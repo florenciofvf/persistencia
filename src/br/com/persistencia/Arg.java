@@ -25,12 +25,16 @@ public abstract class Arg {
 
 		if (tipo.startsWith("longo_") || outro.startsWith("longo_")) {
 			return new ArgLong();
+
 		} else if (tipo.startsWith("inteiro_") || outro.startsWith("inteiro_")) {
 			return new ArgInt();
+
 		} else if (tipo.startsWith("data_") || outro.startsWith("data_")) {
 			return new ArgDate();
+
 		} else if (tipo.startsWith("texto_") || outro.startsWith("texto_")) {
 			return new ArgString();
+
 		} else if (tipo.startsWith("objeto_") || outro.startsWith("objeto_")) {
 			return new ArgObject();
 		}
