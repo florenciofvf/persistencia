@@ -31,9 +31,11 @@ public class Icones {
 	// public static final Icon INFO = criarImagem("info");
 	// public static final Icon TOP = criarImagem("top");
 
+	public static final Icon EXCLUIR2 = criarImagem("excluir2");
 	public static final Icon EXCLUIR = criarImagem("excluir");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon SALVARC = criarImagem("saveas");
+	public static final Icon CRIAR2 = criarImagem("create2");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon BANCO = criarImagem("banco");
