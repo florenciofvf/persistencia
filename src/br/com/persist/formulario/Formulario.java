@@ -233,6 +233,8 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			superficie.addObjeto(new Objeto(40, 40));
+			superficie.repaint();
 		}
 	}
 
