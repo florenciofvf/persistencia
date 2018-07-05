@@ -55,7 +55,7 @@ public abstract class Dialogo extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 		}
-	};
+	}
 
 	private class ProcessarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
@@ -68,7 +68,7 @@ public abstract class Dialogo extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			processar();
 		}
-	};
+	}
 
 	private void setActionESC(JDialog dialog) {
 		JComponent component = (JComponent) dialog.getContentPane();

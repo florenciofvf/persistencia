@@ -90,7 +90,11 @@ public class Formulario extends JFrame {
 
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
+			menuArquivo.add(new MenuItem(new NovoAcao(true)));
 			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuItem(new SalvarAcao(true)));
+			menuArquivo.add(new MenuItem(new SalvarComoAcao(true)));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
 			menuArquivo.addSeparator();
@@ -109,7 +113,11 @@ public class Formulario extends JFrame {
 			addSeparator();
 			add(new Button(new ConexaoAcao(false)));
 			addSeparator();
+			add(new Button(new NovoAcao(false)));
 			add(new Button(new AbrirAcao(false)));
+			addSeparator();
+			add(new Button(new SalvarAcao(false)));
+			add(new Button(new SalvarComoAcao(false)));
 		}
 	}
 
@@ -125,7 +133,7 @@ public class Formulario extends JFrame {
 			FormularioUtil.fechar(Formulario.this);
 			System.exit(0);
 		}
-	};
+	}
 
 	private class ConexaoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
@@ -138,7 +146,7 @@ public class Formulario extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			new DialogoConexao(Formulario.this);
 		}
-	};
+	}
 
 	private class AbrirAcao extends Acao {
 		private static final long serialVersionUID = 1L;
@@ -161,5 +169,41 @@ public class Formulario extends JFrame {
 				}
 			}
 		}
-	};
+	}
+
+	private class SalvarComoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public SalvarComoAcao(boolean menu) {
+			super(menu, "label.salvar_como", Icones.SALVARC);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+
+	private class SalvarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public SalvarAcao(boolean menu) {
+			super(menu, "label.salvar", Icones.SALVAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+
+	private class NovoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public NovoAcao(boolean menu) {
+			super(menu, "label.novo", Icones.NOVO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }

@@ -33,8 +33,11 @@ public class Icones {
 	// public static final Icon TOP = criarImagem("top");
 
 	public static final Icon SUCESSO = criarImagem("sucesso");
+	public static final Icon SALVARC = criarImagem("saveas");
+	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon BANCO = criarImagem("banco");
 	public static final Icon ABRIR = criarImagem("open");
+	public static final Icon NOVO = criarImagem("novo");
 	public static final Icon SAIR = criarImagem("sair");
 
 	private static ImageIcon criarImagem(String nome) {
