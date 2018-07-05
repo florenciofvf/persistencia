@@ -6,7 +6,7 @@ import br.com.persist.util.Util;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		try {
-			//Conexao.getConnection();
+			// Conexao.getConnection();
 		} catch (Exception ex) {
 			Util.stackTraceMessageAndException("Main", ex);
 		}
