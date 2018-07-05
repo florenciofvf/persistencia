@@ -19,8 +19,7 @@ public class Icones {
 	// public static final Icon LOCALIZAR = criarImagem("localizar");
 	// public static final Icon COMENTARIO = criarImagem("comment");
 	// public static final Icon ATUALIZAR = criarImagem("refresh");
-	// public static final Icon EXCLUIR2 = criarImagem("deleted");
-	// public static final Icon EXCLUIR = criarImagem("lixeira");
+	// public static final Icon EXCLUIR2 = criarImagem("lixeira");
 	// public static final Icon UPDATE = criarImagem("update");
 	// public static final Icon ARVORE = criarImagem("arvore");
 	// public static final Icon TABELA = criarImagem("tabela");
@@ -32,9 +31,11 @@ public class Icones {
 	// public static final Icon INFO = criarImagem("info");
 	// public static final Icon TOP = criarImagem("top");
 
+	public static final Icon EXCLUIR = criarImagem("excluir");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon SALVARC = criarImagem("saveas");
 	public static final Icon SALVAR = criarImagem("save1");
+	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon BANCO = criarImagem("banco");
 	public static final Icon ABRIR = criarImagem("open");
 	public static final Icon NOVO = criarImagem("novo");

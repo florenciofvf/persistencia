@@ -118,6 +118,9 @@ public class Formulario extends JFrame {
 			addSeparator();
 			add(new Button(new SalvarAcao(false)));
 			add(new Button(new SalvarComoAcao(false)));
+			addSeparator();
+			add(new Button(new ExcluirObjetoAcao()));
+			add(new Button(new CriarObjetoAcao()));
 		}
 	}
 
@@ -188,6 +191,30 @@ public class Formulario extends JFrame {
 
 		public SalvarAcao(boolean menu) {
 			super(menu, "label.salvar", Icones.SALVAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+
+	private class ExcluirObjetoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ExcluirObjetoAcao() {
+			super(false, "label.excluir_objeto", Icones.EXCLUIR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+
+	private class CriarObjetoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public CriarObjetoAcao() {
+			super(false, "label.criar_objeto", Icones.CRIAR);
 		}
 
 		@Override
