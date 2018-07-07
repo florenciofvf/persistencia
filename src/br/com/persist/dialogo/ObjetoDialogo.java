@@ -23,7 +23,7 @@ public class ObjetoDialogo extends Dialogo {
 	private final Objeto objeto;
 
 	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
-		super(frame, objeto.getId(), 700, 140, false);
+		super(frame, objeto.getId(), 700, 500, false);
 		this.superficie = superficie;
 		this.objeto = objeto;
 		montarLayout();

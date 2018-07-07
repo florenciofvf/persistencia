@@ -64,12 +64,12 @@ public class Superficie extends JDesktopPane {
 		}
 
 		private void processar(MouseEvent e) {
+			final int x = e.getX();
+			final int y = e.getY();
 			selecionado2 = null;
 			selecionado = null;
-			int x = e.getX();
-			int y = e.getY();
 
-			if (!e.isControlDown()) {
+			if (!e.isShiftDown()) {
 				for (Objeto objeto : objetos) {
 					objeto.setSelecionado(false);
 				}
@@ -104,10 +104,8 @@ public class Superficie extends JDesktopPane {
 				objetos[i].setSelecionado(false);
 			}
 
-			if (e.isPopupTrigger()) {
-				if (selecionado != null) {
-					popup.show(Superficie.this, e.getX(), e.getY());
-				}
+			if (e.isPopupTrigger() && selecionado != null) {
+				popup.show(Superficie.this, x, y);
 			}
 
 			repaint();

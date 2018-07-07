@@ -50,7 +50,9 @@ public class Formulario extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				exemplo();
-				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
+				if (!System.getProperty("os.name").startsWith("Mac OS")) {
+					FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
+				}
 			}
 
 			public void windowClosing(WindowEvent e) {
