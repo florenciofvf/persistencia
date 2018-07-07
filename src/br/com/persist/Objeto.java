@@ -56,12 +56,20 @@ public class Objeto {
 		return id;
 	}
 
+	public Icon getIcone() {
+		return icone;
+	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
 
 	public boolean isSelecionado() {
 		return selecionado;
+	}
+
+	public void setIcone(Icon icone) {
+		this.icone = icone;
 	}
 
 	public void setSelecionado(boolean selecionado) {

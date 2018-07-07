@@ -10,10 +10,10 @@ import br.com.persist.util.XMLUtil;
 public class Relacao {
 	static int diametro = 6;
 	static int m = diametro / 2;
-	final boolean ponto1;
-	final boolean ponto2;
 	final Objeto objeto1;
 	final Objeto objeto2;
+	boolean ponto1;
+	boolean ponto2;
 
 	public Relacao(Objeto objeto1, Objeto objeto2) {
 		this(objeto1, false, objeto2, false);
@@ -38,6 +38,22 @@ public class Relacao {
 		if (objeto1 == objeto2 || objeto1.equals(objeto2)) {
 			throw new IllegalStateException();
 		}
+	}
+
+	public void setPonto1(boolean ponto1) {
+		this.ponto1 = ponto1;
+	}
+
+	public void setPonto2(boolean ponto2) {
+		this.ponto2 = ponto2;
+	}
+
+	public boolean isPonto1() {
+		return ponto1;
+	}
+
+	public boolean isPonto2() {
+		return ponto2;
 	}
 
 	@Override
