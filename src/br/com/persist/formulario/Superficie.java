@@ -116,6 +116,14 @@ public class Superficie extends JDesktopPane {
 		return formulario;
 	}
 
+	public Objeto getSelecionado2() {
+		return selecionado2;
+	}
+
+	public Objeto getSelecionado() {
+		return selecionado;
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);

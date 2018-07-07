@@ -215,6 +215,11 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Objeto objeto2 = superficie.getSelecionado2();
+			Objeto objeto1 = superficie.getSelecionado();
+			Relacao relacao = superficie.getRelacao(objeto1, objeto2);
+			superficie.excluir(relacao);
+			superficie.repaint();
 		}
 	}
 
