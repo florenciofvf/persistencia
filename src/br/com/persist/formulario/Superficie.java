@@ -109,26 +109,126 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
-	public void addObjeto(Objeto objeto) {
-		if (objeto == null) {
+	public void addObjeto(Objeto obj) {
+		if (obj == null || contem(obj)) {
 			return;
 		}
 
 		Objeto[] bkp = objetos;
 		objetos = new Objeto[bkp.length + 1];
 		System.arraycopy(bkp, 0, objetos, 0, bkp.length);
-		objetos[bkp.length] = objeto;
+		objetos[bkp.length] = obj;
 	}
 
-	public void addRelacao(Relacao relacao) {
-		if (relacao == null) {
+	public void excluir(Objeto obj) {
+		int indice = getIndice(obj);
+
+		if (indice >= 0) {
+			objetos[indice] = null;
+			Objeto[] bkp = objetos;
+			objetos = new Objeto[0];
+
+			for (int i = 0; i < bkp.length; i++) {
+				if (bkp[i] != null) {
+					addObjeto(bkp[i]);
+				}
+			}
+
+			Relacao relacao = getRelacao(obj);
+
+			while (relacao != null) {
+				excluir(relacao);
+				relacao = getRelacao(obj);
+			}
+		}
+	}
+
+	public void addRelacao(Relacao obj) {
+		if (obj == null) {
 			return;
 		}
 
 		Relacao[] bkp = relacoes;
 		relacoes = new Relacao[bkp.length + 1];
 		System.arraycopy(bkp, 0, relacoes, 0, bkp.length);
-		relacoes[bkp.length] = relacao;
+		relacoes[bkp.length] = obj;
+	}
+
+	public void excluir(Relacao obj) {
+		int indice = getIndice(obj);
+
+		if (indice >= 0) {
+			relacoes[indice] = null;
+			Relacao[] bkp = relacoes;
+			relacoes = new Relacao[0];
+
+			for (int i = 0; i < bkp.length; i++) {
+				if (bkp[i] != null) {
+					addRelacao(bkp[i]);
+				}
+			}
+		}
+	}
+
+	public Relacao getRelacao(Objeto obj) {
+		if (obj == null) {
+			return null;
+		}
+
+		for (Relacao relacao : relacoes) {
+			if (relacao.contem(obj)) {
+				return relacao;
+			}
+		}
+
+		return null;
+	}
+
+	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
+		if (obj1 == null || obj2 == null) {
+			return null;
+		}
+
+		for (Relacao relacao : relacoes) {
+			Relacao temp = new Relacao(obj1, obj2);
+			if (relacao.equals(temp)) {
+				return relacao;
+			}
+		}
+
+		return null;
+	}
+
+	public boolean contem(Objeto obj) {
+		return getIndice(obj) >= 0;
+	}
+
+	public boolean contem(Relacao obj) {
+		return getIndice(obj) >= 0;
+	}
+
+	public int getIndice(Objeto obj) {
+		if (obj != null) {
+			for (int i = 0; i < objetos.length; i++) {
+				if (objetos[i] == obj || objetos[i].equals(obj)) {
+					return i;
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	public int getIndice(Relacao obj) {
+		if (obj != null) {
+			for (int i = 0; i < relacoes.length; i++) {
+				if (relacoes[i] == obj || relacoes[i].equals(obj)) {
+					return i;
+				}
+			}
+		}
+
+		return -1;
 	}
 
 	public void limpar() {

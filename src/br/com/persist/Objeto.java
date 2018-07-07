@@ -92,6 +92,20 @@ public class Objeto {
 		}
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+
+		if (obj instanceof Objeto) {
+			Objeto outro = (Objeto) obj;
+			return id.equals(outro.id);
+		}
+
+		return false;
+	}
+
 	public void desenhar(Component c, Graphics2D g2) {
 		Composite composite = g2.getComposite();
 		Shape shape = g2.getClip();

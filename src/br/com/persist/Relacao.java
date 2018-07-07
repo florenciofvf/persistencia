@@ -34,6 +34,29 @@ public class Relacao {
 		this.objeto2 = objeto2;
 		this.ponto1 = ponto1;
 		this.ponto2 = ponto2;
+
+		if (objeto1 == objeto2 || objeto1.equals(objeto2)) {
+			throw new IllegalStateException();
+		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+
+		if (obj instanceof Relacao) {
+			Relacao outro = (Relacao) obj;
+			return (objeto1.equals(outro.objeto1) && objeto2.equals(outro.objeto2))
+					|| (objeto1.equals(outro.objeto2) && objeto2.equals(outro.objeto1));
+		}
+
+		return false;
+	}
+
+	public boolean contem(Objeto objeto) {
+		return objeto1.equals(objeto) || objeto2.equals(objeto);
 	}
 
 	public void desenhar(Graphics2D g2) {
