@@ -1,6 +1,7 @@
 package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,7 +27,7 @@ public class RelacaoDialogo extends Dialogo {
 	private final Objeto objeto2;
 
 	public RelacaoDialogo(Frame frame, Superficie superficie, Objeto objeto1, Objeto objeto2) {
-		super(frame, objeto1.getId() + " / " + objeto2.getId(), 700, 300, true);
+		super(frame, objeto1.getId() + " / " + objeto2.getId(), 300, 140, true);
 		relacao = superficie.getRelacao(objeto1, objeto2);
 		this.superficie = superficie;
 		this.objeto1 = objeto1;
@@ -36,13 +37,12 @@ public class RelacaoDialogo extends Dialogo {
 	}
 
 	private void montarLayout() {
-		Panel panel = new Panel(new GridLayout(2, 1));
-
-		panel.add(new PanelLinha(objeto1, relacao != null ? relacao.isPonto1() : false));
-		panel.add(new PanelLinha(objeto2, relacao != null ? relacao.isPonto2() : false));
-
 		chkPonto1.setSelected(relacao != null ? relacao.isPonto1() : false);
 		chkPonto2.setSelected(relacao != null ? relacao.isPonto2() : false);
+
+		Panel panel = new Panel(new GridLayout(2, 1));
+		panel.add(new PanelLinha(objeto1, chkPonto1));
+		panel.add(new PanelLinha(objeto2, chkPonto2));
 
 		add(BorderLayout.CENTER, panel);
 	}
@@ -63,10 +63,10 @@ public class RelacaoDialogo extends Dialogo {
 	private class PanelLinha extends PanelBorder {
 		private static final long serialVersionUID = 1L;
 
-		PanelLinha(Objeto objeto, boolean ponto) {
+		PanelLinha(Objeto objeto, CheckBox checkBox) {
 			add(BorderLayout.WEST, new PanelObjeto(objeto));
 			add(BorderLayout.CENTER, new JLabel(objeto.getId()));
-			add(BorderLayout.EAST, chkPonto1);
+			add(BorderLayout.EAST, checkBox);
 		}
 	}
 
@@ -76,6 +76,7 @@ public class RelacaoDialogo extends Dialogo {
 
 		PanelObjeto(Objeto objeto) {
 			this.objeto = new Objeto(5, 5, objeto.getCor(), objeto.getIcone());
+			setPreferredSize(new Dimension(Objeto.diametro + 10, Objeto.diametro + 10));
 		}
 
 		@Override

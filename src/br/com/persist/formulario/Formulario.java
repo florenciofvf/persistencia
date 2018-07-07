@@ -1,7 +1,6 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
@@ -50,7 +49,6 @@ public class Formulario extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				exemplo();
 				if (!System.getProperty("os.name").startsWith("Mac OS")) {
 					FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
 				}
@@ -60,21 +58,6 @@ public class Formulario extends JFrame {
 				FormularioUtil.fechar(Formulario.this);
 			};
 		});
-	}
-
-	private void exemplo() {
-		Objeto[] objetos = { new Objeto(10, 10, Color.BLACK), new Objeto(10, 210),
-				new Objeto(200, 210, new Color(80, 90, 100), Icones.SALVAR) };
-
-		for (Objeto objeto : objetos) {
-			superficie.addObjeto(objeto);
-		}
-
-		superficie.addRelacao(new Relacao(objetos[2], true, objetos[0], true));
-		superficie.addRelacao(new Relacao(objetos[0], true, objetos[1]));
-		superficie.addRelacao(new Relacao(objetos[1], objetos[2]));
-
-		superficie.repaint();
 	}
 
 	private class MenuPrincipal extends JMenuBar {
