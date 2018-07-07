@@ -1,10 +1,11 @@
 package br.com.persist;
 
 import java.awt.Graphics2D;
-import java.io.PrintWriter;
 import java.util.Objects;
 
 import org.xml.sax.Attributes;
+
+import br.com.persist.util.XMLUtil;
 
 public class Relacao {
 	static int diametro = 6;
@@ -68,6 +69,12 @@ public class Relacao {
 	public void aplicar(Attributes attr) {
 	}
 
-	public void salvar(PrintWriter pw) {
+	public void salvar(XMLUtil util) {
+		util.abrirTag("relacao");
+		util.atributo("objeto1", objeto1.getId());
+		util.atributo("ponto1", ponto1);
+		util.atributo("objeto2", objeto2.getId());
+		util.atributo("ponto2", ponto2);
+		util.fecharTag().finalizarTag("relacao");
 	}
 }

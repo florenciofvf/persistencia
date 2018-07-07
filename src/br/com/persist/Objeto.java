@@ -9,19 +9,22 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
-import java.io.PrintWriter;
 
 import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.util.XMLUtil;
+
 public class Objeto {
+	private static long ID;
 	public static final Color COR_PADRAO = new Color(64, 80, 34);
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
 	private Icon icone;
+	private String id;
 	public int x;
 	public int y;
 
@@ -46,6 +49,15 @@ public class Objeto {
 		setCor(cor);
 		this.x = x;
 		this.y = y;
+		id = "" + (++ID);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public boolean isSelecionado() {
@@ -66,6 +78,10 @@ public class Objeto {
 		if (Objeto.diametro < DIAMETRO_PADRAO) {
 			Objeto.diametro = DIAMETRO_PADRAO;
 		}
+	}
+
+	public Color getCor() {
+		return cor;
 	}
 
 	public void setCor(Color cor) {
@@ -123,8 +139,18 @@ public class Objeto {
 	}
 
 	public void aplicar(Attributes attr) {
+		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		x = Integer.parseInt(attr.getValue("x"));
+		y = Integer.parseInt(attr.getValue("y"));
+		id = attr.getValue("id");
 	}
 
-	public void salvar(PrintWriter pw) {
+	public void salvar(XMLUtil util) {
+		util.abrirTag("objeto");
+		util.atributo("x", x);
+		util.atributo("y", y);
+		util.atributo("id", id);
+		util.atributo("cor", cor.getRGB());
+		util.fecharTag().finalizarTag("objeto");
 	}
 }
