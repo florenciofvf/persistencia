@@ -60,9 +60,7 @@ public class Formulario extends JFrame {
 	}
 
 	private void exemplo() {
-		Objeto[] objetos = {
-				new Objeto(10, 10, Color.BLACK),
-				new Objeto(10, 210), 
+		Objeto[] objetos = { new Objeto(10, 10, Color.BLACK), new Objeto(10, 210),
 				new Objeto(200, 210, new Color(80, 90, 100), Icones.SALVAR) };
 
 		for (Objeto objeto : objetos) {
@@ -156,16 +154,16 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			superficie.abrir();
-//			JFileChooser fileChooser = new JFileChooser(".");
-//			int opcao = fileChooser.showOpenDialog(Formulario.this);
-//
-//			if (opcao == JFileChooser.APPROVE_OPTION) {
-//				File file = fileChooser.getSelectedFile();
-//
-//				if (file != null) {
-//					// abrirArquivo(file, true, true, true);
-//				}
-//			}
+			// JFileChooser fileChooser = new JFileChooser(".");
+			// int opcao = fileChooser.showOpenDialog(Formulario.this);
+			//
+			// if (opcao == JFileChooser.APPROVE_OPTION) {
+			// File file = fileChooser.getSelectedFile();
+			//
+			// if (file != null) {
+			// // abrirArquivo(file, true, true, true);
+			// }
+			// }
 		}
 	}
 
