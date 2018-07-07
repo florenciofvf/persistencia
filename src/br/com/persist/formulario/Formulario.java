@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JToolBar;
@@ -63,8 +61,9 @@ public class Formulario extends JFrame {
 
 	private void exemplo() {
 		Objeto[] objetos = {
-				new Objeto(300, 200, Color.BLACK/* , Icones.ARVORE */),
-				new Objeto(10, 210/* , Icones.ALERTA */), new Objeto(20, 20, Color.BLUE) };
+				new Objeto(10, 10, Color.BLACK),
+				new Objeto(10, 210), 
+				new Objeto(200, 210, new Color(80, 90, 100), Icones.SALVAR) };
 
 		for (Objeto objeto : objetos) {
 			superficie.addObjeto(objeto);
@@ -156,16 +155,17 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser fileChooser = new JFileChooser(".");
-			int opcao = fileChooser.showOpenDialog(Formulario.this);
-
-			if (opcao == JFileChooser.APPROVE_OPTION) {
-				File file = fileChooser.getSelectedFile();
-
-				if (file != null) {
-					// abrirArquivo(file, true, true, true);
-				}
-			}
+			superficie.abrir();
+//			JFileChooser fileChooser = new JFileChooser(".");
+//			int opcao = fileChooser.showOpenDialog(Formulario.this);
+//
+//			if (opcao == JFileChooser.APPROVE_OPTION) {
+//				File file = fileChooser.getSelectedFile();
+//
+//				if (file != null) {
+//					// abrirArquivo(file, true, true, true);
+//				}
+//			}
 		}
 	}
 
@@ -190,6 +190,7 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			superficie.salvar();
 		}
 	}
 
@@ -252,6 +253,8 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			superficie.limpar();
+			superficie.repaint();
 		}
 	}
 }
