@@ -144,7 +144,7 @@ public class Superficie extends JDesktopPane {
 	}
 
 	public void addRelacao(Relacao obj) {
-		if (obj == null) {
+		if (obj == null || contem(obj)) {
 			return;
 		}
 
