@@ -29,7 +29,6 @@ public class Formulario extends JFrame {
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private final Toolbar toolbar = new Toolbar();
 	private final Superficie superficie;
-	private boolean aberto;
 
 	public Formulario() {
 		setTitle(Mensagens.getString("label.persistencia"));
@@ -52,11 +51,6 @@ public class Formulario extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				if (aberto) {
-					return;
-				}
-
-				aberto = true;
 				exemplo();
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
 			}
@@ -101,7 +95,6 @@ public class Formulario extends JFrame {
 			menuArquivo.add(new MenuItem(new FecharAcao(true)));
 			add(menuArquivo);
 			add(menuLAF);
-			configurar();
 		}
 	}
 
