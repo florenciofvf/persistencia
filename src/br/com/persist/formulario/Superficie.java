@@ -287,18 +287,18 @@ public class Superficie extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 
 		SuperficiePopup() {
-			add(new MenuItem(new PropriedadeAcao()));
+			add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
+			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
 			addSeparator();
-			add(new MenuItem(new AlinhamentoAcao(true, "label.mesmo_y")));
-			add(new MenuItem(new AlinhamentoAcao(false, "label.mesmo_x")));
+			add(new MenuItem(new ConfiguracaoAcao()));
 		}
 	}
 
-	private class PropriedadeAcao extends Acao {
+	private class ConfiguracaoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public PropriedadeAcao() {
-			super(true, "label.propriedades", Icones.CONFIG);
+		public ConfiguracaoAcao() {
+			super(true, "label.configuracoes", Icones.CONFIG);
 		}
 
 		@Override
