@@ -74,7 +74,7 @@ public class Objeto {
 	public void setIcone(String icone) {
 		this.icone = icone;
 
-		if(Util.estaVazio(this.icone)) {
+		if (Util.estaVazio(this.icone)) {
 			this.icone = "";
 		} else {
 			icon = Imagens.getIcon(this.icone);
