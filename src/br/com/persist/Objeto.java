@@ -25,6 +25,7 @@ public class Objeto {
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
+	private boolean desenharId;
 	private String icone;
 	private Icon icon;
 	private String id;
@@ -71,8 +72,16 @@ public class Objeto {
 		this.id = id;
 	}
 
+	public boolean isDesenharId() {
+		return desenharId;
+	}
+
 	public boolean isSelecionado() {
 		return selecionado;
+	}
+
+	public void setDesenharId(boolean desenharId) {
+		this.desenharId = desenharId;
 	}
 
 	public void setIcone(String icone) {
@@ -171,9 +180,14 @@ public class Objeto {
 		if (selecionado) {
 			g2.drawOval(x - margem3, y - margem3, diametro + margem4, diametro + margem4);
 		}
+
+		if (desenharId) {
+			g2.drawString(id, x, y);
+		}
 	}
 
 	public void aplicar(Attributes attr) {
+		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
@@ -183,11 +197,12 @@ public class Objeto {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
+		util.atributo("desenharId", desenharId);
+		util.atributo("cor", cor.getRGB());
+		util.atributo("icone", icone);
+		util.atributo("id", id);
 		util.atributo("x", x);
 		util.atributo("y", y);
-		util.atributo("id", id);
-		util.atributo("icone", icone);
-		util.atributo("cor", cor.getRGB());
 		util.fecharTag().finalizarTag("objeto");
 	}
 }

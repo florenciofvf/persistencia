@@ -100,10 +100,25 @@ public class ObjetoDialogo extends Dialogo {
 				TextField txt = (TextField) e.getSource();
 				objeto.x = getInt(txt.getText(), objeto.x);
 				superficie.repaint();
+
 			} else if (txtY == e.getSource()) {
 				TextField txt = (TextField) e.getSource();
 				objeto.y = getInt(txt.getText(), objeto.y);
 				superficie.repaint();
+
+			} else if (txtId == e.getSource()) {
+				TextField txt = (TextField) e.getSource();
+				String id = txt.getText();
+
+				if (!Util.estaVazio(id)) {
+					Objeto obj = new Objeto();
+					obj.setId(id);
+
+					if (!superficie.contem(obj)) {
+						objeto.setId(id);
+						superficie.repaint();
+					}
+				}
 			}
 		}
 	}
