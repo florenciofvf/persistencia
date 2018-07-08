@@ -57,7 +57,7 @@ public class Superficie extends JDesktopPane {
 	private MouseListener mouseListener = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS && selecionado != null) {
-				System.out.println("Superficie.enclosing_method()");
+				new FormularioObjeto(formulario, selecionado);
 			}
 		};
 
