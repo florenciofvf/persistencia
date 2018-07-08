@@ -14,6 +14,8 @@ import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.util.Imagens;
+import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Objeto {
@@ -23,7 +25,8 @@ public class Objeto {
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
-	private Icon icone;
+	private String icone;
+	private Icon icon;
 	private String id;
 	public int x;
 	public int y;
@@ -40,23 +43,23 @@ public class Objeto {
 		this(x, y, cor, null);
 	}
 
-	public Objeto(int x, int y, Icon icone) {
+	public Objeto(int x, int y, String icone) {
 		this(x, y, COR_PADRAO, icone);
 	}
 
-	public Objeto(int x, int y, Color cor, Icon icone) {
-		this.icone = icone;
+	public Objeto(int x, int y, Color cor, String icone) {
+		id = "" + (++ID);
+		setIcone(icone);
 		setCor(cor);
 		this.x = x;
 		this.y = y;
-		id = "" + (++ID);
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public Icon getIcone() {
+	public String getIcone() {
 		return icone;
 	}
 
@@ -68,8 +71,14 @@ public class Objeto {
 		return selecionado;
 	}
 
-	public void setIcone(Icon icone) {
+	public void setIcone(String icone) {
 		this.icone = icone;
+
+		if(Util.estaVazio(this.icone)) {
+			this.icone = "";
+		} else {
+			icon = Imagens.getIcon(this.icone);
+		}
 	}
 
 	public void setSelecionado(boolean selecionado) {
@@ -151,8 +160,8 @@ public class Objeto {
 		g2.setComposite(composite);
 		g2.setClip(shape);
 
-		if (icone != null) {
-			icone.paintIcon(c, g2, x + raio - 8, y + raio - 8);
+		if (icon != null) {
+			icon.paintIcon(c, g2, x + raio - 8, y + raio - 8);
 		}
 
 		if (selecionado) {
@@ -164,6 +173,7 @@ public class Objeto {
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
+		setIcone(attr.getValue("icone"));
 		id = attr.getValue("id");
 	}
 
@@ -172,6 +182,7 @@ public class Objeto {
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.atributo("id", id);
+		util.atributo("icone", icone);
 		util.atributo("cor", cor.getRGB());
 		util.fecharTag().finalizarTag("objeto");
 	}
