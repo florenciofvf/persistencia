@@ -8,7 +8,7 @@ import org.xml.sax.Attributes;
 import br.com.persist.util.XMLUtil;
 
 public class Relacao {
-	static int diametro = 6;
+	static int diametro = 9;
 	static int m = diametro / 2;
 	final Objeto objeto1;
 	final Objeto objeto2;

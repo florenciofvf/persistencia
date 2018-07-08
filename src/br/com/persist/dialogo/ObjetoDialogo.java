@@ -3,6 +3,8 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -20,6 +22,7 @@ import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Superficie;
+import br.com.persist.util.Util;
 
 public class ObjetoDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
@@ -58,7 +61,7 @@ public class ObjetoDialogo extends Dialogo {
 		}
 	}
 
-	private class PanelGeral extends PanelBorder {
+	private class PanelGeral extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
@@ -69,6 +72,10 @@ public class ObjetoDialogo extends Dialogo {
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 			txtId.setText(objeto.getId());
+
+			txtId.addActionListener(this);
+			txtX.addActionListener(this);
+			txtY.addActionListener(this);
 
 			if (objeto.getIcon() != null) {
 				labelIcone.setIcon(objeto.getIcon());
@@ -85,6 +92,31 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.y", txtY));
 
 			add(BorderLayout.CENTER, container);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (txtX == e.getSource()) {
+				TextField txt = (TextField) e.getSource();
+				objeto.x = getInt(txt.getText(), objeto.x);
+				superficie.repaint();
+			} else if (txtY == e.getSource()) {
+				TextField txt = (TextField) e.getSource();
+				objeto.y = getInt(txt.getText(), objeto.y);
+				superficie.repaint();
+			}
+		}
+	}
+
+	private int getInt(String s, int padrao) {
+		if (Util.estaVazio(s)) {
+			return padrao;
+		}
+
+		try {
+			return Integer.parseInt(s.trim());
+		} catch (Exception e) {
+			return padrao;
 		}
 	}
 
