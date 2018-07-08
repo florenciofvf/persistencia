@@ -30,6 +30,7 @@ public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup popup = new SuperficiePopup();
 	private final Formulario formulario;
+	private Objeto ultimoSelecionado;
 	private Objeto selecionado2;
 	private Objeto selecionado;
 	private Relacao[] relacoes;
@@ -85,6 +86,7 @@ public class Superficie extends JDesktopPane {
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
 					objeto.setSelecionado(true);
+					ultimoSelecionado = objeto;
 					break;
 				}
 			}
@@ -109,6 +111,13 @@ public class Superficie extends JDesktopPane {
 
 			for (; i < objetos.length; i++) {
 				objetos[i].setSelecionado(false);
+			}
+
+			if (selecionado != null && selecionado2 != null && ultimoSelecionado != selecionado2) {
+				Objeto sel1 = selecionado2;
+				Objeto sel2 = selecionado;
+				selecionado2 = sel2;
+				selecionado = sel1;
 			}
 
 			if (e.isPopupTrigger() && selecionado != null) {
