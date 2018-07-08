@@ -3,7 +3,10 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
@@ -13,6 +16,7 @@ import javax.swing.event.ChangeListener;
 import br.com.persist.Objeto;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Superficie;
@@ -23,7 +27,7 @@ public class ObjetoDialogo extends Dialogo {
 	private final Objeto objeto;
 
 	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
-		super(frame, objeto.getId(), 700, 500, false);
+		super(frame, objeto.getId(), 700, 350, false);
 		this.superficie = superficie;
 		this.objeto = objeto;
 		montarLayout();
@@ -59,13 +63,23 @@ public class ObjetoDialogo extends Dialogo {
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
+		private Label labelIcone = new Label();
 
 		PanelGeral() {
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 			txtId.setText(objeto.getId());
 
+			if (objeto.getIcon() != null) {
+				labelIcone.setIcon(objeto.getIcon());
+			}
+
+			PanelCenter panelIcone = new PanelCenter(labelIcone);
+			panelIcone.setBorder(BorderFactory.createEtchedBorder());
+			panelIcone.addMouseListener(mouseIconeListener);
+
 			Box container = Box.createVerticalBox();
+			container.add(panelIcone);
 			container.add(criarLinha("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
@@ -73,6 +87,11 @@ public class ObjetoDialogo extends Dialogo {
 			add(BorderLayout.CENTER, container);
 		}
 	}
+
+	private MouseListener mouseIconeListener = new MouseAdapter() {
+		public void mouseClicked(java.awt.event.MouseEvent e) {
+		};
+	};
 
 	private Box criarLinha(String chaveRotulo, JComponent componente) {
 		Box box = Box.createHorizontalBox();

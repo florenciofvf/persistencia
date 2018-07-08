@@ -59,6 +59,10 @@ public class Objeto {
 		return id;
 	}
 
+	public Icon getIcon() {
+		return icon;
+	}
+
 	public String getIcone() {
 		return icone;
 	}
