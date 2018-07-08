@@ -279,6 +279,9 @@ public class Superficie extends JDesktopPane {
 
 		SuperficiePopup() {
 			add(new MenuItem(new PropriedadeAcao()));
+			addSeparator();
+			add(new MenuItem(new AlinhamentoAcao(true, "label.mesmo_y")));
+			add(new MenuItem(new AlinhamentoAcao(false, "label.mesmo_x")));
 		}
 	}
 
@@ -292,6 +295,31 @@ public class Superficie extends JDesktopPane {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			new ObjetoDialogo(formulario, Superficie.this, selecionado);
+		}
+	}
+
+	private class AlinhamentoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+		private final boolean horizontal;
+
+		public AlinhamentoAcao(boolean horizontal, String chave) {
+			super(true, chave, null);
+			this.horizontal = horizontal;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (selecionado == null || selecionado2 == null) {
+				return;
+			}
+
+			if (horizontal) {
+				selecionado2.y = selecionado.y;
+			} else {
+				selecionado2.x = selecionado.x;
+			}
+
+			repaint();
 		}
 	}
 
