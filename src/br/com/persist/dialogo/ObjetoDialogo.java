@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -76,7 +76,7 @@ public class ObjetoDialogo extends Dialogo {
 
 			PanelCenter panelIcone = new PanelCenter(labelIcone);
 			panelIcone.setBorder(BorderFactory.createEtchedBorder());
-			panelIcone.addMouseListener(mouseIconeListener);
+			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 
 			Box container = Box.createVerticalBox();
 			container.add(panelIcone);
@@ -88,9 +88,20 @@ public class ObjetoDialogo extends Dialogo {
 		}
 	}
 
-	private MouseListener mouseIconeListener = new MouseAdapter() {
-		public void mouseClicked(java.awt.event.MouseEvent e) {
-		};
+	private class IconeListener extends MouseAdapter {
+		private final Objeto objeto;
+		private final Label label;
+
+		public IconeListener(Objeto objeto, Label label) {
+			this.objeto = objeto;
+			this.label = label;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			new IconeDialogo(ObjetoDialogo.this, objeto, label);
+			superficie.repaint();
+		}
 	};
 
 	private Box criarLinha(String chaveRotulo, JComponent componente) {

@@ -32,8 +32,8 @@ public class Imagens {
 		return icon;
 	}
 
-	public List<Icon> getIcones() {
-		return new ArrayList<>(MAPA_ICONES.values());
+	public static List<Map.Entry<String, Icon>> getIcones() {
+		return new ArrayList<>(MAPA_ICONES.entrySet());
 	}
 
 	public static void ini() {

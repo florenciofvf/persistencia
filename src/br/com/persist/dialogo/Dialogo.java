@@ -1,6 +1,7 @@
 package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.EventQueue;
 import java.awt.Frame;
 import java.awt.Toolkit;
@@ -24,9 +25,19 @@ import br.com.persist.util.Icones;
 public abstract class Dialogo extends JDialog {
 	private static final long serialVersionUID = 1L;
 
+	public Dialogo(Dialog dialog, String titulo, int largura, int altura, boolean btnProcessar) {
+		super(dialog, true);
+		ini(titulo, largura, altura, btnProcessar);
+		setLocationRelativeTo(dialog);
+	}
+
 	public Dialogo(Frame frame, String titulo, int largura, int altura, boolean btnProcessar) {
 		super(frame, true);
+		ini(titulo, largura, altura, btnProcessar);
+		setLocationRelativeTo(frame);
+	}
 
+	private void ini(String titulo, int largura, int altura, boolean btnProcessar) {
 		PanelCenter botoes = new PanelCenter(new Button(new FecharAcao()));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -37,7 +48,6 @@ public abstract class Dialogo extends JDialog {
 		}
 
 		add(BorderLayout.SOUTH, botoes);
-		setLocationRelativeTo(frame);
 		setActionESC(this);
 		setTitle(titulo);
 	}
