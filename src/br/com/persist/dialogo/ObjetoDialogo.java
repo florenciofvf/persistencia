@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -62,9 +64,11 @@ public class ObjetoDialogo extends Dialogo {
 		}
 	}
 
-	private class PanelGeral extends PanelBorder implements ActionListener {
+	private class PanelGeral extends PanelBorder implements ActionListener, FocusListener {
 		private static final long serialVersionUID = 1L;
 		private CheckBox chkDesenharId = new CheckBox();
+		private TextField txtTabela = new TextField();
+		private TextField txtChaves = new TextField();
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
@@ -72,14 +76,23 @@ public class ObjetoDialogo extends Dialogo {
 
 		PanelGeral() {
 			chkDesenharId.setSelected(objeto.isDesenharId());
+			txtTabela.setText(objeto.getTabela());
+			txtChaves.setText(objeto.getChaves());
 			txtId.setText(objeto.getId());
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 
 			chkDesenharId.addActionListener(this);
+			txtTabela.addActionListener(this);
+			txtChaves.addActionListener(this);
+			txtTabela.addFocusListener(this);
+			txtChaves.addFocusListener(this);
 			txtId.addActionListener(this);
+			txtId.addFocusListener(this);
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
+			txtX.addFocusListener(this);
+			txtY.addFocusListener(this);
 
 			if (objeto.getIcon() != null) {
 				labelIcone.setIcon(objeto.getIcon());
@@ -94,25 +107,43 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
+			container.add(criarLinha("label.tabela", txtTabela));
+			container.add(criarLinha("label.chaves", txtChaves));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 
 			add(BorderLayout.CENTER, container);
 		}
 
 		@Override
+		public void focusGained(FocusEvent e) {
+		}
+
+		@Override
+		public void focusLost(FocusEvent e) {
+			actionPerformed(new ActionEvent(e.getSource(), 0, null));
+		}
+
+		@Override
 		public void actionPerformed(ActionEvent e) {
+			TextField txt = null;
+
+			if (e.getSource() instanceof TextField) {
+				txt = (TextField) e.getSource();
+			}
+
 			if (txtX == e.getSource()) {
-				TextField txt = (TextField) e.getSource();
 				objeto.x = getInt(txt.getText(), objeto.x);
-				superficie.repaint();
 
 			} else if (txtY == e.getSource()) {
-				TextField txt = (TextField) e.getSource();
 				objeto.y = getInt(txt.getText(), objeto.y);
-				superficie.repaint();
+
+			} else if (txtTabela == e.getSource()) {
+				objeto.setTabela(txt.getText());
+
+			} else if (txtChaves == e.getSource()) {
+				objeto.setChaves(txt.getText());
 
 			} else if (txtId == e.getSource()) {
-				TextField txt = (TextField) e.getSource();
 				String id = txt.getText();
 
 				if (!Util.estaVazio(id)) {
@@ -121,14 +152,14 @@ public class ObjetoDialogo extends Dialogo {
 
 					if (!superficie.contem(obj)) {
 						objeto.setId(id);
-						superficie.repaint();
 					}
 				}
 			} else if (chkDesenharId == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
-				superficie.repaint();
 			}
+
+			superficie.repaint();
 		}
 	}
 

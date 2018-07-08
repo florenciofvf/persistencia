@@ -21,6 +21,7 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.XMLUtil;
 import br.com.persist.xml.XML;
@@ -53,6 +54,12 @@ public class Superficie extends JDesktopPane {
 	};
 
 	private MouseListener mouseListener = new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			if (e.getClickCount() >= Constantes.DOIS && selecionado != null) {
+				System.out.println("Superficie.enclosing_method()");
+			}
+		};
+
 		@Override
 		public void mousePressed(MouseEvent e) {
 			processar(e);
@@ -279,7 +286,7 @@ public class Superficie extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 
 		public PropriedadeAcao() {
-			super(true, "label.propriedades", Icones.BANCO);
+			super(true, "label.propriedades", Icones.CONFIG);
 		}
 
 		@Override

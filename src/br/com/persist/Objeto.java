@@ -26,6 +26,8 @@ public class Objeto {
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
 	private boolean desenharId;
+	private String tabela;
+	private String chaves;
 	private String icone;
 	private Icon icon;
 	private String id;
@@ -56,32 +58,60 @@ public class Objeto {
 		this.y = y;
 	}
 
-	public String getId() {
-		return id;
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 
-	public Icon getIcon() {
-		return icon;
+	public void setDesenharId(boolean desenharId) {
+		this.desenharId = desenharId;
 	}
 
-	public String getIcone() {
-		return icone;
+	public void setTabela(String tabela) {
+		this.tabela = tabela;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public boolean isDesenharId() {
-		return desenharId;
+	public void setChaves(String chaves) {
+		this.chaves = chaves;
 	}
 
 	public boolean isSelecionado() {
 		return selecionado;
 	}
 
-	public void setDesenharId(boolean desenharId) {
-		this.desenharId = desenharId;
+	public boolean isDesenharId() {
+		return desenharId;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getChaves() {
+		return chaves;
+	}
+
+	public String getTabela() {
+		return tabela;
+	}
+
+	public String getIcone() {
+		return icone;
+	}
+
+	public Icon getIcon() {
+		return icon;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public static void setDiametro(int diametro) {
+		Objeto.diametro = diametro;
+
+		if (Objeto.diametro < DIAMETRO_PADRAO) {
+			Objeto.diametro = DIAMETRO_PADRAO;
+		}
 	}
 
 	public void setIcone(String icone) {
@@ -94,19 +124,11 @@ public class Objeto {
 		}
 	}
 
-	public void setSelecionado(boolean selecionado) {
-		this.selecionado = selecionado;
-	}
+	public void setCor(Color cor) {
+		this.cor = cor;
 
-	public boolean contem(int x, int y) {
-		return (x >= this.x && x <= this.x + diametro) && (y >= this.y && y <= this.y + diametro);
-	}
-
-	public static void setDiametro(int diametro) {
-		Objeto.diametro = diametro;
-
-		if (Objeto.diametro < DIAMETRO_PADRAO) {
-			Objeto.diametro = DIAMETRO_PADRAO;
+		if (this.cor == null) {
+			this.cor = COR_PADRAO;
 		}
 	}
 
@@ -114,12 +136,8 @@ public class Objeto {
 		return cor;
 	}
 
-	public void setCor(Color cor) {
-		this.cor = cor;
-
-		if (this.cor == null) {
-			this.cor = COR_PADRAO;
-		}
+	public boolean contem(int x, int y) {
+		return (x >= this.x && x <= this.x + diametro) && (y >= this.y && y <= this.y + diametro);
 	}
 
 	@Override
@@ -192,6 +210,8 @@ public class Objeto {
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		setIcone(attr.getValue("icone"));
+		tabela = attr.getValue("tabela");
+		chaves = attr.getValue("chaves");
 		id = attr.getValue("id");
 	}
 
@@ -199,10 +219,13 @@ public class Objeto {
 		util.abrirTag("objeto");
 		util.atributo("desenharId", desenharId);
 		util.atributo("cor", cor.getRGB());
+		util.atributo("tabela", tabela);
+		util.atributo("chaves", chaves);
 		util.atributo("icone", icone);
 		util.atributo("id", id);
 		util.atributo("x", x);
 		util.atributo("y", y);
-		util.fecharTag().finalizarTag("objeto");
+		util.fecharTag();
+		util.finalizarTag("objeto");
 	}
 }
