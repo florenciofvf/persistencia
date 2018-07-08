@@ -10,4 +10,7 @@ public class CheckBox extends JCheckBox {
 	public CheckBox(String chaveRotulo) {
 		super(Mensagens.getString(chaveRotulo));
 	}
+
+	public CheckBox() {
+	}
 }

@@ -16,6 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.Objeto;
+import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.PanelCenter;
@@ -63,16 +64,19 @@ public class ObjetoDialogo extends Dialogo {
 
 	private class PanelGeral extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			chkDesenharId.setSelected(objeto.isDesenharId());
+			txtId.setText(objeto.getId());
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
-			txtId.setText(objeto.getId());
 
+			chkDesenharId.addActionListener(this);
 			txtId.addActionListener(this);
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
@@ -90,6 +94,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
+			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 
 			add(BorderLayout.CENTER, container);
 		}
@@ -119,6 +124,10 @@ public class ObjetoDialogo extends Dialogo {
 						superficie.repaint();
 					}
 				}
+			} else if (chkDesenharId == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setDesenharId(chk.isSelected());
+				superficie.repaint();
 			}
 		}
 	}
