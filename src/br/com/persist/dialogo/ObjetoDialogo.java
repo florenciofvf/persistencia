@@ -103,7 +103,7 @@ public class ObjetoDialogo extends Dialogo {
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 
 			Box container = Box.createVerticalBox();
-			container.add(panelIcone);
+			container.add(criarLinha("label.icone", panelIcone));
 			container.add(criarLinha("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
