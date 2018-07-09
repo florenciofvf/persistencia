@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
@@ -99,6 +100,8 @@ public class Formulario extends JFrame {
 			add(new Button(new ExcluirRelacaoAcao()));
 			add(new Button(new CriarObjetoAcao()));
 			add(new Button(new CriarRelacaoAcao()));
+			addSeparator();
+			add(new JToggleButton(new DesenhoIdAcao()));
 		}
 	}
 
@@ -252,6 +255,20 @@ public class Formulario extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			superficie.limpar();
 			superficie.repaint();
+		}
+	}
+
+	private class DesenhoIdAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public DesenhoIdAcao() {
+			super(false, "label.desenhar_id", Icones.LABEL);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JToggleButton button = (JToggleButton) e.getSource();
+			superficie.desenharIds(button.isSelected());
 		}
 	}
 }

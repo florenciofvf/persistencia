@@ -35,7 +35,8 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		setBackground(Color.RED);
 	}
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int rowIndex, int vColIndex) {
 		return this;
 	}
 
@@ -46,7 +47,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		private boolean asc;
 
 		Ordenacao(int indice, boolean numero) {
-			//addMouseListener(mouseListener);
+			// addMouseListener(mouseListener);
 			setIcon(Icones.SUCESSO);
 			this.indice = indice;
 			this.numero = numero;
@@ -59,6 +60,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("CabecalhoColuna.Ordenacao.enclosing_method()");
 			}
+
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("CabecalhoColuna.Ordenacao.enclosing_method()");
 			}
@@ -83,7 +85,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		private final String coluna;
 
 		Filtro(String coluna) {
-			//addMouseListener(mouseListener);
+			// addMouseListener(mouseListener);
 			this.coluna = coluna;
 			setText("...");
 

@@ -68,10 +68,11 @@ public class Tabela extends JTable {
 				TableColumn tableColumn = columnModel.getColumn(tableColuna);
 				CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
 
-//				if (!(headerRenderer instanceof HeaderRD)) {
-//					int largura = tableColumn.getPreferredWidth() + Constantes.LARGURA_ICONE_ORDENAR;
-//					tableColumn.setPreferredWidth(largura);
-//				}
+				// if (!(headerRenderer instanceof HeaderRD)) {
+				// int largura = tableColumn.getPreferredWidth() +
+				// Constantes.LARGURA_ICONE_ORDENAR;
+				// tableColumn.setPreferredWidth(largura);
+				// }
 			}
 		}
 	};

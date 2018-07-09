@@ -377,4 +377,12 @@ public class Superficie extends JDesktopPane {
 
 		repaint();
 	}
+
+	public void desenharIds(boolean b) {
+		for (Objeto objeto : objetos) {
+			objeto.setDesenharId(b);
+		}
+
+		repaint();
+	}
 }
