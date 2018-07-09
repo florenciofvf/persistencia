@@ -1,18 +1,19 @@
 package br.com.persist.main;
 
+import br.com.persist.banco.Conexao;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		Imagens.ini();
-
 		try {
-			// Conexao.getConnection();
+			Conexao.getConnection();
 		} catch (Exception ex) {
 			Util.stackTraceMessageAndException("Main", ex);
 		}
+
+		Imagens.ini();
 
 		Formulario formulario = new Formulario();
 		formulario.setLocationRelativeTo(null);
