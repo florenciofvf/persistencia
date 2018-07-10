@@ -6,7 +6,6 @@ import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -62,18 +61,35 @@ public class Tabela extends JTable {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				int tableColuna = columnAtPoint(e.getPoint());
 				TableColumnModel columnModel = getColumnModel();
-
-				int modelColuna = convertColumnIndexToModel(tableColuna);
-
 				TableColumn tableColumn = columnModel.getColumn(tableColuna);
 				CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
 
-				// if (!(headerRenderer instanceof HeaderRD)) {
-				// int largura = tableColumn.getPreferredWidth() +
-				// Constantes.LARGURA_ICONE_ORDENAR;
-				// tableColumn.setPreferredWidth(largura);
-				// }
+				int resto = getResto(e.getX(), tableColumn);
+
+				if (cabecalho.isOrdenacao(resto)) {
+					cabecalho.ordenar();
+				} else if (cabecalho.isFiltro(resto, tableColumn.getWidth())) {
+					cabecalho.filtrar();
+				}
 			}
+		}
+
+		private int getResto(int x, TableColumn tableColumn) {
+			TableColumnModel columnModel = getColumnModel();
+			int total = columnModel.getColumnCount();
+			int soma = 0;
+
+			for (int c = 0; c < total; c++) {
+				TableColumn coluna = columnModel.getColumn(c);
+
+				if (tableColumn == coluna) {
+					return x - soma;
+				}
+
+				soma += coluna.getWidth();
+			}
+
+			return -1;
 		}
 	};
 

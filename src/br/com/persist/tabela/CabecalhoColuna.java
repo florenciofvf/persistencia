@@ -1,18 +1,13 @@
 package br.com.persist.tabela;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 
 public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
@@ -30,9 +25,6 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		add(BorderLayout.WEST, ordenacao);
 		add(BorderLayout.EAST, filtro);
 		this.modelo = modelo;
-
-		setOpaque(true);
-		setBackground(Color.RED);
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -47,37 +39,20 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		private boolean asc;
 
 		Ordenacao(int indice, boolean numero) {
-			// addMouseListener(mouseListener);
 			setIcon(Icones.SUCESSO);
 			this.indice = indice;
 			this.numero = numero;
-
-			setOpaque(true);
-			setBackground(Color.BLUE);
 		}
 
-		MouseListener mouseListener = new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) {
-				System.out.println("CabecalhoColuna.Ordenacao.enclosing_method()");
+		void ordenar() {
+			if (numero) {
+				setIcon(asc ? Icones.ASC_NUMERO : Icones.DESC_NUMERO);
+			} else {
+				setIcon(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
 			}
-
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("CabecalhoColuna.Ordenacao.enclosing_method()");
-			}
-
-			public void mousePressed(java.awt.event.MouseEvent e) {
-				System.out.println(e.getClickCount());
-				if (e.getClickCount() >= Constantes.DOIS) {
-					if (numero) {
-						setIcon(asc ? Icones.ASC_NUMERO : Icones.DESC_NUMERO);
-					} else {
-						setIcon(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
-					}
-					asc = !asc;
-					modelo.ordenar(indice, numero);
-				}
-			}
-		};
+			asc = !asc;
+			modelo.ordenar(indice, numero);
+		}
 	}
 
 	private class Filtro extends Label {
@@ -85,19 +60,13 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		private final String coluna;
 
 		Filtro(String coluna) {
-			// addMouseListener(mouseListener);
+			setIcon(Icones.FILTRO);
 			this.coluna = coluna;
-			setText("...");
-
-			setOpaque(true);
-			setBackground(Color.GREEN);
 		}
 
-		MouseListener mouseListener = new MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				System.out.println("Filtrar em " + coluna);
-			};
-		};
+		void filtrar() {
+			System.out.println("Filtrar em >>> " + coluna);
+		}
 	}
 
 	private class Descricao extends Label {
@@ -106,9 +75,22 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		Descricao(String nome) {
 			setToolTipText(nome);
 			setText(nome);
-
-			setOpaque(true);
-			setBackground(Color.PINK);
 		}
+	}
+
+	public boolean isOrdenacao(int resto) {
+		return resto <= 16;
+	}
+
+	public boolean isFiltro(int resto, int largura) {
+		return resto >= largura - 16;
+	}
+
+	public void ordenar() {
+		ordenacao.ordenar();
+	}
+
+	public void filtrar() {
+		filtro.filtrar();
 	}
 }
