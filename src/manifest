@@ -1,0 +1,4 @@
+Main-Class: br.com.persist.main.Main
+Class-Path: ojdbc7.jar
+Manifest-Version: 1
+
