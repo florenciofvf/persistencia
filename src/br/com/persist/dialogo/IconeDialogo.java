@@ -49,6 +49,7 @@ public class IconeDialogo extends Dialogo {
 			addMouseListener(mouseListener);
 			setIcon(entry.getValue());
 			nome = entry.getKey();
+			setToolTipText(nome);
 		}
 
 		private MouseListener mouseListener = new MouseAdapter() {
