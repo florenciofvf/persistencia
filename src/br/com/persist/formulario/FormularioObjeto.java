@@ -49,6 +49,7 @@ public class FormularioObjeto extends JFrame {
 		try {
 			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(consulta, chaves);
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
+			setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			if (tabela == null) {
 				tabela = new Tabela(modeloOrdenacao);
@@ -68,6 +69,7 @@ public class FormularioObjeto extends JFrame {
 				}
 
 				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna);
+
 				if (cabecalhoColuna.equals(cabecalho)) {
 					cabecalhoColuna.copiar(cabecalho);
 				}

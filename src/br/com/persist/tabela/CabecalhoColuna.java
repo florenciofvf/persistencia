@@ -40,9 +40,9 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 
 	private class Ordenacao extends Label {
 		private static final long serialVersionUID = 1L;
+		private boolean asc = true;
 		private final int indice;
 		private boolean numero;
-		private boolean asc;
 
 		Ordenacao(int indice, boolean numero) {
 			setIcon(Icones.ORDEM);
@@ -56,8 +56,8 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			} else {
 				setIcon(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
 			}
+			modelo.ordenar(indice, numero, asc);
 			asc = !asc;
-			modelo.ordenar(indice, numero, !asc);
 		}
 	}
 
@@ -97,6 +97,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		private static final long serialVersionUID = 1L;
 
 		Descricao(String nome) {
+			setHorizontalAlignment(CENTER);
 			setToolTipText(nome);
 			setText(nome);
 		}
