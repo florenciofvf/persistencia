@@ -11,9 +11,9 @@ public class ModeloOrdenacao extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final TableModel model;
 	private final Linha[] linhas;
+	private boolean descendente;
 	private boolean numero;
 	private int coluna;
-	private boolean descendente;
 
 	public ModeloOrdenacao(TableModel model) {
 		this.linhas = new Linha[model.getRowCount()];
@@ -24,9 +24,11 @@ public class ModeloOrdenacao extends AbstractTableModel {
 		}
 	}
 
-	public void ordenar(int coluna, boolean numero) {
+	public void ordenar(int coluna, boolean numero, boolean descendente) {
+		this.descendente = descendente;
 		this.coluna = coluna;
 		this.numero = numero;
+
 		Arrays.sort(linhas);
 		fireTableDataChanged();
 	}

@@ -1,6 +1,7 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import br.com.persist.tabela.ModeloOrdenacao;
 import br.com.persist.tabela.ModeloRegistro;
 import br.com.persist.tabela.Persistencia;
 import br.com.persist.tabela.Tabela;
+import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 
@@ -28,18 +30,18 @@ public class FormularioObjeto extends JFrame {
 	private final Objeto objeto;
 	private Tabela tabela;
 
-	public FormularioObjeto(Formulario formulario, Objeto objeto) {
+	public FormularioObjeto(Formulario formulario, Objeto objeto, Graphics g) {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle(objeto.getId());
 		this.objeto = objeto;
 		setSize(800, 600);
 		setLocationRelativeTo(formulario);
-		processarObjeto("");
+		processarObjeto("", g);
 		montarLayout();
 		setVisible(true);
 	}
 
-	private void processarObjeto(String complemento) {
+	private void processarObjeto(String complemento, Graphics g) {
 		String[] chaves = objeto.getChaves().trim().split(",");
 		String consulta = "SELECT * FROM " + objeto.getTabela() + " WHERE 1=1" + complemento;
 
@@ -62,6 +64,8 @@ public class FormularioObjeto extends JFrame {
 				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(modeloOrdenacao, coluna);
 				tableColumn.setHeaderRenderer(cabecalhoColuna);
 			}
+
+			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g, 40);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

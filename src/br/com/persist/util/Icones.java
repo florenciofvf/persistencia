@@ -15,6 +15,7 @@ public class Icones {
 	public static final Icon DESC_TEXTO = criarImagem("desc_texto");
 	public static final Icon ASC_TEXTO = criarImagem("asc_texto");
 	public static final Icon EXCLUIR2 = criarImagem("excluir2");
+	public static final Icon UM_PIXEL = criarImagem("um_pixel");
 	public static final Icon EXCLUIR = criarImagem("excluir");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon SALVARC = criarImagem("saveas");

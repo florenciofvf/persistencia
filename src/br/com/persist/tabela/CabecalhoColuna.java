@@ -39,7 +39,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		private boolean asc;
 
 		Ordenacao(int indice, boolean numero) {
-			setIcon(Icones.SUCESSO);
+			setIcon(Icones.UM_PIXEL);
 			this.indice = indice;
 			this.numero = numero;
 		}
@@ -51,7 +51,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 				setIcon(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
 			}
 			asc = !asc;
-			modelo.ordenar(indice, numero);
+			modelo.ordenar(indice, numero, !asc);
 		}
 	}
 
