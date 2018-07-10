@@ -5,11 +5,13 @@ import java.util.Objects;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Relacao {
 	static int diametro = 6;
 	static int m = diametro / 2;
+	private String descricao;
 	final Objeto objeto1;
 	final Objeto objeto2;
 	boolean ponto1;
@@ -40,12 +42,24 @@ public class Relacao {
 		}
 	}
 
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public void setPonto1(boolean ponto1) {
 		this.ponto1 = ponto1;
 	}
 
 	public void setPonto2(boolean ponto2) {
 		this.ponto2 = ponto2;
+	}
+
+	public String getDescricao() {
+		if (descricao == null) {
+			descricao = "";
+		}
+
+		return descricao;
 	}
 
 	public boolean isPonto1() {
@@ -114,6 +128,12 @@ public class Relacao {
 		util.atributo("ponto1", ponto1);
 		util.atributo("objeto2", objeto2.getId());
 		util.atributo("ponto2", ponto2);
-		util.fecharTag().finalizarTag("relacao");
+		util.fecharTag();
+		if (!Util.estaVazio(getDescricao())) {
+			util.abrirTag2("desc");
+			util.conteudo(Util.escapar(getDescricao())).ql();
+			util.finalizarTag("desc");
+		}
+		util.finalizarTag("relacao");
 	}
 }

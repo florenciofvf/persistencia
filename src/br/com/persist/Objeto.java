@@ -26,6 +26,7 @@ public class Objeto {
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
 	private boolean desenharId;
+	private String descricao;
 	private String tabela;
 	private String chaves;
 	private String icone;
@@ -66,6 +67,10 @@ public class Objeto {
 		this.desenharId = desenharId;
 	}
 
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public void setTabela(String tabela) {
 		this.tabela = tabela;
 	}
@@ -84,6 +89,14 @@ public class Objeto {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getDescricao() {
+		if (descricao == null) {
+			descricao = "";
+		}
+
+		return descricao;
 	}
 
 	public String getChaves() {
@@ -226,6 +239,11 @@ public class Objeto {
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag();
+		if (!Util.estaVazio(getDescricao())) {
+			util.abrirTag2("desc");
+			util.conteudo(Util.escapar(getDescricao())).ql();
+			util.finalizarTag("desc");
+		}
 		util.finalizarTag("objeto");
 	}
 }

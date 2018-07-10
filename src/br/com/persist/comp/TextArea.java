@@ -1,5 +1,7 @@
 package br.com.persist.comp;
 
+import java.awt.event.KeyListener;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -33,5 +35,10 @@ public class TextArea extends JScrollPane {
 
 	public boolean estaVazio() {
 		return Util.estaVazio(getText());
+	}
+
+	@Override
+	public synchronized void addKeyListener(KeyListener l) {
+		textArea.addKeyListener(l);
 	}
 }

@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,6 +25,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
+import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Superficie;
 import br.com.persist.util.Util;
@@ -45,6 +48,30 @@ public class ObjetoDialogo extends Dialogo {
 	}
 
 	protected void processar() {
+	}
+
+	private class PanelDesc extends PanelBorder implements KeyListener {
+		private static final long serialVersionUID = 1L;
+		private TextArea textArea = new TextArea();
+
+		PanelDesc() {
+			textArea.setText(objeto.getDescricao());
+			add(BorderLayout.CENTER, textArea);
+			textArea.addKeyListener(this);
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			objeto.setDescricao(textArea.getText());
+		}
 	}
 
 	private class PanelCor extends PanelBorder implements ChangeListener {
@@ -210,6 +237,7 @@ public class ObjetoDialogo extends Dialogo {
 
 		Fichario() {
 			addTab("label.geral", new PanelGeral());
+			addTab("label.desc", new PanelDesc());
 			addTab("label.cor", new PanelCor());
 		}
 	}

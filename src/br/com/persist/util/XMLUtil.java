@@ -37,6 +37,10 @@ public class XMLUtil {
 		return tabular().print("<" + nome);
 	}
 
+	public XMLUtil conteudo(String string) {
+		return tabular().print(string);
+	}
+
 	public XMLUtil fecharTag() {
 		return print(">").ql();
 	}

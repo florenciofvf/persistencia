@@ -12,6 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.util.Util;
 
 public class XML {
 
@@ -28,12 +29,20 @@ public class XML {
 }
 
 class XMLHandler extends DefaultHandler {
+	final StringBuilder builder = new StringBuilder();
 	final List<Relacao> relacoes;
 	final List<Objeto> objetos;
+	Object selecionado;
 
 	public XMLHandler(List<Objeto> objetos, List<Relacao> relacoes) {
 		this.relacoes = relacoes;
 		this.objetos = objetos;
+	}
+
+	private void limpar() {
+		if (builder.length() > 0) {
+			builder.delete(0, builder.length());
+		}
 	}
 
 	@Override
@@ -41,7 +50,9 @@ class XMLHandler extends DefaultHandler {
 		if ("objeto".equals(qName)) {
 			Objeto objeto = new Objeto();
 			objeto.aplicar(attributes);
+			selecionado = objeto;
 			objetos.add(objeto);
+
 		} else if ("relacao".equals(qName)) {
 			Objeto objeto1 = getObjeto(attributes.getValue("objeto1"));
 			Objeto objeto2 = getObjeto(attributes.getValue("objeto2"));
@@ -51,7 +62,11 @@ class XMLHandler extends DefaultHandler {
 
 			Relacao relacao = new Relacao(objeto1, ponto1, objeto2, ponto2);
 			relacao.aplicar(attributes);
+			selecionado = relacao;
 			relacoes.add(relacao);
+
+		} else if ("desc".equals(qName)) {
+			limpar();
 		}
 	}
 
@@ -63,5 +78,33 @@ class XMLHandler extends DefaultHandler {
 		}
 
 		throw new IllegalStateException();
+	}
+
+	@Override
+	public void endElement(String uri, String localName, String qName) throws SAXException {
+		if ("objeto".equals(qName) || "relacao".equals(qName)) {
+			selecionado = null;
+
+		} else if ("desc".equals(qName) && selecionado != null) {
+			String string = builder.toString();
+
+			if (!Util.estaVazio(string)) {
+				if (selecionado instanceof Objeto) {
+					Objeto obj = (Objeto) selecionado;
+					obj.setDescricao(string.trim());
+
+				} else if (selecionado instanceof Relacao) {
+					Relacao rel = (Relacao) selecionado;
+					rel.setDescricao(string.trim());
+				}
+			}
+
+			limpar();
+		}
+	}
+
+	@Override
+	public void characters(char[] ch, int start, int length) throws SAXException {
+		builder.append(new String(ch, start, length));
 	}
 }
