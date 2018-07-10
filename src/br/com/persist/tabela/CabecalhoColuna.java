@@ -3,27 +3,33 @@ package br.com.persist.tabela;
 import java.awt.BorderLayout;
 import java.awt.Component;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
+import br.com.persist.formulario.FormularioObjeto;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
+	private final FormularioObjeto formulario;
 	private final ModeloOrdenacao modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(ModeloOrdenacao modelo, Coluna coluna) {
+	public CabecalhoColuna(FormularioObjeto formulario, ModeloOrdenacao modelo, Coluna coluna) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
+		setBorder(BorderFactory.createEtchedBorder());
 		descricao = new Descricao(coluna.getNome());
 		filtro = new Filtro(coluna.getNome());
 		add(BorderLayout.CENTER, descricao);
 		add(BorderLayout.WEST, ordenacao);
 		add(BorderLayout.EAST, filtro);
+		this.formulario = formulario;
 		this.modelo = modelo;
 	}
 
@@ -39,7 +45,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		private boolean asc;
 
 		Ordenacao(int indice, boolean numero) {
-			setIcon(Icones.UM_PIXEL);
+			setIcon(Icones.ORDEM);
 			this.indice = indice;
 			this.numero = numero;
 		}
@@ -58,6 +64,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	private class Filtro extends Label {
 		private static final long serialVersionUID = 1L;
 		private final String coluna;
+		private String filtro;
 
 		Filtro(String coluna) {
 			setIcon(Icones.FILTRO);
@@ -65,7 +72,24 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 
 		void filtrar() {
-			System.out.println("Filtrar em >>> " + coluna);
+			String string = filtro;
+
+			if (Util.estaVazio(string)) {
+				string = "AND " + coluna + " = ";
+			}
+
+			String complemento = Util.getStringInput(CabecalhoColuna.this, coluna, string);
+
+			if (complemento != null) {
+				filtro = complemento;
+				formulario.processarObjeto(complemento, null, CabecalhoColuna.this);
+			}
+		}
+
+		void restaurar() {
+			if (!Util.estaVazio(filtro)) {
+				setIcon(Icones.OLHO);
+			}
 		}
 	}
 
@@ -92,5 +116,22 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 
 	public void filtrar() {
 		filtro.filtrar();
+	}
+
+	public void copiar(CabecalhoColuna cabecalho) {
+		if (cabecalho != null) {
+			filtro.filtro = cabecalho.filtro.filtro;
+			filtro.restaurar();
+		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof CabecalhoColuna) {
+			CabecalhoColuna outro = (CabecalhoColuna) obj;
+			return filtro.coluna.equals(outro.filtro.coluna);
+		}
+
+		return false;
 	}
 }

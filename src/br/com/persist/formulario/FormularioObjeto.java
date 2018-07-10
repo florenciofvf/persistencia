@@ -23,6 +23,7 @@ import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Util;
 
 public class FormularioObjeto extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -36,19 +37,24 @@ public class FormularioObjeto extends JFrame {
 		this.objeto = objeto;
 		setSize(800, 600);
 		setLocationRelativeTo(formulario);
-		processarObjeto("", g);
+		processarObjeto("", g, null);
 		montarLayout();
 		setVisible(true);
 	}
 
-	private void processarObjeto(String complemento, Graphics g) {
+	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		String[] chaves = objeto.getChaves().trim().split(",");
-		String consulta = "SELECT * FROM " + objeto.getTabela() + " WHERE 1=1" + complemento;
+		String consulta = "SELECT * FROM " + objeto.getTabela() + " WHERE 1=1 " + complemento;
 
 		try {
 			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(consulta, chaves);
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
-			tabela = new Tabela(modeloOrdenacao);
+
+			if (tabela == null) {
+				tabela = new Tabela(modeloOrdenacao);
+			} else {
+				tabela.setModel(modeloOrdenacao);
+			}
 
 			TableColumnModel columnModel = tabela.getColumnModel();
 			List<Coluna> colunas = modeloRegistro.getColunas();
@@ -61,13 +67,17 @@ public class FormularioObjeto extends JFrame {
 					tableColumn.setCellRenderer(new CellRenderer());
 				}
 
-				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(modeloOrdenacao, coluna);
+				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna);
+				if (cabecalhoColuna.equals(cabecalho)) {
+					cabecalhoColuna.copiar(cabecalho);
+				}
+
 				tableColumn.setHeaderRenderer(cabecalhoColuna);
 			}
 
 			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g, 40);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			Util.stackTraceAndMessage("FILTRO", ex, this);
 		}
 	}
 
