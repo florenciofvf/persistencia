@@ -190,6 +190,9 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Objeto objeto = superficie.getSelecionado();
+			superficie.excluir(objeto);
+			superficie.repaint();
 		}
 	}
 
