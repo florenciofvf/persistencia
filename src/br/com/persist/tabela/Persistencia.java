@@ -52,13 +52,17 @@ public class Persistencia {
 			Boolean numero = mapa.get(classe);
 			Boolean chave = false;
 
+			if (numero == null) {
+				numero = Boolean.FALSE;
+			}
+
 			for (String s : chaves) {
-				if (s.trim().equals(nome)) {
+				if (s.trim().equalsIgnoreCase(nome)) {
 					chave = Boolean.TRUE;
 				}
 			}
 
-			Coluna coluna = new Coluna(nome, i - 1, numero == null ? Boolean.FALSE : numero, chave);
+			Coluna coluna = new Coluna(nome, i - 1, numero, chave);
 			colunas.add(coluna);
 		}
 

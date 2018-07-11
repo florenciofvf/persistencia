@@ -14,8 +14,11 @@ public class CellRenderer extends DefaultTableCellRenderer {
 			int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
+		if (!isSelected) {
+			setBackground(Color.GRAY);
+		}
+
 		setForeground(Color.WHITE);
-		setBackground(Color.GRAY);
 
 		return this;
 	}
