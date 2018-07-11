@@ -10,14 +10,18 @@ import br.com.persist.util.Util;
 public class ModeloOrdenacao extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final TableModel model;
-	private final Linha[] linhas;
 	private boolean descendente;
+	private Linha[] linhas;
 	private boolean numero;
 	private int coluna;
 
 	public ModeloOrdenacao(TableModel model) {
-		this.linhas = new Linha[model.getRowCount()];
 		this.model = model;
+		iniArray();
+	}
+
+	private void iniArray() {
+		linhas = new Linha[model.getRowCount()];
 
 		for (int i = 0; i < linhas.length; i++) {
 			linhas[i] = new Linha(i);
