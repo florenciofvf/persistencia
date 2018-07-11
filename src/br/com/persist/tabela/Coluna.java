@@ -33,4 +33,12 @@ public class Coluna {
 	public String toString() {
 		return nome;
 	}
+
+	public String get(Object o) {
+		if (o == null) {
+			return "";
+		}
+
+		return numero ? o.toString() : "'" + o.toString() + "'";
+	}
 }

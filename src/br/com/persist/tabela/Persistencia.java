@@ -13,12 +13,23 @@ import br.com.persist.banco.Conexao;
 
 public class Persistencia {
 
-	public static ModeloRegistro criarModeloRegistro(String consulta, String[] chaves) throws Exception {
+	public static int executar(String sql) throws Exception {
+		Connection conn = Conexao.getConnection();
+		PreparedStatement psmt = conn.prepareStatement(sql);
+
+		int i = psmt.executeUpdate();
+
+		psmt.close();
+
+		return i;
+	}
+
+	public static ModeloRegistro criarModeloRegistro(String consulta, String[] chaves, String tabela) throws Exception {
 		Connection conn = Conexao.getConnection();
 		PreparedStatement psmt = conn.prepareStatement(consulta);
 
 		ResultSet rs = psmt.executeQuery();
-		ModeloRegistro modelo = criarModelo(rs, chaves);
+		ModeloRegistro modelo = criarModelo(rs, chaves, tabela);
 
 		rs.close();
 		psmt.close();
@@ -26,7 +37,7 @@ public class Persistencia {
 		return modelo;
 	}
 
-	private static ModeloRegistro criarModelo(ResultSet rs, String[] chaves) throws Exception {
+	private static ModeloRegistro criarModelo(ResultSet rs, String[] chaves, String tabela) throws Exception {
 		Map<String, Boolean> mapa = new HashMap<>();
 		mapa.put("java.math.BigDecimal", Boolean.TRUE);
 		mapa.put("java.math.BigInteger", Boolean.TRUE);
@@ -79,6 +90,6 @@ public class Persistencia {
 			registros.add(registro);
 		}
 
-		return new ModeloRegistro(colunas, registros);
+		return new ModeloRegistro(colunas, registros, tabela);
 	}
 }

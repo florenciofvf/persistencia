@@ -47,7 +47,7 @@ public class FormularioObjeto extends JFrame {
 		String consulta = "SELECT * FROM " + objeto.getTabela() + " WHERE 1=1 " + complemento;
 
 		try {
-			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(consulta, chaves);
+			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(consulta, chaves, objeto.getTabela());
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
 			setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
@@ -135,6 +135,19 @@ public class FormularioObjeto extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length > 0) {
+				if (Util.confirmaExclusao(FormularioObjeto.this)) {
+					ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
+
+					for (int linha : linhas) {
+						modelo.excluirRegistro(linha);
+					}
+
+					new AtualizarRegistrosAcao().actionPerformed(null);
+				}
+			}
 		}
 	}
 }

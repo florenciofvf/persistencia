@@ -53,6 +53,11 @@ public class ModeloOrdenacao extends AbstractTableModel {
 		return model.getColumnClass(columnIndex);
 	}
 
+	public void excluirRegistro(int rowIndex) {
+		ModeloRegistro modelo = (ModeloRegistro) model;
+		modelo.excluir(linhas[rowIndex].indice);
+	}
+
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return model.getValueAt(linhas[rowIndex].indice, columnIndex);
