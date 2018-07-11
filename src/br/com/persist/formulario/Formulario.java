@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JToggleButton;
@@ -28,9 +30,9 @@ public class Formulario extends JFrame {
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private final Toolbar toolbar = new Toolbar();
 	private final Superficie superficie;
+	private File arquivo;
 
 	public Formulario() {
-		setTitle(Mensagens.getString("label.persistencia"));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		superficie = new Superficie(this);
 		FormularioUtil.configMAC(this);
@@ -39,6 +41,15 @@ public class Formulario extends JFrame {
 		setSize(800, 600);
 		montarLayout();
 		configurar();
+		titulo();
+	}
+
+	private void titulo() {
+		if (arquivo == null) {
+			setTitle(Mensagens.getString("label.persistencia"));
+		} else {
+			setTitle(Mensagens.getString("label.persistencia") + " - " + arquivo.getAbsolutePath());
+		}
 	}
 
 	private void montarLayout() {
@@ -142,17 +153,18 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			superficie.abrir();
-			// JFileChooser fileChooser = new JFileChooser(".");
-			// int opcao = fileChooser.showOpenDialog(Formulario.this);
-			//
-			// if (opcao == JFileChooser.APPROVE_OPTION) {
-			// File file = fileChooser.getSelectedFile();
-			//
-			// if (file != null) {
-			// // abrirArquivo(file, true, true, true);
-			// }
-			// }
+			JFileChooser fileChooser = new JFileChooser(".");
+			int opcao = fileChooser.showOpenDialog(Formulario.this);
+
+			if (opcao == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+
+				if (file != null) {
+					superficie.abrir(file);
+					arquivo = file;
+					titulo();
+				}
+			}
 		}
 	}
 
@@ -165,6 +177,18 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser(".");
+			int opcao = fileChooser.showSaveDialog(Formulario.this);
+
+			if (opcao == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+
+				if (file != null) {
+					superficie.salvar(file);
+					arquivo = file;
+					titulo();
+				}
+			}
 		}
 	}
 
@@ -177,7 +201,11 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			superficie.salvar();
+			if (arquivo != null) {
+				superficie.salvar(arquivo);
+			} else {
+				new SalvarComoAcao(false).actionPerformed(null);
+			}
 		}
 	}
 
@@ -256,8 +284,10 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			arquivo = null;
 			superficie.limpar();
 			superficie.repaint();
+			titulo();
 		}
 	}
 

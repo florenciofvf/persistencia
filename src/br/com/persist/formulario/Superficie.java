@@ -23,6 +23,7 @@ import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 import br.com.persist.xml.XML;
 
@@ -332,9 +333,9 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
-	public void salvar() {
+	public void salvar(File file) {
 		try {
-			XMLUtil util = new XMLUtil(new File("exemplo.xml"));
+			XMLUtil util = new XMLUtil(file);
 			util.prologo();
 
 			util.abrirTag2("exemplo");
@@ -356,13 +357,13 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
-	public void abrir() {
+	public void abrir(File file) {
 		limpar();
 
 		try {
 			List<Objeto> objetos = new ArrayList<>();
 			List<Relacao> relacoes = new ArrayList<>();
-			XML.processar(new File("exemplo.xml"), objetos, relacoes);
+			XML.processar(file, objetos, relacoes);
 
 			for (Objeto objeto : objetos) {
 				addObjeto(objeto);
@@ -371,8 +372,8 @@ public class Superficie extends JDesktopPane {
 			for (Relacao relacao : relacoes) {
 				addRelacao(relacao);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, this);
 		}
 
 		repaint();
