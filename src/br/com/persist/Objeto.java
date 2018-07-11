@@ -100,10 +100,18 @@ public class Objeto {
 	}
 
 	public String getChaves() {
+		if (Util.estaVazio(chaves)) {
+			chaves = "";
+		}
+
 		return chaves;
 	}
 
 	public String getTabela() {
+		if (Util.estaVazio(tabela)) {
+			tabela = "";
+		}
+
 		return tabela;
 	}
 
@@ -232,8 +240,8 @@ public class Objeto {
 		util.abrirTag("objeto");
 		util.atributo("desenharId", desenharId);
 		util.atributo("cor", cor.getRGB());
-		util.atributo("tabela", tabela);
-		util.atributo("chaves", chaves);
+		util.atributo("tabela", getTabela());
+		util.atributo("chaves", getChaves());
 		util.atributo("icone", icone);
 		util.atributo("id", id);
 		util.atributo("x", x);
