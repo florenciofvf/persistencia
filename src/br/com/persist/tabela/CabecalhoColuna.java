@@ -130,7 +130,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	public boolean equals(Object obj) {
 		if (obj instanceof CabecalhoColuna) {
 			CabecalhoColuna outro = (CabecalhoColuna) obj;
-			return filtro.coluna.equals(outro.filtro.coluna);
+			return filtro.coluna.equalsIgnoreCase(outro.filtro.coluna);
 		}
 
 		return false;
