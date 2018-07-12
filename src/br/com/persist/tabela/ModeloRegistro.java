@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import br.com.persist.banco.Persistencia;
 import br.com.persist.util.Util;
 
 public class ModeloRegistro implements TableModel {

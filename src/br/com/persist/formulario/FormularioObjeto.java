@@ -12,6 +12,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import br.com.persist.Objeto;
+import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.tabela.CabecalhoColuna;
@@ -20,7 +21,6 @@ import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.tabela.ModeloOrdenacao;
 import br.com.persist.tabela.ModeloRegistro;
-import br.com.persist.tabela.Persistencia;
 import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;

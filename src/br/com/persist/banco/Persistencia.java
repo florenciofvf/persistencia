@@ -1,4 +1,4 @@
-package br.com.persist.tabela;
+package br.com.persist.banco;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.banco.Conexao;
+import br.com.persist.tabela.Coluna;
+import br.com.persist.tabela.ModeloRegistro;
 
 public class Persistencia {
 
