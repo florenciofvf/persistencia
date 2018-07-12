@@ -19,6 +19,7 @@ import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -30,6 +31,7 @@ public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup popup = new SuperficiePopup();
 	private final Formulario formulario;
+	private Objeto selecionadoObjeto;
 	private boolean selecionado;
 	private Relacao[] relacoes;
 	private Objeto[] objetos;
@@ -72,6 +74,7 @@ public class Superficie extends JDesktopPane {
 	private MouseListener mouseListener = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
+			selecionadoObjeto = null;
 			selecionado = false;
 			int x = e.getX();
 			int y = e.getY();
@@ -81,12 +84,17 @@ public class Superficie extends JDesktopPane {
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
 					objeto.setSelecionado(true);
+					selecionadoObjeto = objeto;
 					selecionado = true;
 					break;
 				}
 			}
 
 			repaint();
+
+			if (e.isPopupTrigger() && selecionadoObjeto != null) {
+				popup.show(Superficie.this, x, y);
+			}
 		}
 
 		@Override
@@ -98,6 +106,10 @@ public class Superficie extends JDesktopPane {
 			}
 
 			repaint();
+
+			if (e.isPopupTrigger() && selecionadoObjeto != null) {
+				popup.show(Superficie.this, e.getX(), e.getY());
+			}
 		}
 
 		public void mouseClicked(MouseEvent e) {
@@ -296,7 +308,7 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// new ObjetoDialogo(formulario, Superficie.this, selecionado);
+			new ObjetoDialogo(formulario, Superficie.this, selecionadoObjeto);
 		}
 	}
 
