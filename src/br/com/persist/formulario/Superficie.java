@@ -19,9 +19,7 @@ import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
-import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.util.Acao;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
@@ -31,11 +29,10 @@ public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup popup = new SuperficiePopup();
 	private final Formulario formulario;
-	private Objeto ultimoSelecionado;
-	private Objeto selecionado2;
-	private Objeto selecionado;
 	private Relacao[] relacoes;
 	private Objeto[] objetos;
+	private int ultX;
+	private int ultY;
 
 	public Superficie(Formulario formulario) {
 		addMouseMotionListener(mouseMotionListener);
@@ -47,99 +44,77 @@ public class Superficie extends JDesktopPane {
 	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			if (selecionado != null) {
-				selecionado.x = e.getX() - Objeto.diametro / 2;
-				selecionado.y = e.getY() - Objeto.diametro / 2;
-				repaint();
-			}
-		}
-	};
-
-	private MouseListener mouseListener = new MouseAdapter() {
-		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() >= Constantes.DOIS && selecionado != null
-					&& !Util.estaVazio(selecionado.getTabela())) {
-				new FormularioObjeto(formulario, selecionado, getGraphics());
-			}
-		};
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			processar(e);
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			processar(e);
-		}
-
-		private void processar(MouseEvent e) {
-			final int x = e.getX();
-			final int y = e.getY();
-			selecionado2 = null;
-			selecionado = null;
-
-			if (!e.isShiftDown()) {
-				for (Objeto objeto : objetos) {
-					objeto.setSelecionado(false);
-				}
-			}
+			int recX = e.getX();
+			int recY = e.getY();
 
 			for (Objeto objeto : objetos) {
-				if (objeto.contem(x, y)) {
-					objeto.setSelecionado(true);
-					ultimoSelecionado = objeto;
-					break;
+				if (objeto.isSelecionado()) {
+					objeto.x += recX - ultX;
+					objeto.y += recY - ultY;
 				}
 			}
 
-			int i = 0;
-
-			for (; i < objetos.length; i++) {
-				if (objetos[i].isSelecionado()) {
-					selecionado = objetos[i];
-					i++;
-					break;
-				}
-			}
-
-			for (; i < objetos.length; i++) {
-				if (objetos[i].isSelecionado()) {
-					selecionado2 = objetos[i];
-					i++;
-					break;
-				}
-			}
-
-			for (; i < objetos.length; i++) {
-				objetos[i].setSelecionado(false);
-			}
-
-			if (selecionado != null && selecionado2 != null && ultimoSelecionado != selecionado2) {
-				Objeto sel1 = selecionado2;
-				Objeto sel2 = selecionado;
-				selecionado2 = sel2;
-				selecionado = sel1;
-			}
-
-			if (e.isPopupTrigger() && selecionado != null) {
-				popup.show(Superficie.this, x, y);
-			}
+			ultX = recX;
+			ultY = recY;
 
 			repaint();
 		}
 	};
 
+	private MouseListener mouseListener = new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			// if (e.getClickCount() >= Constantes.DOIS && selecionado != null
+			// && !Util.estaVazio(selecionado.getTabela())) {
+			// new FormularioObjeto(formulario, selecionado, getGraphics());
+			// }
+		};
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			boolean shift = e.isShiftDown();
+			boolean selecionado = false;
+			int x = e.getX();
+			int y = e.getY();
+			ultX = x;
+			ultY = y;
+
+			if (shift) {
+				for (Objeto objeto : objetos) {
+					if (objeto.contem(x, y)) {
+						objeto.setSelecionado(true);
+						selecionado = true;
+						break;
+					}
+				}
+
+				if (!selecionado) {
+					for (Objeto objeto : objetos) {
+						objeto.setSelecionado(false);
+					}
+				}
+			} else {
+				for (Objeto objeto : objetos) {
+					objeto.setSelecionado(false);
+				}
+
+				for (Objeto objeto : objetos) {
+					if (objeto.contem(x, y)) {
+						objeto.setSelecionado(true);
+						break;
+					}
+				}
+			}
+
+			repaint();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+	};
+
 	public Formulario getFormulario() {
 		return formulario;
-	}
-
-	public Objeto getSelecionado2() {
-		return selecionado2;
-	}
-
-	public Objeto getSelecionado() {
-		return selecionado;
 	}
 
 	@Override
@@ -305,7 +280,7 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new ObjetoDialogo(formulario, Superficie.this, selecionado);
+			// new ObjetoDialogo(formulario, Superficie.this, selecionado);
 		}
 	}
 
@@ -320,17 +295,17 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (selecionado == null || selecionado2 == null) {
-				return;
-			}
-
-			if (horizontal) {
-				selecionado2.y = selecionado.y;
-			} else {
-				selecionado2.x = selecionado.x;
-			}
-
-			repaint();
+			// if (selecionado == null || selecionado2 == null) {
+			// return;
+			// }
+			//
+			// if (horizontal) {
+			// selecionado2.y = selecionado.y;
+			// } else {
+			// selecionado2.x = selecionado.x;
+			// }
+			//
+			// repaint();
 		}
 	}
 

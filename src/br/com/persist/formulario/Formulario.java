@@ -218,9 +218,9 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Objeto objeto = superficie.getSelecionado();
-			superficie.excluir(objeto);
-			superficie.repaint();
+//			Objeto objeto = superficie.getSelecionado();
+//			superficie.excluir(objeto);
+//			superficie.repaint();
 		}
 	}
 
@@ -233,11 +233,11 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Objeto objeto2 = superficie.getSelecionado2();
-			Objeto objeto1 = superficie.getSelecionado();
-			Relacao relacao = superficie.getRelacao(objeto1, objeto2);
-			superficie.excluir(relacao);
-			superficie.repaint();
+//			Objeto objeto2 = superficie.getSelecionado2();
+//			Objeto objeto1 = superficie.getSelecionado();
+//			Relacao relacao = superficie.getRelacao(objeto1, objeto2);
+//			superficie.excluir(relacao);
+//			superficie.repaint();
 		}
 	}
 
@@ -264,14 +264,14 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Objeto objeto2 = superficie.getSelecionado2();
-			Objeto objeto1 = superficie.getSelecionado();
-
-			if (objeto1 == null || objeto2 == null) {
-				return;
-			}
-
-			new RelacaoDialogo(Formulario.this, superficie, objeto1, objeto2);
+//			Objeto objeto2 = superficie.getSelecionado2();
+//			Objeto objeto1 = superficie.getSelecionado();
+//
+//			if (objeto1 == null || objeto2 == null) {
+//				return;
+//			}
+//
+//			new RelacaoDialogo(Formulario.this, superficie, objeto1, objeto2);
 		}
 	}
 
