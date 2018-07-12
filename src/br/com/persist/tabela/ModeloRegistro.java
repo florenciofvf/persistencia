@@ -1,5 +1,6 @@
 package br.com.persist.tabela;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,17 +85,63 @@ public class ModeloRegistro implements TableModel {
 		}
 	}
 
-	public void excluir(int rowIndex) {
+	public int excluir(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 
 		if (chaves) {
 			try {
 				String delete = gerarDelete(registro);
-				Persistencia.executar(delete);
+				return Persistencia.executar(delete);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("DELETE", ex, null);
+				return -1;
 			}
 		}
+
+		return -1;
+	}
+
+	public List<IndiceValor> getValoresChaves(int rowIndex) {
+		List<Object> registro = registros.get(rowIndex);
+		List<IndiceValor> resp = new ArrayList<>();
+		List<Coluna> chaves = getChaves();
+
+		for (Coluna coluna : chaves) {
+			IndiceValor obj = new IndiceValor(registro.get(coluna.getIndice()), coluna.getIndice());
+			resp.add(obj);
+		}
+
+		return resp;
+	}
+
+	public void excluirValoresChaves(List<IndiceValor> lista) {
+		int indice = getIndice(lista);
+
+		if (indice != -1) {
+			registros.remove(indice);
+		}
+	}
+
+	private int getIndice(List<IndiceValor> valores) {
+		for (int i = 0; i < registros.size(); i++) {
+			List<Object> registro = registros.get(i);
+
+			if (ehLinhaValida(registro, valores)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	private boolean ehLinhaValida(List<Object> registro, List<IndiceValor> valores) {
+		for (IndiceValor obj : valores) {
+			if (!obj.igual(registro)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna coluna, Object valor) {

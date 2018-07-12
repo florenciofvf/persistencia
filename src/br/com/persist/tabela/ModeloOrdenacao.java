@@ -1,6 +1,8 @@
 package br.com.persist.tabela;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -16,11 +18,12 @@ public class ModeloOrdenacao extends AbstractTableModel {
 	private int coluna;
 
 	public ModeloOrdenacao(TableModel model) {
+		Objects.requireNonNull(model);
 		this.model = model;
 		iniArray();
 	}
 
-	private void iniArray() {
+	public void iniArray() {
 		linhas = new Linha[model.getRowCount()];
 
 		for (int i = 0; i < linhas.length; i++) {
@@ -57,9 +60,22 @@ public class ModeloOrdenacao extends AbstractTableModel {
 		return model.getColumnClass(columnIndex);
 	}
 
-	public void excluirRegistro(int rowIndex) {
+	public int excluirRegistro(int rowIndex) {
 		ModeloRegistro modelo = (ModeloRegistro) model;
-		modelo.excluir(linhas[rowIndex].indice);
+		return modelo.excluir(linhas[rowIndex].indice);
+	}
+
+	public List<IndiceValor> getValoresChaves(int rowIndex) {
+		ModeloRegistro modelo = (ModeloRegistro) model;
+		return modelo.getValoresChaves(linhas[rowIndex].indice);
+	}
+
+	public void excluirValoresChaves(List<List<IndiceValor>> listaValores) {
+		ModeloRegistro modelo = (ModeloRegistro) model;
+
+		for (List<IndiceValor> lista : listaValores) {
+			modelo.excluirValoresChaves(lista);
+		}
 	}
 
 	@Override

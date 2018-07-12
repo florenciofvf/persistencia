@@ -3,6 +3,7 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.tabela.CabecalhoColuna;
 import br.com.persist.tabela.CellRenderer;
 import br.com.persist.tabela.Coluna;
+import br.com.persist.tabela.IndiceValor;
 import br.com.persist.tabela.ModeloOrdenacao;
 import br.com.persist.tabela.ModeloRegistro;
 import br.com.persist.tabela.Persistencia;
@@ -141,11 +143,25 @@ public class FormularioObjeto extends JFrame {
 				if (Util.confirmaExclusao(FormularioObjeto.this)) {
 					ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
 
+					List<List<IndiceValor>> listaValores = new ArrayList<>();
+
 					for (int linha : linhas) {
-						modelo.excluirRegistro(linha);
+						int excluido = modelo.excluirRegistro(linha);
+
+						if (excluido == 1) {
+							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
+
+							if (chaves.isEmpty()) {
+								throw new IllegalStateException();
+							}
+
+							listaValores.add(chaves);
+						}
 					}
 
-					new AtualizarRegistrosAcao().actionPerformed(null);
+					modelo.excluirValoresChaves(listaValores);
+					modelo.iniArray();
+					modelo.fireTableDataChanged();
 				}
 			}
 		}
