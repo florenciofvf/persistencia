@@ -29,6 +29,7 @@ public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup popup = new SuperficiePopup();
 	private final Formulario formulario;
+	private boolean selecionado;
 	private Relacao[] relacoes;
 	private Objeto[] objetos;
 	private int ultX;
@@ -44,6 +45,12 @@ public class Superficie extends JDesktopPane {
 	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
+			if (!selecionado) {
+				for (Objeto objeto : objetos) {
+					objeto.setSelecionado(false);
+				}
+			}
+
 			int recX = e.getX();
 			int recY = e.getY();
 
@@ -71,37 +78,17 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			boolean shift = e.isShiftDown();
-			boolean selecionado = false;
+			selecionado = false;
 			int x = e.getX();
 			int y = e.getY();
 			ultX = x;
 			ultY = y;
 
-			if (shift) {
-				for (Objeto objeto : objetos) {
-					if (objeto.contem(x, y)) {
-						objeto.setSelecionado(true);
-						selecionado = true;
-						break;
-					}
-				}
-
-				if (!selecionado) {
-					for (Objeto objeto : objetos) {
-						objeto.setSelecionado(false);
-					}
-				}
-			} else {
-				for (Objeto objeto : objetos) {
-					objeto.setSelecionado(false);
-				}
-
-				for (Objeto objeto : objetos) {
-					if (objeto.contem(x, y)) {
-						objeto.setSelecionado(true);
-						break;
-					}
+			for (Objeto objeto : objetos) {
+				if (objeto.contem(x, y)) {
+					objeto.setSelecionado(true);
+					selecionado = true;
+					break;
 				}
 			}
 
@@ -110,6 +97,13 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (!selecionado) {
+				for (Objeto objeto : objetos) {
+					objeto.setSelecionado(false);
+				}
+			}
+
+			repaint();
 		}
 	};
 
