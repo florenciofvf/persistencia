@@ -20,6 +20,7 @@ import br.com.persist.Relacao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
@@ -69,31 +70,6 @@ public class Superficie extends JDesktopPane {
 	};
 
 	private MouseListener mouseListener = new MouseAdapter() {
-		public void mouseClicked(MouseEvent e) {
-			if (!e.isShiftDown()) {
-				for (Objeto objeto : objetos) {
-					objeto.setSelecionado(false);
-				}
-			}
-
-			int x = e.getX();
-			int y = e.getY();
-
-			for (Objeto objeto : objetos) {
-				if (objeto.contem(x, y)) {
-					objeto.setSelecionado(true);
-					break;
-				}
-			}
-
-			repaint();
-
-			// if (e.getClickCount() >= Constantes.DOIS && selecionado != null
-			// && !Util.estaVazio(selecionado.getTabela())) {
-			// new FormularioObjeto(formulario, selecionado, getGraphics());
-			// }
-		};
-
 		@Override
 		public void mousePressed(MouseEvent e) {
 			selecionado = false;
@@ -122,6 +98,34 @@ public class Superficie extends JDesktopPane {
 			}
 
 			repaint();
+		}
+
+		public void mouseClicked(MouseEvent e) {
+			Objeto selecionado = null;
+
+			if (!e.isShiftDown()) {
+				for (Objeto objeto : objetos) {
+					objeto.setSelecionado(false);
+				}
+			}
+
+			int x = e.getX();
+			int y = e.getY();
+
+			for (Objeto objeto : objetos) {
+				if (objeto.contem(x, y)) {
+					objeto.setSelecionado(true);
+					selecionado = objeto;
+					break;
+				}
+			}
+
+			repaint();
+
+			if (e.getClickCount() >= Constantes.DOIS && selecionado != null
+					&& !Util.estaVazio(selecionado.getTabela())) {
+				new FormularioObjeto(formulario, selecionado, getGraphics());
+			}
 		}
 	};
 
