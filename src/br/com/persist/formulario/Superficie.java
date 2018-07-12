@@ -70,6 +70,24 @@ public class Superficie extends JDesktopPane {
 
 	private MouseListener mouseListener = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
+			if (!e.isShiftDown()) {
+				for (Objeto objeto : objetos) {
+					objeto.setSelecionado(false);
+				}
+			}
+
+			int x = e.getX();
+			int y = e.getY();
+
+			for (Objeto objeto : objetos) {
+				if (objeto.contem(x, y)) {
+					objeto.setSelecionado(true);
+					break;
+				}
+			}
+
+			repaint();
+
 			// if (e.getClickCount() >= Constantes.DOIS && selecionado != null
 			// && !Util.estaVazio(selecionado.getTabela())) {
 			// new FormularioObjeto(formulario, selecionado, getGraphics());
