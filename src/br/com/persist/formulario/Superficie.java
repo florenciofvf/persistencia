@@ -30,9 +30,9 @@ import br.com.persist.xml.XML;
 public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup popup = new SuperficiePopup();
+	private Inversao inversao = new Inversao();
 	private final Formulario formulario;
 	private Objeto selecionadoObjeto;
-	private boolean selecionado;
 	private Relacao[] relacoes;
 	private Objeto[] objetos;
 	private int ultX;
@@ -66,10 +66,6 @@ public class Superficie extends JDesktopPane {
 	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			if (!selecionado) {
-				limparSelecao();
-			}
-
 			int recX = e.getX();
 			int recY = e.getY();
 
@@ -91,7 +87,6 @@ public class Superficie extends JDesktopPane {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			selecionadoObjeto = null;
-			selecionado = false;
 			int x = e.getX();
 			int y = e.getY();
 			ultX = x;
@@ -99,11 +94,30 @@ public class Superficie extends JDesktopPane {
 
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
+					if (!objeto.controlado) {
+						objeto.controlado = e.isShiftDown();
+					}
+
 					objeto.setSelecionado(true);
 					selecionadoObjeto = objeto;
-					selecionado = true;
 					break;
 				}
+			}
+
+			if (selecionadoObjeto != null) {
+				for (Objeto objeto : objetos) {
+					objeto.controlado = selecionadoObjeto.controlado;
+				}
+
+				if (!selecionadoObjeto.controlado) {
+					for (Objeto objeto : objetos) {
+						if (objeto != selecionadoObjeto) {
+							objeto.setSelecionado(false);
+						}
+					}
+				}
+			} else {
+				limparSelecao();
 			}
 
 			repaint();
@@ -115,43 +129,45 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (!selecionado) {
-				limparSelecao();
-			}
-
-			repaint();
-
 			if (e.isPopupTrigger() && selecionadoObjeto != null) {
 				popup.show(Superficie.this, e.getX(), e.getY());
 			}
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			Objeto selecionado = null;
-
-			if (!e.isShiftDown()) {
-				limparSelecao();
+			if (e.isShiftDown()) {
+				inversao.inverterSelecao(selecionadoObjeto);
 			}
 
-			int x = e.getX();
-			int y = e.getY();
-
-			for (Objeto objeto : objetos) {
-				if (objeto.contem(x, y)) {
-					objeto.setSelecionado(true);
-					selecionado = objeto;
-					break;
-				}
+			if (selecionadoObjeto != null && !selecionadoObjeto.isSelecionado()) {
+				selecionadoObjeto = null;
 			}
 
 			repaint();
 
-			if (e.getClickCount() >= Constantes.DOIS && selecionado != null
-					&& !Util.estaVazio(selecionado.getTabela())) {
-				new FormularioObjeto(formulario, selecionado, getGraphics());
+			if (e.getClickCount() >= Constantes.DOIS && selecionadoObjeto != null
+					&& !Util.estaVazio(selecionadoObjeto.getTabela())) {
+				new FormularioObjeto(formulario, selecionadoObjeto, getGraphics());
 			}
 		}
 	};
+
+	private class Inversao {
+		Objeto ultimo;
+		boolean sel;
+
+		void inverterSelecao(Objeto objeto) {
+			if (ultimo != null && ultimo == objeto) {
+				objeto.setSelecionado(!sel);
+			}
+
+			ultimo = objeto;
+
+			if (ultimo != null) {
+				sel = ultimo.isSelecionado();
+			}
+		}
+	}
 
 	public Formulario getFormulario() {
 		return formulario;

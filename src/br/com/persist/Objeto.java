@@ -26,6 +26,7 @@ public class Objeto {
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
 	private boolean desenharId;
+	public boolean controlado;
 	private String descricao;
 	private String tabela;
 	private String chaves;
@@ -61,6 +62,10 @@ public class Objeto {
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
+
+		if (!this.selecionado) {
+			controlado = false;
+		}
 	}
 
 	public void setDesenharId(boolean desenharId) {
