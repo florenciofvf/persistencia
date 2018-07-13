@@ -38,7 +38,10 @@ public class XMLUtil {
 	}
 
 	public XMLUtil conteudo(String string) {
-		return tabular().print(string);
+		tab++;
+		tabular().print(string);
+		tab--;
+		return this;
 	}
 
 	public XMLUtil fecharTag() {

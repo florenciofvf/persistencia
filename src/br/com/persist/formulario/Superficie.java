@@ -45,13 +45,17 @@ public class Superficie extends JDesktopPane {
 		limpar();
 	}
 
+	public void limparSelecao() {
+		for (Objeto objeto : objetos) {
+			objeto.setSelecionado(false);
+		}
+	}
+
 	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (!selecionado) {
-				for (Objeto objeto : objetos) {
-					objeto.setSelecionado(false);
-				}
+				limparSelecao();
 			}
 
 			int recX = e.getX();
@@ -100,9 +104,7 @@ public class Superficie extends JDesktopPane {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (!selecionado) {
-				for (Objeto objeto : objetos) {
-					objeto.setSelecionado(false);
-				}
+				limparSelecao();
 			}
 
 			repaint();
@@ -116,9 +118,7 @@ public class Superficie extends JDesktopPane {
 			Objeto selecionado = null;
 
 			if (!e.isShiftDown()) {
-				for (Objeto objeto : objetos) {
-					objeto.setSelecionado(false);
-				}
+				limparSelecao();
 			}
 
 			int x = e.getX();
