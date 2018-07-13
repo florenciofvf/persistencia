@@ -70,6 +70,8 @@ public class Tabela extends JTable {
 					cabecalho.ordenar();
 				} else if (cabecalho.isFiltro(resto, tableColumn.getWidth())) {
 					cabecalho.filtrar();
+				} else {
+					cabecalho.ordenar();
 				}
 			}
 		}

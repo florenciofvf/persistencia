@@ -46,6 +46,8 @@ public class Superficie extends JDesktopPane {
 	}
 
 	public void limparSelecao() {
+		inversao.ultimo = null;
+
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(false);
 		}
