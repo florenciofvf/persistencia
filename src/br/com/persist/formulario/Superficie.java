@@ -323,17 +323,32 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// if (selecionado == null || selecionado2 == null) {
-			// return;
-			// }
-			//
-			// if (horizontal) {
-			// selecionado2.y = selecionado.y;
-			// } else {
-			// selecionado2.x = selecionado.x;
-			// }
-			//
-			// repaint();
+			Objeto primeiro = null;
+			int i = 0;
+
+			for (; i < objetos.length; i++) {
+				if (objetos[i].isSelecionado()) {
+					primeiro = objetos[i];
+					i++;
+					break;
+				}
+			}
+
+			if (primeiro != null) {
+				for (; i < objetos.length; i++) {
+					Objeto objeto = objetos[i];
+
+					if (objeto.isSelecionado()) {
+						if (horizontal) {
+							objeto.y = primeiro.y;
+						} else {
+							objeto.x = primeiro.x;
+						}
+					}
+				}
+			}
+
+			repaint();
 		}
 	}
 
