@@ -172,6 +172,27 @@ public class Superficie extends JDesktopPane {
 		objetos[bkp.length] = obj;
 	}
 
+	public void excluirSelecionados() {
+		Objeto objeto = getPrimeiroSelecionado();
+
+		while (objeto != null) {
+			excluir(objeto);
+			objeto = getPrimeiroSelecionado();
+		}
+
+		repaint();
+	}
+
+	private Objeto getPrimeiroSelecionado() {
+		for (Objeto objeto : objetos) {
+			if (objeto.isSelecionado()) {
+				return objeto;
+			}
+		}
+
+		return null;
+	}
+
 	public void excluir(Objeto obj) {
 		int indice = getIndice(obj);
 
@@ -286,6 +307,7 @@ public class Superficie extends JDesktopPane {
 	public void limpar() {
 		relacoes = new Relacao[0];
 		objetos = new Objeto[0];
+		repaint();
 	}
 
 	private class SuperficiePopup extends Popup {

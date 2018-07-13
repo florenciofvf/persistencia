@@ -15,12 +15,10 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
-import br.com.persist.Relacao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.dialogo.DialogoConexao;
-import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -218,9 +216,7 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Objeto objeto = superficie.getSelecionado();
-			// superficie.excluir(objeto);
-			// superficie.repaint();
+			superficie.excluirSelecionados();
 		}
 	}
 
@@ -251,6 +247,7 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			superficie.addObjeto(new Objeto(40, 40));
+			superficie.limparSelecao();
 			superficie.repaint();
 		}
 	}
@@ -287,7 +284,6 @@ public class Formulario extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			arquivo = null;
 			superficie.limpar();
-			superficie.repaint();
 			titulo();
 		}
 	}
