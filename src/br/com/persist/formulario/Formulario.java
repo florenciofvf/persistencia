@@ -15,11 +15,14 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
+import br.com.persist.Relacao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.dialogo.DialogoConexao;
+import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 
@@ -229,11 +232,13 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Objeto objeto2 = superficie.getSelecionado2();
-			// Objeto objeto1 = superficie.getSelecionado();
-			// Relacao relacao = superficie.getRelacao(objeto1, objeto2);
-			// superficie.excluir(relacao);
-			// superficie.repaint();
+			Objeto[] selecionados = superficie.getSelecionados();
+
+			if (selecionados.length == Constantes.DOIS) {
+				Relacao relacao = superficie.getRelacao(selecionados[0], selecionados[1]);
+				superficie.excluir(relacao);
+				superficie.repaint();
+			}
 		}
 	}
 
@@ -261,15 +266,11 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Objeto objeto2 = superficie.getSelecionado2();
-			// Objeto objeto1 = superficie.getSelecionado();
-			//
-			// if (objeto1 == null || objeto2 == null) {
-			// return;
-			// }
-			//
-			// new RelacaoDialogo(Formulario.this, superficie, objeto1,
-			// objeto2);
+			Objeto[] selecionados = superficie.getSelecionados();
+
+			if (selecionados.length == Constantes.DOIS) {
+				new RelacaoDialogo(Formulario.this, superficie, selecionados[0], selecionados[1]);
+			}
 		}
 	}
 

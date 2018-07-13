@@ -51,6 +51,18 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
+	public Objeto[] getSelecionados() {
+		List<Objeto> lista = new ArrayList<>();
+
+		for (Objeto objeto : objetos) {
+			if (objeto.isSelecionado()) {
+				lista.add(objeto);
+			}
+		}
+
+		return lista.toArray(new Objeto[0]);
+	}
+
 	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
