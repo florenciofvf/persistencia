@@ -2,13 +2,21 @@ package br.com.persist.tabela;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Frame;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.TextField;
 import br.com.persist.formulario.FormularioObjeto;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
@@ -36,6 +44,16 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int rowIndex, int vColIndex) {
 		return this;
+	}
+
+	private class Descricao extends Label {
+		private static final long serialVersionUID = 1L;
+
+		Descricao(String nome) {
+			setHorizontalAlignment(CENTER);
+			setToolTipText(nome);
+			setText(nome);
+		}
 	}
 
 	private class Ordenacao extends Label {
@@ -71,19 +89,8 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			this.coluna = coluna;
 		}
 
-		void filtrar() {
-			String string = filtro;
-
-			if (Util.estaVazio(string)) {
-				string = "AND " + coluna + " IN (   )";
-			}
-
-			String complemento = Util.getStringInput(CabecalhoColuna.this, coluna, string);
-
-			if (complemento != null) {
-				filtro = complemento;
-				formulario.processarObjeto(complemento, null, CabecalhoColuna.this);
-			}
+		void filtrar(int x, int y) {
+			new FiltroCaixa(formulario, this, x, y);
 		}
 
 		void restaurar() {
@@ -93,14 +100,50 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 	}
 
-	private class Descricao extends Label {
+	private class FiltroCaixa extends JDialog {
 		private static final long serialVersionUID = 1L;
+		final TextField textField = new TextField();
+		final Filtro filtro;
 
-		Descricao(String nome) {
-			setHorizontalAlignment(CENTER);
-			setToolTipText(nome);
-			setText(nome);
+		FiltroCaixa(Frame frame, Filtro filtro, int x, int y) {
+			super(frame, true);
+			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			textField.addKeyListener(keyListener);
+			addWindowListener(windowListener);
+			String string = filtro.filtro;
+			this.filtro = filtro;
+
+			if (Util.estaVazio(string)) {
+				string = "AND " + filtro.coluna + " IN ( )";
+			}
+
+			setLayout(new BorderLayout());
+			textField.setText(string);
+			add(BorderLayout.CENTER, textField);
+			setLocation(x, y);
+			pack();
+			setVisible(true);
 		}
+
+		KeyListener keyListener = new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					filtro.filtro = textField.getText();
+					formulario.processarObjeto(filtro.filtro, null, CabecalhoColuna.this);
+					dispose();
+				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					dispose();
+				}
+			}
+		};
+
+		WindowListener windowListener = new WindowAdapter() {
+			public void windowOpened(java.awt.event.WindowEvent e) {
+				int alturaArea = textField.getHeight();
+				int alturaForm = getHeight();
+				setLocation(getX(), getY() + (alturaForm - alturaArea));
+			}
+		};
 	}
 
 	public boolean isOrdenacao(int resto) {
@@ -115,8 +158,8 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		ordenacao.ordenar();
 	}
 
-	public void filtrar() {
-		filtro.filtrar();
+	public void filtrar(int x, int y) {
+		filtro.filtrar(x, y);
 	}
 
 	public String getFiltroComplemento() {

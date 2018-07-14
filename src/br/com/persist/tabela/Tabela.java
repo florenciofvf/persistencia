@@ -69,7 +69,7 @@ public class Tabela extends JTable {
 				if (cabecalho.isOrdenacao(resto)) {
 					cabecalho.ordenar();
 				} else if (cabecalho.isFiltro(resto, tableColumn.getWidth())) {
-					cabecalho.filtrar();
+					cabecalho.filtrar(e.getXOnScreen() - resto, e.getYOnScreen() + tableHeader.getHeight() - e.getY());
 				} else {
 					cabecalho.ordenar();
 				}
