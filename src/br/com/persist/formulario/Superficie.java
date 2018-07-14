@@ -107,11 +107,13 @@ public class Superficie extends JDesktopPane {
 			}
 
 			if (selecionadoObjeto != null) {
-				for (Objeto objeto : objetos) {
-					objeto.controlado = selecionadoObjeto.controlado;
-				}
-
-				if (!selecionadoObjeto.controlado) {
+				if (selecionadoObjeto.controlado) {
+					for (Objeto objeto : objetos) {
+						if (objeto.isSelecionado()) {
+							objeto.controlado = true;
+						}
+					}
+				} else {
 					for (Objeto objeto : objetos) {
 						if (objeto != selecionadoObjeto) {
 							objeto.setSelecionado(false);
