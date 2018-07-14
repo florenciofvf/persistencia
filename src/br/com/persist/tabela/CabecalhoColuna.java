@@ -75,7 +75,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			String string = filtro;
 
 			if (Util.estaVazio(string)) {
-				string = "AND " + coluna + " = ";
+				string = "AND " + coluna + " IN (   )";
 			}
 
 			String complemento = Util.getStringInput(CabecalhoColuna.this, coluna, string);
@@ -117,6 +117,11 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 
 	public void filtrar() {
 		filtro.filtrar();
+	}
+
+	public String getFiltroComplemento() {
+		String string = filtro.filtro;
+		return string == null ? "" : string;
 	}
 
 	public void copiar(CabecalhoColuna cabecalho) {

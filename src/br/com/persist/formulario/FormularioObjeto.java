@@ -30,6 +30,7 @@ import br.com.persist.util.Util;
 public class FormularioObjeto extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private CabecalhoColuna cabecalhoFiltro;
 	private final Objeto objeto;
 	private Tabela tabela;
 
@@ -52,6 +53,7 @@ public class FormularioObjeto extends JFrame {
 			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(consulta, chaves, objeto.getTabela());
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
 			setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+			cabecalhoFiltro = null;
 
 			if (tabela == null) {
 				tabela = new Tabela(modeloOrdenacao);
@@ -74,6 +76,7 @@ public class FormularioObjeto extends JFrame {
 
 				if (cabecalhoColuna.equals(cabecalho)) {
 					cabecalhoColuna.copiar(cabecalho);
+					cabecalhoFiltro = cabecalhoColuna;
 				}
 
 				tableColumn.setHeaderRenderer(cabecalhoColuna);
@@ -124,7 +127,8 @@ public class FormularioObjeto extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			processarObjeto("", null, null);
+			processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
+					cabecalhoFiltro);
 		}
 	}
 
