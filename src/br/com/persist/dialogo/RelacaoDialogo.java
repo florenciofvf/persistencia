@@ -30,7 +30,7 @@ public class RelacaoDialogo extends Dialogo {
 	private final Objeto objeto2;
 
 	public RelacaoDialogo(Frame frame, Superficie superficie, Objeto objeto1, Objeto objeto2) {
-		super(frame, objeto1.getId() + " / " + objeto2.getId(), 300, 140, true);
+		super(frame, objeto1.getId() + " / " + objeto2.getId(), 500, 200, true);
 		relacao = superficie.getRelacao(objeto1, objeto2);
 		this.superficie = superficie;
 		this.objeto1 = objeto1;
@@ -75,7 +75,6 @@ public class RelacaoDialogo extends Dialogo {
 
 	private class PanelDesc extends PanelBorder {
 		private static final long serialVersionUID = 1L;
-		private TextArea textArea = new TextArea();
 
 		PanelDesc() {
 			textArea.setText(relacao.getDescricao());
