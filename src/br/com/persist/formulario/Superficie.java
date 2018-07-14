@@ -117,6 +117,7 @@ public class Superficie extends JDesktopPane {
 					for (Objeto objeto : objetos) {
 						if (objeto != selecionadoObjeto) {
 							objeto.setSelecionado(false);
+							inversao.anular(objeto);
 						}
 					}
 				}
@@ -169,6 +170,12 @@ public class Superficie extends JDesktopPane {
 
 			if (ultimo != null) {
 				sel = ultimo.isSelecionado();
+			}
+		}
+
+		void anular(Objeto objeto) {
+			if (ultimo == objeto) {
+				ultimo = null;
 			}
 		}
 	}
