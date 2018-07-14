@@ -50,47 +50,6 @@ public class ObjetoDialogo extends Dialogo {
 	protected void processar() {
 	}
 
-	private class PanelDesc extends PanelBorder implements KeyListener {
-		private static final long serialVersionUID = 1L;
-		private TextArea textArea = new TextArea();
-
-		PanelDesc() {
-			textArea.setText(objeto.getDescricao());
-			add(BorderLayout.CENTER, textArea);
-			textArea.addKeyListener(this);
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			objeto.setDescricao(textArea.getText());
-		}
-	}
-
-	private class PanelCor extends PanelBorder implements ChangeListener {
-		private static final long serialVersionUID = 1L;
-		private JColorChooser colorChooser;
-
-		PanelCor() {
-			colorChooser = new JColorChooser(objeto.getCor());
-			colorChooser.getSelectionModel().addChangeListener(this);
-			add(BorderLayout.CENTER, colorChooser);
-		}
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			objeto.setCor(colorChooser.getColor());
-			superficie.repaint();
-		}
-	}
-
 	private class PanelGeral extends PanelBorder implements ActionListener, FocusListener {
 		private static final long serialVersionUID = 1L;
 		private CheckBox chkDesenharId = new CheckBox();
@@ -186,6 +145,47 @@ public class ObjetoDialogo extends Dialogo {
 				objeto.setDesenharId(chk.isSelected());
 			}
 
+			superficie.repaint();
+		}
+	}
+
+	private class PanelDesc extends PanelBorder implements KeyListener {
+		private static final long serialVersionUID = 1L;
+		private TextArea textArea = new TextArea();
+
+		PanelDesc() {
+			textArea.setText(objeto.getDescricao());
+			add(BorderLayout.CENTER, textArea);
+			textArea.addKeyListener(this);
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			objeto.setDescricao(textArea.getText());
+		}
+	}
+
+	private class PanelCor extends PanelBorder implements ChangeListener {
+		private static final long serialVersionUID = 1L;
+		private JColorChooser colorChooser;
+
+		PanelCor() {
+			colorChooser = new JColorChooser(objeto.getCor());
+			colorChooser.getSelectionModel().addChangeListener(this);
+			add(BorderLayout.CENTER, colorChooser);
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			objeto.setCor(colorChooser.getColor());
 			superficie.repaint();
 		}
 	}

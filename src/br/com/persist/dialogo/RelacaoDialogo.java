@@ -15,12 +15,15 @@ import br.com.persist.Relacao;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.TabbedPane;
+import br.com.persist.comp.TextArea;
 import br.com.persist.formulario.Superficie;
 
 public class RelacaoDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkPonto1 = new CheckBox("label.ponto");
 	private final CheckBox chkPonto2 = new CheckBox("label.ponto");
+	private final TextArea textArea = new TextArea();
 	private final Superficie superficie;
 	private final Relacao relacao;
 	private final Objeto objeto1;
@@ -36,28 +39,48 @@ public class RelacaoDialogo extends Dialogo {
 		setVisible(true);
 	}
 
+	private class PanelGeral extends PanelBorder {
+		private static final long serialVersionUID = 1L;
+
+		PanelGeral() {
+			chkPonto1.setSelected(relacao != null ? relacao.isPonto1() : false);
+			chkPonto2.setSelected(relacao != null ? relacao.isPonto2() : false);
+
+			Panel panel = new Panel(new GridLayout(2, 1));
+			panel.add(new PanelLinha(objeto1, chkPonto1));
+			panel.add(new PanelLinha(objeto2, chkPonto2));
+
+			add(BorderLayout.CENTER, panel);
+		}
+	}
+
 	private void montarLayout() {
-		chkPonto1.setSelected(relacao != null ? relacao.isPonto1() : false);
-		chkPonto2.setSelected(relacao != null ? relacao.isPonto2() : false);
-
-		Panel panel = new Panel(new GridLayout(2, 1));
-		panel.add(new PanelLinha(objeto1, chkPonto1));
-		panel.add(new PanelLinha(objeto2, chkPonto2));
-
-		add(BorderLayout.CENTER, panel);
+		add(BorderLayout.CENTER, new Fichario());
 	}
 
 	protected void processar() {
 		if (relacao != null) {
 			relacao.setPonto1(chkPonto1.isSelected());
 			relacao.setPonto2(chkPonto2.isSelected());
+			relacao.setDescricao(textArea.getText());
 		} else {
 			Relacao relacao = new Relacao(objeto1, chkPonto1.isSelected(), objeto2, chkPonto2.isSelected());
+			relacao.setDescricao(textArea.getText());
 			superficie.addRelacao(relacao);
 		}
 
 		superficie.repaint();
 		dispose();
+	}
+
+	private class PanelDesc extends PanelBorder {
+		private static final long serialVersionUID = 1L;
+		private TextArea textArea = new TextArea();
+
+		PanelDesc() {
+			textArea.setText(relacao.getDescricao());
+			add(BorderLayout.CENTER, textArea);
+		}
 	}
 
 	private class PanelLinha extends PanelBorder {
@@ -86,6 +109,16 @@ public class RelacaoDialogo extends Dialogo {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			objeto.desenhar(this, g2);
+		}
+	}
+
+	private class Fichario extends TabbedPane {
+		private static final long serialVersionUID = 1L;
+
+		Fichario() {
+			addTab("label.geral", new PanelGeral());
+			addTab("label.desc", new PanelDesc());
+			// addTab("label.cor", new PanelCor());
 		}
 	}
 }
