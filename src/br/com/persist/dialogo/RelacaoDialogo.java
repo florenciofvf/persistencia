@@ -39,21 +39,6 @@ public class RelacaoDialogo extends Dialogo {
 		setVisible(true);
 	}
 
-	private class PanelGeral extends PanelBorder {
-		private static final long serialVersionUID = 1L;
-
-		PanelGeral() {
-			chkPonto1.setSelected(relacao != null ? relacao.isPonto1() : false);
-			chkPonto2.setSelected(relacao != null ? relacao.isPonto2() : false);
-
-			Panel panel = new Panel(new GridLayout(2, 1));
-			panel.add(new PanelLinha(objeto1, chkPonto1));
-			panel.add(new PanelLinha(objeto2, chkPonto2));
-
-			add(BorderLayout.CENTER, panel);
-		}
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.CENTER, new Fichario());
 	}
@@ -73,11 +58,28 @@ public class RelacaoDialogo extends Dialogo {
 		dispose();
 	}
 
+	private class PanelGeral extends PanelBorder {
+		private static final long serialVersionUID = 1L;
+
+		PanelGeral() {
+			chkPonto1.setSelected(relacao != null ? relacao.isPonto1() : false);
+			chkPonto2.setSelected(relacao != null ? relacao.isPonto2() : false);
+
+			Panel panel = new Panel(new GridLayout(2, 1));
+			panel.add(new PanelLinha(objeto1, chkPonto1));
+			panel.add(new PanelLinha(objeto2, chkPonto2));
+
+			add(BorderLayout.CENTER, panel);
+		}
+	}
+
 	private class PanelDesc extends PanelBorder {
 		private static final long serialVersionUID = 1L;
 
 		PanelDesc() {
-			textArea.setText(relacao.getDescricao());
+			if (relacao != null) {
+				textArea.setText(relacao.getDescricao());
+			}
 			add(BorderLayout.CENTER, textArea);
 		}
 	}
