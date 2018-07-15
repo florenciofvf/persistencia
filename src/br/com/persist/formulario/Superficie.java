@@ -145,6 +145,15 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (area.largura > Objeto.diametro && area.altura > Objeto.diametro) {
+				for (Objeto objeto : objetos) {
+					if (area.contem(objeto)) {
+						objeto.setSelecionado(true);
+						objeto.controlado = true;
+					}
+				}
+			}
+
 			area.ini();
 			area.calc();
 
@@ -223,6 +232,11 @@ public class Superficie extends JDesktopPane {
 			altura = Math.abs(y1 - y2);
 			x = Math.min(x1, x2);
 			y = Math.min(y1, y2);
+		}
+
+		boolean contem(Objeto objeto) {
+			return (objeto.x >= this.x && objeto.x + Objeto.diametro <= this.x + largura)
+					&& (objeto.y >= this.y && objeto.y + Objeto.diametro <= this.y + altura);
 		}
 	}
 
