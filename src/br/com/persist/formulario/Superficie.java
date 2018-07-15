@@ -30,7 +30,8 @@ import br.com.persist.xml.XML;
 public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup popup = new SuperficiePopup();
-	private Inversao inversao = new Inversao();
+	private final Inversao inversao = new Inversao();
+	private final Area area = new Area();
 	private final Formulario formulario;
 	private Objeto selecionadoObjeto;
 	private Relacao[] relacoes;
@@ -68,6 +69,7 @@ public class Superficie extends JDesktopPane {
 	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
+			boolean movimentou = false;
 			int recX = e.getX();
 			int recY = e.getY();
 
@@ -75,11 +77,18 @@ public class Superficie extends JDesktopPane {
 				if (objeto.isSelecionado()) {
 					objeto.x += recX - ultX;
 					objeto.y += recY - ultY;
+					movimentou = true;
 				}
 			}
 
 			ultX = recX;
 			ultY = recY;
+
+			if (!movimentou) {
+				area.x2 = recX;
+				area.y2 = recY;
+				area.calc();
+			}
 
 			repaint();
 		}
@@ -91,6 +100,8 @@ public class Superficie extends JDesktopPane {
 			selecionadoObjeto = null;
 			int x = e.getX();
 			int y = e.getY();
+			area.x1 = x;
+			area.y1 = y;
 			ultX = x;
 			ultY = y;
 
@@ -134,6 +145,11 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			area.ini();
+			area.calc();
+
+			repaint();
+
 			if (e.isPopupTrigger() && selecionadoObjeto != null) {
 				popup.show(Superficie.this, e.getX(), e.getY());
 			}
@@ -184,6 +200,32 @@ public class Superficie extends JDesktopPane {
 		return formulario;
 	}
 
+	private class Area {
+		int x, y, largura, altura;
+		int x1;
+		int y1;
+		int x2;
+		int y2;
+
+		void ini() {
+			x = y = largura = altura = 0;
+			x1 = y1 = x2 = y2 = 0;
+		}
+
+		void desenhar(Graphics2D g2) {
+			if (largura > 2 && altura > 2) {
+				g2.drawRect(x, y, largura, altura);
+			}
+		}
+
+		void calc() {
+			largura = Math.abs(x1 - x2);
+			altura = Math.abs(y1 - y2);
+			x = Math.min(x1, x2);
+			y = Math.min(y1, y2);
+		}
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -198,6 +240,8 @@ public class Superficie extends JDesktopPane {
 		for (Objeto objeto : objetos) {
 			objeto.desenhar(this, g2);
 		}
+
+		area.desenhar(g2);
 	}
 
 	public void addObjeto(Objeto obj) {
