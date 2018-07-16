@@ -101,6 +101,7 @@ public class FormularioObjeto extends JFrame {
 			add(new Button(new FecharAcao(false)));
 			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
+			add(new Button(new SincronizarRegistrosAcao()));
 			add(new Button(new AtualizarRegistrosAcao()));
 		}
 	}
@@ -115,6 +116,20 @@ public class FormularioObjeto extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose();
+		}
+	}
+
+	private class SincronizarRegistrosAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public SincronizarRegistrosAcao() {
+			super(false, "label.sincronizar", Icones.SINCRONIZAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			cabecalhoFiltro = null;
+			new AtualizarRegistrosAcao().actionPerformed(null);
 		}
 	}
 

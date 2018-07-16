@@ -114,7 +114,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			this.filtro = filtro;
 
 			if (Util.estaVazio(string)) {
-				string = "AND " + filtro.coluna + " IN ( )";
+				string = "AND " + filtro.coluna + " IN ()";
 			}
 
 			setLayout(new BorderLayout());
