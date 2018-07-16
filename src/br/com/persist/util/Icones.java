@@ -17,6 +17,7 @@ public class Icones {
 	public static final Icon ATUALIZAR = criarImagem("refresh");
 	public static final Icon EXCLUIR2 = criarImagem("excluir2");
 	public static final Icon UM_PIXEL = criarImagem("um_pixel");
+	public static final Icon SINCRONIZAR = criarImagem("sync");
 	public static final Icon EXCLUIR = criarImagem("excluir");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon SALVARC = criarImagem("saveas");
