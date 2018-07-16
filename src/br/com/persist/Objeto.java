@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Composite;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
@@ -31,6 +32,7 @@ public class Objeto {
 	private String tabela;
 	private String chaves;
 	private String icone;
+	private int desloc;
 	private Icon icon;
 	private String id;
 	public int x;
@@ -93,7 +95,9 @@ public class Objeto {
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		if (!Util.estaVazio(id)) {
+			this.id = id;
+		}
 	}
 
 	public String getDescricao() {
@@ -226,7 +230,7 @@ public class Objeto {
 		}
 
 		if (desenharId) {
-			g2.drawString(id, x, y);
+			g2.drawString(id, desloc + x, y - 5);
 		}
 	}
 
@@ -258,5 +262,16 @@ public class Objeto {
 			util.finalizarTag("desc");
 		}
 		util.finalizarTag("objeto");
+	}
+
+	public void alinhar(FontMetrics fm) {
+		if (fm == null) {
+			return;
+		}
+
+		int largura = fm.stringWidth(id);
+		int metade = largura / 2;
+		int raio = diametro / 2;
+		desloc = raio - metade;
 	}
 }

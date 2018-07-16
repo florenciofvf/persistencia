@@ -138,6 +138,7 @@ public class ObjetoDialogo extends Dialogo {
 
 					if (!superficie.contem(obj)) {
 						objeto.setId(id);
+						superficie.alinhar(objeto);
 					}
 				}
 			} else if (chkDesenharId == e.getSource()) {

@@ -1,5 +1,7 @@
 package br.com.persist.formulario;
 
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -44,6 +46,40 @@ public class Superficie extends JDesktopPane {
 		addMouseListener(mouseListener);
 		this.formulario = formulario;
 		limpar();
+	}
+
+	public void alinhar() {
+		Font font = getFont();
+		if (font == null) {
+			return;
+		}
+
+		FontMetrics fm = getFontMetrics(font);
+		if (fm == null) {
+			return;
+		}
+
+		for (Objeto objeto : objetos) {
+			objeto.alinhar(fm);
+		}
+	}
+
+	public void alinhar(Objeto objeto) {
+		if (objeto == null) {
+			return;
+		}
+
+		Font font = getFont();
+		if (font == null) {
+			return;
+		}
+
+		FontMetrics fm = getFontMetrics(font);
+		if (fm == null) {
+			return;
+		}
+
+		objeto.alinhar(fm);
 	}
 
 	public void limparSelecao() {
@@ -511,6 +547,8 @@ public class Superficie extends JDesktopPane {
 			for (Relacao relacao : relacoes) {
 				addRelacao(relacao);
 			}
+
+			alinhar();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, this);
 		}
