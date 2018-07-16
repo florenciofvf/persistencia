@@ -22,7 +22,7 @@ public class DialogoConexao extends Dialogo {
 	private TextField textFieldPsw = new TextField();
 
 	public DialogoConexao(Frame frame) {
-		super(frame, Mensagens.getString("label.conexao"), 700, 140, true);
+		super(frame, Mensagens.getString("label.conexao"), 700, 200, true);
 		montarLayout();
 		setVisible(true);
 		SwingUtilities.invokeLater(() -> toFront());

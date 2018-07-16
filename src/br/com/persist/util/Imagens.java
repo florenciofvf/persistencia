@@ -39,6 +39,7 @@ public class Imagens {
 	public static void ini() {
 		MAPA_ICONES.clear();
 		File[] files = file.listFiles();
+
 		if (files != null) {
 			for (File f : files) {
 				String s = f.getName();
