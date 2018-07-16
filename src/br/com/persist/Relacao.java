@@ -1,5 +1,6 @@
 package br.com.persist;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
@@ -9,6 +10,8 @@ import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Relacao {
+	public static final Color COR_PADRAO = Color.BLACK;
+	private Color cor = COR_PADRAO;
 	static int diametro = 6;
 	static int m = diametro / 2;
 	private String descricao;
@@ -54,6 +57,18 @@ public class Relacao {
 		this.ponto2 = ponto2;
 	}
 
+	public void setCor(Color cor) {
+		this.cor = cor;
+
+		if (this.cor == null) {
+			this.cor = COR_PADRAO;
+		}
+	}
+
+	public Color getCor() {
+		return cor;
+	}
+
 	public String getDescricao() {
 		if (descricao == null) {
 			descricao = "";
@@ -92,6 +107,8 @@ public class Relacao {
 	public void desenhar(Graphics2D g2) {
 		int raio = Objeto.diametro / 2;
 
+		g2.setColor(cor);
+
 		int x1 = objeto1.x + raio;
 		int y1 = objeto1.y + raio;
 		int x2 = objeto2.x + raio;
@@ -120,6 +137,7 @@ public class Relacao {
 	}
 
 	public void aplicar(Attributes attr) {
+		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 	}
 
 	public void salvar(XMLUtil util) {
@@ -128,6 +146,7 @@ public class Relacao {
 		util.atributo("ponto1", ponto1);
 		util.atributo("objeto2", objeto2.getId());
 		util.atributo("ponto2", ponto2);
+		util.atributo("cor", cor.getRGB());
 		util.fecharTag();
 		if (!Util.estaVazio(getDescricao())) {
 			util.abrirTag2("desc");

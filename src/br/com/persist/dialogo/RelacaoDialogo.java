@@ -1,6 +1,7 @@
 package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -8,7 +9,10 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 
+import javax.swing.JColorChooser;
 import javax.swing.JLabel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
@@ -28,10 +32,12 @@ public class RelacaoDialogo extends Dialogo {
 	private final Relacao relacao;
 	private final Objeto objeto1;
 	private final Objeto objeto2;
+	private Color cor;
 
 	public RelacaoDialogo(Frame frame, Superficie superficie, Objeto objeto1, Objeto objeto2) {
 		super(frame, objeto1.getId() + " / " + objeto2.getId(), 500, 200, true);
 		relacao = superficie.getRelacao(objeto1, objeto2);
+		cor = relacao != null ? relacao.getCor() : Relacao.COR_PADRAO;
 		this.superficie = superficie;
 		this.objeto1 = objeto1;
 		this.objeto2 = objeto2;
@@ -48,9 +54,11 @@ public class RelacaoDialogo extends Dialogo {
 			relacao.setPonto1(chkPonto1.isSelected());
 			relacao.setPonto2(chkPonto2.isSelected());
 			relacao.setDescricao(textArea.getText());
+			relacao.setCor(cor);
 		} else {
 			Relacao relacao = new Relacao(objeto1, chkPonto1.isSelected(), objeto2, chkPonto2.isSelected());
 			relacao.setDescricao(textArea.getText());
+			relacao.setCor(cor);
 			superficie.addRelacao(relacao);
 		}
 
@@ -81,6 +89,22 @@ public class RelacaoDialogo extends Dialogo {
 				textArea.setText(relacao.getDescricao());
 			}
 			add(BorderLayout.CENTER, textArea);
+		}
+	}
+
+	private class PanelCor extends PanelBorder implements ChangeListener {
+		private static final long serialVersionUID = 1L;
+		private JColorChooser colorChooser;
+
+		PanelCor() {
+			colorChooser = new JColorChooser(cor);
+			colorChooser.getSelectionModel().addChangeListener(this);
+			add(BorderLayout.CENTER, colorChooser);
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			cor = colorChooser.getColor();
 		}
 	}
 
@@ -119,7 +143,7 @@ public class RelacaoDialogo extends Dialogo {
 		Fichario() {
 			addTab("label.geral", new PanelGeral());
 			addTab("label.desc", new PanelDesc());
-			// addTab("label.cor", new PanelCor());
+			addTab("label.cor", new PanelCor());
 		}
 	}
 }
