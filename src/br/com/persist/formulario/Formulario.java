@@ -28,6 +28,7 @@ import br.com.persist.util.Mensagens;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
+	private final JToggleButton buttonMovimentar = new JToggleButton(new MovimentarAcao());
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private final Toolbar toolbar = new Toolbar();
 	private final Superficie superficie;
@@ -114,6 +115,7 @@ public class Formulario extends JFrame {
 			add(new Button(new CriarRelacaoAcao()));
 			addSeparator();
 			add(new JToggleButton(new DesenhoIdAcao()));
+			add(buttonMovimentar);
 		}
 	}
 
@@ -162,6 +164,8 @@ public class Formulario extends JFrame {
 
 				if (file != null) {
 					superficie.abrir(file);
+					superficie.movimentarStatus(false);
+					buttonMovimentar.setSelected(false);
 					arquivo = file;
 					titulo();
 				}
@@ -285,6 +289,8 @@ public class Formulario extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			arquivo = null;
 			superficie.limpar();
+			superficie.movimentarStatus(false);
+			buttonMovimentar.setSelected(false);
 			titulo();
 		}
 	}
@@ -300,6 +306,20 @@ public class Formulario extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JToggleButton button = (JToggleButton) e.getSource();
 			superficie.desenharIds(button.isSelected());
+		}
+	}
+
+	private class MovimentarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public MovimentarAcao() {
+			super(false, "label.movimentar", Icones.MAO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JToggleButton button = (JToggleButton) e.getSource();
+			superficie.movimentarStatus(button.isSelected());
 		}
 	}
 }

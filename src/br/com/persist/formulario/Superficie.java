@@ -102,6 +102,23 @@ public class Superficie extends JDesktopPane {
 		return lista.toArray(new Objeto[0]);
 	}
 
+	private MouseMotionListener mouseMotionListenerMovimento = new MouseMotionAdapter() {
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			int recX = e.getX();
+			int recY = e.getY();
+
+			for (Objeto objeto : objetos) {
+				objeto.x += recX - ultX;
+				objeto.y += recY - ultY;
+			}
+
+			ultX = recX;
+			ultY = recY;
+			repaint();
+		}
+	};
+
 	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
@@ -127,6 +144,21 @@ public class Superficie extends JDesktopPane {
 			}
 
 			repaint();
+		}
+	};
+
+	private MouseListener mouseListenerMovimento = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			ultX = e.getX();
+			ultY = e.getY();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+
+		public void mouseClicked(MouseEvent e) {
 		}
 	};
 
@@ -562,5 +594,20 @@ public class Superficie extends JDesktopPane {
 		}
 
 		repaint();
+	}
+
+	public void movimentarStatus(boolean b) {
+		removeMouseMotionListener(mouseMotionListenerMovimento);
+		removeMouseMotionListener(mouseMotionListener);
+		removeMouseListener(mouseListenerMovimento);
+		removeMouseListener(mouseListener);
+
+		if (b) {
+			addMouseMotionListener(mouseMotionListenerMovimento);
+			addMouseListener(mouseListenerMovimento);
+		} else {
+			addMouseMotionListener(mouseMotionListener);
+			addMouseListener(mouseListener);
+		}
 	}
 }
