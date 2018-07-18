@@ -9,4 +9,7 @@ public class Button extends JButton {
 	public Button(Action action) {
 		super(action);
 	}
+
+	public Button() {
+	}
 }
