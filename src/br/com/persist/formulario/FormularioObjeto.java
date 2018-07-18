@@ -40,7 +40,7 @@ public class FormularioObjeto extends JFrame {
 		this.objeto = objeto;
 		setSize(800, 600);
 		setLocationRelativeTo(formulario);
-		processarObjeto("", g, null);
+		processarObjeto(objeto.getFiltroInicio(), g, null);
 		montarLayout();
 		setVisible(true);
 	}

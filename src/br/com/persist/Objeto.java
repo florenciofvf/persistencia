@@ -26,6 +26,7 @@ public class Objeto {
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
+	private String filtroInicio;
 	private boolean desenharId;
 	public boolean controlado;
 	private String descricao;
@@ -62,6 +63,10 @@ public class Objeto {
 		this.y = y;
 	}
 
+	public void setFiltroInicio(String filtroInicio) {
+		this.filtroInicio = filtroInicio;
+	}
+
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 
@@ -86,6 +91,22 @@ public class Objeto {
 		this.chaves = chaves;
 	}
 
+	public String getChaves() {
+		if (Util.estaVazio(chaves)) {
+			chaves = "";
+		}
+
+		return chaves;
+	}
+
+	public String getTabela() {
+		if (Util.estaVazio(tabela)) {
+			tabela = "";
+		}
+
+		return tabela;
+	}
+
 	public boolean isSelecionado() {
 		return selecionado;
 	}
@@ -108,28 +129,16 @@ public class Objeto {
 		return descricao;
 	}
 
-	public String getChaves() {
-		if (Util.estaVazio(chaves)) {
-			chaves = "";
-		}
-
-		return chaves;
-	}
-
-	public String getTabela() {
-		if (Util.estaVazio(tabela)) {
-			tabela = "";
-		}
-
-		return tabela;
-	}
-
 	public String getIcone() {
 		return icone;
 	}
 
 	public Icon getIcon() {
 		return icon;
+	}
+
+	public Color getCor() {
+		return cor;
 	}
 
 	public String getId() {
@@ -154,16 +163,20 @@ public class Objeto {
 		}
 	}
 
+	public String getFiltroInicio() {
+		if (Util.estaVazio(filtroInicio)) {
+			filtroInicio = "";
+		}
+
+		return filtroInicio;
+	}
+
 	public void setCor(Color cor) {
 		this.cor = cor;
 
 		if (this.cor == null) {
 			this.cor = COR_PADRAO;
 		}
-	}
-
-	public Color getCor() {
-		return cor;
 	}
 
 	public boolean contem(int x, int y) {
@@ -237,6 +250,7 @@ public class Objeto {
 	public void aplicar(Attributes attr) {
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		filtroInicio = attr.getValue("filtroInicio");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		setIcone(attr.getValue("icone"));
@@ -247,10 +261,11 @@ public class Objeto {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
+		util.atributo("filtroInicio", Util.escapar(getFiltroInicio()));
 		util.atributo("desenharId", desenharId);
-		util.atributo("cor", cor.getRGB());
 		util.atributo("tabela", getTabela());
 		util.atributo("chaves", getChaves());
+		util.atributo("cor", cor.getRGB());
 		util.atributo("icone", icone);
 		util.atributo("id", id);
 		util.atributo("x", x);
