@@ -89,10 +89,12 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Container container = new Container(Formulario.this);
-			fichario.addTab("Novo", container);
+			fichario.addTab(Mensagens.getString("label.novo"), container);
+			int ultimoIndice = fichario.getTabCount() - 1;
 
 			TituloAba tituloAba = new TituloAba(fichario);
-			fichario.setTabComponentAt(fichario.getTabCount() - 1, tituloAba);
+			fichario.setTabComponentAt(ultimoIndice, tituloAba);
+			fichario.setSelectedIndex(ultimoIndice);
 		}
 	}
 

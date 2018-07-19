@@ -24,6 +24,7 @@ public class Icones {
 	public static final Icon CRIAR2 = criarImagem("create2");
 	public static final Icon CONFIG = criarImagem("config");
 	public static final Icon FILTRO = criarImagem("filtro");
+	public static final Icon BAIXAR = criarImagem("baixar");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon ORDEM = criarImagem("ordem");

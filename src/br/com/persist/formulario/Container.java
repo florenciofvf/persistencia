@@ -3,6 +3,7 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -18,6 +19,8 @@ import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Util;
+import br.com.persist.xml.XML;
 
 public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
@@ -48,6 +51,8 @@ public class Container extends PanelBorder {
 
 		public Toolbar() {
 			add(new Button(new ConexaoAcao(false)));
+			addSeparator();
+			add(new Button(new BaixarAcao()));
 			addSeparator();
 			add(new Button(new SalvarAcao(false)));
 			add(new Button(new SalvarComoAcao(false)));
@@ -135,6 +140,31 @@ public class Container extends PanelBorder {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			superficie.excluirSelecionados();
+		}
+	}
+
+	private class BaixarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public BaixarAcao() {
+			super(false, "label.baixar", Icones.BAIXAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (arquivo == null) {
+				return;
+			}
+
+			try {
+				List<Relacao> relacoes = new ArrayList<>();
+				List<Objeto> objetos = new ArrayList<>();
+				XML.processar(arquivo, objetos, relacoes);
+
+				abrir(arquivo, objetos, relacoes);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
+			}
 		}
 	}
 
