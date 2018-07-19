@@ -10,6 +10,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
+import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
 public class FormularioUtil {
@@ -17,7 +18,7 @@ public class FormularioUtil {
 	}
 
 	public static void configMAC(Formulario formulario) {
-		if (System.getProperty("os.name").startsWith("Mac OS")) {
+		if (Sistema.getInstancia().isMac()) {
 			try {
 				Class<?> classe = Class.forName("com.apple.eawt.FullScreenUtilities");
 				Method method = classe.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);

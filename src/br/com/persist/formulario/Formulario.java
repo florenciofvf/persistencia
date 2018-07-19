@@ -21,6 +21,7 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -52,7 +53,7 @@ public class Formulario extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				if (!System.getProperty("os.name").startsWith("Mac OS")) {
+				if (!Sistema.getInstancia().isMac()) {
 					FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
 				}
 			}

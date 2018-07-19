@@ -19,6 +19,7 @@ import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.FormularioObjeto;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
@@ -139,9 +140,11 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 
 		WindowListener windowListener = new WindowAdapter() {
 			public void windowOpened(java.awt.event.WindowEvent e) {
-				int alturaArea = textField.getHeight();
-				int alturaForm = getHeight();
-				setLocation(getX(), getY() + (alturaForm - alturaArea));
+				if (Sistema.getInstancia().isMac()) {
+					int alturaArea = textField.getHeight();
+					int alturaForm = getHeight();
+					setLocation(getX(), getY() + (alturaForm - alturaArea));
+				}
 			}
 		};
 	}
