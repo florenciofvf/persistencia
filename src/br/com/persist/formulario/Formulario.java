@@ -89,13 +89,7 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Container container = new Container(Formulario.this);
-			fichario.addTab(Mensagens.getString("label.novo"), container);
-			int ultimoIndice = fichario.getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(fichario);
-			fichario.setTabComponentAt(ultimoIndice, tituloAba);
-			fichario.setSelectedIndex(ultimoIndice);
+			fichario.novo(Formulario.this);
 		}
 	}
 
@@ -120,16 +114,7 @@ public class Formulario extends JFrame {
 						List<Relacao> relacoes = new ArrayList<>();
 						List<Objeto> objetos = new ArrayList<>();
 						XML.processar(file, objetos, relacoes);
-
-						Container container = new Container(Formulario.this);
-						container.abrir(file, objetos, relacoes);
-						fichario.addTab(Mensagens.getString("label.novo"), container);
-						int ultimoIndice = fichario.getTabCount() - 1;
-
-						TituloAba tituloAba = new TituloAba(fichario);
-						fichario.setTabComponentAt(ultimoIndice, tituloAba);
-						fichario.setTitleAt(ultimoIndice, file.getName());
-						fichario.setSelectedIndex(ultimoIndice);
+						fichario.abrir(Formulario.this, file, objetos, relacoes);
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 					}
