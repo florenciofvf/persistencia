@@ -197,6 +197,8 @@ public class Container extends PanelBorder {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			superficie.addObjeto(new Objeto(40, 40));
+			buttonMovimentar.setSelected(false);
+			superficie.movimentarStatus(false);
 			superficie.limparSelecao();
 			superficie.repaint();
 		}
