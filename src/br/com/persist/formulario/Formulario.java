@@ -6,57 +6,46 @@ import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
-import br.com.persist.comp.Button;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
-import br.com.persist.dialogo.DialogoConexao;
-import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.util.Acao;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Util;
+import br.com.persist.xml.XML;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private final JToggleButton buttonMovimentar = new JToggleButton(new MovimentarAcao());
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
-	private final Toolbar toolbar = new Toolbar();
-	private final Superficie superficie;
-	private File arquivo;
+	private final Fichario fichario = new Fichario();
 
 	public Formulario() {
+		super(Mensagens.getString("label.persistencia"));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		superficie = new Superficie(this);
 		FormularioUtil.configMAC(this);
 		setLayout(new BorderLayout());
 		setJMenuBar(menuPrincipal);
 		setSize(800, 600);
 		montarLayout();
 		configurar();
-		titulo();
 	}
 
-	private void titulo() {
-		if (arquivo == null) {
-			setTitle(Mensagens.getString("label.persistencia"));
-		} else {
-			setTitle(Mensagens.getString("label.persistencia") + " - " + arquivo.getAbsolutePath());
-		}
+	public Fichario getFichario() {
+		return fichario;
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, superficie);
-		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, fichario);
 	}
 
 	private void configurar() {
@@ -84,65 +73,26 @@ public class Formulario extends JFrame {
 			menuArquivo.add(new MenuItem(new NovoAcao(true)));
 			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new SalvarAcao(true)));
-			menuArquivo.add(new MenuItem(new SalvarComoAcao(true)));
-			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
-			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new FecharAcao(true)));
 			add(menuArquivo);
 			add(menuLAF);
 		}
 	}
 
-	private class Toolbar extends JToolBar {
+	private class NovoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public Toolbar() {
-			add(new Button(new FecharAcao(false)));
-			addSeparator();
-			add(new Button(new ConexaoAcao(false)));
-			addSeparator();
-			add(new Button(new NovoAcao(false)));
-			add(new Button(new AbrirAcao(false)));
-			addSeparator();
-			add(new Button(new SalvarAcao(false)));
-			add(new Button(new SalvarComoAcao(false)));
-			addSeparator();
-			add(new Button(new ExcluirObjetoAcao()));
-			add(new Button(new ExcluirRelacaoAcao()));
-			add(new Button(new CriarObjetoAcao()));
-			add(new Button(new CriarRelacaoAcao()));
-			addSeparator();
-			add(new JToggleButton(new DesenhoIdAcao()));
-			add(buttonMovimentar);
-		}
-	}
-
-	private class FecharAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FecharAcao(boolean menu) {
-			super(menu, "label.fechar", Icones.SAIR);
+		public NovoAcao(boolean menu) {
+			super(menu, "label.novo", Icones.NOVO);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			FormularioUtil.fechar(Formulario.this);
-			System.exit(0);
-		}
-	}
+			Container container = new Container(Formulario.this);
+			fichario.addTab("Novo", container);
 
-	private class ConexaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ConexaoAcao(boolean menu) {
-			super(menu, "label.conexao", Icones.BANCO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new DialogoConexao(Formulario.this);
+			TituloAba tituloAba = new TituloAba(fichario);
+			fichario.setTabComponentAt(fichario.getTabCount() - 1, tituloAba);
 		}
 	}
 
@@ -163,163 +113,39 @@ public class Formulario extends JFrame {
 				File file = fileChooser.getSelectedFile();
 
 				if (file != null) {
-					superficie.abrir(file);
-					superficie.movimentarStatus(false);
-					buttonMovimentar.setSelected(false);
-					arquivo = file;
-					titulo();
+					try {
+						List<Relacao> relacoes = new ArrayList<>();
+						List<Objeto> objetos = new ArrayList<>();
+						XML.processar(file, objetos, relacoes);
+
+						Container container = new Container(Formulario.this);
+						container.abrir(file, objetos, relacoes);
+						fichario.addTab(Mensagens.getString("label.novo"), container);
+						int ultimoIndice = fichario.getTabCount() - 1;
+
+						TituloAba tituloAba = new TituloAba(fichario);
+						fichario.setTabComponentAt(ultimoIndice, tituloAba);
+						fichario.setTitleAt(ultimoIndice, file.getName());
+						fichario.setSelectedIndex(ultimoIndice);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+					}
 				}
 			}
 		}
 	}
 
-	private class SalvarComoAcao extends Acao {
+	private class FecharAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public SalvarComoAcao(boolean menu) {
-			super(menu, "label.salvar_como", Icones.SALVARC);
+		public FecharAcao(boolean menu) {
+			super(menu, "label.fechar", Icones.SAIR);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser fileChooser = new JFileChooser(".");
-			int opcao = fileChooser.showSaveDialog(Formulario.this);
-
-			if (opcao == JFileChooser.APPROVE_OPTION) {
-				File file = fileChooser.getSelectedFile();
-
-				if (file != null) {
-					superficie.salvar(file);
-					arquivo = file;
-					titulo();
-				}
-			}
-		}
-	}
-
-	private class SalvarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public SalvarAcao(boolean menu) {
-			super(menu, "label.salvar", Icones.SALVAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (arquivo != null) {
-				superficie.salvar(arquivo);
-			} else {
-				new SalvarComoAcao(false).actionPerformed(null);
-			}
-		}
-	}
-
-	private class ExcluirObjetoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ExcluirObjetoAcao() {
-			super(false, "label.excluir_objeto", Icones.EXCLUIR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			superficie.excluirSelecionados();
-		}
-	}
-
-	private class ExcluirRelacaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ExcluirRelacaoAcao() {
-			super(false, "label.excluir_relacao", Icones.EXCLUIR2);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Objeto[] selecionados = superficie.getSelecionados();
-
-			if (selecionados.length == Constantes.DOIS) {
-				Relacao relacao = superficie.getRelacao(selecionados[0], selecionados[1]);
-				superficie.excluir(relacao);
-				superficie.repaint();
-			}
-		}
-	}
-
-	private class CriarObjetoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CriarObjetoAcao() {
-			super(false, "label.criar_objeto", Icones.CRIAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			superficie.addObjeto(new Objeto(40, 40));
-			superficie.limparSelecao();
-			superficie.repaint();
-		}
-	}
-
-	private class CriarRelacaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CriarRelacaoAcao() {
-			super(false, "label.criar_relacao", Icones.CRIAR2);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Objeto[] selecionados = superficie.getSelecionados();
-
-			if (selecionados.length == Constantes.DOIS) {
-				new RelacaoDialogo(Formulario.this, superficie, selecionados[0], selecionados[1]);
-			}
-		}
-	}
-
-	private class NovoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public NovoAcao(boolean menu) {
-			super(menu, "label.novo", Icones.NOVO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			arquivo = null;
-			superficie.limpar();
-			superficie.movimentarStatus(false);
-			buttonMovimentar.setSelected(false);
-			titulo();
-		}
-	}
-
-	private class DesenhoIdAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public DesenhoIdAcao() {
-			super(false, "label.desenhar_id", Icones.LABEL);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JToggleButton button = (JToggleButton) e.getSource();
-			superficie.desenharIds(button.isSelected());
-		}
-	}
-
-	private class MovimentarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public MovimentarAcao() {
-			super(false, "label.movimentar", Icones.MAO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JToggleButton button = (JToggleButton) e.getSource();
-			superficie.movimentarStatus(button.isSelected());
+			FormularioUtil.fechar(Formulario.this);
+			System.exit(0);
 		}
 	}
 }

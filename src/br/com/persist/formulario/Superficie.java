@@ -27,7 +27,6 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
-import br.com.persist.xml.XML;
 
 public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
@@ -564,27 +563,18 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
-	public void abrir(File file) {
+	public void abrir(List<Objeto> objetos, List<Relacao> relacoes) {
 		limpar();
 
-		try {
-			List<Objeto> objetos = new ArrayList<>();
-			List<Relacao> relacoes = new ArrayList<>();
-			XML.processar(file, objetos, relacoes);
-
-			for (Objeto objeto : objetos) {
-				addObjeto(objeto);
-			}
-
-			for (Relacao relacao : relacoes) {
-				addRelacao(relacao);
-			}
-
-			alinhar();
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, this);
+		for (Objeto objeto : objetos) {
+			addObjeto(objeto);
 		}
 
+		for (Relacao relacao : relacoes) {
+			addRelacao(relacao);
+		}
+
+		alinhar();
 		repaint();
 	}
 
