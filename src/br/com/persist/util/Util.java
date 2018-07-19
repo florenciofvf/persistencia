@@ -19,17 +19,11 @@ public class Util {
 	private Util() {
 	}
 
-	public static void checarVazio(String s, String chave) {
-		if (estaVazio(s)) {
-			throw new IllegalArgumentException(Mensagens.getString(chave));
-		}
-	}
-
 	public static boolean estaVazio(String s) {
 		return s == null || s.trim().length() == 0;
 	}
 
-	public static void mensagem(Component componente, String string) {
+	private static void mensagem(Component componente, String string) {
 		TextArea textArea = new TextArea(string);
 		textArea.setPreferredSize(new Dimension(500, 300));
 
@@ -40,21 +34,6 @@ public class Util {
 	public static boolean confirmaExclusao(Component componente) {
 		return JOptionPane.showConfirmDialog(componente, Mensagens.getString("msg.confirma_exclusao"),
 				Mensagens.getString("label.atencao"), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
-	}
-
-	public static boolean confirmaAtualizacao(Component componente) {
-		return JOptionPane.showConfirmDialog(componente, Mensagens.getString("msg.confirma_atualizacao"),
-				Mensagens.getString("label.atencao"), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
-	}
-
-	public static String getStringInput(Component componente, String titulo, String atual) {
-		return JOptionPane.showInputDialog(componente, titulo, atual);
-	}
-
-	public static void stackTraceMessageAndException(String tipo, Exception ex) throws Exception {
-		String msg = getStackTrace(tipo, ex);
-		mensagem(null, msg);
-		throw new Exception();
 	}
 
 	public static void stackTraceAndMessage(String tipo, Exception ex, Component componente) {
@@ -76,28 +55,6 @@ public class Util {
 		}
 
 		return sw.toString();
-	}
-
-	public static String normalizar(String s) {
-		if (s == null) {
-			return "";
-		}
-
-		StringBuilder sb = new StringBuilder();
-		char anterior = '\0';
-
-		for (char c : s.toCharArray()) {
-			if (c == '\t') {
-				if (anterior != '\t') {
-					sb.append(" ");
-				}
-			} else {
-				sb.append(c);
-			}
-			anterior = c;
-		}
-
-		return sb.toString();
 	}
 
 	public static String getStringLista(List<String> lista, boolean apostrofes) {
