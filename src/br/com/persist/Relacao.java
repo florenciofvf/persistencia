@@ -14,6 +14,7 @@ public class Relacao {
 	private Color cor = COR_PADRAO;
 	static int diametro = 6;
 	static int m = diametro / 2;
+	private boolean selecionado;
 	private String descricao;
 	final Objeto objeto1;
 	final Objeto objeto2;
@@ -85,6 +86,14 @@ public class Relacao {
 		return ponto2;
 	}
 
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -104,10 +113,48 @@ public class Relacao {
 		return objeto1.equals(objeto) || objeto2.equals(objeto);
 	}
 
+	public boolean contem(int posX, int posY) {
+		int raio = Objeto.diametro / 2;
+		int x1 = objeto1.x + raio;
+		int y1 = objeto1.y + raio;
+		int x2 = objeto2.x + raio;
+		int y2 = objeto2.y + raio;
+
+		int x = x2 - x1;
+		int y = y2 - y1;
+		double h = Math.sqrt(x * x + y * y);
+
+		int xPos = posX - x1;
+		int yPos = posY - y1;
+		double hPos = Math.sqrt(xPos * xPos + yPos * yPos);
+
+		if (hPos > h) {
+			return false;
+		}
+
+		double X = x / h;
+		double Y = y / h;
+
+		int _x1 = (int) (X * hPos);
+		int _y1 = (int) (Y * hPos);
+
+		return comprimento(_x1, _y1, xPos, yPos) < 4;
+	}
+
+	private int comprimento(int x1, int y1, int x2, int y2) {
+		int x = x2 - x1;
+		int y = y2 - y1;
+		return (int) Math.sqrt(x * x + y * y);
+	}
+
 	public void desenhar(Graphics2D g2) {
 		int raio = Objeto.diametro / 2;
 
 		g2.setColor(cor);
+
+		if (selecionado) {
+			g2.setColor(Color.CYAN);
+		}
 
 		int x1 = objeto1.x + raio;
 		int y1 = objeto1.y + raio;

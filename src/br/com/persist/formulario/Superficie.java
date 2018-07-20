@@ -172,6 +172,10 @@ public class Superficie extends JDesktopPane {
 			ultX = x;
 			ultY = y;
 
+			for (Relacao relacao : relacoes) {
+				relacao.setSelecionado(false);
+			}
+
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
 					objeto.setSelecionado(true);
@@ -202,6 +206,13 @@ public class Superficie extends JDesktopPane {
 				}
 			} else {
 				limparSelecao();
+
+				for (Relacao relacao : relacoes) {
+					if (relacao.contem(x, y)) {
+						relacao.setSelecionado(true);
+						break;
+					}
+				}
 			}
 
 			repaint();
