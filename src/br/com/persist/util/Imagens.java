@@ -37,8 +37,8 @@ public class Imagens {
 	}
 
 	public static void ini() {
-		MAPA_ICONES.clear();
 		File[] files = file.listFiles();
+		MAPA_ICONES.clear();
 
 		if (files != null) {
 			for (File f : files) {
