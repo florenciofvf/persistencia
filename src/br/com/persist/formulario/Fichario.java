@@ -59,6 +59,10 @@ public class Fichario extends JTabbedPane {
 	private class Listener extends MouseAdapter {
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (ponto == null) {
+				return;
+			}
+
 			int destino = indexAtLocation(e.getX(), e.getY());
 			int origem = indexAtLocation(ponto.x, ponto.y);
 
