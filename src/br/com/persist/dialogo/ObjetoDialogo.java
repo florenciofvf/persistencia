@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -50,7 +51,7 @@ public class ObjetoDialogo extends Dialogo {
 	protected void processar() {
 	}
 
-	private class PanelGeral extends PanelBorder implements ActionListener, FocusListener {
+	private class PanelGeral extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtComplemento = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
@@ -70,19 +71,20 @@ public class ObjetoDialogo extends Dialogo {
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 
+			txtComplemento.addFocusListener(focusListener);
+			txtTabela.addFocusListener(focusListener);
+			txtChaves.addFocusListener(focusListener);
+			txtId.addFocusListener(focusListener);
+			txtX.addFocusListener(focusListener);
+			txtY.addFocusListener(focusListener);
+
 			txtComplemento.addActionListener(this);
-			txtComplemento.addFocusListener(this);
 			chkDesenharId.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
-			txtTabela.addFocusListener(this);
-			txtChaves.addFocusListener(this);
 			txtId.addActionListener(this);
-			txtId.addFocusListener(this);
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
-			txtX.addFocusListener(this);
-			txtY.addFocusListener(this);
 
 			if (objeto.getIcon() != null) {
 				labelIcone.setIcon(objeto.getIcon());
@@ -105,14 +107,12 @@ public class ObjetoDialogo extends Dialogo {
 			add(BorderLayout.CENTER, container);
 		}
 
-		@Override
-		public void focusGained(FocusEvent e) {
-		}
-
-		@Override
-		public void focusLost(FocusEvent e) {
-			actionPerformed(new ActionEvent(e.getSource(), 0, null));
-		}
+		private FocusListener focusListener = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				actionPerformed(new ActionEvent(e.getSource(), 0, null));
+			}
+		};
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
