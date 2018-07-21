@@ -17,27 +17,6 @@ public class FormularioUtil {
 	private FormularioUtil() {
 	}
 
-	public static void configMAC(Formulario formulario) {
-		if (Sistema.getInstancia().isMac()) {
-			try {
-				Class<?> classe = Class.forName("com.apple.eawt.FullScreenUtilities");
-				Method method = classe.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);
-				method.invoke(classe, formulario, true);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(formulario.getClass().getName() + ".setWindowCanFullScreen()", ex,
-						formulario);
-			}
-		}
-	}
-
-	public static void fechar(Formulario formulario) {
-		try {
-			Conexao.fecharConexoes();
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage(formulario.getClass().getName() + ".fechar()", ex, formulario);
-		}
-	}
-
 	public static void menuAparencia(Formulario formulario, Menu menu) {
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		ButtonGroup grupo = new ButtonGroup();
@@ -58,6 +37,27 @@ public class FormularioUtil {
 			if (titulo.equals(item.getText())) {
 				item.doClick();
 			}
+		}
+	}
+
+	public static void configMAC(Formulario formulario) {
+		if (Sistema.getInstancia().isMac()) {
+			try {
+				Class<?> classe = Class.forName("com.apple.eawt.FullScreenUtilities");
+				Method method = classe.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);
+				method.invoke(classe, formulario, true);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(formulario.getClass().getName() + ".setWindowCanFullScreen()", ex,
+						formulario);
+			}
+		}
+	}
+
+	public static void fechar(Formulario formulario) {
+		try {
+			Conexao.fecharConexoes();
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(formulario.getClass().getName() + ".fechar()", ex, formulario);
 		}
 	}
 }

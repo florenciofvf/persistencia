@@ -12,8 +12,8 @@ public class ItemLAF extends JRadioButtonMenuItem {
 	private final String classe;
 
 	public ItemLAF(Formulario formulario, LookAndFeelInfo info) {
-		this.setText(info.getName());
 		classe = info.getClassName();
+		setText(info.getName());
 
 		addActionListener(e -> {
 			try {

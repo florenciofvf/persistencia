@@ -38,22 +38,22 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 	private static final long serialVersionUID = 1L;
 	private final JTextField txtComplemento = new JTextField(20);
 	private final Toolbar toolbar = new Toolbar();
-	private final JComboBox<Conexao> comboConexao;
+	private final JComboBox<Conexao> cmbConexao;
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final Objeto objeto;
 
 	public FormularioObjeto(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
-		comboConexao = new JComboBox<>(formulario.getConexoes());
+		cmbConexao = new JComboBox<>(formulario.getConexoes());
 		txtComplemento.setText(objeto.getComplemento());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		if (padrao != null) {
-			comboConexao.setSelectedItem(padrao);
+			cmbConexao.setSelectedItem(padrao);
 		}
-		comboConexao.addItemListener(this);
+		cmbConexao.addItemListener(this);
 		toolbar.add(txtComplemento);
-		toolbar.add(comboConexao);
 		setTitle(objeto.getId());
+		toolbar.add(cmbConexao);
 		this.objeto = objeto;
 		setSize(800, 600);
 		setLocationRelativeTo(formulario);
@@ -64,7 +64,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 		if (conexao == null) {
 			return;
@@ -85,7 +85,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 		builder.append(" " + txtComplemento.getText());
 		builder.append(" " + complemento);
 
-		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 		if (conexao == null) {
 			return;
@@ -139,7 +139,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 		private static final long serialVersionUID = 1L;
 
 		public Toolbar() {
-			add(new Button(new FecharAcao(false)));
+			add(new Button(new FecharAcao()));
 			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
 			add(new Button(new SincronizarRegistrosAcao()));
@@ -150,8 +150,8 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 	private class FecharAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public FecharAcao(boolean menu) {
-			super(menu, "label.fechar", Icones.SAIR);
+		public FecharAcao() {
+			super(false, "label.fechar", Icones.SAIR);
 		}
 
 		@Override
