@@ -9,11 +9,8 @@ import br.com.persist.util.Mensagens;
 public class Label extends JLabel {
 	private static final long serialVersionUID = 1L;
 
-	public Label() {
-	}
-
-	public Label(Color corFonte) {
-		super();
+	public Label(String chaveRotulo, Color corFonte) {
+		super(Mensagens.getString(chaveRotulo));
 		setForeground(corFonte);
 	}
 
@@ -21,8 +18,11 @@ public class Label extends JLabel {
 		super(Mensagens.getString(chaveRotulo));
 	}
 
-	public Label(String chaveRotulo, Color corFonte) {
-		super(Mensagens.getString(chaveRotulo));
+	public Label(Color corFonte) {
+		super();
 		setForeground(corFonte);
+	}
+
+	public Label() {
 	}
 }
