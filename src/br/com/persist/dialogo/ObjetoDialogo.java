@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -236,10 +237,18 @@ public class ObjetoDialogo extends Dialogo {
 		label.setMinimumSize(new Dimension(100, 0));
 
 		box.add(label);
-		box.add(componente);
 
 		if (componente instanceof CheckBox) {
+			box.add(componente);
 			box.add(Box.createHorizontalGlue());
+
+		} else if (componente instanceof JPanel) {
+			box.add(Box.createHorizontalStrut(3));
+			box.add(componente);
+			box.add(Box.createHorizontalStrut(2));
+
+		} else {
+			box.add(componente);
 		}
 
 		return box;
