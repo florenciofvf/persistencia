@@ -18,13 +18,13 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class DialogoConexao extends Dialogo {
+public class ConexaoDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
 	private final ModeloConexao modelo = new ModeloConexao();
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
-	public DialogoConexao(Formulario formulario) {
+	public ConexaoDialogo(Formulario formulario) {
 		super(formulario, Mensagens.getString("label.conexao"), 700, 200, false);
 		this.formulario = formulario;
 		montarLayout();
@@ -77,7 +77,7 @@ public class DialogoConexao extends Dialogo {
 				modelo.abrir();
 				formulario.atualizarConexoes();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("ABRIR: ", ex, DialogoConexao.this);
+				Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoDialogo.this);
 			}
 		}
 	}
@@ -95,7 +95,7 @@ public class DialogoConexao extends Dialogo {
 				modelo.salvar();
 				formulario.atualizarConexoes();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("SALVAR: ", ex, DialogoConexao.this);
+				Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoDialogo.this);
 			}
 		}
 	}

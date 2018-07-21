@@ -232,11 +232,15 @@ public class ObjetoDialogo extends Dialogo {
 
 		Label label = new Label(chaveRotulo);
 		label.setHorizontalAlignment(Label.RIGHT);
-		label.setPreferredSize(new Dimension(70, 0));
-		label.setMinimumSize(new Dimension(70, 0));
+		label.setPreferredSize(new Dimension(100, 0));
+		label.setMinimumSize(new Dimension(100, 0));
 
 		box.add(label);
 		box.add(componente);
+
+		if (componente instanceof CheckBox) {
+			box.add(Box.createHorizontalGlue());
+		}
 
 		return box;
 	}

@@ -261,7 +261,7 @@ public class Objeto {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
-		util.atributo("complemento", getComplemento());
+		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("desenharId", desenharId);
 		util.atributo("tabela", getTabela());
 		util.atributo("chaves", getChaves());

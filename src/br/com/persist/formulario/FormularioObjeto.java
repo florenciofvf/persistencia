@@ -36,16 +36,16 @@ import br.com.persist.util.Util;
 
 public class FormularioObjeto extends JFrame implements ItemListener {
 	private static final long serialVersionUID = 1L;
+	private final JTextField txtComplemento = new JTextField(20);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
 	private final Tabela tabela = new Tabela();
-	private final JTextField txtComplemento;
 	private CabecalhoColuna cabecalhoFiltro;
 	private final Objeto objeto;
 
 	public FormularioObjeto(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
-		txtComplemento = new JTextField(objeto.getComplemento());
 		comboConexao = new JComboBox<>(formulario.getConexoes());
+		txtComplemento.setText(objeto.getComplemento());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		if (padrao != null) {
 			comboConexao.setSelectedItem(padrao);
@@ -98,6 +98,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
 			setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
+			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
 			cabecalhoFiltro = null;
 

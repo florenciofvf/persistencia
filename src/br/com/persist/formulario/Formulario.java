@@ -20,7 +20,7 @@ import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
-import br.com.persist.dialogo.DialogoConexao;
+import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.tabela.ModeloConexao;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
@@ -116,7 +116,7 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new DialogoConexao(Formulario.this);
+			new ConexaoDialogo(Formulario.this);
 		}
 	}
 
