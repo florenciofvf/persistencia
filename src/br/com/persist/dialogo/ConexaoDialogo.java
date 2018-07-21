@@ -3,11 +3,12 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
@@ -28,13 +29,22 @@ public class ConexaoDialogo extends Dialogo {
 		super(formulario, Mensagens.getString("label.conexao"), 700, 200, false);
 		this.formulario = formulario;
 		montarLayout();
+		configurar();
 		setVisible(true);
-		SwingUtilities.invokeLater(() -> toFront());
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(new JTable(modelo)));
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				new AbrirAcao().actionPerformed(null);
+			}
+		});
 	}
 
 	protected void processar() {
