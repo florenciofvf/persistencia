@@ -34,16 +34,18 @@ public class Superficie extends JDesktopPane {
 	private final Inversao inversao = new Inversao();
 	private final Area area = new Area();
 	private final Formulario formulario;
+	private final Container container;
 	private Objeto selecionadoObjeto;
 	private Relacao[] relacoes;
 	private Objeto[] objetos;
 	private int ultX;
 	private int ultY;
 
-	public Superficie(Formulario formulario) {
+	public Superficie(Formulario formulario, Container container) {
 		addMouseMotionListener(mouseMotionListener);
 		addMouseListener(mouseListener);
 		this.formulario = formulario;
+		this.container = container;
 		limpar();
 	}
 
@@ -256,7 +258,7 @@ public class Superficie extends JDesktopPane {
 
 			if (e.getClickCount() >= Constantes.DOIS && selecionadoObjeto != null
 					&& !Util.estaVazio(selecionadoObjeto.getTabela())) {
-				new FormularioObjeto(formulario, selecionadoObjeto, getGraphics());
+				new FormularioObjeto(formulario, selecionadoObjeto, getGraphics(), container.getConexaoPadrao());
 			}
 		}
 	};

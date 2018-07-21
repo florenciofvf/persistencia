@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.util.Util;
 
@@ -15,6 +16,7 @@ public class ModeloRegistro implements TableModel {
 	private final List<Coluna> colunas;
 	private final boolean chaves;
 	private final String tabela;
+	private Conexao conexao;
 
 	public ModeloRegistro(List<Coluna> colunas, List<List<Object>> registros, String tabela) {
 		this.registros = registros;
@@ -47,6 +49,14 @@ public class ModeloRegistro implements TableModel {
 		return colunas;
 	}
 
+	public Conexao getConexao() {
+		return conexao;
+	}
+
+	public void setConexao(Conexao conexao) {
+		this.conexao = conexao;
+	}
+
 	@Override
 	public String getColumnName(int columnIndex) {
 		return colunas.get(columnIndex).getNome();
@@ -76,7 +86,7 @@ public class ModeloRegistro implements TableModel {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, coluna, aValue);
-				Persistencia.executar(update);
+				Persistencia.executar(update, Conexao.getConnection(conexao));
 				registro.set(columnIndex, aValue);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("UPDATE", ex, null);
@@ -92,7 +102,7 @@ public class ModeloRegistro implements TableModel {
 		if (chaves) {
 			try {
 				String delete = gerarDelete(registro);
-				return Persistencia.executar(delete);
+				return Persistencia.executar(delete, Conexao.getConnection(conexao));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("DELETE", ex, null);
 				return -1;

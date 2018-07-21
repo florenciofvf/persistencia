@@ -26,8 +26,8 @@ public class Objeto {
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color cor = COR_PADRAO;
 	private boolean selecionado;
-	private String filtroInicio;
 	private boolean desenharId;
+	private String complemento;
 	public boolean controlado;
 	private String descricao;
 	private String tabela;
@@ -63,16 +63,16 @@ public class Objeto {
 		this.y = y;
 	}
 
-	public void setFiltroInicio(String filtroInicio) {
-		this.filtroInicio = filtroInicio;
-	}
-
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 
 		if (!this.selecionado) {
 			controlado = false;
 		}
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	public void setDesenharId(boolean desenharId) {
@@ -89,6 +89,14 @@ public class Objeto {
 
 	public void setChaves(String chaves) {
 		this.chaves = chaves;
+	}
+
+	public String getComplemento() {
+		if (Util.estaVazio(complemento)) {
+			complemento = "";
+		}
+
+		return complemento;
 	}
 
 	public String getChaves() {
@@ -161,14 +169,6 @@ public class Objeto {
 		} else {
 			icon = Imagens.getIcon(this.icone);
 		}
-	}
-
-	public String getFiltroInicio() {
-		if (Util.estaVazio(filtroInicio)) {
-			filtroInicio = "";
-		}
-
-		return filtroInicio;
 	}
 
 	public void setCor(Color cor) {
@@ -250,7 +250,7 @@ public class Objeto {
 	public void aplicar(Attributes attr) {
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
-		filtroInicio = attr.getValue("filtroInicio");
+		complemento = attr.getValue("complemento");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		setIcone(attr.getValue("icone"));
@@ -261,7 +261,7 @@ public class Objeto {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
-		util.atributo("filtroInicio", Util.escapar(getFiltroInicio()));
+		util.atributo("complemento", getComplemento());
 		util.atributo("desenharId", desenharId);
 		util.atributo("tabela", getTabela());
 		util.atributo("chaves", getChaves());

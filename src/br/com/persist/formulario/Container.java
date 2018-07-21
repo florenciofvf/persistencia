@@ -6,15 +6,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
-import br.com.persist.dialogo.DialogoConexao;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
@@ -26,19 +27,26 @@ public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
 	private final JToggleButton buttonMovimentar = new JToggleButton(new MovimentarAcao());
 	private final Toolbar toolbar = new Toolbar();
+	private final JComboBox<Conexao> comboConexao;
 	private final Formulario formulario;
 	private final Superficie superficie;
 	private File arquivo;
 
 	public Container(Formulario formulario) {
-		superficie = new Superficie(formulario);
+		comboConexao = new JComboBox<>(formulario.getConexoes());
+		superficie = new Superficie(formulario, this);
 		this.formulario = formulario;
+		toolbar.add(comboConexao);
 		montarLayout();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, superficie);
 		add(BorderLayout.NORTH, toolbar);
+	}
+
+	public Conexao getConexaoPadrao() {
+		return (Conexao) comboConexao.getSelectedItem();
 	}
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes) {
@@ -50,8 +58,6 @@ public class Container extends PanelBorder {
 		private static final long serialVersionUID = 1L;
 
 		public Toolbar() {
-			add(new Button(new ConexaoAcao(false)));
-			addSeparator();
 			add(new Button(new BaixarAcao()));
 			addSeparator();
 			add(new Button(new SalvarAcao(false)));
@@ -64,19 +70,6 @@ public class Container extends PanelBorder {
 			addSeparator();
 			add(new JToggleButton(new DesenhoIdAcao()));
 			add(buttonMovimentar);
-		}
-	}
-
-	private class ConexaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ConexaoAcao(boolean menu) {
-			super(menu, "label.conexao", Icones.BANCO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new DialogoConexao(formulario);
 		}
 	}
 

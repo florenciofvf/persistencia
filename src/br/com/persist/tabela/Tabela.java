@@ -12,12 +12,17 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.modelo.ModeloVazio;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class Tabela extends JTable {
 	private static final long serialVersionUID = 1L;
 	private PopupHeader popupHeader = new PopupHeader();
+
+	public Tabela() {
+		this(new ModeloOrdenacao(new ModeloVazio()));
+	}
 
 	public Tabela(ModeloOrdenacao modelo) {
 		super(modelo);

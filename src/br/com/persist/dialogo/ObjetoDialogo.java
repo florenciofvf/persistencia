@@ -52,7 +52,7 @@ public class ObjetoDialogo extends Dialogo {
 
 	private class PanelGeral extends PanelBorder implements ActionListener, FocusListener {
 		private static final long serialVersionUID = 1L;
-		private TextField txtFiltroInicio = new TextField();
+		private TextField txtComplemento = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
@@ -62,16 +62,16 @@ public class ObjetoDialogo extends Dialogo {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
-			txtFiltroInicio.setText(objeto.getFiltroInicio());
 			chkDesenharId.setSelected(objeto.isDesenharId());
+			txtComplemento.setText(objeto.getComplemento());
 			txtTabela.setText(objeto.getTabela());
 			txtChaves.setText(objeto.getChaves());
 			txtId.setText(objeto.getId());
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 
-			txtFiltroInicio.addActionListener(this);
-			txtFiltroInicio.addFocusListener(this);
+			txtComplemento.addActionListener(this);
+			txtComplemento.addFocusListener(this);
 			chkDesenharId.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
@@ -99,7 +99,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves));
-			container.add(criarLinha("label.filtro_inicio", txtFiltroInicio));
+			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 
 			add(BorderLayout.CENTER, container);
@@ -128,8 +128,8 @@ public class ObjetoDialogo extends Dialogo {
 			} else if (txtY == e.getSource()) {
 				objeto.y = getInt(txt.getText(), objeto.y);
 
-			} else if (txtFiltroInicio == e.getSource()) {
-				objeto.setFiltroInicio(txt.getText());
+			} else if (txtComplemento == e.getSource()) {
+				objeto.setComplemento(txt.getText());
 
 			} else if (txtTabela == e.getSource()) {
 				objeto.setTabela(txt.getText());

@@ -14,19 +14,15 @@ import br.com.persist.tabela.ModeloRegistro;
 
 public class Persistencia {
 
-	public static int executar(String sql) throws Exception {
-		Connection conn = Conexao.getConnection();
+	public static int executar(String sql, Connection conn) throws Exception {
 		PreparedStatement psmt = conn.prepareStatement(sql);
-
 		int i = psmt.executeUpdate();
-
 		psmt.close();
-
 		return i;
 	}
 
-	public static ModeloRegistro criarModeloRegistro(String consulta, String[] chaves, String tabela) throws Exception {
-		Connection conn = Conexao.getConnection();
+	public static ModeloRegistro criarModeloRegistro(Connection conn, String consulta, String[] chaves, String tabela)
+			throws Exception {
 		PreparedStatement psmt = conn.prepareStatement(consulta);
 
 		ResultSet rs = psmt.executeQuery();
@@ -40,6 +36,7 @@ public class Persistencia {
 
 	private static ModeloRegistro criarModelo(ResultSet rs, String[] chaves, String tabela) throws Exception {
 		Map<String, Boolean> mapa = new HashMap<>();
+
 		mapa.put("java.math.BigDecimal", Boolean.TRUE);
 		mapa.put("java.math.BigInteger", Boolean.TRUE);
 		mapa.put("java.lang.Character", Boolean.FALSE);

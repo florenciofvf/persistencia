@@ -3,15 +3,22 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 import br.com.persist.Objeto;
+import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
@@ -27,39 +34,72 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class FormularioObjeto extends JFrame {
+public class FormularioObjeto extends JFrame implements ItemListener {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
+	private final JComboBox<Conexao> comboConexao;
+	private final Tabela tabela = new Tabela();
+	private final JTextField txtComplemento;
 	private CabecalhoColuna cabecalhoFiltro;
 	private final Objeto objeto;
-	private Tabela tabela;
 
-	public FormularioObjeto(Formulario formulario, Objeto objeto, Graphics g) {
+	public FormularioObjeto(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
+		txtComplemento = new JTextField(objeto.getComplemento());
+		comboConexao = new JComboBox<>(formulario.getConexoes());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		if (padrao != null) {
+			comboConexao.setSelectedItem(padrao);
+		}
+		comboConexao.addItemListener(this);
+		toolbar.add(txtComplemento);
+		toolbar.add(comboConexao);
 		setTitle(objeto.getId());
 		this.objeto = objeto;
 		setSize(800, 600);
 		setLocationRelativeTo(formulario);
-		processarObjeto(objeto.getFiltroInicio(), g, null);
+		processarObjeto("", g, null);
 		montarLayout();
 		setVisible(true);
 	}
 
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
+		TableModel model = modelo.getModel();
+
+		if (model instanceof ModeloRegistro) {
+			ModeloRegistro modeloRegistro = (ModeloRegistro) model;
+			modeloRegistro.setConexao(conexao);
+		}
+	}
+
 	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		String[] chaves = objeto.getChaves().trim().split(",");
-		String consulta = "SELECT * FROM " + objeto.getTabela() + " WHERE 1=1 " + complemento;
+		StringBuilder builder = new StringBuilder("SELECT * FROM " + objeto.getTabela() + " WHERE 1=1");
+		builder.append(" " + txtComplemento.getText());
+		builder.append(" " + complemento);
+
+		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
 
 		try {
-			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(consulta, chaves, objeto.getTabela());
+			Connection conn = Conexao.getConnection(conexao);
+			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves,
+					objeto.getTabela());
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
 			setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
-			cabecalhoFiltro = null;
 
-			if (tabela == null) {
-				tabela = new Tabela(modeloOrdenacao);
-			} else {
-				tabela.setModel(modeloOrdenacao);
-			}
+			tabela.setModel(modeloOrdenacao);
+			cabecalhoFiltro = null;
 
 			TableColumnModel columnModel = tabela.getColumnModel();
 			List<Coluna> colunas = modeloRegistro.getColunas();

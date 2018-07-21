@@ -1,71 +1,102 @@
 package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 
-import javax.swing.Box;
-import javax.swing.JComponent;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.comp.Label;
-import br.com.persist.comp.TextField;
-import br.com.persist.util.Constantes;
+import br.com.persist.comp.Button;
+import br.com.persist.comp.ScrollPane;
+import br.com.persist.formulario.Formulario;
+import br.com.persist.tabela.ModeloConexao;
+import br.com.persist.util.Acao;
+import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class DialogoConexao extends Dialogo {
 	private static final long serialVersionUID = 1L;
-	private TextField textFieldUrl = new TextField();
-	private TextField textFieldUsr = new TextField();
-	private TextField textFieldPsw = new TextField();
+	private final ModeloConexao modelo = new ModeloConexao();
+	private final Toolbar toolbar = new Toolbar();
+	private final Formulario formulario;
 
-	public DialogoConexao(Frame frame) {
-		super(frame, Mensagens.getString("label.conexao"), 700, 200, true);
+	public DialogoConexao(Formulario formulario) {
+		super(formulario, Mensagens.getString("label.conexao"), 700, 200, false);
+		this.formulario = formulario;
 		montarLayout();
 		setVisible(true);
 		SwingUtilities.invokeLater(() -> toFront());
 	}
 
 	private void montarLayout() {
-		textFieldUsr.setText(Conexao.getValor(Constantes.LOGIN));
-		textFieldPsw.setText(Conexao.getValor(Constantes.SENHA));
-		textFieldUrl.setText(Conexao.getValor(Constantes.URL));
-
-		Box container = Box.createVerticalBox();
-		container.add(criarLinha("label.url", textFieldUrl));
-		container.add(criarLinha("label.usr", textFieldUsr));
-		container.add(criarLinha("label.psw", textFieldPsw));
-
-		add(BorderLayout.CENTER, container);
-	}
-
-	private Box criarLinha(String chaveRotulo, JComponent componente) {
-		Box box = Box.createHorizontalBox();
-
-		Label label = new Label(chaveRotulo);
-		label.setHorizontalAlignment(Label.RIGHT);
-		label.setPreferredSize(new Dimension(70, 0));
-		label.setMinimumSize(new Dimension(70, 0));
-
-		box.add(label);
-		box.add(componente);
-
-		return box;
+		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, new ScrollPane(new JTable(modelo)));
 	}
 
 	protected void processar() {
-		Conexao.setValor(Constantes.URL, textFieldUrl.getText());
-		Conexao.setValor(Constantes.LOGIN, textFieldUsr.getText());
-		Conexao.setValor(Constantes.SENHA, textFieldPsw.getText());
+	}
 
-		try {
-			Conexao.close();
-			Conexao.getConnection();
-			dispose();
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("CONECTAR", ex, this);
+	private class Toolbar extends JToolBar {
+		private static final long serialVersionUID = 1L;
+
+		public Toolbar() {
+			add(new Button(new NovoAcao()));
+			add(new Button(new AbrirAcao()));
+			add(new Button(new SalvarAcao()));
+		}
+	}
+
+	private class NovoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public NovoAcao() {
+			super(false, "label.novo", Icones.NOVO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			modelo.novo();
+		}
+	}
+
+	private class AbrirAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public AbrirAcao() {
+			super(false, "label.baixar", Icones.BAIXAR);
+			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				modelo.abrir();
+				formulario.atualizarConexoes();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ABRIR: ", ex, DialogoConexao.this);
+			}
+		}
+	}
+
+	private class SalvarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public SalvarAcao() {
+			super(false, "label.salvar", Icones.SALVAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				modelo.salvar();
+				formulario.atualizarConexoes();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SALVAR: ", ex, DialogoConexao.this);
+			}
 		}
 	}
 }

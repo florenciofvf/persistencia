@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -16,8 +17,11 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
+import br.com.persist.dialogo.DialogoConexao;
+import br.com.persist.tabela.ModeloConexao;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -28,6 +32,7 @@ import br.com.persist.xml.XML;
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
+	private final Vector<Conexao> conexoes = new Vector<>();
 	private final Fichario fichario = new Fichario();
 
 	public Formulario() {
@@ -39,6 +44,10 @@ public class Formulario extends JFrame {
 		setSize(800, 600);
 		montarLayout();
 		configurar();
+	}
+
+	public Vector<Conexao> getConexoes() {
+		return conexoes;
 	}
 
 	public Fichario getFichario() {
@@ -56,12 +65,28 @@ public class Formulario extends JFrame {
 				if (!Sistema.getInstancia().isMac()) {
 					FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
 				}
+
+				atualizarConexoes();
 			}
 
 			public void windowClosing(WindowEvent e) {
 				FormularioUtil.fechar(Formulario.this);
 			};
 		});
+	}
+
+	public void atualizarConexoes() {
+		ModeloConexao modelo = new ModeloConexao();
+		conexoes.clear();
+
+		try {
+			modelo.abrir();
+			for (Conexao conexao : modelo.getConexoes()) {
+				conexoes.add(conexao);
+			}
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("ATUALIZAR CONEXOES", ex, this);
+		}
 	}
 
 	private class MenuPrincipal extends JMenuBar {
@@ -74,9 +99,24 @@ public class Formulario extends JFrame {
 			menuArquivo.add(new MenuItem(new NovoAcao(true)));
 			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
 			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
+			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new FecharAcao(true)));
 			add(menuArquivo);
 			add(menuLAF);
+		}
+	}
+
+	private class ConexaoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ConexaoAcao(boolean menu) {
+			super(menu, "label.conexao", Icones.BANCO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new DialogoConexao(Formulario.this);
 		}
 	}
 

@@ -40,6 +40,10 @@ public class ModeloOrdenacao extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
+	public TableModel getModel() {
+		return model;
+	}
+
 	@Override
 	public int getRowCount() {
 		return model.getRowCount();

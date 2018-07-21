@@ -12,6 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.banco.Conexao;
 import br.com.persist.util.Util;
 
 public class XML {
@@ -23,6 +24,14 @@ public class XML {
 
 		SAXParser parser = factory.newSAXParser();
 		XMLHandler handler = new XMLHandler(objetos, relacoes);
+		parser.parse(file, handler);
+	}
+
+	public static void processarConexao(File file, List<Conexao> conexoes) throws Exception {
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+
+		SAXParser parser = factory.newSAXParser();
+		HandlerConn handler = new HandlerConn(conexoes);
 		parser.parse(file, handler);
 	}
 
@@ -106,5 +115,22 @@ class XMLHandler extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		builder.append(new String(ch, start, length));
+	}
+}
+
+class HandlerConn extends DefaultHandler {
+	final List<Conexao> conexoes;
+
+	public HandlerConn(List<Conexao> conexoes) {
+		this.conexoes = conexoes;
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		if ("conexao".equals(qName)) {
+			Conexao conexao = new Conexao();
+			conexao.aplicar(attributes);
+			conexoes.add(conexao);
+		}
 	}
 }
