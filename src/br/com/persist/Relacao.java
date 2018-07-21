@@ -12,7 +12,7 @@ import br.com.persist.util.XMLUtil;
 public class Relacao {
 	public static final Color COR_PADRAO = Color.BLACK;
 	private Color cor = COR_PADRAO;
-	static int diametro = 6;
+	public static int diametro = 6;
 	static int m = diametro / 2;
 	private boolean selecionado;
 	private String descricao;

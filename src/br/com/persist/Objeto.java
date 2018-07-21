@@ -20,7 +20,6 @@ import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Objeto {
-	private static long ID;
 	public static final Color COR_PADRAO = new Color(64, 80, 34);
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
@@ -30,6 +29,7 @@ public class Objeto {
 	private String complemento;
 	public boolean controlado;
 	private String descricao;
+	private static long ID;
 	private String tabela;
 	private String chaves;
 	private String icone;
@@ -79,6 +79,14 @@ public class Objeto {
 		this.desenharId = desenharId;
 	}
 
+	public static void setDiametro(int diametro) {
+		Objeto.diametro = diametro;
+
+		if (Objeto.diametro < DIAMETRO_PADRAO) {
+			Objeto.diametro = DIAMETRO_PADRAO;
+		}
+	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
@@ -89,6 +97,16 @@ public class Objeto {
 
 	public void setChaves(String chaves) {
 		this.chaves = chaves;
+	}
+
+	public void setIcone(String icone) {
+		this.icone = icone;
+
+		if (Util.estaVazio(this.icone)) {
+			this.icone = "";
+		} else {
+			icon = Imagens.getIcon(this.icone);
+		}
 	}
 
 	public String getComplemento() {
@@ -151,24 +169,6 @@ public class Objeto {
 
 	public String getId() {
 		return id;
-	}
-
-	public static void setDiametro(int diametro) {
-		Objeto.diametro = diametro;
-
-		if (Objeto.diametro < DIAMETRO_PADRAO) {
-			Objeto.diametro = DIAMETRO_PADRAO;
-		}
-	}
-
-	public void setIcone(String icone) {
-		this.icone = icone;
-
-		if (Util.estaVazio(this.icone)) {
-			this.icone = "";
-		} else {
-			icon = Imagens.getIcon(this.icone);
-		}
 	}
 
 	public void setCor(Color cor) {
