@@ -16,7 +16,6 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.util.Util;
 
 public class XML {
-
 	public static void processar(File file, List<Objeto> objetos, List<Relacao> relacoes) throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		factory.setNamespaceAware(true);
@@ -34,7 +33,6 @@ public class XML {
 		HandlerConn handler = new HandlerConn(conexoes);
 		parser.parse(file, handler);
 	}
-
 }
 
 class XMLHandler extends DefaultHandler {

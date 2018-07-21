@@ -1,5 +1,6 @@
 package br.com.persist.tabela;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,7 +15,9 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.modelo.ModeloVazio;
+import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class Tabela extends JTable {
@@ -58,7 +61,7 @@ public class Tabela extends JTable {
 
 			int tableColuna = columnAtPoint(e.getPoint());
 			int modelColuna = convertColumnIndexToModel(tableColuna);
-			popupHeader.setTag(modelColuna);
+			popupHeader.tag = modelColuna;
 			popupHeader.show(tableHeader, e.getX(), e.getY());
 		}
 
@@ -103,32 +106,40 @@ public class Tabela extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
-		final MenuItem itemCopiarComAspas = new MenuItem("label.copiar_com_aspas");
-		final MenuItem itemCopiar = new MenuItem("label.copiar");
 		private int tag;
 
 		public PopupHeader() {
-			add(itemCopiar);
+			add(new MenuItem(new CopiarAcao()));
 			addSeparator();
-			add(itemCopiarComAspas);
+			add(new MenuItem(new CopiarAspasAcao()));
+		}
 
-			itemCopiar.addActionListener(e -> {
-				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, getTag());
+		private class CopiarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarAcao() {
+				super(true, "label.copiar", null);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
 				Util.setContentTransfered(Util.getStringLista(lista, false));
-			});
+			}
+		}
 
-			itemCopiarComAspas.addActionListener(e -> {
-				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, getTag());
+		private class CopiarAspasAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarAspasAcao() {
+				super(true, "label.copiar_com_aspas", Icones.ASPAS);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
 				Util.setContentTransfered(Util.getStringLista(lista, true));
-			});
-		}
-
-		public int getTag() {
-			return tag;
-		}
-
-		public void setTag(int tag) {
-			this.tag = tag;
+			}
 		}
 	}
 }
