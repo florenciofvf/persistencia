@@ -27,16 +27,16 @@ public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
 	private final JToggleButton buttonMovimentar = new JToggleButton(new MovimentarAcao());
 	private final Toolbar toolbar = new Toolbar();
-	private final JComboBox<Conexao> comboConexao;
+	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
 	private final Superficie superficie;
 	private File arquivo;
 
 	public Container(Formulario formulario) {
-		comboConexao = new JComboBox<>(formulario.getConexoes());
+		cmbConexao = new JComboBox<>(formulario.getConexoes());
 		superficie = new Superficie(formulario, this);
 		this.formulario = formulario;
-		toolbar.add(comboConexao);
+		toolbar.add(cmbConexao);
 		montarLayout();
 	}
 
@@ -46,7 +46,7 @@ public class Container extends PanelBorder {
 	}
 
 	public Conexao getConexaoPadrao() {
-		return (Conexao) comboConexao.getSelectedItem();
+		return (Conexao) cmbConexao.getSelectedItem();
 	}
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes) {
@@ -60,8 +60,8 @@ public class Container extends PanelBorder {
 		public Toolbar() {
 			add(new Button(new BaixarAcao()));
 			addSeparator();
-			add(new Button(new SalvarAcao(false)));
-			add(new Button(new SalvarComoAcao(false)));
+			add(new Button(new SalvarAcao()));
+			add(new Button(new SalvarComoAcao()));
 			addSeparator();
 			add(new Button(new ExcluirObjetoAcao()));
 			add(new Button(new ExcluirRelacaoAcao()));
@@ -76,8 +76,8 @@ public class Container extends PanelBorder {
 	private class SalvarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public SalvarAcao(boolean menu) {
-			super(menu, "label.salvar", Icones.SALVAR);
+		public SalvarAcao() {
+			super(false, "label.salvar", Icones.SALVAR);
 		}
 
 		@Override
@@ -85,7 +85,7 @@ public class Container extends PanelBorder {
 			if (arquivo != null) {
 				superficie.salvar(arquivo);
 			} else {
-				new SalvarComoAcao(false).actionPerformed(null);
+				new SalvarComoAcao().actionPerformed(null);
 			}
 		}
 	}
@@ -93,8 +93,8 @@ public class Container extends PanelBorder {
 	private class SalvarComoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public SalvarComoAcao(boolean menu) {
-			super(menu, "label.salvar_como", Icones.SALVARC);
+		public SalvarComoAcao() {
+			super(false, "label.salvar_como", Icones.SALVARC);
 		}
 
 		@Override

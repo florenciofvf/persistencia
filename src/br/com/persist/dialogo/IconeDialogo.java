@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class IconeDialogo extends Dialogo {
 		}
 
 		private MouseListener mouseListener = new MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				label.setIcon(getIcon());
 				objeto.setIcone(nome);
 				dispose();
