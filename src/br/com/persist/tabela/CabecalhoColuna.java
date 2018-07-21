@@ -76,6 +76,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			} else {
 				setIcon(asc ? Icones.ASC_TEXTO : Icones.DESC_TEXTO);
 			}
+
 			modelo.ordenar(indice, numero, asc);
 			asc = !asc;
 		}
@@ -113,15 +114,15 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			textField.addKeyListener(keyListener);
 			addWindowListener(windowListener);
 			String string = filtro.filtro;
+			setLayout(new BorderLayout());
 			this.filtro = filtro;
 
 			if (Util.estaVazio(string)) {
 				string = "AND " + filtro.coluna + " IN ()";
 			}
 
-			setLayout(new BorderLayout());
-			textField.setText(string);
 			add(BorderLayout.CENTER, textField);
+			textField.setText(string);
 			setLocation(x, y);
 			pack();
 			setVisible(true);

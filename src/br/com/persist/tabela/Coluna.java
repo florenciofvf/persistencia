@@ -39,6 +39,20 @@ public class Coluna {
 			return "";
 		}
 
-		return numero ? o.toString() : "'" + o.toString() + "'";
+		String s = o.toString();
+
+		if (numero) {
+			return s;
+		}
+
+		while (s.length() > 0 && s.charAt(0) == '\'') {
+			s = s.substring(1, s.length());
+		}
+
+		while (s.length() > 0 && s.charAt(s.length() - 1) == '\'') {
+			s = s.substring(0, s.length() - 1);
+		}
+
+		return "'" + s + "'";
 	}
 }
