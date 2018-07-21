@@ -1,4 +1,4 @@
-package br.com.persist.tabela;
+package br.com.persist.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,8 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
+import br.com.persist.tabela.Coluna;
+import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Util;
 
 public class ModeloRegistro implements TableModel {

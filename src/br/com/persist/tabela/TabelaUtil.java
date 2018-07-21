@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {

@@ -1,4 +1,4 @@
-package br.com.persist.tabela;
+package br.com.persist.modelo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Util;
 
 public class ModeloOrdenacao extends AbstractTableModel {

@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.tabela.ModeloConexao;
+import br.com.persist.modelo.ModeloConexao;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;

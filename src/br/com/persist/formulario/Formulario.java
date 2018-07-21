@@ -21,7 +21,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.dialogo.ConexaoDialogo;
-import br.com.persist.tabela.ModeloConexao;
+import br.com.persist.modelo.ModeloConexao;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;

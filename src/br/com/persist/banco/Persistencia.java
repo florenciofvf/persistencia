@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.modelo.ModeloRegistro;
 import br.com.persist.tabela.Coluna;
-import br.com.persist.tabela.ModeloRegistro;
 
 public class Persistencia {
 

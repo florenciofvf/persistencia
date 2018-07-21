@@ -1,4 +1,4 @@
-package br.com.persist.tabela;
+package br.com.persist.modelo;
 
 import java.io.File;
 import java.util.ArrayList;

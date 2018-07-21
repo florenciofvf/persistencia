@@ -18,6 +18,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.FormularioObjeto;
+import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
