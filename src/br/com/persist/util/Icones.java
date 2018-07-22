@@ -23,6 +23,7 @@ public class Icones {
 	public static final Icon CONFIG = criarImagem("config");
 	public static final Icon FILTRO = criarImagem("filtro");
 	public static final Icon BAIXAR = criarImagem("baixar");
+	public static final Icon CURSOR = criarImagem("cursor");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon ORDEM = criarImagem("ordem");
@@ -32,6 +33,7 @@ public class Icones {
 	public static final Icon ABRIR = criarImagem("open");
 	public static final Icon NOVO = criarImagem("novo");
 	public static final Icon SAIR = criarImagem("sair");
+	public static final Icon SETA = criarImagem("seta");
 	public static final Icon OLHO = criarImagem("eye");
 	public static final Icon MAO = criarImagem("mao");
 

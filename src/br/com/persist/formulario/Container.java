@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JToggleButton;
@@ -17,13 +18,16 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
 public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
-	private final JToggleButton buttonMovimentar = new JToggleButton(new MovimentarAcao());
+	private final JToggleButton btnArrasto = new JToggleButton(new ArrastoAcao());
+	private final JToggleButton btnRelacao = new JToggleButton(new RelacaoAcao());
+	private final JToggleButton btnSelecao = new JToggleButton(new SelecaoAcao());
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
@@ -39,8 +43,12 @@ public class Container extends PanelBorder {
 	}
 
 	private void montarLayout() {
+		ButtonGroup grupo = new ButtonGroup();
 		add(BorderLayout.CENTER, superficie);
 		add(BorderLayout.NORTH, toolbar);
+		grupo.add(btnArrasto);
+		grupo.add(btnRelacao);
+		grupo.add(btnSelecao);
 	}
 
 	public Conexao getConexaoPadrao() {
@@ -57,16 +65,18 @@ public class Container extends PanelBorder {
 
 		public Toolbar() {
 			add(new Button(new BaixarAcao()));
-			addSeparator();
 			add(new Button(new SalvarAcao()));
 			add(new Button(new SalvarComoAcao()));
 			addSeparator();
 			add(new Button(new ExcluirAcao()));
 			add(new Button(new CriarObjetoAcao()));
-			// add(new Button(new CriarRelacaoAcao()));
+			add(btnRelacao);
+			addSeparator();
+			add(btnSelecao);
+			add(btnArrasto);
 			addSeparator();
 			add(new JToggleButton(new DesenhoIdAcao()));
-			add(buttonMovimentar);
+			addSeparator();
 		}
 	}
 
@@ -167,9 +177,9 @@ public class Container extends PanelBorder {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			superficie.configEstado(Constantes.SELECAO);
 			superficie.addObjeto(new Objeto(40, 40));
-			buttonMovimentar.setSelected(false);
-			superficie.movimentarStatus(false);
+			btnSelecao.setSelected(true);
 			superficie.limparSelecao();
 			superficie.repaint();
 		}
@@ -189,17 +199,48 @@ public class Container extends PanelBorder {
 		}
 	}
 
-	private class MovimentarAcao extends Acao {
+	private class ArrastoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public MovimentarAcao() {
-			super(false, "label.movimentar", Icones.MAO);
+		public ArrastoAcao() {
+			super(false, "label.arrastar", Icones.MAO);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JToggleButton button = (JToggleButton) e.getSource();
-			superficie.movimentarStatus(button.isSelected());
+			if (btnArrasto.isSelected()) {
+				superficie.configEstado(Constantes.ARRASTO);
+			}
+		}
+	}
+
+	private class RelacaoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public RelacaoAcao() {
+			super(false, "label.criar_relacao", Icones.SETA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (btnRelacao.isSelected()) {
+				superficie.configEstado(Constantes.RELACAO);
+			}
+		}
+	}
+
+	private class SelecaoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public SelecaoAcao() {
+			super(false, "label.selecao", Icones.CURSOR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (btnSelecao.isSelected()) {
+				superficie.configEstado(Constantes.SELECAO);
+			}
 		}
 	}
 }
