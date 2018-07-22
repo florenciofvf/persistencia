@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -124,10 +125,10 @@ public class ObjetoDialogo extends Dialogo {
 			}
 
 			if (txtX == e.getSource()) {
-				objeto.x = getInt(txt.getText(), objeto.x);
+				objeto.x = Util.getInt(txt.getText(), objeto.x);
 
 			} else if (txtY == e.getSource()) {
-				objeto.y = getInt(txt.getText(), objeto.y);
+				objeto.y = Util.getInt(txt.getText(), objeto.y);
 
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txt.getText());
@@ -159,33 +160,27 @@ public class ObjetoDialogo extends Dialogo {
 		}
 	}
 
-	private class PanelDesc extends PanelBorder implements KeyListener {
+	private class PanelDesc extends PanelBorder {
 		private static final long serialVersionUID = 1L;
-		private TextArea textArea = new TextArea();
+		private final TextArea textArea = new TextArea();
 
 		PanelDesc() {
 			textArea.setText(objeto.getDescricao());
+			textArea.addKeyListener(keyListener);
 			add(BorderLayout.CENTER, textArea);
-			textArea.addKeyListener(this);
 		}
 
-		@Override
-		public void keyTyped(KeyEvent e) {
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			objeto.setDescricao(textArea.getText());
-		}
+		private KeyListener keyListener = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				objeto.setDescricao(textArea.getText());
+			}
+		};
 	}
 
 	private class PanelCor extends PanelBorder implements ChangeListener {
 		private static final long serialVersionUID = 1L;
-		private JColorChooser colorChooser;
+		private final JColorChooser colorChooser;
 
 		PanelCor() {
 			colorChooser = new JColorChooser(objeto.getCor());
@@ -197,18 +192,6 @@ public class ObjetoDialogo extends Dialogo {
 		public void stateChanged(ChangeEvent e) {
 			objeto.setCor(colorChooser.getColor());
 			superficie.repaint();
-		}
-	}
-
-	private int getInt(String s, int padrao) {
-		if (Util.estaVazio(s)) {
-			return padrao;
-		}
-
-		try {
-			return Integer.parseInt(s.trim());
-		} catch (Exception e) {
-			return padrao;
 		}
 	}
 

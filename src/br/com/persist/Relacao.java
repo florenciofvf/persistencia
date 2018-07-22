@@ -16,46 +16,62 @@ public class Relacao {
 	static int m = diametro / 2;
 	private boolean selecionado;
 	private String descricao;
-	final Objeto objeto1;
-	final Objeto objeto2;
-	boolean ponto1;
-	boolean ponto2;
+	final Objeto destino;
+	boolean pontoDestino;
+	boolean pontoOrigem;
+	final Objeto origem;
 
-	public Relacao(Objeto objeto1, Objeto objeto2) {
-		this(objeto1, false, objeto2, false);
+	public Relacao(Objeto origem, Objeto destino) {
+		this(origem, false, destino, false);
 	}
 
-	public Relacao(Objeto objeto1, boolean ponto1, Objeto objeto2) {
-		this(objeto1, ponto1, objeto2, false);
+	public Relacao(Objeto origem, boolean pontoOrigem, Objeto destino) {
+		this(origem, pontoOrigem, destino, false);
 	}
 
-	public Relacao(Objeto objeto1, Objeto objeto2, boolean ponto2) {
-		this(objeto1, false, objeto2, ponto2);
+	public Relacao(Objeto origem, Objeto destino, boolean pontoDestino) {
+		this(origem, false, destino, pontoDestino);
 	}
 
-	public Relacao(Objeto objeto1, boolean ponto1, Objeto objeto2, boolean ponto2) {
-		Objects.requireNonNull(objeto1);
-		Objects.requireNonNull(objeto2);
-		this.objeto1 = objeto1;
-		this.objeto2 = objeto2;
-		this.ponto1 = ponto1;
-		this.ponto2 = ponto2;
+	public Relacao(Objeto origem, boolean pontoOrigem, Objeto destino, boolean pontoDestino) {
+		this.pontoDestino = pontoDestino;
+		Objects.requireNonNull(destino);
+		this.pontoOrigem = pontoOrigem;
+		Objects.requireNonNull(origem);
+		this.destino = destino;
+		this.origem = origem;
 
-		if (objeto1 == objeto2 || objeto1.equals(objeto2)) {
+		if (origem == destino || origem.equals(destino)) {
 			throw new IllegalStateException();
 		}
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
-	public void setPonto1(boolean ponto1) {
-		this.ponto1 = ponto1;
+	public void setPontoDestino(boolean ponto) {
+		this.pontoDestino = ponto;
 	}
 
-	public void setPonto2(boolean ponto2) {
-		this.ponto2 = ponto2;
+	public void setPontoOrigem(boolean ponto) {
+		this.pontoOrigem = ponto;
+	}
+
+	public boolean isPontoDestino() {
+		return pontoDestino;
+	}
+
+	public boolean isPontoOrigem() {
+		return pontoOrigem;
+	}
+
+	public boolean isSelecionado() {
+		return selecionado;
 	}
 
 	public void setCor(Color cor) {
@@ -66,10 +82,6 @@ public class Relacao {
 		}
 	}
 
-	public Color getCor() {
-		return cor;
-	}
-
 	public String getDescricao() {
 		if (descricao == null) {
 			descricao = "";
@@ -78,20 +90,16 @@ public class Relacao {
 		return descricao;
 	}
 
-	public boolean isPonto1() {
-		return ponto1;
+	public Objeto getDestino() {
+		return destino;
 	}
 
-	public boolean isPonto2() {
-		return ponto2;
+	public Objeto getOrigem() {
+		return origem;
 	}
 
-	public boolean isSelecionado() {
-		return selecionado;
-	}
-
-	public void setSelecionado(boolean selecionado) {
-		this.selecionado = selecionado;
+	public Color getCor() {
+		return cor;
 	}
 
 	@Override
@@ -102,23 +110,23 @@ public class Relacao {
 
 		if (obj instanceof Relacao) {
 			Relacao outro = (Relacao) obj;
-			return (objeto1.equals(outro.objeto1) && objeto2.equals(outro.objeto2))
-					|| (objeto1.equals(outro.objeto2) && objeto2.equals(outro.objeto1));
+			return (origem.equals(outro.origem) && destino.equals(outro.destino))
+					|| (origem.equals(outro.destino) && destino.equals(outro.origem));
 		}
 
 		return false;
 	}
 
 	public boolean contem(Objeto objeto) {
-		return objeto1.equals(objeto) || objeto2.equals(objeto);
+		return origem.equals(objeto) || destino.equals(objeto);
 	}
 
 	public boolean contem(int posX, int posY) {
 		int raio = Objeto.diametro / 2;
-		int x1 = objeto1.x + raio;
-		int y1 = objeto1.y + raio;
-		int x2 = objeto2.x + raio;
-		int y2 = objeto2.y + raio;
+		int x1 = origem.x + raio;
+		int y1 = origem.y + raio;
+		int x2 = destino.x + raio;
+		int y2 = destino.y + raio;
 
 		int x = x2 - x1;
 		int y = y2 - y1;
@@ -156,26 +164,26 @@ public class Relacao {
 			g2.setColor(Color.CYAN);
 		}
 
-		int x1 = objeto1.x + raio;
-		int y1 = objeto1.y + raio;
-		int x2 = objeto2.x + raio;
-		int y2 = objeto2.y + raio;
+		int x1 = origem.x + raio;
+		int y1 = origem.y + raio;
+		int x2 = destino.x + raio;
+		int y2 = destino.y + raio;
 		g2.drawLine(x1, y1, x2, y2);
 
-		if (ponto1 || ponto2) {
+		if (pontoOrigem || pontoDestino) {
 			int x = x2 - x1;
 			int y = y2 - y1;
 			double h = Math.sqrt(x * x + y * y);
 			double X = x / h;
 			double Y = y / h;
 
-			if (ponto1) {
+			if (pontoOrigem) {
 				int _x1 = (int) (X * raio);
 				int _y1 = (int) (Y * raio);
 				g2.fillOval(x1 + _x1 - m, y1 + _y1 - m, diametro, diametro);
 			}
 
-			if (ponto2) {
+			if (pontoDestino) {
 				int _x2 = (int) (X * (h - raio));
 				int _y2 = (int) (Y * (h - raio));
 				g2.fillOval(x1 + _x2 - m, y1 + _y2 - m, diametro, diametro);
@@ -189,10 +197,10 @@ public class Relacao {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("relacao");
-		util.atributo("objeto1", objeto1.getId());
-		util.atributo("ponto1", ponto1);
-		util.atributo("objeto2", objeto2.getId());
-		util.atributo("ponto2", ponto2);
+		util.atributo("origem", origem.getId());
+		util.atributo("pontoOrigem", pontoOrigem);
+		util.atributo("destino", destino.getId());
+		util.atributo("pontoDestino", pontoDestino);
 		util.atributo("cor", cor.getRGB());
 		util.fecharTag();
 		if (!Util.estaVazio(getDescricao())) {

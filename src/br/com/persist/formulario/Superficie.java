@@ -12,7 +12,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JDesktopPane;
@@ -89,18 +88,6 @@ public class Superficie extends JDesktopPane {
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(false);
 		}
-	}
-
-	public Objeto[] getSelecionados() {
-		List<Objeto> lista = new ArrayList<>();
-
-		for (Objeto objeto : objetos) {
-			if (objeto.isSelecionado()) {
-				lista.add(objeto);
-			}
-		}
-
-		return lista.toArray(new Objeto[0]);
 	}
 
 	private MouseMotionListener mouseMotionListenerMovimento = new MouseMotionAdapter() {
@@ -351,20 +338,37 @@ public class Superficie extends JDesktopPane {
 	}
 
 	public void excluirSelecionados() {
-		Objeto objeto = getPrimeiroSelecionado();
+		Objeto objeto = getPrimeiroObjetoSelecionado();
 
 		while (objeto != null) {
 			excluir(objeto);
-			objeto = getPrimeiroSelecionado();
+			objeto = getPrimeiroObjetoSelecionado();
+		}
+
+		Relacao relacao = getPrimeiroRelacaoSelecionado();
+
+		while (relacao != null) {
+			excluir(relacao);
+			relacao = getPrimeiroRelacaoSelecionado();
 		}
 
 		repaint();
 	}
 
-	private Objeto getPrimeiroSelecionado() {
+	private Objeto getPrimeiroObjetoSelecionado() {
 		for (Objeto objeto : objetos) {
 			if (objeto.isSelecionado()) {
 				return objeto;
+			}
+		}
+
+		return null;
+	}
+
+	private Relacao getPrimeiroRelacaoSelecionado() {
+		for (Relacao relacao : relacoes) {
+			if (relacao.isSelecionado()) {
+				return relacao;
 			}
 		}
 
@@ -442,6 +446,7 @@ public class Superficie extends JDesktopPane {
 
 		for (Relacao relacao : relacoes) {
 			Relacao temp = new Relacao(obj1, obj2);
+
 			if (relacao.equals(temp)) {
 				return relacao;
 			}

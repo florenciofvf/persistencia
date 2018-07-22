@@ -16,9 +16,7 @@ import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
-import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.util.Acao;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
@@ -63,10 +61,9 @@ public class Container extends PanelBorder {
 			add(new Button(new SalvarAcao()));
 			add(new Button(new SalvarComoAcao()));
 			addSeparator();
-			add(new Button(new ExcluirObjetoAcao()));
-			add(new Button(new ExcluirRelacaoAcao()));
+			add(new Button(new ExcluirAcao()));
 			add(new Button(new CriarObjetoAcao()));
-			add(new Button(new CriarRelacaoAcao()));
+			// add(new Button(new CriarRelacaoAcao()));
 			addSeparator();
 			add(new JToggleButton(new DesenhoIdAcao()));
 			add(buttonMovimentar);
@@ -123,11 +120,11 @@ public class Container extends PanelBorder {
 		}
 	}
 
-	private class ExcluirObjetoAcao extends Acao {
+	private class ExcluirAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public ExcluirObjetoAcao() {
-			super(false, "label.excluir_objeto", Icones.EXCLUIR);
+		public ExcluirAcao() {
+			super(false, "label.excluir", Icones.EXCLUIR);
 		}
 
 		@Override
@@ -161,25 +158,6 @@ public class Container extends PanelBorder {
 		}
 	}
 
-	private class ExcluirRelacaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ExcluirRelacaoAcao() {
-			super(false, "label.excluir_relacao", Icones.EXCLUIR2);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Objeto[] selecionados = superficie.getSelecionados();
-
-			if (selecionados.length == Constantes.DOIS) {
-				Relacao relacao = superficie.getRelacao(selecionados[0], selecionados[1]);
-				superficie.excluir(relacao);
-				superficie.repaint();
-			}
-		}
-	}
-
 	private class CriarObjetoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
@@ -194,23 +172,6 @@ public class Container extends PanelBorder {
 			superficie.movimentarStatus(false);
 			superficie.limparSelecao();
 			superficie.repaint();
-		}
-	}
-
-	private class CriarRelacaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CriarRelacaoAcao() {
-			super(false, "label.criar_relacao", Icones.CRIAR2);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Objeto[] selecionados = superficie.getSelecionados();
-
-			if (selecionados.length == Constantes.DOIS) {
-				new RelacaoDialogo(formulario, superficie, selecionados[0], selecionados[1]);
-			}
 		}
 	}
 

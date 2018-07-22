@@ -114,4 +114,16 @@ public class Util {
 
 		return builder.toString();
 	}
+
+	public static int getInt(String string, int padrao) {
+		if (Util.estaVazio(string)) {
+			return padrao;
+		}
+
+		try {
+			return Integer.parseInt(string.trim());
+		} catch (Exception e) {
+			return padrao;
+		}
+	}
 }

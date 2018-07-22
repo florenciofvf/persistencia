@@ -61,13 +61,12 @@ class XMLHandler extends DefaultHandler {
 			objetos.add(objeto);
 
 		} else if ("relacao".equals(qName)) {
-			Objeto objeto1 = getObjeto(attributes.getValue("objeto1"));
-			Objeto objeto2 = getObjeto(attributes.getValue("objeto2"));
+			boolean pontoDestino = Boolean.parseBoolean(attributes.getValue("pontoDestino"));
+			boolean pontoOrigem = Boolean.parseBoolean(attributes.getValue("pontoOrigem"));
+			Objeto destino = getObjeto(attributes.getValue("destino"));
+			Objeto origem = getObjeto(attributes.getValue("origem"));
 
-			boolean ponto1 = Boolean.parseBoolean(attributes.getValue("ponto1"));
-			boolean ponto2 = Boolean.parseBoolean(attributes.getValue("ponto2"));
-
-			Relacao relacao = new Relacao(objeto1, ponto1, objeto2, ponto2);
+			Relacao relacao = new Relacao(origem, pontoOrigem, destino, pontoDestino);
 			relacao.aplicar(attributes);
 			selecionado = relacao;
 			relacoes.add(relacao);
