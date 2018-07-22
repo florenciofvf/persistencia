@@ -141,13 +141,6 @@ public class Superficie extends JDesktopPane {
 			ultX = e.getX();
 			ultY = e.getY();
 		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-		}
-
-		public void mouseClicked(MouseEvent e) {
-		}
 	};
 
 	private MouseListener mouseListener = new MouseAdapter() {
