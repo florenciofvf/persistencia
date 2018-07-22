@@ -32,6 +32,7 @@ public class Superficie extends JDesktopPane {
 	private final Linha linha = new Linha();
 	private final Area area = new Area();
 	private final Formulario formulario;
+	private Relacao selecionadoRelacao;
 	private final Container container;
 	private Objeto selecionadoObjeto;
 	private Relacao[] relacoes;
@@ -195,6 +196,7 @@ public class Superficie extends JDesktopPane {
 	private MouseAdapter mouseAdapterSelecao = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
+			selecionadoRelacao = null;
 			selecionadoObjeto = null;
 			int x = e.getX();
 			int y = e.getY();
@@ -241,6 +243,7 @@ public class Superficie extends JDesktopPane {
 				for (Relacao relacao : relacoes) {
 					if (relacao.contem(x, y)) {
 						relacao.setSelecionado(true);
+						selecionadoRelacao = relacao;
 						break;
 					}
 				}
@@ -248,7 +251,7 @@ public class Superficie extends JDesktopPane {
 
 			repaint();
 
-			if (e.isPopupTrigger() && selecionadoObjeto != null) {
+			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.show(Superficie.this, x, y);
 			}
 		}
@@ -295,7 +298,7 @@ public class Superficie extends JDesktopPane {
 
 			repaint();
 
-			if (e.isPopupTrigger() && selecionadoObjeto != null) {
+			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.show(Superficie.this, e.getX(), e.getY());
 			}
 		}
@@ -312,9 +315,13 @@ public class Superficie extends JDesktopPane {
 
 			repaint();
 
-			if (e.getClickCount() >= Constantes.DOIS && selecionadoObjeto != null
-					&& !Util.estaVazio(selecionadoObjeto.getTabela())) {
-				new FormularioObjeto(formulario, selecionadoObjeto, getGraphics(), container.getConexaoPadrao());
+			if (e.getClickCount() >= Constantes.DOIS) {
+				if (selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela())) {
+					new FormularioObjeto(formulario, selecionadoObjeto, getGraphics(), container.getConexaoPadrao());
+
+				} else if (selecionadoRelacao != null) {
+					new RelacaoDialogo(formulario, Superficie.this, selecionadoRelacao);
+				}
 			}
 		}
 	};
@@ -595,7 +602,12 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new ObjetoDialogo(formulario, Superficie.this, selecionadoObjeto);
+			if (selecionadoObjeto != null) {
+				new ObjetoDialogo(formulario, Superficie.this, selecionadoObjeto);
+
+			} else if (selecionadoRelacao != null) {
+				new RelacaoDialogo(formulario, Superficie.this, selecionadoRelacao);
+			}
 		}
 	}
 
