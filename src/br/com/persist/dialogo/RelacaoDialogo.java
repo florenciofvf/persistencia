@@ -15,6 +15,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
+import javax.swing.JSeparator;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -100,7 +101,7 @@ public class RelacaoDialogo extends Dialogo {
 		private final boolean origem;
 
 		PanelLado(boolean origem) {
-			super(new GridLayout(3, 1));
+			super(new GridLayout(5, 1));
 			this.origem = origem;
 			chkPonto.setSelected(origem ? relacao.isPontoOrigem() : relacao.isPontoDestino());
 			chkPonto.addActionListener(pontoListener);
@@ -108,6 +109,13 @@ public class RelacaoDialogo extends Dialogo {
 			Label label = new Label();
 			label.setText(origem ? relacao.getOrigem().getId() : relacao.getDestino().getId());
 
+			if (origem) {
+				add(new PanelCenter(new Label("label.origem")));
+			} else {
+				add(new PanelCenter(new Label("label.destino")));
+			}
+
+			add(new JSeparator());
 			add(new PanelCenter(label));
 			add(new PanelCenter(new PanelObjeto(origem ? relacao.getOrigem() : relacao.getDestino())));
 			add(new PanelCenter(chkPonto));
@@ -119,7 +127,7 @@ public class RelacaoDialogo extends Dialogo {
 				if (origem) {
 					relacao.setPontoOrigem(chkPonto.isSelected());
 				} else {
-					relacao.setPontoOrigem(chkPonto.isSelected());
+					relacao.setPontoDestino(chkPonto.isSelected());
 				}
 
 				superficie.repaint();

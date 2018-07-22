@@ -72,8 +72,8 @@ public class Container extends PanelBorder {
 			add(new Button(new CriarObjetoAcao()));
 			add(btnRelacao);
 			addSeparator();
-			add(btnSelecao);
 			add(btnArrasto);
+			add(btnSelecao);
 			addSeparator();
 			add(new JToggleButton(new DesenhoIdAcao()));
 			addSeparator();

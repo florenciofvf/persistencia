@@ -138,7 +138,13 @@ public class Superficie extends JDesktopPane {
 			if (origem != null) {
 				linha.x1 = origem.x + Objeto.diametro / 2;
 				linha.y1 = origem.y + Objeto.diametro / 2;
+				linha.x2 = linha.x1;
+				linha.y2 = linha.y1;
+			} else {
+				linha.ini();
 			}
+
+			repaint();
 		}
 
 		@Override
@@ -169,6 +175,7 @@ public class Superficie extends JDesktopPane {
 			}
 
 			if (origem == null || destino == null || origem == destino) {
+				repaint();
 				return;
 			}
 
