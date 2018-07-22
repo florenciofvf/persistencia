@@ -8,9 +8,6 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.util.List;
 
@@ -21,6 +18,7 @@ import br.com.persist.Relacao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.dialogo.ObjetoDialogo;
+import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -31,24 +29,25 @@ public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup popup = new SuperficiePopup();
 	private final Inversao inversao = new Inversao();
+	private final Linha linha = new Linha();
 	private final Area area = new Area();
 	private final Formulario formulario;
 	private final Container container;
 	private Objeto selecionadoObjeto;
 	private Relacao[] relacoes;
 	private Objeto[] objetos;
+	private byte estado;
 	private int ultX;
 	private int ultY;
 
 	public Superficie(Formulario formulario, Container container) {
-		addMouseMotionListener(mouseMotionListener);
-		addMouseListener(mouseListener);
+		configEstado(Constantes.SELECAO);
 		this.formulario = formulario;
 		this.container = container;
 		limpar();
 	}
 
-	public void alinhar() {
+	public void alinharNomes() {
 		Font font = getFont();
 		if (font == null) {
 			return;
@@ -64,7 +63,7 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
-	public void alinhar(Objeto objeto) {
+	public void alinharNome(Objeto objeto) {
 		if (objeto == null) {
 			return;
 		}
@@ -90,7 +89,13 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
-	private MouseMotionListener mouseMotionListenerMovimento = new MouseMotionAdapter() {
+	private MouseAdapter mouseAdapterArrasto = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			ultX = e.getX();
+			ultY = e.getY();
+		}
+
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			int recX = e.getX();
@@ -107,43 +112,79 @@ public class Superficie extends JDesktopPane {
 		}
 	};
 
-	private MouseMotionListener mouseMotionListener = new MouseMotionAdapter() {
+	private MouseAdapter mouseAdapterRelacao = new MouseAdapter() {
+		Objeto destino;
+		Objeto origem;
+
 		@Override
-		public void mouseDragged(MouseEvent e) {
-			boolean movimentou = false;
-			int recX = e.getX();
-			int recY = e.getY();
+		public void mousePressed(MouseEvent e) {
+			for (Relacao relacao : relacoes) {
+				relacao.setSelecionado(false);
+			}
+
+			limparSelecao();
+			ultX = e.getX();
+			ultY = e.getY();
+			origem = null;
 
 			for (Objeto objeto : objetos) {
-				if (objeto.isSelecionado()) {
-					objeto.x += recX - ultX;
-					objeto.y += recY - ultY;
-					movimentou = true;
+				if (objeto.contem(ultX, ultY)) {
+					objeto.setSelecionado(true);
+					origem = objeto;
+					break;
 				}
 			}
 
-			ultX = recX;
-			ultY = recY;
+			if(origem != null) {
+				linha.x1 = origem.x + Objeto.diametro / 2;
+				linha.y1 = origem.y + Objeto.diametro / 2;
+			}
+		}
 
-			if (!movimentou) {
-				area.x2 = recX;
-				area.y2 = recY;
-				area.calc();
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			int recX = e.getX();
+			int recY = e.getY();
+
+			if (origem != null) {
+				linha.x2 = recX;
+				linha.y2 = recY;
+				repaint();
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			ultX = e.getX();
+			ultY = e.getY();
+			destino = null;
+
+			for (Objeto objeto : objetos) {
+				if (objeto.contem(ultX, ultY)) {
+					objeto.setSelecionado(true);
+					destino = objeto;
+					break;
+				}
+			}
+
+			if(origem == null || destino == null || origem == destino) {
+				return;
+			}
+
+			Relacao relacao = getRelacao(origem, destino);
+
+			if(relacao == null) {
+				relacao = new Relacao(origem, false, destino, true);
+				addRelacao(relacao);
 			}
 
 			repaint();
+
+			new RelacaoDialogo(formulario, Superficie.this, relacao);
 		}
 	};
 
-	private MouseListener mouseListenerMovimento = new MouseAdapter() {
-		@Override
-		public void mousePressed(MouseEvent e) {
-			ultX = e.getX();
-			ultY = e.getY();
-		}
-	};
-
-	private MouseListener mouseListener = new MouseAdapter() {
+	private MouseAdapter mouseAdapterSelecao = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			selecionadoObjeto = null;
@@ -205,6 +246,32 @@ public class Superficie extends JDesktopPane {
 		}
 
 		@Override
+		public void mouseDragged(MouseEvent e) {
+			boolean movimentou = false;
+			int recX = e.getX();
+			int recY = e.getY();
+
+			for (Objeto objeto : objetos) {
+				if (objeto.isSelecionado()) {
+					objeto.x += recX - ultX;
+					objeto.y += recY - ultY;
+					movimentou = true;
+				}
+			}
+
+			ultX = recX;
+			ultY = recY;
+
+			if (!movimentou) {
+				area.x2 = recX;
+				area.y2 = recY;
+				area.calc();
+			}
+
+			repaint();
+		}
+
+		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (area.largura > Objeto.diametro && area.altura > Objeto.diametro) {
 				for (Objeto objeto : objetos) {
@@ -225,6 +292,7 @@ public class Superficie extends JDesktopPane {
 			}
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.isShiftDown()) {
 				inversao.inverterSelecao(selecionadoObjeto);
@@ -272,10 +340,7 @@ public class Superficie extends JDesktopPane {
 
 	private class Area {
 		int x, y, largura, altura;
-		int x1;
-		int y1;
-		int x2;
-		int y2;
+		int x1, y1, x2, y2;
 
 		void ini() {
 			x = y = largura = altura = 0;
@@ -301,6 +366,14 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
+	private class Linha {
+		int x1, y1, x2, y2;
+
+		void desenhar(Graphics2D g2) {
+			g2.drawLine(x1, y1, x2, y2);
+		}
+	}
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -317,17 +390,10 @@ public class Superficie extends JDesktopPane {
 		}
 
 		area.desenhar(g2);
-	}
 
-	public void addObjeto(Objeto obj) {
-		if (obj == null || contem(obj)) {
-			return;
+		if (estado == Constantes.RELACAO) {
+			linha.desenhar(g2);
 		}
-
-		Objeto[] bkp = objetos;
-		objetos = new Objeto[bkp.length + 1];
-		System.arraycopy(bkp, 0, objetos, 0, bkp.length);
-		objetos[bkp.length] = obj;
 	}
 
 	public void excluirSelecionados() {
@@ -366,6 +432,17 @@ public class Superficie extends JDesktopPane {
 		}
 
 		return null;
+	}
+
+	public void addObjeto(Objeto obj) {
+		if (obj == null || contem(obj)) {
+			return;
+		}
+
+		Objeto[] bkp = objetos;
+		objetos = new Objeto[bkp.length + 1];
+		System.arraycopy(bkp, 0, objetos, 0, bkp.length);
+		objetos[bkp.length] = obj;
 	}
 
 	public void excluir(Objeto obj) {
@@ -437,9 +514,9 @@ public class Superficie extends JDesktopPane {
 			return null;
 		}
 
-		for (Relacao relacao : relacoes) {
-			Relacao temp = new Relacao(obj1, obj2);
+		Relacao temp = new Relacao(obj1, obj2);
 
+		for (Relacao relacao : relacoes) {
 			if (relacao.equals(temp)) {
 				return relacao;
 			}
@@ -555,7 +632,7 @@ public class Superficie extends JDesktopPane {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
 
-			util.abrirTag2("exemplo");
+			util.abrirTag2("fvf");
 
 			for (Objeto objeto : objetos) {
 				objeto.salvar(util);
@@ -567,7 +644,7 @@ public class Superficie extends JDesktopPane {
 				relacao.salvar(util);
 			}
 
-			util.finalizarTag("exemplo");
+			util.finalizarTag("fvf");
 			util.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -585,7 +662,7 @@ public class Superficie extends JDesktopPane {
 			addRelacao(relacao);
 		}
 
-		alinhar();
+		alinharNomes();
 		repaint();
 	}
 
@@ -597,18 +674,32 @@ public class Superficie extends JDesktopPane {
 		repaint();
 	}
 
-	public void movimentarStatus(boolean b) {
-		removeMouseMotionListener(mouseMotionListenerMovimento);
-		removeMouseMotionListener(mouseMotionListener);
-		removeMouseListener(mouseListenerMovimento);
-		removeMouseListener(mouseListener);
+	public void configEstado(byte estado) {
+		removeMouseMotionListener(mouseAdapterArrasto);
+		removeMouseListener(mouseAdapterArrasto);
 
-		if (b) {
-			addMouseMotionListener(mouseMotionListenerMovimento);
-			addMouseListener(mouseListenerMovimento);
-		} else {
-			addMouseMotionListener(mouseMotionListener);
-			addMouseListener(mouseListener);
+		removeMouseMotionListener(mouseAdapterRelacao);
+		removeMouseListener(mouseAdapterRelacao);
+
+		removeMouseMotionListener(mouseAdapterSelecao);
+		removeMouseListener(mouseAdapterSelecao);
+
+		this.estado = -1;
+
+		if (estado == Constantes.ARRASTO) {
+			addMouseMotionListener(mouseAdapterArrasto);
+			addMouseListener(mouseAdapterArrasto);
+			this.estado = estado;
+
+		} else if (estado == Constantes.RELACAO) {
+			addMouseMotionListener(mouseAdapterRelacao);
+			addMouseListener(mouseAdapterRelacao);
+			this.estado = estado;
+
+		} else if (estado == Constantes.SELECAO) {
+			addMouseMotionListener(mouseAdapterSelecao);
+			addMouseListener(mouseAdapterSelecao);
+			this.estado = estado;
 		}
 	}
 }
