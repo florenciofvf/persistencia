@@ -1,6 +1,7 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -21,6 +22,7 @@ import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
+import br.com.persist.comp.Label;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.modelo.ModeloRegistro;
@@ -137,6 +139,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		final Label total = new Label(Color.BLUE);
 
 		public Toolbar() {
 			add(new Button(new FecharAcao()));
@@ -144,6 +147,8 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 			add(new Button(new ExcluirRegistrosAcao()));
 			add(new Button(new SincronizarRegistrosAcao()));
 			add(new Button(new AtualizarRegistrosAcao()));
+			add(new Button(new TotalizarRegistrosAcao()));
+			add(total);
 		}
 	}
 
@@ -185,6 +190,31 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 		public void actionPerformed(ActionEvent e) {
 			processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro);
+		}
+	}
+
+	private class TotalizarRegistrosAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public TotalizarRegistrosAcao() {
+			super(false, "label.total", Icones.SOMA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+			if (conexao == null) {
+				return;
+			}
+
+			try {
+				Connection conn = Conexao.getConnection(conexao);
+				int i = Persistencia.getTotalRegistros(conn, objeto);
+				toolbar.total.setText("" + i);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("TOTAL", ex, FormularioObjeto.this);
+			}
 		}
 	}
 

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.Objeto;
 import br.com.persist.modelo.ModeloRegistro;
 import br.com.persist.tabela.Coluna;
 
@@ -19,6 +20,20 @@ public class Persistencia {
 		int i = psmt.executeUpdate();
 		psmt.close();
 		return i;
+	}
+
+	public static int getTotalRegistros(Connection conn, Objeto objeto) throws Exception {
+		PreparedStatement psmt = conn.prepareStatement("SELECT COUNT(*) FROM " + objeto.getTabela());
+
+		ResultSet rs = psmt.executeQuery();
+		rs.next();
+
+		int total = rs.getInt(1);
+
+		rs.close();
+		psmt.close();
+
+		return total;
 	}
 
 	public static ModeloRegistro criarModeloRegistro(Connection conn, String consulta, String[] chaves, String tabela)

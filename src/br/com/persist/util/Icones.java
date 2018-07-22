@@ -35,6 +35,7 @@ public class Icones {
 	public static final Icon NOVO = criarImagem("novo");
 	public static final Icon SAIR = criarImagem("sair");
 	public static final Icon SETA = criarImagem("seta");
+	public static final Icon SOMA = criarImagem("soma");
 	public static final Icon OLHO = criarImagem("eye");
 	public static final Icon MAO = criarImagem("mao");
 
