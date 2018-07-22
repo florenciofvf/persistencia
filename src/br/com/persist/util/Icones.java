@@ -30,6 +30,7 @@ public class Icones {
 	public static final Icon BANCO = criarImagem("banco");
 	public static final Icon ASPAS = criarImagem("aspas");
 	public static final Icon LABEL = criarImagem("label");
+	public static final Icon COPIA = criarImagem("copy");
 	public static final Icon ABRIR = criarImagem("open");
 	public static final Icon NOVO = criarImagem("novo");
 	public static final Icon SAIR = criarImagem("sair");

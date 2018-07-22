@@ -97,6 +97,17 @@ public class Conexao {
 		return !Util.estaVazio(nome);
 	}
 
+	public Conexao clonar() {
+		Conexao c = new Conexao();
+
+		c.urlBanco = urlBanco;
+		c.usuario = usuario;
+		c.driver = driver;
+		c.senha = senha;
+
+		return c;
+	}
+
 	public void aplicar(Attributes attr) {
 		urlBanco = attr.getValue("urlBanco");
 		usuario = attr.getValue("usuario");

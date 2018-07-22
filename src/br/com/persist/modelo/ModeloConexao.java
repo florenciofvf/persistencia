@@ -24,6 +24,16 @@ public class ModeloConexao extends AbstractTableModel {
 		return conexoes;
 	}
 
+	public Conexao getConexao(int i) {
+		return conexoes.get(i);
+	}
+
+	public void adicionar(Conexao c) {
+		if (c != null) {
+			conexoes.add(c);
+		}
+	}
+
 	@Override
 	public int getRowCount() {
 		return conexoes.size();

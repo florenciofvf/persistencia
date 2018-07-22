@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
+import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
@@ -22,6 +23,7 @@ import br.com.persist.util.Util;
 public class ConexaoDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
 	private final ModeloConexao modelo = new ModeloConexao();
+	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
@@ -35,7 +37,7 @@ public class ConexaoDialogo extends Dialogo {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(new JTable(modelo)));
+		add(BorderLayout.CENTER, new ScrollPane(tabela));
 	}
 
 	private void configurar() {
@@ -55,6 +57,7 @@ public class ConexaoDialogo extends Dialogo {
 
 		public Toolbar() {
 			add(new Button(new NovoAcao()));
+			add(new Button(new CopiaAcao()));
 			add(new Button(new AbrirAcao()));
 			add(new Button(new SalvarAcao()));
 		}
@@ -70,6 +73,28 @@ public class ConexaoDialogo extends Dialogo {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			modelo.novo();
+		}
+	}
+
+	private class CopiaAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public CopiaAcao() {
+			super(false, "label.copiar", Icones.COPIA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length > 0) {
+				for (int i : linhas) {
+					Conexao c = modelo.getConexao(i);
+					modelo.adicionar(c);
+				}
+
+				modelo.fireTableDataChanged();
+			}
 		}
 	}
 
