@@ -35,7 +35,7 @@ public class RelacaoDialogo extends Dialogo {
 	private final Relacao relacao;
 
 	public RelacaoDialogo(Frame frame, Superficie superficie, Relacao relacao) {
-		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId(), 500, 200, false);
+		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId(), 500, 400, false);
 		this.superficie = superficie;
 		this.relacao = relacao;
 		montarLayout();

@@ -135,7 +135,7 @@ public class Superficie extends JDesktopPane {
 				}
 			}
 
-			if(origem != null) {
+			if (origem != null) {
 				linha.x1 = origem.x + Objeto.diametro / 2;
 				linha.y1 = origem.y + Objeto.diametro / 2;
 			}
@@ -158,6 +158,7 @@ public class Superficie extends JDesktopPane {
 			ultX = e.getX();
 			ultY = e.getY();
 			destino = null;
+			linha.ini();
 
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(ultX, ultY)) {
@@ -167,13 +168,13 @@ public class Superficie extends JDesktopPane {
 				}
 			}
 
-			if(origem == null || destino == null || origem == destino) {
+			if (origem == null || destino == null || origem == destino) {
 				return;
 			}
 
 			Relacao relacao = getRelacao(origem, destino);
 
-			if(relacao == null) {
+			if (relacao == null) {
 				relacao = new Relacao(origem, false, destino, true);
 				addRelacao(relacao);
 			}
@@ -369,6 +370,10 @@ public class Superficie extends JDesktopPane {
 	private class Linha {
 		int x1, y1, x2, y2;
 
+		void ini() {
+			x1 = y1 = x2 = y2 = 0;
+		}
+
 		void desenhar(Graphics2D g2) {
 			g2.drawLine(x1, y1, x2, y2);
 		}
@@ -381,6 +386,10 @@ public class Superficie extends JDesktopPane {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+		if (estado == Constantes.RELACAO) {
+			linha.desenhar(g2);
+		}
+
 		for (Relacao relacao : relacoes) {
 			relacao.desenhar(g2);
 		}
@@ -390,10 +399,6 @@ public class Superficie extends JDesktopPane {
 		}
 
 		area.desenhar(g2);
-
-		if (estado == Constantes.RELACAO) {
-			linha.desenhar(g2);
-		}
 	}
 
 	public void excluirSelecionados() {
