@@ -263,11 +263,11 @@ public class Objeto {
 		util.abrirTag("objeto");
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("desenharId", desenharId);
+		util.atributo("id", Util.escapar(id));
 		util.atributo("tabela", getTabela());
 		util.atributo("chaves", getChaves());
 		util.atributo("cor", cor.getRGB());
 		util.atributo("icone", icone);
-		util.atributo("id", id);
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag();

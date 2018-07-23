@@ -38,7 +38,7 @@ import br.com.persist.util.Util;
 
 public class FormularioObjeto extends JFrame implements ItemListener {
 	private static final long serialVersionUID = 1L;
-	private final JTextField txtComplemento = new JTextField(20);
+	private final JTextField txtComplemento = new JTextField(35);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Tabela tabela = new Tabela();

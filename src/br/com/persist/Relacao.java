@@ -197,10 +197,10 @@ public class Relacao {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("relacao");
-		util.atributo("origem", origem.getId());
-		util.atributo("pontoOrigem", pontoOrigem);
-		util.atributo("destino", destino.getId());
+		util.atributo("destino", Util.escapar(destino.getId()));
+		util.atributo("origem", Util.escapar(origem.getId()));
 		util.atributo("pontoDestino", pontoDestino);
+		util.atributo("pontoOrigem", pontoOrigem);
 		util.atributo("cor", cor.getRGB());
 		util.fecharTag();
 		if (!Util.estaVazio(getDescricao())) {
