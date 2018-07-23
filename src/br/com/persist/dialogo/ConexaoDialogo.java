@@ -90,7 +90,7 @@ public class ConexaoDialogo extends Dialogo {
 			if (linhas != null && linhas.length > 0) {
 				for (int i : linhas) {
 					Conexao c = modelo.getConexao(i);
-					modelo.adicionar(c);
+					modelo.adicionar(c.clonar());
 				}
 
 				modelo.fireTableDataChanged();
