@@ -55,6 +55,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 		cmbConexao.addItemListener(this);
 		toolbar.add(txtComplemento);
 		setTitle(objeto.getId());
+		toolbar.complementoBtn();
 		toolbar.add(cmbConexao);
 		this.objeto = objeto;
 		setSize(800, 600);
@@ -149,6 +150,37 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 			add(new Button(new AtualizarRegistrosAcao()));
 			add(new Button(new TotalizarRegistrosAcao()));
 			add(total);
+		}
+
+		void complementoBtn() {
+			add(new Button(new LimparAcao()));
+			add(new Button(new BaixarAcao()));
+		}
+	}
+
+	private class LimparAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public LimparAcao() {
+			super(false, "label.limpar", Icones.NOVO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			txtComplemento.setText("");
+		}
+	}
+
+	private class BaixarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public BaixarAcao() {
+			super(false, "label.baixar", Icones.BAIXAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			txtComplemento.setText(objeto.getComplemento());
 		}
 	}
 
