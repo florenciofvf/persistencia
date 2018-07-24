@@ -33,6 +33,7 @@ public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private final Vector<Conexao> conexoes = new Vector<>();
+	private final List<Objeto> copiados = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
 
 	public Formulario() {
@@ -44,6 +45,35 @@ public class Formulario extends JFrame {
 		setSize(800, 600);
 		montarLayout();
 		configurar();
+	}
+
+	public void copiar(Superficie superficie) {
+		copiados.clear();
+
+		for (Objeto objeto : superficie.getSelecionados()) {
+			copiados.add(objeto.clonar());
+		}
+	}
+
+	public void colar(Superficie superficie) {
+		for (Objeto objeto : copiados) {
+			Objeto clone = get(objeto, superficie);
+			superficie.addObjeto(clone);
+		}
+	}
+
+	private Objeto get(Objeto objeto, Superficie superficie) {
+		Objeto o = objeto.clonar();
+		o.setId(objeto.getId() + "-" + Objeto.getID());
+
+		boolean contem = superficie.contem(o);
+
+		while (contem) {
+			o.setId(objeto.getId() + "-" + Objeto.novoID());
+			contem = superficie.contem(o);
+		}
+
+		return o;
 	}
 
 	public Vector<Conexao> getConexoes() {

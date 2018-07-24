@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JDesktopPane;
@@ -88,6 +89,18 @@ public class Superficie extends JDesktopPane {
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(false);
 		}
+	}
+
+	public List<Objeto> getSelecionados() {
+		List<Objeto> resp = new ArrayList<>();
+
+		for (Objeto objeto : objetos) {
+			if (objeto.isSelecionado()) {
+				resp.add(objeto);
+			}
+		}
+
+		return resp;
 	}
 
 	private MouseAdapter mouseAdapterArrasto = new MouseAdapter() {

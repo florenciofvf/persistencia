@@ -63,6 +63,27 @@ public class Objeto {
 		this.y = y;
 	}
 
+	public Objeto clonar() {
+		Objeto o = new Objeto(x, y, cor, icone);
+
+		o.complemento = complemento;
+		o.desenharId = desenharId;
+		o.descricao = descricao;
+		o.tabela = tabela;
+		o.chaves = chaves;
+		o.setId(id);
+
+		return o;
+	}
+
+	public static long novoID() {
+		return ++ID;
+	}
+
+	public static long getID() {
+		return ID;
+	}
+
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 
