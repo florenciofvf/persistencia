@@ -64,6 +64,8 @@ public class Formulario extends JFrame {
 
 	private Objeto get(Objeto objeto, Superficie superficie) {
 		Objeto o = objeto.clonar();
+		o.x += Objeto.diametro;
+		o.y += Objeto.diametro;
 		o.setId(objeto.getId() + "-" + Objeto.getID());
 
 		boolean contem = superficie.contem(o);

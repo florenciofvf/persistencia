@@ -68,6 +68,9 @@ public class Container extends PanelBorder {
 			add(new Button(new SalvarAcao()));
 			add(new Button(new SalvarComoAcao()));
 			addSeparator();
+			add(new Button(new CopiarAcao()));
+			add(new Button(new ColarAcao()));
+			addSeparator();
 			add(new Button(new ExcluirAcao()));
 			add(new Button(new CriarObjetoAcao()));
 			add(btnRelacao);
@@ -140,6 +143,32 @@ public class Container extends PanelBorder {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			superficie.excluirSelecionados();
+		}
+	}
+
+	private class CopiarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public CopiarAcao() {
+			super(false, "label.copiar", Icones.COPIA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.copiar(superficie);
+		}
+	}
+
+	private class ColarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ColarAcao() {
+			super(false, "label.colar", Icones.COLAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.colar(superficie);
 		}
 	}
 
