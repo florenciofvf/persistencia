@@ -43,6 +43,7 @@ public class Imagens {
 		if (files != null) {
 			for (File f : files) {
 				String s = f.getName();
+
 				if (s.endsWith(".png")) {
 					s = s.substring(0, s.length() - 4);
 					getIcon(s);

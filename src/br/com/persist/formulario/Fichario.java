@@ -29,6 +29,7 @@ public class Fichario extends JTabbedPane {
 		TituloAba tituloAba = new TituloAba(this);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
+		container.estadoSelecao();
 	}
 
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes) {
@@ -41,6 +42,7 @@ public class Fichario extends JTabbedPane {
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setTitleAt(ultimoIndice, file.getName());
 		setSelectedIndex(ultimoIndice);
+		container.estadoSelecao();
 	}
 
 	private void inverter(int origem, int destino) {

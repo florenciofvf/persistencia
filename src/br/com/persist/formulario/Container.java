@@ -17,6 +17,7 @@ import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.ToggleButton;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -27,7 +28,7 @@ public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
 	private final JToggleButton btnArrasto = new JToggleButton(new ArrastoAcao());
 	private final JToggleButton btnRelacao = new JToggleButton(new RelacaoAcao());
-	private final JToggleButton btnSelecao = new JToggleButton(new SelecaoAcao());
+	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
@@ -55,9 +56,14 @@ public class Container extends PanelBorder {
 		return (Conexao) cmbConexao.getSelectedItem();
 	}
 
+	public void estadoSelecao() {
+		btnSelecao.click();
+	}
+
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes) {
 		superficie.abrir(objetos, relacoes);
 		arquivo = file;
+		btnSelecao.click();
 	}
 
 	private class Toolbar extends JToolBar {
@@ -183,6 +189,7 @@ public class Container extends PanelBorder {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (arquivo == null) {
+				btnSelecao.click();
 				return;
 			}
 
@@ -190,7 +197,6 @@ public class Container extends PanelBorder {
 				List<Relacao> relacoes = new ArrayList<>();
 				List<Objeto> objetos = new ArrayList<>();
 				XML.processar(arquivo, objetos, relacoes);
-
 				abrir(arquivo, objetos, relacoes);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
@@ -207,11 +213,11 @@ public class Container extends PanelBorder {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			superficie.configEstado(Constantes.SELECAO);
 			superficie.addObjeto(new Objeto(40, 40));
 			btnSelecao.setSelected(true);
 			superficie.limparSelecao();
 			superficie.repaint();
+			btnSelecao.click();
 		}
 	}
 
