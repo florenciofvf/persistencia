@@ -21,6 +21,16 @@ public class Fichario extends JTabbedPane {
 		addMouseListener(new Listener());
 	}
 
+	public void novoDesktop(Formulario formulario) {
+		Desktop desktop = new Desktop(formulario);
+		addTab(Mensagens.getString("label.desktop"), desktop);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+	}
+
 	public void novo(Formulario formulario) {
 		Container container = new Container(formulario);
 		addTab(Mensagens.getString("label.novo"), container);
