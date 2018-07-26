@@ -11,12 +11,12 @@ import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.formulario.Formulario;
 
-public class FormularioObjeto extends JFrame implements PainelObjetoListener {
+public class FormularioExterno extends JFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final PainelObjeto painelObjeto;
 	private final Formulario formulario;
 
-	public FormularioObjeto(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
+	public FormularioExterno(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
 		this.formulario = formulario;
 		painelObjeto = new PainelObjeto(this, objeto, g, padrao);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
