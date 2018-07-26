@@ -11,6 +11,9 @@ import java.awt.dnd.DropTargetListener;
 
 import javax.swing.JDesktopPane;
 
+import br.com.persist.Objeto;
+import br.com.persist.banco.Conexao;
+import br.com.persist.objeto.FormularioInterno;
 import br.com.persist.util.Util;
 
 public class Desktop extends JDesktopPane {
@@ -71,7 +74,10 @@ public class Desktop extends JDesktopPane {
 			if (Transferidor.flavor.equals(flavor)) {
 				try {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
-					System.out.println(array);
+					Conexao conexao = (Conexao) array[1];
+					Objeto objeto = (Objeto) array[0];
+					FormularioInterno form = new FormularioInterno(formulario, objeto, getGraphics(), conexao);
+					add(form);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
 				}
