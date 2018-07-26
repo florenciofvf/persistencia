@@ -17,6 +17,7 @@ public class Icones {
 	public static final Icon ATUALIZAR = criarImagem("refresh");
 	public static final Icon UM_PIXEL = criarImagem("um_pixel");
 	public static final Icon SINCRONIZAR = criarImagem("sync");
+	public static final Icon ARRASTAR = criarImagem("synonym");
 	public static final Icon EXCLUIR = criarImagem("excluir");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon SALVARC = criarImagem("saveas");
@@ -40,7 +41,6 @@ public class Icones {
 	public static final Icon SOMA = criarImagem("soma");
 	public static final Icon OLHO = criarImagem("eye");
 	public static final Icon MAO = criarImagem("mao");
-	public static final Icon PIN = criarImagem("pin");
 
 	private static ImageIcon criarImagem(String nome) {
 		try {

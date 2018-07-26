@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -33,6 +32,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Transferidor;
 import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.modelo.ModeloRegistro;
@@ -48,8 +48,8 @@ import br.com.persist.util.Util;
 
 public class PainelObjeto extends Panel implements ItemListener {
 	private static final long serialVersionUID = 1L;
-	private final JTextField txtComplemento = new JTextField(35);
-	private final Button btnArrasto = new Button(Icones.PIN);
+	private final Button btnArrasto = new Button(Icones.ARRASTAR);
+	private final TextField txtComplemento = new TextField(35);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;

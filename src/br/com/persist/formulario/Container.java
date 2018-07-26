@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import br.com.persist.Objeto;
@@ -26,8 +25,8 @@ import br.com.persist.xml.XML;
 
 public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
-	private final JToggleButton btnArrasto = new JToggleButton(new ArrastoAcao());
-	private final JToggleButton btnRelacao = new JToggleButton(new RelacaoAcao());
+	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
+	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -84,7 +83,7 @@ public class Container extends PanelBorder {
 			add(btnArrasto);
 			add(btnSelecao);
 			addSeparator();
-			add(new JToggleButton(new DesenhoIdAcao()));
+			add(new ToggleButton(new DesenhoIdAcao()));
 			addSeparator();
 		}
 	}
@@ -230,7 +229,7 @@ public class Container extends PanelBorder {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JToggleButton button = (JToggleButton) e.getSource();
+			ToggleButton button = (ToggleButton) e.getSource();
 			superficie.desenharIds(button.isSelected());
 		}
 	}
