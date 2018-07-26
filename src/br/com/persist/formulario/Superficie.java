@@ -20,6 +20,7 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
+import br.com.persist.objeto.FormularioObjeto;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;

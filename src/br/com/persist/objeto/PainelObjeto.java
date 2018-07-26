@@ -1,7 +1,8 @@
-package br.com.persist.formulario;
+package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
@@ -23,6 +23,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
+import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.modelo.ModeloRegistro;
@@ -36,33 +37,34 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class FormularioObjeto extends JFrame implements ItemListener {
+public class PainelObjeto extends Panel implements ItemListener {
 	private static final long serialVersionUID = 1L;
 	private final JTextField txtComplemento = new JTextField(35);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
+	private final PainelObjetoListener listener;
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final Objeto objeto;
 
-	public FormularioObjeto(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
-		cmbConexao = new JComboBox<>(formulario.getConexoes());
+	public PainelObjeto(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao) {
+		cmbConexao = new JComboBox<>(listener.getConexoes());
 		txtComplemento.setText(objeto.getComplemento());
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
 		cmbConexao.addItemListener(this);
 		toolbar.add(txtComplemento);
-		setTitle(objeto.getId());
+		this.listener = listener;
 		toolbar.complementoBtn();
 		toolbar.add(cmbConexao);
 		this.objeto = objeto;
-		setSize(800, 600);
-		setLocationRelativeTo(formulario);
 		processarObjeto("", g, null);
 		montarLayout();
-		setVisible(true);
+	}
+
+	public Frame getFrame() {
+		return listener.getFrame();
 	}
 
 	@Override
@@ -99,7 +101,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves,
 					objeto.getTabela());
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
-			setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
@@ -193,7 +195,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			dispose();
+			listener.dispose();
 		}
 	}
 
@@ -245,7 +247,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 				int i = Persistencia.getTotalRegistros(conn, objeto);
 				toolbar.total.setText("" + i);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("TOTAL", ex, FormularioObjeto.this);
+				Util.stackTraceAndMessage("TOTAL", ex, PainelObjeto.this);
 			}
 		}
 	}
@@ -262,7 +264,7 @@ public class FormularioObjeto extends JFrame implements ItemListener {
 			int[] linhas = tabela.getSelectedRows();
 
 			if (linhas != null && linhas.length > 0) {
-				if (Util.confirmaExclusao(FormularioObjeto.this)) {
+				if (Util.confirmaExclusao(PainelObjeto.this)) {
 					ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
 
 					List<List<IndiceValor>> listaValores = new ArrayList<>();

@@ -17,29 +17,29 @@ import javax.swing.table.TableCellRenderer;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.TextField;
-import br.com.persist.formulario.FormularioObjeto;
 import br.com.persist.modelo.ModeloOrdenacao;
+import br.com.persist.objeto.PainelObjeto;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
-	private final FormularioObjeto formulario;
+	private final PainelObjeto painelObjeto;
 	private final ModeloOrdenacao modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(FormularioObjeto formulario, ModeloOrdenacao modelo, Coluna coluna) {
+	public CabecalhoColuna(PainelObjeto painelObjeto, ModeloOrdenacao modelo, Coluna coluna) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
 		setBorder(BorderFactory.createEtchedBorder());
 		descricao = new Descricao(coluna.getNome());
 		filtro = new Filtro(coluna.getNome());
 		add(BorderLayout.CENTER, descricao);
 		add(BorderLayout.WEST, ordenacao);
+		this.painelObjeto = painelObjeto;
 		add(BorderLayout.EAST, filtro);
-		this.formulario = formulario;
 		this.modelo = modelo;
 	}
 
@@ -93,7 +93,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 
 		void filtrar(int x, int y) {
-			new FiltroCaixa(formulario, this, x, y);
+			new FiltroCaixa(painelObjeto.getFrame(), this, x, y);
 		}
 
 		void restaurar() {
@@ -132,7 +132,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					filtro.filtro = textField.getText();
-					formulario.processarObjeto(filtro.filtro, null, CabecalhoColuna.this);
+					painelObjeto.processarObjeto(filtro.filtro, null, CabecalhoColuna.this);
 					dispose();
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					dispose();
