@@ -4,6 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DragGestureEvent;
+import java.awt.dnd.DragGestureListener;
+import java.awt.dnd.DragSource;
+import java.awt.dnd.DragSourceDragEvent;
+import java.awt.dnd.DragSourceDropEvent;
+import java.awt.dnd.DragSourceEvent;
+import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -25,6 +33,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.formulario.Transferidor;
 import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.modelo.ModeloRegistro;
 import br.com.persist.tabela.CabecalhoColuna;
@@ -40,6 +49,7 @@ import br.com.persist.util.Util;
 public class PainelObjeto extends Panel implements ItemListener {
 	private static final long serialVersionUID = 1L;
 	private final JTextField txtComplemento = new JTextField(35);
+	private final Button btnArrasto = new Button(Icones.PIN);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
@@ -58,14 +68,51 @@ public class PainelObjeto extends Panel implements ItemListener {
 		this.listener = listener;
 		toolbar.complementoBtn();
 		toolbar.add(cmbConexao);
+		toolbar.add(btnArrasto);
 		this.objeto = objeto;
 		processarObjeto("", g, null);
 		montarLayout();
+		config();
 	}
 
 	public Frame getFrame() {
 		return listener.getFrame();
 	}
+
+	private void config() {
+		DragSource dragSource = DragSource.getDefaultDragSource();
+		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, listenerInicio);
+	}
+
+	private DragGestureListener listenerInicio = new DragGestureListener() {
+		@Override
+		public void dragGestureRecognized(DragGestureEvent dge) {
+			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+			dge.startDrag(null, new Transferidor(objeto, conexao), listenerArrasto);
+		}
+	};
+
+	private DragSourceListener listenerArrasto = new DragSourceListener() {
+		@Override
+		public void dropActionChanged(DragSourceDragEvent dsde) {
+		}
+
+		@Override
+		public void dragEnter(DragSourceDragEvent dsde) {
+		}
+
+		@Override
+		public void dragOver(DragSourceDragEvent dsde) {
+		}
+
+		@Override
+		public void dragExit(DragSourceEvent dse) {
+		}
+
+		@Override
+		public void dragDropEnd(DragSourceDropEvent dsde) {
+		}
+	};
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {

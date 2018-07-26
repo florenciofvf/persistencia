@@ -24,7 +24,7 @@ public class Icones {
 	public static final Icon FILTRO = criarImagem("filtro");
 	public static final Icon BAIXAR = criarImagem("baixar");
 	public static final Icon CURSOR = criarImagem("cursor");
-	public static final Icon PANEL2 = criarImagem("panel2");
+	public static final Icon PANEL3 = criarImagem("panel3");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon ORDEM = criarImagem("ordem");
@@ -40,6 +40,7 @@ public class Icones {
 	public static final Icon SOMA = criarImagem("soma");
 	public static final Icon OLHO = criarImagem("eye");
 	public static final Icon MAO = criarImagem("mao");
+	public static final Icon PIN = criarImagem("pin");
 
 	private static ImageIcon criarImagem(String nome) {
 		try {
