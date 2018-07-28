@@ -48,7 +48,7 @@ import br.com.persist.util.Util;
 
 public class PainelObjeto extends Panel implements ItemListener {
 	private static final long serialVersionUID = 1L;
-	private final Button btnArrasto = new Button(Icones.ARRASTAR);
+	private final Button btnArrasto = new Button(new DestacarAcao());
 	private final TextField txtComplemento = new TextField(35);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -243,6 +243,18 @@ public class PainelObjeto extends Panel implements ItemListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			listener.dispose();
+		}
+	}
+
+	private class DestacarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public DestacarAcao() {
+			super(false, "label.destacar", Icones.ARRASTAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
 		}
 	}
 

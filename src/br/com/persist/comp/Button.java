@@ -1,7 +1,6 @@
 package br.com.persist.comp;
 
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.JButton;
 
 public class Button extends JButton {
@@ -9,10 +8,6 @@ public class Button extends JButton {
 
 	public Button(Action action) {
 		super(action);
-	}
-
-	public Button(Icon icon) {
-		super(icon);
 	}
 
 	public Button() {
