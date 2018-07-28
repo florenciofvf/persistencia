@@ -28,6 +28,7 @@ public class Icones {
 	public static final Icon PANEL3 = criarImagem("panel3");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
+	public static final Icon CUBO2 = criarImagem("cubo2");
 	public static final Icon ORDEM = criarImagem("ordem");
 	public static final Icon BANCO = criarImagem("banco");
 	public static final Icon ASPAS = criarImagem("aspas");
@@ -35,6 +36,7 @@ public class Icones {
 	public static final Icon COLAR = criarImagem("paste");
 	public static final Icon COPIA = criarImagem("copy");
 	public static final Icon ABRIR = criarImagem("open");
+	public static final Icon CUBO = criarImagem("cubo");
 	public static final Icon NOVO = criarImagem("novo");
 	public static final Icon SAIR = criarImagem("sair");
 	public static final Icon SETA = criarImagem("seta");

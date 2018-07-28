@@ -26,7 +26,7 @@ public class Fichario extends JTabbedPane {
 		addTab(Mensagens.getString("label.desktop"), desktop);
 		int ultimoIndice = getTabCount() - 1;
 
-		TituloAba tituloAba = new TituloAba(this);
+		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 	}
@@ -36,7 +36,7 @@ public class Fichario extends JTabbedPane {
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 
-		TituloAba tituloAba = new TituloAba(this);
+		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 		container.estadoSelecao();
@@ -48,7 +48,7 @@ public class Fichario extends JTabbedPane {
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 
-		TituloAba tituloAba = new TituloAba(this);
+		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setTitleAt(ultimoIndice, file.getName());
 		setSelectedIndex(ultimoIndice);

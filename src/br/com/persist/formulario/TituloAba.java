@@ -16,23 +16,28 @@ import java.util.Objects;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
+import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 
 public class TituloAba extends Panel {
 	private static final long serialVersionUID = 1L;
+	private static final Icon[] ICONES = { Icones.CUBO, Icones.CUBO2 };
+	public static final byte OBJETOS = 0;
+	public static final byte DESKTOP = 1;
 	private final Fichario fichario;
 
-	public TituloAba(Fichario fichario) {
+	public TituloAba(Fichario fichario, byte tipo) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
 		Objects.requireNonNull(fichario);
 		this.fichario = fichario;
-		add(new Rotulo());
+		add(new Rotulo(tipo));
 		setOpaque(false);
 		add(new Icone());
 	}
@@ -40,8 +45,9 @@ public class TituloAba extends Panel {
 	private class Rotulo extends Label {
 		private static final long serialVersionUID = 1L;
 
-		Rotulo() {
+		Rotulo(byte tipo) {
 			setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+			setIcon(ICONES[tipo]);
 		}
 
 		@Override
