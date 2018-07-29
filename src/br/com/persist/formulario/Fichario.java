@@ -1,6 +1,8 @@
 package br.com.persist.formulario;
 
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -15,10 +17,23 @@ import br.com.persist.util.Mensagens;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
+	private final Listener listener = new Listener();
+	private Rectangle rectangle;
 	private Ponto ponto;
+	private int ultX;
 
 	public Fichario() {
-		addMouseListener(new Listener());
+		addMouseMotionListener(listener);
+		addMouseListener(listener);
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+
+		if (rectangle != null) {
+			g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+		}
 	}
 
 	public void novoDesktop(Formulario formulario) {
@@ -70,8 +85,36 @@ public class Fichario extends JTabbedPane {
 
 	private class Listener extends MouseAdapter {
 		@Override
+		public void mousePressed(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			int indice = indexAtLocation(x, y);
+			ponto = new Ponto(x, y);
+			ultX = x;
+
+			if (indice != -1) {
+				rectangle = getBoundsAt(indice);
+			}
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			if (rectangle != null) {
+				int recX = e.getX();
+
+				rectangle.x += recX - ultX;
+
+				ultX = recX;
+				repaint();
+			}
+		}
+
+		@Override
 		public void mouseReleased(MouseEvent e) {
+			rectangle = null;
+
 			if (ponto == null) {
+				repaint();
 				return;
 			}
 
@@ -81,11 +124,8 @@ public class Fichario extends JTabbedPane {
 			if (origem != -1 && destino != -1 && origem != destino) {
 				inverter(origem, destino);
 			}
-		}
 
-		@Override
-		public void mousePressed(MouseEvent e) {
-			ponto = new Ponto(e.getX(), e.getY());
+			repaint();
 		}
 	}
 
