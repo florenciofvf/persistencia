@@ -101,9 +101,7 @@ public class Fichario extends JTabbedPane {
 		public void mouseDragged(MouseEvent e) {
 			if (rectangle != null) {
 				int recX = e.getX();
-
 				rectangle.x += recX - ultX;
-
 				ultX = recX;
 				repaint();
 			}
