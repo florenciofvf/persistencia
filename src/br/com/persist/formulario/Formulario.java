@@ -191,19 +191,22 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fileChooser = new JFileChooser(".");
+			fileChooser.setMultiSelectionEnabled(true);
 			int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 			if (opcao == JFileChooser.APPROVE_OPTION) {
-				File file = fileChooser.getSelectedFile();
+				File files[] = fileChooser.getSelectedFiles();
 
-				if (file != null) {
-					try {
-						List<Relacao> relacoes = new ArrayList<>();
-						List<Objeto> objetos = new ArrayList<>();
-						XML.processar(file, objetos, relacoes);
-						fichario.abrir(Formulario.this, file, objetos, relacoes);
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+				if (files != null) {
+					for (File file : files) {
+						try {
+							List<Relacao> relacoes = new ArrayList<>();
+							List<Objeto> objetos = new ArrayList<>();
+							XML.processar(file, objetos, relacoes);
+							fichario.abrir(Formulario.this, file, objetos, relacoes);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+						}
 					}
 				}
 			}
