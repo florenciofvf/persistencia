@@ -112,6 +112,8 @@ public class Tabela extends JTable {
 			add(new MenuItem(new CopiarAcao()));
 			addSeparator();
 			add(new MenuItem(new CopiarAspasAcao()));
+			addSeparator();
+			add(new MenuItem(new CopiarNomeAcao()));
 		}
 
 		private class CopiarAcao extends Acao {
@@ -139,6 +141,20 @@ public class Tabela extends JTable {
 			public void actionPerformed(ActionEvent e) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
 				Util.setContentTransfered(Util.getStringLista(lista, true));
+			}
+		}
+
+		private class CopiarNomeAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarNomeAcao() {
+				super(true, "label.copiar_nome_coluna", null);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nome = getModel().getColumnName(tag);
+				Util.setContentTransfered(nome);
 			}
 		}
 	}
