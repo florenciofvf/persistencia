@@ -23,6 +23,7 @@ public class Fichario extends JTabbedPane {
 	private int ultX;
 
 	public Fichario() {
+		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
 	}

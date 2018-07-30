@@ -21,6 +21,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.dialogo.ConexaoDialogo;
+import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.modelo.ModeloConexao;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
@@ -136,6 +137,8 @@ public class Formulario extends JFrame {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
 			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuItem(new ConfigAcao()));
+			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new FecharAcao(true)));
 			add(menuArquivo);
 			add(menuLAF);
@@ -152,6 +155,19 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			new ConexaoDialogo(Formulario.this);
+		}
+	}
+
+	private class ConfigAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ConfigAcao() {
+			super(true, "label.configuracoes", Icones.CONFIG);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new ConfigDialogo(Formulario.this);
 		}
 	}
 
