@@ -11,9 +11,11 @@ public class Icones {
 	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
 
 	public static final Icon DESC_NUMERO = criarImagem("desc_numero");
+	public static final Icon HORIZONTAL = criarImagem("horizontal");
 	public static final Icon ASC_NUMERO = criarImagem("asc_numero");
 	public static final Icon DESC_TEXTO = criarImagem("desc_texto");
 	public static final Icon ASC_TEXTO = criarImagem("asc_texto");
+	public static final Icon VERTICAL = criarImagem("vertical");
 	public static final Icon ATUALIZAR = criarImagem("refresh");
 	public static final Icon UM_PIXEL = criarImagem("um_pixel");
 	public static final Icon SINCRONIZAR = criarImagem("sync");

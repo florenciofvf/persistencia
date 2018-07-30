@@ -630,7 +630,7 @@ public class Superficie extends JDesktopPane {
 		private final boolean horizontal;
 
 		public AlinhamentoAcao(boolean horizontal, String chave) {
-			super(true, chave, null);
+			super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
 			this.horizontal = horizontal;
 		}
 
