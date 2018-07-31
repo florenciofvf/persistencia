@@ -27,6 +27,7 @@ public class Fichario extends JTabbedPane {
 	private Rectangle rectangle;
 	private Ponto ponto;
 	private int ultX;
+	private int ultY;
 
 	public Fichario() {
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
@@ -130,6 +131,7 @@ public class Fichario extends JTabbedPane {
 			int indice = indexAtLocation(x, y);
 			ponto = new Ponto(x, y);
 			ultX = x;
+			ultY = y;
 
 			if (indice != -1) {
 				rectangle = getBoundsAt(indice);
@@ -140,8 +142,11 @@ public class Fichario extends JTabbedPane {
 		public void mouseDragged(MouseEvent e) {
 			if (rectangle != null) {
 				int recX = e.getX();
+				int recY = e.getY();
 				rectangle.x += recX - ultX;
+				rectangle.y += recY - ultY;
 				ultX = recX;
+				ultY = recY;
 				repaint();
 			}
 		}
