@@ -51,7 +51,7 @@ public class Transferidor implements Transferable {
 	@Override
 	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
 		if (Transferidor.flavor.equals(flavor)) {
-			return new Object[] { objeto, conexao, dimension};
+			return new Object[] { objeto, conexao, dimension };
 		}
 
 		throw new UnsupportedFlavorException(flavor);
