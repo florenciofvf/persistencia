@@ -88,7 +88,7 @@ public class PainelObjeto extends Panel implements ItemListener {
 		@Override
 		public void dragGestureRecognized(DragGestureEvent dge) {
 			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-			dge.startDrag(null, new Transferidor(objeto, conexao), listenerArrasto);
+			dge.startDrag(null, new Transferidor(objeto, conexao, listener.getDimensoes()), listenerArrasto);
 		}
 	};
 

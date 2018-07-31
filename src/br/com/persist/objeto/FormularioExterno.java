@@ -1,6 +1,7 @@
 package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.util.Vector;
@@ -35,6 +36,11 @@ public class FormularioExterno extends JFrame implements PainelObjetoListener {
 	@Override
 	public Vector<Conexao> getConexoes() {
 		return formulario.getConexoes();
+	}
+
+	@Override
+	public Dimension getDimensoes() {
+		return getSize();
 	}
 
 	@Override

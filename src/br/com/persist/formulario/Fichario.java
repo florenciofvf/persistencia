@@ -2,7 +2,13 @@ package br.com.persist.formulario;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -24,9 +30,41 @@ public class Fichario extends JTabbedPane {
 
 	public Fichario() {
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
+		new DropTarget(this, listenerSoltar);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
 	}
+
+	private DropTargetListener listenerSoltar = new DropTargetListener() {
+		@Override
+		public void dropActionChanged(DropTargetDragEvent e) {
+			e.rejectDrag();
+		}
+
+		@Override
+		public void dragEnter(DropTargetDragEvent e) {
+			e.rejectDrag();
+		}
+
+		@Override
+		public void dragOver(DropTargetDragEvent dtde) {
+			Point point = dtde.getLocation();
+			int indice = indexAtLocation(point.x, point.y);
+
+			if (indice != -1 && indice != getSelectedIndex()) {
+				setSelectedIndex(indice);
+			}
+		}
+
+		@Override
+		public void dragExit(DropTargetEvent dte) {
+		}
+
+		@Override
+		public void drop(DropTargetDropEvent e) {
+			e.rejectDrop();
+		}
+	};
 
 	@Override
 	public void paint(Graphics g) {

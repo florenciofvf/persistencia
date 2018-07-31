@@ -1,5 +1,6 @@
 package br.com.persist.formulario;
 
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -74,9 +75,12 @@ public class Desktop extends JDesktopPane {
 			if (Transferidor.flavor.equals(flavor)) {
 				try {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
+					Dimension dimension = (Dimension) array[2];
 					Conexao conexao = (Conexao) array[1];
 					Objeto objeto = (Objeto) array[0];
 					FormularioInterno form = new FormularioInterno(formulario, objeto, getGraphics(), conexao);
+					form.setLocation(e.getLocation());
+					form.setSize(dimension);
 					add(form);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
