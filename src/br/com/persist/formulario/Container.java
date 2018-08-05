@@ -173,7 +173,7 @@ public class Container extends PanelBorder {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			formulario.colar(superficie);
+			formulario.colar(superficie, false, 0, 0);
 			superficie.repaint();
 		}
 	}

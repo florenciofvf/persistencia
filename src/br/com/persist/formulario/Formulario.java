@@ -56,10 +56,15 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	public void colar(Superficie superficie) {
+	public void colar(Superficie superficie, boolean b, int x, int y) {
 		for (Objeto objeto : copiados) {
 			Objeto clone = get(objeto, superficie);
 			superficie.addObjeto(clone);
+
+			if (b) {
+				clone.x = x;
+				clone.y = y;
+			}
 		}
 	}
 
