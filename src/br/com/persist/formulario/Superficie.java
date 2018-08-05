@@ -266,6 +266,7 @@ public class Superficie extends JDesktopPane {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
+				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			}
 		}
@@ -313,6 +314,7 @@ public class Superficie extends JDesktopPane {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
+				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, e.getX(), e.getY());
 			}
 		}
@@ -598,16 +600,47 @@ public class Superficie extends JDesktopPane {
 
 	private class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
 
 		SuperficiePopup() {
 			add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
 			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
+			addSeparator();
+			add(itemCopiar);
+			// add(new MenuItem(new ColarAcao()));
 			addSeparator();
 			add(new MenuItem(new ExcluirAcao()));
 			addSeparator();
 			add(new MenuItem(new ConfiguracaoAcao()));
 		}
 	}
+
+	private class CopiarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public CopiarAcao() {
+			super(true, "label.copiar", Icones.COPIA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.copiar(Superficie.this);
+		}
+	}
+
+	// private class ColarAcao extends Acao {
+	// private static final long serialVersionUID = 1L;
+	//
+	// public ColarAcao() {
+	// super(true, "label.colar", Icones.COLAR);
+	// }
+	//
+	// @Override
+	// public void actionPerformed(ActionEvent e) {
+	// formulario.colar(Superficie.this);
+	// repaint();
+	// }
+	// }
 
 	private class ExcluirAcao extends Acao {
 		private static final long serialVersionUID = 1L;
