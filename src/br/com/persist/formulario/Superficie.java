@@ -603,7 +603,22 @@ public class Superficie extends JDesktopPane {
 			add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
 			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
 			addSeparator();
+			add(new MenuItem(new ExcluirAcao()));
+			addSeparator();
 			add(new MenuItem(new ConfiguracaoAcao()));
+		}
+	}
+
+	private class ExcluirAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ExcluirAcao() {
+			super(true, "label.excluir", Icones.EXCLUIR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			excluirSelecionados();
 		}
 	}
 
