@@ -29,6 +29,7 @@ import br.com.persist.util.XMLUtil;
 
 public class Superficie extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
+	private SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private SuperficiePopup popup = new SuperficiePopup();
 	private final Inversao inversao = new Inversao();
 	private final Linha linha = new Linha();
@@ -268,6 +269,10 @@ public class Superficie extends JDesktopPane {
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
+			} else if (e.isPopupTrigger()) {
+				popup2.x = x;
+				popup2.y = y;
+				popup2.show(Superficie.this, x, y);
 			}
 		}
 
@@ -299,6 +304,9 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+
 			if (area.largura > Objeto.diametro && area.altura > Objeto.diametro) {
 				for (Objeto objeto : objetos) {
 					if (area.contem(objeto)) {
@@ -315,7 +323,11 @@ public class Superficie extends JDesktopPane {
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
-				popup.show(Superficie.this, e.getX(), e.getY());
+				popup.show(Superficie.this, x, y);
+			} else if (e.isPopupTrigger()) {
+				popup2.x = x;
+				popup2.y = y;
+				popup2.show(Superficie.this, x, y);
 			}
 		}
 
@@ -628,19 +640,28 @@ public class Superficie extends JDesktopPane {
 		}
 	}
 
-	// private class ColarAcao extends Acao {
-	// private static final long serialVersionUID = 1L;
-	//
-	// public ColarAcao() {
-	// super(true, "label.colar", Icones.COLAR);
-	// }
-	//
-	// @Override
-	// public void actionPerformed(ActionEvent e) {
-	// formulario.colar(Superficie.this);
-	// repaint();
-	// }
-	// }
+	private class SuperficiePopup2 extends Popup {
+		private static final long serialVersionUID = 1L;
+		int x, y;
+
+		SuperficiePopup2() {
+			add(new MenuItem(new ColarAcao()));
+		}
+	}
+
+	private class ColarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ColarAcao() {
+			super(true, "label.colar", Icones.COLAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.colar(Superficie.this, true, popup2.x, popup2.y);
+			repaint();
+		}
+	}
 
 	private class ExcluirAcao extends Acao {
 		private static final long serialVersionUID = 1L;
