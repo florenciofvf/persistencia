@@ -56,10 +56,30 @@ public class ConexaoDialogo extends Dialogo {
 		private static final long serialVersionUID = 1L;
 
 		public Toolbar() {
+			add(new Button(new TopAcao()));
 			add(new Button(new NovoAcao()));
 			add(new Button(new CopiaAcao()));
 			add(new Button(new AbrirAcao()));
 			add(new Button(new SalvarAcao()));
+		}
+	}
+
+	private class TopAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public TopAcao() {
+			super(false, "label.primeiro", Icones.TOP);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
+				modelo.primeiro(linhas[0]);
+				modelo.fireTableDataChanged();
+				tabela.setRowSelectionInterval(0, 0);
+			}
 		}
 	}
 

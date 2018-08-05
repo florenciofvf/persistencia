@@ -34,6 +34,13 @@ public class ModeloConexao extends AbstractTableModel {
 		}
 	}
 
+	public void primeiro(int indice) {
+		if (indice > 0 && indice < getRowCount()) {
+			Conexao conexao = conexoes.remove(indice);
+			conexoes.add(0, conexao);
+		}
+	}
+
 	@Override
 	public int getRowCount() {
 		return conexoes.size();
