@@ -70,6 +70,7 @@ public class Container extends PanelBorder {
 
 		public Toolbar() {
 			add(new Button(new BaixarAcao()));
+			addSeparator();
 			add(new Button(new SalvarAcao()));
 			add(new Button(new SalvarComoAcao()));
 			addSeparator();
