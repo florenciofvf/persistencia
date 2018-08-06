@@ -36,12 +36,12 @@ public class Persistencia {
 		return total;
 	}
 
-	public static ModeloRegistro criarModeloRegistro(Connection conn, String consulta, String[] chaves, String tabela)
+	public static ModeloRegistro criarModeloRegistro(Connection conn, String consulta, String[] chaves, Objeto objeto)
 			throws Exception {
 		PreparedStatement psmt = conn.prepareStatement(consulta);
 
 		ResultSet rs = psmt.executeQuery();
-		ModeloRegistro modelo = criarModelo(rs, chaves, tabela);
+		ModeloRegistro modelo = criarModelo(rs, chaves, objeto.getTabela());
 
 		rs.close();
 		psmt.close();

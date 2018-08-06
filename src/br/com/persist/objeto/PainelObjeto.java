@@ -145,8 +145,7 @@ public class PainelObjeto extends Panel implements ItemListener {
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves,
-					objeto.getTabela());
+			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves, objeto);
 			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
@@ -177,7 +176,7 @@ public class PainelObjeto extends Panel implements ItemListener {
 
 			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g, 40);
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage("FILTRO", ex, this);
+			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
 		}
 	}
 
