@@ -632,12 +632,12 @@ public class Superficie extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 
 		public DestacarAcao() {
-			super(false, "label.destacar", Icones.ARRASTAR);
+			super(true, "label.destacar", Icones.ARRASTAR);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(Superficie.this);
+			formulario.destacar(container.getConexaoPadrao(), Superficie.this);
 		}
 	}
 

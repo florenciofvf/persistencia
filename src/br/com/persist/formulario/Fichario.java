@@ -1,6 +1,7 @@
 package br.com.persist.formulario;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -19,7 +20,9 @@ import javax.swing.JTabbedPane;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.banco.Conexao;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
@@ -76,11 +79,40 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void destacar(Formulario formulario, List<Objeto> objetos) {
+	public void destacar(Formulario formulario, Conexao conexao, List<Objeto> objetos) {
+		boolean continua = false;
 
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela())) {
+				continua = true;
+				break;
+			}
+		}
+
+		if (!continua) {
+			return;
+		}
+
+		Desktop desktop = novoDesktop(formulario);
+
+		int x = 10;
+		int y = 10;
+
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela())) {
+				Object[] array = criarArray(conexao, objeto);
+				desktop.addForm(array, new Point(x, y));
+				x += 20;
+				y += 20;
+			}
+		}
 	}
 
-	public void novoDesktop(Formulario formulario) {
+	private Object[] criarArray(Conexao conexao, Objeto objeto) {
+		return new Object[] { objeto, conexao, new Dimension(400, 250) };
+	}
+
+	public Desktop novoDesktop(Formulario formulario) {
 		Desktop desktop = new Desktop(formulario);
 		addTab(Mensagens.getString("label.desktop"), desktop);
 		int ultimoIndice = getTabCount() - 1;
@@ -88,6 +120,8 @@ public class Fichario extends JTabbedPane {
 		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
+
+		return desktop;
 	}
 
 	public void novo(Formulario formulario) {

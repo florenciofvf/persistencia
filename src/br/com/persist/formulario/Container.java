@@ -100,7 +100,7 @@ public class Container extends PanelBorder {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(superficie);
+			formulario.destacar(getConexaoPadrao(), superficie);
 		}
 	}
 
