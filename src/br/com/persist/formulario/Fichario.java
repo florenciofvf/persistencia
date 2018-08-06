@@ -102,8 +102,8 @@ public class Fichario extends JTabbedPane {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				Object[] array = criarArray(conexao, objeto);
 				desktop.addForm(array, new Point(x, y));
-				x += 20;
-				y += 20;
+				x += 25;
+				y += 25;
 			}
 		}
 	}

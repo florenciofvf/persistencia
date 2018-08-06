@@ -10,6 +10,7 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
 
@@ -94,6 +95,10 @@ public class Desktop extends JDesktopPane {
 		form.setLocation(point);
 		form.setSize(dimension);
 		add(form);
+		try {
+			form.setSelected(true);
+		} catch (PropertyVetoException e) {
+		}
 	}
 
 	private boolean validoSoltar(DropTargetDragEvent e) {
