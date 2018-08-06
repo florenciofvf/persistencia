@@ -77,6 +77,8 @@ public class Container extends PanelBorder {
 			add(new Button(new CopiarAcao()));
 			add(new Button(new ColarAcao()));
 			addSeparator();
+			add(new Button(new DestacarAcao()));
+			addSeparator();
 			add(new Button(new ExcluirAcao()));
 			add(new Button(new CriarObjetoAcao()));
 			add(btnRelacao);
@@ -86,6 +88,19 @@ public class Container extends PanelBorder {
 			addSeparator();
 			add(new ToggleButton(new DesenhoIdAcao()));
 			addSeparator();
+		}
+	}
+
+	private class DestacarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public DestacarAcao() {
+			super(false, "label.destacar", Icones.ARRASTAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.destacar(superficie);
 		}
 	}
 

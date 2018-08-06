@@ -619,11 +619,25 @@ public class Superficie extends JDesktopPane {
 			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
 			addSeparator();
 			add(itemCopiar);
-			// add(new MenuItem(new ColarAcao()));
 			addSeparator();
 			add(new MenuItem(new ExcluirAcao()));
 			addSeparator();
+			add(new MenuItem(new DestacarAcao()));
+			addSeparator();
 			add(new MenuItem(new ConfiguracaoAcao()));
+		}
+	}
+
+	private class DestacarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public DestacarAcao() {
+			super(false, "label.destacar", Icones.ARRASTAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.destacar(Superficie.this);
 		}
 	}
 

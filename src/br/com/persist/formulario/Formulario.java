@@ -48,6 +48,10 @@ public class Formulario extends JFrame {
 		configurar();
 	}
 
+	public void destacar(Superficie superficie) {
+		fichario.destacar(this, superficie.getSelecionados());
+	}
+
 	public void copiar(Superficie superficie) {
 		copiados.clear();
 

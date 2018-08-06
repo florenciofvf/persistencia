@@ -76,6 +76,10 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public void destacar(Formulario formulario, List<Objeto> objetos) {
+
+	}
+
 	public void novoDesktop(Formulario formulario) {
 		Desktop desktop = new Desktop(formulario);
 		addTab(Mensagens.getString("label.desktop"), desktop);
