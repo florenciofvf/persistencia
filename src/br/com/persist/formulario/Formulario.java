@@ -36,6 +36,7 @@ public class Formulario extends JFrame {
 	private final Vector<Conexao> conexoes = new Vector<>();
 	private final List<Objeto> copiados = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
+	private File arquivo;
 
 	public Formulario() {
 		super(Mensagens.getString("label.persistencia"));
@@ -217,6 +218,9 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fileChooser = new JFileChooser(".");
+			if (arquivo != null) {
+				fileChooser.setCurrentDirectory(arquivo);
+			}
 			fileChooser.setMultiSelectionEnabled(true);
 			int opcao = fileChooser.showOpenDialog(Formulario.this);
 
@@ -226,6 +230,7 @@ public class Formulario extends JFrame {
 				if (files != null) {
 					for (File file : files) {
 						try {
+							arquivo = file.getParentFile();
 							List<Relacao> relacoes = new ArrayList<>();
 							List<Objeto> objetos = new ArrayList<>();
 							XML.processar(file, objetos, relacoes);
