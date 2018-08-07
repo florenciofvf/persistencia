@@ -56,6 +56,7 @@ public class Objeto {
 	}
 
 	public Objeto(int x, int y, Color cor, String icone) {
+		desenharId = true;
 		id = "" + (++ID);
 		setIcone(icone);
 		setCor(cor);
