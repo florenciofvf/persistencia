@@ -267,8 +267,7 @@ public class Superficie extends JDesktopPane {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
-				popup.itemDestacar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.popupObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
@@ -323,8 +322,7 @@ public class Superficie extends JDesktopPane {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
-				popup.itemDestacar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.popupObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
@@ -614,20 +612,29 @@ public class Superficie extends JDesktopPane {
 
 	private class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
+		MenuItem itemHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
+		MenuItem itemVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
+		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
 
 		SuperficiePopup() {
-			add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
-			add(new MenuItem(new AlinhamentoAcao(false, "label.vertical")));
+			add(itemHorizontal);
+			add(itemVertical);
 			addSeparator();
 			add(itemCopiar);
 			addSeparator();
-			add(new MenuItem(new ExcluirAcao()));
-			addSeparator();
 			add(itemDestacar);
 			addSeparator();
+			add(new MenuItem(new ExcluirAcao()));
+			addSeparator();
 			add(new MenuItem(new ConfiguracaoAcao()));
+		}
+
+		void popupObjeto(boolean b) {
+			itemHorizontal.setEnabled(b);
+			itemVertical.setEnabled(b);
+			itemDestacar.setEnabled(b);
+			itemCopiar.setEnabled(b);
 		}
 	}
 
