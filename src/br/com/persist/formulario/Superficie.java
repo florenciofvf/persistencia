@@ -268,6 +268,7 @@ public class Superficie extends JDesktopPane {
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.itemDestacar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
@@ -323,6 +324,7 @@ public class Superficie extends JDesktopPane {
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.itemCopiar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.itemDestacar.setEnabled(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
@@ -613,6 +615,7 @@ public class Superficie extends JDesktopPane {
 	private class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
+		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
 
 		SuperficiePopup() {
 			add(new MenuItem(new AlinhamentoAcao(true, "label.horizontal")));
@@ -622,7 +625,7 @@ public class Superficie extends JDesktopPane {
 			addSeparator();
 			add(new MenuItem(new ExcluirAcao()));
 			addSeparator();
-			add(new MenuItem(new DestacarAcao()));
+			add(itemDestacar);
 			addSeparator();
 			add(new MenuItem(new ConfiguracaoAcao()));
 		}

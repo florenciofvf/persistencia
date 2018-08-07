@@ -146,7 +146,7 @@ public class Relacao {
 		int _x1 = (int) (X * hPos);
 		int _y1 = (int) (Y * hPos);
 
-		return comprimento(_x1, _y1, xPos, yPos) < 4;
+		return comprimento(_x1, _y1, xPos, yPos) < 7;
 	}
 
 	private int comprimento(int x1, int y1, int x2, int y2) {
