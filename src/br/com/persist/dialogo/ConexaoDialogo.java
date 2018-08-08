@@ -57,8 +57,12 @@ public class ConexaoDialogo extends Dialogo {
 
 		public Toolbar() {
 			add(new Button(new TopAcao()));
+			addSeparator();
+			add(new Button(new FecharAcao()));
+			addSeparator();
 			add(new Button(new NovoAcao()));
 			add(new Button(new CopiaAcao()));
+			addSeparator();
 			add(new Button(new AbrirAcao()));
 			add(new Button(new SalvarAcao()));
 		}
@@ -79,6 +83,23 @@ public class ConexaoDialogo extends Dialogo {
 				modelo.primeiro(linhas[0]);
 				modelo.fireTableDataChanged();
 				tabela.setRowSelectionInterval(0, 0);
+			}
+		}
+	}
+
+	private class FecharAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public FecharAcao() {
+			super(false, "label.final_conexoes", Icones.BANCO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				Conexao.fecharConexoes();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
 			}
 		}
 	}
