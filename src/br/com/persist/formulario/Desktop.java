@@ -10,23 +10,61 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
+import br.com.persist.comp.MenuItem;
+import br.com.persist.comp.Popup;
 import br.com.persist.objeto.FormularioInterno;
+import br.com.persist.util.Acao;
+import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class Desktop extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
+	private DesktopPopup popup = new DesktopPopup();
 	private final Formulario formulario;
 
 	public Desktop(Formulario formulario) {
+		addMouseListener(mouseAdapter);
 		new DropTarget(this, listener);
 		this.formulario = formulario;
 	}
+
+	private void centralizar() {
+		double largura = getSize().getWidth();
+
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame.getWidth() >= largura) {
+				frame.setLocation(0, frame.getY());
+			} else {
+				frame.setLocation((int) ((largura - frame.getWidth()) / 2), frame.getY());
+			}
+		}
+	}
+
+	private MouseAdapter mouseAdapter = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				popup.show(Desktop.this, e.getX(), e.getY());
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				popup.show(Desktop.this, e.getX(), e.getY());
+			}
+		}
+	};
 
 	private DropTargetListener listener = new DropTargetListener() {
 		@Override
@@ -107,5 +145,27 @@ public class Desktop extends JDesktopPane {
 
 	private boolean validoSoltar(DropTargetDropEvent e) {
 		return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
+	}
+
+	private class DesktopPopup extends Popup {
+		private static final long serialVersionUID = 1L;
+		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
+
+		DesktopPopup() {
+			add(itemCentralizar);
+		}
+	}
+
+	private class CentralizarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public CentralizarAcao() {
+			super(true, "label.centralizar", Icones.CENTRALIZAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			centralizar();
+		}
 	}
 }
