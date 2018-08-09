@@ -201,6 +201,8 @@ public class PainelObjeto extends Panel implements ItemListener {
 		}
 
 		void complementoBtn() {
+			add(new Button(new MaximoAcao()));
+			addSeparator();
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
 		}
@@ -229,6 +231,29 @@ public class PainelObjeto extends Panel implements ItemListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			txtComplemento.setText(objeto.getComplemento());
+		}
+	}
+
+	private class MaximoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public MaximoAcao() {
+			super(false, "label.maximo", Icones.VAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (Util.estaVazio(objeto.getChaves())) {
+				txtComplemento.setText("");
+				return;
+			}
+
+			String[] chaves = objeto.getChaves().trim().split(",");
+
+			if (chaves.length == 1) {
+				txtComplemento.setText(
+						"AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM " + objeto.getTabela() + ")");
+			}
 		}
 	}
 

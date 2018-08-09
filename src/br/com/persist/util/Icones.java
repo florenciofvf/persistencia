@@ -47,6 +47,7 @@ public class Icones {
 	public static final Icon OLHO = criarImagem("eye");
 	public static final Icon MAO = criarImagem("mao");
 	public static final Icon TOP = criarImagem("top");
+	public static final Icon VAR = criarImagem("var");
 
 	private static ImageIcon criarImagem(String nome) {
 		try {
