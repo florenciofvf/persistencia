@@ -16,6 +16,7 @@ import javax.swing.JDesktopPane;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.banco.Conexao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.dialogo.ObjetoDialogo;
@@ -345,7 +346,13 @@ public class Superficie extends JDesktopPane {
 
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela())) {
-					new FormularioExterno(formulario, selecionadoObjeto, getGraphics(), container.getConexaoPadrao());
+					Conexao conexao = container.getConexaoPadrao();
+
+					if (conexao != null && Util.estaVazio(selecionadoObjeto.getComplemento())) {
+						selecionadoObjeto.setComplemento(conexao.getFinalComplemento());
+					}
+
+					new FormularioExterno(formulario, selecionadoObjeto, getGraphics(), conexao);
 
 				} else if (selecionadoRelacao != null) {
 					new RelacaoDialogo(formulario, Superficie.this, selecionadoRelacao);
