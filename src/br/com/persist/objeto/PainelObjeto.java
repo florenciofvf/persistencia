@@ -194,8 +194,10 @@ public class PainelObjeto extends Panel implements ItemListener {
 			add(new Button(new FecharAcao()));
 			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
+			addSeparator();
 			add(new Button(new SincronizarRegistrosAcao()));
 			add(new Button(new AtualizarRegistrosAcao()));
+			addSeparator();
 			add(new Button(new TotalizarRegistrosAcao()));
 			add(total);
 		}
