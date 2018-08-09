@@ -22,7 +22,7 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 		this.formulario = formulario;
 		painelObjeto = new PainelObjeto(this, objeto, g, padrao);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(800, 600);
+		setSize(1000, 600);
 		montarLayout();
 		setVisible(true);
 	}

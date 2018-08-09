@@ -44,7 +44,7 @@ public class Formulario extends JFrame {
 		FormularioUtil.configMAC(this);
 		setLayout(new BorderLayout());
 		setJMenuBar(menuPrincipal);
-		setSize(800, 600);
+		setSize(1000, 600);
 		montarLayout();
 		configurar();
 	}
