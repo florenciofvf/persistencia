@@ -347,11 +347,7 @@ public class Superficie extends JDesktopPane {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela())) {
 					Conexao conexao = container.getConexaoPadrao();
-
-					if (conexao != null && Util.estaVazio(selecionadoObjeto.getComplemento())) {
-						selecionadoObjeto.setComplemento(conexao.getFinalComplemento());
-					}
-
+					setComplemento(conexao, selecionadoObjeto);
 					new FormularioExterno(formulario, selecionadoObjeto, getGraphics(), conexao);
 
 				} else if (selecionadoRelacao != null) {
@@ -360,6 +356,12 @@ public class Superficie extends JDesktopPane {
 			}
 		}
 	};
+
+	public static void setComplemento(Conexao conexao, Objeto objeto) {
+		if (conexao != null && objeto != null && Util.estaVazio(objeto.getComplemento())) {
+			objeto.setComplemento(conexao.getFinalComplemento());
+		}
+	}
 
 	private class Inversao {
 		Objeto ultimo;

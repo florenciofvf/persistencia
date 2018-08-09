@@ -109,6 +109,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private Object[] criarArray(Conexao conexao, Objeto objeto) {
+		Superficie.setComplemento(conexao, objeto);
 		return new Object[] { objeto, conexao, new Dimension(400, 250) };
 	}
 
