@@ -14,6 +14,8 @@ import br.com.persist.util.XMLUtil;
 
 public class Conexao {
 	private static Map<Conexao, Connection> mapa = new HashMap<>();
+	private String inicioComplemento;
+	private String finalComplemento;
 	private String urlBanco;
 	private String usuario;
 	private String driver;
@@ -100,6 +102,8 @@ public class Conexao {
 	public Conexao clonar() {
 		Conexao c = new Conexao();
 
+		c.inicioComplemento = inicioComplemento;
+		c.finalComplemento = finalComplemento;
 		c.urlBanco = urlBanco;
 		c.usuario = usuario;
 		c.driver = driver;
@@ -109,6 +113,8 @@ public class Conexao {
 	}
 
 	public void aplicar(Attributes attr) {
+		inicioComplemento = attr.getValue("inicioComplemento");
+		finalComplemento = attr.getValue("finalComplemento");
 		urlBanco = attr.getValue("urlBanco");
 		usuario = attr.getValue("usuario");
 		driver = attr.getValue("driver");
@@ -118,6 +124,8 @@ public class Conexao {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("conexao");
+		util.atributo("inicioComplemento", Util.escapar(inicioComplemento));
+		util.atributo("finalComplemento", Util.escapar(finalComplemento));
 		util.atributo("urlBanco", Util.escapar(urlBanco));
 		util.atributo("usuario", Util.escapar(usuario));
 		util.atributo("driver", Util.escapar(driver));
@@ -144,5 +152,21 @@ public class Conexao {
 	@Override
 	public String toString() {
 		return nome;
+	}
+
+	public String getInicioComplemento() {
+		return inicioComplemento;
+	}
+
+	public void setInicioComplemento(String inicioComplemento) {
+		this.inicioComplemento = inicioComplemento;
+	}
+
+	public String getFinalComplemento() {
+		return finalComplemento;
+	}
+
+	public void setFinalComplemento(String finalComplemento) {
+		this.finalComplemento = finalComplemento;
 	}
 }
