@@ -58,6 +58,8 @@ public class ConexaoDialogo extends Dialogo {
 		public Toolbar() {
 			add(new Button(new TopAcao()));
 			addSeparator();
+			add(new Button(new ConectaAcao()));
+			addSeparator();
 			add(new Button(new FecharAcao()));
 			addSeparator();
 			add(new Button(new NovoAcao()));
@@ -83,6 +85,29 @@ public class ConexaoDialogo extends Dialogo {
 				modelo.primeiro(linhas[0]);
 				modelo.fireTableDataChanged();
 				tabela.setRowSelectionInterval(0, 0);
+			}
+		}
+	}
+
+	private class ConectaAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ConectaAcao() {
+			super(false, "label.conectar", Icones.CONECTA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1) {
+				try {
+					Conexao conexao = modelo.getConexao(linhas[0]);
+					Conexao.getConnection(conexao);
+					Util.mensagem(ConexaoDialogo.this, "SUCESSO");
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);
+				}
 			}
 		}
 	}

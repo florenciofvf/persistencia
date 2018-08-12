@@ -22,6 +22,7 @@ public class Icones {
 	public static final Icon SINCRONIZAR = criarImagem("sync");
 	public static final Icon ARRASTAR = criarImagem("synonym");
 	public static final Icon EXCLUIR = criarImagem("excluir");
+	public static final Icon CONECTA = criarImagem("connect");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon SALVARC = criarImagem("saveas");
 	public static final Icon CONFIG = criarImagem("config");

@@ -23,7 +23,7 @@ public class Util {
 		return s == null || s.trim().length() == 0;
 	}
 
-	private static void mensagem(Component componente, String string) {
+	public static void mensagem(Component componente, String string) {
 		TextArea textArea = new TextArea(string);
 		textArea.setPreferredSize(new Dimension(500, 300));
 
