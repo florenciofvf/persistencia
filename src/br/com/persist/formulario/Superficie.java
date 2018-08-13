@@ -279,14 +279,22 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
+			boolean shift = e.isShiftDown();
+			boolean alt = e.isAltDown();
 			boolean movimentou = false;
 			int recX = e.getX();
 			int recY = e.getY();
 
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
-					objeto.x += recX - ultX;
-					objeto.y += recY - ultY;
+					if (alt & !shift) {
+						objeto.x += recX - ultX;
+					} else if (!alt & shift) {
+						objeto.y += recY - ultY;
+					} else {
+						objeto.x += recX - ultX;
+						objeto.y += recY - ultY;
+					}
 					movimentou = true;
 				}
 			}
