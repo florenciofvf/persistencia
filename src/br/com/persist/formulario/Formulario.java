@@ -1,6 +1,7 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
@@ -37,6 +38,7 @@ public class Formulario extends JFrame {
 	private final List<Objeto> copiados = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
 	private File arquivo;
+	private Color cor;
 
 	public Formulario() {
 		super(Mensagens.getString("label.persistencia"));
@@ -47,6 +49,14 @@ public class Formulario extends JFrame {
 		setSize(1000, 600);
 		montarLayout();
 		configurar();
+	}
+
+	public Color getCor() {
+		return cor;
+	}
+
+	public void setCor(Color cor) {
+		this.cor = cor;
 	}
 
 	public void destacar(Conexao conexao, Superficie superficie) {
