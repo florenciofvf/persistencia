@@ -623,7 +623,9 @@ public class Superficie extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 		MenuItem itemHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		MenuItem itemVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
+		MenuItem itemCopiarCor = new MenuItem(new CopiarCorAcao());
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
+		MenuItem itemColarCor = new MenuItem(new ColarCorAcao());
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
 
 		SuperficiePopup() {
@@ -631,6 +633,9 @@ public class Superficie extends JDesktopPane {
 			add(itemVertical);
 			addSeparator();
 			add(itemCopiar);
+			add(itemCopiarCor);
+			addSeparator();
+			add(itemColarCor);
 			addSeparator();
 			add(itemDestacar);
 			addSeparator();
@@ -641,8 +646,10 @@ public class Superficie extends JDesktopPane {
 
 		void popupObjeto(boolean b) {
 			itemHorizontal.setEnabled(b);
+			itemCopiarCor.setEnabled(b);
 			itemVertical.setEnabled(b);
 			itemDestacar.setEnabled(b);
+			itemColarCor.setEnabled(b);
 			itemCopiar.setEnabled(b);
 		}
 	}
@@ -670,6 +677,37 @@ public class Superficie extends JDesktopPane {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			formulario.copiar(Superficie.this);
+		}
+	}
+
+	private class CopiarCorAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public CopiarCorAcao() {
+			super(true, "label.copiar_cor", Icones.COPIA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (selecionadoObjeto != null) {
+				formulario.setCor(selecionadoObjeto.getCor());
+			}
+		}
+	}
+
+	private class ColarCorAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ColarCorAcao() {
+			super(true, "label.colar_cor", Icones.COLAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (selecionadoObjeto != null && formulario.getCor() != null) {
+				selecionadoObjeto.setCor(formulario.getCor());
+				repaint();
+			}
 		}
 	}
 
