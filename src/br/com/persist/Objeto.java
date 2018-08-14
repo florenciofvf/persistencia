@@ -23,6 +23,7 @@ public class Objeto {
 	public static final Color COR_PADRAO = new Color(64, 80, 34);
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
+	private int deslocamentoYId = -5;
 	private Color cor = COR_PADRAO;
 	private boolean transparente;
 	private boolean selecionado;
@@ -68,6 +69,7 @@ public class Objeto {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 
+		o.deslocamentoYId = deslocamentoYId;
 		o.complemento = complemento;
 		o.desenharId = desenharId;
 		o.descricao = descricao;
@@ -84,6 +86,10 @@ public class Objeto {
 
 	public static long getID() {
 		return ID;
+	}
+
+	public void setDeslocamentoYId(int deslocamentoYId) {
+		this.deslocamentoYId = deslocamentoYId;
 	}
 
 	public void setTransparente(boolean transparente) {
@@ -134,6 +140,10 @@ public class Objeto {
 		} else {
 			icon = Imagens.getIcon(this.icone);
 		}
+	}
+
+	public int getDeslocamentoYId() {
+		return deslocamentoYId;
 	}
 
 	public boolean isTransparente() {
@@ -276,12 +286,13 @@ public class Objeto {
 		}
 
 		if (desenharId) {
-			g2.drawString(id, desloc + x, y - 5);
+			g2.drawString(id, desloc + x, y + deslocamentoYId);
 		}
 	}
 
 	public void aplicar(Attributes attr) {
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
+		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		complemento = attr.getValue("complemento");
@@ -296,6 +307,7 @@ public class Objeto {
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
 		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("transparente", transparente);
 		util.atributo("desenharId", desenharId);
 		util.atributo("id", Util.escapar(id));
