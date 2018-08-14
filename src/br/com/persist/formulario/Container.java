@@ -87,6 +87,7 @@ public class Container extends PanelBorder {
 			add(btnSelecao);
 			addSeparator();
 			add(new ToggleButton(new DesenhoIdAcao()));
+			add(new ToggleButton(new TransparenteAcao()));
 			addSeparator();
 		}
 	}
@@ -247,6 +248,20 @@ public class Container extends PanelBorder {
 		public void actionPerformed(ActionEvent e) {
 			ToggleButton button = (ToggleButton) e.getSource();
 			superficie.desenharIds(button.isSelected());
+		}
+	}
+
+	private class TransparenteAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public TransparenteAcao() {
+			super(false, "label.transparente", Icones.VAZIO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ToggleButton button = (ToggleButton) e.getSource();
+			superficie.transparente(button.isSelected());
 		}
 	}
 

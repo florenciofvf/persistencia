@@ -863,6 +863,14 @@ public class Superficie extends JDesktopPane {
 		repaint();
 	}
 
+	public void transparente(boolean b) {
+		for (Objeto objeto : objetos) {
+			objeto.setTransparente(b);
+		}
+
+		repaint();
+	}
+
 	public void configEstado(byte estado) {
 		removeMouseMotionListener(mouseAdapterArrasto);
 		removeMouseListener(mouseAdapterArrasto);
