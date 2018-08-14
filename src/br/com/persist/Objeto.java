@@ -24,6 +24,7 @@ public class Objeto {
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color cor = COR_PADRAO;
+	private boolean transparente;
 	private boolean selecionado;
 	private boolean desenharId;
 	private String complemento;
@@ -85,6 +86,10 @@ public class Objeto {
 		return ID;
 	}
 
+	public void setTransparente(boolean transparente) {
+		this.transparente = transparente;
+	}
+
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 
@@ -129,6 +134,10 @@ public class Objeto {
 		} else {
 			icon = Imagens.getIcon(this.icone);
 		}
+	}
+
+	public boolean isTransparente() {
+		return transparente;
 	}
 
 	public String getComplemento() {
@@ -234,27 +243,29 @@ public class Objeto {
 		final int altura22 = altura2 / 2;
 		final int altura3 = altura2 / 3;
 
-		g2.setColor(Color.DARK_GRAY);
-		g2.fillRoundRect(x, y, largura + 1, altura + 1, diametro, diametro);
+		if (!transparente) {
+			g2.setColor(Color.DARK_GRAY);
+			g2.fillRoundRect(x, y, largura + 1, altura + 1, diametro, diametro);
 
-		Color inicio = cor.darker();
-		Color finall = cor.brighter();
-		Paint paint = new GradientPaint(x, y, inicio, x, y + altura, finall, false);
-		g2.setPaint(paint);
-		g2.fillRoundRect(x, y, largura, altura, diametro, diametro);
+			Color inicio = cor.darker();
+			Color finall = cor.brighter();
+			Paint paint = new GradientPaint(x, y, inicio, x, y + altura, finall, false);
+			g2.setPaint(paint);
+			g2.fillRoundRect(x, y, largura, altura, diametro, diametro);
 
-		inicio = Color.WHITE;
-		finall = cor.brighter();
-		paint = new GradientPaint(x, y + margem3, inicio, x, y + margem3 + (altura22), cor.brighter(), false);
+			inicio = Color.WHITE;
+			finall = cor.brighter();
+			paint = new GradientPaint(x, y + margem3, inicio, x, y + margem3 + (altura22), cor.brighter(), false);
 
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-		g2.setPaint(paint);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+			g2.setPaint(paint);
 
-		g2.setClip(new RoundRectangle2D.Float(x + margem3, y + margem3, largura2 - 2, altura22, altura3, altura3));
-		g2.fillRoundRect(x + margem3, y + margem3, largura2 - 2, altura2, altura2, altura2);
+			g2.setClip(new RoundRectangle2D.Float(x + margem3, y + margem3, largura2 - 2, altura22, altura3, altura3));
+			g2.fillRoundRect(x + margem3, y + margem3, largura2 - 2, altura2, altura2, altura2);
 
-		g2.setComposite(composite);
-		g2.setClip(shape);
+			g2.setComposite(composite);
+			g2.setClip(shape);
+		}
 
 		if (icon != null) {
 			icon.paintIcon(c, g2, x + raio - 8, y + raio - 8);
@@ -270,6 +281,7 @@ public class Objeto {
 	}
 
 	public void aplicar(Attributes attr) {
+		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		complemento = attr.getValue("complemento");
@@ -284,6 +296,7 @@ public class Objeto {
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
 		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("transparente", transparente);
 		util.atributo("desenharId", desenharId);
 		util.atributo("id", Util.escapar(id));
 		util.atributo("tabela", getTabela());

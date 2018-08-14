@@ -56,6 +56,7 @@ public class ObjetoDialogo extends Dialogo {
 	private class PanelGeral extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtComplemento = new TextField();
+		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
@@ -65,6 +66,7 @@ public class ObjetoDialogo extends Dialogo {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			chkTransparente.setSelected(objeto.isTransparente());
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtComplemento.setText(objeto.getComplemento());
 			txtTabela.setText(objeto.getTabela());
@@ -80,6 +82,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtX.addFocusListener(focusListener);
 			txtY.addFocusListener(focusListener);
 
+			chkTransparente.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
 			txtTabela.addActionListener(this);
@@ -105,6 +108,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.chaves", txtChaves));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
+			container.add(criarLinha("label.transparente", chkTransparente));
 
 			add(BorderLayout.CENTER, container);
 		}
@@ -154,6 +158,10 @@ public class ObjetoDialogo extends Dialogo {
 			} else if (chkDesenharId == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
+
+			} else if (chkTransparente == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setTransparente(chk.isSelected());
 			}
 
 			superficie.repaint();
