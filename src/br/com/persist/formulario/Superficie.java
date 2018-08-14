@@ -654,10 +654,8 @@ public class Superficie extends JDesktopPane {
 
 		void popupObjeto(boolean b) {
 			itemHorizontal.setEnabled(b);
-			itemCopiarCor.setEnabled(b);
 			itemVertical.setEnabled(b);
 			itemDestacar.setEnabled(b);
-			itemColarCor.setEnabled(b);
 			itemCopiar.setEnabled(b);
 		}
 	}
@@ -699,6 +697,8 @@ public class Superficie extends JDesktopPane {
 		public void actionPerformed(ActionEvent e) {
 			if (selecionadoObjeto != null) {
 				formulario.setCor(selecionadoObjeto.getCor());
+			} else if (selecionadoRelacao != null) {
+				formulario.setCor(selecionadoRelacao.getCor());
 			}
 		}
 	}
@@ -714,6 +714,9 @@ public class Superficie extends JDesktopPane {
 		public void actionPerformed(ActionEvent e) {
 			if (selecionadoObjeto != null && formulario.getCor() != null) {
 				selecionadoObjeto.setCor(formulario.getCor());
+				repaint();
+			} else if (selecionadoRelacao != null && formulario.getCor() != null) {
+				selecionadoRelacao.setCor(formulario.getCor());
 				repaint();
 			}
 		}
