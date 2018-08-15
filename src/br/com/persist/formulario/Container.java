@@ -16,7 +16,6 @@ import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
-import br.com.persist.comp.Spinner;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
@@ -70,7 +69,6 @@ public class Container extends PanelBorder {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
-		private Spinner spinner = new Spinner();
 
 		public Toolbar() {
 			add(new Button(new BaixarAcao()));
@@ -94,15 +92,6 @@ public class Container extends PanelBorder {
 			add(new ToggleButton(new DesenhoIdAcao()));
 			add(new ToggleButton(new TransparenteAcao()));
 			addSeparator();
-			add(spinner);
-			addSeparator();
-			spinner.addChangeListener(e -> deslocYId(spinner.getValue()));
-		}
-	}
-
-	private void deslocYId(Object obj) {
-		if (obj instanceof Integer) {
-			superficie.deslocamentoYId(((Integer) obj).intValue());
 		}
 	}
 
