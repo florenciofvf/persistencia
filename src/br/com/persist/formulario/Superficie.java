@@ -106,6 +106,29 @@ public class Superficie extends JDesktopPane {
 		return resp;
 	}
 
+	private MouseAdapter mouseAdapterRotulos = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			ultX = e.getX();
+			ultY = e.getY();
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			int recX = e.getX();
+			int recY = e.getY();
+
+			for (Objeto objeto : objetos) {
+				objeto.x += recX - ultX;
+				objeto.y += recY - ultY;
+			}
+
+			ultX = recX;
+			ultY = recY;
+			repaint();
+		}
+	};
+
 	private MouseAdapter mouseAdapterArrasto = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -880,6 +903,9 @@ public class Superficie extends JDesktopPane {
 	}
 
 	public void configEstado(byte estado) {
+		removeMouseMotionListener(mouseAdapterRotulos);
+		removeMouseListener(mouseAdapterRotulos);
+
 		removeMouseMotionListener(mouseAdapterArrasto);
 		removeMouseListener(mouseAdapterArrasto);
 
@@ -894,6 +920,11 @@ public class Superficie extends JDesktopPane {
 		if (estado == Constantes.ARRASTO) {
 			addMouseMotionListener(mouseAdapterArrasto);
 			addMouseListener(mouseAdapterArrasto);
+			this.estado = estado;
+
+		} else if (estado == Constantes.ROTULOS) {
+			addMouseMotionListener(mouseAdapterRotulos);
+			addMouseListener(mouseAdapterRotulos);
 			this.estado = estado;
 
 		} else if (estado == Constantes.RELACAO) {

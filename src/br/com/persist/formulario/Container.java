@@ -26,6 +26,7 @@ import br.com.persist.xml.XML;
 
 public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
+	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
@@ -47,6 +48,7 @@ public class Container extends PanelBorder {
 		ButtonGroup grupo = new ButtonGroup();
 		add(BorderLayout.CENTER, superficie);
 		add(BorderLayout.NORTH, toolbar);
+		grupo.add(btnRotulos);
 		grupo.add(btnArrasto);
 		grupo.add(btnRelacao);
 		grupo.add(btnSelecao);
@@ -85,6 +87,7 @@ public class Container extends PanelBorder {
 			add(new Button(new CriarObjetoAcao()));
 			add(btnRelacao);
 			addSeparator();
+			add(btnRotulos);
 			add(btnArrasto);
 			add(btnSelecao);
 			addSeparator();
@@ -287,6 +290,21 @@ public class Container extends PanelBorder {
 		public void actionPerformed(ActionEvent e) {
 			if (btnArrasto.isSelected()) {
 				superficie.configEstado(Constantes.ARRASTO);
+			}
+		}
+	}
+
+	private class RotulosAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public RotulosAcao() {
+			super(false, "label.rotulos", Icones.TEXTO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (btnRotulos.isSelected()) {
+				superficie.configEstado(Constantes.ROTULOS);
 			}
 		}
 	}
