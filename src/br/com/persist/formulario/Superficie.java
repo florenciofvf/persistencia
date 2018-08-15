@@ -117,12 +117,20 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
+			boolean shift = e.isShiftDown();
+			boolean alt = e.isAltDown();
 			int recX = e.getX();
 			int recY = e.getY();
 
 			if (selecionado != null) {
-				selecionado.deslocamentoXId += recX - ultX;
-				selecionado.deslocamentoYId += recY - ultY;
+				if (alt & !shift) {
+					selecionado.deslocamentoXId += recX - ultX;
+				} else if (!alt & shift) {
+					selecionado.deslocamentoYId += recY - ultY;
+				} else {
+					selecionado.deslocamentoXId += recX - ultX;
+					selecionado.deslocamentoYId += recY - ultY;
+				}
 			}
 
 			ultX = recX;
@@ -162,12 +170,20 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
+			boolean shift = e.isShiftDown();
+			boolean alt = e.isAltDown();
 			int recX = e.getX();
 			int recY = e.getY();
 
 			for (Objeto objeto : objetos) {
-				objeto.x += recX - ultX;
-				objeto.y += recY - ultY;
+				if (alt & !shift) {
+					objeto.x += recX - ultX;
+				} else if (!alt & shift) {
+					objeto.y += recY - ultY;
+				} else {
+					objeto.x += recX - ultX;
+					objeto.y += recY - ultY;
+				}
 			}
 
 			ultX = recX;
