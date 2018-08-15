@@ -21,8 +21,10 @@ import br.com.persist.util.XMLUtil;
 
 public class Objeto {
 	public static final Color COR_PADRAO = new Color(64, 80, 34);
+	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
+	private Color corFonte = COR_PADRAO_FONTE;
 	public int deslocamentoYId = -5;
 	public int deslocamentoXId = -5;
 	private Color cor = COR_PADRAO;
@@ -75,6 +77,7 @@ public class Objeto {
 		o.complemento = complemento;
 		o.desenharId = desenharId;
 		o.descricao = descricao;
+		o.corFonte = corFonte;
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.setId(id);
@@ -214,12 +217,24 @@ public class Objeto {
 		return icon;
 	}
 
+	public Color getCorFonte() {
+		return corFonte;
+	}
+
 	public Color getCor() {
 		return cor;
 	}
 
 	public String getId() {
 		return id;
+	}
+
+	public void setCorFonte(Color corFonte) {
+		this.corFonte = corFonte;
+
+		if (this.corFonte == null) {
+			this.corFonte = COR_PADRAO_FONTE;
+		}
 	}
 
 	public void setCor(Color cor) {
@@ -296,12 +311,14 @@ public class Objeto {
 		}
 
 		if (desenharId) {
+			g2.setColor(corFonte);
 			g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
 		}
 	}
 
 	public void aplicar(Attributes attr) {
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
+		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
 		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
@@ -320,6 +337,7 @@ public class Objeto {
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
+		util.atributo("corFonte", corFonte.getRGB());
 		util.atributo("transparente", transparente);
 		util.atributo("desenharId", desenharId);
 		util.atributo("id", Util.escapar(id));
