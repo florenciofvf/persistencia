@@ -24,6 +24,7 @@ public class Objeto {
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
 	private int deslocamentoYId = -5;
+	private int deslocamentoXId = -5;
 	private Color cor = COR_PADRAO;
 	private boolean transparente;
 	private boolean selecionado;
@@ -35,7 +36,6 @@ public class Objeto {
 	private String tabela;
 	private String chaves;
 	private String icone;
-	private int desloc;
 	private Icon icon;
 	private String id;
 	public int x;
@@ -69,6 +69,7 @@ public class Objeto {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 
+		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.transparente = transparente;
 		o.complemento = complemento;
@@ -87,6 +88,10 @@ public class Objeto {
 
 	public static long getID() {
 		return ID;
+	}
+
+	public void setDeslocamentoXId(int deslocamentoXId) {
+		this.deslocamentoXId = deslocamentoXId;
 	}
 
 	public void setDeslocamentoYId(int deslocamentoYId) {
@@ -141,6 +146,10 @@ public class Objeto {
 		} else {
 			icon = Imagens.getIcon(this.icone);
 		}
+	}
+
+	public int getDeslocamentoXId() {
+		return deslocamentoXId;
 	}
 
 	public int getDeslocamentoYId() {
@@ -287,12 +296,13 @@ public class Objeto {
 		}
 
 		if (desenharId) {
-			g2.drawString(id, desloc + x, y + deslocamentoYId);
+			g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
 		}
 	}
 
 	public void aplicar(Attributes attr) {
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
+		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
 		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
@@ -308,6 +318,7 @@ public class Objeto {
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
 		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("transparente", transparente);
 		util.atributo("desenharId", desenharId);
@@ -328,13 +339,13 @@ public class Objeto {
 	}
 
 	public void alinhar(FontMetrics fm) {
-		if (fm == null) {
-			return;
-		}
+		// if (fm == null) {
+		// return;
+		// }
 
-		int largura = fm.stringWidth(id);
-		int metade = largura / 2;
-		int raio = diametro / 2;
-		desloc = raio - metade;
+		// int largura = fm.stringWidth(id);
+		// int metade = largura / 2;
+		// int raio = diametro / 2;
+		// desloc = raio - metade;
 	}
 }

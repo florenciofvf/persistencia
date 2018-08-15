@@ -39,7 +39,7 @@ public class ObjetoDialogo extends Dialogo {
 	private final Objeto objeto;
 
 	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
-		super(frame, objeto.getId(), 700, 400, false);
+		super(frame, objeto.getId(), 700, 430, false);
 		this.superficie = superficie;
 		this.objeto = objeto;
 		montarLayout();
@@ -57,6 +57,7 @@ public class ObjetoDialogo extends Dialogo {
 		private static final long serialVersionUID = 1L;
 		private TextField txtComplemento = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
+		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtTabela = new TextField();
@@ -67,6 +68,7 @@ public class ObjetoDialogo extends Dialogo {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			txtDeslocXId.setText("" + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
 			chkTransparente.setSelected(objeto.isTransparente());
 			chkDesenharId.setSelected(objeto.isDesenharId());
@@ -78,6 +80,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtY.setText("" + objeto.y);
 
 			txtComplemento.addFocusListener(focusListener);
+			txtDeslocXId.addFocusListener(focusListener);
 			txtDeslocYId.addFocusListener(focusListener);
 			txtTabela.addFocusListener(focusListener);
 			txtChaves.addFocusListener(focusListener);
@@ -88,6 +91,7 @@ public class ObjetoDialogo extends Dialogo {
 			chkTransparente.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
+			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
@@ -108,6 +112,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
+			container.add(criarLinha("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves));
@@ -138,6 +143,9 @@ public class ObjetoDialogo extends Dialogo {
 
 			} else if (txtY == e.getSource()) {
 				objeto.y = Util.getInt(txt.getText(), objeto.y);
+
+			} else if (txtDeslocXId == e.getSource()) {
+				objeto.setDeslocamentoXId(Util.getInt(txtDeslocXId.getText(), objeto.getDeslocamentoXId()));
 
 			} else if (txtDeslocYId == e.getSource()) {
 				objeto.setDeslocamentoYId(Util.getInt(txtDeslocYId.getText(), objeto.getDeslocamentoYId()));
