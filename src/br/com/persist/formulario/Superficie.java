@@ -140,7 +140,13 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (selecionado != null) {
+				selecionado.setSelecionado(false);
+				selecionado.controlado = false;
+			}
+
 			selecionado = null;
+			repaint();
 		}
 
 		@Override
