@@ -2,9 +2,12 @@ package br.com.persist.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -33,7 +36,9 @@ public class Imagens {
 	}
 
 	public static List<Map.Entry<String, Icon>> getIcones() {
-		return new ArrayList<>(MAPA_ICONES.entrySet());
+		List<Map.Entry<String, Icon>> lista = new ArrayList<>(MAPA_ICONES.entrySet());
+		Collections.sort(lista, new Comparador());
+		return lista;
 	}
 
 	public static void ini() {
@@ -49,6 +54,13 @@ public class Imagens {
 					getIcon(s);
 				}
 			}
+		}
+	}
+
+	private static class Comparador implements Comparator<Map.Entry<String, Icon>> {
+		@Override
+		public int compare(Entry<String, Icon> o1, Entry<String, Icon> o2) {
+			return o1.getKey().compareTo(o2.getKey());
 		}
 	}
 }
