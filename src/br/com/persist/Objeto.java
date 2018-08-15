@@ -70,6 +70,7 @@ public class Objeto {
 		Objeto o = new Objeto(x, y, cor, icone);
 
 		o.deslocamentoYId = deslocamentoYId;
+		o.transparente = transparente;
 		o.complemento = complemento;
 		o.desenharId = desenharId;
 		o.descricao = descricao;
