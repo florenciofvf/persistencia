@@ -22,7 +22,7 @@ public class IconeDialogo extends Dialogo {
 	private final Label label;
 
 	public IconeDialogo(Dialog dialog, Objeto objeto, Label label) {
-		super(dialog, objeto.getId(), 500, 500, false);
+		super(dialog, objeto.getId(), 600, 600, false);
 		this.objeto = objeto;
 		this.label = label;
 		montarLayout();
@@ -30,7 +30,7 @@ public class IconeDialogo extends Dialogo {
 	}
 
 	private void montarLayout() {
-		Panel matriz = new Panel(new GridLayout(0, 16));
+		Panel matriz = new Panel(new GridLayout(0, 25));
 
 		for (Map.Entry<String, Icon> entry : Imagens.getIcones()) {
 			matriz.add(new LabelIcone(entry));
