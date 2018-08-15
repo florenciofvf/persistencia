@@ -57,6 +57,7 @@ public class ObjetoDialogo extends Dialogo {
 		private static final long serialVersionUID = 1L;
 		private TextField txtComplemento = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
+		private TextField txtDeslocYId = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
@@ -66,6 +67,7 @@ public class ObjetoDialogo extends Dialogo {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
 			chkTransparente.setSelected(objeto.isTransparente());
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtComplemento.setText(objeto.getComplemento());
@@ -76,6 +78,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtY.setText("" + objeto.y);
 
 			txtComplemento.addFocusListener(focusListener);
+			txtDeslocYId.addFocusListener(focusListener);
 			txtTabela.addFocusListener(focusListener);
 			txtChaves.addFocusListener(focusListener);
 			txtId.addFocusListener(focusListener);
@@ -85,6 +88,7 @@ public class ObjetoDialogo extends Dialogo {
 			chkTransparente.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
+			txtDeslocYId.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
 			txtId.addActionListener(this);
@@ -104,6 +108,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
+			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves));
 			container.add(criarLinha("label.complemento", txtComplemento));
@@ -133,6 +138,9 @@ public class ObjetoDialogo extends Dialogo {
 
 			} else if (txtY == e.getSource()) {
 				objeto.y = Util.getInt(txt.getText(), objeto.y);
+
+			} else if (txtDeslocYId == e.getSource()) {
+				objeto.setDeslocamentoYId(Util.getInt(txtDeslocYId.getText(), objeto.getDeslocamentoYId()));
 
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txt.getText());
