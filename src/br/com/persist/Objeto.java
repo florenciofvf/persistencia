@@ -23,8 +23,8 @@ public class Objeto {
 	public static final Color COR_PADRAO = new Color(64, 80, 34);
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
-	private int deslocamentoYId = -5;
-	private int deslocamentoXId = -5;
+	public int deslocamentoYId = -5;
+	public int deslocamentoXId = -5;
 	private Color cor = COR_PADRAO;
 	private boolean transparente;
 	private boolean selecionado;

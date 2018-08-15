@@ -107,6 +107,8 @@ public class Superficie extends JDesktopPane {
 	}
 
 	private MouseAdapter mouseAdapterRotulos = new MouseAdapter() {
+		Objeto selecionado;
+
 		@Override
 		public void mousePressed(MouseEvent e) {
 			ultX = e.getX();
@@ -118,13 +120,35 @@ public class Superficie extends JDesktopPane {
 			int recX = e.getX();
 			int recY = e.getY();
 
-			for (Objeto objeto : objetos) {
-				objeto.x += recX - ultX;
-				objeto.y += recY - ultY;
+			if (selecionado != null) {
+				selecionado.deslocamentoXId += recX - ultX;
+				selecionado.deslocamentoYId += recY - ultY;
 			}
 
 			ultX = recX;
 			ultY = recY;
+			repaint();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			selecionado = null;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			limparSelecao();
+
+			for (Objeto objeto : objetos) {
+				if (objeto.contem(x, y)) {
+					objeto.setSelecionado(true);
+					selecionado = objeto;
+					break;
+				}
+			}
+
 			repaint();
 		}
 	};
