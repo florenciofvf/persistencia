@@ -107,7 +107,8 @@ public class Superficie extends JDesktopPane {
 	}
 
 	private MouseAdapter mouseAdapterRotulos = new MouseAdapter() {
-		Objeto selecionado;
+		Relacao selecionadoRelacao;
+		Objeto selecionadoObjeto;
 
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -122,14 +123,23 @@ public class Superficie extends JDesktopPane {
 			int recX = e.getX();
 			int recY = e.getY();
 
-			if (selecionado != null) {
+			if (selecionadoObjeto != null) {
 				if (alt & !shift) {
-					selecionado.deslocamentoXId += recX - ultX;
+					selecionadoObjeto.deslocamentoXId += recX - ultX;
 				} else if (!alt & shift) {
-					selecionado.deslocamentoYId += recY - ultY;
+					selecionadoObjeto.deslocamentoYId += recY - ultY;
 				} else {
-					selecionado.deslocamentoXId += recX - ultX;
-					selecionado.deslocamentoYId += recY - ultY;
+					selecionadoObjeto.deslocamentoXId += recX - ultX;
+					selecionadoObjeto.deslocamentoYId += recY - ultY;
+				}
+			} else if (selecionadoRelacao != null) {
+				if (alt & !shift) {
+					selecionadoRelacao.deslocamentoXDesc += recX - ultX;
+				} else if (!alt & shift) {
+					selecionadoRelacao.deslocamentoYDesc += recY - ultY;
+				} else {
+					selecionadoRelacao.deslocamentoXDesc += recX - ultX;
+					selecionadoRelacao.deslocamentoYDesc += recY - ultY;
 				}
 			}
 
@@ -140,12 +150,17 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (selecionado != null) {
-				selecionado.setSelecionado(false);
-				selecionado.controlado = false;
+			if (selecionadoObjeto != null) {
+				selecionadoObjeto.setSelecionado(false);
+				selecionadoObjeto.controlado = false;
 			}
 
-			selecionado = null;
+			if (selecionadoRelacao != null) {
+				selecionadoRelacao.setSelecionado(false);
+			}
+
+			selecionadoRelacao = null;
+			selecionadoObjeto = null;
 			repaint();
 		}
 
@@ -158,8 +173,18 @@ public class Superficie extends JDesktopPane {
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
 					objeto.setSelecionado(true);
-					selecionado = objeto;
+					selecionadoObjeto = objeto;
 					break;
+				}
+			}
+
+			if (selecionadoObjeto == null) {
+				for (Relacao relacao : relacoes) {
+					if (relacao.contem(x, y)) {
+						relacao.setSelecionado(true);
+						selecionadoRelacao = relacao;
+						break;
+					}
 				}
 			}
 

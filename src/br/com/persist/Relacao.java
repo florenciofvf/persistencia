@@ -12,12 +12,10 @@ import br.com.persist.util.XMLUtil;
 public class Relacao {
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	public static final Color COR_PADRAO = Color.BLACK;
-
 	private Color corFonte = COR_PADRAO_FONTE;
 	private boolean desenharDescricao;
 	public int deslocamentoYDesc = -5;
 	public int deslocamentoXDesc = -5;
-
 	private Color cor = COR_PADRAO;
 	public static int diametro = 6;
 	static int m = diametro / 2;
