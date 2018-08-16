@@ -13,6 +13,7 @@ import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Connection;
@@ -46,7 +47,7 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class PainelObjeto extends Panel implements ItemListener {
+public class PainelObjeto extends Panel implements ActionListener, ItemListener {
 	private static final long serialVersionUID = 1L;
 	private final Button btnArrasto = new Button(new DestacarAcao());
 	private final TextField txtComplemento = new TextField(35);
@@ -63,6 +64,7 @@ public class PainelObjeto extends Panel implements ItemListener {
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
+		txtComplemento.addActionListener(this);
 		cmbConexao.addItemListener(this);
 		toolbar.add(txtComplemento);
 		this.listener = listener;
@@ -310,6 +312,11 @@ public class PainelObjeto extends Panel implements ItemListener {
 			processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro);
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		new AtualizarRegistrosAcao().actionPerformed(null);
 	}
 
 	private class TotalizarRegistrosAcao extends Acao {
