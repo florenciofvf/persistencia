@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 public class Icones {
 	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
 
+	public static final Icon BANCO_DESCONECTA = criarImagem("dbdisconn");
 	public static final Icon DESC_NUMERO = criarImagem("desc_numero");
 	public static final Icon HORIZONTAL = criarImagem("horizontal");
 	public static final Icon ASC_NUMERO = criarImagem("asc_numero");

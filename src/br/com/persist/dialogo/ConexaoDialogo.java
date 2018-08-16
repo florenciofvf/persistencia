@@ -116,7 +116,7 @@ public class ConexaoDialogo extends Dialogo {
 		private static final long serialVersionUID = 1L;
 
 		public FecharAcao() {
-			super(false, "label.final_conexoes", Icones.BANCO);
+			super(false, "label.final_conexoes", Icones.BANCO_DESCONECTA);
 		}
 
 		@Override
