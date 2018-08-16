@@ -115,6 +115,9 @@ public class Container extends PanelBorder {
 
 		public SalvarAcao() {
 			super(false, "label.salvar", Icones.SALVAR);
+
+			inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_S), chave);
+			getActionMap().put(chave, this);
 		}
 
 		@Override
@@ -165,6 +168,9 @@ public class Container extends PanelBorder {
 
 		public ExcluirAcao() {
 			super(false, "label.excluir", Icones.EXCLUIR);
+
+			inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_D), chave);
+			getActionMap().put(chave, this);
 		}
 
 		@Override
