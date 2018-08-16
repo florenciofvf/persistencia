@@ -145,10 +145,10 @@ public class ObjetoDialogo extends Dialogo {
 				objeto.y = Util.getInt(txt.getText(), objeto.y);
 
 			} else if (txtDeslocXId == e.getSource()) {
-				objeto.setDeslocamentoXId(Util.getInt(txtDeslocXId.getText(), objeto.getDeslocamentoXId()));
+				objeto.setDeslocamentoXId(Util.getInt(txt.getText(), objeto.getDeslocamentoXId()));
 
 			} else if (txtDeslocYId == e.getSource()) {
-				objeto.setDeslocamentoYId(Util.getInt(txtDeslocYId.getText(), objeto.getDeslocamentoYId()));
+				objeto.setDeslocamentoYId(Util.getInt(txt.getText(), objeto.getDeslocamentoYId()));
 
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txt.getText());

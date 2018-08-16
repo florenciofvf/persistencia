@@ -9,12 +9,17 @@ import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JColorChooser;
+import javax.swing.JComponent;
 import javax.swing.JSeparator;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -28,7 +33,9 @@ import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
+import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Superficie;
+import br.com.persist.util.Util;
 
 public class RelacaoDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
@@ -60,14 +67,85 @@ public class RelacaoDialogo extends Dialogo {
 		}
 	}
 
-	private class PanelDesc extends PanelBorder {
+	private Box criarLinha(String chaveRotulo, JComponent componente) {
+		Box box = Box.createHorizontalBox();
+
+		Label label = new Label(chaveRotulo);
+		label.setHorizontalAlignment(Label.RIGHT);
+		label.setPreferredSize(new Dimension(160, 0));
+		label.setMinimumSize(new Dimension(160, 0));
+
+		box.add(label);
+
+		if (componente instanceof CheckBox) {
+			box.add(componente);
+			box.add(Box.createHorizontalGlue());
+
+		} else {
+			box.add(componente);
+		}
+
+		return box;
+	}
+
+	private class PanelDesc extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
+		private TextField txtDeslocXDesc = new TextField();
+		private TextField txtDeslocYDesc = new TextField();
+		private CheckBox chkDesenharDesc = new CheckBox();
 
 		PanelDesc() {
+			txtDeslocXDesc.setText("" + relacao.getDeslocamentoXDesc());
+			txtDeslocYDesc.setText("" + relacao.getDeslocamentoYDesc());
+			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
+
+			txtDeslocXDesc.addFocusListener(focusListener);
+			txtDeslocYDesc.addFocusListener(focusListener);
+
+			chkDesenharDesc.addActionListener(this);
+			txtDeslocXDesc.addActionListener(this);
+			txtDeslocYDesc.addActionListener(this);
+
 			textArea.setText(relacao.getDescricao());
 			textArea.addKeyListener(keyListener);
 			add(BorderLayout.CENTER, textArea);
+
+			Box container = Box.createVerticalBox();
+			container.add(criarLinha("label.desloc_x_desc", txtDeslocXDesc));
+			container.add(criarLinha("label.desloc_y_desc", txtDeslocYDesc));
+			container.add(criarLinha("label.desenhar_desc", chkDesenharDesc));
+
+			add(BorderLayout.SOUTH, container);
+		}
+
+		private FocusListener focusListener = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				actionPerformed(new ActionEvent(e.getSource(), 0, null));
+			}
+		};
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			TextField txt = null;
+
+			if (e.getSource() instanceof TextField) {
+				txt = (TextField) e.getSource();
+			}
+
+			if (txtDeslocXDesc == e.getSource()) {
+				relacao.setDeslocamentoXDesc(Util.getInt(txt.getText(), relacao.getDeslocamentoXDesc()));
+
+			} else if (txtDeslocYDesc == e.getSource()) {
+				relacao.setDeslocamentoYDesc(Util.getInt(txt.getText(), relacao.getDeslocamentoYDesc()));
+
+			} else if (chkDesenharDesc == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				relacao.setDesenharDescricao(chk.isSelected());
+			}
+
+			superficie.repaint();
 		}
 
 		private KeyListener keyListener = new KeyAdapter() {
