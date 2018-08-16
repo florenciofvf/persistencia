@@ -2,11 +2,13 @@ package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.InputMap;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
@@ -184,11 +186,18 @@ public class Container extends PanelBorder {
 		}
 	}
 
+	private InputMap inputMap() {
+		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	}
+
 	private class ColarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
 		public ColarAcao() {
 			super(false, "label.colar", Icones.COLAR);
+
+			inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_V), chave);
+			getActionMap().put(chave, this);
 		}
 
 		@Override

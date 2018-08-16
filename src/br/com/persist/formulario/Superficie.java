@@ -837,9 +837,6 @@ public class Superficie extends JDesktopPane {
 
 		public ColarAcao() {
 			super(true, "label.colar", Icones.COLAR);
-
-			inputMap().put(getKeyStroke(KeyEvent.VK_V), chave);
-			getActionMap().put(chave, this);
 		}
 
 		@Override
@@ -853,7 +850,7 @@ public class Superficie extends JDesktopPane {
 		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
 	}
 
-	private static KeyStroke getKeyStroke(int keyCode) {
+	public static KeyStroke getKeyStroke(int keyCode) {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
 
