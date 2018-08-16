@@ -10,7 +10,14 @@ import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Relacao {
+	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	public static final Color COR_PADRAO = Color.BLACK;
+
+	private Color corFonte = COR_PADRAO_FONTE;
+	private boolean desenharDescricao;
+	public int deslocamentoYDesc = -5;
+	public int deslocamentoXDesc = -5;
+
 	private Color cor = COR_PADRAO;
 	public static int diametro = 6;
 	static int m = diametro / 2;
@@ -46,6 +53,22 @@ public class Relacao {
 		}
 	}
 
+	public int getDeslocamentoYDesc() {
+		return deslocamentoYDesc;
+	}
+
+	public void setDeslocamentoYDesc(int deslocamentoYDesc) {
+		this.deslocamentoYDesc = deslocamentoYDesc;
+	}
+
+	public int getDeslocamentoXDesc() {
+		return deslocamentoXDesc;
+	}
+
+	public void setDeslocamentoXDesc(int deslocamentoXDesc) {
+		this.deslocamentoXDesc = deslocamentoXDesc;
+	}
+
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 	}
@@ -60,6 +83,26 @@ public class Relacao {
 
 	public void setPontoOrigem(boolean ponto) {
 		this.pontoOrigem = ponto;
+	}
+
+	public Color getCorFonte() {
+		return corFonte;
+	}
+
+	public void setCorFonte(Color corFonte) {
+		this.corFonte = corFonte;
+
+		if (this.corFonte == null) {
+			this.corFonte = COR_PADRAO_FONTE;
+		}
+	}
+
+	public boolean isDesenharDescricao() {
+		return desenharDescricao;
+	}
+
+	public void setDesenharDescricao(boolean desenharDescricao) {
+		this.desenharDescricao = desenharDescricao;
 	}
 
 	public boolean isPontoDestino() {
@@ -189,16 +232,29 @@ public class Relacao {
 				g2.fillOval(x1 + _x2 - m, y1 + _y2 - m, diametro, diametro);
 			}
 		}
+
+		if (desenharDescricao) {
+			g2.setColor(corFonte);
+			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
+		}
 	}
 
 	public void aplicar(Attributes attr) {
+		desenharDescricao = Boolean.parseBoolean(attr.getValue("desenharDescricao"));
+		deslocamentoXDesc = Integer.parseInt(attr.getValue("desloc_x_desc"));
+		deslocamentoYDesc = Integer.parseInt(attr.getValue("desloc_y_desc"));
+		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 	}
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("relacao");
 		util.atributo("destino", Util.escapar(destino.getId()));
+		util.atributo("desenharDescricao", desenharDescricao);
 		util.atributo("origem", Util.escapar(origem.getId()));
+		util.atributo("desloc_x_desc", deslocamentoXDesc);
+		util.atributo("desloc_y_desc", deslocamentoYDesc);
+		util.atributo("corFonte", corFonte.getRGB());
 		util.atributo("pontoDestino", pontoDestino);
 		util.atributo("pontoOrigem", pontoOrigem);
 		util.atributo("cor", cor.getRGB());

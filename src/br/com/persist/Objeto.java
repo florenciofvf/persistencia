@@ -25,8 +25,8 @@ public class Objeto {
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color corFonte = COR_PADRAO_FONTE;
-	public int deslocamentoYId = -5;
 	public int deslocamentoXId = -5;
+	public int deslocamentoYId = -5;
 	private Color cor = COR_PADRAO;
 	private boolean transparente;
 	private boolean selecionado;
@@ -357,13 +357,5 @@ public class Objeto {
 	}
 
 	public void alinhar(FontMetrics fm) {
-		// if (fm == null) {
-		// return;
-		// }
-
-		// int largura = fm.stringWidth(id);
-		// int metade = largura / 2;
-		// int raio = diametro / 2;
-		// desloc = raio - metade;
 	}
 }
