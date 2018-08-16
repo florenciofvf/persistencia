@@ -975,5 +975,15 @@ public class Superficie extends JDesktopPane {
 			addMouseListener(mouseAdapterSelecao);
 			this.estado = estado;
 		}
+
+		if (relacoes != null) {
+			for (Relacao relacao : relacoes) {
+				relacao.setSelecionado(false);
+			}
+		}
+
+		if (objetos != null) {
+			limparSelecao();
+		}
 	}
 }

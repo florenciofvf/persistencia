@@ -279,6 +279,7 @@ public class Container extends PanelBorder {
 		public void actionPerformed(ActionEvent e) {
 			if (btnArrasto.isSelected()) {
 				superficie.configEstado(Constantes.ARRASTO);
+				superficie.repaint();
 			}
 		}
 	}
@@ -294,6 +295,7 @@ public class Container extends PanelBorder {
 		public void actionPerformed(ActionEvent e) {
 			if (btnRotulos.isSelected()) {
 				superficie.configEstado(Constantes.ROTULOS);
+				superficie.repaint();
 			}
 		}
 	}
@@ -309,6 +311,7 @@ public class Container extends PanelBorder {
 		public void actionPerformed(ActionEvent e) {
 			if (btnRelacao.isSelected()) {
 				superficie.configEstado(Constantes.RELACAO);
+				superficie.repaint();
 			}
 		}
 	}
@@ -324,6 +327,7 @@ public class Container extends PanelBorder {
 		public void actionPerformed(ActionEvent e) {
 			if (btnSelecao.isSelected()) {
 				superficie.configEstado(Constantes.SELECAO);
+				superficie.repaint();
 			}
 		}
 	}
