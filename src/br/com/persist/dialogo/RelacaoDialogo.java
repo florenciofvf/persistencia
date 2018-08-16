@@ -78,6 +78,23 @@ public class RelacaoDialogo extends Dialogo {
 		};
 	}
 
+	private class PanelCorFonte extends PanelBorder implements ChangeListener {
+		private static final long serialVersionUID = 1L;
+		private final JColorChooser colorChooser;
+
+		PanelCorFonte() {
+			colorChooser = new JColorChooser(relacao.getCorFonte());
+			colorChooser.getSelectionModel().addChangeListener(this);
+			add(BorderLayout.CENTER, colorChooser);
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			relacao.setCorFonte(colorChooser.getColor());
+			superficie.repaint();
+		}
+	}
+
 	private class PanelCor extends PanelBorder implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
@@ -164,6 +181,7 @@ public class RelacaoDialogo extends Dialogo {
 			addTab("label.geral", new PanelGeral());
 			addTab("label.desc", new PanelDesc());
 			addTab("label.cor", new PanelCor());
+			addTab("label.cor_fonte", new PanelCorFonte());
 		}
 	}
 }
