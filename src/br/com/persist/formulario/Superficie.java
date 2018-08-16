@@ -6,13 +6,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.InputMap;
 import javax.swing.JDesktopPane;
+import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
@@ -772,6 +776,9 @@ public class Superficie extends JDesktopPane {
 
 		public CopiarAcao() {
 			super(true, "label.copiar", Icones.COPIA);
+
+			inputMap().put(getKeyStroke(KeyEvent.VK_C), chave);
+			getActionMap().put(chave, this);
 		}
 
 		@Override
@@ -830,6 +837,9 @@ public class Superficie extends JDesktopPane {
 
 		public ColarAcao() {
 			super(true, "label.colar", Icones.COLAR);
+
+			inputMap().put(getKeyStroke(KeyEvent.VK_V), chave);
+			getActionMap().put(chave, this);
 		}
 
 		@Override
@@ -837,6 +847,14 @@ public class Superficie extends JDesktopPane {
 			formulario.colar(Superficie.this, true, popup2.x, popup2.y);
 			repaint();
 		}
+	}
+
+	private InputMap inputMap() {
+		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	}
+
+	private static KeyStroke getKeyStroke(int keyCode) {
+		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
 
 	private class ExcluirAcao extends Acao {

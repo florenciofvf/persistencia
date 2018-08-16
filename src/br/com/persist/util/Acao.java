@@ -6,9 +6,11 @@ import javax.swing.Icon;
 
 public abstract class Acao extends AbstractAction {
 	private static final long serialVersionUID = 1L;
+	protected final String chave;
 
 	public Acao(boolean menu, String chaveRotulo, Icon icone) {
 		putValue(menu ? Action.NAME : Action.SHORT_DESCRIPTION, Mensagens.getString(chaveRotulo));
 		putValue(Action.SMALL_ICON, icone);
+		this.chave = chaveRotulo;
 	}
 }
