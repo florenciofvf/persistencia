@@ -1,6 +1,7 @@
 package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
 import br.com.persist.Objeto;
@@ -48,9 +50,13 @@ public class IconeDialogo extends Dialogo {
 
 		LabelIcone(Map.Entry<String, Icon> entry) {
 			addMouseListener(mouseListener);
+			setHorizontalAlignment(CENTER);
 			setIcon(entry.getValue());
 			nome = entry.getKey();
 			setToolTipText(nome);
+			if (nome.equals(objeto.getIcone())) {
+				setBorder(BorderFactory.createLineBorder(Color.BLUE));
+			}
 		}
 
 		private MouseListener mouseListener = new MouseAdapter() {
