@@ -3,7 +3,7 @@ package br.com.persist.util;
 import java.util.ResourceBundle;
 
 public class Mensagens {
-	public static ResourceBundle bundle = ResourceBundle.getBundle("mensagens2");
+	public static ResourceBundle bundle = ResourceBundle.getBundle("mensagens");
 
 	private Mensagens() {
 	}
