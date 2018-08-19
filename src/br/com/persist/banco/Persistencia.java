@@ -12,6 +12,7 @@ import java.util.Map;
 import br.com.persist.Objeto;
 import br.com.persist.modelo.ModeloRegistro;
 import br.com.persist.tabela.Coluna;
+import br.com.persist.util.Util;
 
 public class Persistencia {
 
@@ -22,9 +23,13 @@ public class Persistencia {
 		return i;
 	}
 
-	public static int getTotalRegistros(Connection conn, Objeto objeto) throws Exception {
-		PreparedStatement psmt = conn.prepareStatement("SELECT COUNT(*) FROM " + objeto.getTabela());
+	public static int getTotalRegistros(Connection conn, Objeto objeto, String complemento) throws Exception {
+		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + objeto.getTabela());
+		if (!Util.estaVazio(complemento)) {
+			builder.append(" WHERE 1=1 " + complemento);
+		}
 
+		PreparedStatement psmt = conn.prepareStatement(builder.toString());
 		ResultSet rs = psmt.executeQuery();
 		rs.next();
 

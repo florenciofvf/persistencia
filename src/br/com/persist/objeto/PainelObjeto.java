@@ -200,7 +200,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(new Button(new SincronizarRegistrosAcao()));
 			add(new Button(new AtualizarRegistrosAcao()));
 			addSeparator();
-			add(new Button(new TotalizarRegistrosAcao()));
+			add(new Button(new TotalizarRegistrosAcao(false)));
+			add(new Button(new TotalizarRegistrosAcao(true)));
 			add(total);
 		}
 
@@ -321,9 +322,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class TotalizarRegistrosAcao extends Acao {
 		private static final long serialVersionUID = 1L;
+		private final boolean complemento;
 
-		public TotalizarRegistrosAcao() {
-			super(false, "label.total", Icones.SOMA);
+		public TotalizarRegistrosAcao(boolean complemento) {
+			super(false, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
+			this.complemento = complemento;
 		}
 
 		@Override
@@ -336,7 +339,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			try {
 				Connection conn = Conexao.getConnection(conexao);
-				int i = Persistencia.getTotalRegistros(conn, objeto);
+				int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "");
 				toolbar.total.setText("" + i);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("TOTAL", ex, PainelObjeto.this);
