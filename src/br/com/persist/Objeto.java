@@ -28,7 +28,7 @@ public class Objeto {
 	public int deslocamentoXId = -5;
 	public int deslocamentoYId = -5;
 	private Color cor = COR_PADRAO;
-	private boolean transparente;
+	public boolean transparente;
 	private boolean selecionado;
 	private boolean desenharId;
 	private String complemento;

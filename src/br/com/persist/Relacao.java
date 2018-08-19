@@ -198,6 +198,7 @@ public class Relacao {
 
 	public void desenhar(Graphics2D g2) {
 		int raio = Objeto.diametro / 2;
+		int meta = raio / 2;
 
 		g2.setColor(cor);
 
@@ -219,14 +220,16 @@ public class Relacao {
 			double Y = y / h;
 
 			if (pontoOrigem) {
-				int _x1 = (int) (X * raio);
-				int _y1 = (int) (Y * raio);
+				int valor = origem.transparente ? meta : raio;
+				int _x1 = (int) (X * valor);
+				int _y1 = (int) (Y * valor);
 				g2.fillOval(x1 + _x1 - m, y1 + _y1 - m, diametro, diametro);
 			}
 
 			if (pontoDestino) {
-				int _x2 = (int) (X * (h - raio));
-				int _y2 = (int) (Y * (h - raio));
+				int valor = destino.transparente ? meta : raio;
+				int _x2 = (int) (X * (h - valor));
+				int _y2 = (int) (Y * (h - valor));
 				g2.fillOval(x1 + _x2 - m, y1 + _y2 - m, diametro, diametro);
 			}
 		}
