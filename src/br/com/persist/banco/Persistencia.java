@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +80,7 @@ public class Persistencia {
 			String classe = rsmd.getColumnClassName(i);
 			String nome = rsmd.getColumnName(i).trim();
 			Boolean numero = mapa.get(classe);
+			int tipo = rsmd.getColumnType(i);
 			Boolean chave = false;
 
 			if (numero == null) {
@@ -91,7 +93,7 @@ public class Persistencia {
 				}
 			}
 
-			Coluna coluna = new Coluna(nome, i - 1, numero, chave);
+			Coluna coluna = new Coluna(nome, i - 1, numero, chave, tipo == Types.BLOB || tipo == Types.LONGVARBINARY);
 			colunas.add(coluna);
 		}
 
@@ -101,7 +103,7 @@ public class Persistencia {
 			List<Object> registro = new ArrayList<>();
 
 			for (int i = 1; i <= qtdColunas; i++) {
-				Object valor = rs.getString(i);
+				Object valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
 				registro.add(valor == null ? "" : valor);
 			}
 

@@ -3,14 +3,16 @@ package br.com.persist.tabela;
 public class Coluna {
 	private final boolean numero;
 	private final boolean chave;
+	private final boolean blob;
 	private final String nome;
 	private final int indice;
 
-	public Coluna(String nome, int indice, boolean numero, boolean chave) {
+	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob) {
 		this.indice = indice;
 		this.numero = numero;
 		this.chave = chave;
 		this.nome = nome;
+		this.blob = blob;
 	}
 
 	public boolean isNumero() {
@@ -23,6 +25,10 @@ public class Coluna {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public boolean isBlob() {
+		return blob;
 	}
 
 	public int getIndice() {
