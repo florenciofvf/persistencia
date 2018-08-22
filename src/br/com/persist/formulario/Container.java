@@ -273,7 +273,7 @@ public class Container extends PanelBorder {
 		private static final long serialVersionUID = 1L;
 
 		public TransparenteAcao() {
-			super(false, "label.transparente", Icones.VAZIO);
+			super(false, "label.transparente", Icones.RECT);
 		}
 
 		@Override
