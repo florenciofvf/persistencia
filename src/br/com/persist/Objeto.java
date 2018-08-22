@@ -307,7 +307,7 @@ public class Objeto {
 		}
 
 		if (selecionado) {
-			g2.setColor(cor);
+			g2.setColor(Color.CYAN);
 			g2.drawOval(x - margem3, y - margem3, diametro + margem4, diametro + margem4);
 		}
 
