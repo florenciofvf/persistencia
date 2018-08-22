@@ -298,7 +298,7 @@ public class Superficie extends JDesktopPane {
 			Relacao relacao = getRelacao(origem, destino);
 
 			if (relacao == null) {
-				relacao = new Relacao(origem, false, destino, true);
+				relacao = new Relacao(origem, false, destino, !shift);
 				addRelacao(relacao);
 			}
 
