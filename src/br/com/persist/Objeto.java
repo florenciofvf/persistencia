@@ -20,7 +20,7 @@ import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Objeto {
-	public static final Color COR_PADRAO = new Color(64, 80, 34);
+	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
