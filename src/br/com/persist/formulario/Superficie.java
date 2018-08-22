@@ -276,6 +276,7 @@ public class Superficie extends JDesktopPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			boolean shift = e.isShiftDown();
 			ultX = e.getX();
 			ultY = e.getY();
 			destino = null;
@@ -303,7 +304,9 @@ public class Superficie extends JDesktopPane {
 
 			repaint();
 
-			new RelacaoDialogo(formulario, Superficie.this, relacao);
+			if (!shift) {
+				new RelacaoDialogo(formulario, Superficie.this, relacao);
+			}
 		}
 	};
 
