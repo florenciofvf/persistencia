@@ -53,14 +53,14 @@ public class Desktop extends JDesktopPane {
 	private MouseAdapter mouseAdapter = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (e.isPopupTrigger()) {
+			if (e.isPopupTrigger() && getAllFrames().length > 0) {
 				popup.show(Desktop.this, e.getX(), e.getY());
 			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (e.isPopupTrigger()) {
+			if (e.isPopupTrigger() && getAllFrames().length > 0) {
 				popup.show(Desktop.this, e.getX(), e.getY());
 			}
 		}
