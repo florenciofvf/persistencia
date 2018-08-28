@@ -31,7 +31,9 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
+import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
+import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Transferidor;
@@ -217,9 +219,24 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class ButtonInfo extends Button {
 		private static final long serialVersionUID = 1L;
+		private Popup popup = new Popup();
 
 		public ButtonInfo() {
+			popup.add(new MenuItem(new ChavePrimariaAcao()));
+			setComponentPopupMenu(popup);
 			setIcon(Icones.INFO);
+		}
+	}
+
+	private class ChavePrimariaAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ChavePrimariaAcao() {
+			super(true, "label.chave_primaria", Icones.KEY);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
 		}
 	}
 
