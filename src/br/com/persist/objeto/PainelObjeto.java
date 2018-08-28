@@ -223,20 +223,50 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		public ButtonInfo() {
 			popup.add(new MenuItem(new ChavePrimariaAcao()));
+			popup.add(new MenuItem(new ChaveExtrangeiraAcao()));
+			popup.addSeparator();
+			popup.add(new MenuItem(new InfoBancoAcao()));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.INFO);
 		}
-	}
 
-	private class ChavePrimariaAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		class ChavePrimariaAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public ChavePrimariaAcao() {
-			super(true, "label.chave_primaria", Icones.KEY);
+			public ChavePrimariaAcao() {
+				super(true, "label.chave_primaria", Icones.PKEY);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
+		class ChaveExtrangeiraAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ChaveExtrangeiraAcao() {
+				super(true, "label.chave_extrangeira", Icones.KEY);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		}
+
+		class InfoBancoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public InfoBancoAcao() {
+				super(true, "label.info_banco", null);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
 		}
 	}
 
