@@ -195,6 +195,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		public Toolbar() {
 			add(new Button(new FecharAcao()));
 			addSeparator();
+			add(new ButtonInfo());
+			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
 			addSeparator();
 			add(new Button(new SincronizarRegistrosAcao()));
@@ -210,6 +212,14 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
+		}
+	}
+
+	private class ButtonInfo extends Button {
+		private static final long serialVersionUID = 1L;
+
+		public ButtonInfo() {
+			setIcon(Icones.INFO);
 		}
 	}
 
