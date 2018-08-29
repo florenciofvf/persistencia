@@ -223,7 +223,70 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage("INFO-BANCO", ex, this);
+			Util.stackTraceAndMessage("ESQUEMA", ex, this);
+		}
+	}
+
+	private void processarChavePrimaria() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		try {
+			Connection conn = Conexao.getConnection(conexao);
+			ModeloListagem modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto);
+			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+
+			tabela.setModel(modeloOrdenacao);
+
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("CHAVE-PRIMÁRIA", ex, this);
+		}
+	}
+
+	private void processarChaveExportadas() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		try {
+			Connection conn = Conexao.getConnection(conexao);
+			ModeloListagem modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto);
+			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+
+			tabela.setModel(modeloOrdenacao);
+
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, this);
+		}
+	}
+
+	private void processarChaveImportadas() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		try {
+			Connection conn = Conexao.getConnection(conexao);
+			ModeloListagem modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto);
+			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+
+			tabela.setModel(modeloOrdenacao);
+
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, this);
 		}
 	}
 
@@ -265,8 +328,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		private Popup popup = new Popup();
 
 		public ButtonInfo() {
-			popup.add(new MenuItem(new ChavePrimariaAcao()));
-			popup.add(new MenuItem(new ChaveExtrangeiraAcao()));
+			popup.add(new MenuItem(new ChavesPrimariasAcao()));
+			popup.addSeparator();
+			popup.add(new MenuItem(new ChavesExportadasAcao()));
+			popup.add(new MenuItem(new ChavesImportadasAcao()));
 			popup.addSeparator();
 			popup.add(new MenuItem(new InfoBancoAcao()));
 			popup.add(new MenuItem(new EsquemaAcao()));
@@ -274,29 +339,42 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			setIcon(Icones.INFO);
 		}
 
-		class ChavePrimariaAcao extends Acao {
+		class ChavesPrimariasAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ChavePrimariaAcao() {
+			public ChavesPrimariasAcao() {
 				super(true, "label.chave_primaria", Icones.PKEY);
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				processarChavePrimaria();
 			}
 		}
 
-		class ChaveExtrangeiraAcao extends Acao {
+		class ChavesImportadasAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ChaveExtrangeiraAcao() {
-				super(true, "label.chave_extrangeira", Icones.KEY);
+			public ChavesImportadasAcao() {
+				super(true, "label.chaves_importadas", Icones.KEY);
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				processarChaveImportadas();
+			}
+		}
+
+		class ChavesExportadasAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ChavesExportadasAcao() {
+				super(true, "label.chaves_exportadas", Icones.KEY);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				processarChaveExportadas();
 			}
 		}
 

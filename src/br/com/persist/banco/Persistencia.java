@@ -262,18 +262,69 @@ public class Persistencia {
 		return Arrays.asList(nome, object == null ? "" : object.toString());
 	}
 
+	private static List<String> criar(String... strings) {
+		return Arrays.asList(strings);
+	}
+
 	public static ModeloListagem criarModeloEsquema(Connection conn) throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
 		ResultSet rs = m.getSchemas();
 
-		while(rs.next()) {
+		while (rs.next()) {
 			dados.add(criar(rs.getString("TABLE_SCHEM"), rs.getString("TABLE_CATALOG")));
 		}
 
 		rs.close();
 
-		return new ModeloListagem(Arrays.asList("ESQUEMA", "CATÁLOGO"), dados);
+		return new ModeloListagem(Arrays.asList("TABLE_SCHEM", "TABLE_CATALOG"), dados);
+	}
+
+	public static ModeloListagem criarModeloChavePrimaria(Connection conn, Objeto objeto) throws Exception {
+		List<List<String>> dados = new ArrayList<>();
+		DatabaseMetaData m = conn.getMetaData();
+
+		ResultSet rs = m.getPrimaryKeys(null, null, objeto.getTabela());
+
+		while (rs.next()) {
+			dados.add(criar(rs.getString("COLUMN_NAME"), rs.getString("KEY_SEQ"), rs.getString("PK_NAME")));
+		}
+
+		rs.close();
+
+		return new ModeloListagem(Arrays.asList("COLUMN_NAME", "KEY_SEQ", "PK_NAME"), dados);
+	}
+
+	public static ModeloListagem criarModeloChavesExportadas(Connection conn, Objeto objeto) throws Exception {
+		List<List<String>> dados = new ArrayList<>();
+		DatabaseMetaData m = conn.getMetaData();
+
+		ResultSet rs = m.getExportedKeys(null, null, objeto.getTabela());
+
+		while (rs.next()) {
+			dados.add(
+					criar(rs.getString("PKCOLUMN_NAME"), rs.getString("FKTABLE_NAME"), rs.getString("FKCOLUMN_NAME")));
+		}
+
+		rs.close();
+
+		return new ModeloListagem(Arrays.asList("PKCOLUMN_NAME", "FKTABLE_NAME", "FKCOLUMN_NAME"), dados);
+	}
+
+	public static ModeloListagem criarModeloChavesImportadas(Connection conn, Objeto objeto) throws Exception {
+		List<List<String>> dados = new ArrayList<>();
+		DatabaseMetaData m = conn.getMetaData();
+
+		ResultSet rs = m.getImportedKeys(null, null, objeto.getTabela());
+
+		while (rs.next()) {
+			dados.add(
+					criar(rs.getString("PKTABLE_NAME"), rs.getString("PKCOLUMN_NAME"), rs.getString("FKCOLUMN_NAME")));
+		}
+
+		rs.close();
+
+		return new ModeloListagem(Arrays.asList("PKTABLE_NAME", "PKCOLUMN_NAME", "FKCOLUMN_NAME"), dados);
 	}
 }
