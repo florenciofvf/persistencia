@@ -261,4 +261,19 @@ public class Persistencia {
 	private static List<String> criar(String nome, Object object) {
 		return Arrays.asList(nome, object == null ? "" : object.toString());
 	}
+
+	public static ModeloListagem criarModeloEsquema(Connection conn) throws Exception {
+		List<List<String>> dados = new ArrayList<>();
+		DatabaseMetaData m = conn.getMetaData();
+
+		ResultSet rs = m.getSchemas();
+
+		while(rs.next()) {
+			dados.add(criar(rs.getString("TABLE_SCHEM"), rs.getString("TABLE_CATALOG")));
+		}
+
+		rs.close();
+
+		return new ModeloListagem(Arrays.asList("ESQUEMA", "CATÁLOGO"), dados);
+	}
 }

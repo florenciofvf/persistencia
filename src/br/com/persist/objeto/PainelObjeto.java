@@ -206,6 +206,27 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
+	private void processarEsquema() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		try {
+			Connection conn = Conexao.getConnection(conexao);
+			ModeloListagem modeloListagem = Persistencia.criarModeloEsquema(conn);
+			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+
+			tabela.setModel(modeloOrdenacao);
+
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("INFO-BANCO", ex, this);
+		}
+	}
+
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
@@ -248,6 +269,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			popup.add(new MenuItem(new ChaveExtrangeiraAcao()));
 			popup.addSeparator();
 			popup.add(new MenuItem(new InfoBancoAcao()));
+			popup.add(new MenuItem(new EsquemaAcao()));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.INFO);
 		}
@@ -288,6 +310,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				processarInfoBanco();
+			}
+		}
+
+		class EsquemaAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public EsquemaAcao() {
+				super(true, "label.esquema", null);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				processarEsquema();
 			}
 		}
 	}
