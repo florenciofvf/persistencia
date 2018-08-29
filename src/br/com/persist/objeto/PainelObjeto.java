@@ -37,6 +37,7 @@ import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Transferidor;
+import br.com.persist.modelo.ModeloListagem;
 import br.com.persist.modelo.ModeloOrdenacao;
 import br.com.persist.modelo.ModeloRegistro;
 import br.com.persist.tabela.CabecalhoColuna;
@@ -184,6 +185,27 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
+	private void processarInfoBanco() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		try {
+			Connection conn = Conexao.getConnection(conexao);
+			ModeloListagem modeloListagem = Persistencia.criarModeloInfoBanco(conn);
+			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+
+			tabela.setModel(modeloOrdenacao);
+
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("INFO-BANCO", ex, this);
+		}
+	}
+
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
@@ -265,7 +287,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				processarInfoBanco();
 			}
 		}
 	}
