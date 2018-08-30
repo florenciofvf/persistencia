@@ -73,10 +73,6 @@ public class Tabela extends JTable {
 				TableColumn tableColumn = columnModel.getColumn(tableColuna);
 				CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
 
-				if (cabecalho == null) {
-					return;
-				}
-
 				int resto = getResto(e.getX(), tableColumn);
 
 				if (cabecalho.isOrdenacao(resto)) {

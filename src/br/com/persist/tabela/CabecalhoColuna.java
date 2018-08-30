@@ -29,9 +29,10 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	private final ModeloOrdenacao modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
+	private final boolean comFiltro;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(PainelObjeto painelObjeto, ModeloOrdenacao modelo, Coluna coluna) {
+	public CabecalhoColuna(PainelObjeto painelObjeto, ModeloOrdenacao modelo, Coluna coluna, boolean comFiltro) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
 		setBorder(BorderFactory.createEtchedBorder());
 		descricao = new Descricao(coluna.getNome());
@@ -39,7 +40,10 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		add(BorderLayout.CENTER, descricao);
 		add(BorderLayout.WEST, ordenacao);
 		this.painelObjeto = painelObjeto;
-		add(BorderLayout.EAST, filtro);
+		this.comFiltro = comFiltro;
+		if (comFiltro) {
+			add(BorderLayout.EAST, filtro);
+		}
 		this.modelo = modelo;
 	}
 
@@ -156,7 +160,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	}
 
 	public boolean isFiltro(int resto, int largura) {
-		return resto >= largura - 16;
+		return comFiltro ? resto >= largura - 16 : false;
 	}
 
 	public void ordenar() {

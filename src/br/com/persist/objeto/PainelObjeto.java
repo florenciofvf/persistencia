@@ -169,7 +169,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					tableColumn.setCellRenderer(new CellRenderer());
 				}
 
-				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna);
+				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna, true);
 
 				if (cabecalhoColuna.equals(cabecalho)) {
 					cabecalhoColuna.copiar(cabecalho);
@@ -182,6 +182,21 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g, 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
+		}
+	}
+
+	private void configCabecalhoColuna(ModeloListagem modelo) {
+		ModeloOrdenacao modeloOrdenacao = (ModeloOrdenacao) tabela.getModel();
+		TableColumnModel columnModel = tabela.getColumnModel();
+		List<Coluna> colunas = modelo.getColunasInfo();
+
+		for (int i = 0; i < colunas.size(); i++) {
+			TableColumn tableColumn = columnModel.getColumn(i);
+			Coluna coluna = colunas.get(i);
+
+			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna, false);
+
+			tableColumn.setHeaderRenderer(cabecalhoColuna);
 		}
 	}
 
@@ -199,7 +214,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
-
+			configCabecalhoColuna(modeloListagem);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("INFO-BANCO", ex, this);
@@ -220,7 +235,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
-
+			configCabecalhoColuna(modeloListagem);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ESQUEMA", ex, this);
@@ -241,7 +256,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
-
+			configCabecalhoColuna(modeloListagem);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("CHAVE-PRIMÁRIA", ex, this);
@@ -262,7 +277,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
-
+			configCabecalhoColuna(modeloListagem);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, this);
@@ -283,7 +298,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
-
+			configCabecalhoColuna(modeloListagem);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, this);
@@ -304,7 +319,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
-
+			configCabecalhoColuna(modeloListagem);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("META-DADOS", ex, this);
