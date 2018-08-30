@@ -290,6 +290,27 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
+	private void processarMetaDados() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		try {
+			Connection conn = Conexao.getConnection(conexao);
+			ModeloListagem modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto);
+			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+
+			tabela.setModel(modeloOrdenacao);
+
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("META-DADOS", ex, this);
+		}
+	}
+
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
@@ -332,6 +353,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			popup.addSeparator();
 			popup.add(new MenuItem(new ChavesExportadasAcao()));
 			popup.add(new MenuItem(new ChavesImportadasAcao()));
+			popup.addSeparator();
+			popup.add(new MenuItem(new MetaDadosAcao()));
 			popup.addSeparator();
 			popup.add(new MenuItem(new InfoBancoAcao()));
 			popup.add(new MenuItem(new EsquemaAcao()));
@@ -388,6 +411,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				processarInfoBanco();
+			}
+		}
+
+		class MetaDadosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public MetaDadosAcao() {
+				super(true, "label.meta_dados", null);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				processarMetaDados();
 			}
 		}
 

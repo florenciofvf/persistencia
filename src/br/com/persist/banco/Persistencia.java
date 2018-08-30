@@ -327,4 +327,50 @@ public class Persistencia {
 
 		return new ModeloListagem(Arrays.asList("PKTABLE_NAME", "PKCOLUMN_NAME", "FKCOLUMN_NAME"), dados);
 	}
+
+	public static ModeloListagem criarModeloMetaDados(Connection conn, Objeto objeto) throws Exception {
+		StringBuilder builder = new StringBuilder("SELECT * FROM " + objeto.getTabela() + " WHERE 1 > 2");
+		PreparedStatement psmt = conn.prepareStatement(builder.toString());
+		ResultSet rs = psmt.executeQuery();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int totalColunas = rsmd.getColumnCount();
+
+		List<String> colunas = Arrays.asList("ColumnClassName", "ColumnLabel", "ColumnName", "AutoIncrement",
+				"CaseSensitive", "Searchable", "Currency", "Nullable", "Signed", "ColumnDisplaySize", "SchemaName",
+				"Precision", "Scale", "TableName", "CatalogName", "ColumnType", "ColumnTypeName", "ReadOnly",
+				"Writable", "DefinitelyWritable");
+		List<List<String>> dados = new ArrayList<>();
+
+		for (int i = 1; i <= totalColunas; i++) {
+			List<String> linha = new ArrayList<>();
+
+			linha.add(rsmd.getColumnClassName(i));
+			linha.add(rsmd.getColumnLabel(i));
+			linha.add(rsmd.getColumnName(i));
+			linha.add("" + rsmd.isAutoIncrement(i));
+			linha.add("" + rsmd.isCaseSensitive(i));
+			linha.add("" + rsmd.isSearchable(i));
+			linha.add("" + rsmd.isCurrency(i));
+			linha.add("" + rsmd.isNullable(i));
+			linha.add("" + rsmd.isSigned(i));
+			linha.add("" + rsmd.getColumnDisplaySize(i));
+			linha.add(rsmd.getSchemaName(i));
+			linha.add("" + rsmd.getPrecision(i));
+			linha.add("" + rsmd.getScale(i));
+			linha.add(rsmd.getTableName(i));
+			linha.add(rsmd.getCatalogName(i));
+			linha.add("" + rsmd.getColumnType(i));
+			linha.add(rsmd.getColumnTypeName(i));
+			linha.add("" + rsmd.isReadOnly(i));
+			linha.add("" + rsmd.isWritable(i));
+			linha.add("" + rsmd.isDefinitelyWritable(i));
+
+			dados.add(linha);
+		}
+
+		rs.close();
+		psmt.close();
+
+		return new ModeloListagem(colunas, dados);
+	}
 }
