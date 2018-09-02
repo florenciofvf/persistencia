@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <fvf>
-	<objeto complemento="" desloc_x_id="-5" desloc_y_id="-5" corFonte="-16777216" transparente="false" desenharId="true" id="elei&#231;&#227;o" tabela="eleicao" chaves="id" cor="-12555904" icone="" x="144" y="65">
+	<objeto complemento="" desloc_x_id="-5" desloc_y_id="-5" corFonte="-16777216" transparente="false" desenharId="true" id="elei&#231;&#227;o" tabela="eleicao" chaves="id" cor="-12555904" icone="play2" x="144" y="65">
 	</objeto>
 	<objeto complemento="" desloc_x_id="-5" desloc_y_id="-5" corFonte="-16777216" transparente="false" desenharId="true" id="candidato" tabela="candidato" chaves="id" cor="-12555904" icone="boss" x="352" y="65">
 	</objeto>
