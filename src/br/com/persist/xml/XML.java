@@ -13,6 +13,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.util.Fragmento;
 import br.com.persist.util.Util;
 
 public class XML {
@@ -31,6 +32,14 @@ public class XML {
 
 		SAXParser parser = factory.newSAXParser();
 		HandlerConn handler = new HandlerConn(conexoes);
+		parser.parse(file, handler);
+	}
+
+	public static void processarFragmento(File file, List<Fragmento> fragmentos) throws Exception {
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+
+		SAXParser parser = factory.newSAXParser();
+		HandlerFragmento handler = new HandlerFragmento(fragmentos);
 		parser.parse(file, handler);
 	}
 }
@@ -128,6 +137,23 @@ class HandlerConn extends DefaultHandler {
 			Conexao conexao = new Conexao();
 			conexao.aplicar(attributes);
 			conexoes.add(conexao);
+		}
+	}
+}
+
+class HandlerFragmento extends DefaultHandler {
+	final List<Fragmento> fragmentos;
+
+	public HandlerFragmento(List<Fragmento> fragmentos) {
+		this.fragmentos = fragmentos;
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		if ("fragmento".equals(qName)) {
+			Fragmento f = new Fragmento();
+			f.aplicar(attributes);
+			fragmentos.add(f);
 		}
 	}
 }
