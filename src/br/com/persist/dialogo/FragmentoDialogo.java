@@ -132,7 +132,7 @@ public class FragmentoDialogo extends Dialogo {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				modelo.abrir();
-				formulario.atualizarConexoes();
+				formulario.atualizarFragmentos();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: ", ex, FragmentoDialogo.this);
 			}
