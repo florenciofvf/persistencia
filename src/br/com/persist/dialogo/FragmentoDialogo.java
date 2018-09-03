@@ -161,6 +161,11 @@ public class FragmentoDialogo extends Dialogo {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				modelo.abrir();
+
+				if (listener != null) {
+					modelo.filtar(listener.getGruposFiltro());
+				}
+
 				if (formulario != null) {
 					formulario.atualizarFragmentos();
 				}

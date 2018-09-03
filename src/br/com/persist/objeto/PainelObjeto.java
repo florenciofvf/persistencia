@@ -497,11 +497,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		@Override
 		public List<String> getGruposFiltro() {
 			ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
-			TableModel model = modelo.getModel();
 			List<String> colunas = new ArrayList<>();
+			TableModel model = modelo.getModel();
 
 			for (int i = 0; i < model.getColumnCount(); i++) {
-				colunas.add(model.getColumnName(i));
+				colunas.add(model.getColumnName(i).toUpperCase());
 			}
 
 			return colunas;

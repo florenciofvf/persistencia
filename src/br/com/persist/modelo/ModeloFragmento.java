@@ -2,6 +2,7 @@ package br.com.persist.modelo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -127,6 +128,19 @@ public class ModeloFragmento extends AbstractTableModel {
 		if (file.exists() && file.canRead()) {
 			XML.processarFragmento(file, fragmentos);
 			fireTableDataChanged();
+		}
+	}
+
+	public void filtar(List<String> gruposFiltro) {
+		Iterator<Fragmento> it = fragmentos.iterator();
+
+		while (it.hasNext()) {
+			Fragmento f = it.next();
+			String g = f.getGrupo() != null ? f.getGrupo().toUpperCase() : null;
+
+			if (!gruposFiltro.contains(g)) {
+				it.remove();
+			}
 		}
 	}
 }
