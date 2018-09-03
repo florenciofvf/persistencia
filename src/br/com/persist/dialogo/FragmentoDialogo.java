@@ -25,17 +25,20 @@ public class FragmentoDialogo extends Dialogo {
 	private final ModeloFragmento modelo = new ModeloFragmento();
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
+	private final FragmentoListener listener;
 	private final Formulario formulario;
 
-	public FragmentoDialogo(Formulario formulario) {
+	public FragmentoDialogo(Formulario formulario, FragmentoListener listener) {
 		super(formulario, Mensagens.getString("label.fragmento"), 1000, 200, false);
 		this.formulario = formulario;
+		this.listener = listener;
 		montarLayout();
 		configurar();
 		setVisible(true);
 	}
 
 	private void montarLayout() {
+		toolbar.configListener();
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabela));
 	}
@@ -64,6 +67,12 @@ public class FragmentoDialogo extends Dialogo {
 			add(new Button(new AbrirAcao()));
 			add(new Button(new SalvarAcao()));
 		}
+
+		void configListener() {
+			if (listener != null) {
+				add(new Button(new ConfigFragmentoAcao()));
+			}
+		}
 	}
 
 	private class TopAcao extends Acao {
@@ -81,6 +90,25 @@ public class FragmentoDialogo extends Dialogo {
 				modelo.primeiro(linhas[0]);
 				modelo.fireTableDataChanged();
 				tabela.setRowSelectionInterval(0, 0);
+			}
+		}
+	}
+
+	private class ConfigFragmentoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ConfigFragmentoAcao() {
+			super(false, "label.fragmento", Icones.SUCESSO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1) {
+				Fragmento f = modelo.getFragmento(linhas[0]);
+				listener.configFragmento(f);
+				dispose();
 			}
 		}
 	}
@@ -132,7 +160,9 @@ public class FragmentoDialogo extends Dialogo {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				modelo.abrir();
-				formulario.atualizarFragmentos();
+				if (formulario != null) {
+					formulario.atualizarFragmentos();
+				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: ", ex, FragmentoDialogo.this);
 			}
@@ -150,10 +180,16 @@ public class FragmentoDialogo extends Dialogo {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				modelo.salvar();
-				formulario.atualizarFragmentos();
+				if (formulario != null) {
+					formulario.atualizarFragmentos();
+				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("SALVAR: ", ex, FragmentoDialogo.this);
 			}
 		}
+	}
+
+	public static interface FragmentoListener {
+		public void configFragmento(Fragmento f);
 	}
 }

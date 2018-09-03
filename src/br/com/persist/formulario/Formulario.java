@@ -207,7 +207,7 @@ public class Formulario extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new FragmentoDialogo(Formulario.this);
+			new FragmentoDialogo(Formulario.this, null);
 		}
 	}
 

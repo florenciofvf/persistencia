@@ -36,6 +36,8 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
+import br.com.persist.dialogo.FragmentoDialogo;
+import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.Transferidor;
 import br.com.persist.modelo.ModeloListagem;
 import br.com.persist.modelo.ModeloOrdenacao;
@@ -47,6 +49,7 @@ import br.com.persist.tabela.IndiceValor;
 import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
@@ -341,6 +344,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new ButtonInfo());
 			addSeparator();
+			add(new Button(new FragmentoAcao()));
+			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
 			addSeparator();
 			add(new Button(new SincronizarRegistrosAcao()));
@@ -468,6 +473,27 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			txtComplemento.setText("");
 		}
 	}
+
+	private class FragmentoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public FragmentoAcao() {
+			super(false, "label.fragmento", Icones.FRAGMENTO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new FragmentoDialogo(null, fragmentoListener);
+		}
+	}
+
+	private FragmentoListener fragmentoListener = new FragmentoListener() {
+		@Override
+		public void configFragmento(Fragmento f) {
+			txtComplemento.setText(f.getValor());
+			actionPerformed(null);
+		}
+	};
 
 	private class BaixarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
