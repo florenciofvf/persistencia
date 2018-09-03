@@ -493,6 +493,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			txtComplemento.setText(f.getValor());
 			actionPerformed(null);
 		}
+
+		@Override
+		public List<String> getGruposFiltro() {
+			ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
+			TableModel model = modelo.getModel();
+			List<String> colunas = new ArrayList<>();
+
+			for (int i = 0; i < model.getColumnCount(); i++) {
+				colunas.add(model.getColumnName(i));
+			}
+
+			return colunas;
+		}
 	};
 
 	private class BaixarAcao extends Acao {

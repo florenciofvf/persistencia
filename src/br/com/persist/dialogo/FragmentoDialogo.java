@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.JToolBar;
@@ -191,5 +192,7 @@ public class FragmentoDialogo extends Dialogo {
 
 	public static interface FragmentoListener {
 		public void configFragmento(Fragmento f);
+
+		public List<String> getGruposFiltro();
 	}
 }
