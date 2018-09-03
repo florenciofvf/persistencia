@@ -23,8 +23,11 @@ import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
+import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.modelo.ModeloConexao;
+import br.com.persist.modelo.ModeloFragmento;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Sistema;
@@ -34,6 +37,7 @@ import br.com.persist.xml.XML;
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
+	private final Vector<Fragmento> fragmentos = new Vector<>();
 	private final Vector<Conexao> conexoes = new Vector<>();
 	private final List<Objeto> copiados = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
@@ -142,6 +146,20 @@ public class Formulario extends JFrame {
 		}
 	}
 
+	public void atualizarFragmentos() {
+		ModeloFragmento modelo = new ModeloFragmento();
+		fragmentos.clear();
+
+		try {
+			modelo.abrir();
+			for (Fragmento f : modelo.getFragmentos()) {
+				fragmentos.add(f);
+			}
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, this);
+		}
+	}
+
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
 		final Menu menuArquivo = new Menu("label.arquivo");
@@ -156,6 +174,8 @@ public class Formulario extends JFrame {
 			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuItem(new FragmentoAcao(true)));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConfigAcao()));
 			menuArquivo.addSeparator();
@@ -175,6 +195,19 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			new ConexaoDialogo(Formulario.this);
+		}
+	}
+
+	private class FragmentoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public FragmentoAcao(boolean menu) {
+			super(menu, "label.fragmento", Icones.FRAGMENTO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new FragmentoDialogo(Formulario.this);
 		}
 	}
 
