@@ -350,6 +350,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new SincronizarRegistrosAcao()));
 			add(new Button(new AtualizarRegistrosAcao()));
+			add(new Button(new ComplementoAcao()));
 			addSeparator();
 			add(new Button(new TotalizarRegistrosAcao(false)));
 			add(new Button(new TotalizarRegistrosAcao(true)));
@@ -518,6 +519,32 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			txtComplemento.setText(objeto.getComplemento());
+		}
+	}
+
+	private class ComplementoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public ComplementoAcao() {
+			super(false, "label.complemento", Icones.BAIXAR2);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+			if (conexao == null) {
+				return;
+			}
+
+			String complemento = Util.getContentTransfered();
+
+			if (!Util.estaVazio(complemento)) {
+				txtComplemento.setText(complemento);
+				PainelObjeto.this.actionPerformed(null);
+			} else {
+				txtComplemento.setText(objeto.getComplemento());
+			}
 		}
 	}
 

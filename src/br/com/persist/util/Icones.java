@@ -27,6 +27,7 @@ public class Icones {
 	public static final Icon CONECTA = criarImagem("connect");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon SALVARC = criarImagem("saveas");
+	public static final Icon BAIXAR2 = criarImagem("bottom");
 	public static final Icon CONFIG = criarImagem("config");
 	public static final Icon FILTRO = criarImagem("filtro");
 	public static final Icon BAIXAR = criarImagem("baixar");

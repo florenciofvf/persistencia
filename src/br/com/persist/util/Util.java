@@ -4,7 +4,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -85,6 +87,24 @@ public class Util {
 		if (clipboard != null) {
 			clipboard.setContents(new StringSelection(string), null);
 		}
+	}
+
+	public static String getContentTransfered() {
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+		if (clipboard != null) {
+			Transferable transferable = clipboard.getContents(null);
+
+			if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+				try {
+					String string = (String) transferable.getTransferData(DataFlavor.stringFlavor);
+					return string;
+				} catch (Exception e) {
+				}
+			}
+		}
+
+		return null;
 	}
 
 	public static String escapar(String s) {

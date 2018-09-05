@@ -110,10 +110,12 @@ public class Tabela extends JTable {
 
 		public PopupHeader() {
 			add(new MenuItem(new CopiarAcao()));
-			addSeparator();
 			add(new MenuItem(new CopiarAspasAcao()));
 			addSeparator();
 			add(new MenuItem(new CopiarNomeAcao()));
+			addSeparator();
+			add(new MenuItem(new CopiarComplementoAcao()));
+			add(new MenuItem(new CopiarAspasComplementoAcao()));
 		}
 
 		private class CopiarAcao extends Acao {
@@ -127,6 +129,27 @@ public class Tabela extends JTable {
 			public void actionPerformed(ActionEvent e) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
 				Util.setContentTransfered(Util.getStringLista(lista, false));
+			}
+		}
+
+		private class CopiarComplementoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarComplementoAcao() {
+				super(true, "label.copiar_complemento", null);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
+				String complemento = Util.getStringLista(lista, false);
+
+				if (!Util.estaVazio(complemento)) {
+					String coluna = getModel().getColumnName(tag);
+					Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
+				} else {
+					Util.setContentTransfered(" ");
+				}
 			}
 		}
 
@@ -144,6 +167,27 @@ public class Tabela extends JTable {
 			}
 		}
 
+		private class CopiarAspasComplementoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarAspasComplementoAcao() {
+				super(true, "label.copiar_com_aspas_complemento", Icones.ASPAS);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
+				String complemento = Util.getStringLista(lista, true);
+
+				if (!Util.estaVazio(complemento)) {
+					String coluna = getModel().getColumnName(tag);
+					Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
+				} else {
+					Util.setContentTransfered(" ");
+				}
+			}
+		}
+
 		private class CopiarNomeAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
@@ -153,8 +197,8 @@ public class Tabela extends JTable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nome = getModel().getColumnName(tag);
-				Util.setContentTransfered(nome);
+				String coluna = getModel().getColumnName(tag);
+				Util.setContentTransfered(coluna);
 			}
 		}
 	}
