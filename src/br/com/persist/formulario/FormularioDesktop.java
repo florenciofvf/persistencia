@@ -4,13 +4,16 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import br.com.persist.util.Mensagens;
+
 public class FormularioDesktop extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final Desktop desktop;
 
 	public FormularioDesktop(Formulario formulario) {
-		desktop = new Desktop(formulario, false);
+		super(Mensagens.getString("label.persistencia"));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		desktop = new Desktop(formulario, false);
 		setSize(1000, 600);
 		montarLayout();
 		setLocationRelativeTo(formulario);
