@@ -171,6 +171,8 @@ public class Formulario extends JFrame {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new DesktopAcao()));
 			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuItem(new FormularioAcao()));
+			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
@@ -247,6 +249,19 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			fichario.novoDesktop(Formulario.this);
+		}
+	}
+
+	private class FormularioAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public FormularioAcao() {
+			super(true, "label.formulario", Icones.PANEL);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new FormularioDesktop(Formulario.this);
 		}
 	}
 
