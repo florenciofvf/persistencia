@@ -121,6 +121,7 @@ public class Formulario extends JFrame {
 					FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
 				}
 
+				atualizarFragmentos();
 				atualizarConexoes();
 			}
 
@@ -128,6 +129,16 @@ public class Formulario extends JFrame {
 				FormularioUtil.fechar(Formulario.this);
 			};
 		});
+	}
+
+	public void atualizarFragmentos() {
+		FragmentoModelo modelo = new FragmentoModelo();
+
+		try {
+			modelo.abrir();
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, this);
+		}
 	}
 
 	public void atualizarConexoes() {
@@ -141,16 +152,6 @@ public class Formulario extends JFrame {
 			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ATUALIZAR CONEXOES", ex, this);
-		}
-	}
-
-	public void atualizarFragmentos() {
-		FragmentoModelo modelo = new FragmentoModelo();
-
-		try {
-			modelo.abrir();
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, this);
 		}
 	}
 

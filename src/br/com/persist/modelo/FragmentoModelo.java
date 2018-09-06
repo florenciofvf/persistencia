@@ -167,5 +167,7 @@ public class FragmentoModelo extends AbstractTableModel {
 				}
 			}
 		}
+
+		fireTableDataChanged();
 	}
 }

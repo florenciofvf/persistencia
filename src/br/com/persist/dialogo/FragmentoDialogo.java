@@ -160,10 +160,10 @@ public class FragmentoDialogo extends Dialogo {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				modelo.abrir2();
-
 				if (listener != null) {
 					modelo.filtar(listener.getGruposFiltro());
+				} else {
+					modelo.abrir2();
 				}
 
 				if (formulario != null) {
