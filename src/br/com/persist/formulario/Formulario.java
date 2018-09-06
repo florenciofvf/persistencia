@@ -27,7 +27,6 @@ import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
-import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Sistema;
@@ -37,7 +36,6 @@ import br.com.persist.xml.XML;
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
-	private final Vector<Fragmento> fragmentos = new Vector<>();
 	private final Vector<Conexao> conexoes = new Vector<>();
 	private final List<Objeto> copiados = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
@@ -148,13 +146,9 @@ public class Formulario extends JFrame {
 
 	public void atualizarFragmentos() {
 		FragmentoModelo modelo = new FragmentoModelo();
-		fragmentos.clear();
 
 		try {
 			modelo.abrir();
-			for (Fragmento f : modelo.getFragmentos()) {
-				fragmentos.add(f);
-			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, this);
 		}

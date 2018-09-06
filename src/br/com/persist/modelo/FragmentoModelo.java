@@ -15,10 +15,11 @@ public class FragmentoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
 	private static final File file = new File("fragmentos/fragmentos.xml");
-	private final List<Fragmento> fragmentos;
+	private final static List<Fragmento> fragmentos = new ArrayList<>();
+	private final static List<Fragmento> filtrados = new ArrayList<>();
+	private static boolean aberto;
 
 	public FragmentoModelo() {
-		fragmentos = new ArrayList<>();
 	}
 
 	public List<Fragmento> getFragmentos() {
@@ -118,16 +119,36 @@ public class FragmentoModelo extends AbstractTableModel {
 			}
 		}
 
+		for (Fragmento f : filtrados) {
+			if (f.isValida()) {
+				f.salvar(util);
+			}
+		}
+
 		util.finalizarTag("fragmentos");
 		util.close();
 	}
 
 	public void abrir() throws Exception {
-		fragmentos.clear();
+		if (aberto) {
+			return;
+		}
 
 		if (file.exists() && file.canRead()) {
 			XML.processarFragmento(file, fragmentos);
 			fireTableDataChanged();
+			aberto = true;
+		}
+	}
+
+	public void abrir2() throws Exception {
+		fragmentos.clear();
+		filtrados.clear();
+
+		if (file.exists() && file.canRead()) {
+			XML.processarFragmento(file, fragmentos);
+			fireTableDataChanged();
+			aberto = true;
 		}
 	}
 
@@ -140,6 +161,10 @@ public class FragmentoModelo extends AbstractTableModel {
 
 			if (!gruposFiltro.contains(g)) {
 				it.remove();
+
+				if (!filtrados.contains(f)) {
+					filtrados.add(f);
+				}
 			}
 		}
 	}
