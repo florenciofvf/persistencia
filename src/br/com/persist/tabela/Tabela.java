@@ -13,8 +13,8 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
-import br.com.persist.modelo.ModeloOrdenacao;
-import br.com.persist.modelo.ModeloVazio;
+import br.com.persist.modelo.OrdenacaoModelo;
+import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -25,10 +25,10 @@ public class Tabela extends JTable {
 	private PopupHeader popupHeader = new PopupHeader();
 
 	public Tabela() {
-		this(new ModeloOrdenacao(new ModeloVazio()));
+		this(new OrdenacaoModelo(new VazioModelo()));
 	}
 
-	public Tabela(ModeloOrdenacao modelo) {
+	public Tabela(OrdenacaoModelo modelo) {
 		super(modelo);
 		tableHeader.addMouseListener(headerListener);
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -36,7 +36,7 @@ public class Tabela extends JTable {
 
 	@Override
 	public void setModel(TableModel dataModel) {
-		if (!(dataModel instanceof ModeloOrdenacao)) {
+		if (!(dataModel instanceof OrdenacaoModelo)) {
 			throw new IllegalStateException();
 		}
 

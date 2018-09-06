@@ -10,14 +10,14 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.util.XMLUtil;
 import br.com.persist.xml.XML;
 
-public class ModeloConexao extends AbstractTableModel {
+public class ConexaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final String[] COLUNAS = { "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO",
 			"FIM-COMPLEMENTO" };
 	private static final File file = new File("conexoes/conexoes.xml");
 	private final List<Conexao> conexoes;
 
-	public ModeloConexao() {
+	public ConexaoModelo() {
 		conexoes = new ArrayList<>();
 	}
 

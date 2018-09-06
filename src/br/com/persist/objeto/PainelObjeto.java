@@ -39,9 +39,9 @@ import br.com.persist.comp.TextField;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.Transferidor;
-import br.com.persist.modelo.ModeloListagem;
-import br.com.persist.modelo.ModeloOrdenacao;
-import br.com.persist.modelo.ModeloRegistro;
+import br.com.persist.modelo.ListagemModelo;
+import br.com.persist.modelo.OrdenacaoModelo;
+import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.tabela.CabecalhoColuna;
 import br.com.persist.tabela.CellRenderer;
 import br.com.persist.tabela.Coluna;
@@ -130,11 +130,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			return;
 		}
 
-		ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		TableModel model = modelo.getModel();
 
-		if (model instanceof ModeloRegistro) {
-			ModeloRegistro modeloRegistro = (ModeloRegistro) model;
+		if (model instanceof RegistroModelo) {
+			RegistroModelo modeloRegistro = (RegistroModelo) model;
 			modeloRegistro.setConexao(conexao);
 		}
 	}
@@ -153,8 +153,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloRegistro modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves, objeto);
-			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloRegistro);
+			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves, objeto);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			modeloRegistro.setConexao(conexao);
@@ -188,8 +188,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private void configCabecalhoColuna(ModeloListagem modelo) {
-		ModeloOrdenacao modeloOrdenacao = (ModeloOrdenacao) tabela.getModel();
+	private void configCabecalhoColuna(ListagemModelo modelo) {
+		OrdenacaoModelo modeloOrdenacao = (OrdenacaoModelo) tabela.getModel();
 		TableColumnModel columnModel = tabela.getColumnModel();
 		List<Coluna> colunas = modelo.getColunasInfo();
 
@@ -212,8 +212,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloListagem modeloListagem = Persistencia.criarModeloInfoBanco(conn);
-			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			ListagemModelo modeloListagem = Persistencia.criarModeloInfoBanco(conn);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
@@ -233,8 +233,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloListagem modeloListagem = Persistencia.criarModeloEsquema(conn);
-			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			ListagemModelo modeloListagem = Persistencia.criarModeloEsquema(conn);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
@@ -254,8 +254,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloListagem modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto);
-			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
@@ -275,8 +275,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloListagem modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto);
-			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
@@ -296,8 +296,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloListagem modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto);
-			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
@@ -317,8 +317,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ModeloListagem modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto);
-			ModeloOrdenacao modeloOrdenacao = new ModeloOrdenacao(modeloListagem);
+			ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			tabela.setModel(modeloOrdenacao);
@@ -497,7 +497,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		@Override
 		public List<String> getGruposFiltro() {
-			ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
+			OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 			List<String> colunas = new ArrayList<>();
 			TableModel model = modelo.getModel();
 
@@ -669,7 +669,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			if (linhas != null && linhas.length > 0) {
 				if (Util.confirmaExclusao(PainelObjeto.this)) {
-					ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
+					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
 

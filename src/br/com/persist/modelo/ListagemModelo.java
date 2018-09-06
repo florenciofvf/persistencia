@@ -8,12 +8,12 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.tabela.Coluna;
 
-public class ModeloListagem implements TableModel {
+public class ListagemModelo implements TableModel {
 	private final List<Coluna> colunasInfo = new ArrayList<>();
 	private final List<List<String>> dados;
 	private final List<String> colunas;
 
-	public ModeloListagem(List<String> colunas, List<List<String>> dados) {
+	public ListagemModelo(List<String> colunas, List<List<String>> dados) {
 		this.colunas = colunas;
 		this.dados = dados;
 

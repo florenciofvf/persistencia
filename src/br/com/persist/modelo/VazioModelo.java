@@ -3,9 +3,9 @@ package br.com.persist.modelo;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-public class ModeloVazio implements TableModel {
+public class VazioModelo implements TableModel {
 
-	public ModeloVazio() {
+	public VazioModelo() {
 	}
 
 	@Override

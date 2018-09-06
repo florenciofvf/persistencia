@@ -11,13 +11,13 @@ import br.com.persist.util.Fragmento;
 import br.com.persist.util.XMLUtil;
 import br.com.persist.xml.XML;
 
-public class ModeloFragmento extends AbstractTableModel {
+public class FragmentoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
 	private static final File file = new File("fragmentos/fragmentos.xml");
 	private final List<Fragmento> fragmentos;
 
-	public ModeloFragmento() {
+	public FragmentoModelo() {
 		fragmentos = new ArrayList<>();
 	}
 

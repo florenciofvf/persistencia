@@ -24,8 +24,8 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
-import br.com.persist.modelo.ModeloConexao;
-import br.com.persist.modelo.ModeloFragmento;
+import br.com.persist.modelo.ConexaoModelo;
+import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
@@ -133,7 +133,7 @@ public class Formulario extends JFrame {
 	}
 
 	public void atualizarConexoes() {
-		ModeloConexao modelo = new ModeloConexao();
+		ConexaoModelo modelo = new ConexaoModelo();
 		conexoes.clear();
 
 		try {
@@ -147,7 +147,7 @@ public class Formulario extends JFrame {
 	}
 
 	public void atualizarFragmentos() {
-		ModeloFragmento modelo = new ModeloFragmento();
+		FragmentoModelo modelo = new FragmentoModelo();
 		fragmentos.clear();
 
 		try {

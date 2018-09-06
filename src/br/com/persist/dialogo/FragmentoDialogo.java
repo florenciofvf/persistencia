@@ -14,7 +14,7 @@ import javax.swing.KeyStroke;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.modelo.ModeloFragmento;
+import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
@@ -23,14 +23,14 @@ import br.com.persist.util.Util;
 
 public class FragmentoDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
-	private final ModeloFragmento modelo = new ModeloFragmento();
+	private final FragmentoModelo modelo = new FragmentoModelo();
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
 	private final FragmentoListener listener;
 	private final Formulario formulario;
 
 	public FragmentoDialogo(Formulario formulario, FragmentoListener listener) {
-		super(formulario, Mensagens.getString("label.fragmento"), 1000, 200, false);
+		super(formulario, Mensagens.getString("label.fragmento"), 1000, 500, false);
 		this.formulario = formulario;
 		this.listener = listener;
 		montarLayout();

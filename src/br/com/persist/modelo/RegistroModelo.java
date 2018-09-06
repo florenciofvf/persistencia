@@ -13,14 +13,14 @@ import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Util;
 
-public class ModeloRegistro implements TableModel {
+public class RegistroModelo implements TableModel {
 	private final List<List<Object>> registros;
 	private final List<Coluna> colunas;
 	private final boolean chaves;
 	private final String tabela;
 	private Conexao conexao;
 
-	public ModeloRegistro(List<Coluna> colunas, List<List<Object>> registros, String tabela) {
+	public RegistroModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela) {
 		this.registros = registros;
 		this.colunas = colunas;
 		this.tabela = tabela;

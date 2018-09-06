@@ -14,7 +14,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.modelo.ModeloConexao;
+import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -22,7 +22,7 @@ import br.com.persist.util.Util;
 
 public class ConexaoDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
-	private final ModeloConexao modelo = new ModeloConexao();
+	private final ConexaoModelo modelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;

@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import br.com.persist.modelo.ModeloOrdenacao;
+import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {
@@ -41,7 +41,7 @@ public class TabelaUtil {
 	}
 
 	public static List<String> getValoresColuna(Tabela tabela, int coluna) {
-		ModeloOrdenacao modelo = (ModeloOrdenacao) tabela.getModel();
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<String> resposta = new ArrayList<>();
 		int[] linhas = tabela.getSelectedRows();
 		int total = modelo.getRowCount();

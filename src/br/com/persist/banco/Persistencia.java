@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.Objeto;
-import br.com.persist.modelo.ModeloListagem;
-import br.com.persist.modelo.ModeloRegistro;
+import br.com.persist.modelo.ListagemModelo;
+import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.tabela.Coluna;
 import br.com.persist.util.Util;
 
@@ -45,12 +45,12 @@ public class Persistencia {
 		return total;
 	}
 
-	public static ModeloRegistro criarModeloRegistro(Connection conn, String consulta, String[] chaves, Objeto objeto)
+	public static RegistroModelo criarModeloRegistro(Connection conn, String consulta, String[] chaves, Objeto objeto)
 			throws Exception {
 		PreparedStatement psmt = conn.prepareStatement(consulta);
 
 		ResultSet rs = psmt.executeQuery();
-		ModeloRegistro modelo = criarModelo(rs, chaves, objeto.getTabela());
+		RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela());
 
 		rs.close();
 		psmt.close();
@@ -58,7 +58,7 @@ public class Persistencia {
 		return modelo;
 	}
 
-	private static ModeloRegistro criarModelo(ResultSet rs, String[] chaves, String tabela) throws Exception {
+	private static RegistroModelo criarModelo(ResultSet rs, String[] chaves, String tabela) throws Exception {
 		Map<String, Boolean> mapa = new HashMap<>();
 
 		mapa.put("java.math.BigDecimal", Boolean.TRUE);
@@ -113,10 +113,10 @@ public class Persistencia {
 			registros.add(registro);
 		}
 
-		return new ModeloRegistro(colunas, registros, tabela);
+		return new RegistroModelo(colunas, registros, tabela);
 	}
 
-	public static ModeloListagem criarModeloInfoBanco(Connection conn) throws Exception {
+	public static ListagemModelo criarModeloInfoBanco(Connection conn) throws Exception {
 		DatabaseMetaData m = conn.getMetaData();
 
 		List<List<String>> dados = new ArrayList<>();
@@ -255,7 +255,7 @@ public class Persistencia {
 		dados.add(criar("getMaxLogicalLobSize", m.getMaxLogicalLobSize()));
 		dados.add(criar("supportsRefCursors", m.supportsRefCursors()));
 
-		return new ModeloListagem(Arrays.asList("NOME", "VALOR"), dados);
+		return new ListagemModelo(Arrays.asList("NOME", "VALOR"), dados);
 	}
 
 	private static List<String> criar(String nome, Object object) {
@@ -266,7 +266,7 @@ public class Persistencia {
 		return Arrays.asList(strings);
 	}
 
-	public static ModeloListagem criarModeloEsquema(Connection conn) throws Exception {
+	public static ListagemModelo criarModeloEsquema(Connection conn) throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
@@ -278,10 +278,10 @@ public class Persistencia {
 
 		rs.close();
 
-		return new ModeloListagem(Arrays.asList("TABLE_SCHEM", "TABLE_CATALOG"), dados);
+		return new ListagemModelo(Arrays.asList("TABLE_SCHEM", "TABLE_CATALOG"), dados);
 	}
 
-	public static ModeloListagem criarModeloChavePrimaria(Connection conn, Objeto objeto) throws Exception {
+	public static ListagemModelo criarModeloChavePrimaria(Connection conn, Objeto objeto) throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
@@ -293,10 +293,10 @@ public class Persistencia {
 
 		rs.close();
 
-		return new ModeloListagem(Arrays.asList("COLUMN_NAME", "KEY_SEQ", "PK_NAME"), dados);
+		return new ListagemModelo(Arrays.asList("COLUMN_NAME", "KEY_SEQ", "PK_NAME"), dados);
 	}
 
-	public static ModeloListagem criarModeloChavesExportadas(Connection conn, Objeto objeto) throws Exception {
+	public static ListagemModelo criarModeloChavesExportadas(Connection conn, Objeto objeto) throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
@@ -309,10 +309,10 @@ public class Persistencia {
 
 		rs.close();
 
-		return new ModeloListagem(Arrays.asList("PKCOLUMN_NAME", "FKTABLE_NAME", "FKCOLUMN_NAME"), dados);
+		return new ListagemModelo(Arrays.asList("PKCOLUMN_NAME", "FKTABLE_NAME", "FKCOLUMN_NAME"), dados);
 	}
 
-	public static ModeloListagem criarModeloChavesImportadas(Connection conn, Objeto objeto) throws Exception {
+	public static ListagemModelo criarModeloChavesImportadas(Connection conn, Objeto objeto) throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
@@ -325,10 +325,10 @@ public class Persistencia {
 
 		rs.close();
 
-		return new ModeloListagem(Arrays.asList("PKTABLE_NAME", "PKCOLUMN_NAME", "FKCOLUMN_NAME"), dados);
+		return new ListagemModelo(Arrays.asList("PKTABLE_NAME", "PKCOLUMN_NAME", "FKCOLUMN_NAME"), dados);
 	}
 
-	public static ModeloListagem criarModeloMetaDados(Connection conn, Objeto objeto) throws Exception {
+	public static ListagemModelo criarModeloMetaDados(Connection conn, Objeto objeto) throws Exception {
 		StringBuilder builder = new StringBuilder("SELECT * FROM " + objeto.getTabela() + " WHERE 1 > 2");
 		PreparedStatement psmt = conn.prepareStatement(builder.toString());
 		ResultSet rs = psmt.executeQuery();
@@ -371,6 +371,6 @@ public class Persistencia {
 		rs.close();
 		psmt.close();
 
-		return new ModeloListagem(colunas, dados);
+		return new ListagemModelo(colunas, dados);
 	}
 }

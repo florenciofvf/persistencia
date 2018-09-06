@@ -10,7 +10,7 @@ import javax.swing.table.TableModel;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Util;
 
-public class ModeloOrdenacao extends AbstractTableModel {
+public class OrdenacaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final TableModel model;
 	private boolean descendente;
@@ -18,7 +18,7 @@ public class ModeloOrdenacao extends AbstractTableModel {
 	private boolean numero;
 	private int coluna;
 
-	public ModeloOrdenacao(TableModel model) {
+	public OrdenacaoModelo(TableModel model) {
 		Objects.requireNonNull(model);
 		this.model = model;
 		iniArray();
@@ -66,17 +66,17 @@ public class ModeloOrdenacao extends AbstractTableModel {
 	}
 
 	public int excluirRegistro(int rowIndex) {
-		ModeloRegistro modelo = (ModeloRegistro) model;
+		RegistroModelo modelo = (RegistroModelo) model;
 		return modelo.excluir(linhas[rowIndex].indice);
 	}
 
 	public List<IndiceValor> getValoresChaves(int rowIndex) {
-		ModeloRegistro modelo = (ModeloRegistro) model;
+		RegistroModelo modelo = (RegistroModelo) model;
 		return modelo.getValoresChaves(linhas[rowIndex].indice);
 	}
 
 	public void excluirValoresChaves(List<List<IndiceValor>> listaValores) {
-		ModeloRegistro modelo = (ModeloRegistro) model;
+		RegistroModelo modelo = (RegistroModelo) model;
 
 		for (List<IndiceValor> lista : listaValores) {
 			modelo.excluirValoresChaves(lista);
