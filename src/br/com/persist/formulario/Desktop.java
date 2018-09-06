@@ -30,15 +30,17 @@ import br.com.persist.util.Util;
 public class Desktop extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	private DesktopPopup popup = new DesktopPopup();
-	private final Formulario formulario;
+	protected final Formulario formulario;
 
-	public Desktop(Formulario formulario) {
-		addMouseListener(mouseAdapter);
+	public Desktop(Formulario formulario, boolean superficie) {
+		if (!superficie) {
+			addMouseListener(mouseAdapter);
+		}
 		new DropTarget(this, listener);
 		this.formulario = formulario;
 	}
 
-	private void centralizar() {
+	protected void centralizar() {
 		double largura = getSize().getWidth();
 
 		for (JInternalFrame frame : getAllFrames()) {

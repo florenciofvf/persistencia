@@ -114,7 +114,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Desktop novoDesktop(Formulario formulario) {
-		Desktop desktop = new Desktop(formulario);
+		Desktop desktop = new Desktop(formulario, false);
 		addTab(Mensagens.getString("label.desktop"), desktop);
 		int ultimoIndice = getTabCount() - 1;
 

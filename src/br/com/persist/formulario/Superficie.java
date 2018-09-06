@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.InputMap;
-import javax.swing.JDesktopPane;
 import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
@@ -32,14 +31,13 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
-public class Superficie extends JDesktopPane {
+public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
 	private SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private SuperficiePopup popup = new SuperficiePopup();
 	private final Inversao inversao = new Inversao();
 	private final Linha linha = new Linha();
 	private final Area area = new Area();
-	private final Formulario formulario;
 	private Relacao selecionadoRelacao;
 	private final Container container;
 	private Objeto selecionadoObjeto;
@@ -50,8 +48,8 @@ public class Superficie extends JDesktopPane {
 	private int ultY;
 
 	public Superficie(Formulario formulario, Container container) {
+		super(formulario, true);
 		configEstado(Constantes.SELECAO);
-		this.formulario = formulario;
 		this.container = container;
 		limpar();
 	}
@@ -374,6 +372,7 @@ public class Superficie extends JDesktopPane {
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
 				popup2.y = y;
+				popup2.itemCentralizar.setEnabled(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -828,10 +827,26 @@ public class Superficie extends JDesktopPane {
 
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
+		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
 		int x, y;
 
 		SuperficiePopup2() {
 			add(new MenuItem(new ColarAcao()));
+			addSeparator();
+			add(itemCentralizar);
+		}
+	}
+
+	private class CentralizarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public CentralizarAcao() {
+			super(true, "label.centralizar", Icones.CENTRALIZAR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			centralizar();
 		}
 	}
 
