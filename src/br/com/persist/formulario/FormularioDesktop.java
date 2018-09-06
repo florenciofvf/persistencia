@@ -24,4 +24,8 @@ public class FormularioDesktop extends JFrame {
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, desktop);
 	}
+
+	public Desktop getDesktop() {
+		return desktop;
+	}
 }

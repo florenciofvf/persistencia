@@ -61,8 +61,8 @@ public class Formulario extends JFrame {
 		this.cor = cor;
 	}
 
-	public void destacar(Conexao conexao, Superficie superficie) {
-		fichario.destacar(this, conexao, superficie.getSelecionados());
+	public void destacar(Conexao conexao, Superficie superficie, boolean formDesktop) {
+		fichario.destacar(this, conexao, superficie.getSelecionados(), formDesktop);
 	}
 
 	public void copiar(Superficie superficie) {

@@ -79,7 +79,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void destacar(Formulario formulario, Conexao conexao, List<Objeto> objetos) {
+	public void destacar(Formulario formulario, Conexao conexao, List<Objeto> objetos, boolean formDesktop) {
 		boolean continua = false;
 
 		for (Objeto objeto : objetos) {
@@ -93,17 +93,30 @@ public class Fichario extends JTabbedPane {
 			return;
 		}
 
-		Desktop desktop = novoDesktop(formulario);
-
 		int x = 10;
 		int y = 10;
 
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
-				Object[] array = criarArray(conexao, objeto);
-				desktop.addForm(array, new Point(x, y));
-				x += 25;
-				y += 25;
+		if (formDesktop) {
+			FormularioDesktop formularioDesktop = new FormularioDesktop(formulario);
+
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela())) {
+					Object[] array = criarArray(conexao, objeto);
+					formularioDesktop.getDesktop().addForm(array, new Point(x, y));
+					x += 25;
+					y += 25;
+				}
+			}
+		} else {
+			Desktop desktop = novoDesktop(formulario);
+
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela())) {
+					Object[] array = criarArray(conexao, objeto);
+					desktop.addForm(array, new Point(x, y));
+					x += 25;
+					y += 25;
+				}
 			}
 		}
 	}

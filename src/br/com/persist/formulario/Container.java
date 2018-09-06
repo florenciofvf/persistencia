@@ -82,6 +82,7 @@ public class Container extends PanelBorder {
 			add(new Button(new ColarAcao()));
 			addSeparator();
 			add(new Button(new DestacarAcao()));
+			add(new Button(new FormularioAcao()));
 			addSeparator();
 			add(new Button(new ExcluirAcao()));
 			add(new Button(new CriarObjetoAcao()));
@@ -106,7 +107,20 @@ public class Container extends PanelBorder {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(getConexaoPadrao(), superficie);
+			formulario.destacar(getConexaoPadrao(), superficie, false);
+		}
+	}
+
+	private class FormularioAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public FormularioAcao() {
+			super(false, "label.formulario", Icones.PANEL);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.destacar(getConexaoPadrao(), superficie, true);
 		}
 	}
 

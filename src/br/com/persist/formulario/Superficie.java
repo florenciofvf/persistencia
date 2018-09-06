@@ -731,6 +731,7 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		MenuItem itemHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		MenuItem itemVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
+		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
 		MenuItem itemCopiarCor = new MenuItem(new CopiarCorAcao());
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
 		MenuItem itemColarCor = new MenuItem(new ColarCorAcao());
@@ -746,6 +747,7 @@ public class Superficie extends Desktop {
 			add(itemColarCor);
 			addSeparator();
 			add(itemDestacar);
+			add(itemFormulario);
 			addSeparator();
 			add(new MenuItem(new ExcluirAcao()));
 			addSeparator();
@@ -753,6 +755,7 @@ public class Superficie extends Desktop {
 		}
 
 		void popupObjeto(boolean b) {
+			itemFormulario.setEnabled(b);
 			itemHorizontal.setEnabled(b);
 			itemVertical.setEnabled(b);
 			itemDestacar.setEnabled(b);
@@ -769,7 +772,20 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(container.getConexaoPadrao(), Superficie.this);
+			formulario.destacar(container.getConexaoPadrao(), Superficie.this, false);
+		}
+	}
+
+	private class FormularioAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public FormularioAcao() {
+			super(true, "label.formulario", Icones.PANEL);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
 		}
 	}
 
