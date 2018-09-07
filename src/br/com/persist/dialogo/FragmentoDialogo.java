@@ -137,12 +137,18 @@ public class FragmentoDialogo extends Dialogo {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			FragmentoModelo.reiniciar();
-
 			if (listener != null) {
+				FragmentoModelo.reiniciar();
 				FragmentoModelo.filtar(listener.getGruposFiltro());
+			} else {
+				try {
+					FragmentoModelo.inicializar();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, FragmentoDialogo.this);
+				}
 			}
 
+			FragmentoModelo.ordenar();
 			modelo.fireTableDataChanged();
 		}
 	}

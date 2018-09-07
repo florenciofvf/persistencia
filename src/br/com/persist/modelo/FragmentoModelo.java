@@ -2,6 +2,8 @@ package br.com.persist.modelo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -144,5 +146,16 @@ public class FragmentoModelo extends AbstractTableModel {
 			fragmentos.add(f);
 			it.remove();
 		}
+	}
+
+	public static void ordenar() {
+		Collections.sort(fragmentos, new Comparator<Fragmento>() {
+			@Override
+			public int compare(Fragmento o1, Fragmento o2) {
+				String s1 = o1.getGrupo() != null ? o1.getGrupo().toUpperCase() : "";
+				String s2 = o2.getGrupo() != null ? o2.getGrupo().toUpperCase() : "";
+				return s1.compareTo(s2);
+			}
+		});
 	}
 }
