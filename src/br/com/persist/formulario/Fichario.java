@@ -103,7 +103,7 @@ public class Fichario extends JTabbedPane {
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela())) {
 					Object[] array = criarArray(conexao, objeto);
-					formularioDesktop.getDesktop().addForm(array, new Point(x, y));
+					formularioDesktop.getDesktop().addForm(array, new Point(x, y), null);
 					x += 25;
 					y += 25;
 				}
@@ -114,7 +114,7 @@ public class Fichario extends JTabbedPane {
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela())) {
 					Object[] array = criarArray(conexao, objeto);
-					desktop.addForm(array, new Point(x, y));
+					desktop.addForm(array, new Point(x, y), null);
 					x += 25;
 					y += 25;
 				}
@@ -157,7 +157,7 @@ public class Fichario extends JTabbedPane {
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
 			List<Form> forms) {
 		Container container = new Container(formulario);
-		container.abrir(file, objetos, relacoes, forms);
+		container.abrir(file, objetos, relacoes, forms, getGraphics());
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 

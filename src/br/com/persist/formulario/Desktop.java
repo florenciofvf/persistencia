@@ -1,6 +1,7 @@
 package br.com.persist.formulario;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -117,7 +118,7 @@ public class Desktop extends JDesktopPane {
 			if (Transferidor.flavor.equals(flavor)) {
 				try {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
-					addForm(array, e.getLocation());
+					addForm(array, e.getLocation(), null);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
 				}
@@ -127,11 +128,11 @@ public class Desktop extends JDesktopPane {
 		}
 	};
 
-	public void addForm(Object[] array, Point point) {
+	public void addForm(Object[] array, Point point, Graphics g) {
 		Dimension dimension = (Dimension) array[2];
 		Conexao conexao = (Conexao) array[1];
 		Objeto objeto = (Objeto) array[0];
-		FormularioInterno form = new FormularioInterno(formulario, objeto, getGraphics(), conexao);
+		FormularioInterno form = new FormularioInterno(formulario, objeto, g != null ? g : getGraphics(), conexao);
 		form.setLocation(point);
 		form.setSize(dimension);
 		add(form);

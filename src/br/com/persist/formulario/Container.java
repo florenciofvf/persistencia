@@ -2,6 +2,7 @@ package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -66,7 +67,7 @@ public class Container extends PanelBorder {
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms) {
+	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, Graphics g) {
 		superficie.abrir(objetos, relacoes);
 		arquivo = file;
 		btnSelecao.click();
@@ -89,7 +90,7 @@ public class Container extends PanelBorder {
 			if (instancia != null) {
 				Object[] array = Fichario.criarArray(conexao, instancia,
 						new Dimension(form.getLargura(), form.getAltura()));
-				superficie.addForm(array, new Point(form.getX(), form.getY()));
+				superficie.addForm(array, new Point(form.getX(), form.getY()), g);
 			}
 		}
 	}
@@ -271,7 +272,7 @@ public class Container extends PanelBorder {
 				List<Objeto> objetos = new ArrayList<>();
 				List<Form> forms = new ArrayList<>();
 				XML.processar(arquivo, objetos, relacoes, forms);
-				abrir(arquivo, objetos, relacoes, forms);
+				abrir(arquivo, objetos, relacoes, forms, null);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 			}
