@@ -1,6 +1,8 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -65,9 +67,31 @@ public class Container extends PanelBorder {
 	}
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms) {
-		superficie.abrir(objetos, relacoes, forms);
+		superficie.abrir(objetos, relacoes);
 		arquivo = file;
 		btnSelecao.click();
+
+		Conexao conexao = getConexaoPadrao();
+
+		if (conexao == null) {
+			return;
+		}
+
+		for (Form form : forms) {
+			Objeto instancia = null;
+
+			for (Objeto objeto : objetos) {
+				if (form.getObjeto().equals(objeto.getId())) {
+					instancia = objeto;
+				}
+			}
+
+			if (instancia != null) {
+				Object[] array = Fichario.criarArray(conexao, instancia,
+						new Dimension(form.getLargura(), form.getAltura()));
+				superficie.addForm(array, new Point(form.getX(), form.getY()));
+			}
+		}
 	}
 
 	private class Toolbar extends JToolBar {

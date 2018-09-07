@@ -36,4 +36,24 @@ public class Form {
 		util.atributo("y", y);
 		util.fecharTag().finalizarTag("form");
 	}
+
+	public String getObjeto() {
+		return objeto;
+	}
+
+	public int getLargura() {
+		return largura;
+	}
+
+	public int getAltura() {
+		return altura;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
 }

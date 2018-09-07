@@ -122,9 +122,13 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	private Object[] criarArray(Conexao conexao, Objeto objeto) {
+	private static Object[] criarArray(Conexao conexao, Objeto objeto) {
+		return criarArray(conexao, objeto, new Dimension(400, 250));
+	}
+
+	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension) {
 		Superficie.setComplemento(conexao, objeto);
-		return new Object[] { objeto, conexao, new Dimension(400, 250) };
+		return new Object[] { objeto, conexao, dimension };
 	}
 
 	public Desktop novoDesktop(Formulario formulario) {

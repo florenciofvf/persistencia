@@ -1006,6 +1006,13 @@ public class Superficie extends Desktop {
 			addRelacao(relacao);
 		}
 
+		JInternalFrame[] frames = getAllFrames();
+
+		for (int i = 0; i < frames.length; i++) {
+			JInternalFrame f = frames[i];
+			remove(f);
+		}
+
 		alinharNomes();
 		repaint();
 	}
