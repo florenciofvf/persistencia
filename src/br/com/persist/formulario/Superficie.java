@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.InputMap;
+import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
@@ -25,8 +26,10 @@ import br.com.persist.comp.Popup;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.objeto.FormularioExterno;
+import br.com.persist.objeto.FormularioInterno;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
@@ -974,6 +977,15 @@ public class Superficie extends Desktop {
 
 			for (Relacao relacao : relacoes) {
 				relacao.salvar(util);
+			}
+
+			util.ql();
+
+			for (JInternalFrame frame : getAllFrames()) {
+				FormularioInterno interno = (FormularioInterno) frame;
+				Form form = new Form();
+				form.copiar(interno);
+				form.salvar(util);
 			}
 
 			util.finalizarTag("fvf");
