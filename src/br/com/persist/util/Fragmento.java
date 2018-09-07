@@ -52,7 +52,7 @@ public class Fragmento {
 	}
 
 	public boolean isValida() {
-		return !Util.estaVazio(resumo);
+		return !Util.estaVazio(resumo) && !Util.estaVazio(grupo);
 	}
 
 	public void setValor(String valor) {

@@ -27,11 +27,9 @@ public class FragmentoDialogo extends Dialogo {
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
 	private final FragmentoListener listener;
-	private final Formulario formulario;
 
 	public FragmentoDialogo(Formulario formulario, FragmentoListener listener) {
 		super(formulario, Mensagens.getString("label.fragmento"), 1000, 500, false);
-		this.formulario = formulario;
 		this.listener = listener;
 		montarLayout();
 		configurar();
@@ -60,8 +58,6 @@ public class FragmentoDialogo extends Dialogo {
 		private static final long serialVersionUID = 1L;
 
 		public Toolbar() {
-			add(new Button(new TopAcao()));
-			addSeparator();
 			add(new Button(new NovoAcao()));
 			add(new Button(new CopiaAcao()));
 			addSeparator();
@@ -72,25 +68,6 @@ public class FragmentoDialogo extends Dialogo {
 		void configListener() {
 			if (listener != null) {
 				add(new Button(new ConfigFragmentoAcao()));
-			}
-		}
-	}
-
-	private class TopAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public TopAcao() {
-			super(false, "label.primeiro", Icones.TOP);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int[] linhas = tabela.getSelectedRows();
-
-			if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
-				modelo.primeiro(linhas[0]);
-				modelo.fireTableDataChanged();
-				tabela.setRowSelectionInterval(0, 0);
 			}
 		}
 	}
@@ -107,7 +84,7 @@ public class FragmentoDialogo extends Dialogo {
 			int[] linhas = tabela.getSelectedRows();
 
 			if (linhas != null && linhas.length == 1) {
-				Fragmento f = modelo.getFragmento(linhas[0]);
+				Fragmento f = FragmentoModelo.getFragmento(linhas[0]);
 				listener.configFragmento(f);
 				dispose();
 			}
@@ -123,7 +100,8 @@ public class FragmentoDialogo extends Dialogo {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			modelo.novo();
+			FragmentoModelo.novo();
+			modelo.fireTableDataChanged();
 		}
 	}
 
@@ -140,8 +118,8 @@ public class FragmentoDialogo extends Dialogo {
 
 			if (linhas != null && linhas.length > 0) {
 				for (int i : linhas) {
-					Fragmento f = modelo.getFragmento(i);
-					modelo.adicionar(f.clonar());
+					Fragmento f = FragmentoModelo.getFragmento(i);
+					FragmentoModelo.adicionar(f.clonar());
 				}
 
 				modelo.fireTableDataChanged();
@@ -159,19 +137,13 @@ public class FragmentoDialogo extends Dialogo {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try {
-				if (listener != null) {
-					modelo.filtar(listener.getGruposFiltro());
-				} else {
-					modelo.abrir2();
-				}
+			FragmentoModelo.reiniciar();
 
-				if (formulario != null) {
-					formulario.atualizarFragmentos();
-				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("ABRIR: ", ex, FragmentoDialogo.this);
+			if (listener != null) {
+				FragmentoModelo.filtar(listener.getGruposFiltro());
 			}
+
+			modelo.fireTableDataChanged();
 		}
 	}
 
@@ -185,10 +157,7 @@ public class FragmentoDialogo extends Dialogo {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				modelo.salvar();
-				if (formulario != null) {
-					formulario.atualizarFragmentos();
-				}
+				FragmentoModelo.salvar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("SALVAR: ", ex, FragmentoDialogo.this);
 			}

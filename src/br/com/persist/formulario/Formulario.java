@@ -132,10 +132,8 @@ public class Formulario extends JFrame {
 	}
 
 	public void atualizarFragmentos() {
-		FragmentoModelo modelo = new FragmentoModelo();
-
 		try {
-			modelo.abrir();
+			FragmentoModelo.inicializar();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, this);
 		}

@@ -16,32 +16,7 @@ public class FragmentoModelo extends AbstractTableModel {
 	private final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
 	private static final File file = new File("fragmentos/fragmentos.xml");
 	private final static List<Fragmento> fragmentos = new ArrayList<>();
-	private final static List<Fragmento> filtrados = new ArrayList<>();
-	private static boolean aberto;
-
-	public FragmentoModelo() {
-	}
-
-	public List<Fragmento> getFragmentos() {
-		return fragmentos;
-	}
-
-	public Fragmento getFragmento(int i) {
-		return fragmentos.get(i);
-	}
-
-	public void adicionar(Fragmento f) {
-		if (f != null) {
-			fragmentos.add(f);
-		}
-	}
-
-	public void primeiro(int indice) {
-		if (indice > 0 && indice < getRowCount()) {
-			Fragmento f = fragmentos.remove(indice);
-			fragmentos.add(0, f);
-		}
-	}
+	private final static List<Fragmento> auxiliares = new ArrayList<>();
 
 	@Override
 	public int getRowCount() {
@@ -86,8 +61,8 @@ public class FragmentoModelo extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		Fragmento f = fragmentos.get(rowIndex);
 		String valor = aValue == null ? "" : aValue.toString();
+		Fragmento f = fragmentos.get(rowIndex);
 
 		switch (columnIndex) {
 		case 0:
@@ -102,12 +77,21 @@ public class FragmentoModelo extends AbstractTableModel {
 		}
 	}
 
-	public void novo() {
-		fragmentos.add(new Fragmento());
-		fireTableDataChanged();
+	public static Fragmento getFragmento(int i) {
+		return fragmentos.get(i);
 	}
 
-	public void salvar() throws Exception {
+	public static void adicionar(Fragmento f) {
+		if (f != null) {
+			fragmentos.add(f);
+		}
+	}
+
+	public static void novo() {
+		fragmentos.add(new Fragmento());
+	}
+
+	public static void salvar() throws Exception {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
 
@@ -119,7 +103,7 @@ public class FragmentoModelo extends AbstractTableModel {
 			}
 		}
 
-		for (Fragmento f : filtrados) {
+		for (Fragmento f : auxiliares) {
 			if (f.isValida()) {
 				f.salvar(util);
 			}
@@ -129,45 +113,36 @@ public class FragmentoModelo extends AbstractTableModel {
 		util.close();
 	}
 
-	public void abrir() throws Exception {
-		if (aberto) {
-			return;
-		}
-
-		if (file.exists() && file.canRead()) {
-			XML.processarFragmento(file, fragmentos);
-			fireTableDataChanged();
-			aberto = true;
-		}
-	}
-
-	public void abrir2() throws Exception {
+	public static void inicializar() throws Exception {
 		fragmentos.clear();
-		filtrados.clear();
+		auxiliares.clear();
 
 		if (file.exists() && file.canRead()) {
 			XML.processarFragmento(file, fragmentos);
-			fireTableDataChanged();
-			aberto = true;
 		}
 	}
 
-	public void filtar(List<String> gruposFiltro) {
+	public static void filtar(List<String> filtroGrupos) {
 		Iterator<Fragmento> it = fragmentos.iterator();
 
 		while (it.hasNext()) {
 			Fragmento f = it.next();
 			String g = f.getGrupo() != null ? f.getGrupo().toUpperCase() : null;
 
-			if (!gruposFiltro.contains(g)) {
+			if (!filtroGrupos.contains(g)) {
+				auxiliares.add(f);
 				it.remove();
-
-				if (!filtrados.contains(f)) {
-					filtrados.add(f);
-				}
 			}
 		}
+	}
 
-		fireTableDataChanged();
+	public static void reiniciar() {
+		Iterator<Fragmento> it = auxiliares.iterator();
+
+		while (it.hasNext()) {
+			Fragmento f = it.next();
+			fragmentos.add(f);
+			it.remove();
+		}
 	}
 }
