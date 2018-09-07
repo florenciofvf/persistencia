@@ -13,17 +13,19 @@ import org.xml.sax.helpers.DefaultHandler;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.util.Form;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Util;
 
 public class XML {
-	public static void processar(File file, List<Objeto> objetos, List<Relacao> relacoes) throws Exception {
+	public static void processar(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms)
+			throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		factory.setNamespaceAware(true);
 		factory.setXIncludeAware(true);
 
 		SAXParser parser = factory.newSAXParser();
-		XMLHandler handler = new XMLHandler(objetos, relacoes);
+		XMLHandler handler = new XMLHandler(objetos, relacoes, forms);
 		parser.parse(file, handler);
 	}
 
@@ -48,11 +50,13 @@ class XMLHandler extends DefaultHandler {
 	final StringBuilder builder = new StringBuilder();
 	final List<Relacao> relacoes;
 	final List<Objeto> objetos;
+	final List<Form> forms;
 	Object selecionado;
 
-	public XMLHandler(List<Objeto> objetos, List<Relacao> relacoes) {
+	public XMLHandler(List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms) {
 		this.relacoes = relacoes;
 		this.objetos = objetos;
+		this.forms = forms;
 	}
 
 	private void limpar() {
@@ -79,6 +83,11 @@ class XMLHandler extends DefaultHandler {
 			relacao.aplicar(attributes);
 			selecionado = relacao;
 			relacoes.add(relacao);
+
+		} else if ("form".equals(qName)) {
+			Form f = new Form();
+			f.aplicar(attributes);
+			forms.add(f);
 
 		} else if ("desc".equals(qName)) {
 			limpar();

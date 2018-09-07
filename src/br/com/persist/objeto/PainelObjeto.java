@@ -83,6 +83,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		config();
 	}
 
+	public Objeto getObjeto() {
+		return objeto;
+	}
+
 	public Frame getFrame() {
 		return listener.getFrame();
 	}

@@ -27,6 +27,10 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 		setVisible(true);
 	}
 
+	public PainelObjeto getPainelObjeto() {
+		return painelObjeto;
+	}
+
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelObjeto);
