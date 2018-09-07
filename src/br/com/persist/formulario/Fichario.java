@@ -21,6 +21,7 @@ import javax.swing.JTabbedPane;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
@@ -149,9 +150,10 @@ public class Fichario extends JTabbedPane {
 		container.estadoSelecao();
 	}
 
-	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes) {
+	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
+			List<Form> forms) {
 		Container container = new Container(formulario);
-		container.abrir(file, objetos, relacoes);
+		container.abrir(file, objetos, relacoes, forms);
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 

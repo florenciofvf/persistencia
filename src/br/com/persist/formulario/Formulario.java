@@ -27,6 +27,7 @@ import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -283,8 +284,9 @@ public class Formulario extends JFrame {
 							arquivo = file.getParentFile();
 							List<Relacao> relacoes = new ArrayList<>();
 							List<Objeto> objetos = new ArrayList<>();
-							XML.processar(file, objetos, relacoes);
-							fichario.abrir(Formulario.this, file, objetos, relacoes);
+							List<Form> forms = new ArrayList<>();
+							XML.processar(file, objetos, relacoes, forms);
+							fichario.abrir(Formulario.this, file, objetos, relacoes, forms);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 						}

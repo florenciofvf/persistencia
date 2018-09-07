@@ -21,6 +21,7 @@ import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
@@ -63,8 +64,8 @@ public class Container extends PanelBorder {
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes) {
-		superficie.abrir(objetos, relacoes);
+	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms) {
+		superficie.abrir(objetos, relacoes, forms);
 		arquivo = file;
 		btnSelecao.click();
 	}
@@ -244,8 +245,9 @@ public class Container extends PanelBorder {
 			try {
 				List<Relacao> relacoes = new ArrayList<>();
 				List<Objeto> objetos = new ArrayList<>();
-				XML.processar(arquivo, objetos, relacoes);
-				abrir(arquivo, objetos, relacoes);
+				List<Form> forms = new ArrayList<>();
+				XML.processar(arquivo, objetos, relacoes, forms);
+				abrir(arquivo, objetos, relacoes, forms);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 			}
