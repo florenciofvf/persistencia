@@ -52,6 +52,7 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class PainelObjeto extends Panel implements ActionListener, ItemListener {
@@ -378,6 +379,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		private Popup popup = new Popup();
 
 		public ButtonInfo() {
+			setToolTipText(Mensagens.getString("label.meta_dados"));
 			popup.add(new MenuItem(new ChavesPrimariasAcao()));
 			popup.addSeparator();
 			popup.add(new MenuItem(new ChavesExportadasAcao()));
