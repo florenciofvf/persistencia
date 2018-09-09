@@ -51,9 +51,9 @@ public class ConfigDialogo extends Dialogo {
 		}
 
 		Panel container = new Panel(new GridLayout(0, 1));
+		container.add(panelPosicoes);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
-		container.add(panelPosicoes);
 
 		add(BorderLayout.CENTER, container);
 
