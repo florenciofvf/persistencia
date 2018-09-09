@@ -123,6 +123,9 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
+			if (dsde.getDropSuccess()) {
+				new FecharAcao().actionPerformed(null);
+			}
 		}
 	};
 
