@@ -11,10 +11,12 @@ import javax.swing.SwingConstants;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 
 public class ConfigDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
+	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
 			new Posicao("label.esquerdo", SwingConstants.LEFT), new Posicao("label.abaixo", SwingConstants.BOTTOM),
@@ -32,6 +34,7 @@ public class ConfigDialogo extends Dialogo {
 
 	private void montarLayout() {
 		chkFicharioScroll.setSelected(formulario.getFichario().getTabLayoutPolicy() == JTabbedPane.SCROLL_TAB_LAYOUT);
+		chkFecharOrigemAposSoltar.setSelected(Constantes.fechar_apos_soltar);
 
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
 		ButtonGroup grupo = new ButtonGroup();
@@ -46,6 +49,7 @@ public class ConfigDialogo extends Dialogo {
 		}
 
 		Panel container = new Panel(new GridLayout(0, 1));
+		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
 		container.add(panelPosicoes);
 
@@ -55,6 +59,9 @@ public class ConfigDialogo extends Dialogo {
 	private void configurar() {
 		chkFicharioScroll.addActionListener(e -> formulario.getFichario().setTabLayoutPolicy(
 				chkFicharioScroll.isSelected() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT));
+
+		chkFecharOrigemAposSoltar
+				.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
 	}
 
 	protected void processar() {

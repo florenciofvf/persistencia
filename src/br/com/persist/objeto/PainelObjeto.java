@@ -49,6 +49,7 @@ import br.com.persist.tabela.IndiceValor;
 import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
@@ -123,7 +124,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
-			if (dsde.getDropSuccess()) {
+			if (Constantes.fechar_apos_soltar && dsde.getDropSuccess()) {
 				new FecharAcao().actionPerformed(null);
 			}
 		}
