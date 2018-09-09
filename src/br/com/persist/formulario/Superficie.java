@@ -36,8 +36,8 @@ import br.com.persist.util.XMLUtil;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
-	private SuperficiePopup2 popup2 = new SuperficiePopup2();
-	private SuperficiePopup popup = new SuperficiePopup();
+	private final SuperficiePopup2 popup2 = new SuperficiePopup2();
+	private final SuperficiePopup popup = new SuperficiePopup();
 	private final Inversao inversao = new Inversao();
 	private final Linha linha = new Linha();
 	private final Area area = new Area();
