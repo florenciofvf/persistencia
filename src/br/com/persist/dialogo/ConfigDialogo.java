@@ -2,6 +2,7 @@ package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -41,6 +42,7 @@ public class ConfigDialogo extends Dialogo {
 
 		for (int i = 0; i < posicoes.length; i++) {
 			RadioPosicao radio = new RadioPosicao(posicoes[i]);
+			radio.setMargin(new Insets(5, 10, 5, 5));
 			panelPosicoes.add(radio);
 			rdoPosicoes[i] = radio;
 			grupo.add(radio);
@@ -54,6 +56,9 @@ public class ConfigDialogo extends Dialogo {
 		container.add(panelPosicoes);
 
 		add(BorderLayout.CENTER, container);
+
+		chkFecharOrigemAposSoltar.setMargin(new Insets(5, 10, 5, 5));
+		chkFicharioScroll.setMargin(new Insets(5, 10, 5, 5));
 	}
 
 	private void configurar() {
