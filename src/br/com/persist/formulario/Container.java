@@ -21,6 +21,7 @@ import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
@@ -51,7 +52,7 @@ public class Container extends PanelBorder {
 
 	private void montarLayout() {
 		ButtonGroup grupo = new ButtonGroup();
-		add(BorderLayout.CENTER, superficie);
+		add(BorderLayout.CENTER, new ScrollPane(superficie));
 		add(BorderLayout.NORTH, toolbar);
 		grupo.add(btnRotulos);
 		grupo.add(btnArrasto);

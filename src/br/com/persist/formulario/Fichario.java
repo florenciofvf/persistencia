@@ -21,6 +21,7 @@ import javax.swing.JTabbedPane;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.comp.ScrollPane;
 import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -133,7 +134,7 @@ public class Fichario extends JTabbedPane {
 
 	public Desktop novoDesktop(Formulario formulario) {
 		Desktop desktop = new Desktop(formulario, false);
-		addTab(Mensagens.getString("label.desktop"), desktop);
+		addTab(Mensagens.getString("label.desktop"), new ScrollPane(desktop));
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);

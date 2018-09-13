@@ -847,12 +847,15 @@ public class Superficie extends Desktop {
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
 		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
+		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
 		int x, y;
 
 		SuperficiePopup2() {
 			add(new MenuItem(new ColarAcao()));
 			addSeparator();
 			add(itemCentralizar);
+			addSeparator();
+			add(itemDimensoes);
 		}
 	}
 
@@ -866,6 +869,19 @@ public class Superficie extends Desktop {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			centralizar();
+		}
+	}
+
+	private class DimensaoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public DimensaoAcao() {
+			super(true, "label.dimensao", Icones.RECT);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			configDimension();
 		}
 	}
 

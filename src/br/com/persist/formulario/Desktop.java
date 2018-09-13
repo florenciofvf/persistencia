@@ -18,6 +18,7 @@ import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
@@ -51,6 +52,29 @@ public class Desktop extends JDesktopPane {
 				frame.setLocation((int) ((largura - frame.getWidth()) / 2), frame.getY());
 			}
 		}
+	}
+
+	protected void configDimension() {
+		int largura = 0;
+		int altura = 0;
+
+		for (JInternalFrame frame : getAllFrames()) {
+			int x = frame.getX();
+			int y = frame.getY();
+			int l = frame.getWidth();
+			int a = frame.getHeight();
+
+			if (x + l > largura) {
+				largura = x + l;
+			}
+
+			if (y + a > altura) {
+				altura = y + a;
+			}
+		}
+
+		setPreferredSize(new Dimension(largura, altura));
+		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
 	private MouseAdapter mouseAdapter = new MouseAdapter() {
@@ -153,9 +177,12 @@ public class Desktop extends JDesktopPane {
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
 		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
+		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
 
 		DesktopPopup() {
 			add(itemCentralizar);
+			addSeparator();
+			add(itemDimensoes);
 		}
 	}
 
@@ -169,6 +196,19 @@ public class Desktop extends JDesktopPane {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			centralizar();
+		}
+	}
+
+	private class DimensaoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public DimensaoAcao() {
+			super(true, "label.dimensao", Icones.RECT);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			configDimension();
 		}
 	}
 }
