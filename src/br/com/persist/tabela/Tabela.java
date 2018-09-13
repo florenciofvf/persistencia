@@ -110,12 +110,12 @@ public class Tabela extends JTable {
 
 		public PopupHeader() {
 			add(new MenuItem(new CopiarAcao()));
+			add(new MenuItem(new CopiarComplementoAcao()));
+			addSeparator();
 			add(new MenuItem(new CopiarAspasAcao()));
+			add(new MenuItem(new CopiarAspasComplementoAcao()));
 			addSeparator();
 			add(new MenuItem(new CopiarNomeAcao()));
-			addSeparator();
-			add(new MenuItem(new CopiarComplementoAcao()));
-			add(new MenuItem(new CopiarAspasComplementoAcao()));
 		}
 
 		private class CopiarAcao extends Acao {
