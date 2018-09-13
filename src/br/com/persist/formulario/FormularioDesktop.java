@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import br.com.persist.comp.ScrollPane;
 import br.com.persist.util.Mensagens;
 
 public class FormularioDesktop extends JFrame {
@@ -22,7 +23,7 @@ public class FormularioDesktop extends JFrame {
 
 	private void montarLayout() {
 		setLayout(new BorderLayout());
-		add(BorderLayout.CENTER, desktop);
+		add(BorderLayout.CENTER, new ScrollPane(desktop));
 	}
 
 	public Desktop getDesktop() {
