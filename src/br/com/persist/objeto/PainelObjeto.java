@@ -391,6 +391,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			popup.add(new MenuItem(new EsquemaAcao()));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.INFO);
+			addActionListener(e -> popup.show(this, 5, 5));
 		}
 
 		class ChavesPrimariasAcao extends Acao {
