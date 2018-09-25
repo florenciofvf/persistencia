@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.PrintWriter;
 
 public class XMLUtil {
-	private final String QL = "\r\n";
 	private final PrintWriter pw;
 	private int tab = -1;
 
@@ -80,7 +79,7 @@ public class XMLUtil {
 	}
 
 	public XMLUtil ql() {
-		return print(QL);
+		return print(Constantes.QL);
 	}
 
 	public void close() {

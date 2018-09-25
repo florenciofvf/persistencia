@@ -11,6 +11,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class RegistroModelo implements TableModel {
@@ -182,11 +183,11 @@ public class RegistroModelo implements TableModel {
 		StringBuilder builder = new StringBuilder("UPDATE " + tabela);
 
 		Coluna coluna = colunas[0];
-		builder.append(" SET " + coluna.getNome() + " = " + coluna.get(valores[0]));
+		builder.append(Constantes.QL + " SET " + coluna.getNome() + " = " + coluna.get(valores[0]));
 
 		for (int i = 1; i < colunas.length; i++) {
 			coluna = colunas[i];
-			builder.append(", " + coluna.getNome() + " = " + coluna.get(valores[i]));
+			builder.append(Constantes.QL + ", " + coluna.getNome() + " = " + coluna.get(valores[i]));
 		}
 
 		builder.append(getWhere(registro));
@@ -205,12 +206,13 @@ public class RegistroModelo implements TableModel {
 		List<Coluna> lista = getChaves();
 		Coluna coluna = lista.get(0);
 
-		StringBuilder builder = new StringBuilder(" WHERE ");
+		StringBuilder builder = new StringBuilder(Constantes.QL + " WHERE ");
 		builder.append(coluna.getNome() + " = " + coluna.get(registro.get(coluna.getIndice())));
 
 		for (int i = 1; i < lista.size(); i++) {
 			coluna = lista.get(i);
-			builder.append(" AND " + coluna.getNome() + " = " + coluna.get(registro.get(coluna.getIndice())));
+			builder.append(
+					Constantes.QL + " AND " + coluna.getNome() + " = " + coluna.get(registro.get(coluna.getIndice())));
 		}
 
 		return builder.toString();

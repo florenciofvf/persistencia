@@ -18,7 +18,7 @@ public class FormularioUpdate extends JFrame implements PainelObjetoListener {
 		this.listener = listener;
 		painelUpdate = new PainelUpdate(this, instrucao, padrao);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(1000, 200);
+		setSize(1000, 400);
 		montarLayout();
 		setLocationRelativeTo(null);
 		setVisible(true);
