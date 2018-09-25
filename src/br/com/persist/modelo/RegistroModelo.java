@@ -87,7 +87,7 @@ public class RegistroModelo implements TableModel {
 		if (chaves) {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
-				String update = gerarUpdate(registro, coluna, aValue);
+				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue });
 				Persistencia.executar(update, Conexao.getConnection(conexao));
 				registro.set(columnIndex, aValue);
 			} catch (Exception ex) {
@@ -96,6 +96,27 @@ public class RegistroModelo implements TableModel {
 		} else {
 			registro.set(columnIndex, aValue);
 		}
+	}
+
+	public String getUpdate(int rowIndex) {
+		List<Object> registro = registros.get(rowIndex);
+
+		if (chaves) {
+			List<Object> valores = new ArrayList<>();
+			List<Coluna> naoChaves = getNaoChaves();
+
+			if (naoChaves.isEmpty()) {
+				return null;
+			}
+
+			for (Coluna coluna : naoChaves) {
+				valores.add(registro.get(coluna.getIndice()));
+			}
+
+			return gerarUpdate(registro, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]));
+		}
+
+		return null;
 	}
 
 	public int excluir(int rowIndex) {
@@ -157,9 +178,17 @@ public class RegistroModelo implements TableModel {
 		return true;
 	}
 
-	private String gerarUpdate(List<Object> registro, Coluna coluna, Object valor) {
+	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores) {
 		StringBuilder builder = new StringBuilder("UPDATE " + tabela);
-		builder.append(" SET " + coluna.getNome() + " = " + coluna.get(valor));
+
+		Coluna coluna = colunas[0];
+		builder.append(" SET " + coluna.getNome() + " = " + coluna.get(valores[0]));
+
+		for (int i = 1; i < colunas.length; i++) {
+			coluna = colunas[i];
+			builder.append(", " + coluna.getNome() + " = " + coluna.get(valores[i]));
+		}
+
 		builder.append(getWhere(registro));
 
 		return builder.toString();
@@ -189,6 +218,10 @@ public class RegistroModelo implements TableModel {
 
 	private List<Coluna> getChaves() {
 		return colunas.stream().filter(Coluna::isChave).collect(Collectors.toList());
+	}
+
+	private List<Coluna> getNaoChaves() {
+		return colunas.stream().filter(Coluna::isNaoChave).collect(Collectors.toList());
 	}
 
 	@Override

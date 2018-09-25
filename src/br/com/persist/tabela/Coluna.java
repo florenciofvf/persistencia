@@ -19,6 +19,10 @@ public class Coluna {
 		return numero;
 	}
 
+	public boolean isNaoChave() {
+		return !chave;
+	}
+
 	public boolean isChave() {
 		return chave;
 	}

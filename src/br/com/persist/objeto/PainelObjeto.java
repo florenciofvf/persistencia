@@ -148,6 +148,37 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
+	public void atualizarRegistro() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		TableModel model = modelo.getModel();
+
+		if (model instanceof RegistroModelo) {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1) {
+				List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+
+				if (chaves.isEmpty()) {
+					return;
+				}
+
+				String update = modelo.getUpdate(linhas[0]);
+
+				if (Util.estaVazio(update)) {
+					return;
+				}
+
+				// TODO
+			}
+		}
+	}
+
 	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		String[] chaves = objeto.getChaves().trim().split(",");
 		StringBuilder builder = new StringBuilder("SELECT * FROM " + objeto.getTabela() + " WHERE 1=1");
