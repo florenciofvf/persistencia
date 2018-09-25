@@ -174,7 +174,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					return;
 				}
 
-				// TODO
+				new FormularioUpdate(listener, update, conexao);
 			}
 		}
 	}
