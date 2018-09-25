@@ -386,6 +386,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new FragmentoAcao()));
 			addSeparator();
+			add(new Button(new UpdateAcao()));
+			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
 			addSeparator();
 			add(new Button(new SincronizarRegistrosAcao()));
@@ -663,6 +665,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		public void actionPerformed(ActionEvent e) {
 			processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro);
+		}
+	}
+
+	private class UpdateAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public UpdateAcao() {
+			super(false, "label.atualizar", Icones.UPDATE);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			atualizarRegistro();
 		}
 	}
 
