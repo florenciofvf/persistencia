@@ -18,6 +18,7 @@ import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.Objeto;
@@ -75,6 +76,28 @@ public class Desktop extends JDesktopPane {
 
 		setPreferredSize(new Dimension(largura, altura));
 		SwingUtilities.updateComponentTreeUI(getParent());
+	}
+
+	protected void ajustarDimension() {
+		String string = getWidth() + "," + getHeight();
+		String novo = JOptionPane.showInputDialog(this, "Largura,Altura", string);
+
+		if (Util.estaVazio(novo)) {
+			return;
+		}
+
+		String[] strings = novo.split(",");
+
+		if (strings != null && strings.length == 2) {
+			try {
+				int largura = Integer.parseInt(strings[0].trim());
+				int altura = Integer.parseInt(strings[1].trim());
+
+				setPreferredSize(new Dimension(largura, altura));
+				SwingUtilities.updateComponentTreeUI(getParent());
+			} catch (Exception e) {
+			}
+		}
 	}
 
 	private MouseAdapter mouseAdapter = new MouseAdapter() {

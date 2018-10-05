@@ -848,6 +848,7 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
 		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
+		MenuItem itemAjustes = new MenuItem(new AjustarAcao());
 		int x, y;
 
 		SuperficiePopup2() {
@@ -856,6 +857,7 @@ public class Superficie extends Desktop {
 			add(itemCentralizar);
 			addSeparator();
 			add(itemDimensoes);
+			add(itemAjustes);
 		}
 	}
 
@@ -882,6 +884,19 @@ public class Superficie extends Desktop {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			configDimension();
+		}
+	}
+
+	private class AjustarAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public AjustarAcao() {
+			super(true, "label.ajustar", Icones.RECT);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ajustarDimension();
 		}
 	}
 
