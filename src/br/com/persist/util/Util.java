@@ -9,7 +9,10 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -144,6 +147,44 @@ public class Util {
 			return Integer.parseInt(string.trim());
 		} catch (Exception e) {
 			return padrao;
+		}
+	}
+
+	public static Map<String, List<String>> criarMapa(String string) {
+		Map<String, List<String>> mapa = new HashMap<>();
+
+		if (!estaVazio(string)) {
+			String[] strings = string.split(";");
+
+			if (strings != null) {
+				for (String s : strings) {
+					aux(s, mapa);
+				}
+			}
+		}
+
+		return mapa;
+	}
+
+	private static void aux(String string, Map<String, List<String>> mapa) {
+		String[] strings = string.split("=");
+
+		if (strings != null && strings.length > 1) {
+			String campo = strings[0].trim();
+
+			List<String> lista = mapa.get(campo);
+
+			if (lista == null) {
+				lista = new ArrayList<>();
+				mapa.put(campo, lista);
+			}
+
+			String nomes = strings[1];
+			String[] strNomes = nomes.split(",");
+
+			for (String nome : strNomes) {
+				lista.add(nome.trim());
+			}
 		}
 	}
 }
