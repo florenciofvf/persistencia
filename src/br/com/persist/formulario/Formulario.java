@@ -2,6 +2,7 @@ package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
@@ -285,8 +286,8 @@ public class Formulario extends JFrame {
 							List<Relacao> relacoes = new ArrayList<>();
 							List<Objeto> objetos = new ArrayList<>();
 							List<Form> forms = new ArrayList<>();
-							XML.processar(file, objetos, relacoes, forms);
-							fichario.abrir(Formulario.this, file, objetos, relacoes, forms);
+							Dimension d = XML.processar(file, objetos, relacoes, forms);
+							fichario.abrir(Formulario.this, file, objetos, relacoes, forms, d);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 						}

@@ -68,8 +68,9 @@ public class Container extends PanelBorder {
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, Graphics g) {
-		superficie.abrir(objetos, relacoes);
+	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, Graphics g,
+			Dimension d) {
+		superficie.abrir(objetos, relacoes, d);
 		arquivo = file;
 		btnSelecao.click();
 
@@ -272,8 +273,8 @@ public class Container extends PanelBorder {
 				List<Relacao> relacoes = new ArrayList<>();
 				List<Objeto> objetos = new ArrayList<>();
 				List<Form> forms = new ArrayList<>();
-				XML.processar(arquivo, objetos, relacoes, forms);
-				abrir(arquivo, objetos, relacoes, forms, null);
+				Dimension d = XML.processar(arquivo, objetos, relacoes, forms);
+				abrir(arquivo, objetos, relacoes, forms, null, d);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 			}

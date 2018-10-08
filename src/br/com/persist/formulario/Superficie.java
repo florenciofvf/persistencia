@@ -1,5 +1,6 @@
 package br.com.persist.formulario;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -17,6 +18,7 @@ import java.util.List;
 import javax.swing.InputMap;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
@@ -1028,7 +1030,7 @@ public class Superficie extends Desktop {
 		}
 	}
 
-	public void abrir(List<Objeto> objetos, List<Relacao> relacoes) {
+	public void abrir(List<Objeto> objetos, List<Relacao> relacoes, Dimension d) {
 		limpar();
 
 		for (Objeto objeto : objetos) {
@@ -1048,6 +1050,8 @@ public class Superficie extends Desktop {
 
 		alinharNomes();
 		repaint();
+		setPreferredSize(d);
+		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
 	public void desenharIds(boolean b) {

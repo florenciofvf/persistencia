@@ -155,10 +155,10 @@ public class Fichario extends JTabbedPane {
 		container.estadoSelecao();
 	}
 
-	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
-			List<Form> forms) {
+	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
+			Dimension d) {
 		Container container = new Container(formulario);
-		container.abrir(file, objetos, relacoes, forms, getGraphics());
+		container.abrir(file, objetos, relacoes, forms, getGraphics(), d);
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 
