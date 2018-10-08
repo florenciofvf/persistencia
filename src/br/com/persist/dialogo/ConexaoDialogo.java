@@ -28,7 +28,7 @@ public class ConexaoDialogo extends Dialogo {
 	private final Formulario formulario;
 
 	public ConexaoDialogo(Formulario formulario) {
-		super(formulario, Mensagens.getString("label.conexao"), 1000, 200, false);
+		super(formulario, Mensagens.getString("label.conexao"), 1000, 350, false);
 		this.formulario = formulario;
 		montarLayout();
 		configurar();
