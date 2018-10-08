@@ -998,7 +998,9 @@ public class Superficie extends Desktop {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
 
-			util.abrirTag2("fvf");
+			util.abrirTag("fvf");
+			util.atributo("largura", getWidth());
+			util.atributo("altura", getHeight()).fecharTag();
 
 			for (Objeto objeto : objetos) {
 				objeto.salvar(util);
