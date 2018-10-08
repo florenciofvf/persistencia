@@ -32,6 +32,7 @@ public class Objeto {
 	private boolean selecionado;
 	private boolean desenharId;
 	private String complemento;
+	private String chaveamento;
 	public boolean controlado;
 	private String descricao;
 	private static long ID;
@@ -245,6 +246,18 @@ public class Objeto {
 		}
 	}
 
+	public String getChaveamento() {
+		if (Util.estaVazio(chaveamento)) {
+			chaveamento = "";
+		}
+
+		return chaveamento;
+	}
+
+	public void setChaveamento(String chaveamento) {
+		this.chaveamento = chaveamento;
+	}
+
 	public boolean contem(int x, int y) {
 		return (x >= this.x && x <= this.x + diametro) && (y >= this.y && y <= this.y + diametro);
 	}
@@ -324,6 +337,7 @@ public class Objeto {
 		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
@@ -335,6 +349,7 @@ public class Objeto {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
+		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);

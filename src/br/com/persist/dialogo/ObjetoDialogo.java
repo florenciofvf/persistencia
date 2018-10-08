@@ -55,6 +55,7 @@ public class ObjetoDialogo extends Dialogo {
 
 	private class PanelGeral extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private TextField txtChaveamento = new TextField();
 		private TextField txtComplemento = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
 		private TextField txtDeslocXId = new TextField();
@@ -72,6 +73,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
 			chkTransparente.setSelected(objeto.isTransparente());
 			chkDesenharId.setSelected(objeto.isDesenharId());
+			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
 			txtTabela.setText(objeto.getTabela());
 			txtChaves.setText(objeto.getChaves());
@@ -79,6 +81,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 
+			txtChaveamento.addFocusListener(focusListener);
 			txtComplemento.addFocusListener(focusListener);
 			txtDeslocXId.addFocusListener(focusListener);
 			txtDeslocYId.addFocusListener(focusListener);
@@ -89,6 +92,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtY.addFocusListener(focusListener);
 
 			chkTransparente.addActionListener(this);
+			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
 			txtDeslocXId.addActionListener(this);
@@ -116,6 +120,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves));
+			container.add(criarLinha("label.chaveamento", txtChaveamento));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
@@ -149,6 +154,9 @@ public class ObjetoDialogo extends Dialogo {
 
 			} else if (txtDeslocYId == e.getSource()) {
 				objeto.setDeslocamentoYId(Util.getInt(txt.getText(), objeto.getDeslocamentoYId()));
+
+			} else if (txtChaveamento == e.getSource()) {
+				objeto.setChaveamento(txt.getText());
 
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txt.getText());
