@@ -1,11 +1,16 @@
 package br.com.persist.tabela;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -23,6 +28,7 @@ import br.com.persist.util.Util;
 public class Tabela extends JTable {
 	private static final long serialVersionUID = 1L;
 	private PopupHeader popupHeader = new PopupHeader();
+	private Map<String, List<String>> mapaChaveamento;
 
 	public Tabela() {
 		this(new OrdenacaoModelo(new VazioModelo()));
@@ -41,6 +47,14 @@ public class Tabela extends JTable {
 		}
 
 		super.setModel(dataModel);
+	}
+
+	public Map<String, List<String>> getMapaChaveamento() {
+		return mapaChaveamento;
+	}
+
+	public void setMapaChaveamento(Map<String, List<String>> mapaChaveamento) {
+		this.mapaChaveamento = mapaChaveamento;
 	}
 
 	private MouseListener headerListener = new MouseAdapter() {
@@ -62,6 +76,8 @@ public class Tabela extends JTable {
 			int tableColuna = columnAtPoint(e.getPoint());
 			int modelColuna = convertColumnIndexToModel(tableColuna);
 			popupHeader.tag = modelColuna;
+			String coluna = getModel().getColumnName(modelColuna);
+			popupHeader.configurar(coluna);
 			popupHeader.show(tableHeader, e.getX(), e.getY());
 		}
 
@@ -116,6 +132,96 @@ public class Tabela extends JTable {
 			add(new MenuItem(new CopiarAspasComplementoAcao()));
 			addSeparator();
 			add(new MenuItem(new CopiarNomeAcao()));
+		}
+
+		protected class MenuItemTemp extends JMenuItem implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private final boolean aspas;
+
+			MenuItemTemp(String string, boolean aspas) {
+				addActionListener(this);
+				this.aspas = aspas;
+				setText(string);
+				if (aspas) {
+					setIcon(Icones.ASPAS);
+				}
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
+				String complemento = Util.getStringLista(lista, aspas);
+
+				if (!Util.estaVazio(complemento)) {
+					Util.setContentTransfered("AND " + getText() + " IN (" + complemento + ")");
+				} else {
+					Util.setContentTransfered(" ");
+				}
+			}
+		}
+
+		protected class Separador extends JSeparator {
+			private static final long serialVersionUID = 1L;
+		}
+
+		public void limparTemp() {
+			MenuItemTemp temp = getTemp();
+
+			while (temp != null) {
+				remove(temp);
+				temp = getTemp();
+			}
+
+			Separador sep = getSep();
+
+			while (sep != null) {
+				remove(sep);
+				sep = getSep();
+			}
+		}
+
+		public void configurar(String chave) {
+			limparTemp();
+
+			List<String> lista = mapaChaveamento.get(chave);
+
+			if (lista != null && !lista.isEmpty()) {
+				add(new Separador());
+
+				for (String string : lista) {
+					add(new MenuItemTemp(string, false));
+				}
+
+				add(new Separador());
+
+				for (String string : lista) {
+					add(new MenuItemTemp(string, true));
+				}
+			}
+		}
+
+		private MenuItemTemp getTemp() {
+			for (int i = 0; i < getComponentCount(); i++) {
+				Component c = getComponent(i);
+
+				if (c instanceof MenuItemTemp) {
+					return (MenuItemTemp) c;
+				}
+			}
+
+			return null;
+		}
+
+		private Separador getSep() {
+			for (int i = 0; i < getComponentCount(); i++) {
+				Component c = getComponent(i);
+
+				if (c instanceof Separador) {
+					return (Separador) c;
+				}
+			}
+
+			return null;
 		}
 
 		private class CopiarAcao extends Acao {

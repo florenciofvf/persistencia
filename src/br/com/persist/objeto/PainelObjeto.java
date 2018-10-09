@@ -67,6 +67,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	private final Objeto objeto;
 
 	public PainelObjeto(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao) {
+		tabela.setMapaChaveamento(Util.criarMapa(objeto.getChaveamento()));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		txtComplemento.setText(objeto.getComplemento());
 		if (padrao != null) {
