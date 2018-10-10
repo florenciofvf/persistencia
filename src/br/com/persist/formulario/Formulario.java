@@ -118,10 +118,7 @@ public class Formulario extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// if (!Sistema.getInstancia().isMac()) {
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
-				// }
-
 				atualizarFragmentos();
 				atualizarConexoes();
 			}
