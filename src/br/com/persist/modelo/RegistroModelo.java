@@ -180,10 +180,10 @@ public class RegistroModelo implements TableModel {
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores) {
-		StringBuilder builder = new StringBuilder("UPDATE " + tabela);
+		StringBuilder builder = new StringBuilder("UPDATE " + tabela + " SET ");
 
 		Coluna coluna = colunas[0];
-		builder.append(Constantes.QL + " SET " + coluna.getNome() + " = " + coluna.get(valores[0]));
+		builder.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[0]));
 
 		for (int i = 1; i < colunas.length; i++) {
 			coluna = colunas[i];
