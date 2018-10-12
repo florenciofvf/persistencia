@@ -1016,8 +1016,10 @@ public class Superficie extends Desktop {
 
 			util.ql();
 
-			for (JInternalFrame frame : getAllFrames()) {
-				FormularioInterno interno = (FormularioInterno) frame;
+			JInternalFrame[] frames = getAllFrames();
+
+			for (int i = frames.length - 1; i >= 0; i--) {
+				FormularioInterno interno = (FormularioInterno) frames[i];
 				Form form = new Form();
 				form.copiar(interno);
 				form.salvar(util);
