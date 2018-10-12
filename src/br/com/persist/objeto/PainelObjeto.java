@@ -64,12 +64,14 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	private final PainelObjetoListener listener;
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
+	private final String nomeTabela;
 	private final Objeto objeto;
 
 	public PainelObjeto(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao) {
 		tabela.setMapaChaveamento(Util.criarMapa(objeto.getChaveamento()));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		txtComplemento.setText(objeto.getComplemento());
+		this.nomeTabela = objeto.getTabela() + " - ";
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
@@ -196,7 +198,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
-			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
+			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
 			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
@@ -255,7 +257,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloInfoBanco(conn);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - INFO-BANCO");
+			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - INFO-BANCO");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -276,7 +278,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloEsquema(conn);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - ESQUEMA");
+			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - ESQUEMA");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -297,7 +299,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
+			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -318,7 +320,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-EXPORTADAS");
+			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-EXPORTADAS");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -339,7 +341,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-IMPORTADAS");
+			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-IMPORTADAS");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -360,7 +362,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - META-DADOS");
+			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - META-DADOS");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
