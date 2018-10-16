@@ -736,7 +736,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					for (int linha : linhas) {
 						int excluido = modelo.excluirRegistro(linha);
 
-						if (excluido == 1) {
+						if (excluido == 0 || excluido == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
 
 							if (chaves.isEmpty()) {
