@@ -185,6 +185,7 @@ public class Desktop extends JDesktopPane {
 		add(form);
 		try {
 			form.setSelected(true);
+			form.toFront();
 		} catch (PropertyVetoException e) {
 		}
 	}
