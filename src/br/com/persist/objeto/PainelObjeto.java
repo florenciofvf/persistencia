@@ -299,7 +299,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
+			listener.setTitle(
+					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -320,7 +321,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-EXPORTADAS");
+			listener.setTitle(
+					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-EXPORTADAS");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -341,7 +343,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Connection conn = Conexao.getConnection(conexao);
 			ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-IMPORTADAS");
+			listener.setTitle(
+					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-IMPORTADAS");
 
 			tabela.setModel(modeloOrdenacao);
 			configCabecalhoColuna(modeloListagem);
@@ -539,6 +542,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		@Override
 		public void configFragmento(Fragmento f) {
 			txtComplemento.setText(f.getValor());
+			objeto.setComplemento(txtComplemento.getText());
 			actionPerformed(null);
 		}
 
@@ -588,6 +592,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			if (!Util.estaVazio(complemento)) {
 				txtComplemento.setText(complemento);
+				objeto.setComplemento(txtComplemento.getText());
 				PainelObjeto.this.actionPerformed(null);
 			} else {
 				txtComplemento.setText(objeto.getComplemento());
