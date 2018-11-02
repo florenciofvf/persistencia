@@ -39,16 +39,16 @@ public class Instrucao {
 	}
 
 	public void salvar(XMLUtil util) {
-		util.abrirTag("instrucao");
-		util.atributo("nome", Util.escapar(nome));
-		util.fecharTag();
-
 		if (!Util.estaVazio(getValor())) {
+			util.abrirTag("instrucao");
+			util.atributo("nome", Util.escapar(nome));
+			util.fecharTag();
+
 			util.abrirTag2("valor");
 			util.conteudo(Util.escapar(getValor())).ql();
 			util.finalizarTag("valor");
-		}
 
-		util.finalizarTag("instrucao");
+			util.finalizarTag("instrucao");
+		}
 	}
 }

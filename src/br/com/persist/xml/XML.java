@@ -11,6 +11,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import br.com.persist.Instrucao;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
@@ -96,8 +97,17 @@ class XMLHandler extends DefaultHandler {
 			f.aplicar(attributes);
 			forms.add(f);
 
-		} else if ("desc".equals(qName)) {
+		} else if ("instrucao".equals(qName)) {
+			Instrucao i = new Instrucao(attributes.getValue("nome"));
+
+			if (selecionado instanceof Objeto) {
+				Objeto obj = (Objeto) selecionado;
+				obj.addInstrucao(i);
+			}
+
+		} else if ("desc".equals(qName) || "valor".equals(qName)) {
 			limpar();
+
 		}
 	}
 
@@ -127,6 +137,18 @@ class XMLHandler extends DefaultHandler {
 				} else if (selecionado instanceof Relacao) {
 					Relacao rel = (Relacao) selecionado;
 					rel.setDescricao(string.trim());
+				}
+			}
+
+			limpar();
+
+		} else if ("valor".equals(qName) && selecionado != null) {
+			String string = builder.toString();
+
+			if (!Util.estaVazio(string)) {
+				if (selecionado instanceof Objeto) {
+					Objeto obj = (Objeto) selecionado;
+					obj.getUltInstrucao().setValor(string.trim());
 				}
 			}
 
