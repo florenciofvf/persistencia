@@ -31,6 +31,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.PanelCenter;
+import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
@@ -222,7 +223,7 @@ public class ObjetoDialogo extends Dialogo {
 			panelLista = new Panel(new GridLayout(0, 1, 0, 20));
 
 			add(BorderLayout.NORTH, new PanelNome());
-			add(BorderLayout.CENTER, panelLista);
+			add(BorderLayout.CENTER, new ScrollPane(panelLista));
 
 			for (Instrucao i : objeto.getInstrucoes()) {
 				panelLista.add(new PanelInst(i));
@@ -258,7 +259,7 @@ public class ObjetoDialogo extends Dialogo {
 
 			PanelInst(Instrucao i) {
 				this.instrucao = i;
-				nome.setEditable(false);
+				nome.setEnabled(false);
 				nome.setText(i.getNome());
 				valor.setText(i.getValor());
 
