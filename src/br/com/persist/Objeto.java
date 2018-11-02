@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 
@@ -25,6 +27,7 @@ public class Objeto {
 	public static final int DIAMETRO_PADRAO = 36;
 	public static int diametro = DIAMETRO_PADRAO;
 	private Color corFonte = COR_PADRAO_FONTE;
+	private final List<Instrucao> instrucoes;
 	public int deslocamentoXId = -5;
 	public int deslocamentoYId = -5;
 	private Color cor = COR_PADRAO;
@@ -61,6 +64,7 @@ public class Objeto {
 	}
 
 	public Objeto(int x, int y, Color cor, String icone) {
+		instrucoes = new ArrayList<>();
 		desenharId = true;
 		id = "" + (++ID);
 		setIcone(icone);
@@ -127,6 +131,16 @@ public class Objeto {
 
 		if (Objeto.diametro < DIAMETRO_PADRAO) {
 			Objeto.diametro = DIAMETRO_PADRAO;
+		}
+	}
+
+	public List<Instrucao> getInstrucoes() {
+		return instrucoes;
+	}
+
+	public void addInstrucao(Instrucao o) {
+		if (o != null) {
+			instrucoes.add(o);
 		}
 	}
 
@@ -364,11 +378,17 @@ public class Objeto {
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag();
+
 		if (!Util.estaVazio(getDescricao())) {
 			util.abrirTag2("desc");
 			util.conteudo(Util.escapar(getDescricao())).ql();
 			util.finalizarTag("desc");
 		}
+
+		for (Instrucao o : instrucoes) {
+			o.salvar(util);
+		}
+
 		util.finalizarTag("objeto");
 	}
 
