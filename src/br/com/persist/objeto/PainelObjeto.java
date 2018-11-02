@@ -21,11 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.Instrucao;
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
@@ -76,6 +78,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			cmbConexao.setSelectedItem(padrao);
 		}
 		txtComplemento.addActionListener(this);
+		toolbar.complementoUpdate(objeto);
 		cmbConexao.addItemListener(this);
 		toolbar.add(txtComplemento);
 		this.listener = listener;
@@ -383,6 +386,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		final ButtonUpdate update = new ButtonUpdate();
 		final Label total = new Label(Color.BLUE);
 
 		public Toolbar() {
@@ -392,7 +396,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new FragmentoAcao()));
 			addSeparator();
-			add(new ButtonUpdate());
+			add(update);
 			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
 			addSeparator();
@@ -410,6 +414,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
+		}
+
+		void complementoUpdate(Objeto objeto) {
+			update.complemento(objeto);
 		}
 	}
 
@@ -435,6 +443,35 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				atualizarRegistro();
+			}
+		}
+
+		void complemento(Objeto objeto) {
+			if (objeto == null || objeto.getInstrucoes().isEmpty()) {
+				return;
+			}
+
+			popup.addSeparator();
+
+			for (Instrucao i : objeto.getInstrucoes()) {
+				popup.add(new MenuItemUpdate(i));
+			}
+		}
+
+		class MenuItemUpdate extends JMenuItem implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private final Instrucao instrucao;
+
+			MenuItemUpdate(Instrucao instrucao) {
+				this.instrucao = instrucao;
+				setText(instrucao.getNome());
+				addActionListener(this);
+				setIcon(Icones.CALC);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
 			}
 		}
 	}
