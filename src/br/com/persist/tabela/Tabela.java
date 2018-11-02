@@ -126,9 +126,8 @@ public class Tabela extends JTable {
 
 		public PopupHeader() {
 			add(new MenuItem(new CopiarAcao()));
-			add(new MenuItem(new CopiarComplementoAcao()));
-			addSeparator();
 			add(new MenuItem(new CopiarAspasAcao()));
+			add(new MenuItem(new CopiarComplementoAcao()));
 			add(new MenuItem(new CopiarAspasComplementoAcao()));
 			addSeparator();
 			add(new MenuItem(new CopiarNomeAcao()));
@@ -228,7 +227,7 @@ public class Tabela extends JTable {
 			private static final long serialVersionUID = 1L;
 
 			public CopiarAcao() {
-				super(true, "label.copiar", null);
+				super(true, "label.copiar_header", null);
 			}
 
 			@Override
