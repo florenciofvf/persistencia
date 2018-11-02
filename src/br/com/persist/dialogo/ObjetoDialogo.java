@@ -226,7 +226,7 @@ public class ObjetoDialogo extends Dialogo {
 			add(BorderLayout.CENTER, new ScrollPane(panelLista));
 
 			for (Instrucao i : objeto.getInstrucoes()) {
-				panelLista.add(new PanelInst(i));
+				panelLista.add(new ScrollPane(new PanelInst(i)));
 			}
 		}
 
@@ -246,7 +246,7 @@ public class ObjetoDialogo extends Dialogo {
 					Instrucao i = new Instrucao(nome.getText().trim());
 					objeto.addInstrucao(i);
 					panelLista.add(new PanelInst(i));
-					SwingUtilities.updateComponentTreeUI(panelLista);
+					SwingUtilities.updateComponentTreeUI(ObjetoDialogo.this);
 				}
 			}
 		}
