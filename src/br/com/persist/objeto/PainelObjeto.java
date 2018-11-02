@@ -392,7 +392,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new FragmentoAcao()));
 			addSeparator();
-			add(new Button(new UpdateAcao()));
+			add(new ButtonUpdate());
 			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
 			addSeparator();
@@ -410,6 +410,32 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
+		}
+	}
+
+	private class ButtonUpdate extends Button {
+		private static final long serialVersionUID = 1L;
+		private Popup popup = new Popup();
+
+		public ButtonUpdate() {
+			setToolTipText(Mensagens.getString("label.atualizar"));
+			popup.add(new MenuItem(new UpdateAcao()));
+			setComponentPopupMenu(popup);
+			setIcon(Icones.UPDATE);
+			addActionListener(e -> popup.show(this, 5, 5));
+		}
+
+		private class UpdateAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public UpdateAcao() {
+				super(true, "label.atualizar", Icones.UPDATE);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				atualizarRegistro();
+			}
 		}
 	}
 
@@ -673,19 +699,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		public void actionPerformed(ActionEvent e) {
 			processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro);
-		}
-	}
-
-	private class UpdateAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public UpdateAcao() {
-			super(false, "label.atualizar", Icones.UPDATE);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			atualizarRegistro();
 		}
 	}
 
