@@ -126,8 +126,9 @@ public class Tabela extends JTable {
 
 		public PopupHeader() {
 			add(new MenuItem(new CopiarAcao()));
-			add(new MenuItem(new CopiarAspasAcao()));
 			add(new MenuItem(new CopiarComplementoAcao()));
+			addSeparator();
+			add(new MenuItem(new CopiarAspasAcao()));
 			add(new MenuItem(new CopiarAspasComplementoAcao()));
 			addSeparator();
 			add(new MenuItem(new CopiarNomeAcao()));
@@ -135,12 +136,14 @@ public class Tabela extends JTable {
 
 		protected class MenuItemTemp extends JMenuItem implements ActionListener {
 			private static final long serialVersionUID = 1L;
+			private final String nomeColuna;
 			private final boolean aspas;
 
 			MenuItemTemp(String string, boolean aspas) {
+				setText("AND " + string + " IN");
+				this.nomeColuna = string;
 				addActionListener(this);
 				this.aspas = aspas;
-				setText(string);
 				if (aspas) {
 					setIcon(Icones.ASPAS);
 				}
@@ -152,7 +155,7 @@ public class Tabela extends JTable {
 				String complemento = Util.getStringLista(lista, aspas);
 
 				if (!Util.estaVazio(complemento)) {
-					Util.setContentTransfered("AND " + getText() + " IN (" + complemento + ")");
+					Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");
 				} else {
 					Util.setContentTransfered(" ");
 				}
