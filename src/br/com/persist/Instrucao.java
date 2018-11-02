@@ -32,10 +32,10 @@ public class Instrucao {
 	}
 
 	public Instrucao clonar() {
-		Instrucao obj = new Instrucao(nome);
-		obj.setValor(valor);
+		Instrucao i = new Instrucao(nome);
+		i.setValor(valor);
 
-		return obj;
+		return i;
 	}
 
 	public void salvar(XMLUtil util) {

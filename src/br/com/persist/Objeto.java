@@ -138,9 +138,9 @@ public class Objeto {
 		return instrucoes;
 	}
 
-	public void addInstrucao(Instrucao o) {
-		if (o != null) {
-			instrucoes.add(o);
+	public void addInstrucao(Instrucao i) {
+		if (i != null) {
+			instrucoes.add(i);
 		}
 	}
 
@@ -393,8 +393,8 @@ public class Objeto {
 			util.finalizarTag("desc");
 		}
 
-		for (Instrucao o : instrucoes) {
-			o.salvar(util);
+		for (Instrucao i : instrucoes) {
+			i.salvar(util);
 		}
 
 		util.finalizarTag("objeto");

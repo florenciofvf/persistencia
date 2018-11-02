@@ -3,6 +3,7 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -19,12 +20,15 @@ import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.Instrucao;
 import br.com.persist.Objeto;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
+import br.com.persist.comp.Panel;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
@@ -210,6 +214,69 @@ public class ObjetoDialogo extends Dialogo {
 		};
 	}
 
+	private class PanelInstrucao extends PanelBorder {
+		private static final long serialVersionUID = 1L;
+		private final Panel panelLista;
+
+		PanelInstrucao() {
+			panelLista = new Panel(new GridLayout(0, 1, 0, 20));
+
+			add(BorderLayout.NORTH, new PanelNome());
+			add(BorderLayout.CENTER, panelLista);
+
+			for (Instrucao i : objeto.getInstrucoes()) {
+				panelLista.add(new PanelInst(i));
+			}
+		}
+
+		class PanelNome extends PanelBorder implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			TextField nome = new TextField();
+
+			PanelNome() {
+				add(BorderLayout.WEST, new Label("label.nome_enter"));
+				add(BorderLayout.CENTER, nome);
+				nome.addActionListener(this);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!Util.estaVazio(nome.getText())) {
+					Instrucao i = new Instrucao(nome.getText().trim());
+					objeto.addInstrucao(i);
+					panelLista.add(new PanelInst(i));
+					SwingUtilities.updateComponentTreeUI(panelLista);
+				}
+			}
+		}
+
+		class PanelInst extends PanelBorder {
+			private static final long serialVersionUID = 1L;
+			TextField nome = new TextField();
+			TextArea valor = new TextArea();
+			final Instrucao instrucao;
+
+			PanelInst(Instrucao i) {
+				this.instrucao = i;
+				nome.setEditable(false);
+				nome.setText(i.getNome());
+				valor.setText(i.getValor());
+
+				add(BorderLayout.NORTH, nome);
+				add(BorderLayout.CENTER, valor);
+
+				valor.addKeyListener(keyListener);
+			}
+
+			private KeyListener keyListener = new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					instrucao.setValor(valor.getText());
+				}
+			};
+		}
+	}
+
 	private class PanelCorFonte extends PanelBorder implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
@@ -294,6 +361,7 @@ public class ObjetoDialogo extends Dialogo {
 			addTab("label.desc", new PanelDesc());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
+			addTab("label.instrucoes", new PanelInstrucao());
 		}
 	}
 }
