@@ -19,6 +19,7 @@ import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
@@ -180,7 +181,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					return;
 				}
 
-				new FormularioUpdate(listener, update, conexao);
+				new FormularioUpdate(listener, update, conexao, null);
 			}
 		}
 	}
@@ -471,7 +472,32 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+				TableModel model = modelo.getModel();
+
+				if (model instanceof RegistroModelo) {
+					int[] linhas = tabela.getSelectedRows();
+
+					if (linhas != null && linhas.length == 1) {
+						Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
+
+						if (chaves.isEmpty()) {
+							return;
+						}
+
+						if (Util.estaVazio(instrucao.getValor())) {
+							return;
+						}
+
+						new FormularioUpdate(listener, instrucao.getValor(), conexao, chaves);
+					}
+				}
 			}
 		}
 	}

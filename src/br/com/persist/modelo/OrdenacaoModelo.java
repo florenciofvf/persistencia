@@ -2,6 +2,7 @@ package br.com.persist.modelo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.swing.table.AbstractTableModel;
@@ -78,6 +79,11 @@ public class OrdenacaoModelo extends AbstractTableModel {
 	public List<IndiceValor> getValoresChaves(int rowIndex) {
 		RegistroModelo modelo = (RegistroModelo) model;
 		return modelo.getValoresChaves(linhas[rowIndex].indice);
+	}
+
+	public Map<String, String> getMapaChaves(int rowIndex) {
+		RegistroModelo modelo = (RegistroModelo) model;
+		return modelo.getMapaChaves(linhas[rowIndex].indice);
 	}
 
 	public void excluirValoresChaves(List<List<IndiceValor>> listaValores) {

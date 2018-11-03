@@ -1,7 +1,9 @@
 package br.com.persist.modelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.swing.event.TableModelListener;
@@ -144,6 +146,19 @@ public class RegistroModelo implements TableModel {
 		for (Coluna coluna : chaves) {
 			IndiceValor obj = new IndiceValor(registro.get(coluna.getIndice()), coluna.getIndice());
 			resp.add(obj);
+		}
+
+		return resp;
+	}
+
+	public Map<String, String> getMapaChaves(int rowIndex) {
+		List<Object> registro = registros.get(rowIndex);
+		Map<String, String> resp = new HashMap<>();
+		List<Coluna> chaves = getChaves();
+
+		for (Coluna coluna : chaves) {
+			Object valor = registro.get(coluna.getIndice());
+			resp.put(coluna.getNome(), valor.toString());
 		}
 
 		return resp;

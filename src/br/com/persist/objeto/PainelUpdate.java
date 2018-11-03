@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
@@ -24,7 +25,7 @@ public class PainelUpdate extends Panel {
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
 
-	public PainelUpdate(PainelObjetoListener listener, String instrucao, Conexao padrao) {
+	public PainelUpdate(PainelObjetoListener listener, String instrucao, Conexao padrao, Map<String, String> mapaChaveValor) {
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		textArea.setText(instrucao);
 		if (padrao != null) {
