@@ -48,7 +48,9 @@ public class PainelUpdate extends Panel {
 
 		while (it.hasNext()) {
 			Entry<String, String> entry = it.next();
-			instrucao = instrucao.replaceAll("{{" + entry.getKey() + "}}", entry.getValue());
+			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
+			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
+			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
 		}
 
 		return instrucao;
