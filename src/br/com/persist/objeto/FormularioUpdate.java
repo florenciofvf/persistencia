@@ -15,7 +15,8 @@ public class FormularioUpdate extends JFrame implements PainelObjetoListener {
 	private final PainelUpdate painelUpdate;
 	private PainelObjetoListener listener;
 
-	public FormularioUpdate(PainelObjetoListener listener, String instrucao, Conexao padrao, Map<String, String> mapaChaveValor) {
+	public FormularioUpdate(PainelObjetoListener listener, String instrucao, Conexao padrao,
+			Map<String, String> mapaChaveValor) {
 		this.listener = listener;
 		painelUpdate = new PainelUpdate(this, instrucao, padrao, mapaChaveValor);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

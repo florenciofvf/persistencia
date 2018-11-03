@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
@@ -25,15 +27,31 @@ public class PainelUpdate extends Panel {
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
 
-	public PainelUpdate(PainelObjetoListener listener, String instrucao, Conexao padrao, Map<String, String> mapaChaveValor) {
+	public PainelUpdate(PainelObjetoListener listener, String instrucao, Conexao padrao,
+			Map<String, String> mapaChaveValor) {
 		cmbConexao = new JComboBox<>(listener.getConexoes());
-		textArea.setText(instrucao);
+		textArea.setText(subst(instrucao, mapaChaveValor));
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
 		this.listener = listener;
 		toolbar.add(cmbConexao);
 		montarLayout();
+	}
+
+	private String subst(String instrucao, Map<String, String> mapaChaveValor) {
+		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+			return instrucao;
+		}
+
+		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
+
+		while (it.hasNext()) {
+			Entry<String, String> entry = it.next();
+			instrucao = instrucao.replaceAll("{{" + entry.getKey() + "}}", entry.getValue());
+		}
+
+		return instrucao;
 	}
 
 	public Frame getFrame() {
