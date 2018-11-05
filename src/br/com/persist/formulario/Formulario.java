@@ -221,7 +221,7 @@ public class Formulario extends JFrame {
 		private static final long serialVersionUID = 1L;
 
 		public NovoAcao() {
-			super(true, "label.novo", Icones.NOVO);
+			super(true, "label.novo", Icones.CUBO);
 		}
 
 		@Override
@@ -234,7 +234,7 @@ public class Formulario extends JFrame {
 		private static final long serialVersionUID = 1L;
 
 		public DesktopAcao() {
-			super(true, "label.desktop", Icones.PANEL3);
+			super(true, "label.desktop", Icones.CUBO2);
 		}
 
 		@Override
