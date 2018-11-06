@@ -130,7 +130,7 @@ public class Container extends PanelBorder {
 		private static final long serialVersionUID = 1L;
 
 		public DestacarAcao() {
-			super(false, "label.destacar", Icones.ARRASTAR);
+			super(false, "label.desktop", Icones.CUBO2);
 		}
 
 		@Override

@@ -772,7 +772,7 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 
 		public DestacarAcao() {
-			super(true, "label.destacar", Icones.CUBO2);
+			super(true, "label.desktop", Icones.CUBO2);
 		}
 
 		@Override
