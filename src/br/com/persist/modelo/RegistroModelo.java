@@ -93,6 +93,9 @@ public class RegistroModelo implements TableModel {
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue });
 				Persistencia.executar(update, Conexao.getConnection(conexao));
 				registro.set(columnIndex, aValue);
+				if (Constantes.area_trans_tabela_registros) {
+					Util.setContentTransfered(update);
+				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("UPDATE", ex, null);
 			}
@@ -128,7 +131,11 @@ public class RegistroModelo implements TableModel {
 		if (chaves) {
 			try {
 				String delete = gerarDelete(registro);
-				return Persistencia.executar(delete, Conexao.getConnection(conexao));
+				int i = Persistencia.executar(delete, Conexao.getConnection(conexao));
+				if (Constantes.area_trans_tabela_registros) {
+					Util.setContentTransfered(delete);
+				}
+				return i;
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("DELETE", ex, null);
 				return -1;

@@ -68,14 +68,14 @@ public class ConfigDialogo extends Dialogo {
 	}
 
 	private void configurar() {
-		chkAreaTransTabelaRegistros
-		.addActionListener(e -> Constantes.area_trans_tabela_registros = chkAreaTransTabelaRegistros.isSelected());
+		chkAreaTransTabelaRegistros.addActionListener(
+				e -> Constantes.area_trans_tabela_registros = chkAreaTransTabelaRegistros.isSelected());
 
 		chkFicharioScroll.addActionListener(e -> formulario.getFichario().setTabLayoutPolicy(
 				chkFicharioScroll.isSelected() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT));
 
 		chkFecharOrigemAposSoltar
-		.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
+				.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
 	}
 
 	protected void processar() {
