@@ -17,6 +17,7 @@ import br.com.persist.util.Mensagens;
 
 public class ConfigDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
+	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
@@ -35,6 +36,7 @@ public class ConfigDialogo extends Dialogo {
 
 	private void montarLayout() {
 		chkFicharioScroll.setSelected(formulario.getFichario().getTabLayoutPolicy() == JTabbedPane.SCROLL_TAB_LAYOUT);
+		chkAreaTransTabelaRegistros.setSelected(Constantes.area_trans_tabela_registros);
 		chkFecharOrigemAposSoltar.setSelected(Constantes.fechar_apos_soltar);
 
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
@@ -52,21 +54,28 @@ public class ConfigDialogo extends Dialogo {
 
 		Panel container = new Panel(new GridLayout(0, 1));
 		container.add(panelPosicoes);
+		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
 
 		add(BorderLayout.CENTER, container);
 
-		chkFecharOrigemAposSoltar.setMargin(new Insets(5, 10, 5, 5));
-		chkFicharioScroll.setMargin(new Insets(5, 10, 5, 5));
+		Insets insets = new Insets(5, 10, 5, 5);
+
+		chkAreaTransTabelaRegistros.setMargin(insets);
+		chkFecharOrigemAposSoltar.setMargin(insets);
+		chkFicharioScroll.setMargin(insets);
 	}
 
 	private void configurar() {
+		chkAreaTransTabelaRegistros
+		.addActionListener(e -> Constantes.area_trans_tabela_registros = chkAreaTransTabelaRegistros.isSelected());
+
 		chkFicharioScroll.addActionListener(e -> formulario.getFichario().setTabLayoutPolicy(
 				chkFicharioScroll.isSelected() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT));
 
 		chkFecharOrigemAposSoltar
-				.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
+		.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
 	}
 
 	protected void processar() {

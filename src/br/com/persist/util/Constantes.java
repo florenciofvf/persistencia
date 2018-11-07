@@ -1,6 +1,7 @@
 package br.com.persist.util;
 
 public class Constantes {
+	public static boolean area_trans_tabela_registros = false;
 	public static boolean fechar_apos_soltar = true;
 	public static final String ENCODING = "UTF-8";
 	public static final String QL = "\r\n";
