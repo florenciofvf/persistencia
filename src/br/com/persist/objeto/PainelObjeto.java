@@ -155,7 +155,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	public void atualizarRegistro() {
+	public void atualizarRegistro(String titulo) {
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 		if (conexao == null) {
@@ -181,7 +181,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					return;
 				}
 
-				new FormularioUpdate(listener, update, conexao, null);
+				new FormularioUpdate(titulo, listener, update, conexao, null);
 			}
 		}
 	}
@@ -443,7 +443,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				atualizarRegistro();
+				atualizarRegistro(Mensagens.getString("label.atualizar"));
 			}
 		}
 
@@ -495,7 +495,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 							return;
 						}
 
-						new FormularioUpdate(listener, instrucao.getValor(), conexao, chaves);
+						new FormularioUpdate(instrucao.getNome(), listener, instrucao.getValor(), conexao, chaves);
 					}
 				}
 			}
