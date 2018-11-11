@@ -103,7 +103,7 @@ public class ConexaoDialogo extends Dialogo {
 			if (linhas != null && linhas.length == 1) {
 				try {
 					Conexao conexao = modelo.getConexao(linhas[0]);
-					Conexao.getConnection(conexao);
+					Conexao.getConnection2(conexao);
 					Util.mensagem(ConexaoDialogo.this, "SUCESSO");
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);

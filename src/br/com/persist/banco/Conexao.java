@@ -39,6 +39,20 @@ public class Conexao {
 		return conn;
 	}
 
+	public static synchronized Connection getConnection2(Conexao conexao) throws Exception {
+		Connection conn = mapa.get(conexao);
+
+		if (conn != null) {
+			try {
+				fecharConexao(conn);
+				mapa.put(conexao, null);
+			} catch (Exception e) {
+			}
+		}
+
+		return getConnection(conexao);
+	}
+
 	private static void fecharConexao(Connection conn) throws Exception {
 		if (conn != null && !conn.isClosed()) {
 			conn.close();
