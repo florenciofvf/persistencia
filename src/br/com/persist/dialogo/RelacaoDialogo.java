@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -205,9 +206,9 @@ public class RelacaoDialogo extends Dialogo {
 			label.setText(origem ? relacao.getOrigem().getId() : relacao.getDestino().getId());
 
 			if (origem) {
-				add(new PanelCenter(new Label("label.origem")));
+				add(new PanelTitulo("label.origem"));
 			} else {
-				add(new PanelCenter(new Label("label.destino")));
+				add(new PanelTitulo("label.destino"));
 			}
 
 			add(new JSeparator());
@@ -228,6 +229,15 @@ public class RelacaoDialogo extends Dialogo {
 				superficie.repaint();
 			}
 		};
+	}
+
+	private class PanelTitulo extends Panel {
+		private static final long serialVersionUID = 1L;
+
+		PanelTitulo(String chave) {
+			setLayout(new GridBagLayout());
+			add(new Label(chave));
+		}
 	}
 
 	private class PanelObjeto extends Panel {
