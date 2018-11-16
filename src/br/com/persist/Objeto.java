@@ -202,7 +202,15 @@ public class Objeto {
 		return chaves;
 	}
 
-	public String getTabela() {
+	public String getTabela(String esquema) {
+		if (Util.estaVazio(tabela)) {
+			tabela = "";
+		}
+
+		return (Util.estaVazio(esquema) ? "" : esquema + ".") + tabela;
+	}
+
+	public String getTabela2() {
 		if (Util.estaVazio(tabela)) {
 			tabela = "";
 		}
@@ -379,7 +387,7 @@ public class Objeto {
 		util.atributo("transparente", transparente);
 		util.atributo("desenharId", desenharId);
 		util.atributo("id", Util.escapar(id));
-		util.atributo("tabela", getTabela());
+		util.atributo("tabela", getTabela2());
 		util.atributo("chaves", getChaves());
 		util.atributo("cor", cor.getRGB());
 		util.atributo("icone", icone);

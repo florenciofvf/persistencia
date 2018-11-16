@@ -74,7 +74,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		tabela.setMapaChaveamento(Util.criarMapa(objeto.getChaveamento()));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		txtComplemento.setText(objeto.getComplemento());
-		this.nomeTabela = objeto.getTabela() + " - ";
+		this.nomeTabela = objeto.getTabela2() + " - ";
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
@@ -187,20 +187,22 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	}
 
 	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
-		String[] chaves = objeto.getChaves().trim().split(",");
-		StringBuilder builder = new StringBuilder("SELECT * FROM " + objeto.getTabela() + " WHERE 1=1");
-		builder.append(" " + txtComplemento.getText());
-		builder.append(" " + complemento);
-
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 		if (conexao == null) {
 			return;
 		}
 
+		String[] chaves = objeto.getChaves().trim().split(",");
+		StringBuilder builder = new StringBuilder(
+				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
+		builder.append(" " + txtComplemento.getText());
+		builder.append(" " + complemento);
+
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves, objeto);
+			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves, objeto,
+					conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
 			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
@@ -301,7 +303,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto);
+			ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(
 					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
@@ -323,7 +325,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto);
+			ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(
 					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-EXPORTADAS");
@@ -345,7 +347,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto);
+			ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(
 					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-IMPORTADAS");
@@ -367,7 +369,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto);
+			ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
 			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - META-DADOS");
 
@@ -698,6 +700,12 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+			if (conexao == null) {
+				return;
+			}
+
 			if (Util.estaVazio(objeto.getChaves())) {
 				txtComplemento.setText("");
 				return;
@@ -706,8 +714,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			String[] chaves = objeto.getChaves().trim().split(",");
 
 			if (chaves.length == 1) {
-				txtComplemento.setText(
-						"AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM " + objeto.getTabela() + ")");
+				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+						+ objeto.getTabela(conexao.getEsquema()) + ")");
 			}
 		}
 	}
@@ -789,7 +797,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			try {
 				Connection conn = Conexao.getConnection(conexao);
-				int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "");
+				int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "",
+						conexao);
 				toolbar.total.setText("" + i);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("TOTAL", ex, PainelObjeto.this);

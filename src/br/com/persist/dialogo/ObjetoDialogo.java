@@ -80,7 +80,7 @@ public class ObjetoDialogo extends Dialogo {
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
-			txtTabela.setText(objeto.getTabela());
+			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
 			txtId.setText(objeto.getId());
 			txtX.setText("" + objeto.x);

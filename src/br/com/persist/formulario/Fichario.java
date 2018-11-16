@@ -85,7 +85,7 @@ public class Fichario extends JTabbedPane {
 		boolean continua = false;
 
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela())) {
+			if (!Util.estaVazio(objeto.getTabela2())) {
 				continua = true;
 				break;
 			}
@@ -102,7 +102,7 @@ public class Fichario extends JTabbedPane {
 			FormularioDesktop formularioDesktop = new FormularioDesktop(formulario);
 
 			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela())) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
 					Object[] array = criarArray(conexao, objeto);
 					formularioDesktop.getDesktop().addForm(array, new Point(x, y), null);
 					x += 25;
@@ -113,7 +113,7 @@ public class Fichario extends JTabbedPane {
 			Desktop desktop = novoDesktop(formulario);
 
 			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela())) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
 					Object[] array = criarArray(conexao, objeto);
 					desktop.addForm(array, new Point(x, y), null);
 					x += 25;

@@ -458,7 +458,7 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.getClickCount() >= Constantes.DOIS) {
-				if (selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela())) {
+				if (selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2())) {
 					Conexao conexao = container.getConexaoPadrao();
 					setComplemento(conexao, selecionadoObjeto);
 					new FormularioExterno(formulario, selecionadoObjeto, getGraphics(), conexao);

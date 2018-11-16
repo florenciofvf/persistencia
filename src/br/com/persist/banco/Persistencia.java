@@ -27,8 +27,9 @@ public class Persistencia {
 		return i;
 	}
 
-	public static int getTotalRegistros(Connection conn, Objeto objeto, String complemento) throws Exception {
-		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + objeto.getTabela());
+	public static int getTotalRegistros(Connection conn, Objeto objeto, String complemento, Conexao conexao)
+			throws Exception {
+		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + objeto.getTabela(conexao.getEsquema()));
 		if (!Util.estaVazio(complemento)) {
 			builder.append(" WHERE 1=1 " + complemento);
 		}
@@ -45,12 +46,12 @@ public class Persistencia {
 		return total;
 	}
 
-	public static RegistroModelo criarModeloRegistro(Connection conn, String consulta, String[] chaves, Objeto objeto)
-			throws Exception {
+	public static RegistroModelo criarModeloRegistro(Connection conn, String consulta, String[] chaves, Objeto objeto,
+			Conexao conexao) throws Exception {
 		PreparedStatement psmt = conn.prepareStatement(consulta);
 
 		ResultSet rs = psmt.executeQuery();
-		RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela());
+		RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
 
 		rs.close();
 		psmt.close();
@@ -281,11 +282,12 @@ public class Persistencia {
 		return new ListagemModelo(Arrays.asList("TABLE_SCHEM", "TABLE_CATALOG"), dados);
 	}
 
-	public static ListagemModelo criarModeloChavePrimaria(Connection conn, Objeto objeto) throws Exception {
+	public static ListagemModelo criarModeloChavePrimaria(Connection conn, Objeto objeto, Conexao conexao)
+			throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
-		ResultSet rs = m.getPrimaryKeys(null, null, objeto.getTabela());
+		ResultSet rs = m.getPrimaryKeys(null, conexao.getEsquema(), objeto.getTabela2());
 
 		while (rs.next()) {
 			dados.add(criar(rs.getString("COLUMN_NAME"), rs.getString("KEY_SEQ"), rs.getString("PK_NAME")));
@@ -296,11 +298,12 @@ public class Persistencia {
 		return new ListagemModelo(Arrays.asList("COLUMN_NAME", "KEY_SEQ", "PK_NAME"), dados);
 	}
 
-	public static ListagemModelo criarModeloChavesExportadas(Connection conn, Objeto objeto) throws Exception {
+	public static ListagemModelo criarModeloChavesExportadas(Connection conn, Objeto objeto, Conexao conexao)
+			throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
-		ResultSet rs = m.getExportedKeys(null, null, objeto.getTabela());
+		ResultSet rs = m.getExportedKeys(null, conexao.getEsquema(), objeto.getTabela2());
 
 		while (rs.next()) {
 			dados.add(
@@ -312,11 +315,12 @@ public class Persistencia {
 		return new ListagemModelo(Arrays.asList("PKCOLUMN_NAME", "FKTABLE_NAME", "FKCOLUMN_NAME"), dados);
 	}
 
-	public static ListagemModelo criarModeloChavesImportadas(Connection conn, Objeto objeto) throws Exception {
+	public static ListagemModelo criarModeloChavesImportadas(Connection conn, Objeto objeto, Conexao conexao)
+			throws Exception {
 		List<List<String>> dados = new ArrayList<>();
 		DatabaseMetaData m = conn.getMetaData();
 
-		ResultSet rs = m.getImportedKeys(null, null, objeto.getTabela());
+		ResultSet rs = m.getImportedKeys(null, conexao.getEsquema(), objeto.getTabela2());
 
 		while (rs.next()) {
 			dados.add(
@@ -328,8 +332,10 @@ public class Persistencia {
 		return new ListagemModelo(Arrays.asList("PKTABLE_NAME", "PKCOLUMN_NAME", "FKCOLUMN_NAME"), dados);
 	}
 
-	public static ListagemModelo criarModeloMetaDados(Connection conn, Objeto objeto) throws Exception {
-		StringBuilder builder = new StringBuilder("SELECT * FROM " + objeto.getTabela() + " WHERE 1 > 2");
+	public static ListagemModelo criarModeloMetaDados(Connection conn, Objeto objeto, Conexao conexao)
+			throws Exception {
+		StringBuilder builder = new StringBuilder(
+				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1 > 2");
 		PreparedStatement psmt = conn.prepareStatement(builder.toString());
 		ResultSet rs = psmt.executeQuery();
 		ResultSetMetaData rsmd = rs.getMetaData();
