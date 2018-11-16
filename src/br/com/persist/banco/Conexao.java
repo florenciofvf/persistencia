@@ -18,6 +18,7 @@ public class Conexao {
 	private String finalComplemento;
 	private String urlBanco;
 	private String usuario;
+	private String esquema;
 	private String driver;
 	private String senha;
 	private String nome;
@@ -119,6 +120,7 @@ public class Conexao {
 		c.inicioComplemento = inicioComplemento;
 		c.finalComplemento = finalComplemento;
 		c.urlBanco = urlBanco;
+		c.esquema = esquema;
 		c.usuario = usuario;
 		c.driver = driver;
 		c.senha = senha;
@@ -130,6 +132,7 @@ public class Conexao {
 		inicioComplemento = attr.getValue("inicioComplemento");
 		finalComplemento = attr.getValue("finalComplemento");
 		urlBanco = attr.getValue("urlBanco");
+		esquema = attr.getValue("esquema");
 		usuario = attr.getValue("usuario");
 		driver = attr.getValue("driver");
 		senha = attr.getValue("senha");
@@ -141,6 +144,7 @@ public class Conexao {
 		util.atributo("inicioComplemento", Util.escapar(inicioComplemento));
 		util.atributo("finalComplemento", Util.escapar(finalComplemento));
 		util.atributo("urlBanco", Util.escapar(urlBanco));
+		util.atributo("esquema", Util.escapar(esquema));
 		util.atributo("usuario", Util.escapar(usuario));
 		util.atributo("driver", Util.escapar(driver));
 		util.atributo("senha", Util.escapar(senha));
@@ -182,5 +186,13 @@ public class Conexao {
 
 	public void setFinalComplemento(String finalComplemento) {
 		this.finalComplemento = finalComplemento;
+	}
+
+	public String getEsquema() {
+		return esquema;
+	}
+
+	public void setEsquema(String esquema) {
+		this.esquema = esquema;
 	}
 }

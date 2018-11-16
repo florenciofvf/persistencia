@@ -12,8 +12,8 @@ import br.com.persist.xml.XML;
 
 public class ConexaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private final String[] COLUNAS = { "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO",
-			"FIM-COMPLEMENTO" };
+	private final String[] COLUNAS = { "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO", "FIM-COMPLEMENTO",
+			"ESQUEMA" };
 	private static final File file = new File("conexoes/conexoes.xml");
 	private final List<Conexao> conexoes;
 
@@ -86,6 +86,8 @@ public class ConexaoModelo extends AbstractTableModel {
 			return conexao.getInicioComplemento();
 		case 6:
 			return conexao.getFinalComplemento();
+		case 7:
+			return conexao.getEsquema();
 		default:
 			return null;
 		}
@@ -117,6 +119,8 @@ public class ConexaoModelo extends AbstractTableModel {
 			break;
 		case 6:
 			conexao.setFinalComplemento(valor);
+		case 7:
+			conexao.setEsquema(valor);
 			break;
 		}
 	}
