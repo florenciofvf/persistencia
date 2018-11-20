@@ -242,7 +242,7 @@ public class Tabela extends JTable {
 				super("label.vazio");
 				add(new MenuItem(new SemAspasAcao()));
 				add(new MenuItem(new ComAspasAcao()));
-				setText("AND " + coluna + " IN ()");
+				setText("AND IN - " + coluna);
 				this.nomeColuna = coluna;
 			}
 
@@ -297,7 +297,7 @@ public class Tabela extends JTable {
 		}
 
 		public void configurar(String chave) {
-			menuCopiarIN.setText("AND " + chave + " IN ()");
+			menuCopiarIN.setText("AND IN - " + chave);
 			List<String> lista = mapaChaveamento.get(chave);
 			limparMenuTemp();
 
