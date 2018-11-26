@@ -165,6 +165,7 @@ public class Formulario extends JFrame {
 			menuArquivo.add(new MenuItem(new FormularioAcao()));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
+			menuArquivo.add(new MenuItem(new Abrir2Acao(true)));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
 			menuArquivo.addSeparator();
@@ -253,6 +254,43 @@ public class Formulario extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			new FormularioDesktop(Formulario.this);
+		}
+	}
+
+	private class Abrir2Acao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public Abrir2Acao(boolean menu) {
+			super(menu, "label.em_formulario", Icones.ABRIR);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChooser = new JFileChooser(".");
+			if (arquivo != null) {
+				fileChooser.setCurrentDirectory(arquivo);
+			}
+			fileChooser.setMultiSelectionEnabled(true);
+			int opcao = fileChooser.showOpenDialog(Formulario.this);
+
+			if (opcao == JFileChooser.APPROVE_OPTION) {
+				File files[] = fileChooser.getSelectedFiles();
+
+				if (files != null) {
+					for (File file : files) {
+						try {
+							arquivo = file.getParentFile();
+							List<Relacao> relacoes = new ArrayList<>();
+							List<Objeto> objetos = new ArrayList<>();
+							List<Form> forms = new ArrayList<>();
+							Dimension d = XML.processar(file, objetos, relacoes, forms);
+							fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, d);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+						}
+					}
+				}
+			}
 		}
 	}
 
