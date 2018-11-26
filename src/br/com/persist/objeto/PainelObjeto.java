@@ -446,8 +446,9 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		public ButtonUpdate() {
 			setToolTipText(Mensagens.getString("label.atualizar"));
-			popup.add(new MenuItem(new UpdateAcao()));
 			popup.add(new MenuItem(new TabelaAcao()));
+			popup.addSeparator();
+			popup.add(new MenuItem(new UpdateAcao()));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.UPDATE);
 			addActionListener(e -> popup.show(this, 5, 5));
