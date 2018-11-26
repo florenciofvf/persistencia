@@ -164,8 +164,8 @@ public class Formulario extends JFrame {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new FormularioAcao()));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
 			menuArquivo.add(new MenuItem(new Abrir2Acao(true)));
+			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
 			menuArquivo.addSeparator();
