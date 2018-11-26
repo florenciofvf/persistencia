@@ -12,6 +12,7 @@ public class FormularioSuperficie extends JFrame {
 	public FormularioSuperficie(Formulario formulario, Container container, File file) {
 		super(file.getName());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		container.setFormularioSuperficie(this);
 		this.container = container;
 		setSize(1000, 600);
 		montarLayout();

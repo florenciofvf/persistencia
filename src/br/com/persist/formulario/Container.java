@@ -36,6 +36,7 @@ public class Container extends PanelBorder {
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
+	private FormularioSuperficie formularioSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
@@ -197,11 +198,15 @@ public class Container extends PanelBorder {
 	}
 
 	private void titulo() {
-		Fichario fichario = formulario.getFichario();
-		int indice = fichario.getSelectedIndex();
+		if (formularioSuperficie == null) {
+			Fichario fichario = formulario.getFichario();
+			int indice = fichario.getSelectedIndex();
 
-		if (indice != -1) {
-			fichario.setTitleAt(indice, arquivo.getName());
+			if (indice != -1) {
+				fichario.setTitleAt(indice, arquivo.getName());
+			}
+		} else {
+			formularioSuperficie.setTitle(arquivo.getName());
 		}
 	}
 
@@ -388,5 +393,13 @@ public class Container extends PanelBorder {
 				superficie.repaint();
 			}
 		}
+	}
+
+	public FormularioSuperficie getFormularioSuperficie() {
+		return formularioSuperficie;
+	}
+
+	public void setFormularioSuperficie(FormularioSuperficie formularioSuperficie) {
+		this.formularioSuperficie = formularioSuperficie;
 	}
 }
