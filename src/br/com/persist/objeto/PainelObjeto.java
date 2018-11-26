@@ -155,7 +155,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	public void atualizarRegistro(String titulo) {
+	private void atualizarRegistro(String titulo) {
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 		if (conexao == null) {
@@ -182,6 +182,22 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				}
 
 				new FormularioUpdate(titulo, listener, update, conexao, null);
+			}
+		}
+	}
+
+	private void registros() {
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		TableModel model = modelo.getModel();
+
+		if (model instanceof RegistroModelo) {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1) {
+				StringBuilder sb = new StringBuilder(objeto.getTabela2());
+				sb.append(Constantes.QL).append(Constantes.QL);
+				modelo.getDados(linhas[0], sb);
+				Util.mensagem(PainelObjeto.this, sb.toString());
 			}
 		}
 	}
@@ -431,6 +447,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		public ButtonUpdate() {
 			setToolTipText(Mensagens.getString("label.atualizar"));
 			popup.add(new MenuItem(new UpdateAcao()));
+			popup.add(new MenuItem(new TabelaAcao()));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.UPDATE);
 			addActionListener(e -> popup.show(this, 5, 5));
@@ -446,6 +463,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				atualizarRegistro(Mensagens.getString("label.atualizar"));
+			}
+		}
+
+		private class TabelaAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public TabelaAcao() {
+				super(true, "label.dados", Icones.TABELA);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				registros();
 			}
 		}
 

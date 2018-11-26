@@ -71,6 +71,11 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return modelo.excluir(linhas[rowIndex].indice);
 	}
 
+	public void getDados(int rowIndex, StringBuilder sb) {
+		RegistroModelo modelo = (RegistroModelo) model;
+		modelo.getDados(linhas[rowIndex].indice, sb);
+	}
+
 	public String getUpdate(int rowIndex) {
 		RegistroModelo modelo = (RegistroModelo) model;
 		return modelo.getUpdate(linhas[rowIndex].indice);

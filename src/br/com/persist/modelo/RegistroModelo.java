@@ -104,6 +104,18 @@ public class RegistroModelo implements TableModel {
 		}
 	}
 
+	public void getDados(int rowIndex, StringBuilder sb) {
+		List<Object> registro = registros.get(rowIndex);
+
+		List<Object> valores = new ArrayList<>();
+
+		for (Coluna coluna : colunas) {
+			valores.add(registro.get(coluna.getIndice()));
+		}
+
+		getDado(registro, colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb);
+	}
+
 	public String getUpdate(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 
@@ -199,6 +211,16 @@ public class RegistroModelo implements TableModel {
 		}
 
 		return true;
+	}
+
+	private void getDado(List<Object> registro, Coluna[] colunas, Object[] valores, StringBuilder sb) {
+		Coluna coluna = colunas[0];
+		sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[0]));
+
+		for (int i = 1; i < colunas.length; i++) {
+			coluna = colunas[i];
+			sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i]));
+		}
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores) {
