@@ -164,8 +164,8 @@ public class Formulario extends JFrame {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new FormularioAcao()));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new Abrir2Acao(true)));
-			menuArquivo.add(new MenuItem(new AbrirAcao(true)));
+			menuArquivo.add(new MenuItem(new AbrirFormularioAcao(true)));
+			menuArquivo.add(new MenuItem(new AbrirFicharioAcao(true)));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
 			menuArquivo.addSeparator();
@@ -257,11 +257,12 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	private class Abrir2Acao extends Acao {
+	private class AbrirFormularioAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public Abrir2Acao(boolean menu) {
-			super(menu, "label.em_formulario", Icones.ABRIR);
+		public AbrirFormularioAcao(boolean menu) {
+			super(menu, "label.abrir_formulario", Icones.ABRIR);
+			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
 		}
 
 		@Override
@@ -294,11 +295,11 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	private class AbrirAcao extends Acao {
+	private class AbrirFicharioAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public AbrirAcao(boolean menu) {
-			super(menu, "label.abrir", Icones.ABRIR);
+		public AbrirFicharioAcao(boolean menu) {
+			super(menu, "label.abrir_fichario", Icones.ABRIR);
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
 		}
 
