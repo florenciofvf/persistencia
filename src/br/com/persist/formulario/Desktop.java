@@ -47,11 +47,19 @@ public class Desktop extends JDesktopPane {
 		JInternalFrame[] frames = getAllFrames();
 
 		if (frames.length > 0) {
-			// int x = frames[0].getX();
-			//
-			// for (int i = 1; i < frames.length; i++) {
-			// frames[i].setLocation(x, frames[i].getY());
-			// }
+			int l = frames[0].getWidth();
+			int x = frames[0].getX();
+			int x_l = x + l;
+
+			for (int i = 1; i < frames.length; i++) {
+				JInternalFrame frame = frames[i];
+				int _l = frame.getWidth();
+				int _x = frame.getX();
+				int _x_l = _x + _l;
+				int diff = x_l - _x_l;
+
+				frame.setLocation(_x + diff, frame.getY());
+			}
 		}
 	}
 
