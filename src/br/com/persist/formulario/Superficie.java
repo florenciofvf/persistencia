@@ -375,9 +375,14 @@ public class Superficie extends Desktop {
 				popup.popupObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
+				JInternalFrame[] frames = getAllFrames();
+				boolean contemFrames = frames.length > 0;
 				popup2.x = x;
 				popup2.y = y;
-				popup2.itemCentralizar.setEnabled(getAllFrames().length > 0);
+				popup2.itemAlinharEsquerdo.setEnabled(contemFrames);
+				popup2.itemAlinharDireito.setEnabled(contemFrames);
+				popup2.itemMesmaLargura.setEnabled(contemFrames);
+				popup2.itemCentralizar.setEnabled(contemFrames);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -879,7 +884,7 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// alinharEsquerdo();
+			alinharEsquerdo();
 		}
 	}
 
@@ -892,7 +897,7 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// alinharDireito();
+			alinharDireito();
 		}
 	}
 

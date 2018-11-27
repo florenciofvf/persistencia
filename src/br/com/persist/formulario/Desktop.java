@@ -43,6 +43,30 @@ public class Desktop extends JDesktopPane {
 		this.formulario = formulario;
 	}
 
+	protected void alinharDireito() {
+		JInternalFrame[] frames = getAllFrames();
+
+		if (frames.length > 0) {
+			// int x = frames[0].getX();
+			//
+			// for (int i = 1; i < frames.length; i++) {
+			// frames[i].setLocation(x, frames[i].getY());
+			// }
+		}
+	}
+
+	protected void alinharEsquerdo() {
+		JInternalFrame[] frames = getAllFrames();
+
+		if (frames.length > 0) {
+			int x = frames[0].getX();
+
+			for (int i = 1; i < frames.length; i++) {
+				frames[i].setLocation(x, frames[i].getY());
+			}
+		}
+	}
+
 	protected void mesmaLargura() {
 		JInternalFrame[] frames = getAllFrames();
 
