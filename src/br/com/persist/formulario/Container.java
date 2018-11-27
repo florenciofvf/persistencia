@@ -183,6 +183,9 @@ public class Container extends PanelBorder {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fileChooser = new JFileChooser(".");
+			if (arquivo != null) {
+				fileChooser.setCurrentDirectory(arquivo);
+			}
 			int opcao = fileChooser.showSaveDialog(formulario);
 
 			if (opcao == JFileChooser.APPROVE_OPTION) {
