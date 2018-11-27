@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 public class Icones {
 	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
 
+	public static final Icon ALINHA_ESQUERDO = criarImagem("alinha_esquerdo");
+	public static final Icon ALINHA_DIREITO = criarImagem("alinha_direito");
 	public static final Icon BANCO_DESCONECTA = criarImagem("dbdisconn");
 	public static final Icon DESC_NUMERO = criarImagem("desc_numero");
 	public static final Icon HORIZONTAL = criarImagem("horizontal");
@@ -23,6 +25,7 @@ public class Icones {
 	public static final Icon FRAGMENTO = criarImagem("feature");
 	public static final Icon SINCRONIZAR = criarImagem("sync");
 	public static final Icon ARRASTAR = criarImagem("synonym");
+	public static final Icon LARGURA = criarImagem("largura");
 	public static final Icon EXCLUIR = criarImagem("excluir");
 	public static final Icon CONECTA = criarImagem("connect");
 	public static final Icon SUCESSO = criarImagem("sucesso");
