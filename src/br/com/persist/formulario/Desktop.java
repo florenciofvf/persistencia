@@ -43,6 +43,18 @@ public class Desktop extends JDesktopPane {
 		this.formulario = formulario;
 	}
 
+	protected void mesmaLargura() {
+		JInternalFrame[] frames = getAllFrames();
+
+		if (frames.length > 0) {
+			int largura = frames[0].getWidth();
+
+			for (int i = 1; i < frames.length; i++) {
+				frames[i].setSize(largura, frames[i].getHeight());
+			}
+		}
+	}
+
 	protected void centralizar() {
 		double largura = getSize().getWidth();
 

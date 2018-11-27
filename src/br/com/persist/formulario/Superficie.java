@@ -848,6 +848,9 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
+		MenuItem itemAlinharEsquerdo = new MenuItem(new AlinharEsquerdoAcao());
+		MenuItem itemAlinharDireito = new MenuItem(new AlinharDireitoAcao());
+		MenuItem itemMesmaLargura = new MenuItem(new MesmaLarguraAcao());
 		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
 		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
 		MenuItem itemAjustes = new MenuItem(new AjustarAcao());
@@ -858,8 +861,51 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(itemCentralizar);
 			addSeparator();
+			add(itemAlinharEsquerdo);
+			add(itemAlinharDireito);
+			add(itemMesmaLargura);
+			addSeparator();
 			add(itemDimensoes);
 			add(itemAjustes);
+		}
+	}
+
+	private class AlinharEsquerdoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public AlinharEsquerdoAcao() {
+			super(true, "label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// alinharEsquerdo();
+		}
+	}
+
+	private class AlinharDireitoAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public AlinharDireitoAcao() {
+			super(true, "label.alinhar_direito", Icones.ALINHA_DIREITO);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// alinharDireito();
+		}
+	}
+
+	private class MesmaLarguraAcao extends Acao {
+		private static final long serialVersionUID = 1L;
+
+		public MesmaLarguraAcao() {
+			super(true, "label.mesma_largura", Icones.LARGURA);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mesmaLargura();
 		}
 	}
 
