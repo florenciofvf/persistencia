@@ -17,13 +17,13 @@ public class FormularioExterno extends JFrame implements PainelObjetoListener {
 	private final PainelObjeto painelObjeto;
 	private final Formulario formulario;
 
-	public FormularioExterno(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
+	public FormularioExterno(Formulario formulario, Frame frame, Objeto objeto, Graphics g, Conexao padrao) {
 		this.formulario = formulario;
 		painelObjeto = new PainelObjeto(this, objeto, g, padrao);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(1000, 600);
 		montarLayout();
-		setLocationRelativeTo(formulario);
+		setLocationRelativeTo(frame);
 		setVisible(true);
 	}
 
