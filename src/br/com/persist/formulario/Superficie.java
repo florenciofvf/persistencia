@@ -309,7 +309,13 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (!shift) {
-				new RelacaoDialogo(formulario, Superficie.this, relacao);
+				Frame frame = formulario;
+
+				if (container.getFormularioSuperficie() != null) {
+					frame = container.getFormularioSuperficie();
+				}
+
+				new RelacaoDialogo(frame, Superficie.this, relacao);
 			}
 		}
 	};
