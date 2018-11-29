@@ -3,6 +3,7 @@ package br.com.persist.formulario;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -997,11 +998,17 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Frame frame = formulario;
+
+			if (container.getFormularioSuperficie() != null) {
+				frame = container.getFormularioSuperficie();
+			}
+
 			if (selecionadoObjeto != null) {
-				new ObjetoDialogo(formulario, Superficie.this, selecionadoObjeto);
+				new ObjetoDialogo(frame, Superficie.this, selecionadoObjeto);
 
 			} else if (selecionadoRelacao != null) {
-				new RelacaoDialogo(formulario, Superficie.this, selecionadoRelacao);
+				new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
 			}
 		}
 	}
