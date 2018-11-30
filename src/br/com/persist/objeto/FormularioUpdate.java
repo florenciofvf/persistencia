@@ -23,8 +23,6 @@ public class FormularioUpdate extends JFrame implements PainelObjetoListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(1000, 400);
 		montarLayout();
-		setLocationRelativeTo(null);
-		setVisible(true);
 	}
 
 	private void montarLayout() {

@@ -2,6 +2,7 @@ package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.dnd.DnDConstants;
@@ -181,7 +182,13 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					return;
 				}
 
-				new FormularioUpdate(titulo, listener, update, conexao, null);
+				FormularioUpdate form = new FormularioUpdate(titulo, listener, update, conexao, null);
+
+				if (listener instanceof Component) {
+					form.setLocationRelativeTo((Component) listener);
+				}
+
+				form.setVisible(true);
 			}
 		}
 	}
@@ -528,7 +535,14 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 							return;
 						}
 
-						new FormularioUpdate(instrucao.getNome(), listener, instrucao.getValor(), conexao, chaves);
+						FormularioUpdate form = new FormularioUpdate(instrucao.getNome(), listener,
+								instrucao.getValor(), conexao, chaves);
+
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+
+						form.setVisible(true);
 					}
 				}
 			}
@@ -656,7 +670,13 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new FragmentoDialogo(null, fragmentoListener);
+			FragmentoDialogo dialogo = new FragmentoDialogo(null, fragmentoListener);
+
+			if (listener instanceof Component) {
+				dialogo.setLocationRelativeTo((Component) listener);
+			}
+
+			dialogo.setVisible(true);
 		}
 	}
 

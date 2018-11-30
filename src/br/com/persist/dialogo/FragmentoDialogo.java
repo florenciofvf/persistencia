@@ -33,7 +33,6 @@ public class FragmentoDialogo extends Dialogo {
 		this.listener = listener;
 		montarLayout();
 		configurar();
-		setVisible(true);
 	}
 
 	private void montarLayout() {
