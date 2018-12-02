@@ -222,93 +222,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private void processarChavePrimaria() {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		try {
-			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto, conexao);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(
-					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
-
-			tabela.setModel(modeloOrdenacao);
-			configCabecalhoColuna(modeloListagem);
-			TabelaUtil.ajustar(tabela, getGraphics(), 40);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, this);
-		}
-	}
-
-	private void processarChaveExportadas() {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		try {
-			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto, conexao);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(
-					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-EXPORTADAS");
-
-			tabela.setModel(modeloOrdenacao);
-			configCabecalhoColuna(modeloListagem);
-			TabelaUtil.ajustar(tabela, getGraphics(), 40);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, this);
-		}
-	}
-
-	private void processarChaveImportadas() {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		try {
-			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto, conexao);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(
-					nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVES-IMPORTADAS");
-
-			tabela.setModel(modeloOrdenacao);
-			configCabecalhoColuna(modeloListagem);
-			TabelaUtil.ajustar(tabela, getGraphics(), 40);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, this);
-		}
-	}
-
-	private void processarMetaDados() {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		try {
-			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto, conexao);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - META-DADOS");
-
-			tabela.setModel(modeloOrdenacao);
-			configCabecalhoColuna(modeloListagem);
-			TabelaUtil.ajustar(tabela, getGraphics(), 40);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("META-DADOS", ex, this);
-		}
-	}
-
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
@@ -529,7 +442,25 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				processarChavePrimaria();
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto, conexao);
+					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
+					listener.setTitle(
+							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
+
+					tabela.setModel(modeloOrdenacao);
+					configCabecalhoColuna(modeloListagem);
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, PainelObjeto.this);
+				}
 			}
 		}
 
@@ -542,7 +473,25 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				processarChaveImportadas();
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto, conexao);
+					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
+					listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount()
+							+ "] - CHAVES-IMPORTADAS");
+
+					tabela.setModel(modeloOrdenacao);
+					configCabecalhoColuna(modeloListagem);
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, PainelObjeto.this);
+				}
 			}
 		}
 
@@ -555,7 +504,25 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				processarChaveExportadas();
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto, conexao);
+					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
+					listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount()
+							+ "] - CHAVES-EXPORTADAS");
+
+					tabela.setModel(modeloOrdenacao);
+					configCabecalhoColuna(modeloListagem);
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, PainelObjeto.this);
+				}
 			}
 		}
 
@@ -599,7 +566,25 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				processarMetaDados();
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto, conexao);
+					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
+					listener.setTitle(
+							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - META-DADOS");
+
+					tabela.setModel(modeloOrdenacao);
+					configCabecalhoColuna(modeloListagem);
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("META-DADOS", ex, PainelObjeto.this);
+				}
 			}
 		}
 
