@@ -32,8 +32,8 @@ import br.com.persist.xml.XML;
 
 public class Container extends PanelBorder {
 	private static final long serialVersionUID = 1L;
-	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
+	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
 	private FormularioSuperficie formularioSuperficie;
@@ -125,77 +125,194 @@ public class Container extends PanelBorder {
 			add(new ToggleButton(new TransparenteAcao()));
 			addSeparator();
 		}
-	}
 
-	private class DestacarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class BaixarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public DestacarAcao() {
-			super(false, "label.desktop", Icones.CUBO2);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(getConexaoPadrao(), superficie, false);
-		}
-	}
-
-	private class FormularioAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FormularioAcao() {
-			super(false, "label.formulario", Icones.PANEL);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(getConexaoPadrao(), superficie, true);
-		}
-	}
-
-	private class SalvarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public SalvarAcao() {
-			super(false, "label.salvar", Icones.SALVAR);
-
-			inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_S), chave);
-			getActionMap().put(chave, this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (arquivo != null) {
-				superficie.salvar(arquivo);
-			} else {
-				new SalvarComoAcao().actionPerformed(null);
+			public BaixarAcao() {
+				super(false, "label.baixar", Icones.BAIXAR);
 			}
-		}
-	}
 
-	private class SalvarComoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public SalvarComoAcao() {
-			super(false, "label.salvar_como", Icones.SALVARC);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JFileChooser fileChooser = new JFileChooser(".");
-			if (arquivo != null) {
-				fileChooser.setCurrentDirectory(arquivo);
-			}
-			int opcao = fileChooser.showSaveDialog(formulario);
-
-			if (opcao == JFileChooser.APPROVE_OPTION) {
-				File file = fileChooser.getSelectedFile();
-
-				if (file != null) {
-					superficie.salvar(file);
-					arquivo = file;
-					titulo();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (arquivo == null) {
+					btnSelecao.click();
+					return;
 				}
+
+				try {
+					List<Relacao> relacoes = new ArrayList<>();
+					List<Objeto> objetos = new ArrayList<>();
+					List<Form> forms = new ArrayList<>();
+					Dimension d = XML.processar(arquivo, objetos, relacoes, forms);
+					abrir(arquivo, objetos, relacoes, forms, null, d);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
+				}
+			}
+		}
+
+		private class SalvarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public SalvarAcao() {
+				super(false, "label.salvar", Icones.SALVAR);
+
+				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_S), chave);
+				getActionMap().put(chave, this);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (arquivo != null) {
+					superficie.salvar(arquivo);
+				} else {
+					new SalvarComoAcao().actionPerformed(null);
+				}
+			}
+		}
+
+		private class SalvarComoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public SalvarComoAcao() {
+				super(false, "label.salvar_como", Icones.SALVARC);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser(".");
+				if (arquivo != null) {
+					fileChooser.setCurrentDirectory(arquivo);
+				}
+				int opcao = fileChooser.showSaveDialog(formulario);
+
+				if (opcao == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+
+					if (file != null) {
+						superficie.salvar(file);
+						arquivo = file;
+						titulo();
+					}
+				}
+			}
+		}
+
+		private class CopiarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarAcao() {
+				super(false, "label.copiar", Icones.COPIA);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.copiar(superficie);
+			}
+		}
+
+		private class ColarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ColarAcao() {
+				super(false, "label.colar", Icones.COLAR);
+
+				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_V), chave);
+				getActionMap().put(chave, this);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.colar(superficie, false, 0, 0);
+				superficie.repaint();
+			}
+		}
+
+		private class DestacarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public DestacarAcao() {
+				super(false, "label.desktop", Icones.CUBO2);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.destacar(getConexaoPadrao(), superficie, false);
+			}
+		}
+
+		private class FormularioAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public FormularioAcao() {
+				super(false, "label.formulario", Icones.PANEL);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.destacar(getConexaoPadrao(), superficie, true);
+			}
+		}
+
+		private class ExcluirAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ExcluirAcao() {
+				super(false, "label.excluir", Icones.EXCLUIR);
+
+				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_D), chave);
+				getActionMap().put(chave, this);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				superficie.excluirSelecionados();
+			}
+		}
+
+		private class CriarObjetoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CriarObjetoAcao() {
+				super(false, "label.criar_objeto", Icones.CRIAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				superficie.addObjeto(new Objeto(40, 40));
+				btnSelecao.setSelected(true);
+				superficie.limparSelecao();
+				superficie.repaint();
+				btnSelecao.click();
+			}
+		}
+
+		private class DesenhoIdAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public DesenhoIdAcao() {
+				super(false, "label.desenhar_id", Icones.LABEL);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ToggleButton button = (ToggleButton) e.getSource();
+				superficie.desenharIds(button.isSelected());
+			}
+		}
+
+		private class TransparenteAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public TransparenteAcao() {
+				super(false, "label.transparente", Icones.RECT);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ToggleButton button = (ToggleButton) e.getSource();
+				superficie.transparente(button.isSelected());
 			}
 		}
 	}
@@ -213,125 +330,8 @@ public class Container extends PanelBorder {
 		}
 	}
 
-	private class ExcluirAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ExcluirAcao() {
-			super(false, "label.excluir", Icones.EXCLUIR);
-
-			inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_D), chave);
-			getActionMap().put(chave, this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			superficie.excluirSelecionados();
-		}
-	}
-
-	private class CopiarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CopiarAcao() {
-			super(false, "label.copiar", Icones.COPIA);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.copiar(superficie);
-		}
-	}
-
 	private InputMap inputMap() {
 		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
-	}
-
-	private class ColarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ColarAcao() {
-			super(false, "label.colar", Icones.COLAR);
-
-			inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_V), chave);
-			getActionMap().put(chave, this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.colar(superficie, false, 0, 0);
-			superficie.repaint();
-		}
-	}
-
-	private class BaixarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public BaixarAcao() {
-			super(false, "label.baixar", Icones.BAIXAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (arquivo == null) {
-				btnSelecao.click();
-				return;
-			}
-
-			try {
-				List<Relacao> relacoes = new ArrayList<>();
-				List<Objeto> objetos = new ArrayList<>();
-				List<Form> forms = new ArrayList<>();
-				Dimension d = XML.processar(arquivo, objetos, relacoes, forms);
-				abrir(arquivo, objetos, relacoes, forms, null, d);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
-			}
-		}
-	}
-
-	private class CriarObjetoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CriarObjetoAcao() {
-			super(false, "label.criar_objeto", Icones.CRIAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			superficie.addObjeto(new Objeto(40, 40));
-			btnSelecao.setSelected(true);
-			superficie.limparSelecao();
-			superficie.repaint();
-			btnSelecao.click();
-		}
-	}
-
-	private class DesenhoIdAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public DesenhoIdAcao() {
-			super(false, "label.desenhar_id", Icones.LABEL);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ToggleButton button = (ToggleButton) e.getSource();
-			superficie.desenharIds(button.isSelected());
-		}
-	}
-
-	private class TransparenteAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public TransparenteAcao() {
-			super(false, "label.transparente", Icones.RECT);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ToggleButton button = (ToggleButton) e.getSource();
-			superficie.transparente(button.isSelected());
-		}
 	}
 
 	private class ArrastoAcao extends Acao {
