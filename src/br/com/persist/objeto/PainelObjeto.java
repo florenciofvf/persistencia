@@ -156,42 +156,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private void atualizarRegistro(String titulo) {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-		TableModel model = modelo.getModel();
-
-		if (model instanceof RegistroModelo) {
-			int[] linhas = tabela.getSelectedRows();
-
-			if (linhas != null && linhas.length == 1) {
-				List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-
-				if (chaves.isEmpty()) {
-					return;
-				}
-
-				String update = modelo.getUpdate(linhas[0]);
-
-				if (Util.estaVazio(update)) {
-					return;
-				}
-
-				FormularioUpdate form = new FormularioUpdate(titulo, listener, update, conexao, null);
-
-				if (listener instanceof Component) {
-					form.setLocationRelativeTo((Component) listener);
-				}
-
-				form.setVisible(true);
-			}
-		}
-	}
+	// private void atualizarRegistro(String titulo) {
+	// }
 
 	private void registros() {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
@@ -470,7 +436,41 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				atualizarRegistro(Mensagens.getString("label.atualizar"));
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+				TableModel model = modelo.getModel();
+
+				if (model instanceof RegistroModelo) {
+					int[] linhas = tabela.getSelectedRows();
+
+					if (linhas != null && linhas.length == 1) {
+						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+
+						if (chaves.isEmpty()) {
+							return;
+						}
+
+						String update = modelo.getUpdate(linhas[0]);
+
+						if (Util.estaVazio(update)) {
+							return;
+						}
+
+						FormularioUpdate form = new FormularioUpdate(Mensagens.getString("label.atualizar"), listener,
+								update, conexao, null);
+
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+
+						form.setVisible(true);
+					}
+				}
 			}
 		}
 
