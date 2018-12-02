@@ -61,7 +61,7 @@ import br.com.persist.util.Util;
 
 public class PainelObjeto extends Panel implements ActionListener, ItemListener {
 	private static final long serialVersionUID = 1L;
-	private final Button btnArrasto = new Button(new DestacarAcao());
+	private final Button btnArrasto = new Button(new ArrastarAcao());
 	private final TextField txtComplemento = new TextField(35);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -262,6 +262,25 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		void complementoUpdate(Objeto objeto) {
 			update.complemento(objeto);
+		}
+
+		private class FragmentoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public FragmentoAcao() {
+				super(false, "label.fragmento", Icones.FRAGMENTO);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FragmentoDialogo dialogo = new FragmentoDialogo(null, fragmentoListener);
+
+				if (listener instanceof Component) {
+					dialogo.setLocationRelativeTo((Component) listener);
+				}
+
+				dialogo.setVisible(true);
+			}
 		}
 	}
 
@@ -633,25 +652,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private class FragmentoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FragmentoAcao() {
-			super(false, "label.fragmento", Icones.FRAGMENTO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			FragmentoDialogo dialogo = new FragmentoDialogo(null, fragmentoListener);
-
-			if (listener instanceof Component) {
-				dialogo.setLocationRelativeTo((Component) listener);
-			}
-
-			dialogo.setVisible(true);
-		}
-	}
-
 	private FragmentoListener fragmentoListener = new FragmentoListener() {
 		@Override
 		public void configFragmento(Fragmento f) {
@@ -756,10 +756,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private class DestacarAcao extends Acao {
+	private class ArrastarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public DestacarAcao() {
+		public ArrastarAcao() {
 			super(false, "label.destacar", Icones.ARRASTAR);
 		}
 
