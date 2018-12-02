@@ -69,6 +69,59 @@ public class FragmentoDialogo extends Dialogo {
 				add(new Button(new ConfigFragmentoAcao()));
 			}
 		}
+
+		private class NovoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public NovoAcao() {
+				super(false, "label.novo", Icones.NOVO);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FragmentoModelo.novo();
+				modelo.fireTableDataChanged();
+			}
+		}
+
+		private class CopiaAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiaAcao() {
+				super(false, "label.copiar", Icones.COPIA);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] linhas = tabela.getSelectedRows();
+
+				if (linhas != null && linhas.length > 0) {
+					for (int i : linhas) {
+						Fragmento f = FragmentoModelo.getFragmento(i);
+						FragmentoModelo.adicionar(f.clonar());
+					}
+
+					modelo.fireTableDataChanged();
+				}
+			}
+		}
+
+		private class SalvarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public SalvarAcao() {
+				super(false, "label.salvar", Icones.SALVAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FragmentoModelo.salvar();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("SALVAR: ", ex, FragmentoDialogo.this);
+				}
+			}
+		}
 	}
 
 	private class ConfigFragmentoAcao extends Acao {
@@ -86,42 +139,6 @@ public class FragmentoDialogo extends Dialogo {
 				Fragmento f = FragmentoModelo.getFragmento(linhas[0]);
 				listener.configFragmento(f);
 				dispose();
-			}
-		}
-	}
-
-	private class NovoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public NovoAcao() {
-			super(false, "label.novo", Icones.NOVO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			FragmentoModelo.novo();
-			modelo.fireTableDataChanged();
-		}
-	}
-
-	private class CopiaAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CopiaAcao() {
-			super(false, "label.copiar", Icones.COPIA);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int[] linhas = tabela.getSelectedRows();
-
-			if (linhas != null && linhas.length > 0) {
-				for (int i : linhas) {
-					Fragmento f = FragmentoModelo.getFragmento(i);
-					FragmentoModelo.adicionar(f.clonar());
-				}
-
-				modelo.fireTableDataChanged();
 			}
 		}
 	}
@@ -149,23 +166,6 @@ public class FragmentoDialogo extends Dialogo {
 
 			FragmentoModelo.ordenar();
 			modelo.fireTableDataChanged();
-		}
-	}
-
-	private class SalvarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public SalvarAcao() {
-			super(false, "label.salvar", Icones.SALVAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				FragmentoModelo.salvar();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("SALVAR: ", ex, FragmentoDialogo.this);
-			}
 		}
 	}
 
