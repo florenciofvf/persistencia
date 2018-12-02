@@ -177,174 +177,174 @@ public class Formulario extends JFrame {
 			add(menuArquivo);
 			add(menuLAF);
 		}
-	}
 
-	private class ConexaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class NovoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public ConexaoAcao(boolean menu) {
-			super(menu, "label.conexao", Icones.BANCO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new ConexaoDialogo(Formulario.this);
-		}
-	}
-
-	private class FragmentoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FragmentoAcao(boolean menu) {
-			super(menu, "label.fragmento", Icones.FRAGMENTO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			FragmentoDialogo dialogo = new FragmentoDialogo(Formulario.this, null);
-			dialogo.setVisible(true);
-		}
-	}
-
-	private class ConfigAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ConfigAcao() {
-			super(true, "label.configuracoes", Icones.CONFIG);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new ConfigDialogo(Formulario.this);
-		}
-	}
-
-	private class NovoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public NovoAcao() {
-			super(true, "label.novo", Icones.CUBO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			fichario.novo(Formulario.this);
-		}
-	}
-
-	private class DesktopAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public DesktopAcao() {
-			super(true, "label.desktop", Icones.CUBO2);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			fichario.novoDesktop(Formulario.this);
-		}
-	}
-
-	private class FormularioAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FormularioAcao() {
-			super(true, "label.formulario", Icones.PANEL);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			new FormularioDesktop(Formulario.this);
-		}
-	}
-
-	private class AbrirFormularioAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public AbrirFormularioAcao(boolean menu) {
-			super(menu, "label.abrir_formulario", Icones.ABRIR);
-			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JFileChooser fileChooser = new JFileChooser(".");
-			if (arquivo != null) {
-				fileChooser.setCurrentDirectory(arquivo);
+			public NovoAcao() {
+				super(true, "label.novo", Icones.CUBO);
 			}
-			fileChooser.setMultiSelectionEnabled(true);
-			int opcao = fileChooser.showOpenDialog(Formulario.this);
 
-			if (opcao == JFileChooser.APPROVE_OPTION) {
-				File files[] = fileChooser.getSelectedFiles();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fichario.novo(Formulario.this);
+			}
+		}
 
-				if (files != null) {
-					for (File file : files) {
-						try {
-							arquivo = file.getParentFile();
-							List<Relacao> relacoes = new ArrayList<>();
-							List<Objeto> objetos = new ArrayList<>();
-							List<Form> forms = new ArrayList<>();
-							Dimension d = XML.processar(file, objetos, relacoes, forms);
-							fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, d);
-						} catch (Exception ex) {
-							Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+		private class DesktopAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public DesktopAcao() {
+				super(true, "label.desktop", Icones.CUBO2);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fichario.novoDesktop(Formulario.this);
+			}
+		}
+
+		private class FormularioAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public FormularioAcao() {
+				super(true, "label.formulario", Icones.PANEL);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FormularioDesktop(Formulario.this);
+			}
+		}
+
+		private class ConexaoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ConexaoAcao(boolean menu) {
+				super(menu, "label.conexao", Icones.BANCO);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ConexaoDialogo(Formulario.this);
+			}
+		}
+
+		private class FragmentoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public FragmentoAcao(boolean menu) {
+				super(menu, "label.fragmento", Icones.FRAGMENTO);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FragmentoDialogo dialogo = new FragmentoDialogo(Formulario.this, null);
+				dialogo.setVisible(true);
+			}
+		}
+
+		private class ConfigAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ConfigAcao() {
+				super(true, "label.configuracoes", Icones.CONFIG);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ConfigDialogo(Formulario.this);
+			}
+		}
+
+		private class FecharAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public FecharAcao(boolean menu) {
+				super(menu, "label.fechar", Icones.SAIR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FormularioUtil.fechar(Formulario.this);
+				System.exit(0);
+			}
+		}
+
+		private class AbrirFormularioAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public AbrirFormularioAcao(boolean menu) {
+				super(menu, "label.abrir_formulario", Icones.ABRIR);
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser(".");
+				if (arquivo != null) {
+					fileChooser.setCurrentDirectory(arquivo);
+				}
+				fileChooser.setMultiSelectionEnabled(true);
+				int opcao = fileChooser.showOpenDialog(Formulario.this);
+
+				if (opcao == JFileChooser.APPROVE_OPTION) {
+					File files[] = fileChooser.getSelectedFiles();
+
+					if (files != null) {
+						for (File file : files) {
+							try {
+								arquivo = file.getParentFile();
+								List<Relacao> relacoes = new ArrayList<>();
+								List<Objeto> objetos = new ArrayList<>();
+								List<Form> forms = new ArrayList<>();
+								Dimension d = XML.processar(file, objetos, relacoes, forms);
+								fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, d);
+							} catch (Exception ex) {
+								Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+							}
 						}
 					}
 				}
 			}
 		}
-	}
 
-	private class AbrirFicharioAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class AbrirFicharioAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public AbrirFicharioAcao(boolean menu) {
-			super(menu, "label.abrir_fichario", Icones.ABRIR);
-			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JFileChooser fileChooser = new JFileChooser(".");
-			if (arquivo != null) {
-				fileChooser.setCurrentDirectory(arquivo);
+			public AbrirFicharioAcao(boolean menu) {
+				super(menu, "label.abrir_fichario", Icones.ABRIR);
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
 			}
-			fileChooser.setMultiSelectionEnabled(true);
-			int opcao = fileChooser.showOpenDialog(Formulario.this);
 
-			if (opcao == JFileChooser.APPROVE_OPTION) {
-				File files[] = fileChooser.getSelectedFiles();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser(".");
+				if (arquivo != null) {
+					fileChooser.setCurrentDirectory(arquivo);
+				}
+				fileChooser.setMultiSelectionEnabled(true);
+				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
-				if (files != null) {
-					for (File file : files) {
-						try {
-							arquivo = file.getParentFile();
-							List<Relacao> relacoes = new ArrayList<>();
-							List<Objeto> objetos = new ArrayList<>();
-							List<Form> forms = new ArrayList<>();
-							Dimension d = XML.processar(file, objetos, relacoes, forms);
-							fichario.abrir(Formulario.this, file, objetos, relacoes, forms, d);
-						} catch (Exception ex) {
-							Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+				if (opcao == JFileChooser.APPROVE_OPTION) {
+					File files[] = fileChooser.getSelectedFiles();
+
+					if (files != null) {
+						for (File file : files) {
+							try {
+								arquivo = file.getParentFile();
+								List<Relacao> relacoes = new ArrayList<>();
+								List<Objeto> objetos = new ArrayList<>();
+								List<Form> forms = new ArrayList<>();
+								Dimension d = XML.processar(file, objetos, relacoes, forms);
+								fichario.abrir(Formulario.this, file, objetos, relacoes, forms, d);
+							} catch (Exception ex) {
+								Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
+							}
 						}
 					}
 				}
 			}
-		}
-	}
-
-	private class FecharAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FecharAcao(boolean menu) {
-			super(menu, "label.fechar", Icones.SAIR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			FormularioUtil.fechar(Formulario.this);
-			System.exit(0);
 		}
 	}
 }
