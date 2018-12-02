@@ -282,6 +282,169 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				dialogo.setVisible(true);
 			}
 		}
+
+		private class MaximoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public MaximoAcao() {
+				super(false, "label.maximo", Icones.VAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				if (Util.estaVazio(objeto.getChaves())) {
+					txtComplemento.setText("");
+					return;
+				}
+
+				String[] chaves = objeto.getChaves().trim().split(",");
+
+				if (chaves.length == 1) {
+					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+							+ objeto.getTabela(conexao.getEsquema()) + ")");
+				}
+			}
+		}
+
+		private class LimparAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public LimparAcao() {
+				super(false, "label.limpar", Icones.NOVO);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtComplemento.setText("");
+			}
+		}
+
+		private class BaixarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public BaixarAcao() {
+				super(false, "label.baixar", Icones.BAIXAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtComplemento.setText(objeto.getComplemento());
+			}
+		}
+
+		private class ComplementoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ComplementoAcao() {
+				super(false, "label.complemento", Icones.BAIXAR2);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				String complemento = Util.getContentTransfered();
+
+				if (!Util.estaVazio(complemento)) {
+					txtComplemento.setText(complemento);
+					objeto.setComplemento(txtComplemento.getText());
+					PainelObjeto.this.actionPerformed(null);
+				} else {
+					txtComplemento.setText(objeto.getComplemento());
+				}
+			}
+		}
+
+		private class TotalizarRegistrosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+			private final boolean complemento;
+
+			public TotalizarRegistrosAcao(boolean complemento) {
+				super(false, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
+				this.complemento = complemento;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "",
+							conexao);
+					toolbar.total.setText("" + i);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("TOTAL", ex, PainelObjeto.this);
+				}
+			}
+		}
+
+		private class SincronizarRegistrosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public SincronizarRegistrosAcao() {
+				super(false, "label.sincronizar", Icones.SINCRONIZAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cabecalhoFiltro = null;
+				new AtualizarRegistrosAcao().actionPerformed(null);
+			}
+		}
+
+		private class ExcluirRegistrosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ExcluirRegistrosAcao() {
+				super(false, "label.excluir_registro", Icones.EXCLUIR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] linhas = tabela.getSelectedRows();
+
+				if (linhas != null && linhas.length > 0) {
+					if (Util.confirmaExclusao(PainelObjeto.this)) {
+						OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+
+						List<List<IndiceValor>> listaValores = new ArrayList<>();
+
+						for (int linha : linhas) {
+							int excluido = modelo.excluirRegistro(linha);
+
+							if (excluido == 0 || excluido == 1) {
+								List<IndiceValor> chaves = modelo.getValoresChaves(linha);
+
+								if (chaves.isEmpty()) {
+									throw new IllegalStateException();
+								}
+
+								listaValores.add(chaves);
+							}
+						}
+
+						modelo.excluirValoresChaves(listaValores);
+						modelo.iniArray();
+						modelo.fireTableDataChanged();
+					}
+				}
+			}
+		}
 	}
 
 	private class ButtonUpdate extends Button {
@@ -639,19 +802,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private class LimparAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public LimparAcao() {
-			super(false, "label.limpar", Icones.NOVO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			txtComplemento.setText("");
-		}
-	}
-
 	private FragmentoListener fragmentoListener = new FragmentoListener() {
 		@Override
 		public void configFragmento(Fragmento f) {
@@ -673,75 +823,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			return colunas;
 		}
 	};
-
-	private class BaixarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public BaixarAcao() {
-			super(false, "label.baixar", Icones.BAIXAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			txtComplemento.setText(objeto.getComplemento());
-		}
-	}
-
-	private class ComplementoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ComplementoAcao() {
-			super(false, "label.complemento", Icones.BAIXAR2);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-			if (conexao == null) {
-				return;
-			}
-
-			String complemento = Util.getContentTransfered();
-
-			if (!Util.estaVazio(complemento)) {
-				txtComplemento.setText(complemento);
-				objeto.setComplemento(txtComplemento.getText());
-				PainelObjeto.this.actionPerformed(null);
-			} else {
-				txtComplemento.setText(objeto.getComplemento());
-			}
-		}
-	}
-
-	private class MaximoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public MaximoAcao() {
-			super(false, "label.maximo", Icones.VAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-			if (conexao == null) {
-				return;
-			}
-
-			if (Util.estaVazio(objeto.getChaves())) {
-				txtComplemento.setText("");
-				return;
-			}
-
-			String[] chaves = objeto.getChaves().trim().split(",");
-
-			if (chaves.length == 1) {
-				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
-						+ objeto.getTabela(conexao.getEsquema()) + ")");
-			}
-		}
-	}
 
 	private class FecharAcao extends Acao {
 		private static final long serialVersionUID = 1L;
@@ -768,20 +849,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private class SincronizarRegistrosAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public SincronizarRegistrosAcao() {
-			super(false, "label.sincronizar", Icones.SINCRONIZAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			cabecalhoFiltro = null;
-			new AtualizarRegistrosAcao().actionPerformed(null);
-		}
-	}
-
 	private class AtualizarRegistrosAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
@@ -799,72 +866,5 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		new AtualizarRegistrosAcao().actionPerformed(null);
-	}
-
-	private class TotalizarRegistrosAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-		private final boolean complemento;
-
-		public TotalizarRegistrosAcao(boolean complemento) {
-			super(false, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
-			this.complemento = complemento;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-			if (conexao == null) {
-				return;
-			}
-
-			try {
-				Connection conn = Conexao.getConnection(conexao);
-				int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "",
-						conexao);
-				toolbar.total.setText("" + i);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("TOTAL", ex, PainelObjeto.this);
-			}
-		}
-	}
-
-	private class ExcluirRegistrosAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ExcluirRegistrosAcao() {
-			super(false, "label.excluir_registro", Icones.EXCLUIR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int[] linhas = tabela.getSelectedRows();
-
-			if (linhas != null && linhas.length > 0) {
-				if (Util.confirmaExclusao(PainelObjeto.this)) {
-					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-
-					List<List<IndiceValor>> listaValores = new ArrayList<>();
-
-					for (int linha : linhas) {
-						int excluido = modelo.excluirRegistro(linha);
-
-						if (excluido == 0 || excluido == 1) {
-							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
-
-							if (chaves.isEmpty()) {
-								throw new IllegalStateException();
-							}
-
-							listaValores.add(chaves);
-						}
-					}
-
-					modelo.excluirValoresChaves(listaValores);
-					modelo.iniArray();
-					modelo.fireTableDataChanged();
-				}
-			}
-		}
 	}
 }
