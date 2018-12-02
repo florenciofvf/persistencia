@@ -68,98 +68,116 @@ public class ConexaoDialogo extends Dialogo {
 			add(new Button(new AbrirAcao()));
 			add(new Button(new SalvarAcao()));
 		}
-	}
 
-	private class TopAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class TopAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public TopAcao() {
-			super(false, "label.primeiro", Icones.TOP);
-		}
+			public TopAcao() {
+				super(false, "label.primeiro", Icones.TOP);
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int[] linhas = tabela.getSelectedRows();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] linhas = tabela.getSelectedRows();
 
-			if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
-				modelo.primeiro(linhas[0]);
-				modelo.fireTableDataChanged();
-				tabela.setRowSelectionInterval(0, 0);
+				if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
+					modelo.primeiro(linhas[0]);
+					modelo.fireTableDataChanged();
+					tabela.setRowSelectionInterval(0, 0);
+				}
 			}
 		}
-	}
 
-	private class ConectaAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class ConectaAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public ConectaAcao() {
-			super(false, "label.conectar", Icones.CONECTA);
+			public ConectaAcao() {
+				super(false, "label.conectar", Icones.CONECTA);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] linhas = tabela.getSelectedRows();
+
+				if (linhas != null && linhas.length == 1) {
+					try {
+						Conexao conexao = modelo.getConexao(linhas[0]);
+						Conexao.getConnection2(conexao);
+						Util.mensagem(ConexaoDialogo.this, "SUCESSO");
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);
+					}
+				}
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int[] linhas = tabela.getSelectedRows();
+		private class FecharAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-			if (linhas != null && linhas.length == 1) {
+			public FecharAcao() {
+				super(false, "label.final_conexoes", Icones.BANCO_DESCONECTA);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				try {
-					Conexao conexao = modelo.getConexao(linhas[0]);
-					Conexao.getConnection2(conexao);
-					Util.mensagem(ConexaoDialogo.this, "SUCESSO");
+					Conexao.fecharConexoes();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);
+					Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
 				}
 			}
 		}
-	}
 
-	private class FecharAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class NovoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public FecharAcao() {
-			super(false, "label.final_conexoes", Icones.BANCO_DESCONECTA);
-		}
+			public NovoAcao() {
+				super(false, "label.novo", Icones.NOVO);
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				Conexao.fecharConexoes();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				modelo.novo();
 			}
 		}
-	}
 
-	private class NovoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class CopiaAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public NovoAcao() {
-			super(false, "label.novo", Icones.NOVO);
-		}
+			public CopiaAcao() {
+				super(false, "label.copiar", Icones.COPIA);
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			modelo.novo();
-		}
-	}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] linhas = tabela.getSelectedRows();
 
-	private class CopiaAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+				if (linhas != null && linhas.length > 0) {
+					for (int i : linhas) {
+						Conexao c = modelo.getConexao(i);
+						modelo.adicionar(c.clonar());
+					}
 
-		public CopiaAcao() {
-			super(false, "label.copiar", Icones.COPIA);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int[] linhas = tabela.getSelectedRows();
-
-			if (linhas != null && linhas.length > 0) {
-				for (int i : linhas) {
-					Conexao c = modelo.getConexao(i);
-					modelo.adicionar(c.clonar());
+					modelo.fireTableDataChanged();
 				}
+			}
+		}
 
-				modelo.fireTableDataChanged();
+		private class SalvarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public SalvarAcao() {
+				super(false, "label.salvar", Icones.SALVAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					modelo.salvar();
+					formulario.atualizarConexoes();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoDialogo.this);
+				}
 			}
 		}
 	}
@@ -179,24 +197,6 @@ public class ConexaoDialogo extends Dialogo {
 				formulario.atualizarConexoes();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoDialogo.this);
-			}
-		}
-	}
-
-	private class SalvarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public SalvarAcao() {
-			super(false, "label.salvar", Icones.SALVAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				modelo.salvar();
-				formulario.atualizarConexoes();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoDialogo.this);
 			}
 		}
 	}
