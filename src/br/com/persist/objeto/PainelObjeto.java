@@ -222,48 +222,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private void processarInfoBanco() {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		try {
-			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloInfoBanco(conn);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - INFO-BANCO");
-
-			tabela.setModel(modeloOrdenacao);
-			configCabecalhoColuna(modeloListagem);
-			TabelaUtil.ajustar(tabela, getGraphics(), 40);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("INFO-BANCO", ex, this);
-		}
-	}
-
-	private void processarEsquema() {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		try {
-			Connection conn = Conexao.getConnection(conexao);
-			ListagemModelo modeloListagem = Persistencia.criarModeloEsquema(conn);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - ESQUEMA");
-
-			tabela.setModel(modeloOrdenacao);
-			configCabecalhoColuna(modeloListagem);
-			TabelaUtil.ajustar(tabela, getGraphics(), 40);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("ESQUEMA", ex, this);
-		}
-	}
-
 	private void processarChavePrimaria() {
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
@@ -610,7 +568,25 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				processarInfoBanco();
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					ListagemModelo modeloListagem = Persistencia.criarModeloInfoBanco(conn);
+					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
+					listener.setTitle(
+							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - INFO-BANCO");
+
+					tabela.setModel(modeloOrdenacao);
+					configCabecalhoColuna(modeloListagem);
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("INFO-BANCO", ex, PainelObjeto.this);
+				}
 			}
 		}
 
@@ -636,7 +612,25 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				processarEsquema();
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					ListagemModelo modeloListagem = Persistencia.criarModeloEsquema(conn);
+					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
+					listener.setTitle(
+							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - ESQUEMA");
+
+					tabela.setModel(modeloOrdenacao);
+					configCabecalhoColuna(modeloListagem);
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ESQUEMA", ex, PainelObjeto.this);
+				}
 			}
 		}
 	}
