@@ -156,25 +156,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	// private void atualizarRegistro(String titulo) {
-	// }
-
-	private void registros() {
-		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-		TableModel model = modelo.getModel();
-
-		if (model instanceof RegistroModelo) {
-			int[] linhas = tabela.getSelectedRows();
-
-			if (linhas != null && linhas.length == 1) {
-				StringBuilder sb = new StringBuilder(objeto.getTabela2());
-				sb.append(Constantes.QL).append(Constantes.QL);
-				modelo.getDados(linhas[0], sb);
-				Util.mensagem(PainelObjeto.this, sb.toString());
-			}
-		}
-	}
-
 	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
@@ -483,7 +464,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				registros();
+				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+				TableModel model = modelo.getModel();
+
+				if (model instanceof RegistroModelo) {
+					int[] linhas = tabela.getSelectedRows();
+
+					if (linhas != null && linhas.length == 1) {
+						StringBuilder sb = new StringBuilder(objeto.getTabela2());
+						sb.append(Constantes.QL).append(Constantes.QL);
+						modelo.getDados(linhas[0], sb);
+						Util.mensagem(PainelObjeto.this, sb.toString());
+					}
+				}
 			}
 		}
 
