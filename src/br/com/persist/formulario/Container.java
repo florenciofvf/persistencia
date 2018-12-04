@@ -238,7 +238,7 @@ public class Container extends PanelBorder {
 				super(false, "label.colar", Icones.COLAR);
 
 				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_V), chave);
-				getActionMap().put(chave, this);
+				Container.this.getActionMap().put(chave, this);
 			}
 
 			@Override
@@ -281,7 +281,7 @@ public class Container extends PanelBorder {
 				super(false, "label.excluir", Icones.EXCLUIR);
 
 				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_D), chave);
-				getActionMap().put(chave, this);
+				Container.this.getActionMap().put(chave, this);
 			}
 
 			@Override
