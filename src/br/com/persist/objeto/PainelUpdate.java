@@ -74,31 +74,31 @@ public class PainelUpdate extends Panel {
 			addSeparator();
 			add(new Button(new AtualizarRegistrosAcao()));
 		}
-	}
 
-	private class FecharAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class FecharAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public FecharAcao() {
-			super(false, "label.fechar", Icones.SAIR);
+			public FecharAcao() {
+				super(false, "label.fechar", Icones.SAIR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				listener.dispose();
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			listener.dispose();
-		}
-	}
+		private class AtualizarRegistrosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-	private class AtualizarRegistrosAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+			public AtualizarRegistrosAcao() {
+				super(false, "label.atualizar", Icones.ATUALIZAR);
+			}
 
-		public AtualizarRegistrosAcao() {
-			super(false, "label.atualizar", Icones.ATUALIZAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			atualizar();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				atualizar();
+			}
 		}
 	}
 
