@@ -7,7 +7,9 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -34,11 +36,15 @@ public class IconeDialogo extends Dialogo {
 	private void montarLayout() {
 		Panel matriz = new Panel(new GridLayout(0, 25));
 
-		for (Map.Entry<String, Icon> entry : Imagens.getIcones()) {
+		List<Entry<String, Icon>> icones = Imagens.getIcones();
+
+		for (Map.Entry<String, Icon> entry : icones) {
 			matriz.add(new LabelIcone(entry));
 		}
 
 		add(BorderLayout.CENTER, new ScrollPane(matriz));
+
+		setTitle(icones.size() + " - " + getTitle());
 	}
 
 	protected void processar() {
