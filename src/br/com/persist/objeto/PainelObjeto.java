@@ -445,6 +445,20 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				}
 			}
 		}
+
+		private class AtualizarRegistrosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public AtualizarRegistrosAcao() {
+				super(false, "label.atualizar", Icones.ATUALIZAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
+						cabecalhoFiltro);
+			}
+		}
 	}
 
 	private class ButtonUpdate extends Button {
@@ -849,22 +863,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private class AtualizarRegistrosAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public AtualizarRegistrosAcao() {
-			super(false, "label.atualizar", Icones.ATUALIZAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
-					cabecalhoFiltro);
-		}
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		new AtualizarRegistrosAcao().actionPerformed(null);
+		toolbar.new AtualizarRegistrosAcao().actionPerformed(null);
 	}
 }
