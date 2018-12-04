@@ -45,7 +45,7 @@ public class FragmentoDialogo extends Dialogo {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				new AbrirAcao().actionPerformed(null);
+				toolbar.new AbrirAcao().actionPerformed(null);
 			}
 		});
 	}
@@ -122,50 +122,50 @@ public class FragmentoDialogo extends Dialogo {
 				}
 			}
 		}
-	}
 
-	private class ConfigFragmentoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class AbrirAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public ConfigFragmentoAcao() {
-			super(false, "label.fragmento", Icones.SUCESSO);
-		}
+			public AbrirAcao() {
+				super(false, "label.baixar", Icones.BAIXAR);
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			int[] linhas = tabela.getSelectedRows();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (listener != null) {
+					FragmentoModelo.reiniciar();
+					FragmentoModelo.filtar(listener.getGruposFiltro());
+				} else {
+					try {
+						FragmentoModelo.inicializar();
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, FragmentoDialogo.this);
+					}
+				}
 
-			if (linhas != null && linhas.length == 1) {
-				Fragmento f = FragmentoModelo.getFragmento(linhas[0]);
-				listener.configFragmento(f);
-				dispose();
+				FragmentoModelo.ordenar();
+				modelo.fireTableDataChanged();
 			}
 		}
-	}
 
-	private class AbrirAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class ConfigFragmentoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public AbrirAcao() {
-			super(false, "label.baixar", Icones.BAIXAR);
-			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
-		}
+			public ConfigFragmentoAcao() {
+				super(false, "label.fragmento", Icones.SUCESSO);
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (listener != null) {
-				FragmentoModelo.reiniciar();
-				FragmentoModelo.filtar(listener.getGruposFiltro());
-			} else {
-				try {
-					FragmentoModelo.inicializar();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, FragmentoDialogo.this);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int[] linhas = tabela.getSelectedRows();
+
+				if (linhas != null && linhas.length == 1) {
+					Fragmento f = FragmentoModelo.getFragmento(linhas[0]);
+					listener.configFragmento(f);
+					dispose();
 				}
 			}
-
-			FragmentoModelo.ordenar();
-			modelo.fireTableDataChanged();
 		}
 	}
 
