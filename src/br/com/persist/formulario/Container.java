@@ -178,7 +178,7 @@ public class Container extends PanelBorder {
 				super(false, "label.salvar", Icones.SALVAR);
 
 				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_S), chave);
-				getActionMap().put(chave, this);
+				Container.this.getActionMap().put(chave, this);
 			}
 
 			@Override

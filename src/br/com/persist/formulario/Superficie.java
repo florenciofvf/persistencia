@@ -818,7 +818,7 @@ public class Superficie extends Desktop {
 				super(true, "label.copiar", Icones.COPIA);
 
 				inputMap().put(getKeyStroke(KeyEvent.VK_C), chave);
-				getActionMap().put(chave, this);
+				Superficie.this.getActionMap().put(chave, this);
 			}
 
 			@Override
