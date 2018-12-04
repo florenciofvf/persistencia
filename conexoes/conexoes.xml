@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <conexoes>
-	<conexao inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/eleicao" esquema="" usuario="root" driver="com.mysql.jdbc.Driver" senha="root" nome="elei&#231;&#227;o">
-	</conexao>
 	<conexao inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/questionario" esquema="" usuario="root" driver="com.mysql.jdbc.Driver" senha="root" nome="question&#225;rio">
+	</conexao>
+	<conexao inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/eleicao" esquema="" usuario="root" driver="com.mysql.jdbc.Driver" senha="root" nome="elei&#231;&#227;o">
 	</conexao>
 	<conexao inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/carrodb" esquema="" usuario="root" driver="com.mysql.jdbc.Driver" senha="root" nome="carro">
 	</conexao>

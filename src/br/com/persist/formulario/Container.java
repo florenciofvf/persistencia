@@ -165,7 +165,7 @@ public class Container extends PanelBorder {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (arquivo != null) {
-					superficie.salvar(arquivo);
+					superficie.salvar(arquivo, getConexaoPadrao());
 				} else {
 					new SalvarComoAcao().actionPerformed(null);
 				}
@@ -191,7 +191,7 @@ public class Container extends PanelBorder {
 					File file = fileChooser.getSelectedFile();
 
 					if (file != null) {
-						superficie.salvar(file);
+						superficie.salvar(file, getConexaoPadrao());
 						arquivo = file;
 						titulo();
 					}

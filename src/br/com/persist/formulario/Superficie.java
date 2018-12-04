@@ -1065,14 +1065,20 @@ public class Superficie extends Desktop {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
 
-	public void salvar(File file) {
+	public void salvar(File file, Conexao conexao) {
 		try {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
 
 			util.abrirTag("fvf");
 			util.atributo("largura", getWidth());
-			util.atributo("altura", getHeight()).fecharTag();
+			util.atributo("altura", getHeight());
+
+			if (conexao != null) {
+				util.atributo("conexao", Util.escapar(conexao.getNome()));
+			}
+
+			util.fecharTag();
 
 			for (Objeto objeto : objetos) {
 				objeto.salvar(util);
