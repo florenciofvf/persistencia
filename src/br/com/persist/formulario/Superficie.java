@@ -785,10 +785,10 @@ public class Superficie extends Desktop {
 			itemCopiar.setEnabled(b);
 		}
 
-		private class DestacarAcao extends Acao {
+		class DestacarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public DestacarAcao() {
+			DestacarAcao() {
 				super(true, "label.desktop", Icones.CUBO2);
 			}
 
@@ -798,10 +798,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class FormularioAcao extends Acao {
+		class FormularioAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FormularioAcao() {
+			FormularioAcao() {
 				super(true, "label.formulario", Icones.PANEL);
 			}
 
@@ -811,10 +811,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class CopiarAcao extends Acao {
+		class CopiarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CopiarAcao() {
+			CopiarAcao() {
 				super(true, "label.copiar", Icones.COPIA);
 
 				inputMap().put(getKeyStroke(KeyEvent.VK_C), chave);
@@ -827,10 +827,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class CopiarCorAcao extends Acao {
+		class CopiarCorAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CopiarCorAcao() {
+			CopiarCorAcao() {
 				super(true, "label.copiar_cor", Icones.COPIA);
 			}
 
@@ -844,10 +844,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class ColarCorAcao extends Acao {
+		class ColarCorAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ColarCorAcao() {
+			ColarCorAcao() {
 				super(true, "label.colar_cor", Icones.COLAR);
 			}
 
@@ -863,10 +863,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class ExcluirAcao extends Acao {
+		class ExcluirAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ExcluirAcao() {
+			ExcluirAcao() {
 				super(true, "label.excluir", Icones.EXCLUIR);
 			}
 
@@ -876,10 +876,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class ConfiguracaoAcao extends Acao {
+		class ConfiguracaoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ConfiguracaoAcao() {
+			ConfiguracaoAcao() {
 				super(true, "label.configuracoes", Icones.CONFIG);
 			}
 
@@ -900,11 +900,11 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class AlinhamentoAcao extends Acao {
+		class AlinhamentoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 			private final boolean horizontal;
 
-			public AlinhamentoAcao(boolean horizontal, String chave) {
+			AlinhamentoAcao(boolean horizontal, String chave) {
 				super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
 				this.horizontal = horizontal;
 			}
@@ -964,10 +964,10 @@ public class Superficie extends Desktop {
 			add(itemAjustes);
 		}
 
-		private class AlinharEsquerdoAcao extends Acao {
+		class AlinharEsquerdoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AlinharEsquerdoAcao() {
+			AlinharEsquerdoAcao() {
 				super(true, "label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
 			}
 
@@ -977,10 +977,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class AlinharDireitoAcao extends Acao {
+		class AlinharDireitoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AlinharDireitoAcao() {
+			AlinharDireitoAcao() {
 				super(true, "label.alinhar_direito", Icones.ALINHA_DIREITO);
 			}
 
@@ -990,10 +990,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class MesmaLarguraAcao extends Acao {
+		class MesmaLarguraAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public MesmaLarguraAcao() {
+			MesmaLarguraAcao() {
 				super(true, "label.mesma_largura", Icones.LARGURA);
 			}
 
@@ -1003,10 +1003,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class CentralizarAcao extends Acao {
+		class CentralizarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CentralizarAcao() {
+			CentralizarAcao() {
 				super(true, "label.centralizar", Icones.CENTRALIZAR);
 			}
 
@@ -1016,10 +1016,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class DimensaoAcao extends Acao {
+		class DimensaoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public DimensaoAcao() {
+			DimensaoAcao() {
 				super(true, "label.dimensao", Icones.RECT);
 			}
 
@@ -1029,10 +1029,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class AjustarAcao extends Acao {
+		class AjustarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AjustarAcao() {
+			AjustarAcao() {
 				super(true, "label.ajustar", Icones.RECT);
 			}
 
@@ -1042,10 +1042,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		private class ColarAcao extends Acao {
+		class ColarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ColarAcao() {
+			ColarAcao() {
 				super(true, "label.colar", Icones.COLAR);
 			}
 

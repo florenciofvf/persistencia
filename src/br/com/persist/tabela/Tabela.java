@@ -123,17 +123,17 @@ public class Tabela extends JTable {
 		private MenuCopiarIN menuCopiarIN = new MenuCopiarIN();
 		private int tag;
 
-		public PopupHeader() {
+		PopupHeader() {
 			add(new MenuItem(new CopiarNomeAcao()));
 			add(new MenuCopiar());
 			addSeparator();
 			add(menuCopiarIN);
 		}
 
-		private class CopiarNomeAcao extends Acao {
+		class CopiarNomeAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CopiarNomeAcao() {
+			CopiarNomeAcao() {
 				super(true, "label.copiar_nome_coluna", null);
 			}
 
@@ -153,10 +153,10 @@ public class Tabela extends JTable {
 				add(new MenuItem(new ComAspasAcao()));
 			}
 
-			private class SemAspasAcao extends Acao {
+			class SemAspasAcao extends Acao {
 				private static final long serialVersionUID = 1L;
 
-				public SemAspasAcao() {
+				SemAspasAcao() {
 					super(true, "label.sem_aspas", null);
 				}
 
@@ -167,10 +167,10 @@ public class Tabela extends JTable {
 				}
 			}
 
-			private class ComAspasAcao extends Acao {
+			class ComAspasAcao extends Acao {
 				private static final long serialVersionUID = 1L;
 
-				public ComAspasAcao() {
+				ComAspasAcao() {
 					super(true, "label.com_aspas", Icones.ASPAS);
 				}
 
@@ -191,10 +191,10 @@ public class Tabela extends JTable {
 				add(new MenuItem(new ComAspasAcao()));
 			}
 
-			private class SemAspasAcao extends Acao {
+			class SemAspasAcao extends Acao {
 				private static final long serialVersionUID = 1L;
 
-				public SemAspasAcao() {
+				SemAspasAcao() {
 					super(true, "label.sem_aspas", null);
 				}
 
@@ -212,10 +212,10 @@ public class Tabela extends JTable {
 				}
 			}
 
-			private class ComAspasAcao extends Acao {
+			class ComAspasAcao extends Acao {
 				private static final long serialVersionUID = 1L;
 
-				public ComAspasAcao() {
+				ComAspasAcao() {
 					super(true, "label.com_aspas", Icones.ASPAS);
 				}
 
@@ -246,10 +246,10 @@ public class Tabela extends JTable {
 				this.nomeColuna = coluna;
 			}
 
-			private class SemAspasAcao extends Acao {
+			class SemAspasAcao extends Acao {
 				private static final long serialVersionUID = 1L;
 
-				public SemAspasAcao() {
+				SemAspasAcao() {
 					super(true, "label.sem_aspas", null);
 				}
 
@@ -266,10 +266,10 @@ public class Tabela extends JTable {
 				}
 			}
 
-			private class ComAspasAcao extends Acao {
+			class ComAspasAcao extends Acao {
 				private static final long serialVersionUID = 1L;
 
-				public ComAspasAcao() {
+				ComAspasAcao() {
 					super(true, "label.com_aspas", Icones.ASPAS);
 				}
 

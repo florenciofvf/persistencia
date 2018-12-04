@@ -233,7 +233,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		final ButtonUpdate update = new ButtonUpdate();
 		final Label total = new Label(Color.BLUE);
 
-		public Toolbar() {
+		Toolbar() {
 			add(new Button(new FecharAcao()));
 			addSeparator();
 			add(new ButtonInfo());
@@ -253,10 +253,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(total);
 		}
 
-		private class FecharAcao extends Acao {
+		class FecharAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FecharAcao() {
+			FecharAcao() {
 				super(false, "label.fechar", Icones.SAIR);
 			}
 
@@ -277,10 +277,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			update.complemento(objeto);
 		}
 
-		private class FragmentoAcao extends Acao {
+		class FragmentoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FragmentoAcao() {
+			FragmentoAcao() {
 				super(false, "label.fragmento", Icones.FRAGMENTO);
 			}
 
@@ -296,10 +296,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class MaximoAcao extends Acao {
+		class MaximoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public MaximoAcao() {
+			MaximoAcao() {
 				super(false, "label.maximo", Icones.VAR);
 			}
 
@@ -325,10 +325,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class LimparAcao extends Acao {
+		class LimparAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public LimparAcao() {
+			LimparAcao() {
 				super(false, "label.limpar", Icones.NOVO);
 			}
 
@@ -338,10 +338,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class BaixarAcao extends Acao {
+		class BaixarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public BaixarAcao() {
+			BaixarAcao() {
 				super(false, "label.baixar", Icones.BAIXAR);
 			}
 
@@ -351,10 +351,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class ComplementoAcao extends Acao {
+		class ComplementoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ComplementoAcao() {
+			ComplementoAcao() {
 				super(false, "label.complemento", Icones.BAIXAR2);
 			}
 
@@ -378,11 +378,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class TotalizarRegistrosAcao extends Acao {
+		class TotalizarRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 			private final boolean complemento;
 
-			public TotalizarRegistrosAcao(boolean complemento) {
+			TotalizarRegistrosAcao(boolean complemento) {
 				super(false, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
 				this.complemento = complemento;
 			}
@@ -406,10 +406,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class SincronizarRegistrosAcao extends Acao {
+		class SincronizarRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public SincronizarRegistrosAcao() {
+			SincronizarRegistrosAcao() {
 				super(false, "label.sincronizar", Icones.SINCRONIZAR);
 			}
 
@@ -420,10 +420,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class ExcluirRegistrosAcao extends Acao {
+		class ExcluirRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ExcluirRegistrosAcao() {
+			ExcluirRegistrosAcao() {
 				super(false, "label.excluir_registro", Icones.EXCLUIR);
 			}
 
@@ -459,10 +459,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class AtualizarRegistrosAcao extends Acao {
+		class AtualizarRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AtualizarRegistrosAcao() {
+			AtualizarRegistrosAcao() {
 				super(false, "label.atualizar", Icones.ATUALIZAR);
 			}
 
@@ -488,10 +488,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addActionListener(e -> popup.show(this, 5, 5));
 		}
 
-		private class UpdateAcao extends Acao {
+		class UpdateAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public UpdateAcao() {
+			UpdateAcao() {
 				super(true, "label.atualizar", Icones.UPDATE);
 			}
 
@@ -535,10 +535,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		private class TabelaAcao extends Acao {
+		class TabelaAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public TabelaAcao() {
+			TabelaAcao() {
 				super(true, "label.dados", Icones.TABELA);
 			}
 
@@ -645,7 +645,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		class ChavesPrimariasAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ChavesPrimariasAcao() {
+			ChavesPrimariasAcao() {
 				super(true, "label.chave_primaria", Icones.PKEY);
 			}
 
@@ -676,7 +676,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		class ChavesImportadasAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ChavesImportadasAcao() {
+			ChavesImportadasAcao() {
 				super(true, "label.chaves_importadas", Icones.KEY);
 			}
 
@@ -707,7 +707,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		class ChavesExportadasAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ChavesExportadasAcao() {
+			ChavesExportadasAcao() {
 				super(true, "label.chaves_exportadas", Icones.KEY);
 			}
 
@@ -738,7 +738,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		class InfoBancoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public InfoBancoAcao() {
+			InfoBancoAcao() {
 				super(true, "label.info_banco", null);
 			}
 
@@ -769,7 +769,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		class MetaDadosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public MetaDadosAcao() {
+			MetaDadosAcao() {
 				super(true, "label.meta_dados", null);
 			}
 
@@ -800,7 +800,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		class EsquemaAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public EsquemaAcao() {
+			EsquemaAcao() {
 				super(true, "label.esquema", null);
 			}
 
@@ -854,7 +854,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	private class ArrastarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public ArrastarAcao() {
+		ArrastarAcao() {
 			super(false, "label.destacar", Icones.ARRASTAR);
 		}
 

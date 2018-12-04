@@ -69,16 +69,16 @@ public class PainelUpdate extends Panel {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 
-		public Toolbar() {
+		Toolbar() {
 			add(new Button(new FecharAcao()));
 			addSeparator();
 			add(new Button(new AtualizarRegistrosAcao()));
 		}
 
-		private class FecharAcao extends Acao {
+		class FecharAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FecharAcao() {
+			FecharAcao() {
 				super(false, "label.fechar", Icones.SAIR);
 			}
 
@@ -88,10 +88,10 @@ public class PainelUpdate extends Panel {
 			}
 		}
 
-		private class AtualizarRegistrosAcao extends Acao {
+		class AtualizarRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AtualizarRegistrosAcao() {
+			AtualizarRegistrosAcao() {
 				super(false, "label.atualizar", Icones.ATUALIZAR);
 			}
 

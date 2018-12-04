@@ -57,7 +57,7 @@ public abstract class Dialogo extends JDialog {
 	private class FecharAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public FecharAcao() {
+		FecharAcao() {
 			super(false, "label.fechar", Icones.SAIR);
 		}
 
@@ -70,7 +70,7 @@ public abstract class Dialogo extends JDialog {
 	private class ProcessarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public ProcessarAcao() {
+		ProcessarAcao() {
 			super(false, "label.ok", Icones.SUCESSO);
 		}
 

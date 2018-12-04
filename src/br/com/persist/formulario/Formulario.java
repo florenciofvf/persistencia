@@ -178,10 +178,10 @@ public class Formulario extends JFrame {
 			add(menuLAF);
 		}
 
-		private class NovoAcao extends Acao {
+		class NovoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public NovoAcao() {
+			NovoAcao() {
 				super(true, "label.novo", Icones.CUBO);
 			}
 
@@ -191,10 +191,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class DesktopAcao extends Acao {
+		class DesktopAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public DesktopAcao() {
+			DesktopAcao() {
 				super(true, "label.desktop", Icones.CUBO2);
 			}
 
@@ -204,10 +204,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class FormularioAcao extends Acao {
+		class FormularioAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FormularioAcao() {
+			FormularioAcao() {
 				super(true, "label.formulario", Icones.PANEL);
 			}
 
@@ -217,10 +217,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class ConexaoAcao extends Acao {
+		class ConexaoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ConexaoAcao(boolean menu) {
+			ConexaoAcao(boolean menu) {
 				super(menu, "label.conexao", Icones.BANCO);
 			}
 
@@ -230,10 +230,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class FragmentoAcao extends Acao {
+		class FragmentoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FragmentoAcao(boolean menu) {
+			FragmentoAcao(boolean menu) {
 				super(menu, "label.fragmento", Icones.FRAGMENTO);
 			}
 
@@ -244,10 +244,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class ConfigAcao extends Acao {
+		class ConfigAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ConfigAcao() {
+			ConfigAcao() {
 				super(true, "label.configuracoes", Icones.CONFIG);
 			}
 
@@ -257,10 +257,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class FecharAcao extends Acao {
+		class FecharAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FecharAcao(boolean menu) {
+			FecharAcao(boolean menu) {
 				super(menu, "label.fechar", Icones.SAIR);
 			}
 
@@ -271,10 +271,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class AbrirFormularioAcao extends Acao {
+		class AbrirFormularioAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AbrirFormularioAcao(boolean menu) {
+			AbrirFormularioAcao(boolean menu) {
 				super(menu, "label.abrir_formulario", Icones.ABRIR);
 				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
 			}
@@ -310,10 +310,10 @@ public class Formulario extends JFrame {
 			}
 		}
 
-		private class AbrirFicharioAcao extends Acao {
+		class AbrirFicharioAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AbrirFicharioAcao(boolean menu) {
+			AbrirFicharioAcao(boolean menu) {
 				super(menu, "label.abrir_fichario", Icones.ABRIR);
 				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
 			}

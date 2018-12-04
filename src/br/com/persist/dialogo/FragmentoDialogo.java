@@ -56,7 +56,7 @@ public class FragmentoDialogo extends Dialogo {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 
-		public Toolbar() {
+		Toolbar() {
 			add(new Button(new NovoAcao()));
 			add(new Button(new CopiaAcao()));
 			addSeparator();
@@ -70,10 +70,10 @@ public class FragmentoDialogo extends Dialogo {
 			}
 		}
 
-		private class NovoAcao extends Acao {
+		class NovoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public NovoAcao() {
+			NovoAcao() {
 				super(false, "label.novo", Icones.NOVO);
 			}
 
@@ -84,10 +84,10 @@ public class FragmentoDialogo extends Dialogo {
 			}
 		}
 
-		private class CopiaAcao extends Acao {
+		class CopiaAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CopiaAcao() {
+			CopiaAcao() {
 				super(false, "label.copiar", Icones.COPIA);
 			}
 
@@ -106,10 +106,10 @@ public class FragmentoDialogo extends Dialogo {
 			}
 		}
 
-		private class SalvarAcao extends Acao {
+		class SalvarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public SalvarAcao() {
+			SalvarAcao() {
 				super(false, "label.salvar", Icones.SALVAR);
 			}
 
@@ -123,10 +123,10 @@ public class FragmentoDialogo extends Dialogo {
 			}
 		}
 
-		private class AbrirAcao extends Acao {
+		class AbrirAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AbrirAcao() {
+			AbrirAcao() {
 				super(false, "label.baixar", Icones.BAIXAR);
 				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
 			}
@@ -149,10 +149,10 @@ public class FragmentoDialogo extends Dialogo {
 			}
 		}
 
-		private class ConfigFragmentoAcao extends Acao {
+		class ConfigFragmentoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ConfigFragmentoAcao() {
+			ConfigFragmentoAcao() {
 				super(false, "label.fragmento", Icones.SUCESSO);
 			}
 

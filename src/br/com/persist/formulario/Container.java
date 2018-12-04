@@ -119,7 +119,7 @@ public class Container extends PanelBorder {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 
-		public Toolbar() {
+		Toolbar() {
 			add(new Button(new BaixarAcao()));
 			addSeparator();
 			add(new Button(new SalvarAcao()));
@@ -144,10 +144,10 @@ public class Container extends PanelBorder {
 			addSeparator();
 		}
 
-		private class BaixarAcao extends Acao {
+		class BaixarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public BaixarAcao() {
+			BaixarAcao() {
 				super(false, "label.baixar", Icones.BAIXAR);
 			}
 
@@ -171,10 +171,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class SalvarAcao extends Acao {
+		class SalvarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public SalvarAcao() {
+			SalvarAcao() {
 				super(false, "label.salvar", Icones.SALVAR);
 
 				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_S), chave);
@@ -191,10 +191,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class SalvarComoAcao extends Acao {
+		class SalvarComoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public SalvarComoAcao() {
+			SalvarComoAcao() {
 				super(false, "label.salvar_como", Icones.SALVARC);
 			}
 
@@ -218,10 +218,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class CopiarAcao extends Acao {
+		class CopiarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CopiarAcao() {
+			CopiarAcao() {
 				super(false, "label.copiar", Icones.COPIA);
 			}
 
@@ -231,10 +231,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class ColarAcao extends Acao {
+		class ColarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ColarAcao() {
+			ColarAcao() {
 				super(false, "label.colar", Icones.COLAR);
 
 				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_V), chave);
@@ -248,10 +248,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class DestacarAcao extends Acao {
+		class DestacarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public DestacarAcao() {
+			DestacarAcao() {
 				super(false, "label.desktop", Icones.CUBO2);
 			}
 
@@ -261,10 +261,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class FormularioAcao extends Acao {
+		class FormularioAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FormularioAcao() {
+			FormularioAcao() {
 				super(false, "label.formulario", Icones.PANEL);
 			}
 
@@ -274,10 +274,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class ExcluirAcao extends Acao {
+		class ExcluirAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ExcluirAcao() {
+			ExcluirAcao() {
 				super(false, "label.excluir", Icones.EXCLUIR);
 
 				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_D), chave);
@@ -290,10 +290,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class CriarObjetoAcao extends Acao {
+		class CriarObjetoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CriarObjetoAcao() {
+			CriarObjetoAcao() {
 				super(false, "label.criar_objeto", Icones.CRIAR);
 			}
 
@@ -307,10 +307,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class DesenhoIdAcao extends Acao {
+		class DesenhoIdAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public DesenhoIdAcao() {
+			DesenhoIdAcao() {
 				super(false, "label.desenhar_id", Icones.LABEL);
 			}
 
@@ -321,10 +321,10 @@ public class Container extends PanelBorder {
 			}
 		}
 
-		private class TransparenteAcao extends Acao {
+		class TransparenteAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public TransparenteAcao() {
+			TransparenteAcao() {
 				super(false, "label.transparente", Icones.RECT);
 			}
 
@@ -356,7 +356,7 @@ public class Container extends PanelBorder {
 	private class ArrastoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public ArrastoAcao() {
+		ArrastoAcao() {
 			super(false, "label.arrastar", Icones.MAO);
 		}
 
@@ -372,7 +372,7 @@ public class Container extends PanelBorder {
 	private class RotulosAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public RotulosAcao() {
+		RotulosAcao() {
 			super(false, "label.rotulos", Icones.TEXTO);
 		}
 
@@ -388,7 +388,7 @@ public class Container extends PanelBorder {
 	private class RelacaoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public RelacaoAcao() {
+		RelacaoAcao() {
 			super(false, "label.criar_relacao", Icones.SETA);
 		}
 
@@ -404,7 +404,7 @@ public class Container extends PanelBorder {
 	private class SelecaoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		public SelecaoAcao() {
+		SelecaoAcao() {
 			super(false, "label.selecao", Icones.CURSOR);
 		}
 

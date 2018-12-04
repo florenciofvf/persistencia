@@ -55,7 +55,7 @@ public class ConexaoDialogo extends Dialogo {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 
-		public Toolbar() {
+		Toolbar() {
 			add(new Button(new TopAcao()));
 			addSeparator();
 			add(new Button(new ConectaAcao()));
@@ -69,10 +69,10 @@ public class ConexaoDialogo extends Dialogo {
 			add(new Button(new SalvarAcao()));
 		}
 
-		private class TopAcao extends Acao {
+		class TopAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public TopAcao() {
+			TopAcao() {
 				super(false, "label.primeiro", Icones.TOP);
 			}
 
@@ -88,10 +88,10 @@ public class ConexaoDialogo extends Dialogo {
 			}
 		}
 
-		private class ConectaAcao extends Acao {
+		class ConectaAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public ConectaAcao() {
+			ConectaAcao() {
 				super(false, "label.conectar", Icones.CONECTA);
 			}
 
@@ -111,10 +111,10 @@ public class ConexaoDialogo extends Dialogo {
 			}
 		}
 
-		private class FecharAcao extends Acao {
+		class FecharAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public FecharAcao() {
+			FecharAcao() {
 				super(false, "label.final_conexoes", Icones.BANCO_DESCONECTA);
 			}
 
@@ -128,10 +128,10 @@ public class ConexaoDialogo extends Dialogo {
 			}
 		}
 
-		private class NovoAcao extends Acao {
+		class NovoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public NovoAcao() {
+			NovoAcao() {
 				super(false, "label.novo", Icones.NOVO);
 			}
 
@@ -141,10 +141,10 @@ public class ConexaoDialogo extends Dialogo {
 			}
 		}
 
-		private class CopiaAcao extends Acao {
+		class CopiaAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CopiaAcao() {
+			CopiaAcao() {
 				super(false, "label.copiar", Icones.COPIA);
 			}
 
@@ -163,10 +163,10 @@ public class ConexaoDialogo extends Dialogo {
 			}
 		}
 
-		private class SalvarAcao extends Acao {
+		class SalvarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public SalvarAcao() {
+			SalvarAcao() {
 				super(false, "label.salvar", Icones.SALVAR);
 			}
 
@@ -181,10 +181,10 @@ public class ConexaoDialogo extends Dialogo {
 			}
 		}
 
-		private class AbrirAcao extends Acao {
+		class AbrirAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public AbrirAcao() {
+			AbrirAcao() {
 				super(false, "label.baixar", Icones.BAIXAR);
 				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
 			}

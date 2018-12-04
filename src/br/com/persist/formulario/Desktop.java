@@ -253,10 +253,10 @@ public class Desktop extends JDesktopPane {
 			add(itemDimensoes);
 		}
 
-		private class CentralizarAcao extends Acao {
+		class CentralizarAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public CentralizarAcao() {
+			CentralizarAcao() {
 				super(true, "label.centralizar", Icones.CENTRALIZAR);
 			}
 
@@ -266,10 +266,10 @@ public class Desktop extends JDesktopPane {
 			}
 		}
 
-		private class DimensaoAcao extends Acao {
+		class DimensaoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			public DimensaoAcao() {
+			DimensaoAcao() {
 				super(true, "label.dimensao", Icones.RECT);
 			}
 
