@@ -44,7 +44,7 @@ public class ConexaoDialogo extends Dialogo {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				new AbrirAcao().actionPerformed(null);
+				toolbar.new AbrirAcao().actionPerformed(null);
 			}
 		});
 	}
@@ -180,23 +180,23 @@ public class ConexaoDialogo extends Dialogo {
 				}
 			}
 		}
-	}
 
-	private class AbrirAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class AbrirAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public AbrirAcao() {
-			super(false, "label.baixar", Icones.BAIXAR);
-			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
-		}
+			public AbrirAcao() {
+				super(false, "label.baixar", Icones.BAIXAR);
+				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			try {
-				modelo.abrir();
-				formulario.atualizarConexoes();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoDialogo.this);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					modelo.abrir();
+					formulario.atualizarConexoes();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoDialogo.this);
+				}
 			}
 		}
 	}
