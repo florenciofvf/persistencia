@@ -20,14 +20,14 @@ import br.com.persist.util.Fragmento;
 import br.com.persist.util.Util;
 
 public class XML {
-	public static Dimension processar(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms)
-			throws Exception {
+	public static Dimension processar(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
+			StringBuilder sbConexao) throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		factory.setNamespaceAware(true);
 		factory.setXIncludeAware(true);
 
 		SAXParser parser = factory.newSAXParser();
-		XMLHandler handler = new XMLHandler(objetos, relacoes, forms);
+		XMLHandler handler = new XMLHandler(objetos, relacoes, forms, sbConexao);
 		parser.parse(file, handler);
 		return handler.getDimension();
 	}
@@ -52,12 +52,14 @@ public class XML {
 class XMLHandler extends DefaultHandler {
 	private final Dimension dimension = new Dimension();
 	final StringBuilder builder = new StringBuilder();
+	final StringBuilder sbConexao;
 	final List<Relacao> relacoes;
 	final List<Objeto> objetos;
 	final List<Form> forms;
 	Object selecionado;
 
-	public XMLHandler(List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms) {
+	public XMLHandler(List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, StringBuilder sbConexao) {
+		this.sbConexao = sbConexao;
 		this.relacoes = relacoes;
 		this.objetos = objetos;
 		this.forms = forms;
@@ -74,6 +76,12 @@ class XMLHandler extends DefaultHandler {
 		if ("fvf".equals(qName)) {
 			dimension.width = Integer.parseInt(attributes.getValue("largura"));
 			dimension.height = Integer.parseInt(attributes.getValue("altura"));
+
+			String conexao = attributes.getValue("conexao");
+
+			if (!Util.estaVazio(conexao)) {
+				sbConexao.append(conexao);
+			}
 
 		} else if ("objeto".equals(qName)) {
 			Objeto objeto = new Objeto();

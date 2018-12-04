@@ -69,11 +69,29 @@ public class Container extends PanelBorder {
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, Graphics g,
-			Dimension d) {
+	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
+			StringBuilder sbConexao, Graphics g, Dimension d) {
 		superficie.abrir(objetos, relacoes, d);
 		arquivo = file;
 		btnSelecao.click();
+
+		if (!Util.estaVazio(sbConexao.toString())) {
+			String nomeConexao = sbConexao.toString();
+			Conexao conexao = null;
+
+			for (int i = 0; i < cmbConexao.getItemCount(); i++) {
+				Conexao c = cmbConexao.getItemAt(i);
+
+				if (nomeConexao.equals(c.getNome())) {
+					conexao = c;
+					break;
+				}
+			}
+
+			if (conexao != null) {
+				cmbConexao.setSelectedItem(conexao);
+			}
+		}
 
 		Conexao conexao = getConexaoPadrao();
 
@@ -141,11 +159,12 @@ public class Container extends PanelBorder {
 				}
 
 				try {
+					StringBuilder sbConexao = new StringBuilder();
 					List<Relacao> relacoes = new ArrayList<>();
 					List<Objeto> objetos = new ArrayList<>();
 					List<Form> forms = new ArrayList<>();
-					Dimension d = XML.processar(arquivo, objetos, relacoes, forms);
-					abrir(arquivo, objetos, relacoes, forms, null, d);
+					Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao);
+					abrir(arquivo, objetos, relacoes, forms, sbConexao, null, d);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 				}

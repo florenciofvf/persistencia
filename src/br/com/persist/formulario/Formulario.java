@@ -295,11 +295,12 @@ public class Formulario extends JFrame {
 						for (File file : files) {
 							try {
 								arquivo = file.getParentFile();
+								StringBuilder sbConexao = new StringBuilder();
 								List<Relacao> relacoes = new ArrayList<>();
 								List<Objeto> objetos = new ArrayList<>();
 								List<Form> forms = new ArrayList<>();
-								Dimension d = XML.processar(file, objetos, relacoes, forms);
-								fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, d);
+								Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
+								fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
 							} catch (Exception ex) {
 								Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 							}
@@ -333,11 +334,12 @@ public class Formulario extends JFrame {
 						for (File file : files) {
 							try {
 								arquivo = file.getParentFile();
+								StringBuilder sbConexao = new StringBuilder();
 								List<Relacao> relacoes = new ArrayList<>();
 								List<Objeto> objetos = new ArrayList<>();
 								List<Form> forms = new ArrayList<>();
-								Dimension d = XML.processar(file, objetos, relacoes, forms);
-								fichario.abrir(Formulario.this, file, objetos, relacoes, forms, d);
+								Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
+								fichario.abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
 							} catch (Exception ex) {
 								Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 							}
