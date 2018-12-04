@@ -134,7 +134,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
 			if (Constantes.fechar_apos_soltar && dsde.getDropSuccess()) {
-				new FecharAcao().actionPerformed(null);
+				toolbar.new FecharAcao().actionPerformed(null);
 			}
 		}
 	};
@@ -251,6 +251,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(new Button(new TotalizarRegistrosAcao(false)));
 			add(new Button(new TotalizarRegistrosAcao(true)));
 			add(total);
+		}
+
+		private class FecharAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public FecharAcao() {
+				super(false, "label.fechar", Icones.SAIR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				listener.dispose();
+			}
 		}
 
 		void complementoBtn() {
@@ -837,19 +850,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			return colunas;
 		}
 	};
-
-	private class FecharAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FecharAcao() {
-			super(false, "label.fechar", Icones.SAIR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			listener.dispose();
-		}
-	}
 
 	private class ArrastarAcao extends Acao {
 		private static final long serialVersionUID = 1L;
