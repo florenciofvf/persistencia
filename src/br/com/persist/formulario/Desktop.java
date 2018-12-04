@@ -252,31 +252,31 @@ public class Desktop extends JDesktopPane {
 			addSeparator();
 			add(itemDimensoes);
 		}
-	}
 
-	private class CentralizarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class CentralizarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public CentralizarAcao() {
-			super(true, "label.centralizar", Icones.CENTRALIZAR);
+			public CentralizarAcao() {
+				super(true, "label.centralizar", Icones.CENTRALIZAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				centralizar();
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			centralizar();
-		}
-	}
+		private class DimensaoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-	private class DimensaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+			public DimensaoAcao() {
+				super(true, "label.dimensao", Icones.RECT);
+			}
 
-		public DimensaoAcao() {
-			super(true, "label.dimensao", Icones.RECT);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			configDimension();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				configDimension();
+			}
 		}
 	}
 }

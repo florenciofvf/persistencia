@@ -784,82 +784,159 @@ public class Superficie extends Desktop {
 			itemDestacar.setEnabled(b);
 			itemCopiar.setEnabled(b);
 		}
-	}
 
-	private class DestacarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class DestacarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public DestacarAcao() {
-			super(true, "label.desktop", Icones.CUBO2);
-		}
+			public DestacarAcao() {
+				super(true, "label.desktop", Icones.CUBO2);
+			}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(container.getConexaoPadrao(), Superficie.this, false);
-		}
-	}
-
-	private class FormularioAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public FormularioAcao() {
-			super(true, "label.formulario", Icones.PANEL);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
-		}
-	}
-
-	private class CopiarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CopiarAcao() {
-			super(true, "label.copiar", Icones.COPIA);
-
-			inputMap().put(getKeyStroke(KeyEvent.VK_C), chave);
-			getActionMap().put(chave, this);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.copiar(Superficie.this);
-		}
-	}
-
-	private class CopiarCorAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public CopiarCorAcao() {
-			super(true, "label.copiar_cor", Icones.COPIA);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (selecionadoObjeto != null) {
-				formulario.setCor(selecionadoObjeto.getCor());
-			} else if (selecionadoRelacao != null) {
-				formulario.setCor(selecionadoRelacao.getCor());
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.destacar(container.getConexaoPadrao(), Superficie.this, false);
 			}
 		}
-	}
 
-	private class ColarCorAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class FormularioAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public ColarCorAcao() {
-			super(true, "label.colar_cor", Icones.COLAR);
+			public FormularioAcao() {
+				super(true, "label.formulario", Icones.PANEL);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (selecionadoObjeto != null && formulario.getCor() != null) {
-				selecionadoObjeto.setCor(formulario.getCor());
-				repaint();
-			} else if (selecionadoRelacao != null && formulario.getCor() != null) {
-				selecionadoRelacao.setCor(formulario.getCor());
-				repaint();
+		private class CopiarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarAcao() {
+				super(true, "label.copiar", Icones.COPIA);
+
+				inputMap().put(getKeyStroke(KeyEvent.VK_C), chave);
+				getActionMap().put(chave, this);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.copiar(Superficie.this);
+			}
+		}
+
+		private class CopiarCorAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public CopiarCorAcao() {
+				super(true, "label.copiar_cor", Icones.COPIA);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (selecionadoObjeto != null) {
+					formulario.setCor(selecionadoObjeto.getCor());
+				} else if (selecionadoRelacao != null) {
+					formulario.setCor(selecionadoRelacao.getCor());
+				}
+			}
+		}
+
+		private class ColarCorAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ColarCorAcao() {
+				super(true, "label.colar_cor", Icones.COLAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (selecionadoObjeto != null && formulario.getCor() != null) {
+					selecionadoObjeto.setCor(formulario.getCor());
+					repaint();
+				} else if (selecionadoRelacao != null && formulario.getCor() != null) {
+					selecionadoRelacao.setCor(formulario.getCor());
+					repaint();
+				}
+			}
+		}
+
+		private class ExcluirAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ExcluirAcao() {
+				super(true, "label.excluir", Icones.EXCLUIR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				excluirSelecionados();
+			}
+		}
+
+		private class ConfiguracaoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ConfiguracaoAcao() {
+				super(true, "label.configuracoes", Icones.CONFIG);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Frame frame = formulario;
+
+				if (container.getFormularioSuperficie() != null) {
+					frame = container.getFormularioSuperficie();
+				}
+
+				if (selecionadoObjeto != null) {
+					new ObjetoDialogo(frame, Superficie.this, selecionadoObjeto);
+
+				} else if (selecionadoRelacao != null) {
+					new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
+				}
+			}
+		}
+
+		private class AlinhamentoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+			private final boolean horizontal;
+
+			public AlinhamentoAcao(boolean horizontal, String chave) {
+				super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
+				this.horizontal = horizontal;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Objeto primeiro = null;
+				int i = 0;
+
+				for (; i < objetos.length; i++) {
+					if (objetos[i].isSelecionado()) {
+						primeiro = objetos[i];
+						i++;
+						break;
+					}
+				}
+
+				if (primeiro != null) {
+					for (; i < objetos.length; i++) {
+						Objeto objeto = objetos[i];
+
+						if (objeto.isSelecionado()) {
+							if (horizontal) {
+								objeto.y = primeiro.y;
+							} else {
+								objeto.x = primeiro.x;
+							}
+						}
+					}
+				}
+
+				Superficie.this.repaint();
 			}
 		}
 	}
@@ -886,97 +963,97 @@ public class Superficie extends Desktop {
 			add(itemDimensoes);
 			add(itemAjustes);
 		}
-	}
 
-	private class AlinharEsquerdoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+		private class AlinharEsquerdoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-		public AlinharEsquerdoAcao() {
-			super(true, "label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
+			public AlinharEsquerdoAcao() {
+				super(true, "label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				alinharEsquerdo();
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			alinharEsquerdo();
-		}
-	}
+		private class AlinharDireitoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-	private class AlinharDireitoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+			public AlinharDireitoAcao() {
+				super(true, "label.alinhar_direito", Icones.ALINHA_DIREITO);
+			}
 
-		public AlinharDireitoAcao() {
-			super(true, "label.alinhar_direito", Icones.ALINHA_DIREITO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			alinharDireito();
-		}
-	}
-
-	private class MesmaLarguraAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public MesmaLarguraAcao() {
-			super(true, "label.mesma_largura", Icones.LARGURA);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				alinharDireito();
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			mesmaLargura();
-		}
-	}
+		private class MesmaLarguraAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-	private class CentralizarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+			public MesmaLarguraAcao() {
+				super(true, "label.mesma_largura", Icones.LARGURA);
+			}
 
-		public CentralizarAcao() {
-			super(true, "label.centralizar", Icones.CENTRALIZAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			centralizar();
-		}
-	}
-
-	private class DimensaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public DimensaoAcao() {
-			super(true, "label.dimensao", Icones.RECT);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mesmaLargura();
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			configDimension();
-		}
-	}
+		private class CentralizarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
 
-	private class AjustarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
+			public CentralizarAcao() {
+				super(true, "label.centralizar", Icones.CENTRALIZAR);
+			}
 
-		public AjustarAcao() {
-			super(true, "label.ajustar", Icones.RECT);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ajustarDimension();
-		}
-	}
-
-	private class ColarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ColarAcao() {
-			super(true, "label.colar", Icones.COLAR);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				centralizar();
+			}
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			formulario.colar(Superficie.this, true, popup2.x, popup2.y);
-			repaint();
+		private class DimensaoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public DimensaoAcao() {
+				super(true, "label.dimensao", Icones.RECT);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				configDimension();
+			}
+		}
+
+		private class AjustarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public AjustarAcao() {
+				super(true, "label.ajustar", Icones.RECT);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ajustarDimension();
+			}
+		}
+
+		private class ColarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			public ColarAcao() {
+				super(true, "label.colar", Icones.COLAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				formulario.colar(Superficie.this, true, popup2.x, popup2.y);
+				repaint();
+			}
 		}
 	}
 
@@ -986,83 +1063,6 @@ public class Superficie extends Desktop {
 
 	public static KeyStroke getKeyStroke(int keyCode) {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
-	}
-
-	private class ExcluirAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ExcluirAcao() {
-			super(true, "label.excluir", Icones.EXCLUIR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			excluirSelecionados();
-		}
-	}
-
-	private class ConfiguracaoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		public ConfiguracaoAcao() {
-			super(true, "label.configuracoes", Icones.CONFIG);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Frame frame = formulario;
-
-			if (container.getFormularioSuperficie() != null) {
-				frame = container.getFormularioSuperficie();
-			}
-
-			if (selecionadoObjeto != null) {
-				new ObjetoDialogo(frame, Superficie.this, selecionadoObjeto);
-
-			} else if (selecionadoRelacao != null) {
-				new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
-			}
-		}
-	}
-
-	private class AlinhamentoAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-		private final boolean horizontal;
-
-		public AlinhamentoAcao(boolean horizontal, String chave) {
-			super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
-			this.horizontal = horizontal;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Objeto primeiro = null;
-			int i = 0;
-
-			for (; i < objetos.length; i++) {
-				if (objetos[i].isSelecionado()) {
-					primeiro = objetos[i];
-					i++;
-					break;
-				}
-			}
-
-			if (primeiro != null) {
-				for (; i < objetos.length; i++) {
-					Objeto objeto = objetos[i];
-
-					if (objeto.isSelecionado()) {
-						if (horizontal) {
-							objeto.y = primeiro.y;
-						} else {
-							objeto.x = primeiro.x;
-						}
-					}
-				}
-			}
-
-			repaint();
-		}
 	}
 
 	public void salvar(File file) {
