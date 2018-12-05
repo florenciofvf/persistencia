@@ -58,7 +58,7 @@ class XMLHandler extends DefaultHandler {
 	final List<Form> forms;
 	Object selecionado;
 
-	public XMLHandler(List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, StringBuilder sbConexao) {
+	XMLHandler(List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, StringBuilder sbConexao) {
 		this.sbConexao = sbConexao;
 		this.relacoes = relacoes;
 		this.objetos = objetos;
@@ -177,7 +177,7 @@ class XMLHandler extends DefaultHandler {
 class HandlerConn extends DefaultHandler {
 	final List<Conexao> conexoes;
 
-	public HandlerConn(List<Conexao> conexoes) {
+	HandlerConn(List<Conexao> conexoes) {
 		this.conexoes = conexoes;
 	}
 
@@ -194,7 +194,7 @@ class HandlerConn extends DefaultHandler {
 class HandlerFragmento extends DefaultHandler {
 	final List<Fragmento> fragmentos;
 
-	public HandlerFragmento(List<Fragmento> fragmentos) {
+	HandlerFragmento(List<Fragmento> fragmentos) {
 		this.fragmentos = fragmentos;
 	}
 

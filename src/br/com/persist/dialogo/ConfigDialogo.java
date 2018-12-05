@@ -85,7 +85,7 @@ public class ConfigDialogo extends Dialogo {
 		final String nome;
 		final int indice;
 
-		public Posicao(String chave, int indice) {
+		Posicao(String chave, int indice) {
 			this.nome = Mensagens.getString(chave);
 			this.indice = indice;
 		}
@@ -95,7 +95,7 @@ public class ConfigDialogo extends Dialogo {
 		private static final long serialVersionUID = 1L;
 		final Posicao posicao;
 
-		public RadioPosicao(Posicao posicao) {
+		RadioPosicao(Posicao posicao) {
 			super(posicao.nome);
 			this.posicao = posicao;
 			addActionListener(e -> formulario.getFichario().setTabPlacement(posicao.indice));

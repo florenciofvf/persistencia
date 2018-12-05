@@ -478,7 +478,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		private static final long serialVersionUID = 1L;
 		private Popup popup = new Popup();
 
-		public ButtonUpdate() {
+		ButtonUpdate() {
 			setToolTipText(Mensagens.getString("label.atualizar"));
 			popup.add(new MenuItem(new TabelaAcao()));
 			popup.addSeparator();
@@ -626,7 +626,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		private static final long serialVersionUID = 1L;
 		private Popup popup = new Popup();
 
-		public ButtonInfo() {
+		ButtonInfo() {
 			setToolTipText(Mensagens.getString("label.meta_dados"));
 			popup.add(new MenuItem(new ChavesPrimariasAcao()));
 			popup.addSeparator();

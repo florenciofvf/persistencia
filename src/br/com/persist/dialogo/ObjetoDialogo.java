@@ -316,7 +316,7 @@ public class ObjetoDialogo extends Dialogo {
 		private final Objeto objeto;
 		private final Label label;
 
-		public IconeListener(Objeto objeto, Label label) {
+		IconeListener(Objeto objeto, Label label) {
 			this.objeto = objeto;
 			this.label = label;
 		}
