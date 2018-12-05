@@ -855,10 +855,10 @@ public class Superficie extends Desktop {
 			public void actionPerformed(ActionEvent e) {
 				if (selecionadoObjeto != null && formulario.getCor() != null) {
 					selecionadoObjeto.setCor(formulario.getCor());
-					repaint();
+					Superficie.this.repaint();
 				} else if (selecionadoRelacao != null && formulario.getCor() != null) {
 					selecionadoRelacao.setCor(formulario.getCor());
-					repaint();
+					Superficie.this.repaint();
 				}
 			}
 		}
@@ -1052,7 +1052,7 @@ public class Superficie extends Desktop {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				formulario.colar(Superficie.this, true, popup2.x, popup2.y);
-				repaint();
+				Superficie.this.repaint();
 			}
 		}
 	}
