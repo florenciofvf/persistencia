@@ -2,14 +2,12 @@ package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
 
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
