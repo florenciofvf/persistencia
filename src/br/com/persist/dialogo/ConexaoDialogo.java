@@ -186,7 +186,6 @@ public class ConexaoDialogo extends Dialogo {
 
 			AbrirAcao() {
 				super(false, "label.baixar", Icones.BAIXAR);
-				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
 			}
 
 			@Override
