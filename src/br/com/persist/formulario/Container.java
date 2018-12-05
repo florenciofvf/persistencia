@@ -82,7 +82,7 @@ public class Container extends PanelBorder {
 			for (int i = 0; i < cmbConexao.getItemCount(); i++) {
 				Conexao c = cmbConexao.getItemAt(i);
 
-				if (nomeConexao.equals(c.getNome())) {
+				if (nomeConexao.equalsIgnoreCase(c.getNome())) {
 					conexao = c;
 					break;
 				}
