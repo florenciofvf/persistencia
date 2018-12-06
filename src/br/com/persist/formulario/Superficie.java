@@ -379,17 +379,12 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.popupObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.configObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
-				JInternalFrame[] frames = getAllFrames();
-				boolean contemFrames = frames.length > 0;
 				popup2.x = x;
 				popup2.y = y;
-				popup2.itemAlinharEsquerdo.setEnabled(contemFrames);
-				popup2.itemAlinharDireito.setEnabled(contemFrames);
-				popup2.itemMesmaLargura.setEnabled(contemFrames);
-				popup2.itemCentralizar.setEnabled(contemFrames);
+				popup2.configContemFrames(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -448,11 +443,12 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.popupObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.configObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
 				popup2.y = y;
+				popup2.configContemFrames(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -777,7 +773,7 @@ public class Superficie extends Desktop {
 			add(new MenuItem(new ConfiguracaoAcao()));
 		}
 
-		void popupObjeto(boolean b) {
+		void configObjeto(boolean b) {
 			itemFormulario.setEnabled(b);
 			itemHorizontal.setEnabled(b);
 			itemVertical.setEnabled(b);
@@ -962,6 +958,13 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(itemDimensoes);
 			add(itemAjustes);
+		}
+
+		void configContemFrames(boolean b) {
+			itemAlinharEsquerdo.setEnabled(b);
+			itemAlinharDireito.setEnabled(b);
+			itemMesmaLargura.setEnabled(b);
+			itemCentralizar.setEnabled(b);
 		}
 
 		class AlinharEsquerdoAcao extends Acao {
