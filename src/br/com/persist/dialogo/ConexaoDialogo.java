@@ -39,6 +39,8 @@ public class ConexaoDialogo extends Dialogo {
 	}
 
 	private void configurar() {
+		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
