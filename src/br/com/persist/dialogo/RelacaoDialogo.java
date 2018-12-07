@@ -47,6 +47,7 @@ public class RelacaoDialogo extends Dialogo {
 	public RelacaoDialogo(Frame frame, Superficie superficie, Relacao relacao) {
 		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId(), 600, 400, false);
 		this.superficie = superficie;
+		Formulario.macro.limpar();
 		this.relacao = relacao;
 		montarLayout();
 		setVisible(true);

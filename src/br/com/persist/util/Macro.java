@@ -1,7 +1,9 @@
 package br.com.persist.util;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.persist.Objeto;
@@ -17,12 +19,13 @@ public class Macro {
 	public static final String COR_FONTE = "corFonte";
 	public static final String ICONE = "icone";
 	private final Map<String, Instrucao> mapa;
+	private final List<Instrucao> instrucoes;
 	public static final String COR = "cor";
 	public static final String X = "x";
 	public static final String Y = "y";
-	private Instrucao instrucao;
 
 	public Macro() {
+		instrucoes = new ArrayList<>();
 		mapa = new HashMap<>();
 
 		mapa.put(DESENHAR_ID_DESC, new DesenharIdDesc());
@@ -38,8 +41,8 @@ public class Macro {
 		mapa.put(Y, new Y());
 	}
 
-	public Instrucao getInstrucao() {
-		return instrucao;
+	public List<Instrucao> getInstrucoes() {
+		return instrucoes;
 	}
 
 	public abstract class Instrucao {
@@ -181,57 +184,77 @@ public class Macro {
 	}
 
 	public void desenharIdDescricao(Object valor) {
-		instrucao = mapa.get(DESENHAR_ID_DESC);
+		Instrucao instrucao = mapa.get(DESENHAR_ID_DESC);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void deslocarXIdDescricao(Object valor) {
-		instrucao = mapa.get(DESCLOC_X_ID_DESC);
+		Instrucao instrucao = mapa.get(DESCLOC_X_ID_DESC);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void deslocarYIdDescricao(Object valor) {
-		instrucao = mapa.get(DESCLOC_Y_ID_DESC);
+		Instrucao instrucao = mapa.get(DESCLOC_Y_ID_DESC);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void pontoDestino(Object valor) {
-		instrucao = mapa.get(PONTO_DESTINO);
+		Instrucao instrucao = mapa.get(PONTO_DESTINO);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void transparente(Object valor) {
-		instrucao = mapa.get(TRANSPARENTE);
+		Instrucao instrucao = mapa.get(TRANSPARENTE);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void pontoOrigem(Object valor) {
-		instrucao = mapa.get(PONTO_ORIGEM);
+		Instrucao instrucao = mapa.get(PONTO_ORIGEM);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void corFonte(Object valor) {
-		instrucao = mapa.get(COR_FONTE);
+		Instrucao instrucao = mapa.get(COR_FONTE);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void icone(Object valor) {
-		instrucao = mapa.get(ICONE);
+		Instrucao instrucao = mapa.get(ICONE);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void cor(Object valor) {
-		instrucao = mapa.get(COR);
+		Instrucao instrucao = mapa.get(COR);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void x(Object valor) {
-		instrucao = mapa.get(X);
+		Instrucao instrucao = mapa.get(X);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
 	}
 
 	public void y(Object valor) {
-		instrucao = mapa.get(Y);
+		Instrucao instrucao = mapa.get(Y);
 		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	private void adicionar(Instrucao instrucao) {
+		instrucoes.remove(instrucao);
+		instrucoes.add(instrucao);
+	}
+
+	public void limpar() {
+		instrucoes.clear();
 	}
 }

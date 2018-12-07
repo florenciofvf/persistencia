@@ -74,21 +74,25 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Instrucao instrucao = Formulario.macro.getInstrucao();
+			List<Instrucao> instrucoes = Formulario.macro.getInstrucoes();
 
-			if (instrucao == null) {
+			if (instrucoes.isEmpty()) {
 				return;
 			}
 
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
-					instrucao.executar(objeto);
+					for (Instrucao instrucao : instrucoes) {
+						instrucao.executar(objeto);
+					}
 				}
 			}
 
 			for (Relacao relacao : relacoes) {
 				if (relacao.isSelecionado()) {
-					instrucao.executar(relacao);
+					for (Instrucao instrucao : instrucoes) {
+						instrucao.executar(relacao);
+					}
 				}
 			}
 

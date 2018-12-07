@@ -47,6 +47,7 @@ public class ObjetoDialogo extends Dialogo {
 	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
 		super(frame, objeto.getId(), 700, 430, false);
 		this.superficie = superficie;
+		Formulario.macro.limpar();
 		this.objeto = objeto;
 		montarLayout();
 		setVisible(true);
