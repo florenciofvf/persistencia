@@ -13,6 +13,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.modelo.ConexaoModelo;
+import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -193,6 +194,7 @@ public class ConexaoDialogo extends Dialogo {
 				try {
 					modelo.abrir();
 					formulario.atualizarConexoes();
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoDialogo.this);
 				}

@@ -13,6 +13,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.modelo.FragmentoModelo;
+import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
@@ -145,6 +146,7 @@ public class FragmentoDialogo extends Dialogo {
 
 				FragmentoModelo.ordenar();
 				modelo.fireTableDataChanged();
+				TabelaUtil.ajustar(tabela, getGraphics(), 40);
 			}
 		}
 
