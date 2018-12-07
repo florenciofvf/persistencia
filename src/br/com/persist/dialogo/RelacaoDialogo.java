@@ -35,6 +35,7 @@ import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.Superficie;
 import br.com.persist.util.Util;
 
@@ -137,13 +138,16 @@ public class RelacaoDialogo extends Dialogo {
 
 			if (txtDeslocXDesc == e.getSource()) {
 				relacao.setDeslocamentoXDesc(Util.getInt(txt.getText(), relacao.getDeslocamentoXDesc()));
+				Formulario.macro.deslocarXIdDescricao(relacao.getDeslocamentoXDesc());
 
 			} else if (txtDeslocYDesc == e.getSource()) {
 				relacao.setDeslocamentoYDesc(Util.getInt(txt.getText(), relacao.getDeslocamentoYDesc()));
+				Formulario.macro.deslocarYIdDescricao(relacao.getDeslocamentoYDesc());
 
 			} else if (chkDesenharDesc == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setDesenharDescricao(chk.isSelected());
+				Formulario.macro.desenharIdDescricao(chk.isSelected());
 			}
 
 			superficie.repaint();
@@ -170,6 +174,7 @@ public class RelacaoDialogo extends Dialogo {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			relacao.setCorFonte(colorChooser.getColor());
+			Formulario.macro.corFonte(relacao.getCorFonte());
 			superficie.repaint();
 		}
 	}
@@ -187,6 +192,7 @@ public class RelacaoDialogo extends Dialogo {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			relacao.setCor(colorChooser.getColor());
+			Formulario.macro.cor(relacao.getCor());
 			superficie.repaint();
 		}
 	}
@@ -221,8 +227,10 @@ public class RelacaoDialogo extends Dialogo {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (origem) {
+					Formulario.macro.pontoOrigem(chkPonto.isSelected());
 					relacao.setPontoOrigem(chkPonto.isSelected());
 				} else {
+					Formulario.macro.pontoDestino(chkPonto.isSelected());
 					relacao.setPontoDestino(chkPonto.isSelected());
 				}
 

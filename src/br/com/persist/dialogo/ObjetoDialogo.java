@@ -35,6 +35,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.Superficie;
 import br.com.persist.util.Util;
 
@@ -150,15 +151,19 @@ public class ObjetoDialogo extends Dialogo {
 
 			if (txtX == e.getSource()) {
 				objeto.x = Util.getInt(txt.getText(), objeto.x);
+				Formulario.macro.x(objeto.x);
 
 			} else if (txtY == e.getSource()) {
 				objeto.y = Util.getInt(txt.getText(), objeto.y);
+				Formulario.macro.y(objeto.y);
 
 			} else if (txtDeslocXId == e.getSource()) {
 				objeto.setDeslocamentoXId(Util.getInt(txt.getText(), objeto.getDeslocamentoXId()));
+				Formulario.macro.deslocarXIdDescricao(objeto.getDeslocamentoXId());
 
 			} else if (txtDeslocYId == e.getSource()) {
 				objeto.setDeslocamentoYId(Util.getInt(txt.getText(), objeto.getDeslocamentoYId()));
+				Formulario.macro.deslocarYIdDescricao(objeto.getDeslocamentoYId());
 
 			} else if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txt.getText());
@@ -187,10 +192,12 @@ public class ObjetoDialogo extends Dialogo {
 			} else if (chkDesenharId == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
+				Formulario.macro.desenharIdDescricao(chk.isSelected());
 
 			} else if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setTransparente(chk.isSelected());
+				Formulario.macro.transparente(chk.isSelected());
 			}
 
 			superficie.repaint();
@@ -291,6 +298,7 @@ public class ObjetoDialogo extends Dialogo {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			objeto.setCorFonte(colorChooser.getColor());
+			Formulario.macro.corFonte(objeto.getCorFonte());
 			superficie.repaint();
 		}
 	}
@@ -308,6 +316,7 @@ public class ObjetoDialogo extends Dialogo {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			objeto.setCor(colorChooser.getColor());
+			Formulario.macro.cor(objeto.getCor());
 			superficie.repaint();
 		}
 	}

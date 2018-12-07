@@ -30,6 +30,7 @@ import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Macro;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
@@ -40,6 +41,7 @@ public class Formulario extends JFrame {
 	private final Vector<Conexao> conexoes = new Vector<>();
 	private final List<Objeto> copiados = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
+	public static final Macro macro = new Macro();
 	private File arquivo;
 	private Color cor;
 
