@@ -98,14 +98,6 @@ public class Objeto {
 		return ID;
 	}
 
-	public void setDeslocamentoXId(int deslocamentoXId) {
-		this.deslocamentoXId = deslocamentoXId;
-	}
-
-	public void setDeslocamentoYId(int deslocamentoYId) {
-		this.deslocamentoYId = deslocamentoYId;
-	}
-
 	public void setTransparente(boolean transparente) {
 		this.transparente = transparente;
 	}
@@ -172,14 +164,6 @@ public class Objeto {
 		} else {
 			icon = Imagens.getIcon(this.icone);
 		}
-	}
-
-	public int getDeslocamentoXId() {
-		return deslocamentoXId;
-	}
-
-	public int getDeslocamentoYId() {
-		return deslocamentoYId;
 	}
 
 	public boolean isTransparente() {

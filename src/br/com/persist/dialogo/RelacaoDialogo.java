@@ -98,8 +98,8 @@ public class RelacaoDialogo extends Dialogo {
 		private CheckBox chkDesenharDesc = new CheckBox();
 
 		PanelDesc() {
-			txtDeslocXDesc.setText("" + relacao.getDeslocamentoXDesc());
-			txtDeslocYDesc.setText("" + relacao.getDeslocamentoYDesc());
+			txtDeslocXDesc.setText("" + relacao.deslocamentoXDesc);
+			txtDeslocYDesc.setText("" + relacao.deslocamentoYDesc);
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
 
 			txtDeslocXDesc.addFocusListener(focusListener);
@@ -137,12 +137,12 @@ public class RelacaoDialogo extends Dialogo {
 			}
 
 			if (txtDeslocXDesc == e.getSource()) {
-				relacao.setDeslocamentoXDesc(Util.getInt(txt.getText(), relacao.getDeslocamentoXDesc()));
-				Formulario.macro.deslocarXIdDescricao(relacao.getDeslocamentoXDesc());
+				relacao.deslocamentoXDesc = Util.getInt(txt.getText(), relacao.deslocamentoXDesc);
+				Formulario.macro.deslocarXIdDescricao(relacao.deslocamentoXDesc);
 
 			} else if (txtDeslocYDesc == e.getSource()) {
-				relacao.setDeslocamentoYDesc(Util.getInt(txt.getText(), relacao.getDeslocamentoYDesc()));
-				Formulario.macro.deslocarYIdDescricao(relacao.getDeslocamentoYDesc());
+				relacao.deslocamentoYDesc = Util.getInt(txt.getText(), relacao.deslocamentoYDesc);
+				Formulario.macro.deslocarYIdDescricao(relacao.deslocamentoYDesc);
 
 			} else if (chkDesenharDesc == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();

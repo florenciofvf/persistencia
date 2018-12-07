@@ -75,9 +75,9 @@ public class ObjetoDialogo extends Dialogo {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
-			txtDeslocXId.setText("" + objeto.getDeslocamentoXId());
-			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
 			chkTransparente.setSelected(objeto.isTransparente());
+			txtDeslocXId.setText("" + objeto.deslocamentoXId);
+			txtDeslocYId.setText("" + objeto.deslocamentoYId);
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
@@ -158,12 +158,12 @@ public class ObjetoDialogo extends Dialogo {
 				Formulario.macro.y(objeto.y);
 
 			} else if (txtDeslocXId == e.getSource()) {
-				objeto.setDeslocamentoXId(Util.getInt(txt.getText(), objeto.getDeslocamentoXId()));
-				Formulario.macro.deslocarXIdDescricao(objeto.getDeslocamentoXId());
+				objeto.deslocamentoXId = Util.getInt(txt.getText(), objeto.deslocamentoXId);
+				Formulario.macro.deslocarXIdDescricao(objeto.deslocamentoXId);
 
 			} else if (txtDeslocYId == e.getSource()) {
-				objeto.setDeslocamentoYId(Util.getInt(txt.getText(), objeto.getDeslocamentoYId()));
-				Formulario.macro.deslocarYIdDescricao(objeto.getDeslocamentoYId());
+				objeto.deslocamentoYId = Util.getInt(txt.getText(), objeto.deslocamentoYId);
+				Formulario.macro.deslocarYIdDescricao(objeto.deslocamentoYId);
 
 			} else if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txt.getText());
