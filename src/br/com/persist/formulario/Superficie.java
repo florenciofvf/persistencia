@@ -508,13 +508,16 @@ public class Superficie extends Desktop {
 					frame = container.getFormularioSuperficie();
 				}
 
-				if (selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2())) {
-					Conexao conexao = container.getConexaoPadrao();
-					setComplemento(conexao, selecionadoObjeto);
-					new FormularioExterno(formulario, frame, selecionadoObjeto, getGraphics(), conexao);
-
+				if (selecionadoObjeto != null) {
+					if (!Util.estaVazio(selecionadoObjeto.getTabela2())) {
+						Conexao conexao = container.getConexaoPadrao();
+						setComplemento(conexao, selecionadoObjeto);
+						new FormularioExterno(formulario, frame, selecionadoObjeto, getGraphics(), conexao);
+					} else {
+						popup.new ConfiguracaoAcao().actionPerformed(null);
+					}
 				} else if (selecionadoRelacao != null) {
-					new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
+					popup.new ConfiguracaoAcao().actionPerformed(null);
 				}
 			}
 		}
