@@ -45,9 +45,9 @@ public class Macro {
 	public abstract class Instrucao {
 		Object valor;
 
-		abstract void executar(Relacao relacao);
+		public abstract void executar(Relacao relacao);
 
-		abstract void executar(Objeto objeto);
+		public abstract void executar(Objeto objeto);
 
 		public void setValor(Object valor) {
 			this.valor = valor;
@@ -56,126 +56,126 @@ public class Macro {
 
 	class DesenharIdDesc extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 			relacao.setDesenharDescricao((Boolean) valor);
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.setDesenharId((Boolean) valor);
 		}
 	}
 
 	class DeslocXIdDesc extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 			relacao.deslocamentoXDesc = (Integer) valor;
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.deslocamentoXId = (Integer) valor;
 		}
 	}
 
 	class DeslocYIdDesc extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 			relacao.deslocamentoYDesc = (Integer) valor;
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.deslocamentoYId = (Integer) valor;
 		}
 	}
 
 	class Transparente extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.setTransparente((Boolean) valor);
 		}
 	}
 
 	class PontoDestino extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 			relacao.setPontoDestino((Boolean) valor);
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 		}
 	}
 
 	class PontoOrigem extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 			relacao.setPontoOrigem((Boolean) valor);
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 		}
 	}
 
 	class CorFonte extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 			relacao.setCorFonte((Color) valor);
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.setCorFonte((Color) valor);
 		}
 	}
 
 	class Icone extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.setIcone(valor.toString());
 		}
 	}
 
 	class Cor extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 			relacao.setCor((Color) valor);
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.setCor((Color) valor);
 		}
 	}
 
 	class X extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.x = (Integer) valor;
 		}
 	}
 
 	class Y extends Instrucao {
 		@Override
-		void executar(Relacao relacao) {
+		public void executar(Relacao relacao) {
 		}
 
 		@Override
-		void executar(Objeto objeto) {
+		public void executar(Objeto objeto) {
 			objeto.y = (Integer) valor;
 		}
 	}

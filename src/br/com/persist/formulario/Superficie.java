@@ -16,6 +16,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.InputMap;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
@@ -34,6 +36,7 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Macro.Instrucao;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
@@ -57,8 +60,41 @@ public class Superficie extends Desktop {
 		super(formulario, true);
 		configEstado(Constantes.SELECAO);
 		this.container = container;
+		config();
 		limpar();
 	}
+
+	private void config() {
+		inputMap().put(getKeyStroke(KeyEvent.VK_M), "macro");
+		getActionMap().put("macro", macro);
+	}
+
+	Action macro = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Instrucao instrucao = Formulario.macro.getInstrucao();
+
+			if (instrucao == null) {
+				return;
+			}
+
+			for (Objeto objeto : objetos) {
+				if (objeto.isSelecionado()) {
+					instrucao.executar(objeto);
+				}
+			}
+
+			for (Relacao relacao : relacoes) {
+				if (relacao.isSelecionado()) {
+					instrucao.executar(relacao);
+				}
+			}
+
+			repaint();
+		}
+	};
 
 	public void alinharNomes() {
 		Font font = getFont();
