@@ -37,8 +37,8 @@ import br.com.persist.xml.XML;
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
+	public static final List<Objeto> COPIADOS = new ArrayList<>();
 	private final Vector<Conexao> conexoes = new Vector<>();
-	private final List<Objeto> copiados = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
 	public static final Macro macro = new Macro();
 	private File arquivo;
@@ -58,16 +58,16 @@ public class Formulario extends JFrame {
 		fichario.destacar(this, conexao, superficie.getSelecionados(), formDesktop);
 	}
 
-	public void copiar(Superficie superficie) {
-		copiados.clear();
+	public static void copiar(Superficie superficie) {
+		COPIADOS.clear();
 
 		for (Objeto objeto : superficie.getSelecionados()) {
-			copiados.add(objeto.clonar());
+			COPIADOS.add(objeto.clonar());
 		}
 	}
 
-	public void colar(Superficie superficie, boolean b, int x, int y) {
-		for (Objeto objeto : copiados) {
+	public static void colar(Superficie superficie, boolean b, int x, int y) {
+		for (Objeto objeto : COPIADOS) {
 			Objeto clone = get(objeto, superficie);
 			superficie.addObjeto(clone);
 
@@ -78,7 +78,7 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	private Objeto get(Objeto objeto, Superficie superficie) {
+	private static Objeto get(Objeto objeto, Superficie superficie) {
 		Objeto o = objeto.clonar();
 		o.x += Objeto.diametro;
 		o.y += Objeto.diametro;

@@ -441,12 +441,12 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.configObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.configItens(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
 				popup2.y = y;
-				popup2.configContemFrames(getAllFrames().length > 0);
+				popup2.configItens(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -505,12 +505,12 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.configObjeto(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.configItens(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.x = x;
 				popup2.y = y;
-				popup2.configContemFrames(getAllFrames().length > 0);
+				popup2.configItens(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -838,12 +838,12 @@ public class Superficie extends Desktop {
 			add(new MenuItem(new ConfiguracaoAcao()));
 		}
 
-		void configObjeto(boolean b) {
-			itemFormulario.setEnabled(b);
-			itemHorizontal.setEnabled(b);
-			itemVertical.setEnabled(b);
-			itemDestacar.setEnabled(b);
-			itemCopiar.setEnabled(b);
+		void configItens(boolean objetoSelecionado) {
+			itemFormulario.setEnabled(objetoSelecionado);
+			itemHorizontal.setEnabled(objetoSelecionado);
+			itemVertical.setEnabled(objetoSelecionado);
+			itemDestacar.setEnabled(objetoSelecionado);
+			itemCopiar.setEnabled(objetoSelecionado);
 		}
 
 		class DestacarAcao extends Acao {
@@ -884,7 +884,7 @@ public class Superficie extends Desktop {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				formulario.copiar(Superficie.this);
+				Formulario.copiar(Superficie.this);
 			}
 		}
 
@@ -987,10 +987,11 @@ public class Superficie extends Desktop {
 		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
 		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
 		MenuItem itemAjustes = new MenuItem(new AjustarAcao());
+		MenuItem itemColar = new MenuItem(new ColarAcao());
 		int x, y;
 
 		SuperficiePopup2() {
-			add(new MenuItem(new ColarAcao()));
+			add(itemColar);
 			addSeparator();
 			add(itemAlinharEsquerdo);
 			add(itemAlinharDireito);
@@ -1001,11 +1002,12 @@ public class Superficie extends Desktop {
 			add(itemAjustes);
 		}
 
-		void configContemFrames(boolean b) {
-			itemAlinharEsquerdo.setEnabled(b);
-			itemAlinharDireito.setEnabled(b);
-			itemMesmaLargura.setEnabled(b);
-			itemCentralizar.setEnabled(b);
+		void configItens(boolean contemFrames) {
+			itemColar.setEnabled(!Formulario.COPIADOS.isEmpty());
+			itemAlinharEsquerdo.setEnabled(contemFrames);
+			itemAlinharDireito.setEnabled(contemFrames);
+			itemMesmaLargura.setEnabled(contemFrames);
+			itemCentralizar.setEnabled(contemFrames);
 		}
 
 		class AlinharEsquerdoAcao extends Acao {
@@ -1095,7 +1097,7 @@ public class Superficie extends Desktop {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				formulario.colar(Superficie.this, true, popup2.x, popup2.y);
+				Formulario.colar(Superficie.this, true, popup2.x, popup2.y);
 				Superficie.this.repaint();
 			}
 		}

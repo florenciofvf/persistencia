@@ -227,7 +227,7 @@ public class Container extends PanelBorder {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				formulario.copiar(superficie);
+				Formulario.copiar(superficie);
 			}
 		}
 
@@ -243,7 +243,7 @@ public class Container extends PanelBorder {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				formulario.colar(superficie, false, 0, 0);
+				Formulario.colar(superficie, false, 0, 0);
 				superficie.repaint();
 			}
 		}
