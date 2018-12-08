@@ -218,7 +218,7 @@ public class Relacao {
 			}
 		}
 
-		if (desenharDescricao) {
+		if (desenharDescricao && descricao != null) {
 			g2.setColor(corFonte);
 			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
 		}

@@ -28,15 +28,15 @@ public class Macro {
 		instrucoes = new ArrayList<>();
 		mapa = new HashMap<>();
 
-		mapa.put(DESENHAR_ID_DESC, new DesenharIdDesc());
-		mapa.put(DESCLOC_X_ID_DESC, new DeslocXIdDesc());
-		mapa.put(DESCLOC_Y_ID_DESC, new DeslocYIdDesc());
-		mapa.put(PONTO_DESTINO, new PontoDestino());
-		mapa.put(TRANSPARENTE, new Transparente());
-		mapa.put(PONTO_ORIGEM, new PontoOrigem());
-		mapa.put(COR_FONTE, new CorFonte());
-		mapa.put(ICONE, new Icone());
-		mapa.put(COR, new Cor());
+		mapa.put(DESCLOC_X_ID_DESC, new DESLOCAMENTO_X_ID_DESCRICAO());
+		mapa.put(DESCLOC_Y_ID_DESC, new DESLOCAMENTO_Y_ID_DESCRICAO());
+		mapa.put(DESENHAR_ID_DESC, new DESENHAR_ID_DESCRICAO());
+		mapa.put(PONTO_DESTINO, new PONTO_DESTINO());
+		mapa.put(TRANSPARENTE, new TRANSPARENTE());
+		mapa.put(PONTO_ORIGEM, new PONTO_ORIGEM());
+		mapa.put(COR_FONTE, new COR_FONTE());
+		mapa.put(ICONE, new ICONE());
+		mapa.put(COR, new COR());
 		mapa.put(X, new X());
 		mapa.put(Y, new Y());
 	}
@@ -62,19 +62,7 @@ public class Macro {
 		}
 	}
 
-	class DesenharIdDesc extends Instrucao {
-		@Override
-		public void executar(Relacao relacao) {
-			relacao.setDesenharDescricao((Boolean) valor);
-		}
-
-		@Override
-		public void executar(Objeto objeto) {
-			objeto.setDesenharId((Boolean) valor);
-		}
-	}
-
-	class DeslocXIdDesc extends Instrucao {
+	class DESLOCAMENTO_X_ID_DESCRICAO extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.deslocamentoXDesc = (Integer) valor;
@@ -86,7 +74,7 @@ public class Macro {
 		}
 	}
 
-	class DeslocYIdDesc extends Instrucao {
+	class DESLOCAMENTO_Y_ID_DESCRICAO extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.deslocamentoYDesc = (Integer) valor;
@@ -98,7 +86,19 @@ public class Macro {
 		}
 	}
 
-	class Transparente extends Instrucao {
+	class DESENHAR_ID_DESCRICAO extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			relacao.setDesenharDescricao((Boolean) valor);
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setDesenharId((Boolean) valor);
+		}
+	}
+
+	class TRANSPARENTE extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 		}
@@ -109,7 +109,7 @@ public class Macro {
 		}
 	}
 
-	class PontoDestino extends Instrucao {
+	class PONTO_DESTINO extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setPontoDestino((Boolean) valor);
@@ -120,7 +120,7 @@ public class Macro {
 		}
 	}
 
-	class PontoOrigem extends Instrucao {
+	class PONTO_ORIGEM extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setPontoOrigem((Boolean) valor);
@@ -131,7 +131,7 @@ public class Macro {
 		}
 	}
 
-	class CorFonte extends Instrucao {
+	class COR_FONTE extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setCorFonte((Color) valor);
@@ -143,7 +143,7 @@ public class Macro {
 		}
 	}
 
-	class Icone extends Instrucao {
+	class ICONE extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 		}
@@ -154,7 +154,7 @@ public class Macro {
 		}
 	}
 
-	class Cor extends Instrucao {
+	class COR extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setCor((Color) valor);
