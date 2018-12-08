@@ -150,7 +150,7 @@ public class Util {
 		}
 	}
 
-	public static Map<String, List<String>> criarMapa(String string) {
+	public static Map<String, List<String>> criarMapaCampoNomes(String string) {
 		Map<String, List<String>> mapa = new HashMap<>();
 
 		if (!estaVazio(string)) {
