@@ -31,6 +31,7 @@ public class Objeto {
 	public int deslocamentoXId = -5;
 	public int deslocamentoYId = -5;
 	private Color cor = COR_PADRAO;
+	private String buscaAutomatica;
 	public boolean transparente;
 	private boolean selecionado;
 	private boolean desenharId;
@@ -260,6 +261,14 @@ public class Objeto {
 		}
 	}
 
+	public String getBuscaAutomatica() {
+		if (Util.estaVazio(buscaAutomatica)) {
+			buscaAutomatica = "";
+		}
+
+		return buscaAutomatica;
+	}
+
 	public String getChaveamento() {
 		if (Util.estaVazio(chaveamento)) {
 			chaveamento = "";
@@ -270,6 +279,10 @@ public class Objeto {
 
 	public void setChaveamento(String chaveamento) {
 		this.chaveamento = chaveamento;
+	}
+
+	public void setBuscaAutomatica(String buscaAutomatica) {
+		this.buscaAutomatica = buscaAutomatica;
 	}
 
 	public boolean contem(int x, int y) {
@@ -351,6 +364,7 @@ public class Objeto {
 		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		buscaAutomatica = attr.getValue("buscaAutomatica");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
 		x = Integer.parseInt(attr.getValue("x"));
@@ -363,6 +377,7 @@ public class Objeto {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
+		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("desloc_x_id", deslocamentoXId);

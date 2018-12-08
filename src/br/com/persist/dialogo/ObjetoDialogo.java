@@ -63,6 +63,7 @@ public class ObjetoDialogo extends Dialogo {
 
 	private class PanelGeral extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private TextField txtBuscaAutomatica = new TextField();
 		private TextField txtChaveamento = new TextField();
 		private TextField txtComplemento = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
@@ -77,6 +78,7 @@ public class ObjetoDialogo extends Dialogo {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtDeslocXId.setText("" + objeto.deslocamentoXId);
 			txtDeslocYId.setText("" + objeto.deslocamentoYId);
@@ -89,6 +91,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 
+			txtBuscaAutomatica.addFocusListener(focusListener);
 			txtChaveamento.addFocusListener(focusListener);
 			txtComplemento.addFocusListener(focusListener);
 			txtDeslocXId.addFocusListener(focusListener);
@@ -99,6 +102,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtX.addFocusListener(focusListener);
 			txtY.addFocusListener(focusListener);
 
+			txtBuscaAutomatica.addActionListener(this);
 			chkTransparente.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
@@ -129,6 +133,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
+			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
@@ -166,6 +171,9 @@ public class ObjetoDialogo extends Dialogo {
 			} else if (txtDeslocYId == e.getSource()) {
 				objeto.deslocamentoYId = Util.getInt(txt.getText(), objeto.deslocamentoYId);
 				Formulario.macro.deslocarYIdDescricao(objeto.deslocamentoYId);
+
+			} else if (txtBuscaAutomatica == e.getSource()) {
+				objeto.setBuscaAutomatica(txt.getText());
 
 			} else if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txt.getText());
