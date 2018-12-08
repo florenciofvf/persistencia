@@ -290,11 +290,6 @@ public class Desktop extends JDesktopPane {
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof FormularioInterno) {
 				FormularioInterno interno = (FormularioInterno) frame;
-
-				if (interno.getPainelObjeto() == painelObjeto) {
-					continue;
-				}
-
 				List<Tabela> tabelas = grupo.getTabelas();
 
 				for (Tabela tabela : tabelas) {
