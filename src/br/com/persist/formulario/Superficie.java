@@ -972,32 +972,17 @@ public class Superficie extends Desktop {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Objeto primeiro = null;
-				int i = 0;
+				if (selecionadoObjeto != null) {
+					Formulario.macro.limpar();
 
-				for (; i < objetos.length; i++) {
-					if (objetos[i].isSelecionado()) {
-						primeiro = objetos[i];
-						i++;
-						break;
+					if (horizontal) {
+						Formulario.macro.y(selecionadoObjeto.y);
+					} else {
+						Formulario.macro.x(selecionadoObjeto.x);
 					}
+
+					macro.actionPerformed(null);
 				}
-
-				if (primeiro != null) {
-					for (; i < objetos.length; i++) {
-						Objeto objeto = objetos[i];
-
-						if (objeto.isSelecionado()) {
-							if (horizontal) {
-								objeto.y = primeiro.y;
-							} else {
-								objeto.x = primeiro.x;
-							}
-						}
-					}
-				}
-
-				Superficie.this.repaint();
 			}
 		}
 	}
