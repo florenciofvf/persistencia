@@ -816,9 +816,9 @@ public class Superficie extends Desktop {
 		MenuItem itemHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		MenuItem itemVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
-		MenuItem itemCopiarCor = new MenuItem(new CopiarCorAcao());
+		// MenuItem itemCopiarCor = new MenuItem(new CopiarCorAcao());
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
-		MenuItem itemColarCor = new MenuItem(new ColarCorAcao());
+		// MenuItem itemColarCor = new MenuItem(new ColarCorAcao());
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
 
 		SuperficiePopup() {
@@ -826,9 +826,9 @@ public class Superficie extends Desktop {
 			add(itemVertical);
 			addSeparator();
 			add(itemCopiar);
-			add(itemCopiarCor);
-			addSeparator();
-			add(itemColarCor);
+			// add(itemCopiarCor);
+			// addSeparator();
+			// add(itemColarCor);
 			addSeparator();
 			add(itemDestacar);
 			add(itemFormulario);
@@ -888,41 +888,33 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class CopiarCorAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+		/*
+		 * class CopiarCorAcao extends Acao { private static final long
+		 * serialVersionUID = 1L;
+		 * 
+		 * CopiarCorAcao() { super(true, "label.copiar_cor", Icones.COPIA); }
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) { if
+		 * (selecionadoObjeto != null) {
+		 * formulario.setCor(selecionadoObjeto.getCor()); } else if
+		 * (selecionadoRelacao != null) {
+		 * formulario.setCor(selecionadoRelacao.getCor()); } } }
+		 */
 
-			CopiarCorAcao() {
-				super(true, "label.copiar_cor", Icones.COPIA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (selecionadoObjeto != null) {
-					formulario.setCor(selecionadoObjeto.getCor());
-				} else if (selecionadoRelacao != null) {
-					formulario.setCor(selecionadoRelacao.getCor());
-				}
-			}
-		}
-
-		class ColarCorAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ColarCorAcao() {
-				super(true, "label.colar_cor", Icones.COLAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (selecionadoObjeto != null && formulario.getCor() != null) {
-					selecionadoObjeto.setCor(formulario.getCor());
-					Superficie.this.repaint();
-				} else if (selecionadoRelacao != null && formulario.getCor() != null) {
-					selecionadoRelacao.setCor(formulario.getCor());
-					Superficie.this.repaint();
-				}
-			}
-		}
+		/*
+		 * class ColarCorAcao extends Acao { private static final long
+		 * serialVersionUID = 1L;
+		 * 
+		 * ColarCorAcao() { super(true, "label.colar_cor", Icones.COLAR); }
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) { if
+		 * (selecionadoObjeto != null && formulario.getCor() != null) {
+		 * selecionadoObjeto.setCor(formulario.getCor());
+		 * Superficie.this.repaint(); } else if (selecionadoRelacao != null &&
+		 * formulario.getCor() != null) {
+		 * selecionadoRelacao.setCor(formulario.getCor());
+		 * Superficie.this.repaint(); } } }
+		 */
 
 		class ExcluirAcao extends Acao {
 			private static final long serialVersionUID = 1L;
@@ -1000,11 +992,10 @@ public class Superficie extends Desktop {
 		SuperficiePopup2() {
 			add(new MenuItem(new ColarAcao()));
 			addSeparator();
-			add(itemCentralizar);
-			addSeparator();
 			add(itemAlinharEsquerdo);
 			add(itemAlinharDireito);
 			add(itemMesmaLargura);
+			add(itemCentralizar);
 			addSeparator();
 			add(itemDimensoes);
 			add(itemAjustes);
