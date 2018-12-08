@@ -55,6 +55,11 @@ public class Macro {
 		public void setValor(Object valor) {
 			this.valor = valor;
 		}
+
+		@Override
+		public String toString() {
+			return getClass().getSimpleName();
+		}
 	}
 
 	class DesenharIdDesc extends Instrucao {
@@ -256,5 +261,13 @@ public class Macro {
 
 	public void limpar() {
 		instrucoes.clear();
+	}
+
+	public void excluir(int indice) {
+		instrucoes.remove(indice);
+	}
+
+	public boolean isEmpty() {
+		return instrucoes.isEmpty();
 	}
 }

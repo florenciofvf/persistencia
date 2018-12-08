@@ -28,6 +28,7 @@ import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.objeto.FormularioExterno;
@@ -65,9 +66,30 @@ public class Superficie extends Desktop {
 	}
 
 	private void config() {
+		inputMap().put(getKeyStroke(KeyEvent.VK_N), "macro_lista");
 		inputMap().put(getKeyStroke(KeyEvent.VK_M), "macro");
+		getActionMap().put("macro_lista", macroLista);
 		getActionMap().put("macro", macro);
 	}
+
+	Action macroLista = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (Formulario.macro.isEmpty()) {
+				return;
+			}
+
+			Frame frame = formulario;
+
+			if (container.getFormularioSuperficie() != null) {
+				frame = container.getFormularioSuperficie();
+			}
+
+			new MacroDialogo(frame, Superficie.this);
+		}
+	};
 
 	Action macro = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
