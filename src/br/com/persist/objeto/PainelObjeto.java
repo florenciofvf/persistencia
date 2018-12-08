@@ -53,6 +53,8 @@ import br.com.persist.tabela.IndiceValor;
 import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
+import br.com.persist.util.BuscaAuto;
+import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
@@ -80,6 +82,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			cmbConexao.setSelectedItem(padrao);
 		}
 		txtComplemento.addActionListener(this);
+		toolbar.complementoBuscaAuto(objeto);
 		toolbar.complementoUpdate(objeto);
 		cmbConexao.addItemListener(this);
 		toolbar.add(txtComplemento);
@@ -230,6 +233,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
 		final ButtonUpdate update = new ButtonUpdate();
 		final Label total = new Label(Color.BLUE);
 
@@ -240,6 +244,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new FragmentoAcao()));
 			addSeparator();
+			add(buscaAuto);
 			add(update);
 			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
@@ -271,6 +276,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
+		}
+
+		void complementoBuscaAuto(Objeto objeto) {
+			buscaAuto.complemento(objeto);
 		}
 
 		void complementoUpdate(Objeto objeto) {
@@ -470,6 +479,43 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			public void actionPerformed(ActionEvent e) {
 				processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
 						cabecalhoFiltro);
+			}
+		}
+	}
+
+	private class ButtonBuscaAuto extends Button {
+		private static final long serialVersionUID = 1L;
+		private Popup popup = new Popup();
+
+		ButtonBuscaAuto() {
+			setToolTipText(Mensagens.getString("label.buscaAuto"));
+			setComponentPopupMenu(popup);
+			setIcon(Icones.CONFIG2);
+			addActionListener(e -> popup.show(this, 5, 5));
+		}
+
+		void complemento(Objeto objeto) {
+			List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
+
+			for (Grupo grupo : listaGrupo) {
+				popup.add(new MenuItemBuscaAuto(grupo));
+			}
+		}
+
+		class MenuItemBuscaAuto extends JMenuItem implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private final Grupo grupo;
+
+			MenuItemBuscaAuto(Grupo grupo) {
+				this.grupo = grupo;
+				setText(grupo.getDescricao());
+				addActionListener(this);
+				setIcon(Icones.RESUME);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				grupo.getCampo();
 			}
 		}
 	}
