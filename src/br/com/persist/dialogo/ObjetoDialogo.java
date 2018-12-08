@@ -37,6 +37,7 @@ import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.Superficie;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class ObjetoDialogo extends Dialogo {
@@ -127,7 +128,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves));
-			container.add(criarLinha("label.chaveamento", txtChaveamento));
+			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
@@ -339,12 +340,20 @@ public class ObjetoDialogo extends Dialogo {
 	};
 
 	private Box criarLinha(String chaveRotulo, JComponent componente) {
+		return criarLinha(chaveRotulo, componente, null);
+	}
+
+	private Box criarLinha(String chaveRotulo, JComponent componente, String hint) {
 		Box box = Box.createHorizontalBox();
 
 		Label label = new Label(chaveRotulo);
 		label.setHorizontalAlignment(Label.RIGHT);
 		label.setPreferredSize(new Dimension(100, 0));
 		label.setMinimumSize(new Dimension(100, 0));
+
+		if (!Util.estaVazio(hint)) {
+			label.setToolTipText(hint);
+		}
 
 		box.add(label);
 
