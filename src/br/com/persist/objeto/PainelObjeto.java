@@ -515,7 +515,20 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				grupo.getCampo();
+				int coluna = TabelaUtil.getIndiceColuna(tabela, grupo.getCampo());
+
+				if (coluna == -1) {
+					return;
+				}
+
+				List<String> lista = TabelaUtil.getValoresColuna(tabela, coluna);
+
+				if (lista.isEmpty()) {
+					return;
+				}
+
+				String argumentos = Util.getStringLista(lista, false);
+				listener.buscaAutomatica(grupo, argumentos);
 			}
 		}
 	}
@@ -912,5 +925,18 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		toolbar.new AtualizarRegistrosAcao().actionPerformed(null);
+	}
+
+	public void buscaAutomatica(String campo, String argumentos) {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		String complemento = "AND " + campo + " IN (" + argumentos + ")";
+		txtComplemento.setText(complemento);
+		objeto.setComplemento(txtComplemento.getText());
+		PainelObjeto.this.actionPerformed(null);
 	}
 }

@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.util.List;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -26,7 +27,10 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.objeto.FormularioInterno;
+import br.com.persist.objeto.PainelObjeto;
 import br.com.persist.util.Acao;
+import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
@@ -276,6 +280,28 @@ public class Desktop extends JDesktopPane {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				configDimension();
+			}
+		}
+	}
+
+	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto) {
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof FormularioInterno) {
+				FormularioInterno interno = (FormularioInterno) frame;
+
+				if (interno.getPainelObjeto() == painelObjeto) {
+					continue;
+				}
+
+				List<Tabela> tabelas = grupo.getTabelas();
+
+				for (Tabela tabela : tabelas) {
+					if (interno.ehTabela(tabela.getNome())) {
+						interno.buscaAutomatica(tabela.getCampo(), argumentos);
+					}
+				}
 			}
 		}
 	}

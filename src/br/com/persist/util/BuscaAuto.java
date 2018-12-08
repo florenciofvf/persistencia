@@ -17,6 +17,10 @@ public class BuscaAuto {
 			this.descricao = descricao;
 		}
 
+		public List<Tabela> getTabelas() {
+			return tabelas;
+		}
+
 		public String getDescricao() {
 			return descricao;
 		}

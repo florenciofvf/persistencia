@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.util.BuscaAuto.Grupo;
 
 public class FormularioExterno extends JFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +31,10 @@ public class FormularioExterno extends JFrame implements PainelObjetoListener {
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelObjeto);
+	}
+
+	@Override
+	public void buscaAutomatica(Grupo grupo, String argumentos) {
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -10,7 +11,9 @@ import javax.swing.JInternalFrame;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
+import br.com.persist.formulario.Desktop;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.util.BuscaAuto.Grupo;
 
 public class FormularioInterno extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
@@ -27,13 +30,40 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 		setVisible(true);
 	}
 
+	public boolean ehTabela(String nome) {
+		return painelObjeto.getObjeto().getTabela2().equalsIgnoreCase(nome);
+	}
+
 	public PainelObjeto getPainelObjeto() {
 		return painelObjeto;
+	}
+
+	public void buscaAutomatica(String campo, String argumentos) {
+		painelObjeto.buscaAutomatica(campo, argumentos);
 	}
 
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelObjeto);
+	}
+
+	@Override
+	public void buscaAutomatica(Grupo grupo, String argumentos) {
+		Container parent = getParent();
+		Desktop desktop = null;
+
+		while (parent != null) {
+			if (parent instanceof Desktop) {
+				desktop = (Desktop) parent;
+				break;
+			}
+
+			parent = getParent();
+		}
+
+		if (desktop != null) {
+			desktop.buscaAutomatica(grupo, argumentos, painelObjeto);
+		}
 	}
 
 	@Override

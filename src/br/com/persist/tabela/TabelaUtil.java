@@ -40,6 +40,21 @@ public class TabelaUtil {
 		}
 	}
 
+	public static int getIndiceColuna(Tabela tabela, String nome) {
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		int qtdColunas = modelo.getColumnCount();
+
+		for (int i = 0; i < qtdColunas; i++) {
+			String coluna = modelo.getColumnName(i);
+
+			if (coluna.equalsIgnoreCase(nome)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
 	public static List<String> getValoresColuna(Tabela tabela, int coluna) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<String> resposta = new ArrayList<>();
