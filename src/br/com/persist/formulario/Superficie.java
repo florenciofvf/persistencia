@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.dialogo.MacroDialogo;
@@ -816,19 +817,17 @@ public class Superficie extends Desktop {
 		MenuItem itemHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		MenuItem itemVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
-		// MenuItem itemCopiarCor = new MenuItem(new CopiarCorAcao());
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
-		// MenuItem itemColarCor = new MenuItem(new ColarCorAcao());
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
 
 		SuperficiePopup() {
-			add(itemHorizontal);
-			add(itemVertical);
+			Menu menuAlinhamento = new Menu("label.alinhamento");
+			menuAlinhamento.add(itemHorizontal);
+			menuAlinhamento.add(itemVertical);
+			add(menuAlinhamento);
+
 			addSeparator();
 			add(itemCopiar);
-			// add(itemCopiarCor);
-			// addSeparator();
-			// add(itemColarCor);
 			addSeparator();
 			add(itemDestacar);
 			add(itemFormulario);
@@ -887,34 +886,6 @@ public class Superficie extends Desktop {
 				Formulario.copiar(Superficie.this);
 			}
 		}
-
-		/*
-		 * class CopiarCorAcao extends Acao { private static final long
-		 * serialVersionUID = 1L;
-		 * 
-		 * CopiarCorAcao() { super(true, "label.copiar_cor", Icones.COPIA); }
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { if
-		 * (selecionadoObjeto != null) {
-		 * formulario.setCor(selecionadoObjeto.getCor()); } else if
-		 * (selecionadoRelacao != null) {
-		 * formulario.setCor(selecionadoRelacao.getCor()); } } }
-		 */
-
-		/*
-		 * class ColarCorAcao extends Acao { private static final long
-		 * serialVersionUID = 1L;
-		 * 
-		 * ColarCorAcao() { super(true, "label.colar_cor", Icones.COLAR); }
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { if
-		 * (selecionadoObjeto != null && formulario.getCor() != null) {
-		 * selecionadoObjeto.setCor(formulario.getCor());
-		 * Superficie.this.repaint(); } else if (selecionadoRelacao != null &&
-		 * formulario.getCor() != null) {
-		 * selecionadoRelacao.setCor(formulario.getCor());
-		 * Superficie.this.repaint(); } } }
-		 */
 
 		class ExcluirAcao extends Acao {
 			private static final long serialVersionUID = 1L;
