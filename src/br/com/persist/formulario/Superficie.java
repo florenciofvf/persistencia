@@ -822,21 +822,20 @@ public class Superficie extends Desktop {
 		MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
+		Menu menuDistribuicao = new Menu("label.distribuicao");
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
+		Menu menuAlinhamento = new Menu("label.alinhamento");
 
 		SuperficiePopup() {
-			Menu menuAlinhamento = new Menu("label.alinhamento");
-			menuAlinhamento.add(itemAlinhaHorizontal);
-			menuAlinhamento.add(itemAlinhaVertical);
-			add(menuAlinhamento);
-			addSeparator();
-
-			Menu menuDistribuicao = new Menu("label.distribuicao");
 			menuDistribuicao.add(itemDistribuiHorizontal);
 			menuDistribuicao.add(itemDistribuiVertical);
+			menuAlinhamento.add(itemAlinhaHorizontal);
+			menuAlinhamento.add(itemAlinhaVertical);
+
+			add(menuAlinhamento);
+			addSeparator();
 			add(menuDistribuicao);
 			addSeparator();
-
 			add(itemCopiar);
 			addSeparator();
 			add(itemDestacar);
@@ -848,9 +847,9 @@ public class Superficie extends Desktop {
 		}
 
 		void configItens(boolean objetoSelecionado) {
+			menuDistribuicao.setEnabled(objetoSelecionado);
+			menuAlinhamento.setEnabled(objetoSelecionado);
 			itemFormulario.setEnabled(objetoSelecionado);
-			itemAlinhaHorizontal.setEnabled(objetoSelecionado);
-			itemAlinhaVertical.setEnabled(objetoSelecionado);
 			itemDestacar.setEnabled(objetoSelecionado);
 			itemCopiar.setEnabled(objetoSelecionado);
 		}
