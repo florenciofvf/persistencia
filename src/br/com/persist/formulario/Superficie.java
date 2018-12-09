@@ -14,6 +14,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -814,19 +816,27 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		MenuItem itemHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
-		MenuItem itemVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
+		MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
+		MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
+		MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
+		MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
 
 		SuperficiePopup() {
 			Menu menuAlinhamento = new Menu("label.alinhamento");
-			menuAlinhamento.add(itemHorizontal);
-			menuAlinhamento.add(itemVertical);
+			menuAlinhamento.add(itemAlinhaHorizontal);
+			menuAlinhamento.add(itemAlinhaVertical);
 			add(menuAlinhamento);
-
 			addSeparator();
+
+			Menu menuDistribuicao = new Menu("label.distribuicao");
+			menuDistribuicao.add(itemDistribuiHorizontal);
+			menuDistribuicao.add(itemDistribuiVertical);
+			add(menuDistribuicao);
+			addSeparator();
+
 			add(itemCopiar);
 			addSeparator();
 			add(itemDestacar);
@@ -839,8 +849,8 @@ public class Superficie extends Desktop {
 
 		void configItens(boolean objetoSelecionado) {
 			itemFormulario.setEnabled(objetoSelecionado);
-			itemHorizontal.setEnabled(objetoSelecionado);
-			itemVertical.setEnabled(objetoSelecionado);
+			itemAlinhaHorizontal.setEnabled(objetoSelecionado);
+			itemAlinhaVertical.setEnabled(objetoSelecionado);
 			itemDestacar.setEnabled(objetoSelecionado);
 			itemCopiar.setEnabled(objetoSelecionado);
 		}
@@ -945,6 +955,74 @@ public class Superficie extends Desktop {
 					}
 
 					macro.actionPerformed(null);
+				}
+			}
+		}
+
+		class DistribuicaoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+			private final boolean horizontal;
+
+			DistribuicaoAcao(boolean horizontal, String chave) {
+				super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
+				this.horizontal = horizontal;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (selecionadoObjeto != null) {
+					int total = 0;
+
+					for (Objeto objeto : objetos) {
+						if (objeto.isSelecionado()) {
+							total++;
+						}
+					}
+
+					if (total < 3) {
+						return;
+					}
+
+					List<Objeto> lista = new ArrayList<>();
+
+					for (Objeto objeto : objetos) {
+						if (objeto.isSelecionado()) {
+							lista.add(objeto);
+						}
+					}
+
+					Collections.sort(lista, new Compara());
+
+					if (horizontal) {
+						int totalDifX = lista.get(lista.size() - 1).x - lista.get(0).x;
+						int fragmentoX = totalDifX / (lista.size() - 1);
+						int x = lista.get(0).x;
+
+						for (int i = 1; i < lista.size(); i++) {
+							Objeto objeto = lista.get(i);
+							x += fragmentoX;
+							objeto.x = x;
+						}
+					} else {
+						int totalDifY = lista.get(lista.size() - 1).y - lista.get(0).y;
+						int fragmentoY = totalDifY / (lista.size() - 1);
+						int y = lista.get(0).y;
+
+						for (int i = 1; i < lista.size(); i++) {
+							Objeto objeto = lista.get(i);
+							y += fragmentoY;
+							objeto.y = y;
+						}
+					}
+
+					Superficie.this.repaint();
+				}
+			}
+
+			class Compara implements Comparator<Objeto> {
+				@Override
+				public int compare(Objeto o1, Objeto o2) {
+					return horizontal ? o1.x - o2.x : o1.y - o2.y;
 				}
 			}
 		}
