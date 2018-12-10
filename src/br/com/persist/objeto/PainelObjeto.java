@@ -566,7 +566,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		ButtonUpdate() {
 			setToolTipText(Mensagens.getString("label.atualizar"));
-			popup.add(new MenuItem(new TabelaAcao()));
+			popup.add(new MenuItem(new DadosAcao()));
 			popup.addSeparator();
 			popup.add(new MenuItem(new UpdateAcao()));
 			setComponentPopupMenu(popup);
@@ -621,10 +621,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		class TabelaAcao extends Acao {
+		class DadosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			TabelaAcao() {
+			DadosAcao() {
 				super(true, "label.dados", Icones.TABELA);
 			}
 
@@ -638,7 +638,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 					if (linhas != null && linhas.length == 1) {
 						StringBuilder sb = new StringBuilder(objeto.getTabela2());
-						sb.append(Constantes.QL).append(Constantes.QL);
+						sb.append(Constantes.QL);
 						modelo.getDados(linhas[0], sb);
 						Util.mensagem(PainelObjeto.this, sb.toString());
 					}

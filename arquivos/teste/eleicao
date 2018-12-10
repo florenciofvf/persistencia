@@ -4,6 +4,13 @@
 	<objeto buscaAutomatica="Candidados da Elei&#231;&#227;o.id=candidato.eleicao_id" chaveamento="teste=escola,filho;teste=campo" complemento="" desloc_x_id="-5" desloc_y_id="8" corFonte="-1" transparente="true" desenharId="true" id="elei&#231;&#227;o" tabela="eleicao" chaves="id" cor="-12555904" icone="executar" x="141" y="12">
 	</objeto>
 	<objeto buscaAutomatica="Endere&#231;os.id=endereco.id_candidato" chaveamento="" complemento="AND eleicao_id IN (76)" desloc_x_id="-9" desloc_y_id="8" corFonte="-1" transparente="true" desenharId="true" id="candidato" tabela="candidato" chaves="id" cor="-12555904" icone="boss" x="340" y="12">
+		<instrucao nome="total votos">
+			<valor>
+				UPDATE candidato 
+SET votos = 0
+WHERE id = #id#
+			</valor>
+		</instrucao>
 	</objeto>
 	<objeto buscaAutomatica="" chaveamento="" complemento="AND id_candidato IN (52)" desloc_x_id="-9" desloc_y_id="8" corFonte="-1" transparente="true" desenharId="true" id="endere&#231;o" tabela="endereco" chaves="id" cor="-12555904" icone="home" x="533" y="12">
 	</objeto>
@@ -15,8 +22,8 @@
 
 	<form objeto="elei&#231;&#227;o" largura="697" altura="134" x="144" y="69">
 	</form>
-	<form objeto="candidato" largura="697" altura="129" x="144" y="219">
-	</form>
 	<form objeto="endere&#231;o" largura="697" altura="109" x="144" y="367">
+	</form>
+	<form objeto="candidato" largura="697" altura="129" x="144" y="219">
 	</form>
 </fvf>
