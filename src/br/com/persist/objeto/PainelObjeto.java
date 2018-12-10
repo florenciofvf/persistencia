@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComboBox;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
@@ -498,23 +499,49 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
 
 			for (Grupo grupo : listaGrupo) {
-				popup.add(new MenuItemBuscaAuto(grupo));
+				popup.add(new MenuBuscaAuto(grupo));
 			}
 		}
 
-		class MenuItemBuscaAuto extends JMenuItem implements ActionListener {
+		class MenuBuscaAuto extends JMenu {
 			private static final long serialVersionUID = 1L;
 			private final Grupo grupo;
 
-			MenuItemBuscaAuto(Grupo grupo) {
-				this.grupo = grupo;
-				setText(grupo.getDescricao());
-				addActionListener(this);
+			MenuBuscaAuto(Grupo grupo) {
+				super(grupo.getDescricao());
+				add(new MenuItem(new SemAspasAcao()));
+				add(new MenuItem(new ComAspasAcao()));
 				setIcon(Icones.RESUME);
+				this.grupo = grupo;
 			}
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			class SemAspasAcao extends Acao {
+				private static final long serialVersionUID = 1L;
+
+				SemAspasAcao() {
+					super(true, "label.sem_aspas", null);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					processar(false);
+				}
+			}
+
+			class ComAspasAcao extends Acao {
+				private static final long serialVersionUID = 1L;
+
+				ComAspasAcao() {
+					super(true, "label.com_aspas", Icones.ASPAS);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					processar(true);
+				}
+			}
+
+			private void processar(boolean apostrofes) {
 				int coluna = TabelaUtil.getIndiceColuna(tabela, grupo.getCampo());
 
 				if (coluna == -1) {
@@ -527,7 +554,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					return;
 				}
 
-				String argumentos = Util.getStringLista(lista, false);
+				String argumentos = Util.getStringLista(lista, apostrofes);
 				listener.buscaAutomatica(grupo, argumentos);
 			}
 		}
