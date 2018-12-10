@@ -81,7 +81,7 @@ public class ConfigDialogo extends Dialogo {
 	protected void processar() {
 	}
 
-	class Posicao {
+	private class Posicao {
 		final String nome;
 		final int indice;
 
@@ -91,7 +91,7 @@ public class ConfigDialogo extends Dialogo {
 		}
 	}
 
-	class RadioPosicao extends JRadioButton {
+	private class RadioPosicao extends JRadioButton {
 		private static final long serialVersionUID = 1L;
 		final Posicao posicao;
 

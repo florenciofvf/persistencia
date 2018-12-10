@@ -144,7 +144,7 @@ public class Tabela extends JTable {
 			}
 		}
 
-		private class MenuCopiar extends Menu {
+		class MenuCopiar extends Menu {
 			private static final long serialVersionUID = 1L;
 
 			MenuCopiar() {
@@ -182,7 +182,7 @@ public class Tabela extends JTable {
 			}
 		}
 
-		private class MenuCopiarIN extends Menu {
+		class MenuCopiarIN extends Menu {
 			private static final long serialVersionUID = 1L;
 
 			MenuCopiarIN() {
@@ -234,7 +234,7 @@ public class Tabela extends JTable {
 			}
 		}
 
-		private class MenuCopiarIN2 extends Menu {
+		class MenuCopiarIN2 extends Menu {
 			private static final long serialVersionUID = 1L;
 			private final String nomeColuna;
 
