@@ -111,6 +111,7 @@ public class RelacaoDialogo extends Dialogo {
 			txtDeslocYDesc.addActionListener(this);
 
 			textArea.setText(relacao.getDescricao());
+			textArea.addFocusListener(focusListenerDesc);
 			textArea.addKeyListener(keyListener);
 			add(BorderLayout.CENTER, textArea);
 
@@ -153,6 +154,14 @@ public class RelacaoDialogo extends Dialogo {
 
 			superficie.repaint();
 		}
+
+		private FocusListener focusListenerDesc = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				keyListener.keyReleased(null);
+				superficie.repaint();
+			}
+		};
 
 		private KeyListener keyListener = new KeyAdapter() {
 			@Override

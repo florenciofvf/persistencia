@@ -1,5 +1,6 @@
 package br.com.persist.comp;
 
+import java.awt.event.FocusListener;
 import java.awt.event.KeyListener;
 
 import javax.swing.JScrollPane;
@@ -40,5 +41,10 @@ public class TextArea extends JScrollPane {
 	@Override
 	public synchronized void addKeyListener(KeyListener l) {
 		textArea.addKeyListener(l);
+	}
+
+	@Override
+	public synchronized void addFocusListener(FocusListener l) {
+		textArea.addFocusListener(l);
 	}
 }
