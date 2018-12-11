@@ -239,29 +239,35 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int x = e.getX();
-			int y = e.getY();
-			limparSelecao();
+			if (e.getClickCount() >= Constantes.DOIS) {
+				container.estadoSelecao();
+				mouseAdapterSelecao.mousePressed(e);
+				mouseAdapterSelecao.mouseClicked(e);
+			} else {
+				int x = e.getX();
+				int y = e.getY();
+				limparSelecao();
 
-			for (Objeto objeto : objetos) {
-				if (objeto.contem(x, y)) {
-					objeto.setSelecionado(true);
-					selecionadoObjeto = objeto;
-					break;
-				}
-			}
-
-			if (selecionadoObjeto == null) {
-				for (Relacao relacao : relacoes) {
-					if (relacao.contem(x, y)) {
-						relacao.setSelecionado(true);
-						selecionadoRelacao = relacao;
+				for (Objeto objeto : objetos) {
+					if (objeto.contem(x, y)) {
+						objeto.setSelecionado(true);
+						selecionadoObjeto = objeto;
 						break;
 					}
 				}
-			}
 
-			repaint();
+				if (selecionadoObjeto == null) {
+					for (Relacao relacao : relacoes) {
+						if (relacao.contem(x, y)) {
+							relacao.setSelecionado(true);
+							selecionadoRelacao = relacao;
+							break;
+						}
+					}
+				}
+
+				repaint();
+			}
 		}
 	};
 
