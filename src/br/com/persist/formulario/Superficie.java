@@ -300,6 +300,14 @@ public class Superficie extends Desktop {
 			ultY = recY;
 			repaint();
 		}
+
+		public void mouseClicked(MouseEvent e) {
+			if (e.getClickCount() >= Constantes.DOIS) {
+				container.estadoSelecao();
+				mouseAdapterSelecao.mousePressed(e);
+				mouseAdapterSelecao.mouseClicked(e);
+			}
+		};
 	};
 
 	private MouseAdapter mouseAdapterRelacao = new MouseAdapter() {
@@ -389,6 +397,14 @@ public class Superficie extends Desktop {
 				new RelacaoDialogo(frame, Superficie.this, relacao);
 			}
 		}
+
+		public void mouseClicked(MouseEvent e) {
+			if (e.getClickCount() >= Constantes.DOIS) {
+				container.estadoSelecao();
+				mouseAdapterSelecao.mousePressed(e);
+				mouseAdapterSelecao.mouseClicked(e);
+			}
+		};
 	};
 
 	private MouseAdapter mouseAdapterSelecao = new MouseAdapter() {
