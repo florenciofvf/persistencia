@@ -19,6 +19,10 @@ public class TabelaUtil {
 	}
 
 	public static void ajustar(JTable table, Graphics graphics, int ajuste) {
+		if (table == null || graphics == null) {
+			return;
+		}
+
 		DefaultTableColumnModel columnModel = (DefaultTableColumnModel) table.getColumnModel();
 		FontMetrics fontMetrics = graphics.getFontMetrics();
 
