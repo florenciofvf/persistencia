@@ -1,7 +1,7 @@
 package br.com.persist.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +55,7 @@ public class BuscaAuto {
 	}
 
 	public static List<Grupo> criarGruposAuto(String string) {
-		Map<String, Grupo> mapa = new HashMap<>();
+		Map<String, Grupo> mapa = new LinkedHashMap<>();
 
 		if (!Util.estaVazio(string)) {
 			String[] grupos = string.split(";");
