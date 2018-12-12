@@ -409,4 +409,14 @@ public class Objeto {
 
 	public void alinhar(FontMetrics fm) {
 	}
+
+	public void zoomMenos() {
+		x -= x * 0.10;
+		y -= y * 0.10;
+	}
+
+	public void zoomMais() {
+		x += x * 0.10;
+		y += y * 0.10;
+	}
 }

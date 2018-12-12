@@ -70,8 +70,12 @@ public class Superficie extends Desktop {
 
 	private void config() {
 		inputMap().put(getKeyStroke(KeyEvent.VK_N), "macro_lista");
+		inputMap().put(getKeyStroke(KeyEvent.VK_Z), "zoom_menos");
+		inputMap().put(getKeyStroke(KeyEvent.VK_X), "zoom_mais");
 		inputMap().put(getKeyStroke(KeyEvent.VK_M), "macro");
 		getActionMap().put("macro_lista", macroLista);
+		getActionMap().put("zoom_menos", zoomMenos);
+		getActionMap().put("zoom_mais", zoomMais);
 		getActionMap().put("macro", macro);
 	}
 
@@ -119,6 +123,32 @@ public class Superficie extends Desktop {
 						instrucao.executar(relacao);
 					}
 				}
+			}
+
+			repaint();
+		}
+	};
+
+	Action zoomMenos = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (Objeto objeto : objetos) {
+				objeto.zoomMenos();
+			}
+
+			repaint();
+		}
+	};
+
+	Action zoomMais = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (Objeto objeto : objetos) {
+				objeto.zoomMais();
 			}
 
 			repaint();
