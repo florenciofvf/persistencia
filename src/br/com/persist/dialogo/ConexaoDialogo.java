@@ -107,6 +107,7 @@ public class ConexaoDialogo extends Dialogo {
 						Conexao conexao = modelo.getConexao(linhas[0]);
 						Conexao.getConnection2(conexao);
 						Util.mensagem(ConexaoDialogo.this, "SUCESSO");
+						tabela.repaint();
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);
 					}
@@ -125,6 +126,7 @@ public class ConexaoDialogo extends Dialogo {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Conexao.fecharConexoes();
+					tabela.repaint();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
 				}
