@@ -90,7 +90,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		this.listener = listener;
 		toolbar.complementoBtn();
 		toolbar.add(cmbConexao);
-		toolbar.add(btnArrasto);
 		this.objeto = objeto;
 		processarObjeto("", g, null);
 		montarLayout();
@@ -241,6 +240,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		Toolbar() {
 			add(new Button(new FecharAcao()));
 			addSeparator();
+			add(btnArrasto);
+			addSeparator();
 			add(new ButtonInfo());
 			addSeparator();
 			add(new Button(new FragmentoAcao()));
@@ -259,19 +260,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(total);
 		}
 
-		class FecharAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FecharAcao() {
-				super(false, "label.fechar", Icones.SAIR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				listener.dispose();
-			}
-		}
-
 		void complementoBtn() {
 			add(new Button(new MaximoAcao()));
 			addSeparator();
@@ -285,6 +273,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		void complementoUpdate(Objeto objeto) {
 			update.complemento(objeto);
+		}
+
+		class FecharAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			FecharAcao() {
+				super(false, "label.fechar", Icones.SAIR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				listener.dispose();
+			}
 		}
 
 		class FragmentoAcao extends Acao {
