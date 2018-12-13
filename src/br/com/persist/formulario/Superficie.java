@@ -1273,6 +1273,14 @@ public class Superficie extends Desktop {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
+	public void desenharDesc(boolean b) {
+		for (Relacao relacao : relacoes) {
+			relacao.setDesenharDescricao(b);
+		}
+
+		repaint();
+	}
+
 	public void desenharIds(boolean b) {
 		for (Objeto objeto : objetos) {
 			objeto.setDesenharId(b);

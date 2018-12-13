@@ -140,6 +140,8 @@ public class Container extends PanelBorder {
 			add(btnSelecao);
 			addSeparator();
 			add(new ToggleButton(new DesenhoIdAcao()));
+			add(new ToggleButton(new DesenhoDescAcao()));
+			addSeparator();
 			add(new ToggleButton(new TransparenteAcao()));
 			addSeparator();
 		}
@@ -318,6 +320,20 @@ public class Container extends PanelBorder {
 			public void actionPerformed(ActionEvent e) {
 				ToggleButton button = (ToggleButton) e.getSource();
 				superficie.desenharIds(button.isSelected());
+			}
+		}
+
+		class DesenhoDescAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			DesenhoDescAcao() {
+				super(false, "label.desenhar_desc", Icones.TAG);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ToggleButton button = (ToggleButton) e.getSource();
+				superficie.desenharDesc(button.isSelected());
 			}
 		}
 
