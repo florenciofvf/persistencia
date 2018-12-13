@@ -40,6 +40,8 @@ public class ConexaoDialogo extends Dialogo {
 	}
 
 	private void configurar() {
+		tabela.getColumnModel().getColumn(0).setCellRenderer(new ConexaoStatusRenderer());
+		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoStatusEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		addWindowListener(new WindowAdapter() {

@@ -12,8 +12,8 @@ import br.com.persist.xml.XML;
 
 public class ConexaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private final String[] COLUNAS = { "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO", "FIM-COMPLEMENTO",
-			"ESQUEMA" };
+	private final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO",
+			"FIM-COMPLEMENTO", "ESQUEMA" };
 	private static final File file = new File("conexoes/conexoes.xml");
 	private final List<Conexao> conexoes;
 
@@ -59,7 +59,7 @@ public class ConexaoModelo extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return String.class;
+		return Object.class;
 	}
 
 	@Override
@@ -72,21 +72,21 @@ public class ConexaoModelo extends AbstractTableModel {
 		Conexao conexao = conexoes.get(rowIndex);
 
 		switch (columnIndex) {
-		case 0:
-			return conexao.getNome();
 		case 1:
-			return conexao.getDriver();
+			return conexao.getNome();
 		case 2:
-			return conexao.getUrlBanco();
+			return conexao.getDriver();
 		case 3:
-			return conexao.getUsuario();
+			return conexao.getUrlBanco();
 		case 4:
-			return conexao.getSenha();
+			return conexao.getUsuario();
 		case 5:
-			return conexao.getInicioComplemento();
+			return conexao.getSenha();
 		case 6:
-			return conexao.getFinalComplemento();
+			return conexao.getInicioComplemento();
 		case 7:
+			return conexao.getFinalComplemento();
+		case 8:
 			return conexao.getEsquema();
 		default:
 			return null;
@@ -99,27 +99,33 @@ public class ConexaoModelo extends AbstractTableModel {
 		String valor = aValue == null ? "" : aValue.toString();
 
 		switch (columnIndex) {
-		case 0:
+		case 1:
 			conexao.setNome(valor);
 			break;
-		case 1:
+		case 2:
 			conexao.setDriver(valor);
 			break;
-		case 2:
-			conexao.setUrlBanco(valor);
-			break;
 		case 3:
-			conexao.setUsuario(valor);
+			conexao.setUrlBanco(valor);
+			conexao.fechar();
+			fireTableDataChanged();
 			break;
 		case 4:
-			conexao.setSenha(valor);
+			conexao.setUsuario(valor);
+			conexao.fechar();
+			fireTableDataChanged();
 			break;
 		case 5:
-			conexao.setInicioComplemento(valor);
+			conexao.setSenha(valor);
+			conexao.fechar();
+			fireTableDataChanged();
 			break;
 		case 6:
-			conexao.setFinalComplemento(valor);
+			conexao.setInicioComplemento(valor);
+			break;
 		case 7:
+			conexao.setFinalComplemento(valor);
+		case 8:
 			conexao.setEsquema(valor);
 			break;
 		}

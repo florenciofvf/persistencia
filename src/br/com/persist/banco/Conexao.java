@@ -13,7 +13,7 @@ import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Conexao {
-	private static Map<Conexao, Connection> mapa = new HashMap<>();
+	public static final Map<Conexao, Connection> CONEXOES = new HashMap<>();
 	private String inicioComplemento;
 	private String finalComplemento;
 	private String urlBanco;
@@ -30,23 +30,23 @@ public class Conexao {
 	}
 
 	public static synchronized Connection getConnection(Conexao conexao) throws Exception {
-		Connection conn = mapa.get(conexao);
+		Connection conn = CONEXOES.get(conexao);
 
 		if (conn == null || conn.isClosed()) {
 			conn = conexao.getConnection();
-			mapa.put(conexao, conn);
+			CONEXOES.put(conexao, conn);
 		}
 
 		return conn;
 	}
 
 	public static synchronized Connection getConnection2(Conexao conexao) throws Exception {
-		Connection conn = mapa.get(conexao);
+		Connection conn = CONEXOES.get(conexao);
 
 		if (conn != null) {
 			try {
 				fecharConexao(conn);
-				mapa.put(conexao, null);
+				CONEXOES.put(conexao, null);
 			} catch (Exception e) {
 			}
 		}
@@ -61,13 +61,25 @@ public class Conexao {
 	}
 
 	public static void fecharConexoes() throws Exception {
-		for (Connection conn : mapa.values()) {
+		for (Connection conn : CONEXOES.values()) {
 			fecharConexao(conn);
 		}
 	}
 
+	public void fechar() {
+		Connection conn = CONEXOES.get(this);
+
+		if (conn != null) {
+			try {
+				fecharConexao(conn);
+				CONEXOES.put(this, null);
+			} catch (Exception e) {
+			}
+		}
+	}
+
 	public static List<Conexao> getConexoes() {
-		return new ArrayList<>(mapa.keySet());
+		return new ArrayList<>(CONEXOES.keySet());
 	}
 
 	public void setUrlBanco(String urlBanco) {
