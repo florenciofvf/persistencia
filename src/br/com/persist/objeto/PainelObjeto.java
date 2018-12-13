@@ -501,6 +501,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			for (Grupo grupo : listaGrupo) {
 				popup.add(new MenuBuscaAuto(grupo));
 			}
+
+			if (listaGrupo.isEmpty()) {
+				setEnabled(false);
+			}
 		}
 
 		class MenuBuscaAuto extends JMenu {
