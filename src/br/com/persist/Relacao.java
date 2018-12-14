@@ -224,6 +224,18 @@ public class Relacao {
 		}
 	}
 
+	public Objeto criarObjetoMeio() {
+		Objeto objeto = new Objeto();
+
+		int difX = (destino.x - origem.x) / 2;
+		int difY = (destino.y - origem.y) / 2;
+
+		objeto.x = origem.x + difX;
+		objeto.y = origem.y + difY;
+
+		return objeto;
+	}
+
 	public void aplicar(Attributes attr) {
 		desenharDescricao = Boolean.parseBoolean(attr.getValue("desenharDescricao"));
 		deslocamentoXDesc = Integer.parseInt(attr.getValue("desloc_x_desc"));

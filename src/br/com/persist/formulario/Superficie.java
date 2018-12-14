@@ -876,6 +876,7 @@ public class Superficie extends Desktop {
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
 		Menu menuDistribuicao = new Menu("label.distribuicao");
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
+		MenuItem itemPartir = new MenuItem(new PartirAcao());
 		Menu menuAlinhamento = new Menu("label.alinhamento");
 
 		SuperficiePopup() {
@@ -895,6 +896,8 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(new MenuItem(new ExcluirAcao()));
 			addSeparator();
+			add(itemPartir);
+			addSeparator();
 			add(new MenuItem(new ConfiguracaoAcao()));
 		}
 
@@ -903,6 +906,7 @@ public class Superficie extends Desktop {
 			menuAlinhamento.setEnabled(objetoSelecionado);
 			itemFormulario.setEnabled(objetoSelecionado);
 			itemDestacar.setEnabled(objetoSelecionado);
+			itemPartir.setEnabled(!objetoSelecionado);
 			itemCopiar.setEnabled(objetoSelecionado);
 		}
 
@@ -958,6 +962,34 @@ public class Superficie extends Desktop {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				excluirSelecionados();
+			}
+		}
+
+		class PartirAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			PartirAcao() {
+				super(true, "label.partir", null);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (selecionadoRelacao != null) {
+					Objeto novo = selecionadoRelacao.criarObjetoMeio();
+					Objeto destino = selecionadoRelacao.getDestino();
+					Objeto origem = selecionadoRelacao.getOrigem();
+
+					addObjeto(novo);
+
+					selecionadoRelacao.setSelecionado(false);
+					excluir(selecionadoRelacao);
+					selecionadoRelacao = null;
+
+					addRelacao(new Relacao(origem, false, novo, false));
+					addRelacao(new Relacao(novo, false, destino, false));
+
+					Superficie.this.repaint();
+				}
 			}
 		}
 
