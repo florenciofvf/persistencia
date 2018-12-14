@@ -969,7 +969,7 @@ public class Superficie extends Desktop {
 			private static final long serialVersionUID = 1L;
 
 			PartirAcao() {
-				super(true, "label.partir", null);
+				super(true, "label.partir", Icones.PARTIR);
 			}
 
 			@Override

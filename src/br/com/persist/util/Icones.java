@@ -40,6 +40,7 @@ public class Icones {
 	public static final Icon BAIXAR = criarImagem("baixar");
 	public static final Icon CURSOR = criarImagem("cursor");
 	public static final Icon PANEL3 = criarImagem("panel3");
+	public static final Icon PARTIR = criarImagem("partir");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon PANEL = criarImagem("panel");
