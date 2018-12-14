@@ -231,11 +231,11 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			ultX = e.getX();
-			ultY = e.getY();
-
 			if (e.isPopupTrigger()) {
-
+				mousePressedPopup(e);
+			} else {
+				ultX = e.getX();
+				ultY = e.getY();
 			}
 		}
 
@@ -273,18 +273,22 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (selecionadoObjeto != null) {
-				selecionadoObjeto.setSelecionado(false);
-				selecionadoObjeto.controlado = false;
-			}
+			if (e.isPopupTrigger()) {
+				mouseReleasedPopup(e);
+			} else {
+				if (selecionadoObjeto != null) {
+					selecionadoObjeto.setSelecionado(false);
+					selecionadoObjeto.controlado = false;
+				}
 
-			if (selecionadoRelacao != null) {
-				selecionadoRelacao.setSelecionado(false);
-			}
+				if (selecionadoRelacao != null) {
+					selecionadoRelacao.setSelecionado(false);
+				}
 
-			selecionadoRelacao = null;
-			selecionadoObjeto = null;
-			repaint();
+				selecionadoRelacao = null;
+				selecionadoObjeto = null;
+				repaint();
+			}
 		}
 
 		@Override
@@ -322,8 +326,12 @@ public class Superficie extends Desktop {
 	private MouseAdapter mouseAdapterArrasto = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
-			ultX = e.getX();
-			ultY = e.getY();
+			if (e.isPopupTrigger()) {
+				mousePressedPopup(e);
+			} else {
+				ultX = e.getX();
+				ultY = e.getY();
+			}
 		}
 
 		@Override
@@ -349,6 +357,14 @@ public class Superficie extends Desktop {
 			repaint();
 		}
 
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				mouseReleasedPopup(e);
+			}
+		}
+
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				duploClick(e);
@@ -362,6 +378,11 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				mousePressedPopup(e);
+				return;
+			}
+
 			for (Relacao relacao : relacoes) {
 				relacao.setSelecionado(false);
 			}
@@ -405,6 +426,11 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				mouseReleasedPopup(e);
+				return;
+			}
+
 			boolean shift = e.isShiftDown();
 			ultX = e.getX();
 			ultY = e.getY();
@@ -444,6 +470,7 @@ public class Superficie extends Desktop {
 			}
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				duploClick(e);
