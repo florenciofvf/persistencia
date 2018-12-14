@@ -209,6 +209,22 @@ public class Superficie extends Desktop {
 		return resp;
 	}
 
+	private void mousePressedPopup(MouseEvent e) {
+		container.estadoSelecao();
+		mouseAdapterSelecao.mousePressed(e);
+	}
+
+	private void mouseReleasedPopup(MouseEvent e) {
+		container.estadoSelecao();
+		mouseAdapterSelecao.mouseReleased(e);
+	}
+
+	private void duploClick(MouseEvent e) {
+		container.estadoSelecao();
+		mouseAdapterSelecao.mousePressed(e);
+		mouseAdapterSelecao.mouseClicked(e);
+	}
+
 	private MouseAdapter mouseAdapterRotulos = new MouseAdapter() {
 		Relacao selecionadoRelacao;
 		Objeto selecionadoObjeto;
@@ -217,6 +233,10 @@ public class Superficie extends Desktop {
 		public void mousePressed(MouseEvent e) {
 			ultX = e.getX();
 			ultY = e.getY();
+
+			if (e.isPopupTrigger()) {
+
+			}
 		}
 
 		@Override
@@ -270,9 +290,7 @@ public class Superficie extends Desktop {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				container.estadoSelecao();
-				mouseAdapterSelecao.mousePressed(e);
-				mouseAdapterSelecao.mouseClicked(e);
+				duploClick(e);
 			} else {
 				int x = e.getX();
 				int y = e.getY();
@@ -333,9 +351,7 @@ public class Superficie extends Desktop {
 
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				container.estadoSelecao();
-				mouseAdapterSelecao.mousePressed(e);
-				mouseAdapterSelecao.mouseClicked(e);
+				duploClick(e);
 			}
 		};
 	};
@@ -430,9 +446,7 @@ public class Superficie extends Desktop {
 
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				container.estadoSelecao();
-				mouseAdapterSelecao.mousePressed(e);
-				mouseAdapterSelecao.mouseClicked(e);
+				duploClick(e);
 			}
 		};
 	};
