@@ -301,7 +301,16 @@ public class Container extends PanelBorder {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				superficie.addObjeto(new Objeto(40, 40));
+				Objeto novo = new Objeto(40, 40);
+
+				boolean contem = superficie.contem(novo);
+
+				while (contem) {
+					novo.setId("" + Objeto.novoID());
+					contem = superficie.contem(novo);
+				}
+
+				superficie.addObjeto(novo);
 				btnSelecao.setSelected(true);
 				superficie.limparSelecao();
 				superficie.repaint();

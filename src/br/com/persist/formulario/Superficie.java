@@ -1020,6 +1020,13 @@ public class Superficie extends Desktop {
 					Objeto destino = selecionadoRelacao.getDestino();
 					Objeto origem = selecionadoRelacao.getOrigem();
 
+					boolean contem = contem(novo);
+
+					while (contem) {
+						novo.setId("" + Objeto.novoID());
+						contem = contem(novo);
+					}
+
 					addObjeto(novo);
 
 					selecionadoRelacao.setSelecionado(false);
