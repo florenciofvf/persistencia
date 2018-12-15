@@ -1165,12 +1165,15 @@ public class Superficie extends Desktop {
 		MenuItem itemAlinharDireito = new MenuItem(new AlinharDireitoAcao());
 		MenuItem itemMesmaLargura = new MenuItem(new MesmaLarguraAcao());
 		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
+		MenuItem itemCriarObjeto = new MenuItem(new CriarObjetoAcao());
 		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
 		MenuItem itemAjustes = new MenuItem(new AjustarAcao());
 		MenuItem itemColar = new MenuItem(new ColarAcao());
 		int x, y;
 
 		SuperficiePopup2() {
+			add(itemCriarObjeto);
+			addSeparator();
 			add(itemColar);
 			addSeparator();
 			add(itemAlinharEsquerdo);
@@ -1281,6 +1284,34 @@ public class Superficie extends Desktop {
 				Superficie.this.repaint();
 			}
 		}
+
+		class CriarObjetoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			CriarObjetoAcao() {
+				super(true, "label.criar_objeto", Icones.CRIAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				criarNovoObjeto(popup2.x, popup2.y);
+			}
+		}
+	}
+
+	public void criarNovoObjeto(int x, int y) {
+		Objeto novo = new Objeto(x, y);
+
+		boolean contem = contem(novo);
+
+		while (contem) {
+			novo.setId("" + Objeto.novoID());
+			contem = contem(novo);
+		}
+
+		addObjeto(novo);
+		limparSelecao();
+		repaint();
 	}
 
 	private InputMap inputMap() {
