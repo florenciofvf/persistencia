@@ -80,4 +80,8 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 	public Frame getFrame() {
 		return null;
 	}
+
+	public void atualizarFormulario() {
+		painelObjeto.atualizarFormulario();
+	}
 }

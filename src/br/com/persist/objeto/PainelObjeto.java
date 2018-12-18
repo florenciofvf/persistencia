@@ -971,4 +971,14 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		objeto.setComplemento(txtComplemento.getText());
 		PainelObjeto.this.actionPerformed(null);
 	}
+
+	public void atualizarFormulario() {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		PainelObjeto.this.actionPerformed(null);
+	}
 }

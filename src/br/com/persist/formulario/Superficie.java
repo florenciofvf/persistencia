@@ -1161,6 +1161,7 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
+		MenuItem itemAtualizarForms = new MenuItem(new AtualizarFormularioAcao());
 		MenuItem itemAlinharEsquerdo = new MenuItem(new AlinharEsquerdoAcao());
 		MenuItem itemAlinharDireito = new MenuItem(new AlinharDireitoAcao());
 		MenuItem itemMesmaLargura = new MenuItem(new MesmaLarguraAcao());
@@ -1176,6 +1177,8 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(itemColar);
 			addSeparator();
+			add(itemAtualizarForms);
+			addSeparator();
 			add(itemAlinharEsquerdo);
 			add(itemAlinharDireito);
 			add(itemMesmaLargura);
@@ -1188,6 +1191,7 @@ public class Superficie extends Desktop {
 		void configItens(boolean contemFrames) {
 			itemColar.setEnabled(!Formulario.COPIADOS.isEmpty());
 			itemAlinharEsquerdo.setEnabled(contemFrames);
+			itemAtualizarForms.setEnabled(contemFrames);
 			itemAlinharDireito.setEnabled(contemFrames);
 			itemMesmaLargura.setEnabled(contemFrames);
 			itemCentralizar.setEnabled(contemFrames);
@@ -1296,6 +1300,27 @@ public class Superficie extends Desktop {
 			public void actionPerformed(ActionEvent e) {
 				criarNovoObjeto(popup2.x, popup2.y);
 			}
+		}
+
+		class AtualizarFormularioAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			AtualizarFormularioAcao() {
+				super(true, "label.atualizar_forms", Icones.ATUALIZAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JInternalFrame[] frames = getAllFrames();
+
+				for (JInternalFrame frame : frames) {
+					if (frame instanceof FormularioInterno) {
+						FormularioInterno interno = (FormularioInterno) frame;
+						interno.atualizarFormulario();
+					}
+				}
+			}
+
 		}
 	}
 
