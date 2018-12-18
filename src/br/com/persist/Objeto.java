@@ -471,7 +471,6 @@ public class Objeto implements Runnable {
 			try {
 				Thread.sleep(i);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
 				Thread.currentThread().interrupt();
 			}
 		}

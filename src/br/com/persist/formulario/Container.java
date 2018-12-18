@@ -438,4 +438,8 @@ public class Container extends PanelBorder {
 	public void setFormularioSuperficie(FormularioSuperficie formularioSuperficie) {
 		this.formularioSuperficie = formularioSuperficie;
 	}
+
+	public void excluido() {
+		superficie.excluido();
+	}
 }

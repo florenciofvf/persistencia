@@ -1522,4 +1522,10 @@ public class Superficie extends Desktop {
 			limparSelecao();
 		}
 	}
+
+	public void excluido() {
+		for (Objeto objeto : objetos) {
+			objeto.desativar();
+		}
+	}
 }

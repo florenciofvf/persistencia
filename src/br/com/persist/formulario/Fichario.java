@@ -191,6 +191,17 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(destino);
 	}
 
+	@Override
+	public void remove(int index) {
+		Component cmp = getComponentAt(index);
+
+		if (cmp instanceof Container) {
+			((Container) cmp).excluido();
+		}
+
+		super.remove(index);
+	}
+
 	private class Listener extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {
