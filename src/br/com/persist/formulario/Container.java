@@ -161,6 +161,7 @@ public class Container extends PanelBorder {
 				}
 
 				try {
+					excluido();
 					StringBuilder sbConexao = new StringBuilder();
 					List<Relacao> relacoes = new ArrayList<>();
 					List<Objeto> objetos = new ArrayList<>();

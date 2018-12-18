@@ -1525,6 +1525,7 @@ public class Superficie extends Desktop {
 
 	public void excluido() {
 		for (Objeto objeto : objetos) {
+			objeto.setSuperficie(null);
 			objeto.desativar();
 		}
 	}

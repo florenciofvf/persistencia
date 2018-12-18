@@ -397,8 +397,8 @@ public class Objeto implements Runnable {
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
+		util.atributo("intervalo", getIntervalo());
 		util.atributo("desenharId", desenharId);
-		util.atributo("intervalo", intervalo);
 		util.atributo("id", Util.escapar(id));
 		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
@@ -436,6 +436,10 @@ public class Objeto implements Runnable {
 	}
 
 	public int getIntervalo() {
+		if (intervalo < 500) {
+			intervalo = 500;
+		}
+
 		return intervalo;
 	}
 
@@ -460,14 +464,8 @@ public class Objeto implements Runnable {
 				superficie.repaint(x, y, diametro, diametro);
 			}
 
-			int i = intervalo;
-
-			if (i < 500) {
-				i = 500;
-			}
-
 			try {
-				Thread.sleep(i);
+				Thread.sleep(getIntervalo());
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
