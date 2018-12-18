@@ -17,11 +17,12 @@ import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.formulario.Superficie;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
-public class Objeto {
+public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	public static final int DIAMETRO_PADRAO = 36;
@@ -30,17 +31,22 @@ public class Objeto {
 	private final List<Instrucao> instrucoes;
 	public int deslocamentoXId = -5;
 	public int deslocamentoYId = -5;
+	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
+	private Superficie superficie;
 	public boolean transparente;
 	private boolean selecionado;
 	private boolean desenharId;
 	private String complemento;
 	private String chaveamento;
 	public boolean controlado;
+	private boolean processar;
 	private String descricao;
 	private static long ID;
 	private String tabela;
+	private Thread thread;
+	private int intervalo;
 	private String chaves;
 	private String icone;
 	private Icon icon;
@@ -363,6 +369,7 @@ public class Objeto {
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
 		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
+		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		buscaAutomatica = attr.getValue("buscaAutomatica");
 		chaveamento = attr.getValue("chaveamento");
@@ -373,19 +380,27 @@ public class Objeto {
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
 		id = attr.getValue("id");
+
+		String strIntervalo = attr.getValue("intervalo");
+
+		if (!Util.estaVazio(strIntervalo)) {
+			intervalo = Integer.parseInt(strIntervalo);
+		}
 	}
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
+		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
 		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
-		util.atributo("transparente", transparente);
 		util.atributo("desenharId", desenharId);
+		util.atributo("intervalo", intervalo);
 		util.atributo("id", Util.escapar(id));
+		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
 		util.atributo("chaves", getChaves());
 		util.atributo("cor", cor.getRGB());
@@ -418,5 +433,72 @@ public class Objeto {
 	public void zoomMais() {
 		x += x * 0.10;
 		y += y * 0.10;
+	}
+
+	public int getIntervalo() {
+		return intervalo;
+	}
+
+	public void setIntervalo(int intervalo) {
+		this.intervalo = intervalo;
+	}
+
+	public Superficie getSuperficie() {
+		return superficie;
+	}
+
+	public void setSuperficie(Superficie superficie) {
+		this.superficie = superficie;
+	}
+
+	@Override
+	public void run() {
+		while (!Thread.currentThread().isInterrupted()) {
+			System.out.println("Objeto.run()");
+
+			transparente = !transparente;
+
+			if (superficie != null) {
+				superficie.repaint(x, y, diametro, diametro);
+			}
+
+			int i = intervalo;
+
+			if (i < 500) {
+				i = 500;
+			}
+
+			try {
+				Thread.sleep(i);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+
+	public void ativar() {
+		if (processar && thread == null) {
+			transparenteBkp = transparente;
+			thread = new Thread(this);
+			thread.start();
+		}
+	}
+
+	public void desativar() {
+		if (thread != null) {
+			transparente = transparenteBkp;
+			thread.interrupt();
+			processar = false;
+			thread = null;
+		}
+	}
+
+	public boolean isProcessar() {
+		return processar;
+	}
+
+	public void setProcessar(boolean processar) {
+		this.processar = processar;
 	}
 }

@@ -46,7 +46,7 @@ public class ObjetoDialogo extends Dialogo {
 	private final Objeto objeto;
 
 	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
-		super(frame, objeto.getId(), 700, 460, false);
+		super(frame, objeto.getId(), 700, 500, false);
 		this.superficie = superficie;
 		Formulario.macro.limpar();
 		this.objeto = objeto;
@@ -69,6 +69,7 @@ public class ObjetoDialogo extends Dialogo {
 		private CheckBox chkTransparente = new CheckBox();
 		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
+		private TextField txtIntervalo = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
@@ -82,6 +83,7 @@ public class ObjetoDialogo extends Dialogo {
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtDeslocXId.setText("" + objeto.deslocamentoXId);
 			txtDeslocYId.setText("" + objeto.deslocamentoYId);
+			txtIntervalo.setText("" + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
@@ -96,6 +98,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtComplemento.addFocusListener(focusListener);
 			txtDeslocXId.addFocusListener(focusListener);
 			txtDeslocYId.addFocusListener(focusListener);
+			txtIntervalo.addFocusListener(focusListener);
 			txtTabela.addFocusListener(focusListener);
 			txtChaves.addFocusListener(focusListener);
 			txtId.addFocusListener(focusListener);
@@ -109,6 +112,7 @@ public class ObjetoDialogo extends Dialogo {
 			chkDesenharId.addActionListener(this);
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
+			txtIntervalo.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
 			txtId.addActionListener(this);
@@ -130,6 +134,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinha("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
+			container.add(criarLinha("label.intervalo", txtIntervalo));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
@@ -171,6 +176,9 @@ public class ObjetoDialogo extends Dialogo {
 			} else if (txtDeslocYId == e.getSource()) {
 				objeto.deslocamentoYId = Util.getInt(txt.getText(), objeto.deslocamentoYId);
 				Formulario.macro.deslocarYIdDescricao(objeto.deslocamentoYId);
+
+			} else if (txtIntervalo == e.getSource()) {
+				objeto.setIntervalo(Util.getInt(txt.getText(), objeto.getIntervalo()));
 
 			} else if (txtBuscaAutomatica == e.getSource()) {
 				objeto.setBuscaAutomatica(txt.getText());
