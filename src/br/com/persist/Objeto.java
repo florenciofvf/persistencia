@@ -454,8 +454,6 @@ public class Objeto implements Runnable {
 	@Override
 	public void run() {
 		while (!Thread.currentThread().isInterrupted()) {
-			System.out.println("Objeto.run()");
-
 			transparente = !transparente;
 
 			if (superficie != null) {
