@@ -69,15 +69,51 @@ public class Superficie extends Desktop {
 	}
 
 	private void config() {
+		inputMap().put(getKeyStroke(KeyEvent.VK_T), "thread_processar");
+		inputMap().put(getKeyStroke(KeyEvent.VK_Y), "thread_desativar");
 		inputMap().put(getKeyStroke(KeyEvent.VK_N), "macro_lista");
 		inputMap().put(getKeyStroke(KeyEvent.VK_Z), "zoom_menos");
 		inputMap().put(getKeyStroke(KeyEvent.VK_X), "zoom_mais");
 		inputMap().put(getKeyStroke(KeyEvent.VK_M), "macro");
+
+		getActionMap().put("thread_processar", threadProcessar);
+		getActionMap().put("thread_desativar", threadDesativar);
 		getActionMap().put("macro_lista", macroLista);
 		getActionMap().put("zoom_menos", zoomMenos);
 		getActionMap().put("zoom_mais", zoomMais);
 		getActionMap().put("macro", macro);
 	}
+
+	Action threadProcessar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (Objeto objeto : objetos) {
+				if (objeto.isSelecionado()) {
+					objeto.setProcessar(true);
+					objeto.ativar();
+				}
+			}
+
+			repaint();
+		}
+	};
+
+	Action threadDesativar = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (Objeto objeto : objetos) {
+				if (objeto.isSelecionado()) {
+					objeto.desativar();
+				}
+			}
+
+			repaint();
+		}
+	};
 
 	Action macroLista = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
@@ -787,12 +823,15 @@ public class Superficie extends Desktop {
 		objetos = new Objeto[bkp.length + 1];
 		System.arraycopy(bkp, 0, objetos, 0, bkp.length);
 		objetos[bkp.length] = obj;
+		obj.setSuperficie(this);
 	}
 
 	public void excluir(Objeto obj) {
 		int indice = getIndice(obj);
 
 		if (indice >= 0) {
+			objetos[indice].setSuperficie(null);
+			objetos[indice].desativar();
 			objetos[indice] = null;
 			Objeto[] bkp = objetos;
 			objetos = new Objeto[0];
@@ -1407,6 +1446,10 @@ public class Superficie extends Desktop {
 		repaint();
 		setPreferredSize(d);
 		SwingUtilities.updateComponentTreeUI(getParent());
+
+		for (Objeto objeto : objetos) {
+			objeto.ativar();
+		}
 	}
 
 	public void desenharDesc(boolean b) {
