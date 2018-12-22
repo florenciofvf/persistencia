@@ -14,11 +14,13 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.formulario.Desktop;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.Util;
 
 public class FormularioInterno extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final PainelObjeto painelObjeto;
 	private final Formulario formulario;
+	private String apelido;
 
 	public FormularioInterno(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao) {
 		super(objeto.getId(), true, true, true, true);
@@ -83,5 +85,17 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 
 	public void atualizarFormulario() {
 		painelObjeto.atualizarFormulario();
+	}
+
+	public String getApelido() {
+		if (Util.estaVazio(apelido)) {
+			apelido = "";
+		}
+
+		return apelido;
+	}
+
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
 	}
 }

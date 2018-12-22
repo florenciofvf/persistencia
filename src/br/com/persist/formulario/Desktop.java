@@ -223,11 +223,13 @@ public class Desktop extends JDesktopPane {
 		}
 	};
 
-	public void addForm(Object[] array, Point point, Graphics g) {
+	public void addForm(Object[] array, Point point,
+			Graphics g/* , String apelido */) {
 		Dimension dimension = (Dimension) array[2];
 		Conexao conexao = (Conexao) array[1];
 		Objeto objeto = (Objeto) array[0];
 		FormularioInterno form = new FormularioInterno(formulario, objeto, g != null ? g : getGraphics(), conexao);
+		// form.setApelido(apelido);
 		form.setLocation(point);
 		form.setSize(dimension);
 		add(form);
