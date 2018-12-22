@@ -719,6 +719,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		ButtonInfo() {
 			setToolTipText(Mensagens.getString("label.meta_dados"));
+			popup.add(new MenuItem(new ApelidoAcao()));
+			popup.addSeparator();
 			popup.add(new MenuItem(new ChavesPrimariasAcao()));
 			popup.addSeparator();
 			popup.add(new MenuItem(new ChavesExportadasAcao()));
@@ -731,6 +733,29 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			setComponentPopupMenu(popup);
 			setIcon(Icones.INFO);
 			addActionListener(e -> popup.show(this, 5, 5));
+		}
+
+		class ApelidoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			ApelidoAcao() {
+				super(true, "label.apelido", Icones.TAG2);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (listener instanceof FormularioInterno) {
+					FormularioInterno interno = (FormularioInterno) listener;
+					String valor = interno.getApelido();
+					String resp = Util.getValorInputDialog(PainelObjeto.this, "label.apelido", valor);
+
+					if (resp == null) {
+						return;
+					}
+
+					interno.setApelido(resp);
+				}
+			}
 		}
 
 		class ChavesPrimariasAcao extends Acao {

@@ -30,6 +30,7 @@ public class Icones {
 	public static final Icon CONECTA = criarImagem("connect");
 	public static final Icon SUCESSO = criarImagem("sucesso");
 	public static final Icon CONFIG2 = criarImagem("config2");
+	public static final Icon TAG2 = criarImagem("tag_yellow");
 	public static final Icon SALVARC = criarImagem("saveas");
 	public static final Icon BAIXAR2 = criarImagem("bottom");
 	public static final Icon RESUME = criarImagem("resume");
