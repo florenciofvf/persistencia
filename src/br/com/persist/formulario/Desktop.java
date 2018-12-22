@@ -294,7 +294,7 @@ public class Desktop extends JDesktopPane {
 				List<Tabela> tabelas = grupo.getTabelas();
 
 				for (Tabela tabela : tabelas) {
-					if (interno.ehTabela(tabela.getNome())) {
+					if (interno.ehTabela(tabela)) {
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 					}
 				}

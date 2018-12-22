@@ -14,6 +14,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.formulario.Desktop;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.BuscaAuto.Tabela;
 
 public class FormularioInterno extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
@@ -31,8 +32,9 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 		setVisible(true);
 	}
 
-	public boolean ehTabela(String nome) {
-		return painelObjeto.getObjeto().getTabela2().equalsIgnoreCase(nome);
+	public boolean ehTabela(Tabela tabela) {
+		return getApelido().equalsIgnoreCase(tabela.getApelido())
+				&& painelObjeto.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
 	public PainelObjeto getPainelObjeto() {
