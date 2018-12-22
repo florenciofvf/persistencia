@@ -16,7 +16,10 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import br.com.persist.Objeto;
+import br.com.persist.banco.Conexao;
 import br.com.persist.comp.TextArea;
+import br.com.persist.formulario.Superficie;
 
 public class Util {
 	private static final boolean LOG_CONSOLE = false;
@@ -187,4 +190,18 @@ public class Util {
 			}
 		}
 	}
+
+	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
+		return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
+	}
+
+	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension, String apelido) {
+		Superficie.setComplemento(conexao, objeto);
+		return new Object[] { objeto, conexao, dimension, apelido };
+	}
+
+	public static byte ARRAY_INDICE_OBJ = 0;
+	public static byte ARRAY_INDICE_CON = 1;
+	public static byte ARRAY_INDICE_DIM = 2;
+	public static byte ARRAY_INDICE_APE = 3;
 }

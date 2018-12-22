@@ -109,9 +109,10 @@ public class Container extends PanelBorder {
 			}
 
 			if (instancia != null) {
-				Object[] array = Fichario.criarArray(conexao, instancia,
-						new Dimension(form.getLargura(), form.getAltura()));
-				superficie.addForm(array, new Point(form.getX(), form.getY()), g);
+				Object[] array = Util.criarArray(conexao, instancia, new Dimension(form.getLargura(), form.getAltura()),
+						form.getApelido());
+				superficie.addForm(array, new Point(form.getX(), form.getY()), g,
+						(String) array[Util.ARRAY_INDICE_APE]);
 			}
 		}
 	}
