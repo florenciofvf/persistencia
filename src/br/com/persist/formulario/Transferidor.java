@@ -15,14 +15,16 @@ public class Transferidor implements Transferable {
 	private static final DataFlavor[] flavors = { flavor };
 	private final Dimension dimension;
 	private final Conexao conexao;
+	private final String apelido;
 	private final Objeto objeto;
 
-	public Transferidor(Objeto objeto, Conexao conexao, Dimension dimension) {
+	public Transferidor(Objeto objeto, Conexao conexao, Dimension dimension, String apelido) {
 		Objects.requireNonNull(dimension);
 		Objects.requireNonNull(conexao);
 		Objects.requireNonNull(objeto);
 		this.dimension = dimension;
 		this.conexao = conexao;
+		this.apelido = apelido;
 		this.objeto = objeto;
 	}
 
@@ -51,7 +53,7 @@ public class Transferidor implements Transferable {
 	@Override
 	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
 		if (Transferidor.flavor.equals(flavor)) {
-			return new Object[] { objeto, conexao, dimension, null };
+			return new Object[] { objeto, conexao, dimension, apelido };
 		}
 
 		throw new UnsupportedFlavorException(flavor);
