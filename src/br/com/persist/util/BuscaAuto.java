@@ -36,13 +36,28 @@ public class BuscaAuto {
 	}
 
 	public static class Tabela {
-		final String nome;
+		final String apelido;
 		final String campo;
+		final String nome;
 
 		public Tabela(String descricao) {
 			int pos = descricao.indexOf('.');
-			nome = descricao.substring(0, pos);
+			String n = descricao.substring(0, pos);
+
+			if (n.startsWith("(")) {
+				int pos2 = n.indexOf(")");
+				apelido = n.substring(1, pos2);
+				nome = n.substring(pos2 + 1);
+			} else {
+				apelido = "";
+				nome = n;
+			}
+
 			campo = descricao.substring(pos + 1);
+		}
+
+		public String getApelido() {
+			return apelido;
 		}
 
 		public String getCampo() {

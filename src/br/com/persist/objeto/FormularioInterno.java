@@ -14,7 +14,6 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.formulario.Desktop;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
-import br.com.persist.util.Util;
 
 public class FormularioInterno extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
@@ -88,7 +87,7 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 	}
 
 	public String getApelido() {
-		if (Util.estaVazio(apelido)) {
+		if (apelido == null) {
 			apelido = "";
 		}
 
