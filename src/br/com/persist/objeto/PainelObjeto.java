@@ -713,6 +713,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				if (chaves.length == 1) {
 					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
 							+ objeto.getTabela(conexao.getEsquema()) + ")");
+					PainelObjeto.this.actionPerformed(null);
 				}
 			}
 		}
