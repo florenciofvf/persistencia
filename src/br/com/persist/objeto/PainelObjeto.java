@@ -529,7 +529,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		private Popup popup = new Popup();
 
 		ButtonUpdate() {
-			setToolTipText(Mensagens.getString("label.atualizar"));
+			setToolTipText(Mensagens.getString("label.update"));
 			popup.add(new MenuItem(new DadosAcao()));
 			popup.addSeparator();
 			popup.add(new MenuItem(new UpdateAcao()));
@@ -542,7 +542,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			private static final long serialVersionUID = 1L;
 
 			UpdateAcao() {
-				super(true, "label.atualizar", Icones.UPDATE);
+				super(true, "label.update", Icones.UPDATE);
 			}
 
 			@Override
