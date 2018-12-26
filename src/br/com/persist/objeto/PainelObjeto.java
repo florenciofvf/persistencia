@@ -241,6 +241,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
+		final ButtonFuncoes funcoes = new ButtonFuncoes();
 		final ButtonUpdate update = new ButtonUpdate();
 		final Label total = new Label(Color.BLUE);
 
@@ -268,8 +269,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 
 		void complementoBtn() {
-			add(new Button(new MaximoAcao()));
-			addSeparator();
+			add(funcoes);
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
 		}
@@ -311,35 +311,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				}
 
 				dialogo.setVisible(true);
-			}
-		}
-
-		class MaximoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			MaximoAcao() {
-				super(false, "label.maximo", Icones.VAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				if (Util.estaVazio(objeto.getChaves())) {
-					txtComplemento.setText("");
-					return;
-				}
-
-				String[] chaves = objeto.getChaves().trim().split(",");
-
-				if (chaves.length == 1) {
-					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
-							+ objeto.getTabela(conexao.getEsquema()) + ")");
-				}
 			}
 		}
 
@@ -715,6 +686,49 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 						form.setVisible(true);
 					}
+				}
+			}
+		}
+	}
+
+	private class ButtonFuncoes extends Button {
+		private static final long serialVersionUID = 1L;
+		private Popup popup = new Popup();
+
+		ButtonFuncoes() {
+			setToolTipText(Mensagens.getString("label.funcoes"));
+			popup.add(new MenuItem(new MaximoAcao()));
+			// popup.addSeparator();
+			setComponentPopupMenu(popup);
+			setIcon(Icones.SOMA);
+			addActionListener(e -> popup.show(this, 5, 5));
+		}
+
+		class MaximoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			MaximoAcao() {
+				super(true, "label.maximo", Icones.VAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				if (Util.estaVazio(objeto.getChaves())) {
+					txtComplemento.setText("");
+					return;
+				}
+
+				String[] chaves = objeto.getChaves().trim().split(",");
+
+				if (chaves.length == 1) {
+					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+							+ objeto.getTabela(conexao.getEsquema()) + ")");
 				}
 			}
 		}
