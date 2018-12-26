@@ -23,6 +23,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
+import br.com.persist.objeto.FormularioSelect;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -131,6 +132,7 @@ public class Container extends PanelBorder {
 			addSeparator();
 			add(new Button(new DestacarAcao()));
 			add(new Button(new FormularioAcao()));
+			add(new Button(new FormularioSelectAcao()));
 			addSeparator();
 			add(new Button(new ExcluirAcao()));
 			add(new Button(new CriarObjetoAcao()));
@@ -275,6 +277,20 @@ public class Container extends PanelBorder {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				formulario.destacar(getConexaoPadrao(), superficie, true);
+			}
+		}
+
+		class FormularioSelectAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			FormularioSelectAcao() {
+				super(false, "label.consulta", Icones.PANEL3);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FormularioSelect(formulario, formularioSuperficie != null ? formularioSuperficie : formulario,
+						getConexaoPadrao());
 			}
 		}
 

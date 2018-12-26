@@ -36,6 +36,7 @@ import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.objeto.FormularioExterno;
 import br.com.persist.objeto.FormularioInterno;
+import br.com.persist.objeto.FormularioSelect;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -952,6 +953,7 @@ public class Superficie extends Desktop {
 		MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
 		MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
+		MenuItem itemFormularioSel = new MenuItem(new FormularioSelectAcao());
 		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
 		Menu menuDistribuicao = new Menu("label.distribuicao");
@@ -973,6 +975,7 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(itemDestacar);
 			add(itemFormulario);
+			add(itemFormularioSel);
 			addSeparator();
 			add(new MenuItem(new ExcluirAcao()));
 			addSeparator();
@@ -1013,6 +1016,25 @@ public class Superficie extends Desktop {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
+			}
+		}
+
+		class FormularioSelectAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			FormularioSelectAcao() {
+				super(true, "label.consulta", Icones.PANEL3);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Frame frame = formulario;
+
+				if (container.getFormularioSuperficie() != null) {
+					frame = container.getFormularioSuperficie();
+				}
+
+				new FormularioSelect(formulario, frame, container.getConexaoPadrao());
 			}
 		}
 
