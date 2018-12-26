@@ -252,15 +252,12 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(btnArrasto);
 			addSeparator();
 			add(new ButtonInfo());
-			addSeparator();
 			add(new Button(new FragmentoAcao()));
-			addSeparator();
 			add(buscaAuto);
 			add(update);
-			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
-			addSeparator();
 			add(atualizar);
+			addSeparator();
 			add(new Button(new ComplementoAcao()));
 		}
 
