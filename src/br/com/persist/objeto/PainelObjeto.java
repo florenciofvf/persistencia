@@ -240,6 +240,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		final ButtonAtualizar atualizar = new ButtonAtualizar();
 		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
 		final ButtonFuncoes funcoes = new ButtonFuncoes();
 		final ButtonUpdate update = new ButtonUpdate();
@@ -259,8 +260,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new Button(new ExcluirRegistrosAcao()));
 			addSeparator();
-			add(new Button(new SincronizarRegistrosAcao()));
-			add(new Button(new AtualizarRegistrosAcao()));
+			add(atualizar);
 			add(new Button(new ComplementoAcao()));
 		}
 
@@ -365,20 +365,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			}
 		}
 
-		class SincronizarRegistrosAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			SincronizarRegistrosAcao() {
-				super(false, "label.sincronizar", Icones.SINCRONIZAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cabecalhoFiltro = null;
-				new AtualizarRegistrosAcao().actionPerformed(null);
-			}
-		}
-
 		class ExcluirRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
@@ -417,18 +403,46 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				}
 			}
 		}
+	}
+
+	private class ButtonAtualizar extends Button {
+		private static final long serialVersionUID = 1L;
+		private Popup popup = new Popup();
+
+		ButtonAtualizar() {
+			setToolTipText(Mensagens.getString("label.atualizar"));
+			popup.add(new MenuItem(new AtualizarRegistrosAcao()));
+			popup.addSeparator();
+			popup.add(new MenuItem(new SincronizarRegistrosAcao()));
+			setComponentPopupMenu(popup);
+			setIcon(Icones.ATUALIZAR);
+			addActionListener(e -> popup.show(this, 5, 5));
+		}
 
 		class AtualizarRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
 			AtualizarRegistrosAcao() {
-				super(false, "label.atualizar", Icones.ATUALIZAR);
+				super(true, "label.atualizar", Icones.ATUALIZAR);
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null,
-						cabecalhoFiltro);
+				PainelObjeto.this.actionPerformed(null);
+			}
+		}
+
+		class SincronizarRegistrosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			SincronizarRegistrosAcao() {
+				super(true, "label.sincronizar", Icones.SINCRONIZAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cabecalhoFiltro = null;
+				PainelObjeto.this.actionPerformed(null);
 			}
 		}
 	}
@@ -1003,7 +1017,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		toolbar.new AtualizarRegistrosAcao().actionPerformed(null);
+		processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null, cabecalhoFiltro);
 	}
 
 	public void buscaAutomatica(String campo, String argumentos) {
