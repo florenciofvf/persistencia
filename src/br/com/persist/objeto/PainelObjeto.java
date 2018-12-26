@@ -265,9 +265,9 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		}
 
 		void complementoBtn() {
-			addSeparator();
 			add(total);
 			add(funcoes);
+			addSeparator();
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
 		}
