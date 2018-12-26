@@ -262,13 +262,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(new Button(new SincronizarRegistrosAcao()));
 			add(new Button(new AtualizarRegistrosAcao()));
 			add(new Button(new ComplementoAcao()));
-			addSeparator();
-			add(new Button(new TotalizarRegistrosAcao(false)));
-			add(new Button(new TotalizarRegistrosAcao(true)));
-			add(total);
 		}
 
 		void complementoBtn() {
+			addSeparator();
+			add(total);
 			add(funcoes);
 			add(new Button(new LimparAcao()));
 			add(new Button(new BaixarAcao()));
@@ -363,34 +361,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					PainelObjeto.this.actionPerformed(null);
 				} else {
 					txtComplemento.setText(objeto.getComplemento());
-				}
-			}
-		}
-
-		class TotalizarRegistrosAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-			private final boolean complemento;
-
-			TotalizarRegistrosAcao(boolean complemento) {
-				super(false, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
-				this.complemento = complemento;
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				try {
-					Connection conn = Conexao.getConnection(conexao);
-					int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "",
-							conexao);
-					toolbar.total.setText("" + i);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("TOTAL", ex, PainelObjeto.this);
 				}
 			}
 		}
@@ -697,8 +667,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		ButtonFuncoes() {
 			setToolTipText(Mensagens.getString("label.funcoes"));
+			popup.add(new MenuItem(new TotalizarRegistrosAcao(false)));
+			popup.addSeparator();
+			popup.add(new MenuItem(new TotalizarRegistrosAcao(true)));
+			popup.addSeparator();
 			popup.add(new MenuItem(new MaximoAcao()));
-			// popup.addSeparator();
 			setComponentPopupMenu(popup);
 			setIcon(Icones.SOMA);
 			addActionListener(e -> popup.show(this, 5, 5));
@@ -729,6 +702,34 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				if (chaves.length == 1) {
 					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
 							+ objeto.getTabela(conexao.getEsquema()) + ")");
+				}
+			}
+		}
+
+		class TotalizarRegistrosAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+			private final boolean complemento;
+
+			TotalizarRegistrosAcao(boolean complemento) {
+				super(true, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
+				this.complemento = complemento;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "",
+							conexao);
+					toolbar.total.setText("" + i);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("TOTAL", ex, PainelObjeto.this);
 				}
 			}
 		}
