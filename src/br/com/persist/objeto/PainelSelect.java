@@ -19,6 +19,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
+import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
@@ -33,6 +34,7 @@ public class PainelSelect extends Panel {
 
 	public PainelSelect(PainelObjetoListener listener, Conexao padrao) {
 		cmbConexao = new JComboBox<>(listener.getConexoes());
+		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
@@ -111,6 +113,7 @@ public class PainelSelect extends Panel {
 			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, consulta, new String[0],
 					new Objeto(), conexao);
 			tabela.setModel(modeloRegistro);
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("PAINEL SELECT", ex, this);
 		}
