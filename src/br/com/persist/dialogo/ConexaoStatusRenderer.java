@@ -39,7 +39,7 @@ public class ConexaoStatusRenderer extends DefaultTableCellRenderer {
 					setIcon(Icones.CONECTA);
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("ERRO", ex, this);
+				Util.stackTraceAndMessage("ERRO STATUS CONN", ex, this);
 			}
 		}
 
