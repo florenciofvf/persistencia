@@ -34,6 +34,10 @@ public class TextArea extends JScrollPane {
 		return Util.estaVazio(getText());
 	}
 
+	public String getSelectedText() {
+		return textArea.getSelectedText();
+	}
+
 	public String getText() {
 		return textArea.getText();
 	}

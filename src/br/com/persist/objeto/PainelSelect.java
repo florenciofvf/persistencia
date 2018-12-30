@@ -6,19 +6,26 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 
 import javax.swing.JComboBox;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 
+import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
+import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
+import br.com.persist.modelo.RegistroModelo;
+import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class PainelSelect extends Panel {
 	private static final long serialVersionUID = 1L;
+	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -41,7 +48,9 @@ public class PainelSelect extends Panel {
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, textArea);
+
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
+		add(BorderLayout.CENTER, split);
 	}
 
 	private class Toolbar extends JToolBar {
@@ -91,10 +100,17 @@ public class PainelSelect extends Panel {
 			return;
 		}
 
+		String consulta = textArea.getSelectedText();
+
+		if (Util.estaVazio(consulta)) {
+			consulta = textArea.getText();
+		}
+
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			int atualizados = Persistencia.executar(textArea.getText(), conn);
-			listener.setTitle("ATUALIZADOS [" + atualizados + "]");
+			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, consulta, new String[0],
+					new Objeto(), conexao);
+			tabela.setModel(modeloRegistro);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("PAINEL SELECT", ex, this);
 		}
