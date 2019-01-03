@@ -21,12 +21,13 @@ public class Coluna {
 
 	public String getDetalhe() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("    NOME: " + nome + Constantes.QL);
-		sb.append("    TIPO: " + tipo + Constantes.QL);
-		sb.append("   CHAVE: " + chave + Constantes.QL);
+
+		sb.append("NOME: " + nome + Constantes.QL);
+		sb.append("TIPO: " + tipo + Constantes.QL);
+		sb.append("BLOB: " + blob + Constantes.QL);
+		sb.append("CHAVE: " + chave + Constantes.QL);
+		sb.append("ÍNDICE: " + indice + Constantes.QL);
 		sb.append("NUMÉRICO: " + numero + Constantes.QL);
-		sb.append("  ÍNDICE: " + indice + Constantes.QL);
-		sb.append("    BLOB: " + blob);
 
 		return sb.toString();
 	}

@@ -67,6 +67,10 @@ public class RegistroModelo implements TableModel {
 		return colunas.get(columnIndex).getNome();
 	}
 
+	public Coluna getColuna(int indice) {
+		return colunas.get(indice);
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return String.class;

@@ -141,8 +141,11 @@ public class Tabela extends JTable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// String coluna = getModel().getColumnName(tag);
-				// Util.setContentTransfered(coluna);
+				Coluna coluna = ((OrdenacaoModelo) getModel()).getColuna(tag);
+
+				if (coluna != null) {
+					Util.mensagem(Tabela.this, coluna.getDetalhe());
+				}
 			}
 		}
 

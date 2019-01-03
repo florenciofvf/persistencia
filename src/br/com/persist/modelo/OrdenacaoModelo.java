@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Util;
 
@@ -64,6 +65,14 @@ public class OrdenacaoModelo extends AbstractTableModel {
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return model.getColumnClass(columnIndex);
+	}
+
+	public Coluna getColuna(int indice) {
+		if (model instanceof RegistroModelo) {
+			return ((RegistroModelo) model).getColuna(indice);
+		}
+
+		return null;
 	}
 
 	public int excluirRegistro(int rowIndex) {
