@@ -97,7 +97,8 @@ public class Persistencia {
 				}
 			}
 
-			Coluna coluna = new Coluna(nome, i - 1, numero, chave, tipo == Types.BLOB || tipo == Types.LONGVARBINARY);
+			Coluna coluna = new Coluna(nome, i - 1, numero, chave, tipo == Types.BLOB || tipo == Types.LONGVARBINARY,
+					classe);
 			colunas.add(coluna);
 		}
 

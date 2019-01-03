@@ -5,22 +5,24 @@ public class Coluna {
 	private final boolean chave;
 	private final boolean blob;
 	private final String nome;
+	private final String tipo;
 	private final int indice;
 
-	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob) {
+	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo) {
 		this.indice = indice;
 		this.numero = numero;
 		this.chave = chave;
 		this.nome = nome;
 		this.blob = blob;
-	}
-
-	public boolean isNumero() {
-		return numero;
+		this.tipo = tipo;
 	}
 
 	public boolean isNaoChave() {
 		return !chave;
+	}
+
+	public boolean isNumero() {
+		return numero;
 	}
 
 	public boolean isChave() {
@@ -33,6 +35,10 @@ public class Coluna {
 
 	public boolean isBlob() {
 		return blob;
+	}
+
+	public String getTipo() {
+		return tipo;
 	}
 
 	public int getIndice() {

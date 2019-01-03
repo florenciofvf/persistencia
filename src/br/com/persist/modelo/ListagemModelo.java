@@ -20,7 +20,7 @@ public class ListagemModelo implements TableModel {
 		int i = 0;
 
 		for (String s : colunas) {
-			colunasInfo.add(new Coluna(s, i, false, false, false));
+			colunasInfo.add(new Coluna(s, i, false, false, false, null));
 			i++;
 		}
 	}
