@@ -125,7 +125,7 @@ public class Tabela extends JTable {
 
 		PopupHeader() {
 			add(new MenuItem(new CopiarNomeAcao()));
-			add(new MenuCopiar());
+			add(new MenuCopiarValor());
 			addSeparator();
 			add(menuCopiarIN);
 		}
@@ -144,10 +144,10 @@ public class Tabela extends JTable {
 			}
 		}
 
-		class MenuCopiar extends Menu {
+		class MenuCopiarValor extends Menu {
 			private static final long serialVersionUID = 1L;
 
-			MenuCopiar() {
+			MenuCopiarValor() {
 				super("label.copiar_header");
 				add(new MenuItem(new SemAspasAcao()));
 				add(new MenuItem(new ComAspasAcao()));
@@ -234,11 +234,11 @@ public class Tabela extends JTable {
 			}
 		}
 
-		class MenuCopiarIN2 extends Menu {
+		class MenuCopiarINDinamico extends Menu {
 			private static final long serialVersionUID = 1L;
 			private final String nomeColuna;
 
-			MenuCopiarIN2(String coluna) {
+			MenuCopiarINDinamico(String coluna) {
 				super("label.vazio");
 				add(new MenuItem(new SemAspasAcao()));
 				add(new MenuItem(new ComAspasAcao()));
@@ -287,33 +287,33 @@ public class Tabela extends JTable {
 			}
 		}
 
-		private void limparMenuTemp() {
-			MenuCopiarIN2 menu = getMenuCopiarIN2();
-
-			while (menu != null) {
-				remove(menu);
-				menu = getMenuCopiarIN2();
-			}
-		}
-
 		public void configurar(String chave) {
 			menuCopiarIN.setText("AND IN - " + chave);
 			List<String> lista = mapaChaveamento.get(chave);
-			limparMenuTemp();
+			limparMenuDinamico();
 
 			if (lista != null && !lista.isEmpty()) {
 				for (String coluna : lista) {
-					add(new MenuCopiarIN2(coluna));
+					add(new MenuCopiarINDinamico(coluna));
 				}
 			}
 		}
 
-		private MenuCopiarIN2 getMenuCopiarIN2() {
+		private void limparMenuDinamico() {
+			MenuCopiarINDinamico menu = getMenuCopiarINDinamico();
+
+			while (menu != null) {
+				remove(menu);
+				menu = getMenuCopiarINDinamico();
+			}
+		}
+
+		private MenuCopiarINDinamico getMenuCopiarINDinamico() {
 			for (int i = 0; i < getComponentCount(); i++) {
 				Component c = getComponent(i);
 
-				if (c instanceof MenuCopiarIN2) {
-					return (MenuCopiarIN2) c;
+				if (c instanceof MenuCopiarINDinamico) {
+					return (MenuCopiarINDinamico) c;
 				}
 			}
 
