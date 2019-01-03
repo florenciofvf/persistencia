@@ -124,10 +124,26 @@ public class Tabela extends JTable {
 		private int tag;
 
 		PopupHeader() {
+			add(new MenuItem(new InformacaoAcao()));
+			addSeparator();
 			add(new MenuItem(new CopiarNomeAcao()));
 			add(new MenuCopiarValor());
 			addSeparator();
 			add(menuCopiarIN);
+		}
+
+		class InformacaoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			InformacaoAcao() {
+				super(true, "label.meta_dados", Icones.INFO);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// String coluna = getModel().getColumnName(tag);
+				// Util.setContentTransfered(coluna);
+			}
 		}
 
 		class CopiarNomeAcao extends Acao {

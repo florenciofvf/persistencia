@@ -1,5 +1,7 @@
 package br.com.persist.tabela;
 
+import br.com.persist.util.Constantes;
+
 public class Coluna {
 	private final boolean numero;
 	private final boolean chave;
@@ -15,6 +17,18 @@ public class Coluna {
 		this.nome = nome;
 		this.blob = blob;
 		this.tipo = tipo;
+	}
+
+	public String getDetalhe() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("    NOME: " + nome + Constantes.QL);
+		sb.append("    TIPO: " + tipo + Constantes.QL);
+		sb.append("   CHAVE: " + chave + Constantes.QL);
+		sb.append("NUMÉRICO: " + numero + Constantes.QL);
+		sb.append("  ÍNDICE: " + indice + Constantes.QL);
+		sb.append("    BLOB: " + blob);
+
+		return sb.toString();
 	}
 
 	public boolean isNaoChave() {
