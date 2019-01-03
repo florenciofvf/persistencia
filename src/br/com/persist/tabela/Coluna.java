@@ -26,8 +26,8 @@ public class Coluna {
 		sb.append("TIPO: " + tipo + Constantes.QL);
 		sb.append("BLOB: " + blob + Constantes.QL);
 		sb.append("CHAVE: " + chave + Constantes.QL);
-		sb.append("ÍNDICE: " + indice + Constantes.QL);
-		sb.append("NUMÉRICO: " + numero + Constantes.QL);
+		sb.append("INDICE: " + indice + Constantes.QL);
+		sb.append("NUMERICO: " + numero + Constantes.QL);
 
 		return sb.toString();
 	}
