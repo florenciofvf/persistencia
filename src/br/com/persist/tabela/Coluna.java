@@ -3,14 +3,19 @@ package br.com.persist.tabela;
 import br.com.persist.util.Constantes;
 
 public class Coluna {
+	private final String tipoBanco;
 	private final boolean numero;
 	private final boolean chave;
 	private final boolean blob;
 	private final String nome;
 	private final String tipo;
+	private final int tamanho;
 	private final int indice;
 
-	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo) {
+	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, int tamanho,
+			String tipoBanco) {
+		this.tipoBanco = tipoBanco;
+		this.tamanho = tamanho;
 		this.indice = indice;
 		this.numero = numero;
 		this.chave = chave;
@@ -27,9 +32,15 @@ public class Coluna {
 		sb.append("BLOB: " + blob + Constantes.QL);
 		sb.append("CHAVE: " + chave + Constantes.QL);
 		sb.append("INDICE: " + indice + Constantes.QL);
+		sb.append("TAMANHO: " + tamanho + Constantes.QL);
 		sb.append("NUMERICO: " + numero + Constantes.QL);
+		sb.append("COLUNA: " + tipoBanco + Constantes.QL);
 
 		return sb.toString();
+	}
+
+	public String getTipoBanco() {
+		return tipoBanco;
 	}
 
 	public boolean isNaoChave() {
@@ -42,6 +53,10 @@ public class Coluna {
 
 	public boolean isChave() {
 		return chave;
+	}
+
+	public int getTamanho() {
+		return tamanho;
 	}
 
 	public String getNome() {
