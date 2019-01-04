@@ -4,6 +4,7 @@ import br.com.persist.util.Constantes;
 
 public class Coluna {
 	private final String tipoBanco;
+	private final boolean nulavel;
 	private final boolean numero;
 	private final boolean chave;
 	private final boolean blob;
@@ -13,13 +14,14 @@ public class Coluna {
 	private final int indice;
 
 	public Coluna(String nome, int indice) {
-		this(nome, indice, false, false, false, null, -1, null);
+		this(nome, indice, false, false, false, null, -1, null, false);
 	}
 
 	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, int tamanho,
-			String tipoBanco) {
+			String tipoBanco, boolean nulavel) {
 		this.tipoBanco = tipoBanco;
 		this.tamanho = tamanho;
+		this.nulavel = nulavel;
 		this.indice = indice;
 		this.numero = numero;
 		this.chave = chave;
@@ -38,6 +40,7 @@ public class Coluna {
 		sb.append("INDICE: " + indice + Constantes.QL);
 		sb.append("TAMANHO: " + tamanho + Constantes.QL);
 		sb.append("NUMERICO: " + numero + Constantes.QL);
+		sb.append("NULAVEL: " + nulavel + Constantes.QL);
 		sb.append("COLUNA: " + tipoBanco + Constantes.QL);
 
 		return sb.toString();

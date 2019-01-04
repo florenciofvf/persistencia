@@ -85,6 +85,7 @@ public class Persistencia {
 			int tamanho = rsmd.getColumnDisplaySize(i);
 			String classe = rsmd.getColumnClassName(i);
 			String nome = rsmd.getColumnName(i).trim();
+			boolean nulavel = rsmd.isNullable(i) == 1;
 			Boolean numero = mapa.get(classe);
 			int tipo = rsmd.getColumnType(i);
 			Boolean chave = false;
@@ -100,7 +101,7 @@ public class Persistencia {
 			}
 
 			Coluna coluna = new Coluna(nome, i - 1, numero, chave, tipo == Types.BLOB || tipo == Types.LONGVARBINARY,
-					classe, tamanho, tipoBanco);
+					classe, tamanho, tipoBanco, nulavel);
 			colunas.add(coluna);
 		}
 
