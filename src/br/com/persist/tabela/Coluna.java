@@ -12,6 +12,10 @@ public class Coluna {
 	private final int tamanho;
 	private final int indice;
 
+	public Coluna(String nome, int indice) {
+		this(nome, indice, false, false, false, null, -1, null);
+	}
+
 	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, int tamanho,
 			String tipoBanco) {
 		this.tipoBanco = tipoBanco;
