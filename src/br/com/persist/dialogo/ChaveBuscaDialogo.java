@@ -3,6 +3,8 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JToolBar;
 
@@ -10,8 +12,10 @@ import br.com.persist.Objeto;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.TextArea;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Util;
 
 public class ChaveBuscaDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
@@ -37,10 +41,31 @@ public class ChaveBuscaDialogo extends Dialogo {
 		add(BorderLayout.CENTER, textArea);
 
 		if (Tipo.CHAVE.equals(tipo)) {
-			setTitle(Mensagens.getString("label.chaveamento") + " " + getTitle());
+			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
+
+			Map<String, List<String>> campoNomes = Util.criarMapaCampoNomes(objeto.getChaveamento());
+
+			for (String chave : campoNomes.keySet()) {
+				List<String> nomes = campoNomes.get(chave);
+				textArea.append(chave + "=" + get(nomes) + Constantes.QL);
+			}
 		} else if (Tipo.BUSCA.equals(tipo)) {
-			setTitle(Mensagens.getString("label.buscaAuto") + " " + getTitle());
+			setTitle(Mensagens.getString("label.buscaAuto") + " - " + getTitle());
 		}
+	}
+
+	private String get(List<String> lista) {
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < lista.size(); i++) {
+			if (sb.length() > 0) {
+				sb.append(",");
+			}
+
+			sb.append(lista.get(i));
+		}
+
+		return sb.toString();
 	}
 
 	protected void processar() {

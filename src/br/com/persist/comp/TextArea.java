@@ -26,6 +26,10 @@ public class TextArea extends JScrollPane {
 		textArea.insert(string, pos);
 	}
 
+	public void append(String string) {
+		textArea.append(string);
+	}
+
 	public void setText(String string) {
 		textArea.setText(string);
 	}
