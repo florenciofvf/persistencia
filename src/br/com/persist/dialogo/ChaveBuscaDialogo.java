@@ -56,8 +56,15 @@ public class ChaveBuscaDialogo extends Dialogo {
 
 			List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
 
-			for (Grupo grupo : listaGrupo) {
-				textArea.append(grupo.getDetalhe() + Constantes.QL);
+			for (int i = 0; i < listaGrupo.size(); i++) {
+				Grupo grupo = listaGrupo.get(i);
+				textArea.append(grupo.getDetalhe());
+
+				if (i + 1 < listaGrupo.size()) {
+					textArea.append(";");
+				}
+
+				textArea.append(Constantes.QL);
 			}
 		}
 	}
