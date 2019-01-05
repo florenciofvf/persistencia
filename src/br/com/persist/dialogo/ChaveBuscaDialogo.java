@@ -52,7 +52,7 @@ public class ChaveBuscaDialogo extends Dialogo {
 
 			for (String chave : campoNomes.keySet()) {
 				List<String> nomes = campoNomes.get(chave);
-				textArea.append(get(chave, nomes));
+				textArea.append(campoDetalhe(chave, nomes));
 
 				if (i + 1 < tamanho) {
 					textArea.append(";");
@@ -79,7 +79,7 @@ public class ChaveBuscaDialogo extends Dialogo {
 		}
 	}
 
-	private String get(String chave, List<String> lista) {
+	private String campoDetalhe(String chave, List<String> lista) {
 		StringBuilder sb = new StringBuilder(chave + "=" + Constantes.QL);
 
 		for (int i = 0; i < lista.size(); i++) {
@@ -115,13 +115,32 @@ public class ChaveBuscaDialogo extends Dialogo {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Tipo.CHAVE.equals(tipo)) {
+				if (Tipo.BUSCA.equals(tipo)) {
+					objeto.setBuscaAutomatica(normalizar(textArea.getText()));
 
 				} else if (Tipo.CHAVE.equals(tipo)) {
-
+					objeto.setChaveamento(normalizar(textArea.getText()));
 				}
 
 				dispose();
+			}
+
+			String normalizar(String s) {
+				StringBuilder sb = new StringBuilder();
+
+				if (s != null) {
+					s = s.trim();
+
+					for (char c : s.toCharArray()) {
+						if (c == '\r' || c == '\n' || c == '\t') {
+							continue;
+						}
+
+						sb.append(c);
+					}
+				}
+
+				return sb.toString();
 			}
 		}
 	}

@@ -156,6 +156,7 @@ public class ObjetoDialogo extends Dialogo {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
 					new ChaveBuscaDialogo(ObjetoDialogo.this, objeto, ChaveBuscaDialogo.Tipo.BUSCA);
+					txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
 				}
 			}
 		};
@@ -165,6 +166,7 @@ public class ObjetoDialogo extends Dialogo {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
 					new ChaveBuscaDialogo(ObjetoDialogo.this, objeto, ChaveBuscaDialogo.Tipo.CHAVE);
+					txtChaveamento.setText(objeto.getChaveamento());
 				}
 			}
 		};
