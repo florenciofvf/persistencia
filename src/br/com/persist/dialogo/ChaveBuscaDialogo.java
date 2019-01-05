@@ -12,10 +12,12 @@ import br.com.persist.Objeto;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.TextArea;
 import br.com.persist.util.Acao;
+import br.com.persist.util.BuscaAuto;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
+import br.com.persist.util.BuscaAuto.Grupo;
 
 public class ChaveBuscaDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
@@ -51,6 +53,12 @@ public class ChaveBuscaDialogo extends Dialogo {
 			}
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			setTitle(Mensagens.getString("label.buscaAuto") + " - " + getTitle());
+
+			List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
+
+			for (Grupo grupo : listaGrupo) {
+				textArea.append(grupo.getDetalhe() + Constantes.QL);
+			}
 		}
 	}
 

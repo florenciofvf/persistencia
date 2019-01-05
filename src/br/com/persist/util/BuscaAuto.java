@@ -33,14 +33,26 @@ public class BuscaAuto {
 		public String toString() {
 			return descricao;
 		}
+
+		public String getDetalhe() {
+			StringBuilder sb = new StringBuilder(descricao + "=" + Constantes.QL);
+
+			for (Tabela tabela : tabelas) {
+				sb.append("  " + tabela.descricao + Constantes.QL);
+			}
+
+			return sb.toString();
+		}
 	}
 
 	public static class Tabela {
+		final String descricao;
 		final String apelido;
 		final String campo;
 		final String nome;
 
 		public Tabela(String descricao) {
+			this.descricao = descricao;
 			int pos = descricao.indexOf('.');
 			String n = descricao.substring(0, pos);
 
