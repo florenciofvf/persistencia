@@ -37,8 +37,15 @@ public class BuscaAuto {
 		public String getDetalhe() {
 			StringBuilder sb = new StringBuilder(descricao + "=" + Constantes.QL);
 
-			for (Tabela tabela : tabelas) {
-				sb.append("  " + tabela.descricao + Constantes.QL);
+			for (int i = 0; i < tabelas.size(); i++) {
+				Tabela tabela = tabelas.get(i);
+				sb.append("  " + tabela.descricao);
+
+				if (i + 1 < tabelas.size()) {
+					sb.append(",");
+				}
+
+				sb.append(Constantes.QL);
 			}
 
 			return sb.toString();
