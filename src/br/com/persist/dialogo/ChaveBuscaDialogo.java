@@ -47,9 +47,19 @@ public class ChaveBuscaDialogo extends Dialogo {
 
 			Map<String, List<String>> campoNomes = Util.criarMapaCampoNomes(objeto.getChaveamento());
 
+			int tamanho = campoNomes.size();
+			int i = 0;
+
 			for (String chave : campoNomes.keySet()) {
 				List<String> nomes = campoNomes.get(chave);
-				textArea.append(chave + "=" + get(nomes) + Constantes.QL);
+				textArea.append(get(chave, nomes));
+
+				if (i + 1 < tamanho) {
+					textArea.append(";");
+				}
+
+				textArea.append(Constantes.QL);
+				i++;
 			}
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			setTitle(Mensagens.getString("label.buscaAuto") + " - " + getTitle());
@@ -69,15 +79,18 @@ public class ChaveBuscaDialogo extends Dialogo {
 		}
 	}
 
-	private String get(List<String> lista) {
-		StringBuilder sb = new StringBuilder();
+	private String get(String chave, List<String> lista) {
+		StringBuilder sb = new StringBuilder(chave + "=" + Constantes.QL);
 
 		for (int i = 0; i < lista.size(); i++) {
-			if (sb.length() > 0) {
+			String string = lista.get(i);
+			sb.append(Constantes.TAB + string);
+
+			if (i + 1 < lista.size()) {
 				sb.append(",");
 			}
 
-			sb.append(lista.get(i));
+			sb.append(Constantes.QL);
 		}
 
 		return sb.toString();

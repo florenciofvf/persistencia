@@ -39,7 +39,7 @@ public class BuscaAuto {
 
 			for (int i = 0; i < tabelas.size(); i++) {
 				Tabela tabela = tabelas.get(i);
-				sb.append("  " + tabela.descricao);
+				sb.append(Constantes.TAB + tabela.descricao);
 
 				if (i + 1 < tabelas.size()) {
 					sb.append(",");
