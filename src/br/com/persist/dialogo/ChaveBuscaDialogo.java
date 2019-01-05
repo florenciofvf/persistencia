@@ -42,6 +42,8 @@ public class ChaveBuscaDialogo extends Dialogo {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, textArea);
 
+		StringBuilder builder = new StringBuilder();
+
 		if (Tipo.CHAVE.equals(tipo)) {
 			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
 
@@ -52,13 +54,13 @@ public class ChaveBuscaDialogo extends Dialogo {
 
 			for (String chave : campoNomes.keySet()) {
 				List<String> nomes = campoNomes.get(chave);
-				textArea.append(campoDetalhe(chave, nomes));
+				builder.append(campoDetalhe(chave, nomes));
 
 				if (i + 1 < tamanho) {
-					textArea.append(";");
+					builder.append(";");
 				}
 
-				textArea.append(Constantes.QL);
+				builder.append(Constantes.QL);
 				i++;
 			}
 		} else if (Tipo.BUSCA.equals(tipo)) {
@@ -68,15 +70,17 @@ public class ChaveBuscaDialogo extends Dialogo {
 
 			for (int i = 0; i < listaGrupo.size(); i++) {
 				Grupo grupo = listaGrupo.get(i);
-				textArea.append(grupo.getDetalhe());
+				builder.append(grupo.getDetalhe());
 
 				if (i + 1 < listaGrupo.size()) {
-					textArea.append(";");
+					builder.append(";");
 				}
 
-				textArea.append(Constantes.QL);
+				builder.append(Constantes.QL);
 			}
 		}
+
+		textArea.setText(builder.toString().trim());
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
