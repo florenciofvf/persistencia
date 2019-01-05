@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -37,6 +38,7 @@ import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.Superficie;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
@@ -143,8 +145,29 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 
+			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
+			txtChaveamento.addMouseListener(chaveamentoListener);
+
 			add(BorderLayout.CENTER, container);
 		}
+
+		private MouseListener buscaAutomaticaListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					new ChaveBuscaDialogo(ObjetoDialogo.this, objeto, ChaveBuscaDialogo.Tipo.CHAVE);
+				}
+			}
+		};
+
+		private MouseListener chaveamentoListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					new ChaveBuscaDialogo(ObjetoDialogo.this, objeto, ChaveBuscaDialogo.Tipo.BUSCA);
+				}
+			}
+		};
 
 		private FocusListener focusListener = new FocusAdapter() {
 			@Override
