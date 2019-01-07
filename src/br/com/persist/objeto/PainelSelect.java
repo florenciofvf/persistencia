@@ -52,6 +52,7 @@ public class PainelSelect extends Panel {
 		add(BorderLayout.NORTH, toolbar);
 
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
+		split.setDividerLocation(200);
 		add(BorderLayout.CENTER, split);
 	}
 
