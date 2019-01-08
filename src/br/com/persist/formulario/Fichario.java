@@ -21,7 +21,9 @@ import javax.swing.JTabbedPane;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.objeto.PainelSelect2;
 import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -134,6 +136,18 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 
 		return desktop;
+	}
+
+	public Panel novoSelect(Formulario formulario) {
+		PainelSelect2 panel = new PainelSelect2(formulario, null);
+		addTab(Mensagens.getString("label.consulta"), panel);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.CONSULTA);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+
+		return panel;
 	}
 
 	public void novo(Formulario formulario) {

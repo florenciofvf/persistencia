@@ -26,7 +26,6 @@ import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
-import br.com.persist.objeto.FormularioSelect;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
@@ -221,7 +220,7 @@ public class Formulario extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FormularioSelect(Formulario.this, Formulario.this, null);
+				fichario.novoSelect(Formulario.this);
 			}
 		}
 
