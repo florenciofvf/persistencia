@@ -6,10 +6,12 @@ import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import br.com.persist.comp.CheckBox;
+import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Constantes;
@@ -52,11 +54,17 @@ public class ConfigDialogo extends Dialogo {
 			radio.setSelected(radio.posicao.indice == formulario.getFichario().getTabPlacement());
 		}
 
+		Label localAbas = new Label("label.local_abas");
+		localAbas.setHorizontalAlignment(Label.CENTER);
+
 		Panel container = new Panel(new GridLayout(0, 1));
+		container.add(localAbas);
 		container.add(panelPosicoes);
+		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
+		container.add(new JSeparator());
 
 		add(BorderLayout.CENTER, container);
 
