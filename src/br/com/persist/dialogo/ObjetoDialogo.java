@@ -285,7 +285,9 @@ public class ObjetoDialogo extends Dialogo {
 			TextField nome = new TextField();
 
 			PanelNome() {
-				add(BorderLayout.WEST, new Label("label.nome_enter"));
+				Label label = new Label("label.nome_enter");
+				label.setToolTipText(Mensagens.getString("hint.instrucoes"));
+				add(BorderLayout.WEST, label);
 				add(BorderLayout.CENTER, nome);
 				nome.addActionListener(this);
 			}
