@@ -21,6 +21,7 @@ public class ConfigDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
+	private final CheckBox chkTabelaListener = new CheckBox("label.tabela_listener");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
 			new Posicao("label.esquerdo", SwingConstants.LEFT), new Posicao("label.abaixo", SwingConstants.BOTTOM),
@@ -40,6 +41,7 @@ public class ConfigDialogo extends Dialogo {
 		chkFicharioScroll.setSelected(formulario.getFichario().getTabLayoutPolicy() == JTabbedPane.SCROLL_TAB_LAYOUT);
 		chkAreaTransTabelaRegistros.setSelected(Constantes.area_trans_tabela_registros);
 		chkFecharOrigemAposSoltar.setSelected(Constantes.fechar_apos_soltar);
+		chkTabelaListener.setSelected(Constantes.tabela_listener);
 
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
 		ButtonGroup grupo = new ButtonGroup();
@@ -64,6 +66,7 @@ public class ConfigDialogo extends Dialogo {
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
+		container.add(chkTabelaListener);
 		container.add(new JSeparator());
 
 		add(BorderLayout.CENTER, container);
@@ -72,6 +75,7 @@ public class ConfigDialogo extends Dialogo {
 
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
+		chkTabelaListener.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
 	}
 
@@ -84,6 +88,8 @@ public class ConfigDialogo extends Dialogo {
 
 		chkFecharOrigemAposSoltar
 				.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
+
+		chkTabelaListener.addActionListener(e -> Constantes.tabela_listener = chkTabelaListener.isSelected());
 	}
 
 	protected void processar() {
