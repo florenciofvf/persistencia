@@ -52,6 +52,7 @@ import br.com.persist.tabela.CellRenderer;
 import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.tabela.Tabela;
+import br.com.persist.tabela.TabelaListener;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
 import br.com.persist.util.BuscaAuto;
@@ -82,6 +83,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
+		tabela.setTabelaListener(tabelaListener);
 		txtComplemento.addActionListener(this);
 		toolbar.complementoBuscaAuto(objeto);
 		toolbar.complementoUpdate(objeto);
@@ -1040,4 +1042,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		PainelObjeto.this.actionPerformed(null);
 	}
+
+	private TabelaListener tabelaListener = new TabelaListener() {
+		@Override
+		public void copiarNomeColuna(Tabela tabela, String nome) {
+			txtComplemento.setText("AND " + nome + " = ");
+		}
+	};
 }
