@@ -27,6 +27,7 @@ public class Tabela extends JTable {
 	private static final long serialVersionUID = 1L;
 	private PopupHeader popupHeader = new PopupHeader();
 	private Map<String, List<String>> mapaChaveamento;
+	private TabelaListener tabelaListener;
 
 	public Tabela() {
 		this(new OrdenacaoModelo(new VazioModelo()));
@@ -45,6 +46,14 @@ public class Tabela extends JTable {
 		}
 
 		super.setModel(dataModel);
+	}
+
+	public TabelaListener getTabelaListener() {
+		return tabelaListener;
+	}
+
+	public void setTabelaListener(TabelaListener tabelaListener) {
+		this.tabelaListener = tabelaListener;
 	}
 
 	public Map<String, List<String>> getMapaChaveamento() {
@@ -160,6 +169,10 @@ public class Tabela extends JTable {
 			public void actionPerformed(ActionEvent e) {
 				String coluna = getModel().getColumnName(tag);
 				Util.setContentTransfered(coluna);
+
+				if (tabelaListener != null && Constantes.tabela_listener) {
+					tabelaListener.copiarNomeColuna(Tabela.this, coluna);
+				}
 			}
 		}
 
