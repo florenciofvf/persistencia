@@ -2,6 +2,11 @@ package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.sql.Connection;
 
 import javax.swing.JComboBox;
@@ -21,11 +26,13 @@ import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class PainelSelect2 extends Panel {
 	private static final long serialVersionUID = 1L;
+	private static final File file = new File("consultas/consultas");
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
@@ -39,6 +46,7 @@ public class PainelSelect2 extends Panel {
 		}
 		toolbar.add(cmbConexao);
 		montarLayout();
+		abrir();
 	}
 
 	private void montarLayout() {
@@ -50,11 +58,47 @@ public class PainelSelect2 extends Panel {
 		add(BorderLayout.CENTER, split);
 	}
 
+	private void abrir() {
+		if (file.exists()) {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+
+				while (linha != null) {
+					textArea.append(linha + Constantes.QL);
+					linha = br.readLine();
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("PAINEL SELECT", ex, PainelSelect2.this);
+			}
+		}
+	}
+
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 
 		Toolbar() {
+			add(new Button(new SalvarAcao()));
+			addSeparator();
 			add(new Button(new AtualizarRegistrosAcao()));
+		}
+
+		class SalvarAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			SalvarAcao() {
+				super(false, "label.salvar", Icones.SALVAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					PrintWriter pw = new PrintWriter(file);
+					pw.print(textArea.getText());
+					pw.close();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("PAINEL SELECT", ex, PainelSelect2.this);
+				}
+			}
 		}
 
 		class AtualizarRegistrosAcao extends Acao {
