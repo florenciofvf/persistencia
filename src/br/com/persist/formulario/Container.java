@@ -207,6 +207,7 @@ public class Container extends PanelBorder {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser(".");
+				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
 				if (arquivo != null) {
 					fileChooser.setCurrentDirectory(arquivo);
 				}

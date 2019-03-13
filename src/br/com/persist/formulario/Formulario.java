@@ -27,6 +27,7 @@ import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro;
@@ -289,6 +290,7 @@ public class Formulario extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser(".");
+				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
 				if (arquivo != null) {
 					fileChooser.setCurrentDirectory(arquivo);
 				}
@@ -328,6 +330,7 @@ public class Formulario extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser(".");
+				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
 				if (arquivo != null) {
 					fileChooser.setCurrentDirectory(arquivo);
 				}
