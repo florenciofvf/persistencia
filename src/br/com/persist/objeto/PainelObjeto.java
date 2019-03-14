@@ -217,6 +217,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
 		}
+
+		tabelaListener.tabelaMouseClick(tabela);
 	}
 
 	private void configCabecalhoColuna(ListagemModelo modelo) {
@@ -242,6 +244,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		final Button excluir = new Button(new ExcluirRegistrosAcao());
 		final ButtonAtualizar atualizar = new ButtonAtualizar();
 		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
 		final ButtonFuncoes funcoes = new ButtonFuncoes();
@@ -255,7 +258,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(new ButtonInfo());
 			addSeparator();
-			add(new Button(new ExcluirRegistrosAcao()));
+			add(excluir);
 			addSeparator();
 			add(new Button(new FragmentoAcao()));
 			add(buscaAuto);
@@ -280,6 +283,11 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		void complementoUpdate(Objeto objeto) {
 			update.complemento(objeto);
+		}
+
+		public void excluirAtualizarEnable(boolean b) {
+			excluir.setEnabled(b);
+			update.setEnabled(b);
 		}
 
 		class FecharAcao extends Acao {
@@ -401,6 +409,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 						modelo.excluirValoresChaves(listaValores);
 						modelo.iniArray();
 						modelo.fireTableDataChanged();
+						tabelaListener.tabelaMouseClick(tabela);
 					}
 				}
 			}
@@ -1050,6 +1059,27 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		@Override
 		public void copiarNomeColuna(Tabela tabela, String nome) {
 			txtComplemento.setText("AND " + nome + " = ");
+		}
+
+		@Override
+		public void tabelaMouseClick(Tabela tabela) {
+			OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+			TableModel model = modelo.getModel();
+
+			if (model instanceof RegistroModelo) {
+				int[] linhas = tabela.getSelectedRows();
+
+				if (linhas != null && linhas.length > 0) {
+					List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+
+					toolbar.update.setEnabled(!chaves.isEmpty() && linhas.length == 1);
+					toolbar.excluir.setEnabled(!chaves.isEmpty());
+				} else {
+					toolbar.excluirAtualizarEnable(false);
+				}
+			} else {
+				toolbar.excluirAtualizarEnable(false);
+			}
 		}
 	};
 }

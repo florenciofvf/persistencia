@@ -37,6 +37,7 @@ public class Tabela extends JTable {
 		super(modelo);
 		tableHeader.addMouseListener(headerListener);
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		addMouseListener(mouseListener);
 	}
 
 	@Override
@@ -63,6 +64,14 @@ public class Tabela extends JTable {
 	public void setMapaChaveamento(Map<String, List<String>> mapaChaveamento) {
 		this.mapaChaveamento = mapaChaveamento;
 	}
+
+	private MouseListener mouseListener = new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			if (tabelaListener != null) {
+				tabelaListener.tabelaMouseClick(Tabela.this);
+			}
+		}
+	};
 
 	private MouseListener headerListener = new MouseAdapter() {
 		@Override
