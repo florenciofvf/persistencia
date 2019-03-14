@@ -254,10 +254,13 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(btnArrasto);
 			addSeparator();
 			add(new ButtonInfo());
+			addSeparator();
+			add(new Button(new ExcluirRegistrosAcao()));
+			addSeparator();
 			add(new Button(new FragmentoAcao()));
 			add(buscaAuto);
+			addSeparator();
 			add(update);
-			add(new Button(new ExcluirRegistrosAcao()));
 			add(atualizar);
 			addSeparator();
 			add(new Button(new ComplementoAcao()));
@@ -453,7 +456,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		ButtonBuscaAuto() {
 			setToolTipText(Mensagens.getString("label.buscaAuto"));
 			setComponentPopupMenu(popup);
-			setIcon(Icones.CONFIG2);
+			setIcon(Icones.FIELDS);
 			addActionListener(e -> popup.show(this, 5, 5));
 		}
 
