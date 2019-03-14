@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class Tabela extends JTable {
 	private PopupHeader popupHeader = new PopupHeader();
 	private Map<String, List<String>> mapaChaveamento;
 	private TabelaListener tabelaListener;
+	private boolean arrastado;
 
 	public Tabela() {
 		this(new OrdenacaoModelo(new VazioModelo()));
@@ -36,6 +38,7 @@ public class Tabela extends JTable {
 	public Tabela(OrdenacaoModelo modelo) {
 		super(modelo);
 		tableHeader.addMouseListener(headerListener);
+		addMouseMotionListener(mouseMotionListener);
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		addMouseListener(mouseListener);
 	}
@@ -65,9 +68,22 @@ public class Tabela extends JTable {
 		this.mapaChaveamento = mapaChaveamento;
 	}
 
+	private MouseMotionListener mouseMotionListener = new MouseAdapter() {
+		public void mouseDragged(MouseEvent e) {
+			arrastado = true;
+		}
+	};
+
 	private MouseListener mouseListener = new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) {
 			if (tabelaListener != null) {
+				tabelaListener.tabelaMouseClick(Tabela.this);
+			}
+		}
+
+		public void mouseReleased(MouseEvent e) {
+			if (arrastado && tabelaListener != null) {
+				arrastado = false;
 				tabelaListener.tabelaMouseClick(Tabela.this);
 			}
 		}
