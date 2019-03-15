@@ -218,6 +218,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
 		}
 
+		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0);
 		tabelaListener.tabelaMouseClick(tabela);
 	}
 
@@ -461,6 +462,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	private class ButtonBuscaAuto extends Button {
 		private static final long serialVersionUID = 1L;
 		private Popup popup = new Popup();
+		private boolean habilitado;
 
 		ButtonBuscaAuto() {
 			setToolTipText(Mensagens.getString("label.buscaAuto"));
@@ -476,9 +478,12 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				popup.add(new MenuBuscaAuto(grupo));
 			}
 
-			if (listaGrupo.isEmpty()) {
-				setEnabled(false);
-			}
+			habilitado = !listaGrupo.isEmpty();
+			setEnabled(habilitado);
+		}
+
+		void habilitar(boolean b) {
+			setEnabled(habilitado && b);
 		}
 
 		class MenuBuscaAuto extends JMenu {
