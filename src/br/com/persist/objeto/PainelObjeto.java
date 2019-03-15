@@ -701,6 +701,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			popup.addSeparator();
 			popup.add(new MenuItem(new TotalizarRegistrosAcao(true)));
 			popup.addSeparator();
+			popup.add(new MenuItem(new MinimoAcao()));
 			popup.add(new MenuItem(new MaximoAcao()));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.SOMA);
@@ -731,6 +732,36 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 				if (chaves.length == 1) {
 					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+							+ objeto.getTabela(conexao.getEsquema()) + ")");
+					PainelObjeto.this.actionPerformed(null);
+				}
+			}
+		}
+
+		class MinimoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			MinimoAcao() {
+				super(true, "label.minimo", Icones.VAR);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				if (Util.estaVazio(objeto.getChaves())) {
+					txtComplemento.setText("");
+					return;
+				}
+
+				String[] chaves = objeto.getChaves().trim().split(",");
+
+				if (chaves.length == 1) {
+					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
 							+ objeto.getTabela(conexao.getEsquema()) + ")");
 					PainelObjeto.this.actionPerformed(null);
 				}
