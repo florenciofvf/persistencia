@@ -1106,10 +1106,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				int[] linhas = tabela.getSelectedRows();
 
 				if (linhas != null && linhas.length > 0) {
-					List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+					String[] chaves = objeto.getChaves().trim().split(",");
 
-					toolbar.update.setEnabled(!chaves.isEmpty() && linhas.length == 1);
-					toolbar.excluir.setEnabled(!chaves.isEmpty());
+					toolbar.update.setEnabled(chaves.length > 0 && linhas.length == 1);
+					toolbar.excluir.setEnabled(chaves.length > 0);
 				} else {
 					toolbar.excluirAtualizarEnable(false);
 				}
