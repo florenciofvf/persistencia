@@ -700,8 +700,12 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			popup.addSeparator();
 			popup.add(new MenuItem(new TotalizarRegistrosAcao(true)));
 			popup.addSeparator();
-			popup.add(new MenuItem(new MinimoAcao()));
-			popup.add(new MenuItem(new MaximoAcao()));
+			MenuItem minimo = new MenuItem(new MinimoAcao());
+			minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
+			popup.add(minimo);
+			MenuItem maximo = new MenuItem(new MaximoAcao());
+			maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
+			popup.add(maximo);
 			setComponentPopupMenu(popup);
 			setIcon(Icones.SOMA);
 			addActionListener(e -> popup.show(this, 5, 5));
