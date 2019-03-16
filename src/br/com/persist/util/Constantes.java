@@ -3,7 +3,7 @@ package br.com.persist.util;
 import java.awt.Dimension;
 
 public class Constantes {
-	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(500, 550);
+	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
 	public static boolean area_trans_tabela_registros = false;
 	public static boolean fechar_apos_soltar = true;
