@@ -73,6 +73,7 @@ public class ObjetoDialogo extends Dialogo {
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
+		private CheckBox chkAbrirAuto = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
 		private TextField txtId = new TextField();
@@ -89,6 +90,7 @@ public class ObjetoDialogo extends Dialogo {
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
+			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
 			txtId.setText(objeto.getId());
@@ -112,6 +114,7 @@ public class ObjetoDialogo extends Dialogo {
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
+			chkAbrirAuto.addActionListener(this);
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
 			txtIntervalo.addActionListener(this);
@@ -143,6 +146,7 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
+			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.transparente", chkTransparente));
 
 			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
@@ -236,6 +240,11 @@ public class ObjetoDialogo extends Dialogo {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
 				Formulario.macro.desenharIdDescricao(chk.isSelected());
+
+			} else if (chkAbrirAuto == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setAbrirAuto(chk.isSelected());
+				Formulario.macro.abrirAuto(chk.isSelected());
 
 			} else if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();

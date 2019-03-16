@@ -16,6 +16,7 @@ public class Macro {
 	public static final String PONTO_DESTINO = "pontoDestino";
 	public static final String TRANSPARENTE = "transparente";
 	public static final String PONTO_ORIGEM = "pontoOrigem";
+	public static final String ABRIR_AUTO = "abrirAuto";
 	public static final String COR_FONTE = "corFonte";
 	public static final String ICONE = "icone";
 	private final Map<String, Instrucao> mapa;
@@ -34,6 +35,7 @@ public class Macro {
 		mapa.put(PONTO_DESTINO, new PONTO_DESTINO());
 		mapa.put(TRANSPARENTE, new TRANSPARENTE());
 		mapa.put(PONTO_ORIGEM, new PONTO_ORIGEM());
+		mapa.put(ABRIR_AUTO, new ABRIR_AUTO());
 		mapa.put(COR_FONTE, new COR_FONTE());
 		mapa.put(ICONE, new ICONE());
 		mapa.put(COR, new COR());
@@ -95,6 +97,17 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setDesenharId((Boolean) valor);
+		}
+	}
+
+	class ABRIR_AUTO extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setAbrirAuto((Boolean) valor);
 		}
 	}
 
@@ -190,6 +203,12 @@ public class Macro {
 
 	public void desenharIdDescricao(Object valor) {
 		Instrucao instrucao = mapa.get(DESENHAR_ID_DESC);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void abrirAuto(Object valor) {
+		Instrucao instrucao = mapa.get(ABRIR_AUTO);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

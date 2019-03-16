@@ -41,6 +41,7 @@ public class Objeto implements Runnable {
 	private boolean desenharId;
 	private String complemento;
 	private String chaveamento;
+	private boolean abrirAuto;
 	public boolean controlado;
 	private boolean processar;
 	private String descricao;
@@ -91,6 +92,7 @@ public class Objeto implements Runnable {
 		o.complemento = complemento;
 		o.chaveamento = chaveamento;
 		o.desenharId = desenharId;
+		o.abrirAuto = abrirAuto;
 		o.descricao = descricao;
 		o.corFonte = corFonte;
 		o.tabela = tabela;
@@ -126,6 +128,10 @@ public class Objeto implements Runnable {
 
 	public void setDesenharId(boolean desenharId) {
 		this.desenharId = desenharId;
+	}
+
+	public void setAbrirAuto(boolean abrirAuto) {
+		this.abrirAuto = abrirAuto;
 	}
 
 	public static void setDiametro(int diametro) {
@@ -228,6 +234,10 @@ public class Objeto implements Runnable {
 
 	public boolean isDesenharId() {
 		return desenharId;
+	}
+
+	public boolean isAbrirAuto() {
+		return abrirAuto;
 	}
 
 	public void setId(String id) {
@@ -382,6 +392,7 @@ public class Objeto implements Runnable {
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
 		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
 		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
+		abrirAuto = Boolean.parseBoolean(attr.getValue("abrirAuto"));
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		buscaAutomatica = attr.getValue("buscaAutomatica");
@@ -412,6 +423,7 @@ public class Objeto implements Runnable {
 		util.atributo("corFonte", corFonte.getRGB());
 		util.atributo("intervalo", getIntervalo());
 		util.atributo("desenharId", desenharId);
+		util.atributo("abrirAuto", abrirAuto);
 		util.atributo("id", Util.escapar(id));
 		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
