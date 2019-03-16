@@ -17,6 +17,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
+import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.Transferidor;
@@ -78,6 +82,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	public PainelObjeto(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
+		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
 		this.nomeTabela = objeto.getTabela2() + " - ";
 		if (padrao != null) {
@@ -97,6 +102,15 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		montarLayout();
 		config();
 	}
+
+	private MouseListener complementoListener = new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getClickCount() >= Constantes.DOIS) {
+				new ComplementoDialogo(listener.getFrame(), objeto, txtComplemento);
+			}
+		}
+	};
 
 	public Objeto getObjeto() {
 		return objeto;
