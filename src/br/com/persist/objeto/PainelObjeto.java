@@ -175,7 +175,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			return;
 		}
 
-		String[] chaves = objeto.getChaves().trim().split(",");
 		StringBuilder builder = new StringBuilder(
 				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
 		builder.append(" " + txtComplemento.getText());
@@ -183,8 +182,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(), chaves, objeto,
-					conexao);
+			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(),
+					objeto.getChavesArray(), objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
 			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
 
@@ -723,18 +722,16 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					return;
 				}
 
-				if (Util.estaVazio(objeto.getChaves())) {
+				String[] chaves = objeto.getChavesArray();
+
+				if (chaves.length != 1) {
 					txtComplemento.setText("");
 					return;
 				}
 
-				String[] chaves = objeto.getChaves().trim().split(",");
-
-				if (chaves.length == 1) {
-					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
-							+ objeto.getTabela(conexao.getEsquema()) + ")");
-					PainelObjeto.this.actionPerformed(null);
-				}
+				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+						+ objeto.getTabela(conexao.getEsquema()) + ")");
+				PainelObjeto.this.actionPerformed(null);
 			}
 		}
 
@@ -753,18 +750,16 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 					return;
 				}
 
-				if (Util.estaVazio(objeto.getChaves())) {
+				String[] chaves = objeto.getChavesArray();
+
+				if (chaves.length != 1) {
 					txtComplemento.setText("");
 					return;
 				}
 
-				String[] chaves = objeto.getChaves().trim().split(",");
-
-				if (chaves.length == 1) {
-					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
-							+ objeto.getTabela(conexao.getEsquema()) + ")");
-					PainelObjeto.this.actionPerformed(null);
-				}
+				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
+						+ objeto.getTabela(conexao.getEsquema()) + ")");
+				PainelObjeto.this.actionPerformed(null);
 			}
 		}
 
@@ -1106,7 +1101,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				int[] linhas = tabela.getSelectedRows();
 
 				if (linhas != null && linhas.length > 0) {
-					String[] chaves = objeto.getChaves().trim().split(",");
+					String[] chaves = objeto.getChavesArray();
 
 					toolbar.update.setEnabled(chaves.length > 0 && linhas.length == 1);
 					toolbar.excluir.setEnabled(chaves.length > 0);

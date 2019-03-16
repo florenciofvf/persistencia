@@ -18,6 +18,7 @@ import javax.swing.Icon;
 import org.xml.sax.Attributes;
 
 import br.com.persist.formulario.Superficie;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
@@ -193,6 +194,16 @@ public class Objeto implements Runnable {
 		}
 
 		return chaves;
+	}
+
+	public String[] getChavesArray() {
+		String chaves = getChaves();
+
+		if (Util.estaVazio(chaves)) {
+			return Constantes.ARRAY_LENGTH_ZERO;
+		}
+
+		return chaves.trim().split(",");
 	}
 
 	public String getTabela(String esquema) {
