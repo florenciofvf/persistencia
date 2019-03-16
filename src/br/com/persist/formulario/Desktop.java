@@ -287,6 +287,7 @@ public class Desktop extends JDesktopPane {
 
 	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto) {
 		JInternalFrame[] frames = getAllFrames();
+		grupo.processadoFalse();
 
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof FormularioInterno) {
@@ -296,6 +297,7 @@ public class Desktop extends JDesktopPane {
 				for (Tabela tabela : tabelas) {
 					if (interno.ehTabela(tabela)) {
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
+						tabela.setProcessado(true);
 					}
 				}
 			}

@@ -17,6 +17,12 @@ public class BuscaAuto {
 			this.descricao = descricao;
 		}
 
+		public void processadoFalse() {
+			for (Tabela tabela : tabelas) {
+				tabela.setProcessado(false);
+			}
+		}
+
 		public List<Tabela> getTabelas() {
 			return tabelas;
 		}
@@ -56,6 +62,7 @@ public class BuscaAuto {
 		final String descricao;
 		final String apelido;
 		final String campo;
+		boolean processado;
 		final String nome;
 
 		public Tabela(String descricao) {
@@ -73,6 +80,14 @@ public class BuscaAuto {
 			}
 
 			campo = descricao.substring(pos + 1);
+		}
+
+		public void setProcessado(boolean processado) {
+			this.processado = processado;
+		}
+
+		public boolean isProcessado() {
+			return processado;
 		}
 
 		public String getApelido() {

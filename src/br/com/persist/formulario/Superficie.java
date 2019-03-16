@@ -37,6 +37,7 @@ import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.objeto.FormularioExterno;
 import br.com.persist.objeto.FormularioInterno;
 import br.com.persist.objeto.FormularioSelect;
+import br.com.persist.objeto.PainelObjeto;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -44,6 +45,8 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Macro.Instrucao;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
+import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.BuscaAuto.Tabela;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
@@ -1549,6 +1552,40 @@ public class Superficie extends Desktop {
 		for (Objeto objeto : objetos) {
 			objeto.setSuperficie(null);
 			objeto.desativar();
+		}
+	}
+
+	@Override
+	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto) {
+		super.buscaAutomatica(grupo, argumentos, painelObjeto);
+
+		if (Constantes.abrir_auto) {
+			for (Tabela tabela : grupo.getTabelas()) {
+				if (!tabela.isProcessado()) {
+					Objeto objeto = null;
+
+					for (Objeto obj : objetos) {
+						if (tabela.getNome().equalsIgnoreCase(obj.getTabela2())) {
+							objeto = obj;
+							break;
+						}
+					}
+
+					if (objeto == null || !objeto.isAbrirAuto()) {
+						continue;
+					}
+
+					Frame frame = formulario;
+
+					if (container.getFormularioSuperficie() != null) {
+						frame = container.getFormularioSuperficie();
+					}
+
+					Conexao conexao = container.getConexaoPadrao();
+					objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
+					new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao);
+				}
+			}
 		}
 	}
 }
