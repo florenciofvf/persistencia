@@ -9,6 +9,7 @@ public class Constantes {
 	public static boolean fechar_apos_soltar = true;
 	public static boolean tabela_listener = false;
 	public static final String ENCODING = "UTF-8";
+	public static boolean abrir_auto = false;
 	public static final String QL = "\r\n";
 	public static final String TAB = "\t";
 	public static final byte ARRASTO = 1;

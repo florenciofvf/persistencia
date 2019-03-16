@@ -145,8 +145,8 @@ public class ObjetoDialogo extends Dialogo {
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
-			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
+			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 
 			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);

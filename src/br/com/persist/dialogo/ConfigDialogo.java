@@ -21,6 +21,7 @@ public class ConfigDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
+	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkTabelaListener = new CheckBox("label.tabela_listener");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
@@ -30,7 +31,7 @@ public class ConfigDialogo extends Dialogo {
 	private final Formulario formulario;
 
 	public ConfigDialogo(Formulario formulario) {
-		super(formulario, Mensagens.getString("label.configuracoes"), 700, 200, false);
+		super(formulario, Mensagens.getString("label.configuracoes"), 700, 341, false);
 		this.formulario = formulario;
 		montarLayout();
 		configurar();
@@ -42,6 +43,7 @@ public class ConfigDialogo extends Dialogo {
 		chkAreaTransTabelaRegistros.setSelected(Constantes.area_trans_tabela_registros);
 		chkFecharOrigemAposSoltar.setSelected(Constantes.fechar_apos_soltar);
 		chkTabelaListener.setSelected(Constantes.tabela_listener);
+		chkAtivarAbrirAuto.setSelected(Constantes.abrir_auto);
 
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
 		ButtonGroup grupo = new ButtonGroup();
@@ -64,6 +66,7 @@ public class ConfigDialogo extends Dialogo {
 		container.add(panelPosicoes);
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
+		container.add(chkAtivarAbrirAuto);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
 		container.add(chkTabelaListener);
@@ -75,6 +78,7 @@ public class ConfigDialogo extends Dialogo {
 
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
+		chkAtivarAbrirAuto.setMargin(insets);
 		chkTabelaListener.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
 	}
@@ -90,6 +94,8 @@ public class ConfigDialogo extends Dialogo {
 				.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
 
 		chkTabelaListener.addActionListener(e -> Constantes.tabela_listener = chkTabelaListener.isSelected());
+
+		chkAtivarAbrirAuto.addActionListener(e -> Constantes.abrir_auto = chkAtivarAbrirAuto.isSelected());
 	}
 
 	protected void processar() {
