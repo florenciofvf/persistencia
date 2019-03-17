@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JInternalFrame;
 
@@ -51,7 +52,7 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos) {
+	public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
 		Container parent = getParent();
 		Desktop desktop = null;
 
@@ -65,7 +66,7 @@ public class FormularioInterno extends JInternalFrame implements PainelObjetoLis
 		}
 
 		if (desktop != null) {
-			desktop.buscaAutomatica(grupo, argumentos, painelObjeto);
+			desktop.buscaAutomatica(grupo, argumentos, painelObjeto, processado);
 		}
 	}
 

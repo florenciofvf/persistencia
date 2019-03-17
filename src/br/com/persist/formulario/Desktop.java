@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -300,7 +301,7 @@ public class Desktop extends JDesktopPane {
 		}
 	}
 
-	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto) {
+	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto, AtomicBoolean processado) {
 		JInternalFrame[] frames = getAllFrames();
 		grupo.processadoFalse();
 
@@ -313,6 +314,7 @@ public class Desktop extends JDesktopPane {
 					if (interno.ehTabela(tabela)) {
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 						tabela.setProcessado(true);
+						processado.set(true);
 					}
 				}
 			}

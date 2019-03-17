@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFrame;
 
@@ -34,7 +35,7 @@ public class FormularioExterno extends JFrame implements PainelObjetoListener {
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos) {
+	public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
 	}
 
 	@Override

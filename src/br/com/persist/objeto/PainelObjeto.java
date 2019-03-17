@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
@@ -551,7 +552,9 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				}
 
 				String argumentos = Util.getStringLista(lista, apostrofes);
-				listener.buscaAutomatica(grupo, argumentos);
+				AtomicBoolean processado = new AtomicBoolean(false);
+				listener.buscaAutomatica(grupo, argumentos, processado);
+				setEnabled(processado.get());
 			}
 		}
 	}

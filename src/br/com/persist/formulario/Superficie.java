@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -1556,8 +1557,8 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto) {
-		super.buscaAutomatica(grupo, argumentos, painelObjeto);
+	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto, AtomicBoolean processado) {
+		super.buscaAutomatica(grupo, argumentos, painelObjeto, processado);
 
 		if (Constantes.abrir_auto) {
 			limparSelecao();
@@ -1588,6 +1589,7 @@ public class Superficie extends Desktop {
 
 					if (Constantes.abrir_auto_destacado) {
 						new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao);
+						processado.set(true);
 					} else {
 						objeto.setSelecionado(true);
 					}
@@ -1596,6 +1598,7 @@ public class Superficie extends Desktop {
 
 			if (getPrimeiroObjetoSelecionado() != null) {
 				formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
+				processado.set(true);
 			}
 		}
 	}
