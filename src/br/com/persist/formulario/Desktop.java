@@ -103,7 +103,7 @@ public class Desktop extends JDesktopPane {
 		}
 	}
 
-	protected void configDimension() {
+	protected void ajusteDimension() {
 		int largura = 0;
 		int altura = 0;
 
@@ -124,6 +124,21 @@ public class Desktop extends JDesktopPane {
 
 		setPreferredSize(new Dimension(largura, altura));
 		SwingUtilities.updateComponentTreeUI(getParent());
+	}
+
+	public void distribuir() {
+		int largura = getSize().width - 20;
+		int altura = 341;
+		int y = 10;
+
+		for (JInternalFrame frame : getAllFrames()) {
+			frame.setSize(largura, altura);
+			frame.setLocation(0, y);
+			y += altura + 20;
+		}
+
+		centralizar();
+		ajusteDimension();
 	}
 
 	protected void ajustarDimension() {
@@ -280,7 +295,7 @@ public class Desktop extends JDesktopPane {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				configDimension();
+				ajusteDimension();
 			}
 		}
 	}

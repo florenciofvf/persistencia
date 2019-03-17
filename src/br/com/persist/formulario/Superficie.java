@@ -1322,7 +1322,7 @@ public class Superficie extends Desktop {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				configDimension();
+				ajusteDimension();
 			}
 		}
 

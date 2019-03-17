@@ -1,6 +1,8 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
@@ -17,8 +19,18 @@ public class FormularioDesktop extends JFrame {
 		desktop = new Desktop(formulario, false);
 		setSize(1000, 600);
 		montarLayout();
+		configurar();
 		setLocationRelativeTo(formulario);
 		setVisible(true);
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				desktop.distribuir();
+			}
+		});
 	}
 
 	private void montarLayout() {
