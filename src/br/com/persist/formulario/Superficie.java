@@ -1560,6 +1560,8 @@ public class Superficie extends Desktop {
 		super.buscaAutomatica(grupo, argumentos, painelObjeto);
 
 		if (Constantes.abrir_auto) {
+			limparSelecao();
+
 			for (Tabela tabela : grupo.getTabelas()) {
 				if (!tabela.isProcessado()) {
 					Objeto objeto = null;
@@ -1583,8 +1585,17 @@ public class Superficie extends Desktop {
 
 					Conexao conexao = container.getConexaoPadrao();
 					objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
-					new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao);
+
+					if (Constantes.abrir_auto_destacado) {
+						new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao);
+					} else {
+						objeto.setSelecionado(true);
+					}
 				}
+			}
+
+			if (getPrimeiroObjetoSelecionado() != null) {
+				formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
 			}
 		}
 	}
