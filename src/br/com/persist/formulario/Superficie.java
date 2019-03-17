@@ -675,7 +675,7 @@ public class Superficie extends Desktop {
 					if (!Util.estaVazio(selecionadoObjeto.getTabela2())) {
 						Conexao conexao = container.getConexaoPadrao();
 						setComplemento(conexao, selecionadoObjeto);
-						new FormularioExterno(formulario, frame, selecionadoObjeto, getGraphics(), conexao);
+						new FormularioExterno(formulario, frame, selecionadoObjeto, getGraphics(), conexao, false);
 					} else {
 						popup.new ConfiguracaoAcao().actionPerformed(null);
 					}
@@ -1588,7 +1588,7 @@ public class Superficie extends Desktop {
 					objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 
 					if (Constantes.abrir_auto_destacado) {
-						new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao);
+						new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao, false);
 						processado.set(true);
 					} else {
 						objeto.setSelecionado(true);

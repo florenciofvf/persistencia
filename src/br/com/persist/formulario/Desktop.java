@@ -229,7 +229,7 @@ public class Desktop extends JDesktopPane {
 			if (Transferidor.flavor.equals(flavor)) {
 				try {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
-					addForm(array, e.getLocation(), null, (String) array[Util.ARRAY_INDICE_APE]);
+					addForm(array, e.getLocation(), null, (String) array[Util.ARRAY_INDICE_APE], false);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
 				}
@@ -239,11 +239,12 @@ public class Desktop extends JDesktopPane {
 		}
 	};
 
-	public void addForm(Object[] array, Point point, Graphics g, String apelido) {
+	public void addForm(Object[] array, Point point, Graphics g, String apelido, boolean buscaAuto) {
 		Dimension dimension = (Dimension) array[Util.ARRAY_INDICE_DIM];
 		Conexao conexao = (Conexao) array[Util.ARRAY_INDICE_CON];
 		Objeto objeto = (Objeto) array[Util.ARRAY_INDICE_OBJ];
-		FormularioInterno form = new FormularioInterno(formulario, objeto, g != null ? g : getGraphics(), conexao);
+		FormularioInterno form = new FormularioInterno(formulario, objeto, g != null ? g : getGraphics(), conexao,
+				buscaAuto);
 		form.setApelido(apelido);
 		form.setLocation(point);
 		form.setSize(dimension);

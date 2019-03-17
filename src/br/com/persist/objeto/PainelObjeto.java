@@ -78,9 +78,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final String nomeTabela;
+	private final boolean buscaAuto;
 	private final Objeto objeto;
 
-	public PainelObjeto(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao) {
+	public PainelObjeto(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		txtComplemento.addMouseListener(complementoListener);
@@ -95,6 +96,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		toolbar.complementoUpdate(objeto);
 		cmbConexao.addItemListener(this);
 		toolbar.add(txtComplemento);
+		this.buscaAuto = buscaAuto;
 		this.listener = listener;
 		toolbar.complementoBtn();
 		toolbar.add(cmbConexao);
@@ -232,7 +234,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
 		}
 
-		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0);
+		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabela);
 	}
 
