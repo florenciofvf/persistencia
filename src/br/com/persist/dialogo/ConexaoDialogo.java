@@ -47,7 +47,7 @@ public class ConexaoDialogo extends Dialogo {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				toolbar.new AbrirAcao().actionPerformed(null);
+				toolbar.abrirAcao.actionPerformed(null);
 			}
 		});
 	}
@@ -57,6 +57,7 @@ public class ConexaoDialogo extends Dialogo {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private AbrirAcao abrirAcao = new AbrirAcao();
 
 		Toolbar() {
 			add(new Button(new TopAcao()));
@@ -68,7 +69,7 @@ public class ConexaoDialogo extends Dialogo {
 			add(new Button(new NovoAcao()));
 			add(new Button(new CopiaAcao()));
 			addSeparator();
-			add(new Button(new AbrirAcao()));
+			add(new Button(abrirAcao));
 			add(new Button(new SalvarAcao()));
 		}
 

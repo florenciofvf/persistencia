@@ -677,10 +677,10 @@ public class Superficie extends Desktop {
 						setComplemento(conexao, selecionadoObjeto);
 						new FormularioExterno(formulario, frame, selecionadoObjeto, getGraphics(), conexao, false);
 					} else {
-						popup.new ConfiguracaoAcao().actionPerformed(null);
+						popup.configuracaoAcao.actionPerformed(null);
 					}
 				} else if (selecionadoRelacao != null) {
-					popup.new ConfiguracaoAcao().actionPerformed(null);
+					popup.configuracaoAcao.actionPerformed(null);
 				}
 			}
 		}
@@ -959,6 +959,7 @@ public class Superficie extends Desktop {
 		MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		MenuItem itemFormularioSel = new MenuItem(new FormularioSelectAcao());
 		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
+		ConfiguracaoAcao configuracaoAcao = new ConfiguracaoAcao();
 		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
 		Menu menuDistribuicao = new Menu("label.distribuicao");
 		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
@@ -985,7 +986,7 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(itemPartir);
 			addSeparator();
-			add(new MenuItem(new ConfiguracaoAcao()));
+			add(new MenuItem(configuracaoAcao));
 		}
 
 		void configItens(boolean objetoSelecionado) {
