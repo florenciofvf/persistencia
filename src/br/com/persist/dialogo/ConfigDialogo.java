@@ -3,6 +3,8 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -14,16 +16,16 @@ import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Preferencias;
 
 public class ConfigDialogo extends Dialogo {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
+	private final CheckBox chkNomeColunaListener = new CheckBox("label.copiar_nome_coluna_listener");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
-	private final CheckBox chkTabelaListener = new CheckBox("label.tabela_listener");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
 			new Posicao("label.esquerdo", SwingConstants.LEFT), new Posicao("label.abaixo", SwingConstants.BOTTOM),
@@ -41,11 +43,11 @@ public class ConfigDialogo extends Dialogo {
 
 	private void montarLayout() {
 		chkFicharioScroll.setSelected(formulario.getFichario().getTabLayoutPolicy() == JTabbedPane.SCROLL_TAB_LAYOUT);
-		chkAreaTransTabelaRegistros.setSelected(Constantes.area_trans_tabela_registros);
-		chkAtivarAbrirAutoDestac.setSelected(Constantes.abrir_auto_destacado);
-		chkFecharOrigemAposSoltar.setSelected(Constantes.fechar_apos_soltar);
-		chkTabelaListener.setSelected(Constantes.tabela_listener);
-		chkAtivarAbrirAuto.setSelected(Constantes.abrir_auto);
+		chkAreaTransTabelaRegistros.setSelected(Preferencias.area_trans_tabela_registros);
+		chkNomeColunaListener.setSelected(Preferencias.copiar_nome_coluna_listener);
+		chkAtivarAbrirAutoDestac.setSelected(Preferencias.abrir_auto_destacado);
+		chkFecharOrigemAposSoltar.setSelected(Preferencias.fechar_apos_soltar);
+		chkAtivarAbrirAuto.setSelected(Preferencias.abrir_auto);
 
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
 		ButtonGroup grupo = new ButtonGroup();
@@ -68,11 +70,11 @@ public class ConfigDialogo extends Dialogo {
 		container.add(panelPosicoes);
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
+		container.add(chkNomeColunaListener);
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
-		container.add(chkTabelaListener);
 		container.add(new JSeparator());
 
 		add(BorderLayout.CENTER, container);
@@ -82,27 +84,35 @@ public class ConfigDialogo extends Dialogo {
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
+		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
-		chkTabelaListener.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
 	}
 
 	private void configurar() {
+		chkNomeColunaListener
+				.addActionListener(e -> Preferencias.copiar_nome_coluna_listener = chkNomeColunaListener.isSelected());
+
 		chkAtivarAbrirAutoDestac
-				.addActionListener(e -> Constantes.abrir_auto_destacado = chkAtivarAbrirAutoDestac.isSelected());
+				.addActionListener(e -> Preferencias.abrir_auto_destacado = chkAtivarAbrirAutoDestac.isSelected());
 
 		chkFecharOrigemAposSoltar
-				.addActionListener(e -> Constantes.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
+				.addActionListener(e -> Preferencias.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
 
 		chkFicharioScroll.addActionListener(e -> formulario.getFichario().setTabLayoutPolicy(
 				chkFicharioScroll.isSelected() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT));
 
-		chkTabelaListener.addActionListener(e -> Constantes.tabela_listener = chkTabelaListener.isSelected());
-
-		chkAtivarAbrirAuto.addActionListener(e -> Constantes.abrir_auto = chkAtivarAbrirAuto.isSelected());
+		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.abrir_auto = chkAtivarAbrirAuto.isSelected());
 
 		chkAreaTransTabelaRegistros.addActionListener(
-				e -> Constantes.area_trans_tabela_registros = chkAreaTransTabelaRegistros.isSelected());
+				e -> Preferencias.area_trans_tabela_registros = chkAreaTransTabelaRegistros.isSelected());
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Preferencias.salvar();
+			}
+		});
 	}
 
 	protected void processar() {

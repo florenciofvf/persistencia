@@ -14,6 +14,7 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class RegistroModelo implements TableModel {
@@ -97,7 +98,7 @@ public class RegistroModelo implements TableModel {
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue });
 				Persistencia.executar(update, Conexao.getConnection(conexao));
 				registro.set(columnIndex, aValue);
-				if (Constantes.area_trans_tabela_registros) {
+				if (Preferencias.area_trans_tabela_registros) {
 					Util.setContentTransfered(update);
 				}
 			} catch (Exception ex) {
@@ -148,7 +149,7 @@ public class RegistroModelo implements TableModel {
 			try {
 				String delete = gerarDelete(registro);
 				int i = Persistencia.executar(delete, Conexao.getConnection(conexao));
-				if (Constantes.area_trans_tabela_registros) {
+				if (Preferencias.area_trans_tabela_registros) {
 					Util.setContentTransfered(delete);
 				}
 				return i;

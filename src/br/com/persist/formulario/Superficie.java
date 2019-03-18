@@ -40,14 +40,15 @@ import br.com.persist.objeto.FormularioInterno;
 import br.com.persist.objeto.FormularioSelect;
 import br.com.persist.objeto.PainelObjeto;
 import br.com.persist.util.Acao;
+import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro.Instrucao;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
-import br.com.persist.util.BuscaAuto.Grupo;
-import br.com.persist.util.BuscaAuto.Tabela;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
@@ -1561,7 +1562,7 @@ public class Superficie extends Desktop {
 	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto, AtomicBoolean processado) {
 		super.buscaAutomatica(grupo, argumentos, painelObjeto, processado);
 
-		if (Constantes.abrir_auto) {
+		if (Preferencias.abrir_auto) {
 			limparSelecao();
 
 			for (Tabela tabela : grupo.getTabelas()) {
@@ -1588,7 +1589,7 @@ public class Superficie extends Desktop {
 					Conexao conexao = container.getConexaoPadrao();
 					objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 
-					if (Constantes.abrir_auto_destacado) {
+					if (Preferencias.abrir_auto_destacado) {
 						new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao, false);
 						processado.set(true);
 					} else {

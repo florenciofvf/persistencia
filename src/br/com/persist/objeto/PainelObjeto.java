@@ -66,6 +66,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class PainelObjeto extends Panel implements ActionListener, ItemListener {
@@ -162,7 +163,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
-			if (Constantes.fechar_apos_soltar && dsde.getDropSuccess()) {
+			if (Preferencias.fechar_apos_soltar && dsde.getDropSuccess()) {
 				toolbar.new FecharAcao().actionPerformed(null);
 			}
 		}

@@ -22,6 +22,7 @@ import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class Tabela extends JTable {
@@ -195,7 +196,7 @@ public class Tabela extends JTable {
 				String coluna = getModel().getColumnName(tag);
 				Util.setContentTransfered(coluna);
 
-				if (tabelaListener != null && Constantes.tabela_listener) {
+				if (tabelaListener != null && Preferencias.copiar_nome_coluna_listener) {
 					tabelaListener.copiarNomeColuna(Tabela.this, coluna);
 				}
 			}

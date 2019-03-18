@@ -10,9 +10,12 @@ import java.util.List;
 
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Imagens;
+import br.com.persist.util.Preferencias;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
+		Preferencias.abrir();
+
 		URL[] urLs = getURLs();
 
 		for (URL url : urLs) {

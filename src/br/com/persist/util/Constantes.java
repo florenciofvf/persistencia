@@ -5,12 +5,7 @@ import java.awt.Dimension;
 public class Constantes {
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
-	public static boolean area_trans_tabela_registros = false;
-	public static boolean abrir_auto_destacado = false;
-	public static boolean fechar_apos_soltar = true;
-	public static boolean tabela_listener = false;
 	public static final String ENCODING = "UTF-8";
-	public static boolean abrir_auto = false;
 	public static final String QL = "\r\n";
 	public static final String TAB = "\t";
 	public static final byte ARRASTO = 1;
