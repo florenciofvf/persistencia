@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
@@ -32,6 +33,7 @@ import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -108,6 +110,9 @@ public class Formulario extends JFrame {
 	}
 
 	private void configurar() {
+		fichario.setTabLayoutPolicy(
+				Preferencias.fichario_com_rolagem ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {

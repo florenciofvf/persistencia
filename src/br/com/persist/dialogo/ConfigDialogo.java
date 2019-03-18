@@ -42,11 +42,11 @@ public class ConfigDialogo extends Dialogo {
 	}
 
 	private void montarLayout() {
-		chkFicharioScroll.setSelected(formulario.getFichario().getTabLayoutPolicy() == JTabbedPane.SCROLL_TAB_LAYOUT);
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.area_trans_tabela_registros);
 		chkNomeColunaListener.setSelected(Preferencias.copiar_nome_coluna_listener);
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.abrir_auto_destacado);
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.fechar_apos_soltar);
+		chkFicharioScroll.setSelected(Preferencias.fichario_com_rolagem);
 		chkAtivarAbrirAuto.setSelected(Preferencias.abrir_auto);
 
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
@@ -93,14 +93,17 @@ public class ConfigDialogo extends Dialogo {
 		chkNomeColunaListener
 				.addActionListener(e -> Preferencias.copiar_nome_coluna_listener = chkNomeColunaListener.isSelected());
 
+		chkFicharioScroll.addActionListener(e -> {
+			Preferencias.fichario_com_rolagem = chkFicharioScroll.isSelected();
+			formulario.getFichario().setTabLayoutPolicy(
+					Preferencias.fichario_com_rolagem ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+		});
+
 		chkAtivarAbrirAutoDestac
 				.addActionListener(e -> Preferencias.abrir_auto_destacado = chkAtivarAbrirAutoDestac.isSelected());
 
 		chkFecharOrigemAposSoltar
 				.addActionListener(e -> Preferencias.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
-
-		chkFicharioScroll.addActionListener(e -> formulario.getFichario().setTabLayoutPolicy(
-				chkFicharioScroll.isSelected() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT));
 
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.abrir_auto = chkAtivarAbrirAuto.isSelected());
 
