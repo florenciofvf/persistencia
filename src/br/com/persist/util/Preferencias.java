@@ -10,6 +10,7 @@ public class Preferencias {
 	public static boolean fichario_com_rolagem;
 	public static boolean abrir_auto_destacado;
 	public static boolean fechar_apos_soltar;
+	public static int posicao_aba_fichario;
 	public static boolean abrir_auto;
 
 	private Preferencias() {
@@ -23,6 +24,7 @@ public class Preferencias {
 		abrir_auto_destacado = pref.getBoolean("abrir_auto_destacado", false);
 		fichario_com_rolagem = pref.getBoolean("fichario_com_rolagem", true);
 		fechar_apos_soltar = pref.getBoolean("fechar_apos_soltar", true);
+		posicao_aba_fichario = pref.getInt("posicao_aba_fichario", 1);
 		abrir_auto = pref.getBoolean("abrir_auto", false);
 	}
 
@@ -34,6 +36,7 @@ public class Preferencias {
 		pref.putBoolean("abrir_auto_destacado", abrir_auto_destacado);
 		pref.putBoolean("fichario_com_rolagem", fichario_com_rolagem);
 		pref.putBoolean("fechar_apos_soltar", fechar_apos_soltar);
+		pref.putInt("posicao_aba_fichario", posicao_aba_fichario);
 		pref.putBoolean("abrir_auto", abrir_auto);
 	}
 }

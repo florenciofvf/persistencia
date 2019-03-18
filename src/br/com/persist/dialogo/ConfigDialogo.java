@@ -59,7 +59,7 @@ public class ConfigDialogo extends Dialogo {
 			rdoPosicoes[i] = radio;
 			grupo.add(radio);
 
-			radio.setSelected(radio.posicao.indice == formulario.getFichario().getTabPlacement());
+			radio.setSelected(radio.posicao.indice == Preferencias.posicao_aba_fichario);
 		}
 
 		Label localAbas = new Label("label.local_abas");
@@ -138,7 +138,10 @@ public class ConfigDialogo extends Dialogo {
 		RadioPosicao(Posicao posicao) {
 			super(posicao.nome);
 			this.posicao = posicao;
-			addActionListener(e -> formulario.getFichario().setTabPlacement(posicao.indice));
+			addActionListener(e -> {
+				Preferencias.posicao_aba_fichario = posicao.indice;
+				formulario.getFichario().setTabPlacement(Preferencias.posicao_aba_fichario);
+			});
 		}
 	}
 }
