@@ -382,6 +382,17 @@ public class Container extends PanelBorder {
 		}
 	}
 
+	public void excluir() {
+		if (formularioSuperficie == null) {
+			Fichario fichario = formulario.getFichario();
+			int indice = fichario.getSelectedIndex();
+
+			if (indice != -1) {
+				fichario.remove(indice);
+			}
+		}
+	}
+
 	private InputMap inputMap() {
 		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
 	}
