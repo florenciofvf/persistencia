@@ -77,7 +77,6 @@ public class Superficie extends Desktop {
 	private void config() {
 		inputMap().put(getKeyStroke(KeyEvent.VK_T), "thread_processar");
 		inputMap().put(getKeyStroke(KeyEvent.VK_Y), "thread_desativar");
-		inputMap().put(getKeyStroke(KeyEvent.VK_Q), "excluir_action");
 		inputMap().put(getKeyStroke(KeyEvent.VK_N), "macro_lista");
 		inputMap().put(getKeyStroke(KeyEvent.VK_Z), "zoom_menos");
 		inputMap().put(getKeyStroke(KeyEvent.VK_X), "zoom_mais");
@@ -85,7 +84,6 @@ public class Superficie extends Desktop {
 
 		getActionMap().put("thread_processar", threadProcessar);
 		getActionMap().put("thread_desativar", threadDesativar);
-		getActionMap().put("excluir_action", excluirAction);
 		getActionMap().put("macro_lista", macroLista);
 		getActionMap().put("zoom_menos", zoomMenos);
 		getActionMap().put("zoom_mais", zoomMais);

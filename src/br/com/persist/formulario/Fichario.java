@@ -10,13 +10,20 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.Icon;
+import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
@@ -41,6 +48,34 @@ public class Fichario extends JTabbedPane {
 		new DropTarget(this, listenerSoltar);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
+		config();
+	}
+
+	private void config() {
+		inputMap().put(getKeyStroke(KeyEvent.VK_Q), "excluir_action");
+
+		getActionMap().put("excluir_action", excluirAction);
+	}
+
+	Action excluirAction = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int indice = getSelectedIndex();
+
+			if (indice != -1) {
+				remove(indice);
+			}
+		}
+	};
+
+	private InputMap inputMap() {
+		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	}
+
+	public static KeyStroke getKeyStroke(int keyCode) {
+		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
 
 	private DropTargetListener listenerSoltar = new DropTargetListener() {
