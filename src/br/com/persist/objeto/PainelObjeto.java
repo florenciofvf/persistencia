@@ -511,7 +511,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				super(grupo.getDescricao());
 				add(new MenuItem(new SemAspasAcao()));
 				add(new MenuItem(new ComAspasAcao()));
-				setIcon(Icones.RESUME);
+				setIcon(Icones.CONFIG2);
 				this.grupo = grupo;
 			}
 
