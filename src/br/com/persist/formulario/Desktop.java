@@ -92,6 +92,17 @@ public class Desktop extends JDesktopPane {
 		}
 	}
 
+	protected void larguraTotal() {
+		int largura = (int) (getSize().getWidth() - 8);
+
+		for (JInternalFrame frame : getAllFrames()) {
+			frame.setLocation(0, frame.getY());
+			frame.setSize(largura, frame.getHeight());
+		}
+
+		centralizar();
+	}
+
 	protected void centralizar() {
 		double largura = getSize().getWidth();
 
@@ -266,13 +277,29 @@ public class Desktop extends JDesktopPane {
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		MenuItem itemLarguraTotal = new MenuItem(new LarguraTotalAcao());
 		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
 		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
 
 		DesktopPopup() {
+			add(itemLarguraTotal);
+			addSeparator();
 			add(itemCentralizar);
 			addSeparator();
 			add(itemDimensoes);
+		}
+
+		class LarguraTotalAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+
+			LarguraTotalAcao() {
+				super(true, "label.largura_total", Icones.LARGURA);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				larguraTotal();
+			}
 		}
 
 		class CentralizarAcao extends Acao {
