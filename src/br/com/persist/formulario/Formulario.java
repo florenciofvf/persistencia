@@ -196,7 +196,7 @@ public class Formulario extends JFrame {
 			private static final long serialVersionUID = 1L;
 
 			DesktopAcao() {
-				super(true, "label.desktop", Icones.CUBO2);
+				super(true, "label.desktop", Icones.PANEL2);
 			}
 
 			@Override
