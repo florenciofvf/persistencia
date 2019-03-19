@@ -108,6 +108,7 @@ public class Fichario extends JTabbedPane {
 					Object[] array = Util.criarArray(conexao, objeto, null);
 					formularioDesktop.getDesktop().addForm(array, new Point(x, y), null,
 							(String) array[Util.ARRAY_INDICE_APE], false);
+					objeto.setSelecionado(false);
 					x += 25;
 					y += 25;
 				}
@@ -119,6 +120,7 @@ public class Fichario extends JTabbedPane {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					Object[] array = Util.criarArray(conexao, objeto, null);
 					desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
+					objeto.setSelecionado(false);
 					x += 25;
 					y += 25;
 				}
