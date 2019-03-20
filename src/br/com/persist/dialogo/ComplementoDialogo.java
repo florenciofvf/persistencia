@@ -14,21 +14,21 @@ import br.com.persist.comp.TextField;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 
-public class ComplementoDialogo extends Dialogo {
+public class ComplementoDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private TextField txtComplemento;
 
 	public ComplementoDialogo(Dialog dialog, Objeto objeto, TextField txtComplemento) {
-		super(dialog, objeto.getId(), 600, 600, false);
+		super(dialog, objeto.getId(), false);
 		this.txtComplemento = txtComplemento;
 		montarLayout();
 		setVisible(true);
 	}
 
 	public ComplementoDialogo(Frame frame, Objeto objeto, TextField txtComplemento) {
-		super(frame, objeto.getId(), 600, 600, false);
+		super(frame, objeto.getId(), false);
 		this.txtComplemento = txtComplemento;
 		montarLayout();
 		setVisible(true);

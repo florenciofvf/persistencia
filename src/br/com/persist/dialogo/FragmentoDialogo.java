@@ -20,7 +20,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class FragmentoDialogo extends Dialogo {
+public class FragmentoDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo modelo = new FragmentoModelo();
 	private final JTable tabela = new JTable(modelo);
@@ -28,7 +28,7 @@ public class FragmentoDialogo extends Dialogo {
 	private final FragmentoListener listener;
 
 	public FragmentoDialogo(Formulario formulario, FragmentoListener listener) {
-		super(formulario, Mensagens.getString("label.fragmento"), 1000, 500, false);
+		super(formulario, Mensagens.getString("label.fragmento"), 1000, 600, false);
 		this.listener = listener;
 		montarLayout();
 		configurar();

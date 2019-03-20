@@ -15,7 +15,7 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.Superficie;
 import br.com.persist.util.Macro;
 
-public class MacroDialogo extends Dialogo {
+public class MacroDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private JList<Macro.Instrucao> lista;
 

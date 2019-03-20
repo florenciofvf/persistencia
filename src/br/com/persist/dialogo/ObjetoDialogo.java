@@ -42,13 +42,13 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class ObjetoDialogo extends Dialogo {
+public class ObjetoDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private final Superficie superficie;
 	private final Objeto objeto;
 
 	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
-		super(frame, objeto.getId(), 700, 550, false);
+		super(frame, objeto.getId(), 700, 600, false);
 		this.superficie = superficie;
 		Formulario.macro.limpar();
 		this.objeto = objeto;

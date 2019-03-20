@@ -19,7 +19,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class ConexaoDialogo extends Dialogo {
+public class ConexaoDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo modelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(modelo);
@@ -27,7 +27,7 @@ public class ConexaoDialogo extends Dialogo {
 	private final Formulario formulario;
 
 	public ConexaoDialogo(Formulario formulario) {
-		super(formulario, Mensagens.getString("label.conexao"), 1000, 350, false);
+		super(formulario, Mensagens.getString("label.conexao"), 1000, 600, false);
 		this.formulario = formulario;
 		montarLayout();
 		configurar();

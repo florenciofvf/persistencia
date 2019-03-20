@@ -21,13 +21,13 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Imagens;
 
-public class IconeDialogo extends Dialogo {
+public class IconeDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private final Objeto objeto;
 	private final Label label;
 
 	public IconeDialogo(Dialog dialog, Objeto objeto, Label label) {
-		super(dialog, objeto.getId(), 600, 600, false);
+		super(dialog, objeto.getId(), false);
 		this.objeto = objeto;
 		this.label = label;
 		montarLayout();

@@ -22,19 +22,27 @@ import br.com.persist.comp.PanelCenter;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Icones;
 
-public abstract class Dialogo extends JDialog {
+public abstract class DialogoAbstrato extends JDialog {
 	private static final long serialVersionUID = 1L;
 
-	public Dialogo(Dialog dialog, String titulo, int largura, int altura, boolean btnProcessar) {
+	public DialogoAbstrato(Dialog dialog, String titulo, int largura, int altura, boolean btnProcessar) {
 		super(dialog, true);
 		ini(titulo, largura, altura, btnProcessar);
 		setLocationRelativeTo(dialog);
 	}
 
-	public Dialogo(Frame frame, String titulo, int largura, int altura, boolean btnProcessar) {
+	public DialogoAbstrato(Frame frame, String titulo, int largura, int altura, boolean btnProcessar) {
 		super(frame, true);
 		ini(titulo, largura, altura, btnProcessar);
 		setLocationRelativeTo(frame);
+	}
+
+	public DialogoAbstrato(Dialog dialog, String titulo, boolean btnProcessar) {
+		this(dialog, titulo, 600, 600, btnProcessar);
+	}
+
+	public DialogoAbstrato(Frame frame, String titulo, boolean btnProcessar) {
+		this(frame, titulo, 600, 600, btnProcessar);
 	}
 
 	private void ini(String titulo, int largura, int altura, boolean btnProcessar) {

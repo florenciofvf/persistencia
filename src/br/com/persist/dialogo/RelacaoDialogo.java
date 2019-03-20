@@ -39,13 +39,13 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.Superficie;
 import br.com.persist.util.Util;
 
-public class RelacaoDialogo extends Dialogo {
+public class RelacaoDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private final Superficie superficie;
 	private final Relacao relacao;
 
 	public RelacaoDialogo(Frame frame, Superficie superficie, Relacao relacao) {
-		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId(), 600, 400, false);
+		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId(), false);
 		this.superficie = superficie;
 		Formulario.macro.limpar();
 		this.relacao = relacao;

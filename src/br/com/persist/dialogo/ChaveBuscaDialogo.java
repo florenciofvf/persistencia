@@ -19,7 +19,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.util.BuscaAuto.Grupo;
 
-public class ChaveBuscaDialogo extends Dialogo {
+public class ChaveBuscaDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
@@ -27,7 +27,7 @@ public class ChaveBuscaDialogo extends Dialogo {
 	private final Tipo tipo;
 
 	public ChaveBuscaDialogo(Dialog dialog, Objeto objeto, Tipo tipo) {
-		super(dialog, objeto.getId(), 600, 600, false);
+		super(dialog, objeto.getId(), false);
 		this.objeto = objeto;
 		this.tipo = tipo;
 		montarLayout();
