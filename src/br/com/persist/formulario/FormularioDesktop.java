@@ -14,11 +14,10 @@ public class FormularioDesktop extends FormularioAbstrato {
 
 	public FormularioDesktop(Formulario formulario) {
 		super(Mensagens.getString("label.persistencia"));
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		desktop = new Desktop(formulario, false);
+		setLocationRelativeTo(formulario);
 		montarLayout();
 		configurar();
-		setLocationRelativeTo(formulario);
 		setVisible(true);
 	}
 
