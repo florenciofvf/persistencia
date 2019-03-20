@@ -14,7 +14,6 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -260,11 +259,10 @@ public class Desktop extends JDesktopPane {
 		form.setLocation(point);
 		form.setSize(dimension);
 		add(form);
-		try {
-			form.setSelected(true);
-			form.toFront();
-		} catch (PropertyVetoException e) {
-		}
+		/*
+		 * try { form.setSelected(true); form.toFront(); } catch
+		 * (PropertyVetoException e) { }
+		 */
 	}
 
 	private boolean validoSoltar(DropTargetDragEvent e) {
