@@ -297,10 +297,12 @@ public class Formulario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser(".");
 				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
+				fileChooser.setMultiSelectionEnabled(true);
+
 				if (arquivo != null) {
 					fileChooser.setCurrentDirectory(arquivo);
 				}
-				fileChooser.setMultiSelectionEnabled(true);
+
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
@@ -337,10 +339,12 @@ public class Formulario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser(".");
 				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
+				fileChooser.setMultiSelectionEnabled(true);
+
 				if (arquivo != null) {
 					fileChooser.setCurrentDirectory(arquivo);
 				}
-				fileChooser.setMultiSelectionEnabled(true);
+
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
