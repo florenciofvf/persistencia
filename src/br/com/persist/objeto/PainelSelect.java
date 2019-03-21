@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
@@ -32,7 +33,9 @@ public class PainelSelect extends Panel {
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
 
-	public PainelSelect(PainelObjetoListener listener, Conexao padrao) {
+	public PainelSelect(PainelObjetoListener listener, Conexao padrao, String instrucao,
+			Map<String, String> mapaChaveValor) {
+		textArea.setText(PainelUpdate.subst(instrucao, mapaChaveValor));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		if (padrao != null) {

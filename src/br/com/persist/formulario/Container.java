@@ -28,6 +28,7 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -292,8 +293,10 @@ public class Container extends PanelBorder {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new FormularioSelect(formulario, formularioSuperficie != null ? formularioSuperficie : formulario,
-						getConexaoPadrao());
+				FormularioSelect form = new FormularioSelect(Mensagens.getString("label.pesquisa"), formulario,
+						getConexaoPadrao(), null, null);
+				form.setLocationRelativeTo(formularioSuperficie != null ? formularioSuperficie : formulario);
+				form.setVisible(true);
 			}
 		}
 

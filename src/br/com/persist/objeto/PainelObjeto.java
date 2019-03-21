@@ -611,7 +611,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 						}
 
 						FormularioUpdate form = new FormularioUpdate(Mensagens.getString("label.atualizar"), listener,
-								update, conexao, null);
+								conexao, update, null);
 
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
@@ -699,9 +699,17 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 						}
 
 						if (instrucao.isSelect()) {
+							FormularioSelect form = new FormularioSelect(instrucao.getNome(), listener, conexao,
+									instrucao.getValor(), chaves);
 
+							if (listener instanceof Component) {
+								form.setLocationRelativeTo((Component) listener);
+							}
+
+							form.setVisible(true);
 						} else {
-							FormularioUpdate form = new FormularioUpdate(instrucao.getNome(), listener, instrucao.getValor(), conexao, chaves);
+							FormularioUpdate form = new FormularioUpdate(instrucao.getNome(), listener, conexao,
+									instrucao.getValor(), chaves);
 
 							if (listener instanceof Component) {
 								form.setLocationRelativeTo((Component) listener);

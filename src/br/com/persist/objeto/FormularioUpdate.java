@@ -15,11 +15,11 @@ public class FormularioUpdate extends FormularioAbstrato implements PainelObjeto
 	private final PainelUpdate painelUpdate;
 	private PainelObjetoListener listener;
 
-	public FormularioUpdate(String titulo, PainelObjetoListener listener, String instrucao, Conexao padrao,
+	public FormularioUpdate(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		super(titulo);
 		this.listener = listener;
-		painelUpdate = new PainelUpdate(this, instrucao, padrao, mapaChaveValor);
+		painelUpdate = new PainelUpdate(this, padrao, instrucao, mapaChaveValor);
 		montarLayout();
 	}
 

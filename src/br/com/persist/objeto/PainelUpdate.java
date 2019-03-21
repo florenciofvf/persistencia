@@ -27,10 +27,10 @@ public class PainelUpdate extends Panel {
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
 
-	public PainelUpdate(PainelObjetoListener listener, String instrucao, Conexao padrao,
+	public PainelUpdate(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
+		textArea.setText(PainelUpdate.subst(instrucao, mapaChaveValor));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
-		textArea.setText(subst(instrucao, mapaChaveValor));
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
@@ -39,7 +39,11 @@ public class PainelUpdate extends Panel {
 		montarLayout();
 	}
 
-	private String subst(String instrucao, Map<String, String> mapaChaveValor) {
+	public static String subst(String instrucao, Map<String, String> mapaChaveValor) {
+		if (instrucao == null) {
+			instrucao = "";
+		}
+
 		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
 			return instrucao;
 		}

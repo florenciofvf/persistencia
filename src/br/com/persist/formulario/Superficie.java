@@ -46,6 +46,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro.Instrucao;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
@@ -1049,7 +1050,10 @@ public class Superficie extends Desktop {
 					frame = container.getFormularioSuperficie();
 				}
 
-				new FormularioSelect(formulario, frame, container.getConexaoPadrao());
+				FormularioSelect form = new FormularioSelect(Mensagens.getString("label.pesquisa"), formulario,
+						container.getConexaoPadrao(), null, null);
+				form.setLocationRelativeTo(frame);
+				form.setVisible(true);
 			}
 		}
 

@@ -3,26 +3,36 @@ package br.com.persist.objeto;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
-import br.com.persist.util.Mensagens;
 
 public class FormularioSelect extends FormularioAbstrato implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
+	private final PainelObjetoListener listener;
 	private final PainelSelect painelSelect;
 	private final Formulario formulario;
 
-	public FormularioSelect(Formulario formulario, Frame frame, Conexao padrao) {
-		super(Mensagens.getString("label.pesquisa"));
-		this.formulario = formulario;
-		painelSelect = new PainelSelect(this, padrao);
-		setLocationRelativeTo(frame);
+	public FormularioSelect(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
+			Map<String, String> mapaChaveValor) {
+		super(titulo);
+		this.listener = listener;
+		painelSelect = new PainelSelect(this, padrao, instrucao, mapaChaveValor);
+		this.formulario = null;
 		montarLayout();
-		setVisible(true);
+	}
+
+	public FormularioSelect(String titulo, Formulario formulario, Conexao padrao, String instrucao,
+			Map<String, String> mapaChaveValor) {
+		super(titulo);
+		this.formulario = formulario;
+		painelSelect = new PainelSelect(this, padrao, instrucao, mapaChaveValor);
+		this.listener = null;
+		montarLayout();
 	}
 
 	private void montarLayout() {
@@ -36,7 +46,7 @@ public class FormularioSelect extends FormularioAbstrato implements PainelObjeto
 
 	@Override
 	public Vector<Conexao> getConexoes() {
-		return formulario.getConexoes();
+		return listener != null ? listener.getConexoes() : formulario.getConexoes();
 	}
 
 	@Override
