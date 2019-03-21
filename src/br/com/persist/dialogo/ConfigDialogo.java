@@ -34,7 +34,7 @@ public class ConfigDialogo extends DialogoAbstrato {
 	private final Formulario formulario;
 
 	public ConfigDialogo(Formulario formulario) {
-		super(formulario, Mensagens.getString("label.configuracoes"), 700, 341, false);
+		super(formulario, Mensagens.getString("label.configuracoes"), 1000, 600, false);
 		this.formulario = formulario;
 		montarLayout();
 		configurar();
