@@ -96,7 +96,7 @@ public class PainelUpdate extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			AtualizarRegistrosAcao() {
-				super(false, "label.atualizar", Icones.ATUALIZAR);
+				super(false, "label.atualizar", Icones.UPDATE);
 			}
 
 			@Override
