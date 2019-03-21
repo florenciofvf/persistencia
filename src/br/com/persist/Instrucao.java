@@ -15,6 +15,10 @@ public class Instrucao {
 		this.nome = nome;
 	}
 
+	public boolean isSelect() {
+		return getValor().trim().toUpperCase().startsWith("SELECT");
+	}
+
 	public String getValor() {
 		if (Util.estaVazio(valor)) {
 			valor = "";

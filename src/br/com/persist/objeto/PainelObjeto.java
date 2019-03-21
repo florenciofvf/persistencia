@@ -656,7 +656,9 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			popup.addSeparator();
 
 			for (Instrucao i : objeto.getInstrucoes()) {
-				popup.add(new MenuItemUpdate(i));
+				if (!Util.estaVazio(i.getValor())) {
+					popup.add(new MenuItemUpdate(i));
+				}
 			}
 		}
 
@@ -665,10 +667,10 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			private final Instrucao instrucao;
 
 			MenuItemUpdate(Instrucao instrucao) {
-				this.instrucao = instrucao;
+				setIcon(instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC);
 				setText(instrucao.getNome());
+				this.instrucao = instrucao;
 				addActionListener(this);
-				setIcon(Icones.CALC);
 			}
 
 			@Override
@@ -696,14 +698,17 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 							return;
 						}
 
-						FormularioUpdate form = new FormularioUpdate(instrucao.getNome(), listener,
-								instrucao.getValor(), conexao, chaves);
+						if (instrucao.isSelect()) {
 
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
+						} else {
+							FormularioUpdate form = new FormularioUpdate(instrucao.getNome(), listener, instrucao.getValor(), conexao, chaves);
+
+							if (listener instanceof Component) {
+								form.setLocationRelativeTo((Component) listener);
+							}
+
+							form.setVisible(true);
 						}
-
-						form.setVisible(true);
 					}
 				}
 			}
