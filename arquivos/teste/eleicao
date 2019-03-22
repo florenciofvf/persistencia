@@ -17,6 +17,17 @@ WHERE id = #id#
 WHERE id = #id#
 			</valor>
 		</instrucao>
+		<instrucao nome="Excluir registro">
+			<valor>
+				DELETE FROM candidato
+WHERE id = #id#
+			</valor>
+		</instrucao>
+		<instrucao nome="Incluir candidato">
+			<valor>
+				INSERT INTO candidato (eleicao_id, nome, votos) VALUES (65, &apos;CANDIDATO TESTE&apos;, 12)
+			</valor>
+		</instrucao>
 	</objeto>
 	<objeto transparente="true" buscaAutomatica="" chaveamento="" complemento="AND id_candidato IN (52)" desloc_x_id="30" desloc_y_id="20" corFonte="-1" intervalo="700" desenharId="true" abrirAuto="false" id="endere&#231;o" processar="false" tabela="endereco" chaves="id" cor="-12555904" icone="home" x="73" y="364">
 	</objeto>
@@ -34,12 +45,12 @@ WHERE id = #id#
 	<relacao destino="endere&#231;o" desenharDescricao="false" origem="9" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" cor="-16777216">
 	</relacao>
 
-	<form apelido="" objeto="candidato" largura="974" altura="152" x="48" y="204">
-	</form>
-	<form apelido="" objeto="elei&#231;&#227;o" largura="974" altura="134" x="48" y="33">
+	<form apelido="" objeto="candidato2" largura="974" altura="127" x="48" y="549">
 	</form>
 	<form apelido="" objeto="endere&#231;o" largura="939" altura="125" x="83" y="395">
 	</form>
-	<form apelido="" objeto="candidato2" largura="974" altura="127" x="48" y="549">
+	<form apelido="" objeto="elei&#231;&#227;o" largura="974" altura="134" x="48" y="33">
+	</form>
+	<form apelido="" objeto="candidato" largura="974" altura="152" x="48" y="204">
 	</form>
 </fvf>
