@@ -3,6 +3,7 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import javax.swing.JToolBar;
 import br.com.persist.Objeto;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.TextArea;
-import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -103,49 +104,41 @@ public class ChaveBuscaDialogo extends DialogoAbstrato {
 	protected void processar() {
 	}
 
-	private class Toolbar extends JToolBar {
+	private class Toolbar extends JToolBar implements ActionListener {
 		private static final long serialVersionUID = 1L;
 
 		Toolbar() {
-			add(new Button(new ConfigFragmentoAcao()));
+			add(new Button(Action.actionIcon("label.aplicar", Icones.SUCESSO, this)));
 		}
 
-		class ConfigFragmentoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (Tipo.BUSCA.equals(tipo)) {
+				objeto.setBuscaAutomatica(normalizar(textArea.getText()));
 
-			ConfigFragmentoAcao() {
-				super(false, "label.aplicar", Icones.SUCESSO);
+			} else if (Tipo.CHAVE.equals(tipo)) {
+				objeto.setChaveamento(normalizar(textArea.getText()));
 			}
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (Tipo.BUSCA.equals(tipo)) {
-					objeto.setBuscaAutomatica(normalizar(textArea.getText()));
+			dispose();
+		}
 
-				} else if (Tipo.CHAVE.equals(tipo)) {
-					objeto.setChaveamento(normalizar(textArea.getText()));
-				}
+		String normalizar(String s) {
+			StringBuilder sb = new StringBuilder();
 
-				dispose();
-			}
+			if (s != null) {
+				s = s.trim();
 
-			String normalizar(String s) {
-				StringBuilder sb = new StringBuilder();
-
-				if (s != null) {
-					s = s.trim();
-
-					for (char c : s.toCharArray()) {
-						if (c == '\r' || c == '\n' || c == '\t') {
-							continue;
-						}
-
-						sb.append(c);
+				for (char c : s.toCharArray()) {
+					if (c == '\r' || c == '\n' || c == '\t') {
+						continue;
 					}
-				}
 
-				return sb.toString();
+					sb.append(c);
+				}
 			}
+
+			return sb.toString();
 		}
 	}
 }
