@@ -114,31 +114,13 @@ public class ChaveBuscaDialogo extends DialogoAbstrato {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (Tipo.BUSCA.equals(tipo)) {
-				objeto.setBuscaAutomatica(normalizar(textArea.getText()));
+				objeto.setBuscaAutomatica(Util.normalizar(textArea.getText(), false));
 
 			} else if (Tipo.CHAVE.equals(tipo)) {
-				objeto.setChaveamento(normalizar(textArea.getText()));
+				objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
 			}
 
 			dispose();
-		}
-
-		String normalizar(String s) {
-			StringBuilder sb = new StringBuilder();
-
-			if (s != null) {
-				s = s.trim();
-
-				for (char c : s.toCharArray()) {
-					if (c == '\r' || c == '\n' || c == '\t') {
-						continue;
-					}
-
-					sb.append(c);
-				}
-			}
-
-			return sb.toString();
 		}
 	}
 }

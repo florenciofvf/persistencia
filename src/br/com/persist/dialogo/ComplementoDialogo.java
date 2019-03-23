@@ -14,6 +14,7 @@ import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Util;
 
 public class ComplementoDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
@@ -53,27 +54,8 @@ public class ComplementoDialogo extends DialogoAbstrato {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			txtComplemento.setText(normalizar(textArea.getText()));
+			txtComplemento.setText(Util.normalizar(textArea.getText(), true));
 			dispose();
-		}
-
-		String normalizar(String s) {
-			StringBuilder sb = new StringBuilder();
-
-			if (s != null) {
-				s = s.trim();
-
-				for (char c : s.toCharArray()) {
-					if (c == '\r' || c == '\n' || c == '\t') {
-						sb.append(' ');
-						continue;
-					}
-
-					sb.append(c);
-				}
-			}
-
-			return sb.toString();
 		}
 	}
 }

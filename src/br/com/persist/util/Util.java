@@ -195,6 +195,28 @@ public class Util {
 		}
 	}
 
+	public static String normalizar(String string, boolean substituir) {
+		StringBuilder sb = new StringBuilder();
+
+		if (string != null) {
+			string = string.trim();
+
+			for (char c : string.toCharArray()) {
+				if (c == '\r' || c == '\n' || c == '\t') {
+					if (substituir) {
+						sb.append(' ');
+					}
+
+					continue;
+				}
+
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
 		return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
 	}
