@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JToolBar;
 
@@ -11,7 +12,7 @@ import br.com.persist.Objeto;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
-import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 
 public class ComplementoDialogo extends DialogoAbstrato {
@@ -43,44 +44,36 @@ public class ComplementoDialogo extends DialogoAbstrato {
 	protected void processar() {
 	}
 
-	private class Toolbar extends JToolBar {
+	private class Toolbar extends JToolBar implements ActionListener {
 		private static final long serialVersionUID = 1L;
 
 		Toolbar() {
-			add(new Button(new ConfigFragmentoAcao()));
+			add(new Button(Action.actionIcon("label.aplicar", Icones.SUCESSO, this)));
 		}
 
-		class ConfigFragmentoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			txtComplemento.setText(normalizar(textArea.getText()));
+			dispose();
+		}
 
-			ConfigFragmentoAcao() {
-				super(false, "label.aplicar", Icones.SUCESSO);
-			}
+		String normalizar(String s) {
+			StringBuilder sb = new StringBuilder();
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				txtComplemento.setText(normalizar(textArea.getText()));
-				dispose();
-			}
+			if (s != null) {
+				s = s.trim();
 
-			String normalizar(String s) {
-				StringBuilder sb = new StringBuilder();
-
-				if (s != null) {
-					s = s.trim();
-
-					for (char c : s.toCharArray()) {
-						if (c == '\r' || c == '\n' || c == '\t') {
-							sb.append(' ');
-							continue;
-						}
-
-						sb.append(c);
+				for (char c : s.toCharArray()) {
+					if (c == '\r' || c == '\n' || c == '\t') {
+						sb.append(' ');
+						continue;
 					}
-				}
 
-				return sb.toString();
+					sb.append(c);
+				}
 			}
+
+			return sb.toString();
 		}
 	}
 }
