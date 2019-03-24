@@ -28,6 +28,7 @@ import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
@@ -152,137 +153,55 @@ public class Formulario extends JFrame {
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
+		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
+		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
+		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
+		private Action formAcao = Action.actionMenu("label.formulario", Icones.PANEL);
+		private Action consAcao = Action.actionMenu("label.consulta", Icones.PANEL3);
+		private Action deskAcao = Action.actionMenu("label.desktop", Icones.PANEL2);
+		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.SAIR);
+		private Action novoAcao = Action.actionMenu("label.novo", Icones.CUBO);
 		final Menu menuArquivo = new Menu("label.arquivo");
 		final Menu menuLAF = new Menu("label.aparencia");
 
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
-			menuArquivo.add(new MenuItem(new NovoAcao()));
+			menuArquivo.add(new MenuItem(novoAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new DesktopAcao()));
+			menuArquivo.add(new MenuItem(deskAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new FormularioAcao()));
+			menuArquivo.add(new MenuItem(formAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new FormularioSelectAcao()));
+			menuArquivo.add(new MenuItem(consAcao));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new AbrirFormularioAcao(true)));
 			menuArquivo.add(new MenuItem(new AbrirFicharioAcao(true)));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new ConexaoAcao(true)));
+			menuArquivo.add(new MenuItem(conexaoAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new FragmentoAcao(true)));
+			menuArquivo.add(new MenuItem(fragmentoAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new ConfigAcao()));
+			menuArquivo.add(new MenuItem(configAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new FecharAcao(true)));
+			menuArquivo.add(new MenuItem(fecharAcao));
 			add(menuArquivo);
 			add(menuLAF);
+
+			eventos();
 		}
 
-		class NovoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			NovoAcao() {
-				super(true, "label.novo", Icones.CUBO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fichario.novo(Formulario.this);
-			}
-		}
-
-		class DesktopAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			DesktopAcao() {
-				super(true, "label.desktop", Icones.PANEL2);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fichario.novoDesktop(Formulario.this);
-			}
-		}
-
-		class FormularioAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FormularioAcao() {
-				super(true, "label.formulario", Icones.PANEL);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new FormularioDesktop(Formulario.this);
-			}
-		}
-
-		class FormularioSelectAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FormularioSelectAcao() {
-				super(true, "label.consulta", Icones.PANEL3);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fichario.novoSelect(Formulario.this);
-			}
-		}
-
-		class ConexaoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ConexaoAcao(boolean menu) {
-				super(menu, "label.conexao", Icones.BANCO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ConexaoDialogo(Formulario.this);
-			}
-		}
-
-		class FragmentoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FragmentoAcao(boolean menu) {
-				super(menu, "label.fragmento", Icones.FRAGMENTO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FragmentoDialogo dialogo = new FragmentoDialogo(Formulario.this, null);
-				dialogo.setVisible(true);
-			}
-		}
-
-		class ConfigAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ConfigAcao() {
-				super(true, "label.configuracoes", Icones.CONFIG);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ConfigDialogo(Formulario.this);
-			}
-		}
-
-		class FecharAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FecharAcao(boolean menu) {
-				super(menu, "label.fechar", Icones.SAIR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		private void eventos() {
+			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
+			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
+			formAcao.setActionListener(e -> new FormularioDesktop(Formulario.this));
+			deskAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
+			consAcao.setActionListener(e -> fichario.novoSelect(Formulario.this));
+			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
+			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
+			fecharAcao.setActionListener(e -> {
 				FormularioUtil.fechar(Formulario.this);
 				System.exit(0);
-			}
+			});
 		}
 
 		class AbrirFormularioAcao extends Acao {
