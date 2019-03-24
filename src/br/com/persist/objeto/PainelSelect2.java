@@ -1,7 +1,6 @@
 package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +24,7 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.tabela.TabelaUtil;
-import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
@@ -75,22 +74,21 @@ public class PainelSelect2 extends Panel {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
+		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
 
 		Toolbar() {
-			add(new Button(new SalvarAcao()));
+			add(new Button(salvarAcao));
 			addSeparator();
-			add(new Button(new AtualizarRegistrosAcao()));
+			add(new Button(atualizarAcao));
+
+			eventos();
 		}
 
-		class SalvarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+		private void eventos() {
+			atualizarAcao.setActionListener(e -> atualizar());
 
-			SalvarAcao() {
-				super(false, "label.salvar", Icones.SALVAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			salvarAcao.setActionListener(e -> {
 				try {
 					PrintWriter pw = new PrintWriter(file);
 					pw.print(textArea.getText());
@@ -98,20 +96,7 @@ public class PainelSelect2 extends Panel {
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("PAINEL SELECT", ex, PainelSelect2.this);
 				}
-			}
-		}
-
-		class AtualizarRegistrosAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			AtualizarRegistrosAcao() {
-				super(false, "label.atualizar", Icones.ATUALIZAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				atualizar();
-			}
+			});
 		}
 	}
 
