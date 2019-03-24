@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
@@ -19,7 +18,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelCenter;
-import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 
 public abstract class DialogoAbstrato extends JDialog {
@@ -46,60 +45,37 @@ public abstract class DialogoAbstrato extends JDialog {
 	}
 
 	private void ini(String titulo, int largura, int altura, boolean btnProcessar) {
-		PanelCenter botoes = new PanelCenter(new Button(new FecharAcao()));
+		Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR, e -> dispose());
+
+		PanelCenter botoes = new PanelCenter(new Button(fecharAcao));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setSize(largura, altura);
 
 		if (btnProcessar) {
-			botoes.add(new Button(new ProcessarAcao()));
+			Action processarAcao = Action.actionIcon("label.ok", Icones.SUCESSO, e -> processar());
+			botoes.add(new Button(processarAcao));
 		}
 
 		add(BorderLayout.SOUTH, botoes);
-		setActionESC(this);
 		setTitle(titulo);
+		setActionESC();
 	}
 
 	protected abstract void processar();
 
-	private class FecharAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		FecharAcao() {
-			super(false, "label.fechar", Icones.SAIR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			dispose();
-		}
-	}
-
-	private class ProcessarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		ProcessarAcao() {
-			super(false, "label.ok", Icones.SUCESSO);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			processar();
-		}
-	}
-
-	private void setActionESC(JDialog dialog) {
-		JComponent component = (JComponent) dialog.getContentPane();
+	private void setActionESC() {
+		JComponent component = (JComponent) getContentPane();
 
 		InputMap inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "esc");
 
-		Action action = new AbstractAction() {
+		javax.swing.Action action = new AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				WindowEvent event = new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING);
+				WindowEvent event = new WindowEvent(DialogoAbstrato.this, WindowEvent.WINDOW_CLOSING);
 				EventQueue systemEventQueue = Toolkit.getDefaultToolkit().getSystemEventQueue();
 				systemEventQueue.postEvent(event);
 			}
