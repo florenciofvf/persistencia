@@ -193,39 +193,21 @@ public class Tabela extends JTable {
 
 		class MenuCopiarValor extends Menu {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasAcao = Action.actionIcon("label.com_aspas", Icones.ASPAS);
+			private Action semAspasAcao = Action.actionIcon("label.sem_aspas", null);
 
 			MenuCopiarValor() {
 				super("label.copiar_header");
-				add(new MenuItem(new SemAspasAcao()));
-				add(new MenuItem(new ComAspasAcao()));
+				add(new MenuItem(semAspasAcao));
+				add(new MenuItem(comAspasAcao));
+
+				semAspasAcao.setActionListener(e -> copiar(false));
+				comAspasAcao.setActionListener(e -> copiar(true));
 			}
 
-			class SemAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
-
-				SemAspasAcao() {
-					super(true, "label.sem_aspas", null);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-					Util.setContentTransfered(Util.getStringLista(lista, false));
-				}
-			}
-
-			class ComAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
-
-				ComAspasAcao() {
-					super(true, "label.com_aspas", Icones.ASPAS);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-					Util.setContentTransfered(Util.getStringLista(lista, true));
-				}
+			private void copiar(boolean aspas) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
+				Util.setContentTransfered(Util.getStringLista(lista, aspas));
 			}
 		}
 
