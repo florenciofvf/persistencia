@@ -1,7 +1,6 @@
 package br.com.persist.tabela;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,7 +18,6 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.VazioModelo;
-import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -240,53 +238,29 @@ public class Tabela extends JTable {
 
 		class MenuCopiarINDinamico extends Menu {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasAcao = Action.actionIcon("label.com_aspas", Icones.ASPAS);
+			private Action semAspasAcao = Action.actionIcon("label.sem_aspas", null);
 			private final String nomeColuna;
 
 			MenuCopiarINDinamico(String coluna) {
 				super("label.vazio");
-				add(new MenuItem(new SemAspasAcao()));
-				add(new MenuItem(new ComAspasAcao()));
+				add(new MenuItem(semAspasAcao));
+				add(new MenuItem(comAspasAcao));
 				setText("AND IN - " + coluna);
 				this.nomeColuna = coluna;
+
+				semAspasAcao.setActionListener(e -> copiarINDinamico(false));
+				comAspasAcao.setActionListener(e -> copiarINDinamico(true));
 			}
 
-			class SemAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
+			private void copiarINDinamico(boolean aspas) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
+				String complemento = Util.getStringLista(lista, aspas);
 
-				SemAspasAcao() {
-					super(true, "label.sem_aspas", null);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-					String complemento = Util.getStringLista(lista, false);
-
-					if (!Util.estaVazio(complemento)) {
-						Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");
-					} else {
-						Util.setContentTransfered(" ");
-					}
-				}
-			}
-
-			class ComAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
-
-				ComAspasAcao() {
-					super(true, "label.com_aspas", Icones.ASPAS);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-					String complemento = Util.getStringLista(lista, true);
-
-					if (!Util.estaVazio(complemento)) {
-						Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");
-					} else {
-						Util.setContentTransfered(" ");
-					}
+				if (!Util.estaVazio(complemento)) {
+					Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");
+				} else {
+					Util.setContentTransfered(" ");
 				}
 			}
 		}
