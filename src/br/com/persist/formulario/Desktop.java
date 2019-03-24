@@ -11,7 +11,6 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -28,7 +27,7 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.objeto.FormularioInterno;
 import br.com.persist.objeto.PainelObjeto;
-import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Icones;
@@ -195,7 +194,6 @@ public class Desktop extends JDesktopPane {
 		public void dropActionChanged(DropTargetDragEvent e) {
 			if (!validoSoltar(e)) {
 				e.rejectDrag();
-				return;
 			}
 		}
 
@@ -203,7 +201,6 @@ public class Desktop extends JDesktopPane {
 		public void dragEnter(DropTargetDragEvent e) {
 			if (!validoSoltar(e)) {
 				e.rejectDrag();
-				return;
 			}
 		}
 
@@ -259,10 +256,6 @@ public class Desktop extends JDesktopPane {
 		form.setLocation(point);
 		form.setSize(dimension);
 		add(form);
-		/*
-		 * try { form.setSelected(true); form.toFront(); } catch
-		 * (PropertyVetoException e) { }
-		 */
 	}
 
 	private boolean validoSoltar(DropTargetDragEvent e) {
@@ -275,55 +268,24 @@ public class Desktop extends JDesktopPane {
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		MenuItem itemLarguraTotal = new MenuItem(new LarguraTotalAcao());
-		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
-		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
+		private Action centralAcao = Action.actionIcon("label.centralizar", Icones.CENTRALIZAR);
+		private Action larTotalAcao = Action.actionIcon("label.largura_total", Icones.LARGURA);
+		private Action dimenAcao = Action.actionIcon("label.dimensao", Icones.RECT);
 
 		DesktopPopup() {
-			add(itemLarguraTotal);
+			add(new MenuItem(larTotalAcao));
 			addSeparator();
-			add(itemCentralizar);
+			add(new MenuItem(centralAcao));
 			addSeparator();
-			add(itemDimensoes);
+			add(new MenuItem(dimenAcao));
+
+			eventos();
 		}
 
-		class LarguraTotalAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			LarguraTotalAcao() {
-				super(true, "label.largura_total", Icones.LARGURA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				larguraTotal();
-			}
-		}
-
-		class CentralizarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CentralizarAcao() {
-				super(true, "label.centralizar", Icones.CENTRALIZAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				centralizar();
-			}
-		}
-
-		class DimensaoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			DimensaoAcao() {
-				super(true, "label.dimensao", Icones.RECT);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ajusteDimension();
-			}
+		private void eventos() {
+			larTotalAcao.setActionListener(e -> larguraTotal());
+			dimenAcao.setActionListener(e -> ajusteDimension());
+			centralAcao.setActionListener(e -> centralizar());
 		}
 	}
 
