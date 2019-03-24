@@ -58,13 +58,14 @@ public class ConexaoDialogo extends DialogoAbstrato {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
 		private Action abrirAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
 
 		Toolbar() {
 			add(new Button(topAcao));
 			addSeparator();
-			add(new Button(new ConectaAcao()));
+			add(new Button(conectaAcao));
 			addSeparator();
 			add(new Button(new FecharAcao()));
 			addSeparator();
@@ -97,17 +98,8 @@ public class ConexaoDialogo extends DialogoAbstrato {
 					tabela.setRowSelectionInterval(0, 0);
 				}
 			});
-		}
 
-		class ConectaAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ConectaAcao() {
-				super(false, "label.conectar", Icones.CONECTA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			conectaAcao.setActionListener(e -> {
 				int[] linhas = tabela.getSelectedRows();
 
 				if (linhas != null && linhas.length == 1) {
@@ -120,7 +112,7 @@ public class ConexaoDialogo extends DialogoAbstrato {
 						Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);
 					}
 				}
-			}
+			});
 		}
 
 		class FecharAcao extends Acao {
