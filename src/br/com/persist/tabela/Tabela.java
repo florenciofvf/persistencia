@@ -213,52 +213,27 @@ public class Tabela extends JTable {
 
 		class MenuCopiarIN extends Menu {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasAcao = Action.actionIcon("label.com_aspas", Icones.ASPAS);
+			private Action semAspasAcao = Action.actionIcon("label.sem_aspas", null);
 
 			MenuCopiarIN() {
 				super("label.vazio");
-				add(new MenuItem(new SemAspasAcao()));
-				add(new MenuItem(new ComAspasAcao()));
+				add(new MenuItem(semAspasAcao));
+				add(new MenuItem(comAspasAcao));
+
+				semAspasAcao.setActionListener(e -> copiarIN(false));
+				comAspasAcao.setActionListener(e -> copiarIN(true));
 			}
 
-			class SemAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
+			private void copiarIN(boolean aspas) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
+				String complemento = Util.getStringLista(lista, aspas);
 
-				SemAspasAcao() {
-					super(true, "label.sem_aspas", null);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-					String complemento = Util.getStringLista(lista, false);
-
-					if (!Util.estaVazio(complemento)) {
-						String coluna = Tabela.this.getModel().getColumnName(tag);
-						Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
-					} else {
-						Util.setContentTransfered(" ");
-					}
-				}
-			}
-
-			class ComAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
-
-				ComAspasAcao() {
-					super(true, "label.com_aspas", Icones.ASPAS);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-					String complemento = Util.getStringLista(lista, true);
-
-					if (!Util.estaVazio(complemento)) {
-						String coluna = Tabela.this.getModel().getColumnName(tag);
-						Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
-					} else {
-						Util.setContentTransfered(" ");
-					}
+				if (!Util.estaVazio(complemento)) {
+					String coluna = Tabela.this.getModel().getColumnName(tag);
+					Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
+				} else {
+					Util.setContentTransfered(" ");
 				}
 			}
 		}
