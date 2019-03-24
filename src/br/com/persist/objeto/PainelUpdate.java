@@ -2,7 +2,6 @@ package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,7 +15,7 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
-import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
@@ -72,37 +71,20 @@ public class PainelUpdate extends Panel {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.UPDATE);
+		private Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
 
 		Toolbar() {
-			add(new Button(new FecharAcao()));
+			add(new Button(fecharAcao));
 			addSeparator();
-			add(new Button(new AtualizarRegistrosAcao()));
+			add(new Button(atualizarAcao));
+
+			eventos();
 		}
 
-		class FecharAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FecharAcao() {
-				super(false, "label.fechar", Icones.SAIR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				listener.dispose();
-			}
-		}
-
-		class AtualizarRegistrosAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			AtualizarRegistrosAcao() {
-				super(false, "label.atualizar", Icones.UPDATE);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				atualizar();
-			}
+		private void eventos() {
+			fecharAcao.setActionListener(e -> listener.dispose());
+			atualizarAcao.setActionListener(e -> atualizar());
 		}
 	}
 
