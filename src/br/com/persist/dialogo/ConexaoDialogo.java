@@ -15,6 +15,7 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -57,10 +58,11 @@ public class ConexaoDialogo extends DialogoAbstrato {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
-		private AbrirAcao abrirAcao = new AbrirAcao();
+		private Action abrirAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
+		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
 
 		Toolbar() {
-			add(new Button(new TopAcao()));
+			add(new Button(topAcao));
 			addSeparator();
 			add(new Button(new ConectaAcao()));
 			addSeparator();
@@ -71,17 +73,22 @@ public class ConexaoDialogo extends DialogoAbstrato {
 			addSeparator();
 			add(new Button(abrirAcao));
 			add(new Button(new SalvarAcao()));
+
+			eventos();
 		}
 
-		class TopAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+		private void eventos() {
+			abrirAcao.setActionListener(e -> {
+				try {
+					modelo.abrir();
+					formulario.atualizarConexoes();
+					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoDialogo.this);
+				}
+			});
 
-			TopAcao() {
-				super(false, "label.primeiro", Icones.TOP);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			topAcao.setActionListener(e -> {
 				int[] linhas = tabela.getSelectedRows();
 
 				if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
@@ -89,7 +96,7 @@ public class ConexaoDialogo extends DialogoAbstrato {
 					modelo.fireTableDataChanged();
 					tabela.setRowSelectionInterval(0, 0);
 				}
-			}
+			});
 		}
 
 		class ConectaAcao extends Acao {
@@ -183,25 +190,6 @@ public class ConexaoDialogo extends DialogoAbstrato {
 					formulario.atualizarConexoes();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoDialogo.this);
-				}
-			}
-		}
-
-		class AbrirAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			AbrirAcao() {
-				super(false, "label.baixar", Icones.BAIXAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					modelo.abrir();
-					formulario.atualizarConexoes();
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoDialogo.this);
 				}
 			}
 		}
