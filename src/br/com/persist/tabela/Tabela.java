@@ -20,6 +20,7 @@ import br.com.persist.comp.Popup;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Preferencias;
@@ -155,51 +156,39 @@ public class Tabela extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action copiarNomeAcao = Action.actionIcon("label.copiar_nome_coluna", null);
+		private Action infoAcao = Action.actionIcon("label.meta_dados", Icones.INFO);
 		private MenuCopiarIN menuCopiarIN = new MenuCopiarIN();
 		private int tag;
 
 		PopupHeader() {
-			add(new MenuItem(new InformacaoAcao()));
+			add(new MenuItem(infoAcao));
 			addSeparator();
-			add(new MenuItem(new CopiarNomeAcao()));
+			add(new MenuItem(copiarNomeAcao));
 			add(new MenuCopiarValor());
 			addSeparator();
 			add(menuCopiarIN);
+
+			eventos();
 		}
 
-		class InformacaoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			InformacaoAcao() {
-				super(true, "label.meta_dados", Icones.INFO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Coluna coluna = ((OrdenacaoModelo) getModel()).getColuna(tag);
-
-				if (coluna != null) {
-					Util.mensagem(Tabela.this, coluna.getDetalhe());
-				}
-			}
-		}
-
-		class CopiarNomeAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CopiarNomeAcao() {
-				super(true, "label.copiar_nome_coluna", null);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		private void eventos() {
+			copiarNomeAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(tag);
 				Util.setContentTransfered(coluna);
 
 				if (tabelaListener != null && Preferencias.copiar_nome_coluna_listener) {
 					tabelaListener.copiarNomeColuna(Tabela.this, coluna);
 				}
-			}
+			});
+
+			infoAcao.setActionListener(e -> {
+				Coluna coluna = ((OrdenacaoModelo) getModel()).getColuna(tag);
+
+				if (coluna != null) {
+					Util.mensagem(Tabela.this, coluna.getDetalhe());
+				}
+			});
 		}
 
 		class MenuCopiarValor extends Menu {
