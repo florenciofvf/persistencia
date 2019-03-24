@@ -123,8 +123,11 @@ public class Container extends PanelBorder {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 		private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
+		private Action destacarAcao = Action.actionIcon("label.desktop", Icones.PANEL2);
+		private Action formAcao = Action.actionIcon("label.formulario", Icones.PANEL);
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
+		private Action consAcao = Action.actionIcon("label.consulta", Icones.PANEL3);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 
@@ -137,9 +140,9 @@ public class Container extends PanelBorder {
 			add(new Button(copiarAcao));
 			add(new Button(colarAcao));
 			addSeparator();
-			add(new Button(new DestacarAcao()));
-			add(new Button(new FormularioAcao()));
-			add(new Button(new FormularioSelectAcao()));
+			add(new Button(destacarAcao));
+			add(new Button(formAcao));
+			add(new Button(consAcao));
 			addSeparator();
 			add(new Button(new ExcluirAcao()));
 			add(new Button(new CriarObjetoAcao()));
@@ -159,6 +162,8 @@ public class Container extends PanelBorder {
 		}
 
 		private void eventos() {
+			destacarAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie, false));
+			formAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie, true));
 			copiarAcao.setActionListener(e -> Formulario.copiar(superficie));
 
 			baixarAcao.setActionListener(e -> {
@@ -214,48 +219,13 @@ public class Container extends PanelBorder {
 				Formulario.colar(superficie, false, 0, 0);
 				superficie.repaint();
 			});
-		}
 
-		class DestacarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			DestacarAcao() {
-				super(false, "label.desktop", Icones.PANEL2);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				formulario.destacar(getConexaoPadrao(), superficie, false);
-			}
-		}
-
-		class FormularioAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FormularioAcao() {
-				super(false, "label.formulario", Icones.PANEL);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				formulario.destacar(getConexaoPadrao(), superficie, true);
-			}
-		}
-
-		class FormularioSelectAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FormularioSelectAcao() {
-				super(false, "label.consulta", Icones.PANEL3);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			consAcao.setActionListener(e -> {
 				FormularioSelect form = new FormularioSelect(Mensagens.getString("label.pesquisa"), formulario,
 						getConexaoPadrao(), null, null);
 				form.setLocationRelativeTo(formularioSuperficie != null ? formularioSuperficie : formulario);
 				form.setVisible(true);
-			}
+			});
 		}
 
 		class ExcluirAcao extends Acao {
