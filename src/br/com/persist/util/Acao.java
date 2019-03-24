@@ -13,4 +13,8 @@ public abstract class Acao extends AbstractAction {
 		putValue(Action.SMALL_ICON, icone);
 		this.chave = chaveRotulo;
 	}
+
+	public String getChave() {
+		return chave;
+	}
 }

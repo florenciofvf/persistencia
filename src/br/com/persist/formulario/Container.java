@@ -25,6 +25,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.objeto.FormularioSelect;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
@@ -121,15 +122,20 @@ public class Container extends PanelBorder {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
+		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
+		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
+		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
+		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 
 		Toolbar() {
-			add(new Button(new BaixarAcao()));
+			add(new Button(baixarAcao));
 			addSeparator();
-			add(new Button(new SalvarAcao()));
-			add(new Button(new SalvarComoAcao()));
+			add(new Button(salvarAcao));
+			add(new Button(salvarComoAcao));
 			addSeparator();
-			add(new Button(new CopiarAcao()));
-			add(new Button(new ColarAcao()));
+			add(new Button(copiarAcao));
+			add(new Button(colarAcao));
 			addSeparator();
 			add(new Button(new DestacarAcao()));
 			add(new Button(new FormularioAcao()));
@@ -148,17 +154,14 @@ public class Container extends PanelBorder {
 			addSeparator();
 			add(new ToggleButton(new TransparenteAcao()));
 			addSeparator();
+
+			eventos();
 		}
 
-		class BaixarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+		private void eventos() {
+			copiarAcao.setActionListener(e -> Formulario.copiar(superficie));
 
-			BaixarAcao() {
-				super(false, "label.baixar", Icones.BAIXAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			baixarAcao.setActionListener(e -> {
 				if (arquivo == null) {
 					btnSelecao.click();
 					return;
@@ -175,38 +178,17 @@ public class Container extends PanelBorder {
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 				}
-			}
-		}
+			});
 
-		class SalvarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			SalvarAcao() {
-				super(false, "label.salvar", Icones.SALVAR);
-
-				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_S), chave);
-				Container.this.getActionMap().put(chave, this);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			salvarAcao.setActionListener(e -> {
 				if (arquivo != null) {
 					superficie.salvar(arquivo, getConexaoPadrao());
 				} else {
-					new SalvarComoAcao().actionPerformed(null);
+					salvarComoAcao.actionPerformed(null);
 				}
-			}
-		}
+			});
 
-		class SalvarComoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			SalvarComoAcao() {
-				super(false, "label.salvar_como", Icones.SALVARC);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			salvarComoAcao.setActionListener(e -> {
 				JFileChooser fileChooser = new JFileChooser(".");
 				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
 
@@ -225,37 +207,13 @@ public class Container extends PanelBorder {
 						titulo();
 					}
 				}
-			}
-		}
+			});
 
-		class CopiarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CopiarAcao() {
-				super(false, "label.copiar", Icones.COPIA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Formulario.copiar(superficie);
-			}
-		}
-
-		class ColarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ColarAcao() {
-				super(false, "label.colar", Icones.COLAR);
-
-				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_V), chave);
-				Container.this.getActionMap().put(chave, this);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			configAtalho(colarAcao, KeyEvent.VK_V);
+			colarAcao.setActionListener(e -> {
 				Formulario.colar(superficie, false, 0, 0);
 				superficie.repaint();
-			}
+			});
 		}
 
 		class DestacarAcao extends Acao {
@@ -400,6 +358,11 @@ public class Container extends PanelBorder {
 
 	private InputMap inputMap() {
 		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
+	}
+
+	private void configAtalho(Acao acao, int tecla) {
+		inputMap().put(Superficie.getKeyStroke(tecla), acao.getChave());
+		getActionMap().put(acao.getChave(), acao);
 	}
 
 	private class ArrastoAcao extends Acao {
