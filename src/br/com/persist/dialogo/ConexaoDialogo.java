@@ -1,7 +1,6 @@
 package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -14,7 +13,6 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.tabela.TabelaUtil;
-import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -58,22 +56,26 @@ public class ConexaoDialogo extends DialogoAbstrato {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action fecharAcao = Action.actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
+		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
 		private Action abrirAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
+		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
+		private Action novoAcao = Action.actionIcon("label.novo", Icones.NOVO);
 
 		Toolbar() {
 			add(new Button(topAcao));
 			addSeparator();
 			add(new Button(conectaAcao));
 			addSeparator();
-			add(new Button(new FecharAcao()));
+			add(new Button(fecharAcao));
 			addSeparator();
-			add(new Button(new NovoAcao()));
-			add(new Button(new CopiaAcao()));
+			add(new Button(novoAcao));
+			add(new Button(copiarAcao));
 			addSeparator();
 			add(new Button(abrirAcao));
-			add(new Button(new SalvarAcao()));
+			add(new Button(salvarAcao));
 
 			eventos();
 		}
@@ -113,48 +115,19 @@ public class ConexaoDialogo extends DialogoAbstrato {
 					}
 				}
 			});
-		}
 
-		class FecharAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FecharAcao() {
-				super(false, "label.final_conexoes", Icones.BANCO_DESCONECTA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			fecharAcao.setActionListener(e -> {
 				try {
 					Conexao.fecharConexoes();
 					tabela.repaint();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
 				}
-			}
-		}
+			});
 
-		class NovoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+			novoAcao.setActionListener(e -> modelo.novo());
 
-			NovoAcao() {
-				super(false, "label.novo", Icones.NOVO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				modelo.novo();
-			}
-		}
-
-		class CopiaAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CopiaAcao() {
-				super(false, "label.copiar", Icones.COPIA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			copiarAcao.setActionListener(e -> {
 				int[] linhas = tabela.getSelectedRows();
 
 				if (linhas != null && linhas.length > 0) {
@@ -165,25 +138,16 @@ public class ConexaoDialogo extends DialogoAbstrato {
 
 					modelo.fireTableDataChanged();
 				}
-			}
-		}
+			});
 
-		class SalvarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			SalvarAcao() {
-				super(false, "label.salvar", Icones.SALVAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			salvarAcao.setActionListener(e -> {
 				try {
 					modelo.salvar();
 					formulario.atualizarConexoes();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoDialogo.this);
 				}
-			}
+			});
 		}
 	}
 }
