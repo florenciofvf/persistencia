@@ -123,7 +123,9 @@ public class Container extends PanelBorder {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 		private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
+		private Action criarObjAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
 		private Action destacarAcao = Action.actionIcon("label.desktop", Icones.PANEL2);
+		private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
 		private Action formAcao = Action.actionIcon("label.formulario", Icones.PANEL);
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
@@ -144,8 +146,8 @@ public class Container extends PanelBorder {
 			add(new Button(formAcao));
 			add(new Button(consAcao));
 			addSeparator();
-			add(new Button(new ExcluirAcao()));
-			add(new Button(new CriarObjetoAcao()));
+			add(new Button(excluirAcao));
+			add(new Button(criarObjAcao));
 			add(btnRelacao);
 			addSeparator();
 			add(btnRotulos);
@@ -226,37 +228,15 @@ public class Container extends PanelBorder {
 				form.setLocationRelativeTo(formularioSuperficie != null ? formularioSuperficie : formulario);
 				form.setVisible(true);
 			});
-		}
 
-		class ExcluirAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+			configAtalho(excluirAcao, KeyEvent.VK_D);
+			excluirAcao.setActionListener(e -> superficie.excluirSelecionados());
 
-			ExcluirAcao() {
-				super(false, "label.excluir", Icones.EXCLUIR);
-
-				inputMap().put(Superficie.getKeyStroke(KeyEvent.VK_D), chave);
-				Container.this.getActionMap().put(chave, this);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				superficie.excluirSelecionados();
-			}
-		}
-
-		class CriarObjetoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CriarObjetoAcao() {
-				super(false, "label.criar_objeto", Icones.CRIAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			criarObjAcao.setActionListener(e -> {
 				superficie.criarNovoObjeto(40, 40);
 				btnSelecao.setSelected(true);
 				btnSelecao.click();
-			}
+			});
 		}
 
 		class DesenhoIdAcao extends Acao {
