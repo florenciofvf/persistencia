@@ -1235,17 +1235,25 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action alinharEsquerdoAcao = Action.actionMenu("label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
+		private Action alinharDireitoAcao = Action.actionMenu("label.alinhar_direito", Icones.ALINHA_DIREITO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
+		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
+		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
+		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
+		private Action dimensaoAcao = Action.actionMenu("label.dimensao", Icones.RECT);
+		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
+		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 
+		MenuItem itemAlinharEsquerdo = new MenuItem(alinharEsquerdoAcao);
+		MenuItem itemAlinharDireito = new MenuItem(alinharDireitoAcao);
 		MenuItem itemAtualizarForms = new MenuItem(atualizarFormAcao);
-		MenuItem itemAlinharEsquerdo = new MenuItem(new AlinharEsquerdoAcao());
-		MenuItem itemAlinharDireito = new MenuItem(new AlinharDireitoAcao());
-		MenuItem itemMesmaLargura = new MenuItem(new MesmaLarguraAcao());
-		MenuItem itemCentralizar = new MenuItem(new CentralizarAcao());
-		MenuItem itemCriarObjeto = new MenuItem(new CriarObjetoAcao());
-		MenuItem itemDimensoes = new MenuItem(new DimensaoAcao());
-		MenuItem itemAjustes = new MenuItem(new AjustarAcao());
-		MenuItem itemColar = new MenuItem(new ColarAcao());
+		MenuItem itemMesmaLargura = new MenuItem(mesmaLarguraAcao);
+		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
+		MenuItem itemCriarObjeto = new MenuItem(criarObjAcao);
+		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
+		MenuItem itemAjustes = new MenuItem(ajustarAcao);
+		MenuItem itemColar = new MenuItem(colarAcao);
 		int x, y;
 
 		SuperficiePopup2() {
@@ -1267,6 +1275,14 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
+			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.x, popup2.y));
+			alinharEsquerdoAcao.setActionListener(e -> alinharEsquerdo());
+			alinharDireitoAcao.setActionListener(e -> alinharDireito());
+			mesmaLarguraAcao.setActionListener(e -> mesmaLargura());
+			dimensaoAcao.setActionListener(e -> ajusteDimension());
+			ajustarAcao.setActionListener(e -> ajustarDimension());
+			centralizarAcao.setActionListener(e -> centralizar());
+
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();
 
@@ -1277,6 +1293,11 @@ public class Superficie extends Desktop {
 					}
 				}
 			});
+
+			colarAcao.setActionListener(e -> {
+				Formulario.colar(Superficie.this, true, popup2.x, popup2.y);
+				Superficie.this.repaint();
+			});
 		}
 
 		void configItens(boolean contemFrames) {
@@ -1286,111 +1307,6 @@ public class Superficie extends Desktop {
 			itemAlinharDireito.setEnabled(contemFrames);
 			itemMesmaLargura.setEnabled(contemFrames);
 			itemCentralizar.setEnabled(contemFrames);
-		}
-
-		class AlinharEsquerdoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			AlinharEsquerdoAcao() {
-				super(true, "label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				alinharEsquerdo();
-			}
-		}
-
-		class AlinharDireitoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			AlinharDireitoAcao() {
-				super(true, "label.alinhar_direito", Icones.ALINHA_DIREITO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				alinharDireito();
-			}
-		}
-
-		class MesmaLarguraAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			MesmaLarguraAcao() {
-				super(true, "label.mesma_largura", Icones.LARGURA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mesmaLargura();
-			}
-		}
-
-		class CentralizarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CentralizarAcao() {
-				super(true, "label.centralizar", Icones.CENTRALIZAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				centralizar();
-			}
-		}
-
-		class DimensaoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			DimensaoAcao() {
-				super(true, "label.dimensao", Icones.RECT);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ajusteDimension();
-			}
-		}
-
-		class AjustarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			AjustarAcao() {
-				super(true, "label.ajustar", Icones.RECT);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ajustarDimension();
-			}
-		}
-
-		class ColarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ColarAcao() {
-				super(true, "label.colar", Icones.COLAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Formulario.colar(Superficie.this, true, popup2.x, popup2.y);
-				Superficie.this.repaint();
-			}
-		}
-
-		class CriarObjetoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CriarObjetoAcao() {
-				super(true, "label.criar_objeto", Icones.CRIAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				criarNovoObjeto(popup2.x, popup2.y);
-			}
 		}
 	}
 
