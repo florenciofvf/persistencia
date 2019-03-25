@@ -263,6 +263,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action complementoAcao = Action.actionIcon("label.complemento", Icones.BAIXAR2);
 		private Action fragmentoAcao = Action.actionIcon("label.fragmento", Icones.FRAGMENTO);
 		private Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
 		final Button excluir = new Button(new ExcluirRegistrosAcao());
@@ -287,12 +288,30 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(update);
 			add(atualizar);
 			addSeparator();
-			add(new Button(new ComplementoAcao()));
+			add(new Button(complementoAcao));
 
 			eventos();
 		}
 
 		private void eventos() {
+			complementoAcao.setActionListener(e -> {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				String complemento = Util.getContentTransfered();
+
+				if (!Util.estaVazio(complemento)) {
+					txtComplemento.setText(complemento);
+					objeto.setComplemento(txtComplemento.getText());
+					PainelObjeto.this.actionPerformed(null);
+				} else {
+					txtComplemento.setText(objeto.getComplemento());
+				}
+			});
+
 			fragmentoAcao.setActionListener(e -> {
 				FragmentoDialogo dialogo = new FragmentoDialogo(null, fragmentoListener);
 
@@ -310,8 +329,13 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			add(total);
 			add(funcoes);
 			addSeparator();
-			add(new Button(new LimparAcao()));
-			add(new Button(new BaixarAcao()));
+
+			Action limparAcao = Action.actionIcon("label.limpar", Icones.NOVO, e -> txtComplemento.setText(""));
+			add(new Button(limparAcao));
+
+			Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR,
+					e -> txtComplemento.setText(objeto.getComplemento()));
+			add(new Button(baixarAcao));
 		}
 
 		void complementoBuscaAuto(Objeto objeto) {
@@ -325,59 +349,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		public void excluirAtualizarEnable(boolean b) {
 			excluir.setEnabled(b);
 			update.setEnabled(b);
-		}
-
-		class LimparAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			LimparAcao() {
-				super(false, "label.limpar", Icones.NOVO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				txtComplemento.setText("");
-			}
-		}
-
-		class BaixarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			BaixarAcao() {
-				super(false, "label.baixar", Icones.BAIXAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				txtComplemento.setText(objeto.getComplemento());
-			}
-		}
-
-		class ComplementoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ComplementoAcao() {
-				super(false, "label.complemento", Icones.BAIXAR2);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				String complemento = Util.getContentTransfered();
-
-				if (!Util.estaVazio(complemento)) {
-					txtComplemento.setText(complemento);
-					objeto.setComplemento(txtComplemento.getText());
-					PainelObjeto.this.actionPerformed(null);
-				} else {
-					txtComplemento.setText(objeto.getComplemento());
-				}
-			}
 		}
 
 		class ExcluirRegistrosAcao extends Acao {
