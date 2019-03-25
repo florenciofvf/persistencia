@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.InputMap;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
@@ -40,6 +39,7 @@ import br.com.persist.objeto.FormularioInterno;
 import br.com.persist.objeto.FormularioSelect;
 import br.com.persist.objeto.PainelObjeto;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Constantes;
@@ -91,7 +91,7 @@ public class Superficie extends Desktop {
 		getActionMap().put("macro", macro);
 	}
 
-	Action threadProcessar = new AbstractAction() {
+	javax.swing.Action threadProcessar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -107,7 +107,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	Action threadDesativar = new AbstractAction() {
+	javax.swing.Action threadDesativar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -122,7 +122,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	Action macroLista = new AbstractAction() {
+	javax.swing.Action macroLista = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -141,7 +141,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	Action excluirAction = new AbstractAction() {
+	javax.swing.Action excluirAction = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -150,7 +150,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	Action macro = new AbstractAction() {
+	javax.swing.Action macro = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -181,7 +181,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	Action zoomMenos = new AbstractAction() {
+	javax.swing.Action zoomMenos = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -194,7 +194,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	Action zoomMais = new AbstractAction() {
+	javax.swing.Action zoomMais = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -968,6 +968,7 @@ public class Superficie extends Desktop {
 		MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
 		MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
+		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
 		MenuItem itemFormularioSel = new MenuItem(new FormularioSelectAcao());
 		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
 		ConfiguracaoAcao configuracaoAcao = new ConfiguracaoAcao();
@@ -993,11 +994,17 @@ public class Superficie extends Desktop {
 			add(itemFormulario);
 			add(itemFormularioSel);
 			addSeparator();
-			add(new MenuItem(new ExcluirAcao()));
+			add(new MenuItem(excluirAcao));
 			addSeparator();
 			add(itemPartir);
 			addSeparator();
 			add(new MenuItem(configuracaoAcao));
+
+			eventos();
+		}
+
+		private void eventos() {
+			excluirAcao.setActionListener(e -> excluirSelecionados());
 		}
 
 		void configItens(boolean objetoSelecionado) {
@@ -1070,19 +1077,6 @@ public class Superficie extends Desktop {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Formulario.copiar(Superficie.this);
-			}
-		}
-
-		class ExcluirAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ExcluirAcao() {
-				super(true, "label.excluir", Icones.EXCLUIR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				excluirSelecionados();
 			}
 		}
 
