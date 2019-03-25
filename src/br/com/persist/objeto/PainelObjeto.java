@@ -72,7 +72,8 @@ import br.com.persist.util.Util;
 
 public class PainelObjeto extends Panel implements ActionListener, ItemListener {
 	private static final long serialVersionUID = 1L;
-	private final Button btnArrasto = new Button(new ArrastarAcao());
+	private final Button btnArrasto = new Button(Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
+	}));
 	private final TextField txtComplemento = new TextField(35);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -394,43 +395,28 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class ButtonAtualizar extends Button {
 		private static final long serialVersionUID = 1L;
+		private Action sincronizarAcao = Action.actionMenu("label.sincronizar", Icones.SINCRONIZAR);
+		private Action atualizarAcao = Action.actionMenu("label.atualizar", Icones.ATUALIZAR);
 		private Popup popup = new Popup();
 
 		ButtonAtualizar() {
 			setToolTipText(Mensagens.getString("label.atualizar"));
-			popup.add(new MenuItem(new AtualizarRegistrosAcao()));
+			popup.add(new MenuItem(atualizarAcao));
 			popup.addSeparator();
-			popup.add(new MenuItem(new SincronizarRegistrosAcao()));
+			popup.add(new MenuItem(sincronizarAcao));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.ATUALIZAR);
 			addActionListener(e -> popup.show(this, 5, 5));
+
+			eventos();
 		}
 
-		class AtualizarRegistrosAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			AtualizarRegistrosAcao() {
-				super(true, "label.atualizar", Icones.ATUALIZAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				PainelObjeto.this.actionPerformed(null);
-			}
-		}
-
-		class SincronizarRegistrosAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			SincronizarRegistrosAcao() {
-				super(true, "label.sincronizar", Icones.SINCRONIZAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		private void eventos() {
+			atualizarAcao.setActionListener(e -> PainelObjeto.this.actionPerformed(null));
+			sincronizarAcao.setActionListener(e -> {
 				cabecalhoFiltro = null;
 				PainelObjeto.this.actionPerformed(null);
-			}
+			});
 		}
 	}
 
@@ -463,40 +449,19 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		class MenuBuscaAuto extends JMenu {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasAcao = Action.actionMenu("label.com_aspas", Icones.ASPAS);
+			private Action semAspasAcao = Action.actionMenu("label.sem_aspas", null);
 			private final Grupo grupo;
 
 			MenuBuscaAuto(Grupo grupo) {
 				super(grupo.getDescricao());
-				add(new MenuItem(new SemAspasAcao()));
-				add(new MenuItem(new ComAspasAcao()));
+				add(new MenuItem(semAspasAcao));
+				add(new MenuItem(comAspasAcao));
 				setIcon(Icones.CONFIG2);
 				this.grupo = grupo;
-			}
 
-			class SemAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
-
-				SemAspasAcao() {
-					super(true, "label.sem_aspas", null);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					processar(false);
-				}
-			}
-
-			class ComAspasAcao extends Acao {
-				private static final long serialVersionUID = 1L;
-
-				ComAspasAcao() {
-					super(true, "label.com_aspas", Icones.ASPAS);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					processar(true);
-				}
+				semAspasAcao.setActionListener(e -> processar(false));
+				comAspasAcao.setActionListener(e -> processar(true));
 			}
 
 			private void processar(boolean apostrofes) {
@@ -1040,18 +1005,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			return colunas;
 		}
 	};
-
-	private class ArrastarAcao extends Acao {
-		private static final long serialVersionUID = 1L;
-
-		ArrastarAcao() {
-			super(false, "label.destacar", Icones.ARRASTAR);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
