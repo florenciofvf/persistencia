@@ -60,6 +60,7 @@ import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaListener;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
+import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
@@ -164,7 +165,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
 			if (Preferencias.fechar_apos_soltar && dsde.getDropSuccess()) {
-				toolbar.new FecharAcao().actionPerformed(null);
+				toolbar.fecharAcao.actionPerformed(null);
 			}
 		}
 	};
@@ -262,6 +263,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action fragmentoAcao = Action.actionIcon("label.fragmento", Icones.FRAGMENTO);
+		private Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
 		final Button excluir = new Button(new ExcluirRegistrosAcao());
 		final ButtonAtualizar atualizar = new ButtonAtualizar();
 		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
@@ -270,7 +273,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		final Label total = new Label(Color.BLUE);
 
 		Toolbar() {
-			add(new Button(new FecharAcao()));
+			add(new Button(fecharAcao));
 			addSeparator();
 			add(btnArrasto);
 			addSeparator();
@@ -278,13 +281,29 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			addSeparator();
 			add(excluir);
 			addSeparator();
-			add(new Button(new FragmentoAcao()));
+			add(new Button(fragmentoAcao));
 			add(buscaAuto);
 			addSeparator();
 			add(update);
 			add(atualizar);
 			addSeparator();
 			add(new Button(new ComplementoAcao()));
+
+			eventos();
+		}
+
+		private void eventos() {
+			fragmentoAcao.setActionListener(e -> {
+				FragmentoDialogo dialogo = new FragmentoDialogo(null, fragmentoListener);
+
+				if (listener instanceof Component) {
+					dialogo.setLocationRelativeTo((Component) listener);
+				}
+
+				dialogo.setVisible(true);
+			});
+
+			fecharAcao.setActionListener(e -> listener.dispose());
 		}
 
 		void complementoBtn() {
@@ -306,38 +325,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		public void excluirAtualizarEnable(boolean b) {
 			excluir.setEnabled(b);
 			update.setEnabled(b);
-		}
-
-		class FecharAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FecharAcao() {
-				super(false, "label.fechar", Icones.SAIR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				listener.dispose();
-			}
-		}
-
-		class FragmentoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FragmentoAcao() {
-				super(false, "label.fragmento", Icones.FRAGMENTO);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				FragmentoDialogo dialogo = new FragmentoDialogo(null, fragmentoListener);
-
-				if (listener instanceof Component) {
-					dialogo.setLocationRelativeTo((Component) listener);
-				}
-
-				dialogo.setVisible(true);
-			}
 		}
 
 		class LimparAcao extends Acao {
