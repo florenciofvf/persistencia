@@ -123,7 +123,10 @@ public class Container extends PanelBorder {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 		private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
+		private Action desenharDescAcao = Action.actionIcon("label.desenhar_desc", Icones.TAG);
+		private Action desenharIdAcao = Action.actionIcon("label.desenhar_id", Icones.LABEL);
 		private Action criarObjAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
+		private Action transpAcao = Action.actionIcon("label.transparente", Icones.RECT);
 		private Action destacarAcao = Action.actionIcon("label.desktop", Icones.PANEL2);
 		private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
 		private Action formAcao = Action.actionIcon("label.formulario", Icones.PANEL);
@@ -154,10 +157,10 @@ public class Container extends PanelBorder {
 			add(btnArrasto);
 			add(btnSelecao);
 			addSeparator();
-			add(new ToggleButton(new DesenhoIdAcao()));
-			add(new ToggleButton(new DesenhoDescAcao()));
+			add(new ToggleButton(desenharIdAcao));
+			add(new ToggleButton(desenharDescAcao));
 			addSeparator();
-			add(new ToggleButton(new TransparenteAcao()));
+			add(new ToggleButton(transpAcao));
 			addSeparator();
 
 			eventos();
@@ -237,48 +240,21 @@ public class Container extends PanelBorder {
 				btnSelecao.setSelected(true);
 				btnSelecao.click();
 			});
-		}
 
-		class DesenhoIdAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			DesenhoIdAcao() {
-				super(false, "label.desenhar_id", Icones.LABEL);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			desenharIdAcao.setActionListener(e -> {
 				ToggleButton button = (ToggleButton) e.getSource();
 				superficie.desenharIds(button.isSelected());
-			}
-		}
+			});
 
-		class DesenhoDescAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			DesenhoDescAcao() {
-				super(false, "label.desenhar_desc", Icones.TAG);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			desenharDescAcao.setActionListener(e -> {
 				ToggleButton button = (ToggleButton) e.getSource();
 				superficie.desenharDesc(button.isSelected());
-			}
-		}
+			});
 
-		class TransparenteAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			TransparenteAcao() {
-				super(false, "label.transparente", Icones.RECT);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			transpAcao.setActionListener(e -> {
 				ToggleButton button = (ToggleButton) e.getSource();
 				superficie.transparente(button.isSelected());
-			}
+			});
 		}
 	}
 
