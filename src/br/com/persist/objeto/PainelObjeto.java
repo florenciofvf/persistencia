@@ -487,16 +487,37 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class ButtonUpdate extends Button {
 		private static final long serialVersionUID = 1L;
+		private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
 		private Popup popup = new Popup();
 
 		ButtonUpdate() {
 			setToolTipText(Mensagens.getString("label.update"));
-			popup.add(new MenuItem(new DadosAcao()));
+			popup.add(new MenuItem(dadosAcao));
 			popup.addSeparator();
 			popup.add(new MenuItem(new UpdateAcao()));
 			setComponentPopupMenu(popup);
 			setIcon(Icones.UPDATE);
 			addActionListener(e -> popup.show(this, 5, 5));
+
+			eventos();
+		}
+
+		private void eventos() {
+			dadosAcao.setActionListener(e -> {
+				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+				TableModel model = modelo.getModel();
+
+				if (model instanceof RegistroModelo) {
+					int[] linhas = tabela.getSelectedRows();
+
+					if (linhas != null && linhas.length == 1) {
+						StringBuilder sb = new StringBuilder(objeto.getTabela2());
+						sb.append(Constantes.QL);
+						modelo.getDados(linhas[0], sb);
+						Util.mensagem(PainelObjeto.this, sb.toString());
+					}
+				}
+			});
 		}
 
 		class UpdateAcao extends Acao {
@@ -541,31 +562,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 						}
 
 						form.setVisible(true);
-					}
-				}
-			}
-		}
-
-		class DadosAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			DadosAcao() {
-				super(true, "label.dados", Icones.TABELA);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-				TableModel model = modelo.getModel();
-
-				if (model instanceof RegistroModelo) {
-					int[] linhas = tabela.getSelectedRows();
-
-					if (linhas != null && linhas.length == 1) {
-						StringBuilder sb = new StringBuilder(objeto.getTabela2());
-						sb.append(Constantes.QL);
-						modelo.getDados(linhas[0], sb);
-						Util.mensagem(PainelObjeto.this, sb.toString());
 					}
 				}
 			}
@@ -754,11 +750,12 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class ButtonInfo extends Button {
 		private static final long serialVersionUID = 1L;
+		private Action apelidoAcao = Action.actionMenu("label.apelido", Icones.TAG2);
 		private Popup popup = new Popup();
 
 		ButtonInfo() {
 			setToolTipText(Mensagens.getString("label.meta_dados"));
-			popup.add(new MenuItem(new ApelidoAcao()));
+			popup.add(new MenuItem(apelidoAcao));
 			popup.addSeparator();
 			popup.add(new MenuItem(new ChavesPrimariasAcao()));
 			popup.addSeparator();
@@ -772,17 +769,12 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			setComponentPopupMenu(popup);
 			setIcon(Icones.INFO);
 			addActionListener(e -> popup.show(this, 5, 5));
+
+			eventos();
 		}
 
-		class ApelidoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ApelidoAcao() {
-				super(true, "label.apelido", Icones.TAG2);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		private void eventos() {
+			apelidoAcao.setActionListener(e -> {
 				if (listener instanceof FormularioInterno) {
 					FormularioInterno interno = (FormularioInterno) listener;
 					String valor = interno.getApelido();
@@ -794,7 +786,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 					interno.setApelido(resp);
 				}
-			}
+			});
 		}
 
 		class ChavesPrimariasAcao extends Acao {
