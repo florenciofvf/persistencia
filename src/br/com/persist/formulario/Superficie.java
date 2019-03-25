@@ -964,19 +964,24 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
+		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
+		private Action formAcao = Action.actionMenu("label.formulario", Icones.PANEL);
+		private Action consAcao = Action.actionMenu("label.consulta", Icones.PANEL3);
+		private Action destAcao = Action.actionMenu("label.desktop", Icones.PANEL2);
+		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
+
 		MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
 		MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
 		MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
-		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
-		MenuItem itemFormularioSel = new MenuItem(new FormularioSelectAcao());
-		MenuItem itemFormulario = new MenuItem(new FormularioAcao());
-		ConfiguracaoAcao configuracaoAcao = new ConfiguracaoAcao();
-		MenuItem itemDestacar = new MenuItem(new DestacarAcao());
 		Menu menuDistribuicao = new Menu("label.distribuicao");
-		MenuItem itemCopiar = new MenuItem(new CopiarAcao());
 		MenuItem itemPartir = new MenuItem(new PartirAcao());
 		Menu menuAlinhamento = new Menu("label.alinhamento");
+		MenuItem itemFormularioSel = new MenuItem(consAcao);
+		MenuItem itemFormulario = new MenuItem(formAcao);
+		MenuItem itemDestacar = new MenuItem(destAcao);
+		MenuItem itemCopiar = new MenuItem(copiarAcao);
 
 		SuperficiePopup() {
 			menuDistribuicao.add(itemDistribuiHorizontal);
@@ -1004,53 +1009,26 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
+			destAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this, false));
+			formAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this, true));
 			excluirAcao.setActionListener(e -> excluirSelecionados());
-		}
 
-		void configItens(boolean objetoSelecionado) {
-			menuDistribuicao.setEnabled(objetoSelecionado);
-			menuAlinhamento.setEnabled(objetoSelecionado);
-			itemFormulario.setEnabled(objetoSelecionado);
-			itemDestacar.setEnabled(objetoSelecionado);
-			itemPartir.setEnabled(!objetoSelecionado);
-			itemCopiar.setEnabled(objetoSelecionado);
-		}
+			configuracaoAcao.setActionListener(e -> {
+				Frame frame = formulario;
 
-		class DestacarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+				if (container.getFormularioSuperficie() != null) {
+					frame = container.getFormularioSuperficie();
+				}
 
-			DestacarAcao() {
-				super(true, "label.desktop", Icones.PANEL2);
-			}
+				if (selecionadoObjeto != null) {
+					new ObjetoDialogo(frame, Superficie.this, selecionadoObjeto);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				formulario.destacar(container.getConexaoPadrao(), Superficie.this, false);
-			}
-		}
+				} else if (selecionadoRelacao != null) {
+					new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
+				}
+			});
 
-		class FormularioAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FormularioAcao() {
-				super(true, "label.formulario", Icones.PANEL);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
-			}
-		}
-
-		class FormularioSelectAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			FormularioSelectAcao() {
-				super(true, "label.consulta", Icones.PANEL3);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			consAcao.setActionListener(e -> {
 				Frame frame = formulario;
 
 				if (container.getFormularioSuperficie() != null) {
@@ -1061,23 +1039,20 @@ public class Superficie extends Desktop {
 						container.getConexaoPadrao(), null, null);
 				form.setLocationRelativeTo(frame);
 				form.setVisible(true);
-			}
+			});
+
+			inputMap().put(getKeyStroke(KeyEvent.VK_C), copiarAcao.getChave());
+			Superficie.this.getActionMap().put(copiarAcao.getChave(), copiarAcao);
+			copiarAcao.setActionListener(e -> Formulario.copiar(Superficie.this));
 		}
 
-		class CopiarAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			CopiarAcao() {
-				super(true, "label.copiar", Icones.COPIA);
-
-				inputMap().put(getKeyStroke(KeyEvent.VK_C), chave);
-				Superficie.this.getActionMap().put(chave, this);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Formulario.copiar(Superficie.this);
-			}
+		void configItens(boolean objetoSelecionado) {
+			menuDistribuicao.setEnabled(objetoSelecionado);
+			menuAlinhamento.setEnabled(objetoSelecionado);
+			itemFormulario.setEnabled(objetoSelecionado);
+			itemDestacar.setEnabled(objetoSelecionado);
+			itemPartir.setEnabled(!objetoSelecionado);
+			itemCopiar.setEnabled(objetoSelecionado);
 		}
 
 		class PartirAcao extends Acao {
@@ -1111,30 +1086,6 @@ public class Superficie extends Desktop {
 					addRelacao(new Relacao(novo, false, destino, false));
 
 					Superficie.this.repaint();
-				}
-			}
-		}
-
-		class ConfiguracaoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			ConfiguracaoAcao() {
-				super(true, "label.configuracoes", Icones.CONFIG);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Frame frame = formulario;
-
-				if (container.getFormularioSuperficie() != null) {
-					frame = container.getFormularioSuperficie();
-				}
-
-				if (selecionadoObjeto != null) {
-					new ObjetoDialogo(frame, Superficie.this, selecionadoObjeto);
-
-				} else if (selecionadoRelacao != null) {
-					new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
 				}
 			}
 		}
