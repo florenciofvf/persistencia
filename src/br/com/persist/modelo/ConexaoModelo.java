@@ -125,9 +125,11 @@ public class ConexaoModelo extends AbstractTableModel {
 			break;
 		case 7:
 			conexao.setFinalComplemento(valor);
+			break;
 		case 8:
 			conexao.setEsquema(valor);
 			break;
+		default:
 		}
 	}
 
