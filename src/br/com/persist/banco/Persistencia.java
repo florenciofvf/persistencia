@@ -20,6 +20,9 @@ import br.com.persist.util.Util;
 
 public class Persistencia {
 
+	private Persistencia() {
+	}
+
 	public static int executar(String sql, Connection conn) throws Exception {
 		PreparedStatement psmt = conn.prepareStatement(sql);
 		int i = psmt.executeUpdate();

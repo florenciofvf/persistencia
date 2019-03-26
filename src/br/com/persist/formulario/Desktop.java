@@ -244,6 +244,14 @@ public class Desktop extends JDesktopPane {
 
 			e.dropComplete(true);
 		}
+
+		private boolean validoSoltar(DropTargetDragEvent e) {
+			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
+		}
+
+		private boolean validoSoltar(DropTargetDropEvent e) {
+			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
+		}
 	};
 
 	public void addForm(Object[] array, Point point, Graphics g, String apelido, boolean buscaAuto) {
@@ -256,14 +264,6 @@ public class Desktop extends JDesktopPane {
 		form.setLocation(point);
 		form.setSize(dimension);
 		add(form);
-	}
-
-	private boolean validoSoltar(DropTargetDragEvent e) {
-		return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
-	}
-
-	private boolean validoSoltar(DropTargetDropEvent e) {
-		return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
 	}
 
 	private class DesktopPopup extends Popup {
