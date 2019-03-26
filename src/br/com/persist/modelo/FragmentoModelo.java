@@ -17,8 +17,8 @@ public class FragmentoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
 	private static final File file = new File("fragmentos/fragmentos.xml");
-	private final static List<Fragmento> fragmentos = new ArrayList<>();
-	private final static List<Fragmento> auxiliares = new ArrayList<>();
+	private static final List<Fragmento> fragmentos = new ArrayList<>();
+	private static final List<Fragmento> auxiliares = new ArrayList<>();
 
 	@Override
 	public int getRowCount() {
@@ -76,6 +76,7 @@ public class FragmentoModelo extends AbstractTableModel {
 		case 2:
 			f.setValor(valor);
 			break;
+		default:
 		}
 	}
 

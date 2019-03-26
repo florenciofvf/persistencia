@@ -20,6 +20,10 @@ import br.com.persist.util.Fragmento;
 import br.com.persist.util.Util;
 
 public class XML {
+
+	private XML() {
+	}
+
 	public static Dimension processar(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao) throws Exception {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -153,11 +157,9 @@ class XMLHandler extends DefaultHandler {
 		} else if ("valor".equals(qName) && selecionado != null) {
 			String string = builder.toString();
 
-			if (!Util.estaVazio(string)) {
-				if (selecionado instanceof Objeto) {
-					Objeto obj = (Objeto) selecionado;
-					obj.getUltInstrucao().setValor(string.trim());
-				}
+			if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
+				Objeto obj = (Objeto) selecionado;
+				obj.getUltInstrucao().setValor(string.trim());
 			}
 
 			limpar();
