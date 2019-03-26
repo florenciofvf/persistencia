@@ -88,9 +88,11 @@ public class TituloAba extends Panel {
 			}
 		}
 
+		@Override
 		public void updateUI() {
 		}
 
+		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 

@@ -33,10 +33,10 @@ public class Main {
 		Class<?> classe = URLClassLoader.class;
 
 		try {
-			Method method = classe.getDeclaredMethod("addURL", new Class[] { URL.class });
+			Method method = classe.getDeclaredMethod("addURL", URL.class);
 			method.setAccessible(true);
-			method.invoke(classLoader, new Object[] { url });
-		} catch (Throwable ex) {
+			method.invoke(classLoader, url);
+		} catch (Exception ex) {
 			throw ex;
 		}
 	}

@@ -7,6 +7,9 @@ import java.util.Map;
 
 public class BuscaAuto {
 
+	private BuscaAuto() {
+	}
+
 	public static class Grupo {
 		final List<Tabela> tabelas = new ArrayList<>();
 		final String descricao;
@@ -71,7 +74,7 @@ public class BuscaAuto {
 			String n = descricao.substring(0, pos);
 
 			if (n.startsWith("(")) {
-				int pos2 = n.indexOf(")");
+				int pos2 = n.indexOf(')');
 				apelido = n.substring(1, pos2);
 				nome = n.substring(pos2 + 1);
 			} else {
