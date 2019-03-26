@@ -19,47 +19,52 @@ import br.com.persist.tabela.Coluna;
 import br.com.persist.util.Util;
 
 public class Persistencia {
+	private static final String FKCOLUMN_NAME = "FKCOLUMN_NAME";
+	private static final String PKCOLUMN_NAME = "PKCOLUMN_NAME";
+	private static final String TABLE_CATALOG = "TABLE_CATALOG";
+	private static final String FKTABLE_NAME = "FKTABLE_NAME";
+	private static final String PKTABLE_NAME = "PKTABLE_NAME";
+	private static final String TABLE_SCHEM = "TABLE_SCHEM";
+	private static final String COLUMN_NAME = "COLUMN_NAME";
+	private static final String KEY_SEQ = "KEY_SEQ";
+	private static final String PK_NAME = "PK_NAME";
 
 	private Persistencia() {
 	}
 
 	public static int executar(String sql, Connection conn) throws Exception {
-		PreparedStatement psmt = conn.prepareStatement(sql);
-		int i = psmt.executeUpdate();
-		psmt.close();
-		return i;
+		try (PreparedStatement psmt = conn.prepareStatement(sql)) {
+			return psmt.executeUpdate();
+		}
 	}
 
 	public static int getTotalRegistros(Connection conn, Objeto objeto, String complemento, Conexao conexao)
 			throws Exception {
 		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + objeto.getTabela(conexao.getEsquema()));
+
 		if (!Util.estaVazio(complemento)) {
 			builder.append(" WHERE 1=1 " + complemento);
 		}
 
-		PreparedStatement psmt = conn.prepareStatement(builder.toString());
-		ResultSet rs = psmt.executeQuery();
-		rs.next();
+		try (PreparedStatement psmt = conn.prepareStatement(builder.toString())) {
+			ResultSet rs = psmt.executeQuery();
+			rs.next();
 
-		int total = rs.getInt(1);
-
-		rs.close();
-		psmt.close();
-
-		return total;
+			int total = rs.getInt(1);
+			rs.close();
+			return total;
+		}
 	}
 
 	public static RegistroModelo criarModeloRegistro(Connection conn, String consulta, String[] chaves, Objeto objeto,
 			Conexao conexao) throws Exception {
-		PreparedStatement psmt = conn.prepareStatement(consulta);
+		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
+			ResultSet rs = psmt.executeQuery();
+			RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
 
-		ResultSet rs = psmt.executeQuery();
-		RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
-
-		rs.close();
-		psmt.close();
-
-		return modelo;
+			rs.close();
+			return modelo;
+		}
 	}
 
 	private static RegistroModelo criarModelo(ResultSet rs, String[] chaves, String tabela) throws Exception {
@@ -281,12 +286,12 @@ public class Persistencia {
 		ResultSet rs = m.getSchemas();
 
 		while (rs.next()) {
-			dados.add(criar(rs.getString("TABLE_SCHEM"), rs.getString("TABLE_CATALOG")));
+			dados.add(criar(rs.getString(TABLE_SCHEM), rs.getString(TABLE_CATALOG)));
 		}
 
 		rs.close();
 
-		return new ListagemModelo(Arrays.asList("TABLE_SCHEM", "TABLE_CATALOG"), dados);
+		return new ListagemModelo(Arrays.asList(TABLE_SCHEM, TABLE_CATALOG), dados);
 	}
 
 	public static ListagemModelo criarModeloChavePrimaria(Connection conn, Objeto objeto, Conexao conexao)
@@ -297,12 +302,12 @@ public class Persistencia {
 		ResultSet rs = m.getPrimaryKeys(null, conexao.getEsquema(), objeto.getTabela2());
 
 		while (rs.next()) {
-			dados.add(criar(rs.getString("COLUMN_NAME"), rs.getString("KEY_SEQ"), rs.getString("PK_NAME")));
+			dados.add(criar(rs.getString(COLUMN_NAME), rs.getString(KEY_SEQ), rs.getString(PK_NAME)));
 		}
 
 		rs.close();
 
-		return new ListagemModelo(Arrays.asList("COLUMN_NAME", "KEY_SEQ", "PK_NAME"), dados);
+		return new ListagemModelo(Arrays.asList(COLUMN_NAME, KEY_SEQ, PK_NAME), dados);
 	}
 
 	public static ListagemModelo criarModeloChavesExportadas(Connection conn, Objeto objeto, Conexao conexao)
@@ -313,13 +318,12 @@ public class Persistencia {
 		ResultSet rs = m.getExportedKeys(null, conexao.getEsquema(), objeto.getTabela2());
 
 		while (rs.next()) {
-			dados.add(
-					criar(rs.getString("PKCOLUMN_NAME"), rs.getString("FKTABLE_NAME"), rs.getString("FKCOLUMN_NAME")));
+			dados.add(criar(rs.getString(PKCOLUMN_NAME), rs.getString(FKTABLE_NAME), rs.getString(FKCOLUMN_NAME)));
 		}
 
 		rs.close();
 
-		return new ListagemModelo(Arrays.asList("PKCOLUMN_NAME", "FKTABLE_NAME", "FKCOLUMN_NAME"), dados);
+		return new ListagemModelo(Arrays.asList(PKCOLUMN_NAME, FKTABLE_NAME, FKCOLUMN_NAME), dados);
 	}
 
 	public static ListagemModelo criarModeloChavesImportadas(Connection conn, Objeto objeto, Conexao conexao)
@@ -330,13 +334,12 @@ public class Persistencia {
 		ResultSet rs = m.getImportedKeys(null, conexao.getEsquema(), objeto.getTabela2());
 
 		while (rs.next()) {
-			dados.add(
-					criar(rs.getString("PKTABLE_NAME"), rs.getString("PKCOLUMN_NAME"), rs.getString("FKCOLUMN_NAME")));
+			dados.add(criar(rs.getString(PKTABLE_NAME), rs.getString(PKCOLUMN_NAME), rs.getString(FKCOLUMN_NAME)));
 		}
 
 		rs.close();
 
-		return new ListagemModelo(Arrays.asList("PKTABLE_NAME", "PKCOLUMN_NAME", "FKCOLUMN_NAME"), dados);
+		return new ListagemModelo(Arrays.asList(PKTABLE_NAME, PKCOLUMN_NAME, FKCOLUMN_NAME), dados);
 	}
 
 	public static ListagemModelo criarModeloMetaDados(Connection conn, Objeto objeto, Conexao conexao)

@@ -117,6 +117,10 @@ public class RelacaoDialogo extends DialogoAbstrato {
 				txt = (TextField) e.getSource();
 			}
 
+			if (txt == null) {
+				return;
+			}
+
 			if (txtDeslocXDesc == e.getSource()) {
 				relacao.deslocamentoXDesc = Util.getInt(txt.getText(), relacao.deslocamentoXDesc);
 				Formulario.macro.deslocarXIdDescricao(relacao.deslocamentoXDesc);

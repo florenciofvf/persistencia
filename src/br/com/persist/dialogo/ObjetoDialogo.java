@@ -190,6 +190,10 @@ public class ObjetoDialogo extends DialogoAbstrato {
 				txt = (TextField) e.getSource();
 			}
 
+			if (txt == null) {
+				return;
+			}
+
 			if (txtX == e.getSource()) {
 				objeto.x = Util.getInt(txt.getText(), objeto.x);
 				Formulario.macro.x(objeto.x);
