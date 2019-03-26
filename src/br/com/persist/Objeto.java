@@ -332,6 +332,11 @@ public class Objeto implements Runnable {
 		return false;
 	}
 
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
 	public void desenhar(Component c, Graphics2D g2) {
 		Composite composite = g2.getComposite();
 		Shape shape = g2.getClip();

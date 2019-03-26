@@ -192,4 +192,9 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return filtro.coluna != null ? filtro.coluna.hashCode() : -1;
+	}
 }

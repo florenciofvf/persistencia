@@ -142,6 +142,11 @@ public class Relacao {
 		return false;
 	}
 
+	@Override
+	public int hashCode() {
+		return origem.hashCode() + destino.hashCode();
+	}
+
 	public boolean contem(Objeto objeto) {
 		return origem.equals(objeto) || destino.equals(objeto);
 	}
