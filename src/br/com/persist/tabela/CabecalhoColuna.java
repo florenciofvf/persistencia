@@ -162,7 +162,11 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	}
 
 	public boolean isFiltro(int resto, int largura) {
-		return comFiltro ? resto >= largura - 16 : false;
+		if (comFiltro) {
+			return resto >= largura - 16;
+		}
+
+		return false;
 	}
 
 	public void ordenar() {

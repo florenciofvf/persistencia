@@ -203,13 +203,13 @@ public class Objeto implements Runnable {
 	}
 
 	public String[] getChavesArray() {
-		String chaves_ = getChaves();
+		String $chaves = getChaves();
 
-		if (Util.estaVazio(chaves_)) {
+		if (Util.estaVazio($chaves)) {
 			return Constantes.ARRAY_LENGTH_ZERO;
 		}
 
-		return chaves_.trim().split(",");
+		return $chaves.trim().split(",");
 	}
 
 	public String getTabela(String esquema) {

@@ -29,18 +29,18 @@ public class Macro {
 		instrucoes = new ArrayList<>();
 		mapa = new HashMap<>();
 
-		mapa.put(DESCLOC_X_ID_DESC, new DESLOCAMENTO_X_ID_DESCRICAO());
-		mapa.put(DESCLOC_Y_ID_DESC, new DESLOCAMENTO_Y_ID_DESCRICAO());
-		mapa.put(DESENHAR_ID_DESC, new DESENHAR_ID_DESCRICAO());
-		mapa.put(PONTO_DESTINO, new PONTO_DESTINO());
-		mapa.put(TRANSPARENTE, new TRANSPARENTE());
-		mapa.put(PONTO_ORIGEM, new PONTO_ORIGEM());
-		mapa.put(ABRIR_AUTO, new ABRIR_AUTO());
-		mapa.put(COR_FONTE, new COR_FONTE());
-		mapa.put(ICONE, new ICONE());
-		mapa.put(COR, new COR());
-		mapa.put(X, new X());
-		mapa.put(Y, new Y());
+		mapa.put(DESCLOC_X_ID_DESC, new DeslocamentoXIdDescricao());
+		mapa.put(DESCLOC_Y_ID_DESC, new DeslocamentoYIdDescricao());
+		mapa.put(DESENHAR_ID_DESC, new DesenharIdDescricao());
+		mapa.put(PONTO_DESTINO, new PontoDestino());
+		mapa.put(TRANSPARENTE, new Transparente());
+		mapa.put(PONTO_ORIGEM, new PontoOrigem());
+		mapa.put(ABRIR_AUTO, new AbrirAuto());
+		mapa.put(COR_FONTE, new CorFonte());
+		mapa.put(ICONE, new Icone());
+		mapa.put(COR, new Cor());
+		mapa.put(X, new XPos());
+		mapa.put(Y, new YPos());
 	}
 
 	public List<Instrucao> getInstrucoes() {
@@ -64,7 +64,7 @@ public class Macro {
 		}
 	}
 
-	class DESLOCAMENTO_X_ID_DESCRICAO extends Instrucao {
+	class DeslocamentoXIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.deslocamentoXDesc = (Integer) valor;
@@ -76,7 +76,7 @@ public class Macro {
 		}
 	}
 
-	class DESLOCAMENTO_Y_ID_DESCRICAO extends Instrucao {
+	class DeslocamentoYIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.deslocamentoYDesc = (Integer) valor;
@@ -88,7 +88,7 @@ public class Macro {
 		}
 	}
 
-	class DESENHAR_ID_DESCRICAO extends Instrucao {
+	class DesenharIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setDesenharDescricao((Boolean) valor);
@@ -100,7 +100,7 @@ public class Macro {
 		}
 	}
 
-	class ABRIR_AUTO extends Instrucao {
+	class AbrirAuto extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 		}
@@ -111,7 +111,7 @@ public class Macro {
 		}
 	}
 
-	class TRANSPARENTE extends Instrucao {
+	class Transparente extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 		}
@@ -122,7 +122,7 @@ public class Macro {
 		}
 	}
 
-	class PONTO_DESTINO extends Instrucao {
+	class PontoDestino extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setPontoDestino((Boolean) valor);
@@ -133,7 +133,7 @@ public class Macro {
 		}
 	}
 
-	class PONTO_ORIGEM extends Instrucao {
+	class PontoOrigem extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setPontoOrigem((Boolean) valor);
@@ -144,7 +144,7 @@ public class Macro {
 		}
 	}
 
-	class COR_FONTE extends Instrucao {
+	class CorFonte extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setCorFonte((Color) valor);
@@ -156,7 +156,7 @@ public class Macro {
 		}
 	}
 
-	class ICONE extends Instrucao {
+	class Icone extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 		}
@@ -167,7 +167,7 @@ public class Macro {
 		}
 	}
 
-	class COR extends Instrucao {
+	class Cor extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setCor((Color) valor);
@@ -179,7 +179,7 @@ public class Macro {
 		}
 	}
 
-	class X extends Instrucao {
+	class XPos extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 		}
@@ -190,7 +190,7 @@ public class Macro {
 		}
 	}
 
-	class Y extends Instrucao {
+	class YPos extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 		}
