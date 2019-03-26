@@ -115,8 +115,8 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		FiltroCaixa(Frame frame, Filtro filtro, int x, int y) {
 			super(frame, true);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			textField.addKeyListener(keyListener);
-			addWindowListener(windowListener);
+			textField.addKeyListener(keyListener_);
+			addWindowListener(windowListener_);
 			String string = filtro.filtro;
 			setLayout(new BorderLayout());
 			this.filtro = filtro;
@@ -132,7 +132,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			setVisible(true);
 		}
 
-		KeyListener keyListener = new KeyAdapter() {
+		KeyListener keyListener_ = new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					filtro.filtro = textField.getText();
@@ -144,7 +144,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			}
 		};
 
-		WindowListener windowListener = new WindowAdapter() {
+		WindowListener windowListener_ = new WindowAdapter() {
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				if (Sistema.getInstancia().isMac()) {
 					int alturaArea = textField.getHeight();
