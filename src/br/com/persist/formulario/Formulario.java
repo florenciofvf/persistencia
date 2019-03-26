@@ -127,9 +127,10 @@ public class Formulario extends JFrame {
 				atualizarConexoes();
 			}
 
+			@Override
 			public void windowClosing(WindowEvent e) {
 				FormularioUtil.fechar(Formulario.this);
-			};
+			}
 		});
 	}
 
@@ -229,7 +230,7 @@ public class Formulario extends JFrame {
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
-					File files[] = fileChooser.getSelectedFiles();
+					File[] files = fileChooser.getSelectedFiles();
 
 					if (files != null) {
 						for (File file : files) {
@@ -271,7 +272,7 @@ public class Formulario extends JFrame {
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
-					File files[] = fileChooser.getSelectedFiles();
+					File[] files = fileChooser.getSelectedFiles();
 
 					if (files != null) {
 						for (File file : files) {

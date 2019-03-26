@@ -254,6 +254,40 @@ public class ObjetoDialogo extends DialogoAbstrato {
 
 			superficie.repaint();
 		}
+
+		private Box criarLinha(String chaveRotulo, JComponent componente) {
+			return criarLinha(chaveRotulo, componente, null);
+		}
+
+		private Box criarLinha(String chaveRotulo, JComponent componente, String hint) {
+			Box box = Box.createHorizontalBox();
+
+			Label label = new Label(chaveRotulo);
+			label.setHorizontalAlignment(Label.RIGHT);
+			label.setPreferredSize(new Dimension(100, 0));
+			label.setMinimumSize(new Dimension(100, 0));
+
+			if (!Util.estaVazio(hint)) {
+				label.setToolTipText(hint);
+			}
+
+			box.add(label);
+
+			if (componente instanceof CheckBox) {
+				box.add(componente);
+				box.add(Box.createHorizontalGlue());
+
+			} else if (componente instanceof JPanel) {
+				box.add(Box.createHorizontalStrut(3));
+				box.add(componente);
+				box.add(Box.createHorizontalStrut(2));
+
+			} else {
+				box.add(componente);
+			}
+
+			return box;
+		}
 	}
 
 	private class PanelDesc extends PanelBorder {
@@ -390,40 +424,6 @@ public class ObjetoDialogo extends DialogoAbstrato {
 			superficie.repaint();
 		}
 	};
-
-	private Box criarLinha(String chaveRotulo, JComponent componente) {
-		return criarLinha(chaveRotulo, componente, null);
-	}
-
-	private Box criarLinha(String chaveRotulo, JComponent componente, String hint) {
-		Box box = Box.createHorizontalBox();
-
-		Label label = new Label(chaveRotulo);
-		label.setHorizontalAlignment(Label.RIGHT);
-		label.setPreferredSize(new Dimension(100, 0));
-		label.setMinimumSize(new Dimension(100, 0));
-
-		if (!Util.estaVazio(hint)) {
-			label.setToolTipText(hint);
-		}
-
-		box.add(label);
-
-		if (componente instanceof CheckBox) {
-			box.add(componente);
-			box.add(Box.createHorizontalGlue());
-
-		} else if (componente instanceof JPanel) {
-			box.add(Box.createHorizontalStrut(3));
-			box.add(componente);
-			box.add(Box.createHorizontalStrut(2));
-
-		} else {
-			box.add(componente);
-		}
-
-		return box;
-	}
 
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;

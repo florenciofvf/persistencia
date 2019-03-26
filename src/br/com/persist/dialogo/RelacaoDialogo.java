@@ -70,27 +70,6 @@ public class RelacaoDialogo extends DialogoAbstrato {
 		}
 	}
 
-	private Box criarLinha(String chaveRotulo, JComponent componente) {
-		Box box = Box.createHorizontalBox();
-
-		Label label = new Label(chaveRotulo);
-		label.setHorizontalAlignment(Label.RIGHT);
-		label.setPreferredSize(new Dimension(160, 0));
-		label.setMinimumSize(new Dimension(160, 0));
-
-		box.add(label);
-
-		if (componente instanceof CheckBox) {
-			box.add(componente);
-			box.add(Box.createHorizontalGlue());
-
-		} else {
-			box.add(componente);
-		}
-
-		return box;
-	}
-
 	private class PanelDesc extends PanelBorder implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
@@ -169,6 +148,27 @@ public class RelacaoDialogo extends DialogoAbstrato {
 				relacao.setDescricao(textArea.getText());
 			}
 		};
+
+		private Box criarLinha(String chaveRotulo, JComponent componente) {
+			Box box = Box.createHorizontalBox();
+
+			Label label = new Label(chaveRotulo);
+			label.setHorizontalAlignment(Label.RIGHT);
+			label.setPreferredSize(new Dimension(160, 0));
+			label.setMinimumSize(new Dimension(160, 0));
+
+			box.add(label);
+
+			if (componente instanceof CheckBox) {
+				box.add(componente);
+				box.add(Box.createHorizontalGlue());
+
+			} else {
+				box.add(componente);
+			}
+
+			return box;
+		}
 	}
 
 	private class PanelCorFonte extends PanelBorder implements ChangeListener {
