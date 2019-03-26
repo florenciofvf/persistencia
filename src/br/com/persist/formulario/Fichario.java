@@ -53,7 +53,6 @@ public class Fichario extends JTabbedPane {
 
 	private void config() {
 		inputMap().put(getKeyStroke(KeyEvent.VK_Q), "excluir_action");
-
 		getActionMap().put("excluir_action", excluirAction);
 	}
 
