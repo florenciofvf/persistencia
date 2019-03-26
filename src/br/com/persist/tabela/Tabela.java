@@ -69,18 +69,21 @@ public class Tabela extends JTable {
 	}
 
 	private MouseMotionListener mouseMotionListener = new MouseAdapter() {
+		@Override
 		public void mouseDragged(MouseEvent e) {
 			arrastado = true;
 		}
 	};
 
 	private MouseListener mouseListener = new MouseAdapter() {
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (tabelaListener != null) {
 				tabelaListener.tabelaMouseClick(Tabela.this);
 			}
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (arrastado && tabelaListener != null) {
 				arrastado = false;

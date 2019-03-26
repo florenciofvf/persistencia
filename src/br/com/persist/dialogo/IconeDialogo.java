@@ -67,6 +67,7 @@ public class IconeDialogo extends DialogoAbstrato {
 		}
 
 		private MouseListener mouseListener = new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				label.setIcon(getIcon());
 				objeto.setIcone(nome);

@@ -79,6 +79,7 @@ public class TituloAba extends Panel {
 			setFocusable(false);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			int i = fichario.indexOfTabComponent(TituloAba.this);
 
@@ -114,6 +115,7 @@ public class TituloAba extends Panel {
 	}
 
 	private MouseListener mouseListener = new MouseAdapter() {
+		@Override
 		public void mouseEntered(MouseEvent e) {
 			Component component = e.getComponent();
 
@@ -123,6 +125,7 @@ public class TituloAba extends Panel {
 			}
 		}
 
+		@Override
 		public void mouseExited(MouseEvent e) {
 			Component component = e.getComponent();
 
