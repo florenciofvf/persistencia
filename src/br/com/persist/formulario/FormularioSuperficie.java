@@ -23,6 +23,7 @@ public class FormularioSuperficie extends FormularioAbstrato {
 
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent e) {
 				container.excluido();
 			};

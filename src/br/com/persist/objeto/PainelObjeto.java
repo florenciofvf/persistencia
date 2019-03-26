@@ -241,21 +241,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 		tabelaListener.tabelaMouseClick(tabela);
 	}
 
-	private void configCabecalhoColuna(ListagemModelo modelo) {
-		OrdenacaoModelo modeloOrdenacao = (OrdenacaoModelo) tabela.getModel();
-		TableColumnModel columnModel = tabela.getColumnModel();
-		List<Coluna> colunas = modelo.getColunasInfo();
-
-		for (int i = 0; i < colunas.size(); i++) {
-			TableColumn tableColumn = columnModel.getColumn(i);
-			Coluna coluna = colunas.get(i);
-
-			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna, false);
-
-			tableColumn.setHeaderRenderer(cabecalhoColuna);
-		}
-	}
-
 	private void montarLayout() {
 		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
@@ -972,6 +957,22 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("ESQUEMA", ex, PainelObjeto.this);
 				}
+			}
+		}
+
+		private void configCabecalhoColuna(ListagemModelo modelo) {
+			OrdenacaoModelo modeloOrdenacao = (OrdenacaoModelo) tabela.getModel();
+			TableColumnModel columnModel = tabela.getColumnModel();
+			List<Coluna> colunas = modelo.getColunasInfo();
+
+			for (int i = 0; i < colunas.size(); i++) {
+				TableColumn tableColumn = columnModel.getColumn(i);
+				Coluna coluna = colunas.get(i);
+
+				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(PainelObjeto.this, modeloOrdenacao, coluna,
+						false);
+
+				tableColumn.setHeaderRenderer(cabecalhoColuna);
 			}
 		}
 	}

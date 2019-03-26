@@ -118,7 +118,7 @@ public class RegistroModelo implements TableModel {
 			valores.add(registro.get(coluna.getIndice()));
 		}
 
-		getDado(registro, colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb);
+		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb);
 	}
 
 	public String getUpdate(int rowIndex) {
@@ -165,9 +165,8 @@ public class RegistroModelo implements TableModel {
 	public List<IndiceValor> getValoresChaves(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 		List<IndiceValor> resp = new ArrayList<>();
-		List<Coluna> chaves = getChaves();
 
-		for (Coluna coluna : chaves) {
+		for (Coluna coluna : getChaves()) {
 			IndiceValor obj = new IndiceValor(registro.get(coluna.getIndice()), coluna.getIndice());
 			resp.add(obj);
 		}
@@ -178,9 +177,8 @@ public class RegistroModelo implements TableModel {
 	public Map<String, String> getMapaChaves(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 		Map<String, String> resp = new HashMap<>();
-		List<Coluna> chaves = getChaves();
 
-		for (Coluna coluna : chaves) {
+		for (Coluna coluna : getChaves()) {
 			Object valor = registro.get(coluna.getIndice());
 			resp.put(coluna.getNome(), valor.toString());
 		}
@@ -218,7 +216,7 @@ public class RegistroModelo implements TableModel {
 		return true;
 	}
 
-	private void getDado(List<Object> registro, Coluna[] colunas, Object[] valores, StringBuilder sb) {
+	private void getDado(Coluna[] colunas, Object[] valores, StringBuilder sb) {
 		Coluna coluna = colunas[0];
 		sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[0]));
 

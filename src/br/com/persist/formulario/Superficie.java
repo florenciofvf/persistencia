@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -53,6 +55,7 @@ import br.com.persist.util.XMLUtil;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getGlobal();
 	private final SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private final SuperficiePopup popup = new SuperficiePopup();
 	private final Inversao inversao = new Inversao();
@@ -299,7 +302,7 @@ public class Superficie extends Desktop {
 			int recY = e.getY();
 
 			if (selecionadoObjeto != null) {
-				if (alt & !shift) {
+				if (alt && !shift) {
 					selecionadoObjeto.deslocamentoXId += recX - ultX;
 				} else if (!alt & shift) {
 					selecionadoObjeto.deslocamentoYId += recY - ultY;
@@ -308,9 +311,9 @@ public class Superficie extends Desktop {
 					selecionadoObjeto.deslocamentoYId += recY - ultY;
 				}
 			} else if (selecionadoRelacao != null) {
-				if (alt & !shift) {
+				if (alt && !shift) {
 					selecionadoRelacao.deslocamentoXDesc += recX - ultX;
-				} else if (!alt & shift) {
+				} else if (!alt && shift) {
 					selecionadoRelacao.deslocamentoYDesc += recY - ultY;
 				} else {
 					selecionadoRelacao.deslocamentoXDesc += recX - ultX;
@@ -394,7 +397,7 @@ public class Superficie extends Desktop {
 			int recY = e.getY();
 
 			for (Objeto objeto : objetos) {
-				if (alt & !shift) {
+				if (alt && !shift) {
 					objeto.x += recX - ultX;
 				} else if (!alt & shift) {
 					objeto.y += recY - ultY;
@@ -421,7 +424,7 @@ public class Superficie extends Desktop {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				duploClick(e);
 			}
-		};
+		}
 	};
 
 	private MouseAdapter mouseAdapterRelacao = new MouseAdapter() {
@@ -609,9 +612,9 @@ public class Superficie extends Desktop {
 
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
-					if (alt & !shift) {
+					if (alt && !shift) {
 						objeto.x += recX - ultX;
-					} else if (!alt & shift) {
+					} else if (!alt && shift) {
 						objeto.y += recY - ultY;
 					} else {
 						objeto.x += recX - ultX;
@@ -1323,7 +1326,7 @@ public class Superficie extends Desktop {
 			util.finalizarTag("fvf");
 			util.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.log(Level.SEVERE, "ERRO", e);
 		}
 	}
 

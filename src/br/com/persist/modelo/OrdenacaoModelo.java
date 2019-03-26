@@ -141,18 +141,18 @@ public class OrdenacaoModelo extends AbstractTableModel {
 
 				if (descendente) {
 					return valor.compareTo(outro);
-				} else {
-					return outro.compareTo(valor);
 				}
+
+				return outro.compareTo(valor);
 			} else {
 				string = Util.estaVazio(string) ? "" : string;
 				outra = Util.estaVazio(outra) ? "" : outra;
 
 				if (descendente) {
 					return string.compareTo(outra);
-				} else {
-					return outra.compareTo(string);
 				}
+
+				return outra.compareTo(string);
 			}
 		}
 	}
