@@ -38,9 +38,9 @@ public class Tabela extends JTable {
 	public Tabela(OrdenacaoModelo modelo) {
 		super(modelo);
 		tableHeader.addMouseListener(headerListener);
-		addMouseMotionListener(mouseMotionListener);
+		addMouseMotionListener(mouseMotionListener_);
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		addMouseListener(mouseListener);
+		addMouseListener(mouseListener_);
 	}
 
 	@Override
@@ -68,14 +68,14 @@ public class Tabela extends JTable {
 		this.mapaChaveamento = mapaChaveamento;
 	}
 
-	private MouseMotionListener mouseMotionListener = new MouseAdapter() {
+	private MouseMotionListener mouseMotionListener_ = new MouseAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			arrastado = true;
 		}
 	};
 
-	private MouseListener mouseListener = new MouseAdapter() {
+	private MouseListener mouseListener_ = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (tabelaListener != null) {

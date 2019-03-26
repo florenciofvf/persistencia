@@ -56,7 +56,7 @@ public class IconeDialogo extends DialogoAbstrato {
 		private final String nome;
 
 		LabelIcone(Map.Entry<String, Icon> entry) {
-			addMouseListener(mouseListener);
+			addMouseListener(mouseListener_);
 			setHorizontalAlignment(CENTER);
 			setIcon(entry.getValue());
 			nome = entry.getKey();
@@ -66,7 +66,7 @@ public class IconeDialogo extends DialogoAbstrato {
 			}
 		}
 
-		private MouseListener mouseListener = new MouseAdapter() {
+		private MouseListener mouseListener_ = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				label.setIcon(getIcon());

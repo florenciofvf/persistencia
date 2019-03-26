@@ -70,7 +70,7 @@ public class TituloAba extends Panel {
 			setToolTipText(Mensagens.getString("label.fechar"));
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(17, 17));
-			addMouseListener(mouseListener);
+			addMouseListener(mouseListener_);
 			setContentAreaFilled(false);
 			setUI(new BasicButtonUI());
 			setRolloverEnabled(true);
@@ -114,7 +114,7 @@ public class TituloAba extends Panel {
 		}
 	}
 
-	private MouseListener mouseListener = new MouseAdapter() {
+	private MouseListener mouseListener_ = new MouseAdapter() {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			Component component = e.getComponent();

@@ -97,17 +97,17 @@ public class ObjetoDialogo extends DialogoAbstrato {
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 
-			txtBuscaAutomatica.addFocusListener(focusListener);
-			txtChaveamento.addFocusListener(focusListener);
-			txtComplemento.addFocusListener(focusListener);
-			txtDeslocXId.addFocusListener(focusListener);
-			txtDeslocYId.addFocusListener(focusListener);
-			txtIntervalo.addFocusListener(focusListener);
-			txtTabela.addFocusListener(focusListener);
-			txtChaves.addFocusListener(focusListener);
-			txtId.addFocusListener(focusListener);
-			txtX.addFocusListener(focusListener);
-			txtY.addFocusListener(focusListener);
+			txtBuscaAutomatica.addFocusListener(focusListener_);
+			txtChaveamento.addFocusListener(focusListener_);
+			txtComplemento.addFocusListener(focusListener_);
+			txtDeslocXId.addFocusListener(focusListener_);
+			txtDeslocYId.addFocusListener(focusListener_);
+			txtIntervalo.addFocusListener(focusListener_);
+			txtTabela.addFocusListener(focusListener_);
+			txtChaves.addFocusListener(focusListener_);
+			txtId.addFocusListener(focusListener_);
+			txtX.addFocusListener(focusListener_);
+			txtY.addFocusListener(focusListener_);
 
 			txtBuscaAutomatica.addActionListener(this);
 			chkTransparente.addActionListener(this);
@@ -175,7 +175,7 @@ public class ObjetoDialogo extends DialogoAbstrato {
 			}
 		};
 
-		private FocusListener focusListener = new FocusAdapter() {
+		private FocusListener focusListener_ = new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				actionPerformed(new ActionEvent(e.getSource(), 0, null));
