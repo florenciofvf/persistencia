@@ -26,7 +26,7 @@ public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
 	private int linha;
 
 	public ConexaoStatusEditor() {
-		listeners = new ArrayList<CellEditorListener>();
+		listeners = new ArrayList<>();
 		changeEvent = new ChangeEvent(this);
 	}
 
@@ -74,7 +74,7 @@ public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
 
 	@Override
 	public boolean stopCellEditing() {
-		List<CellEditorListener> lista = new ArrayList<CellEditorListener>(listeners);
+		List<CellEditorListener> lista = new ArrayList<>(listeners);
 
 		for (CellEditorListener listener : lista) {
 			listener.editingStopped(changeEvent);
@@ -85,7 +85,7 @@ public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
 
 	@Override
 	public void cancelCellEditing() {
-		List<CellEditorListener> lista = new ArrayList<CellEditorListener>(listeners);
+		List<CellEditorListener> lista = new ArrayList<>(listeners);
 
 		for (CellEditorListener listener : lista) {
 			listener.editingCanceled(changeEvent);
