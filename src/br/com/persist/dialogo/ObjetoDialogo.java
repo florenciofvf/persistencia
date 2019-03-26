@@ -296,11 +296,11 @@ public class ObjetoDialogo extends DialogoAbstrato {
 
 		PanelDesc() {
 			textArea.setText(objeto.getDescricao());
-			textArea.addKeyListener(keyListener);
+			textArea.addKeyListener(keyListener_);
 			add(BorderLayout.CENTER, textArea);
 		}
 
-		private KeyListener keyListener = new KeyAdapter() {
+		private KeyListener keyListener_ = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				objeto.setDescricao(textArea.getText());
@@ -361,10 +361,10 @@ public class ObjetoDialogo extends DialogoAbstrato {
 				add(BorderLayout.NORTH, nome);
 				add(BorderLayout.CENTER, valor);
 
-				valor.addKeyListener(keyListener);
+				valor.addKeyListener(keyListener_);
 			}
 
-			private KeyListener keyListener = new KeyAdapter() {
+			private KeyListener keyListener_ = new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
 					instrucao.setValor(valor.getText());
@@ -423,7 +423,7 @@ public class ObjetoDialogo extends DialogoAbstrato {
 			new IconeDialogo(ObjetoDialogo.this, objeto, label);
 			superficie.repaint();
 		}
-	};
+	}
 
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;

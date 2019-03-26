@@ -49,23 +49,21 @@ public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
 		if (evento instanceof MouseEvent) {
 			MouseEvent mouseEvent = (MouseEvent) evento;
 
-			if (mouseEvent.getClickCount() >= TOTAL_CLICKS) {
-				if (tabela != null) {
-					TableModel model = tabela.getModel();
+			if (mouseEvent.getClickCount() >= TOTAL_CLICKS && tabela != null) {
+				TableModel model = tabela.getModel();
 
-					if (model instanceof ConexaoModelo) {
-						ConexaoModelo modelo = (ConexaoModelo) model;
-						Conexao conexao = modelo.getConexao(linha);
+				if (model instanceof ConexaoModelo) {
+					ConexaoModelo modelo = (ConexaoModelo) model;
+					Conexao conexao = modelo.getConexao(linha);
 
-						try {
-							Conexao.getConnection2(conexao);
-						} catch (Exception ex) {
-							Util.stackTraceAndMessage("ERRO", ex, tabela);
-						}
+					try {
+						Conexao.getConnection2(conexao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("ERRO", ex, tabela);
 					}
-
-					stopCellEditing();
 				}
+
+				stopCellEditing();
 			}
 		}
 

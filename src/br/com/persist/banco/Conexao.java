@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.xml.sax.Attributes;
 
@@ -13,6 +15,7 @@ import br.com.persist.util.Util;
 import br.com.persist.util.XMLUtil;
 
 public class Conexao {
+	private static final Logger LOG = Logger.getGlobal();
 	public static final Map<Conexao, Connection> CONEXOES = new HashMap<>();
 	private String inicioComplemento;
 	private String finalComplemento;
@@ -25,8 +28,7 @@ public class Conexao {
 
 	private Connection getConnection() throws Exception {
 		Class.forName(getDriver());
-		Connection conn = DriverManager.getConnection(getUrlBanco(), getUsuario(), getSenha());
-		return conn;
+		return DriverManager.getConnection(getUrlBanco(), getUsuario(), getSenha());
 	}
 
 	public static synchronized Connection getConnection(Conexao conexao) throws Exception {
@@ -48,6 +50,7 @@ public class Conexao {
 				fecharConexao(conn);
 				CONEXOES.put(conexao, null);
 			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "ERRO", e);
 			}
 		}
 
@@ -74,6 +77,7 @@ public class Conexao {
 				fecharConexao(conn);
 				CONEXOES.put(this, null);
 			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "ERRO", e);
 			}
 		}
 	}
