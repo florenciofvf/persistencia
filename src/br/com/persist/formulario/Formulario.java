@@ -71,9 +71,13 @@ public class Formulario extends JFrame {
 	}
 
 	public static void colar(Superficie superficie, boolean b, int x, int y) {
+		superficie.limparSelecao();
+
 		for (Objeto objeto : COPIADOS) {
 			Objeto clone = get(objeto, superficie);
 			superficie.addObjeto(clone);
+			clone.setSelecionado(true);
+			clone.controlado = true;
 
 			if (b) {
 				clone.x = x;
