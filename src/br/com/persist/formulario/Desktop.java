@@ -15,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -35,6 +37,7 @@ import br.com.persist.util.Util;
 
 public class Desktop extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
 	protected final Formulario formulario;
 
@@ -169,6 +172,7 @@ public class Desktop extends JDesktopPane {
 				setPreferredSize(new Dimension(largura, altura));
 				SwingUtilities.updateComponentTreeUI(getParent());
 			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "ERRO", e);
 			}
 		}
 	}

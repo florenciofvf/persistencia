@@ -220,19 +220,6 @@ public class Fichario extends JTabbedPane {
 		container.estadoSelecao();
 	}
 
-	private void inverter(int origem, int destino) {
-		Component aba = getTabComponentAt(origem);
-		Component cmp = getComponentAt(origem);
-		String hint = getToolTipTextAt(origem);
-		String titulo = getTitleAt(origem);
-		Icon icon = getIconAt(origem);
-		remove(origem);
-
-		insertTab(titulo, icon, cmp, hint, destino);
-		setTabComponentAt(destino, aba);
-		setSelectedIndex(destino);
-	}
-
 	@Override
 	public void remove(int index) {
 		Component cmp = getComponentAt(index);
@@ -289,6 +276,19 @@ public class Fichario extends JTabbedPane {
 			}
 
 			repaint();
+		}
+
+		private void inverter(int origem, int destino) {
+			Component aba = getTabComponentAt(origem);
+			Component cmp = getComponentAt(origem);
+			String hint = getToolTipTextAt(origem);
+			String titulo = getTitleAt(origem);
+			Icon icon = getIconAt(origem);
+			remove(origem);
+
+			insertTab(titulo, icon, cmp, hint, destino);
+			setTabComponentAt(destino, aba);
+			setSelectedIndex(destino);
 		}
 	}
 

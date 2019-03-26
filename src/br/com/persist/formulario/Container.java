@@ -256,18 +256,18 @@ public class Container extends PanelBorder {
 				superficie.transparente(button.isSelected());
 			});
 		}
-	}
 
-	private void titulo() {
-		if (formularioSuperficie == null) {
-			Fichario fichario = formulario.getFichario();
-			int indice = fichario.getSelectedIndex();
+		private void titulo() {
+			if (formularioSuperficie == null) {
+				Fichario fichario = formulario.getFichario();
+				int indice = fichario.getSelectedIndex();
 
-			if (indice != -1) {
-				fichario.setTitleAt(indice, arquivo.getName());
+				if (indice != -1) {
+					fichario.setTitleAt(indice, arquivo.getName());
+				}
+			} else {
+				formularioSuperficie.setTitle(arquivo.getName());
 			}
-		} else {
-			formularioSuperficie.setTitle(arquivo.getName());
 		}
 	}
 
