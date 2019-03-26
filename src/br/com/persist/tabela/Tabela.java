@@ -26,6 +26,8 @@ import br.com.persist.util.Util;
 
 public class Tabela extends JTable {
 	private static final long serialVersionUID = 1L;
+	private static final String LABEL_COM_ASPAS = "label.com_aspas";
+	private static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	private PopupHeader popupHeader = new PopupHeader();
 	private Map<String, List<String>> mapaChaveamento;
 	private TabelaListener tabelaListener;
@@ -157,8 +159,8 @@ public class Tabela extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action copiarNomeAcao = Action.actionIcon("label.copiar_nome_coluna", null);
-		private Action infoAcao = Action.actionIcon("label.meta_dados", Icones.INFO);
+		private Action copiarNomeAcao = Action.actionMenu("label.copiar_nome_coluna", null);
+		private Action infoAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private MenuCopiarIN menuCopiarIN = new MenuCopiarIN();
 		private int tag;
 
@@ -194,8 +196,8 @@ public class Tabela extends JTable {
 
 		class MenuCopiarValor extends Menu {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionIcon("label.com_aspas", Icones.ASPAS);
-			private Action semAspasAcao = Action.actionIcon("label.sem_aspas", null);
+			private Action comAspasAcao = Action.actionMenu(LABEL_COM_ASPAS, Icones.ASPAS);
+			private Action semAspasAcao = Action.actionMenu(LABEL_SEM_ASPAS, null);
 
 			MenuCopiarValor() {
 				super("label.copiar_header");
@@ -214,8 +216,8 @@ public class Tabela extends JTable {
 
 		class MenuCopiarIN extends Menu {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionIcon("label.com_aspas", Icones.ASPAS);
-			private Action semAspasAcao = Action.actionIcon("label.sem_aspas", null);
+			private Action comAspasAcao = Action.actionMenu(LABEL_COM_ASPAS, Icones.ASPAS);
+			private Action semAspasAcao = Action.actionMenu(LABEL_SEM_ASPAS, null);
 
 			MenuCopiarIN() {
 				super("label.vazio");
@@ -241,8 +243,8 @@ public class Tabela extends JTable {
 
 		class MenuCopiarINDinamico extends Menu {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionIcon("label.com_aspas", Icones.ASPAS);
-			private Action semAspasAcao = Action.actionIcon("label.sem_aspas", null);
+			private Action comAspasAcao = Action.actionMenu(LABEL_COM_ASPAS, Icones.ASPAS);
+			private Action semAspasAcao = Action.actionMenu(LABEL_SEM_ASPAS, null);
 			private final String nomeColuna;
 
 			MenuCopiarINDinamico(String coluna) {
