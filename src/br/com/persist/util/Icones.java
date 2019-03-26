@@ -72,6 +72,9 @@ public class Icones {
 	public static final Icon KEY = criarImagem("key");
 	public static final Icon TAG = criarImagem("tag");
 
+	private Icones() {
+	}
+
 	private static ImageIcon criarImagem(String nome) {
 		try {
 			URL url = Icones.class.getResource("/resources/" + nome + ".png");

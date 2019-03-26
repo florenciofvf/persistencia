@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -22,6 +24,7 @@ import br.com.persist.comp.TextArea;
 import br.com.persist.formulario.Superficie;
 
 public class Util {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final boolean LOG_CONSOLE = false;
 
 	private Util() {
@@ -59,7 +62,7 @@ public class Util {
 
 		if (ex != null) {
 			if (LOG_CONSOLE) {
-				ex.printStackTrace();
+				LOG.log(Level.SEVERE, "ERRO", ex);
 			} else {
 				PrintWriter pw = new PrintWriter(sw);
 				ex.printStackTrace(pw);
@@ -107,9 +110,9 @@ public class Util {
 
 			if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 				try {
-					String string = (String) transferable.getTransferData(DataFlavor.stringFlavor);
-					return string;
+					return (String) transferable.getTransferData(DataFlavor.stringFlavor);
 				} catch (Exception e) {
+					LOG.log(Level.SEVERE, "ERRO", e);
 				}
 			}
 		}
@@ -226,8 +229,8 @@ public class Util {
 		return new Object[] { objeto, conexao, dimension, apelido };
 	}
 
-	public static byte ARRAY_INDICE_OBJ = 0;
-	public static byte ARRAY_INDICE_CON = 1;
-	public static byte ARRAY_INDICE_DIM = 2;
-	public static byte ARRAY_INDICE_APE = 3;
+	public static final byte ARRAY_INDICE_OBJ = 0;
+	public static final byte ARRAY_INDICE_CON = 1;
+	public static final byte ARRAY_INDICE_DIM = 2;
+	public static final byte ARRAY_INDICE_APE = 3;
 }

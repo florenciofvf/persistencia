@@ -24,6 +24,9 @@ public class Imagens {
 		}
 	}
 
+	private Imagens() {
+	}
+
 	public static Icon getIcon(String nome) {
 		Icon icon = MAPA_ICONES.get(nome);
 

@@ -133,6 +133,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 
 		KeyListener keyListener_ = new KeyAdapter() {
+			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					filtro.filtro = textField.getText();
@@ -145,6 +146,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		};
 
 		WindowListener windowListener_ = new WindowAdapter() {
+			@Override
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				if (Sistema.getInstancia().isMac()) {
 					int alturaArea = textField.getHeight();

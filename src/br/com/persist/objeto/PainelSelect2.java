@@ -31,6 +31,7 @@ import br.com.persist.util.Util;
 
 public class PainelSelect2 extends Panel {
 	private static final long serialVersionUID = 1L;
+	private static final String PAINEL_SELECT = "PAINEL SELECT";
 	private static final File file = new File("consultas/consultas");
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
@@ -67,7 +68,7 @@ public class PainelSelect2 extends Panel {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("PAINEL SELECT", ex, PainelSelect2.this);
+				Util.stackTraceAndMessage(PAINEL_SELECT, ex, PainelSelect2.this);
 			}
 		}
 	}
@@ -94,7 +95,7 @@ public class PainelSelect2 extends Panel {
 					pw.print(textArea.getText());
 					pw.close();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("PAINEL SELECT", ex, PainelSelect2.this);
+					Util.stackTraceAndMessage(PAINEL_SELECT, ex, PainelSelect2.this);
 				}
 			});
 		}
