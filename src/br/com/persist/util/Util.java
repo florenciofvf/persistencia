@@ -182,12 +182,7 @@ public class Util {
 		if (strings != null && strings.length > 1) {
 			String campo = strings[0].trim();
 
-			List<String> lista = mapa.get(campo);
-
-			if (lista == null) {
-				lista = new ArrayList<>();
-				mapa.put(campo, lista);
-			}
+			List<String> lista = mapa.computeIfAbsent(campo, t -> new ArrayList<>());
 
 			String nomes = strings[1];
 			String[] strNomes = nomes.split(",");

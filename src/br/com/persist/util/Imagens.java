@@ -28,14 +28,7 @@ public class Imagens {
 	}
 
 	public static Icon getIcon(String nome) {
-		Icon icon = MAPA_ICONES.get(nome);
-
-		if (icon == null) {
-			icon = criarImagem(nome);
-			MAPA_ICONES.put(nome, icon);
-		}
-
-		return icon;
+		return MAPA_ICONES.computeIfAbsent(nome, n -> criarImagem(n));
 	}
 
 	public static List<Map.Entry<String, Icon>> getIcones() {
