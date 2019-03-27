@@ -74,6 +74,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	private static final long serialVersionUID = 1L;
 	private final Button btnArrasto = new Button(Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
 	}));
+	private static final String LABEL_SINCRONIZAR = "label.sincronizar";
+	private static final String LABEL_ATUALIZAR = "label.atualizar";
 	private final TextField txtComplemento = new TextField(35);
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -378,12 +380,12 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 	private class ButtonAtualizar extends Button {
 		private static final long serialVersionUID = 1L;
-		private Action sincronizarAcao = Action.actionMenu("label.sincronizar", Icones.SINCRONIZAR);
-		private Action atualizarAcao = Action.actionMenu("label.atualizar", Icones.ATUALIZAR);
+		private Action sincronizarAcao = Action.actionMenu(LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
+		private Action atualizarAcao = Action.actionMenu(LABEL_ATUALIZAR, Icones.ATUALIZAR);
 		private Popup popup = new Popup();
 
 		ButtonAtualizar() {
-			setToolTipText(Mensagens.getString("label.atualizar"));
+			setToolTipText(Mensagens.getString(LABEL_ATUALIZAR));
 			popup.add(new MenuItem(atualizarAcao));
 			popup.addSeparator();
 			popup.add(new MenuItem(sincronizarAcao));

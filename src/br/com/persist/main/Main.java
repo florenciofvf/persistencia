@@ -32,13 +32,9 @@ public class Main {
 		URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 		Class<?> classe = URLClassLoader.class;
 
-		try {
-			Method method = classe.getDeclaredMethod("addURL", URL.class);
-			method.setAccessible(true);
-			method.invoke(classLoader, url);
-		} catch (Exception ex) {
-			throw ex;
-		}
+		Method method = classe.getDeclaredMethod("addURL", URL.class);
+		method.setAccessible(true);
+		method.invoke(classLoader, url);
 	}
 
 	private static URL[] getURLs() throws Exception {
