@@ -12,14 +12,13 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
 import br.com.persist.formulario.Formulario;
-import br.com.persist.formulario.Superficie;
 import br.com.persist.util.Macro;
 
 public class MacroDialogo extends DialogoAbstrato {
 	private static final long serialVersionUID = 1L;
 	private JList<Macro.Instrucao> lista;
 
-	public MacroDialogo(Frame frame, Superficie superficie) {
+	public MacroDialogo(Frame frame) {
 		super(frame, "Macro", 0, 0, false);
 		lista = new JList<>(new Modelo());
 		montarLayout();

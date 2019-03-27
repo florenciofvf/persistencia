@@ -40,8 +40,8 @@ import br.com.persist.xml.XML;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
+	protected static final List<Objeto> COPIADOS = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
-	public static final List<Objeto> COPIADOS = new ArrayList<>();
 	private final Vector<Conexao> conexoes = new Vector<>();
 	private final Fichario fichario = new Fichario();
 	public static final Macro macro = new Macro();

@@ -26,7 +26,7 @@ public class FormularioSuperficie extends FormularioAbstrato {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				container.excluido();
-			};
+			}
 		});
 	}
 

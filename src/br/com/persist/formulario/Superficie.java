@@ -140,7 +140,7 @@ public class Superficie extends Desktop {
 				frame = container.getFormularioSuperficie();
 			}
 
-			new MacroDialogo(frame, Superficie.this);
+			new MacroDialogo(frame);
 		}
 	};
 
