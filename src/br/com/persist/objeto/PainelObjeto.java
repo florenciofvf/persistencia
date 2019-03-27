@@ -348,31 +348,29 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			public void actionPerformed(ActionEvent e) {
 				int[] linhas = tabela.getSelectedRows();
 
-				if (linhas != null && linhas.length > 0) {
-					if (Util.confirmaExclusao(PainelObjeto.this)) {
-						OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(PainelObjeto.this)) {
+					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 
-						List<List<IndiceValor>> listaValores = new ArrayList<>();
+					List<List<IndiceValor>> listaValores = new ArrayList<>();
 
-						for (int linha : linhas) {
-							int excluido = modelo.excluirRegistro(linha);
+					for (int linha : linhas) {
+						int excluido = modelo.excluirRegistro(linha);
 
-							if (excluido == 0 || excluido == 1) {
-								List<IndiceValor> chaves = modelo.getValoresChaves(linha);
+						if (excluido == 0 || excluido == 1) {
+							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
 
-								if (chaves.isEmpty()) {
-									throw new IllegalStateException();
-								}
-
-								listaValores.add(chaves);
+							if (chaves.isEmpty()) {
+								throw new IllegalStateException();
 							}
-						}
 
-						modelo.excluirValoresChaves(listaValores);
-						modelo.iniArray();
-						modelo.fireTableDataChanged();
-						tabelaListener.tabelaMouseClick(tabela);
+							listaValores.add(chaves);
+						}
 					}
+
+					modelo.excluirValoresChaves(listaValores);
+					modelo.iniArray();
+					modelo.fireTableDataChanged();
+					tabelaListener.tabelaMouseClick(tabela);
 				}
 			}
 		}

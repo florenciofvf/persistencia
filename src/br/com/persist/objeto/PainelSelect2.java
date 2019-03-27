@@ -125,7 +125,7 @@ public class PainelSelect2 extends Panel {
 			tabela.setModel(modeloRegistro);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage("PAINEL SELECT", ex, this);
+			Util.stackTraceAndMessage(PAINEL_SELECT, ex, this);
 		}
 	}
 }

@@ -28,7 +28,7 @@ public class Imagens {
 	}
 
 	public static Icon getIcon(String nome) {
-		return MAPA_ICONES.computeIfAbsent(nome, n -> criarImagem(n));
+		return MAPA_ICONES.computeIfAbsent(nome, Imagens::criarImagem);
 	}
 
 	public static List<Map.Entry<String, Icon>> getIcones() {

@@ -85,6 +85,6 @@ public class Icones {
 	}
 
 	public static Icon getIcon(String nome) {
-		return MAPA_ICONES.computeIfAbsent(nome, n -> criarImagem(n));
+		return MAPA_ICONES.computeIfAbsent(nome, Icones::criarImagem);
 	}
 }
