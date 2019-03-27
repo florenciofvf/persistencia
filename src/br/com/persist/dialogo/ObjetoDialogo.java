@@ -184,52 +184,42 @@ public class ObjetoDialogo extends DialogoAbstrato {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			TextField txt = null;
-
-			if (e.getSource() instanceof TextField) {
-				txt = (TextField) e.getSource();
-			}
-
-			if (txt == null) {
-				return;
-			}
-
 			if (txtX == e.getSource()) {
-				objeto.x = Util.getInt(txt.getText(), objeto.x);
+				objeto.x = Util.getInt(txtX.getText(), objeto.x);
 				Formulario.macro.x(objeto.x);
 
 			} else if (txtY == e.getSource()) {
-				objeto.y = Util.getInt(txt.getText(), objeto.y);
+				objeto.y = Util.getInt(txtY.getText(), objeto.y);
 				Formulario.macro.y(objeto.y);
 
 			} else if (txtDeslocXId == e.getSource()) {
-				objeto.deslocamentoXId = Util.getInt(txt.getText(), objeto.deslocamentoXId);
+				objeto.deslocamentoXId = Util.getInt(txtDeslocXId.getText(), objeto.deslocamentoXId);
 				Formulario.macro.deslocarXIdDescricao(objeto.deslocamentoXId);
 
 			} else if (txtDeslocYId == e.getSource()) {
-				objeto.deslocamentoYId = Util.getInt(txt.getText(), objeto.deslocamentoYId);
+				objeto.deslocamentoYId = Util.getInt(txtDeslocYId.getText(), objeto.deslocamentoYId);
 				Formulario.macro.deslocarYIdDescricao(objeto.deslocamentoYId);
 
 			} else if (txtIntervalo == e.getSource()) {
-				objeto.setIntervalo(Util.getInt(txt.getText(), objeto.getIntervalo()));
+				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
 
 			} else if (txtBuscaAutomatica == e.getSource()) {
-				objeto.setBuscaAutomatica(txt.getText());
+				objeto.setBuscaAutomatica(txtBuscaAutomatica.getText());
 
 			} else if (txtChaveamento == e.getSource()) {
-				objeto.setChaveamento(txt.getText());
+				objeto.setChaveamento(txtChaveamento.getText());
 
 			} else if (txtComplemento == e.getSource()) {
-				objeto.setComplemento(txt.getText());
+				objeto.setComplemento(txtComplemento.getText());
 
 			} else if (txtTabela == e.getSource()) {
-				objeto.setTabela(txt.getText());
+				objeto.setTabela(txtTabela.getText());
 
 			} else if (txtChaves == e.getSource()) {
-				objeto.setChaves(txt.getText());
+				objeto.setChaves(txtChaves.getText());
 
 			} else if (txtId == e.getSource()) {
-				String id = txt.getText();
+				String id = txtId.getText();
 
 				if (!Util.estaVazio(id)) {
 					Objeto obj = new Objeto();

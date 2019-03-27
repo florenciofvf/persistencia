@@ -111,22 +111,12 @@ public class RelacaoDialogo extends DialogoAbstrato {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			TextField txt = null;
-
-			if (e.getSource() instanceof TextField) {
-				txt = (TextField) e.getSource();
-			}
-
-			if (txt == null) {
-				return;
-			}
-
 			if (txtDeslocXDesc == e.getSource()) {
-				relacao.deslocamentoXDesc = Util.getInt(txt.getText(), relacao.deslocamentoXDesc);
+				relacao.deslocamentoXDesc = Util.getInt(txtDeslocXDesc.getText(), relacao.deslocamentoXDesc);
 				Formulario.macro.deslocarXIdDescricao(relacao.deslocamentoXDesc);
 
 			} else if (txtDeslocYDesc == e.getSource()) {
-				relacao.deslocamentoYDesc = Util.getInt(txt.getText(), relacao.deslocamentoYDesc);
+				relacao.deslocamentoYDesc = Util.getInt(txtDeslocYDesc.getText(), relacao.deslocamentoYDesc);
 				Formulario.macro.deslocarYIdDescricao(relacao.deslocamentoYDesc);
 
 			} else if (chkDesenharDesc == e.getSource()) {
