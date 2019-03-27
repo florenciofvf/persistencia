@@ -304,7 +304,7 @@ public class Superficie extends Desktop {
 			if (selecionadoObjeto != null) {
 				if (alt && !shift) {
 					selecionadoObjeto.deslocamentoXId += recX - ultX;
-				} else if (!alt & shift) {
+				} else if (!alt && shift) {
 					selecionadoObjeto.deslocamentoYId += recY - ultY;
 				} else {
 					selecionadoObjeto.deslocamentoXId += recX - ultX;
@@ -399,7 +399,7 @@ public class Superficie extends Desktop {
 			for (Objeto objeto : objetos) {
 				if (alt && !shift) {
 					objeto.x += recX - ultX;
-				} else if (!alt & shift) {
+				} else if (!alt && shift) {
 					objeto.y += recY - ultY;
 				} else {
 					objeto.x += recX - ultX;
@@ -530,7 +530,7 @@ public class Superficie extends Desktop {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				duploClick(e);
 			}
-		};
+		}
 	};
 
 	private MouseAdapter mouseAdapterSelecao = new MouseAdapter() {

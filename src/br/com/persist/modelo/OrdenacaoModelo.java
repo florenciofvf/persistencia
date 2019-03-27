@@ -155,5 +155,24 @@ public class OrdenacaoModelo extends AbstractTableModel {
 				return outra.compareTo(string);
 			}
 		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj == this) {
+				return true;
+			}
+
+			if (obj instanceof Linha) {
+				Linha outro = (Linha) obj;
+				return indice == outro.indice;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			return indice;
+		}
 	}
 }
