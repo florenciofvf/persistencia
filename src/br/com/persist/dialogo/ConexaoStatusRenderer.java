@@ -31,7 +31,7 @@ public class ConexaoStatusRenderer extends DefaultTableCellRenderer {
 			Conexao conexao = modelo.getConexao(row);
 
 			try {
-				Connection conn = Conexao.CONEXOES.get(conexao);
+				Connection conn = Conexao.get(conexao);
 
 				if (conn == null || conn.isClosed()) {
 					setIcon(Icones.BANCO_DESCONECTA);

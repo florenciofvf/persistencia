@@ -16,7 +16,7 @@ import br.com.persist.util.XMLUtil;
 
 public class Conexao {
 	private static final Logger LOG = Logger.getGlobal();
-	public static final Map<Conexao, Connection> CONEXOES = new HashMap<>();
+	private static final Map<Conexao, Connection> CONEXOES = new HashMap<>();
 	private String inicioComplemento;
 	private String finalComplemento;
 	private String urlBanco;
@@ -84,6 +84,10 @@ public class Conexao {
 
 	public static List<Conexao> getConexoes() {
 		return new ArrayList<>(CONEXOES.keySet());
+	}
+
+	public static Connection get(Conexao conexao) {
+		return CONEXOES.get(conexao);
 	}
 
 	public void setUrlBanco(String urlBanco) {
