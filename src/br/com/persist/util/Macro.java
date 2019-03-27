@@ -231,7 +231,7 @@ public class Macro {
 		adicionar(instrucao);
 	}
 
-	public void transparente(Object valor) {
+	public void transparencia(Object valor) {
 		Instrucao instrucao = mapa.get(TRANSPARENTE);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
@@ -249,25 +249,25 @@ public class Macro {
 		adicionar(instrucao);
 	}
 
-	public void icone(Object valor) {
+	public void imagem(Object valor) {
 		Instrucao instrucao = mapa.get(ICONE);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}
 
-	public void cor(Object valor) {
+	public void corFundo(Object valor) {
 		Instrucao instrucao = mapa.get(COR);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}
 
-	public void x(Object valor) {
+	public void xLocal(Object valor) {
 		Instrucao instrucao = mapa.get(X);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}
 
-	public void y(Object valor) {
+	public void yLocal(Object valor) {
 		Instrucao instrucao = mapa.get(Y);
 		instrucao.setValor(valor);
 		adicionar(instrucao);

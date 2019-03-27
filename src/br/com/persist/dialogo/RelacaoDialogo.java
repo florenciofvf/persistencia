@@ -196,7 +196,7 @@ public class RelacaoDialogo extends DialogoAbstrato {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			relacao.setCor(colorChooser.getColor());
-			Formulario.macro.cor(relacao.getCor());
+			Formulario.macro.corFundo(relacao.getCor());
 			superficie.repaint();
 		}
 	}

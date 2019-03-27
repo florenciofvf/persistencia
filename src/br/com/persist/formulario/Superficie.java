@@ -1108,9 +1108,9 @@ public class Superficie extends Desktop {
 					Formulario.macro.limpar();
 
 					if (horizontal) {
-						Formulario.macro.y(selecionadoObjeto.y);
+						Formulario.macro.yLocal(selecionadoObjeto.y);
 					} else {
-						Formulario.macro.x(selecionadoObjeto.x);
+						Formulario.macro.xLocal(selecionadoObjeto.x);
 					}
 
 					macro.actionPerformed(null);

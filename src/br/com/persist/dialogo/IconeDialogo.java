@@ -71,7 +71,7 @@ public class IconeDialogo extends DialogoAbstrato {
 			public void mouseClicked(MouseEvent e) {
 				label.setIcon(getIcon());
 				objeto.setIcone(nome);
-				Formulario.macro.icone(objeto.getIcone());
+				Formulario.macro.imagem(objeto.getIcone());
 				dispose();
 			}
 		};

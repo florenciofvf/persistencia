@@ -186,11 +186,11 @@ public class ObjetoDialogo extends DialogoAbstrato {
 		public void actionPerformed(ActionEvent e) {
 			if (txtX == e.getSource()) {
 				objeto.x = Util.getInt(txtX.getText(), objeto.x);
-				Formulario.macro.x(objeto.x);
+				Formulario.macro.xLocal(objeto.x);
 
 			} else if (txtY == e.getSource()) {
 				objeto.y = Util.getInt(txtY.getText(), objeto.y);
-				Formulario.macro.y(objeto.y);
+				Formulario.macro.yLocal(objeto.y);
 
 			} else if (txtDeslocXId == e.getSource()) {
 				objeto.deslocamentoXId = Util.getInt(txtDeslocXId.getText(), objeto.deslocamentoXId);
@@ -243,7 +243,7 @@ public class ObjetoDialogo extends DialogoAbstrato {
 			} else if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setTransparente(chk.isSelected());
-				Formulario.macro.transparente(chk.isSelected());
+				Formulario.macro.transparencia(chk.isSelected());
 			}
 
 			superficie.repaint();
@@ -398,7 +398,7 @@ public class ObjetoDialogo extends DialogoAbstrato {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			objeto.setCor(colorChooser.getColor());
-			Formulario.macro.cor(objeto.getCor());
+			Formulario.macro.corFundo(objeto.getCor());
 			superficie.repaint();
 		}
 	}
