@@ -116,8 +116,8 @@ public class Formulario extends JFrame {
 
 	private void configurar() {
 		fichario.setTabLayoutPolicy(
-				Preferencias.fichario_com_rolagem ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
-		fichario.setTabPlacement(Preferencias.posicao_aba_fichario);
+				Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+		fichario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
 
 		addWindowListener(new WindowAdapter() {
 			@Override

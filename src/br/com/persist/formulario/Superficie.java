@@ -1435,7 +1435,7 @@ public class Superficie extends Desktop {
 	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto, AtomicBoolean processado) {
 		super.buscaAutomatica(grupo, argumentos, painelObjeto, processado);
 
-		if (Preferencias.abrir_auto) {
+		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
 
 			for (Tabela tabela : grupo.getTabelas()) {
@@ -1462,7 +1462,7 @@ public class Superficie extends Desktop {
 					Conexao conexao = container.getConexaoPadrao();
 					objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 
-					if (Preferencias.abrir_auto_destacado) {
+					if (Preferencias.isAbrirAutoDestacado()) {
 						new FormularioExterno(formulario, frame, objeto, getGraphics(), conexao, false);
 						processado.set(true);
 					} else {

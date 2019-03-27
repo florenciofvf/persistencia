@@ -180,7 +180,7 @@ public class Tabela extends JTable {
 				String coluna = getModel().getColumnName(tag);
 				Util.setContentTransfered(coluna);
 
-				if (tabelaListener != null && Preferencias.copiar_nome_coluna_listener) {
+				if (tabelaListener != null && Preferencias.isCopiarNomeColunaListener()) {
 					tabelaListener.copiarNomeColuna(Tabela.this, coluna);
 				}
 			});

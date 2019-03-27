@@ -167,7 +167,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
-			if (Preferencias.fechar_apos_soltar && dsde.getDropSuccess()) {
+			if (Preferencias.isFecharAposSoltar() && dsde.getDropSuccess()) {
 				toolbar.fecharAcao.actionPerformed(null);
 			}
 		}

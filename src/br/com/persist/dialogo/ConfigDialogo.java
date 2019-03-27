@@ -42,12 +42,12 @@ public class ConfigDialogo extends DialogoAbstrato {
 	}
 
 	private void montarLayout() {
-		chkAreaTransTabelaRegistros.setSelected(Preferencias.area_trans_tabela_registros);
-		chkNomeColunaListener.setSelected(Preferencias.copiar_nome_coluna_listener);
-		chkAtivarAbrirAutoDestac.setSelected(Preferencias.abrir_auto_destacado);
-		chkFecharOrigemAposSoltar.setSelected(Preferencias.fechar_apos_soltar);
-		chkFicharioScroll.setSelected(Preferencias.fichario_com_rolagem);
-		chkAtivarAbrirAuto.setSelected(Preferencias.abrir_auto);
+		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
+		chkNomeColunaListener.setSelected(Preferencias.isCopiarNomeColunaListener());
+		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
+		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
+		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
+		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
 		ButtonGroup grupo = new ButtonGroup();
@@ -59,7 +59,7 @@ public class ConfigDialogo extends DialogoAbstrato {
 			rdoPosicoes[i] = radio;
 			grupo.add(radio);
 
-			radio.setSelected(radio.posicao.indice == Preferencias.posicao_aba_fichario);
+			radio.setSelected(radio.posicao.indice == Preferencias.getPosicaoAbaFichario());
 		}
 
 		Label localAbas = new Label("label.local_abas");
@@ -91,24 +91,24 @@ public class ConfigDialogo extends DialogoAbstrato {
 
 	private void configurar() {
 		chkNomeColunaListener
-				.addActionListener(e -> Preferencias.copiar_nome_coluna_listener = chkNomeColunaListener.isSelected());
+				.addActionListener(e -> Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected()));
 
 		chkFicharioScroll.addActionListener(e -> {
-			Preferencias.fichario_com_rolagem = chkFicharioScroll.isSelected();
+			Preferencias.setFicharioComRolagem(chkFicharioScroll.isSelected());
 			formulario.getFichario().setTabLayoutPolicy(
-					Preferencias.fichario_com_rolagem ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+					Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
 		});
 
 		chkAtivarAbrirAutoDestac
-				.addActionListener(e -> Preferencias.abrir_auto_destacado = chkAtivarAbrirAutoDestac.isSelected());
+				.addActionListener(e -> Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected()));
 
 		chkFecharOrigemAposSoltar
-				.addActionListener(e -> Preferencias.fechar_apos_soltar = chkFecharOrigemAposSoltar.isSelected());
+				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));
 
-		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.abrir_auto = chkAtivarAbrirAuto.isSelected());
+		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
 
 		chkAreaTransTabelaRegistros.addActionListener(
-				e -> Preferencias.area_trans_tabela_registros = chkAreaTransTabelaRegistros.isSelected());
+				e -> Preferencias.setAreaTransTabelaRegistros(chkAreaTransTabelaRegistros.isSelected()));
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -139,8 +139,8 @@ public class ConfigDialogo extends DialogoAbstrato {
 			super(posicao.nome);
 			this.posicao = posicao;
 			addActionListener(e -> {
-				Preferencias.posicao_aba_fichario = posicao.indice;
-				formulario.getFichario().setTabPlacement(Preferencias.posicao_aba_fichario);
+				Preferencias.setPosicaoAbaFichario(posicao.indice);
+				formulario.getFichario().setTabPlacement(Preferencias.getPosicaoAbaFichario());
 			});
 		}
 	}
