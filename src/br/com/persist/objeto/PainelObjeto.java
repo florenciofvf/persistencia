@@ -539,7 +539,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 							return;
 						}
 
-						FormularioUpdate form = new FormularioUpdate(Mensagens.getString("label.atualizar"), listener,
+						FormularioUpdate form = new FormularioUpdate(Mensagens.getString(LABEL_ATUALIZAR), listener,
 								conexao, update, null);
 
 						if (listener instanceof Component) {

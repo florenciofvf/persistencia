@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
-import javax.swing.InputMap;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
@@ -269,6 +268,11 @@ public class Container extends PanelBorder {
 				formularioSuperficie.setTitle(arquivo.getName());
 			}
 		}
+
+		private void configAtalho(Acao acao, int tecla) {
+			Container.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(Superficie.getKeyStroke(tecla), acao.getChave());
+			Container.this.getActionMap().put(acao.getChave(), acao);
+		}
 	}
 
 	public void excluir() {
@@ -280,15 +284,6 @@ public class Container extends PanelBorder {
 				fichario.remove(indice);
 			}
 		}
-	}
-
-	private InputMap inputMap() {
-		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
-	}
-
-	private void configAtalho(Acao acao, int tecla) {
-		inputMap().put(Superficie.getKeyStroke(tecla), acao.getChave());
-		getActionMap().put(acao.getChave(), acao);
 	}
 
 	private class ArrastoAcao extends Acao {
