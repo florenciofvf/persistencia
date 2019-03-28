@@ -65,30 +65,20 @@ public class TabelaUtil {
 		int[] linhas = tabela.getSelectedRows();
 		int total = modelo.getRowCount();
 
-		for (int i = 0; i < total; i++) {
-			Object obj = null;
-
-			if (linhas == null || linhas.length == 0) {
-				obj = modelo.getValueAt(i, coluna);
+		if (linhas == null || linhas.length == 0) {
+			for (int i = 0; i < total; i++) {
+				Object obj = modelo.getValueAt(i, coluna);
 
 				if (obj != null && !Util.estaVazio(obj.toString())) {
 					resposta.add(obj.toString());
 				}
-			} else {
-				boolean contem = false;
+			}
+		} else {
+			for (int i : linhas) {
+				Object obj = modelo.getValueAt(i, coluna);
 
-				for (int j : linhas) {
-					if (j == i) {
-						contem = true;
-					}
-				}
-
-				if (contem) {
-					obj = modelo.getValueAt(i, coluna);
-
-					if (obj != null && !Util.estaVazio(obj.toString())) {
-						resposta.add(obj.toString());
-					}
+				if (obj != null && !Util.estaVazio(obj.toString())) {
+					resposta.add(obj.toString());
 				}
 			}
 		}
