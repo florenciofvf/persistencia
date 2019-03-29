@@ -272,9 +272,9 @@ public class Desktop extends JDesktopPane {
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action centralAcao = Action.actionIcon("label.centralizar", Icones.CENTRALIZAR);
-		private Action larTotalAcao = Action.actionIcon("label.largura_total", Icones.LARGURA);
-		private Action dimenAcao = Action.actionIcon("label.dimensao", Icones.RECT);
+		private Action centralAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
+		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
+		private Action dimenAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 
 		DesktopPopup() {
 			add(new MenuItem(larTotalAcao));
