@@ -9,21 +9,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.listener.PainelObjetoListener;
-import br.com.persist.painel.PainelSelect;
+import br.com.persist.painel.SelectPainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 
 public class SelectFormulario extends AbstratoFormulario implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final PainelObjetoListener listener;
-	private final PainelSelect painelSelect;
+	private final SelectPainel selectPainel;
 	private final Formulario formulario;
 
 	public SelectFormulario(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		super(titulo);
 		this.listener = listener;
-		painelSelect = new PainelSelect(this, padrao, instrucao, mapaChaveValor);
+		selectPainel = new SelectPainel(this, padrao, instrucao, mapaChaveValor);
 		this.formulario = null;
 		montarLayout();
 	}
@@ -32,13 +32,13 @@ public class SelectFormulario extends AbstratoFormulario implements PainelObjeto
 			Map<String, String> mapaChaveValor) {
 		super(titulo);
 		this.formulario = formulario;
-		painelSelect = new PainelSelect(this, padrao, instrucao, mapaChaveValor);
+		selectPainel = new SelectPainel(this, padrao, instrucao, mapaChaveValor);
 		this.listener = null;
 		montarLayout();
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, painelSelect);
+		add(BorderLayout.CENTER, selectPainel);
 	}
 
 	@Override

@@ -39,7 +39,7 @@ import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.formulario.ExternoFormulario;
 import br.com.persist.formulario.InternoFormulario;
 import br.com.persist.formulario.SelectFormulario;
-import br.com.persist.painel.PainelObjeto;
+import br.com.persist.painel.ObjetoPainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -1433,8 +1433,8 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto, AtomicBoolean processado) {
-		super.buscaAutomatica(grupo, argumentos, painelObjeto, processado);
+	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoPainel objetoPainel, AtomicBoolean processado) {
+		super.buscaAutomatica(grupo, argumentos, objetoPainel, processado);
 
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();

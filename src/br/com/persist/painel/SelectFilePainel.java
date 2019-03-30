@@ -29,7 +29,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class PainelSelect2 extends Panel {
+public class SelectFilePainel extends Panel {
 	private static final long serialVersionUID = 1L;
 	private static final String PAINEL_SELECT = "PAINEL SELECT";
 	private static final File file = new File("consultas/consultas");
@@ -38,7 +38,7 @@ public class PainelSelect2 extends Panel {
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 
-	public PainelSelect2(Formulario formulario, Conexao padrao) {
+	public SelectFilePainel(Formulario formulario, Conexao padrao) {
 		cmbConexao = new JComboBox<>(formulario.getConexoes());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		if (padrao != null) {
@@ -67,7 +67,7 @@ public class PainelSelect2 extends Panel {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_SELECT, ex, PainelSelect2.this);
+				Util.stackTraceAndMessage(PAINEL_SELECT, ex, SelectFilePainel.this);
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public class PainelSelect2 extends Panel {
 					pw.print(textArea.getText());
 					pw.close();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_SELECT, ex, PainelSelect2.this);
+					Util.stackTraceAndMessage(PAINEL_SELECT, ex, SelectFilePainel.this);
 				}
 			});
 		}

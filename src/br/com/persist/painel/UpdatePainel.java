@@ -20,16 +20,16 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class PainelUpdate extends Panel {
+public class UpdatePainel extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
 
-	public PainelUpdate(PainelObjetoListener listener, Conexao padrao, String instrucao,
+	public UpdatePainel(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
-		textArea.setText(PainelUpdate.subst(instrucao, mapaChaveValor));
+		textArea.setText(UpdatePainel.subst(instrucao, mapaChaveValor));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);

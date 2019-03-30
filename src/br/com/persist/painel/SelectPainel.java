@@ -25,7 +25,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class PainelSelect extends Panel {
+public class SelectPainel extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
@@ -33,9 +33,9 @@ public class PainelSelect extends Panel {
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
 
-	public PainelSelect(PainelObjetoListener listener, Conexao padrao, String instrucao,
+	public SelectPainel(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
-		textArea.setText(PainelUpdate.subst(instrucao, mapaChaveValor));
+		textArea.setText(UpdatePainel.subst(instrucao, mapaChaveValor));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		if (padrao != null) {

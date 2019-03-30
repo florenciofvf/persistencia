@@ -28,7 +28,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.formulario.InternoFormulario;
-import br.com.persist.painel.PainelObjeto;
+import br.com.persist.painel.ObjetoPainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
@@ -294,7 +294,7 @@ public class Desktop extends JDesktopPane {
 		}
 	}
 
-	public void buscaAutomatica(Grupo grupo, String argumentos, PainelObjeto painelObjeto, AtomicBoolean processado) {
+	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoPainel objetoPainel, AtomicBoolean processado) {
 		JInternalFrame[] frames = getAllFrames();
 		grupo.processadoFalse();
 

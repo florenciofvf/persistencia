@@ -18,28 +18,28 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.TextField;
 import br.com.persist.modelo.OrdenacaoModelo;
-import br.com.persist.painel.PainelObjeto;
+import br.com.persist.painel.ObjetoPainel;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
-	private final PainelObjeto painelObjeto;
+	private final ObjetoPainel objetoPainel;
 	private final OrdenacaoModelo modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
 	private final boolean comFiltro;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(PainelObjeto painelObjeto, OrdenacaoModelo modelo, Coluna coluna, boolean comFiltro) {
+	public CabecalhoColuna(ObjetoPainel objetoPainel, OrdenacaoModelo modelo, Coluna coluna, boolean comFiltro) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
 		setBorder(BorderFactory.createEtchedBorder());
 		descricao = new Descricao(coluna.getNome());
 		filtro = new Filtro(coluna.getNome());
 		add(BorderLayout.CENTER, descricao);
 		add(BorderLayout.WEST, ordenacao);
-		this.painelObjeto = painelObjeto;
+		this.objetoPainel = objetoPainel;
 		this.comFiltro = comFiltro;
 		if (comFiltro) {
 			add(BorderLayout.EAST, filtro);
@@ -97,7 +97,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 
 		void filtrar(int x, int y) {
-			new FiltroCaixa(painelObjeto.getFrame(), this, x, y);
+			new FiltroCaixa(objetoPainel.getFrame(), this, x, y);
 		}
 
 		void restaurar() {
@@ -137,7 +137,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					filtro.filtro = textField.getText();
-					painelObjeto.processarObjeto(filtro.filtro, null, CabecalhoColuna.this);
+					objetoPainel.processarObjeto(filtro.filtro, null, CabecalhoColuna.this);
 					dispose();
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					dispose();

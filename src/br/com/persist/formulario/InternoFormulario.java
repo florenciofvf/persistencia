@@ -14,21 +14,21 @@ import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.listener.PainelObjetoListener;
-import br.com.persist.painel.PainelObjeto;
+import br.com.persist.painel.ObjetoPainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 
 public class InternoFormulario extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
-	private final PainelObjeto painelObjeto;
+	private final ObjetoPainel objetoPainel;
 	private final Formulario formulario;
 	private String apelido;
 
 	public InternoFormulario(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		super(objeto.getId(), true, true, true, true);
 		this.formulario = formulario;
-		painelObjeto = new PainelObjeto(this, objeto, g, padrao, buscaAuto);
+		objetoPainel = new ObjetoPainel(this, objeto, g, padrao, buscaAuto);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(1000, 600);
 		montarLayout();
@@ -37,20 +37,20 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 
 	public boolean ehTabela(Tabela tabela) {
 		return getApelido().equalsIgnoreCase(tabela.getApelido())
-				&& painelObjeto.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
+				&& objetoPainel.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
-	public PainelObjeto getPainelObjeto() {
-		return painelObjeto;
+	public ObjetoPainel getPainelObjeto() {
+		return objetoPainel;
 	}
 
 	public void buscaAutomatica(String campo, String argumentos) {
-		painelObjeto.buscaAutomatica(campo, argumentos);
+		objetoPainel.buscaAutomatica(campo, argumentos);
 	}
 
 	private void montarLayout() {
 		setLayout(new BorderLayout());
-		add(BorderLayout.CENTER, painelObjeto);
+		add(BorderLayout.CENTER, objetoPainel);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 		}
 
 		if (desktop != null) {
-			desktop.buscaAutomatica(grupo, argumentos, painelObjeto, processado);
+			desktop.buscaAutomatica(grupo, argumentos, objetoPainel, processado);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 	}
 
 	public void atualizarFormulario() {
-		painelObjeto.atualizarFormulario();
+		objetoPainel.atualizarFormulario();
 	}
 
 	public String getApelido() {
