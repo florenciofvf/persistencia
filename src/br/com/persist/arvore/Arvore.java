@@ -1,5 +1,6 @@
 package br.com.persist.arvore;
 
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,6 +16,7 @@ import javax.swing.tree.TreeSelectionModel;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 
 public class Arvore extends JTree {
@@ -77,7 +79,9 @@ public class Arvore extends JTree {
 	private MouseListener mouseListener_ = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// ouvintes.forEach(o -> o.selecionadoObjeto(Arvore.this));
+			if (e.getClickCount() >= Constantes.DOIS) {
+				ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this));
+			}
 		}
 
 		@Override
@@ -91,14 +95,29 @@ public class Arvore extends JTree {
 		}
 
 		private void processar(MouseEvent e) {
-			if (!e.isPopupTrigger()) {
+			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
 				return;
 			}
 
-			Arquivo selecionado = getObjetoSelecionado();
+			TreePath arvoreCli = getClosestPathForLocation(e.getX(), e.getY());
+			TreePath arvoreSel = getSelectionPath();
 
-			if (selecionado != null && !popupDesabilitado) {
+			if (arvoreCli == null || arvoreSel == null) {
+				setSelectionPath(null);
+				return;
+			}
+
+			Rectangle rect = getPathBounds(arvoreCli);
+
+			if (rect == null || !rect.contains(e.getX(), e.getY())) {
+				setSelectionPath(null);
+				return;
+			}
+
+			if (arvoreCli.equals(arvoreSel)) {
 				arvorePopup.show(Arvore.this, e.getX(), e.getY());
+			} else {
+				setSelectionPath(null);
 			}
 		}
 	};
