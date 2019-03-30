@@ -41,7 +41,7 @@ public class Container extends PanelBorder {
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
-	private SuperficieFormulario formularioSuperficie;
+	private SuperficieFormulario superficieFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
@@ -230,7 +230,7 @@ public class Container extends PanelBorder {
 			consAcao.setActionListener(e -> {
 				SelectFormulario form = new SelectFormulario(Mensagens.getString("label.pesquisa"), formulario,
 						getConexaoPadrao(), null, null);
-				form.setLocationRelativeTo(formularioSuperficie != null ? formularioSuperficie : formulario);
+				form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
 				form.setVisible(true);
 			});
 
@@ -260,7 +260,7 @@ public class Container extends PanelBorder {
 		}
 
 		private void titulo() {
-			if (formularioSuperficie == null) {
+			if (superficieFormulario == null) {
 				Fichario fichario = formulario.getFichario();
 				int indice = fichario.getSelectedIndex();
 
@@ -268,7 +268,7 @@ public class Container extends PanelBorder {
 					fichario.setTitleAt(indice, arquivo.getName());
 				}
 			} else {
-				formularioSuperficie.setTitle(arquivo.getName());
+				superficieFormulario.setTitle(arquivo.getName());
 			}
 		}
 
@@ -279,7 +279,7 @@ public class Container extends PanelBorder {
 	}
 
 	public void excluir() {
-		if (formularioSuperficie == null) {
+		if (superficieFormulario == null) {
 			Fichario fichario = formulario.getFichario();
 			int indice = fichario.getSelectedIndex();
 
@@ -354,11 +354,11 @@ public class Container extends PanelBorder {
 	}
 
 	public SuperficieFormulario getFormularioSuperficie() {
-		return formularioSuperficie;
+		return superficieFormulario;
 	}
 
 	public void setFormularioSuperficie(SuperficieFormulario formularioSuperficie) {
-		this.formularioSuperficie = formularioSuperficie;
+		this.superficieFormulario = formularioSuperficie;
 	}
 
 	public void excluido() {
