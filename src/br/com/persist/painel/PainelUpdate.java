@@ -15,6 +15,7 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
+import br.com.persist.listener.PainelObjetoListener;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;

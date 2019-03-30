@@ -17,6 +17,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
+import br.com.persist.listener.PainelObjetoListener;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.tabela.TabelaUtil;

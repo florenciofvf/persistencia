@@ -15,6 +15,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.listener.ArvoreListener;
 import br.com.persist.renderer.TreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -139,8 +140,6 @@ public class Arvore extends JTree {
 			addSeparator();
 			add(new MenuItem(abrirFormAcao));
 			add(new MenuItem(abrirFichAcao));
-			// addSeparator();
-			// add(new MenuItem(excluirAcao));
 
 			abrirFormAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
 			abrirFichAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));

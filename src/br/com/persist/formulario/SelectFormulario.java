@@ -8,7 +8,7 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.banco.Conexao;
-import br.com.persist.painel.PainelObjetoListener;
+import br.com.persist.listener.PainelObjetoListener;
 import br.com.persist.painel.PainelSelect;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;

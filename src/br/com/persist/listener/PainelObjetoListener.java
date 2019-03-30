@@ -1,4 +1,4 @@
-package br.com.persist.painel;
+package br.com.persist.listener;
 
 import java.awt.Dimension;
 import java.awt.Frame;

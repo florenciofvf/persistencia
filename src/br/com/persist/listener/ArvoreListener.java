@@ -1,4 +1,6 @@
-package br.com.persist.arvore;
+package br.com.persist.listener;
+
+import br.com.persist.arvore.Arvore;
 
 public interface ArvoreListener {
 	public void abrirFormArquivo(Arvore arvore);

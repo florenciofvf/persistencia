@@ -1,4 +1,4 @@
-package br.com.persist.tabela;
+package br.com.persist.renderer;
 
 import java.awt.Color;
 import java.awt.Component;

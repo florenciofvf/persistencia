@@ -4,18 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import br.com.persist.arvore.ArvoreContainer;
+import br.com.persist.arvore.ContainerArvore;
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Mensagens;
 
 public class ArvoreFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
-	private final ArvoreContainer container;
+	private final ContainerArvore container;
 
 	public ArvoreFormulario(Formulario formulario) {
 		super(Mensagens.getString("label.arquivos"));
-		container = new ArvoreContainer(formulario);
+		container = new ContainerArvore(formulario);
 		setLocationRelativeTo(formulario);
 		montarLayout();
 		configurar();
