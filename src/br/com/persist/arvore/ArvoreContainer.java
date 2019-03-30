@@ -7,13 +7,14 @@ import javax.swing.JToolBar;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 
 public class ArvoreContainer extends PanelBorder implements ArvoreListener {
 	private static final long serialVersionUID = 1L;
-	private Arvore arvore = new Arvore(new ModeloArvore());
+	private Arvore arvore = new Arvore(new ArvoreModelo());
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
@@ -59,7 +60,7 @@ public class ArvoreContainer extends PanelBorder implements ArvoreListener {
 
 	@Override
 	public void atualizarArvore(Arvore arvore) {
-		arvore.setModel(new ModeloArvore());
+		arvore.setModel(new ArvoreModelo());
 	}
 
 	@Override

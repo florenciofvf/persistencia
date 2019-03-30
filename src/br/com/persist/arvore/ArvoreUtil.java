@@ -7,6 +7,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
 
+import br.com.persist.modelo.ArvoreModelo;
+
 public class ArvoreUtil {
 	private ArvoreUtil() {
 	}
@@ -25,7 +27,7 @@ public class ArvoreUtil {
 	}
 
 	public static void atualizarEstrutura(Arvore arvore, Arquivo arquivo) {
-		ModeloArvore modelo = (ModeloArvore) arvore.getModel();
+		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -34,7 +36,7 @@ public class ArvoreUtil {
 	}
 
 	public static void excluirEstrutura(Arvore arvore, Arquivo arquivo) {
-		ModeloArvore modelo = (ModeloArvore) arvore.getModel();
+		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
