@@ -36,7 +36,6 @@ public class FormularioSelect extends FormularioAbstrato implements PainelObjeto
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelSelect);
 	}
 

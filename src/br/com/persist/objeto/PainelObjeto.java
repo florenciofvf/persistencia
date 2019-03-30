@@ -244,7 +244,6 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabela));
 	}

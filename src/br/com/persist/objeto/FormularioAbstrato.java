@@ -1,5 +1,6 @@
 package br.com.persist.objeto;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -16,6 +17,7 @@ public abstract class FormularioAbstrato extends JFrame {
 
 	public FormularioAbstrato(String titulo) {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setLayout(new BorderLayout());
 		setSize(1000, 600);
 		setTitle(titulo);
 		setActionESC();

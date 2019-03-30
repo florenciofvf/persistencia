@@ -64,7 +64,6 @@ public class PainelUpdate extends Panel {
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, textArea);
 	}

@@ -28,7 +28,6 @@ public class FormularioExterno extends FormularioAbstrato implements PainelObjet
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelObjeto);
 	}
 

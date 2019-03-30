@@ -50,7 +50,6 @@ public class PainelSelect2 extends Panel {
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.NORTH, toolbar);
 
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));

@@ -1,5 +1,6 @@
 package br.com.persist.comp;
 
+import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 
 import javax.swing.JPanel;
@@ -12,5 +13,6 @@ public class Panel extends JPanel {
 	}
 
 	public Panel() {
+		setLayout(new BorderLayout());
 	}
 }

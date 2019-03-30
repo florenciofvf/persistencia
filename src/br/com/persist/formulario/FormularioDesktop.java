@@ -31,7 +31,6 @@ public class FormularioDesktop extends FormularioAbstrato {
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, new ScrollPane(desktop));
 	}
 

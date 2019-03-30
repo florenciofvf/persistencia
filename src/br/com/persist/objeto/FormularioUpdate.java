@@ -24,7 +24,6 @@ public class FormularioUpdate extends FormularioAbstrato implements PainelObjeto
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, painelUpdate);
 	}
 

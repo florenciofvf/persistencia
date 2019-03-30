@@ -31,7 +31,6 @@ public class FormularioSuperficie extends FormularioAbstrato {
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, container);
 	}
 }
