@@ -31,48 +31,30 @@ public class ArvoreContainer extends PanelBorder implements ArvoreListener {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
-		// private Action baixarAcao = Action.actionIcon("label.baixar",
-		// Icones.BAIXAR);
 
 		Toolbar() {
 			add(new Button(atualizarAcao));
-			// add(new Button(baixarAcao));
 
-			eventos();
-		}
-
-		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizarArvore(arvore));
-
-			// baixarAcao.setActionListener(e -> {
-			// if (arquivo == null) {
-			// btnSelecao.click();
-			// return;
-			// }
-			//
-			// try {
-			// excluido();
-			// StringBuilder sbConexao = new StringBuilder();
-			// List<Relacao> relacoes = new ArrayList<>();
-			// List<Objeto> objetos = new ArrayList<>();
-			// List<Form> forms = new ArrayList<>();
-			// Dimension d = XML.processar(arquivo, objetos, relacoes, forms,
-			// sbConexao);
-			// abrir(arquivo, objetos, relacoes, forms, sbConexao, null, d);
-			// } catch (Exception ex) {
-			// Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(),
-			// ex, formulario);
-			// }
-			// });
 		}
 	}
 
 	@Override
 	public void abrirFormArquivo(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+
+		if (arquivo != null) {
+			formulario.abrirArquivo(arquivo.getFile(), false);
+		}
 	}
 
 	@Override
 	public void abrirFichArquivo(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+
+		if (arquivo != null) {
+			formulario.abrirArquivo(arquivo.getFile(), true);
+		}
 	}
 
 	@Override

@@ -222,14 +222,7 @@ public class Formulario extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser(".");
-				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
-				fileChooser.setMultiSelectionEnabled(true);
-
-				if (arquivo != null) {
-					fileChooser.setCurrentDirectory(arquivo);
-				}
-
+				JFileChooser fileChooser = criarFileChooser();
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
@@ -237,17 +230,7 @@ public class Formulario extends JFrame {
 
 					if (files != null) {
 						for (File file : files) {
-							try {
-								arquivo = file.getParentFile();
-								StringBuilder sbConexao = new StringBuilder();
-								List<Relacao> relacoes = new ArrayList<>();
-								List<Objeto> objetos = new ArrayList<>();
-								List<Form> forms = new ArrayList<>();
-								Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
-								fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
-							} catch (Exception ex) {
-								Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
-							}
+							abrirArquivo(file, false);
 						}
 					}
 				}
@@ -264,14 +247,7 @@ public class Formulario extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser(".");
-				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
-				fileChooser.setMultiSelectionEnabled(true);
-
-				if (arquivo != null) {
-					fileChooser.setCurrentDirectory(arquivo);
-				}
-
+				JFileChooser fileChooser = criarFileChooser();
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
@@ -279,21 +255,46 @@ public class Formulario extends JFrame {
 
 					if (files != null) {
 						for (File file : files) {
-							try {
-								arquivo = file.getParentFile();
-								StringBuilder sbConexao = new StringBuilder();
-								List<Relacao> relacoes = new ArrayList<>();
-								List<Objeto> objetos = new ArrayList<>();
-								List<Form> forms = new ArrayList<>();
-								Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
-								fichario.abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
-							} catch (Exception ex) {
-								Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
-							}
+							abrirArquivo(file, true);
 						}
 					}
 				}
 			}
+		}
+
+		private JFileChooser criarFileChooser() {
+			JFileChooser fileChooser = new JFileChooser(".");
+			fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
+			fileChooser.setMultiSelectionEnabled(true);
+
+			if (arquivo != null) {
+				fileChooser.setCurrentDirectory(arquivo);
+			}
+
+			return fileChooser;
+		}
+	}
+
+	public void abrirArquivo(File file, boolean abrirNoFichario) {
+		if (file == null || !file.isFile()) {
+			return;
+		}
+
+		try {
+			arquivo = file.getParentFile();
+			StringBuilder sbConexao = new StringBuilder();
+			List<Relacao> relacoes = new ArrayList<>();
+			List<Objeto> objetos = new ArrayList<>();
+			List<Form> forms = new ArrayList<>();
+			Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
+
+			if (abrirNoFichario) {
+				fichario.abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
+			} else {
+				fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
+			}
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 		}
 	}
 }

@@ -138,8 +138,8 @@ public class Arvore extends JTree {
 			addSeparator();
 			add(new MenuItem(abrirFormAcao));
 			add(new MenuItem(abrirFichAcao));
-			addSeparator();
-			add(new MenuItem(excluirAcao));
+			// addSeparator();
+			// add(new MenuItem(excluirAcao));
 
 			abrirFormAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
 			abrirFichAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));
