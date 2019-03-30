@@ -158,9 +158,10 @@ public class Formulario extends JFrame {
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
+		private Action arvoreFormAcao = Action.actionMenu("label.arvore_formulario", Icones.EXPANDIR);
+		private Action arvoreFichAcao = Action.actionMenu("label.arvore_fichario", Icones.EXPANDIR);
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
 		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
-		private Action arvoreAcao = Action.actionMenu("label.arvore", Icones.EXPANDIR);
 		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
 		private Action formAcao = Action.actionMenu("label.formulario", Icones.PANEL);
 		private Action consAcao = Action.actionMenu("label.consulta", Icones.PANEL3);
@@ -182,7 +183,9 @@ public class Formulario extends JFrame {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new AbrirFormularioAcao(true)));
 			menuArquivo.add(new MenuItem(new AbrirFicharioAcao(true)));
-			menuArquivo.add(new MenuItem(arvoreAcao));
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuItem(arvoreFormAcao));
+			menuArquivo.add(new MenuItem(arvoreFichAcao));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(conexaoAcao));
 			menuArquivo.addSeparator();
@@ -199,9 +202,10 @@ public class Formulario extends JFrame {
 
 		private void eventos() {
 			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
+			arvoreFormAcao.setActionListener(e -> new FormularioArvore(Formulario.this));
+			arvoreFichAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
 			formAcao.setActionListener(e -> new FormularioDesktop(Formulario.this));
-			arvoreAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
 			deskAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
 			consAcao.setActionListener(e -> fichario.novoSelect(Formulario.this));
 			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
