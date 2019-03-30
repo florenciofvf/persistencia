@@ -137,8 +137,8 @@ public class Superficie extends Desktop {
 
 			Frame frame = formulario;
 
-			if (container.getFormularioSuperficie() != null) {
-				frame = container.getFormularioSuperficie();
+			if (container.getSuperficieFormulario() != null) {
+				frame = container.getSuperficieFormulario();
 			}
 
 			new MacroDialogo(frame);
@@ -518,8 +518,8 @@ public class Superficie extends Desktop {
 			if (!shift) {
 				Frame frame = formulario;
 
-				if (container.getFormularioSuperficie() != null) {
-					frame = container.getFormularioSuperficie();
+				if (container.getSuperficieFormulario() != null) {
+					frame = container.getSuperficieFormulario();
 				}
 
 				new RelacaoDialogo(frame, Superficie.this, relacao);
@@ -682,8 +682,8 @@ public class Superficie extends Desktop {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				Frame frame = formulario;
 
-				if (container.getFormularioSuperficie() != null) {
-					frame = container.getFormularioSuperficie();
+				if (container.getSuperficieFormulario() != null) {
+					frame = container.getSuperficieFormulario();
 				}
 
 				if (selecionadoObjeto != null) {
@@ -1020,8 +1020,8 @@ public class Superficie extends Desktop {
 			configuracaoAcao.setActionListener(e -> {
 				Frame frame = formulario;
 
-				if (container.getFormularioSuperficie() != null) {
-					frame = container.getFormularioSuperficie();
+				if (container.getSuperficieFormulario() != null) {
+					frame = container.getSuperficieFormulario();
 				}
 
 				if (selecionadoObjeto != null) {
@@ -1035,8 +1035,8 @@ public class Superficie extends Desktop {
 			consAcao.setActionListener(e -> {
 				Frame frame = formulario;
 
-				if (container.getFormularioSuperficie() != null) {
-					frame = container.getFormularioSuperficie();
+				if (container.getSuperficieFormulario() != null) {
+					frame = container.getSuperficieFormulario();
 				}
 
 				SelectFormulario form = new SelectFormulario(Mensagens.getString("label.pesquisa"), formulario,
@@ -1456,8 +1456,8 @@ public class Superficie extends Desktop {
 
 					Frame frame = formulario;
 
-					if (container.getFormularioSuperficie() != null) {
-						frame = container.getFormularioSuperficie();
+					if (container.getSuperficieFormulario() != null) {
+						frame = container.getSuperficieFormulario();
 					}
 
 					Conexao conexao = container.getConexaoPadrao();

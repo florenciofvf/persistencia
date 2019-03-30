@@ -40,7 +40,7 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 				&& objetoPainel.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
-	public ObjetoPainel getPainelObjeto() {
+	public ObjetoPainel getObjetoPainel() {
 		return objetoPainel;
 	}
 

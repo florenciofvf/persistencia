@@ -353,12 +353,12 @@ public class Container extends PanelBorder {
 		}
 	}
 
-	public SuperficieFormulario getFormularioSuperficie() {
+	public SuperficieFormulario getSuperficieFormulario() {
 		return superficieFormulario;
 	}
 
-	public void setFormularioSuperficie(SuperficieFormulario formularioSuperficie) {
-		this.superficieFormulario = formularioSuperficie;
+	public void setSuperficieFormulario(SuperficieFormulario superficieFormulario) {
+		this.superficieFormulario = superficieFormulario;
 	}
 
 	public void excluido() {

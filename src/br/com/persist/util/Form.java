@@ -14,7 +14,7 @@ public class Form {
 	private int y;
 
 	public void copiar(InternoFormulario interno) {
-		objeto = interno.getPainelObjeto().getObjeto().getId();
+		objeto = interno.getObjetoPainel().getObjeto().getId();
 		apelido = interno.getApelido();
 		largura = interno.getWidth();
 		altura = interno.getHeight();

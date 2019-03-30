@@ -14,7 +14,7 @@ public class SuperficieFormulario extends AbstratoFormulario {
 
 	public SuperficieFormulario(Formulario formulario, Container container, File file) {
 		super(file.getName());
-		container.setFormularioSuperficie(this);
+		container.setSuperficieFormulario(this);
 		setLocationRelativeTo(formulario);
 		this.container = container;
 		montarLayout();
