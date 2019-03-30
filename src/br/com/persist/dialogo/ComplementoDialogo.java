@@ -16,7 +16,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class ComplementoDialogo extends DialogoAbstrato {
+public class ComplementoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();

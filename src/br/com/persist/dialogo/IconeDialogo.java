@@ -21,7 +21,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Imagens;
 
-public class IconeDialogo extends DialogoAbstrato {
+public class IconeDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final Objeto objeto;
 	private final Label label;

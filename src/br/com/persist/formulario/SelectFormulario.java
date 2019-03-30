@@ -13,13 +13,13 @@ import br.com.persist.painel.PainelSelect;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 
-public class FormularioSelect extends FormularioAbstrato implements PainelObjetoListener {
+public class SelectFormulario extends AbstratoFormulario implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final PainelObjetoListener listener;
 	private final PainelSelect painelSelect;
 	private final Formulario formulario;
 
-	public FormularioSelect(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
+	public SelectFormulario(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		super(titulo);
 		this.listener = listener;
@@ -28,7 +28,7 @@ public class FormularioSelect extends FormularioAbstrato implements PainelObjeto
 		montarLayout();
 	}
 
-	public FormularioSelect(String titulo, Formulario formulario, Conexao padrao, String instrucao,
+	public SelectFormulario(String titulo, Formulario formulario, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		super(titulo);
 		this.formulario = formulario;

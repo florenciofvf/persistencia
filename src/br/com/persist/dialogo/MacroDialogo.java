@@ -14,7 +14,7 @@ import javax.swing.event.ListDataListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Macro;
 
-public class MacroDialogo extends DialogoAbstrato {
+public class MacroDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private JList<Macro.Instrucao> lista;
 

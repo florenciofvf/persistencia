@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.editor;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;

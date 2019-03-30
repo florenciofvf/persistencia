@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.renderer;
 
 import java.awt.Component;
 import java.sql.Connection;

@@ -20,7 +20,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.util.BuscaAuto.Grupo;
 
-public class ChaveBuscaDialogo extends DialogoAbstrato {
+public class ChaveBuscaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();

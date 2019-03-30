@@ -39,7 +39,7 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.util.Util;
 
-public class RelacaoDialogo extends DialogoAbstrato {
+public class RelacaoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final Superficie superficie;
 	private final Relacao relacao;

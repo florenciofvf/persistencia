@@ -14,12 +14,12 @@ import br.com.persist.painel.PainelObjetoListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 
-public class FormularioExterno extends FormularioAbstrato implements PainelObjetoListener {
+public class ExternoFormulario extends AbstratoFormulario implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final PainelObjeto painelObjeto;
 	private final Formulario formulario;
 
-	public FormularioExterno(Formulario formulario, Frame frame, Objeto objeto, Graphics g, Conexao padrao,
+	public ExternoFormulario(Formulario formulario, Frame frame, Objeto objeto, Graphics g, Conexao padrao,
 			boolean buscaAuto) {
 		super(objeto.getId());
 		this.formulario = formulario;

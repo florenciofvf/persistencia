@@ -19,13 +19,13 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 
-public class FormularioInterno extends JInternalFrame implements PainelObjetoListener {
+public class InternoFormulario extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final PainelObjeto painelObjeto;
 	private final Formulario formulario;
 	private String apelido;
 
-	public FormularioInterno(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
+	public InternoFormulario(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		super(objeto.getId(), true, true, true, true);
 		this.formulario = formulario;
 		painelObjeto = new PainelObjeto(this, objeto, g, padrao, buscaAuto);

@@ -3,20 +3,20 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
-import br.com.persist.arvore.ArvoreContainer;
-import br.com.persist.formulario.FormularioAbstrato;
+import br.com.persist.desktop.Container;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Mensagens;
 
-public class FormularioArvore extends FormularioAbstrato {
+public class SuperficieFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
-	private final ArvoreContainer container;
+	private final Container container;
 
-	public FormularioArvore(Formulario formulario) {
-		super(Mensagens.getString("label.arquivos"));
-		container = new ArvoreContainer(formulario);
+	public SuperficieFormulario(Formulario formulario, Container container, File file) {
+		super(file.getName());
+		container.setFormularioSuperficie(this);
 		setLocationRelativeTo(formulario);
+		this.container = container;
 		montarLayout();
 		configurar();
 		setVisible(true);
@@ -25,7 +25,8 @@ public class FormularioArvore extends FormularioAbstrato {
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowOpened(WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
+				container.excluido();
 			}
 		});
 	}

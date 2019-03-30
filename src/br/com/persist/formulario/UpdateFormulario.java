@@ -12,12 +12,12 @@ import br.com.persist.painel.PainelObjetoListener;
 import br.com.persist.painel.PainelUpdate;
 import br.com.persist.util.BuscaAuto.Grupo;
 
-public class FormularioUpdate extends FormularioAbstrato implements PainelObjetoListener {
+public class UpdateFormulario extends AbstratoFormulario implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final PainelUpdate painelUpdate;
 	private PainelObjetoListener listener;
 
-	public FormularioUpdate(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
+	public UpdateFormulario(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		super(titulo);
 		this.listener = listener;

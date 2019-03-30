@@ -1,4 +1,4 @@
-package br.com.persist.arvore;
+package br.com.persist.renderer;
 
 import java.awt.Component;
 

@@ -2,7 +2,7 @@ package br.com.persist.util;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.formulario.FormularioInterno;
+import br.com.persist.formulario.InternoFormulario;
 
 public class Form {
 	private String apelido;
@@ -12,7 +12,7 @@ public class Form {
 	private int x;
 	private int y;
 
-	public void copiar(FormularioInterno interno) {
+	public void copiar(InternoFormulario interno) {
 		objeto = interno.getPainelObjeto().getObjeto().getId();
 		apelido = interno.getApelido();
 		largura = interno.getWidth();

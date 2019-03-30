@@ -33,8 +33,8 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;
-import br.com.persist.formulario.FormularioDesktop;
-import br.com.persist.formulario.FormularioSuperficie;
+import br.com.persist.formulario.DesktopFormulario;
+import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.painel.PainelSelect2;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Form;
@@ -141,7 +141,7 @@ public class Fichario extends JTabbedPane {
 		int y = 10;
 
 		if (formDesktop) {
-			FormularioDesktop formularioDesktop = new FormularioDesktop(formulario);
+			DesktopFormulario formularioDesktop = new DesktopFormulario(formulario);
 
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
@@ -218,7 +218,7 @@ public class Fichario extends JTabbedPane {
 		Container container = new Container(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 
-		new FormularioSuperficie(formulario, container, file);
+		new SuperficieFormulario(formulario, container, file);
 		container.estadoSelecao();
 	}
 

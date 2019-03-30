@@ -49,9 +49,9 @@ import br.com.persist.desktop.Transferidor;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
-import br.com.persist.formulario.FormularioInterno;
-import br.com.persist.formulario.FormularioSelect;
-import br.com.persist.formulario.FormularioUpdate;
+import br.com.persist.formulario.InternoFormulario;
+import br.com.persist.formulario.SelectFormulario;
+import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.RegistroModelo;
@@ -142,8 +142,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 			String apelido = null;
 
-			if (listener instanceof FormularioInterno) {
-				FormularioInterno interno = (FormularioInterno) listener;
+			if (listener instanceof InternoFormulario) {
+				InternoFormulario interno = (InternoFormulario) listener;
 				apelido = interno.getApelido();
 			}
 
@@ -541,7 +541,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 							return;
 						}
 
-						FormularioUpdate form = new FormularioUpdate(Mensagens.getString(LABEL_ATUALIZAR), listener,
+						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(LABEL_ATUALIZAR), listener,
 								conexao, update, null);
 
 						if (listener instanceof Component) {
@@ -605,7 +605,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 						}
 
 						if (instrucao.isSelect()) {
-							FormularioSelect form = new FormularioSelect(instrucao.getNome(), listener, conexao,
+							SelectFormulario form = new SelectFormulario(instrucao.getNome(), listener, conexao,
 									instrucao.getValor(), chaves);
 
 							if (listener instanceof Component) {
@@ -614,7 +614,7 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 							form.setVisible(true);
 						} else {
-							FormularioUpdate form = new FormularioUpdate(instrucao.getNome(), listener, conexao,
+							UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), listener, conexao,
 									instrucao.getValor(), chaves);
 
 							if (listener instanceof Component) {
@@ -762,8 +762,8 @@ public class PainelObjeto extends Panel implements ActionListener, ItemListener 
 
 		private void eventos() {
 			apelidoAcao.setActionListener(e -> {
-				if (listener instanceof FormularioInterno) {
-					FormularioInterno interno = (FormularioInterno) listener;
+				if (listener instanceof InternoFormulario) {
+					InternoFormulario interno = (InternoFormulario) listener;
 					String valor = interno.getApelido();
 					String resp = Util.getValorInputDialog(PainelObjeto.this, "label.apelido", valor);
 

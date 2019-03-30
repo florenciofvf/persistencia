@@ -21,26 +21,26 @@ import br.com.persist.comp.PanelCenter;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 
-public abstract class DialogoAbstrato extends JDialog {
+public abstract class AbstratoDialogo extends JDialog {
 	private static final long serialVersionUID = 1L;
 
-	public DialogoAbstrato(Dialog dialog, String titulo, int largura, int altura, boolean btnProcessar) {
+	public AbstratoDialogo(Dialog dialog, String titulo, int largura, int altura, boolean btnProcessar) {
 		super(dialog, true);
 		ini(titulo, largura, altura, btnProcessar);
 		setLocationRelativeTo(dialog);
 	}
 
-	public DialogoAbstrato(Frame frame, String titulo, int largura, int altura, boolean btnProcessar) {
+	public AbstratoDialogo(Frame frame, String titulo, int largura, int altura, boolean btnProcessar) {
 		super(frame, true);
 		ini(titulo, largura, altura, btnProcessar);
 		setLocationRelativeTo(frame);
 	}
 
-	public DialogoAbstrato(Dialog dialog, String titulo, boolean btnProcessar) {
+	public AbstratoDialogo(Dialog dialog, String titulo, boolean btnProcessar) {
 		this(dialog, titulo, 600, 600, btnProcessar);
 	}
 
-	public DialogoAbstrato(Frame frame, String titulo, boolean btnProcessar) {
+	public AbstratoDialogo(Frame frame, String titulo, boolean btnProcessar) {
 		this(frame, titulo, 600, 600, btnProcessar);
 	}
 
@@ -75,7 +75,7 @@ public abstract class DialogoAbstrato extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				WindowEvent event = new WindowEvent(DialogoAbstrato.this, WindowEvent.WINDOW_CLOSING);
+				WindowEvent event = new WindowEvent(AbstratoDialogo.this, WindowEvent.WINDOW_CLOSING);
 				EventQueue systemEventQueue = Toolkit.getDefaultToolkit().getSystemEventQueue();
 				systemEventQueue.postEvent(event);
 			}

@@ -9,11 +9,11 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Mensagens;
 
-public class FormularioDesktop extends FormularioAbstrato {
+public class DesktopFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final Desktop desktop;
 
-	public FormularioDesktop(Formulario formulario) {
+	public DesktopFormulario(Formulario formulario) {
 		super(Mensagens.getString("label.persistencia"));
 		desktop = new Desktop(formulario, false);
 		setLocationRelativeTo(formulario);

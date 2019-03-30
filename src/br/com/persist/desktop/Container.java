@@ -23,8 +23,8 @@ import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.FormularioSelect;
-import br.com.persist.formulario.FormularioSuperficie;
+import br.com.persist.formulario.SelectFormulario;
+import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -41,7 +41,7 @@ public class Container extends PanelBorder {
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
-	private FormularioSuperficie formularioSuperficie;
+	private SuperficieFormulario formularioSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
@@ -228,7 +228,7 @@ public class Container extends PanelBorder {
 			});
 
 			consAcao.setActionListener(e -> {
-				FormularioSelect form = new FormularioSelect(Mensagens.getString("label.pesquisa"), formulario,
+				SelectFormulario form = new SelectFormulario(Mensagens.getString("label.pesquisa"), formulario,
 						getConexaoPadrao(), null, null);
 				form.setLocationRelativeTo(formularioSuperficie != null ? formularioSuperficie : formulario);
 				form.setVisible(true);
@@ -353,11 +353,11 @@ public class Container extends PanelBorder {
 		}
 	}
 
-	public FormularioSuperficie getFormularioSuperficie() {
+	public SuperficieFormulario getFormularioSuperficie() {
 		return formularioSuperficie;
 	}
 
-	public void setFormularioSuperficie(FormularioSuperficie formularioSuperficie) {
+	public void setFormularioSuperficie(SuperficieFormulario formularioSuperficie) {
 		this.formularioSuperficie = formularioSuperficie;
 	}
 

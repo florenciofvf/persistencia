@@ -12,10 +12,10 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
-public abstract class FormularioAbstrato extends JFrame {
+public abstract class AbstratoFormulario extends JFrame {
 	private static final long serialVersionUID = 1L;
 
-	public FormularioAbstrato(String titulo) {
+	public AbstratoFormulario(String titulo) {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setSize(1000, 600);

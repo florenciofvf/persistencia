@@ -42,7 +42,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class ObjetoDialogo extends DialogoAbstrato {
+public class ObjetoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final Superficie superficie;
 	private final Objeto objeto;

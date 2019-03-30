@@ -10,7 +10,9 @@ import javax.swing.JToolBar;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.editor.ConexaoStatusEditor;
 import br.com.persist.principal.Formulario;
+import br.com.persist.renderer.ConexaoStatusRenderer;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
@@ -18,7 +20,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class ConexaoDialogo extends DialogoAbstrato {
+public class ConexaoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo modelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(modelo);

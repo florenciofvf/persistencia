@@ -19,7 +19,7 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 
-public class ConfigDialogo extends DialogoAbstrato {
+public class ConfigDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");

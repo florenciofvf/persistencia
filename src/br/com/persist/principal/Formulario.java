@@ -27,8 +27,8 @@ import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.FormularioArvore;
-import br.com.persist.formulario.FormularioDesktop;
+import br.com.persist.formulario.ArvoreFormulario;
+import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
@@ -210,10 +210,10 @@ public class Formulario extends JFrame {
 
 		private void eventos() {
 			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
-			arvoreFormAcao.setActionListener(e -> new FormularioArvore(Formulario.this));
+			arvoreFormAcao.setActionListener(e -> new ArvoreFormulario(Formulario.this));
 			arvoreFichAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
-			formAcao.setActionListener(e -> new FormularioDesktop(Formulario.this));
+			formAcao.setActionListener(e -> new DesktopFormulario(Formulario.this));
 			deskAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
 			consAcao.setActionListener(e -> fichario.novoSelect(Formulario.this));
 			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));

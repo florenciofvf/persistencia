@@ -19,7 +19,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class FragmentoDialogo extends DialogoAbstrato {
+public class FragmentoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo modelo = new FragmentoModelo();
 	private final JTable tabela = new JTable(modelo);
