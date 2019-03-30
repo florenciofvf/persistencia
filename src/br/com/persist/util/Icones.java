@@ -19,6 +19,7 @@ public class Icones {
 	public static final Icon DESC_TEXTO = criarImagem("desc_texto");
 	public static final Icon ASC_TEXTO = criarImagem("asc_texto");
 	public static final Icon CENTRALIZAR = criarImagem("section");
+	public static final Icon EXPANDIR = criarImagem("expandir");
 	public static final Icon VERTICAL = criarImagem("vertical");
 	public static final Icon ATUALIZAR = criarImagem("refresh");
 	public static final Icon UM_PIXEL = criarImagem("um_pixel");

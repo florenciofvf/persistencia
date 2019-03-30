@@ -27,10 +27,11 @@ import br.com.persist.util.Mensagens;
 
 public class TituloAba extends Panel {
 	private static final long serialVersionUID = 1L;
-	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.PANEL3 };
+	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.PANEL3, Icones.EXPANDIR };
+	public static final byte CONSULTA = 2;
 	public static final byte OBJETOS = 0;
 	public static final byte DESKTOP = 1;
-	public static final byte CONSULTA = 2;
+	public static final byte ARVORE = 3;
 	private final Fichario fichario;
 
 	public TituloAba(Fichario fichario, byte tipo) {

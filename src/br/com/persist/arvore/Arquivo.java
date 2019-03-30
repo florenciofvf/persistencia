@@ -59,6 +59,10 @@ public class Arquivo {
 		processado = true;
 	}
 
+	public boolean isFile() {
+		return file.isFile();
+	}
+
 	public File getFile() {
 		return file;
 	}

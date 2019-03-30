@@ -1,5 +1,6 @@
 package br.com.persist.arvore;
 
+import java.io.File;
 import java.util.Objects;
 
 import javax.swing.event.EventListenerList;
@@ -11,6 +12,10 @@ import javax.swing.tree.TreePath;
 public class ModeloArvore implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private final Arquivo raiz;
+
+	public ModeloArvore() {
+		this(new Arquivo(new File("arquivos")));
+	}
 
 	public ModeloArvore(Arquivo raiz) {
 		Objects.requireNonNull(raiz);

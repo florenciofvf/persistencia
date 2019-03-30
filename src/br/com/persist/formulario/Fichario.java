@@ -27,6 +27,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.arvore.ArvoreContainer;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -184,6 +185,16 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 
 		return panel;
+	}
+
+	public void novaArvore(Formulario formulario) {
+		ArvoreContainer container = new ArvoreContainer(formulario);
+		addTab(Mensagens.getString("label.arquivos"), container);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.ARVORE);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
 	}
 
 	public void novo(Formulario formulario) {
