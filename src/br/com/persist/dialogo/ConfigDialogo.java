@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
-import br.com.persist.formulario.Formulario;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 

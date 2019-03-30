@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.principal;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,9 +22,13 @@ import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
+import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
+import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.FormularioArvore;
+import br.com.persist.formulario.FormularioDesktop;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
@@ -40,7 +44,7 @@ import br.com.persist.xml.XML;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
-	protected static final List<Objeto> COPIADOS = new ArrayList<>();
+	private static final List<Objeto> COPIADOS = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private final Vector<Conexao> conexoes = new Vector<>();
 	private final Fichario fichario = new Fichario();
@@ -68,6 +72,10 @@ public class Formulario extends JFrame {
 		for (Objeto objeto : superficie.getSelecionados()) {
 			COPIADOS.add(objeto.clonar());
 		}
+	}
+
+	public static boolean copiadosIsEmpty() {
+		return COPIADOS.isEmpty();
 	}
 
 	public static void colar(Superficie superficie, boolean b, int x, int y) {

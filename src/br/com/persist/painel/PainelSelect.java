@@ -1,35 +1,42 @@
-package br.com.persist.objeto;
+package br.com.persist.painel;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.sql.Connection;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JComboBox;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 
+import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
+import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
+import br.com.persist.modelo.RegistroModelo;
+import br.com.persist.modelo.VazioModelo;
+import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class PainelUpdate extends Panel {
+public class PainelSelect extends Panel {
 	private static final long serialVersionUID = 1L;
+	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final PainelObjetoListener listener;
 
-	public PainelUpdate(PainelObjetoListener listener, Conexao padrao, String instrucao,
+	public PainelSelect(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		textArea.setText(PainelUpdate.subst(instrucao, mapaChaveValor));
 		cmbConexao = new JComboBox<>(listener.getConexoes());
+		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
@@ -38,39 +45,21 @@ public class PainelUpdate extends Panel {
 		montarLayout();
 	}
 
-	public static String subst(String instrucao, Map<String, String> mapaChaveValor) {
-		if (instrucao == null) {
-			instrucao = "";
-		}
-
-		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
-			return instrucao;
-		}
-
-		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Entry<String, String> entry = it.next();
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
-		}
-
-		return instrucao;
-	}
-
 	public Frame getFrame() {
 		return listener.getFrame();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, textArea);
+
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
+		split.setDividerLocation(200);
+		add(BorderLayout.CENTER, split);
 	}
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.UPDATE);
+		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
 		private Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
 
 		Toolbar() {
@@ -98,12 +87,20 @@ public class PainelUpdate extends Panel {
 			return;
 		}
 
+		String consulta = textArea.getSelectedText();
+
+		if (Util.estaVazio(consulta)) {
+			consulta = textArea.getText();
+		}
+
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			int atualizados = Persistencia.executar(textArea.getText(), conn);
-			listener.setTitle("ATUALIZADOS [" + atualizados + "]");
+			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, consulta, new String[0],
+					new Objeto(), conexao);
+			tabela.setModel(modeloRegistro);
+			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage("PAINEL UPDATE", ex, this);
+			Util.stackTraceAndMessage("PAINEL SELECT", ex, this);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.desktop;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,8 +27,9 @@ import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
-import br.com.persist.objeto.FormularioInterno;
-import br.com.persist.objeto.PainelObjeto;
+import br.com.persist.formulario.FormularioInterno;
+import br.com.persist.painel.PainelObjeto;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;

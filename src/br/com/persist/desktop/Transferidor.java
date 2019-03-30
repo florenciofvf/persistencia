@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.desktop;
 
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;

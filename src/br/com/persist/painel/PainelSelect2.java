@@ -1,9 +1,12 @@
-package br.com.persist.objeto;
+package br.com.persist.painel;
 
 import java.awt.BorderLayout;
-import java.awt.Frame;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
@@ -17,36 +20,33 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
+import br.com.persist.principal.Formulario;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class PainelSelect extends Panel {
+public class PainelSelect2 extends Panel {
 	private static final long serialVersionUID = 1L;
+	private static final String PAINEL_SELECT = "PAINEL SELECT";
+	private static final File file = new File("consultas/consultas");
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
-	private final PainelObjetoListener listener;
 
-	public PainelSelect(PainelObjetoListener listener, Conexao padrao, String instrucao,
-			Map<String, String> mapaChaveValor) {
-		textArea.setText(PainelUpdate.subst(instrucao, mapaChaveValor));
-		cmbConexao = new JComboBox<>(listener.getConexoes());
+	public PainelSelect2(Formulario formulario, Conexao padrao) {
+		cmbConexao = new JComboBox<>(formulario.getConexoes());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
-		this.listener = listener;
 		toolbar.add(cmbConexao);
 		montarLayout();
-	}
-
-	public Frame getFrame() {
-		return listener.getFrame();
+		abrir();
 	}
 
 	private void montarLayout() {
@@ -57,13 +57,28 @@ public class PainelSelect extends Panel {
 		add(BorderLayout.CENTER, split);
 	}
 
+	private void abrir() {
+		if (file.exists()) {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+
+				while (linha != null) {
+					textArea.append(linha + Constantes.QL);
+					linha = br.readLine();
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_SELECT, ex, PainelSelect2.this);
+			}
+		}
+	}
+
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
-		private Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
+		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
 
 		Toolbar() {
-			add(new Button(fecharAcao));
+			add(new Button(salvarAcao));
 			addSeparator();
 			add(new Button(atualizarAcao));
 
@@ -71,8 +86,17 @@ public class PainelSelect extends Panel {
 		}
 
 		private void eventos() {
-			fecharAcao.setActionListener(e -> listener.dispose());
 			atualizarAcao.setActionListener(e -> atualizar());
+
+			salvarAcao.setActionListener(e -> {
+				try {
+					PrintWriter pw = new PrintWriter(file);
+					pw.print(textArea.getText());
+					pw.close();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(PAINEL_SELECT, ex, PainelSelect2.this);
+				}
+			});
 		}
 	}
 
@@ -100,7 +124,7 @@ public class PainelSelect extends Panel {
 			tabela.setModel(modeloRegistro);
 			TabelaUtil.ajustar(tabela, getGraphics(), 40);
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage("PAINEL SELECT", ex, this);
+			Util.stackTraceAndMessage(PAINEL_SELECT, ex, this);
 		}
 	}
 }

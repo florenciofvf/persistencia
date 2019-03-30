@@ -1,4 +1,4 @@
-package br.com.persist.objeto;
+package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -12,8 +12,10 @@ import javax.swing.JInternalFrame;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
-import br.com.persist.formulario.Desktop;
-import br.com.persist.formulario.Formulario;
+import br.com.persist.desktop.Desktop;
+import br.com.persist.painel.PainelObjeto;
+import br.com.persist.painel.PainelObjetoListener;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 

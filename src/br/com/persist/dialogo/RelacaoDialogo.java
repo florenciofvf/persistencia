@@ -35,8 +35,8 @@ import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
-import br.com.persist.formulario.Formulario;
-import br.com.persist.formulario.Superficie;
+import br.com.persist.principal.Formulario;
+import br.com.persist.desktop.Superficie;
 import br.com.persist.util.Util;
 
 public class RelacaoDialogo extends DialogoAbstrato {

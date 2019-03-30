@@ -1,4 +1,4 @@
-package br.com.persist.objeto;
+package br.com.persist.painel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -45,10 +45,13 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
+import br.com.persist.desktop.Transferidor;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
-import br.com.persist.formulario.Transferidor;
+import br.com.persist.formulario.FormularioInterno;
+import br.com.persist.formulario.FormularioSelect;
+import br.com.persist.formulario.FormularioUpdate;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.RegistroModelo;

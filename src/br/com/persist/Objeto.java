@@ -17,7 +17,7 @@ import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.formulario.Superficie;
+import br.com.persist.desktop.Superficie;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;

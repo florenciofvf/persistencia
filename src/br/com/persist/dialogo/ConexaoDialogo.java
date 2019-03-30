@@ -10,7 +10,7 @@ import javax.swing.JToolBar;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.ScrollPane;
-import br.com.persist.formulario.Formulario;
+import br.com.persist.principal.Formulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;

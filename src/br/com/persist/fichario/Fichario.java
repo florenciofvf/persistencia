@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.fichario;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -31,7 +31,12 @@ import br.com.persist.arvore.ArvoreContainer;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
-import br.com.persist.objeto.PainelSelect2;
+import br.com.persist.desktop.Container;
+import br.com.persist.desktop.Desktop;
+import br.com.persist.formulario.FormularioDesktop;
+import br.com.persist.formulario.FormularioSuperficie;
+import br.com.persist.painel.PainelSelect2;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;

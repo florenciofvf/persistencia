@@ -8,7 +8,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.formulario.Formulario;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Preferencias;
 

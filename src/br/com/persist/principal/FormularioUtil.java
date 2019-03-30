@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.principal;
 
 import java.awt.Window;
 import java.lang.reflect.Method;

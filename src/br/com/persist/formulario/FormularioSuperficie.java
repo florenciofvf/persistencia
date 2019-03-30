@@ -5,7 +5,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import br.com.persist.objeto.FormularioAbstrato;
+import br.com.persist.desktop.Container;
+import br.com.persist.principal.Formulario;
 
 public class FormularioSuperficie extends FormularioAbstrato {
 	private static final long serialVersionUID = 1L;

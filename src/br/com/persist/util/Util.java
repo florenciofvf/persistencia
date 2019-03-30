@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.TextArea;
-import br.com.persist.formulario.Superficie;
+import br.com.persist.desktop.Superficie;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();

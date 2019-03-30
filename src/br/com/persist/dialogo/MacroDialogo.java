@@ -11,7 +11,7 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-import br.com.persist.formulario.Formulario;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Macro;
 
 public class MacroDialogo extends DialogoAbstrato {

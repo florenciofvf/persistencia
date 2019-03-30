@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.principal;
 
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;

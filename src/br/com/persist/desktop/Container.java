@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.desktop;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,7 +22,10 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
-import br.com.persist.objeto.FormularioSelect;
+import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.FormularioSelect;
+import br.com.persist.formulario.FormularioSuperficie;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;

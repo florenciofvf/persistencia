@@ -2,7 +2,7 @@ package br.com.persist.util;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.objeto.FormularioInterno;
+import br.com.persist.formulario.FormularioInterno;
 
 public class Form {
 	private String apelido;

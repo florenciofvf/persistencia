@@ -5,7 +5,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import br.com.persist.arvore.ArvoreContainer;
-import br.com.persist.objeto.FormularioAbstrato;
+import br.com.persist.formulario.FormularioAbstrato;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Mensagens;
 
 public class FormularioArvore extends FormularioAbstrato {

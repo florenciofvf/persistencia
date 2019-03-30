@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.desktop;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -36,10 +36,11 @@ import br.com.persist.comp.Popup;
 import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
-import br.com.persist.objeto.FormularioExterno;
-import br.com.persist.objeto.FormularioInterno;
-import br.com.persist.objeto.FormularioSelect;
-import br.com.persist.objeto.PainelObjeto;
+import br.com.persist.formulario.FormularioExterno;
+import br.com.persist.formulario.FormularioInterno;
+import br.com.persist.formulario.FormularioSelect;
+import br.com.persist.painel.PainelObjeto;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
@@ -1255,7 +1256,7 @@ public class Superficie extends Desktop {
 		}
 
 		void configItens(boolean contemFrames) {
-			itemColar.setEnabled(!Formulario.COPIADOS.isEmpty());
+			itemColar.setEnabled(!Formulario.copiadosIsEmpty());
 			itemAlinharEsquerdo.setEnabled(contemFrames);
 			itemAtualizarForms.setEnabled(contemFrames);
 			itemAlinharDireito.setEnabled(contemFrames);

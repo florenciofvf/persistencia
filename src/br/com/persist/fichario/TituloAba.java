@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.fichario;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
