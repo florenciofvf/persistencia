@@ -49,10 +49,10 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro.Instrucao;
+import br.com.persist.xml.XMLUtil;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
-import br.com.persist.util.XMLUtil;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;

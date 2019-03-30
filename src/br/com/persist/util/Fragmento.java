@@ -2,6 +2,8 @@ package br.com.persist.util;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.xml.XMLUtil;
+
 public class Fragmento {
 	private String resumo;
 	private String grupo;

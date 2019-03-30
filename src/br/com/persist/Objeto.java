@@ -21,7 +21,7 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
-import br.com.persist.util.XMLUtil;
+import br.com.persist.xml.XMLUtil;
 
 public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);

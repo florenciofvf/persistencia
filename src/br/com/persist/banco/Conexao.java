@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import org.xml.sax.Attributes;
 
 import br.com.persist.util.Util;
-import br.com.persist.util.XMLUtil;
+import br.com.persist.xml.XMLUtil;
 
 public class Conexao {
 	private static final Logger LOG = Logger.getGlobal();

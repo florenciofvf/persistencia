@@ -7,8 +7,8 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.banco.Conexao;
-import br.com.persist.util.XMLUtil;
 import br.com.persist.xml.XML;
+import br.com.persist.xml.XMLUtil;
 
 public class ConexaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;

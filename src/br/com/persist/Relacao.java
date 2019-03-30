@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.xml.sax.Attributes;
 
 import br.com.persist.util.Util;
-import br.com.persist.util.XMLUtil;
+import br.com.persist.xml.XMLUtil;
 
 public class Relacao {
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;

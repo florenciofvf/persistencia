@@ -1,7 +1,7 @@
 package br.com.persist;
 
 import br.com.persist.util.Util;
-import br.com.persist.util.XMLUtil;
+import br.com.persist.xml.XMLUtil;
 
 public class Instrucao {
 	private final String nome;

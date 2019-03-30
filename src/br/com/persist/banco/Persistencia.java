@@ -47,23 +47,20 @@ public class Persistencia {
 		}
 
 		try (PreparedStatement psmt = conn.prepareStatement(builder.toString())) {
-			ResultSet rs = psmt.executeQuery();
-			rs.next();
-
-			int total = rs.getInt(1);
-			rs.close();
-			return total;
+			try (ResultSet rs = psmt.executeQuery()) {
+				rs.next();
+				return rs.getInt(1);
+			}
 		}
 	}
 
 	public static RegistroModelo criarModeloRegistro(Connection conn, String consulta, String[] chaves, Objeto objeto,
 			Conexao conexao) throws Exception {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
-			ResultSet rs = psmt.executeQuery();
-			RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
-
-			rs.close();
-			return modelo;
+			try (ResultSet rs = psmt.executeQuery()) {
+				RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
+				return modelo;
+			}
 		}
 	}
 
