@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DragGestureEvent;
-import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
@@ -25,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
@@ -76,19 +76,20 @@ import br.com.persist.util.Util;
 
 public class ObjetoPainel extends Panel implements ActionListener, ItemListener {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getGlobal();
 	private final Button btnArrasto = new Button(Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
 	}));
 	private static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	private static final String LABEL_ATUALIZAR = "label.atualizar";
 	private final TextField txtComplemento = new TextField(35);
+	private final transient PainelObjetoListener listener;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
-	private final PainelObjetoListener listener;
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
+	private final transient Objeto objeto;
 	private final String nomeTabela;
 	private final boolean buscaAuto;
-	private final Objeto objeto;
 
 	public ObjetoPainel(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
@@ -115,7 +116,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 		config();
 	}
 
-	private MouseListener complementoListener = new MouseAdapter() {
+	private transient MouseListener complementoListener = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
@@ -134,12 +135,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 
 	private void config() {
 		DragSource dragSource = DragSource.getDefaultDragSource();
-		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, listenerInicio);
-	}
-
-	private DragGestureListener listenerInicio = new DragGestureListener() {
-		@Override
-		public void dragGestureRecognized(DragGestureEvent dge) {
+		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
 			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 			String apelido = null;
 
@@ -149,24 +145,28 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 			}
 
 			dge.startDrag(null, new Transferidor(objeto, conexao, listener.getDimensoes(), apelido), listenerArrasto);
-		}
-	};
+		});
+	}
 
-	private DragSourceListener listenerArrasto = new DragSourceListener() {
+	private transient DragSourceListener listenerArrasto = new DragSourceListener() {
 		@Override
 		public void dropActionChanged(DragSourceDragEvent dsde) {
+			LOG.log(Level.FINEST, "dropActionChanged");
 		}
 
 		@Override
 		public void dragEnter(DragSourceDragEvent dsde) {
+			LOG.log(Level.FINEST, "dragEnter");
 		}
 
 		@Override
 		public void dragOver(DragSourceDragEvent dsde) {
+			LOG.log(Level.FINEST, "dragOver");
 		}
 
 		@Override
 		public void dragExit(DragSourceEvent dse) {
+			LOG.log(Level.FINEST, "dragExit");
 		}
 
 		@Override
@@ -439,7 +439,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 			private static final long serialVersionUID = 1L;
 			private Action comAspasAcao = Action.actionMenu("label.com_aspas", Icones.ASPAS);
 			private Action semAspasAcao = Action.actionMenu("label.sem_aspas", null);
-			private final Grupo grupo;
+			private final transient Grupo grupo;
 
 			MenuBuscaAuto(Grupo grupo) {
 				super(grupo.getDescricao());
@@ -571,7 +571,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 
 		class MenuItemUpdate extends JMenuItem implements ActionListener {
 			private static final long serialVersionUID = 1L;
-			private final Instrucao instrucao;
+			private final transient Instrucao instrucao;
 
 			MenuItemUpdate(Instrucao instrucao) {
 				setIcon(instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC);
@@ -605,26 +605,30 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 							return;
 						}
 
-						if (instrucao.isSelect()) {
-							SelectFormulario form = new SelectFormulario(instrucao.getNome(), listener, conexao,
-									instrucao.getValor(), chaves);
-
-							if (listener instanceof Component) {
-								form.setLocationRelativeTo((Component) listener);
-							}
-
-							form.setVisible(true);
-						} else {
-							UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), listener, conexao,
-									instrucao.getValor(), chaves);
-
-							if (listener instanceof Component) {
-								form.setLocationRelativeTo((Component) listener);
-							}
-
-							form.setVisible(true);
-						}
+						abrirFormulario(instrucao, conexao, chaves);
 					}
+				}
+			}
+
+			private void abrirFormulario(Instrucao instrucao, Conexao conexao, Map<String, String> chaves) {
+				if (instrucao.isSelect()) {
+					SelectFormulario form = new SelectFormulario(instrucao.getNome(), listener, conexao,
+							instrucao.getValor(), chaves);
+
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					}
+
+					form.setVisible(true);
+				} else {
+					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), listener, conexao,
+							instrucao.getValor(), chaves);
+
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					}
+
+					form.setVisible(true);
 				}
 			}
 		}
@@ -980,7 +984,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 		}
 	}
 
-	private FragmentoListener fragmentoListener = new FragmentoListener() {
+	private transient FragmentoListener fragmentoListener = new FragmentoListener() {
 		@Override
 		public void configFragmento(Fragmento f) {
 			txtComplemento.setText(f.getValor());
@@ -1030,7 +1034,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 		ObjetoPainel.this.actionPerformed(null);
 	}
 
-	private TabelaListener tabelaListener = new TabelaListener() {
+	private transient TabelaListener tabelaListener = new TabelaListener() {
 		@Override
 		public void copiarNomeColuna(Tabela tabela, String nome) {
 			txtComplemento.setText("AND " + nome + " = ");
