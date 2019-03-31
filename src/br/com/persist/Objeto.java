@@ -12,6 +12,8 @@ import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
@@ -24,6 +26,7 @@ import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
 public class Objeto implements Runnable {
+	private static final Logger LOG = Logger.getGlobal();
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	public static final int DIAMETRO_PADRAO = 36;
@@ -452,7 +455,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void alinhar(FontMetrics fm) {
-		throw new UnsupportedOperationException();
+		LOG.log(Level.FINEST, "alinhar");
 	}
 
 	public void zoomMenos() {

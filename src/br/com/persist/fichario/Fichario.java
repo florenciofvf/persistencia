@@ -263,19 +263,22 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public boolean isAberto(File file) {
-		int total = getComponentCount();
+		int total = getTabCount();
 
 		for (int i = 0; i < total; i++) {
-			Component cmp = getComponentAt(i);
+			try {
+				Component cmp = getComponentAt(i);
 
-			if (cmp instanceof Container) {
-				Container c = (Container) cmp;
+				if (cmp instanceof Container) {
+					Container c = (Container) cmp;
 
-				if (c.getArquivo() != null && c.getArquivo().equals(file)) {
-					return true;
+					if (c.getArquivo() != null && c.getArquivo().equals(file)) {
+						return true;
+					}
 				}
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "ERRO", e);
 			}
-
 		}
 
 		return false;
