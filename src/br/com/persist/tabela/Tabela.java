@@ -31,7 +31,7 @@ public class Tabela extends JTable {
 	private static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	private PopupHeader popupHeader = new PopupHeader();
 	private Map<String, List<String>> mapaChaveamento;
-	private TabelaListener tabelaListener;
+	private transient TabelaListener tabelaListener;
 	private boolean arrastado;
 
 	public Tabela() {
@@ -41,9 +41,9 @@ public class Tabela extends JTable {
 	public Tabela(OrdenacaoModelo modelo) {
 		super(modelo);
 		tableHeader.addMouseListener(headerListener);
-		addMouseMotionListener(mouseMotionListener_);
+		addMouseMotionListener(mouseMotionListenerInner);
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		addMouseListener(mouseListener_);
+		addMouseListener(mouseListenerInner);
 	}
 
 	@Override
@@ -71,14 +71,14 @@ public class Tabela extends JTable {
 		this.mapaChaveamento = mapaChaveamento;
 	}
 
-	private MouseMotionListener mouseMotionListener_ = new MouseAdapter() {
+	private transient MouseMotionListener mouseMotionListenerInner = new MouseAdapter() {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			arrastado = true;
 		}
 	};
 
-	private MouseListener mouseListener_ = new MouseAdapter() {
+	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (tabelaListener != null) {
@@ -95,7 +95,7 @@ public class Tabela extends JTable {
 		}
 	};
 
-	private MouseListener headerListener = new MouseAdapter() {
+	private transient MouseListener headerListener = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			processar(e);

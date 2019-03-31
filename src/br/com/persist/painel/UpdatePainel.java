@@ -22,10 +22,10 @@ import br.com.persist.util.Util;
 
 public class UpdatePainel extends Panel {
 	private static final long serialVersionUID = 1L;
+	private final transient PainelObjetoListener listener;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
-	private final PainelObjetoListener listener;
 
 	public UpdatePainel(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {

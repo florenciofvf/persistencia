@@ -61,6 +61,7 @@ public class ObjetoDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class PanelGeral extends PanelBorder implements ActionListener {
@@ -290,11 +291,11 @@ public class ObjetoDialogo extends AbstratoDialogo {
 
 		PanelDesc() {
 			textArea.setText(objeto.getDescricao());
-			textArea.addKeyListener(keyListener_);
+			textArea.addKeyListener(keyListenerInner);
 			add(BorderLayout.CENTER, textArea);
 		}
 
-		private KeyListener keyListener_ = new KeyAdapter() {
+		private transient KeyListener keyListenerInner = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				objeto.setDescricao(textArea.getText());

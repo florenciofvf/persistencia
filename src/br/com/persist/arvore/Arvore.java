@@ -23,8 +23,8 @@ import br.com.persist.util.Icones;
 
 public class Arvore extends JTree {
 	private static final long serialVersionUID = 1L;
+	private final transient List<ArvoreListener> ouvintes;
 	private ArvorePopup arvorePopup = new ArvorePopup();
-	private final List<ArvoreListener> ouvintes;
 	private boolean popupDesabilitado;
 
 	public Arvore(TreeModel newModel) {

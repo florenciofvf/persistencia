@@ -43,6 +43,7 @@ public class ComplementoDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class Toolbar extends JToolBar implements ActionListener {

@@ -7,7 +7,7 @@ import javax.swing.Icon;
 
 public class Action extends Acao {
 	private static final long serialVersionUID = 1L;
-	protected ActionListener actionListener;
+	protected transient ActionListener actionListener;
 
 	private Action(boolean menu, String chaveRotulo, Icon icone) {
 		super(menu, chaveRotulo, icone);

@@ -24,7 +24,7 @@ public class ChaveBuscaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
-	private final Objeto objeto;
+	private final transient Objeto objeto;
 	private final Tipo tipo;
 
 	public ChaveBuscaDialogo(Dialog dialog, Objeto objeto, Tipo tipo) {
@@ -102,6 +102,7 @@ public class ChaveBuscaDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class Toolbar extends JToolBar implements ActionListener {

@@ -28,10 +28,10 @@ import br.com.persist.util.Util;
 public class SelectPainel extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final JTable tabela = new JTable(new VazioModelo());
+	private final transient PainelObjetoListener listener;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
-	private final PainelObjetoListener listener;
 
 	public SelectPainel(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {

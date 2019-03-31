@@ -1,11 +1,8 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.arvore.ContainerArvore;
-import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Mensagens;
 
@@ -18,16 +15,7 @@ public class ArvoreFormulario extends AbstratoFormulario {
 		container = new ContainerArvore(formulario);
 		setLocationRelativeTo(formulario);
 		montarLayout();
-		configurar();
 		setVisible(true);
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-		});
 	}
 
 	private void montarLayout() {

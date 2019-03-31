@@ -14,9 +14,9 @@ import br.com.persist.util.Util;
 
 public class OrdenacaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private final TableModel model;
+	private final transient TableModel model;
+	private transient Linha[] linhas;
 	private boolean descendente;
-	private Linha[] linhas;
 	private boolean numero;
 	private int coluna;
 

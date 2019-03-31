@@ -35,6 +35,7 @@ public class ExternoFormulario extends AbstratoFormulario implements PainelObjet
 
 	@Override
 	public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

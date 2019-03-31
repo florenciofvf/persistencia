@@ -103,6 +103,7 @@ public class Macro {
 	class AbrirAuto extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -114,6 +115,7 @@ public class Macro {
 	class Transparente extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -130,6 +132,7 @@ public class Macro {
 
 		@Override
 		public void executar(Objeto objeto) {
+			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -141,6 +144,7 @@ public class Macro {
 
 		@Override
 		public void executar(Objeto objeto) {
+			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -159,6 +163,7 @@ public class Macro {
 	class Icone extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -182,6 +187,7 @@ public class Macro {
 	class XPos extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -193,6 +199,7 @@ public class Macro {
 	class YPos extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
 		}
 
 		@Override

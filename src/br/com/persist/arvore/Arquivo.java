@@ -49,8 +49,8 @@ public class Arquivo {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 
-			for (File file : files) {
-				Arquivo arq = new Arquivo(file);
+			for (File f : files) {
+				Arquivo arq = new Arquivo(f);
 				arquivos.add(arq);
 				arq.pai = this;
 			}

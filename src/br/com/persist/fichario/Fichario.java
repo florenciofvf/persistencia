@@ -43,9 +43,9 @@ import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
-	private final Listener listener = new Listener();
+	private final transient Listener listener = new Listener();
+	private transient Ponto ponto;
 	private Rectangle rectangle;
-	private Ponto ponto;
 	private int ultX;
 	private int ultY;
 
@@ -62,7 +62,7 @@ public class Fichario extends JTabbedPane {
 		getActionMap().put("excluir_action", excluirAction);
 	}
 
-	Action excluirAction = new AbstractAction() {
+	transient Action excluirAction = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -83,7 +83,7 @@ public class Fichario extends JTabbedPane {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
 
-	private DropTargetListener listenerSoltar = new DropTargetListener() {
+	private transient DropTargetListener listenerSoltar = new DropTargetListener() {
 		@Override
 		public void dropActionChanged(DropTargetDragEvent e) {
 			e.rejectDrag();

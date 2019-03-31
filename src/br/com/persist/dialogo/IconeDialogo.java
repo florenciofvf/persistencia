@@ -23,7 +23,7 @@ import br.com.persist.util.Imagens;
 
 public class IconeDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
-	private final Objeto objeto;
+	private final transient Objeto objeto;
 	private final Label label;
 
 	public IconeDialogo(Dialog dialog, Objeto objeto, Label label) {
@@ -49,6 +49,7 @@ public class IconeDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class LabelIcone extends Label {

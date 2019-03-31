@@ -10,28 +10,28 @@ import br.com.persist.util.Util;
 
 public class TextArea extends JScrollPane {
 	private static final long serialVersionUID = 1L;
-	private final JTextArea textArea;
+	private final JTextArea textAreaInner;
 
 	public TextArea(String string) {
-		textArea = new JTextArea(string);
-		setViewportView(textArea);
+		textAreaInner = new JTextArea(string);
+		setViewportView(textAreaInner);
 	}
 
 	public TextArea() {
-		textArea = new JTextArea();
-		setViewportView(textArea);
+		textAreaInner = new JTextArea();
+		setViewportView(textAreaInner);
 	}
 
 	public void insert(int pos, String string) {
-		textArea.insert(string, pos);
+		textAreaInner.insert(string, pos);
 	}
 
 	public void append(String string) {
-		textArea.append(string);
+		textAreaInner.append(string);
 	}
 
 	public void setText(String string) {
-		textArea.setText(string);
+		textAreaInner.setText(string);
 	}
 
 	public boolean estaVazio() {
@@ -39,20 +39,20 @@ public class TextArea extends JScrollPane {
 	}
 
 	public String getSelectedText() {
-		return textArea.getSelectedText();
+		return textAreaInner.getSelectedText();
 	}
 
 	public String getText() {
-		return textArea.getText();
+		return textAreaInner.getText();
 	}
 
 	@Override
 	public synchronized void addKeyListener(KeyListener l) {
-		textArea.addKeyListener(l);
+		textAreaInner.addKeyListener(l);
 	}
 
 	@Override
 	public synchronized void addFocusListener(FocusListener l) {
-		textArea.addFocusListener(l);
+		textAreaInner.addFocusListener(l);
 	}
 }

@@ -22,9 +22,9 @@ import br.com.persist.util.Util;
 public class FragmentoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo modelo = new FragmentoModelo();
+	private final transient FragmentoListener listener;
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
-	private final FragmentoListener listener;
 
 	public FragmentoDialogo(Formulario formulario, FragmentoListener listener) {
 		super(formulario, Mensagens.getString("label.fragmento"), 1000, 600, false);
@@ -51,6 +51,7 @@ public class FragmentoDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class Toolbar extends JToolBar {

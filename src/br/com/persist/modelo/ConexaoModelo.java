@@ -15,7 +15,7 @@ public class ConexaoModelo extends AbstractTableModel {
 	private final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO",
 			"FIM-COMPLEMENTO", "ESQUEMA" };
 	private static final File file = new File("conexoes/conexoes.xml");
-	private final List<Conexao> conexoes;
+	private final transient List<Conexao> conexoes;
 
 	public ConexaoModelo() {
 		conexoes = new ArrayList<>();

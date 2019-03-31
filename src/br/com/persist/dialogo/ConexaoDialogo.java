@@ -54,6 +54,7 @@ public class ConexaoDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class Toolbar extends JToolBar {

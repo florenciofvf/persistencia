@@ -80,5 +80,6 @@ public class MacroDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 }

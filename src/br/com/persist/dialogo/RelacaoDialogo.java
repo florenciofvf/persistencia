@@ -82,8 +82,8 @@ public class RelacaoDialogo extends AbstratoDialogo {
 			txtDeslocYDesc.setText("" + relacao.deslocamentoYDesc);
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
 
-			txtDeslocXDesc.addFocusListener(focusListener_);
-			txtDeslocYDesc.addFocusListener(focusListener_);
+			txtDeslocXDesc.addFocusListener(focusListenerInner);
+			txtDeslocYDesc.addFocusListener(focusListenerInner);
 
 			chkDesenharDesc.addActionListener(this);
 			txtDeslocXDesc.addActionListener(this);
@@ -91,7 +91,7 @@ public class RelacaoDialogo extends AbstratoDialogo {
 
 			textArea.setText(relacao.getDescricao());
 			textArea.addFocusListener(focusListenerDesc);
-			textArea.addKeyListener(keyListener_);
+			textArea.addKeyListener(keyListenerInner);
 			add(BorderLayout.CENTER, textArea);
 
 			Box container = Box.createVerticalBox();
@@ -102,7 +102,7 @@ public class RelacaoDialogo extends AbstratoDialogo {
 			add(BorderLayout.SOUTH, container);
 		}
 
-		private FocusListener focusListener_ = new FocusAdapter() {
+		private transient FocusListener focusListenerInner = new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				actionPerformed(new ActionEvent(e.getSource(), 0, null));
@@ -128,15 +128,15 @@ public class RelacaoDialogo extends AbstratoDialogo {
 			superficie.repaint();
 		}
 
-		private FocusListener focusListenerDesc = new FocusAdapter() {
+		private transient FocusListener focusListenerDesc = new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				keyListener_.keyReleased(null);
+				keyListenerInner.keyReleased(null);
 				superficie.repaint();
 			}
 		};
 
-		private KeyListener keyListener_ = new KeyAdapter() {
+		private transient KeyListener keyListenerInner = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				relacao.setDescricao(textArea.getText());

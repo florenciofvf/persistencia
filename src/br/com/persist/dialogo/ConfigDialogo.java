@@ -119,6 +119,7 @@ public class ConfigDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class Posicao {
@@ -133,7 +134,7 @@ public class ConfigDialogo extends AbstratoDialogo {
 
 	private class RadioPosicao extends JRadioButton {
 		private static final long serialVersionUID = 1L;
-		final Posicao posicao;
+		final transient Posicao posicao;
 
 		RadioPosicao(Posicao posicao) {
 			super(posicao.nome);

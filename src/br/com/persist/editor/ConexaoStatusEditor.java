@@ -19,7 +19,7 @@ import br.com.persist.util.Util;
 
 public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
 	private static final long serialVersionUID = 1L;
-	private final List<CellEditorListener> listeners;
+	private final transient List<CellEditorListener> listeners;
 	public static final int TOTAL_CLICKS = 1;
 	private ChangeEvent changeEvent;
 	private JTable tabela;

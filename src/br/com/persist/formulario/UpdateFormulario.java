@@ -14,8 +14,8 @@ import br.com.persist.util.BuscaAuto.Grupo;
 
 public class UpdateFormulario extends AbstratoFormulario implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
+	private transient PainelObjetoListener listener;
 	private final UpdatePainel updatePainel;
-	private PainelObjetoListener listener;
 
 	public UpdateFormulario(String titulo, PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
@@ -31,6 +31,7 @@ public class UpdateFormulario extends AbstratoFormulario implements PainelObjeto
 
 	@Override
 	public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

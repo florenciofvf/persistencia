@@ -66,5 +66,6 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 
 	@Override
 	public void excluirArquivo(Arvore arvore) {
+		throw new UnsupportedOperationException();
 	}
 }

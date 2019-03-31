@@ -58,8 +58,7 @@ public class Persistencia {
 			Conexao conexao) throws Exception {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
-				RegistroModelo modelo = criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
-				return modelo;
+				return criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
 			}
 		}
 	}
