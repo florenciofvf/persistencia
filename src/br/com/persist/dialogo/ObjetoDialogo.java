@@ -218,8 +218,15 @@ public class ObjetoDialogo extends AbstratoDialogo {
 
 			} else if (txtChaves == e.getSource()) {
 				objeto.setChaves(txtChaves.getText());
+			}
 
-			} else if (txtId == e.getSource()) {
+			actionPerformedCont(e);
+
+			superficie.repaint();
+		}
+
+		private void actionPerformedCont(ActionEvent e) {
+			if (txtId == e.getSource()) {
 				String id = txtId.getText();
 
 				if (!Util.estaVazio(id)) {
@@ -246,8 +253,6 @@ public class ObjetoDialogo extends AbstratoDialogo {
 				objeto.setTransparente(chk.isSelected());
 				Formulario.macro.transparencia(chk.isSelected());
 			}
-
-			superficie.repaint();
 		}
 
 		private Box criarLinha(String chaveRotulo, JComponent componente) {
