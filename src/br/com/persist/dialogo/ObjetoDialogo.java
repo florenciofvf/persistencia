@@ -44,8 +44,8 @@ import br.com.persist.util.Util;
 
 public class ObjetoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
+	private final transient Objeto objeto;
 	private final Superficie superficie;
-	private final Objeto objeto;
 
 	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
 		super(frame, objeto.getId(), 700, 600, false);
@@ -98,17 +98,17 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			txtX.setText("" + objeto.x);
 			txtY.setText("" + objeto.y);
 
-			txtBuscaAutomatica.addFocusListener(focusListener_);
-			txtChaveamento.addFocusListener(focusListener_);
-			txtComplemento.addFocusListener(focusListener_);
-			txtDeslocXId.addFocusListener(focusListener_);
-			txtDeslocYId.addFocusListener(focusListener_);
-			txtIntervalo.addFocusListener(focusListener_);
-			txtTabela.addFocusListener(focusListener_);
-			txtChaves.addFocusListener(focusListener_);
-			txtId.addFocusListener(focusListener_);
-			txtX.addFocusListener(focusListener_);
-			txtY.addFocusListener(focusListener_);
+			txtBuscaAutomatica.addFocusListener(focusListenerInner);
+			txtChaveamento.addFocusListener(focusListenerInner);
+			txtComplemento.addFocusListener(focusListenerInner);
+			txtDeslocXId.addFocusListener(focusListenerInner);
+			txtDeslocYId.addFocusListener(focusListenerInner);
+			txtIntervalo.addFocusListener(focusListenerInner);
+			txtTabela.addFocusListener(focusListenerInner);
+			txtChaves.addFocusListener(focusListenerInner);
+			txtId.addFocusListener(focusListenerInner);
+			txtX.addFocusListener(focusListenerInner);
+			txtY.addFocusListener(focusListenerInner);
 
 			txtBuscaAutomatica.addActionListener(this);
 			chkTransparente.addActionListener(this);
@@ -156,7 +156,7 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			add(BorderLayout.CENTER, container);
 		}
 
-		private MouseListener buscaAutomaticaListener = new MouseAdapter() {
+		private transient MouseListener buscaAutomaticaListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
@@ -166,7 +166,7 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			}
 		};
 
-		private MouseListener chaveamentoListener = new MouseAdapter() {
+		private transient MouseListener chaveamentoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
@@ -176,7 +176,7 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			}
 		};
 
-		private FocusListener focusListener_ = new FocusAdapter() {
+		private transient FocusListener focusListenerInner = new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				actionPerformed(new ActionEvent(e.getSource(), 0, null));
@@ -343,9 +343,9 @@ public class ObjetoDialogo extends AbstratoDialogo {
 
 		class PanelInst extends PanelBorder {
 			private static final long serialVersionUID = 1L;
+			final transient Instrucao instrucao;
 			TextField nome = new TextField();
 			TextArea valor = new TextArea();
-			final Instrucao instrucao;
 
 			PanelInst(Instrucao i) {
 				this.instrucao = i;
@@ -356,10 +356,10 @@ public class ObjetoDialogo extends AbstratoDialogo {
 				add(BorderLayout.NORTH, nome);
 				add(BorderLayout.CENTER, valor);
 
-				valor.addKeyListener(keyListener_);
+				valor.addKeyListener(keyListenerInner);
 			}
 
-			private KeyListener keyListener_ = new KeyAdapter() {
+			private transient KeyListener keyListenerInner = new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
 					instrucao.setValor(valor.getText());

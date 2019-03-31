@@ -41,8 +41,8 @@ import br.com.persist.util.Util;
 
 public class RelacaoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
+	private final transient Relacao relacao;
 	private final Superficie superficie;
-	private final Relacao relacao;
 
 	public RelacaoDialogo(Frame frame, Superficie superficie, Relacao relacao) {
 		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId(), false);
@@ -58,6 +58,7 @@ public class RelacaoDialogo extends AbstratoDialogo {
 	}
 
 	protected void processar() {
+		throw new UnsupportedOperationException();
 	}
 
 	private class PanelGeral extends Panel {
@@ -210,7 +211,7 @@ public class RelacaoDialogo extends AbstratoDialogo {
 			super(new GridLayout(5, 1));
 			this.origem = origem;
 			chkPonto.setSelected(origem ? relacao.isPontoOrigem() : relacao.isPontoDestino());
-			chkPonto.addActionListener(pontoListener);
+			chkPonto.addActionListener(e -> processarPonto());
 
 			Label label = new Label();
 			label.setText(origem ? relacao.getOrigem().getId() : relacao.getDestino().getId());
@@ -227,20 +228,17 @@ public class RelacaoDialogo extends AbstratoDialogo {
 			add(new PanelCenter(chkPonto));
 		}
 
-		private ActionListener pontoListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (origem) {
-					Formulario.macro.pontoOrigem(chkPonto.isSelected());
-					relacao.setPontoOrigem(chkPonto.isSelected());
-				} else {
-					Formulario.macro.pontoDestino(chkPonto.isSelected());
-					relacao.setPontoDestino(chkPonto.isSelected());
-				}
-
-				superficie.repaint();
+		private void processarPonto() {
+			if (origem) {
+				Formulario.macro.pontoOrigem(chkPonto.isSelected());
+				relacao.setPontoOrigem(chkPonto.isSelected());
+			} else {
+				Formulario.macro.pontoDestino(chkPonto.isSelected());
+				relacao.setPontoDestino(chkPonto.isSelected());
 			}
-		};
+
+			superficie.repaint();
+		}
 	}
 
 	private class PanelTitulo extends Panel {
@@ -254,7 +252,7 @@ public class RelacaoDialogo extends AbstratoDialogo {
 
 	private class PanelObjeto extends Panel {
 		private static final long serialVersionUID = 1L;
-		private final Objeto objeto;
+		private final transient Objeto objeto;
 
 		PanelObjeto(Objeto objeto) {
 			super(null);

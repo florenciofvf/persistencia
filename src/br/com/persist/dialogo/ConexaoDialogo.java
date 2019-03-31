@@ -83,6 +83,21 @@ public class ConexaoDialogo extends AbstratoDialogo {
 			eventos();
 		}
 
+		private void conectar() {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1) {
+				try {
+					Conexao conexao = modelo.getConexao(linhas[0]);
+					Conexao.getConnection2(conexao);
+					Util.mensagem(ConexaoDialogo.this, "SUCESSO");
+					tabela.repaint();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);
+				}
+			}
+		}
+
 		private void eventos() {
 			abrirAcao.setActionListener(e -> {
 				try {
@@ -104,20 +119,7 @@ public class ConexaoDialogo extends AbstratoDialogo {
 				}
 			});
 
-			conectaAcao.setActionListener(e -> {
-				int[] linhas = tabela.getSelectedRows();
-
-				if (linhas != null && linhas.length == 1) {
-					try {
-						Conexao conexao = modelo.getConexao(linhas[0]);
-						Conexao.getConnection2(conexao);
-						Util.mensagem(ConexaoDialogo.this, "SUCESSO");
-						tabela.repaint();
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("ERRO", ex, ConexaoDialogo.this);
-					}
-				}
-			});
+			conectaAcao.setActionListener(e -> conectar());
 
 			fecharAcao.setActionListener(e -> {
 				try {

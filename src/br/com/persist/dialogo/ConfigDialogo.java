@@ -27,7 +27,7 @@ public class ConfigDialogo extends AbstratoDialogo {
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
-	private final Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
+	private final transient Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
 			new Posicao("label.esquerdo", SwingConstants.LEFT), new Posicao("label.abaixo", SwingConstants.BOTTOM),
 			new Posicao("label.direito", SwingConstants.RIGHT) };
 	private final RadioPosicao[] rdoPosicoes = new RadioPosicao[posicoes.length];

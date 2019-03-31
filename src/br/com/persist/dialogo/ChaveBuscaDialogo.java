@@ -53,8 +53,9 @@ public class ChaveBuscaDialogo extends AbstratoDialogo {
 			int tamanho = campoNomes.size();
 			int i = 0;
 
-			for (String chave : campoNomes.keySet()) {
-				List<String> nomes = campoNomes.get(chave);
+			for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
+				String chave = entry.getKey();
+				List<String> nomes = entry.getValue();
 				builder.append(campoDetalhe(chave, nomes));
 
 				if (i + 1 < tamanho) {

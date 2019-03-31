@@ -6,6 +6,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JList;
 import javax.swing.ListModel;
@@ -16,6 +18,7 @@ import br.com.persist.util.Macro;
 
 public class MacroDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getGlobal();
 	private JList<Macro.Instrucao> lista;
 
 	public MacroDialogo(Frame frame) {
@@ -68,10 +71,12 @@ public class MacroDialogo extends AbstratoDialogo {
 
 		@Override
 		public void addListDataListener(ListDataListener l) {
+			LOG.log(Level.FINEST, "addListDataListener");
 		}
 
 		@Override
 		public void removeListDataListener(ListDataListener l) {
+			LOG.log(Level.FINEST, "removeListDataListener");
 		}
 	}
 
