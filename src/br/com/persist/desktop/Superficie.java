@@ -1076,7 +1076,7 @@ public class Superficie extends Desktop {
 					boolean contem = contem(novo);
 
 					while (contem) {
-						novo.setId("" + Objeto.novoID());
+						novo.setId("" + Objeto.novaSequencia());
 						contem = contem(novo);
 					}
 
@@ -1271,7 +1271,7 @@ public class Superficie extends Desktop {
 		boolean contem = contem(novo);
 
 		while (contem) {
-			novo.setId("" + Objeto.novoID());
+			novo.setId("" + Objeto.novaSequencia());
 			contem = contem(novo);
 		}
 

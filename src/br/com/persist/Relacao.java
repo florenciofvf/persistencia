@@ -170,13 +170,13 @@ public class Relacao {
 			return false;
 		}
 
-		double X = x / h;
-		double Y = y / h;
+		double auxX = x / h;
+		double auxY = y / h;
 
-		int _x1 = (int) (X * hPos);
-		int _y1 = (int) (Y * hPos);
+		int auxX1 = (int) (auxX * hPos);
+		int auxY1 = (int) (auxY * hPos);
 
-		return comprimento(_x1, _y1, xPos, yPos) < 7;
+		return comprimento(auxX1, auxY1, xPos, yPos) < 7;
 	}
 
 	private int comprimento(int x1, int y1, int x2, int y2) {
@@ -205,21 +205,21 @@ public class Relacao {
 			int x = x2 - x1;
 			int y = y2 - y1;
 			double h = Math.sqrt(x * x + y * y);
-			double X = x / h;
-			double Y = y / h;
+			double auxX = x / h;
+			double auxY = y / h;
 
 			if (pontoOrigem) {
 				int valor = origem.transparente ? meta : raio;
-				int _x1 = (int) (X * valor);
-				int _y1 = (int) (Y * valor);
-				g2.fillOval(x1 + _x1 - m, y1 + _y1 - m, diametro, diametro);
+				int auxX1 = (int) (auxX * valor);
+				int auxY1 = (int) (auxY * valor);
+				g2.fillOval(x1 + auxX1 - m, y1 + auxY1 - m, diametro, diametro);
 			}
 
 			if (pontoDestino) {
 				int valor = destino.transparente ? meta : raio;
-				int _x2 = (int) (X * (h - valor));
-				int _y2 = (int) (Y * (h - valor));
-				g2.fillOval(x1 + _x2 - m, y1 + _y2 - m, diametro, diametro);
+				int auxX2 = (int) (auxX * (h - valor));
+				int auxY2 = (int) (auxY * (h - valor));
+				g2.fillOval(x1 + auxX2 - m, y1 + auxY2 - m, diametro, diametro);
 			}
 		}
 

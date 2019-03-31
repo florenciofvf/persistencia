@@ -35,6 +35,7 @@ public class Objeto implements Runnable {
 	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
+	private static long sequencia;
 	private Superficie superficie;
 	public boolean transparente;
 	private boolean selecionado;
@@ -45,7 +46,6 @@ public class Objeto implements Runnable {
 	public boolean controlado;
 	private boolean processar;
 	private String descricao;
-	private static long ID;
 	private String tabela;
 	private Thread thread;
 	private int intervalo;
@@ -74,8 +74,8 @@ public class Objeto implements Runnable {
 
 	public Objeto(int x, int y, Color cor, String icone) {
 		instrucoes = new ArrayList<>();
+		id = "" + (++sequencia);
 		desenharId = true;
-		id = "" + (++ID);
 		setIcone(icone);
 		setCor(cor);
 		this.x = x;
@@ -102,12 +102,12 @@ public class Objeto implements Runnable {
 		return o;
 	}
 
-	public static long novoID() {
-		return ++ID;
+	public static long novaSequencia() {
+		return ++sequencia;
 	}
 
-	public static long getID() {
-		return ID;
+	public static long getSequencia() {
+		return sequencia;
 	}
 
 	public void setTransparente(boolean transparente) {
@@ -363,8 +363,7 @@ public class Objeto implements Runnable {
 			g2.fillRoundRect(x, y, largura, altura, diametro, diametro);
 
 			inicio = Color.WHITE;
-			finall = cor.brighter();
-			paint = new GradientPaint(x, y + margem3, inicio, x, y + margem3 + (altura22), cor.brighter(), false);
+			paint = new GradientPaint(x, y + margem3, inicio, x, y + margem3 + (altura22), finall, false);
 
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
 			g2.setPaint(paint);
@@ -453,6 +452,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void alinhar(FontMetrics fm) {
+		throw new UnsupportedOperationException();
 	}
 
 	public void zoomMenos() {
