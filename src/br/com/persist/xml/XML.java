@@ -24,32 +24,50 @@ public class XML {
 	private XML() {
 	}
 
+	private static SAXParserFactory criarSAXParserFactory() throws XMLException {
+		try {
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			factory.setXIncludeAware(true);
+			return factory;
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
+	}
+
 	public static Dimension processar(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao) throws Exception {
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-		factory.setNamespaceAware(true);
-		factory.setXIncludeAware(true);
-
-		SAXParser parser = factory.newSAXParser();
-		XMLHandler handler = new XMLHandler(objetos, relacoes, forms, sbConexao);
-		parser.parse(file, handler);
-		return handler.getDimension();
+			StringBuilder sbConexao) throws XMLException {
+		try {
+			SAXParserFactory factory = criarSAXParserFactory();
+			SAXParser parser = factory.newSAXParser();
+			XMLHandler handler = new XMLHandler(objetos, relacoes, forms, sbConexao);
+			parser.parse(file, handler);
+			return handler.getDimension();
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
 	}
 
-	public static void processarConexao(File file, List<Conexao> conexoes) throws Exception {
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-
-		SAXParser parser = factory.newSAXParser();
-		HandlerConn handler = new HandlerConn(conexoes);
-		parser.parse(file, handler);
+	public static void processarConexao(File file, List<Conexao> conexoes) throws XMLException {
+		try {
+			SAXParserFactory factory = criarSAXParserFactory();
+			SAXParser parser = factory.newSAXParser();
+			HandlerConn handler = new HandlerConn(conexoes);
+			parser.parse(file, handler);
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
 	}
 
-	public static void processarFragmento(File file, List<Fragmento> fragmentos) throws Exception {
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-
-		SAXParser parser = factory.newSAXParser();
-		HandlerFragmento handler = new HandlerFragmento(fragmentos);
-		parser.parse(file, handler);
+	public static void processarFragmento(File file, List<Fragmento> fragmentos) throws XMLException {
+		try {
+			SAXParserFactory factory = criarSAXParserFactory();
+			SAXParser parser = factory.newSAXParser();
+			HandlerFragmento handler = new HandlerFragmento(fragmentos);
+			parser.parse(file, handler);
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
 	}
 }
 

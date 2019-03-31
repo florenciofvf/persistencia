@@ -89,7 +89,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	private class Filtro extends Label {
 		private static final long serialVersionUID = 1L;
 		private final String coluna;
-		private String filtro;
+		private String filtroString;
 
 		Filtro(String coluna) {
 			setIcon(Icones.FILTRO);
@@ -101,7 +101,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 
 		void restaurar() {
-			if (!Util.estaVazio(filtro)) {
+			if (!Util.estaVazio(filtroString)) {
 				setIcon(Icones.OLHO);
 			}
 		}
@@ -115,9 +115,9 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		FiltroCaixa(Frame frame, Filtro filtro, int x, int y) {
 			super(frame, true);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			textField.addKeyListener(keyListener_);
-			addWindowListener(windowListener_);
-			String string = filtro.filtro;
+			textField.addKeyListener(keyListenerInner);
+			addWindowListener(windowListenerInner);
+			String string = filtro.filtroString;
 			setLayout(new BorderLayout());
 			this.filtro = filtro;
 
@@ -132,12 +132,12 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			setVisible(true);
 		}
 
-		KeyListener keyListener_ = new KeyAdapter() {
+		transient KeyListener keyListenerInner = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					filtro.filtro = textField.getText();
-					objetoPainel.processarObjeto(filtro.filtro, null, CabecalhoColuna.this);
+					filtro.filtroString = textField.getText();
+					objetoPainel.processarObjeto(filtro.filtroString, null, CabecalhoColuna.this);
 					dispose();
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					dispose();
@@ -145,7 +145,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			}
 		};
 
-		WindowListener windowListener_ = new WindowAdapter() {
+		transient WindowListener windowListenerInner = new WindowAdapter() {
 			@Override
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				if (Sistema.getInstancia().isMac()) {
@@ -178,13 +178,13 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	}
 
 	public String getFiltroComplemento() {
-		String string = filtro.filtro;
+		String string = filtro.filtroString;
 		return string == null ? "" : string;
 	}
 
 	public void copiar(CabecalhoColuna cabecalho) {
 		if (cabecalho != null) {
-			filtro.filtro = cabecalho.filtro.filtro;
+			filtro.filtroString = cabecalho.filtro.filtroString;
 			filtro.restaurar();
 		}
 	}

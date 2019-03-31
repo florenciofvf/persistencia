@@ -9,8 +9,12 @@ public class XMLUtil {
 	private final PrintWriter pw;
 	private int tab = -1;
 
-	public XMLUtil(File file) throws Exception {
-		pw = new PrintWriter(file, Constantes.ENCODING);
+	public XMLUtil(File file) throws XMLException {
+		try {
+			pw = new PrintWriter(file, Constantes.ENCODING);
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
 	}
 
 	public XMLUtil prologo() {
