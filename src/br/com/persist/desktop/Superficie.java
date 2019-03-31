@@ -59,14 +59,14 @@ public class Superficie extends Desktop {
 	private static final Logger LOG = Logger.getGlobal();
 	private final SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private final SuperficiePopup popup = new SuperficiePopup();
-	private final Inversao inversao = new Inversao();
-	private final Linha linha = new Linha();
-	private final Area area = new Area();
-	private Relacao selecionadoRelacao;
+	private final transient Inversao inversao = new Inversao();
+	private final transient Linha linha = new Linha();
+	private final transient Area area = new Area();
+	private transient Relacao selecionadoRelacao;
+	private transient Objeto selecionadoObjeto;
+	private transient Relacao[] relacoes;
+	private transient Objeto[] objetos;
 	private final Container container;
-	private Objeto selecionadoObjeto;
-	private Relacao[] relacoes;
-	private Objeto[] objetos;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -95,7 +95,7 @@ public class Superficie extends Desktop {
 		getActionMap().put("macro", macro);
 	}
 
-	javax.swing.Action threadProcessar = new AbstractAction() {
+	transient javax.swing.Action threadProcessar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -111,7 +111,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	javax.swing.Action threadDesativar = new AbstractAction() {
+	transient javax.swing.Action threadDesativar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -126,7 +126,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	javax.swing.Action macroLista = new AbstractAction() {
+	transient javax.swing.Action macroLista = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -145,7 +145,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	javax.swing.Action excluirAction = new AbstractAction() {
+	transient javax.swing.Action excluirAction = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -154,7 +154,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	javax.swing.Action macro = new AbstractAction() {
+	transient javax.swing.Action macro = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -185,7 +185,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	javax.swing.Action zoomMenos = new AbstractAction() {
+	transient javax.swing.Action zoomMenos = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -198,7 +198,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	javax.swing.Action zoomMais = new AbstractAction() {
+	transient javax.swing.Action zoomMais = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -281,7 +281,7 @@ public class Superficie extends Desktop {
 		mouseAdapterSelecao.mouseClicked(e);
 	}
 
-	private MouseAdapter mouseAdapterRotulos = new MouseAdapter() {
+	private transient MouseAdapter mouseAdapterRotulos = new MouseAdapter() {
 		Relacao selecionadoRelacao;
 		Objeto selecionadoObjeto;
 
@@ -379,7 +379,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	private MouseAdapter mouseAdapterArrasto = new MouseAdapter() {
+	private transient MouseAdapter mouseAdapterArrasto = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isPopupTrigger()) {
@@ -428,7 +428,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	private MouseAdapter mouseAdapterRelacao = new MouseAdapter() {
+	private transient MouseAdapter mouseAdapterRelacao = new MouseAdapter() {
 		Objeto destino;
 		Objeto origem;
 
@@ -534,7 +534,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	private MouseAdapter mouseAdapterSelecao = new MouseAdapter() {
+	private transient MouseAdapter mouseAdapterSelecao = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			selecionadoRelacao = null;
@@ -596,8 +596,8 @@ public class Superficie extends Desktop {
 				popup.configItens(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
-				popup2.x = x;
-				popup2.y = y;
+				popup2.xLocal = x;
+				popup2.yLocal = y;
 				popup2.configItens(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
@@ -660,8 +660,8 @@ public class Superficie extends Desktop {
 				popup.configItens(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
-				popup2.x = x;
-				popup2.y = y;
+				popup2.xLocal = x;
+				popup2.yLocal = y;
 				popup2.configItens(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
@@ -735,8 +735,14 @@ public class Superficie extends Desktop {
 	}
 
 	private class Area {
-		int x, y, largura, altura;
-		int x1, y1, x2, y2;
+		int x;
+		int y;
+		int largura;
+		int altura;
+		int x1;
+		int y1;
+		int x2;
+		int y2;
 
 		void ini() {
 			x = y = largura = altura = 0;
@@ -763,7 +769,10 @@ public class Superficie extends Desktop {
 	}
 
 	private class Linha {
-		int x1, y1, x2, y2;
+		int x1;
+		int y1;
+		int x2;
+		int y2;
 
 		void ini() {
 			x1 = y1 = x2 = y2 = 0;
@@ -1131,24 +1140,10 @@ public class Superficie extends Desktop {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (selecionadoObjeto != null) {
-					int total = 0;
+					List<Objeto> lista = getSelecionados();
 
-					for (Objeto objeto : objetos) {
-						if (objeto.isSelecionado()) {
-							total++;
-						}
-					}
-
-					if (total < 3) {
+					if (lista.size() < 3) {
 						return;
-					}
-
-					List<Objeto> lista = new ArrayList<>();
-
-					for (Objeto objeto : objetos) {
-						if (objeto.isSelecionado()) {
-							lista.add(objeto);
-						}
 					}
 
 					Collections.sort(lista, new Compara());
@@ -1209,7 +1204,8 @@ public class Superficie extends Desktop {
 		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
 		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 		MenuItem itemColar = new MenuItem(colarAcao);
-		int x, y;
+		int xLocal;
+		int yLocal;
 
 		SuperficiePopup2() {
 			add(itemCriarObjeto);
@@ -1230,7 +1226,7 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
-			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.x, popup2.y));
+			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
 			alinharEsquerdoAcao.setActionListener(e -> alinharEsquerdo());
 			alinharDireitoAcao.setActionListener(e -> alinharDireito());
 			mesmaLarguraAcao.setActionListener(e -> mesmaLargura());
@@ -1250,7 +1246,7 @@ public class Superficie extends Desktop {
 			});
 
 			colarAcao.setActionListener(e -> {
-				Formulario.colar(Superficie.this, true, popup2.x, popup2.y);
+				Formulario.colar(Superficie.this, true, popup2.xLocal, popup2.yLocal);
 				Superficie.this.repaint();
 			});
 		}
@@ -1441,34 +1437,7 @@ public class Superficie extends Desktop {
 
 			for (Tabela tabela : grupo.getTabelas()) {
 				if (!tabela.isProcessado()) {
-					Objeto objeto = null;
-
-					for (Objeto obj : objetos) {
-						if (tabela.getNome().equalsIgnoreCase(obj.getTabela2())) {
-							objeto = obj;
-							break;
-						}
-					}
-
-					if (objeto == null || !objeto.isAbrirAuto()) {
-						continue;
-					}
-
-					Frame frame = formulario;
-
-					if (container.getSuperficieFormulario() != null) {
-						frame = container.getSuperficieFormulario();
-					}
-
-					Conexao conexao = container.getConexaoPadrao();
-					objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
-
-					if (Preferencias.isAbrirAutoDestacado()) {
-						new ExternoFormulario(formulario, frame, objeto, getGraphics(), conexao, false);
-						processado.set(true);
-					} else {
-						objeto.setSelecionado(true);
-					}
+					buscaAutomaticaFinal(tabela, argumentos, processado);
 				}
 			}
 
@@ -1476,6 +1445,37 @@ public class Superficie extends Desktop {
 				formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
 				processado.set(true);
 			}
+		}
+	}
+
+	private void buscaAutomaticaFinal(Tabela tabela, String argumentos, AtomicBoolean processado) {
+		Objeto objeto = null;
+
+		for (Objeto obj : objetos) {
+			if (tabela.getNome().equalsIgnoreCase(obj.getTabela2())) {
+				objeto = obj;
+				break;
+			}
+		}
+
+		if (objeto == null || !objeto.isAbrirAuto()) {
+			return;
+		}
+
+		Frame frame = formulario;
+
+		if (container.getSuperficieFormulario() != null) {
+			frame = container.getSuperficieFormulario();
+		}
+
+		Conexao conexao = container.getConexaoPadrao();
+		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
+
+		if (Preferencias.isAbrirAutoDestacado()) {
+			new ExternoFormulario(formulario, frame, objeto, getGraphics(), conexao, false);
+			processado.set(true);
+		} else {
+			objeto.setSelecionado(true);
 		}
 	}
 }

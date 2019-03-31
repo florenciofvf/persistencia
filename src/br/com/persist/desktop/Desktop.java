@@ -56,16 +56,16 @@ public class Desktop extends JDesktopPane {
 		if (frames.length > 0) {
 			int l = frames[0].getWidth();
 			int x = frames[0].getX();
-			int x_l = x + l;
+			int xlAux = x + l;
 
 			for (int i = 1; i < frames.length; i++) {
 				JInternalFrame frame = frames[i];
-				int _l = frame.getWidth();
-				int _x = frame.getX();
-				int _x_l = _x + _l;
-				int diff = x_l - _x_l;
+				int lAux = frame.getWidth();
+				int xAux = frame.getX();
+				int xlAux2 = xAux + lAux;
+				int diff = xlAux - xlAux2;
 
-				frame.setLocation(_x + diff, frame.getY());
+				frame.setLocation(xAux + diff, frame.getY());
 			}
 		}
 	}
@@ -178,7 +178,7 @@ public class Desktop extends JDesktopPane {
 		}
 	}
 
-	private MouseAdapter mouseAdapter = new MouseAdapter() {
+	private transient MouseAdapter mouseAdapter = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isPopupTrigger() && getAllFrames().length > 0) {
@@ -194,7 +194,7 @@ public class Desktop extends JDesktopPane {
 		}
 	};
 
-	private DropTargetListener listener = new DropTargetListener() {
+	private transient DropTargetListener listener = new DropTargetListener() {
 		@Override
 		public void dropActionChanged(DropTargetDragEvent e) {
 			if (!validoSoltar(e)) {
@@ -211,10 +211,12 @@ public class Desktop extends JDesktopPane {
 
 		@Override
 		public void dragOver(DropTargetDragEvent dtde) {
+			LOG.log(Level.FINEST, "dragOver");
 		}
 
 		@Override
 		public void dragExit(DropTargetEvent dte) {
+			LOG.log(Level.FINEST, "dragExit");
 		}
 
 		@Override

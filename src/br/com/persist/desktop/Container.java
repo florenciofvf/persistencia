@@ -104,6 +104,10 @@ public class Container extends PanelBorder {
 			return;
 		}
 
+		adicionarForm(conexao, forms, objetos, g);
+	}
+
+	private void adicionarForm(Conexao conexao, List<Form> forms, List<Objeto> objetos, Graphics g) {
 		for (Form form : forms) {
 			Objeto instancia = null;
 
@@ -168,6 +172,20 @@ public class Container extends PanelBorder {
 			eventos();
 		}
 
+		private void abrirArquivo() {
+			try {
+				excluido();
+				StringBuilder sbConexao = new StringBuilder();
+				List<Relacao> relacoes = new ArrayList<>();
+				List<Objeto> objetos = new ArrayList<>();
+				List<Form> forms = new ArrayList<>();
+				Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao);
+				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, d);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
+			}
+		}
+
 		private void eventos() {
 			destacarAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie, false));
 			formAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie, true));
@@ -179,17 +197,7 @@ public class Container extends PanelBorder {
 					return;
 				}
 
-				try {
-					excluido();
-					StringBuilder sbConexao = new StringBuilder();
-					List<Relacao> relacoes = new ArrayList<>();
-					List<Objeto> objetos = new ArrayList<>();
-					List<Form> forms = new ArrayList<>();
-					Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao);
-					abrir(arquivo, objetos, relacoes, forms, sbConexao, null, d);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
-				}
+				abrirArquivo();
 			});
 
 			salvarAcao.setActionListener(e -> {
