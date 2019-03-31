@@ -161,12 +161,16 @@ public class ConexaoModelo extends AbstractTableModel {
 		}
 	}
 
-	public void abrir() throws Exception {
+	public void abrir() {
 		conexoes.clear();
 
-		if (file.exists() && file.canRead()) {
-			XML.processarConexao(file, conexoes);
-			fireTableDataChanged();
+		try {
+			if (file.exists() && file.canRead()) {
+				XML.processarConexao(file, conexoes);
+				fireTableDataChanged();
+			}
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "ERRO", e);
 		}
 	}
 }
