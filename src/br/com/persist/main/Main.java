@@ -7,13 +7,17 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Preferencias;
 
 public class Main {
-	public static void main(String[] args) throws Exception {
+	private static final Logger LOG = Logger.getGlobal();
+
+	public static void main(String[] args) {
 		Preferencias.abrir();
 
 		URL[] urLs = getURLs();
@@ -28,28 +32,36 @@ public class Main {
 		formulario.setVisible(true);
 	}
 
-	public static void addURL(URL url) throws Exception {
-		URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-		Class<?> classe = URLClassLoader.class;
+	public static void addURL(URL url) {
+		try {
+			URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+			Class<?> classe = URLClassLoader.class;
 
-		Method method = classe.getDeclaredMethod("addURL", URL.class);
-		method.setAccessible(true);
-		method.invoke(classLoader, url);
+			Method method = classe.getDeclaredMethod("addURL", URL.class);
+			method.setAccessible(true);
+			method.invoke(classLoader, url);
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "ERRO", e);
+		}
 	}
 
-	private static URL[] getURLs() throws Exception {
+	private static URL[] getURLs() {
 		File[] files = new File("libs").listFiles();
 		List<URL> urls = new ArrayList<>();
 
-		if (files != null) {
-			for (File f : files) {
-				String s = f.getName().toLowerCase();
+		try {
+			if (files != null) {
+				for (File f : files) {
+					String s = f.getName().toLowerCase();
 
-				if (s.endsWith(".jar")) {
-					URI uri = f.toURI();
-					urls.add(uri.toURL());
+					if (s.endsWith(".jar")) {
+						URI uri = f.toURI();
+						urls.add(uri.toURL());
+					}
 				}
 			}
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "ERRO", e);
 		}
 
 		return urls.toArray(new URL[urls.size()]);
