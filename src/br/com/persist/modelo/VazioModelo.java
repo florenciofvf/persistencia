@@ -1,12 +1,13 @@
 package br.com.persist.modelo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 public class VazioModelo implements TableModel {
-
-	public VazioModelo() {
-	}
+	private static final Logger LOG = Logger.getGlobal();
 
 	@Override
 	public int getRowCount() {
@@ -40,13 +41,16 @@ public class VazioModelo implements TableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		LOG.log(Level.FINEST, "setValueAt");
 	}
 
 	@Override
 	public void addTableModelListener(TableModelListener l) {
+		LOG.log(Level.FINEST, "addTableModelListener");
 	}
 
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
+		LOG.log(Level.FINEST, "removeTableModelListener");
 	}
 }

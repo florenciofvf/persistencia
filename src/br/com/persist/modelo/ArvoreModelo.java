@@ -2,6 +2,8 @@ package br.com.persist.modelo;
 
 import java.io.File;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
@@ -12,6 +14,7 @@ import javax.swing.tree.TreePath;
 import br.com.persist.arvore.Arquivo;
 
 public class ArvoreModelo implements TreeModel {
+	private static final Logger LOG = Logger.getGlobal();
 	private final EventListenerList listenerList = new EventListenerList();
 	private final Arquivo raiz;
 
@@ -51,6 +54,7 @@ public class ArvoreModelo implements TreeModel {
 
 	@Override
 	public void valueForPathChanged(TreePath path, Object newValue) {
+		LOG.log(Level.FINEST, "valueForPathChanged");
 	}
 
 	@Override

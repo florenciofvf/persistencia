@@ -3,9 +3,10 @@ package br.com.persist.modelo;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -15,7 +16,8 @@ import br.com.persist.xml.XMLUtil;
 
 public class FragmentoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
+	private static final Logger LOG = Logger.getGlobal();
+	private static final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
 	private static final File file = new File("fragmentos/fragmentos.xml");
 	private static final List<Fragmento> fragmentos = new ArrayList<>();
 	private static final List<Fragmento> auxiliares = new ArrayList<>();
@@ -94,26 +96,30 @@ public class FragmentoModelo extends AbstractTableModel {
 		fragmentos.add(new Fragmento());
 	}
 
-	public static void salvar() throws Exception {
-		XMLUtil util = new XMLUtil(file);
-		util.prologo();
+	public static void salvar() {
+		try {
+			XMLUtil util = new XMLUtil(file);
+			util.prologo();
 
-		util.abrirTag2("fragmentos");
+			util.abrirTag2("fragmentos");
 
-		for (Fragmento f : fragmentos) {
-			if (f.isValida()) {
-				f.salvar(util);
+			for (Fragmento f : fragmentos) {
+				if (f.isValida()) {
+					f.salvar(util);
+				}
 			}
-		}
 
-		for (Fragmento f : auxiliares) {
-			if (f.isValida()) {
-				f.salvar(util);
+			for (Fragmento f : auxiliares) {
+				if (f.isValida()) {
+					f.salvar(util);
+				}
 			}
-		}
 
-		util.finalizarTag("fragmentos");
-		util.close();
+			util.finalizarTag("fragmentos");
+			util.close();
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "ERRO", e);
+		}
 	}
 
 	public static void inicializar() throws Exception {
@@ -150,13 +156,10 @@ public class FragmentoModelo extends AbstractTableModel {
 	}
 
 	public static void ordenar() {
-		Collections.sort(fragmentos, new Comparator<Fragmento>() {
-			@Override
-			public int compare(Fragmento o1, Fragmento o2) {
-				String s1 = o1.getGrupo() != null ? o1.getGrupo().toUpperCase() : "";
-				String s2 = o2.getGrupo() != null ? o2.getGrupo().toUpperCase() : "";
-				return s1.compareTo(s2);
-			}
+		Collections.sort(fragmentos, (o1, o2) -> {
+			String s1 = o1.getGrupo() != null ? o1.getGrupo().toUpperCase() : "";
+			String s2 = o2.getGrupo() != null ? o2.getGrupo().toUpperCase() : "";
+			return s1.compareTo(s2);
 		});
 	}
 }

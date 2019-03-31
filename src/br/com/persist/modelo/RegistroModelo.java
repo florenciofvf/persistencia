@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.swing.event.TableModelListener;
@@ -18,6 +20,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class RegistroModelo implements TableModel {
+	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<Object>> registros;
 	private final List<Coluna> colunas;
 	private final boolean chaves;
@@ -275,9 +278,11 @@ public class RegistroModelo implements TableModel {
 
 	@Override
 	public void addTableModelListener(TableModelListener l) {
+		LOG.log(Level.FINEST, "addTableModelListener");
 	}
 
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
+		LOG.log(Level.FINEST, "removeTableModelListener");
 	}
 }

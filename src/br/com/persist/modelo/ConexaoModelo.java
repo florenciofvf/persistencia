@@ -3,6 +3,8 @@ package br.com.persist.modelo;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -12,7 +14,8 @@ import br.com.persist.xml.XMLUtil;
 
 public class ConexaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO",
+	private static final Logger LOG = Logger.getGlobal();
+	private static final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "INI-COMPLEMENTO",
 			"FIM-COMPLEMENTO", "ESQUEMA" };
 	private static final File file = new File("conexoes/conexoes.xml");
 	private final transient List<Conexao> conexoes;
@@ -138,20 +141,24 @@ public class ConexaoModelo extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
-	public void salvar() throws Exception {
-		XMLUtil util = new XMLUtil(file);
-		util.prologo();
+	public void salvar() {
+		try {
+			XMLUtil util = new XMLUtil(file);
+			util.prologo();
 
-		util.abrirTag2("conexoes");
+			util.abrirTag2("conexoes");
 
-		for (Conexao conexao : conexoes) {
-			if (conexao.isValida()) {
-				conexao.salvar(util);
+			for (Conexao conexao : conexoes) {
+				if (conexao.isValida()) {
+					conexao.salvar(util);
+				}
 			}
-		}
 
-		util.finalizarTag("conexoes");
-		util.close();
+			util.finalizarTag("conexoes");
+			util.close();
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "ERRO", e);
+		}
 	}
 
 	public void abrir() throws Exception {
