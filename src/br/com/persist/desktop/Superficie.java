@@ -1190,6 +1190,7 @@ public class Superficie extends Desktop {
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
+		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action dimensaoAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
@@ -1217,6 +1218,7 @@ public class Superficie extends Desktop {
 			add(itemAlinharEsquerdo);
 			add(itemAlinharDireito);
 			add(itemMesmaLargura);
+			add(new MenuItem(larTotalAcao));
 			add(itemCentralizar);
 			addSeparator();
 			add(itemDimensoes);
@@ -1233,6 +1235,7 @@ public class Superficie extends Desktop {
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			centralizarAcao.setActionListener(e -> centralizar());
+			larTotalAcao.setActionListener(e -> larguraTotal());
 
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();
