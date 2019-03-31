@@ -26,23 +26,31 @@ public class Conexao {
 	private String senha;
 	private String nome;
 
-	private Connection getConnection() throws Exception {
-		Class.forName(getDriver());
-		return DriverManager.getConnection(getUrlBanco(), getUsuario(), getSenha());
-	}
-
-	public static synchronized Connection getConnection(Conexao conexao) throws Exception {
-		Connection conn = CONEXOES.get(conexao);
-
-		if (conn == null || conn.isClosed()) {
-			conn = conexao.getConnection();
-			CONEXOES.put(conexao, conn);
+	private Connection getConnection() throws ConexaoException {
+		try {
+			Class.forName(getDriver());
+			return DriverManager.getConnection(getUrlBanco(), getUsuario(), getSenha());
+		} catch (Exception ex) {
+			throw new ConexaoException(ex);
 		}
-
-		return conn;
 	}
 
-	public static synchronized Connection getConnection2(Conexao conexao) throws Exception {
+	public static synchronized Connection getConnection(Conexao conexao) throws ConexaoException {
+		try {
+			Connection conn = CONEXOES.get(conexao);
+
+			if (conn == null || conn.isClosed()) {
+				conn = conexao.getConnection();
+				CONEXOES.put(conexao, conn);
+			}
+
+			return conn;
+		} catch (Exception ex) {
+			throw new ConexaoException(ex);
+		}
+	}
+
+	public static synchronized Connection getConnection2(Conexao conexao) throws ConexaoException {
 		Connection conn = CONEXOES.get(conexao);
 
 		if (conn != null) {
@@ -57,13 +65,17 @@ public class Conexao {
 		return getConnection(conexao);
 	}
 
-	private static void fecharConexao(Connection conn) throws Exception {
-		if (conn != null && !conn.isClosed()) {
-			conn.close();
+	private static void fecharConexao(Connection conn) throws ConexaoException {
+		try {
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			throw new ConexaoException(ex);
 		}
 	}
 
-	public static void fecharConexoes() throws Exception {
+	public static void fecharConexoes() throws ConexaoException {
 		for (Connection conn : CONEXOES.values()) {
 			fecharConexao(conn);
 		}

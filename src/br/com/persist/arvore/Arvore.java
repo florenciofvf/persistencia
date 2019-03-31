@@ -32,7 +32,7 @@ public class Arvore extends JTree {
 		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		setBorder(BorderFactory.createEmptyBorder());
 		setCellRenderer(new TreeCellRenderer());
-		addMouseListener(mouseListener_);
+		addMouseListener(mouseListenerInner);
 		ouvintes = new ArrayList<>();
 		setShowsRootHandles(true);
 		setRootVisible(true);
@@ -78,7 +78,7 @@ public class Arvore extends JTree {
 		ArvoreUtil.excluirEstrutura(this, selecionado);
 	}
 
-	private MouseListener mouseListener_ = new MouseAdapter() {
+	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
