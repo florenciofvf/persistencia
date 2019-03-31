@@ -25,6 +25,7 @@ public class ArvoreModelo implements TreeModel {
 	public ArvoreModelo(Arquivo raiz) {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
+		raiz.inflar();
 	}
 
 	@Override

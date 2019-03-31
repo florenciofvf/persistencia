@@ -18,6 +18,14 @@ public class Arquivo {
 		this.file = file;
 	}
 
+	public void inflar() {
+		getArquivos();
+
+		for (Arquivo a : arquivos) {
+			a.inflar();
+		}
+	}
+
 	public List<Arquivo> getArquivos() {
 		if (!processado) {
 			processar();
