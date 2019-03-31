@@ -262,6 +262,25 @@ public class Fichario extends JTabbedPane {
 		super.remove(index);
 	}
 
+	public boolean isAberto(File file) {
+		int total = getComponentCount();
+
+		for (int i = 0; i < total; i++) {
+			Component cmp = getComponentAt(i);
+
+			if (cmp instanceof Container) {
+				Container c = (Container) cmp;
+
+				if (c.getArquivo() != null && c.getArquivo().equals(file)) {
+					return true;
+				}
+			}
+
+		}
+
+		return false;
+	}
+
 	private class Listener extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {

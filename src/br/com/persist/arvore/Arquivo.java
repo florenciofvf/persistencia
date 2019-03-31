@@ -26,6 +26,16 @@ public class Arquivo {
 		}
 	}
 
+	public void listar(List<Arquivo> lista) {
+		if (isFile()) {
+			lista.add(this);
+		}
+
+		for (Arquivo a : arquivos) {
+			a.listar(lista);
+		}
+	}
+
 	public List<Arquivo> getArquivos() {
 		if (!processado) {
 			processar();

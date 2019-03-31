@@ -1,6 +1,8 @@
 package br.com.persist.arvore;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JToolBar;
 
@@ -56,12 +58,21 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 
 		if (arquivo != null) {
 			formulario.abrirArquivo(arquivo.getFile(), true);
+			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
 		}
 	}
 
 	@Override
 	public void atualizarArvore(Arvore arvore) {
-		arvore.setModel(new ArvoreModelo());
+		ArvoreModelo modelo = new ArvoreModelo();
+		arvore.setModel(modelo);
+
+		List<Arquivo> lista = new ArrayList<>();
+		modelo.listar(lista);
+
+		for (Arquivo a : lista) {
+			a.setArquivoAberto(formulario.getFichario().isAberto(a.getFile()));
+		}
 	}
 
 	@Override

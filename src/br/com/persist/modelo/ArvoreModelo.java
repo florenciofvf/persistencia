@@ -1,6 +1,7 @@
 package br.com.persist.modelo;
 
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,10 @@ public class ArvoreModelo implements TreeModel {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
 		raiz.inflar();
+	}
+
+	public void listar(List<Arquivo> lista) {
+		raiz.listar(lista);
 	}
 
 	@Override

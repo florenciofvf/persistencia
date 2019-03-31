@@ -372,4 +372,8 @@ public class Container extends PanelBorder {
 	public void excluido() {
 		superficie.excluido();
 	}
+
+	public File getArquivo() {
+		return arquivo;
+	}
 }
