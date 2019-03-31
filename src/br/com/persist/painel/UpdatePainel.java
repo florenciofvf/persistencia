@@ -30,7 +30,7 @@ public class UpdatePainel extends Panel {
 	public UpdatePainel(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		textArea.setText(UpdatePainel.subst(instrucao, mapaChaveValor));
-		cmbConexao = new JComboBox<>(listener.getConexoes());
+		cmbConexao = Util.criarComboConexao(listener);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}

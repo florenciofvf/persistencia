@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
-import java.util.Vector;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.Objeto;
@@ -39,7 +39,7 @@ public class ExternoFormulario extends AbstratoFormulario implements PainelObjet
 	}
 
 	@Override
-	public Vector<Conexao> getConexoes() {
+	public List<Conexao> getConexoes() {
 		return formulario.getConexoes();
 	}
 

@@ -39,8 +39,8 @@ public class SelectFilePainel extends Panel {
 	private final JComboBox<Conexao> cmbConexao;
 
 	public SelectFilePainel(Formulario formulario, Conexao padrao) {
-		cmbConexao = new JComboBox<>(formulario.getConexoes());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		cmbConexao = Util.criarComboConexao(formulario);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}

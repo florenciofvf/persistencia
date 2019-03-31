@@ -9,7 +9,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -44,9 +43,9 @@ import br.com.persist.xml.XML;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private static final List<Objeto> COPIADOS = new ArrayList<>();
+	private final transient List<Conexao> conexoes = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
-	private final Vector<Conexao> conexoes = new Vector<>();
+	private static final List<Objeto> COPIADOS = new ArrayList<>();
 	private final Fichario fichario = new Fichario();
 	public static final Macro macro = new Macro();
 	private File arquivo;
@@ -110,7 +109,7 @@ public class Formulario extends JFrame {
 		return o;
 	}
 
-	public Vector<Conexao> getConexoes() {
+	public List<Conexao> getConexoes() {
 		return conexoes;
 	}
 

@@ -5,7 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
-import java.util.Vector;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JInternalFrame;
@@ -73,7 +73,7 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 	}
 
 	@Override
-	public Vector<Conexao> getConexoes() {
+	public List<Conexao> getConexoes() {
 		return formulario.getConexoes();
 	}
 

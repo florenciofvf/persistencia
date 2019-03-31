@@ -49,7 +49,7 @@ public class Container extends PanelBorder {
 	private File arquivo;
 
 	public Container(Formulario formulario) {
-		cmbConexao = new JComboBox<>(formulario.getConexoes());
+		cmbConexao = Util.criarComboConexao(formulario);
 		superficie = new Superficie(formulario, this);
 		this.formulario = formulario;
 		toolbar.add(cmbConexao);

@@ -3,8 +3,8 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.banco.Conexao;
@@ -47,7 +47,7 @@ public class SelectFormulario extends AbstratoFormulario implements PainelObjeto
 	}
 
 	@Override
-	public Vector<Conexao> getConexoes() {
+	public List<Conexao> getConexoes() {
 		return listener != null ? listener.getConexoes() : formulario.getConexoes();
 	}
 

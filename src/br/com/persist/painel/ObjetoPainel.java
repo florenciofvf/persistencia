@@ -93,10 +93,10 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 
 	public ObjetoPainel(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
-		cmbConexao = new JComboBox<>(listener.getConexoes());
 		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
 		this.nomeTabela = objeto.getTabela2() + " - ";
+		cmbConexao = Util.criarComboConexao(listener);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
