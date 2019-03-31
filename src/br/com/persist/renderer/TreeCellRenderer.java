@@ -5,6 +5,9 @@ import java.awt.Component;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+import br.com.persist.arvore.Arquivo;
+import br.com.persist.util.Icones;
+
 public class TreeCellRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = 1L;
 
@@ -13,15 +16,15 @@ public class TreeCellRenderer extends DefaultTreeCellRenderer {
 			int row, boolean hasFocus) {
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
-		// if (value instanceof Objeto) {
-		// Objeto obj = (Objeto) value;
-		//
-		// if (obj.estaVazio() && obj.isManterVazio()) {
-		// setIcon(obj.getIconeManterVazio());
-		// } else {
-		// setIcon(obj.getIcone());
-		// }
-		// }
+		if (value instanceof Arquivo) {
+			Arquivo obj = (Arquivo) value;
+
+			if (obj.isArquivoAberto()) {
+				setIcon(Icones.BOLA_VERDE);
+			} else if (obj.isFile()) {
+				setIcon(Icones.NOVO);
+			}
+		}
 
 		return this;
 	}

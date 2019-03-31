@@ -7,6 +7,7 @@ import java.io.File;
 
 public class Arquivo {
 	private final List<Arquivo> arquivos;
+	private boolean arquivoAberto;
 	private boolean processado;
 	private final File file;
 	private Arquivo pai;
@@ -74,5 +75,13 @@ public class Arquivo {
 	@Override
 	public String toString() {
 		return file.getName();
+	}
+
+	public boolean isArquivoAberto() {
+		return arquivoAberto;
+	}
+
+	public void setArquivoAberto(boolean arquivoAberto) {
+		this.arquivoAberto = arquivoAberto;
 	}
 }

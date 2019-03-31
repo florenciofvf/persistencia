@@ -14,6 +14,7 @@ public class Icones {
 	public static final Icon ALINHA_DIREITO = criarImagem("alinha_direito");
 	public static final Icon BANCO_DESCONECTA = criarImagem("dbdisconn");
 	public static final Icon DESC_NUMERO = criarImagem("desc_numero");
+	public static final Icon BOLA_VERDE = criarImagem("bola_verde");
 	public static final Icon HORIZONTAL = criarImagem("horizontal");
 	public static final Icon ASC_NUMERO = criarImagem("asc_numero");
 	public static final Icon DESC_TEXTO = criarImagem("desc_texto");
