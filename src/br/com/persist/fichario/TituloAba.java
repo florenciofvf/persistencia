@@ -13,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -27,6 +29,7 @@ import br.com.persist.util.Mensagens;
 
 public class TituloAba extends Panel {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getGlobal();
 	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.PANEL3, Icones.EXPANDIR };
 	public static final byte CONSULTA = 2;
 	public static final byte OBJETOS = 0;
@@ -71,7 +74,7 @@ public class TituloAba extends Panel {
 			setToolTipText(Mensagens.getString("label.fechar"));
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(17, 17));
-			addMouseListener(mouseListener_);
+			addMouseListener(mouseListenerInner);
 			setContentAreaFilled(false);
 			setUI(new BasicButtonUI());
 			setRolloverEnabled(true);
@@ -91,6 +94,7 @@ public class TituloAba extends Panel {
 
 		@Override
 		public void updateUI() {
+			LOG.log(Level.FINEST, "updateUI");
 		}
 
 		@Override
@@ -117,7 +121,7 @@ public class TituloAba extends Panel {
 		}
 	}
 
-	private MouseListener mouseListener_ = new MouseAdapter() {
+	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			Component component = e.getComponent();

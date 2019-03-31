@@ -17,6 +17,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -43,6 +45,7 @@ import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getGlobal();
 	private final transient Listener listener = new Listener();
 	private transient Ponto ponto;
 	private Rectangle rectangle;
@@ -106,6 +109,7 @@ public class Fichario extends JTabbedPane {
 
 		@Override
 		public void dragExit(DropTargetEvent dte) {
+			LOG.log(Level.FINEST, "dragExit");
 		}
 
 		@Override
@@ -137,33 +141,44 @@ public class Fichario extends JTabbedPane {
 			return;
 		}
 
+		if (formDesktop) {
+			destacarForm(formulario, objetos, conexao);
+		} else {
+			destacarDesk(formulario, objetos, conexao);
+		}
+	}
+
+	private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+		DesktopFormulario desktopFormulario = new DesktopFormulario(formulario);
+
 		int x = 10;
 		int y = 10;
 
-		if (formDesktop) {
-			DesktopFormulario desktopFormulario = new DesktopFormulario(formulario);
-
-			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
-					Object[] array = Util.criarArray(conexao, objeto, null);
-					desktopFormulario.getDesktop().addForm(array, new Point(x, y), null,
-							(String) array[Util.ARRAY_INDICE_APE], false);
-					objeto.setSelecionado(false);
-					x += 25;
-					y += 25;
-				}
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela2())) {
+				Object[] array = Util.criarArray(conexao, objeto, null);
+				desktopFormulario.getDesktop().addForm(array, new Point(x, y), null,
+						(String) array[Util.ARRAY_INDICE_APE], false);
+				objeto.setSelecionado(false);
+				x += 25;
+				y += 25;
 			}
-		} else {
-			Desktop desktop = novoDesktop(formulario);
+		}
+	}
 
-			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
-					Object[] array = Util.criarArray(conexao, objeto, null);
-					desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
-					objeto.setSelecionado(false);
-					x += 25;
-					y += 25;
-				}
+	private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+		Desktop desktop = novoDesktop(formulario);
+
+		int x = 10;
+		int y = 10;
+
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela2())) {
+				Object[] array = Util.criarArray(conexao, objeto, null);
+				desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
+				objeto.setSelecionado(false);
+				x += 25;
+				y += 25;
 			}
 		}
 	}
