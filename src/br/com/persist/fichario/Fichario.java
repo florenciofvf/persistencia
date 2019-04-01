@@ -272,7 +272,8 @@ public class Fichario extends JTabbedPane {
 				if (cmp instanceof Container) {
 					Container c = (Container) cmp;
 
-					if (c.getArquivo() != null && c.getArquivo().equals(file)) {
+					if (c.getArquivo() != null && file != null
+							&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {
 						return true;
 					}
 				}
