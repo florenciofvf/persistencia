@@ -132,16 +132,16 @@ public class Arvore extends JTree {
 		private static final long serialVersionUID = 1L;
 		private Action abrirFormAcao = Action.actionMenu("label.abrir_formulario", Icones.ABRIR);
 		private Action abrirFichAcao = Action.actionMenu("label.abrir_fichario", Icones.ABRIR);
-		private Action atualizarAcao = Action.actionMenu("label.atualizar", Icones.ATUALIZAR);
+		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.FECHAR);
 
 		public ArvorePopup() {
-			add(new MenuItem(atualizarAcao));
-			addSeparator();
 			add(new MenuItem(abrirFormAcao));
 			add(new MenuItem(abrirFichAcao));
 			addSeparator();
 			add(new MenuItem(fecharAcao));
+			addSeparator();
+			add(new MenuItem(atualizarAcao));
 
 			abrirFormAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
 			abrirFichAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));

@@ -24,7 +24,7 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 	public ContainerArvore(Formulario formulario) {
 		this.formulario = formulario;
 		montarLayout();
-		atualizarArvore(arvore);
+		baixarArquivo();
 	}
 
 	private void montarLayout() {
@@ -35,12 +35,12 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
+		private Action atualizarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 
 		Toolbar() {
 			add(new Button(atualizarAcao));
 
-			atualizarAcao.setActionListener(e -> atualizarArvore(arvore));
+			atualizarAcao.setActionListener(e -> baixarArquivo());
 		}
 	}
 
@@ -65,14 +65,22 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 
 	@Override
 	public void atualizarArvore(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+
+		if (arquivo != null) {
+			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+		}
+	}
+
+	private void baixarArquivo() {
 		ArvoreModelo modelo = new ArvoreModelo();
 		arvore.setModel(modelo);
 
 		List<Arquivo> lista = new ArrayList<>();
 		modelo.listar(lista);
 
-		for (Arquivo a : lista) {
-			a.setArquivoAberto(formulario.getFichario().isAberto(a.getFile()));
+		for (Arquivo arquivo : lista) {
+			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
 		}
 	}
 
