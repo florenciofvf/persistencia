@@ -24,6 +24,7 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 	public ContainerArvore(Formulario formulario) {
 		this.formulario = formulario;
 		montarLayout();
+		atualizarArvore(arvore);
 	}
 
 	private void montarLayout() {
