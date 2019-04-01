@@ -7,6 +7,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import br.com.persist.Objeto;
@@ -257,6 +259,18 @@ public class Util {
 		}
 
 		return instrucao;
+	}
+
+	public static JFileChooser criarFileChooser(File arquivo, boolean multiSelection) {
+		JFileChooser fileChooser = new JFileChooser(".");
+		fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
+		fileChooser.setMultiSelectionEnabled(multiSelection);
+
+		if (arquivo != null) {
+			fileChooser.setCurrentDirectory(arquivo);
+		}
+
+		return fileChooser;
 	}
 
 	public static final byte ARRAY_INDICE_OBJ = 0;

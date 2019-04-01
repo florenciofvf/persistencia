@@ -32,7 +32,6 @@ import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro;
@@ -233,7 +232,7 @@ public class Formulario extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = criarFileChooser();
+				JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
@@ -258,7 +257,7 @@ public class Formulario extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = criarFileChooser();
+				JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
 				int opcao = fileChooser.showOpenDialog(Formulario.this);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
@@ -271,18 +270,6 @@ public class Formulario extends JFrame {
 					}
 				}
 			}
-		}
-
-		private JFileChooser criarFileChooser() {
-			JFileChooser fileChooser = new JFileChooser(".");
-			fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
-			fileChooser.setMultiSelectionEnabled(true);
-
-			if (arquivo != null) {
-				fileChooser.setCurrentDirectory(arquivo);
-			}
-
-			return fileChooser;
 		}
 	}
 

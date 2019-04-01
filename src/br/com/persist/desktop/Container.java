@@ -209,13 +209,7 @@ public class Container extends PanelBorder {
 			});
 
 			salvarComoAcao.setActionListener(e -> {
-				JFileChooser fileChooser = new JFileChooser(".");
-				fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
-
-				if (arquivo != null) {
-					fileChooser.setCurrentDirectory(arquivo);
-				}
-
+				JFileChooser fileChooser = Util.criarFileChooser(arquivo, false);
 				int opcao = fileChooser.showSaveDialog(formulario);
 
 				if (opcao == JFileChooser.APPROVE_OPTION) {
