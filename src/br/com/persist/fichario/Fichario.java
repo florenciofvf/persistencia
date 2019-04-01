@@ -262,7 +262,24 @@ public class Fichario extends JTabbedPane {
 		super.remove(index);
 	}
 
+	public void fecharArquivo(File file) {
+		if (file == null || !file.isFile()) {
+			return;
+		}
+
+		int indice = getIndice(file);
+
+		while (indice >= 0) {
+			remove(indice);
+			indice = getIndice(file);
+		}
+	}
+
 	public boolean isAberto(File file) {
+		return getIndice(file) >= 0;
+	}
+
+	public int getIndice(File file) {
 		int total = getTabCount();
 
 		for (int i = 0; i < total; i++) {
@@ -274,7 +291,7 @@ public class Fichario extends JTabbedPane {
 
 					if (c.getArquivo() != null && file != null
 							&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {
-						return true;
+						return i;
 					}
 				}
 			} catch (Exception e) {
@@ -282,7 +299,7 @@ public class Fichario extends JTabbedPane {
 			}
 		}
 
-		return false;
+		return -1;
 	}
 
 	private class Listener extends MouseAdapter {

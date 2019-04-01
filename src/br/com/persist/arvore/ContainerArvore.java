@@ -77,7 +77,12 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 	}
 
 	@Override
-	public void excluirArquivo(Arvore arvore) {
-		throw new UnsupportedOperationException();
+	public void fecharArquivo(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+
+		if (arquivo != null) {
+			formulario.getFichario().fecharArquivo(arquivo.getFile());
+			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+		}
 	}
 }

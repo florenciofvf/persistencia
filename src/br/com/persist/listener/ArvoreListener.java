@@ -9,5 +9,5 @@ public interface ArvoreListener {
 
 	public void atualizarArvore(Arvore arvore);
 
-	public void excluirArquivo(Arvore arvore);
+	public void fecharArquivo(Arvore arvore);
 }
