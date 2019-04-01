@@ -69,6 +69,7 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 
 		if (arquivo != null) {
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			ArvoreUtil.statusEstrutura(arvore, arquivo);
 		}
 	}
 

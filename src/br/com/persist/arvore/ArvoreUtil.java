@@ -35,6 +35,15 @@ public class ArvoreUtil {
 		modelo.treeStructureChanged(event);
 	}
 
+	public static void statusEstrutura(Arvore arvore, Arquivo arquivo) {
+		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
+
+		TreePath path = getTreePath(arquivo);
+		TreeModelEvent event = new TreeModelEvent(arquivo, path);
+
+		modelo.treeNodesChanged(event);
+	}
+
 	public static void excluirEstrutura(Arvore arvore, Arquivo arquivo) {
 		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
 
