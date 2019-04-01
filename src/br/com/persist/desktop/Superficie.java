@@ -735,14 +735,14 @@ public class Superficie extends Desktop {
 	}
 
 	private class Area {
-		int x;
-		int y;
 		int largura;
 		int altura;
 		int x1;
 		int y1;
 		int x2;
 		int y2;
+		int x;
+		int y;
 
 		void ini() {
 			x = y = largura = altura = 0;
