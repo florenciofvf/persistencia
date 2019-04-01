@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -27,6 +28,7 @@ public class XML {
 	private static SAXParserFactory criarSAXParserFactory() throws XMLException {
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
+			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 			factory.setNamespaceAware(true);
 			factory.setXIncludeAware(true);
 			return factory;

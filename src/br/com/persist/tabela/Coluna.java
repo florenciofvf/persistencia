@@ -14,20 +14,31 @@ public class Coluna {
 	private final int indice;
 
 	public Coluna(String nome, int indice) {
-		this(nome, indice, false, false, false, null, -1, null, false);
+		this(nome, indice, false, false, false, null, new Config(-1, null, false));
 	}
 
-	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, int tamanho,
-			String tipoBanco, boolean nulavel) {
-		this.tipoBanco = tipoBanco;
-		this.tamanho = tamanho;
-		this.nulavel = nulavel;
+	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, Config config) {
+		this.tipoBanco = config.tipoBanco;
+		this.tamanho = config.tamanho;
+		this.nulavel = config.nulavel;
 		this.indice = indice;
 		this.numero = numero;
 		this.chave = chave;
 		this.nome = nome;
 		this.blob = blob;
 		this.tipo = tipo;
+	}
+
+	public static class Config {
+		final int tamanho;
+		final String tipoBanco;
+		final boolean nulavel;
+
+		public Config(int tamanho, String tipoBanco, boolean nulavel) {
+			this.tamanho = tamanho;
+			this.tipoBanco = tipoBanco;
+			this.nulavel = nulavel;
+		}
 	}
 
 	public String getDetalhe() {

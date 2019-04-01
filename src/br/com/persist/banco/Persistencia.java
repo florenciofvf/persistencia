@@ -116,7 +116,8 @@ public class Persistencia {
 				}
 
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave,
-						tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe, tamanho, tipoBanco, nulavel);
+						tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe,
+						new Coluna.Config(tamanho, tipoBanco, nulavel));
 				colunas.add(coluna);
 			}
 
