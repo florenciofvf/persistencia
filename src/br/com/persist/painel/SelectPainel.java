@@ -35,7 +35,7 @@ public class SelectPainel extends Panel {
 
 	public SelectPainel(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
-		textArea.setText(UpdatePainel.subst(instrucao, mapaChaveValor));
+		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		cmbConexao = Util.criarComboConexao(listener);
 		if (padrao != null) {

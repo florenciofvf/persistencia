@@ -11,8 +11,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -234,6 +236,27 @@ public class Util {
 	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension, String apelido) {
 		Superficie.setComplemento(conexao, objeto);
 		return new Object[] { objeto, conexao, dimension, apelido };
+	}
+
+	public static String substituir(String instrucao, Map<String, String> mapaChaveValor) {
+		if (instrucao == null) {
+			instrucao = "";
+		}
+
+		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+			return instrucao;
+		}
+
+		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
+
+		while (it.hasNext()) {
+			Entry<String, String> entry = it.next();
+			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
+			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
+			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
+		}
+
+		return instrucao;
 	}
 
 	public static final byte ARRAY_INDICE_OBJ = 0;

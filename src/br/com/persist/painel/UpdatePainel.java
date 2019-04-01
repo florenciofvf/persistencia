@@ -3,9 +3,7 @@ package br.com.persist.painel;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.sql.Connection;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JComboBox;
 import javax.swing.JToolBar;
@@ -29,7 +27,7 @@ public class UpdatePainel extends Panel {
 
 	public UpdatePainel(PainelObjetoListener listener, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
-		textArea.setText(UpdatePainel.subst(instrucao, mapaChaveValor));
+		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
 		cmbConexao = Util.criarComboConexao(listener);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
@@ -37,27 +35,6 @@ public class UpdatePainel extends Panel {
 		this.listener = listener;
 		toolbar.add(cmbConexao);
 		montarLayout();
-	}
-
-	public static String subst(String instrucao, Map<String, String> mapaChaveValor) {
-		if (instrucao == null) {
-			instrucao = "";
-		}
-
-		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
-			return instrucao;
-		}
-
-		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Entry<String, String> entry = it.next();
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
-		}
-
-		return instrucao;
 	}
 
 	public Frame getFrame() {

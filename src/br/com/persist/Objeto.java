@@ -102,6 +102,10 @@ public class Objeto implements Runnable {
 		o.chaves = chaves;
 		o.setId(id);
 
+		for (Instrucao i : instrucoes) {
+			o.addInstrucao(i.clonar());
+		}
+
 		return o;
 	}
 
