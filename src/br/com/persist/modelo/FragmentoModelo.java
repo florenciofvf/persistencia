@@ -122,12 +122,16 @@ public class FragmentoModelo extends AbstractTableModel {
 		}
 	}
 
-	public static void inicializar() throws Exception {
+	public static void inicializar() {
 		fragmentos.clear();
 		auxiliares.clear();
 
-		if (file.exists() && file.canRead()) {
-			XML.processarFragmento(file, fragmentos);
+		try {
+			if (file.exists() && file.canRead()) {
+				XML.processarFragmento(file, fragmentos);
+			}
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, "ERRO", e);
 		}
 	}
 
