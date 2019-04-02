@@ -129,6 +129,7 @@ public class Formulario extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
+				menuPrincipal.arvoreFichAcao.actionPerformed(null);
 				atualizarFragmentos();
 				atualizarConexoes();
 			}
