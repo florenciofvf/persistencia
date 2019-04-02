@@ -262,6 +262,14 @@ public class Fichario extends JTabbedPane {
 		super.remove(index);
 	}
 
+	public void selecionarAba(File file) {
+		int indice = getIndice(file);
+
+		if (indice >= 0) {
+			setSelectedIndex(indice);
+		}
+	}
+
 	public void fecharArquivo(File file) {
 		if (file == null || !file.isFile()) {
 			return;

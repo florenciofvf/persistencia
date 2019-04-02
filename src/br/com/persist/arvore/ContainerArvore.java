@@ -64,6 +64,17 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 	}
 
 	@Override
+	public void selecionarArquivo(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+
+		if (arquivo != null) {
+			formulario.getFichario().selecionarAba(arquivo.getFile());
+			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			ArvoreUtil.statusEstrutura(arvore, arquivo);
+		}
+	}
+
+	@Override
 	public void atualizarArvore(Arvore arvore) {
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
