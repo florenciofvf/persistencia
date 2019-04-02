@@ -35,12 +35,32 @@ public class ContainerArvore extends PanelBorder implements ArvoreListener {
 
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
+		private Action statusAcao = Action.actionIcon("label.status", Icones.HIERARQUIA);
 		private Action atualizarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 
 		Toolbar() {
 			add(new Button(atualizarAcao));
+			add(new Button(statusAcao));
 
 			atualizarAcao.setActionListener(e -> baixarArquivo());
+			statusAcao.setActionListener(e -> statusArquivo());
+		}
+
+		private void statusArquivo() {
+			ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
+
+			List<Arquivo> lista = new ArrayList<>();
+			modelo.listar(lista);
+
+			for (Arquivo arquivo : lista) {
+				arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+
+				if (arquivo.isArquivoAberto()) {
+					ArvoreUtil.selecionarObjeto(arvore, arquivo);
+				} else {
+					ArvoreUtil.statusEstrutura(arvore, arquivo);
+				}
+			}
 		}
 	}
 
