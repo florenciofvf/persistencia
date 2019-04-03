@@ -435,7 +435,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 	public void run() {
 		while (!Thread.currentThread().isInterrupted() && toolbar.atualizar.itemAtualizarAuto.isDisplayable()) {
 			try {
-				Thread.sleep(Constantes.INTERVALO_PESQUISA_AUTO);
+				Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
 				actionPerformed(null);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

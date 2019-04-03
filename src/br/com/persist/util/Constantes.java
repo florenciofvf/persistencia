@@ -5,7 +5,6 @@ import java.awt.Dimension;
 public class Constantes {
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
-	public static final int INTERVALO_PESQUISA_AUTO = 5000;
 	public static final String ENCODING = "UTF-8";
 	public static final String QL = "\r\n";
 	public static final String TAB = "\t";
