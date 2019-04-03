@@ -27,10 +27,23 @@ public class ConfigDialogo extends AbstratoDialogo {
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
-	private final transient Posicao[] posicoes = { new Posicao("label.acima", SwingConstants.TOP),
-			new Posicao("label.esquerdo", SwingConstants.LEFT), new Posicao("label.abaixo", SwingConstants.BOTTOM),
-			new Posicao("label.direito", SwingConstants.RIGHT) };
-	private final RadioPosicao[] rdoPosicoes = new RadioPosicao[posicoes.length];
+
+	private final transient NomeValor[] nomeValorPosicoes = {
+			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
+			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
+			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
+			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
+
+	private final transient NomeValor[] nomeValorIntervalos = {
+			new NomeValor("label.1000", 1000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.5000", 5000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.10000", 10000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.20000", 20000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.30000", 30000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.59000", 59000, NomeValor.INTERVALO_AUTO), };
+
+	private final RadioPosicao[] rdoIntervalos = new RadioPosicao[nomeValorIntervalos.length];
+	private final RadioPosicao[] rdoPosicoes = new RadioPosicao[nomeValorPosicoes.length];
 	private final Formulario formulario;
 
 	public ConfigDialogo(Formulario formulario) {
@@ -49,25 +62,42 @@ public class ConfigDialogo extends AbstratoDialogo {
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 
+		Panel panelIntervalos = new Panel(new GridLayout(0, 6));
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
-		ButtonGroup grupo = new ButtonGroup();
+		ButtonGroup grupoIntervalos = new ButtonGroup();
+		ButtonGroup grupoPosicoes = new ButtonGroup();
 
-		for (int i = 0; i < posicoes.length; i++) {
-			RadioPosicao radio = new RadioPosicao(posicoes[i]);
+		for (int i = 0; i < nomeValorPosicoes.length; i++) {
+			RadioPosicao radio = new RadioPosicao(nomeValorPosicoes[i]);
 			radio.setMargin(new Insets(5, 10, 5, 5));
+			grupoPosicoes.add(radio);
 			panelPosicoes.add(radio);
 			rdoPosicoes[i] = radio;
-			grupo.add(radio);
 
-			radio.setSelected(radio.posicao.indice == Preferencias.getPosicaoAbaFichario());
+			radio.setSelected(radio.nomeValor.valor == Preferencias.getPosicaoAbaFichario());
 		}
 
+		for (int i = 0; i < nomeValorIntervalos.length; i++) {
+			RadioPosicao radio = new RadioPosicao(nomeValorIntervalos[i]);
+			radio.setMargin(new Insets(5, 10, 5, 5));
+			grupoIntervalos.add(radio);
+			panelIntervalos.add(radio);
+			rdoIntervalos[i] = radio;
+
+			radio.setSelected(radio.nomeValor.valor == Preferencias.getIntervaloPesquisaAuto());
+		}
+
+		Label tituloIntervalo = new Label("label.intervalo_pesquisa_auto");
+		tituloIntervalo.setHorizontalAlignment(Label.CENTER);
 		Label localAbas = new Label("label.local_abas");
 		localAbas.setHorizontalAlignment(Label.CENTER);
 
 		Panel container = new Panel(new GridLayout(0, 1));
 		container.add(localAbas);
 		container.add(panelPosicoes);
+		container.add(new JSeparator());
+		container.add(tituloIntervalo);
+		container.add(panelIntervalos);
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkNomeColunaListener);
@@ -122,26 +152,35 @@ public class ConfigDialogo extends AbstratoDialogo {
 		throw new UnsupportedOperationException();
 	}
 
-	private class Posicao {
+	private class NomeValor {
+		static final byte INTERVALO_AUTO = 2;
+		static final byte POSICAO_ABA = 1;
 		final String nome;
-		final int indice;
+		final int valor;
+		final int tipo;
 
-		Posicao(String chave, int indice) {
+		NomeValor(String chave, int valor, int tipo) {
 			this.nome = Mensagens.getString(chave);
-			this.indice = indice;
+			this.valor = valor;
+			this.tipo = tipo;
 		}
 	}
 
 	private class RadioPosicao extends JRadioButton {
 		private static final long serialVersionUID = 1L;
-		final transient Posicao posicao;
+		final transient NomeValor nomeValor;
 
-		RadioPosicao(Posicao posicao) {
-			super(posicao.nome);
-			this.posicao = posicao;
+		RadioPosicao(NomeValor nomeValor) {
+			super(nomeValor.nome);
+			this.nomeValor = nomeValor;
+
 			addActionListener(e -> {
-				Preferencias.setPosicaoAbaFichario(posicao.indice);
-				formulario.getFichario().setTabPlacement(Preferencias.getPosicaoAbaFichario());
+				if (nomeValor.tipo == NomeValor.POSICAO_ABA) {
+					Preferencias.setPosicaoAbaFichario(nomeValor.valor);
+					formulario.getFichario().setTabPlacement(Preferencias.getPosicaoAbaFichario());
+				} else if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
+					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
+				}
 			});
 		}
 	}
