@@ -166,7 +166,9 @@ public class Formulario extends JFrame {
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
 		private Action arvoreFormAcao = Action.actionMenu("label.arvore_formulario", Icones.EXPANDIR);
+		private Action anotaFormAcao = Action.actionMenu("label.anotacoes_formulario", Icones.PANEL4);
 		private Action arvoreFichAcao = Action.actionMenu("label.arvore_fichario", Icones.EXPANDIR);
+		private Action anotaFichAcao = Action.actionMenu("label.anotacoes_fichario", Icones.PANEL4);
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
 		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
@@ -187,6 +189,9 @@ public class Formulario extends JFrame {
 			menuArquivo.add(new MenuItem(formAcao));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(consAcao));
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuItem(anotaFormAcao));
+			menuArquivo.add(new MenuItem(anotaFichAcao));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(new AbrirFormularioAcao(true)));
 			menuArquivo.add(new MenuItem(new AbrirFicharioAcao(true)));
@@ -210,6 +215,7 @@ public class Formulario extends JFrame {
 		private void eventos() {
 			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
 			arvoreFormAcao.setActionListener(e -> new ArvoreFormulario(Formulario.this));
+			anotaFichAcao.setActionListener(e -> fichario.novaAnotacao(Formulario.this));
 			arvoreFichAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
 			formAcao.setActionListener(e -> new DesktopFormulario(Formulario.this));
@@ -217,10 +223,15 @@ public class Formulario extends JFrame {
 			consAcao.setActionListener(e -> fichario.novoSelect(Formulario.this));
 			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
+			anotaFormAcao.setActionListener(e -> anotacaoFormulario());
 			fecharAcao.setActionListener(e -> {
 				FormularioUtil.fechar(Formulario.this);
 				System.exit(0);
 			});
+		}
+
+		private void anotacaoFormulario() {
+			// fvf
 		}
 
 		class AbrirFormularioAcao extends Acao {
