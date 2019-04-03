@@ -74,7 +74,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
-public class ObjetoPainel extends Panel implements ActionListener, ItemListener {
+public class ObjetoPainel extends Panel implements ActionListener, ItemListener, Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
 	private final Button btnArrasto = new Button(Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
@@ -90,6 +90,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 	private final transient Objeto objeto;
 	private final String nomeTabela;
 	private final boolean buscaAuto;
+	private Thread thread;
 
 	public ObjetoPainel(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
@@ -383,6 +384,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 
 	private class ButtonAtualizar extends Button {
 		private static final long serialVersionUID = 1L;
+		private MenuItem itemAtualizarAuto = new MenuItem("label.atualizar_auto", Icones.ATUALIZAR);
 		private Action sincronizarAcao = Action.actionMenu(LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
 		private Action atualizarAcao = Action.actionMenu(LABEL_ATUALIZAR, Icones.ATUALIZAR);
 		private Popup popup = new Popup();
@@ -392,6 +394,8 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 			popup.add(new MenuItem(atualizarAcao));
 			popup.addSeparator();
 			popup.add(new MenuItem(sincronizarAcao));
+			popup.addSeparator();
+			popup.add(itemAtualizarAuto);
 			setComponentPopupMenu(popup);
 			setIcon(Icones.ATUALIZAR);
 			addActionListener(e -> popup.show(this, 5, 5));
@@ -400,12 +404,45 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener 
 		}
 
 		private void eventos() {
+			itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
+			itemAtualizarAuto.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if (thread == null) {
+						thread = new Thread(ObjetoPainel.this);
+						thread.start();
+					}
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					if (thread != null) {
+						thread.interrupt();
+						thread = null;
+					}
+				}
+			});
+
 			atualizarAcao.setActionListener(e -> ObjetoPainel.this.actionPerformed(null));
 			sincronizarAcao.setActionListener(e -> {
 				cabecalhoFiltro = null;
 				ObjetoPainel.this.actionPerformed(null);
 			});
 		}
+	}
+
+	@Override
+	public void run() {
+		while (!Thread.currentThread().isInterrupted() && toolbar.atualizar.itemAtualizarAuto.isDisplayable()) {
+			try {
+				Thread.sleep(Constantes.INTERVALO_PESQUISA_AUTO);
+				actionPerformed(null);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+
+		thread = null;
 	}
 
 	private class ButtonBuscaAuto extends Button {
