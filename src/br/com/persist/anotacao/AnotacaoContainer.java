@@ -1,4 +1,4 @@
-package br.com.persist.painel;
+package br.com.persist.anotacao;
 
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
@@ -7,16 +7,15 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import javax.swing.JToolBar;
-
+import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
-import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
+import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
 public class AnotacaoContainer extends Panel {
@@ -26,15 +25,15 @@ public class AnotacaoContainer extends Panel {
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 
-	public AnotacaoContainer(Formulario formulario) {
+	public AnotacaoContainer(IJanela janela) {
+		toolbar.ini(janela);
 		montarLayout();
 		abrir();
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.NORTH, toolbar);
-
 		add(BorderLayout.CENTER, new ScrollPane(textArea));
+		add(BorderLayout.NORTH, toolbar);
 	}
 
 	private void abrir() {
@@ -52,12 +51,15 @@ public class AnotacaoContainer extends Panel {
 		}
 	}
 
-	private class Toolbar extends JToolBar {
+	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.BAIXAR);
 		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
 
-		Toolbar() {
+		@Override
+		protected void ini(IJanela janela) {
+			super.ini(janela);
+
 			add(new Button(atualizarAcao));
 			addSeparator();
 			add(new Button(salvarAcao));

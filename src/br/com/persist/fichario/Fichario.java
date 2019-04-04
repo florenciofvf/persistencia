@@ -37,7 +37,7 @@ import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
-import br.com.persist.painel.AnotacaoContainer;
+import br.com.persist.anotacao.AnotacaoContainer;
 import br.com.persist.painel.SelectFilePainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Form;
@@ -197,7 +197,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Panel novaAnotacao(Formulario formulario) {
-		AnotacaoContainer panel = new AnotacaoContainer(formulario);
+		AnotacaoContainer panel = new AnotacaoContainer(null);
 		addTab(Mensagens.getString("label.anotacoes"), panel);
 		int ultimoIndice = getTabCount() - 1;
 
