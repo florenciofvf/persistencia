@@ -17,4 +17,8 @@ public class BarraButton extends JToolBar {
 			addSeparator();
 		}
 	}
+
+	protected void addButton(Action action) {
+		add(new Button(action));
+	}
 }

@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
@@ -60,9 +59,9 @@ public class AnotacaoContainer extends Panel {
 		protected void ini(IJanela janela) {
 			super.ini(janela);
 
-			add(new Button(atualizarAcao));
+			addButton(atualizarAcao);
 			addSeparator();
-			add(new Button(salvarAcao));
+			addButton(salvarAcao);
 
 			eventos();
 		}
