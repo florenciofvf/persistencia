@@ -18,6 +18,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
+import br.com.persist.anotacao.AnotacaoFormulario;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
@@ -231,7 +232,9 @@ public class Formulario extends JFrame {
 		}
 
 		private void anotacaoFormulario() {
-			// fvf
+			AnotacaoFormulario form = new AnotacaoFormulario();
+			form.setLocationRelativeTo(this);
+			form.setVisible(true);
 		}
 
 		class AbrirFormularioAcao extends Acao {
