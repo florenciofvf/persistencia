@@ -33,12 +33,12 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.formulario.ExternoFormulario;
 import br.com.persist.formulario.InternoFormulario;
-import br.com.persist.formulario.SelectFormulario;
 import br.com.persist.painel.ObjetoPainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
@@ -49,10 +49,9 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro.Instrucao;
-import br.com.persist.xml.XMLUtil;
-import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
+import br.com.persist.xml.XMLUtil;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
@@ -1048,8 +1047,7 @@ public class Superficie extends Desktop {
 					frame = container.getSuperficieFormulario();
 				}
 
-				SelectFormulario form = new SelectFormulario(Mensagens.getString("label.pesquisa"), formulario,
-						container.getConexaoPadrao(), null, null);
+				ConsultaFormulario form = new ConsultaFormulario(formulario, container.getConexaoPadrao());
 				form.setLocationRelativeTo(frame);
 				form.setVisible(true);
 			});

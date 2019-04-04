@@ -22,8 +22,8 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
+import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.SelectFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
@@ -31,7 +31,6 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
-import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -230,8 +229,7 @@ public class Container extends PanelBorder {
 			});
 
 			consAcao.setActionListener(e -> {
-				SelectFormulario form = new SelectFormulario(Mensagens.getString("label.pesquisa"), formulario,
-						getConexaoPadrao(), null, null);
+				ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
 				form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
 				form.setVisible(true);
 			});

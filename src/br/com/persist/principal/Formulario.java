@@ -20,8 +20,10 @@ import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.anotacao.AnotacaoFormulario;
 import br.com.persist.banco.Conexao;
+import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
+import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
@@ -41,7 +43,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
-public class Formulario extends JFrame {
+public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
 	private final transient List<Conexao> conexoes = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
@@ -109,6 +111,7 @@ public class Formulario extends JFrame {
 		return o;
 	}
 
+	@Override
 	public List<Conexao> getConexoes() {
 		return conexoes;
 	}
@@ -170,11 +173,12 @@ public class Formulario extends JFrame {
 		private Action anotaFormAcao = Action.actionMenu("label.anotacoes_formulario", Icones.PANEL4);
 		private Action arvoreFichAcao = Action.actionMenu("label.arvore_fichario", Icones.EXPANDIR);
 		private Action anotaFichAcao = Action.actionMenu("label.anotacoes_fichario", Icones.PANEL4);
+		private Action consFormAcao = Action.actionMenu("label.consulta_formulario", Icones.PANEL3);
+		private Action consFichAcao = Action.actionMenu("label.consulta_fichario", Icones.PANEL3);
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
 		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
 		private Action formAcao = Action.actionMenu("label.formulario", Icones.PANEL);
-		private Action consAcao = Action.actionMenu("label.consulta", Icones.PANEL3);
 		private Action deskAcao = Action.actionMenu("label.desktop", Icones.PANEL2);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.SAIR);
 		private Action novoAcao = Action.actionMenu("label.novo", Icones.CUBO);
@@ -189,7 +193,8 @@ public class Formulario extends JFrame {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(formAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(consAcao));
+			menuArquivo.add(new MenuItem(consFormAcao));
+			menuArquivo.add(new MenuItem(consFichAcao));
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(anotaFormAcao));
 			menuArquivo.add(new MenuItem(anotaFichAcao));
@@ -218,13 +223,14 @@ public class Formulario extends JFrame {
 			arvoreFormAcao.setActionListener(e -> new ArvoreFormulario(Formulario.this));
 			anotaFichAcao.setActionListener(e -> fichario.novaAnotacao(Formulario.this));
 			arvoreFichAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
+			consFichAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
 			formAcao.setActionListener(e -> new DesktopFormulario(Formulario.this));
 			deskAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
-			consAcao.setActionListener(e -> fichario.novoSelect(Formulario.this));
 			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
 			anotaFormAcao.setActionListener(e -> anotacaoFormulario());
+			consFormAcao.setActionListener(e -> consultaFormulario());
 			fecharAcao.setActionListener(e -> {
 				FormularioUtil.fechar(Formulario.this);
 				System.exit(0);
@@ -233,6 +239,12 @@ public class Formulario extends JFrame {
 
 		private void anotacaoFormulario() {
 			AnotacaoFormulario form = new AnotacaoFormulario();
+			form.setLocationRelativeTo(this);
+			form.setVisible(true);
+		}
+
+		private void consultaFormulario() {
+			ConsultaFormulario form = new ConsultaFormulario(Formulario.this, null);
 			form.setLocationRelativeTo(this);
 			form.setVisible(true);
 		}

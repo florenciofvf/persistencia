@@ -33,12 +33,12 @@ import br.com.persist.arvore.ContainerArvore;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.consulta.ConsultaContainer;
 import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.anotacao.AnotacaoContainer;
-import br.com.persist.painel.SelectFilePainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
@@ -208,8 +208,8 @@ public class Fichario extends JTabbedPane {
 		return panel;
 	}
 
-	public Panel novoSelect(Formulario formulario) {
-		SelectFilePainel panel = new SelectFilePainel(formulario, null);
+	public Panel novaConsulta(Formulario formulario) {
+		ConsultaContainer panel = new ConsultaContainer(null, formulario, null, null, null);
 		addTab(Mensagens.getString("label.consulta"), panel);
 		int ultimoIndice = getTabCount() - 1;
 
