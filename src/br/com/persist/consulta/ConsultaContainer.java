@@ -1,4 +1,4 @@
-package br.com.persist.painel;
+package br.com.persist.consulta;
 
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
@@ -7,29 +7,29 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.JToolBar;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
+import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
-import br.com.persist.comp.Button;
+import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
-import br.com.persist.principal.Formulario;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
+import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class SelectFilePainel extends Panel {
+public class ConsultaContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private static final String PAINEL_SELECT = "PAINEL SELECT";
 	private static final File file = new File("consultas/consultas");
@@ -38,15 +38,19 @@ public class SelectFilePainel extends Panel {
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 
-	public SelectFilePainel(Formulario formulario, Conexao padrao) {
+	public ConsultaContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, String instrucao,
+			Map<String, String> mapaChaveValor) {
+		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		cmbConexao = Util.criarComboConexao(formulario);
+		cmbConexao = Util.criarComboConexao(provedor);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
-		toolbar.add(cmbConexao);
+		toolbar.ini(janela, mapaChaveValor);
 		montarLayout();
-		abrir();
+		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+			abrir();
+		}
 	}
 
 	private void montarLayout() {
@@ -58,6 +62,8 @@ public class SelectFilePainel extends Panel {
 	}
 
 	private void abrir() {
+		textArea.setText("");
+
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 				String linha = br.readLine();
@@ -67,21 +73,28 @@ public class SelectFilePainel extends Panel {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_SELECT, ex, SelectFilePainel.this);
+				Util.stackTraceAndMessage(PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
 		}
 	}
 
-	private class Toolbar extends JToolBar {
+	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
-		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
+		private Action atualizarAcao = Action.actionIconAtualizar();
+		private Action salvarAcao = Action.actionIconSalvar();
 
-		Toolbar() {
-			add(new Button(salvarAcao));
+		protected void ini(IJanela janela, Map<String, String> mapaChaveValor) {
+			super.ini(janela);
+
+			addButton(atualizarAcao);
+
+			if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+				addSeparator();
+				addButton(salvarAcao);
+			}
+
 			addSeparator();
-			add(new Button(atualizarAcao));
-
+			add(cmbConexao);
 			eventos();
 		}
 
@@ -94,7 +107,7 @@ public class SelectFilePainel extends Panel {
 					pw.print(textArea.getText());
 					pw.close();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_SELECT, ex, SelectFilePainel.this);
+					Util.stackTraceAndMessage(PAINEL_SELECT, ex, ConsultaContainer.this);
 				}
 			});
 		}

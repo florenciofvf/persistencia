@@ -51,4 +51,16 @@ public class Action extends Acao {
 	public static Action actionMenu(String chaveRotulo, Icon icone) {
 		return new Action(true, chaveRotulo, icone);
 	}
+
+	public static Action actionIconAtualizar() {
+		return Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
+	}
+
+	public static Action actionIconBaixar() {
+		return Action.actionIcon("label.baixar", Icones.BAIXAR);
+	}
+
+	public static Action actionIconSalvar() {
+		return Action.actionIcon("label.salvar", Icones.SALVAR);
+	}
 }

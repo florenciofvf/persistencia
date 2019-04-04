@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
+import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.listener.PainelObjetoListener;
@@ -229,6 +230,10 @@ public class Util {
 
 	public static JComboBox<Conexao> criarComboConexao(PainelObjetoListener listener) {
 		return new JComboBox<>(new ConexaoComboModelo(listener.getConexoes()));
+	}
+
+	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor) {
+		return new JComboBox<>(new ConexaoComboModelo(provedor.getConexoes()));
 	}
 
 	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {

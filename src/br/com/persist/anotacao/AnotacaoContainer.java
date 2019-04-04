@@ -13,7 +13,6 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
@@ -54,8 +53,8 @@ public class AnotacaoContainer extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIcon("label.atualizar", Icones.BAIXAR);
-		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
+		private Action atualizarAcao = Action.actionIconBaixar();
+		private Action salvarAcao = Action.actionIconSalvar();
 
 		@Override
 		protected void ini(IJanela janela) {
