@@ -90,7 +90,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 	private final transient Objeto objeto;
 	private final String nomeTabela;
 	private final boolean buscaAuto;
-	private Thread thread;
+	private transient Thread thread;
 
 	public ObjetoPainel(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
