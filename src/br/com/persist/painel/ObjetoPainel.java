@@ -45,12 +45,12 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
+import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.desktop.Transferidor;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.InternoFormulario;
-import br.com.persist.formulario.SelectFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.listener.PainelObjetoListener;
 import br.com.persist.listener.TabelaListener;
@@ -649,8 +649,8 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 
 			private void abrirFormulario(Instrucao instrucao, Conexao conexao, Map<String, String> chaves) {
 				if (instrucao.isSelect()) {
-					SelectFormulario form = new SelectFormulario(instrucao.getNome(), listener, conexao,
-							instrucao.getValor(), chaves);
+					ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), () -> listener.getConexoes(),
+							conexao, instrucao.getValor(), chaves);
 
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);

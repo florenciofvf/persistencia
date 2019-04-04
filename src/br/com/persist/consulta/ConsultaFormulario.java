@@ -1,6 +1,7 @@
 package br.com.persist.consulta;
 
 import java.awt.BorderLayout;
+import java.util.Map;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -13,8 +14,13 @@ public class ConsultaFormulario extends AbstratoFormulario implements IJanela {
 	private final ConsultaContainer container;
 
 	public ConsultaFormulario(ConexaoProvedor provedor, Conexao padrao) {
-		super(Mensagens.getString("label.consulta"));
-		container = new ConsultaContainer(this, provedor, padrao, null, null);
+		this(Mensagens.getString("label.consulta"), provedor, padrao, null, null);
+	}
+
+	public ConsultaFormulario(String titulo, ConexaoProvedor provedor, Conexao padrao, String instrucao,
+			Map<String, String> mapaChaveValor) {
+		super(titulo);
+		container = new ConsultaContainer(this, provedor, padrao, instrucao, mapaChaveValor);
 		montarLayout();
 	}
 
