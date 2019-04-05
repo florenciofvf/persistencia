@@ -49,7 +49,7 @@ import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.ConsultaFormulario;
-import br.com.persist.formulario.InternoFormulario;
+import br.com.persist.formulario.ObjetoFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.listener.PainelObjetoListener;
 import br.com.persist.listener.TabelaListener;
@@ -141,8 +141,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 			String apelido = null;
 
-			if (listener instanceof InternoFormulario) {
-				InternoFormulario interno = (InternoFormulario) listener;
+			if (listener instanceof ObjetoFormularioInterno) {
+				ObjetoFormularioInterno interno = (ObjetoFormularioInterno) listener;
 				apelido = interno.getApelido();
 			}
 
@@ -805,8 +805,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		private void eventos() {
 			apelidoAcao.setActionListener(e -> {
-				if (listener instanceof InternoFormulario) {
-					InternoFormulario interno = (InternoFormulario) listener;
+				if (listener instanceof ObjetoFormularioInterno) {
+					ObjetoFormularioInterno interno = (ObjetoFormularioInterno) listener;
 					String valor = interno.getApelido();
 					String resp = Util.getValorInputDialog(ObjetoContainer.this, "label.apelido", valor);
 

@@ -28,7 +28,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
-import br.com.persist.formulario.InternoFormulario;
+import br.com.persist.formulario.ObjetoFormularioInterno;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
@@ -266,8 +266,8 @@ public class Desktop extends JDesktopPane {
 		Dimension dimension = (Dimension) array[Util.ARRAY_INDICE_DIM];
 		Conexao conexao = (Conexao) array[Util.ARRAY_INDICE_CON];
 		Objeto objeto = (Objeto) array[Util.ARRAY_INDICE_OBJ];
-		InternoFormulario form = new InternoFormulario(formulario, objeto, g != null ? g : getGraphics(), conexao,
-				buscaAuto);
+		ObjetoFormularioInterno form = new ObjetoFormularioInterno(formulario, objeto, g != null ? g : getGraphics(),
+				conexao, buscaAuto);
 		form.setApelido(apelido);
 		form.setLocation(point);
 		form.setSize(dimension);
@@ -302,8 +302,8 @@ public class Desktop extends JDesktopPane {
 		grupo.processadoFalse();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof InternoFormulario) {
-				InternoFormulario interno = (InternoFormulario) frame;
+			if (frame instanceof ObjetoFormularioInterno) {
+				ObjetoFormularioInterno interno = (ObjetoFormularioInterno) frame;
 				List<Tabela> tabelas = grupo.getTabelas();
 
 				for (Tabela tabela : tabelas) {

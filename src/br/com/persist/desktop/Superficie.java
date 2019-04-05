@@ -38,8 +38,8 @@ import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
-import br.com.persist.formulario.ExternoFormulario;
-import br.com.persist.formulario.InternoFormulario;
+import br.com.persist.formulario.ObjetoFormulario;
+import br.com.persist.formulario.ObjetoFormularioInterno;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -689,7 +689,7 @@ public class Superficie extends Desktop {
 					if (!Util.estaVazio(selecionadoObjeto.getTabela2())) {
 						Conexao conexao = container.getConexaoPadrao();
 						setComplemento(conexao, selecionadoObjeto);
-						new ExternoFormulario(formulario, frame, selecionadoObjeto, getGraphics(), conexao, false);
+						new ObjetoFormulario(formulario, frame, selecionadoObjeto, getGraphics(), conexao, false);
 					} else {
 						popup.configuracaoAcao.actionPerformed(null);
 					}
@@ -1239,8 +1239,8 @@ public class Superficie extends Desktop {
 				JInternalFrame[] frames = getAllFrames();
 
 				for (JInternalFrame frame : frames) {
-					if (frame instanceof InternoFormulario) {
-						InternoFormulario interno = (InternoFormulario) frame;
+					if (frame instanceof ObjetoFormularioInterno) {
+						ObjetoFormularioInterno interno = (ObjetoFormularioInterno) frame;
 						interno.atualizarFormulario();
 					}
 				}
@@ -1315,7 +1315,7 @@ public class Superficie extends Desktop {
 			JInternalFrame[] frames = getAllFrames();
 
 			for (int i = frames.length - 1; i >= 0; i--) {
-				InternoFormulario interno = (InternoFormulario) frames[i];
+				ObjetoFormularioInterno interno = (ObjetoFormularioInterno) frames[i];
 				Form form = new Form();
 				form.copiar(interno);
 				form.salvar(util);
@@ -1474,7 +1474,7 @@ public class Superficie extends Desktop {
 		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 
 		if (Preferencias.isAbrirAutoDestacado()) {
-			new ExternoFormulario(formulario, frame, objeto, getGraphics(), conexao, false);
+			new ObjetoFormulario(formulario, frame, objeto, getGraphics(), conexao, false);
 			processado.set(true);
 		} else {
 			objeto.setSelecionado(true);
