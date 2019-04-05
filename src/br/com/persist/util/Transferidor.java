@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.util;
 
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;

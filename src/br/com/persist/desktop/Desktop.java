@@ -34,6 +34,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
 public class Desktop extends JDesktopPane {

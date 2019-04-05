@@ -45,7 +45,6 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
-import br.com.persist.desktop.Transferidor;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
@@ -72,6 +71,7 @@ import br.com.persist.util.Fragmento;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
+import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
 public class ObjetoPainel extends Panel implements ActionListener, ItemListener, Runnable {
