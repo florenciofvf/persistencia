@@ -3,6 +3,7 @@ package br.com.persist.xml;
 import java.io.File;
 import java.io.PrintWriter;
 
+import br.com.persist.exception.XMLException;
 import br.com.persist.util.Constantes;
 
 public class XMLUtil {

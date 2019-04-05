@@ -1,11 +1,11 @@
-package br.com.persist.update;
+package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 import java.util.Map;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
-import br.com.persist.formulario.AbstratoFormulario;
+import br.com.persist.container.UpdateContainer;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 

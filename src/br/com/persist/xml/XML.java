@@ -16,6 +16,7 @@ import br.com.persist.Instrucao;
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.exception.XMLException;
 import br.com.persist.util.Form;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Util;
