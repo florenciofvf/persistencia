@@ -25,21 +25,21 @@ import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
-	private final ObjetoContainer objetoPainel;
+	private final ObjetoContainer container;
 	private final OrdenacaoModelo modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
 	private final boolean comFiltro;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(ObjetoContainer objetoPainel, OrdenacaoModelo modelo, Coluna coluna, boolean comFiltro) {
+	public CabecalhoColuna(ObjetoContainer container, OrdenacaoModelo modelo, Coluna coluna, boolean comFiltro) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
 		setBorder(BorderFactory.createEtchedBorder());
 		descricao = new Descricao(coluna.getNome());
 		filtro = new Filtro(coluna.getNome());
 		add(BorderLayout.CENTER, descricao);
 		add(BorderLayout.WEST, ordenacao);
-		this.objetoPainel = objetoPainel;
+		this.container = container;
 		this.comFiltro = comFiltro;
 		if (comFiltro) {
 			add(BorderLayout.EAST, filtro);
@@ -97,7 +97,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 
 		void filtrar(int x, int y) {
-			new FiltroCaixa(objetoPainel.getFrame(), this, x, y);
+			new FiltroCaixa(container.getFrame(), this, x, y);
 		}
 
 		void restaurar() {
@@ -137,7 +137,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					filtro.filtroString = textField.getText();
-					objetoPainel.processarObjeto(filtro.filtroString, null, CabecalhoColuna.this);
+					container.processarObjeto(filtro.filtroString, null, CabecalhoColuna.this);
 					dispose();
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					dispose();

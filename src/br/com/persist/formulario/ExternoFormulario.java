@@ -16,21 +16,21 @@ import br.com.persist.util.BuscaAuto.Grupo;
 
 public class ExternoFormulario extends AbstratoFormulario implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
-	private final ObjetoContainer objetoPainel;
+	private final ObjetoContainer container;
 	private final Formulario formulario;
 
 	public ExternoFormulario(Formulario formulario, Frame frame, Objeto objeto, Graphics g, Conexao padrao,
 			boolean buscaAuto) {
 		super(objeto.getId());
 		this.formulario = formulario;
-		objetoPainel = new ObjetoContainer(this, objeto, g, padrao, buscaAuto);
+		container = new ObjetoContainer(this, objeto, g, padrao, buscaAuto);
 		setLocationRelativeTo(frame);
 		montarLayout();
 		setVisible(true);
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, objetoPainel);
+		add(BorderLayout.CENTER, container);
 	}
 
 	@Override

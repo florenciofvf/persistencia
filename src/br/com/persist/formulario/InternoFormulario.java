@@ -21,14 +21,14 @@ import br.com.persist.util.BuscaAuto.Tabela;
 
 public class InternoFormulario extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
-	private final ObjetoContainer objetoPainel;
+	private final ObjetoContainer container;
 	private final Formulario formulario;
 	private String apelido;
 
 	public InternoFormulario(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		super(objeto.getId(), true, true, true, true);
 		this.formulario = formulario;
-		objetoPainel = new ObjetoContainer(this, objeto, g, padrao, buscaAuto);
+		container = new ObjetoContainer(this, objeto, g, padrao, buscaAuto);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(1000, 600);
 		montarLayout();
@@ -37,20 +37,20 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 
 	public boolean ehTabela(Tabela tabela) {
 		return getApelido().equalsIgnoreCase(tabela.getApelido())
-				&& objetoPainel.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
+				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
 	public ObjetoContainer getObjetoPainel() {
-		return objetoPainel;
+		return container;
 	}
 
 	public void buscaAutomatica(String campo, String argumentos) {
-		objetoPainel.buscaAutomatica(campo, argumentos);
+		container.buscaAutomatica(campo, argumentos);
 	}
 
 	private void montarLayout() {
 		setLayout(new BorderLayout());
-		add(BorderLayout.CENTER, objetoPainel);
+		add(BorderLayout.CENTER, container);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 		}
 
 		if (desktop != null) {
-			desktop.buscaAutomatica(grupo, argumentos, objetoPainel, processado);
+			desktop.buscaAutomatica(grupo, argumentos, container, processado);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 	}
 
 	public void atualizarFormulario() {
-		objetoPainel.atualizarFormulario();
+		container.atualizarFormulario();
 	}
 
 	public String getApelido() {

@@ -297,8 +297,7 @@ public class Desktop extends JDesktopPane {
 		}
 	}
 
-	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer objetoPainel,
-			AtomicBoolean processado) {
+	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer container, AtomicBoolean processado) {
 		JInternalFrame[] frames = getAllFrames();
 		grupo.processadoFalse();
 

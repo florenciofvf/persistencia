@@ -1430,9 +1430,9 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer objetoPainel,
+	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer objContainer,
 			AtomicBoolean processado) {
-		super.buscaAutomatica(grupo, argumentos, objetoPainel, processado);
+		super.buscaAutomatica(grupo, argumentos, objContainer, processado);
 
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
