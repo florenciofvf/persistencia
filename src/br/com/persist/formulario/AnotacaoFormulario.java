@@ -1,8 +1,8 @@
-package br.com.persist.anotacao;
+package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.formulario.AbstratoFormulario;
+import br.com.persist.anotacao.AnotacaoContainer;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 

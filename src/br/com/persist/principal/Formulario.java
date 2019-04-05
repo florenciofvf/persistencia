@@ -18,7 +18,6 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
-import br.com.persist.anotacao.AnotacaoFormulario;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
@@ -28,6 +27,7 @@ import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.DesktopFormulario;
