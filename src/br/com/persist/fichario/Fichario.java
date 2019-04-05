@@ -29,11 +29,11 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
-import br.com.persist.arvore.ArvoreContainer;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.container.AnotacaoContainer;
+import br.com.persist.container.ArvoreContainer;
 import br.com.persist.container.ConsultaContainer;
 import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;

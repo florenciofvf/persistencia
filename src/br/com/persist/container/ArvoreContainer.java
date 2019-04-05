@@ -1,4 +1,4 @@
-package br.com.persist.arvore;
+package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.swing.JToolBar;
 
+import br.com.persist.Arquivo;
+import br.com.persist.arvore.Arvore;
+import br.com.persist.arvore.ArvoreUtil;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ScrollPane;

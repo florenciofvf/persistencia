@@ -1,4 +1,4 @@
-package br.com.persist.arvore;
+package br.com.persist;
 
 import java.util.ArrayList;
 import java.util.List;

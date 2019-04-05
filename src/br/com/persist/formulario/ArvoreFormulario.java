@@ -2,7 +2,7 @@ package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.arvore.ArvoreContainer;
+import br.com.persist.container.ArvoreContainer;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Mensagens;
 

@@ -13,6 +13,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import br.com.persist.Arquivo;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.ArvoreListener;
