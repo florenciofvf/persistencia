@@ -15,13 +15,13 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 
-public class ContainerArvore extends PanelBorder implements ArvoreListener {
+public class ArvoreContainer extends PanelBorder implements ArvoreListener {
 	private static final long serialVersionUID = 1L;
 	private Arvore arvore = new Arvore(new ArvoreModelo());
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
-	public ContainerArvore(Formulario formulario) {
+	public ArvoreContainer(Formulario formulario) {
 		this.formulario = formulario;
 		montarLayout();
 		baixarArquivo();

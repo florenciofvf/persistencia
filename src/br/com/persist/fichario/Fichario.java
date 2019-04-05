@@ -29,7 +29,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
-import br.com.persist.arvore.ContainerArvore;
+import br.com.persist.arvore.ArvoreContainer;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -221,7 +221,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public void novaArvore(Formulario formulario) {
-		ContainerArvore container = new ContainerArvore(formulario);
+		ArvoreContainer container = new ArvoreContainer(formulario);
 		addTab(Mensagens.getString("label.arquivos"), container);
 		int ultimoIndice = getTabCount() - 1;
 
