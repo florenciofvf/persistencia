@@ -2,7 +2,7 @@ package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.anotacao.AnotacaoContainer;
+import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 

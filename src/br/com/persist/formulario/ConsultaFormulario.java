@@ -5,7 +5,7 @@ import java.util.Map;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
-import br.com.persist.consulta.ConsultaContainer;
+import br.com.persist.container.ConsultaContainer;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
