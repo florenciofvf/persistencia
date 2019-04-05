@@ -72,4 +72,16 @@ public class Action extends Acao {
 		return Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
 		});
 	}
+
+	public static Action actionMenuFormulario() {
+		return new Action(true, Constantes.LABEL_FORMULARIO, null);
+	}
+
+	public static Action actionMenuFichario() {
+		return new Action(true, Constantes.LABEL_FICHARIO, null);
+	}
+
+	public static Action actionMenuDialogo() {
+		return new Action(true, Constantes.LABEL_DIALOGO, null);
+	}
 }

@@ -3,6 +3,7 @@ package br.com.persist.comp;
 import javax.swing.Icon;
 import javax.swing.JMenu;
 
+import br.com.persist.util.Action;
 import br.com.persist.util.Mensagens;
 
 public class Menu extends JMenu {
@@ -15,5 +16,9 @@ public class Menu extends JMenu {
 
 	public Menu(String chaveRotulo) {
 		super(Mensagens.getString(chaveRotulo));
+	}
+
+	protected void addMenuItem(Action action) {
+		add(new MenuItem(action));
 	}
 }
