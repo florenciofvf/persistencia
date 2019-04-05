@@ -51,7 +51,6 @@ import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.InternoFormulario;
-import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.listener.PainelObjetoListener;
 import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.ListagemModelo;
@@ -63,6 +62,7 @@ import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaUtil;
+import br.com.persist.update.UpdateFormulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto;
@@ -579,8 +579,8 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 							return;
 						}
 
-						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(LABEL_ATUALIZAR), listener,
-								conexao, update, null);
+						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(LABEL_ATUALIZAR),
+								() -> listener.getConexoes(), conexao, update);
 
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
@@ -658,8 +658,8 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 
 					form.setVisible(true);
 				} else {
-					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), listener, conexao,
-							instrucao.getValor(), chaves);
+					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), () -> listener.getConexoes(),
+							conexao, instrucao.getValor(), chaves);
 
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);

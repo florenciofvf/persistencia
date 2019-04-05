@@ -56,6 +56,10 @@ public class Action extends Acao {
 		return Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
 	}
 
+	public static Action actionIconUpdate() {
+		return Action.actionIcon("label.atualizar", Icones.UPDATE);
+	}
+
 	public static Action actionIconBaixar() {
 		return Action.actionIcon("label.baixar", Icones.BAIXAR);
 	}
