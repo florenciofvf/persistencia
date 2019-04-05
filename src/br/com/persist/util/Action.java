@@ -67,4 +67,9 @@ public class Action extends Acao {
 	public static Action actionIconSalvar() {
 		return Action.actionIcon("label.salvar", Icones.SALVAR);
 	}
+
+	public static Action actionIconDestacar() {
+		return Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
+		});
+	}
 }

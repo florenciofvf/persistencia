@@ -77,8 +77,7 @@ import br.com.persist.util.Util;
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
-	private final Button btnArrasto = new Button(Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
-	}));
+	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	private static final String LABEL_ATUALIZAR = "label.atualizar";
 	private final TextField txtComplemento = new TextField(35);
