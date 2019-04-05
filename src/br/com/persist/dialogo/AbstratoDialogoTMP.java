@@ -1,6 +1,8 @@
-package br.com.persist.formulario;
+package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -9,14 +11,25 @@ import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
-public abstract class AbstratoFormulario extends JFrame {
+public abstract class AbstratoDialogoTMP extends JDialog {
 	private static final long serialVersionUID = 1L;
 
-	public AbstratoFormulario(String titulo) {
-		super(titulo);
+	public AbstratoDialogoTMP(Dialog dialog, String titulo) {
+		super(dialog, titulo, true);
+		inicializar();
+		setLocationRelativeTo(dialog);
+	}
+
+	public AbstratoDialogoTMP(Frame frame, String titulo) {
+		super(frame, titulo, true);
+		inicializar();
+		setLocationRelativeTo(frame);
+	}
+
+	private void inicializar() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setSize(1000, 600);
