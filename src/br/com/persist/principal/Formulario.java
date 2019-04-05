@@ -13,8 +13,12 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import br.com.persist.Objeto;
 import br.com.persist.Relacao;
@@ -321,5 +325,24 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 		}
+	}
+}
+
+class ItemLAF extends JRadioButtonMenuItem {
+	private static final long serialVersionUID = 1L;
+	private final String classe;
+
+	public ItemLAF(Formulario formulario, LookAndFeelInfo info) {
+		classe = info.getClassName();
+		setText(info.getName());
+
+		addActionListener(e -> {
+			try {
+				UIManager.setLookAndFeel(classe);
+				SwingUtilities.updateComponentTreeUI(formulario);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(getClass().getName() + ".ItemMenu()", ex, formulario);
+			}
+		});
 	}
 }
