@@ -35,7 +35,6 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
 import br.com.persist.container.ConsultaContainer;
-import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
@@ -231,7 +230,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public void novo(Formulario formulario) {
-		Container container = new Container(formulario);
+		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 
@@ -243,7 +242,7 @@ public class Fichario extends JTabbedPane {
 
 	public void abrirFormulario(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
 			List<Form> forms, StringBuilder sbConexao, Dimension d) {
-		Container container = new Container(formulario);
+		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 
 		new SuperficieFormulario(formulario, container, file);
@@ -252,7 +251,7 @@ public class Fichario extends JTabbedPane {
 
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Dimension d) {
-		Container container = new Container(formulario);
+		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
@@ -268,8 +267,8 @@ public class Fichario extends JTabbedPane {
 	public void remove(int index) {
 		Component cmp = getComponentAt(index);
 
-		if (cmp instanceof Container) {
-			((Container) cmp).excluido();
+		if (cmp instanceof FicharioAbaContainer) {
+			((FicharioAbaContainer) cmp).excluido();
 		}
 
 		super.remove(index);
@@ -307,8 +306,8 @@ public class Fichario extends JTabbedPane {
 			try {
 				Component cmp = getComponentAt(i);
 
-				if (cmp instanceof Container) {
-					Container c = (Container) cmp;
+				if (cmp instanceof FicharioAbaContainer) {
+					FicharioAbaContainer c = (FicharioAbaContainer) cmp;
 
 					if (c.getArquivo() != null && file != null
 							&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {

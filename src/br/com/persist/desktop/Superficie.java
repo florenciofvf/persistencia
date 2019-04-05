@@ -37,6 +37,7 @@ import br.com.persist.container.ObjetoContainer;
 import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
+import br.com.persist.fichario.FicharioAbaContainer;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoFormulario;
 import br.com.persist.formulario.ObjetoFormularioInterno;
@@ -62,15 +63,15 @@ public class Superficie extends Desktop {
 	private final transient Linha linha = new Linha();
 	private final transient Area area = new Area();
 	private transient Relacao selecionadoRelacao;
+	private final FicharioAbaContainer container;
 	private transient Objeto selecionadoObjeto;
 	private transient Relacao[] relacoes;
 	private transient Objeto[] objetos;
-	private final Container container;
 	private byte estado;
 	private int ultX;
 	private int ultY;
 
-	public Superficie(Formulario formulario, Container container) {
+	public Superficie(Formulario formulario, FicharioAbaContainer container) {
 		super(formulario, true);
 		configEstado(Constantes.SELECAO);
 		this.container = container;

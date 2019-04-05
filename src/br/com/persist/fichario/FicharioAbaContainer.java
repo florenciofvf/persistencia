@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.fichario;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,7 +22,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.principal.Formulario;
@@ -34,7 +34,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
-public class Container extends PanelBorder {
+public class FicharioAbaContainer extends PanelBorder {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
@@ -47,7 +47,7 @@ public class Container extends PanelBorder {
 	private final Superficie superficie;
 	private File arquivo;
 
-	public Container(Formulario formulario) {
+	public FicharioAbaContainer(Formulario formulario) {
 		cmbConexao = Util.criarComboConexao(formulario);
 		superficie = new Superficie(formulario, this);
 		this.formulario = formulario;
@@ -273,8 +273,9 @@ public class Container extends PanelBorder {
 		}
 
 		private void configAtalho(Acao acao, int tecla) {
-			Container.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(Superficie.getKeyStroke(tecla), acao.getChave());
-			Container.this.getActionMap().put(acao.getChave(), acao);
+			FicharioAbaContainer.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(Superficie.getKeyStroke(tecla),
+					acao.getChave());
+			FicharioAbaContainer.this.getActionMap().put(acao.getChave(), acao);
 		}
 	}
 
