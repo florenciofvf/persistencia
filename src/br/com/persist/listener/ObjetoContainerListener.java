@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.banco.Conexao;
 import br.com.persist.util.BuscaAuto.Grupo;
 
-public interface PainelObjetoListener {
+public interface ObjetoContainerListener {
 	public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado);
 
 	public List<Conexao> getConexoes();

@@ -14,12 +14,12 @@ import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
-import br.com.persist.listener.PainelObjetoListener;
+import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 
-public class ObjetoFormularioInterno extends JInternalFrame implements PainelObjetoListener {
+public class ObjetoFormularioInterno extends JInternalFrame implements ObjetoContainerListener {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
 	private final Formulario formulario;

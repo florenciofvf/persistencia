@@ -28,7 +28,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Superficie;
-import br.com.persist.listener.PainelObjetoListener;
+import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.ConexaoComboModelo;
 import br.com.persist.principal.Formulario;
 
@@ -228,7 +228,7 @@ public class Util {
 		return new JComboBox<>(new ConexaoComboModelo(formulario.getConexoes()));
 	}
 
-	public static JComboBox<Conexao> criarComboConexao(PainelObjetoListener listener) {
+	public static JComboBox<Conexao> criarComboConexao(ObjetoContainerListener listener) {
 		return new JComboBox<>(new ConexaoComboModelo(listener.getConexoes()));
 	}
 

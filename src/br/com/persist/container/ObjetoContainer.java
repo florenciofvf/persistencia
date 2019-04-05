@@ -51,7 +51,7 @@ import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
-import br.com.persist.listener.PainelObjetoListener;
+import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
@@ -81,7 +81,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	private static final String LABEL_ATUALIZAR = "label.atualizar";
 	private final TextField txtComplemento = new TextField(35);
-	private final transient PainelObjetoListener listener;
+	private final transient ObjetoContainerListener listener;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Tabela tabela = new Tabela();
@@ -91,7 +91,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private final boolean buscaAuto;
 	private transient Thread thread;
 
-	public ObjetoContainer(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao,
+	public ObjetoContainer(ObjetoContainerListener listener, Objeto objeto, Graphics g, Conexao padrao,
 			boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		txtComplemento.addMouseListener(complementoListener);
