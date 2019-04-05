@@ -1,4 +1,4 @@
-package br.com.persist.painel;
+package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -74,7 +74,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
-public class ObjetoPainel extends Panel implements ActionListener, ItemListener, Runnable {
+public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
 	private final Button btnArrasto = new Button(Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
@@ -92,7 +92,8 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 	private final boolean buscaAuto;
 	private transient Thread thread;
 
-	public ObjetoPainel(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
+	public ObjetoContainer(PainelObjetoListener listener, Objeto objeto, Graphics g, Conexao padrao,
+			boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
@@ -298,7 +299,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 				if (!Util.estaVazio(complemento)) {
 					txtComplemento.setText(complemento);
 					objeto.setComplemento(txtComplemento.getText());
-					ObjetoPainel.this.actionPerformed(null);
+					ObjetoContainer.this.actionPerformed(null);
 				} else {
 					txtComplemento.setText(objeto.getComplemento());
 				}
@@ -354,7 +355,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 			public void actionPerformed(ActionEvent e) {
 				int[] linhas = tabela.getSelectedRows();
 
-				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(ObjetoPainel.this)) {
+				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(ObjetoContainer.this)) {
 					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
@@ -409,7 +410,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (thread == null) {
-						thread = new Thread(ObjetoPainel.this);
+						thread = new Thread(ObjetoContainer.this);
 						thread.start();
 					}
 				}
@@ -423,10 +424,10 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 				}
 			});
 
-			atualizarAcao.setActionListener(e -> ObjetoPainel.this.actionPerformed(null));
+			atualizarAcao.setActionListener(e -> ObjetoContainer.this.actionPerformed(null));
 			sincronizarAcao.setActionListener(e -> {
 				cabecalhoFiltro = null;
-				ObjetoPainel.this.actionPerformed(null);
+				ObjetoContainer.this.actionPerformed(null);
 			});
 		}
 	}
@@ -539,7 +540,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 						StringBuilder sb = new StringBuilder(objeto.getTabela2());
 						sb.append(Constantes.QL);
 						modelo.getDados(linhas[0], sb);
-						Util.mensagem(ObjetoPainel.this, sb.toString());
+						Util.mensagem(ObjetoContainer.this, sb.toString());
 					}
 				}
 			});
@@ -716,7 +717,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 
 				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
 						+ objeto.getTabela(conexao.getEsquema()) + ")");
-				ObjetoPainel.this.actionPerformed(null);
+				ObjetoContainer.this.actionPerformed(null);
 			}
 		}
 
@@ -744,7 +745,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 
 				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
 						+ objeto.getTabela(conexao.getEsquema()) + ")");
-				ObjetoPainel.this.actionPerformed(null);
+				ObjetoContainer.this.actionPerformed(null);
 			}
 		}
 
@@ -771,7 +772,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 							conexao);
 					toolbar.total.setText("" + i);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("TOTAL", ex, ObjetoPainel.this);
+					Util.stackTraceAndMessage("TOTAL", ex, ObjetoContainer.this);
 				}
 			}
 		}
@@ -807,7 +808,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 				if (listener instanceof InternoFormulario) {
 					InternoFormulario interno = (InternoFormulario) listener;
 					String valor = interno.getApelido();
-					String resp = Util.getValorInputDialog(ObjetoPainel.this, "label.apelido", valor);
+					String resp = Util.getValorInputDialog(ObjetoContainer.this, "label.apelido", valor);
 
 					if (resp == null) {
 						return;
@@ -844,7 +845,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 					configCabecalhoColuna(modeloListagem);
 					TabelaUtil.ajustar(tabela, getGraphics(), 40);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, ObjetoPainel.this);
+					Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, ObjetoContainer.this);
 				}
 			}
 		}
@@ -875,7 +876,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 					configCabecalhoColuna(modeloListagem);
 					TabelaUtil.ajustar(tabela, getGraphics(), 40);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, ObjetoPainel.this);
+					Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, ObjetoContainer.this);
 				}
 			}
 		}
@@ -906,7 +907,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 					configCabecalhoColuna(modeloListagem);
 					TabelaUtil.ajustar(tabela, getGraphics(), 40);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, ObjetoPainel.this);
+					Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, ObjetoContainer.this);
 				}
 			}
 		}
@@ -937,7 +938,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 					configCabecalhoColuna(modeloListagem);
 					TabelaUtil.ajustar(tabela, getGraphics(), 40);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("INFO-BANCO", ex, ObjetoPainel.this);
+					Util.stackTraceAndMessage("INFO-BANCO", ex, ObjetoContainer.this);
 				}
 			}
 		}
@@ -968,7 +969,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 					configCabecalhoColuna(modeloListagem);
 					TabelaUtil.ajustar(tabela, getGraphics(), 40);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("META-DADOS", ex, ObjetoPainel.this);
+					Util.stackTraceAndMessage("META-DADOS", ex, ObjetoContainer.this);
 				}
 			}
 		}
@@ -999,7 +1000,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 					configCabecalhoColuna(modeloListagem);
 					TabelaUtil.ajustar(tabela, getGraphics(), 40);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("ESQUEMA", ex, ObjetoPainel.this);
+					Util.stackTraceAndMessage("ESQUEMA", ex, ObjetoContainer.this);
 				}
 			}
 		}
@@ -1013,7 +1014,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 				TableColumn tableColumn = columnModel.getColumn(i);
 				Coluna coluna = colunas.get(i);
 
-				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(ObjetoPainel.this, modeloOrdenacao, coluna,
+				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(ObjetoContainer.this, modeloOrdenacao, coluna,
 						false);
 
 				tableColumn.setHeaderRenderer(cabecalhoColuna);
@@ -1058,7 +1059,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 		String complemento = "AND " + campo + " IN (" + argumentos + ")";
 		txtComplemento.setText(complemento);
 		objeto.setComplemento(txtComplemento.getText());
-		ObjetoPainel.this.actionPerformed(null);
+		ObjetoContainer.this.actionPerformed(null);
 	}
 
 	public void atualizarFormulario() {
@@ -1068,7 +1069,7 @@ public class ObjetoPainel extends Panel implements ActionListener, ItemListener,
 			return;
 		}
 
-		ObjetoPainel.this.actionPerformed(null);
+		ObjetoContainer.this.actionPerformed(null);
 	}
 
 	private transient TabelaListener tabelaListener = new TabelaListener() {

@@ -33,13 +33,13 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.container.ObjetoContainer;
 import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ExternoFormulario;
 import br.com.persist.formulario.InternoFormulario;
-import br.com.persist.painel.ObjetoPainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -1430,7 +1430,8 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoPainel objetoPainel, AtomicBoolean processado) {
+	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer objetoPainel,
+			AtomicBoolean processado) {
 		super.buscaAutomatica(grupo, argumentos, objetoPainel, processado);
 
 		if (Preferencias.isAbrirAuto()) {

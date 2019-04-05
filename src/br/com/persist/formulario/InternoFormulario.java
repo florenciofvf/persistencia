@@ -12,23 +12,23 @@ import javax.swing.JInternalFrame;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
+import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.listener.PainelObjetoListener;
-import br.com.persist.painel.ObjetoPainel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 
 public class InternoFormulario extends JInternalFrame implements PainelObjetoListener {
 	private static final long serialVersionUID = 1L;
-	private final ObjetoPainel objetoPainel;
+	private final ObjetoContainer objetoPainel;
 	private final Formulario formulario;
 	private String apelido;
 
 	public InternoFormulario(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao, boolean buscaAuto) {
 		super(objeto.getId(), true, true, true, true);
 		this.formulario = formulario;
-		objetoPainel = new ObjetoPainel(this, objeto, g, padrao, buscaAuto);
+		objetoPainel = new ObjetoContainer(this, objeto, g, padrao, buscaAuto);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(1000, 600);
 		montarLayout();
@@ -40,7 +40,7 @@ public class InternoFormulario extends JInternalFrame implements PainelObjetoLis
 				&& objetoPainel.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
-	public ObjetoPainel getObjetoPainel() {
+	public ObjetoContainer getObjetoPainel() {
 		return objetoPainel;
 	}
 
