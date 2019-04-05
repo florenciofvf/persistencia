@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.Objeto;
+import br.com.persist.exception.PersistenciaException;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.tabela.Coluna;
