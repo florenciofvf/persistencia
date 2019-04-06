@@ -106,9 +106,9 @@ public class ConfigContainer extends Panel {
 		container.add(chkAtivarAbrirAutoDestac);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
-		container.add(new JSeparator());
 
 		add(BorderLayout.CENTER, container);
+		add(BorderLayout.NORTH, toolbar);
 
 		Insets insets = new Insets(5, 10, 5, 5);
 
