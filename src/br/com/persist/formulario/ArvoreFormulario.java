@@ -13,9 +13,7 @@ public class ArvoreFormulario extends AbstratoFormulario {
 	public ArvoreFormulario(Formulario formulario) {
 		super(Mensagens.getString("label.arquivos"));
 		container = new ArvoreContainer(formulario);
-		setLocationRelativeTo(formulario);
 		montarLayout();
-		setVisible(true);
 	}
 
 	private void montarLayout() {

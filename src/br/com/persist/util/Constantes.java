@@ -11,6 +11,7 @@ public class Constantes {
 	public static final String LABEL_FICHARIO = "label.fichario";
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String LABEL_DESKTOP = "label.desktop";
+	public static final String LABEL_ARVORE = "label.arvore";
 	public static final String ENCODING = "UTF-8";
 	public static final String QL = "\r\n";
 	public static final String TAB = "\t";

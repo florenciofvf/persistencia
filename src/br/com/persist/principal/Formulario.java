@@ -138,7 +138,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
-				menuPrincipal.arvoreFichAcao.actionPerformed(null);
 				atualizarFragmentos();
 				atualizarConexoes();
 			}
@@ -174,8 +173,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
-		private Action arvoreFormAcao = Action.actionMenu("label.arvore_formulario", Icones.EXPANDIR);
-		private Action arvoreFichAcao = Action.actionMenu("label.arvore_fichario", Icones.EXPANDIR);
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
 		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
@@ -196,8 +193,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAbrir());
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(arvoreFormAcao));
-			menuArquivo.add(new MenuItem(arvoreFichAcao));
+			menuArquivo.add(new MenuArvore());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(conexaoAcao));
 			menuArquivo.addSeparator();
@@ -214,8 +210,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		private void eventos() {
 			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
-			arvoreFormAcao.setActionListener(e -> new ArvoreFormulario(Formulario.this));
-			arvoreFichAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
 			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
@@ -298,6 +292,26 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
+			}
+		}
+
+		class MenuArvore extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+
+			MenuArvore() {
+				super(Constantes.LABEL_ARVORE, Icones.EXPANDIR);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+
+				formularioAcao.setActionListener(e -> {
+					ArvoreFormulario form = new ArvoreFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
 			}
 		}
 
