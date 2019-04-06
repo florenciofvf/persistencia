@@ -222,8 +222,14 @@ public class Util {
 		return sb.toString();
 	}
 
-	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor) {
-		return new JComboBox<>(new ConexaoComboModelo(provedor.getConexoes()));
+	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor, Conexao padrao) {
+		JComboBox<Conexao> cmbConexao = new JComboBox<>(new ConexaoComboModelo(provedor.getConexoes()));
+
+		if (padrao != null) {
+			cmbConexao.setSelectedItem(padrao);
+		}
+
+		return cmbConexao;
 	}
 
 	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {

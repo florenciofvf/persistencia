@@ -95,12 +95,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
 			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
+		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
-		cmbConexao = Util.criarComboConexao(provedor);
-		if (padrao != null) {
-			cmbConexao.setSelectedItem(padrao);
-		}
 		tabela.setTabelaListener(tabelaListener);
 		txtComplemento.addActionListener(this);
 		cmbConexao.addItemListener(this);

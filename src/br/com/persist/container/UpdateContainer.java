@@ -36,10 +36,7 @@ public class UpdateContainer extends Panel {
 	public UpdateContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, String instrucao,
 			Map<String, String> mapaChaveValor) {
 		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
-		cmbConexao = Util.criarComboConexao(provedor);
-		if (padrao != null) {
-			cmbConexao.setSelectedItem(padrao);
-		}
+		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela, mapaChaveValor);
 		montarLayout();
 		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
@@ -49,10 +46,7 @@ public class UpdateContainer extends Panel {
 
 	public UpdateContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, String instrucao) {
 		textArea.setText(instrucao);
-		cmbConexao = Util.criarComboConexao(provedor);
-		if (padrao != null) {
-			cmbConexao.setSelectedItem(padrao);
-		}
+		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela);
 		montarLayout();
 	}

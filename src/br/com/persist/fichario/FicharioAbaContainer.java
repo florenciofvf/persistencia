@@ -48,7 +48,7 @@ public class FicharioAbaContainer extends PanelBorder {
 	private File arquivo;
 
 	public FicharioAbaContainer(Formulario formulario) {
-		cmbConexao = Util.criarComboConexao(formulario);
+		cmbConexao = Util.criarComboConexao(formulario, null);
 		superficie = new Superficie(formulario, this);
 		this.formulario = formulario;
 		toolbar.add(cmbConexao);
