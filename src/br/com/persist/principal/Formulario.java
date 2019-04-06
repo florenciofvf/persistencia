@@ -181,8 +181,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
 		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
-		private Action formAcao = Action.actionMenu("label.formulario", Icones.PANEL);
-		private Action deskAcao = Action.actionMenu("label.desktop", Icones.PANEL2);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.SAIR);
 		private Action novoAcao = Action.actionMenu("label.novo", Icones.CUBO);
 		final Menu menuArquivo = new Menu("label.arquivo");
@@ -192,9 +190,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
 			menuArquivo.add(new MenuItem(novoAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(deskAcao));
-			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(formAcao));
+			menuArquivo.add(new MenuDesktop());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConsulta());
 			menuArquivo.addSeparator();
@@ -224,8 +220,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			arvoreFormAcao.setActionListener(e -> new ArvoreFormulario(Formulario.this));
 			arvoreFichAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
-			formAcao.setActionListener(e -> new DesktopFormulario(Formulario.this));
-			deskAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
 			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
 			fecharAcao.setActionListener(e -> {
@@ -287,6 +281,26 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this));
+			}
+		}
+
+		class MenuDesktop extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+
+			MenuDesktop() {
+				super(Constantes.LABEL_DESKTOP, Icones.PANEL2);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+
+				formularioAcao.setActionListener(e -> {
+					DesktopFormulario form = new DesktopFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
 			}
 		}
 

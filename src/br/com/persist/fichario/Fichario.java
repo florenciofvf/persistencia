@@ -150,7 +150,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
-		DesktopFormulario desktopFormulario = new DesktopFormulario(formulario);
+		DesktopFormulario form = new DesktopFormulario(formulario);
 
 		int x = 10;
 		int y = 10;
@@ -158,13 +158,15 @@ public class Fichario extends JTabbedPane {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = Util.criarArray(conexao, objeto, null);
-				desktopFormulario.getDesktop().addForm(array, new Point(x, y), null,
-						(String) array[Util.ARRAY_INDICE_APE], false);
+				form.getDesktop().addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
 				objeto.setSelecionado(false);
 				x += 25;
 				y += 25;
 			}
 		}
+
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
 	}
 
 	private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
@@ -186,7 +188,7 @@ public class Fichario extends JTabbedPane {
 
 	public Desktop novoDesktop(Formulario formulario) {
 		Desktop desktop = new Desktop(formulario, false);
-		addTab(Mensagens.getString("label.desktop"), new ScrollPane(desktop));
+		addTab(Mensagens.getString(Constantes.LABEL_DESKTOP), new ScrollPane(desktop));
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);

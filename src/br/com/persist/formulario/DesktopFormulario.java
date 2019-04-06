@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 
 public class DesktopFormulario extends AbstratoFormulario {
@@ -14,12 +15,14 @@ public class DesktopFormulario extends AbstratoFormulario {
 	private final Desktop desktop;
 
 	public DesktopFormulario(Formulario formulario) {
-		super(Mensagens.getString("label.persistencia"));
+		super(Mensagens.getString(Constantes.LABEL_DESKTOP));
 		desktop = new Desktop(formulario, false);
-		setLocationRelativeTo(formulario);
 		montarLayout();
 		configurar();
-		setVisible(true);
+	}
+
+	private void montarLayout() {
+		add(BorderLayout.CENTER, new ScrollPane(desktop));
 	}
 
 	private void configurar() {
@@ -29,10 +32,6 @@ public class DesktopFormulario extends AbstratoFormulario {
 				desktop.distribuir();
 			}
 		});
-	}
-
-	private void montarLayout() {
-		add(BorderLayout.CENTER, new ScrollPane(desktop));
 	}
 
 	public Desktop getDesktop() {
