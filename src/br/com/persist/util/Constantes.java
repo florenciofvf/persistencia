@@ -7,6 +7,7 @@ public class Constantes {
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
 	public static final String LABEL_ANOTACOES = "label.anotacoes";
+	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String ENCODING = "UTF-8";

@@ -39,6 +39,7 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -197,7 +198,7 @@ public class Fichario extends JTabbedPane {
 
 	public Panel novaAnotacao(Formulario formulario) {
 		AnotacaoContainer panel = new AnotacaoContainer(null);
-		addTab(Mensagens.getString("label.anotacoes"), panel);
+		addTab(Mensagens.getString(Constantes.LABEL_ANOTACOES), panel);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.ANOTACAO);
@@ -209,7 +210,7 @@ public class Fichario extends JTabbedPane {
 
 	public Panel novaConsulta(Formulario formulario) {
 		ConsultaContainer panel = new ConsultaContainer(null, formulario, null, null, null);
-		addTab(Mensagens.getString("label.consulta"), panel);
+		addTab(Mensagens.getString(Constantes.LABEL_CONSULTA), panel);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONSULTA);

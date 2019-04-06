@@ -6,6 +6,7 @@ import java.util.Map;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.container.ConsultaContainer;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
@@ -14,7 +15,7 @@ public class ConsultaFormulario extends AbstratoFormulario implements IJanela {
 	private final ConsultaContainer container;
 
 	public ConsultaFormulario(ConexaoProvedor provedor, Conexao padrao) {
-		this(Mensagens.getString("label.consulta"), provedor, padrao, null, null);
+		this(Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, padrao, null, null);
 	}
 
 	public ConsultaFormulario(String titulo, ConexaoProvedor provedor, Conexao padrao, String instrucao,

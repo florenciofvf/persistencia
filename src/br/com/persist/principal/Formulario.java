@@ -30,6 +30,7 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.AnotacaoDialogo;
 import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
+import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnotacaoFormulario;
@@ -177,8 +178,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private static final long serialVersionUID = 1L;
 		private Action arvoreFormAcao = Action.actionMenu("label.arvore_formulario", Icones.EXPANDIR);
 		private Action arvoreFichAcao = Action.actionMenu("label.arvore_fichario", Icones.EXPANDIR);
-		private Action consFormAcao = Action.actionMenu("label.consulta_formulario", Icones.PANEL3);
-		private Action consFichAcao = Action.actionMenu("label.consulta_fichario", Icones.PANEL3);
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
 		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
@@ -197,8 +196,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(formAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(consFormAcao));
-			menuArquivo.add(new MenuItem(consFichAcao));
+			menuArquivo.add(new MenuConsulta());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAnotacao());
 			menuArquivo.addSeparator();
@@ -225,13 +223,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
 			arvoreFormAcao.setActionListener(e -> new ArvoreFormulario(Formulario.this));
 			arvoreFichAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
-			consFichAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
 			formAcao.setActionListener(e -> new DesktopFormulario(Formulario.this));
 			deskAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
 			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
-			consFormAcao.setActionListener(e -> consultaFormulario());
 			fecharAcao.setActionListener(e -> {
 				FormularioUtil.fechar(Formulario.this);
 				System.exit(0);
@@ -266,10 +262,32 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		private void consultaFormulario() {
-			ConsultaFormulario form = new ConsultaFormulario(Formulario.this, null);
-			form.setLocationRelativeTo(this);
-			form.setVisible(true);
+		class MenuConsulta extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+
+			MenuConsulta() {
+				super(Constantes.LABEL_CONSULTA, Icones.PANEL3);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+				addMenuItem(dialogoAcao);
+
+				formularioAcao.setActionListener(e -> {
+					ConsultaFormulario form = new ConsultaFormulario(Formulario.this, null);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					ConsultaDialogo form = new ConsultaDialogo(Formulario.this, Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this));
+			}
 		}
 
 		class AbrirFormularioAcao extends Acao {
