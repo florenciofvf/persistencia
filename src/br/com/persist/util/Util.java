@@ -28,9 +28,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Superficie;
-import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.ConexaoComboModelo;
-import br.com.persist.principal.Formulario;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
@@ -222,14 +220,6 @@ public class Util {
 		}
 
 		return sb.toString();
-	}
-
-	public static JComboBox<Conexao> criarComboConexao(Formulario formulario) {
-		return new JComboBox<>(new ConexaoComboModelo(formulario.getConexoes()));
-	}
-
-	public static JComboBox<Conexao> criarComboConexao(ObjetoContainerListener listener) {
-		return new JComboBox<>(new ConexaoComboModelo(listener.getConexoes()));
 	}
 
 	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor) {

@@ -20,6 +20,7 @@ import javax.swing.Icon;
 import org.xml.sax.Attributes;
 
 import br.com.persist.desktop.Superficie;
+import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
@@ -532,5 +533,13 @@ public class Objeto implements Runnable {
 
 	public void setProcessar(boolean processar) {
 		this.processar = processar;
+	}
+
+	public String getTitle(OrdenacaoModelo modelo) {
+		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "]";
+	}
+
+	public String getTitle(OrdenacaoModelo modelo, String complemento) {
+		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "] - " + complemento;
 	}
 }

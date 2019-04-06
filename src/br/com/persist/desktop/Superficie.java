@@ -39,8 +39,8 @@ import br.com.persist.dialogo.ObjetoDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.fichario.FicharioAbaContainer;
 import br.com.persist.formulario.ConsultaFormulario;
-import br.com.persist.formulario.ObjetoFormulario;
-import br.com.persist.formulario.ObjetoFormularioInterno;
+import br.com.persist.formulario.ObjetoContainerFormulario;
+import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -690,7 +690,10 @@ public class Superficie extends Desktop {
 					if (!Util.estaVazio(selecionadoObjeto.getTabela2())) {
 						Conexao conexao = container.getConexaoPadrao();
 						setComplemento(conexao, selecionadoObjeto);
-						new ObjetoFormulario(formulario, frame, selecionadoObjeto, getGraphics(), conexao, false);
+						ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao,
+								selecionadoObjeto, getGraphics());
+						form.setLocationRelativeTo(frame);
+						form.setVisible(true);
 					} else {
 						popup.configuracaoAcao.actionPerformed(null);
 					}
@@ -1240,8 +1243,8 @@ public class Superficie extends Desktop {
 				JInternalFrame[] frames = getAllFrames();
 
 				for (JInternalFrame frame : frames) {
-					if (frame instanceof ObjetoFormularioInterno) {
-						ObjetoFormularioInterno interno = (ObjetoFormularioInterno) frame;
+					if (frame instanceof ObjetoContainerFormularioInterno) {
+						ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
 						interno.atualizarFormulario();
 					}
 				}
@@ -1316,7 +1319,7 @@ public class Superficie extends Desktop {
 			JInternalFrame[] frames = getAllFrames();
 
 			for (int i = frames.length - 1; i >= 0; i--) {
-				ObjetoFormularioInterno interno = (ObjetoFormularioInterno) frames[i];
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frames[i];
 				Form form = new Form();
 				form.copiar(interno);
 				form.salvar(util);
@@ -1475,7 +1478,9 @@ public class Superficie extends Desktop {
 		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 
 		if (Preferencias.isAbrirAutoDestacado()) {
-			new ObjetoFormulario(formulario, frame, objeto, getGraphics(), conexao, false);
+			ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());
+			form.setLocationRelativeTo(frame);
+			form.setVisible(true);
 			processado.set(true);
 		} else {
 			objeto.setSelecionado(true);

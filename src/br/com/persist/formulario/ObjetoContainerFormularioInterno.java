@@ -3,55 +3,39 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Graphics;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.swing.JInternalFrame;
 
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
+import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.listener.ObjetoContainerListener;
-import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
+import br.com.persist.util.IJanela;
 
-public class ObjetoFormularioInterno extends JInternalFrame implements ObjetoContainerListener {
+public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
+		implements IJanela, ObjetoContainerListener {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
-	private final Formulario formulario;
 	private String apelido;
 
-	public ObjetoFormularioInterno(Formulario formulario, Objeto objeto, Graphics g, Conexao padrao,
+	public ObjetoContainerFormularioInterno(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
 			boolean buscaAuto) {
-		super(objeto.getId(), true, true, true, true);
-		this.formulario = formulario;
-		container = new ObjetoContainer(this, objeto, g, padrao, buscaAuto);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(1000, 600);
+		super(objeto.getId());
+		container = new ObjetoContainer(this, provedor, padrao, objeto, this, g, buscaAuto);
 		montarLayout();
-		setVisible(true);
-	}
-
-	public boolean ehTabela(Tabela tabela) {
-		return getApelido().equalsIgnoreCase(tabela.getApelido())
-				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
-	}
-
-	public ObjetoContainer getObjetoPainel() {
-		return container;
-	}
-
-	public void buscaAutomatica(String campo, String argumentos) {
-		container.buscaAutomatica(campo, argumentos);
 	}
 
 	private void montarLayout() {
-		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, container);
+	}
+
+	@Override
+	public void fechar() {
+		dispose();
 	}
 
 	@Override
@@ -74,18 +58,26 @@ public class ObjetoFormularioInterno extends JInternalFrame implements ObjetoCon
 	}
 
 	@Override
-	public List<Conexao> getConexoes() {
-		return formulario.getConexoes();
-	}
-
-	@Override
 	public Dimension getDimensoes() {
 		return getSize();
 	}
 
 	@Override
-	public Frame getFrame() {
-		return null;
+	public void setTitulo(String titulo) {
+		setTitle(titulo);
+	}
+
+	public boolean ehTabela(Tabela tabela) {
+		return getApelido().equalsIgnoreCase(tabela.getApelido())
+				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
+	}
+
+	public ObjetoContainer getObjetoContainer() {
+		return container;
+	}
+
+	public void buscaAutomatica(String campo, String argumentos) {
+		container.buscaAutomatica(campo, argumentos);
 	}
 
 	public void atualizarFormulario() {

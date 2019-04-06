@@ -97,7 +97,7 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		}
 
 		void filtrar(int x, int y) {
-			new FiltroCaixa(container.getFrame(), this, x, y);
+			new FiltroCaixa(this, x, y);
 		}
 
 		void restaurar() {
@@ -112,8 +112,8 @@ public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
 		final TextField textField = new TextField();
 		final Filtro filtro;
 
-		FiltroCaixa(Frame frame, Filtro filtro, int x, int y) {
-			super(frame, true);
+		FiltroCaixa(Filtro filtro, int x, int y) {
+			super((Frame) null, true);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			textField.addKeyListener(keyListenerInner);
 			addWindowListener(windowListenerInner);

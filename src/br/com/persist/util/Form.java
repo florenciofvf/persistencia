@@ -2,7 +2,7 @@ package br.com.persist.util;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.formulario.ObjetoFormularioInterno;
+import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.xml.XMLUtil;
 
 public class Form {
@@ -13,8 +13,8 @@ public class Form {
 	private int x;
 	private int y;
 
-	public void copiar(ObjetoFormularioInterno interno) {
-		objeto = interno.getObjetoPainel().getObjeto().getId();
+	public void copiar(ObjetoContainerFormularioInterno interno) {
+		objeto = interno.getObjetoContainer().getObjeto().getId();
 		apelido = interno.getApelido();
 		largura = interno.getWidth();
 		altura = interno.getHeight();
