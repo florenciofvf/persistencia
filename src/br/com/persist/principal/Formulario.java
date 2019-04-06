@@ -34,6 +34,7 @@ import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
+import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.modelo.ConexaoModelo;
@@ -174,7 +175,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
-		private Action configAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.SAIR);
 		private Action novoAcao = Action.actionMenu("label.novo", Icones.CUBO);
@@ -199,7 +199,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(fragmentoAcao));
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(configAcao));
+			menuArquivo.add(new MenuConfig());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(fecharAcao));
 			add(menuArquivo);
@@ -211,7 +211,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private void eventos() {
 			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
 			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
-			configAcao.setActionListener(e -> new ConfigDialogo(Formulario.this));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
 			fecharAcao.setActionListener(e -> {
 				FormularioUtil.fechar(Formulario.this);
@@ -369,6 +368,34 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 						abrirArquivo(file, true);
 					}
 				});
+			}
+		}
+
+		class MenuConfig extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+
+			MenuConfig() {
+				super(Constantes.LABEL_CONFIGURACOES, Icones.CONFIG);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+				addMenuItem(dialogoAcao);
+
+				formularioAcao.setActionListener(e -> {
+					ConfigFormulario form = new ConfigFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					ConfigDialogo form = new ConfigDialogo(Formulario.this, Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoConfig(Formulario.this));
 			}
 		}
 	}
