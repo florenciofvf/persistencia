@@ -9,23 +9,32 @@ public class ListaArray<E> extends ArrayList<E> {
 	private transient ListaListener listener;
 
 	@Override
-	public void clear() {
-		super.clear();
-
-		if (listener != null) {
-			listener.limpo();
-		}
-	}
-
-	@Override
 	public boolean add(E e) {
 		boolean b = super.add(e);
 
 		if (listener != null) {
-			listener.adicionado();
+			listener.adicionado(size() - 1);
 		}
 
 		return b;
+	}
+
+	@Override
+	public E remove(int index) {
+		E e = super.remove(index);
+
+		if (listener != null) {
+			listener.excluido(index);
+		}
+
+		return e;
+	}
+
+	@Override
+	public void clear() {
+		while (!isEmpty()) {
+			remove(0);
+		}
 	}
 
 	public ListaListener getListener() {

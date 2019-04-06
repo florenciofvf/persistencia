@@ -1,7 +1,7 @@
 package br.com.persist.listener;
 
 public interface ListaListener {
-	public void adicionado();
+	public void adicionado(int indice);
 
-	public void limpo();
+	public void excluido(int indice);
 }
