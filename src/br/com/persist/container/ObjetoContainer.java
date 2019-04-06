@@ -47,10 +47,10 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
-import br.com.persist.dialogo.FragmentoDialogo.FragmentoListener;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
+import br.com.persist.listener.FragmentoListener;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.ListagemModelo;
@@ -305,13 +305,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			});
 
 			fragmentoAcao.setActionListener(e -> {
-				FragmentoDialogo dialogo = new FragmentoDialogo(null, fragmentoListener);
+				FragmentoDialogo form = new FragmentoDialogo((Frame) null, fragmentoListener);
 
 				if (listener instanceof Component) {
-					dialogo.setLocationRelativeTo((Component) listener);
+					form.setLocationRelativeTo((Component) listener);
 				}
 
-				dialogo.setVisible(true);
+				form.setVisible(true);
 			});
 
 			fecharAcao.setActionListener(e -> listener.dispose());
