@@ -34,6 +34,7 @@ import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
+import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.DesktopFormulario;
@@ -175,7 +176,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
 		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
-		private Action conexaoAcao = Action.actionMenu("label.conexao", Icones.BANCO);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.SAIR);
 		private Action novoAcao = Action.actionMenu("label.novo", Icones.CUBO);
 		final Menu menuArquivo = new Menu("label.arquivo");
@@ -195,7 +195,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuArvore());
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(conexaoAcao));
+			menuArquivo.add(new MenuConexao());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(fragmentoAcao));
 			menuArquivo.addSeparator();
@@ -210,7 +210,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		private void eventos() {
 			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
-			conexaoAcao.setActionListener(e -> new ConexaoDialogo(Formulario.this));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
 			fecharAcao.setActionListener(e -> {
 				FormularioUtil.fechar(Formulario.this);
@@ -396,6 +395,34 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoConfig(Formulario.this));
+			}
+		}
+
+		class MenuConexao extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+
+			MenuConexao() {
+				super(Constantes.LABEL_CONEXAO, Icones.BANCO);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+				addMenuItem(dialogoAcao);
+
+				formularioAcao.setActionListener(e -> {
+					ConexaoFormulario form = new ConexaoFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					ConexaoDialogo form = new ConexaoDialogo(Formulario.this, Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novaConexao(Formulario.this));
 			}
 		}
 	}

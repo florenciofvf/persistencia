@@ -34,6 +34,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
+import br.com.persist.container.ConexaoContainer;
 import br.com.persist.container.ConfigContainer;
 import br.com.persist.container.ConsultaContainer;
 import br.com.persist.desktop.Desktop;
@@ -252,6 +253,16 @@ public class Fichario extends JTabbedPane {
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 		container.estadoSelecao();
+	}
+
+	public void novaConexao(Formulario formulario) {
+		ConexaoContainer container = new ConexaoContainer(null, formulario);
+		addTab(Mensagens.getString(Constantes.LABEL_CONEXAO), container);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.CONEXAO);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
 	}
 
 	public void abrirFormulario(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
