@@ -141,6 +141,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
+				fichario.novaArvore(Formulario.this);
 				atualizarFragmentos();
 				atualizarConexoes();
 			}
