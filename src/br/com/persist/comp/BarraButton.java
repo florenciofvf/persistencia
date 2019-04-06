@@ -8,8 +8,11 @@ import br.com.persist.util.Icones;
 
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
+	protected transient IJanela janela;
 
 	protected void ini(IJanela janela) {
+		this.janela = janela;
+
 		if (janela != null) {
 			Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
 			fecharAcao.setActionListener(e -> janela.fechar());

@@ -38,6 +38,7 @@ import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.DesktopFormulario;
+import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Action;
@@ -175,7 +176,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
-		private Action fragmentoAcao = Action.actionMenu("label.fragmento", Icones.FRAGMENTO);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.SAIR);
 		private Action novoAcao = Action.actionMenu("label.novo", Icones.CUBO);
 		final Menu menuArquivo = new Menu("label.arquivo");
@@ -197,7 +197,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConexao());
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(fragmentoAcao));
+			menuArquivo.add(new MenuFragmento());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConfig());
 			menuArquivo.addSeparator();
@@ -209,7 +209,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		private void eventos() {
-			fragmentoAcao.setActionListener(e -> new FragmentoDialogo(Formulario.this, null).setVisible(true));
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
 			fecharAcao.setActionListener(e -> {
 				FormularioUtil.fechar(Formulario.this);
@@ -423,6 +422,34 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaConexao(Formulario.this));
+			}
+		}
+
+		class MenuFragmento extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+
+			MenuFragmento() {
+				super(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+				addMenuItem(dialogoAcao);
+
+				formularioAcao.setActionListener(e -> {
+					FragmentoFormulario form = new FragmentoFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					FragmentoDialogo form = new FragmentoDialogo(Formulario.this, null);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoFragmento(Formulario.this));
 			}
 		}
 	}
