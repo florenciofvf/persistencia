@@ -24,4 +24,10 @@ public class BarraButton extends JToolBar {
 	protected void addButton(Action action) {
 		add(new Button(action));
 	}
+
+	public void fechar() {
+		if (janela != null) {
+			janela.fechar();
+		}
+	}
 }

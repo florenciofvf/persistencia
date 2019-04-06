@@ -5,8 +5,10 @@ import java.awt.Dimension;
 public class Constantes {
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
+	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
+	public static final String LABEL_ATUALIZAR = "label.atualizar";
 	public static final String LABEL_FRAGMENTO = "label.fragmento";
 	public static final String LABEL_ANOTACOES = "label.anotacoes";
 	public static final String LABEL_CONSULTA = "label.consulta";

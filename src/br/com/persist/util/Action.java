@@ -53,11 +53,15 @@ public class Action extends Acao {
 	}
 
 	public static Action actionIconAtualizar() {
-		return Action.actionIcon("label.atualizar", Icones.ATUALIZAR);
+		return Action.actionIcon(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
+	}
+
+	public static Action actionMenuAtualizar() {
+		return Action.actionMenu(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
 	}
 
 	public static Action actionIconUpdate() {
-		return Action.actionIcon("label.atualizar", Icones.UPDATE);
+		return Action.actionIcon(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 	}
 
 	public static Action actionIconBaixar() {

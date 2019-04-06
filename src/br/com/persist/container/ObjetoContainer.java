@@ -3,6 +3,7 @@ package br.com.persist.container;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.dnd.DnDConstants;
@@ -29,7 +30,6 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -37,7 +37,9 @@ import javax.swing.table.TableModel;
 import br.com.persist.Instrucao;
 import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
+import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
+import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.MenuItem;
@@ -48,7 +50,7 @@ import br.com.persist.comp.TextField;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
-import br.com.persist.formulario.ObjetoFormularioInterno;
+import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.listener.FragmentoListener;
 import br.com.persist.listener.ObjetoContainerListener;
@@ -68,6 +70,7 @@ import br.com.persist.util.BuscaAuto;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
+import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
@@ -78,174 +81,37 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
-	private static final String LABEL_SINCRONIZAR = "label.sincronizar";
-	private static final String LABEL_ATUALIZAR = "label.atualizar";
 	private final TextField txtComplemento = new TextField(35);
 	private final transient ObjetoContainerListener listener;
+	private final transient ConexaoProvedor provedor;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
-	private final String nomeTabela;
 	private final boolean buscaAuto;
 	private transient Thread thread;
 
-	public ObjetoContainer(ObjetoContainerListener listener, Objeto objeto, Graphics g, Conexao padrao,
-			boolean buscaAuto) {
+	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
+			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
-		this.nomeTabela = objeto.getTabela2() + " - ";
-		cmbConexao = Util.criarComboConexao(listener);
+		cmbConexao = Util.criarComboConexao(provedor);
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
 		tabela.setTabelaListener(tabelaListener);
 		txtComplemento.addActionListener(this);
-		toolbar.complementoBuscaAuto(objeto);
-		toolbar.complementoUpdate(objeto);
 		cmbConexao.addItemListener(this);
-		toolbar.add(txtComplemento);
+		toolbar.ini(janela, objeto);
 		this.buscaAuto = buscaAuto;
+		this.provedor = provedor;
 		this.listener = listener;
-		toolbar.complementoBtn();
-		toolbar.add(cmbConexao);
 		this.objeto = objeto;
-		processarObjeto("", g, null);
 		montarLayout();
-		config();
-	}
-
-	private transient MouseListener complementoListener = new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() >= Constantes.DOIS) {
-				new ComplementoDialogo(listener.getFrame(), objeto, txtComplemento);
-			}
-		}
-	};
-
-	public Objeto getObjeto() {
-		return objeto;
-	}
-
-	public Frame getFrame() {
-		return listener.getFrame();
-	}
-
-	private void config() {
-		DragSource dragSource = DragSource.getDefaultDragSource();
-		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
-			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-			String apelido = null;
-
-			if (listener instanceof ObjetoFormularioInterno) {
-				ObjetoFormularioInterno interno = (ObjetoFormularioInterno) listener;
-				apelido = interno.getApelido();
-			}
-
-			dge.startDrag(null, new Transferidor(objeto, conexao, listener.getDimensoes(), apelido), listenerArrasto);
-		});
-	}
-
-	private transient DragSourceListener listenerArrasto = new DragSourceListener() {
-		@Override
-		public void dropActionChanged(DragSourceDragEvent dsde) {
-			LOG.log(Level.FINEST, "dropActionChanged");
-		}
-
-		@Override
-		public void dragEnter(DragSourceDragEvent dsde) {
-			LOG.log(Level.FINEST, "dragEnter");
-		}
-
-		@Override
-		public void dragOver(DragSourceDragEvent dsde) {
-			LOG.log(Level.FINEST, "dragOver");
-		}
-
-		@Override
-		public void dragExit(DragSourceEvent dse) {
-			LOG.log(Level.FINEST, "dragExit");
-		}
-
-		@Override
-		public void dragDropEnd(DragSourceDropEvent dsde) {
-			if (Preferencias.isFecharAposSoltar() && dsde.getDropSuccess()) {
-				toolbar.fecharAcao.actionPerformed(null);
-			}
-		}
-	};
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-		TableModel model = modelo.getModel();
-
-		if (model instanceof RegistroModelo) {
-			RegistroModelo modeloRegistro = (RegistroModelo) model;
-			modeloRegistro.setConexao(conexao);
-		}
-	}
-
-	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
-		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-		if (conexao == null) {
-			return;
-		}
-
-		StringBuilder builder = new StringBuilder(
-				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
-		builder.append(" " + txtComplemento.getText());
-		builder.append(" " + complemento);
-
-		try {
-			Connection conn = Conexao.getConnection(conexao);
-			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(),
-					objeto.getChavesArray(), objeto, conexao);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
-			listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "]");
-
-			modeloRegistro.setConexao(conexao);
-			tabela.setModel(modeloOrdenacao);
-			cabecalhoFiltro = null;
-
-			TableColumnModel columnModel = tabela.getColumnModel();
-			List<Coluna> colunas = modeloRegistro.getColunas();
-
-			for (int i = 0; i < colunas.size(); i++) {
-				TableColumn tableColumn = columnModel.getColumn(i);
-				Coluna coluna = colunas.get(i);
-
-				if (coluna.isChave()) {
-					tableColumn.setCellRenderer(new CellRenderer());
-				}
-
-				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna, true);
-
-				if (cabecalhoColuna.equals(cabecalho)) {
-					cabecalhoColuna.copiar(cabecalho);
-					cabecalhoFiltro = cabecalhoColuna;
-				}
-
-				tableColumn.setHeaderRenderer(cabecalhoColuna);
-			}
-
-			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g, 40);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
-		}
-
-		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
-		tabelaListener.tabelaMouseClick(tabela);
+		configurar();
+		processarObjeto("", g, null);
 	}
 
 	private void montarLayout() {
@@ -253,34 +119,62 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		add(BorderLayout.CENTER, new ScrollPane(tabela));
 	}
 
-	private class Toolbar extends JToolBar {
+	private void configurar() {
+		DragSource dragSource = DragSource.getDefaultDragSource();
+
+		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
+			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+			String apelido = null;
+
+			if (listener instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) listener;
+				apelido = interno.getApelido();
+			}
+
+			dge.startDrag(null, new Transferidor(objeto, conexao, listener.getDimensoes(), apelido), listenerArrasto);
+		});
+	}
+
+	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR,
+				e -> txtComplemento.setText(objeto.getComplemento()));
+		private Action limparAcao = Action.actionIcon("label.limpar", Icones.NOVO, e -> txtComplemento.setText(""));
 		private Action complementoAcao = Action.actionIcon("label.complemento", Icones.BAIXAR2);
 		private Action fragmentoAcao = Action.actionIcon("label.fragmento", Icones.FRAGMENTO);
-		private Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
 		final Button excluir = new Button(new ExcluirRegistrosAcao());
 		final ButtonAtualizar atualizar = new ButtonAtualizar();
 		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
 		final ButtonFuncoes funcoes = new ButtonFuncoes();
 		final ButtonUpdate update = new ButtonUpdate();
-		final Label total = new Label(Color.BLUE);
+		final Label labelTotal = new Label(Color.BLUE);
 
-		Toolbar() {
-			add(new Button(fecharAcao));
-			addSeparator();
+		protected void ini(IJanela janela, Objeto objeto) {
+			super.ini(janela);
+
 			add(btnArrasto);
 			addSeparator();
 			add(new ButtonInfo());
 			addSeparator();
 			add(excluir);
 			addSeparator();
-			add(new Button(fragmentoAcao));
+			addButton(fragmentoAcao);
 			add(buscaAuto);
 			addSeparator();
 			add(update);
 			add(atualizar);
 			addSeparator();
-			add(new Button(complementoAcao));
+			addButton(complementoAcao);
+			add(txtComplemento);
+			add(labelTotal);
+			add(funcoes);
+			addSeparator();
+			addButton(limparAcao);
+			addButton(baixarAcao);
+			add(cmbConexao);
+
+			buscaAuto.complemento(objeto);
+			update.complemento(objeto);
 
 			eventos();
 		}
@@ -313,29 +207,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				form.setVisible(true);
 			});
-
-			fecharAcao.setActionListener(e -> listener.dispose());
-		}
-
-		void complementoBtn() {
-			add(total);
-			add(funcoes);
-			addSeparator();
-
-			Action limparAcao = Action.actionIcon("label.limpar", Icones.NOVO, e -> txtComplemento.setText(""));
-			add(new Button(limparAcao));
-
-			Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR,
-					e -> txtComplemento.setText(objeto.getComplemento()));
-			add(new Button(baixarAcao));
-		}
-
-		void complementoBuscaAuto(Objeto objeto) {
-			buscaAuto.complemento(objeto);
-		}
-
-		void complementoUpdate(Objeto objeto) {
-			update.complemento(objeto);
 		}
 
 		public void excluirAtualizarEnable(boolean b) {
@@ -382,15 +253,127 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
+	private transient MouseListener complementoListener = new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getClickCount() >= Constantes.DOIS) {
+				new ComplementoDialogo((Dialog) null, objeto, txtComplemento);
+			}
+		}
+	};
+
+	public Objeto getObjeto() {
+		return objeto;
+	}
+
+	private transient DragSourceListener listenerArrasto = new DragSourceListener() {
+		@Override
+		public void dropActionChanged(DragSourceDragEvent dsde) {
+			LOG.log(Level.FINEST, "dropActionChanged");
+		}
+
+		@Override
+		public void dragEnter(DragSourceDragEvent dsde) {
+			LOG.log(Level.FINEST, "dragEnter");
+		}
+
+		@Override
+		public void dragOver(DragSourceDragEvent dsde) {
+			LOG.log(Level.FINEST, "dragOver");
+		}
+
+		@Override
+		public void dragExit(DragSourceEvent dse) {
+			LOG.log(Level.FINEST, "dragExit");
+		}
+
+		@Override
+		public void dragDropEnd(DragSourceDropEvent dsde) {
+			if (Preferencias.isFecharAposSoltar() && dsde.getDropSuccess()) {
+				toolbar.fechar();
+			}
+		}
+	};
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		TableModel model = modelo.getModel();
+
+		if (model instanceof RegistroModelo) {
+			RegistroModelo modeloRegistro = (RegistroModelo) model;
+			modeloRegistro.setConexao(conexao);
+		}
+	}
+
+	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
+		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+		if (conexao == null) {
+			return;
+		}
+
+		StringBuilder builder = new StringBuilder(
+				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
+		builder.append(" " + txtComplemento.getText());
+		builder.append(" " + complemento);
+
+		try {
+			Connection conn = Conexao.getConnection(conexao);
+			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(),
+					objeto.getChavesArray(), objeto, conexao);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
+			listener.setTitulo(objeto.getTitle(modeloOrdenacao));
+
+			modeloRegistro.setConexao(conexao);
+			tabela.setModel(modeloOrdenacao);
+			cabecalhoFiltro = null;
+
+			TableColumnModel columnModel = tabela.getColumnModel();
+			List<Coluna> colunas = modeloRegistro.getColunas();
+
+			for (int i = 0; i < colunas.size(); i++) {
+				TableColumn tableColumn = columnModel.getColumn(i);
+				Coluna coluna = colunas.get(i);
+
+				if (coluna.isChave()) {
+					tableColumn.setCellRenderer(new CellRenderer());
+				}
+
+				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna, true);
+
+				if (cabecalhoColuna.equals(cabecalho)) {
+					cabecalhoColuna.copiar(cabecalho);
+					cabecalhoFiltro = cabecalhoColuna;
+				}
+
+				tableColumn.setHeaderRenderer(cabecalhoColuna);
+			}
+
+			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g, 40);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
+		}
+
+		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
+		tabelaListener.tabelaMouseClick(tabela);
+	}
+
 	private class ButtonAtualizar extends Button {
 		private static final long serialVersionUID = 1L;
+		private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
 		private MenuItem itemAtualizarAuto = new MenuItem("label.atualizar_auto", Icones.ATUALIZAR);
-		private Action sincronizarAcao = Action.actionMenu(LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
-		private Action atualizarAcao = Action.actionMenu(LABEL_ATUALIZAR, Icones.ATUALIZAR);
+		private Action atualizarAcao = Action.actionMenuAtualizar();
 		private Popup popup = new Popup();
 
 		ButtonAtualizar() {
-			setToolTipText(Mensagens.getString(LABEL_ATUALIZAR));
+			setToolTipText(Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 			popup.add(new MenuItem(atualizarAcao));
 			popup.addSeparator();
 			popup.add(new MenuItem(sincronizarAcao));
@@ -579,8 +562,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							return;
 						}
 
-						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(LABEL_ATUALIZAR),
-								() -> listener.getConexoes(), conexao, update);
+						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
+								provedor, conexao, update);
 
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
@@ -649,8 +632,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			private void abrirFormulario(Instrucao instrucao, Conexao conexao, Map<String, String> chaves) {
 				if (instrucao.isSelect()) {
-					ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), () -> listener.getConexoes(),
-							conexao, instrucao.getValor(), chaves);
+					ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), provedor, conexao,
+							instrucao.getValor(), chaves);
 
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);
@@ -658,8 +641,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					form.setVisible(true);
 				} else {
-					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), () -> listener.getConexoes(),
-							conexao, instrucao.getValor(), chaves);
+					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), provedor, conexao,
+							instrucao.getValor(), chaves);
 
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);
@@ -769,7 +752,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					Connection conn = Conexao.getConnection(conexao);
 					int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "",
 							conexao);
-					toolbar.total.setText("" + i);
+					toolbar.labelTotal.setText("" + i);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("TOTAL", ex, ObjetoContainer.this);
 				}
@@ -804,8 +787,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		private void eventos() {
 			apelidoAcao.setActionListener(e -> {
-				if (listener instanceof ObjetoFormularioInterno) {
-					ObjetoFormularioInterno interno = (ObjetoFormularioInterno) listener;
+				if (listener instanceof ObjetoContainerFormularioInterno) {
+					ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) listener;
 					String valor = interno.getApelido();
 					String resp = Util.getValorInputDialog(ObjetoContainer.this, "label.apelido", valor);
 
@@ -837,8 +820,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					Connection conn = Conexao.getConnection(conexao);
 					ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto, conexao);
 					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-					listener.setTitle(
-							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - CHAVE-PRIMARIA");
+					listener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVE-PRIMARIA"));
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
@@ -868,8 +850,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					Connection conn = Conexao.getConnection(conexao);
 					ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto, conexao);
 					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-					listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount()
-							+ "] - CHAVES-IMPORTADAS");
+					listener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-IMPORTADAS"));
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
@@ -899,8 +880,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					Connection conn = Conexao.getConnection(conexao);
 					ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto, conexao);
 					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-					listener.setTitle(nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount()
-							+ "] - CHAVES-EXPORTADAS");
+					listener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-EXPORTADAS"));
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
@@ -930,8 +910,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					Connection conn = Conexao.getConnection(conexao);
 					ListagemModelo modeloListagem = Persistencia.criarModeloInfoBanco(conn);
 					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-					listener.setTitle(
-							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - INFO-BANCO");
+					listener.setTitulo(objeto.getTitle(modeloOrdenacao, "INFO-BANCO"));
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
@@ -961,8 +940,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					Connection conn = Conexao.getConnection(conexao);
 					ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto, conexao);
 					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-					listener.setTitle(
-							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - META-DADOS");
+					listener.setTitulo(objeto.getTitle(modeloOrdenacao, "META-DADOS"));
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
@@ -992,8 +970,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					Connection conn = Conexao.getConnection(conexao);
 					ListagemModelo modeloListagem = Persistencia.criarModeloEsquema(conn);
 					OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-					listener.setTitle(
-							nomeTabela + objeto.getId() + " [" + modeloOrdenacao.getRowCount() + "] - ESQUEMA");
+					listener.setTitulo(objeto.getTitle(modeloOrdenacao, "ESQUEMA"));
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
