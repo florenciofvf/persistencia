@@ -2,7 +2,6 @@ package br.com.persist.principal;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,7 +38,6 @@ import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
-import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -196,8 +194,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAnotacao());
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuItem(new AbrirFormularioAcao(true)));
-			menuArquivo.add(new MenuItem(new AbrirFicharioAcao(true)));
+			menuArquivo.add(new MenuAbrir());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(arvoreFormAcao));
 			menuArquivo.add(new MenuItem(arvoreFichAcao));
@@ -304,53 +301,60 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		class AbrirFormularioAcao extends Acao {
+		class MenuAbrir extends Menu {
 			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
 
-			AbrirFormularioAcao(boolean menu) {
-				super(menu, "label.abrir_formulario", Icones.ABRIR);
-				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
+			MenuAbrir() {
+				super("label.abrir", Icones.ABRIR);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+
+				formularioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
+				ficharioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
+
+				eventos();
 			}
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
-				int opcao = fileChooser.showOpenDialog(Formulario.this);
+			void eventos() {
+				formularioAcao.setActionListener(e -> {
+					JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
+					int opcao = fileChooser.showOpenDialog(Formulario.this);
 
-				if (opcao == JFileChooser.APPROVE_OPTION) {
+					if (opcao != JFileChooser.APPROVE_OPTION) {
+						return;
+					}
+
 					File[] files = fileChooser.getSelectedFiles();
 
-					if (files != null) {
-						for (File file : files) {
-							abrirArquivo(file, false);
-						}
+					if (files == null) {
+						return;
 					}
-				}
-			}
-		}
 
-		class AbrirFicharioAcao extends Acao {
-			private static final long serialVersionUID = 1L;
+					for (File file : files) {
+						abrirArquivo(file, false);
+					}
+				});
 
-			AbrirFicharioAcao(boolean menu) {
-				super(menu, "label.abrir_fichario", Icones.ABRIR);
-				putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
-			}
+				ficharioAcao.setActionListener(e -> {
+					JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
+					int opcao = fileChooser.showOpenDialog(Formulario.this);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
-				int opcao = fileChooser.showOpenDialog(Formulario.this);
+					if (opcao != JFileChooser.APPROVE_OPTION) {
+						return;
+					}
 
-				if (opcao == JFileChooser.APPROVE_OPTION) {
 					File[] files = fileChooser.getSelectedFiles();
 
-					if (files != null) {
-						for (File file : files) {
-							abrirArquivo(file, true);
-						}
+					if (files == null) {
+						return;
 					}
-				}
+
+					for (File file : files) {
+						abrirArquivo(file, true);
+					}
+				});
 			}
 		}
 	}
