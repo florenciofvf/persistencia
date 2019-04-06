@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,10 +39,13 @@ import br.com.persist.container.ConexaoContainer;
 import br.com.persist.container.ConfigContainer;
 import br.com.persist.container.ConsultaContainer;
 import br.com.persist.container.FragmentoContainer;
+import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
+import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
@@ -272,6 +276,34 @@ public class Fichario extends JTabbedPane {
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.FRAGMENTO);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+	}
+
+	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
+		@Override
+		public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void setTitulo(String titulo) {
+			LOG.log(Level.FINEST, titulo);
+		}
+
+		@Override
+		public Dimension getDimensoes() {
+			return getSize();
+		}
+	};
+
+	public void novoObjeto(Formulario formulario, Conexao padrao, Objeto objeto) {
+		ObjetoContainer container = new ObjetoContainer(null, formulario, padrao, objeto, objetoContainerListener,
+				getGraphics(), false);
+		addTab(objeto.getId(), container);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETO);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 	}
