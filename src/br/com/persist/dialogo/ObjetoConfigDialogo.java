@@ -8,7 +8,7 @@ import br.com.persist.container.ObjetoConfigContainer;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.util.IJanela;
 
-public class ObjetoConfigDialogo extends AbstratoDialogoTMP implements IJanela {
+public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoConfigContainer container;
 

@@ -8,7 +8,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.container.IconeContainer;
 import br.com.persist.util.IJanela;
 
-public class IconeDialogo extends AbstratoDialogoTMP implements IJanela {
+public class IconeDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final IconeContainer container;
 

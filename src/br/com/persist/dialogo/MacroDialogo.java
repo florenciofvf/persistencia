@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 import br.com.persist.container.MacroContainer;
 import br.com.persist.util.IJanela;
 
-public class MacroDialogo extends AbstratoDialogoTMP implements IJanela {
+public class MacroDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final MacroContainer container;
 

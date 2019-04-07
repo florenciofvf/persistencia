@@ -9,7 +9,7 @@ import br.com.persist.comp.TextField;
 import br.com.persist.container.ComplementoContainer;
 import br.com.persist.util.IJanela;
 
-public class ComplementoDialogo extends AbstratoDialogoTMP implements IJanela {
+public class ComplementoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ComplementoContainer container;
 

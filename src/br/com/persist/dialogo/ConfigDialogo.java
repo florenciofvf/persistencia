@@ -9,7 +9,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class ConfigDialogo extends AbstratoDialogoTMP implements IJanela {
+public class ConfigDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ConfigContainer container;
 

@@ -8,7 +8,7 @@ import br.com.persist.container.RelacaoContainer;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.util.IJanela;
 
-public class RelacaoDialogo extends AbstratoDialogoTMP implements IJanela {
+public class RelacaoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final RelacaoContainer container;
 

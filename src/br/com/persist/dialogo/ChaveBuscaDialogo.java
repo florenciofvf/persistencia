@@ -9,7 +9,7 @@ import br.com.persist.container.ChaveBuscaContainer.Tipo;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class ChaveBuscaDialogo extends AbstratoDialogoTMP implements IJanela {
+public class ChaveBuscaDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ChaveBuscaContainer container;
 
