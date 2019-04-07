@@ -14,6 +14,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.Arquivo;
+import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.ArvoreListener;
@@ -131,15 +132,12 @@ public class Arvore extends JTree {
 
 	private class ArvorePopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action abrirFormAcao = Action.actionMenu("label.abrir_formulario", Icones.ABRIR);
-		private Action abrirFichAcao = Action.actionMenu("label.abrir_fichario", Icones.ABRIR);
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
 		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.FECHAR);
 
 		public ArvorePopup() {
-			add(new MenuItem(abrirFormAcao));
-			add(new MenuItem(abrirFichAcao));
+			add(new MenuAbrir());
 			addSeparator();
 			add(new MenuItem(selecionarAcao));
 			addSeparator();
@@ -148,10 +146,23 @@ public class Arvore extends JTree {
 			add(new MenuItem(atualizarAcao));
 
 			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(Arvore.this)));
-			abrirFormAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
-			abrirFichAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));
 			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArvore(Arvore.this)));
 			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(Arvore.this)));
+		}
+
+		class MenuAbrir extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+
+			MenuAbrir() {
+				super("label.abrir", Icones.ABRIR);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+
+				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
+				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));
+			}
 		}
 	}
 }
