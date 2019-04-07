@@ -11,12 +11,16 @@ public class Constantes {
 	public static final String LABEL_ATUALIZAR = "label.atualizar";
 	public static final String LABEL_FRAGMENTO = "label.fragmento";
 	public static final String LABEL_ANOTACOES = "label.anotacoes";
+	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
 	public static final String LABEL_CONEXAO = "label.conexao";
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String LABEL_DESKTOP = "label.desktop";
 	public static final String LABEL_ARVORE = "label.arvore";
+	public static final byte TIPO_CONTAINER_FORMULARIO = 0;
+	public static final byte TIPO_CONTAINER_DESKTOP = 1;
+	public static final byte TIPO_CONTAINER_OBJETO = 2;
 	public static final String ENCODING = "UTF-8";
 	public static final String QL = "\r\n";
 	public static final String TAB = "\t";

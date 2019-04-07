@@ -982,9 +982,7 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
-		private Action formAcao = Action.actionMenu("label.formulario", Icones.PANEL);
 		private Action consAcao = Action.actionMenu("label.consulta", Icones.PANEL3);
-		private Action destAcao = Action.actionMenu("label.desktop", Icones.PANEL2);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 
 		MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
@@ -995,9 +993,8 @@ public class Superficie extends Desktop {
 		MenuItem itemPartir = new MenuItem(new PartirAcao());
 		Menu menuAlinhamento = new Menu("label.alinhamento");
 		MenuItem itemFormularioSel = new MenuItem(consAcao);
-		MenuItem itemFormulario = new MenuItem(formAcao);
-		MenuItem itemDestacar = new MenuItem(destAcao);
 		MenuItem itemCopiar = new MenuItem(copiarAcao);
+		MenuDestacar menuDestacar = new MenuDestacar();
 
 		SuperficiePopup() {
 			menuDistribuicao.add(itemDistribuiHorizontal);
@@ -1011,8 +1008,7 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(itemCopiar);
 			addSeparator();
-			add(itemDestacar);
-			add(itemFormulario);
+			add(menuDestacar);
 			add(itemFormularioSel);
 			addSeparator();
 			add(new MenuItem(excluirAcao));
@@ -1024,9 +1020,28 @@ public class Superficie extends Desktop {
 			eventos();
 		}
 
+		class MenuDestacar extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action objetoAcao = Action.actionMenu("label.objeto", null);
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action desktopAcao = Action.actionMenuDesktop();
+
+			MenuDestacar() {
+				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
+				addMenuItem(formularioAcao);
+				addMenuItem(desktopAcao);
+				addMenuItem(objetoAcao);
+
+				formularioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
+						Constantes.TIPO_CONTAINER_FORMULARIO));
+				desktopAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
+						Constantes.TIPO_CONTAINER_DESKTOP));
+				objetoAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
+						Constantes.TIPO_CONTAINER_OBJETO));
+			}
+		}
+
 		private void eventos() {
-			destAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this, false));
-			formAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this, true));
 			excluirAcao.setActionListener(e -> excluirSelecionados());
 
 			configuracaoAcao.setActionListener(e -> {
@@ -1064,8 +1079,7 @@ public class Superficie extends Desktop {
 		void configItens(boolean objetoSelecionado) {
 			menuDistribuicao.setEnabled(objetoSelecionado);
 			menuAlinhamento.setEnabled(objetoSelecionado);
-			itemFormulario.setEnabled(objetoSelecionado);
-			itemDestacar.setEnabled(objetoSelecionado);
+			menuDestacar.setEnabled(objetoSelecionado);
 			itemPartir.setEnabled(!objetoSelecionado);
 			itemCopiar.setEnabled(objetoSelecionado);
 		}
@@ -1448,7 +1462,8 @@ public class Superficie extends Desktop {
 			}
 
 			if (getPrimeiroObjetoSelecionado() != null) {
-				formulario.destacar(container.getConexaoPadrao(), Superficie.this, true);
+				formulario.destacar(container.getConexaoPadrao(), Superficie.this,
+						Constantes.TIPO_CONTAINER_FORMULARIO);
 				processado.set(true);
 			}
 		}

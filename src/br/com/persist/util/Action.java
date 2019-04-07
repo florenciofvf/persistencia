@@ -73,7 +73,7 @@ public class Action extends Acao {
 	}
 
 	public static Action actionIconDestacar() {
-		return Action.actionIcon("label.destacar", Icones.ARRASTAR, e -> {
+		return Action.actionIcon(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, e -> {
 		});
 	}
 
@@ -83,6 +83,10 @@ public class Action extends Acao {
 
 	public static Action actionMenuFichario() {
 		return new Action(true, Constantes.LABEL_FICHARIO, null);
+	}
+
+	public static Action actionMenuDesktop() {
+		return new Action(true, Constantes.LABEL_DESKTOP, null);
 	}
 
 	public static Action actionMenuDialogo() {

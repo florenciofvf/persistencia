@@ -41,6 +41,7 @@ import br.com.persist.container.ConsultaContainer;
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
+import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
@@ -135,7 +136,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void destacar(Formulario formulario, Conexao conexao, List<Objeto> objetos, boolean formDesktop) {
+	public void destacar(Formulario formulario, Conexao conexao, List<Objeto> objetos, byte tipoContainer) {
 		boolean continua = false;
 
 		for (Objeto objeto : objetos) {
@@ -149,10 +150,12 @@ public class Fichario extends JTabbedPane {
 			return;
 		}
 
-		if (formDesktop) {
+		if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
 			destacarForm(formulario, objetos, conexao);
-		} else {
+		} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
 			destacarDesk(formulario, objetos, conexao);
+		} else if (tipoContainer == Constantes.TIPO_CONTAINER_OBJETO) {
+			destacarObjt(formulario, objetos, conexao);
 		}
 	}
 
@@ -189,6 +192,16 @@ public class Fichario extends JTabbedPane {
 				objeto.setSelecionado(false);
 				x += 25;
 				y += 25;
+			}
+		}
+	}
+
+	private void destacarObjt(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela2())) {
+				Superficie.setComplemento(conexao, objeto);
+				novoObjeto(formulario, conexao, objeto);
+				objeto.setSelecionado(false);
 			}
 		}
 	}
