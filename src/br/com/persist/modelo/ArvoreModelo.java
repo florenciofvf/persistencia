@@ -15,8 +15,8 @@ import javax.swing.tree.TreePath;
 import br.com.persist.Arquivo;
 
 public class ArvoreModelo implements TreeModel {
-	private static final Logger LOG = Logger.getGlobal();
 	private final EventListenerList listenerList = new EventListenerList();
+	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
 
 	public ArvoreModelo() {

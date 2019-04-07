@@ -79,10 +79,10 @@ import br.com.persist.util.Util;
 
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getGlobal();
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private final TextField txtComplemento = new TextField(35);
 	private final transient ObjetoContainerListener listener;
+	private static final Logger LOG = Logger.getGlobal();
 	private final transient ConexaoProvedor provedor;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;

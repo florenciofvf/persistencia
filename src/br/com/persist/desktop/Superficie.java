@@ -54,10 +54,10 @@ import br.com.persist.xml.XMLUtil;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getGlobal();
 	private final SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private final SuperficiePopup popup = new SuperficiePopup();
 	private final transient Inversao inversao = new Inversao();
+	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
 	private final transient Area area = new Area();
 	private transient Relacao selecionadoRelacao;

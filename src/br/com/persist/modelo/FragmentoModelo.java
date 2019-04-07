@@ -16,11 +16,11 @@ import br.com.persist.xml.XMLUtil;
 
 public class FragmentoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getGlobal();
 	private static final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
 	private static final File file = new File("fragmentos/fragmentos.xml");
 	private static final List<Fragmento> fragmentos = new ArrayList<>();
 	private static final List<Fragmento> auxiliares = new ArrayList<>();
+	private static final Logger LOG = Logger.getGlobal();
 
 	@Override
 	public int getRowCount() {

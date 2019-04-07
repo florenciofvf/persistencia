@@ -11,8 +11,8 @@ import javax.swing.table.TableModel;
 import br.com.persist.tabela.Coluna;
 
 public class ListagemModelo implements TableModel {
-	private static final Logger LOG = Logger.getGlobal();
 	private final List<Coluna> colunasInfo = new ArrayList<>();
+	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<String>> dados;
 	private final List<String> colunas;
 

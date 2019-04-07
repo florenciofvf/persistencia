@@ -54,8 +54,8 @@ import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getGlobal();
 	private final transient Listener listener = new Listener();
+	private static final Logger LOG = Logger.getGlobal();
 	private transient Ponto ponto;
 	private Rectangle rectangle;
 	private int ultX;
@@ -326,7 +326,9 @@ public class Fichario extends JTabbedPane {
 		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 
-		new SuperficieFormulario(formulario, container, file);
+		SuperficieFormulario form = new SuperficieFormulario(formulario, container, file);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
 		container.estadoSelecao();
 	}
 
