@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
-import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -30,7 +29,7 @@ public class AnotacaoContainer extends Panel {
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, new ScrollPane(textArea));
+		add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.NORTH, toolbar);
 	}
 
