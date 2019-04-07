@@ -78,7 +78,7 @@ public class Action extends Acao {
 	}
 
 	public static Action actionMenuFormulario() {
-		return new Action(true, Constantes.LABEL_FORMULARIO, null);
+		return new Action(true, Constantes.LABEL_FORMULARIO, null);// Icones.PANEL
 	}
 
 	public static Action actionMenuFichario() {
@@ -86,7 +86,7 @@ public class Action extends Acao {
 	}
 
 	public static Action actionMenuDesktop() {
-		return new Action(true, Constantes.LABEL_DESKTOP, null);
+		return new Action(true, Constantes.LABEL_DESKTOP, null);// Icones.PANEL2
 	}
 
 	public static Action actionMenuDialogo() {

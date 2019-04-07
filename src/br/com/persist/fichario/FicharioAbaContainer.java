@@ -19,7 +19,9 @@ import br.com.persist.Objeto;
 import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
+import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.desktop.Superficie;
@@ -31,6 +33,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -132,9 +135,7 @@ public class FicharioAbaContainer extends PanelBorder {
 		private Action desenharIdAcao = Action.actionIcon("label.desenhar_id", Icones.LABEL);
 		private Action criarObjAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
 		private Action transpAcao = Action.actionIcon("label.transparente", Icones.RECT);
-		private Action destacarAcao = Action.actionIcon("label.desktop", Icones.PANEL2);
 		private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-		private Action formAcao = Action.actionIcon("label.formulario", Icones.PANEL);
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
 		private Action consAcao = Action.actionIcon("label.consulta", Icones.PANEL3);
@@ -150,8 +151,7 @@ public class FicharioAbaContainer extends PanelBorder {
 			add(new Button(copiarAcao));
 			add(new Button(colarAcao));
 			addSeparator();
-			add(new Button(destacarAcao));
-			add(new Button(formAcao));
+			add(new ButtonDestacar());
 			add(new Button(consAcao));
 			addSeparator();
 			add(new Button(excluirAcao));
@@ -171,6 +171,31 @@ public class FicharioAbaContainer extends PanelBorder {
 			eventos();
 		}
 
+		private class ButtonDestacar extends Button {
+			private static final long serialVersionUID = 1L;
+			Action objetoAcao = Action.actionMenu("label.objeto", null);
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action desktopAcao = Action.actionMenuDesktop();
+			private Popup popup = new Popup();
+
+			ButtonDestacar() {
+				setToolTipText(Mensagens.getString(Constantes.LABEL_DESTACAR));
+				popup.add(new MenuItem(formularioAcao));
+				popup.add(new MenuItem(desktopAcao));
+				popup.add(new MenuItem(objetoAcao));
+				setComponentPopupMenu(popup);
+				setIcon(Icones.ARRASTAR);
+				addActionListener(e -> popup.show(this, 5, 5));
+
+				formularioAcao.setActionListener(
+						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
+				desktopAcao.setActionListener(
+						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
+				objetoAcao.setActionListener(
+						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_OBJETO));
+			}
+		}
+
 		private void abrirArquivo() {
 			try {
 				excluido();
@@ -186,8 +211,6 @@ public class FicharioAbaContainer extends PanelBorder {
 		}
 
 		private void eventos() {
-			destacarAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie, false));
-			formAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie, true));
 			copiarAcao.setActionListener(e -> Formulario.copiar(superficie));
 
 			baixarAcao.setActionListener(e -> {
