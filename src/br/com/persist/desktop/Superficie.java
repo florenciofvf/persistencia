@@ -459,8 +459,8 @@ public class Superficie extends Desktop {
 			}
 
 			if (origem != null) {
-				linha.x1 = origem.x + Objeto.diametro / 2;
-				linha.y1 = origem.y + Objeto.diametro / 2;
+				linha.x1 = origem.x + Objeto.DIAMETRO / 2;
+				linha.y1 = origem.y + Objeto.DIAMETRO / 2;
 				linha.x2 = linha.x1;
 				linha.y2 = linha.y1;
 			} else {
@@ -646,7 +646,7 @@ public class Superficie extends Desktop {
 			int x = e.getX();
 			int y = e.getY();
 
-			if (area.largura > Objeto.diametro && area.altura > Objeto.diametro) {
+			if (area.largura > Objeto.DIAMETRO && area.altura > Objeto.DIAMETRO) {
 				for (Objeto objeto : objetos) {
 					if (area.contem(objeto)) {
 						objeto.setSelecionado(true);
@@ -770,8 +770,8 @@ public class Superficie extends Desktop {
 		}
 
 		boolean contem(Objeto objeto) {
-			return (objeto.x >= this.x && objeto.x + Objeto.diametro <= this.x + largura)
-					&& (objeto.y >= this.y && objeto.y + Objeto.diametro <= this.y + altura);
+			return (objeto.x >= this.x && objeto.x + Objeto.DIAMETRO <= this.x + largura)
+					&& (objeto.y >= this.y && objeto.y + Objeto.DIAMETRO <= this.y + altura);
 		}
 	}
 

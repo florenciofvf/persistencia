@@ -106,8 +106,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	private static Objeto get(Objeto objeto, Superficie superficie) {
 		Objeto o = objeto.clonar();
-		o.x += Objeto.diametro;
-		o.y += Objeto.diametro;
+		o.x += Objeto.DIAMETRO;
+		o.y += Objeto.DIAMETRO;
 		o.setId(objeto.getId() + "-" + Objeto.getSequencia());
 
 		boolean contem = superficie.contem(o);

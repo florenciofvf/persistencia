@@ -254,7 +254,7 @@ public class RelacaoContainer extends Panel {
 
 		PanelObjeto(Objeto objeto) {
 			super(null);
-			final int lado = Objeto.diametro + 10;
+			final int lado = Objeto.DIAMETRO + 10;
 			this.objeto = new Objeto(5, 5, objeto.getCor(), objeto.getIcone());
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(lado, lado));

@@ -152,7 +152,7 @@ public class Relacao {
 	}
 
 	public boolean contem(int posX, int posY) {
-		int raio = Objeto.diametro / 2;
+		int raio = Objeto.DIAMETRO / 2;
 		int x1 = origem.x + raio;
 		int y1 = origem.y + raio;
 		int x2 = destino.x + raio;
@@ -186,7 +186,7 @@ public class Relacao {
 	}
 
 	public void desenhar(Graphics2D g2) {
-		int raio = Objeto.diametro / 2;
+		int raio = Objeto.DIAMETRO / 2;
 		int meta = raio / 2;
 
 		g2.setColor(cor);

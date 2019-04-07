@@ -30,10 +30,9 @@ public class Objeto implements Runnable {
 	private static final Logger LOG = Logger.getGlobal();
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
-	public static final int DIAMETRO_PADRAO = 36;
-	public static int diametro = DIAMETRO_PADRAO;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
+	public static final int DIAMETRO = 36;
 	public int deslocamentoXId = -5;
 	public int deslocamentoYId = -5;
 	private boolean transparenteBkp;
@@ -140,14 +139,6 @@ public class Objeto implements Runnable {
 
 	public void setAbrirAuto(boolean abrirAuto) {
 		this.abrirAuto = abrirAuto;
-	}
-
-	public static void setDiametro(int diametro) {
-		Objeto.diametro = diametro;
-
-		if (Objeto.diametro < DIAMETRO_PADRAO) {
-			Objeto.diametro = DIAMETRO_PADRAO;
-		}
 	}
 
 	public List<Instrucao> getInstrucoes() {
@@ -323,7 +314,7 @@ public class Objeto implements Runnable {
 	}
 
 	public boolean contem(int x, int y) {
-		return (x >= this.x && x <= this.x + diametro) && (y >= this.y && y <= this.y + diametro);
+		return (x >= this.x && x <= this.x + DIAMETRO) && (y >= this.y && y <= this.y + DIAMETRO);
 	}
 
 	@Override
@@ -349,12 +340,12 @@ public class Objeto implements Runnable {
 		Composite composite = g2.getComposite();
 		Shape shape = g2.getClip();
 
-		final int raio = diametro / 2;
+		final int raio = DIAMETRO / 2;
 		final int margem2 = 2;
 		final int margem3 = 3;
 		final int margem4 = 4;
-		final int largura = diametro - margem2;
-		final int altura = diametro - margem2;
+		final int largura = DIAMETRO - margem2;
+		final int altura = DIAMETRO - margem2;
 		final int largura2 = largura - margem4;
 		final int altura2 = altura - margem4;
 		final int altura22 = altura2 / 2;
@@ -362,13 +353,13 @@ public class Objeto implements Runnable {
 
 		if (!transparente) {
 			g2.setColor(Color.DARK_GRAY);
-			g2.fillRoundRect(x, y, largura + 1, altura + 1, diametro, diametro);
+			g2.fillRoundRect(x, y, largura + 1, altura + 1, DIAMETRO, DIAMETRO);
 
 			Color inicio = cor.darker();
 			Color finall = cor.brighter();
 			Paint paint = new GradientPaint(x, y, inicio, x, y + altura, finall, false);
 			g2.setPaint(paint);
-			g2.fillRoundRect(x, y, largura, altura, diametro, diametro);
+			g2.fillRoundRect(x, y, largura, altura, DIAMETRO, DIAMETRO);
 
 			inicio = Color.WHITE;
 			paint = new GradientPaint(x, y + margem3, inicio, x, y + margem3 + (altura22), finall, false);
@@ -389,7 +380,7 @@ public class Objeto implements Runnable {
 
 		if (selecionado) {
 			g2.setColor(Color.CYAN);
-			g2.drawOval(x - margem3, y - margem3, diametro + margem4, diametro + margem4);
+			g2.drawOval(x - margem3, y - margem3, DIAMETRO + margem4, DIAMETRO + margem4);
 		}
 
 		if (desenharId) {
@@ -499,7 +490,7 @@ public class Objeto implements Runnable {
 			transparente = !transparente;
 
 			if (superficie != null) {
-				superficie.repaint(x, y, diametro, diametro);
+				superficie.repaint(x, y, DIAMETRO, DIAMETRO);
 			}
 
 			try {
