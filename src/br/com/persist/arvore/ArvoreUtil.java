@@ -11,6 +11,7 @@ import br.com.persist.Arquivo;
 import br.com.persist.modelo.ArvoreModelo;
 
 public class ArvoreUtil {
+
 	private ArvoreUtil() {
 	}
 
