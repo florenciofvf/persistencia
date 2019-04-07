@@ -141,7 +141,9 @@ public class Superficie extends Desktop {
 				frame = container.getSuperficieFormulario();
 			}
 
-			new MacroDialogo(frame);
+			MacroDialogo form = new MacroDialogo(frame);
+			form.setLocationRelativeTo(frame);
+			form.setVisible(true);
 		}
 	};
 
