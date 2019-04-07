@@ -420,7 +420,9 @@ public class ObjetoDialogo extends AbstratoDialogo {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			new IconeDialogo(ObjetoDialogo.this, objeto, label);
+			IconeDialogo form = new IconeDialogo(ObjetoDialogo.this, objeto, label);
+			form.setLocationRelativeTo(ObjetoDialogo.this);
+			form.setVisible(true);
 			superficie.repaint();
 		}
 	}
