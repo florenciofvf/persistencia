@@ -160,11 +160,11 @@ public class Relacao {
 
 		int x = x2 - x1;
 		int y = y2 - y1;
-		double h = Math.sqrt(x * x + y * y);
+		double h = Math.sqrt((double) (x * x + y * y));
 
 		int xPos = posX - x1;
 		int yPos = posY - y1;
-		double hPos = Math.sqrt(xPos * xPos + yPos * yPos);
+		double hPos = Math.sqrt((double) (xPos * xPos + yPos * yPos));
 
 		if (hPos > h) {
 			return false;
@@ -182,7 +182,7 @@ public class Relacao {
 	private int comprimento(int x1, int y1, int x2, int y2) {
 		int x = x2 - x1;
 		int y = y2 - y1;
-		return (int) Math.sqrt(x * x + y * y);
+		return (int) Math.sqrt((double) (x * x + y * y));
 	}
 
 	public void desenhar(Graphics2D g2) {
@@ -204,7 +204,7 @@ public class Relacao {
 		if (pontoOrigem || pontoDestino) {
 			int x = x2 - x1;
 			int y = y2 - y1;
-			double h = Math.sqrt(x * x + y * y);
+			double h = Math.sqrt((double) (x * x + y * y));
 			double auxX = x / h;
 			double auxY = y / h;
 

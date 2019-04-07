@@ -357,17 +357,19 @@ public class Objeto implements Runnable {
 
 			Color inicio = cor.darker();
 			Color finall = cor.brighter();
-			Paint paint = new GradientPaint(x, y, inicio, x, y + altura, finall, false);
+			Paint paint = new GradientPaint(x, y, inicio, x, (float) (y + altura), finall, false);
 			g2.setPaint(paint);
 			g2.fillRoundRect(x, y, largura, altura, DIAMETRO, DIAMETRO);
 
 			inicio = Color.WHITE;
-			paint = new GradientPaint(x, y + margem3, inicio, x, y + margem3 + (altura22), finall, false);
+			paint = new GradientPaint(x, (float) (y + margem3), inicio, x, (float) (y + margem3 + altura22), finall,
+					false);
 
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
 			g2.setPaint(paint);
 
-			g2.setClip(new RoundRectangle2D.Float(x + margem3, y + margem3, largura2 - 2, altura22, altura3, altura3));
+			g2.setClip(new RoundRectangle2D.Float((float) (x + margem3), (float) (y + margem3), (float) (largura2 - 2),
+					altura22, altura3, altura3));
 			g2.fillRoundRect(x + margem3, y + margem3, largura2 - 2, altura2, altura2, altura2);
 
 			g2.setComposite(composite);
