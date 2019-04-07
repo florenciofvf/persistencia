@@ -18,7 +18,7 @@ import javax.swing.JToolBar;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.MenuItem;
-import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.Panel;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
@@ -37,7 +37,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
-public class FicharioAbaContainer extends PanelBorder {
+public class FicharioAbaContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());

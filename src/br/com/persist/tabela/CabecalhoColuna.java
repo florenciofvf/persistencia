@@ -15,7 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import br.com.persist.comp.Label;
-import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextField;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.modelo.OrdenacaoModelo;
@@ -23,7 +23,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
-public class CabecalhoColuna extends PanelBorder implements TableCellRenderer {
+public class CabecalhoColuna extends Panel implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
 	private final OrdenacaoModelo modelo;

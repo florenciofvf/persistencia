@@ -10,7 +10,7 @@ import br.com.persist.Arquivo;
 import br.com.persist.arvore.Arvore;
 import br.com.persist.arvore.ArvoreUtil;
 import br.com.persist.comp.Button;
-import br.com.persist.comp.PanelBorder;
+import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.listener.ArvoreListener;
 import br.com.persist.modelo.ArvoreModelo;
@@ -18,7 +18,7 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
 
-public class ArvoreContainer extends PanelBorder implements ArvoreListener {
+public class ArvoreContainer extends Panel implements ArvoreListener {
 	private static final long serialVersionUID = 1L;
 	private Arvore arvore = new Arvore(new ArvoreModelo());
 	private final Toolbar toolbar = new Toolbar();

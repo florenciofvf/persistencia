@@ -30,7 +30,6 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
-import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
@@ -65,7 +64,7 @@ public class ObjetoConfigContainer extends Panel {
 		add(BorderLayout.NORTH, toolbar);
 	}
 
-	private class PanelGeral extends PanelBorder implements ActionListener {
+	private class PanelGeral extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtBuscaAutomatica = new TextField();
 		private TextField txtChaveamento = new TextField();
@@ -299,7 +298,7 @@ public class ObjetoConfigContainer extends Panel {
 		}
 	}
 
-	private class PanelDesc extends PanelBorder {
+	private class PanelDesc extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
 
@@ -317,7 +316,7 @@ public class ObjetoConfigContainer extends Panel {
 		};
 	}
 
-	private class PanelInstrucao extends PanelBorder {
+	private class PanelInstrucao extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Panel panelLista;
 
@@ -332,7 +331,7 @@ public class ObjetoConfigContainer extends Panel {
 			}
 		}
 
-		class PanelNome extends PanelBorder implements ActionListener {
+		class PanelNome extends Panel implements ActionListener {
 			private static final long serialVersionUID = 1L;
 			TextField nome = new TextField();
 
@@ -355,7 +354,7 @@ public class ObjetoConfigContainer extends Panel {
 			}
 		}
 
-		class PanelInst extends PanelBorder {
+		class PanelInst extends Panel {
 			private static final long serialVersionUID = 1L;
 			final transient Instrucao instrucao;
 			TextField nome = new TextField();
@@ -382,7 +381,7 @@ public class ObjetoConfigContainer extends Panel {
 		}
 	}
 
-	private class PanelCorFonte extends PanelBorder implements ChangeListener {
+	private class PanelCorFonte extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 
@@ -400,7 +399,7 @@ public class ObjetoConfigContainer extends Panel {
 		}
 	}
 
-	private class PanelCor extends PanelBorder implements ChangeListener {
+	private class PanelCor extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 

@@ -16,8 +16,8 @@ import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
 public class Conexao {
-	private static final Logger LOG = Logger.getGlobal();
 	private static final Map<Conexao, Connection> CONEXOES = new HashMap<>();
+	private static final Logger LOG = Logger.getGlobal();
 	private String inicioComplemento;
 	private String finalComplemento;
 	private String urlBanco;

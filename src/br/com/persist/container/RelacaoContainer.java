@@ -28,7 +28,6 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
-import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
@@ -69,7 +68,7 @@ public class RelacaoContainer extends Panel {
 		}
 	}
 
-	private class PanelDesc extends PanelBorder implements ActionListener {
+	private class PanelDesc extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
 		private TextField txtDeslocXDesc = new TextField();
@@ -164,7 +163,7 @@ public class RelacaoContainer extends Panel {
 		}
 	}
 
-	private class PanelCorFonte extends PanelBorder implements ChangeListener {
+	private class PanelCorFonte extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 
@@ -182,7 +181,7 @@ public class RelacaoContainer extends Panel {
 		}
 	}
 
-	private class PanelCor extends PanelBorder implements ChangeListener {
+	private class PanelCor extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 
