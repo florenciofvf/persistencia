@@ -2,7 +2,7 @@ package br.com.persist.util;
 
 import java.util.prefs.Preferences;
 
-import br.com.persist.Objeto;
+import br.com.persist.desktop.Objeto;
 
 public class Preferencias {
 	private static boolean areaTransTabelaRegistros;

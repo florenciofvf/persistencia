@@ -1,4 +1,4 @@
-package br.com.persist;
+package br.com.persist.desktop;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -19,7 +19,7 @@ import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.desktop.Superficie;
+import br.com.persist.Instrucao;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
@@ -27,26 +27,26 @@ import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
 public class Objeto implements Runnable {
-	private static final Logger LOG = Logger.getGlobal();
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
+	private static final Logger LOG = Logger.getGlobal();
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	public static final int DIAMETRO = 36;
-	public int deslocamentoXId = -5;
-	public int deslocamentoYId = -5;
+	protected int deslocamentoXId = -5;
+	protected int deslocamentoYId = -5;
 	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
+	protected boolean transparente;
 	private static long sequencia;
 	private Superficie superficie;
-	public boolean transparente;
+	protected boolean controlado;
 	private boolean selecionado;
 	private boolean desenharId;
 	private String complemento;
 	private String chaveamento;
 	private boolean abrirAuto;
-	public boolean controlado;
 	private boolean processar;
 	private String descricao;
 	private String tabela;
@@ -56,8 +56,8 @@ public class Objeto implements Runnable {
 	private String icone;
 	private Icon icon;
 	private String id;
-	public int x;
-	public int y;
+	protected int x;
+	protected int y;
 
 	public Objeto() {
 		this(0, 0, null, null);
@@ -532,5 +532,53 @@ public class Objeto implements Runnable {
 
 	public String getTitle(OrdenacaoModelo modelo, String complemento) {
 		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "] - " + complemento;
+	}
+
+	public int getDeslocamentoXId() {
+		return deslocamentoXId;
+	}
+
+	public void setDeslocamentoXId(int deslocamentoXId) {
+		this.deslocamentoXId = deslocamentoXId;
+	}
+
+	public int getDeslocamentoYId() {
+		return deslocamentoYId;
+	}
+
+	public void setDeslocamentoYId(int deslocamentoYId) {
+		this.deslocamentoYId = deslocamentoYId;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void deltaX(int i) {
+		x += i;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public void deltaY(int i) {
+		y += i;
+	}
+
+	public boolean isControlado() {
+		return controlado;
+	}
+
+	public void setControlado(boolean controlado) {
+		this.controlado = controlado;
 	}
 }

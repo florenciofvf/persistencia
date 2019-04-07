@@ -13,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 
-import br.com.persist.Objeto;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
@@ -21,6 +20,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
+import br.com.persist.desktop.Objeto;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.tabela.TabelaUtil;

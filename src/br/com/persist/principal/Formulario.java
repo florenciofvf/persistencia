@@ -19,12 +19,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import br.com.persist.Objeto;
-import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
+import br.com.persist.desktop.Objeto;
+import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.AnotacaoDialogo;
 import br.com.persist.dialogo.ConexaoDialogo;
@@ -95,19 +95,19 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			Objeto clone = get(objeto, superficie);
 			superficie.addObjeto(clone);
 			clone.setSelecionado(true);
-			clone.controlado = true;
+			clone.setControlado(true);
 
 			if (b) {
-				clone.x = x;
-				clone.y = y;
+				clone.setX(x);
+				clone.setY(y);
 			}
 		}
 	}
 
 	private static Objeto get(Objeto objeto, Superficie superficie) {
 		Objeto o = objeto.clonar();
-		o.x += Objeto.DIAMETRO;
-		o.y += Objeto.DIAMETRO;
+		o.deltaX(Objeto.DIAMETRO);
+		o.deltaY(Objeto.DIAMETRO);
 		o.setId(objeto.getId() + "-" + Objeto.getSequencia());
 
 		boolean contem = superficie.contem(o);

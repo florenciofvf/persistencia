@@ -26,7 +26,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.Instrucao;
-import br.com.persist.Objeto;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
@@ -37,6 +36,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
+import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.ChaveBuscaDialogo;
 import br.com.persist.dialogo.IconeDialogo;
@@ -85,9 +85,9 @@ public class ObjetoConfigContainer extends Panel {
 
 		PanelGeral() {
 			txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
+			txtDeslocXId.setText("" + objeto.getDeslocamentoXId());
+			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
 			chkTransparente.setSelected(objeto.isTransparente());
-			txtDeslocXId.setText("" + objeto.deslocamentoXId);
-			txtDeslocYId.setText("" + objeto.deslocamentoYId);
 			txtIntervalo.setText("" + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtChaveamento.setText(objeto.getChaveamento());
@@ -95,9 +95,9 @@ public class ObjetoConfigContainer extends Panel {
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
+			txtX.setText("" + objeto.getX());
+			txtY.setText("" + objeto.getY());
 			txtId.setText(objeto.getId());
-			txtX.setText("" + objeto.x);
-			txtY.setText("" + objeto.y);
 
 			txtBuscaAutomatica.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
@@ -195,20 +195,20 @@ public class ObjetoConfigContainer extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (txtX == e.getSource()) {
-				objeto.x = Util.getInt(txtX.getText(), objeto.x);
-				Formulario.macro.xLocal(objeto.x);
+				objeto.setX(Util.getInt(txtX.getText(), objeto.getX()));
+				Formulario.macro.xLocal(objeto.getX());
 
 			} else if (txtY == e.getSource()) {
-				objeto.y = Util.getInt(txtY.getText(), objeto.y);
-				Formulario.macro.yLocal(objeto.y);
+				objeto.setY(Util.getInt(txtY.getText(), objeto.getY()));
+				Formulario.macro.yLocal(objeto.getY());
 
 			} else if (txtDeslocXId == e.getSource()) {
-				objeto.deslocamentoXId = Util.getInt(txtDeslocXId.getText(), objeto.deslocamentoXId);
-				Formulario.macro.deslocarXIdDescricao(objeto.deslocamentoXId);
+				objeto.setDeslocamentoXId(Util.getInt(txtDeslocXId.getText(), objeto.getDeslocamentoXId()));
+				Formulario.macro.deslocarXIdDescricao(objeto.getDeslocamentoXId());
 
 			} else if (txtDeslocYId == e.getSource()) {
-				objeto.deslocamentoYId = Util.getInt(txtDeslocYId.getText(), objeto.deslocamentoYId);
-				Formulario.macro.deslocarYIdDescricao(objeto.deslocamentoYId);
+				objeto.setDeslocamentoYId(Util.getInt(txtDeslocYId.getText(), objeto.getDeslocamentoYId()));
+				Formulario.macro.deslocarYIdDescricao(objeto.getDeslocamentoYId());
 
 			} else if (txtIntervalo == e.getSource()) {
 				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));

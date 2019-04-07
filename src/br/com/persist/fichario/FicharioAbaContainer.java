@@ -15,8 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JToolBar;
 
-import br.com.persist.Objeto;
-import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.MenuItem;
@@ -24,6 +22,8 @@ import br.com.persist.comp.PanelBorder;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
+import br.com.persist.desktop.Objeto;
+import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.SuperficieFormulario;

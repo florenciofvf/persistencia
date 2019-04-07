@@ -13,11 +13,11 @@ import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
-import br.com.persist.Objeto;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.desktop.Objeto;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Imagens;

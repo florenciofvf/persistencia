@@ -3,9 +3,9 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 
-import br.com.persist.Objeto;
 import br.com.persist.container.ChaveBuscaContainer;
 import br.com.persist.container.ChaveBuscaContainer.Tipo;
+import br.com.persist.desktop.Objeto;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 

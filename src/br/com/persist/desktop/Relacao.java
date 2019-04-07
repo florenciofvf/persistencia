@@ -1,4 +1,4 @@
-package br.com.persist;
+package br.com.persist.desktop;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,11 +13,11 @@ public class Relacao {
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	public static final Color COR_PADRAO = Color.BLACK;
 	private Color corFonte = COR_PADRAO_FONTE;
+	protected int deslocamentoXDesc = -5;
+	protected int deslocamentoYDesc = -5;
 	private boolean desenharDescricao;
-	public int deslocamentoXDesc = -5;
-	public int deslocamentoYDesc = -5;
+	protected static int diametro = 6;
 	private Color cor = COR_PADRAO;
-	public static int diametro = 6;
 	static int m = diametro / 2;
 	private boolean selecionado;
 	private String descricao;
@@ -267,5 +267,21 @@ public class Relacao {
 			util.finalizarTag("desc");
 		}
 		util.finalizarTag("relacao");
+	}
+
+	public int getDeslocamentoXDesc() {
+		return deslocamentoXDesc;
+	}
+
+	public void setDeslocamentoXDesc(int deslocamentoXDesc) {
+		this.deslocamentoXDesc = deslocamentoXDesc;
+	}
+
+	public int getDeslocamentoYDesc() {
+		return deslocamentoYDesc;
+	}
+
+	public void setDeslocamentoYDesc(int deslocamentoYDesc) {
+		this.deslocamentoYDesc = deslocamentoYDesc;
 	}
 }

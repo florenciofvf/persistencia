@@ -24,8 +24,6 @@ import javax.swing.JSeparator;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import br.com.persist.Objeto;
-import br.com.persist.Relacao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
@@ -36,6 +34,8 @@ import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.principal.Formulario;
+import br.com.persist.desktop.Objeto;
+import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
@@ -77,8 +77,8 @@ public class RelacaoContainer extends Panel {
 		private CheckBox chkDesenharDesc = new CheckBox();
 
 		PanelDesc() {
-			txtDeslocXDesc.setText("" + relacao.deslocamentoXDesc);
-			txtDeslocYDesc.setText("" + relacao.deslocamentoYDesc);
+			txtDeslocXDesc.setText("" + relacao.getDeslocamentoXDesc());
+			txtDeslocYDesc.setText("" + relacao.getDeslocamentoYDesc());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
 
 			txtDeslocXDesc.addFocusListener(focusListenerInner);
@@ -111,12 +111,12 @@ public class RelacaoContainer extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (txtDeslocXDesc == e.getSource()) {
-				relacao.deslocamentoXDesc = Util.getInt(txtDeslocXDesc.getText(), relacao.deslocamentoXDesc);
-				Formulario.macro.deslocarXIdDescricao(relacao.deslocamentoXDesc);
+				relacao.setDeslocamentoXDesc(Util.getInt(txtDeslocXDesc.getText(), relacao.getDeslocamentoXDesc()));
+				Formulario.macro.deslocarXIdDescricao(relacao.getDeslocamentoXDesc());
 
 			} else if (txtDeslocYDesc == e.getSource()) {
-				relacao.deslocamentoYDesc = Util.getInt(txtDeslocYDesc.getText(), relacao.deslocamentoYDesc);
-				Formulario.macro.deslocarYIdDescricao(relacao.deslocamentoYDesc);
+				relacao.setDeslocamentoYDesc(Util.getInt(txtDeslocYDesc.getText(), relacao.getDeslocamentoYDesc()));
+				Formulario.macro.deslocarYIdDescricao(relacao.getDeslocamentoYDesc());
 
 			} else if (chkDesenharDesc == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();

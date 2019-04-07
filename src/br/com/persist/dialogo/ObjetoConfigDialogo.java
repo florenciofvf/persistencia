@@ -3,8 +3,8 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
-import br.com.persist.Objeto;
 import br.com.persist.container.ObjetoConfigContainer;
+import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.util.IJanela;
 

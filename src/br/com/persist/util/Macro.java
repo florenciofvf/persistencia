@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.Objeto;
-import br.com.persist.Relacao;
+import br.com.persist.desktop.Objeto;
+import br.com.persist.desktop.Relacao;
 
 public class Macro {
 	public static final String DESENHAR_ID_DESC = "desenharIdDesc";
@@ -67,24 +67,24 @@ public class Macro {
 	class DeslocamentoXIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
-			relacao.deslocamentoXDesc = (Integer) valor;
+			relacao.setDeslocamentoXDesc((Integer) valor);
 		}
 
 		@Override
 		public void executar(Objeto objeto) {
-			objeto.deslocamentoXId = (Integer) valor;
+			objeto.setDeslocamentoXId((Integer) valor);
 		}
 	}
 
 	class DeslocamentoYIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
-			relacao.deslocamentoYDesc = (Integer) valor;
+			relacao.setDeslocamentoYDesc((Integer) valor);
 		}
 
 		@Override
 		public void executar(Objeto objeto) {
-			objeto.deslocamentoYId = (Integer) valor;
+			objeto.setDeslocamentoYId((Integer) valor);
 		}
 	}
 
@@ -192,7 +192,7 @@ public class Macro {
 
 		@Override
 		public void executar(Objeto objeto) {
-			objeto.x = (Integer) valor;
+			objeto.setX((Integer) valor);
 		}
 	}
 
@@ -204,7 +204,7 @@ public class Macro {
 
 		@Override
 		public void executar(Objeto objeto) {
-			objeto.y = (Integer) valor;
+			objeto.setY((Integer) valor);
 		}
 	}
 

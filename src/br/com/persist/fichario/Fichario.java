@@ -28,8 +28,6 @@ import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
-import br.com.persist.Objeto;
-import br.com.persist.Relacao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -41,6 +39,8 @@ import br.com.persist.container.ConsultaContainer;
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
+import br.com.persist.desktop.Objeto;
+import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.SuperficieFormulario;

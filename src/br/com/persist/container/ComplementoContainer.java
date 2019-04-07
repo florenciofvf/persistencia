@@ -2,11 +2,11 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.Objeto;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
+import br.com.persist.desktop.Objeto;
 import br.com.persist.util.Action;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
