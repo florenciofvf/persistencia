@@ -524,7 +524,9 @@ public class Superficie extends Desktop {
 					frame = container.getSuperficieFormulario();
 				}
 
-				new RelacaoDialogo(frame, Superficie.this, relacao);
+				RelacaoDialogo form = new RelacaoDialogo(frame, Superficie.this, relacao);
+				form.setLocationRelativeTo(frame);
+				form.setVisible(true);
 			}
 		}
 
@@ -1057,7 +1059,9 @@ public class Superficie extends Desktop {
 					new ObjetoDialogo(frame, Superficie.this, selecionadoObjeto);
 
 				} else if (selecionadoRelacao != null) {
-					new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
+					RelacaoDialogo form = new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
 				}
 			});
 
