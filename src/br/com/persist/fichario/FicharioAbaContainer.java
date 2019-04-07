@@ -173,7 +173,7 @@ public class FicharioAbaContainer extends Panel {
 
 		private class ButtonDestacar extends Button {
 			private static final long serialVersionUID = 1L;
-			Action objetoAcao = Action.actionMenu("label.objeto", null);
+			Action objetoAcao = Action.actionMenu("label.fichario", null);
 			Action formularioAcao = Action.actionMenuFormulario();
 			Action desktopAcao = Action.actionMenuDesktop();
 			private Popup popup = new Popup();

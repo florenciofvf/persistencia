@@ -1024,7 +1024,7 @@ public class Superficie extends Desktop {
 
 		class MenuDestacar extends Menu {
 			private static final long serialVersionUID = 1L;
-			Action objetoAcao = Action.actionMenu("label.objeto", null);
+			Action objetoAcao = Action.actionMenu("label.fichario", null);
 			Action formularioAcao = Action.actionMenuFormulario();
 			Action desktopAcao = Action.actionMenuDesktop();
 
