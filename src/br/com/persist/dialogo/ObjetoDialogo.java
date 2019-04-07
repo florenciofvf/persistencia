@@ -36,8 +36,9 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
-import br.com.persist.principal.Formulario;
+import br.com.persist.container.ChaveBuscaContainer;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -160,7 +161,11 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					new ChaveBuscaDialogo(ObjetoDialogo.this, objeto, ChaveBuscaDialogo.Tipo.BUSCA);
+					ChaveBuscaDialogo form = new ChaveBuscaDialogo(ObjetoDialogo.this, objeto,
+							ChaveBuscaContainer.Tipo.BUSCA);
+					form.setLocationRelativeTo(ObjetoDialogo.this);
+					form.setVisible(true);
+
 					txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
 				}
 			}
@@ -170,7 +175,11 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					new ChaveBuscaDialogo(ObjetoDialogo.this, objeto, ChaveBuscaDialogo.Tipo.CHAVE);
+					ChaveBuscaDialogo form = new ChaveBuscaDialogo(ObjetoDialogo.this, objeto,
+							ChaveBuscaContainer.Tipo.CHAVE);
+					form.setLocationRelativeTo(ObjetoDialogo.this);
+					form.setVisible(true);
+
 					txtChaveamento.setText(objeto.getChaveamento());
 				}
 			}
