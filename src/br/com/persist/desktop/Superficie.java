@@ -35,7 +35,7 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.dialogo.MacroDialogo;
-import br.com.persist.dialogo.ObjetoDialogo;
+import br.com.persist.dialogo.ObjetoConfigDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.fichario.FicharioAbaContainer;
 import br.com.persist.formulario.ConsultaFormulario;
@@ -1056,7 +1056,9 @@ public class Superficie extends Desktop {
 				}
 
 				if (selecionadoObjeto != null) {
-					new ObjetoDialogo(frame, Superficie.this, selecionadoObjeto);
+					ObjetoConfigDialogo form = new ObjetoConfigDialogo(frame, Superficie.this, selecionadoObjeto);
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
 
 				} else if (selecionadoRelacao != null) {
 					RelacaoDialogo form = new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);

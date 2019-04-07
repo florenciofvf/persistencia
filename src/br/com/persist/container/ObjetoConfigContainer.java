@@ -1,8 +1,8 @@
-package br.com.persist.dialogo;
+package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +27,7 @@ import javax.swing.event.ChangeListener;
 
 import br.com.persist.Instrucao;
 import br.com.persist.Objeto;
+import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
@@ -36,33 +37,32 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
-import br.com.persist.container.ChaveBuscaContainer;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.dialogo.ChaveBuscaDialogo;
+import br.com.persist.dialogo.IconeDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class ObjetoDialogo extends AbstratoDialogo {
+public class ObjetoConfigContainer extends Panel {
 	private static final long serialVersionUID = 1L;
+	private final Toolbar toolbar = new Toolbar();
 	private final transient Objeto objeto;
 	private final Superficie superficie;
 
-	public ObjetoDialogo(Frame frame, Superficie superficie, Objeto objeto) {
-		super(frame, objeto.getId(), 700, 600, false);
+	public ObjetoConfigContainer(IJanela janela, Superficie superficie, Objeto objeto) {
 		this.superficie = superficie;
 		Formulario.macro.limpar();
 		this.objeto = objeto;
+		toolbar.ini(janela);
 		montarLayout();
-		setVisible(true);
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, new Fichario());
-	}
-
-	protected void processar() {
-		throw new UnsupportedOperationException();
+		add(BorderLayout.NORTH, toolbar);
 	}
 
 	private class PanelGeral extends PanelBorder implements ActionListener {
@@ -161,9 +161,9 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ChaveBuscaDialogo form = new ChaveBuscaDialogo(ObjetoDialogo.this, objeto,
+					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
 							ChaveBuscaContainer.Tipo.BUSCA);
-					form.setLocationRelativeTo(ObjetoDialogo.this);
+					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
 					txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
@@ -175,9 +175,9 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ChaveBuscaDialogo form = new ChaveBuscaDialogo(ObjetoDialogo.this, objeto,
+					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
 							ChaveBuscaContainer.Tipo.CHAVE);
-					form.setLocationRelativeTo(ObjetoDialogo.this);
+					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
 					txtChaveamento.setText(objeto.getChaveamento());
@@ -350,7 +350,7 @@ public class ObjetoDialogo extends AbstratoDialogo {
 					Instrucao i = new Instrucao(nome.getText().trim());
 					objeto.addInstrucao(i);
 					panelLista.add(new PanelInst(i));
-					SwingUtilities.updateComponentTreeUI(ObjetoDialogo.this);
+					SwingUtilities.updateComponentTreeUI(ObjetoConfigContainer.this);
 				}
 			}
 		}
@@ -429,8 +429,8 @@ public class ObjetoDialogo extends AbstratoDialogo {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			IconeDialogo form = new IconeDialogo(ObjetoDialogo.this, objeto, label);
-			form.setLocationRelativeTo(ObjetoDialogo.this);
+			IconeDialogo form = new IconeDialogo((Dialog) null, objeto, label);
+			form.setLocationRelativeTo(ObjetoConfigContainer.this);
 			form.setVisible(true);
 			superficie.repaint();
 		}
@@ -445,6 +445,15 @@ public class ObjetoDialogo extends AbstratoDialogo {
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
 			addTab("label.instrucoes", new PanelInstrucao());
+		}
+	}
+
+	private class Toolbar extends BarraButton {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected void ini(IJanela janela) {
+			super.ini(janela);
 		}
 	}
 }
