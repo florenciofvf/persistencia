@@ -31,6 +31,7 @@ import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
+import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
@@ -39,6 +40,7 @@ import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
+import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.util.Action;
@@ -191,6 +193,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConsulta());
 			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuUpdate());
+			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAnotacao());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAbrir());
@@ -271,6 +275,34 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this));
+			}
+		}
+
+		class MenuUpdate extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+
+			MenuUpdate() {
+				super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+				addMenuItem(dialogoAcao);
+
+				formularioAcao.setActionListener(e -> {
+					UpdateFormulario form = new UpdateFormulario(Formulario.this, null);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					UpdateDialogo form = new UpdateDialogo(Formulario.this, Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoUpdate(Formulario.this));
 			}
 		}
 

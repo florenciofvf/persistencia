@@ -38,6 +38,7 @@ import br.com.persist.container.ConfigContainer;
 import br.com.persist.container.ConsultaContainer;
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.container.ObjetoContainer;
+import br.com.persist.container.UpdateContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
@@ -236,6 +237,18 @@ public class Fichario extends JTabbedPane {
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONSULTA);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+
+		return panel;
+	}
+
+	public Panel novoUpdate(Formulario formulario) {
+		UpdateContainer panel = new UpdateContainer(null, formulario, null, null, null);
+		addTab(Mensagens.getString(Constantes.LABEL_ATUALIZAR), panel);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.UPDATE);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 
