@@ -56,7 +56,7 @@ public class ConexaoContainer extends Panel {
 		private Action abrirAcao = Action.actionIconBaixar();
 
 		@Override
-		protected void ini(IJanela janela) {
+		public void ini(IJanela janela) {
 			super.ini(janela);
 
 			add(new Button(abrirAcao));

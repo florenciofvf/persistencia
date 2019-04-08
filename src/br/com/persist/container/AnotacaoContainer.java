@@ -56,7 +56,7 @@ public class AnotacaoContainer extends Panel {
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		@Override
-		protected void ini(IJanela janela) {
+		public void ini(IJanela janela) {
 			super.ini(janela);
 
 			addButton(atualizarAcao);

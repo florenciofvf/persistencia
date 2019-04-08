@@ -15,6 +15,7 @@ import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {
+
 	private TabelaUtil() {
 	}
 

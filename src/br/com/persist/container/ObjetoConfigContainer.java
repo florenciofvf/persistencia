@@ -47,7 +47,7 @@ import br.com.persist.util.Util;
 
 public class ObjetoConfigContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private final Toolbar toolbar = new Toolbar();
+	private final BarraButton toolbar = new BarraButton();
 	private final transient Objeto objeto;
 	private final Superficie superficie;
 
@@ -444,15 +444,6 @@ public class ObjetoConfigContainer extends Panel {
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
 			addTab("label.instrucoes", new PanelInstrucao());
-		}
-	}
-
-	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected void ini(IJanela janela) {
-			super.ini(janela);
 		}
 	}
 }

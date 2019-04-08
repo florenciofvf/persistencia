@@ -41,7 +41,7 @@ import br.com.persist.util.Util;
 
 public class RelacaoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private final Toolbar toolbar = new Toolbar();
+	private final BarraButton toolbar = new BarraButton();
 	private final transient Relacao relacao;
 	private final Superficie superficie;
 
@@ -277,15 +277,6 @@ public class RelacaoContainer extends Panel {
 			addTab("label.desc", new PanelDesc());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
-		}
-	}
-
-	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected void ini(IJanela janela) {
-			super.ini(janela);
 		}
 	}
 }

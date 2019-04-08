@@ -96,7 +96,7 @@ public class UpdateContainer extends Panel {
 		}
 
 		@Override
-		protected void ini(IJanela janela) {
+		public void ini(IJanela janela) {
 			super.ini(janela);
 
 			addButton(atualizarAcao);

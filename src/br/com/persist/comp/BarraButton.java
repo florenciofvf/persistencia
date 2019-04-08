@@ -10,7 +10,7 @@ public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	protected transient IJanela janela;
 
-	protected void ini(IJanela janela) {
+	public void ini(IJanela janela) {
 		this.janela = janela;
 
 		if (janela != null) {

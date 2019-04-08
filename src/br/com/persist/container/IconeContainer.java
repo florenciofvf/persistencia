@@ -24,7 +24,7 @@ import br.com.persist.util.Imagens;
 
 public class IconeContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private final Toolbar toolbar = new Toolbar();
+	private final BarraButton toolbar = new BarraButton();
 	private final transient Objeto objeto;
 	private final Label label;
 	private int totalIcones;
@@ -51,15 +51,6 @@ public class IconeContainer extends Panel {
 
 	public int getTotalIcones() {
 		return totalIcones;
-	}
-
-	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected void ini(IJanela janela) {
-			super.ini(janela);
-		}
 	}
 
 	private class LabelIcone extends Label {

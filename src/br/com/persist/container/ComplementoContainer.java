@@ -35,7 +35,7 @@ public class ComplementoContainer extends Panel {
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 
 		@Override
-		protected void ini(IJanela janela) {
+		public void ini(IJanela janela) {
 			super.ini(janela);
 
 			addButton(sucessoAcao);
