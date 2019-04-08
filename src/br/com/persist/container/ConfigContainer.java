@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
@@ -69,7 +70,7 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 
-		Panel panelDestacados = new Panel(new GridLayout(0, 2));
+		Panel panelDestacados = new Panel(new FlowLayout(FlowLayout.CENTER));
 		Panel panelIntervalos = new Panel(new GridLayout(0, 6));
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
 		ButtonGroup grupoDestacados = new ButtonGroup();
