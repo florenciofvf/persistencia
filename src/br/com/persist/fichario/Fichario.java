@@ -137,7 +137,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void destacar(Formulario formulario, Conexao conexao, List<Objeto> objetos, byte tipoContainer) {
+	public void destacar(Formulario formulario, Conexao conexao, List<Objeto> objetos, int tipoContainer) {
 		boolean continua = false;
 
 		for (Objeto objeto : objetos) {

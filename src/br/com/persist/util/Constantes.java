@@ -18,9 +18,9 @@ public class Constantes {
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String LABEL_DESKTOP = "label.desktop";
 	public static final String LABEL_ARVORE = "label.arvore";
-	public static final byte TIPO_CONTAINER_FORMULARIO = 0;
-	public static final byte TIPO_CONTAINER_DESKTOP = 1;
-	public static final byte TIPO_CONTAINER_OBJETO = 2;
+	public static final int TIPO_CONTAINER_FORMULARIO = 0;
+	public static final int TIPO_CONTAINER_DESKTOP = 1;
+	public static final int TIPO_CONTAINER_OBJETO = 2;
 	public static final String ENCODING = "UTF-8";
 	public static final String QL = "\r\n";
 	public static final String TAB = "\t";

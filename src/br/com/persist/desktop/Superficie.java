@@ -1469,7 +1469,7 @@ public class Superficie extends Desktop {
 
 			if (getPrimeiroObjetoSelecionado() != null) {
 				formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Constantes.TIPO_CONTAINER_FORMULARIO);
+						Preferencias.getTipoContainerPesquisaAuto());
 				processado.set(true);
 			}
 		}

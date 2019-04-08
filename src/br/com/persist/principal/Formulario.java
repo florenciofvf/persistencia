@@ -74,7 +74,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		configurar();
 	}
 
-	public void destacar(Conexao conexao, Superficie superficie, byte tipoContainer) {
+	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer) {
 		fichario.destacar(this, conexao, superficie.getSelecionados(), tipoContainer);
 	}
 

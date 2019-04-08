@@ -7,6 +7,7 @@ import br.com.persist.desktop.Objeto;
 public class Preferencias {
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
+	private static int tipoContainerPesquisaAuto;
 	private static boolean ficharioComRolagem;
 	private static boolean abrirAutoDestacado;
 	private static int intervaloPesquisaAuto;
@@ -20,6 +21,7 @@ public class Preferencias {
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
 
+		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
 		copiarNomeColunaListener = pref.getBoolean("copiar_nome_coluna_listener", false);
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
@@ -35,6 +37,7 @@ public class Preferencias {
 
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
 		pref.putBoolean("copiar_nome_coluna_listener", copiarNomeColunaListener);
+		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
@@ -105,5 +108,13 @@ public class Preferencias {
 
 	public static void setIntervaloPesquisaAuto(int intervaloPesquisaAuto) {
 		Preferencias.intervaloPesquisaAuto = intervaloPesquisaAuto;
+	}
+
+	public static int getTipoContainerPesquisaAuto() {
+		return tipoContainerPesquisaAuto;
+	}
+
+	public static void setTipoContainerPesquisaAuto(int tipoContainerPesquisaAuto) {
+		Preferencias.tipoContainerPesquisaAuto = tipoContainerPesquisaAuto;
 	}
 }

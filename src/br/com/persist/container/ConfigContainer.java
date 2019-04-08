@@ -16,6 +16,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
@@ -44,6 +45,11 @@ public class ConfigContainer extends Panel {
 			new NomeValor("label.30000", 30000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.59000", 59000, NomeValor.INTERVALO_AUTO), };
 
+	private final transient NomeValor[] nomeValorDestacados = {
+			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
+			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
+
+	private final RadioPosicao[] rdoDestacados = new RadioPosicao[nomeValorDestacados.length];
 	private final RadioPosicao[] rdoIntervalos = new RadioPosicao[nomeValorIntervalos.length];
 	private final RadioPosicao[] rdoPosicoes = new RadioPosicao[nomeValorPosicoes.length];
 	private final Formulario formulario;
@@ -63,8 +69,10 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 
+		Panel panelDestacados = new Panel(new GridLayout(0, 2));
 		Panel panelIntervalos = new Panel(new GridLayout(0, 6));
 		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
+		ButtonGroup grupoDestacados = new ButtonGroup();
 		ButtonGroup grupoIntervalos = new ButtonGroup();
 		ButtonGroup grupoPosicoes = new ButtonGroup();
 
@@ -88,7 +96,19 @@ public class ConfigContainer extends Panel {
 			radio.setSelected(radio.nomeValor.valor == Preferencias.getIntervaloPesquisaAuto());
 		}
 
+		for (int i = 0; i < nomeValorDestacados.length; i++) {
+			RadioPosicao radio = new RadioPosicao(nomeValorDestacados[i]);
+			radio.setMargin(new Insets(5, 10, 5, 5));
+			grupoDestacados.add(radio);
+			panelDestacados.add(radio);
+			rdoDestacados[i] = radio;
+
+			radio.setSelected(radio.nomeValor.valor == Preferencias.getTipoContainerPesquisaAuto());
+		}
+
+		Label tituloDestacado = new Label("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = new Label("label.intervalo_pesquisa_auto");
+		tituloDestacado.setHorizontalAlignment(Label.CENTER);
 		tituloIntervalo.setHorizontalAlignment(Label.CENTER);
 		Label localAbas = new Label("label.local_abas");
 		localAbas.setHorizontalAlignment(Label.CENTER);
@@ -102,8 +122,12 @@ public class ConfigContainer extends Panel {
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkNomeColunaListener);
+		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
+		container.add(tituloDestacado);
+		container.add(panelDestacados);
+		container.add(new JSeparator());
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
 
@@ -145,6 +169,7 @@ public class ConfigContainer extends Panel {
 	private class NomeValor {
 		static final byte INTERVALO_AUTO = 2;
 		static final byte POSICAO_ABA = 1;
+		static final byte DESTACADOS = 3;
 		final String nome;
 		final int valor;
 		final int tipo;
@@ -170,6 +195,8 @@ public class ConfigContainer extends Panel {
 					formulario.getFichario().setTabPlacement(Preferencias.getPosicaoAbaFichario());
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
 					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
+				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
+					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
 				}
 			});
 		}
