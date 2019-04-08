@@ -220,39 +220,39 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Panel novaAnotacao(Formulario formulario) {
-		AnotacaoContainer panel = new AnotacaoContainer(null);
-		addTab(Mensagens.getString(Constantes.LABEL_ANOTACOES), panel);
+		AnotacaoContainer container = new AnotacaoContainer(null);
+		addTab(Mensagens.getString(Constantes.LABEL_ANOTACOES), container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.ANOTACAO);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 
-		return panel;
+		return container;
 	}
 
 	public Panel novaConsulta(Formulario formulario) {
-		ConsultaContainer panel = new ConsultaContainer(null, formulario, null, null, null);
-		addTab(Mensagens.getString(Constantes.LABEL_CONSULTA), panel);
+		ConsultaContainer container = new ConsultaContainer(null, formulario, null, null, null);
+		addTab(Mensagens.getString(Constantes.LABEL_CONSULTA), container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONSULTA);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 
-		return panel;
+		return container;
 	}
 
 	public Panel novoUpdate(Formulario formulario) {
-		UpdateContainer panel = new UpdateContainer(null, formulario, null, null, null);
-		addTab(Mensagens.getString(Constantes.LABEL_ATUALIZAR), panel);
+		UpdateContainer container = new UpdateContainer(null, formulario, null, null, null);
+		addTab(Mensagens.getString(Constantes.LABEL_ATUALIZAR), container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.UPDATE);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 
-		return panel;
+		return container;
 	}
 
 	public void novaArvore(Formulario formulario) {
