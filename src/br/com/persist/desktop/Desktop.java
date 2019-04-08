@@ -284,10 +284,13 @@ public class Desktop extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 		private Action centralAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
+		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimenAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 
 		DesktopPopup() {
 			add(new MenuItem(larTotalAcao));
+			addSeparator();
+			add(new MenuItem(distribuirAcao));
 			addSeparator();
 			add(new MenuItem(centralAcao));
 			addSeparator();
@@ -298,6 +301,7 @@ public class Desktop extends JDesktopPane {
 
 		private void eventos() {
 			larTotalAcao.setActionListener(e -> larguraTotal());
+			distribuirAcao.setActionListener(e -> distribuir());
 			dimenAcao.setActionListener(e -> ajusteDimension());
 			centralAcao.setActionListener(e -> centralizar());
 		}
