@@ -44,11 +44,12 @@ public class ConfigContainer extends Panel {
 			new NomeValor("label.10000", 10000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.20000", 20000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.30000", 30000, NomeValor.INTERVALO_AUTO),
-			new NomeValor("label.59000", 59000, NomeValor.INTERVALO_AUTO), };
+			new NomeValor("label.59000", 59000, NomeValor.INTERVALO_AUTO) };
 
 	private final transient NomeValor[] nomeValorDestacados = {
 			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
-			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
+			new NomeValor("label.desktop", Constantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS),
+			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_OBJETO, NomeValor.DESTACADOS) };
 
 	private final RadioPosicao[] rdoDestacados = new RadioPosicao[nomeValorDestacados.length];
 	private final RadioPosicao[] rdoIntervalos = new RadioPosicao[nomeValorIntervalos.length];
