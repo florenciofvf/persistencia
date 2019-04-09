@@ -39,6 +39,7 @@ import br.com.persist.fichario.FicharioAbaContainer;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
+import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -984,6 +985,7 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
+		private Action updtAcao = Action.actionMenu("label.atualizar", Icones.UPDATE);
 		private Action consAcao = Action.actionMenu("label.consulta", Icones.PANEL3);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 
@@ -995,6 +997,7 @@ public class Superficie extends Desktop {
 		MenuItem itemPartir = new MenuItem(new PartirAcao());
 		Menu menuAlinhamento = new Menu("label.alinhamento");
 		MenuItem itemFormularioSel = new MenuItem(consAcao);
+		MenuItem itemFormularioUpt = new MenuItem(updtAcao);
 		MenuItem itemCopiar = new MenuItem(copiarAcao);
 		MenuDestacar menuDestacar = new MenuDestacar();
 
@@ -1012,6 +1015,7 @@ public class Superficie extends Desktop {
 			addSeparator();
 			add(menuDestacar);
 			add(itemFormularioSel);
+			add(itemFormularioUpt);
 			addSeparator();
 			add(new MenuItem(excluirAcao));
 			addSeparator();
@@ -1073,6 +1077,18 @@ public class Superficie extends Desktop {
 				}
 
 				ConsultaFormulario form = new ConsultaFormulario(formulario, container.getConexaoPadrao());
+				form.setLocationRelativeTo(frame);
+				form.setVisible(true);
+			});
+
+			updtAcao.setActionListener(e -> {
+				Frame frame = formulario;
+
+				if (container.getSuperficieFormulario() != null) {
+					frame = container.getSuperficieFormulario();
+				}
+
+				UpdateFormulario form = new UpdateFormulario(formulario, container.getConexaoPadrao());
 				form.setLocationRelativeTo(frame);
 				form.setVisible(true);
 			});

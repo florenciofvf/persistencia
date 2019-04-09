@@ -27,6 +27,7 @@ import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
+import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -136,6 +137,7 @@ public class FicharioAbaContainer extends Panel {
 		private Action criarObjAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
 		private Action transpAcao = Action.actionIcon("label.transparente", Icones.RECT);
 		private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
+		private Action updtAcao = Action.actionIcon("label.atualizar", Icones.UPDATE);
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
 		private Action consAcao = Action.actionIcon("label.consulta", Icones.PANEL3);
@@ -153,6 +155,7 @@ public class FicharioAbaContainer extends Panel {
 			addSeparator();
 			add(new ButtonDestacar());
 			add(new Button(consAcao));
+			add(new Button(updtAcao));
 			addSeparator();
 			add(new Button(excluirAcao));
 			add(new Button(criarObjAcao));
@@ -253,6 +256,12 @@ public class FicharioAbaContainer extends Panel {
 
 			consAcao.setActionListener(e -> {
 				ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
+				form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
+				form.setVisible(true);
+			});
+
+			updtAcao.setActionListener(e -> {
+				UpdateFormulario form = new UpdateFormulario(formulario, getConexaoPadrao());
 				form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
 				form.setVisible(true);
 			});
