@@ -261,7 +261,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				ComplementoDialogo form = new ComplementoDialogo((Dialog) null, objeto, txtComplemento);
-				form.setLocationRelativeTo(null);
+
+				if (listener instanceof Component) {
+					form.setLocationRelativeTo((Component) listener);
+				}
+
 				form.setVisible(true);
 			}
 		}
