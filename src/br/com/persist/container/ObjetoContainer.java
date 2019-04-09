@@ -135,7 +135,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	@Override
 	public void ini(Graphics graphics) {
-		TabelaUtil.ajustar(tabela, graphics, 40);
+		TabelaUtil.ajustar(tabela, graphics);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -361,7 +361,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				tableColumn.setHeaderRenderer(cabecalhoColuna);
 			}
 
-			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g, 40);
+			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
 		}
@@ -829,7 +829,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+					TabelaUtil.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, ObjetoContainer.this);
 				}
@@ -859,7 +859,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+					TabelaUtil.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, ObjetoContainer.this);
 				}
@@ -889,7 +889,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+					TabelaUtil.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, ObjetoContainer.this);
 				}
@@ -919,7 +919,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+					TabelaUtil.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("INFO-BANCO", ex, ObjetoContainer.this);
 				}
@@ -949,7 +949,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+					TabelaUtil.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("META-DADOS", ex, ObjetoContainer.this);
 				}
@@ -979,7 +979,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					tabela.setModel(modeloOrdenacao);
 					configCabecalhoColuna(modeloListagem);
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+					TabelaUtil.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("ESQUEMA", ex, ObjetoContainer.this);
 				}

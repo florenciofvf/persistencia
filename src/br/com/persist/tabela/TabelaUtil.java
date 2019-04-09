@@ -19,7 +19,7 @@ public class TabelaUtil {
 	private TabelaUtil() {
 	}
 
-	public static void ajustar(JTable table, Graphics graphics, int ajuste) {
+	public static void ajustar(JTable table, Graphics graphics) {
 		if (table == null || graphics == null) {
 			return;
 		}
@@ -41,7 +41,7 @@ public class TabelaUtil {
 			}
 
 			TableColumn column = columnModel.getColumn(col);
-			column.setPreferredWidth(largura + ajuste);
+			column.setPreferredWidth(largura + 40);
 		}
 	}
 

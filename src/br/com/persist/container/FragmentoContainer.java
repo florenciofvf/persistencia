@@ -46,7 +46,7 @@ public class FragmentoContainer extends Panel implements IIni {
 
 	@Override
 	public void ini(Graphics graphics) {
-		TabelaUtil.ajustar(tabela, graphics, 40);
+		TabelaUtil.ajustar(tabela, graphics);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -84,7 +84,7 @@ public class FragmentoContainer extends Panel implements IIni {
 
 				FragmentoModelo.ordenar();
 				modelo.fireTableDataChanged();
-				TabelaUtil.ajustar(tabela, getGraphics(), 40);
+				TabelaUtil.ajustar(tabela, getGraphics());
 			});
 
 			novoAcao.setActionListener(e -> {

@@ -132,7 +132,7 @@ public class ConsultaContainer extends Panel {
 			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, consulta, new String[0],
 					new Objeto(), conexao);
 			tabela.setModel(modeloRegistro);
-			TabelaUtil.ajustar(tabela, getGraphics(), 40);
+			TabelaUtil.ajustar(tabela, getGraphics());
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(PAINEL_SELECT, ex, this);
 		}

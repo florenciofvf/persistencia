@@ -49,7 +49,7 @@ public class ConexaoContainer extends Panel implements IIni {
 
 	@Override
 	public void ini(Graphics graphics) {
-		TabelaUtil.ajustar(tabela, graphics, 40);
+		TabelaUtil.ajustar(tabela, graphics);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -86,7 +86,7 @@ public class ConexaoContainer extends Panel implements IIni {
 				try {
 					modelo.abrir();
 					formulario.atualizarConexoes();
-					TabelaUtil.ajustar(tabela, getGraphics(), 40);
+					TabelaUtil.ajustar(tabela, getGraphics());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("ABRIR: ", ex, ConexaoContainer.this);
 				}
