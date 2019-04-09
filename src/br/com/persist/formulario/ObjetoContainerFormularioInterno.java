@@ -6,6 +6,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.container.ObjetoContainer;
@@ -27,6 +30,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		super(objeto.getId());
 		container = new ObjetoContainer(this, provedor, padrao, objeto, this, g, buscaAuto);
 		montarLayout();
+		configurar();
 	}
 
 	private void montarLayout() {
@@ -36,6 +40,15 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	private void configurar() {
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameOpened(InternalFrameEvent e) {
+				container.ini(getGraphics());
+			}
+		});
 	}
 
 	@Override

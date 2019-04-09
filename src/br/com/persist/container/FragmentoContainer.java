@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 
 import javax.swing.JTable;
 
@@ -13,11 +14,12 @@ import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.Fragmento;
+import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class FragmentoContainer extends Panel {
+public class FragmentoContainer extends Panel implements IIni {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo modelo = new FragmentoModelo();
 	private final transient FragmentoListener listener;
@@ -40,6 +42,11 @@ public class FragmentoContainer extends Panel {
 	private void configurar() {
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.abrirAcao.actionPerformed(null);
+	}
+
+	@Override
+	public void ini(Graphics graphics) {
+		TabelaUtil.ajustar(tabela, graphics, 40);
 	}
 
 	private class Toolbar extends BarraButton {

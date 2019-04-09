@@ -3,6 +3,8 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.banco.Conexao;
@@ -21,6 +23,7 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 		super(objeto.getId());
 		container = new ObjetoContainer(this, provedor, padrao, objeto, this, g, false);
 		montarLayout();
+		configurar();
 	}
 
 	private void montarLayout() {
@@ -30,6 +33,15 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
 	}
 
 	@Override

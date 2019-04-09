@@ -2,6 +2,8 @@ package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import br.com.persist.container.ConexaoContainer;
 import br.com.persist.principal.Formulario;
@@ -17,6 +19,7 @@ public class ConexaoDialogo extends AbstratoDialogo implements IJanela {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONEXAO));
 		container = new ConexaoContainer(this, formulario);
 		montarLayout();
+		configurar();
 	}
 
 	private void montarLayout() {
@@ -26,5 +29,14 @@ public class ConexaoDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
 	}
 }

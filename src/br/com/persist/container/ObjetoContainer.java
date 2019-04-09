@@ -70,6 +70,7 @@ import br.com.persist.util.BuscaAuto;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
+import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -77,7 +78,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
-public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable {
+public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable, IIni {
 	private static final long serialVersionUID = 1L;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private final TextField txtComplemento = new TextField(35);
@@ -130,6 +131,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			dge.startDrag(null, new Transferidor(objeto, conexao, listener.getDimensoes(), apelido), listenerArrasto);
 		});
+	}
+
+	@Override
+	public void ini(Graphics graphics) {
+		TabelaUtil.ajustar(tabela, graphics, 40);
 	}
 
 	private class Toolbar extends BarraButton {

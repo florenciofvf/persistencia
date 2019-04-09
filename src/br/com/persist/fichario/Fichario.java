@@ -294,6 +294,8 @@ public class Fichario extends JTabbedPane {
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONEXAO);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
+
+		container.ini(getGraphics());
 	}
 
 	public void novoFragmento(Formulario formulario) {
@@ -304,6 +306,8 @@ public class Fichario extends JTabbedPane {
 		TituloAba tituloAba = new TituloAba(this, TituloAba.FRAGMENTO);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
+
+		container.ini(getGraphics());
 	}
 
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
@@ -332,6 +336,8 @@ public class Fichario extends JTabbedPane {
 		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETO);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
+
+		container.ini(getGraphics());
 	}
 
 	public void abrirFormulario(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,

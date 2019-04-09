@@ -3,6 +3,8 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.listener.FragmentoListener;
@@ -18,12 +20,14 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 		super(dialog, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container = new FragmentoContainer(this, listener);
 		montarLayout();
+		configurar();
 	}
 
 	public FragmentoDialogo(Frame frame, FragmentoListener listener) {
 		super(frame, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container = new FragmentoContainer(this, listener);
 		montarLayout();
+		configurar();
 	}
 
 	private void montarLayout() {
@@ -33,5 +37,14 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
 	}
 }

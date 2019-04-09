@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 
 import javax.swing.JTable;
 
@@ -15,11 +16,12 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.renderer.ConexaoStatusRenderer;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
+import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class ConexaoContainer extends Panel {
+public class ConexaoContainer extends Panel implements IIni {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo modelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(modelo);
@@ -43,6 +45,11 @@ public class ConexaoContainer extends Panel {
 		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoStatusEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.abrirAcao.actionPerformed(null);
+	}
+
+	@Override
+	public void ini(Graphics graphics) {
+		TabelaUtil.ajustar(tabela, graphics, 40);
 	}
 
 	private class Toolbar extends BarraButton {

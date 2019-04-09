@@ -1,6 +1,8 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import br.com.persist.container.ConexaoContainer;
 import br.com.persist.principal.Formulario;
@@ -16,6 +18,7 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 		super(Mensagens.getString(Constantes.LABEL_CONEXAO));
 		container = new ConexaoContainer(this, formulario);
 		montarLayout();
+		configurar();
 	}
 
 	private void montarLayout() {
@@ -25,5 +28,14 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
 	}
 }
