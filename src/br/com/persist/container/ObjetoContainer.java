@@ -92,6 +92,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private final transient Objeto objeto;
 	private final boolean buscaAuto;
 	private transient Thread thread;
+	private Component suporte;
 
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
 			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
@@ -206,6 +207,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				if (listener instanceof Component) {
 					form.setLocationRelativeTo((Component) listener);
+				} else if (suporte instanceof Component) {
+					form.setLocationRelativeTo(suporte);
 				}
 
 				form.setVisible(true);
@@ -264,6 +267,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				if (listener instanceof Component) {
 					form.setLocationRelativeTo((Component) listener);
+				} else if (suporte instanceof Component) {
+					form.setLocationRelativeTo(suporte);
 				}
 
 				form.setVisible(true);
@@ -1084,4 +1089,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 	};
+
+	public Component getSuporte() {
+		return suporte;
+	}
+
+	public void setSuporte(Component suporte) {
+		this.suporte = suporte;
+	}
 }

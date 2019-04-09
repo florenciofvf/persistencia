@@ -339,6 +339,7 @@ public class Fichario extends JTabbedPane {
 		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETO);
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
+		container.setSuporte(this);
 
 		container.ini(getGraphics());
 	}
