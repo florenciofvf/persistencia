@@ -197,7 +197,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		desktop.ini(getGraphics());
-		desktop.distribuir();
+		desktop.distribuir(-20);
 	}
 
 	private void destacarObjt(Formulario formulario, List<Objeto> objetos, Conexao conexao) {

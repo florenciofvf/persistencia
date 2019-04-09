@@ -153,8 +153,8 @@ public class Desktop extends JDesktopPane implements IIni {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	public void distribuir() {
-		int largura = getSize().width - 20;
+	public void distribuir(int delta) {
+		int largura = (getSize().width - 20) + delta;
 		int altura = 341;
 		int y = 10;
 
@@ -313,8 +313,8 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 
 		private void eventos() {
+			distribuirAcao.setActionListener(e -> distribuir(0));
 			larTotalAcao.setActionListener(e -> larguraTotal());
-			distribuirAcao.setActionListener(e -> distribuir());
 			dimenAcao.setActionListener(e -> ajusteDimension());
 			centralAcao.setActionListener(e -> centralizar());
 		}
