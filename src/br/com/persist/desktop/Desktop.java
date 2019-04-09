@@ -30,13 +30,14 @@ import br.com.persist.container.ObjetoContainer;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.IIni;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
-public class Desktop extends JDesktopPane {
+public class Desktop extends JDesktopPane implements IIni {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
@@ -48,6 +49,18 @@ public class Desktop extends JDesktopPane {
 		}
 		new DropTarget(this, listener);
 		this.formulario = formulario;
+	}
+
+	@Override
+	public void ini(Graphics graphics) {
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				interno.ini(graphics);
+			}
+		}
 	}
 
 	protected void alinharDireito() {

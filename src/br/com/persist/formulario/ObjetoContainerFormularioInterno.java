@@ -17,10 +17,11 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
+import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 
 public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
-		implements IJanela, ObjetoContainerListener {
+		implements IJanela, ObjetoContainerListener, IIni {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
 	private String apelido;
@@ -40,6 +41,11 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	@Override
+	public void ini(Graphics graphics) {
+		container.ini(graphics);
 	}
 
 	private void configurar() {

@@ -29,6 +29,7 @@ public class DesktopFormulario extends AbstratoFormulario {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
+				desktop.ini(getGraphics());
 				desktop.distribuir();
 			}
 		});
