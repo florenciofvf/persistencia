@@ -15,7 +15,7 @@ public class DesktopFormulario extends AbstratoFormulario {
 	private final Desktop desktop;
 
 	public DesktopFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_DESKTOP));
+		super(Mensagens.getString(Constantes.LABEL_FORMULARIO));
 		desktop = new Desktop(formulario, false);
 		montarLayout();
 		configurar();
