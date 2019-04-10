@@ -205,7 +205,8 @@ public class FicharioAbaContainer extends Panel {
 					form.setVisible(true);
 				});
 
-				ficharioAcao.setActionListener(e -> formulario.getFichario().novaConsulta(formulario));
+				ficharioAcao
+						.setActionListener(e -> formulario.getFichario().novaConsulta(formulario, getConexaoPadrao()));
 			}
 		}
 
@@ -238,7 +239,8 @@ public class FicharioAbaContainer extends Panel {
 					form.setVisible(true);
 				});
 
-				ficharioAcao.setActionListener(e -> formulario.getFichario().novoUpdate(formulario));
+				ficharioAcao
+						.setActionListener(e -> formulario.getFichario().novoUpdate(formulario, getConexaoPadrao()));
 			}
 		}
 

@@ -274,7 +274,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 					form.setVisible(true);
 				});
 
-				ficharioAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this, null));
 			}
 		}
 
@@ -302,7 +302,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 					form.setVisible(true);
 				});
 
-				ficharioAcao.setActionListener(e -> fichario.novoUpdate(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.novoUpdate(Formulario.this, null));
 			}
 		}
 

@@ -1062,7 +1062,8 @@ public class Superficie extends Desktop {
 					form.setVisible(true);
 				});
 
-				ficharioAcao.setActionListener(e -> formulario.getFichario().novaConsulta(formulario));
+				ficharioAcao.setActionListener(
+						e -> formulario.getFichario().novaConsulta(formulario, container.getConexaoPadrao()));
 			}
 		}
 
@@ -1102,7 +1103,8 @@ public class Superficie extends Desktop {
 					form.setVisible(true);
 				});
 
-				ficharioAcao.setActionListener(e -> formulario.getFichario().novoUpdate(formulario));
+				ficharioAcao.setActionListener(
+						e -> formulario.getFichario().novoUpdate(formulario, container.getConexaoPadrao()));
 			}
 		}
 
