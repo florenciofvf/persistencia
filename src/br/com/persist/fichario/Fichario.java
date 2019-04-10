@@ -405,6 +405,12 @@ public class Fichario extends JTabbedPane {
 		return getIndice(file) >= 0;
 	}
 
+	public boolean isAtivo(File file) {
+		int pos = getIndice(file);
+		int sel = getSelectedIndex();
+		return pos != -1 && pos == sel;
+	}
+
 	public int getIndice(File file) {
 		int total = getTabCount();
 

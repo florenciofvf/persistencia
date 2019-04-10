@@ -64,6 +64,14 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 					ArvoreUtil.statusEstrutura(arvore, arquivo);
 				}
 			}
+
+			arvore.clearSelection();
+
+			for (Arquivo arquivo : lista) {
+				if (formulario.getFichario().isAtivo(arquivo.getFile())) {
+					ArvoreUtil.selecionarObjeto(arvore, arquivo);
+				}
+			}
 		}
 	}
 
