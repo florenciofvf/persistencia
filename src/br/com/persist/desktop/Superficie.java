@@ -1108,7 +1108,7 @@ public class Superficie extends Desktop {
 				formularioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
 						Constantes.TIPO_CONTAINER_FORMULARIO));
 				ficharioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Constantes.TIPO_CONTAINER_OBJETO));
+						Constantes.TIPO_CONTAINER_FICHARIO));
 				desktopAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
 						Constantes.TIPO_CONTAINER_DESKTOP));
 			}

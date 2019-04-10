@@ -155,7 +155,7 @@ public class Fichario extends JTabbedPane {
 			destacarForm(formulario, objetos, conexao);
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
 			destacarDesk(formulario, objetos, conexao);
-		} else if (tipoContainer == Constantes.TIPO_CONTAINER_OBJETO) {
+		} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
 			destacarObjt(formulario, objetos, conexao);
 		}
 	}

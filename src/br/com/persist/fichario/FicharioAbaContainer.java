@@ -233,10 +233,10 @@ public class FicharioAbaContainer extends Panel {
 
 				formularioAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
+				ficharioAcao.setActionListener(
+						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FICHARIO));
 				desktopAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
-				ficharioAcao.setActionListener(
-						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_OBJETO));
 			}
 		}
 
