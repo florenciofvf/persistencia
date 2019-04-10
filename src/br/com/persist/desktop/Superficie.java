@@ -51,6 +51,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro.Instrucao;
+import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
@@ -1026,17 +1027,11 @@ public class Superficie extends Desktop {
 			eventos();
 		}
 
-		class MenuConsulta extends Menu {
+		class MenuConsulta extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action formularioAcao = Action.actionMenuFormulario();
-			Action ficharioAcao = Action.actionMenuFichario();
-			Action dialogoAcao = Action.actionMenuDialogo();
 
 			MenuConsulta() {
 				super(Constantes.LABEL_CONSULTA, Icones.PANEL3);
-				addMenuItem(formularioAcao);
-				addMenuItem(ficharioAcao);
-				addMenuItem(dialogoAcao);
 
 				formularioAcao.setActionListener(e -> {
 					Frame frame = formulario;
@@ -1067,17 +1062,11 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class MenuUpdate extends Menu {
+		class MenuUpdate extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action formularioAcao = Action.actionMenuFormulario();
-			Action ficharioAcao = Action.actionMenuFichario();
-			Action dialogoAcao = Action.actionMenuDialogo();
 
 			MenuUpdate() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
-				addMenuItem(formularioAcao);
-				addMenuItem(ficharioAcao);
-				addMenuItem(dialogoAcao);
 
 				formularioAcao.setActionListener(e -> {
 					Frame frame = formulario;
@@ -1108,24 +1097,20 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class MenuDestacar extends Menu {
+		class MenuDestacar extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action objetoAcao = Action.actionMenu("label.fichario", null);
-			Action formularioAcao = Action.actionMenuFormulario();
 			Action desktopAcao = Action.actionMenuDesktop();
 
 			MenuDestacar() {
-				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
-				addMenuItem(formularioAcao);
+				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
-				addMenuItem(objetoAcao);
 
 				formularioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
 						Constantes.TIPO_CONTAINER_FORMULARIO));
+				ficharioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
+						Constantes.TIPO_CONTAINER_OBJETO));
 				desktopAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
 						Constantes.TIPO_CONTAINER_DESKTOP));
-				objetoAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Constantes.TIPO_CONTAINER_OBJETO));
 			}
 		}
 

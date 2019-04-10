@@ -19,7 +19,6 @@ import javax.swing.JToolBar;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
-import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.desktop.Objeto;
@@ -33,10 +32,10 @@ import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
+import br.com.persist.util.ButtonPadrao1;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
-import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -176,21 +175,11 @@ public class FicharioAbaContainer extends Panel {
 			eventos();
 		}
 
-		class ButtonConsulta extends Button {
+		class ButtonConsulta extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action formularioAcao = Action.actionMenuFormulario();
-			Action ficharioAcao = Action.actionMenuFichario();
-			Action dialogoAcao = Action.actionMenuDialogo();
-			private Popup popup = new Popup();
 
 			ButtonConsulta() {
-				setToolTipText(Mensagens.getString(Constantes.LABEL_CONSULTA));
-				popup.addMenuItem(formularioAcao);
-				popup.addMenuItem(ficharioAcao);
-				popup.addMenuItem(dialogoAcao);
-				setComponentPopupMenu(popup);
-				setIcon(Icones.PANEL3);
-				addActionListener(e -> popup.show(this, 5, 5));
+				super(Constantes.LABEL_CONSULTA, Icones.PANEL3);
 
 				formularioAcao.setActionListener(e -> {
 					ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
@@ -210,21 +199,11 @@ public class FicharioAbaContainer extends Panel {
 			}
 		}
 
-		class ButtonUpdate extends Button {
+		class ButtonUpdate extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action formularioAcao = Action.actionMenuFormulario();
-			Action ficharioAcao = Action.actionMenuFichario();
-			Action dialogoAcao = Action.actionMenuDialogo();
-			private Popup popup = new Popup();
 
 			ButtonUpdate() {
-				setToolTipText(Mensagens.getString(Constantes.LABEL_ATUALIZAR));
-				popup.addMenuItem(formularioAcao);
-				popup.addMenuItem(ficharioAcao);
-				popup.addMenuItem(dialogoAcao);
-				setComponentPopupMenu(popup);
-				setIcon(Icones.UPDATE);
-				addActionListener(e -> popup.show(this, 5, 5));
+				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
 				formularioAcao.setActionListener(e -> {
 					UpdateFormulario form = new UpdateFormulario(formulario, getConexaoPadrao());
@@ -244,21 +223,13 @@ public class FicharioAbaContainer extends Panel {
 			}
 		}
 
-		private class ButtonDestacar extends Button {
+		private class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action formularioAcao = Action.actionMenuFormulario();
-			Action ficharioAcao = Action.actionMenuFichario();
 			Action desktopAcao = Action.actionMenuDesktop();
-			private Popup popup = new Popup();
 
 			ButtonDestacar() {
-				setToolTipText(Mensagens.getString(Constantes.LABEL_DESTACAR));
-				popup.addMenuItem(formularioAcao);
-				popup.addMenuItem(desktopAcao);
-				popup.addMenuItem(ficharioAcao);
-				setComponentPopupMenu(popup);
-				setIcon(Icones.ARRASTAR);
-				addActionListener(e -> popup.show(this, 5, 5));
+				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
+				addMenuItem(desktopAcao);
 
 				formularioAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
