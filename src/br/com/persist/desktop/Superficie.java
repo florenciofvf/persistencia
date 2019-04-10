@@ -32,9 +32,11 @@ import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
+import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoConfigDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
+import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.fichario.FicharioAbaContainer;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormulario;
@@ -985,8 +987,6 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
-		private Action updtAcao = Action.actionMenu("label.atualizar", Icones.UPDATE);
-		private Action consAcao = Action.actionMenu("label.consulta", Icones.PANEL3);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 
 		MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
@@ -996,8 +996,6 @@ public class Superficie extends Desktop {
 		Menu menuDistribuicao = new Menu("label.distribuicao");
 		MenuItem itemPartir = new MenuItem(new PartirAcao());
 		Menu menuAlinhamento = new Menu("label.alinhamento");
-		MenuItem itemFormularioSel = new MenuItem(consAcao);
-		MenuItem itemFormularioUpt = new MenuItem(updtAcao);
 		MenuItem itemCopiar = new MenuItem(copiarAcao);
 		MenuDestacar menuDestacar = new MenuDestacar();
 
@@ -1014,8 +1012,10 @@ public class Superficie extends Desktop {
 			add(itemCopiar);
 			addSeparator();
 			add(menuDestacar);
-			add(itemFormularioSel);
-			add(itemFormularioUpt);
+			addSeparator();
+			add(new MenuConsulta());
+			addSeparator();
+			add(new MenuUpdate());
 			addSeparator();
 			add(new MenuItem(excluirAcao));
 			addSeparator();
@@ -1024,6 +1024,86 @@ public class Superficie extends Desktop {
 			add(new MenuItem(configuracaoAcao));
 
 			eventos();
+		}
+
+		class MenuConsulta extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+
+			MenuConsulta() {
+				super(Constantes.LABEL_CONSULTA, Icones.PANEL3);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+				addMenuItem(dialogoAcao);
+
+				formularioAcao.setActionListener(e -> {
+					Frame frame = formulario;
+
+					if (container.getSuperficieFormulario() != null) {
+						frame = container.getSuperficieFormulario();
+					}
+
+					ConsultaFormulario form = new ConsultaFormulario(formulario, container.getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					Frame frame = formulario;
+
+					if (container.getSuperficieFormulario() != null) {
+						frame = container.getSuperficieFormulario();
+					}
+
+					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, container.getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> formulario.getFichario().novaConsulta(formulario));
+			}
+		}
+
+		class MenuUpdate extends Menu {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+
+			MenuUpdate() {
+				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
+				addMenuItem(formularioAcao);
+				addMenuItem(ficharioAcao);
+				addMenuItem(dialogoAcao);
+
+				formularioAcao.setActionListener(e -> {
+					Frame frame = formulario;
+
+					if (container.getSuperficieFormulario() != null) {
+						frame = container.getSuperficieFormulario();
+					}
+
+					UpdateFormulario form = new UpdateFormulario(formulario, container.getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					Frame frame = formulario;
+
+					if (container.getSuperficieFormulario() != null) {
+						frame = container.getSuperficieFormulario();
+					}
+
+					UpdateDialogo form = new UpdateDialogo(frame, formulario, container.getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> formulario.getFichario().novoUpdate(formulario));
+			}
 		}
 
 		class MenuDestacar extends Menu {
@@ -1067,30 +1147,6 @@ public class Superficie extends Desktop {
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				}
-			});
-
-			consAcao.setActionListener(e -> {
-				Frame frame = formulario;
-
-				if (container.getSuperficieFormulario() != null) {
-					frame = container.getSuperficieFormulario();
-				}
-
-				ConsultaFormulario form = new ConsultaFormulario(formulario, container.getConexaoPadrao());
-				form.setLocationRelativeTo(frame);
-				form.setVisible(true);
-			});
-
-			updtAcao.setActionListener(e -> {
-				Frame frame = formulario;
-
-				if (container.getSuperficieFormulario() != null) {
-					frame = container.getSuperficieFormulario();
-				}
-
-				UpdateFormulario form = new UpdateFormulario(formulario, container.getConexaoPadrao());
-				form.setLocationRelativeTo(frame);
-				form.setVisible(true);
 			});
 
 			inputMap().put(getKeyStroke(KeyEvent.VK_C), copiarAcao.getChave());

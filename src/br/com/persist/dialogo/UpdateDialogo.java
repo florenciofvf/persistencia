@@ -3,6 +3,7 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
+import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.container.UpdateContainer;
 import br.com.persist.util.Constantes;
@@ -16,6 +17,12 @@ public class UpdateDialogo extends AbstratoDialogo implements IJanela {
 	public UpdateDialogo(Frame frame, ConexaoProvedor provedor) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 		container = new UpdateContainer(this, provedor, null, null, null);
+		montarLayout();
+	}
+
+	public UpdateDialogo(Frame frame, ConexaoProvedor provedor, Conexao conexao) {
+		super(frame, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
+		container = new UpdateContainer(this, provedor, conexao, null, null);
 		montarLayout();
 	}
 

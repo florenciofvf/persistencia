@@ -3,6 +3,7 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
+import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.container.ConsultaContainer;
 import br.com.persist.util.Constantes;
@@ -16,6 +17,12 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 	public ConsultaDialogo(Frame frame, ConexaoProvedor provedor) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
 		container = new ConsultaContainer(this, provedor, null, null, null);
+		montarLayout();
+	}
+
+	public ConsultaDialogo(Frame frame, ConexaoProvedor provedor, Conexao padrao) {
+		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
+		container = new ConsultaContainer(this, provedor, padrao, null, null);
 		montarLayout();
 	}
 

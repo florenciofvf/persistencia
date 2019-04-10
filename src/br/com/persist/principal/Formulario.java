@@ -285,7 +285,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			Action dialogoAcao = Action.actionMenuDialogo();
 
 			MenuUpdate() {
-				super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
+				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 				addMenuItem(formularioAcao);
 				addMenuItem(ficharioAcao);
 				addMenuItem(dialogoAcao);

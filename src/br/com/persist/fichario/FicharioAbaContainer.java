@@ -2,6 +2,7 @@ package br.com.persist.fichario;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,6 @@ import javax.swing.JToolBar;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Button;
-import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
@@ -25,6 +25,8 @@ import br.com.persist.comp.ToggleButton;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.dialogo.ConsultaDialogo;
+import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.SuperficieFormulario;
 import br.com.persist.formulario.UpdateFormulario;
@@ -137,10 +139,8 @@ public class FicharioAbaContainer extends Panel {
 		private Action criarObjAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
 		private Action transpAcao = Action.actionIcon("label.transparente", Icones.RECT);
 		private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-		private Action updtAcao = Action.actionIcon("label.atualizar", Icones.UPDATE);
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
-		private Action consAcao = Action.actionIcon("label.consulta", Icones.PANEL3);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 
@@ -154,8 +154,10 @@ public class FicharioAbaContainer extends Panel {
 			add(new Button(colarAcao));
 			addSeparator();
 			add(new ButtonDestacar());
-			add(new Button(consAcao));
-			add(new Button(updtAcao));
+			addSeparator();
+			add(new ButtonConsulta());
+			addSeparator();
+			add(new ButtonUpdate());
 			addSeparator();
 			add(new Button(excluirAcao));
 			add(new Button(criarObjAcao));
@@ -174,18 +176,84 @@ public class FicharioAbaContainer extends Panel {
 			eventos();
 		}
 
+		class ButtonConsulta extends Button {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+			private Popup popup = new Popup();
+
+			ButtonConsulta() {
+				setToolTipText(Mensagens.getString(Constantes.LABEL_CONSULTA));
+				popup.addMenuItem(formularioAcao);
+				popup.addMenuItem(ficharioAcao);
+				popup.addMenuItem(dialogoAcao);
+				setComponentPopupMenu(popup);
+				setIcon(Icones.PANEL3);
+				addActionListener(e -> popup.show(this, 5, 5));
+
+				formularioAcao.setActionListener(e -> {
+					ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
+					form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					Frame frame = superficieFormulario != null ? superficieFormulario : formulario;
+					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> formulario.getFichario().novaConsulta(formulario));
+			}
+		}
+
+		class ButtonUpdate extends Button {
+			private static final long serialVersionUID = 1L;
+			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
+			Action dialogoAcao = Action.actionMenuDialogo();
+			private Popup popup = new Popup();
+
+			ButtonUpdate() {
+				setToolTipText(Mensagens.getString(Constantes.LABEL_ATUALIZAR));
+				popup.addMenuItem(formularioAcao);
+				popup.addMenuItem(ficharioAcao);
+				popup.addMenuItem(dialogoAcao);
+				setComponentPopupMenu(popup);
+				setIcon(Icones.UPDATE);
+				addActionListener(e -> popup.show(this, 5, 5));
+
+				formularioAcao.setActionListener(e -> {
+					UpdateFormulario form = new UpdateFormulario(formulario, getConexaoPadrao());
+					form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					Frame frame = superficieFormulario != null ? superficieFormulario : formulario;
+					UpdateDialogo form = new UpdateDialogo(frame, formulario, getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> formulario.getFichario().novoUpdate(formulario));
+			}
+		}
+
 		private class ButtonDestacar extends Button {
 			private static final long serialVersionUID = 1L;
-			Action objetoAcao = Action.actionMenu("label.fichario", null);
 			Action formularioAcao = Action.actionMenuFormulario();
+			Action ficharioAcao = Action.actionMenuFichario();
 			Action desktopAcao = Action.actionMenuDesktop();
 			private Popup popup = new Popup();
 
 			ButtonDestacar() {
 				setToolTipText(Mensagens.getString(Constantes.LABEL_DESTACAR));
-				popup.add(new MenuItem(formularioAcao));
-				popup.add(new MenuItem(desktopAcao));
-				popup.add(new MenuItem(objetoAcao));
+				popup.addMenuItem(formularioAcao);
+				popup.addMenuItem(desktopAcao);
+				popup.addMenuItem(ficharioAcao);
 				setComponentPopupMenu(popup);
 				setIcon(Icones.ARRASTAR);
 				addActionListener(e -> popup.show(this, 5, 5));
@@ -194,7 +262,7 @@ public class FicharioAbaContainer extends Panel {
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
 				desktopAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
-				objetoAcao.setActionListener(
+				ficharioAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_OBJETO));
 			}
 		}
@@ -252,18 +320,6 @@ public class FicharioAbaContainer extends Panel {
 			colarAcao.setActionListener(e -> {
 				Formulario.colar(superficie, false, 0, 0);
 				superficie.repaint();
-			});
-
-			consAcao.setActionListener(e -> {
-				ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
-				form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
-				form.setVisible(true);
-			});
-
-			updtAcao.setActionListener(e -> {
-				UpdateFormulario form = new UpdateFormulario(formulario, getConexaoPadrao());
-				form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
-				form.setVisible(true);
 			});
 
 			configAtalho(excluirAcao, KeyEvent.VK_D);
