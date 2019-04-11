@@ -11,6 +11,8 @@ public class Constantes {
 	public static final String LABEL_ATUALIZAR = "label.atualizar";
 	public static final String LABEL_FRAGMENTO = "label.fragmento";
 	public static final String LABEL_ANOTACOES = "label.anotacoes";
+	public static final String LABEL_COM_ASPAS = "label.com_aspas";
+	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";

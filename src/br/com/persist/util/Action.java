@@ -92,4 +92,12 @@ public class Action extends Acao {
 	public static Action actionMenuDialogo() {
 		return new Action(true, Constantes.LABEL_DIALOGO, null);
 	}
+
+	public static Action actionMenuComAspas() {
+		return new Action(true, Constantes.LABEL_COM_ASPAS, Icones.ASPAS);
+	}
+
+	public static Action actionMenuSemAspas() {
+		return new Action(true, Constantes.LABEL_SEM_ASPAS, null);
+	}
 }

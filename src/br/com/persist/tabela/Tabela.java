@@ -27,8 +27,6 @@ import br.com.persist.util.Util;
 
 public class Tabela extends JTable {
 	private static final long serialVersionUID = 1L;
-	private static final String LABEL_COM_ASPAS = "label.com_aspas";
-	private static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	private PopupHeader popupHeader = new PopupHeader();
 	private Map<String, List<String>> mapaChaveamento;
 	private transient TabelaListener tabelaListener;
@@ -197,8 +195,8 @@ public class Tabela extends JTable {
 
 		class MenuCopiarValor extends Menu {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenu(LABEL_COM_ASPAS, Icones.ASPAS);
-			private Action semAspasAcao = Action.actionMenu(LABEL_SEM_ASPAS, null);
+			private Action comAspasAcao = Action.actionMenuComAspas();
+			private Action semAspasAcao = Action.actionMenuSemAspas();
 
 			MenuCopiarValor() {
 				super("label.copiar_header");
@@ -217,8 +215,8 @@ public class Tabela extends JTable {
 
 		class MenuCopiarIN extends Menu {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenu(LABEL_COM_ASPAS, Icones.ASPAS);
-			private Action semAspasAcao = Action.actionMenu(LABEL_SEM_ASPAS, null);
+			private Action comAspasAcao = Action.actionMenuComAspas();
+			private Action semAspasAcao = Action.actionMenuSemAspas();
 
 			MenuCopiarIN() {
 				super("label.vazio");
@@ -244,8 +242,8 @@ public class Tabela extends JTable {
 
 		class MenuCopiarINDinamico extends Menu {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenu(LABEL_COM_ASPAS, Icones.ASPAS);
-			private Action semAspasAcao = Action.actionMenu(LABEL_SEM_ASPAS, null);
+			private Action comAspasAcao = Action.actionMenuComAspas();
+			private Action semAspasAcao = Action.actionMenuSemAspas();
 			private final String nomeColuna;
 
 			MenuCopiarINDinamico(String coluna) {
