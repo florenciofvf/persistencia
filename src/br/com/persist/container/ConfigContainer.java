@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -32,28 +33,27 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final Toolbar toolbar = new Toolbar();
 
-	private final transient NomeValor[] nomeValorPosicoes = {
+	private final transient NomeValor[] intervalos = { new NomeValor("label.1000", 1000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.5000", 5000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.7500", 7500, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.10000", 10000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.15000", 15000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.20000", 20000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.30000", 30000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.40000", 40000, NomeValor.INTERVALO_AUTO),
+			new NomeValor("label.59000", 59000, NomeValor.INTERVALO_AUTO) };
+
+	private final transient NomeValor[] destacados = {
+			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
+			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
+			new NomeValor("label.desktop", Constantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
+
+	private final transient NomeValor[] posicoes = {
 			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
 			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
 			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
 			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
 
-	private final transient NomeValor[] nomeValorIntervalos = {
-			new NomeValor("label.1000", 1000, NomeValor.INTERVALO_AUTO),
-			new NomeValor("label.5000", 5000, NomeValor.INTERVALO_AUTO),
-			new NomeValor("label.10000", 10000, NomeValor.INTERVALO_AUTO),
-			new NomeValor("label.20000", 20000, NomeValor.INTERVALO_AUTO),
-			new NomeValor("label.30000", 30000, NomeValor.INTERVALO_AUTO),
-			new NomeValor("label.59000", 59000, NomeValor.INTERVALO_AUTO) };
-
-	private final transient NomeValor[] nomeValorDestacados = {
-			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
-			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
-			new NomeValor("label.desktop", Constantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
-
-	private final RadioPosicao[] rdoDestacados = new RadioPosicao[nomeValorDestacados.length];
-	private final RadioPosicao[] rdoIntervalos = new RadioPosicao[nomeValorIntervalos.length];
-	private final RadioPosicao[] rdoPosicoes = new RadioPosicao[nomeValorPosicoes.length];
 	private final Formulario formulario;
 
 	public ConfigContainer(IJanela janela, Formulario formulario) {
@@ -71,42 +71,12 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 
-		Panel panelDestacados = new Panel(new FlowLayout(FlowLayout.CENTER));
-		Panel panelIntervalos = new Panel(new GridLayout(0, 6));
-		Panel panelPosicoes = new Panel(new GridLayout(0, 4));
-		ButtonGroup grupoDestacados = new ButtonGroup();
-		ButtonGroup grupoIntervalos = new ButtonGroup();
-		ButtonGroup grupoPosicoes = new ButtonGroup();
-
-		for (int i = 0; i < nomeValorPosicoes.length; i++) {
-			RadioPosicao radio = new RadioPosicao(nomeValorPosicoes[i]);
-			radio.setMargin(new Insets(5, 10, 5, 5));
-			grupoPosicoes.add(radio);
-			panelPosicoes.add(radio);
-			rdoPosicoes[i] = radio;
-
-			radio.setSelected(radio.nomeValor.valor == Preferencias.getPosicaoAbaFichario());
-		}
-
-		for (int i = 0; i < nomeValorIntervalos.length; i++) {
-			RadioPosicao radio = new RadioPosicao(nomeValorIntervalos[i]);
-			radio.setMargin(new Insets(5, 10, 5, 5));
-			grupoIntervalos.add(radio);
-			panelIntervalos.add(radio);
-			rdoIntervalos[i] = radio;
-
-			radio.setSelected(radio.nomeValor.valor == Preferencias.getIntervaloPesquisaAuto());
-		}
-
-		for (int i = 0; i < nomeValorDestacados.length; i++) {
-			RadioPosicao radio = new RadioPosicao(nomeValorDestacados[i]);
-			radio.setMargin(new Insets(5, 10, 5, 5));
-			grupoDestacados.add(radio);
-			panelDestacados.add(radio);
-			rdoDestacados[i] = radio;
-
-			radio.setSelected(radio.nomeValor.valor == Preferencias.getTipoContainerPesquisaAuto());
-		}
+		Panel panelIntervalos = criarPainelGrupo(new GridLayout(0, intervalos.length), intervalos,
+				Preferencias.getIntervaloPesquisaAuto());
+		Panel panelDestacados = criarPainelGrupo(new FlowLayout(FlowLayout.CENTER), destacados,
+				Preferencias.getTipoContainerPesquisaAuto());
+		Panel panelPosicoes = criarPainelGrupo(new GridLayout(0, posicoes.length), posicoes,
+				Preferencias.getPosicaoAbaFichario());
 
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
@@ -143,9 +113,25 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setMargin(insets);
 	}
 
+	private Panel criarPainelGrupo(LayoutManager layout, NomeValor[] nomeValores, int padrao) {
+		ButtonGroup grupo = new ButtonGroup();
+		Panel panel = new Panel(layout);
+
+		for (int i = 0; i < nomeValores.length; i++) {
+			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
+			radio.setSelected(radio.nomeValor.valor == padrao);
+			radio.setMargin(new Insets(5, 10, 5, 5));
+			panel.add(radio);
+			grupo.add(radio);
+		}
+
+		return panel;
+	}
+
 	private Label criarLabelTitulo(String chaveRotulo) {
 		Label label = new Label(chaveRotulo);
 		label.setHorizontalAlignment(Label.CENTER);
+
 		return label;
 	}
 
