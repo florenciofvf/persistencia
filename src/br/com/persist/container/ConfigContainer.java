@@ -108,15 +108,12 @@ public class ConfigContainer extends Panel {
 			radio.setSelected(radio.nomeValor.valor == Preferencias.getTipoContainerPesquisaAuto());
 		}
 
-		Label tituloDestacado = new Label("label.tipo_container_pesquisa_auto");
-		Label tituloIntervalo = new Label("label.intervalo_pesquisa_auto");
-		tituloDestacado.setHorizontalAlignment(Label.CENTER);
-		tituloIntervalo.setHorizontalAlignment(Label.CENTER);
-		Label localAbas = new Label("label.local_abas");
-		localAbas.setHorizontalAlignment(Label.CENTER);
+		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
+		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
+		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
 
 		Panel container = new Panel(new GridLayout(0, 1));
-		container.add(localAbas);
+		container.add(tituloLocalAbas);
 		container.add(panelPosicoes);
 		container.add(new JSeparator());
 		container.add(tituloIntervalo);
@@ -144,6 +141,12 @@ public class ConfigContainer extends Panel {
 		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
+	}
+
+	private Label criarLabelTitulo(String chaveRotulo) {
+		Label label = new Label(chaveRotulo);
+		label.setHorizontalAlignment(Label.CENTER);
+		return label;
 	}
 
 	private void configurar() {
