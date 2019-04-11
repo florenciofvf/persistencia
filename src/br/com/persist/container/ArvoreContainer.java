@@ -10,6 +10,7 @@ import br.com.persist.Arquivo;
 import br.com.persist.arvore.Arvore;
 import br.com.persist.arvore.ArvoreUtil;
 import br.com.persist.comp.Button;
+import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.listener.ArvoreListener;
@@ -21,6 +22,7 @@ import br.com.persist.util.Icones;
 public class ArvoreContainer extends Panel implements ArvoreListener {
 	private static final long serialVersionUID = 1L;
 	private Arvore arvore = new Arvore(new ArvoreModelo());
+	private final CheckBox chkLinkAuto = new CheckBox();
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
@@ -44,6 +46,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		Toolbar() {
 			add(new Button(atualizarAcao));
 			add(new Button(statusAcao));
+			add(chkLinkAuto);
 
 			atualizarAcao.setActionListener(e -> baixarArquivo());
 			statusAcao.setActionListener(e -> statusArquivo());
@@ -100,6 +103,17 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
 		if (arquivo != null) {
+			formulario.getFichario().selecionarAba(arquivo.getFile());
+			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			ArvoreUtil.statusEstrutura(arvore, arquivo);
+		}
+	}
+
+	@Override
+	public void clickArquivo(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+
+		if (arquivo != null && chkLinkAuto.isSelected()) {
 			formulario.getFichario().selecionarAba(arquivo.getFile());
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
 			ArvoreUtil.statusEstrutura(arvore, arquivo);

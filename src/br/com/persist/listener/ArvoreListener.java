@@ -12,4 +12,6 @@ public interface ArvoreListener {
 	public void atualizarArvore(Arvore arvore);
 
 	public void fecharArquivo(Arvore arvore);
+
+	public void clickArquivo(Arvore arvore);
 }

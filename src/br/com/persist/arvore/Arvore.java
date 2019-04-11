@@ -85,6 +85,8 @@ public class Arvore extends JTree {
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this));
+			} else {
+				ouvintes.forEach(o -> o.clickArquivo(Arvore.this));
 			}
 		}
 
