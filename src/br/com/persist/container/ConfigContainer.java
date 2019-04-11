@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.LayoutManager;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -71,12 +70,9 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 
-		Panel panelIntervalos = criarPainelGrupo(new GridLayout(0, intervalos.length), intervalos,
-				Preferencias.getIntervaloPesquisaAuto());
-		Panel panelDestacados = criarPainelGrupo(new FlowLayout(FlowLayout.CENTER), destacados,
-				Preferencias.getTipoContainerPesquisaAuto());
-		Panel panelPosicoes = criarPainelGrupo(new GridLayout(0, posicoes.length), posicoes,
-				Preferencias.getPosicaoAbaFichario());
+		Panel panelDestacados = criarPainelGrupo(destacados, Preferencias.getTipoContainerPesquisaAuto());
+		Panel panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
+		Panel panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
@@ -113,9 +109,9 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setMargin(insets);
 	}
 
-	private Panel criarPainelGrupo(LayoutManager layout, NomeValor[] nomeValores, int padrao) {
+	private Panel criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
+		Panel panel = new Panel(new FlowLayout(FlowLayout.CENTER));
 		ButtonGroup grupo = new ButtonGroup();
-		Panel panel = new Panel(layout);
 
 		for (int i = 0; i < nomeValores.length; i++) {
 			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
