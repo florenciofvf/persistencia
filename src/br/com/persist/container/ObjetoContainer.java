@@ -471,8 +471,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		class MenuBuscaAuto extends JMenu {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenu("label.com_aspas", Icones.ASPAS);
-			private Action semAspasAcao = Action.actionMenu("label.sem_aspas", null);
+			private Action comAspasAcao = Action.actionMenuComAspas();
+			private Action semAspasAcao = Action.actionMenuSemAspas();
 			private final transient Grupo grupo;
 
 			MenuBuscaAuto(Grupo grupo) {
