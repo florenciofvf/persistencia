@@ -673,27 +673,30 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		private Popup popup = new Popup();
 
 		ButtonFuncoes() {
-			setToolTipText(Mensagens.getString("label.funcoes"));
+			MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
+			MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
+			maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
+			minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
+
 			popup.add(new MenuItem(new TotalizarRegistrosAcao(false)));
 			popup.addSeparator();
 			popup.add(new MenuItem(new TotalizarRegistrosAcao(true)));
-			popup.addSeparator();
-			MenuItem minimo = new MenuItem(new MinimoAcao());
-			minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
-			popup.add(minimo);
-			MenuItem maximo = new MenuItem(new MaximoAcao());
-			maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
-			popup.add(maximo);
-			setComponentPopupMenu(popup);
-			setIcon(Icones.SOMA);
+			setToolTipText(Mensagens.getString("label.funcoes"));
 			addActionListener(e -> popup.show(this, 5, 5));
+			setComponentPopupMenu(popup);
+			popup.addSeparator();
+			setIcon(Icones.SOMA);
+			popup.add(minimo);
+			popup.add(maximo);
 		}
 
-		class MaximoAcao extends Acao {
+		class MinimoMaximoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
+			private final boolean minimo;
 
-			MaximoAcao() {
-				super(true, "label.maximo", Icones.VAR);
+			MinimoMaximoAcao(boolean minimo) {
+				super(true, minimo ? "label.minimo" : "label.maximo", Icones.VAR);
+				this.minimo = minimo;
 			}
 
 			@Override
@@ -711,36 +714,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					return;
 				}
 
-				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
-						+ objeto.getTabela(conexao.getEsquema()) + ")");
-				ObjetoContainer.this.actionPerformed(null);
-			}
-		}
-
-		class MinimoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-
-			MinimoAcao() {
-				super(true, "label.minimo", Icones.VAR);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
+				if (minimo) {
+					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
+							+ objeto.getTabela(conexao.getEsquema()) + ")");
+				} else {
+					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+							+ objeto.getTabela(conexao.getEsquema()) + ")");
 				}
 
-				String[] chaves = objeto.getChavesArray();
-
-				if (chaves.length != 1) {
-					txtComplemento.setText("");
-					return;
-				}
-
-				txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
-						+ objeto.getTabela(conexao.getEsquema()) + ")");
 				ObjetoContainer.this.actionPerformed(null);
 			}
 		}
