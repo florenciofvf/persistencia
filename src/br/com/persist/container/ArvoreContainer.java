@@ -41,7 +41,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 	private class Toolbar extends JToolBar {
 		private static final long serialVersionUID = 1L;
 		private Action statusAcao = Action.actionIcon("label.status", Icones.HIERARQUIA);
-		private Action atualizarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
+		private Action atualizarAcao = Action.actionIconBaixar();
 
 		Toolbar() {
 			add(new Button(atualizarAcao));

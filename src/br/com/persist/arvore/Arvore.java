@@ -14,7 +14,6 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.Arquivo;
-import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.ArvoreListener;
@@ -22,6 +21,7 @@ import br.com.persist.renderer.TreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
+import br.com.persist.util.MenuPadrao1;
 
 public class Arvore extends JTree {
 	private static final long serialVersionUID = 1L;
@@ -152,15 +152,11 @@ public class Arvore extends JTree {
 			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(Arvore.this)));
 		}
 
-		class MenuAbrir extends Menu {
+		class MenuAbrir extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action formularioAcao = Action.actionMenuFormulario();
-			Action ficharioAcao = Action.actionMenuFichario();
 
 			MenuAbrir() {
-				super("label.abrir", Icones.ABRIR);
-				addMenuItem(formularioAcao);
-				addMenuItem(ficharioAcao);
+				super("label.abrir", Icones.ABRIR, false);
 
 				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
 				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));

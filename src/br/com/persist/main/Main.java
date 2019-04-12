@@ -18,15 +18,14 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		Preferencias.abrir();
-
 		URL[] urLs = getURLs();
+		Preferencias.abrir();
+		Imagens.ini();
 
 		for (URL url : urLs) {
 			addURL(url);
 		}
 
-		Imagens.ini();
 		Formulario formulario = new Formulario();
 		formulario.setLocationRelativeTo(null);
 		formulario.setVisible(true);

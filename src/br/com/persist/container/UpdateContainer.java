@@ -26,8 +26,8 @@ import br.com.persist.util.Util;
 
 public class UpdateContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private static final String PAINEL_UPDATE = "PAINEL UPDATE";
 	private static final File file = new File("atualizacoes/atualizacoes");
+	private static final String PAINEL_UPDATE = "PAINEL UPDATE";
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;

@@ -138,10 +138,10 @@ public class FicharioAbaContainer extends Panel {
 		private Action criarObjAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
 		private Action transpAcao = Action.actionIcon("label.transparente", Icones.RECT);
 		private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR);
 		private Action salvarAcao = Action.actionIcon("label.salvar", Icones.SALVAR);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
+		private Action baixarAcao = Action.actionIconBaixar();
 
 		Toolbar() {
 			add(new Button(baixarAcao));
