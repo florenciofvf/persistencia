@@ -990,6 +990,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				tableColumn.setHeaderRenderer(cabecalhoColuna);
 			}
+
+			toolbar.buscaAuto.habilitar(false);
+			toolbar.excluirAtualizarEnable(false);
 		}
 	}
 
