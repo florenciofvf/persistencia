@@ -18,11 +18,13 @@ import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Mensagens;
 
 public class ArvoreContainer extends Panel implements ArvoreListener {
 	private static final long serialVersionUID = 1L;
 	private Arvore arvore = new Arvore(new ArvoreModelo());
 	private final CheckBox chkLinkAuto = new CheckBox();
+	private final CheckBox chkDuplicar = new CheckBox();
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
@@ -33,6 +35,8 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 	}
 
 	private void montarLayout() {
+		chkLinkAuto.setToolTipText(Mensagens.getString("msg.arvore.link_auto"));
+		chkDuplicar.setToolTipText(Mensagens.getString("msg.arvore.duplicar"));
 		add(BorderLayout.CENTER, new ScrollPane(arvore));
 		add(BorderLayout.NORTH, toolbar);
 		arvore.adicionarOuvinte(this);
@@ -47,6 +51,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 			add(new Button(atualizarAcao));
 			add(new Button(statusAcao));
 			add(chkLinkAuto);
+			add(chkDuplicar);
 
 			atualizarAcao.setActionListener(e -> baixarArquivo());
 			statusAcao.setActionListener(e -> statusArquivo());
@@ -92,8 +97,15 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
 		if (arquivo != null) {
-			formulario.abrirArquivo(arquivo.getFile(), true);
+			if (chkDuplicar.isSelected()) {
+				formulario.abrirArquivo(arquivo.getFile(), true);
+			} else {
+				if (!formulario.getFichario().isAberto(arquivo.getFile())) {
+					formulario.abrirArquivo(arquivo.getFile(), true);
+				}
+			}
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			formulario.getFichario().selecionarAba(arquivo.getFile());
 			ArvoreUtil.statusEstrutura(arvore, arquivo);
 		}
 	}
