@@ -14,9 +14,9 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JToolBar;
 
 import br.com.persist.banco.Conexao;
+import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -130,7 +130,7 @@ public class FicharioAbaContainer extends Panel {
 		}
 	}
 
-	private class Toolbar extends JToolBar {
+	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
 		private Action desenharDescAcao = Action.actionIcon("label.desenhar_desc", Icones.TAG);
@@ -144,32 +144,23 @@ public class FicharioAbaContainer extends Panel {
 		private Action baixarAcao = Action.actionIconBaixar();
 
 		Toolbar() {
-			add(new Button(baixarAcao));
-			addSeparator();
-			add(new Button(salvarAcao));
-			add(new Button(salvarComoAcao));
-			addSeparator();
-			add(new Button(copiarAcao));
-			add(new Button(colarAcao));
-			addSeparator();
-			add(new ButtonDestacar());
-			addSeparator();
-			add(new ButtonConsulta());
-			addSeparator();
-			add(new ButtonUpdate());
-			addSeparator();
-			add(new Button(excluirAcao));
+			addButton(baixarAcao);
+			addButton(true, salvarAcao);
+			addButton(salvarComoAcao);
+			addButton(true, copiarAcao);
+			addButton(colarAcao);
+			add(true, new ButtonDestacar());
+			add(true, new ButtonConsulta());
+			add(true, new ButtonUpdate());
+			add(true, new Button(excluirAcao));
 			add(new Button(criarObjAcao));
 			add(btnRelacao);
-			addSeparator();
-			add(btnRotulos);
+			add(true, btnRotulos);
 			add(btnArrasto);
 			add(btnSelecao);
-			addSeparator();
-			add(new ToggleButton(desenharIdAcao));
+			add(true, new ToggleButton(desenharIdAcao));
 			add(new ToggleButton(desenharDescAcao));
-			addSeparator();
-			add(new ToggleButton(transpAcao));
+			add(true, new ToggleButton(transpAcao));
 			addSeparator();
 
 			eventos();
