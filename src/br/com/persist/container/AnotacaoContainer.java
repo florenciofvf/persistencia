@@ -60,8 +60,7 @@ public class AnotacaoContainer extends Panel {
 			super.ini(janela);
 
 			addButton(atualizarAcao);
-			addSeparator();
-			addButton(salvarAcao);
+			addButton(true, salvarAcao);
 
 			eventos();
 		}

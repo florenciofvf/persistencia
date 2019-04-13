@@ -16,13 +16,21 @@ public class BarraButton extends JToolBar {
 		if (janela != null) {
 			Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
 			fecharAcao.setActionListener(e -> janela.fechar());
-			add(new Button(fecharAcao));
+			addButton(fecharAcao);
 			addSeparator();
 		}
 	}
 
-	protected void addButton(Action action) {
+	protected void addButton(boolean separador, Action action) {
+		if (separador) {
+			addSeparator();
+		}
+
 		add(new Button(action));
+	}
+
+	protected void addButton(Action action) {
+		addButton(false, action);
 	}
 
 	public void fechar() {
