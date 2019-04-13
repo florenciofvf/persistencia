@@ -37,7 +37,7 @@ public class ArvoreUtil {
 		modelo.treeStructureChanged(event);
 	}
 
-	public static void statusEstrutura(Arvore arvore, Arquivo arquivo) {
+	public static void refreshEstrutura(Arvore arvore, Arquivo arquivo) {
 		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
 
 		TreePath path = getTreePath(arquivo);

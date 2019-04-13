@@ -69,7 +69,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 				if (arquivo.isArquivoAberto()) {
 					ArvoreUtil.selecionarObjeto(arvore, arquivo);
 				} else {
-					ArvoreUtil.statusEstrutura(arvore, arquivo);
+					ArvoreUtil.refreshEstrutura(arvore, arquivo);
 				}
 			}
 
@@ -106,7 +106,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 			}
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
 			formulario.getFichario().selecionarAba(arquivo.getFile());
-			ArvoreUtil.statusEstrutura(arvore, arquivo);
+			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		if (arquivo != null) {
 			formulario.getFichario().selecionarAba(arquivo.getFile());
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
-			ArvoreUtil.statusEstrutura(arvore, arquivo);
+			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 
 			if (arquivo.isFile()) {
 				formulario.toFront();
@@ -132,7 +132,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		if (arquivo != null && chkLinkAuto.isSelected()) {
 			formulario.getFichario().selecionarAba(arquivo.getFile());
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
-			ArvoreUtil.statusEstrutura(arvore, arquivo);
+			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 
 			if (arquivo.isFile()) {
 				formulario.toFront();
@@ -146,7 +146,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 
 		if (arquivo != null) {
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
-			ArvoreUtil.statusEstrutura(arvore, arquivo);
+			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 		}
 	}
 
