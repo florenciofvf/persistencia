@@ -13,7 +13,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.OrdenacaoModelo;
@@ -21,6 +20,7 @@ import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
+import br.com.persist.util.MenuPadrao2;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
@@ -190,15 +190,11 @@ public class Tabela extends JTable {
 			});
 		}
 
-		class MenuCopiarValor extends Menu {
+		class MenuCopiarValor extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenuComAspas();
-			private Action semAspasAcao = Action.actionMenuSemAspas();
 
 			MenuCopiarValor() {
 				super("label.copiar_header");
-				addMenuItem(semAspasAcao);
-				addMenuItem(comAspasAcao);
 
 				semAspasAcao.setActionListener(e -> copiar(false));
 				comAspasAcao.setActionListener(e -> copiar(true));
@@ -210,15 +206,11 @@ public class Tabela extends JTable {
 			}
 		}
 
-		class MenuCopiarIN extends Menu {
+		class MenuCopiarIN extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenuComAspas();
-			private Action semAspasAcao = Action.actionMenuSemAspas();
 
 			MenuCopiarIN() {
 				super("label.vazio");
-				addMenuItem(semAspasAcao);
-				addMenuItem(comAspasAcao);
 
 				semAspasAcao.setActionListener(e -> copiarIN(false));
 				comAspasAcao.setActionListener(e -> copiarIN(true));
@@ -237,16 +229,12 @@ public class Tabela extends JTable {
 			}
 		}
 
-		class MenuCopiarINDinamico extends Menu {
+		class MenuCopiarINDinamico extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenuComAspas();
-			private Action semAspasAcao = Action.actionMenuSemAspas();
 			private final String nomeColuna;
 
 			MenuCopiarINDinamico(String coluna) {
 				super("label.vazio");
-				addMenuItem(semAspasAcao);
-				addMenuItem(comAspasAcao);
 				setText("AND IN - " + coluna);
 				this.nomeColuna = coluna;
 
