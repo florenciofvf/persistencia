@@ -9,6 +9,11 @@ import br.com.persist.util.Mensagens;
 public class MenuItem extends JMenuItem {
 	private static final long serialVersionUID = 1L;
 
+	public MenuItem(String rotulo, Icon icon, String naoChave) {
+		super(rotulo);
+		setIcon(icon);
+	}
+
 	public MenuItem(String chaveRotulo, Icon icon) {
 		super(Mensagens.getString(chaveRotulo), icon);
 	}

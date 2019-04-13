@@ -9,7 +9,7 @@ public class Action extends Acao {
 	private static final long serialVersionUID = 1L;
 	protected transient ActionListener actionListener;
 
-	private Action(boolean menu, String chaveRotulo, Icon icone) {
+	public Action(boolean menu, String chaveRotulo, Icon icone) {
 		super(menu, chaveRotulo, icone);
 	}
 

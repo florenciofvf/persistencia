@@ -14,6 +14,11 @@ public class Menu extends JMenu {
 		setIcon(icon);
 	}
 
+	public Menu(String rotulo, Icon icon, String naoChave) {
+		super(rotulo);
+		setIcon(icon);
+	}
+
 	public Menu(String chaveRotulo) {
 		super(Mensagens.getString(chaveRotulo));
 	}

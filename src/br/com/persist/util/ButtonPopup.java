@@ -5,12 +5,13 @@ import java.awt.Component;
 import javax.swing.Icon;
 
 import br.com.persist.comp.Button;
+import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 
 public class ButtonPopup extends Button {
 	private static final long serialVersionUID = 1L;
-	protected Popup popup = new Popup();
+	private Popup popup = new Popup();
 
 	public ButtonPopup(String chaveRotulo, Icon icon) {
 		setToolTipText(Mensagens.getString(chaveRotulo));
@@ -27,9 +28,13 @@ public class ButtonPopup extends Button {
 		addMenuItem(false, item);
 	}
 
+	protected void addMenu(Menu menu) {
+		popup.add(menu);
+	}
+
 	protected void addMenuItem(boolean separador, Action action) {
 		if (separador) {
-			popup.addSeparator();
+			addSeparator();
 		}
 
 		popup.addMenuItem(action);
@@ -37,10 +42,14 @@ public class ButtonPopup extends Button {
 
 	protected void addMenuItem(boolean separador, MenuItem item) {
 		if (separador) {
-			popup.addSeparator();
+			addSeparator();
 		}
 
 		popup.addMenuItem(item);
+	}
+
+	public void addSeparator() {
+		popup.addSeparator();
 	}
 
 	public void excluirAcao(Action action) {

@@ -28,8 +28,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -41,9 +39,9 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
+import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
-import br.com.persist.comp.Popup;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.desktop.Objeto;
@@ -438,23 +436,19 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		thread = null;
 	}
 
-	private class ButtonBuscaAuto extends Button {
+	private class ButtonBuscaAuto extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
-		private Popup popup = new Popup();
 		private boolean habilitado;
 
 		ButtonBuscaAuto() {
-			setToolTipText(Mensagens.getString("label.buscaAuto"));
-			setComponentPopupMenu(popup);
-			setIcon(Icones.FIELDS);
-			addActionListener(e -> popup.show(this, 5, 5));
+			super("label.buscaAuto", Icones.FIELDS);
 		}
 
 		void complemento(Objeto objeto) {
 			List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
 
 			for (Grupo grupo : listaGrupo) {
-				popup.add(new MenuBuscaAuto(grupo));
+				addMenu(new MenuBuscaAuto(grupo));
 			}
 
 			habilitado = !listaGrupo.isEmpty();
@@ -465,17 +459,17 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			setEnabled(habilitado && b);
 		}
 
-		class MenuBuscaAuto extends JMenu {
+		class MenuBuscaAuto extends Menu {
 			private static final long serialVersionUID = 1L;
 			private Action comAspasAcao = Action.actionMenuComAspas();
 			private Action semAspasAcao = Action.actionMenuSemAspas();
 			private final transient Grupo grupo;
 
 			MenuBuscaAuto(Grupo grupo) {
-				super(grupo.getDescricao());
-				add(new MenuItem(semAspasAcao));
-				add(new MenuItem(comAspasAcao));
-				setIcon(Icones.CONFIG2);
+				super(grupo.getDescricao(), Icones.CONFIG2, "nao_chave");
+
+				addMenuItem(semAspasAcao);
+				addMenuItem(comAspasAcao);
 				this.grupo = grupo;
 
 				semAspasAcao.setActionListener(e -> processar(false));
@@ -503,19 +497,15 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
-	private class ButtonUpdate extends Button {
+	private class ButtonUpdate extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
 		private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
-		private Popup popup = new Popup();
 
 		ButtonUpdate() {
-			setToolTipText(Mensagens.getString("label.update"));
-			popup.add(new MenuItem(dadosAcao));
-			popup.addSeparator();
-			popup.add(new MenuItem(new UpdateAcao()));
-			setComponentPopupMenu(popup);
-			setIcon(Icones.UPDATE);
-			addActionListener(e -> popup.show(this, 5, 5));
+			super("label.update", Icones.UPDATE);
+
+			addMenuItem(dadosAcao);
+			addMenuItem(true, new UpdateAcao());
 
 			eventos();
 		}
@@ -538,7 +528,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			});
 		}
 
-		class UpdateAcao extends Acao {
+		class UpdateAcao extends Action {
 			private static final long serialVersionUID = 1L;
 
 			UpdateAcao() {
@@ -590,22 +580,21 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				return;
 			}
 
-			popup.addSeparator();
+			addSeparator();
 
 			for (Instrucao i : objeto.getInstrucoes()) {
 				if (!Util.estaVazio(i.getValor())) {
-					popup.add(new MenuItemUpdate(i));
+					addMenuItem(new MenuItemUpdate(i));
 				}
 			}
 		}
 
-		class MenuItemUpdate extends JMenuItem implements ActionListener {
+		class MenuItemUpdate extends MenuItem implements ActionListener {
 			private static final long serialVersionUID = 1L;
 			private final transient Instrucao instrucao;
 
 			MenuItemUpdate(Instrucao instrucao) {
-				setIcon(instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC);
-				setText(instrucao.getNome());
+				super(instrucao.getNome(), instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC, "nao_chave");
 				this.instrucao = instrucao;
 				addActionListener(this);
 			}
@@ -664,29 +653,24 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
-	private class ButtonFuncoes extends Button {
+	private class ButtonFuncoes extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
-		private Popup popup = new Popup();
 
 		ButtonFuncoes() {
+			super("label.funcoes", Icones.SOMA);
+
 			MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
 			MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
 			maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
 			minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
 
-			popup.add(new MenuItem(new TotalizarRegistrosAcao(false)));
-			popup.addSeparator();
-			popup.add(new MenuItem(new TotalizarRegistrosAcao(true)));
-			setToolTipText(Mensagens.getString("label.funcoes"));
-			addActionListener(e -> popup.show(this, 5, 5));
-			setComponentPopupMenu(popup);
-			popup.addSeparator();
-			setIcon(Icones.SOMA);
-			popup.add(minimo);
-			popup.add(maximo);
+			addMenuItem(new TotalizarRegistrosAcao(false));
+			addMenuItem(true, new TotalizarRegistrosAcao(true));
+			addMenuItem(true, minimo);
+			addMenuItem(maximo);
 		}
 
-		class MinimoMaximoAcao extends Acao {
+		class MinimoMaximoAcao extends Action {
 			private static final long serialVersionUID = 1L;
 			private final boolean minimo;
 
@@ -722,7 +706,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class TotalizarRegistrosAcao extends Acao {
+		class TotalizarRegistrosAcao extends Action {
 			private static final long serialVersionUID = 1L;
 			private final boolean complemento;
 
@@ -751,27 +735,20 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
-	private class ButtonInfo extends Button {
+	private class ButtonInfo extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
 		private Action apelidoAcao = Action.actionMenu("label.apelido", Icones.TAG2);
-		private Popup popup = new Popup();
 
 		ButtonInfo() {
-			setToolTipText(Mensagens.getString("label.meta_dados"));
-			popup.add(new MenuItem(apelidoAcao));
-			popup.addSeparator();
-			popup.add(new MenuItem(new ChavesPrimariasAcao()));
-			popup.addSeparator();
-			popup.add(new MenuItem(new ChavesExportadasAcao()));
-			popup.add(new MenuItem(new ChavesImportadasAcao()));
-			popup.addSeparator();
-			popup.add(new MenuItem(new MetaDadosAcao()));
-			popup.addSeparator();
-			popup.add(new MenuItem(new InfoBancoAcao()));
-			popup.add(new MenuItem(new EsquemaAcao()));
-			setComponentPopupMenu(popup);
-			setIcon(Icones.INFO);
-			addActionListener(e -> popup.show(this, 5, 5));
+			super("label.meta_dados", Icones.INFO);
+
+			addMenuItem(apelidoAcao);
+			addMenuItem(true, new ChavesPrimariasAcao());
+			addMenuItem(true, new ChavesExportadasAcao());
+			addMenuItem(new ChavesImportadasAcao());
+			addMenuItem(true, new MetaDadosAcao());
+			addMenuItem(true, new InfoBancoAcao());
+			addMenuItem(new EsquemaAcao());
 
 			eventos();
 		}
@@ -792,7 +769,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			});
 		}
 
-		class ChavesPrimariasAcao extends Acao {
+		class ChavesPrimariasAcao extends Action {
 			private static final long serialVersionUID = 1L;
 
 			ChavesPrimariasAcao() {
@@ -822,7 +799,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ChavesImportadasAcao extends Acao {
+		class ChavesImportadasAcao extends Action {
 			private static final long serialVersionUID = 1L;
 
 			ChavesImportadasAcao() {
@@ -852,7 +829,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ChavesExportadasAcao extends Acao {
+		class ChavesExportadasAcao extends Action {
 			private static final long serialVersionUID = 1L;
 
 			ChavesExportadasAcao() {
@@ -882,7 +859,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class InfoBancoAcao extends Acao {
+		class InfoBancoAcao extends Action {
 			private static final long serialVersionUID = 1L;
 
 			InfoBancoAcao() {
@@ -912,7 +889,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class MetaDadosAcao extends Acao {
+		class MetaDadosAcao extends Action {
 			private static final long serialVersionUID = 1L;
 
 			MetaDadosAcao() {
@@ -942,7 +919,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class EsquemaAcao extends Acao {
+		class EsquemaAcao extends Action {
 			private static final long serialVersionUID = 1L;
 
 			EsquemaAcao() {
