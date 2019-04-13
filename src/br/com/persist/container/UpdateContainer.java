@@ -86,12 +86,10 @@ public class UpdateContainer extends Panel {
 			addButton(atualizarAcao);
 
 			if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
-				addSeparator();
-				addButton(salvarAcao);
+				addButton(true, salvarAcao);
 			}
 
-			addSeparator();
-			add(cmbConexao);
+			add(true, cmbConexao);
 			eventos();
 		}
 

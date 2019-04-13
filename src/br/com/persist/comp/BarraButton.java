@@ -1,5 +1,7 @@
 package br.com.persist.comp;
 
+import java.awt.Component;
+
 import javax.swing.JToolBar;
 
 import br.com.persist.util.Action;
@@ -31,6 +33,14 @@ public class BarraButton extends JToolBar {
 
 	protected void addButton(Action action) {
 		addButton(false, action);
+	}
+
+	protected Component add(boolean separador, Component comp) {
+		if (separador) {
+			addSeparator();
+		}
+
+		return add(comp);
 	}
 
 	public void fechar() {

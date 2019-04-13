@@ -156,23 +156,17 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			super.ini(janela);
 
 			add(btnArrasto);
-			addSeparator();
-			add(new ButtonInfo());
-			addSeparator();
-			add(excluir);
-			addSeparator();
-			addButton(fragmentoAcao);
+			add(true, new ButtonInfo());
+			add(true, excluir);
+			addButton(true, fragmentoAcao);
 			add(buscaAuto);
-			addSeparator();
-			add(update);
+			add(true, update);
 			add(atualizar);
-			addSeparator();
-			addButton(complementoAcao);
+			addButton(true, complementoAcao);
 			add(txtComplemento);
 			add(labelTotal);
 			add(funcoes);
-			addSeparator();
-			addButton(limparAcao);
+			addButton(true, limparAcao);
 			addButton(baixarAcao);
 			add(cmbConexao);
 

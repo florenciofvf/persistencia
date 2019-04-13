@@ -89,8 +89,7 @@ public class ConsultaContainer extends Panel {
 				addButton(true, salvarAcao);
 			}
 
-			addSeparator();
-			add(cmbConexao);
+			add(true, cmbConexao);
 			eventos();
 		}
 
