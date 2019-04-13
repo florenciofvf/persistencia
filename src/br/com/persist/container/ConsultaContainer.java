@@ -86,8 +86,7 @@ public class ConsultaContainer extends Panel {
 			addButton(atualizarAcao);
 
 			if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
-				addSeparator();
-				addButton(salvarAcao);
+				addButton(true, salvarAcao);
 			}
 
 			addSeparator();

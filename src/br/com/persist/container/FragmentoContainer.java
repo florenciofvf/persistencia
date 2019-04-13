@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import javax.swing.JTable;
 
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.listener.FragmentoListener;
@@ -60,11 +59,10 @@ public class FragmentoContainer extends Panel implements IIni {
 		public void ini(IJanela janela) {
 			super.ini(janela);
 
-			add(new Button(abrirAcao));
-			add(new Button(salvarAcao));
-			addSeparator();
-			add(new Button(novoAcao));
-			add(new Button(copiarAcao));
+			addButton(abrirAcao);
+			addButton(salvarAcao);
+			addButton(true, novoAcao);
+			addButton(copiarAcao);
 
 			eventos();
 		}
@@ -129,7 +127,7 @@ public class FragmentoContainer extends Panel implements IIni {
 					}
 				});
 
-				add(new Button(configAcao));
+				addButton(configAcao);
 			}
 		}
 	}
