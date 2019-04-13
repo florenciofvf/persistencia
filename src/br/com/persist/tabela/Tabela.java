@@ -14,7 +14,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import br.com.persist.comp.Menu;
-import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.OrdenacaoModelo;
@@ -38,8 +37,8 @@ public class Tabela extends JTable {
 
 	public Tabela(OrdenacaoModelo modelo) {
 		super(modelo);
-		tableHeader.addMouseListener(headerListener);
 		addMouseMotionListener(mouseMotionListenerInner);
+		tableHeader.addMouseListener(headerListener);
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		addMouseListener(mouseListenerInner);
 	}
@@ -164,12 +163,10 @@ public class Tabela extends JTable {
 		private int tag;
 
 		PopupHeader() {
-			add(new MenuItem(infoAcao));
-			addSeparator();
-			add(new MenuItem(copiarNomeAcao));
+			addMenuItem(infoAcao);
+			addMenuItem(true, copiarNomeAcao);
 			add(new MenuCopiarValor());
-			addSeparator();
-			add(menuCopiarIN);
+			add(true, menuCopiarIN);
 
 			eventos();
 		}
@@ -200,8 +197,8 @@ public class Tabela extends JTable {
 
 			MenuCopiarValor() {
 				super("label.copiar_header");
-				add(new MenuItem(semAspasAcao));
-				add(new MenuItem(comAspasAcao));
+				addMenuItem(semAspasAcao);
+				addMenuItem(comAspasAcao);
 
 				semAspasAcao.setActionListener(e -> copiar(false));
 				comAspasAcao.setActionListener(e -> copiar(true));
@@ -220,8 +217,8 @@ public class Tabela extends JTable {
 
 			MenuCopiarIN() {
 				super("label.vazio");
-				add(new MenuItem(semAspasAcao));
-				add(new MenuItem(comAspasAcao));
+				addMenuItem(semAspasAcao);
+				addMenuItem(comAspasAcao);
 
 				semAspasAcao.setActionListener(e -> copiarIN(false));
 				comAspasAcao.setActionListener(e -> copiarIN(true));
@@ -248,8 +245,8 @@ public class Tabela extends JTable {
 
 			MenuCopiarINDinamico(String coluna) {
 				super("label.vazio");
-				add(new MenuItem(semAspasAcao));
-				add(new MenuItem(comAspasAcao));
+				addMenuItem(semAspasAcao);
+				addMenuItem(comAspasAcao);
 				setText("AND IN - " + coluna);
 				this.nomeColuna = coluna;
 

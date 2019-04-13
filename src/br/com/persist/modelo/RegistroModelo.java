@@ -114,7 +114,6 @@ public class RegistroModelo implements TableModel {
 
 	public void getDados(int rowIndex, StringBuilder sb) {
 		List<Object> registro = registros.get(rowIndex);
-
 		List<Object> valores = new ArrayList<>();
 
 		for (Coluna coluna : colunas) {
