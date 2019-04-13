@@ -104,6 +104,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 					formulario.abrirArquivo(arquivo.getFile(), true);
 				}
 			}
+
 			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
 			formulario.getFichario().selecionarAba(arquivo.getFile());
 			ArvoreUtil.refreshEstrutura(arvore, arquivo);

@@ -7,7 +7,6 @@ import javax.swing.JTable;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Button;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.editor.ConexaoStatusEditor;
@@ -66,17 +65,13 @@ public class ConexaoContainer extends Panel implements IIni {
 		public void ini(IJanela janela) {
 			super.ini(janela);
 
-			add(new Button(abrirAcao));
-			add(new Button(salvarAcao));
-			addSeparator();
-			add(new Button(topAcao));
-			addSeparator();
-			add(new Button(conectaAcao));
-			addSeparator();
-			add(new Button(desconectaAcao));
-			addSeparator();
-			add(new Button(novoAcao));
-			add(new Button(copiarAcao));
+			addButton(abrirAcao);
+			addButton(salvarAcao);
+			addButton(true, topAcao);
+			addButton(true, conectaAcao);
+			addButton(true, desconectaAcao);
+			addButton(true, novoAcao);
+			addButton(copiarAcao);
 
 			eventos();
 		}
