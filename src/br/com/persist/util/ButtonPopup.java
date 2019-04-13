@@ -20,7 +20,27 @@ public class ButtonPopup extends Button {
 	}
 
 	protected void addMenuItem(Action action) {
+		addMenuItem(false, action);
+	}
+
+	protected void addMenuItem(MenuItem item) {
+		addMenuItem(false, item);
+	}
+
+	protected void addMenuItem(boolean separador, Action action) {
+		if (separador) {
+			popup.addSeparator();
+		}
+
 		popup.addMenuItem(action);
+	}
+
+	protected void addMenuItem(boolean separador, MenuItem item) {
+		if (separador) {
+			popup.addSeparator();
+		}
+
+		popup.addMenuItem(item);
 	}
 
 	public void excluirAcao(Action action) {

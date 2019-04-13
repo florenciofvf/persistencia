@@ -9,4 +9,8 @@ public class Popup extends JPopupMenu {
 	public void addMenuItem(Action action) {
 		add(new MenuItem(action));
 	}
+
+	public void addMenuItem(MenuItem item) {
+		add(item);
+	}
 }

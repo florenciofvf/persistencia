@@ -68,6 +68,7 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto;
 import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.IIni;
@@ -379,29 +380,24 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		tabelaListener.tabelaMouseClick(tabela);
 	}
 
-	private class ButtonAtualizar extends Button {
+	private class ButtonAtualizar extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
 		private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
 		private MenuItem itemAtualizarAuto = new MenuItem("label.atualizar_auto", Icones.ATUALIZAR);
 		private Action atualizarAcao = Action.actionMenuAtualizar();
-		private Popup popup = new Popup();
 
 		ButtonAtualizar() {
-			setToolTipText(Mensagens.getString(Constantes.LABEL_ATUALIZAR));
-			popup.add(new MenuItem(atualizarAcao));
-			popup.addSeparator();
-			popup.add(new MenuItem(sincronizarAcao));
-			popup.addSeparator();
-			popup.add(itemAtualizarAuto);
-			setComponentPopupMenu(popup);
-			setIcon(Icones.ATUALIZAR);
-			addActionListener(e -> popup.show(this, 5, 5));
+			super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
+
+			addMenuItem(atualizarAcao);
+			addMenuItem(true, sincronizarAcao);
+			addMenuItem(true, itemAtualizarAuto);
+			itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
 
 			eventos();
 		}
 
 		private void eventos() {
-			itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
 			itemAtualizarAuto.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
