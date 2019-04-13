@@ -1,10 +1,19 @@
 package br.com.persist.comp;
 
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import br.com.persist.util.Action;
 
 public class Popup extends JPopupMenu {
 	private static final long serialVersionUID = 1L;
+
+	public JMenuItem add(boolean separador, JMenuItem menuItem) {
+		if (separador) {
+			addSeparator();
+		}
+
+		return add(menuItem);
+	}
 
 	public void addMenuItem(boolean separador, Action action) {
 		if (separador) {

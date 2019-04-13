@@ -1007,22 +1007,14 @@ public class Superficie extends Desktop {
 			menuAlinhamento.add(itemAlinhaVertical);
 
 			add(menuAlinhamento);
-			addSeparator();
-			add(menuDistribuicao);
-			addSeparator();
-			add(itemCopiar);
-			addSeparator();
-			add(menuDestacar);
-			addSeparator();
-			add(new MenuConsulta());
-			addSeparator();
-			add(new MenuUpdate());
-			addSeparator();
-			add(new MenuItem(excluirAcao));
-			addSeparator();
-			add(itemPartir);
-			addSeparator();
-			add(new MenuItem(configuracaoAcao));
+			add(true, menuDistribuicao);
+			add(true, itemCopiar);
+			add(true, menuDestacar);
+			add(true, new MenuConsulta());
+			add(true, new MenuUpdate());
+			add(true, new MenuItem(excluirAcao));
+			add(true, itemPartir);
+			add(true, new MenuItem(configuracaoAcao));
 
 			eventos();
 		}
@@ -1291,18 +1283,14 @@ public class Superficie extends Desktop {
 
 		SuperficiePopup2() {
 			add(itemCriarObjeto);
-			addSeparator();
-			add(itemColar);
-			addSeparator();
-			add(itemAtualizarForms);
-			addSeparator();
-			add(itemAlinharEsquerdo);
+			add(true, itemColar);
+			add(true, itemAtualizarForms);
+			add(true, itemAlinharEsquerdo);
 			add(itemAlinharDireito);
 			add(itemMesmaLargura);
 			add(new MenuItem(larTotalAcao));
 			add(itemCentralizar);
-			addSeparator();
-			add(itemDimensoes);
+			add(true, itemDimensoes);
 			add(itemAjustes);
 
 			eventos();

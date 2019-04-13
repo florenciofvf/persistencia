@@ -24,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.banco.Conexao;
-import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
@@ -301,13 +300,10 @@ public class Desktop extends JDesktopPane implements IIni {
 		private Action dimenAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 
 		DesktopPopup() {
-			add(new MenuItem(larTotalAcao));
-			addSeparator();
-			add(new MenuItem(distribuirAcao));
-			addSeparator();
-			add(new MenuItem(centralAcao));
-			addSeparator();
-			add(new MenuItem(dimenAcao));
+			addMenuItem(larTotalAcao);
+			addMenuItem(true, distribuirAcao);
+			addMenuItem(true, centralAcao);
+			addMenuItem(true, dimenAcao);
 
 			eventos();
 		}
