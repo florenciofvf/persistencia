@@ -94,4 +94,18 @@ public class TabelaUtil {
 
 		return resposta;
 	}
+
+	public static void contabilizarTabela(Tabela tabela, br.com.persist.util.BuscaAuto.Tabela tabelaPesquisaAuto,
+			int coluna) {
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		int total = modelo.getRowCount();
+
+		for (int i = 0; i < total; i++) {
+			Object obj = modelo.getValueAt(i, coluna);
+
+			if (obj != null && !Util.estaVazio(obj.toString())) {
+				tabelaPesquisaAuto.contabilizar(obj.toString());
+			}
+		}
+	}
 }

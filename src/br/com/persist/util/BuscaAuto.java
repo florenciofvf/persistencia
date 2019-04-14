@@ -20,6 +20,12 @@ public class BuscaAuto {
 			this.descricao = descricao;
 		}
 
+		public void setArgumentos(List<String> argumentos) {
+			for (Tabela tabela : tabelas) {
+				tabela.setArgumentos(argumentos);
+			}
+		}
+
 		public void processadoFalse() {
 			for (Tabela tabela : tabelas) {
 				tabela.setProcessado(false);
@@ -62,12 +68,13 @@ public class BuscaAuto {
 	}
 
 	public static class Tabela {
+		List<Contabil> contabilizados;
+		List<String> argumentos;
 		final String descricao;
 		final String apelido;
 		final String campo;
 		boolean processado;
 		final String nome;
-		int selecionados;
 
 		public Tabela(String descricao) {
 			this.descricao = descricao;
@@ -86,24 +93,42 @@ public class BuscaAuto {
 			campo = descricao.substring(pos + 1);
 		}
 
-		public void setSelecionados(int selecionados) {
-			this.selecionados = selecionados;
+		public void setArgumentos(List<String> argumentos) {
+			this.argumentos = argumentos;
+
+			if (argumentos != null) {
+				contabilizados = new ArrayList<>();
+
+				for (String string : argumentos) {
+					contabilizados.add(new Contabil(string));
+				}
+			} else {
+				contabilizados = null;
+			}
 		}
 
 		public void setProcessado(boolean processado) {
 			this.processado = processado;
 
 			if (!processado) {
-				selecionados = 0;
+				contabilizados = new ArrayList<>();
 			}
 		}
 
-		public void selecionadosDelta(int total) {
-			selecionados += total;
+		public void contabilizar(String valor) {
+			if (argumentos == null || contabilizados == null) {
+				return;
+			}
+
+			for (Contabil c : contabilizados) {
+				if (c.tag.equals(valor)) {
+					c.valor++;
+				}
+			}
 		}
 
-		public int getSelecionados() {
-			return selecionados;
+		public List<String> getArgumentos() {
+			return argumentos;
 		}
 
 		public boolean isProcessado() {
@@ -120,6 +145,15 @@ public class BuscaAuto {
 
 		public String getNome() {
 			return nome;
+		}
+
+		public static class Contabil {
+			final String tag;
+			int valor;
+
+			public Contabil(String tag) {
+				this.tag = tag;
+			}
 		}
 	}
 
