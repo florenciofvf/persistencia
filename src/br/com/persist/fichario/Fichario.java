@@ -17,7 +17,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -315,7 +314,7 @@ public class Fichario extends JTabbedPane {
 
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
 		@Override
-		public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
+		public void buscaAutomatica(Grupo grupo, String argumentos) {
 			throw new UnsupportedOperationException();
 		}
 

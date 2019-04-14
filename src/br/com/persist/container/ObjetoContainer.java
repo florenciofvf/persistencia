@@ -23,7 +23,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -340,12 +339,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
 			listener.setTitulo(objeto.getTitle(modeloOrdenacao));
 
-			br.com.persist.util.BuscaAuto.Tabela tabelaPesquisaAuto = objeto.getTabelaPesquisaAuto();
-
-			if (tabelaPesquisaAuto != null) {
-				tabelaPesquisaAuto.selecionadosDelta(modeloOrdenacao.getRowCount());
-			}
-
 			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
 			cabecalhoFiltro = null;
@@ -376,6 +369,18 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 
 			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g);
+
+			br.com.persist.util.BuscaAuto.Tabela tabelaPesquisaAuto = objeto.getTabelaPesquisaAuto();
+
+			if (tabelaPesquisaAuto != null) {
+				int coluna = TabelaUtil.getIndiceColuna(tabela, tabelaPesquisaAuto.getCampo());
+
+				if (coluna != -1) {
+					TabelaUtil.contabilizarTabela(tabela, tabelaPesquisaAuto, coluna);
+				}
+
+				objeto.setTabelaPesquisaAuto(null);
+			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
 		}
@@ -486,15 +491,16 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 
 				List<String> lista = TabelaUtil.getValoresColuna(tabela, coluna);
+				// List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
 
 				if (lista.isEmpty()) {
 					return;
 				}
 
-				String argumentos = Util.getStringLista(lista, apostrofes);
-				AtomicBoolean processado = new AtomicBoolean(false);
-				listener.buscaAutomatica(grupo, argumentos, processado);
-				setEnabled(processado.get());
+				grupo.setProcessado(false);
+				grupo.setArgumentos(lista);
+				listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes));
+				setEnabled(grupo.isProcessado());// fvf
 			}
 		}
 	}

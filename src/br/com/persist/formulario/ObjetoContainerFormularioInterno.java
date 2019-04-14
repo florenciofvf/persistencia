@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -58,7 +57,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
+	public void buscaAutomatica(Grupo grupo, String argumentos) {
 		Container parent = getParent();
 		Desktop desktop = null;
 
@@ -72,7 +71,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		}
 
 		if (desktop != null) {
-			desktop.buscaAutomatica(grupo, argumentos, container, processado);
+			desktop.buscaAutomatica(grupo, argumentos, container);
 		}
 	}
 

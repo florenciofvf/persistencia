@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -45,7 +44,7 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, AtomicBoolean processado) {
+	public void buscaAutomatica(Grupo grupo, String argumentos) {
 		throw new UnsupportedOperationException();
 	}
 

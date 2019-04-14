@@ -26,10 +26,20 @@ public class BuscaAuto {
 			}
 		}
 
-		public void processadoFalse() {
+		public void setProcessado(boolean b) {
 			for (Tabela tabela : tabelas) {
-				tabela.setProcessado(false);
+				tabela.setProcessado(b);
 			}
+		}
+
+		public boolean isProcessado() {
+			for (Tabela tabela : tabelas) {
+				if (tabela.isProcessado()) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public List<Tabela> getTabelas() {
@@ -109,14 +119,10 @@ public class BuscaAuto {
 
 		public void setProcessado(boolean processado) {
 			this.processado = processado;
-
-			if (!processado) {
-				contabilizados = new ArrayList<>();
-			}
 		}
 
 		public void contabilizar(String valor) {
-			if (argumentos == null || contabilizados == null) {
+			if (contabilizados == null) {
 				return;
 			}
 

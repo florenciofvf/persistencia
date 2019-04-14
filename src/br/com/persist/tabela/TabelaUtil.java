@@ -62,7 +62,7 @@ public class TabelaUtil {
 
 	public static List<String> getValoresColuna(Tabela tabela, int coluna) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-		List<Integer> linhas = getIndicesColuna(tabela, coluna);
+		List<Integer> linhas = getIndicesColuna(tabela);
 		List<String> resposta = new ArrayList<>();
 
 		for (int i : linhas) {
@@ -76,7 +76,7 @@ public class TabelaUtil {
 		return resposta;
 	}
 
-	public static List<Integer> getIndicesColuna(Tabela tabela, int coluna) {
+	public static List<Integer> getIndicesColuna(Tabela tabela) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<Integer> resposta = new ArrayList<>();
 		int[] linhas = tabela.getSelectedRows();

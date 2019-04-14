@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -1501,28 +1500,26 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer objContainer,
-			AtomicBoolean processado) {
-		super.buscaAutomatica(grupo, argumentos, objContainer, processado);
+	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer objContainer) {
+		super.buscaAutomatica(grupo, argumentos, objContainer);
 
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
 
 			for (Tabela tabela : grupo.getTabelas()) {
 				if (!tabela.isProcessado()) {
-					buscaAutomaticaFinal(tabela, argumentos, processado);
+					buscaAutomaticaFinal(tabela, argumentos);
 				}
 			}
 
 			if (getPrimeiroObjetoSelecionado() != null) {
 				formulario.destacar(container.getConexaoPadrao(), Superficie.this,
 						Preferencias.getTipoContainerPesquisaAuto());
-				processado.set(true);
 			}
 		}
 	}
 
-	private void buscaAutomaticaFinal(Tabela tabela, String argumentos, AtomicBoolean processado) {
+	private void buscaAutomaticaFinal(Tabela tabela, String argumentos) {
 		Objeto objeto = null;
 
 		for (Objeto obj : objetos) {
@@ -1550,9 +1547,10 @@ public class Superficie extends Desktop {
 			ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());
 			form.setLocationRelativeTo(frame);
 			form.setVisible(true);
-			processado.set(true);
 		} else {
 			objeto.setSelecionado(true);
 		}
+
+		tabela.setProcessado(true);
 	}
 }

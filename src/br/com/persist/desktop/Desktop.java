@@ -14,7 +14,6 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -316,9 +315,8 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 	}
 
-	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer container, AtomicBoolean processado) {
+	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer container) {
 		JInternalFrame[] frames = getAllFrames();
-		grupo.processadoFalse();
 
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
@@ -330,7 +328,6 @@ public class Desktop extends JDesktopPane implements IIni {
 						interno.getObjetoContainer().getObjeto().setTabelaPesquisaAuto(tabela);
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 						tabela.setProcessado(true);
-						processado.set(true);
 					}
 				}
 			}
