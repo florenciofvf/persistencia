@@ -56,6 +56,7 @@ import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.RegistroModelo;
+import br.com.persist.renderer.CellInfoRenderer;
 import br.com.persist.renderer.CellRenderer;
 import br.com.persist.tabela.CabecalhoColuna;
 import br.com.persist.tabela.Coluna;
@@ -352,6 +353,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				if (coluna.isChave()) {
 					tableColumn.setCellRenderer(new CellRenderer());
+				}
+
+				if (coluna.isColunaInfo()) {
+					tableColumn.setCellRenderer(new CellInfoRenderer());
 				}
 
 				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna, true);

@@ -3,6 +3,7 @@ package br.com.persist.tabela;
 import br.com.persist.util.Constantes;
 
 public class Coluna {
+	private final boolean colunaInfo;
 	private final String tipoBanco;
 	private final boolean nulavel;
 	private final boolean numero;
@@ -14,10 +15,11 @@ public class Coluna {
 	private final int indice;
 
 	public Coluna(String nome, int indice) {
-		this(nome, indice, false, false, false, null, new Config(-1, null, false));
+		this(nome, indice, false, false, false, null, new Config(-1, null, false, false));
 	}
 
 	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, Config config) {
+		this.colunaInfo = config.colunaInfo;
 		this.tipoBanco = config.tipoBanco;
 		this.tamanho = config.tamanho;
 		this.nulavel = config.nulavel;
@@ -30,13 +32,15 @@ public class Coluna {
 	}
 
 	public static class Config {
-		final int tamanho;
+		final boolean colunaInfo;
 		final String tipoBanco;
 		final boolean nulavel;
+		final int tamanho;
 
-		public Config(int tamanho, String tipoBanco, boolean nulavel) {
-			this.tamanho = tamanho;
+		public Config(int tamanho, String tipoBanco, boolean nulavel, boolean colunaInfo) {
+			this.colunaInfo = colunaInfo;
 			this.tipoBanco = tipoBanco;
+			this.tamanho = tamanho;
 			this.nulavel = nulavel;
 		}
 	}
@@ -55,6 +59,10 @@ public class Coluna {
 		sb.append("COLUNA: " + tipoBanco + Constantes.QL);
 
 		return sb.toString();
+	}
+
+	public boolean isColunaInfo() {
+		return colunaInfo;
 	}
 
 	public String getTipoBanco() {
