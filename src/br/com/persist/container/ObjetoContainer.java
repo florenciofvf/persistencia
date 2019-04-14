@@ -39,7 +39,6 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
-import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -74,6 +73,7 @@ import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.MenuPadrao2;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
@@ -459,17 +459,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			setEnabled(habilitado && b);
 		}
 
-		class MenuBuscaAuto extends Menu {
+		class MenuBuscaAuto extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAcao = Action.actionMenuComAspas();
-			private Action semAspasAcao = Action.actionMenuSemAspas();
 			private final transient Grupo grupo;
 
 			MenuBuscaAuto(Grupo grupo) {
 				super(grupo.getDescricao(), Icones.CONFIG2, "nao_chave");
 
-				addMenuItem(semAspasAcao);
-				addMenuItem(comAspasAcao);
 				this.grupo = grupo;
 
 				semAspasAcao.setActionListener(e -> processar(false));

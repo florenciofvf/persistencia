@@ -67,6 +67,7 @@ public class BuscaAuto {
 		final String campo;
 		boolean processado;
 		final String nome;
+		int selecionados;
 
 		public Tabela(String descricao) {
 			this.descricao = descricao;
@@ -85,8 +86,24 @@ public class BuscaAuto {
 			campo = descricao.substring(pos + 1);
 		}
 
+		public void setSelecionados(int selecionados) {
+			this.selecionados = selecionados;
+		}
+
 		public void setProcessado(boolean processado) {
 			this.processado = processado;
+
+			if (!processado) {
+				selecionados = 0;
+			}
+		}
+
+		public void selecionadosDelta(int total) {
+			selecionados += total;
+		}
+
+		public int getSelecionados() {
+			return selecionados;
 		}
 
 		public boolean isProcessado() {
