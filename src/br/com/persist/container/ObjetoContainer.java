@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -491,7 +492,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 
 				List<String> lista = TabelaUtil.getValoresColuna(tabela, coluna);
-				// List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
 
 				if (lista.isEmpty()) {
 					return;
@@ -500,7 +500,20 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				grupo.setProcessado(false);
 				grupo.setArgumentos(lista);
 				listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes));
-				setEnabled(grupo.isProcessado());// fvf
+				setEnabled(grupo.isProcessado());
+
+				if (!objeto.isColunaInfo()) {
+					return;
+				}
+
+				List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
+				Map<br.com.persist.util.BuscaAuto.Tabela, Integer> map = new LinkedHashMap<>();
+
+				for (int i : indices) {
+					TabelaUtil.atualizarIndice(i, tabela, grupo, coluna, map);
+				}
+
+				TabelaUtil.ajustar(tabela, ObjetoContainer.this.getGraphics());
 			}
 		}
 	}

@@ -133,6 +133,16 @@ public class BuscaAuto {
 			}
 		}
 
+		public Contabil getContabil(String tag) {
+			for (Contabil c : contabilizados) {
+				if (c.tag.equals(tag)) {
+					return c;
+				}
+			}
+
+			return null;
+		}
+
 		public List<String> getArgumentos() {
 			return argumentos;
 		}
@@ -159,6 +169,10 @@ public class BuscaAuto {
 
 			public Contabil(String tag) {
 				this.tag = tag;
+			}
+
+			public int getValor() {
+				return valor;
 			}
 		}
 	}

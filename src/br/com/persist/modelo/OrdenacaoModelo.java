@@ -80,6 +80,11 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return modelo.excluir(linhas[rowIndex].indice);
 	}
 
+	public List<Object> getRegistro(int rowIndex) {
+		RegistroModelo modelo = (RegistroModelo) model;
+		return modelo.getRegistro(linhas[rowIndex].indice);
+	}
+
 	public void getDados(int rowIndex, StringBuilder sb) {
 		RegistroModelo modelo = (RegistroModelo) model;
 		modelo.getDados(linhas[rowIndex].indice, sb);

@@ -18,7 +18,11 @@ public class CellInfoRenderer extends DefaultTableCellRenderer {
 
 		if (value != null && !Util.estaVazio(value.toString())) {
 			setBackground(Color.YELLOW);
+		} else {
+			setBackground(Color.WHITE);
 		}
+
+		setForeground(Color.BLACK);
 
 		return this;
 	}

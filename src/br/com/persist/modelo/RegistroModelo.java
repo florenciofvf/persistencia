@@ -86,6 +86,10 @@ public class RegistroModelo implements TableModel {
 		return !coluna.isChave() && !coluna.isBlob() && !coluna.isColunaInfo();
 	}
 
+	public List<Object> getRegistro(int rowIndex) {
+		return registros.get(rowIndex);
+	}
+
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		List<Object> registro = registros.get(rowIndex);

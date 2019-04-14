@@ -4,7 +4,10 @@ import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
@@ -12,6 +15,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import br.com.persist.modelo.OrdenacaoModelo;
+import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.BuscaAuto.Tabela.Contabil;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {
@@ -107,5 +112,45 @@ public class TabelaUtil {
 				tabelaPesquisaAuto.contabilizar(obj.toString());
 			}
 		}
+	}
+
+	public static void atualizarIndice(int i, Tabela tabela, Grupo grupo, int coluna,
+			Map<br.com.persist.util.BuscaAuto.Tabela, Integer> map) {
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+
+		List<Object> registro = modelo.getRegistro(i);
+		String id = registro.get(coluna).toString();
+		map.clear();
+
+		for (br.com.persist.util.BuscaAuto.Tabela t : grupo.getTabelas()) {
+			map.put(t, 0);
+		}
+
+		for (br.com.persist.util.BuscaAuto.Tabela t : grupo.getTabelas()) {
+			Contabil contabil = t.getContabil(id);
+
+			Integer valor = map.get(t);
+			valor += contabil.getValor();
+			map.put(t, valor);
+		}
+
+		StringBuilder sb = new StringBuilder();
+		Iterator<Map.Entry<br.com.persist.util.BuscaAuto.Tabela, Integer>> it = map.entrySet().iterator();
+
+		while (it.hasNext()) {
+			Entry<br.com.persist.util.BuscaAuto.Tabela, Integer> next = it.next();
+			br.com.persist.util.BuscaAuto.Tabela t = next.getKey();
+			Integer total = next.getValue();
+
+			if (total > 0) {
+				sb.append(t.getNome() + " [" + total + "]   ");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.delete(sb.length() - 3, sb.length());
+		}
+
+		registro.set(registro.size() - 1, sb.toString());
 	}
 }
