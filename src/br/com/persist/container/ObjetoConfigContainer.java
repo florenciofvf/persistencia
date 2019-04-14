@@ -67,6 +67,7 @@ public class ObjetoConfigContainer extends Panel {
 	private class PanelGeral extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtBuscaAutomatica = new TextField();
+		private TextField txtFinalConsulta = new TextField();
 		private TextField txtChaveamento = new TextField();
 		private TextField txtComplemento = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
@@ -87,6 +88,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtDeslocXId.setText("" + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
 			chkTransparente.setSelected(objeto.isTransparente());
+			txtFinalConsulta.setText(objeto.getFinalConsulta());
 			txtIntervalo.setText("" + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			txtChaveamento.setText(objeto.getChaveamento());
@@ -99,6 +101,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtId.setText(objeto.getId());
 
 			txtBuscaAutomatica.addFocusListener(focusListenerInner);
+			txtFinalConsulta.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
 			txtComplemento.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
@@ -111,6 +114,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtY.addFocusListener(focusListenerInner);
 
 			txtBuscaAutomatica.addActionListener(this);
+			txtFinalConsulta.addActionListener(this);
 			chkTransparente.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
@@ -146,6 +150,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
+			container.add(criarLinha("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
@@ -217,6 +222,9 @@ public class ObjetoConfigContainer extends Panel {
 
 			} else if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txtChaveamento.getText());
+
+			} else if (txtFinalConsulta == e.getSource()) {
+				objeto.setFinalConsulta(txtFinalConsulta.getText());
 
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txtComplemento.getText());

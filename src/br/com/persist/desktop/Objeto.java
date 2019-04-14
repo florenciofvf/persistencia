@@ -42,6 +42,7 @@ public class Objeto implements Runnable {
 	private static long sequencia;
 	private Superficie superficie;
 	protected boolean controlado;
+	private String finalConsulta;
 	private boolean selecionado;
 	private boolean desenharId;
 	private String complemento;
@@ -91,6 +92,7 @@ public class Objeto implements Runnable {
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
+		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
 		o.complemento = complemento;
 		o.chaveamento = chaveamento;
@@ -127,6 +129,10 @@ public class Objeto implements Runnable {
 		if (!this.selecionado) {
 			controlado = false;
 		}
+	}
+
+	public void setFinalConsulta(String finalConsulta) {
+		this.finalConsulta = finalConsulta;
 	}
 
 	public void setComplemento(String complemento) {
@@ -179,6 +185,10 @@ public class Objeto implements Runnable {
 		} else {
 			icon = Imagens.getIcon(this.icone);
 		}
+	}
+
+	public String getFinalConsulta() {
+		return finalConsulta;
 	}
 
 	public boolean isTransparente() {
@@ -401,6 +411,7 @@ public class Objeto implements Runnable {
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		buscaAutomatica = attr.getValue("buscaAutomatica");
+		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
 		x = Integer.parseInt(attr.getValue("x"));
@@ -421,6 +432,7 @@ public class Objeto implements Runnable {
 		util.abrirTag("objeto");
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
 		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
+		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("desloc_x_id", deslocamentoXId);
