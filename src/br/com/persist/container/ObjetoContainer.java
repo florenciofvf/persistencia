@@ -330,6 +330,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
 		builder.append(" " + txtComplemento.getText());
 		builder.append(" " + complemento);
+		builder.append(" " + objeto.getFinalConsulta());
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);

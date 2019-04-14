@@ -188,6 +188,10 @@ public class Objeto implements Runnable {
 	}
 
 	public String getFinalConsulta() {
+		if (Util.estaVazio(finalConsulta)) {
+			finalConsulta = "";
+		}
+
 		return finalConsulta;
 	}
 
