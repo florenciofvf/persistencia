@@ -340,6 +340,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
 			listener.setTitulo(objeto.getTitle(modeloOrdenacao));
 
+			br.com.persist.util.BuscaAuto.Tabela tabelaPesquisaAuto = objeto.getTabelaPesquisaAuto();
+
+			if (tabelaPesquisaAuto != null) {
+				tabelaPesquisaAuto.selecionadosDelta(modeloOrdenacao.getRowCount());
+			}
+
 			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
 			cabecalhoFiltro = null;

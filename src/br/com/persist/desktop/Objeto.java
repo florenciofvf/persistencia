@@ -21,6 +21,7 @@ import org.xml.sax.Attributes;
 
 import br.com.persist.Instrucao;
 import br.com.persist.modelo.OrdenacaoModelo;
+import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
@@ -35,6 +36,7 @@ public class Objeto implements Runnable {
 	public static final int DIAMETRO = 36;
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
+	private Tabela tabelaPesquisaAuto;
 	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
@@ -610,5 +612,13 @@ public class Objeto implements Runnable {
 
 	public void setControlado(boolean controlado) {
 		this.controlado = controlado;
+	}
+
+	public Tabela getTabelaPesquisaAuto() {
+		return tabelaPesquisaAuto;
+	}
+
+	public void setTabelaPesquisaAuto(Tabela tabelaPesquisaAuto) {
+		this.tabelaPesquisaAuto = tabelaPesquisaAuto;
 	}
 }
