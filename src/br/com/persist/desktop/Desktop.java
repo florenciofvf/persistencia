@@ -327,6 +327,7 @@ public class Desktop extends JDesktopPane implements IIni {
 
 				for (Tabela tabela : tabelas) {
 					if (interno.ehTabela(tabela)) {
+						interno.getObjetoContainer().getObjeto().setTabelaPesquisaAuto(tabela);
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 						tabela.setProcessado(true);
 						processado.set(true);
