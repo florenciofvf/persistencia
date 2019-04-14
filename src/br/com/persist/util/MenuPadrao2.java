@@ -11,6 +11,8 @@ public class MenuPadrao2 extends Menu {
 
 	public MenuPadrao2(String rotulo, Icon icon, String naoChave) {
 		super(rotulo, icon, naoChave);
+		addMenuItem(semAspasAcao);
+		addMenuItem(comAspasAcao);
 	}
 
 	public MenuPadrao2(String chaveRotulo) {
