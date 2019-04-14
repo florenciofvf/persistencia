@@ -82,7 +82,8 @@ public class RegistroModelo implements TableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return !colunas.get(columnIndex).isChave();
+		Coluna coluna = colunas.get(columnIndex);
+		return !coluna.isChave() && !coluna.isBlob() && !coluna.isColunaInfo();
 	}
 
 	@Override
