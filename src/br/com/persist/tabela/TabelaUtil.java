@@ -62,25 +62,33 @@ public class TabelaUtil {
 
 	public static List<String> getValoresColuna(Tabela tabela, int coluna) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		List<Integer> linhas = getIndicesColuna(tabela, coluna);
 		List<String> resposta = new ArrayList<>();
+
+		for (int i : linhas) {
+			Object obj = modelo.getValueAt(i, coluna);
+
+			if (obj != null && !Util.estaVazio(obj.toString())) {
+				resposta.add(obj.toString());
+			}
+		}
+
+		return resposta;
+	}
+
+	public static List<Integer> getIndicesColuna(Tabela tabela, int coluna) {
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		List<Integer> resposta = new ArrayList<>();
 		int[] linhas = tabela.getSelectedRows();
 		int total = modelo.getRowCount();
 
 		if (linhas == null || linhas.length == 0) {
 			for (int i = 0; i < total; i++) {
-				Object obj = modelo.getValueAt(i, coluna);
-
-				if (obj != null && !Util.estaVazio(obj.toString())) {
-					resposta.add(obj.toString());
-				}
+				resposta.add(i);
 			}
 		} else {
 			for (int i : linhas) {
-				Object obj = modelo.getValueAt(i, coluna);
-
-				if (obj != null && !Util.estaVazio(obj.toString())) {
-					resposta.add(obj.toString());
-				}
+				resposta.add(i);
 			}
 		}
 
