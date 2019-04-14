@@ -63,7 +63,7 @@ public class Persistencia {
 			Conexao conexao) throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
-				return criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()));
+				return criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()), objeto);
 			}
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -89,14 +89,16 @@ public class Persistencia {
 		return mapa;
 	}
 
-	private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[] chaves) throws PersistenciaException {
+	private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[] chaves, Objeto objeto)
+			throws PersistenciaException {
 		Map<String, Boolean> mapa = criarMapaTipos();
 		List<Coluna> colunas = new ArrayList<>();
 
 		try {
 			int qtdColunas = rsmd.getColumnCount();
+			int i = 1;
 
-			for (int i = 1; i <= qtdColunas; i++) {
+			for (; i <= qtdColunas; i++) {
 				String tipoBanco = rsmd.getColumnTypeName(i);
 				int tamanho = rsmd.getColumnDisplaySize(i);
 				String classe = rsmd.getColumnClassName(i);
@@ -118,7 +120,13 @@ public class Persistencia {
 
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave,
 						tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe,
-						new Coluna.Config(tamanho, tipoBanco, nulavel));
+						new Coluna.Config(tamanho, tipoBanco, nulavel, false));
+				colunas.add(coluna);
+			}
+
+			if (objeto.isColunaInfo()) {
+				Coluna coluna = new Coluna("INFO", i - 1, false, false, false, "INFO",
+						new Coluna.Config(0, "INFO", true, true));
 				colunas.add(coluna);
 			}
 
@@ -128,14 +136,14 @@ public class Persistencia {
 		}
 	}
 
-	private static RegistroModelo criarModelo(ResultSet rs, String[] chaves, String tabela)
+	private static RegistroModelo criarModelo(ResultSet rs, String[] chaves, String tabela, Objeto objeto)
 			throws PersistenciaException {
 
 		try {
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int qtdColunas = rsmd.getColumnCount();
 
-			List<Coluna> colunas = criarColunas(rsmd, chaves);
+			List<Coluna> colunas = criarColunas(rsmd, chaves, objeto);
 			List<List<Object>> registros = new ArrayList<>();
 
 			while (rs.next()) {
@@ -144,6 +152,10 @@ public class Persistencia {
 				for (int i = 1; i <= qtdColunas; i++) {
 					Object valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
 					registro.add(valor == null ? "" : valor);
+				}
+
+				if (objeto.isColunaInfo()) {
+					registro.add("");
 				}
 
 				registros.add(registro);
