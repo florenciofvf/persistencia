@@ -16,6 +16,7 @@ public class Macro {
 	public static final String PONTO_DESTINO = "pontoDestino";
 	public static final String TRANSPARENTE = "transparente";
 	public static final String PONTO_ORIGEM = "pontoOrigem";
+	public static final String COLUNA_INFO = "colunaInfo";
 	public static final String ABRIR_AUTO = "abrirAuto";
 	public static final String COR_FONTE = "corFonte";
 	public static final String ICONE = "icone";
@@ -35,6 +36,7 @@ public class Macro {
 		mapa.put(PONTO_DESTINO, new PontoDestino());
 		mapa.put(TRANSPARENTE, new Transparente());
 		mapa.put(PONTO_ORIGEM, new PontoOrigem());
+		mapa.put(COLUNA_INFO, new ColunaInfo());
 		mapa.put(ABRIR_AUTO, new AbrirAuto());
 		mapa.put(COR_FONTE, new CorFonte());
 		mapa.put(ICONE, new Icone());
@@ -97,6 +99,18 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setDesenharId((Boolean) valor);
+		}
+	}
+
+	class ColunaInfo extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setColunaInfo((Boolean) valor);
 		}
 	}
 
@@ -210,6 +224,12 @@ public class Macro {
 
 	public void desenharIdDescricao(Object valor) {
 		Instrucao instrucao = mapa.get(DESENHAR_ID_DESC);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void colunaInfo(Object valor) {
+		Instrucao instrucao = mapa.get(COLUNA_INFO);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

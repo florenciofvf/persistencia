@@ -75,6 +75,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
+		private CheckBox chkColunaInfo = new CheckBox();
 		private CheckBox chkAbrirAuto = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
@@ -91,6 +92,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
 			txtIntervalo.setText("" + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
+			chkColunaInfo.setSelected(objeto.isColunaInfo());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
@@ -119,6 +121,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
+			chkColunaInfo.addActionListener(this);
 			chkAbrirAuto.addActionListener(this);
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
@@ -151,6 +154,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.final_consulta", txtFinalConsulta));
+			container.add(criarLinha("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
@@ -258,6 +262,11 @@ public class ObjetoConfigContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
 				Formulario.macro.desenharIdDescricao(chk.isSelected());
+
+			} else if (chkColunaInfo == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setColunaInfo(chk.isSelected());
+				Formulario.macro.colunaInfo(chk.isSelected());
 
 			} else if (chkAbrirAuto == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
