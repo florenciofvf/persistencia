@@ -92,6 +92,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private final boolean buscaAuto;
 	private transient Thread thread;
 	private Component suporte;
+	private int contadorAuto;
 
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
 			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
@@ -392,7 +393,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private class ButtonAtualizar extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
 		private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
-		private MenuItem itemAtualizarAuto = new MenuItem("label.atualizar_auto", Icones.ATUALIZAR);
+		private MenuItem itemAtualizarAuto = new MenuItem(Constantes.LABEL_ATUALIZAR_AUTO, Icones.ATUALIZAR);
 		private Action atualizarAcao = Action.actionMenuAtualizar();
 
 		ButtonAtualizar() {
@@ -411,7 +412,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					if (thread == null) {
+						itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
 						thread = new Thread(ObjetoContainer.this);
+						contadorAuto = 0;
 						thread.start();
 					}
 				}
@@ -438,12 +441,17 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		while (!Thread.currentThread().isInterrupted() && toolbar.atualizar.itemAtualizarAuto.isDisplayable()) {
 			try {
 				Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
+				contadorAuto++;
+				toolbar.atualizar.itemAtualizarAuto
+						.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO) + " " + contadorAuto);
 				actionPerformed(null);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
 		}
 
+		toolbar.atualizar.itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
+		contadorAuto = 0;
 		thread = null;
 	}
 
