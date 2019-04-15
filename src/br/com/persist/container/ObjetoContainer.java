@@ -402,6 +402,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			addMenuItem(atualizarAcao);
 			addMenuItem(true, sincronizarAcao);
 			addMenuItem(true, itemAtualizarAuto);
+			itemAtualizarAuto.setText(itemAtualizarAuto.getText() + "   ");
 			itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
 
 			eventos();
