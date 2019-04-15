@@ -4,10 +4,7 @@ import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
@@ -114,36 +111,17 @@ public class TabelaUtil {
 		}
 	}
 
-	public static void atualizarIndice(int i, Tabela tabela, Grupo grupo, int coluna,
-			Map<br.com.persist.util.BuscaAuto.Tabela, Integer> map) {
+	public static void atualizarIndice(int i, Tabela tabela, Grupo grupo, int coluna) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-
 		List<Object> registro = modelo.getRegistro(i);
 		String id = registro.get(coluna).toString();
-		map.clear();
-
-		for (br.com.persist.util.BuscaAuto.Tabela t : grupo.getTabelas()) {
-			map.put(t, 0);
-		}
+		StringBuilder sb = new StringBuilder();
 
 		for (br.com.persist.util.BuscaAuto.Tabela t : grupo.getTabelas()) {
 			Contabil contabil = t.getContabil(id);
 
-			Integer valor = map.get(t);
-			valor += contabil.getValor();
-			map.put(t, valor);
-		}
-
-		StringBuilder sb = new StringBuilder();
-		Iterator<Map.Entry<br.com.persist.util.BuscaAuto.Tabela, Integer>> it = map.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Entry<br.com.persist.util.BuscaAuto.Tabela, Integer> next = it.next();
-			br.com.persist.util.BuscaAuto.Tabela t = next.getKey();
-			Integer total = next.getValue();
-
-			if (total > 0) {
-				sb.append(t.getNome() + " [" + total + "]   ");
+			if (contabil.getValor() > 0) {
+				sb.append(t.getNome() + " [" + contabil.getValor() + "]   ");
 			}
 		}
 
