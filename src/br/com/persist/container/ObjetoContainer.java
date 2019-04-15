@@ -189,7 +189,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				if (!Util.estaVazio(complemento)) {
 					txtComplemento.setText(complemento);
-					objeto.setComplemento(txtComplemento.getText());
 					ObjetoContainer.this.actionPerformed(null);
 				} else {
 					txtComplemento.setText(objeto.getComplemento());
@@ -339,7 +338,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					objeto.getChavesArray(), objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
 			listener.setTitulo(objeto.getTitle(modeloOrdenacao));
-
+			objeto.setComplemento(txtComplemento.getText());
 			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
 			cabecalhoFiltro = null;
@@ -1001,7 +1000,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		@Override
 		public void configFragmento(Fragmento f) {
 			txtComplemento.setText(f.getValor());
-			objeto.setComplemento(txtComplemento.getText());
 			actionPerformed(null);
 		}
 
@@ -1031,9 +1029,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return;
 		}
 
-		String complemento = "AND " + campo + " IN (" + argumentos + ")";
-		txtComplemento.setText(complemento);
-		objeto.setComplemento(txtComplemento.getText());
+		txtComplemento.setText("AND " + campo + " IN (" + argumentos + ")");
 		ObjetoContainer.this.actionPerformed(null);
 	}
 
