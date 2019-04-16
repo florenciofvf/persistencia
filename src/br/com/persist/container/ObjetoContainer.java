@@ -683,8 +683,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 					form.setVisible(true);
 				} else {
-					ConsultaDialogo form = new ConsultaDialogo((Frame) null, provedor, conexao, instrucao.getValor(),
-							chaves, instrucao.getNome());
+					ConsultaDialogo form = new ConsultaDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
+							instrucao.getValor(), chaves);
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);
 					}
@@ -701,8 +701,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 					form.setVisible(true);
 				} else {
-					UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao.getValor(),
-							chaves, instrucao.getNome());
+					UpdateDialogo form = new UpdateDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
+							instrucao.getValor(), chaves);
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);
 					}

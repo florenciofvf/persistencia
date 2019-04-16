@@ -27,8 +27,8 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 		montarLayout();
 	}
 
-	public ConsultaDialogo(Frame frame, ConexaoProvedor provedor, Conexao padrao, String instrucao,
-			Map<String, String> mapaChaveValor, String titulo) {
+	public ConsultaDialogo(Frame frame, String titulo, ConexaoProvedor provedor, Conexao padrao, String instrucao,
+			Map<String, String> mapaChaveValor) {
 		super(frame, titulo);
 		container = new ConsultaContainer(this, provedor, padrao, instrucao, mapaChaveValor);
 		montarLayout();

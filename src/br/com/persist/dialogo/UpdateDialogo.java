@@ -33,8 +33,8 @@ public class UpdateDialogo extends AbstratoDialogo implements IJanela {
 		montarLayout();
 	}
 
-	public UpdateDialogo(Frame frame, ConexaoProvedor provedor, Conexao conexao, String instrucao,
-			Map<String, String> mapaChaveValor, String titulo) {
+	public UpdateDialogo(Frame frame, String titulo, ConexaoProvedor provedor, Conexao conexao, String instrucao,
+			Map<String, String> mapaChaveValor) {
 		super(frame, titulo);
 		container = new UpdateContainer(this, provedor, conexao, instrucao, mapaChaveValor);
 		montarLayout();
