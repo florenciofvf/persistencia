@@ -45,6 +45,7 @@ import br.com.persist.comp.TextField;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
+import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
@@ -73,6 +74,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuPadrao2;
+import br.com.persist.util.MenuPadrao3;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
@@ -532,7 +534,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			super("label.update", Icones.UPDATE);
 
 			addMenuItem(dadosAcao);
-			addMenuItem(true, new UpdateAcao());
+			addMenu(true, new MenuUpdate());
 
 			eventos();
 		}
@@ -555,15 +557,17 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			});
 		}
 
-		class UpdateAcao extends Action {
+		class MenuUpdate extends MenuPadrao3 {
 			private static final long serialVersionUID = 1L;
 
-			UpdateAcao() {
-				super(true, "label.update", Icones.UPDATE);
+			MenuUpdate() {
+				super("label.update", Icones.UPDATE);
+
+				formularioAcao.setActionListener(e -> abrirUpdate(true));
+				dialogoAcao.setActionListener(e -> abrirUpdate(false));
 			}
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			private void abrirUpdate(boolean abrirEmForm) {
 				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 				if (conexao == null) {
@@ -589,15 +593,25 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							return;
 						}
 
-						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
-								provedor, conexao, update);
-
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
-
-						form.setVisible(true);
+						abrir(abrirEmForm, conexao, update);
 					}
+				}
+			}
+
+			private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
+				if (abrirEmForm) {
+					UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
+							provedor, conexao, instrucao);
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					}
+					form.setVisible(true);
+				} else {
+					UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					}
+					form.setVisible(true);
 				}
 			}
 		}

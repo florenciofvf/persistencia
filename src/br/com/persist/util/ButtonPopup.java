@@ -29,6 +29,14 @@ public class ButtonPopup extends Button {
 	}
 
 	protected void addMenu(Menu menu) {
+		addMenu(false, menu);
+	}
+
+	protected void addMenu(boolean separador, Menu menu) {
+		if (separador) {
+			addSeparator();
+		}
+
 		popup.add(menu);
 	}
 
