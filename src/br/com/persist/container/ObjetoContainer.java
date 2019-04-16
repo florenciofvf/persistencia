@@ -370,6 +370,190 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
+		class ButtonUpdate extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
+
+			ButtonUpdate() {
+				super("label.update", Icones.UPDATE);
+
+				addMenuItem(dadosAcao);
+				addMenu(true, new MenuUpdate());
+
+				eventos();
+			}
+
+			private void eventos() {
+				dadosAcao.setActionListener(e -> {
+					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+					TableModel model = modelo.getModel();
+
+					if (model instanceof RegistroModelo) {
+						int[] linhas = tabela.getSelectedRows();
+
+						if (linhas != null && linhas.length == 1) {
+							StringBuilder sb = new StringBuilder(objeto.getTabela2());
+							sb.append(Constantes.QL);
+							modelo.getDados(linhas[0], sb);
+							Util.mensagem(ObjetoContainer.this, sb.toString());
+						}
+					}
+				});
+			}
+
+			class MenuUpdate extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				MenuUpdate() {
+					super("label.update", Icones.UPDATE);
+
+					formularioAcao.setActionListener(e -> abrirUpdate(true));
+					dialogoAcao.setActionListener(e -> abrirUpdate(false));
+				}
+
+				private void abrirUpdate(boolean abrirEmForm) {
+					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+					if (conexao == null) {
+						return;
+					}
+
+					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+					TableModel model = modelo.getModel();
+
+					if (model instanceof RegistroModelo) {
+						int[] linhas = tabela.getSelectedRows();
+
+						if (linhas != null && linhas.length == 1) {
+							List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+
+							if (chaves.isEmpty()) {
+								return;
+							}
+
+							String instrucao = modelo.getUpdate(linhas[0]);
+
+							if (Util.estaVazio(instrucao)) {
+								return;
+							}
+
+							abrir(abrirEmForm, conexao, instrucao);
+						}
+					}
+				}
+
+				private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
+					if (abrirEmForm) {
+						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
+								provedor, conexao, instrucao);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					} else {
+						UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					}
+				}
+			}
+
+			void complemento(Objeto objeto) {
+				if (objeto == null || objeto.getInstrucoes().isEmpty()) {
+					return;
+				}
+
+				for (Instrucao i : objeto.getInstrucoes()) {
+					if (!Util.estaVazio(i.getValor())) {
+						addMenu(true, new MenuInstrucao(i));
+					}
+				}
+			}
+
+			class MenuInstrucao extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+				private final transient Instrucao instrucao;
+
+				MenuInstrucao(Instrucao instrucao) {
+					super(instrucao.getNome(), instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC, "nao_chave");
+					this.instrucao = instrucao;
+
+					formularioAcao.setActionListener(e -> abrirInstrucao(true));
+					dialogoAcao.setActionListener(e -> abrirInstrucao(false));
+				}
+
+				public void abrirInstrucao(boolean abrirEmForm) {
+					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+					if (conexao == null) {
+						return;
+					}
+
+					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+					TableModel model = modelo.getModel();
+
+					if (model instanceof RegistroModelo) {
+						int[] linhas = tabela.getSelectedRows();
+
+						if (linhas != null && linhas.length == 1) {
+							Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
+
+							if (chaves.isEmpty()) {
+								return;
+							}
+
+							if (Util.estaVazio(instrucao.getValor())) {
+								return;
+							}
+
+							if (instrucao.isSelect()) {
+								abrirSelect(abrirEmForm, conexao, chaves);
+							} else {
+								abrirUpdate(abrirEmForm, conexao, chaves);
+							}
+						}
+					}
+				}
+
+				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
+					if (abrirEmForm) {
+						ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), provedor, conexao,
+								instrucao.getValor(), chaves);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					} else {
+						ConsultaDialogo form = new ConsultaDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
+								instrucao.getValor(), chaves);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					}
+				}
+
+				private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
+					if (abrirEmForm) {
+						UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), provedor, conexao,
+								instrucao.getValor(), chaves);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					} else {
+						UpdateDialogo form = new UpdateDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
+								instrucao.getValor(), chaves);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					}
+				}
+			}
+		}
 	}
 
 	private transient MouseListener complementoListener = new MouseAdapter() {
@@ -526,191 +710,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		toolbar.atualizar.itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
 		contadorAuto = 0;
 		thread = null;
-	}
-
-	private class ButtonUpdate extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
-		private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
-
-		ButtonUpdate() {
-			super("label.update", Icones.UPDATE);
-
-			addMenuItem(dadosAcao);
-			addMenu(true, new MenuUpdate());
-
-			eventos();
-		}
-
-		private void eventos() {
-			dadosAcao.setActionListener(e -> {
-				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-				TableModel model = modelo.getModel();
-
-				if (model instanceof RegistroModelo) {
-					int[] linhas = tabela.getSelectedRows();
-
-					if (linhas != null && linhas.length == 1) {
-						StringBuilder sb = new StringBuilder(objeto.getTabela2());
-						sb.append(Constantes.QL);
-						modelo.getDados(linhas[0], sb);
-						Util.mensagem(ObjetoContainer.this, sb.toString());
-					}
-				}
-			});
-		}
-
-		class MenuUpdate extends MenuPadrao3 {
-			private static final long serialVersionUID = 1L;
-
-			MenuUpdate() {
-				super("label.update", Icones.UPDATE);
-
-				formularioAcao.setActionListener(e -> abrirUpdate(true));
-				dialogoAcao.setActionListener(e -> abrirUpdate(false));
-			}
-
-			private void abrirUpdate(boolean abrirEmForm) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-				TableModel model = modelo.getModel();
-
-				if (model instanceof RegistroModelo) {
-					int[] linhas = tabela.getSelectedRows();
-
-					if (linhas != null && linhas.length == 1) {
-						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-
-						if (chaves.isEmpty()) {
-							return;
-						}
-
-						String update = modelo.getUpdate(linhas[0]);
-
-						if (Util.estaVazio(update)) {
-							return;
-						}
-
-						abrir(abrirEmForm, conexao, update);
-					}
-				}
-			}
-
-			private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-				if (abrirEmForm) {
-					UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
-							provedor, conexao, instrucao);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				} else {
-					UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				}
-			}
-		}
-
-		void complemento(Objeto objeto) {
-			if (objeto == null || objeto.getInstrucoes().isEmpty()) {
-				return;
-			}
-
-			for (Instrucao i : objeto.getInstrucoes()) {
-				if (!Util.estaVazio(i.getValor())) {
-					addMenu(true, new MenuInstrucao(i));
-				}
-			}
-		}
-
-		class MenuInstrucao extends MenuPadrao3 {
-			private static final long serialVersionUID = 1L;
-			private final transient Instrucao instrucao;
-
-			MenuInstrucao(Instrucao instrucao) {
-				super(instrucao.getNome(), instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC, "nao_chave");
-				this.instrucao = instrucao;
-
-				formularioAcao.setActionListener(e -> abrirInstrucao(true));
-				dialogoAcao.setActionListener(e -> abrirInstrucao(false));
-			}
-
-			public void abrirInstrucao(boolean abrirEmForm) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-				TableModel model = modelo.getModel();
-
-				if (model instanceof RegistroModelo) {
-					int[] linhas = tabela.getSelectedRows();
-
-					if (linhas != null && linhas.length == 1) {
-						Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
-
-						if (chaves.isEmpty()) {
-							return;
-						}
-
-						if (Util.estaVazio(instrucao.getValor())) {
-							return;
-						}
-
-						if (instrucao.isSelect()) {
-							abrirSelect(abrirEmForm, conexao, chaves);
-						} else {
-							abrirUpdate(abrirEmForm, conexao, chaves);
-						}
-					}
-				}
-			}
-
-			private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-				if (abrirEmForm) {
-					ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), provedor, conexao,
-							instrucao.getValor(), chaves);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				} else {
-					ConsultaDialogo form = new ConsultaDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
-							instrucao.getValor(), chaves);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				}
-			}
-
-			private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-				if (abrirEmForm) {
-					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), provedor, conexao,
-							instrucao.getValor(), chaves);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				} else {
-					UpdateDialogo form = new UpdateDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
-							instrucao.getValor(), chaves);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				}
-			}
-		}
 	}
 
 	private class ButtonFuncoes extends ButtonPopup {
