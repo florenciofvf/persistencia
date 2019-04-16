@@ -13,10 +13,6 @@ public class MenuPadrao1 extends Menu {
 	protected Action ficharioAcao = Action.actionMenuFichario();
 	protected Action dialogoAcao = Action.actionMenuDialogo();
 
-	public MenuPadrao1(String chaveRotulo, Icon icon) {
-		this(chaveRotulo, icon, true);
-	}
-
 	public MenuPadrao1(String chaveRotulo, Icon icon, boolean dialogo) {
 		super(chaveRotulo, icon);
 
@@ -26,6 +22,10 @@ public class MenuPadrao1 extends Menu {
 		if (dialogo) {
 			addMenuItem(dialogoAcao);
 		}
+	}
+
+	public MenuPadrao1(String chaveRotulo, Icon icon) {
+		this(chaveRotulo, icon, true);
 	}
 
 	public void excluirAcao(Action action) {

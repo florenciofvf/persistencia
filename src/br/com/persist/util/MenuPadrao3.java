@@ -12,6 +12,13 @@ public class MenuPadrao3 extends Menu {
 	protected Action formularioAcao = Action.actionMenuFormulario();
 	protected Action dialogoAcao = Action.actionMenuDialogo();
 
+	public MenuPadrao3(String rotulo, Icon icon, String naoChave) {
+		super(rotulo, icon, naoChave);
+
+		addMenuItem(formularioAcao);
+		addMenuItem(dialogoAcao);
+	}
+
 	public MenuPadrao3(String chaveRotulo, Icon icon) {
 		super(chaveRotulo, icon);
 
