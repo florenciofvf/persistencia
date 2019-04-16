@@ -554,6 +554,89 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 		}
+
+		class ButtonFuncoes extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+
+			ButtonFuncoes() {
+				super("label.funcoes", Icones.SOMA);
+
+				MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
+				MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
+				maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
+				minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
+
+				addMenuItem(new TotalizarRegistrosAcao(false));
+				addMenuItem(true, new TotalizarRegistrosAcao(true));
+				addMenuItem(true, minimo);
+				addMenuItem(maximo);
+			}
+
+			class MinimoMaximoAcao extends Action {
+				private static final long serialVersionUID = 1L;
+				private final boolean minimo;
+
+				MinimoMaximoAcao(boolean minimo) {
+					super(true, minimo ? "label.minimo" : "label.maximo", Icones.VAR);
+					this.minimo = minimo;
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+					if (conexao == null) {
+						return;
+					}
+
+					String[] chaves = objeto.getChavesArray();
+
+					if (chaves.length != 1) {
+						txtComplemento.setText("");
+						return;
+					}
+
+					if (minimo) {
+						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
+								+ objeto.getTabela(conexao.getEsquema()) + ")");
+					} else {
+						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+								+ objeto.getTabela(conexao.getEsquema()) + ")");
+					}
+
+					ObjetoContainer.this.actionPerformed(null);
+				}
+			}
+
+			class TotalizarRegistrosAcao extends Action {
+				private static final long serialVersionUID = 1L;
+				private final boolean complemento;
+
+				TotalizarRegistrosAcao(boolean complemento) {
+					super(true, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
+					this.complemento = complemento;
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+					if (conexao == null) {
+						return;
+					}
+
+					try {
+						Connection conn = Conexao.getConnection(conexao);
+						int i = Persistencia.getTotalRegistros(conn, objeto,
+								complemento ? txtComplemento.getText() : "", conexao);
+						toolbar.labelTotal.setText("" + i);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("TOTAL", ex, ObjetoContainer.this);
+					}
+				}
+			}
+		}
+
 	}
 
 	private transient MouseListener complementoListener = new MouseAdapter() {
@@ -710,88 +793,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		toolbar.atualizar.itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
 		contadorAuto = 0;
 		thread = null;
-	}
-
-	private class ButtonFuncoes extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
-
-		ButtonFuncoes() {
-			super("label.funcoes", Icones.SOMA);
-
-			MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
-			MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
-			maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
-			minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
-
-			addMenuItem(new TotalizarRegistrosAcao(false));
-			addMenuItem(true, new TotalizarRegistrosAcao(true));
-			addMenuItem(true, minimo);
-			addMenuItem(maximo);
-		}
-
-		class MinimoMaximoAcao extends Action {
-			private static final long serialVersionUID = 1L;
-			private final boolean minimo;
-
-			MinimoMaximoAcao(boolean minimo) {
-				super(true, minimo ? "label.minimo" : "label.maximo", Icones.VAR);
-				this.minimo = minimo;
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				String[] chaves = objeto.getChavesArray();
-
-				if (chaves.length != 1) {
-					txtComplemento.setText("");
-					return;
-				}
-
-				if (minimo) {
-					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
-							+ objeto.getTabela(conexao.getEsquema()) + ")");
-				} else {
-					txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
-							+ objeto.getTabela(conexao.getEsquema()) + ")");
-				}
-
-				ObjetoContainer.this.actionPerformed(null);
-			}
-		}
-
-		class TotalizarRegistrosAcao extends Action {
-			private static final long serialVersionUID = 1L;
-			private final boolean complemento;
-
-			TotalizarRegistrosAcao(boolean complemento) {
-				super(true, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
-				this.complemento = complemento;
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				try {
-					Connection conn = Conexao.getConnection(conexao);
-					int i = Persistencia.getTotalRegistros(conn, objeto, complemento ? txtComplemento.getText() : "",
-							conexao);
-					toolbar.labelTotal.setText("" + i);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("TOTAL", ex, ObjetoContainer.this);
-				}
-			}
-		}
 	}
 
 	private class ButtonInfo extends ButtonPopup {
