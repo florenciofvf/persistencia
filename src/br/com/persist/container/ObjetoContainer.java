@@ -300,6 +300,76 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				});
 			}
 		}
+
+		class ButtonBuscaAuto extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private boolean habilitado;
+
+			ButtonBuscaAuto() {
+				super("label.buscaAuto", Icones.FIELDS);
+			}
+
+			void complemento(Objeto objeto) {
+				List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
+
+				for (Grupo grupo : listaGrupo) {
+					addMenu(new MenuBuscaAuto(grupo));
+				}
+
+				habilitado = !listaGrupo.isEmpty();
+				setEnabled(habilitado);
+			}
+
+			void habilitar(boolean b) {
+				setEnabled(habilitado && b);
+			}
+
+			class MenuBuscaAuto extends MenuPadrao2 {
+				private static final long serialVersionUID = 1L;
+				private final transient Grupo grupo;
+
+				MenuBuscaAuto(Grupo grupo) {
+					super(grupo.getDescricao(), Icones.CONFIG2, "nao_chave");
+
+					this.grupo = grupo;
+
+					semAspasAcao.setActionListener(e -> processar(false));
+					comAspasAcao.setActionListener(e -> processar(true));
+				}
+
+				private void processar(boolean apostrofes) {
+					int coluna = TabelaUtil.getIndiceColuna(tabela, grupo.getCampo());
+
+					if (coluna == -1) {
+						return;
+					}
+
+					List<String> lista = TabelaUtil.getValoresColuna(tabela, coluna);
+
+					if (lista.isEmpty()) {
+						return;
+					}
+
+					grupo.setProcessado(false);
+					grupo.setArgumentos(lista);
+					listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes));
+					setEnabled(grupo.isProcessado());
+
+					if (!objeto.isColunaInfo()) {
+						return;
+					}
+
+					List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
+
+					for (int i : indices) {
+						TabelaUtil.atualizarIndice(i, tabela, grupo, coluna);
+					}
+
+					TabelaUtil.ajustar(tabela, ObjetoContainer.this.getGraphics());
+				}
+			}
+		}
+
 	}
 
 	private transient MouseListener complementoListener = new MouseAdapter() {
@@ -456,75 +526,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		toolbar.atualizar.itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
 		contadorAuto = 0;
 		thread = null;
-	}
-
-	private class ButtonBuscaAuto extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
-		private boolean habilitado;
-
-		ButtonBuscaAuto() {
-			super("label.buscaAuto", Icones.FIELDS);
-		}
-
-		void complemento(Objeto objeto) {
-			List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
-
-			for (Grupo grupo : listaGrupo) {
-				addMenu(new MenuBuscaAuto(grupo));
-			}
-
-			habilitado = !listaGrupo.isEmpty();
-			setEnabled(habilitado);
-		}
-
-		void habilitar(boolean b) {
-			setEnabled(habilitado && b);
-		}
-
-		class MenuBuscaAuto extends MenuPadrao2 {
-			private static final long serialVersionUID = 1L;
-			private final transient Grupo grupo;
-
-			MenuBuscaAuto(Grupo grupo) {
-				super(grupo.getDescricao(), Icones.CONFIG2, "nao_chave");
-
-				this.grupo = grupo;
-
-				semAspasAcao.setActionListener(e -> processar(false));
-				comAspasAcao.setActionListener(e -> processar(true));
-			}
-
-			private void processar(boolean apostrofes) {
-				int coluna = TabelaUtil.getIndiceColuna(tabela, grupo.getCampo());
-
-				if (coluna == -1) {
-					return;
-				}
-
-				List<String> lista = TabelaUtil.getValoresColuna(tabela, coluna);
-
-				if (lista.isEmpty()) {
-					return;
-				}
-
-				grupo.setProcessado(false);
-				grupo.setArgumentos(lista);
-				listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes));
-				setEnabled(grupo.isProcessado());
-
-				if (!objeto.isColunaInfo()) {
-					return;
-				}
-
-				List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
-
-				for (int i : indices) {
-					TabelaUtil.atualizarIndice(i, tabela, grupo, coluna);
-				}
-
-				TabelaUtil.ajustar(tabela, ObjetoContainer.this.getGraphics());
-			}
-		}
 	}
 
 	private class ButtonUpdate extends ButtonPopup {
