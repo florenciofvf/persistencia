@@ -2,6 +2,7 @@ package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.util.Map;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -29,6 +30,13 @@ public class UpdateDialogo extends AbstratoDialogo implements IJanela {
 	public UpdateDialogo(Frame frame, ConexaoProvedor provedor, Conexao conexao, String instrucao) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 		container = new UpdateContainer(this, provedor, conexao, instrucao);
+		montarLayout();
+	}
+
+	public UpdateDialogo(Frame frame, ConexaoProvedor provedor, Conexao conexao, String instrucao,
+			Map<String, String> mapaChaveValor, String titulo) {
+		super(frame, titulo);
+		container = new UpdateContainer(this, provedor, conexao, instrucao, mapaChaveValor);
 		montarLayout();
 	}
 

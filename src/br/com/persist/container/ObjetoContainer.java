@@ -44,6 +44,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.dialogo.ComplementoDialogo;
+import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
@@ -621,27 +622,26 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				return;
 			}
 
-			addSeparator();
-
 			for (Instrucao i : objeto.getInstrucoes()) {
 				if (!Util.estaVazio(i.getValor())) {
-					addMenuItem(new MenuItemUpdate(i));
+					addMenu(true, new MenuInstrucao(i));
 				}
 			}
 		}
 
-		class MenuItemUpdate extends MenuItem implements ActionListener {
+		class MenuInstrucao extends MenuPadrao3 {
 			private static final long serialVersionUID = 1L;
 			private final transient Instrucao instrucao;
 
-			MenuItemUpdate(Instrucao instrucao) {
+			MenuInstrucao(Instrucao instrucao) {
 				super(instrucao.getNome(), instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC, "nao_chave");
 				this.instrucao = instrucao;
-				addActionListener(this);
+
+				formularioAcao.setActionListener(e -> abrirInstrucao(true));
+				dialogoAcao.setActionListener(e -> abrirInstrucao(false));
 			}
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void abrirInstrucao(boolean abrirEmForm) {
 				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 				if (conexao == null) {
@@ -665,29 +665,47 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							return;
 						}
 
-						abrirFormulario(instrucao, conexao, chaves);
+						if (instrucao.isSelect()) {
+							abrirSelect(abrirEmForm, conexao, chaves);
+						} else {
+							abrirUpdate(abrirEmForm, conexao, chaves);
+						}
 					}
 				}
 			}
 
-			private void abrirFormulario(Instrucao instrucao, Conexao conexao, Map<String, String> chaves) {
-				if (instrucao.isSelect()) {
+			private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
+				if (abrirEmForm) {
 					ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), provedor, conexao,
 							instrucao.getValor(), chaves);
-
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);
 					}
-
 					form.setVisible(true);
 				} else {
-					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), provedor, conexao,
-							instrucao.getValor(), chaves);
-
+					ConsultaDialogo form = new ConsultaDialogo((Frame) null, provedor, conexao, instrucao.getValor(),
+							chaves, instrucao.getNome());
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);
 					}
+					form.setVisible(true);
+				}
+			}
 
+			private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
+				if (abrirEmForm) {
+					UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), provedor, conexao,
+							instrucao.getValor(), chaves);
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					}
+					form.setVisible(true);
+				} else {
+					UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao.getValor(),
+							chaves, instrucao.getNome());
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					}
 					form.setVisible(true);
 				}
 			}
