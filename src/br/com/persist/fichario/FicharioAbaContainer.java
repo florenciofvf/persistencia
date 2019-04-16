@@ -214,7 +214,7 @@ public class FicharioAbaContainer extends Panel {
 			}
 		}
 
-		private class ButtonDestacar extends ButtonPadrao1 {
+		class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 			Action desktopAcao = Action.actionMenuDesktop();
 

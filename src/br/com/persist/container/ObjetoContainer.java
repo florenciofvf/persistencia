@@ -253,6 +253,53 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 		}
+
+		class ButtonAtualizar extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
+			private MenuItem itemAtualizarAuto = new MenuItem(Constantes.LABEL_ATUALIZAR_AUTO, Icones.ATUALIZAR);
+			private Action atualizarAcao = Action.actionMenuAtualizar();
+
+			ButtonAtualizar() {
+				super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
+
+				addMenuItem(atualizarAcao);
+				addMenuItem(true, sincronizarAcao);
+				addMenuItem(true, itemAtualizarAuto);
+				itemAtualizarAuto.setText(itemAtualizarAuto.getText() + "   ");
+				itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
+
+				eventos();
+			}
+
+			private void eventos() {
+				itemAtualizarAuto.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (thread == null) {
+							itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
+							thread = new Thread(ObjetoContainer.this);
+							contadorAuto = 0;
+							thread.start();
+						}
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (thread != null) {
+							thread.interrupt();
+							thread = null;
+						}
+					}
+				});
+
+				atualizarAcao.setActionListener(e -> ObjetoContainer.this.actionPerformed(null));
+				sincronizarAcao.setActionListener(e -> {
+					cabecalhoFiltro = null;
+					ObjetoContainer.this.actionPerformed(null);
+				});
+			}
+		}
 	}
 
 	private transient MouseListener complementoListener = new MouseAdapter() {
@@ -390,53 +437,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabela);
-	}
-
-	private class ButtonAtualizar extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
-		private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
-		private MenuItem itemAtualizarAuto = new MenuItem(Constantes.LABEL_ATUALIZAR_AUTO, Icones.ATUALIZAR);
-		private Action atualizarAcao = Action.actionMenuAtualizar();
-
-		ButtonAtualizar() {
-			super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
-
-			addMenuItem(atualizarAcao);
-			addMenuItem(true, sincronizarAcao);
-			addMenuItem(true, itemAtualizarAuto);
-			itemAtualizarAuto.setText(itemAtualizarAuto.getText() + "   ");
-			itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
-
-			eventos();
-		}
-
-		private void eventos() {
-			itemAtualizarAuto.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					if (thread == null) {
-						itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
-						thread = new Thread(ObjetoContainer.this);
-						contadorAuto = 0;
-						thread.start();
-					}
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e) {
-					if (thread != null) {
-						thread.interrupt();
-						thread = null;
-					}
-				}
-			});
-
-			atualizarAcao.setActionListener(e -> ObjetoContainer.this.actionPerformed(null));
-			sincronizarAcao.setActionListener(e -> {
-				cabecalhoFiltro = null;
-				ObjetoContainer.this.actionPerformed(null);
-			});
-		}
 	}
 
 	@Override
