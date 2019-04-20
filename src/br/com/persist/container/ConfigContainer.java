@@ -28,6 +28,7 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
 	private final CheckBox chkNomeColunaListener = new CheckBox("label.copiar_nome_coluna_listener");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
+	private final CheckBox chkAbortarFecharComESC = new CheckBox("label.abortar_fechar_com_esc");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final Toolbar toolbar = new Toolbar();
@@ -66,6 +67,7 @@ public class ConfigContainer extends Panel {
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkNomeColunaListener.setSelected(Preferencias.isCopiarNomeColunaListener());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
+		chkAbortarFecharComESC.setSelected(Preferencias.isAbortarFecharComESC());
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
@@ -86,6 +88,7 @@ public class ConfigContainer extends Panel {
 		container.add(panelIntervalos);
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
+		container.add(chkAbortarFecharComESC);
 		container.add(chkNomeColunaListener);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
@@ -104,6 +107,7 @@ public class ConfigContainer extends Panel {
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
+		chkAbortarFecharComESC.setMargin(insets);
 		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
@@ -132,17 +136,20 @@ public class ConfigContainer extends Panel {
 	}
 
 	private void configurar() {
-		chkNomeColunaListener
-				.addActionListener(e -> Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected()));
-
 		chkFicharioScroll.addActionListener(e -> {
 			Preferencias.setFicharioComRolagem(chkFicharioScroll.isSelected());
 			formulario.getFichario().setTabLayoutPolicy(
 					Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
 		});
 
+		chkNomeColunaListener
+				.addActionListener(e -> Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected()));
+
 		chkAtivarAbrirAutoDestac
 				.addActionListener(e -> Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected()));
+
+		chkAbortarFecharComESC
+				.addActionListener(e -> Preferencias.setAbortarFecharComESC(chkAbortarFecharComESC.isSelected()));
 
 		chkFecharOrigemAposSoltar
 				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));

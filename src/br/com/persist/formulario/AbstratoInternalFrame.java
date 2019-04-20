@@ -14,6 +14,7 @@ import javax.swing.KeyStroke;
 
 public abstract class AbstratoInternalFrame extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
+	private boolean abortarFecharComESC;
 
 	public AbstratoInternalFrame(String titulo) {
 		super(titulo, true, true, true, true);
@@ -34,11 +35,23 @@ public abstract class AbstratoInternalFrame extends JInternalFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (abortarFecharComESC) {
+					return;
+				}
+
 				dispose();
 			}
 		};
 
 		ActionMap actionMap = component.getActionMap();
 		actionMap.put("esc", action);
+	}
+
+	public boolean isAbortarFecharComESC() {
+		return abortarFecharComESC;
+	}
+
+	public void setAbortarFecharComESC(boolean abortarFecharComESC) {
+		this.abortarFecharComESC = abortarFecharComESC;
 	}
 }
