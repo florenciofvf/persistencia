@@ -60,6 +60,10 @@ public class FicharioAbaContainer extends Panel {
 		montarLayout();
 	}
 
+	public Superficie getSuperficie() {
+		return superficie;
+	}
+
 	private void montarLayout() {
 		ButtonGroup grupo = new ButtonGroup();
 		add(BorderLayout.CENTER, new ScrollPane(superficie));

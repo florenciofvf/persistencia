@@ -40,6 +40,7 @@ public class Desktop extends JDesktopPane implements IIni {
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
 	protected final Formulario formulario;
+	private boolean abortarFecharComESC;
 
 	public Desktop(Formulario formulario, boolean superficie) {
 		if (!superficie) {
@@ -283,6 +284,7 @@ public class Desktop extends JDesktopPane implements IIni {
 
 		ObjetoContainerFormularioInterno form = new ObjetoContainerFormularioInterno(formulario, conexao, objeto, g,
 				buscaAuto);
+		form.setAbortarFecharComESC(abortarFecharComESC);
 		form.setApelido(apelido);
 		form.setLocation(point);
 		form.setSize(dimension);
@@ -332,5 +334,13 @@ public class Desktop extends JDesktopPane implements IIni {
 				}
 			}
 		}
+	}
+
+	public boolean isAbortarFecharComESC() {
+		return abortarFecharComESC;
+	}
+
+	public void setAbortarFecharComESC(boolean abortarFecharComESC) {
+		this.abortarFecharComESC = abortarFecharComESC;
 	}
 }

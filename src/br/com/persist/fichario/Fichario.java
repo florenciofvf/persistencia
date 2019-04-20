@@ -50,6 +50,7 @@ import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
@@ -211,6 +212,7 @@ public class Fichario extends JTabbedPane {
 
 	public Desktop novoDesktop(Formulario formulario) {
 		Desktop desktop = new Desktop(formulario, false);
+		desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		addTab(Mensagens.getString(Constantes.LABEL_DESKTOP), new ScrollPane(desktop));
 		int ultimoIndice = getTabCount() - 1;
 
@@ -279,6 +281,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novo(Formulario formulario) {
 		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
+		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 
@@ -357,6 +360,7 @@ public class Fichario extends JTabbedPane {
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Dimension d) {
 		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
+		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
