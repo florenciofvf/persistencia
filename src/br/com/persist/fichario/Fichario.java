@@ -279,18 +279,6 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 	}
 
-	public void novo(Formulario formulario) {
-		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
-		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		addTab(Mensagens.getString("label.novo"), container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-		container.estadoSelecao();
-	}
-
 	public void novaConexao(Formulario formulario) {
 		ConexaoContainer container = new ConexaoContainer(null, formulario);
 		addTab(Mensagens.getString(Constantes.LABEL_CONEXAO), container);
@@ -357,19 +345,25 @@ public class Fichario extends JTabbedPane {
 		container.estadoSelecao();
 	}
 
-	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao, Dimension d) {
+	public FicharioAbaContainer novo(Formulario formulario) {
 		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
 		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		addTab(Mensagens.getString("label.novo"), container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
 		setTabComponentAt(ultimoIndice, tituloAba);
-		setTitleAt(ultimoIndice, file.getName());
 		setSelectedIndex(ultimoIndice);
 		container.estadoSelecao();
+
+		return container;
+	}
+
+	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
+			StringBuilder sbConexao, Dimension d) {
+		FicharioAbaContainer container = novo(formulario);
+		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
+		setTitleAt(getTabCount() - 1, file.getName());
 	}
 
 	@Override
