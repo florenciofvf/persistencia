@@ -335,16 +335,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			void eventos() {
 				formularioAcao.setActionListener(e -> {
-					JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
-					int opcao = fileChooser.showOpenDialog(Formulario.this);
+					File[] files = getSelectedFiles(arquivo, true);
 
-					if (opcao != JFileChooser.APPROVE_OPTION) {
-						return;
-					}
-
-					File[] files = fileChooser.getSelectedFiles();
-
-					if (files == null) {
+					if (files == null || files.length == 0) {
 						return;
 					}
 
@@ -354,16 +347,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> {
-					JFileChooser fileChooser = Util.criarFileChooser(arquivo, true);
-					int opcao = fileChooser.showOpenDialog(Formulario.this);
+					File[] files = getSelectedFiles(arquivo, true);
 
-					if (opcao != JFileChooser.APPROVE_OPTION) {
-						return;
-					}
-
-					File[] files = fileChooser.getSelectedFiles();
-
-					if (files == null) {
+					if (files == null || files.length == 0) {
 						return;
 					}
 
@@ -371,6 +357,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 						abrirArquivo(file, true);
 					}
 				});
+			}
+
+			private File[] getSelectedFiles(File arquivo, boolean multiSelection) {
+				JFileChooser fileChooser = Util.criarFileChooser(arquivo, multiSelection);
+				int opcao = fileChooser.showOpenDialog(Formulario.this);
+
+				if (opcao != JFileChooser.APPROVE_OPTION) {
+					return new File[0];
+				}
+
+				return fileChooser.getSelectedFiles();
 			}
 		}
 
