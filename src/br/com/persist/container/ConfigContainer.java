@@ -90,14 +90,13 @@ public class ConfigContainer extends Panel {
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkAbortarFecharComESC);
 		container.add(chkNomeColunaListener);
+		container.add(chkFecharOrigemAposSoltar);
+		container.add(chkFicharioScroll);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
 		container.add(tituloDestacado);
 		container.add(panelDestacados);
-		container.add(new JSeparator());
-		container.add(chkFecharOrigemAposSoltar);
-		container.add(chkFicharioScroll);
 
 		add(BorderLayout.CENTER, container);
 		add(BorderLayout.NORTH, toolbar);
