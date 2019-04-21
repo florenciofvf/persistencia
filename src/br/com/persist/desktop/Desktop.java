@@ -238,7 +238,6 @@ public class Desktop extends JDesktopPane implements IIni {
 				return;
 			}
 
-			e.acceptDrop(DnDConstants.ACTION_COPY);
 			Transferable transferable = e.getTransferable();
 
 			if (transferable == null) {
@@ -251,17 +250,28 @@ public class Desktop extends JDesktopPane implements IIni {
 			}
 
 			DataFlavor flavor = flavors[0];
+			boolean completado = false;
 
 			if (Transferidor.flavor.equals(flavor)) {
 				try {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
-					addForm(array, e.getLocation(), null, (String) array[Util.ARRAY_INDICE_APE], false);
+					Objeto objeto = (Objeto) array[Util.ARRAY_INDICE_OBJ];
+
+					if (!contemReferencia(objeto)) {
+						addForm(array, e.getLocation(), null, (String) array[Util.ARRAY_INDICE_APE], false);
+						completado = true;
+					}
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
 				}
 			}
 
-			e.dropComplete(true);
+			if (completado) {
+				e.acceptDrop(DnDConstants.ACTION_COPY);
+				e.dropComplete(true);
+			} else {
+				e.rejectDrop();
+			}
 		}
 
 		private boolean validoSoltar(DropTargetDragEvent e) {
@@ -272,6 +282,10 @@ public class Desktop extends JDesktopPane implements IIni {
 			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
 		}
 	};
+
+	protected boolean contemReferencia(Objeto objeto) {
+		return false;
+	}
 
 	public void addForm(Object[] array, Point point, Graphics g, String apelido, boolean buscaAuto) {
 		Dimension dimension = (Dimension) array[Util.ARRAY_INDICE_DIM];

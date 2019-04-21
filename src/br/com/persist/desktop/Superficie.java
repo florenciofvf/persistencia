@@ -977,6 +977,17 @@ public class Superficie extends Desktop {
 		return -1;
 	}
 
+	@Override
+	protected boolean contemReferencia(Objeto objeto) {
+		for (Objeto obj : objetos) {
+			if (obj == objeto) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public void limpar() {
 		relacoes = new Relacao[0];
 		objetos = new Objeto[0];
