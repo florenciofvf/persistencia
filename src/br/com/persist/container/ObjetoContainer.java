@@ -1069,6 +1069,30 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		ObjetoContainer.this.actionPerformed(null);
 	}
 
+	public void linkAutomatico(String campo, String argumento) {
+		if (!objeto.isLinkAuto()) {
+			return;
+		}
+
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		TableModel model = modelo.getModel();
+		tabela.clearSelection();
+
+		if (model instanceof RegistroModelo) {
+			int coluna = TabelaUtil.getIndiceColuna(tabela, campo);
+
+			if (coluna == -1) {
+				return;
+			}
+
+			for (int i = 0; i < modelo.getRowCount(); i++) {
+				if (argumento.equals(modelo.getValueAt(i, coluna))) {
+					tabela.addRowSelectionInterval(i, i);
+				}
+			}
+		}
+	}
+
 	public void atualizarFormulario() {
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 

@@ -110,12 +110,21 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
+	public boolean ehTabela(br.com.persist.util.LinkAuto.Tabela tabela) {
+		return getApelido().equalsIgnoreCase(tabela.getApelido())
+				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
+	}
+
 	public ObjetoContainer getObjetoContainer() {
 		return container;
 	}
 
 	public void buscaAutomatica(String campo, String argumentos) {
 		container.buscaAutomatica(campo, argumentos);
+	}
+
+	public void linkAutomatico(String campo, String argumento) {
+		container.linkAutomatico(campo, argumento);
 	}
 
 	public void atualizarFormulario() {

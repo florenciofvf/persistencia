@@ -352,7 +352,20 @@ public class Desktop extends JDesktopPane implements IIni {
 	}
 
 	public void linkAutomatico(Link link, String argumento, ObjetoContainer container) {
-		// fvf
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				List<br.com.persist.util.LinkAuto.Tabela> tabelas = link.getTabelas();
+
+				for (br.com.persist.util.LinkAuto.Tabela tabela : tabelas) {
+					if (interno.ehTabela(tabela)) {
+						interno.linkAutomatico(tabela.getCampo(), argumento);
+					}
+				}
+			}
+		}
 	}
 
 	public boolean isAbortarFecharComESC() {
