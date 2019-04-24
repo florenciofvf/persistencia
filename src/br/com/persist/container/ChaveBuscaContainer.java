@@ -14,6 +14,8 @@ import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.LinkAuto;
+import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Util;
 
 public class ChaveBuscaContainer extends Panel {
@@ -37,37 +39,62 @@ public class ChaveBuscaContainer extends Panel {
 		StringBuilder builder = new StringBuilder();
 
 		if (Tipo.CHAVE.equals(tipo)) {
-			Map<String, List<String>> campoNomes = Util.criarMapaCampoNomes(objeto.getChaveamento());
-			int i = 0;
-
-			for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
-				String chave = entry.getKey();
-				List<String> nomes = entry.getValue();
-				builder.append(campoDetalhe(chave, nomes));
-
-				if (i + 1 < campoNomes.size()) {
-					builder.append(";");
-				}
-
-				builder.append(Constantes.QL);
-				i++;
-			}
+			chave(builder);
 		} else if (Tipo.BUSCA.equals(tipo)) {
-			List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
-
-			for (int i = 0; i < listaGrupo.size(); i++) {
-				Grupo grupo = listaGrupo.get(i);
-				builder.append(grupo.getDetalhe());
-
-				if (i + 1 < listaGrupo.size()) {
-					builder.append(";");
-				}
-
-				builder.append(Constantes.QL);
-			}
+			buscaAuto(builder);
+		} else if (Tipo.LINK.equals(tipo)) {
+			linkAuto(builder);
 		}
 
 		textArea.setText(builder.toString().trim());
+	}
+
+	private void chave(StringBuilder builder) {
+		Map<String, List<String>> campoNomes = Util.criarMapaCampoNomes(objeto.getChaveamento());
+		int i = 0;
+
+		for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
+			String chave = entry.getKey();
+			List<String> nomes = entry.getValue();
+			builder.append(campoDetalhe(chave, nomes));
+
+			if (i + 1 < campoNomes.size()) {
+				builder.append(";");
+			}
+
+			builder.append(Constantes.QL);
+			i++;
+		}
+	}
+
+	private void buscaAuto(StringBuilder builder) {
+		List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
+
+		for (int i = 0; i < listaGrupo.size(); i++) {
+			Grupo grupo = listaGrupo.get(i);
+			builder.append(grupo.getDetalhe());
+
+			if (i + 1 < listaGrupo.size()) {
+				builder.append(";");
+			}
+
+			builder.append(Constantes.QL);
+		}
+	}
+
+	private void linkAuto(StringBuilder builder) {
+		List<Link> listaLink = LinkAuto.criarLinksAuto(objeto.getLinkAutomatico());
+
+		for (int i = 0; i < listaLink.size(); i++) {
+			Link link = listaLink.get(i);
+			builder.append(link.getDetalhe());
+
+			if (i + 1 < listaLink.size()) {
+				builder.append(";");
+			}
+
+			builder.append(Constantes.QL);
+		}
 	}
 
 	public enum Tipo {
@@ -104,6 +131,9 @@ public class ChaveBuscaContainer extends Panel {
 			sucessoAcao.setActionListener(e -> {
 				if (Tipo.BUSCA.equals(tipo)) {
 					objeto.setBuscaAutomatica(Util.normalizar(textArea.getText(), false));
+
+				} else if (Tipo.LINK.equals(tipo)) {
+					objeto.setLinkAutomatico(Util.normalizar(textArea.getText(), false));
 
 				} else if (Tipo.CHAVE.equals(tipo)) {
 					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
