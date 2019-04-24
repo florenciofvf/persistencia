@@ -19,6 +19,7 @@ public class Macro {
 	public static final String COLUNA_INFO = "colunaInfo";
 	public static final String ABRIR_AUTO = "abrirAuto";
 	public static final String COR_FONTE = "corFonte";
+	public static final String LINK_AUTO = "linkAuto";
 	public static final String ICONE = "icone";
 	private final Map<String, Instrucao> mapa;
 	private final List<Instrucao> instrucoes;
@@ -38,6 +39,7 @@ public class Macro {
 		mapa.put(PONTO_ORIGEM, new PontoOrigem());
 		mapa.put(COLUNA_INFO, new ColunaInfo());
 		mapa.put(ABRIR_AUTO, new AbrirAuto());
+		mapa.put(LINK_AUTO, new LinkAuto());
 		mapa.put(COR_FONTE, new CorFonte());
 		mapa.put(ICONE, new Icone());
 		mapa.put(COR, new Cor());
@@ -123,6 +125,18 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setAbrirAuto((Boolean) valor);
+		}
+	}
+
+	class LinkAuto extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setLinkAuto((Boolean) valor);
 		}
 	}
 
@@ -236,6 +250,12 @@ public class Macro {
 
 	public void abrirAuto(Object valor) {
 		Instrucao instrucao = mapa.get(ABRIR_AUTO);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void linkAuto(Object valor) {
+		Instrucao instrucao = mapa.get(LINK_AUTO);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

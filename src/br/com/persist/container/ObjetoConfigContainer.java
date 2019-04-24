@@ -77,6 +77,7 @@ public class ObjetoConfigContainer extends Panel {
 		private CheckBox chkDesenharId = new CheckBox();
 		private CheckBox chkColunaInfo = new CheckBox();
 		private CheckBox chkAbrirAuto = new CheckBox();
+		private CheckBox chkLinkAuto = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
 		private TextField txtId = new TextField();
@@ -96,6 +97,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
+			chkLinkAuto.setSelected(objeto.isLinkAuto());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
 			txtX.setText("" + objeto.getX());
@@ -126,6 +128,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
 			txtIntervalo.addActionListener(this);
+			chkLinkAuto.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
 			txtId.addActionListener(this);
@@ -156,6 +159,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinha("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
+			container.add(criarLinha("label.link_auto", chkLinkAuto));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 
@@ -272,6 +276,11 @@ public class ObjetoConfigContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAbrirAuto(chk.isSelected());
 				Formulario.macro.abrirAuto(chk.isSelected());
+
+			} else if (chkLinkAuto == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setLinkAuto(chk.isSelected());
+				Formulario.macro.linkAuto(chk.isSelected());
 
 			} else if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
