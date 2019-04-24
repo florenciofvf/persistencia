@@ -71,7 +71,7 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		CHAVE, BUSCA
+		CHAVE, BUSCA, LINK
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {

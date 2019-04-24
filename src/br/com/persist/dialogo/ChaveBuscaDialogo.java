@@ -22,6 +22,8 @@ public class ChaveBuscaDialogo extends AbstratoDialogo implements IJanela {
 			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			setTitle(Mensagens.getString("label.buscaAuto") + " - " + getTitle());
+		} else if (Tipo.LINK.equals(tipo)) {
+			setTitle(Mensagens.getString("label.linkAuto") + " - " + getTitle());
 		}
 	}
 
