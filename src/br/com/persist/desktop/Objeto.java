@@ -41,6 +41,7 @@ public class Objeto implements Runnable {
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
 	protected boolean transparente;
+	private String linkAutomatico;
 	private static long sequencia;
 	private Superficie superficie;
 	protected boolean controlado;
@@ -52,6 +53,7 @@ public class Objeto implements Runnable {
 	private boolean colunaInfo;
 	private boolean abrirAuto;
 	private boolean processar;
+	private boolean linkAuto;
 	private String descricao;
 	private String tabela;
 	private Thread thread;
@@ -95,6 +97,7 @@ public class Objeto implements Runnable {
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
+		o.linkAutomatico = linkAutomatico;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
 		o.complemento = complemento;
@@ -104,6 +107,7 @@ public class Objeto implements Runnable {
 		o.abrirAuto = abrirAuto;
 		o.descricao = descricao;
 		o.corFonte = corFonte;
+		o.linkAuto = linkAuto;
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.setId(id);
@@ -149,6 +153,14 @@ public class Objeto implements Runnable {
 
 	public void setAbrirAuto(boolean abrirAuto) {
 		this.abrirAuto = abrirAuto;
+	}
+
+	public boolean isLinkAuto() {
+		return linkAuto;
+	}
+
+	public void setLinkAuto(boolean linkAuto) {
+		this.linkAuto = linkAuto;
 	}
 
 	public List<Instrucao> getInstrucoes() {
@@ -323,6 +335,14 @@ public class Objeto implements Runnable {
 		return buscaAutomatica;
 	}
 
+	public String getLinkAutomatico() {
+		if (Util.estaVazio(linkAutomatico)) {
+			linkAutomatico = "";
+		}
+
+		return linkAutomatico;
+	}
+
 	public String getChaveamento() {
 		if (Util.estaVazio(chaveamento)) {
 			chaveamento = "";
@@ -337,6 +357,10 @@ public class Objeto implements Runnable {
 
 	public void setBuscaAutomatica(String buscaAutomatica) {
 		this.buscaAutomatica = buscaAutomatica;
+	}
+
+	public void setLinkAutomatico(String linkAutomatico) {
+		this.linkAutomatico = linkAutomatico;
 	}
 
 	public boolean contem(int x, int y) {
@@ -426,8 +450,10 @@ public class Objeto implements Runnable {
 		colunaInfo = Boolean.parseBoolean(attr.getValue("colunaInfo"));
 		abrirAuto = Boolean.parseBoolean(attr.getValue("abrirAuto"));
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
+		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		buscaAutomatica = attr.getValue("buscaAutomatica");
+		linkAutomatico = attr.getValue("linkAutomatico");
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
@@ -449,6 +475,7 @@ public class Objeto implements Runnable {
 		util.abrirTag("objeto");
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
 		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
+		util.atributo("linkAutomatico", Util.escapar(getLinkAutomatico()));
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
@@ -463,6 +490,7 @@ public class Objeto implements Runnable {
 		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
 		util.atributo("chaves", getChaves());
+		util.atributo("linkAuto", linkAuto);
 		util.atributo("cor", cor.getRGB());
 		util.atributo("icone", icone);
 		util.atributo("x", x);
