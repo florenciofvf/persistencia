@@ -16,6 +16,7 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
+import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 
@@ -72,6 +73,25 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 		if (desktop != null) {
 			desktop.buscaAutomatica(grupo, argumentos, container);
+		}
+	}
+
+	@Override
+	public void linkAutomatico(Link link, String argumento) {
+		Container parent = getParent();
+		Desktop desktop = null;
+
+		while (parent != null) {
+			if (parent instanceof Desktop) {
+				desktop = (Desktop) parent;
+				break;
+			}
+
+			parent = getParent();
+		}
+
+		if (desktop != null) {
+			desktop.linkAutomatico(link, argumento, container);
 		}
 	}
 

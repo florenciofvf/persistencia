@@ -12,6 +12,7 @@ import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.IJanela;
 
 public class ObjetoContainerFormulario extends AbstratoFormulario implements IJanela, ObjetoContainerListener {
@@ -45,6 +46,11 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 
 	@Override
 	public void buscaAutomatica(Grupo grupo, String argumentos) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void linkAutomatico(Link link, String argumento) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -49,6 +49,7 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
+import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
@@ -306,6 +307,11 @@ public class Fichario extends JTabbedPane {
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
 		@Override
 		public void buscaAutomatica(Grupo grupo, String argumentos) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void linkAutomatico(Link link, String argumento) {
 			throw new UnsupportedOperationException();
 		}
 

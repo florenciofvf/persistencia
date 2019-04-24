@@ -32,6 +32,7 @@ import br.com.persist.util.IIni;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
@@ -348,6 +349,10 @@ public class Desktop extends JDesktopPane implements IIni {
 				}
 			}
 		}
+	}
+
+	public void linkAutomatico(Link link, String argumento, ObjetoContainer container) {
+		// fvf
 	}
 
 	public boolean isAbortarFecharComESC() {
