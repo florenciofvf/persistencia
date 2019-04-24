@@ -14,6 +14,7 @@ public class Constantes {
 	public static final String LABEL_ANOTACOES = "label.anotacoes";
 	public static final String LABEL_COM_ASPAS = "label.com_aspas";
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
+	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";

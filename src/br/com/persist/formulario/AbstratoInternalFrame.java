@@ -12,6 +12,8 @@ import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 
+import br.com.persist.util.Constantes;
+
 public abstract class AbstratoInternalFrame extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private boolean abortarFecharComESC;
@@ -20,7 +22,7 @@ public abstract class AbstratoInternalFrame extends JInternalFrame {
 		super(titulo, true, true, true, true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
-		setSize(1000, 600);
+		setSize(Constantes.SIZE);
 		setActionESC();
 	}
 

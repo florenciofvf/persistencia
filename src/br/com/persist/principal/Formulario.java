@@ -70,7 +70,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		FormularioUtil.configMAC(this);
 		setLayout(new BorderLayout());
 		setJMenuBar(menuPrincipal);
-		setSize(1000, 600);
+		setSize(Constantes.SIZE);
 		montarLayout();
 		configurar();
 	}

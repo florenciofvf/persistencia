@@ -14,6 +14,8 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
+import br.com.persist.util.Constantes;
+
 public abstract class AbstratoDialogo extends JDialog {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +34,7 @@ public abstract class AbstratoDialogo extends JDialog {
 	private void inicializar() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
-		setSize(1000, 600);
+		setSize(Constantes.SIZE);
 		setActionESC();
 	}
 
