@@ -73,6 +73,8 @@ import br.com.persist.util.Fragmento;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.LinkAuto;
+import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuPadrao2;
 import br.com.persist.util.MenuPadrao3;
@@ -88,6 +90,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient ConexaoProvedor provedor;
 	private final Toolbar toolbar = new Toolbar();
+	private final transient List<Link> listaLink;
 	private final JComboBox<Conexao> cmbConexao;
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
@@ -100,6 +103,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
 			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
+		listaLink = LinkAuto.criarLinksAuto(objeto.getLinkAutomatico());
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
@@ -249,7 +253,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					modelo.excluirValoresChaves(listaValores);
 					modelo.iniArray();
 					modelo.fireTableDataChanged();
-					tabelaListener.tabelaMouseClick(tabela);
+					tabelaListener.tabelaMouseClick(tabela, -1);
 				}
 			}
 		}
@@ -1006,7 +1010,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 
 		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
-		tabelaListener.tabelaMouseClick(tabela);
+		tabelaListener.tabelaMouseClick(tabela, -1);
 	}
 
 	@Override
@@ -1082,7 +1086,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 
 		@Override
-		public void tabelaMouseClick(Tabela tabela) {
+		public void tabelaMouseClick(Tabela tabela, int colunaClick) {
 			OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 			TableModel model = modelo.getModel();
 
@@ -1096,6 +1100,30 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					toolbar.excluir.setEnabled(chaves.length > 0);
 				} else {
 					toolbar.excluirAtualizarEnable(false);
+				}
+
+				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaLink.isEmpty()) {
+					int indiceLinkSelecionado = -1;
+
+					for (int i = 0; i < listaLink.size(); i++) {
+						Link link = listaLink.get(i);
+
+						if (TabelaUtil.getIndiceColuna(tabela, link.getCampo()) == colunaClick) {
+							indiceLinkSelecionado = i;
+						}
+					}
+
+					if (indiceLinkSelecionado == -1) {
+						return;
+					}
+
+					List<String> lista = TabelaUtil.getValoresColuna(tabela, colunaClick);
+
+					if (lista.size() != 1) {
+						return;
+					}
+
+					listener.linkAutomatico(listaLink.get(indiceLinkSelecionado), lista.get(0));
 				}
 			} else {
 				toolbar.excluirAtualizarEnable(false);

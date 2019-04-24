@@ -79,7 +79,9 @@ public class Tabela extends JTable {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (tabelaListener != null) {
-				tabelaListener.tabelaMouseClick(Tabela.this);
+				int tableColuna = columnAtPoint(e.getPoint());
+				int modelColuna = convertColumnIndexToModel(tableColuna);
+				tabelaListener.tabelaMouseClick(Tabela.this, modelColuna);
 			}
 		}
 
@@ -87,7 +89,9 @@ public class Tabela extends JTable {
 		public void mouseReleased(MouseEvent e) {
 			if (arrastado && tabelaListener != null) {
 				arrastado = false;
-				tabelaListener.tabelaMouseClick(Tabela.this);
+				int tableColuna = columnAtPoint(e.getPoint());
+				int modelColuna = convertColumnIndexToModel(tableColuna);
+				tabelaListener.tabelaMouseClick(Tabela.this, modelColuna);
 			}
 		}
 	};
