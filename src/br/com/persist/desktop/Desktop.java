@@ -108,7 +108,7 @@ public class Desktop extends JDesktopPane implements IIni {
 	}
 
 	protected void larguraTotal() {
-		int largura = (int) (getSize().getWidth() - 8);
+		int largura = getSize().width - 20;
 
 		for (JInternalFrame frame : getAllFrames()) {
 			frame.setLocation(0, frame.getY());
