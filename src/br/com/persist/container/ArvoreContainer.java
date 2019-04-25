@@ -40,6 +40,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		add(BorderLayout.CENTER, new ScrollPane(arvore));
 		add(BorderLayout.NORTH, toolbar);
 		arvore.adicionarOuvinte(this);
+		chkLinkAuto.setSelected(true);
 	}
 
 	private class Toolbar extends JToolBar {
