@@ -1534,7 +1534,7 @@ public class Superficie extends Desktop {
 		Objeto objeto = null;
 
 		for (Objeto obj : objetos) {
-			if (tabela.getNome().equalsIgnoreCase(obj.getTabela2())) {
+			if (obj.getTabela2().equalsIgnoreCase(tabela.getNome())) {
 				objeto = obj;
 				break;
 			}
