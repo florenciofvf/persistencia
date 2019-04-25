@@ -36,6 +36,7 @@ import br.com.persist.util.ButtonPadrao1;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -46,6 +47,7 @@ public class FicharioAbaContainer extends Panel {
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
 	private SuperficieFormulario superficieFormulario;
+	private boolean abortarFecharComESCSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
@@ -84,6 +86,9 @@ public class FicharioAbaContainer extends Panel {
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Graphics g, Dimension d) {
+		if (abortarFecharComESCSuperficie) {
+			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+		}
 		superficie.abrir(objetos, relacoes, d);
 		arquivo = file;
 		btnSelecao.click();
@@ -424,5 +429,9 @@ public class FicharioAbaContainer extends Panel {
 
 	public File getArquivo() {
 		return arquivo;
+	}
+
+	public void setAbortarFecharComESCSuperficie(boolean b) {
+		this.abortarFecharComESCSuperficie = b;
 	}
 }

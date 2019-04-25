@@ -355,6 +355,7 @@ public class Fichario extends JTabbedPane {
 		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
 		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		addTab(Mensagens.getString("label.novo"), container);
+		container.setAbortarFecharComESCSuperficie(true);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
