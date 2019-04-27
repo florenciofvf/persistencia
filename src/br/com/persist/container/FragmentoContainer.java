@@ -51,9 +51,9 @@ public class FragmentoContainer extends Panel implements IIni {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-		private Action novoAcao = Action.actionIcon("label.novo", Icones.NOVO);
 		private Action salvarAcao = Action.actionIconSalvar();
 		private Action abrirAcao = Action.actionIconBaixar();
+		private Action novoAcao = Action.actionIconNovo();
 
 		@Override
 		public void ini(IJanela janela) {

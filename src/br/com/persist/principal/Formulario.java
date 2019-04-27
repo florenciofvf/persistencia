@@ -181,8 +181,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
-		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.SAIR);
 		private Action novoAcao = Action.actionMenu("label.novo", Icones.CUBO);
+		private Action fecharAcao = Action.actionMenuFechar();
 		final Menu menuArquivo = new Menu("label.arquivo");
 		final Menu menuLAF = new Menu("label.aparencia");
 

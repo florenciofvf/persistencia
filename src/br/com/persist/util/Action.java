@@ -72,6 +72,10 @@ public class Action extends Acao {
 		return Action.actionIcon("label.salvar", Icones.SALVAR);
 	}
 
+	public static Action actionIconNovo() {
+		return Action.actionIcon("label.novo", Icones.NOVO);
+	}
+
 	public static Action actionIconDestacar() {
 		return Action.actionIcon(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, e -> {
 		});
@@ -99,5 +103,9 @@ public class Action extends Acao {
 
 	public static Action actionMenuSemAspas() {
 		return new Action(true, Constantes.LABEL_SEM_ASPAS, null);
+	}
+
+	public static Action actionMenuFechar() {
+		return Action.actionMenu("label.fechar", Icones.SAIR);
 	}
 }
