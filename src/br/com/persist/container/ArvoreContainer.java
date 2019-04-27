@@ -23,6 +23,7 @@ import br.com.persist.util.Mensagens;
 public class ArvoreContainer extends Panel implements ArvoreListener {
 	private static final long serialVersionUID = 1L;
 	private Arvore arvore = new Arvore(new ArvoreModelo());
+	private final CheckBox chkSempreTop = new CheckBox();
 	private final CheckBox chkLinkAuto = new CheckBox();
 	private final CheckBox chkDuplicar = new CheckBox();
 	private final Toolbar toolbar = new Toolbar();
@@ -35,6 +36,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 	}
 
 	private void montarLayout() {
+		chkSempreTop.setToolTipText(Mensagens.getString("msg.arvore.sempreTop"));
 		chkLinkAuto.setToolTipText(Mensagens.getString("msg.arvore.link_auto"));
 		chkDuplicar.setToolTipText(Mensagens.getString("msg.arvore.duplicar"));
 		add(BorderLayout.CENTER, new ScrollPane(arvore));
@@ -51,9 +53,11 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		Toolbar() {
 			add(new Button(atualizarAcao));
 			add(new Button(statusAcao));
+			add(chkSempreTop);
 			add(chkLinkAuto);
 			add(chkDuplicar);
 
+			chkSempreTop.addActionListener(e -> formulario.setAlwaysOnTop(chkSempreTop.isSelected()));
 			atualizarAcao.setActionListener(e -> baixarArquivo());
 			statusAcao.setActionListener(e -> statusArquivo());
 		}
