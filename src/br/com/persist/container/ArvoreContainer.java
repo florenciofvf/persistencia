@@ -4,11 +4,10 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JToolBar;
-
 import br.com.persist.Arquivo;
 import br.com.persist.arvore.Arvore;
 import br.com.persist.arvore.ArvoreUtil;
+import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
@@ -17,26 +16,29 @@ import br.com.persist.listener.ArvoreListener;
 import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 
 public class ArvoreContainer extends Panel implements ArvoreListener {
 	private static final long serialVersionUID = 1L;
+	private final CheckBox chkSempreTopForm = new CheckBox();
+	private final CheckBox chkSempreTopArvo = new CheckBox();
 	private Arvore arvore = new Arvore(new ArvoreModelo());
-	private final CheckBox chkSempreTop = new CheckBox();
 	private final CheckBox chkLinkAuto = new CheckBox();
 	private final CheckBox chkDuplicar = new CheckBox();
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
-	public ArvoreContainer(Formulario formulario) {
+	public ArvoreContainer(IJanela janela, Formulario formulario) {
 		this.formulario = formulario;
 		montarLayout();
 		baixarArquivo();
 	}
 
 	private void montarLayout() {
-		chkSempreTop.setToolTipText(Mensagens.getString("msg.arvore.sempreTop"));
+		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arvore.sempreTopForm"));
+		chkSempreTopArvo.setToolTipText(Mensagens.getString("msg.arvore.sempreTopArvo"));
 		chkLinkAuto.setToolTipText(Mensagens.getString("msg.arvore.link_auto"));
 		chkDuplicar.setToolTipText(Mensagens.getString("msg.arvore.duplicar"));
 		add(BorderLayout.CENTER, new ScrollPane(arvore));
@@ -45,21 +47,24 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		chkLinkAuto.setSelected(true);
 	}
 
-	private class Toolbar extends JToolBar {
+	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action statusAcao = Action.actionIcon("label.status", Icones.HIERARQUIA);
 		private Action atualizarAcao = Action.actionIconBaixar();
 
-		Toolbar() {
+		@Override
+		public void ini(IJanela janela) {
+			super.ini(janela);
+
 			add(new Button(atualizarAcao));
 			add(new Button(statusAcao));
-			add(chkSempreTop);
+			add(chkSempreTopForm);
 			add(chkLinkAuto);
 			add(chkDuplicar);
 
-			chkSempreTop.addActionListener(e -> {
-				formulario.setAlwaysOnTop(chkSempreTop.isSelected());
-				if (chkSempreTop.isSelected()) {
+			chkSempreTopForm.addActionListener(e -> {
+				formulario.setAlwaysOnTop(chkSempreTopForm.isSelected());
+				if (chkSempreTopForm.isSelected()) {
 					formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
 				}
 			});
