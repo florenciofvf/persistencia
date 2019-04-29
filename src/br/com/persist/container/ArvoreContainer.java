@@ -12,6 +12,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.listener.ArvoreListener;
 import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.principal.Formulario;
@@ -27,11 +28,14 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 	private Arvore arvore = new Arvore(new ArvoreModelo());
 	private final CheckBox chkLinkAuto = new CheckBox();
 	private final CheckBox chkDuplicar = new CheckBox();
+	private final ArvoreFormulario arvoreFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private final Formulario formulario;
 
-	public ArvoreContainer(IJanela janela, Formulario formulario) {
+	public ArvoreContainer(IJanela janela, Formulario formulario, ArvoreFormulario arvoreFormulario) {
+		this.arvoreFormulario = arvoreFormulario;
 		this.formulario = formulario;
+		toolbar.ini(janela);
 		montarLayout();
 		baixarArquivo();
 	}
@@ -58,10 +62,14 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 
 			add(new Button(atualizarAcao));
 			add(new Button(statusAcao));
+			if (arvoreFormulario != null) {
+				add(chkSempreTopArvo);
+			}
 			add(chkSempreTopForm);
 			add(chkLinkAuto);
 			add(chkDuplicar);
 
+			chkSempreTopArvo.addActionListener(e -> arvoreFormulario.setAlwaysOnTop(chkSempreTopArvo.isSelected()));
 			chkSempreTopForm.addActionListener(e -> {
 				formulario.setAlwaysOnTop(chkSempreTopForm.isSelected());
 				if (chkSempreTopForm.isSelected()) {
