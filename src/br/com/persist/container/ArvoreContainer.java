@@ -57,7 +57,12 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 			add(chkLinkAuto);
 			add(chkDuplicar);
 
-			chkSempreTop.addActionListener(e -> formulario.setAlwaysOnTop(chkSempreTop.isSelected()));
+			chkSempreTop.addActionListener(e -> {
+				formulario.setAlwaysOnTop(chkSempreTop.isSelected());
+				if (chkSempreTop.isSelected()) {
+					formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
+				}
+			});
 			atualizarAcao.setActionListener(e -> baixarArquivo());
 			statusAcao.setActionListener(e -> statusArquivo());
 		}
