@@ -13,8 +13,11 @@ public class Preferencias {
 	private static boolean abrirAutoDestacado;
 	private static int intervaloPesquisaAuto;
 	private static boolean fecharAposSoltar;
+	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
+	private static String formDialogo;
 	private static boolean abrirAuto;
+	private static String formFicha;
 
 	private Preferencias() {
 	}
@@ -25,13 +28,16 @@ public class Preferencias {
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
 		copiarNomeColunaListener = pref.getBoolean("copiar_nome_coluna_listener", false);
+		formFichaDialogo = pref.get("form_ficha_dialogo", "FORM,FICHA,DIALOG");
 		abortarFecharComESC = pref.getBoolean("abortar_fechar_com_ESC", false);
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
 		fecharAposSoltar = pref.getBoolean("fechar_apos_soltar", true);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
+		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		abrirAuto = pref.getBoolean("abrir_auto", false);
+		formFicha = pref.get("form_ficha", "FORM,FICHA");
 	}
 
 	public static void salvar() {
@@ -46,7 +52,10 @@ public class Preferencias {
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
 		pref.putBoolean("fechar_apos_soltar", fecharAposSoltar);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
+		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("abrir_auto", abrirAuto);
+		pref.put("form_dialogo", formDialogo);
+		pref.put("form_ficha", formFicha);
 	}
 
 	public static boolean isAreaTransTabelaRegistros() {
@@ -127,5 +136,29 @@ public class Preferencias {
 
 	public static void setAbortarFecharComESC(boolean abortarFecharComESC) {
 		Preferencias.abortarFecharComESC = abortarFecharComESC;
+	}
+
+	public static String getFormFichaDialogo() {
+		return formFichaDialogo;
+	}
+
+	public static void setFormFichaDialogo(String formFichaDialogo) {
+		Preferencias.formFichaDialogo = formFichaDialogo;
+	}
+
+	public static String getFormDialogo() {
+		return formDialogo;
+	}
+
+	public static void setFormDialogo(String formDialogo) {
+		Preferencias.formDialogo = formDialogo;
+	}
+
+	public static String getFormFicha() {
+		return formFicha;
+	}
+
+	public static void setFormFicha(String formFicha) {
+		Preferencias.formFicha = formFicha;
 	}
 }
