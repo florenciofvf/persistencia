@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -15,6 +17,8 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
+import br.com.persist.comp.PanelCenter;
+import br.com.persist.comp.TextField;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -31,6 +35,9 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkAbortarFecharComESC = new CheckBox("label.abortar_fechar_com_esc");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
+	private final TextField txtFormFichaDialogo = new TextField();
+	private final TextField txtFormDialogo = new TextField();
+	private final TextField txtFormFicha = new TextField();
 	private final Toolbar toolbar = new Toolbar();
 
 	private final transient NomeValor[] intervalos = { new NomeValor("label.1000", 1000, NomeValor.INTERVALO_AUTO),
@@ -70,7 +77,10 @@ public class ConfigContainer extends Panel {
 		chkAbortarFecharComESC.setSelected(Preferencias.isAbortarFecharComESC());
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
+		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
+		txtFormDialogo.setText(Preferencias.getFormDialogo());
+		txtFormFicha.setText(Preferencias.getFormFicha());
 
 		Panel panelDestacados = criarPainelGrupo(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		Panel panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
@@ -97,6 +107,10 @@ public class ConfigContainer extends Panel {
 		container.add(chkAtivarAbrirAutoDestac);
 		container.add(tituloDestacado);
 		container.add(panelDestacados);
+		container.add(new JSeparator());
+		container.add(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo));
+		container.add(new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo));
+		container.add(new PanelCenter(new Label("label.form_ficha"), txtFormFicha));
 
 		add(BorderLayout.CENTER, container);
 		add(BorderLayout.NORTH, toolbar);
@@ -144,6 +158,8 @@ public class ConfigContainer extends Panel {
 		chkNomeColunaListener
 				.addActionListener(e -> Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected()));
 
+		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
+
 		chkAtivarAbrirAutoDestac
 				.addActionListener(e -> Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected()));
 
@@ -157,6 +173,30 @@ public class ConfigContainer extends Panel {
 
 		chkAreaTransTabelaRegistros.addActionListener(
 				e -> Preferencias.setAreaTransTabelaRegistros(chkAreaTransTabelaRegistros.isSelected()));
+
+		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
+		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
+
+		txtFormFichaDialogo.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText());
+			}
+		});
+
+		txtFormDialogo.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Preferencias.setFormDialogo(txtFormDialogo.getText());
+			}
+		});
+
+		txtFormFicha.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Preferencias.setFormFicha(txtFormFicha.getText());
+			}
+		});
 	}
 
 	private class NomeValor {
