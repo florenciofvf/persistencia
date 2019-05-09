@@ -26,6 +26,9 @@ public class Constantes {
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final String ENCODING = "UTF-8";
+	public static final String DIALOG = "DIALOG";
+	public static final String FICHA = "FICHA";
+	public static final String FORM = "FORM";
 	public static final String QL = "\r\n";
 	public static final String TAB = "\t";
 	public static final byte ARRASTO = 1;

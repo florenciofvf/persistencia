@@ -16,11 +16,26 @@ public class MenuPadrao1 extends Menu {
 	public MenuPadrao1(String chaveRotulo, Icon icon, boolean dialogo) {
 		super(chaveRotulo, icon);
 
-		addMenuItem(formularioAcao);
-		addMenuItem(ficharioAcao);
+		String[] strings = Preferencias.getFormFichaDialogo().split(",");
 
 		if (dialogo) {
-			addMenuItem(dialogoAcao);
+			for (String s : strings) {
+				if (Constantes.FORM.equals(s)) {
+					addMenuItem(formularioAcao);
+				} else if (Constantes.FICHA.equals(s)) {
+					addMenuItem(ficharioAcao);
+				} else if (Constantes.DIALOG.equals(s)) {
+					addMenuItem(dialogoAcao);
+				}
+			}
+		} else {
+			for (String s : strings) {
+				if (Constantes.FORM.equals(s)) {
+					addMenuItem(formularioAcao);
+				} else if (Constantes.FICHA.equals(s)) {
+					addMenuItem(ficharioAcao);
+				}
+			}
 		}
 	}
 
