@@ -38,6 +38,18 @@ public class Preferencias {
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		abrirAuto = pref.getBoolean("abrir_auto", false);
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
+
+		if (Util.estaVazio(formFichaDialogo)) {
+			formFichaDialogo = "FORM,FICHA,DIALOG";
+		}
+
+		if (Util.estaVazio(formDialogo)) {
+			formDialogo = "FORM,DIALOG";
+		}
+
+		if (Util.estaVazio(formFicha)) {
+			formFicha = "FORM,FICHA";
+		}
 	}
 
 	public static void salvar() {
