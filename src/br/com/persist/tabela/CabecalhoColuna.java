@@ -105,6 +105,11 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 				setIcon(Icones.OLHO);
 			}
 		}
+
+		void limpar() {
+			setIcon(Icones.FILTRO);
+			filtroString = null;
+		}
 	}
 
 	private class FiltroCaixa extends JDialog {
@@ -171,6 +176,10 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 
 	public void ordenar() {
 		ordenacao.ordenar();
+	}
+
+	public void limparFiltro() {
+		filtro.limpar();
 	}
 
 	public void filtrar(int x, int y) {
