@@ -28,7 +28,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComboBox;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -309,28 +308,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					ObjetoContainer.this.actionPerformed(null);
 
 					if (!processado.get()) {
-						restaurar(temp);
+						cabecalhoFiltro = temp;
 					}
 				});
-			}
-
-			private void restaurar(CabecalhoColuna temp) {
-				TableColumnModel columnModel = tabela.getColumnModel();
-
-				for (int i = 0; i < columnModel.getColumnCount(); i++) {
-					TableColumn tableColumn = columnModel.getColumn(i);
-					TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
-
-					if (headerRenderer instanceof CabecalhoColuna) {
-						CabecalhoColuna cabecalhoColuna = (CabecalhoColuna) headerRenderer;
-
-						if (cabecalhoColuna.equals(temp)) {
-							cabecalhoColuna.copiar(temp);
-							cabecalhoFiltro = temp;
-							tabela.getTableHeader().repaint();
-						}
-					}
-				}
 			}
 		}
 
