@@ -23,6 +23,7 @@ public class Macro {
 	public static final String ICONE = "icone";
 	private final Map<String, Instrucao> mapa;
 	private final List<Instrucao> instrucoes;
+	public static final String CCSC = "ccsc";
 	public static final String COR = "cor";
 	public static final String X = "x";
 	public static final String Y = "y";
@@ -42,6 +43,7 @@ public class Macro {
 		mapa.put(LINK_AUTO, new LinkAuto());
 		mapa.put(COR_FONTE, new CorFonte());
 		mapa.put(ICONE, new Icone());
+		mapa.put(CCSC, new Ccsc());
 		mapa.put(COR, new Cor());
 		mapa.put(X, new XPos());
 		mapa.put(Y, new YPos());
@@ -137,6 +139,18 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setLinkAuto((Boolean) valor);
+		}
+	}
+
+	class Ccsc extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setCcsc((Boolean) valor);
 		}
 	}
 
@@ -256,6 +270,12 @@ public class Macro {
 
 	public void linkAuto(Object valor) {
 		Instrucao instrucao = mapa.get(LINK_AUTO);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void ccsc(Object valor) {
+		Instrucao instrucao = mapa.get(CCSC);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

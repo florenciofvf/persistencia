@@ -81,6 +81,7 @@ public class ObjetoConfigContainer extends Panel {
 		private CheckBox chkLinkAuto = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
+		private CheckBox chkCCSC = new CheckBox();
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
@@ -102,6 +103,7 @@ public class ObjetoConfigContainer extends Panel {
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
+			chkCCSC.setSelected(objeto.isCcsc());
 			txtX.setText("" + objeto.getX());
 			txtY.setText("" + objeto.getY());
 			txtId.setText(objeto.getId());
@@ -135,6 +137,7 @@ public class ObjetoConfigContainer extends Panel {
 			chkLinkAuto.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
+			chkCCSC.addActionListener(this);
 			txtId.addActionListener(this);
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
@@ -165,6 +168,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
+			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 
@@ -304,6 +308,11 @@ public class ObjetoConfigContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setLinkAuto(chk.isSelected());
 				Formulario.macro.linkAuto(chk.isSelected());
+
+			} else if (chkCCSC == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setCcsc(chk.isSelected());
+				Formulario.macro.ccsc(chk.isSelected());
 
 			} else if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
