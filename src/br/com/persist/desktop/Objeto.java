@@ -60,6 +60,7 @@ public class Objeto implements Runnable {
 	private int intervalo;
 	private String chaves;
 	private String icone;
+	private boolean ccsc;
 	private Icon icon;
 	private String id;
 	protected int x;
@@ -110,6 +111,7 @@ public class Objeto implements Runnable {
 		o.linkAuto = linkAuto;
 		o.tabela = tabela;
 		o.chaves = chaves;
+		o.ccsc = ccsc;
 		o.setId(id);
 
 		for (Instrucao i : instrucoes) {
@@ -452,6 +454,7 @@ public class Objeto implements Runnable {
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
 		buscaAutomatica = attr.getValue("buscaAutomatica");
 		linkAutomatico = attr.getValue("linkAutomatico");
 		finalConsulta = attr.getValue("finalConsulta");
@@ -493,6 +496,7 @@ public class Objeto implements Runnable {
 		util.atributo("linkAuto", linkAuto);
 		util.atributo("cor", cor.getRGB());
 		util.atributo("icone", icone);
+		util.atributo("ccsc", ccsc);
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag();
@@ -648,5 +652,13 @@ public class Objeto implements Runnable {
 
 	public void setTabelaPesquisaAuto(Tabela tabelaPesquisaAuto) {
 		this.tabelaPesquisaAuto = tabelaPesquisaAuto;
+	}
+
+	public boolean isCcsc() {
+		return ccsc;
+	}
+
+	public void setCcsc(boolean ccsc) {
+		this.ccsc = ccsc;
 	}
 }
