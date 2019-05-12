@@ -23,10 +23,12 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComboBox;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -85,6 +87,7 @@ import br.com.persist.util.Util;
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable, IIni {
 	private static final long serialVersionUID = 1L;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
+	private final AtomicBoolean processado = new AtomicBoolean();
 	private final TextField txtComplemento = new TextField(35);
 	private final transient ObjetoContainerListener listener;
 	private static final Logger LOG = Logger.getGlobal();
@@ -299,14 +302,35 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				atualizarAcao.setActionListener(e -> ObjetoContainer.this.actionPerformed(null));
 				sincronizarAcao.setActionListener(e -> {
-					if (cabecalhoFiltro != null) {
-						cabecalhoFiltro.limparFiltro();
-						tabela.getTableHeader().repaint();
-					}
+					CabecalhoColuna temp = cabecalhoFiltro;
+					processado.set(true);
 
 					cabecalhoFiltro = null;
 					ObjetoContainer.this.actionPerformed(null);
+
+					if (!processado.get()) {
+						restaurar(temp);
+					}
 				});
+			}
+
+			private void restaurar(CabecalhoColuna temp) {
+				TableColumnModel columnModel = tabela.getColumnModel();
+
+				for (int i = 0; i < columnModel.getColumnCount(); i++) {
+					TableColumn tableColumn = columnModel.getColumn(i);
+					TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
+
+					if (headerRenderer instanceof CabecalhoColuna) {
+						CabecalhoColuna cabecalhoColuna = (CabecalhoColuna) headerRenderer;
+
+						if (cabecalhoColuna.equals(temp)) {
+							cabecalhoColuna.copiar(temp);
+							cabecalhoFiltro = temp;
+							tabela.getTableHeader().repaint();
+						}
+					}
+				}
 			}
 		}
 
@@ -982,6 +1006,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 
 		if (!continuar(complemento, "hint.ccsc")) {
+			processado.set(false);
 			return;
 		}
 
