@@ -943,6 +943,32 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
+	private StringBuilder getConsulta(Conexao conexao, String complemento) {
+		StringBuilder builder = new StringBuilder(
+				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
+		builder.append(" " + txtComplemento.getText());
+		builder.append(" " + complemento);
+		builder.append(" " + objeto.getFinalConsulta());
+
+		return builder;
+	}
+
+	private boolean continuar(String complemento, String chaveMsg) {
+		if (!Util.estaVazio(txtComplemento.getText())) {
+			return true;
+		}
+
+		if (!Util.estaVazio(complemento)) {
+			return true;
+		}
+
+		if (!objeto.isCcsc()) {
+			return true;
+		}
+
+		return Util.confirmar(ObjetoContainer.this, chaveMsg);
+	}
+
 	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
@@ -950,11 +976,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return;
 		}
 
-		StringBuilder builder = new StringBuilder(
-				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
-		builder.append(" " + txtComplemento.getText());
-		builder.append(" " + complemento);
-		builder.append(" " + objeto.getFinalConsulta());
+		if (!continuar(complemento, "hint.ccsc")) {
+			return;
+		}
+
+		StringBuilder builder = getConsulta(conexao, complemento);
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);

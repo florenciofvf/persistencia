@@ -45,13 +45,17 @@ public class Util {
 		TextArea textArea = new TextArea(string);
 		textArea.setPreferredSize(new Dimension(500, 300));
 
-		JOptionPane.showMessageDialog(componente, textArea, Mensagens.getString("label.atencao"),
+		JOptionPane.showMessageDialog(componente, textArea, Mensagens.getString(Constantes.LABEL_ATENCAO),
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
 	public static boolean confirmaExclusao(Component componente) {
-		return JOptionPane.showConfirmDialog(componente, Mensagens.getString("msg.confirma_exclusao"),
-				Mensagens.getString("label.atencao"), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
+		return confirmar(componente, "msg.confirma_exclusao");
+	}
+
+	public static boolean confirmar(Component componente, String chaveMsg) {
+		return JOptionPane.showConfirmDialog(componente, Mensagens.getString(chaveMsg),
+				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
 	}
 
 	public static String getValorInputDialog(Component parent, String chaveMensagem, String valorPadrao) {

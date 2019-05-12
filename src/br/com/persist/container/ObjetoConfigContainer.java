@@ -312,7 +312,7 @@ public class ObjetoConfigContainer extends Panel {
 			} else if (chkCCSC == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setCcsc(chk.isSelected());
-				Formulario.macro.ccsc(chk.isSelected());
+				Formulario.macro.confirmarCsc(chk.isSelected());
 
 			} else if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();

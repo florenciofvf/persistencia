@@ -274,7 +274,7 @@ public class Macro {
 		adicionar(instrucao);
 	}
 
-	public void ccsc(Object valor) {
+	public void confirmarCsc(Object valor) {
 		Instrucao instrucao = mapa.get(CCSC);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
