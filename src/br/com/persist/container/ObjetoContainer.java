@@ -985,7 +985,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return;
 		}
 
-		if (!continuar(complemento, "hint.ccsc")) {
+		if (!continuar(complemento, "msg.ccsc")) {
 			processado.set(false);
 			return;
 		}

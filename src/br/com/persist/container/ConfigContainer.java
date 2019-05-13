@@ -34,6 +34,7 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkAbortarFecharComESC = new CheckBox("label.abortar_fechar_com_esc");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
+	private final CheckBox chkAbrirComArvore = new CheckBox("label.abrir_com_arvore");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtFormDialogo = new TextField();
@@ -78,6 +79,7 @@ public class ConfigContainer extends Panel {
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
+		chkAbrirComArvore.setSelected(Preferencias.isAbrirComArvore());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
@@ -102,6 +104,7 @@ public class ConfigContainer extends Panel {
 		container.add(chkNomeColunaListener);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
+		container.add(chkAbrirComArvore);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
@@ -123,6 +126,7 @@ public class ConfigContainer extends Panel {
 		chkAbortarFecharComESC.setMargin(insets);
 		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
+		chkAbrirComArvore.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
 	}
 
@@ -168,6 +172,8 @@ public class ConfigContainer extends Panel {
 
 		chkFecharOrigemAposSoltar
 				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));
+
+		chkAbrirComArvore.addActionListener(e -> Preferencias.setAbrirComArvore(chkAbrirComArvore.isSelected()));
 
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
 
