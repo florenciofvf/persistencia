@@ -55,6 +55,7 @@ public class Icones {
 	public static final Icon ORDEM = criarImagem("ordem");
 	public static final Icon BANCO = criarImagem("banco");
 	public static final Icon ASPAS = criarImagem("aspas");
+	public static final Icon ANEXO = criarImagem("anexo");
 	public static final Icon LABEL = criarImagem("label");
 	public static final Icon COLAR = criarImagem("paste");
 	public static final Icon VAZIO = criarImagem("empty");

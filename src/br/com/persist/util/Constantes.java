@@ -23,6 +23,7 @@ public class Constantes {
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String LABEL_DESKTOP = "label.desktop";
 	public static final String LABEL_ARVORE = "label.arvore";
+	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;

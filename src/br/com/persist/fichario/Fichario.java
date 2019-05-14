@@ -270,6 +270,16 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 	}
 
+	public void novoAnexo(Formulario formulario) {
+		AnexoContainer container = new AnexoContainer(null, formulario, null);
+		addTab(Mensagens.getString("label.anexos"), container);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.ANEXO);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+	}
+
 	public void novoConfig(Formulario formulario) {
 		ConfigContainer container = new ConfigContainer(null, formulario);
 		addTab(Mensagens.getString(Constantes.LABEL_CONFIGURACOES), container);

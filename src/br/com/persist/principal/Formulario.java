@@ -151,6 +151,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				if (Preferencias.isAbrirComArvore()) {
 					fichario.novaArvore(Formulario.this);
 				}
+
+				if (Preferencias.isAbrirComAnexo()) {
+					fichario.novoAnexo(Formulario.this);
+				}
 			}
 
 			@Override
@@ -204,6 +208,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(new MenuAbrir());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuArvore());
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuAnexo());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConexao());
 			menuArquivo.addSeparator();
@@ -321,6 +327,22 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
+			}
+		}
+
+		class MenuAnexo extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuAnexo() {
+				super(Constantes.LABEL_ANEXOS, Icones.ANEXO, false);
+
+				formularioAcao.setActionListener(e -> {
+					AnexoFormulario form = new AnexoFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoAnexo(Formulario.this));
 			}
 		}
 
