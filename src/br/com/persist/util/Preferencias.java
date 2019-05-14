@@ -16,6 +16,7 @@ public class Preferencias {
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
 	private static boolean abrirComArvore;
+	private static boolean abrirComAnexo;
 	private static String formDialogo;
 	private static boolean abrirAuto;
 	private static String formFicha;
@@ -37,6 +38,7 @@ public class Preferencias {
 		fecharAposSoltar = pref.getBoolean("fechar_apos_soltar", true);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		abrirComArvore = pref.getBoolean("abrir_com_arvore", true);
+		abrirComAnexo = pref.getBoolean("abrir_com_anexo", true);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		abrirAuto = pref.getBoolean("abrir_auto", false);
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
@@ -67,6 +69,7 @@ public class Preferencias {
 		pref.putBoolean("fechar_apos_soltar", fecharAposSoltar);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.putBoolean("abrir_com_arvore", abrirComArvore);
+		pref.putBoolean("abrir_com_anexo", abrirComAnexo);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
@@ -183,5 +186,13 @@ public class Preferencias {
 
 	public static void setAbrirComArvore(boolean abrirComArvore) {
 		Preferencias.abrirComArvore = abrirComArvore;
+	}
+
+	public static boolean isAbrirComAnexo() {
+		return abrirComAnexo;
+	}
+
+	public static void setAbrirComAnexo(boolean abrirComAnexo) {
+		Preferencias.abrirComAnexo = abrirComAnexo;
 	}
 }

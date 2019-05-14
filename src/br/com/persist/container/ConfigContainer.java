@@ -36,6 +36,7 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkAbrirComArvore = new CheckBox("label.abrir_com_arvore");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
+	private final CheckBox chkAbrirComAnexo = new CheckBox("label.abrir_com_anexo");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
@@ -80,6 +81,7 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkAbrirComArvore.setSelected(Preferencias.isAbrirComArvore());
+		chkAbrirComAnexo.setSelected(Preferencias.isAbrirComAnexo());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
@@ -105,6 +107,7 @@ public class ConfigContainer extends Panel {
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkFicharioScroll);
 		container.add(chkAbrirComArvore);
+		container.add(chkAbrirComAnexo);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
@@ -128,6 +131,7 @@ public class ConfigContainer extends Panel {
 		chkAtivarAbrirAuto.setMargin(insets);
 		chkAbrirComArvore.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
+		chkAbrirComAnexo.setMargin(insets);
 	}
 
 	private Panel criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
@@ -174,6 +178,8 @@ public class ConfigContainer extends Panel {
 				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));
 
 		chkAbrirComArvore.addActionListener(e -> Preferencias.setAbrirComArvore(chkAbrirComArvore.isSelected()));
+
+		chkAbrirComAnexo.addActionListener(e -> Preferencias.setAbrirComAnexo(chkAbrirComAnexo.isSelected()));
 
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
 
