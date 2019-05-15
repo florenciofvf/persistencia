@@ -672,14 +672,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				apelidoAcao.setActionListener(e -> {
 					if (listener instanceof ObjetoContainerFormularioInterno) {
 						ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) listener;
-						String valor = interno.getApelido();
-						String resp = Util.getValorInputDialog(ObjetoContainer.this, "label.apelido", valor);
+						Object resp = Util.getValorInputDialog(ObjetoContainer.this, "label.apelido",
+								interno.getApelido(), interno.getApelido());
 
-						if (resp == null) {
+						if (resp == null || Util.estaVazio(resp.toString())) {
 							return;
 						}
 
-						interno.setApelido(resp);
+						interno.setApelido(resp.toString());
 					}
 				});
 			}

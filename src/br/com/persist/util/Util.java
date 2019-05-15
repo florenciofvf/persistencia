@@ -58,11 +58,7 @@ public class Util {
 				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
 	}
 
-	public static String getValorInputDialog(Component parent, String chaveMensagem, String valorPadrao) {
-		return JOptionPane.showInputDialog(parent, Mensagens.getString(chaveMensagem), valorPadrao);
-	}
-
-	public static Object getValorInputDialog2(Component parent, String chaveTitulo, String mensagem,
+	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem,
 			String valorPadrao) {
 		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),
 				JOptionPane.PLAIN_MESSAGE, null, null, valorPadrao);
