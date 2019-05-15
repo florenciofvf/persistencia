@@ -113,6 +113,11 @@ public class AnexoContainer extends Panel implements AnexoListener {
 		}
 	}
 
+	@Override
+	public void renomearArquivo(Anexo anexo) {
+		// TODO Auto-generated method stub
+	}
+
 	private void baixarArquivo() {
 		AnexoModelo modelo = new AnexoModelo();
 		anexo.setModel(modelo);

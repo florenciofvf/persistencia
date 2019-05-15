@@ -16,11 +16,7 @@ public class Popup extends JPopupMenu {
 	}
 
 	public void addMenuItem(boolean separador, Action action) {
-		if (separador) {
-			addSeparator();
-		}
-
-		add(new MenuItem(action));
+		addMenuItem(separador, new MenuItem(action));
 	}
 
 	public void addMenuItem(boolean separador, MenuItem item) {
