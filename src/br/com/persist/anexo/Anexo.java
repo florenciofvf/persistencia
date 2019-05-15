@@ -81,7 +81,17 @@ public class Anexo extends JTree {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
+				Arquivo arquivo = getObjetoSelecionado();
+
+				if (arquivo == null) {
+					return;
+				}
+
+				if (arquivo.isFile()) {
+					ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
+				} else if (arquivo.isDirectory()) {
+					ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
+				}
 			}
 		}
 

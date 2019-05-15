@@ -106,7 +106,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	public void excluirArquivo(Anexo anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
-		if (arquivo != null && Util.confirmaExclusao(AnexoContainer.this)) {
+		if (arquivo != null && arquivo.getPai() != null && Util.confirmaExclusao(AnexoContainer.this)) {
 			arquivo.excluir();
 		}
 	}
