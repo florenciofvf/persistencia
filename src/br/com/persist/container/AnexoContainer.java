@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import br.com.persist.Arquivo;
 import br.com.persist.anexo.Anexo;
+import br.com.persist.anexo.AnexoUtil;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
@@ -108,6 +109,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 
 		if (arquivo != null && arquivo.getPai() != null && Util.confirmaExclusao(AnexoContainer.this)) {
 			arquivo.excluir();
+			AnexoUtil.excluirEstrutura(anexo, arquivo);
 		}
 	}
 
