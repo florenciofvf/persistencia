@@ -126,7 +126,11 @@ public class Anexo extends JTree {
 			}
 
 			if (anexoCli.equals(anexoSel)) {
-				anexoPopup.show(Anexo.this, e.getX(), e.getY());
+				if (anexoSel.getLastPathComponent() instanceof Arquivo) {
+					Arquivo arquivo = (Arquivo) anexoSel.getLastPathComponent();
+					anexoPopup.preShow(arquivo);
+					anexoPopup.show(Anexo.this, e.getX(), e.getY());
+				}
 			} else {
 				setSelectionPath(null);
 			}
@@ -146,6 +150,10 @@ public class Anexo extends JTree {
 			addMenuItem(true, excluirAcao);
 
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));
+		}
+
+		private void preShow(Arquivo arquivo) {
+			excluirAcao.setEnabled(arquivo.getPai() != null);
 		}
 
 		class MenuAbrir extends Menu {
