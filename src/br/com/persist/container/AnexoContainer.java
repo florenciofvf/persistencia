@@ -115,7 +115,21 @@ public class AnexoContainer extends Panel implements AnexoListener {
 
 	@Override
 	public void renomearArquivo(Anexo anexo) {
-		// TODO Auto-generated method stub
+		Arquivo arquivo = anexo.getObjetoSelecionado();
+
+		if (arquivo == null || arquivo.getPai() == null) {
+			return;
+		}
+
+		String resp = Util.getValorInputDialog2(AnexoContainer.this, arquivo.toString(), arquivo.toString());
+
+		if (Util.estaVazio(resp)) {
+			return;
+		}
+
+		if (arquivo.renomear(resp)) {
+			AnexoUtil.refreshEstrutura(anexo, arquivo);
+		}
 	}
 
 	private void baixarArquivo() {

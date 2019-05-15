@@ -16,8 +16,8 @@ public class Arquivo {
 	private final List<Arquivo> arquivos;
 	private boolean arquivoAberto;
 	private boolean processado;
-	private final File file;
 	private Arquivo pai;
+	private File file;
 
 	public Arquivo(File file) {
 		Objects.requireNonNull(file);
@@ -46,6 +46,21 @@ public class Arquivo {
 			} catch (IOException e) {
 				LOG.log(Level.FINEST, "EXCLUIR ARQUIVO");
 			}
+		}
+	}
+
+	public boolean renomear(String nome) {
+		try {
+			File destino = new File(file.getParent(), nome);
+			boolean resp = file.renameTo(destino);
+
+			if (resp) {
+				file = destino;
+			}
+
+			return resp;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
