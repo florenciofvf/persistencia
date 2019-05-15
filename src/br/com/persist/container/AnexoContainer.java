@@ -30,8 +30,8 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	private final transient Desktop desktop;
 	private final Formulario formulario;
 
-	public AnexoContainer(IJanela janela, Formulario formulario, AnexoFormulario arvoreFormulario) {
-		this.anexoFormulario = arvoreFormulario;
+	public AnexoContainer(IJanela janela, Formulario formulario, AnexoFormulario anexoFormulario) {
+		this.anexoFormulario = anexoFormulario;
 		this.desktop = Desktop.getDesktop();
 		this.formulario = formulario;
 		toolbar.ini(janela);
@@ -41,7 +41,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 
 	private void montarLayout() {
 		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arvore.sempreTopForm"));
-		chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.arvore.sempreTopAnex"));
+		chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.anexo.sempreTopAnex"));
 		add(BorderLayout.CENTER, new ScrollPane(anexo));
 		add(BorderLayout.NORTH, toolbar);
 		anexo.adicionarOuvinte(this);
