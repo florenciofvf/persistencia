@@ -121,13 +121,14 @@ public class AnexoContainer extends Panel implements AnexoListener {
 			return;
 		}
 
-		String resp = Util.getValorInputDialog2(AnexoContainer.this, arquivo.toString(), arquivo.toString());
+		Object resp = Util.getValorInputDialog2(AnexoContainer.this, "label.renomear", arquivo.toString(),
+				arquivo.toString());
 
-		if (Util.estaVazio(resp)) {
+		if (resp == null || Util.estaVazio(resp.toString())) {
 			return;
 		}
 
-		if (arquivo.renomear(resp)) {
+		if (arquivo.renomear(resp.toString())) {
 			AnexoUtil.refreshEstrutura(anexo, arquivo);
 		}
 	}
