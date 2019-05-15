@@ -14,12 +14,12 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.Arquivo;
+import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.AnexoListener;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
-import br.com.persist.util.MenuPadrao1;
 
 public class Anexo extends JTree {
 	private static final long serialVersionUID = 1L;
@@ -81,9 +81,7 @@ public class Anexo extends JTree {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ouvintes.forEach(o -> o.abrirFichArquivo(Anexo.this));
-			} else {
-				ouvintes.forEach(o -> o.clickArquivo(Anexo.this));
+				ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
 			}
 		}
 
@@ -131,29 +129,27 @@ public class Anexo extends JTree {
 
 	private class AnexoPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
-		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
-		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.FECHAR);
+		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 
 		public AnexoPopup() {
 			add(new MenuAbrir());
-			addMenuItem(true, selecionarAcao);
-			addMenuItem(true, fecharAcao);
-			addMenuItem(true, atualizarAcao);
+			addMenuItem(true, excluirAcao);
 
-			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(Anexo.this)));
-			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArvore(Anexo.this)));
-			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(Anexo.this)));
+			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));
 		}
 
-		class MenuAbrir extends MenuPadrao1 {
+		class MenuAbrir extends Menu {
 			private static final long serialVersionUID = 1L;
+			private Action editarAcao = Action.actionMenu("label.editar", null);
+			private Action abrirAcao = Action.actionMenu("label.abrir", null);
 
 			MenuAbrir() {
-				super("label.abrir", Icones.ABRIR, false);
+				super("label.abrir", Icones.ABRIR);
+				addMenuItem(editarAcao);
+				addMenuItem(abrirAcao);
 
-				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Anexo.this)));
-				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Anexo.this)));
+				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarArquivo(Anexo.this)));
+				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(Anexo.this)));
 			}
 		}
 	}

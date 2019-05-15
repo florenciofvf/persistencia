@@ -33,6 +33,7 @@ import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.formulario.ConexaoFormulario;

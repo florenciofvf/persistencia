@@ -30,6 +30,7 @@ import javax.swing.KeyStroke;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
 import br.com.persist.container.ConexaoContainer;

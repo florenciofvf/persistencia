@@ -3,9 +3,16 @@ package br.com.persist;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Arquivo {
+	private static final Logger LOG = Logger.getGlobal();
 	private final List<Arquivo> arquivos;
 	private boolean arquivoAberto;
 	private boolean processado;
@@ -23,6 +30,22 @@ public class Arquivo {
 
 		for (Arquivo a : arquivos) {
 			a.inflar();
+		}
+	}
+
+	public void excluir() {
+		for (Arquivo a : arquivos) {
+			a.excluir();
+		}
+
+		if (isFile() || isDirectory()) {
+			Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
+
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				LOG.log(Level.FINEST, "EXCLUIR ARQUIVO");
+			}
 		}
 	}
 
@@ -80,6 +103,10 @@ public class Arquivo {
 
 	public boolean isFile() {
 		return file.isFile();
+	}
+
+	public boolean isDirectory() {
+		return file.isDirectory();
 	}
 
 	public File getFile() {
