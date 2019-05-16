@@ -17,6 +17,7 @@ import br.com.persist.Arquivo;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.AnexoListener;
+import br.com.persist.renderer.AnexoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -31,6 +32,7 @@ public class Anexo extends JTree {
 		super(newModel);
 		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		setBorder(BorderFactory.createEmptyBorder());
+		setCellRenderer(new AnexoTreeCellRenderer());
 		addMouseListener(mouseListenerInner);
 		ouvintes = new ArrayList<>();
 		setShowsRootHandles(true);

@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.Icon;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -17,6 +20,7 @@ public class Arquivo {
 	private boolean arquivoAberto;
 	private boolean processado;
 	private Arquivo pai;
+	private Icon icone;
 	private File file;
 
 	public Arquivo(File file) {
@@ -143,5 +147,13 @@ public class Arquivo {
 
 	public void setArquivoAberto(boolean arquivoAberto) {
 		this.arquivoAberto = arquivoAberto;
+	}
+
+	public Icon getIcone() {
+		return icone;
+	}
+
+	public void setIcone(Icon icone) {
+		this.icone = icone;
 	}
 }

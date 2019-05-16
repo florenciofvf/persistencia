@@ -16,7 +16,7 @@ import javax.swing.tree.TreeSelectionModel;
 import br.com.persist.Arquivo;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.ArvoreListener;
-import br.com.persist.renderer.TreeCellRenderer;
+import br.com.persist.renderer.ArquivoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -31,8 +31,8 @@ public class Arvore extends JTree {
 	public Arvore(TreeModel newModel) {
 		super(newModel);
 		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		setCellRenderer(new ArquivoTreeCellRenderer());
 		setBorder(BorderFactory.createEmptyBorder());
-		setCellRenderer(new TreeCellRenderer());
 		addMouseListener(mouseListenerInner);
 		ouvintes = new ArrayList<>();
 		setShowsRootHandles(true);

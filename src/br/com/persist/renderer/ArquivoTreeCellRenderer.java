@@ -8,7 +8,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import br.com.persist.Arquivo;
 import br.com.persist.util.Icones;
 
-public class TreeCellRenderer extends DefaultTreeCellRenderer {
+public class ArquivoTreeCellRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = 1L;
 
 	@Override
