@@ -120,7 +120,13 @@ public class Arvore extends JTree {
 			}
 
 			if (arvoreCli.equals(arvoreSel)) {
-				arvorePopup.show(Arvore.this, e.getX(), e.getY());
+				if (arvoreSel.getLastPathComponent() instanceof Arquivo) {
+					Arquivo arquivo = (Arquivo) arvoreSel.getLastPathComponent();
+					arvorePopup.preShow(arquivo);
+					arvorePopup.show(Arvore.this, e.getX(), e.getY());
+				} else {
+					setSelectionPath(null);
+				}
 			} else {
 				setSelectionPath(null);
 			}
@@ -136,9 +142,10 @@ public class Arvore extends JTree {
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
 		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
 		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.FECHAR);
+		private MenuAbrir menuAbrir = new MenuAbrir();
 
 		public ArvorePopup() {
-			add(new MenuAbrir());
+			add(menuAbrir);
 			addMenuItem(true, selecionarAcao);
 			addMenuItem(true, fecharAcao);
 			addMenuItem(true, atualizarAcao);
@@ -146,6 +153,14 @@ public class Arvore extends JTree {
 			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(Arvore.this)));
 			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArvore(Arvore.this)));
 			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(Arvore.this)));
+		}
+
+		private void preShow(Arquivo arquivo) {
+			boolean ehArquivo = arquivo.isFile();
+			selecionarAcao.setEnabled(ehArquivo);
+			atualizarAcao.setEnabled(ehArquivo);
+			fecharAcao.setEnabled(ehArquivo);
+			menuAbrir.setEnabled(ehArquivo);
 		}
 
 		class MenuAbrir extends MenuPadrao1 {

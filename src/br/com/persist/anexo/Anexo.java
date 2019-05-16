@@ -136,6 +136,8 @@ public class Anexo extends JTree {
 					Arquivo arquivo = (Arquivo) anexoSel.getLastPathComponent();
 					anexoPopup.preShow(arquivo);
 					anexoPopup.show(Anexo.this, e.getX(), e.getY());
+				} else {
+					setSelectionPath(null);
 				}
 			} else {
 				setSelectionPath(null);
