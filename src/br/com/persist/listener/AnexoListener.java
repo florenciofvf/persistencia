@@ -10,4 +10,6 @@ public interface AnexoListener {
 	public void editarArquivo(Anexo anexo);
 
 	public void abrirArquivo(Anexo anexo);
+
+	public void iconeArquivo(Anexo anexo);
 }

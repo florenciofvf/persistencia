@@ -133,6 +133,16 @@ public class AnexoContainer extends Panel implements AnexoListener {
 		}
 	}
 
+	@Override
+	public void iconeArquivo(Anexo anexo) {
+		Arquivo arquivo = anexo.getObjetoSelecionado();
+
+		if (arquivo == null || arquivo.getPai() == null) {
+			return;
+		}
+
+	}
+
 	private void baixarArquivo() {
 		AnexoModelo modelo = new AnexoModelo();
 		anexo.setModel(modelo);
