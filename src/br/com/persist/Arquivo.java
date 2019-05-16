@@ -19,6 +19,7 @@ public class Arquivo {
 	private final List<Arquivo> arquivos;
 	private boolean arquivoAberto;
 	private boolean processado;
+	private String nomeIcone;
 	private Arquivo pai;
 	private Icon icone;
 	private File file;
@@ -153,7 +154,12 @@ public class Arquivo {
 		return icone;
 	}
 
-	public void setIcone(Icon icone) {
+	public void setIcone(Icon icone, String nomeIcone) {
+		this.nomeIcone = nomeIcone;
 		this.icone = icone;
+	}
+
+	public String getNomeIcone() {
+		return nomeIcone;
 	}
 }
