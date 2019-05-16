@@ -14,6 +14,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.Arquivo;
+import br.com.persist.comp.ItemCheckBox;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.AnexoListener;
@@ -152,6 +153,7 @@ public class Anexo extends JTree {
 	private class AnexoPopup extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
+		private ItemCheckBox chkPadraoAbrir = new ItemCheckBox("label.padrao_abrir");
 		private Action renomearAcao = Action.actionMenu("label.renomear", null);
 		private Action iconeAcao = Action.actionMenu("label.icone", null);
 
@@ -160,15 +162,26 @@ public class Anexo extends JTree {
 			addMenuItem(true, renomearAcao);
 			addMenuItem(true, excluirAcao);
 			addMenuItem(true, iconeAcao);
+			add(true, chkPadraoAbrir);
 
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(Anexo.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));
 			iconeAcao.setActionListener(e -> ouvintes.forEach(o -> o.iconeArquivo(Anexo.this)));
+			chkPadraoAbrir.addActionListener(e -> padraoAbrir(chkPadraoAbrir.isSelected()));
 		}
 
 		private void preShow(Arquivo arquivo) {
 			renomearAcao.setEnabled(arquivo.getPai() != null);
 			excluirAcao.setEnabled(arquivo.getPai() != null);
+			chkPadraoAbrir.setEnabled(arquivo.isFile());
+		}
+
+		private void padraoAbrir(boolean b) {
+			Arquivo arquivo = getObjetoSelecionado();
+
+			if (arquivo != null) {
+				arquivo.setPadraoAbrir(b);
+			}
 		}
 
 		class MenuAbrir extends Menu {
