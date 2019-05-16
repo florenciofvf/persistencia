@@ -90,7 +90,11 @@ public class Anexo extends JTree {
 				}
 
 				if (arquivo.isFile()) {
-					ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
+					if (arquivo.isPadraoAbrir()) {
+						ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
+					} else {
+						ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
+					}
 				} else if (arquivo.isDirectory()) {
 					ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
 				}

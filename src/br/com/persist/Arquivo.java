@@ -18,6 +18,7 @@ public class Arquivo {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<Arquivo> arquivos;
 	private boolean arquivoAberto;
+	private boolean padraoAbrir;
 	private boolean processado;
 	private String nomeIcone;
 	private Arquivo pai;
@@ -161,5 +162,13 @@ public class Arquivo {
 
 	public String getNomeIcone() {
 		return nomeIcone;
+	}
+
+	public boolean isPadraoAbrir() {
+		return padraoAbrir;
+	}
+
+	public void setPadraoAbrir(boolean padraoAbrir) {
+		this.padraoAbrir = padraoAbrir;
 	}
 }
