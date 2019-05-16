@@ -2,6 +2,7 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
+import java.awt.Frame;
 import java.io.IOException;
 
 import br.com.persist.Arquivo;
@@ -12,6 +13,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.dialogo.ArquivoIconeDialogo;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.listener.AnexoListener;
 import br.com.persist.modelo.AnexoModelo;
@@ -141,6 +143,10 @@ public class AnexoContainer extends Panel implements AnexoListener {
 			return;
 		}
 
+		ArquivoIconeDialogo form = new ArquivoIconeDialogo((Frame) null, arquivo);
+		form.setLocationRelativeTo(AnexoContainer.this);
+		form.setVisible(true);
+		AnexoUtil.refreshEstrutura(anexo, arquivo);
 	}
 
 	private void baixarArquivo() {
