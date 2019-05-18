@@ -27,6 +27,7 @@ public class Arvore extends JTree {
 	private final transient List<ArvoreListener> ouvintes;
 	private ArvorePopup arvorePopup = new ArvorePopup();
 	private boolean popupDesabilitado;
+	private boolean popupTrigger;
 
 	public Arvore(TreeModel newModel) {
 		super(newModel);
@@ -81,15 +82,6 @@ public class Arvore extends JTree {
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() >= Constantes.DOIS) {
-				ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this));
-			} else {
-				ouvintes.forEach(o -> o.clickArquivo(Arvore.this));
-			}
-		}
-
-		@Override
 		public void mousePressed(MouseEvent e) {
 			processar(e);
 		}
@@ -100,12 +92,15 @@ public class Arvore extends JTree {
 		}
 
 		private void processar(MouseEvent e) {
+			popupTrigger = false;
+
 			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
 				return;
 			}
 
 			TreePath arvoreCli = getClosestPathForLocation(e.getX(), e.getY());
 			TreePath arvoreSel = getSelectionPath();
+			popupTrigger = true;
 
 			if (arvoreCli == null || arvoreSel == null) {
 				setSelectionPath(null);
@@ -129,6 +124,19 @@ public class Arvore extends JTree {
 				}
 			} else {
 				setSelectionPath(null);
+			}
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (popupTrigger) {
+				return;
+			}
+
+			if (e.getClickCount() >= Constantes.DOIS) {
+				ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this));
+			} else {
+				ouvintes.forEach(o -> o.clickArquivo(Arvore.this));
 			}
 		}
 	};
