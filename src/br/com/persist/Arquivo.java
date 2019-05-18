@@ -2,11 +2,14 @@ package br.com.persist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
+
+import br.com.persist.util.Constantes;
 
 import java.io.File;
 import java.io.IOException;
@@ -156,8 +159,10 @@ public class Arquivo {
 	}
 
 	public void setIcone(Icon icone, String nomeIcone) {
-		this.nomeIcone = nomeIcone;
-		this.icone = icone;
+		if (icone != null && nomeIcone != null) {
+			this.nomeIcone = nomeIcone;
+			this.icone = icone;
+		}
 	}
 
 	public String getNomeIcone() {
@@ -170,5 +175,26 @@ public class Arquivo {
 
 	public void setPadraoAbrir(boolean padraoAbrir) {
 		this.padraoAbrir = padraoAbrir;
+	}
+
+	public void config(Map<String, Arquivo> map, StringBuilder sb) {
+		criarChave(sb);
+		Arquivo arq = map.get(sb.toString());
+
+		if (arq != null) {
+			arq.setIcone(arq.getIcone(), arq.getNomeIcone());
+			arq.setPadraoAbrir(arq.isPadraoAbrir());
+		}
+	}
+
+	private void criarChave(StringBuilder sb) {
+		sb.delete(0, sb.length());
+		sb.append(Constantes.SEP);
+		Arquivo arq = this;
+
+		while (arq != null) {
+			sb.append(arq.file.getName() + Constantes.SEP);
+			arq = arq.getPai();
+		}
 	}
 }

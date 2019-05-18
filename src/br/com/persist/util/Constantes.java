@@ -32,6 +32,7 @@ public class Constantes {
 	public static final String FICHA = "FICHA";
 	public static final String FORM = "FORM";
 	public static final String QL = "\r\n";
+	public static final String SEP = "###";
 	public static final String TAB = "\t";
 	public static final byte ARRASTO = 1;
 	public static final byte RELACAO = 3;
