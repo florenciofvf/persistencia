@@ -171,6 +171,7 @@ public class Anexo extends JTree {
 		}
 
 		private void preShow(Arquivo arquivo) {
+			chkPadraoAbrir.setSelected(arquivo.isPadraoAbrir());
 			renomearAcao.setEnabled(arquivo.getPai() != null);
 			excluirAcao.setEnabled(arquivo.getPai() != null);
 			chkPadraoAbrir.setEnabled(arquivo.isFile());
