@@ -182,8 +182,7 @@ public class Arquivo {
 	}
 
 	private void config(StringBuilder sb) {
-		criarChave(sb);
-		Arquivo arq = AnexoModelo.getArquivos().get(sb.toString());
+		Arquivo arq = AnexoModelo.getArquivos().get(criarChave(sb).toString());
 
 		if (arq != null) {
 			setIcone(arq.getIcone(), arq.getNomeIcone());

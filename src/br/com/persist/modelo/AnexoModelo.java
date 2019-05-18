@@ -25,12 +25,13 @@ import br.com.persist.util.Imagens;
 public class AnexoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Map<String, Arquivo> arquivos = new HashMap<>();
-	public static final File anexosInfo = new File("anexos_info");
+	private static final File anexosRaiz = new File("anexos");
+	public static final File anexosInfo = new File(anexosRaiz, "aaa_i");
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
 
 	public AnexoModelo(boolean anexos) {
-		this(new Arquivo(new File("anexos")), anexos);
+		this(new Arquivo(anexosRaiz), anexos);
 	}
 
 	public AnexoModelo(Arquivo raiz, boolean anexos) {
@@ -55,6 +56,7 @@ public class AnexoModelo implements TreeModel {
 				while (linha != null && linha.length() > 0) {
 					if (linha.startsWith(Constantes.SEP)) {
 						sel = new Arquivo(new File(linha));
+						arquivos.put(linha, sel);
 
 					} else if (sel != null && linha.startsWith(Constantes.ICONE)) {
 						String nome = linha.substring(Constantes.ICONE.length());
@@ -65,6 +67,8 @@ public class AnexoModelo implements TreeModel {
 						String padraoAbrir = linha.substring(Constantes.PADRAO_ABRIR.length());
 						sel.setPadraoAbrir(Boolean.parseBoolean(padraoAbrir));
 					}
+
+					linha = br.readLine();
 				}
 			} catch (Exception e) {
 				LOG.log(Level.FINEST, "AnexoModelo.inicializar");

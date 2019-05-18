@@ -93,6 +93,8 @@ public class AnexoContainer extends Panel implements AnexoListener {
 					if (!Util.estaVazio(arquivo.getNomeIcone())) {
 						pw.println(Constantes.ICONE + arquivo.getNomeIcone());
 					}
+
+					pw.println();
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoContainer.this);
