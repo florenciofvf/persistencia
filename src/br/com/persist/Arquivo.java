@@ -34,11 +34,11 @@ public class Arquivo {
 		this.file = file;
 	}
 
-	public void inflar() {
+	public void inflar(boolean anexos) {
 		getArquivos();
 
 		for (Arquivo a : arquivos) {
-			a.inflar();
+			a.inflar(anexos);
 		}
 	}
 

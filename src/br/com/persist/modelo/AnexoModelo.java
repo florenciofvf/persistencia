@@ -1,11 +1,17 @@
 package br.com.persist.modelo;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Icon;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -13,20 +19,57 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.Arquivo;
+import br.com.persist.util.Constantes;
+import br.com.persist.util.Imagens;
 
 public class AnexoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
+	private static final Map<String, Arquivo> arquivos = new HashMap<>();
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
 
-	public AnexoModelo() {
-		this(new Arquivo(new File("anexos")));
+	public AnexoModelo(boolean anexos) {
+		this(new Arquivo(new File("anexos")), anexos);
 	}
 
-	public AnexoModelo(Arquivo raiz) {
+	public AnexoModelo(Arquivo raiz, boolean anexos) {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
-		raiz.inflar();
+		inicializar(anexos);
+		raiz.inflar(anexos);
+	}
+
+	private void inicializar(boolean anexos) {
+		if (!anexos) {
+			return;
+		}
+
+		File anexosInfo = new File("anexos_info");
+		arquivos.clear();
+
+		if (anexosInfo.isFile()) {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(anexosInfo)))) {
+				String linha = br.readLine();
+				Arquivo sel = null;
+
+				while (linha != null && linha.length() > 0) {
+					if (linha.startsWith(Constantes.SEP)) {
+						sel = new Arquivo(new File(linha));
+
+					} else if (sel != null && linha.startsWith(Constantes.ICONE)) {
+						String nome = linha.substring(Constantes.ICONE.length());
+						Icon icone = Imagens.getIcon(nome);
+						sel.setIcone(icone, nome);
+
+					} else if (sel != null && linha.startsWith(Constantes.PADRAO_ABRIR)) {
+						String padraoAbrir = linha.substring(Constantes.PADRAO_ABRIR.length());
+						sel.setPadraoAbrir(Boolean.parseBoolean(padraoAbrir));
+					}
+				}
+			} catch (Exception e) {
+				LOG.log(Level.FINEST, "AnexoModelo.inicializar");
+			}
+		}
 	}
 
 	public void listar(List<Arquivo> lista) {

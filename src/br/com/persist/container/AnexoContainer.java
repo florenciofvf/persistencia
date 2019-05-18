@@ -27,7 +27,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopAnex = new CheckBox();
-	private Anexo anexo = new Anexo(new AnexoModelo());
+	private Anexo anexo = new Anexo(new AnexoModelo(true));
 	private final AnexoFormulario anexoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Desktop desktop;
@@ -53,12 +53,14 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconBaixar();
+		private Action salvarAcao = Action.actionIconSalvar();
 
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
 
 			add(new Button(atualizarAcao));
+			addButton(true, salvarAcao);
 			if (anexoFormulario != null) {
 				add(chkSempreTopAnex);
 			}
@@ -150,7 +152,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	}
 
 	private void baixarArquivo() {
-		AnexoModelo modelo = new AnexoModelo();
+		AnexoModelo modelo = new AnexoModelo(true);
 		anexo.setModel(modelo);
 	}
 }

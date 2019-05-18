@@ -22,6 +22,7 @@ public class Constantes {
 	public static final String LABEL_CONEXAO = "label.conexao";
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String LABEL_DESKTOP = "label.desktop";
+	public static final String PADRAO_ABRIR = "PADRAO_ABRIR:";
 	public static final String LABEL_ARVORE = "label.arvore";
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
@@ -29,6 +30,7 @@ public class Constantes {
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final String ENCODING = "UTF-8";
 	public static final String DIALOG = "DIALOG";
+	public static final String ICONE = "ICONE:";
 	public static final String FICHA = "FICHA";
 	public static final String FORM = "FORM";
 	public static final String QL = "\r\n";

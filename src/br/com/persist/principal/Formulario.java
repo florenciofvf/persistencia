@@ -7,9 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -21,7 +19,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import br.com.persist.Arquivo;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
@@ -61,7 +58,6 @@ import br.com.persist.xml.XML;
 
 public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
-	private static final Map<String, Arquivo> arquivos = new HashMap<>();
 	private final transient List<Conexao> conexoes = new ListaArray<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private static final List<Objeto> copiados = new ArrayList<>();
@@ -94,10 +90,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public static boolean copiadosIsEmpty() {
 		return copiados.isEmpty();
-	}
-
-	public static Map<String, Arquivo> getArquivos() {
-		return arquivos;
 	}
 
 	public static void colar(Superficie superficie, boolean b, int x, int y) {
