@@ -87,7 +87,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 
 				for (Entry<String, Arquivo> entry : entrySet) {
 					Arquivo arquivo = entry.getValue();
-					pw.println(arquivo.getFile().getAbsolutePath());
+					pw.println(entry.getKey());
 					pw.println(Constantes.PADRAO_ABRIR + arquivo.isPadraoAbrir());
 
 					if (!Util.estaVazio(arquivo.getNomeIcone())) {
