@@ -18,6 +18,7 @@ import br.com.persist.comp.ItemCheckBox;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.AnexoListener;
+import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.renderer.AnexoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -182,6 +183,7 @@ public class Anexo extends JTree {
 
 			if (arquivo != null) {
 				arquivo.setPadraoAbrir(b);
+				AnexoModelo.putArquivo(arquivo);
 			}
 		}
 

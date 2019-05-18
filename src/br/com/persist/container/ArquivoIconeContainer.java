@@ -18,6 +18,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Imagens;
 
@@ -69,6 +70,7 @@ public class ArquivoIconeContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				arquivo.setIcone(getIcon(), nome);
+				AnexoModelo.putArquivo(arquivo);
 				toolbar.fechar();
 			}
 		};

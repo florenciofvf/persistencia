@@ -2,13 +2,13 @@ package br.com.persist;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.Constantes;
 
 import java.io.File;
@@ -34,11 +34,15 @@ public class Arquivo {
 		this.file = file;
 	}
 
-	public void inflar(boolean anexos) {
+	public void inflar(boolean anexos, StringBuilder sb) {
+		if (anexos) {
+			config(sb);
+		}
+
 		getArquivos();
 
 		for (Arquivo a : arquivos) {
-			a.inflar(anexos);
+			a.inflar(anexos, sb);
 		}
 	}
 
@@ -177,17 +181,17 @@ public class Arquivo {
 		this.padraoAbrir = padraoAbrir;
 	}
 
-	public void config(Map<String, Arquivo> map, StringBuilder sb) {
+	private void config(StringBuilder sb) {
 		criarChave(sb);
-		Arquivo arq = map.get(sb.toString());
+		Arquivo arq = AnexoModelo.getArquivos().get(sb.toString());
 
 		if (arq != null) {
-			arq.setIcone(arq.getIcone(), arq.getNomeIcone());
-			arq.setPadraoAbrir(arq.isPadraoAbrir());
+			setIcone(arq.getIcone(), arq.getNomeIcone());
+			setPadraoAbrir(arq.isPadraoAbrir());
 		}
 	}
 
-	private void criarChave(StringBuilder sb) {
+	public StringBuilder criarChave(StringBuilder sb) {
 		sb.delete(0, sb.length());
 		sb.append(Constantes.SEP);
 		Arquivo arq = this;
@@ -196,5 +200,7 @@ public class Arquivo {
 			sb.append(arq.file.getName() + Constantes.SEP);
 			arq = arq.getPai();
 		}
+
+		return sb;
 	}
 }

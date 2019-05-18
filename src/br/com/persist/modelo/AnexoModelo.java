@@ -37,7 +37,7 @@ public class AnexoModelo implements TreeModel {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
 		inicializar(anexos);
-		raiz.inflar(anexos);
+		raiz.inflar(anexos, new StringBuilder());
 	}
 
 	private void inicializar(boolean anexos) {
@@ -74,6 +74,12 @@ public class AnexoModelo implements TreeModel {
 
 	public static Map<String, Arquivo> getArquivos() {
 		return arquivos;
+	}
+
+	public static void putArquivo(Arquivo arquivo) {
+		if (arquivo != null) {
+			arquivos.put(arquivo.criarChave(new StringBuilder()).toString(), arquivo);
+		}
 	}
 
 	public void listar(List<Arquivo> lista) {

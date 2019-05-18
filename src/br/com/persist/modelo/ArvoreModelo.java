@@ -26,7 +26,7 @@ public class ArvoreModelo implements TreeModel {
 	public ArvoreModelo(Arquivo raiz) {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
-		raiz.inflar(false);
+		raiz.inflar(false, null);
 	}
 
 	public void listar(List<Arquivo> lista) {
