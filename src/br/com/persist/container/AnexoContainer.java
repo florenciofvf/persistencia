@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Frame;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import br.com.persist.Arquivo;
 import br.com.persist.anexo.Anexo;
@@ -19,6 +22,7 @@ import br.com.persist.listener.AnexoListener;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -74,6 +78,25 @@ public class AnexoContainer extends Panel implements AnexoListener {
 				}
 			});
 			atualizarAcao.setActionListener(e -> baixarArquivo());
+			salvarAcao.setActionListener(e -> salvarMapaAnexos());
+		}
+
+		private void salvarMapaAnexos() {
+			try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo)) {
+				Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
+
+				for (Entry<String, Arquivo> entry : entrySet) {
+					Arquivo arquivo = entry.getValue();
+					pw.println(arquivo.getFile().getAbsolutePath());
+					pw.println(Constantes.PADRAO_ABRIR + arquivo.isPadraoAbrir());
+
+					if (!Util.estaVazio(arquivo.getNomeIcone())) {
+						pw.println(Constantes.ICONE + arquivo.getNomeIcone());
+					}
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoContainer.this);
+			}
 		}
 	}
 
