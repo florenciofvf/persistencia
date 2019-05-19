@@ -24,6 +24,7 @@ public class Arquivo {
 	private boolean padraoAbrir;
 	private boolean processado;
 	private String nomeIcone;
+	private boolean checado;
 	private Arquivo pai;
 	private Icon icone;
 	private File file;
@@ -187,6 +188,7 @@ public class Arquivo {
 		if (arq != null) {
 			setIcone(arq.getIcone(), arq.getNomeIcone());
 			setPadraoAbrir(arq.isPadraoAbrir());
+			arq.setChecado(true);
 		}
 	}
 
@@ -201,5 +203,13 @@ public class Arquivo {
 		}
 
 		return sb;
+	}
+
+	public boolean isChecado() {
+		return checado;
+	}
+
+	public void setChecado(boolean checado) {
+		this.checado = checado;
 	}
 }

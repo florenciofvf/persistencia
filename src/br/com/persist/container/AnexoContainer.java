@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.awt.Frame;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -179,5 +180,16 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	private void baixarArquivo() {
 		AnexoModelo modelo = new AnexoModelo(true);
 		anexo.setModel(modelo);
+
+		Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
+		Iterator<Entry<String, Arquivo>> iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Entry<String, Arquivo> next = iterator.next();
+
+			if (!next.getValue().isChecado()) {
+				iterator.remove();
+			}
+		}
 	}
 }
