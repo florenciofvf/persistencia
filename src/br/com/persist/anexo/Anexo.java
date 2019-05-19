@@ -153,17 +153,17 @@ public class Anexo extends JTree {
 
 	private class AnexoPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private ItemCheckBox chkPadraoAbrir = new ItemCheckBox("label.padrao_abrir", Icones.EXECUTAR);
 		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
-		private ItemCheckBox chkPadraoAbrir = new ItemCheckBox("label.padrao_abrir");
-		private Action renomearAcao = Action.actionMenu("label.renomear", null);
-		private Action iconeAcao = Action.actionMenu("label.icone", null);
+		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
+		private Action iconeAcao = Action.actionMenu("label.icone", Icones.ICON);
 
 		public AnexoPopup() {
 			add(new MenuAbrir());
 			addMenuItem(true, renomearAcao);
-			addMenuItem(true, excluirAcao);
 			addMenuItem(true, iconeAcao);
 			add(true, chkPadraoAbrir);
+			addMenuItem(true, excluirAcao);
 
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(Anexo.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));

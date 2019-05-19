@@ -21,6 +21,7 @@ public class Icones {
 	public static final Icon HIERARQUIA = criarImagem("hierarchy");
 	public static final Icon ASC_TEXTO = criarImagem("asc_texto");
 	public static final Icon CENTRALIZAR = criarImagem("section");
+	public static final Icon EXECUTAR = criarImagem("executar");
 	public static final Icon EXPANDIR = criarImagem("expandir");
 	public static final Icon VERTICAL = criarImagem("vertical");
 	public static final Icon ATUALIZAR = criarImagem("refresh");
@@ -62,6 +63,8 @@ public class Icones {
 	public static final Icon COPIA = criarImagem("copy");
 	public static final Icon ABRIR = criarImagem("open");
 	public static final Icon TEXTO = criarImagem("text");
+	public static final Icon ICON = criarImagem("icons");
+	public static final Icon RULE = criarImagem("rule");
 	public static final Icon CALC = criarImagem("calc");
 	public static final Icon CUBO = criarImagem("cubo");
 	public static final Icon RECT = criarImagem("rect");
