@@ -160,10 +160,10 @@ public class Anexo extends JTree {
 
 		public AnexoPopup() {
 			add(new MenuAbrir());
-			addMenuItem(true, renomearAcao);
-			addMenuItem(true, iconeAcao);
 			add(true, chkPadraoAbrir);
+			addMenuItem(true, renomearAcao);
 			addMenuItem(true, excluirAcao);
+			addMenuItem(true, iconeAcao);
 
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(Anexo.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));
