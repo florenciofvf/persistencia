@@ -26,7 +26,7 @@ public class AnexoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Map<String, Arquivo> arquivos = new HashMap<>();
 	private static final File anexosRaiz = new File("anexos");
-	public static final File anexosInfo = new File(anexosRaiz, "aaa_i");
+	public static final File anexosInfo = new File(anexosRaiz, "A");
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
 
@@ -53,7 +53,7 @@ public class AnexoModelo implements TreeModel {
 				String linha = br.readLine();
 				Arquivo sel = null;
 
-				while (linha != null && linha.length() > 0) {
+				while (linha != null) {
 					if (linha.startsWith(Constantes.SEP)) {
 						sel = new Arquivo(new File(linha));
 						arquivos.put(linha, sel);
