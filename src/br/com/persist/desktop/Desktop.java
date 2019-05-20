@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.banco.Conexao;
@@ -170,13 +169,13 @@ public class Desktop extends JDesktopPane implements IIni {
 
 	protected void ajustarDimension() {
 		String string = getWidth() + "," + getHeight();
-		String novo = JOptionPane.showInputDialog(this, "Largura,Altura", string);
+		Object resp = Util.getValorInputDialog(this, "label.largura_altura", string, string);
 
-		if (Util.estaVazio(novo)) {
+		if (resp == null || Util.estaVazio(resp.toString())) {
 			return;
 		}
 
-		String[] strings = novo.split(",");
+		String[] strings = resp.toString().split(",");
 
 		if (strings != null && strings.length == 2) {
 			try {
