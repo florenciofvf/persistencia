@@ -183,13 +183,19 @@ public class AnexoContainer extends Panel implements AnexoListener {
 
 		Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
 		Iterator<Entry<String, Arquivo>> iterator = entrySet.iterator();
+		boolean removido = false;
 
 		while (iterator.hasNext()) {
 			Entry<String, Arquivo> next = iterator.next();
 
 			if (!next.getValue().isChecado()) {
 				iterator.remove();
+				removido = true;
 			}
+		}
+
+		if (removido) {
+			toolbar.salvarMapaAnexos();
 		}
 	}
 }
