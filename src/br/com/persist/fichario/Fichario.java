@@ -160,6 +160,8 @@ public class Fichario extends JTabbedPane {
 			destacarDesk(formulario, objetos, conexao);
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
 			destacarObjt(formulario, objetos, conexao);
+		} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
+			destacarProp(formulario, objetos, conexao, superficie);
 		}
 	}
 
@@ -201,6 +203,21 @@ public class Fichario extends JTabbedPane {
 
 		desktop.ini(getGraphics());
 		desktop.distribuir(-20);
+	}
+
+	private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie) {
+		int x = 10;
+		int y = 10;
+
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela2())) {
+				Object[] array = Util.criarArray(conexao, objeto, null);
+				superficie.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
+				objeto.setSelecionado(false);
+				x += 25;
+				y += 25;
+			}
+		}
 	}
 
 	private void destacarObjt(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
