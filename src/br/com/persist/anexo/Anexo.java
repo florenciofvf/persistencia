@@ -1,6 +1,8 @@
 package br.com.persist.anexo;
 
 import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -36,6 +38,7 @@ public class Anexo extends JTree {
 		setBorder(BorderFactory.createEmptyBorder());
 		setCellRenderer(new AnexoTreeCellRenderer());
 		addMouseListener(mouseListenerInner);
+		addKeyListener(keyListenerInner);
 		ouvintes = new ArrayList<>();
 		setShowsRootHandles(true);
 		setRootVisible(true);
@@ -80,6 +83,15 @@ public class Anexo extends JTree {
 
 		AnexoUtil.excluirEstrutura(this, selecionado);
 	}
+
+	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				mouseListenerInner.mouseClicked(new MouseEvent(Anexo.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+			}
+		}
+	};
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
