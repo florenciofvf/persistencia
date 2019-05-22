@@ -1,6 +1,8 @@
 package br.com.persist.arvore;
 
 import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -35,6 +37,7 @@ public class Arvore extends JTree {
 		setCellRenderer(new ArquivoTreeCellRenderer());
 		setBorder(BorderFactory.createEmptyBorder());
 		addMouseListener(mouseListenerInner);
+		addKeyListener(keyListenerInner);
 		ouvintes = new ArrayList<>();
 		setShowsRootHandles(true);
 		setRootVisible(true);
@@ -79,6 +82,16 @@ public class Arvore extends JTree {
 
 		ArvoreUtil.excluirEstrutura(this, selecionado);
 	}
+
+	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				popupTrigger = false;
+				mouseListenerInner.mouseClicked(new MouseEvent(Arvore.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+			}
+		}
+	};
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
