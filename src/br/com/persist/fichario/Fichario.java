@@ -218,6 +218,8 @@ public class Fichario extends JTabbedPane {
 				y += 25;
 			}
 		}
+
+		superficie.repaint();
 	}
 
 	private void destacarObjt(Formulario formulario, List<Objeto> objetos, Conexao conexao) {

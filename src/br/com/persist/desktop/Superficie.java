@@ -1101,11 +1101,13 @@ public class Superficie extends Desktop {
 
 		class MenuDestacar extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
+			Action proprioAcao = Action.actionMenu("label.proprio", null);
 			Action desktopAcao = Action.actionMenuDesktop();
 
 			MenuDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
+				addMenuItem(proprioAcao);
 
 				formularioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
 						Constantes.TIPO_CONTAINER_FORMULARIO));
@@ -1113,6 +1115,8 @@ public class Superficie extends Desktop {
 						Constantes.TIPO_CONTAINER_FICHARIO));
 				desktopAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
 						Constantes.TIPO_CONTAINER_DESKTOP));
+				proprioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
+						Constantes.TIPO_CONTAINER_PROPRIO));
 			}
 		}
 
