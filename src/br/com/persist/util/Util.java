@@ -281,16 +281,18 @@ public class Util {
 		return fileChooser;
 	}
 
-	public static SplitPane splitPaneVertical(Component left, Component right) {
+	public static SplitPane splitPaneVertical(Component left, Component right, int local) {
 		SplitPane splitPane = criarSplitPane(SplitPane.VERTICAL_SPLIT);
+		splitPane.setDividerLocation(local);
 		splitPane.setRightComponent(right);
 		splitPane.setLeftComponent(left);
 
 		return splitPane;
 	}
 
-	public static SplitPane splitPaneHorizontal(Component left, Component right) {
+	public static SplitPane splitPaneHorizontal(Component left, Component right, int local) {
 		SplitPane splitPane = criarSplitPane(SplitPane.HORIZONTAL_SPLIT);
+		splitPane.setDividerLocation(local);
 		splitPane.setRightComponent(right);
 		splitPane.setLeftComponent(left);
 
