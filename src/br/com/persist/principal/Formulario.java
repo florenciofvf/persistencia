@@ -407,16 +407,19 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			private Action layout1Acao = Action.actionMenu("label.layout_1", null);
 			private Action layout2Acao = Action.actionMenu("label.layout_2", null);
 			private Action layout3Acao = Action.actionMenu("label.layout_3", null);
+			private Action layout4Acao = Action.actionMenu("label.layout_4", null);
 
 			MenuLayout() {
 				super("label.layout", Icones.REGION);
 				addMenuItem(layout1Acao);
 				addMenuItem(layout2Acao);
 				addMenuItem(layout3Acao);
+				addMenuItem(layout4Acao);
 
 				layout1Acao.setActionListener(e -> Formulario.this.add(BorderLayout.CENTER, fichario));
 				layout2Acao.setActionListener(e -> layout2());
 				layout3Acao.setActionListener(e -> layout3());
+				layout4Acao.setActionListener(e -> layout4());
 			}
 
 			private void layout2() {
@@ -425,10 +428,25 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				SplitPane esquerdo = Util.splitPaneVertical(arvore, anexo);
 				SplitPane completo = Util.splitPaneHorizontal(esquerdo, fichario);
 				Formulario.this.add(BorderLayout.CENTER, completo);
+				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 
 			private void layout3() {
+				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this, null);
+				AnexoContainer anexo = new AnexoContainer(null, Formulario.this, null);
+				SplitPane esquerdo = Util.splitPaneVertical(anexo, arvore);
+				SplitPane completo = Util.splitPaneHorizontal(esquerdo, fichario);
+				Formulario.this.add(BorderLayout.CENTER, completo);
+				SwingUtilities.updateComponentTreeUI(Formulario.this);
+			}
 
+			private void layout4() {
+				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this, null);
+				AnexoContainer anexo = new AnexoContainer(null, Formulario.this, null);
+				SplitPane abaixo = Util.splitPaneHorizontal(arvore, anexo);
+				SplitPane completo = Util.splitPaneVertical(fichario, abaixo);
+				Formulario.this.add(BorderLayout.CENTER, completo);
+				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 		}
 
