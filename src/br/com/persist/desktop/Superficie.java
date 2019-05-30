@@ -816,6 +816,10 @@ public class Superficie extends Desktop {
 	public void excluirSelecionados() {
 		Objeto objeto = getPrimeiroObjetoSelecionado();
 
+		if (objeto != null && !Util.confirmaExclusao(Superficie.this)) {
+			return;
+		}
+
 		while (objeto != null) {
 			excluir(objeto);
 			objeto = getPrimeiroObjetoSelecionado();
