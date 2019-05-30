@@ -49,6 +49,7 @@ public class Icones {
 	public static final Icon PARTIR = criarImagem("partir");
 	public static final Icon FIELDS = criarImagem("fields");
 	public static final Icon PANEL2 = criarImagem("panel2");
+	public static final Icon REGION = criarImagem("region");
 	public static final Icon SALVAR = criarImagem("save1");
 	public static final Icon CRIAR = criarImagem("create");
 	public static final Icon FECHAR = criarImagem("close");

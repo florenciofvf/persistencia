@@ -218,6 +218,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConfig());
 			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuLayout());
+			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(fecharAcao));
 			add(menuArquivo);
 			add(menuLAF);
@@ -394,6 +396,32 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				}
 
 				return fileChooser.getSelectedFiles();
+			}
+		}
+
+		class MenuLayout extends Menu {
+			private static final long serialVersionUID = 1L;
+			private Action layout1Acao = Action.actionMenu("label.layout_1", null);
+			private Action layout2Acao = Action.actionMenu("label.layout_2", null);
+			private Action layout3Acao = Action.actionMenu("label.layout_3", null);
+
+			MenuLayout() {
+				super("label.layout", Icones.REGION);
+				addMenuItem(layout1Acao);
+				addMenuItem(layout2Acao);
+				addMenuItem(layout3Acao);
+
+				layout1Acao.setActionListener(e -> Formulario.this.add(BorderLayout.CENTER, fichario));
+				layout2Acao.setActionListener(e -> layout2());
+				layout3Acao.setActionListener(e -> layout3());
+			}
+
+			private void layout2() {
+
+			}
+
+			private void layout3() {
+
 			}
 		}
 
