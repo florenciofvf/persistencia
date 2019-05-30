@@ -8,6 +8,7 @@ public class SplitPane extends JSplitPane {
 
 	public SplitPane(int orientacao) {
 		super(orientacao);
+		setContinuousLayout(true);
 		setBorder(BorderFactory.createEmptyBorder());
 	}
 }
