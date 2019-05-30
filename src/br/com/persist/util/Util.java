@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
+import br.com.persist.comp.SplitPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
@@ -278,6 +279,26 @@ public class Util {
 		}
 
 		return fileChooser;
+	}
+
+	public static SplitPane splitPaneVertical(Component left, Component right) {
+		SplitPane splitPane = criarSplitPane(SplitPane.VERTICAL_SPLIT);
+		splitPane.setRightComponent(right);
+		splitPane.setLeftComponent(left);
+
+		return splitPane;
+	}
+
+	public static SplitPane splitPaneHorizontal(Component left, Component right) {
+		SplitPane splitPane = criarSplitPane(SplitPane.HORIZONTAL_SPLIT);
+		splitPane.setRightComponent(right);
+		splitPane.setLeftComponent(left);
+
+		return splitPane;
+	}
+
+	public static SplitPane criarSplitPane(int orientacao) {
+		return new SplitPane(orientacao);
 	}
 
 	public static final byte ARRAY_INDICE_OBJ = 0;
