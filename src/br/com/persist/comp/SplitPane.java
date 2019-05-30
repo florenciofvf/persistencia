@@ -1,5 +1,6 @@
 package br.com.persist.comp;
 
+import javax.swing.BorderFactory;
 import javax.swing.JSplitPane;
 
 public class SplitPane extends JSplitPane {
@@ -7,5 +8,6 @@ public class SplitPane extends JSplitPane {
 
 	public SplitPane(int orientacao) {
 		super(orientacao);
+		setBorder(BorderFactory.createEmptyBorder());
 	}
 }

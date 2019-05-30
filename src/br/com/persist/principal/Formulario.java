@@ -23,6 +23,9 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
+import br.com.persist.comp.SplitPane;
+import br.com.persist.container.AnexoContainer;
+import br.com.persist.container.ArvoreContainer;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
@@ -417,7 +420,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 
 			private void layout2() {
-
+				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this, null);
+				AnexoContainer anexo = new AnexoContainer(null, Formulario.this, null);
+				SplitPane esquerdo = Util.splitPaneVertical(arvore, anexo);
+				SplitPane completo = Util.splitPaneHorizontal(esquerdo, fichario);
+				Formulario.this.add(BorderLayout.CENTER, completo);
 			}
 
 			private void layout3() {
