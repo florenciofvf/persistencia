@@ -52,6 +52,12 @@ public class ConfigContainer extends Panel {
 			new NomeValor("label.40000", 40000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.60000", 60000, NomeValor.INTERVALO_AUTO) };
 
+	private final transient NomeValor[] layouts = { new NomeValor("label.layout_1", 1, NomeValor.LAYOUTS),
+			new NomeValor("label.layout_2", 2, NomeValor.LAYOUTS),
+			new NomeValor("label.layout_3", 3, NomeValor.LAYOUTS),
+			new NomeValor("label.layout_4", 4, NomeValor.LAYOUTS),
+			new NomeValor("label.layout_5", 5, NomeValor.LAYOUTS) };
+
 	private final transient NomeValor[] destacados = {
 			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
 			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
@@ -89,9 +95,11 @@ public class ConfigContainer extends Panel {
 		Panel panelDestacados = criarPainelGrupo(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		Panel panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
 		Panel panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
+		Panel panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
 
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
+		Label tituloLayoutAbr = criarLabelTitulo("label.layout_abertura");
 		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
 
 		Panel container = new Panel(new GridLayout(0, 1));
@@ -100,6 +108,9 @@ public class ConfigContainer extends Panel {
 		container.add(new JSeparator());
 		container.add(tituloIntervalo);
 		container.add(panelIntervalos);
+		container.add(new JSeparator());
+		container.add(tituloLayoutAbr);
+		container.add(panelLayouts);
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkAbortarFecharComESC);
@@ -215,7 +226,7 @@ public class ConfigContainer extends Panel {
 		static final byte INTERVALO_AUTO = 2;
 		static final byte POSICAO_ABA = 1;
 		static final byte DESTACADOS = 3;
-		static final byte LAYOUT = 4;
+		static final byte LAYOUTS = 4;
 		final String nome;
 		final int valor;
 		final int tipo;
@@ -243,6 +254,8 @@ public class ConfigContainer extends Panel {
 					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
 					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
+				} else if (nomeValor.tipo == NomeValor.LAYOUTS) {
+					Preferencias.setLayoutAbertura(nomeValor.valor);
 				}
 			});
 		}
