@@ -160,6 +160,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				if (Preferencias.isAbrirComAnexo()) {
 					fichario.novoAnexo(Formulario.this);
 				}
+
+				menuPrincipal.menuLayout.aplicarLayout();
 			}
 
 			@Override
@@ -197,6 +199,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private Action fecharAcao = Action.actionMenuFechar();
 		final Menu menuArquivo = new Menu("label.arquivo");
 		final Menu menuLAF = new Menu("label.aparencia");
+		final MenuLayout menuLayout = new MenuLayout();
 
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
@@ -222,7 +225,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConfig());
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuLayout());
+			menuArquivo.add(menuLayout);
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuItem(fecharAcao));
 			add(menuArquivo);
@@ -484,6 +487,22 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				splitPane = Util.splitPaneVertical(fichario, abaixo, d.height / 2);
 				Formulario.this.add(BorderLayout.CENTER, splitPane);
 				SwingUtilities.updateComponentTreeUI(Formulario.this);
+			}
+
+			void aplicarLayout() {
+				int valor = Preferencias.getLayoutAbertura();
+
+				if (valor == 1) {
+					layout1();
+				} else if (valor == 2) {
+					layout2();
+				} else if (valor == 3) {
+					layout3();
+				} else if (valor == 4) {
+					layout4();
+				} else if (valor == 5) {
+					layout5();
+				}
 			}
 		}
 
