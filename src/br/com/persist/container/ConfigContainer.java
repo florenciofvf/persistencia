@@ -215,6 +215,7 @@ public class ConfigContainer extends Panel {
 		static final byte INTERVALO_AUTO = 2;
 		static final byte POSICAO_ABA = 1;
 		static final byte DESTACADOS = 3;
+		static final byte LAYOUT = 4;
 		final String nome;
 		final int valor;
 		final int tipo;

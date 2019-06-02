@@ -18,6 +18,7 @@ public class Preferencias {
 	private static boolean abrirComArvore;
 	private static boolean abrirComAnexo;
 	private static String formDialogo;
+	private static int layoutAbertura;
 	private static boolean abrirAuto;
 	private static String formFicha;
 
@@ -40,6 +41,7 @@ public class Preferencias {
 		abrirComArvore = pref.getBoolean("abrir_com_arvore", true);
 		abrirComAnexo = pref.getBoolean("abrir_com_anexo", true);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
+		layoutAbertura = pref.getInt("layout_abertura", 1);
 		abrirAuto = pref.getBoolean("abrir_auto", false);
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
 
@@ -71,6 +73,7 @@ public class Preferencias {
 		pref.putBoolean("abrir_com_arvore", abrirComArvore);
 		pref.putBoolean("abrir_com_anexo", abrirComAnexo);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
+		pref.putInt("layout_abertura", layoutAbertura);
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
@@ -194,5 +197,13 @@ public class Preferencias {
 
 	public static void setAbrirComAnexo(boolean abrirComAnexo) {
 		Preferencias.abrirComAnexo = abrirComAnexo;
+	}
+
+	public static int getLayoutAbertura() {
+		return layoutAbertura;
+	}
+
+	public static void setLayoutAbertura(int layoutAbertura) {
+		Preferencias.layoutAbertura = layoutAbertura;
 	}
 }
