@@ -137,7 +137,8 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	public void excluirArquivo(Anexo anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
-		if (arquivo != null && arquivo.getPai() != null && Util.confirmaExclusao(AnexoContainer.this)) {
+		if (arquivo != null && arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile())
+				&& Util.confirmaExclusao(AnexoContainer.this)) {
 			arquivo.excluir();
 			AnexoUtil.excluirEstrutura(anexo, arquivo);
 		}
@@ -147,7 +148,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	public void renomearArquivo(Anexo anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
-		if (arquivo == null || arquivo.getPai() == null) {
+		if (arquivo == null || arquivo.getPai() == null || AnexoModelo.anexosInfo.equals(arquivo.getFile())) {
 			return;
 		}
 
