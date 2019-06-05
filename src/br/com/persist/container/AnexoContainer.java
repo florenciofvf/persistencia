@@ -160,6 +160,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 
 		if (arquivo.renomear(resp.toString())) {
 			AnexoUtil.refreshEstrutura(anexo, arquivo);
+			AnexoModelo.putArquivo(arquivo);
 		}
 	}
 
