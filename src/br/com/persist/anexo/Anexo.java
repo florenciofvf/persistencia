@@ -207,8 +207,8 @@ public class Anexo extends JTree {
 
 			MenuAbrir() {
 				super("label.abrir", Icones.ABRIR);
-				addMenuItem(editarAcao);
 				addMenuItem(abrirAcao);
+				addMenuItem(editarAcao);
 				addMenuItem(imprimirAcao);
 
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirArquivo(Anexo.this)));
