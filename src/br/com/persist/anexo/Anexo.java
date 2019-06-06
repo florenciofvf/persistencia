@@ -205,11 +205,11 @@ public class Anexo extends JTree {
 		class MenuAbrir extends Menu {
 			private static final long serialVersionUID = 1L;
 			private Action imprimirAcao = Action.actionMenu("label.imprimir", Icones.PRINT);
-			private Action editarAcao = Action.actionMenu("label.editar", null);
-			private Action abrirAcao = Action.actionMenu("label.abrir", null);
+			private Action editarAcao = Action.actionMenu("label.editar", Icones.EDIT);
+			private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
 
 			MenuAbrir() {
-				super("label.opcoes", Icones.ABRIR);
+				super("label.opcoes", Icones.CONFIG);
 				addMenuItem(abrirAcao);
 				addMenuItem(editarAcao);
 				addMenuItem(imprimirAcao);

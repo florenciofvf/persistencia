@@ -67,6 +67,7 @@ public class Icones {
 	public static final Icon TEXTO = criarImagem("text");
 	public static final Icon ICON = criarImagem("icons");
 	public static final Icon COR = criarImagem("color");
+	public static final Icon EDIT = criarImagem("edit");
 	public static final Icon RULE = criarImagem("rule");
 	public static final Icon CALC = criarImagem("calc");
 	public static final Icon CUBO = criarImagem("cubo");
