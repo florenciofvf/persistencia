@@ -201,6 +201,7 @@ public class Anexo extends JTree {
 
 		class MenuAbrir extends Menu {
 			private static final long serialVersionUID = 1L;
+			private Action imprimirAcao = Action.actionMenu("label.imprimir", null);
 			private Action editarAcao = Action.actionMenu("label.editar", null);
 			private Action abrirAcao = Action.actionMenu("label.abrir", null);
 
@@ -208,7 +209,9 @@ public class Anexo extends JTree {
 				super("label.abrir", Icones.ABRIR);
 				addMenuItem(editarAcao);
 				addMenuItem(abrirAcao);
+				addMenuItem(imprimirAcao);
 
+				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirArquivo(Anexo.this)));
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarArquivo(Anexo.this)));
 				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(Anexo.this)));
 			}

@@ -104,6 +104,21 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	}
 
 	@Override
+	public void imprimirArquivo(Anexo anexo) {
+		Arquivo arquivo = anexo.getObjetoSelecionado();
+
+		if (arquivo == null) {
+			return;
+		}
+
+		try {
+			desktop.print(arquivo.getFile());
+		} catch (IOException e) {
+			Util.mensagem(AnexoContainer.this, e.getMessage());
+		}
+	}
+
+	@Override
 	public void editarArquivo(Anexo anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
