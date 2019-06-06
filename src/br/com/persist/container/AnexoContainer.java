@@ -96,6 +96,10 @@ public class AnexoContainer extends Panel implements AnexoListener {
 						pw.println(Constantes.ICONE + arquivo.getNomeIcone());
 					}
 
+					if (arquivo.getCorFonte() != null) {
+						pw.println(Constantes.COR_FONTE + arquivo.getCorFonte().getRGB());
+					}
+
 					pw.println();
 				}
 			} catch (Exception ex) {

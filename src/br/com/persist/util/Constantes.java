@@ -26,6 +26,7 @@ public class Constantes {
 	public static final String LABEL_ARVORE = "label.arvore";
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
+	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;

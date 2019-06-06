@@ -190,6 +190,7 @@ public class Arquivo {
 		if (arq != null) {
 			setIcone(arq.getIcone(), arq.getNomeIcone());
 			setPadraoAbrir(arq.isPadraoAbrir());
+			setCorFonte(arq.getCorFonte());
 			arq.setChecado(true);
 		}
 	}

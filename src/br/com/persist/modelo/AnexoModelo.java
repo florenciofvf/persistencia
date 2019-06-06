@@ -1,5 +1,6 @@
 package br.com.persist.modelo;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,6 +67,10 @@ public class AnexoModelo implements TreeModel {
 					} else if (sel != null && linha.startsWith(Constantes.PADRAO_ABRIR)) {
 						String padraoAbrir = linha.substring(Constantes.PADRAO_ABRIR.length());
 						sel.setPadraoAbrir(Boolean.parseBoolean(padraoAbrir));
+
+					} else if (sel != null && linha.startsWith(Constantes.COR_FONTE)) {
+						String cor = linha.substring(Constantes.COR_FONTE.length());
+						sel.setCorFonte(new Color(Integer.parseInt(cor)));
 					}
 
 					linha = br.readLine();
