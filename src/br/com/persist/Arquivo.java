@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.Constantes;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -25,6 +26,7 @@ public class Arquivo {
 	private boolean processado;
 	private String nomeIcone;
 	private boolean checado;
+	private Color corFonte;
 	private Arquivo pai;
 	private Icon icone;
 	private File file;
@@ -211,5 +213,13 @@ public class Arquivo {
 
 	public void setChecado(boolean checado) {
 		this.checado = checado;
+	}
+
+	public Color getCorFonte() {
+		return corFonte;
+	}
+
+	public void setCorFonte(Color corFonte) {
+		this.corFonte = corFonte;
 	}
 }

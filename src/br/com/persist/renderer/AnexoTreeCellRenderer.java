@@ -21,6 +21,10 @@ public class AnexoTreeCellRenderer extends DefaultTreeCellRenderer {
 			if (obj.getIcone() != null) {
 				setIcon(obj.getIcone());
 			}
+
+			if (obj.getCorFonte() != null) {
+				setForeground(obj.getCorFonte());
+			}
 		}
 
 		return this;
