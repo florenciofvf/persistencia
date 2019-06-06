@@ -7,6 +7,8 @@ public interface AnexoListener {
 
 	public void imprimirArquivo(Anexo anexo);
 
+	public void corFonteArquivo(Anexo anexo);
+
 	public void excluirArquivo(Anexo anexo);
 
 	public void editarArquivo(Anexo anexo);

@@ -17,6 +17,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.dialogo.ArquivoCorDialogo;
 import br.com.persist.dialogo.ArquivoIconeDialogo;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.listener.AnexoListener;
@@ -178,6 +179,20 @@ public class AnexoContainer extends Panel implements AnexoListener {
 			AnexoUtil.refreshEstrutura(anexo, arquivo);
 			AnexoModelo.putArquivo(arquivo);
 		}
+	}
+
+	@Override
+	public void corFonteArquivo(Anexo anexo) {
+		Arquivo arquivo = anexo.getObjetoSelecionado();
+
+		if (arquivo == null) {
+			return;
+		}
+
+		ArquivoCorDialogo form = new ArquivoCorDialogo((Frame) null, arquivo);
+		form.setLocationRelativeTo(AnexoContainer.this);
+		form.setVisible(true);
+		AnexoUtil.refreshEstrutura(anexo, arquivo);
 	}
 
 	@Override

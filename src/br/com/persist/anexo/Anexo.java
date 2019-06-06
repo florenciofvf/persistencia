@@ -168,6 +168,7 @@ public class Anexo extends JTree {
 		private ItemCheckBox chkPadraoAbrir = new ItemCheckBox("label.padrao_abrir", Icones.EXECUTAR);
 		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
+		private Action corFonteAcao = Action.actionMenu("label.cor_fonte", Icones.COR);
 		private Action iconeAcao = Action.actionMenu("label.icone", Icones.ICON);
 
 		public AnexoPopup() {
@@ -175,9 +176,11 @@ public class Anexo extends JTree {
 			add(true, chkPadraoAbrir);
 			addMenuItem(true, renomearAcao);
 			addMenuItem(true, excluirAcao);
+			addMenuItem(true, corFonteAcao);
 			addMenuItem(true, iconeAcao);
 
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(Anexo.this)));
+			corFonteAcao.setActionListener(e -> ouvintes.forEach(o -> o.corFonteArquivo(Anexo.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));
 			iconeAcao.setActionListener(e -> ouvintes.forEach(o -> o.iconeArquivo(Anexo.this)));
 			chkPadraoAbrir.addActionListener(e -> padraoAbrir(chkPadraoAbrir.isSelected()));
