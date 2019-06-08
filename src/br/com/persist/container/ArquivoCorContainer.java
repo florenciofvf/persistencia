@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JColorChooser;
 import javax.swing.event.ChangeEvent;
@@ -34,6 +35,8 @@ public class ArquivoCorContainer extends Panel implements ChangeListener {
 
 		if (arquivo.getCorFonte() != null) {
 			colorChooser.setColor(arquivo.getCorFonte());
+		} else {
+			colorChooser.setColor(Color.BLACK);
 		}
 	}
 
