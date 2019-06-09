@@ -15,6 +15,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.LinkAuto;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Util;
 
@@ -50,7 +51,8 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	private void chave(StringBuilder builder) {
-		Map<String, List<String>> campoNomes = Util.criarMapaCampoNomes(objeto.getChaveamento());
+		Map<String, List<String>> campoNomes = Util.criarMapaCampoNomes(!Util.estaVazio(objeto.getChaveamento())
+				? objeto.getChaveamento() : Mensagens.getString("hint.chaveamento"));
 		int i = 0;
 
 		for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
@@ -68,7 +70,8 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	private void buscaAuto(StringBuilder builder) {
-		List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
+		List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(!Util.estaVazio(objeto.getBuscaAutomatica())
+				? objeto.getBuscaAutomatica() : Mensagens.getString("hint.buscaAuto"));
 
 		for (int i = 0; i < listaGrupo.size(); i++) {
 			Grupo grupo = listaGrupo.get(i);
@@ -83,7 +86,8 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	private void linkAuto(StringBuilder builder) {
-		List<Link> listaLink = LinkAuto.criarLinksAuto(objeto.getLinkAutomatico());
+		List<Link> listaLink = LinkAuto.criarLinksAuto(!Util.estaVazio(objeto.getLinkAutomatico())
+				? objeto.getLinkAutomatico() : Mensagens.getString("hint.linkAuto"));
 
 		for (int i = 0; i < listaLink.size(); i++) {
 			Link link = listaLink.get(i);
