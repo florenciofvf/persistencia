@@ -5,6 +5,7 @@ import br.com.persist.util.Constantes;
 public class Coluna {
 	private final boolean colunaInfo;
 	private final String tipoBanco;
+	private final boolean autoInc;
 	private final boolean nulavel;
 	private final boolean numero;
 	private final boolean chave;
@@ -15,10 +16,11 @@ public class Coluna {
 	private final int indice;
 
 	public Coluna(String nome, int indice) {
-		this(nome, indice, false, false, false, null, new Config(-1, null, false, false));
+		this(nome, indice, false, false, false, null, new Config(-1, null, false, false, false));
 	}
 
 	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, Config config) {
+		this.autoInc = config.autoIncremento;
 		this.colunaInfo = config.colunaInfo;
 		this.tipoBanco = config.tipoBanco;
 		this.tamanho = config.tamanho;
@@ -32,12 +34,14 @@ public class Coluna {
 	}
 
 	public static class Config {
+		final boolean autoIncremento;
 		final boolean colunaInfo;
 		final String tipoBanco;
 		final boolean nulavel;
 		final int tamanho;
 
-		public Config(int tamanho, String tipoBanco, boolean nulavel, boolean colunaInfo) {
+		public Config(int tamanho, String tipoBanco, boolean nulavel, boolean colunaInfo, boolean autoIncremento) {
+			this.autoIncremento = autoIncremento;
 			this.colunaInfo = colunaInfo;
 			this.tipoBanco = tipoBanco;
 			this.tamanho = tamanho;
@@ -57,6 +61,7 @@ public class Coluna {
 		sb.append("NUMERICO: " + numero + Constantes.QL);
 		sb.append("NULAVEL: " + nulavel + Constantes.QL);
 		sb.append("COLUNA: " + tipoBanco + Constantes.QL);
+		sb.append("AUTO INCR: " + autoInc + Constantes.QL);
 
 		return sb.toString();
 	}

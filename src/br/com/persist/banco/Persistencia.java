@@ -104,6 +104,7 @@ public class Persistencia {
 				String classe = rsmd.getColumnClassName(i);
 				String nome = rsmd.getColumnName(i).trim();
 				boolean nulavel = rsmd.isNullable(i) == 1;
+				boolean autoInc = rsmd.isAutoIncrement(i);
 				Boolean numero = mapa.get(classe);
 				int tipo = rsmd.getColumnType(i);
 				Boolean chave = false;
@@ -120,13 +121,13 @@ public class Persistencia {
 
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave,
 						tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe,
-						new Coluna.Config(tamanho, tipoBanco, nulavel, false));
+						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc));
 				colunas.add(coluna);
 			}
 
 			if (objeto.isColunaInfo()) {
 				Coluna coluna = new Coluna("INFO", i - 1, false, false, false, "INFO",
-						new Coluna.Config(0, "INFO", true, true));
+						new Coluna.Config(0, "INFO", true, true, false));
 				colunas.add(coluna);
 			}
 
