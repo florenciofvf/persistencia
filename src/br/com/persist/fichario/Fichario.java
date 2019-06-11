@@ -45,7 +45,7 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.DesktopFormulario;
-import br.com.persist.formulario.SuperficieFormulario;
+import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
@@ -377,7 +377,7 @@ public class Fichario extends JTabbedPane {
 		Container container = new Container(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 
-		SuperficieFormulario form = new SuperficieFormulario(formulario, container, file);
+		ContainerFormulario form = new ContainerFormulario(formulario, container, file);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 		container.estadoSelecao();

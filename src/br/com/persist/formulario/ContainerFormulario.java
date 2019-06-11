@@ -8,11 +8,11 @@ import java.io.File;
 import br.com.persist.desktop.Container;
 import br.com.persist.principal.Formulario;
 
-public class SuperficieFormulario extends AbstratoFormulario {
+public class ContainerFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final Container container;
 
-	public SuperficieFormulario(Formulario formulario, Container container, File file) {
+	public ContainerFormulario(Formulario formulario, Container container, File file) {
 		super(file.getName());
 		container.setSuperficieFormulario(this);
 		this.container = container;

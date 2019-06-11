@@ -137,8 +137,8 @@ public class Superficie extends Desktop {
 
 			Frame frame = formulario;
 
-			if (container.getSuperficieFormulario() != null) {
-				frame = container.getSuperficieFormulario();
+			if (container.getContainerFormulario() != null) {
+				frame = container.getContainerFormulario();
 			}
 
 			MacroDialogo form = new MacroDialogo(frame);
@@ -520,8 +520,8 @@ public class Superficie extends Desktop {
 			if (!shift) {
 				Frame frame = formulario;
 
-				if (container.getSuperficieFormulario() != null) {
-					frame = container.getSuperficieFormulario();
+				if (container.getContainerFormulario() != null) {
+					frame = container.getContainerFormulario();
 				}
 
 				RelacaoDialogo form = new RelacaoDialogo(frame, Superficie.this, relacao);
@@ -686,8 +686,8 @@ public class Superficie extends Desktop {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				Frame frame = formulario;
 
-				if (container.getSuperficieFormulario() != null) {
-					frame = container.getSuperficieFormulario();
+				if (container.getContainerFormulario() != null) {
+					frame = container.getContainerFormulario();
 				}
 
 				if (selecionadoObjeto != null) {
@@ -1041,8 +1041,8 @@ public class Superficie extends Desktop {
 				formularioAcao.setActionListener(e -> {
 					Frame frame = formulario;
 
-					if (container.getSuperficieFormulario() != null) {
-						frame = container.getSuperficieFormulario();
+					if (container.getContainerFormulario() != null) {
+						frame = container.getContainerFormulario();
 					}
 
 					ConsultaFormulario form = new ConsultaFormulario(formulario, container.getConexaoPadrao());
@@ -1053,8 +1053,8 @@ public class Superficie extends Desktop {
 				dialogoAcao.setActionListener(e -> {
 					Frame frame = formulario;
 
-					if (container.getSuperficieFormulario() != null) {
-						frame = container.getSuperficieFormulario();
+					if (container.getContainerFormulario() != null) {
+						frame = container.getContainerFormulario();
 					}
 
 					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, container.getConexaoPadrao());
@@ -1076,8 +1076,8 @@ public class Superficie extends Desktop {
 				formularioAcao.setActionListener(e -> {
 					Frame frame = formulario;
 
-					if (container.getSuperficieFormulario() != null) {
-						frame = container.getSuperficieFormulario();
+					if (container.getContainerFormulario() != null) {
+						frame = container.getContainerFormulario();
 					}
 
 					UpdateFormulario form = new UpdateFormulario(formulario, container.getConexaoPadrao());
@@ -1088,8 +1088,8 @@ public class Superficie extends Desktop {
 				dialogoAcao.setActionListener(e -> {
 					Frame frame = formulario;
 
-					if (container.getSuperficieFormulario() != null) {
-						frame = container.getSuperficieFormulario();
+					if (container.getContainerFormulario() != null) {
+						frame = container.getContainerFormulario();
 					}
 
 					UpdateDialogo form = new UpdateDialogo(frame, formulario, container.getConexaoPadrao());
@@ -1129,8 +1129,8 @@ public class Superficie extends Desktop {
 			configuracaoAcao.setActionListener(e -> {
 				Frame frame = formulario;
 
-				if (container.getSuperficieFormulario() != null) {
-					frame = container.getSuperficieFormulario();
+				if (container.getContainerFormulario() != null) {
+					frame = container.getContainerFormulario();
 				}
 
 				if (selecionadoObjeto != null) {
@@ -1553,8 +1553,8 @@ public class Superficie extends Desktop {
 
 		Frame frame = formulario;
 
-		if (container.getSuperficieFormulario() != null) {
-			frame = container.getSuperficieFormulario();
+		if (container.getContainerFormulario() != null) {
+			frame = container.getContainerFormulario();
 		}
 
 		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");

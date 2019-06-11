@@ -25,7 +25,7 @@ import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ConsultaFormulario;
-import br.com.persist.formulario.SuperficieFormulario;
+import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
@@ -44,7 +44,7 @@ public class Container extends Panel {
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
-	private SuperficieFormulario superficieFormulario;
+	private ContainerFormulario containerFormulario;
 	private boolean abortarFecharComESCSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -181,12 +181,12 @@ public class Container extends Panel {
 
 				formularioAcao.setActionListener(e -> {
 					ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
+					form.setLocationRelativeTo(containerFormulario != null ? containerFormulario : formulario);
 					form.setVisible(true);
 				});
 
 				dialogoAcao.setActionListener(e -> {
-					Frame frame = superficieFormulario != null ? superficieFormulario : formulario;
+					Frame frame = containerFormulario != null ? containerFormulario : formulario;
 					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
@@ -205,12 +205,12 @@ public class Container extends Panel {
 
 				formularioAcao.setActionListener(e -> {
 					UpdateFormulario form = new UpdateFormulario(formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(superficieFormulario != null ? superficieFormulario : formulario);
+					form.setLocationRelativeTo(containerFormulario != null ? containerFormulario : formulario);
 					form.setVisible(true);
 				});
 
 				dialogoAcao.setActionListener(e -> {
-					Frame frame = superficieFormulario != null ? superficieFormulario : formulario;
+					Frame frame = containerFormulario != null ? containerFormulario : formulario;
 					UpdateDialogo form = new UpdateDialogo(frame, formulario, getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
@@ -319,7 +319,7 @@ public class Container extends Panel {
 		}
 
 		private void titulo() {
-			if (superficieFormulario == null) {
+			if (containerFormulario == null) {
 				Fichario fichario = formulario.getFichario();
 				int indice = fichario.getSelectedIndex();
 
@@ -327,7 +327,7 @@ public class Container extends Panel {
 					fichario.setTitleAt(indice, arquivo.getName());
 				}
 			} else {
-				superficieFormulario.setTitle(arquivo.getName());
+				containerFormulario.setTitle(arquivo.getName());
 			}
 		}
 
@@ -338,7 +338,7 @@ public class Container extends Panel {
 	}
 
 	public void excluir() {
-		if (superficieFormulario == null) {
+		if (containerFormulario == null) {
 			Fichario fichario = formulario.getFichario();
 			int indice = fichario.getSelectedIndex();
 
@@ -412,12 +412,12 @@ public class Container extends Panel {
 		}
 	}
 
-	public SuperficieFormulario getSuperficieFormulario() {
-		return superficieFormulario;
+	public ContainerFormulario getContainerFormulario() {
+		return containerFormulario;
 	}
 
-	public void setSuperficieFormulario(SuperficieFormulario superficieFormulario) {
-		this.superficieFormulario = superficieFormulario;
+	public void setSuperficieFormulario(ContainerFormulario containerFormulario) {
+		this.containerFormulario = containerFormulario;
 	}
 
 	public void excluido() {
