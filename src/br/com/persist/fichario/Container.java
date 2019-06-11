@@ -334,8 +334,7 @@ public class Container extends Panel {
 		}
 
 		private void configAtalho(Acao acao, int tecla) {
-			Container.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(Superficie.getKeyStroke(tecla),
-					acao.getChave());
+			Container.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(Superficie.getKeyStroke(tecla), acao.getChave());
 			Container.this.getActionMap().put(acao.getChave(), acao);
 		}
 	}
