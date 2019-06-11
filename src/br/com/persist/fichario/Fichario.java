@@ -39,6 +39,7 @@ import br.com.persist.container.ConsultaContainer;
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.container.UpdateContainer;
+import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;

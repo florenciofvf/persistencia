@@ -5,7 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import br.com.persist.fichario.Container;
+import br.com.persist.desktop.Container;
 import br.com.persist.principal.Formulario;
 
 public class SuperficieFormulario extends AbstratoFormulario {

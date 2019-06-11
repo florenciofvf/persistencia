@@ -36,7 +36,6 @@ import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoConfigDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
-import br.com.persist.fichario.Container;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
