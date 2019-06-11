@@ -40,7 +40,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
-public class FicharioAbaContainer extends Panel {
+public class Container extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
@@ -54,7 +54,7 @@ public class FicharioAbaContainer extends Panel {
 	private final Superficie superficie;
 	private File arquivo;
 
-	public FicharioAbaContainer(Formulario formulario) {
+	public Container(Formulario formulario) {
 		cmbConexao = Util.criarComboConexao(formulario, null);
 		superficie = new Superficie(formulario, this);
 		this.formulario = formulario;
@@ -334,9 +334,9 @@ public class FicharioAbaContainer extends Panel {
 		}
 
 		private void configAtalho(Acao acao, int tecla) {
-			FicharioAbaContainer.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(Superficie.getKeyStroke(tecla),
+			Container.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(Superficie.getKeyStroke(tecla),
 					acao.getChave());
-			FicharioAbaContainer.this.getActionMap().put(acao.getChave(), acao);
+			Container.this.getActionMap().put(acao.getChave(), acao);
 		}
 	}
 

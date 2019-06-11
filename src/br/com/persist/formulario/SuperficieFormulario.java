@@ -5,14 +5,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import br.com.persist.fichario.FicharioAbaContainer;
+import br.com.persist.fichario.Container;
 import br.com.persist.principal.Formulario;
 
 public class SuperficieFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
-	private final FicharioAbaContainer container;
+	private final Container container;
 
-	public SuperficieFormulario(Formulario formulario, FicharioAbaContainer container, File file) {
+	public SuperficieFormulario(Formulario formulario, Container container, File file) {
 		super(file.getName());
 		container.setSuperficieFormulario(this);
 		this.container = container;

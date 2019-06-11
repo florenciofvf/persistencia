@@ -373,7 +373,7 @@ public class Fichario extends JTabbedPane {
 
 	public void abrirFormulario(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
 			List<Form> forms, StringBuilder sbConexao, Dimension d) {
-		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
+		Container container = new Container(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 
 		SuperficieFormulario form = new SuperficieFormulario(formulario, container, file);
@@ -382,8 +382,8 @@ public class Fichario extends JTabbedPane {
 		container.estadoSelecao();
 	}
 
-	public FicharioAbaContainer novo(Formulario formulario) {
-		FicharioAbaContainer container = new FicharioAbaContainer(formulario);
+	public Container novo(Formulario formulario) {
+		Container container = new Container(formulario);
 		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		addTab(Mensagens.getString("label.novo"), container);
 		container.setAbortarFecharComESCSuperficie(true);
@@ -399,7 +399,7 @@ public class Fichario extends JTabbedPane {
 
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Dimension d) {
-		FicharioAbaContainer container = novo(formulario);
+		Container container = novo(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		setTitleAt(getTabCount() - 1, file.getName());
 	}
@@ -408,8 +408,8 @@ public class Fichario extends JTabbedPane {
 	public void remove(int index) {
 		Component cmp = getComponentAt(index);
 
-		if (cmp instanceof FicharioAbaContainer) {
-			((FicharioAbaContainer) cmp).excluido();
+		if (cmp instanceof Container) {
+			((Container) cmp).excluido();
 		}
 
 		super.remove(index);
@@ -453,8 +453,8 @@ public class Fichario extends JTabbedPane {
 			try {
 				Component cmp = getComponentAt(i);
 
-				if (cmp instanceof FicharioAbaContainer) {
-					FicharioAbaContainer c = (FicharioAbaContainer) cmp;
+				if (cmp instanceof Container) {
+					Container c = (Container) cmp;
 
 					if (c.getArquivo() != null && file != null
 							&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {
