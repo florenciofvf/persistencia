@@ -1597,5 +1597,45 @@ public class Superficie extends Desktop {
 			return;
 		}
 
+		Font font = getFont();
+		if (font == null) {
+			return;
+		}
+
+		FontMetrics fm = getFontMetrics(font);
+		if (fm == null) {
+			return;
+		}
+
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela2())) {
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+					processarRecente(objeto, i, fm);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
+				}
+			}
+		}
+
+		repaint();
+	}
+
+	private void processarRecente(Objeto objeto, int recente, FontMetrics fm) {
+		long diff = recente - objeto.getTag();
+
+		if (diff == 0) {
+			return;
+		}
+
+		int largura = fm.stringWidth(objeto.getId());
+		Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create" : "delete");
+		info.setId("[" + diff + "] [" + recente + "] - " + Objeto.novaSequencia());
+		info.deslocamentoXId = objeto.deslocamentoXId;
+		info.deslocamentoYId = objeto.deslocamentoYId;
+		info.setCorFonte(objeto.getCorFonte());
+		info.setTransparente(true);
+		addObjeto(info);
 	}
 }
