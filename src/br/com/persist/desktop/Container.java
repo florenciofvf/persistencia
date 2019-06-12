@@ -190,6 +190,8 @@ public class Container extends Panel {
 				addMenuItem(totalAtualAcao);
 				addMenuItem(true, comparaRecAcao);
 
+				totalAtualAcao.setActionListener(e -> superficie.atualizarTotal(getConexaoPadrao()));
+				comparaRecAcao.setActionListener(e -> superficie.compararRecent(getConexaoPadrao()));
 			}
 		}
 

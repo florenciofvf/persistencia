@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,6 +28,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.banco.Conexao;
+import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
@@ -1570,5 +1572,30 @@ public class Superficie extends Desktop {
 		}
 
 		tabela.setProcessado(true);
+	}
+
+	public void atualizarTotal(Conexao conexao) {
+		if (conexao == null) {
+			return;
+		}
+
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela2())) {
+				try {
+					Connection conn = Conexao.getConnection(conexao);
+					int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+					objeto.setTag(i);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
+				}
+			}
+		}
+	}
+
+	public void compararRecent(Conexao conexao) {
+		if (conexao == null) {
+			return;
+		}
+
 	}
 }
