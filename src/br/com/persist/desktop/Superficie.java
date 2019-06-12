@@ -1630,7 +1630,7 @@ public class Superficie extends Desktop {
 		}
 
 		int largura = fm.stringWidth(objeto.getId());
-		Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create" : "delete");
+		Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create2" : "delete");
 		info.setId("[" + diff + "] [" + recente + "] - " + Objeto.novaSequencia());
 		info.deslocamentoXId = objeto.deslocamentoXId;
 		info.deslocamentoYId = objeto.deslocamentoYId;
