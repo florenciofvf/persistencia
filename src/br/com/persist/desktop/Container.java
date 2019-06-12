@@ -33,6 +33,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPadrao1;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
+import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
@@ -52,11 +53,11 @@ public class Container extends Panel {
 	private final Superficie superficie;
 	private File arquivo;
 
-	public Container(Formulario formulario) {
+	public Container(Formulario formulario, IJanela janela) {
 		cmbConexao = Util.criarComboConexao(formulario, null);
 		superficie = new Superficie(formulario, this);
 		this.formulario = formulario;
-		toolbar.add(cmbConexao);
+		toolbar.ini(janela);
 		montarLayout();
 	}
 
@@ -150,7 +151,10 @@ public class Container extends Panel {
 		private Action salvarAcao = Action.actionIconSalvar();
 		private Action baixarAcao = Action.actionIconBaixar();
 
-		Toolbar() {
+		@Override
+		public void ini(IJanela janela) {
+			super.ini(janela);
+
 			addButton(baixarAcao);
 			addButton(true, salvarAcao);
 			addButton(salvarComoAcao);
@@ -169,6 +173,7 @@ public class Container extends Panel {
 			add(new ToggleButton(desenharDescAcao));
 			add(true, new ToggleButton(transpAcao));
 			addSeparator();
+			add(cmbConexao);
 
 			eventos();
 		}

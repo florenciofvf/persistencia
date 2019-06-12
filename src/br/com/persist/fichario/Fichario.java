@@ -374,17 +374,14 @@ public class Fichario extends JTabbedPane {
 
 	public void abrirFormulario(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
 			List<Form> forms, StringBuilder sbConexao, Dimension d) {
-		Container container = new Container(formulario);
-		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
-
-		ContainerFormulario form = new ContainerFormulario(formulario, container, file);
+		ContainerFormulario form = new ContainerFormulario(formulario, file);
+		form.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
-		container.estadoSelecao();
 	}
 
 	public Container novo(Formulario formulario) {
-		Container container = new Container(formulario);
+		Container container = new Container(formulario, null);
 		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		addTab(Mensagens.getString("label.novo"), container);
 		container.setAbortarFecharComESCSuperficie(true);

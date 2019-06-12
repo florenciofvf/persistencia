@@ -1,27 +1,44 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.List;
 
 import br.com.persist.desktop.Container;
+import br.com.persist.desktop.Objeto;
+import br.com.persist.desktop.Relacao;
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.Form;
+import br.com.persist.util.IJanela;
 
-public class ContainerFormulario extends AbstratoFormulario {
+public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final Container container;
 
-	public ContainerFormulario(Formulario formulario, Container container, File file) {
+	public ContainerFormulario(Formulario formulario, File file) {
 		super(file.getName());
+		container = new Container(formulario, this);
 		container.setSuperficieFormulario(this);
-		this.container = container;
 		montarLayout();
 		configurar();
 	}
 
+	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
+			StringBuilder sbConexao, Graphics g, Dimension d) {
+		container.abrir(file, objetos, relacoes, forms, sbConexao, g, d);
+	}
+
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.estadoSelecao();
+			}
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				container.excluido();
@@ -31,5 +48,10 @@ public class ContainerFormulario extends AbstratoFormulario {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
+	}
+
+	@Override
+	public void fechar() {
+		dispose();
 	}
 }
