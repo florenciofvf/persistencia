@@ -31,6 +31,7 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPadrao1;
+import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.IJanela;
@@ -172,10 +173,24 @@ public class Container extends Panel {
 			add(true, new ToggleButton(desenharIdAcao));
 			add(new ToggleButton(desenharDescAcao));
 			add(true, new ToggleButton(transpAcao));
-			addSeparator();
-			add(cmbConexao);
+			add(true, cmbConexao);
+			add(true, new ButtonInfo());
 
 			eventos();
+		}
+
+		class ButtonInfo extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action totalAtualAcao = Action.actionMenu("label.total_atual", null);
+			private Action comparaRecAcao = Action.actionMenu("label.compararRec", null);
+
+			ButtonInfo() {
+				super("label.comparar", Icones.INFO);
+
+				addMenuItem(totalAtualAcao);
+				addMenuItem(true, comparaRecAcao);
+
+			}
 		}
 
 		class ButtonConsulta extends ButtonPadrao1 {

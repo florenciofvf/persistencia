@@ -63,6 +63,7 @@ public class Objeto implements Runnable {
 	private boolean ccsc;
 	private Icon icon;
 	private String id;
+	private long tag;
 	protected int x;
 	protected int y;
 
@@ -660,5 +661,13 @@ public class Objeto implements Runnable {
 
 	public void setCcsc(boolean ccsc) {
 		this.ccsc = ccsc;
+	}
+
+	public long getTag() {
+		return tag;
+	}
+
+	public void setTag(long tag) {
+		this.tag = tag;
 	}
 }
