@@ -433,14 +433,14 @@ public class Objeto implements Runnable {
 			icon.paintIcon(c, g2, x + raio - 8, y + raio - 8);
 		}
 
-		if (selecionado) {
-			g2.setColor(Color.CYAN);
-			g2.drawOval(x - margem3, y - margem3, DIAMETRO + margem4, DIAMETRO + margem4);
-		}
-
 		if (desenharId) {
 			g2.setColor(corFonte);
 			g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
+		}
+
+		if (selecionado) {
+			g2.setColor(Color.CYAN);
+			g2.drawOval(x - margem3, y - margem3, DIAMETRO + margem4, DIAMETRO + margem4);
 		}
 	}
 
