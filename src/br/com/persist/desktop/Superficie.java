@@ -1582,14 +1582,44 @@ public class Superficie extends Desktop {
 
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				try {
-					Connection conn = Conexao.getConnection(conexao);
-					int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
-					objeto.setTag(i);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
+				objeto.setCorFonte(Color.BLACK);
+			}
+		}
+
+		repaint();
+
+		new ThreadTotal(conexao, menuItem).start();
+	}
+
+	private class ThreadTotal extends Thread {
+		final MenuItem menuItem;
+		final Conexao conexao;
+
+		public ThreadTotal(Conexao conexao, MenuItem menuItem) {
+			this.menuItem = menuItem;
+			this.conexao = conexao;
+		}
+
+		@Override
+		public void run() {
+			menuItem.setEnabled(false);
+
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
+					try {
+						Connection conn = Conexao.getConnection(conexao);
+						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+						objeto.setTag(i);
+						objeto.setCorFonte(Color.MAGENTA);
+						repaint();
+						sleep(Constantes.TREZENTOS);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
+					}
 				}
 			}
+
+			menuItem.setEnabled(true);
 		}
 	}
 
@@ -1599,11 +1629,13 @@ public class Superficie extends Desktop {
 		}
 
 		Font font = getFont();
+
 		if (font == null) {
 			return;
 		}
 
 		FontMetrics fm = getFontMetrics(font);
+
 		if (fm == null) {
 			return;
 		}
@@ -1633,7 +1665,7 @@ public class Superficie extends Desktop {
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
 						processarRecente(objeto, i, fm);
 						repaint();
-						sleep(300);
+						sleep(Constantes.TREZENTOS);
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
 					}
