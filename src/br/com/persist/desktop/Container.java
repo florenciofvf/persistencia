@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
+import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.ToggleButton;
@@ -183,15 +184,17 @@ public class Container extends Panel {
 			private static final long serialVersionUID = 1L;
 			private Action totalAtualAcao = Action.actionMenu("label.total_atual", null);
 			private Action comparaRecAcao = Action.actionMenu("label.compararRec", null);
+			private MenuItem itemTotalAtual = new MenuItem(totalAtualAcao);
+			private MenuItem itemComparaRec = new MenuItem(comparaRecAcao);
 
 			ButtonInfo() {
 				super("label.comparar", Icones.INFO);
 
-				addMenuItem(totalAtualAcao);
-				addMenuItem(true, comparaRecAcao);
+				addMenuItem(itemTotalAtual);
+				addMenuItem(true, itemComparaRec);
 
-				totalAtualAcao.setActionListener(e -> superficie.atualizarTotal(getConexaoPadrao()));
-				comparaRecAcao.setActionListener(e -> superficie.compararRecent(getConexaoPadrao()));
+				totalAtualAcao.setActionListener(e -> superficie.atualizarTotal(getConexaoPadrao(), itemTotalAtual));
+				comparaRecAcao.setActionListener(e -> superficie.compararRecent(getConexaoPadrao(), itemComparaRec));
 			}
 		}
 

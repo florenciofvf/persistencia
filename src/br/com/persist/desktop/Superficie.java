@@ -1,5 +1,6 @@
 package br.com.persist.desktop;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -1574,7 +1575,7 @@ public class Superficie extends Desktop {
 		tabela.setProcessado(true);
 	}
 
-	public void atualizarTotal(Conexao conexao) {
+	public void atualizarTotal(Conexao conexao, MenuItem menuItem) {
 		if (conexao == null) {
 			return;
 		}
@@ -1592,7 +1593,7 @@ public class Superficie extends Desktop {
 		}
 	}
 
-	public void compararRecent(Conexao conexao) {
+	public void compararRecent(Conexao conexao, MenuItem menuItem) {
 		if (conexao == null) {
 			return;
 		}
@@ -1607,35 +1608,57 @@ public class Superficie extends Desktop {
 			return;
 		}
 
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
-				try {
-					Connection conn = Conexao.getConnection(conexao);
-					int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
-					processarRecente(objeto, i, fm);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
-				}
-			}
-		}
-
-		repaint();
+		new ThreadRecente(conexao, fm, menuItem).start();
 	}
 
-	private void processarRecente(Objeto objeto, int recente, FontMetrics fm) {
-		long diff = recente - objeto.getTag();
+	private class ThreadRecente extends Thread {
+		final MenuItem menuItem;
+		final Conexao conexao;
+		final FontMetrics fm;
 
-		if (diff == 0) {
-			return;
+		ThreadRecente(Conexao conexao, FontMetrics fm, MenuItem menuItem) {
+			this.menuItem = menuItem;
+			this.conexao = conexao;
+			this.fm = fm;
 		}
 
-		int largura = fm.stringWidth(objeto.getId());
-		Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create2" : "delete");
-		info.setId(diff + " / " + recente + " - " + Objeto.novaSequencia());
-		info.deslocamentoXId = objeto.deslocamentoXId;
-		info.deslocamentoYId = objeto.deslocamentoYId;
-		info.setCorFonte(objeto.getCorFonte());
-		info.setTransparente(true);
-		addObjeto(info);
+		@Override
+		public void run() {
+			menuItem.setEnabled(false);
+
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
+					try {
+						Connection conn = Conexao.getConnection(conexao);
+						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+						processarRecente(objeto, i, fm);
+						repaint();
+						sleep(300);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
+					}
+				}
+			}
+
+			menuItem.setEnabled(true);
+		}
+
+		private void processarRecente(Objeto objeto, int recente, FontMetrics fm) {
+			long diff = recente - objeto.getTag();
+			objeto.setCorFonte(Color.CYAN);
+
+			if (diff == 0) {
+				return;
+			}
+
+			int largura = fm.stringWidth(objeto.getId());
+			Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create2" : "delete");
+			info.setId(diff + " - " + recente + " - " + Objeto.novaSequencia());
+			info.deslocamentoXId = objeto.deslocamentoXId;
+			info.deslocamentoYId = objeto.deslocamentoYId;
+			info.setCorFonte(objeto.getCorFonte());
+			info.setTransparente(true);
+			addObjeto(info);
+		}
 	}
 }
