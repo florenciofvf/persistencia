@@ -218,11 +218,13 @@ public class Superficie extends Desktop {
 
 	public void alinharNomes() {
 		Font font = getFont();
+
 		if (font == null) {
 			return;
 		}
 
 		FontMetrics fm = getFontMetrics(font);
+
 		if (fm == null) {
 			return;
 		}
