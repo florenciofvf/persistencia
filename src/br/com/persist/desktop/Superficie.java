@@ -1625,6 +1625,16 @@ public class Superficie extends Desktop {
 		}
 	}
 
+	public void excluirSemTabela() {
+		for (Objeto objeto : objetos) {
+			if (Util.estaVazio(objeto.getTabela2())) {
+				excluir(objeto);
+			}
+		}
+
+		repaint();
+	}
+
 	public void compararRecent(Conexao conexao, MenuItem menuItem) {
 		if (conexao == null) {
 			return;

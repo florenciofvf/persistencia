@@ -182,6 +182,7 @@ public class Container extends Panel {
 
 		class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action excluirSemTabelaAcao = Action.actionMenu("label.excluir_sem_tabela", null);
 			private Action totalAtualAcao = Action.actionMenu("label.total_atual", null);
 			private Action comparaRecAcao = Action.actionMenu("label.compararRec", null);
 			private MenuItem itemTotalAtual = new MenuItem(totalAtualAcao);
@@ -192,9 +193,11 @@ public class Container extends Panel {
 
 				addMenuItem(itemTotalAtual);
 				addMenuItem(true, itemComparaRec);
+				addMenuItem(true, excluirSemTabelaAcao);
 
 				totalAtualAcao.setActionListener(e -> superficie.atualizarTotal(getConexaoPadrao(), itemTotalAtual));
 				comparaRecAcao.setActionListener(e -> superficie.compararRecent(getConexaoPadrao(), itemComparaRec));
+				excluirSemTabelaAcao.setActionListener(e -> superficie.excluirSemTabela());
 			}
 		}
 
