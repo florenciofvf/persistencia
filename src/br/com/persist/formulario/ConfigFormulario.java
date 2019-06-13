@@ -18,6 +18,7 @@ public class ConfigFormulario extends AbstratoFormulario implements IJanela {
 	public ConfigFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
 		container = new ConfigContainer(this, formulario);
+		setSize(Constantes.SIZE2);
 		montarLayout();
 		configurar();
 	}
