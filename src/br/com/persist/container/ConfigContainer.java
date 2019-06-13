@@ -42,6 +42,19 @@ public class ConfigContainer extends Panel {
 	private final TextField txtFormFicha = new TextField();
 	private final Toolbar toolbar = new Toolbar();
 
+	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.5", 5, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.10", 10, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.30", 30, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.50", 50, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.100", 100, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.200", 200, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.300", 300, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.500", 500, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.1000", 1000, NomeValor.INTERVALO_COMPARA),
+			new NomeValor("label.2000", 2000, NomeValor.INTERVALO_COMPARA) };
+
 	private final transient NomeValor[] intervalos = { new NomeValor("label.1000", 1000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.5000", 5000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.7500", 7500, NomeValor.INTERVALO_AUTO),
@@ -92,11 +105,13 @@ public class ConfigContainer extends Panel {
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
 
+		Panel panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
 		Panel panelDestacados = criarPainelGrupo(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		Panel panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
 		Panel panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 		Panel panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
 
+		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
 		Label tituloLayoutAbr = criarLabelTitulo("label.layout_abertura");
@@ -108,6 +123,9 @@ public class ConfigContainer extends Panel {
 		container.add(new JSeparator());
 		container.add(tituloIntervalo);
 		container.add(panelIntervalos);
+		container.add(new JSeparator());
+		container.add(tituloIntervaloCompara);
+		container.add(panelIntervalosCompara);
 		container.add(new JSeparator());
 		container.add(tituloLayoutAbr);
 		container.add(panelLayouts);
@@ -223,6 +241,7 @@ public class ConfigContainer extends Panel {
 	}
 
 	private class NomeValor {
+		static final byte INTERVALO_COMPARA = 5;
 		static final byte INTERVALO_AUTO = 2;
 		static final byte POSICAO_ABA = 1;
 		static final byte DESTACADOS = 3;
@@ -252,6 +271,8 @@ public class ConfigContainer extends Panel {
 					formulario.getFichario().setTabPlacement(Preferencias.getPosicaoAbaFichario());
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
 					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
+				} else if (nomeValor.tipo == NomeValor.INTERVALO_COMPARA) {
+					Preferencias.setIntervaloComparacao(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
 					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.LAYOUTS) {
