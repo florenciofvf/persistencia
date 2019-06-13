@@ -34,7 +34,6 @@ public class Constantes {
 	public static final String DIALOG = "DIALOG";
 	public static final String ICONE = "ICONE:";
 	public static final String FICHA = "FICHA";
-	public static final short TREZENTOS = 300;
 	public static final String FORM = "FORM";
 	public static final String QL = "\r\n";
 	public static final String SEP = "###";

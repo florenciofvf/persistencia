@@ -13,6 +13,7 @@ public class Preferencias {
 	private static boolean abrirAutoDestacado;
 	private static int intervaloPesquisaAuto;
 	private static boolean fecharAposSoltar;
+	private static int intervaloComparacao;
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
 	private static boolean abrirComArvore;
@@ -37,6 +38,7 @@ public class Preferencias {
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
 		fecharAposSoltar = pref.getBoolean("fechar_apos_soltar", true);
+		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		abrirComArvore = pref.getBoolean("abrir_com_arvore", true);
 		abrirComAnexo = pref.getBoolean("abrir_com_anexo", true);
@@ -68,6 +70,7 @@ public class Preferencias {
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
+		pref.putInt("intervalo_comparacao", intervaloComparacao);
 		pref.putBoolean("fechar_apos_soltar", fecharAposSoltar);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.putBoolean("abrir_com_arvore", abrirComArvore);
@@ -205,5 +208,13 @@ public class Preferencias {
 
 	public static void setLayoutAbertura(int layoutAbertura) {
 		Preferencias.layoutAbertura = layoutAbertura;
+	}
+
+	public static int getIntervaloComparacao() {
+		return intervaloComparacao;
+	}
+
+	public static void setIntervaloComparacao(int intervaloComparacao) {
+		Preferencias.intervaloComparacao = intervaloComparacao;
 	}
 }

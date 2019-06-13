@@ -1614,7 +1614,7 @@ public class Superficie extends Desktop {
 						objeto.setTag(i);
 						objeto.setCorFonte(Color.MAGENTA);
 						repaint();
-						sleep(Constantes.TREZENTOS);
+						sleep(Preferencias.getIntervaloComparacao());
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
 					}
@@ -1667,7 +1667,7 @@ public class Superficie extends Desktop {
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
 						processarRecente(objeto, i, fm);
 						repaint();
-						sleep(Constantes.TREZENTOS);
+						sleep(Preferencias.getIntervaloComparacao());
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
 					}
