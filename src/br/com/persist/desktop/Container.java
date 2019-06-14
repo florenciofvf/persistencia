@@ -204,7 +204,7 @@ public class Container extends Panel {
 						e -> superficie.compararRecent(getConexaoPadrao(), itemComparaRec, labelStatus));
 				excluirSemTabelaAcao.setActionListener(e -> {
 					superficie.excluirSemTabela();
-					labelStatus.setText("");
+					labelStatus.limpar();
 				});
 			}
 		}
@@ -283,7 +283,7 @@ public class Container extends Panel {
 				List<Form> forms = new ArrayList<>();
 				Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao);
 				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, d);
-				labelStatus.setText("");
+				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 			}
@@ -367,7 +367,7 @@ public class Container extends Panel {
 				containerFormulario.setTitle(arquivo.getName());
 			}
 
-			labelStatus.setText("");
+			labelStatus.limpar();
 		}
 
 		private void configAtalho(Acao acao, int tecla) {

@@ -46,6 +46,10 @@ public class TextArea extends JScrollPane {
 		return textAreaInner.getText();
 	}
 
+	public void limpar() {
+		textAreaInner.setText("");
+	}
+
 	@Override
 	public synchronized void addKeyListener(KeyListener l) {
 		textAreaInner.addKeyListener(l);

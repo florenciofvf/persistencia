@@ -1613,7 +1613,7 @@ public class Superficie extends Desktop {
 		public void run() {
 			boolean processado = false;
 			menuItem.setEnabled(false);
-			label.setText("");
+			label.limpar();
 
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
@@ -1698,7 +1698,7 @@ public class Superficie extends Desktop {
 		public void run() {
 			boolean processado = false;
 			menuItem.setEnabled(false);
-			label.setText("");
+			label.limpar();
 
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {

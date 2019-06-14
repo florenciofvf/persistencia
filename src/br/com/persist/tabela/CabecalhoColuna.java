@@ -106,7 +106,8 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 			}
 		}
 
-		void limpar() {
+		@Override
+		public void limpar() {
 			setIcon(Icones.FILTRO);
 			filtroString = null;
 		}

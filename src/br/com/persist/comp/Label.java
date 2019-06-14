@@ -25,4 +25,8 @@ public class Label extends JLabel {
 
 	public Label() {
 	}
+
+	public void limpar() {
+		setText("");
+	}
 }

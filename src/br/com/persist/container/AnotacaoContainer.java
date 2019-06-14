@@ -34,7 +34,7 @@ public class AnotacaoContainer extends Panel {
 	}
 
 	private void abrir() {
-		textArea.setText("");
+		textArea.limpar();
 
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {

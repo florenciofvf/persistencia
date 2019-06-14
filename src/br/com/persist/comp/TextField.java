@@ -11,4 +11,8 @@ public class TextField extends JTextField {
 
 	public TextField() {
 	}
+
+	public void limpar() {
+		setText("");
+	}
 }

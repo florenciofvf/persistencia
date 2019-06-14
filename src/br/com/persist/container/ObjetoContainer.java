@@ -605,7 +605,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					String[] chaves = objeto.getChavesArray();
 
 					if (chaves.length != 1) {
-						txtComplemento.setText("");
+						txtComplemento.limpar();
 						return;
 					}
 
