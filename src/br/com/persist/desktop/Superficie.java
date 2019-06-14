@@ -1582,6 +1582,11 @@ public class Superficie extends Desktop {
 			return;
 		}
 
+		preTotalRecente();
+		new ThreadTotal(conexao, menuItem).start();
+	}
+
+	private void preTotalRecente() {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				objeto.setCorFonte(Color.BLACK);
@@ -1589,8 +1594,6 @@ public class Superficie extends Desktop {
 		}
 
 		repaint();
-
-		new ThreadTotal(conexao, menuItem).start();
 	}
 
 	private class ThreadTotal extends Thread {
@@ -1663,6 +1666,7 @@ public class Superficie extends Desktop {
 			return;
 		}
 
+		preTotalRecente();
 		new ThreadRecente(conexao, fm, menuItem).start();
 	}
 
@@ -1690,7 +1694,7 @@ public class Superficie extends Desktop {
 						repaint();
 						sleep(Preferencias.getIntervaloComparacao());
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage("TOTAL", ex, Superficie.this);
+						Util.stackTraceAndMessage("RECENTE", ex, Superficie.this);
 					}
 				}
 			}
