@@ -280,6 +280,7 @@ public class Container extends Panel {
 				List<Form> forms = new ArrayList<>();
 				Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao);
 				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, d);
+				labelStatus.setText("");
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 			}
@@ -362,6 +363,8 @@ public class Container extends Panel {
 			} else {
 				containerFormulario.setTitle(arquivo.getName());
 			}
+
+			labelStatus.setText("");
 		}
 
 		private void configAtalho(Acao acao, int tecla) {
