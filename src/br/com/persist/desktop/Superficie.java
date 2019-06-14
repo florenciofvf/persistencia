@@ -30,6 +30,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
+import br.com.persist.comp.Label;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
@@ -52,6 +53,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro.Instrucao;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
@@ -1577,13 +1579,13 @@ public class Superficie extends Desktop {
 		tabela.setProcessado(true);
 	}
 
-	public void atualizarTotal(Conexao conexao, MenuItem menuItem) {
+	public void atualizarTotal(Conexao conexao, MenuItem menuItem, Label label) {
 		if (conexao == null) {
 			return;
 		}
 
 		preTotalRecente();
-		new ThreadTotal(conexao, menuItem).start();
+		new ThreadTotal(conexao, menuItem, label).start();
 	}
 
 	private void preTotalRecente() {
@@ -1599,15 +1601,18 @@ public class Superficie extends Desktop {
 	private class ThreadTotal extends Thread {
 		final MenuItem menuItem;
 		final Conexao conexao;
+		final Label label;
 
-		public ThreadTotal(Conexao conexao, MenuItem menuItem) {
+		public ThreadTotal(Conexao conexao, MenuItem menuItem, Label label) {
 			this.menuItem = menuItem;
 			this.conexao = conexao;
+			this.label = label;
 		}
 
 		@Override
 		public void run() {
 			menuItem.setEnabled(false);
+			label.setText("");
 
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
@@ -1624,6 +1629,8 @@ public class Superficie extends Desktop {
 				}
 			}
 
+			label.setText(Mensagens.getString("label.threadTotalAtual"));
+			label.setForeground(Color.MAGENTA);
 			menuItem.setEnabled(true);
 		}
 	}
@@ -1649,7 +1656,7 @@ public class Superficie extends Desktop {
 		repaint();
 	}
 
-	public void compararRecent(Conexao conexao, MenuItem menuItem) {
+	public void compararRecent(Conexao conexao, MenuItem menuItem, Label label) {
 		if (conexao == null) {
 			return;
 		}
@@ -1667,23 +1674,26 @@ public class Superficie extends Desktop {
 		}
 
 		preTotalRecente();
-		new ThreadRecente(conexao, fm, menuItem).start();
+		new ThreadRecente(conexao, fm, menuItem, label).start();
 	}
 
 	private class ThreadRecente extends Thread {
 		final MenuItem menuItem;
 		final Conexao conexao;
 		final FontMetrics fm;
+		final Label label;
 
-		ThreadRecente(Conexao conexao, FontMetrics fm, MenuItem menuItem) {
+		ThreadRecente(Conexao conexao, FontMetrics fm, MenuItem menuItem, Label label) {
 			this.menuItem = menuItem;
 			this.conexao = conexao;
+			this.label = label;
 			this.fm = fm;
 		}
 
 		@Override
 		public void run() {
 			menuItem.setEnabled(false);
+			label.setText("");
 
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
@@ -1699,6 +1709,8 @@ public class Superficie extends Desktop {
 				}
 			}
 
+			label.setText(Mensagens.getString("label.threadRecente"));
+			label.setForeground(Color.CYAN);
 			menuItem.setEnabled(true);
 		}
 

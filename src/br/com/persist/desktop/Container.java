@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
+import br.com.persist.comp.Label;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -152,6 +153,7 @@ public class Container extends Panel {
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 		private Action salvarAcao = Action.actionIconSalvar();
 		private Action baixarAcao = Action.actionIconBaixar();
+		private Label labelStatus = new Label();
 
 		@Override
 		public void ini(IJanela janela) {
@@ -176,6 +178,7 @@ public class Container extends Panel {
 			add(true, new ToggleButton(transpAcao));
 			add(true, cmbConexao);
 			add(true, new ButtonInfo());
+			add(true, labelStatus);
 
 			eventos();
 		}
@@ -195,8 +198,10 @@ public class Container extends Panel {
 				addMenuItem(true, itemComparaRec);
 				addMenuItem(true, excluirSemTabelaAcao);
 
-				totalAtualAcao.setActionListener(e -> superficie.atualizarTotal(getConexaoPadrao(), itemTotalAtual));
-				comparaRecAcao.setActionListener(e -> superficie.compararRecent(getConexaoPadrao(), itemComparaRec));
+				totalAtualAcao.setActionListener(
+						e -> superficie.atualizarTotal(getConexaoPadrao(), itemTotalAtual, labelStatus));
+				comparaRecAcao.setActionListener(
+						e -> superficie.compararRecent(getConexaoPadrao(), itemComparaRec, labelStatus));
 				excluirSemTabelaAcao.setActionListener(e -> superficie.excluirSemTabela());
 			}
 		}
