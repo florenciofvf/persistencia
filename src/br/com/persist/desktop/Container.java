@@ -202,7 +202,10 @@ public class Container extends Panel {
 						e -> superficie.atualizarTotal(getConexaoPadrao(), itemTotalAtual, labelStatus));
 				comparaRecAcao.setActionListener(
 						e -> superficie.compararRecent(getConexaoPadrao(), itemComparaRec, labelStatus));
-				excluirSemTabelaAcao.setActionListener(e -> superficie.excluirSemTabela());
+				excluirSemTabelaAcao.setActionListener(e -> {
+					superficie.excluirSemTabela();
+					labelStatus.setText("");
+				});
 			}
 		}
 
