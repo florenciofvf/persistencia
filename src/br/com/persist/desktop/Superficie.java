@@ -1611,6 +1611,7 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void run() {
+			boolean processado = false;
 			menuItem.setEnabled(false);
 			label.setText("");
 
@@ -1621,6 +1622,7 @@ public class Superficie extends Desktop {
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
 						objeto.setTag(i);
 						objeto.setCorFonte(Color.MAGENTA);
+						processado = true;
 						repaint();
 						sleep(Preferencias.getIntervaloComparacao());
 					} catch (Exception ex) {
@@ -1629,7 +1631,9 @@ public class Superficie extends Desktop {
 				}
 			}
 
-			label.setText(Mensagens.getString("label.threadTotalAtual"));
+			if (processado) {
+				label.setText(Mensagens.getString("label.threadTotalAtual"));
+			}
 			label.setForeground(Color.MAGENTA);
 			menuItem.setEnabled(true);
 		}
@@ -1692,6 +1696,7 @@ public class Superficie extends Desktop {
 
 		@Override
 		public void run() {
+			boolean processado = false;
 			menuItem.setEnabled(false);
 			label.setText("");
 
@@ -1701,6 +1706,7 @@ public class Superficie extends Desktop {
 						Connection conn = Conexao.getConnection(conexao);
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
 						processarRecente(objeto, i, fm);
+						processado = true;
 						repaint();
 						sleep(Preferencias.getIntervaloComparacao());
 					} catch (Exception ex) {
@@ -1709,7 +1715,9 @@ public class Superficie extends Desktop {
 				}
 			}
 
-			label.setText(Mensagens.getString("label.threadRecente"));
+			if (processado) {
+				label.setText(Mensagens.getString("label.threadRecente"));
+			}
 			label.setForeground(Color.CYAN);
 			menuItem.setEnabled(true);
 		}
