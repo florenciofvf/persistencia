@@ -328,7 +328,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			private static final long serialVersionUID = 1L;
 
 			MenuArvore() {
-				super(Constantes.LABEL_ARVORE, Icones.EXPANDIR, false);
+				super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
 
 				formularioAcao.setActionListener(e -> {
 					ArvoreFormulario form = new ArvoreFormulario(Formulario.this);

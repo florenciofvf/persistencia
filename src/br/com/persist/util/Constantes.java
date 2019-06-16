@@ -19,12 +19,12 @@ public class Constantes {
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
+	public static final String LABEL_ARQUIVOS = "label.arquivos";
 	public static final String LABEL_ATENCAO = "label.atencao";
 	public static final String LABEL_CONEXAO = "label.conexao";
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String LABEL_DESKTOP = "label.desktop";
 	public static final String PADRAO_ABRIR = "PADRAO_ABRIR:";
-	public static final String LABEL_ARVORE = "label.arvore";
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final String COR_FONTE = "COR_FONTE:";

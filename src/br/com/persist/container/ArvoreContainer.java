@@ -41,10 +41,10 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 	}
 
 	private void montarLayout() {
-		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arvore.sempreTopForm"));
-		chkSempreTopArvo.setToolTipText(Mensagens.getString("msg.arvore.sempreTopArvo"));
-		chkLinkAuto.setToolTipText(Mensagens.getString("msg.arvore.link_auto"));
-		chkDuplicar.setToolTipText(Mensagens.getString("msg.arvore.duplicar"));
+		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
+		chkSempreTopArvo.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopArqu"));
+		chkLinkAuto.setToolTipText(Mensagens.getString("msg.arquivo.link_auto"));
+		chkDuplicar.setToolTipText(Mensagens.getString("msg.arquivo.duplicar"));
 		add(BorderLayout.CENTER, new ScrollPane(arvore));
 		add(BorderLayout.NORTH, toolbar);
 		arvore.adicionarOuvinte(this);

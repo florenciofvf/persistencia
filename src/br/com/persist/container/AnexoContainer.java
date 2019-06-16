@@ -49,7 +49,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 	}
 
 	private void montarLayout() {
-		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arvore.sempreTopForm"));
+		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
 		chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.anexo.sempreTopAnex"));
 		add(BorderLayout.CENTER, new ScrollPane(anexo));
 		add(BorderLayout.NORTH, toolbar);
