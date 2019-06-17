@@ -284,7 +284,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novaArvore(Formulario formulario) {
 		ArvoreContainer container = new ArvoreContainer(null, formulario, null);
-		addTab(Mensagens.getString("label.arquivos"), container);
+		addTab(Mensagens.getString(Constantes.LABEL_ARQUIVOS), container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.ARVORE);

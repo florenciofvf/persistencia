@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import br.com.persist.container.ArvoreContainer;
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
@@ -12,7 +13,7 @@ public class ArvoreFormulario extends AbstratoFormulario implements IJanela {
 	private final ArvoreContainer container;
 
 	public ArvoreFormulario(Formulario formulario) {
-		super(Mensagens.getString("label.arquivos"));
+		super(Mensagens.getString(Constantes.LABEL_ARQUIVOS));
 		container = new ArvoreContainer(this, formulario, this);
 		montarLayout();
 	}
