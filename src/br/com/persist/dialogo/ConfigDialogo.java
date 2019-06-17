@@ -19,7 +19,6 @@ public class ConfigDialogo extends AbstratoDialogo implements IJanela {
 	public ConfigDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ANOTACOES));
 		container = new ConfigContainer(this, formulario);
-		setSize(Constantes.SIZE2);
 		montarLayout();
 		configurar();
 	}

@@ -8,7 +8,6 @@ public class Constantes {
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_FORMULARIO = "label.formulario";
-	public static final Dimension SIZE2 = new Dimension(1000, 1000);
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
 	public static final String LABEL_ATUALIZAR = "label.atualizar";
 	public static final String LABEL_FRAGMENTO = "label.fragmento";

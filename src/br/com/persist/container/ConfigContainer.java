@@ -18,6 +18,7 @@ import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.PanelCenter;
+import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
@@ -147,7 +148,7 @@ public class ConfigContainer extends Panel {
 		container.add(new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo));
 		container.add(new PanelCenter(new Label("label.form_ficha"), txtFormFicha));
 
-		add(BorderLayout.CENTER, container);
+		add(BorderLayout.CENTER, new ScrollPane(container));
 		add(BorderLayout.NORTH, toolbar);
 
 		Insets insets = new Insets(5, 10, 5, 5);
