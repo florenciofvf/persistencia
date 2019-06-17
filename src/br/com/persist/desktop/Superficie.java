@@ -1621,7 +1621,7 @@ public class Superficie extends Desktop {
 						Connection conn = Conexao.getConnection(conexao);
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
 						objeto.setTag(i);
-						objeto.setCorFonte(Color.MAGENTA);
+						objeto.setCorFonte(Color.ORANGE);
 						processado = true;
 						repaint();
 						sleep(Preferencias.getIntervaloComparacao());
@@ -1634,7 +1634,7 @@ public class Superficie extends Desktop {
 			if (processado) {
 				label.setText(Mensagens.getString("label.threadTotalAtual"));
 			}
-			label.setForeground(Color.MAGENTA);
+			label.setForeground(Color.ORANGE);
 			menuItem.setEnabled(true);
 		}
 	}
