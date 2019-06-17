@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.Metadado;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.exception.PersistenciaException;
 import br.com.persist.modelo.ListagemModelo;
@@ -27,6 +28,7 @@ public class Persistencia {
 	private static final String PKTABLE_NAME = "PKTABLE_NAME";
 	private static final String TABLE_SCHEM = "TABLE_SCHEM";
 	private static final String COLUMN_NAME = "COLUMN_NAME";
+	private static final String TABLE_NAME = "TABLE_NAME";
 	private static final String KEY_SEQ = "KEY_SEQ";
 	private static final String PK_NAME = "PK_NAME";
 
@@ -361,6 +363,26 @@ public class Persistencia {
 		}
 	}
 
+	public static List<Metadado> listarChaves(Connection conn, Conexao conexao, Metadado metadado)
+			throws PersistenciaException {
+		try {
+			List<Metadado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+
+			ResultSet rs = m.getPrimaryKeys(null, conexao.getEsquema(), metadado.getDescricao());
+
+			while (rs.next()) {
+				resposta.add(new Metadado(rs.getString(COLUMN_NAME)));
+			}
+
+			rs.close();
+
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
 	public static ListagemModelo criarModeloChavesExportadas(Connection conn, Objeto objeto, Conexao conexao)
 			throws PersistenciaException {
 		try {
@@ -446,6 +468,25 @@ public class Persistencia {
 
 				return new ListagemModelo(colunas, dados);
 			}
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static List<Metadado> listarMetadados(Connection conn, Conexao conexao) throws PersistenciaException {
+		try {
+			List<Metadado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+
+			ResultSet rs = m.getTables("", conexao.getEsquema(), "%", new String[] { "TABLE" });
+
+			while (rs.next()) {
+				resposta.add(new Metadado(rs.getString(TABLE_NAME)));
+			}
+
+			rs.close();
+
+			return resposta;
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
