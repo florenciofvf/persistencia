@@ -16,6 +16,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.metadado.Metadados;
 import br.com.persist.modelo.MetadadoModelo;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
@@ -65,7 +66,7 @@ public class MetadadosContainer extends Panel {
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			Metadado raiz = new Metadado(Mensagens.getString("label.meta_dados"));
+			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_METADADOS));
 			List<Metadado> lista = Persistencia.listarMetadados(conn, conexao);
 
 			for (Metadado metadado : lista) {
