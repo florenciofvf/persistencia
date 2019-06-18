@@ -130,12 +130,11 @@ public class ConfigContainer extends Panel {
 		container.add(tituloIntervalo);
 		container.add(panelIntervalos);
 		container.add(new JSeparator());
-		container.add(tituloIntervaloCompara);
-		container.add(panelIntervalosCompara);
-		container.add(new JSeparator());
 		container.add(tituloLayoutAbr);
 		container.add(panelLayouts);
 		container.add(new JSeparator());
+		container.add(tituloIntervaloCompara);
+		container.add(panelIntervalosCompara);
 		container.add(criarLabelTitulo("label.titulo_cor_total_recente"));
 		container.add(new PainelCorTotalRecente());
 		container.add(new JSeparator());
@@ -305,7 +304,7 @@ public class ConfigContainer extends Panel {
 		}
 	}
 
-	private class PainelCorTotalRecente extends PanelCenter {
+	private class PainelCorTotalRecente extends Panel {
 		private static final long serialVersionUID = 1L;
 		private Label labelAntesProcessar = new Label("label.cor_antes_processar");
 		private Label labelBuscarTotal = new Label("label.cor_total_atual");
@@ -313,7 +312,11 @@ public class ConfigContainer extends Panel {
 		private transient MouseInner mouseInner = new MouseInner();
 
 		PainelCorTotalRecente() {
-			adicionar(labelAntesProcessar, labelBuscarTotal, labelComparacao);
+			super(new GridLayout(0, 3));
+
+			add(labelAntesProcessar);
+			add(labelBuscarTotal);
+			add(labelComparacao);
 
 			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			labelAntesProcessar.setForeground(Preferencias.getCorAntesTotalRecente());
@@ -321,6 +324,10 @@ public class ConfigContainer extends Panel {
 			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			labelBuscarTotal.setForeground(Preferencias.getCorTotalAtual());
 			labelComparacao.setForeground(Preferencias.getCorComparaRec());
+
+			labelAntesProcessar.setHorizontalAlignment(Label.CENTER);
+			labelBuscarTotal.setHorizontalAlignment(Label.CENTER);
+			labelComparacao.setHorizontalAlignment(Label.CENTER);
 
 			labelAntesProcessar.addMouseListener(mouseInner);
 			labelBuscarTotal.addMouseListener(mouseInner);
