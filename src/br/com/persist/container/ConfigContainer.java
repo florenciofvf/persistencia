@@ -1,13 +1,18 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JColorChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -130,6 +135,9 @@ public class ConfigContainer extends Panel {
 		container.add(new JSeparator());
 		container.add(tituloLayoutAbr);
 		container.add(panelLayouts);
+		container.add(new JSeparator());
+		container.add(criarLabelTitulo("label.titulo_cor_total_recente"));
+		container.add(new PainelCorTotalRecente());
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkAbortarFecharComESC);
@@ -294,6 +302,40 @@ public class ConfigContainer extends Panel {
 			addButton(salvarAcao);
 
 			salvarAcao.setActionListener(e -> Preferencias.salvar());
+		}
+	}
+
+	private class PainelCorTotalRecente extends PanelCenter {
+		private static final long serialVersionUID = 1L;
+		private Label labelAntesProcessar = new Label("label.cor_antes_processar");
+		private Label labelBuscarTotal = new Label("label.cor_total_atual");
+		private Label labelComparacao = new Label("label.cor_comparacao");
+		private transient MouseInner mouseInner = new MouseInner();
+
+		PainelCorTotalRecente() {
+			adicionar(labelAntesProcessar, labelBuscarTotal, labelComparacao);
+			labelAntesProcessar.addMouseListener(mouseInner);
+			labelBuscarTotal.addMouseListener(mouseInner);
+			labelComparacao.addMouseListener(mouseInner);
+
+			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			labelBuscarTotal.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		}
+
+		class MouseInner extends MouseAdapter {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Label label = (Label) e.getSource();
+
+				Color color = JColorChooser.showDialog(ConfigContainer.this, label.getText(), label.getForeground());
+
+				if (color == null) {
+					return;
+				}
+
+				label.setForeground(color);
+			}
 		}
 	}
 }

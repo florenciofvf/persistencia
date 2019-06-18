@@ -218,11 +218,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuArvore());
 			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuMetadado());
-			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAnexo());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConexao());
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuMetadado());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuFragmento());
 			menuArquivo.addSeparator();
