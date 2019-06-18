@@ -66,8 +66,8 @@ public class MetadadosContainer extends Panel {
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_METADADOS));
 			List<Metadado> lista = Persistencia.listarMetadados(conn, conexao);
+			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_METADADOS) + " - " + lista.size());
 
 			for (Metadado metadado : lista) {
 				Metadado chaves = new Metadado(Mensagens.getString("label.chaves"));

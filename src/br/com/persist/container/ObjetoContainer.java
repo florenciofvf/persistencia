@@ -823,7 +823,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Connection conn = Conexao.getConnection(conexao);
 						ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto, conexao);
 						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-						listener.setTitulo(objeto.getTitle(modeloOrdenacao, "META-DADOS"));
+						listener.setTitulo(
+								objeto.getTitle(modeloOrdenacao, Mensagens.getString(Constantes.LABEL_METADADOS)));
 
 						tabela.setModel(modeloOrdenacao);
 						configCabecalhoColuna(modeloListagem);

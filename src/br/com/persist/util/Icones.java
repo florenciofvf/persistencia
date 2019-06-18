@@ -37,6 +37,7 @@ public class Icones {
 	public static final Icon TAG2 = criarImagem("tag_yellow");
 	public static final Icon SALVARC = criarImagem("saveas");
 	public static final Icon BAIXAR2 = criarImagem("bottom");
+	public static final Icon CAMPOS = criarImagem("campos");
 	public static final Icon RESUME = criarImagem("resume");
 	public static final Icon TABELA = criarImagem("tabela");
 	public static final Icon UPDATE = criarImagem("update");

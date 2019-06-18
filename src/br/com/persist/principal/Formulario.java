@@ -44,6 +44,7 @@ import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
+import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
@@ -217,6 +218,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuArvore());
 			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuMetadado());
+			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAnexo());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConexao());
@@ -337,6 +340,22 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
+			}
+		}
+
+		class MenuMetadado extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuMetadado() {
+				super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
+
+				formularioAcao.setActionListener(e -> {
+					MetadadoFormulario form = new MetadadoFormulario(Formulario.this, null);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoMetadado(Formulario.this, null));
 			}
 		}
 
