@@ -2,7 +2,6 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
@@ -98,6 +97,12 @@ public class ConfigContainer extends Panel {
 	}
 
 	private void montarLayout() {
+		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
+		PanelCenter panelDestacados = criarPainelGrupo(destacados, Preferencias.getTipoContainerPesquisaAuto());
+		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
+		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
+		PanelCenter panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
+
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkNomeColunaListener.setSelected(Preferencias.isCopiarNomeColunaListener());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
@@ -110,12 +115,6 @@ public class ConfigContainer extends Panel {
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
-
-		Panel panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
-		Panel panelDestacados = criarPainelGrupo(destacados, Preferencias.getTipoContainerPesquisaAuto());
-		Panel panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
-		Panel panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
-		Panel panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
 
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
@@ -171,8 +170,8 @@ public class ConfigContainer extends Panel {
 		chkAbrirComAnexo.setMargin(insets);
 	}
 
-	private Panel criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
-		Panel panel = new Panel(new FlowLayout(FlowLayout.CENTER));
+	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
+		PanelCenter panel = new PanelCenter();
 		ButtonGroup grupo = new ButtonGroup();
 
 		for (int i = 0; i < nomeValores.length; i++) {
