@@ -1,6 +1,5 @@
 package br.com.persist.desktop;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -1591,7 +1590,7 @@ public class Superficie extends Desktop {
 	private void preTotalRecente() {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				objeto.setCorFonte(Color.BLACK);
+				objeto.setCorFonte(Preferencias.getCorAntesTotalRecente());
 			}
 		}
 
@@ -1620,8 +1619,8 @@ public class Superficie extends Desktop {
 					try {
 						Connection conn = Conexao.getConnection(conexao);
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+						objeto.setCorFonte(Preferencias.getCorTotalAtual());
 						objeto.setTag(i);
-						objeto.setCorFonte(Color.ORANGE);
 						processado = true;
 						repaint();
 						sleep(Preferencias.getIntervaloComparacao());
@@ -1634,7 +1633,8 @@ public class Superficie extends Desktop {
 			if (processado) {
 				label.setText(Mensagens.getString("label.threadTotalAtual"));
 			}
-			label.setForeground(Color.ORANGE);
+
+			label.setForeground(Preferencias.getCorTotalAtual());
 			menuItem.setEnabled(true);
 		}
 	}
@@ -1718,13 +1718,14 @@ public class Superficie extends Desktop {
 			if (processado) {
 				label.setText(Mensagens.getString("label.threadRecente"));
 			}
-			label.setForeground(Color.CYAN);
+
+			label.setForeground(Preferencias.getCorComparaRec());
 			menuItem.setEnabled(true);
 		}
 
 		private void processarRecente(Objeto objeto, int recente, FontMetrics fm) {
+			objeto.setCorFonte(Preferencias.getCorComparaRec());
 			long diff = recente - objeto.getTag();
-			objeto.setCorFonte(Color.CYAN);
 
 			if (diff == 0) {
 				return;
