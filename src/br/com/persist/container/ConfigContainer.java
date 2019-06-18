@@ -314,13 +314,17 @@ public class ConfigContainer extends Panel {
 
 		PainelCorTotalRecente() {
 			adicionar(labelAntesProcessar, labelBuscarTotal, labelComparacao);
+
+			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			labelAntesProcessar.setForeground(Preferencias.getCorAntesTotalRecente());
+			labelBuscarTotal.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			labelBuscarTotal.setForeground(Preferencias.getCorTotalAtual());
+			labelComparacao.setForeground(Preferencias.getCorComparaRec());
+
 			labelAntesProcessar.addMouseListener(mouseInner);
 			labelBuscarTotal.addMouseListener(mouseInner);
 			labelComparacao.addMouseListener(mouseInner);
-
-			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			labelBuscarTotal.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		}
 
 		class MouseInner extends MouseAdapter {
@@ -335,6 +339,14 @@ public class ConfigContainer extends Panel {
 				}
 
 				label.setForeground(color);
+
+				if (label == labelAntesProcessar) {
+					Preferencias.setCorAntesTotalRecente(color);
+				} else if (label == labelBuscarTotal) {
+					Preferencias.setCorTotalAtual(color);
+				} else if (label == labelComparacao) {
+					Preferencias.setCorComparaRec(color);
+				}
 			}
 		}
 	}
