@@ -269,7 +269,7 @@ public class Desktop extends JDesktopPane implements IIni {
 				try {
 					Metadado metadado = (Metadado) transferable.getTransferData(flavor);
 
-					if (processadoMetadado(metadado)) {
+					if (processadoMetadado(metadado, e.getLocation())) {
 						completado = true;
 					}
 				} catch (Exception ex) {
@@ -298,7 +298,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		return false;
 	}
 
-	protected boolean processadoMetadado(Metadado metadado) {
+	protected boolean processadoMetadado(Metadado metadado, Point point) {
 		return false;
 	}
 

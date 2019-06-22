@@ -80,4 +80,8 @@ public class Metadado implements Transferable {
 
 		throw new UnsupportedFlavorException(flavor);
 	}
+
+	public String getChaves() {
+		return null;
+	}
 }

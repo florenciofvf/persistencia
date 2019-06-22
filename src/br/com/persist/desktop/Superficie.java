@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -988,10 +989,26 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	protected boolean processadoMetadado(Metadado metadado) {
+	protected boolean processadoMetadado(Metadado metadado, Point point) {
 		if (metadado == null) {
 			return false;
 		}
+
+		Objeto novo = new Objeto(point.x, point.y);
+		String descricao = metadado.getDescricao();
+		novo.setId(descricao + "-" + Objeto.getSequencia());
+		novo.setChaves(metadado.getChaves());
+		novo.setTabela(descricao);
+
+		boolean contem = contem(novo);
+
+		while (contem) {
+			novo.setId(descricao + "-" + Objeto.novaSequencia());
+			contem = contem(novo);
+		}
+
+		addObjeto(novo);
+		repaint();
 
 		return true;
 	}
