@@ -363,7 +363,7 @@ public class Persistencia {
 		}
 	}
 
-	public static List<Metadado> listarChaves(Connection conn, Conexao conexao, Metadado metadado)
+	public static List<Metadado> listarPrimarias(Connection conn, Conexao conexao, Metadado metadado)
 			throws PersistenciaException {
 		try {
 			List<Metadado> resposta = new ArrayList<>();
@@ -403,6 +403,26 @@ public class Persistencia {
 		}
 	}
 
+	public static List<Metadado> listarExportados(Connection conn, Conexao conexao, Metadado metadado)
+			throws PersistenciaException {
+		try {
+			List<Metadado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+
+			ResultSet rs = m.getExportedKeys(null, conexao.getEsquema(), metadado.getDescricao());
+
+			while (rs.next()) {
+				resposta.add(new Metadado(rs.getString(PKCOLUMN_NAME)));
+			}
+
+			rs.close();
+
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
 	public static ListagemModelo criarModeloChavesImportadas(Connection conn, Objeto objeto, Conexao conexao)
 			throws PersistenciaException {
 		try {
@@ -418,6 +438,26 @@ public class Persistencia {
 			rs.close();
 
 			return new ListagemModelo(Arrays.asList(PKTABLE_NAME, PKCOLUMN_NAME, FKCOLUMN_NAME), dados);
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static List<Metadado> listarImportados(Connection conn, Conexao conexao, Metadado metadado)
+			throws PersistenciaException {
+		try {
+			List<Metadado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+
+			ResultSet rs = m.getImportedKeys(null, conexao.getEsquema(), metadado.getDescricao());
+
+			while (rs.next()) {
+				resposta.add(new Metadado(rs.getString(FKCOLUMN_NAME)));
+			}
+
+			rs.close();
+
+			return resposta;
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}

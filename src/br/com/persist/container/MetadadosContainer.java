@@ -70,14 +70,13 @@ public class MetadadosContainer extends Panel {
 			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_METADADOS) + " - " + lista.size());
 
 			for (Metadado metadado : lista) {
-				Metadado chaves = new Metadado(Mensagens.getString("label.chaves"));
-				metadado.add(chaves);
+				List<Metadado> fks = Persistencia.listarImportados(conn, conexao, metadado);
+				List<Metadado> eks = Persistencia.listarExportados(conn, conexao, metadado);
+				List<Metadado> pks = Persistencia.listarPrimarias(conn, conexao, metadado);
 
-				List<Metadado> listaChaves = Persistencia.listarChaves(conn, conexao, metadado);
-
-				for (Metadado chave : listaChaves) {
-					chaves.add(chave);
-				}
+				criarAtributoMetadado(metadado, pks, Constantes.PKS, Constantes.PK);
+				criarAtributoMetadado(metadado, fks, Constantes.FKS, Constantes.FK);
+				criarAtributoMetadado(metadado, eks, Constantes.EKS, Constantes.EK);
 
 				raiz.add(metadado);
 			}
@@ -85,6 +84,20 @@ public class MetadadosContainer extends Panel {
 			metadados.setModel(new MetadadoModelo(raiz));
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("META-DADOS", ex, this);
+		}
+	}
+
+	private void criarAtributoMetadado(Metadado metadado, List<Metadado> listaMetadado, String plural,
+			String singular) {
+		if (listaMetadado.isEmpty()) {
+			return;
+		}
+
+		Metadado titulo = new Metadado(listaMetadado.size() > 1 ? plural : singular);
+		metadado.add(titulo);
+
+		for (Metadado meta : listaMetadado) {
+			titulo.add(meta);
 		}
 	}
 }

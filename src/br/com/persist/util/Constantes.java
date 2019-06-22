@@ -36,9 +36,15 @@ public class Constantes {
 	public static final String ICONE = "ICONE:";
 	public static final String FICHA = "FICHA";
 	public static final String FORM = "FORM";
+	public static final String PKS = "pks";
+	public static final String FKS = "fks";
+	public static final String EKS = "eks";
 	public static final String QL = "\r\n";
 	public static final String SEP = "###";
 	public static final String TAB = "\t";
+	public static final String PK = "pk";
+	public static final String FK = "fk";
+	public static final String EK = "ek";
 	public static final byte ARRASTO = 1;
 	public static final byte RELACAO = 3;
 	public static final byte SELECAO = 5;
