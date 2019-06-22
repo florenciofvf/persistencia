@@ -21,6 +21,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
@@ -264,6 +265,16 @@ public class Desktop extends JDesktopPane implements IIni {
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
 				}
+			} else if (Metadado.flavor.equals(flavor)) {
+				try {
+					Metadado metadado = (Metadado) transferable.getTransferData(flavor);
+
+					if (processadoMetadado(metadado)) {
+						completado = true;
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
+				}
 			}
 
 			if (completado) {
@@ -284,6 +295,10 @@ public class Desktop extends JDesktopPane implements IIni {
 	};
 
 	protected boolean contemReferencia(Objeto objeto) {
+		return false;
+	}
+
+	protected boolean processadoMetadado(Metadado metadado) {
 		return false;
 	}
 

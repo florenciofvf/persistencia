@@ -27,6 +27,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.Label;
@@ -984,6 +985,15 @@ public class Superficie extends Desktop {
 		}
 
 		return -1;
+	}
+
+	@Override
+	protected boolean processadoMetadado(Metadado metadado) {
+		if (metadado == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
