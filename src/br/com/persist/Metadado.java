@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.util.Constantes;
+
 public class Metadado implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(Metadado.class, "Metadado");
 	private static final DataFlavor[] flavors = { flavor };
@@ -82,6 +84,26 @@ public class Metadado implements Transferable {
 	}
 
 	public String getChaves() {
+		for (Metadado titulo : filhos) {
+			if (Constantes.PK.equals(titulo.descricao) || Constantes.PKS.equals(titulo.descricao)) {
+				return titulo.getChaves2();
+			}
+		}
+
 		return null;
+	}
+
+	public String getChaves2() {
+		StringBuilder sb = new StringBuilder();
+
+		if (!filhos.isEmpty()) {
+			sb.append(filhos.get(0).descricao);
+		}
+
+		for (int i = 1; i < filhos.size(); i++) {
+			sb.append("," + filhos.get(i).descricao);
+		}
+
+		return sb.toString();
 	}
 }
