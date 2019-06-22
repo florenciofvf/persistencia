@@ -70,6 +70,8 @@ public class MetadadosContainer extends Panel {
 			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_METADADOS) + " - " + lista.size());
 
 			for (Metadado metadado : lista) {
+				metadado.setTabela(true);
+
 				List<Metadado> fks = Persistencia.listarImportados(conn, conexao, metadado);
 				List<Metadado> eks = Persistencia.listarExportados(conn, conexao, metadado);
 				List<Metadado> pks = Persistencia.listarPrimarias(conn, conexao, metadado);
