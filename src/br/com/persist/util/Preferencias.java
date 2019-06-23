@@ -19,6 +19,7 @@ public class Preferencias {
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
 	private static boolean abrirComArvore;
+	private static boolean nomearArrasto;
 	private static boolean abrirComAnexo;
 	private static Color corTotalAtual;
 	private static Color corComparaRec;
@@ -48,6 +49,7 @@ public class Preferencias {
 		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		abrirComArvore = pref.getBoolean("abrir_com_arvore", true);
+		nomearArrasto = pref.getBoolean("nomear_arrasto", false);
 		abrirComAnexo = pref.getBoolean("abrir_com_anexo", true);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		layoutAbertura = pref.getInt("layout_abertura", 1);
@@ -85,6 +87,7 @@ public class Preferencias {
 		pref.putInt("cor_compara_rec", corComparaRec.getRGB());
 		pref.putBoolean("abrir_com_arvore", abrirComArvore);
 		pref.putBoolean("abrir_com_anexo", abrirComAnexo);
+		pref.putBoolean("nomear_arrasto", nomearArrasto);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putInt("layout_abertura", layoutAbertura);
 		pref.putBoolean("abrir_auto", abrirAuto);
@@ -250,5 +253,13 @@ public class Preferencias {
 
 	public static void setCorComparaRec(Color corComparaRec) {
 		Preferencias.corComparaRec = corComparaRec;
+	}
+
+	public static boolean isNomearArrasto() {
+		return nomearArrasto;
+	}
+
+	public static void setNomearArrasto(boolean nomearArrasto) {
+		Preferencias.nomearArrasto = nomearArrasto;
 	}
 }
