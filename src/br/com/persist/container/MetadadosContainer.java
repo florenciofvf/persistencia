@@ -61,18 +61,23 @@ public class MetadadosContainer extends Panel {
 
 		class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action pksMultiplasAcao = Action.actionMenu("label.pks_multiplas", null);
+			private Action queExportamAcao = Action.actionMenu("label.tabelas_que_exportam", null);
+			private Action naoExportamAcao = Action.actionMenu("label.tabelas_nao_exportam", null);
+			private Action pksMultiplaAcao = Action.actionMenu("label.pks_multiplas", null);
 			private Action pksAusentesAcao = Action.actionMenu("label.pks_ausente", null);
 
 			ButtonInfo() {
 				super("label.funcoes", Icones.INFO);
 
-				addMenuItem(pksMultiplasAcao);
+				addMenuItem(pksMultiplaAcao);
+				addMenuItem(true, naoExportamAcao);
+				addMenuItem(true, queExportamAcao);
 				addMenuItem(true, pksAusentesAcao);
 
+				queExportamAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.queExportam()));
+				naoExportamAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.naoExportam()));
+				pksMultiplaAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksMultipla()));
 				pksAusentesAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksAusente()));
-				pksMultiplasAcao
-						.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksMultiplas()));
 			}
 		}
 	}

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class Metadado implements Transferable {
@@ -113,24 +114,66 @@ public class Metadado implements Transferable {
 
 	public String pksMultiplas() {
 		StringBuilder sb = new StringBuilder();
+		int total = 0;
 
 		for (Metadado table : filhos) {
 			if (table.contem(Constantes.PKS)) {
 				sb.append(table.descricao + Constantes.QL);
+				total++;
 			}
 		}
+
+		sb.insert(0, Mensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL + Constantes.QL);
 
 		return sb.toString();
 	}
 
 	public String pksAusente() {
 		StringBuilder sb = new StringBuilder();
+		int total = 0;
 
 		for (Metadado table : filhos) {
 			if (!table.contem(Constantes.PK) && !table.contem(Constantes.PKS)) {
 				sb.append(table.descricao + Constantes.QL);
+				total++;
 			}
 		}
+
+		sb.insert(0, Mensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL + Constantes.QL);
+
+		return sb.toString();
+	}
+
+	public String queExportam() {
+		StringBuilder sb = new StringBuilder();
+		int total = 0;
+
+		for (Metadado table : filhos) {
+			if (table.contem(Constantes.EK) || table.contem(Constantes.EKS)) {
+				sb.append(table.descricao + Constantes.QL);
+				total++;
+			}
+		}
+
+		sb.insert(0,
+				Mensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL + Constantes.QL);
+
+		return sb.toString();
+	}
+
+	public String naoExportam() {
+		StringBuilder sb = new StringBuilder();
+		int total = 0;
+
+		for (Metadado table : filhos) {
+			if (!table.contem(Constantes.EK) && !table.contem(Constantes.EKS)) {
+				sb.append(table.descricao + Constantes.QL);
+				total++;
+			}
+		}
+
+		sb.insert(0,
+				Mensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL + Constantes.QL);
 
 		return sb.toString();
 	}
