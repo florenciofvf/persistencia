@@ -42,6 +42,7 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkAbrirComArvore = new CheckBox("label.abrir_com_arvore");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkAbrirComAnexo = new CheckBox("label.abrir_com_anexo");
+	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
@@ -112,6 +113,7 @@ public class ConfigContainer extends Panel {
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkAbrirComArvore.setSelected(Preferencias.isAbrirComArvore());
 		chkAbrirComAnexo.setSelected(Preferencias.isAbrirComAnexo());
+		chkNomearArrasto.setSelected(Preferencias.isNomearArrasto());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
@@ -144,6 +146,7 @@ public class ConfigContainer extends Panel {
 		container.add(chkFicharioScroll);
 		container.add(chkAbrirComArvore);
 		container.add(chkAbrirComAnexo);
+		container.add(chkNomearArrasto);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
@@ -168,6 +171,7 @@ public class ConfigContainer extends Panel {
 		chkAbrirComArvore.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
 		chkAbrirComAnexo.setMargin(insets);
+		chkNomearArrasto.setMargin(insets);
 	}
 
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
@@ -216,6 +220,8 @@ public class ConfigContainer extends Panel {
 		chkAbrirComArvore.addActionListener(e -> Preferencias.setAbrirComArvore(chkAbrirComArvore.isSelected()));
 
 		chkAbrirComAnexo.addActionListener(e -> Preferencias.setAbrirComAnexo(chkAbrirComAnexo.isSelected()));
+
+		chkNomearArrasto.addActionListener(e -> Preferencias.setNomearArrasto(chkNomearArrasto.isSelected()));
 
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
 
