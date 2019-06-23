@@ -1610,36 +1610,49 @@ public class Superficie extends Desktop {
 			return;
 		}
 
-		preTotalRecente();
-		new ThreadTotal(conexao, menuItem, label).start();
+		int total = preTotalRecente(label);
+
+		if (total > 0) {
+			new ThreadTotal(conexao, menuItem, label, total).start();
+		}
 	}
 
-	private void preTotalRecente() {
+	private int preTotalRecente(Label label) {
+		int total = 0;
+
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				objeto.setCorFonte(Preferencias.getCorAntesTotalRecente());
+				total++;
 			}
 		}
 
+		label.limpar();
 		repaint();
+
+		return total;
 	}
 
 	private class ThreadTotal extends Thread {
 		final MenuItem menuItem;
 		final Conexao conexao;
 		final Label label;
+		final int total;
 
-		public ThreadTotal(Conexao conexao, MenuItem menuItem, Label label) {
+		public ThreadTotal(Conexao conexao, MenuItem menuItem, Label label, int total) {
 			this.menuItem = menuItem;
 			this.conexao = conexao;
 			this.label = label;
+			this.total = total;
 		}
 
 		@Override
 		public void run() {
+			label.setForeground(Preferencias.getCorTotalAtual());
+			label.setText("0 / " + total);
 			boolean processado = false;
 			menuItem.setEnabled(false);
-			label.limpar();
+			int atual = 0;
 
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
@@ -1647,8 +1660,9 @@ public class Superficie extends Desktop {
 						Connection conn = Conexao.getConnection(conexao);
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
 						objeto.setCorFonte(Preferencias.getCorTotalAtual());
-						objeto.setTag(i);
+						label.setText(++atual + " / " + total);
 						processado = true;
+						objeto.setTag(i);
 						repaint();
 						sleep(Preferencias.getIntervaloComparacao());
 					} catch (Exception ex) {
@@ -1661,7 +1675,6 @@ public class Superficie extends Desktop {
 				label.setText(Mensagens.getString("label.threadTotalAtual"));
 			}
 
-			label.setForeground(Preferencias.getCorTotalAtual());
 			menuItem.setEnabled(true);
 		}
 	}
@@ -1704,8 +1717,11 @@ public class Superficie extends Desktop {
 			return;
 		}
 
-		preTotalRecente();
-		new ThreadRecente(conexao, fm, menuItem, label).start();
+		int total = preTotalRecente(label);
+
+		if (total > 0) {
+			new ThreadRecente(conexao, fm, menuItem, label, total).start();
+		}
 	}
 
 	private class ThreadRecente extends Thread {
@@ -1713,25 +1729,30 @@ public class Superficie extends Desktop {
 		final Conexao conexao;
 		final FontMetrics fm;
 		final Label label;
+		final int total;
 
-		ThreadRecente(Conexao conexao, FontMetrics fm, MenuItem menuItem, Label label) {
+		ThreadRecente(Conexao conexao, FontMetrics fm, MenuItem menuItem, Label label, int total) {
 			this.menuItem = menuItem;
 			this.conexao = conexao;
 			this.label = label;
+			this.total = total;
 			this.fm = fm;
 		}
 
 		@Override
 		public void run() {
+			label.setForeground(Preferencias.getCorComparaRec());
+			label.setText("0 / " + total);
 			boolean processado = false;
 			menuItem.setEnabled(false);
-			label.limpar();
+			int atual = 0;
 
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					try {
 						Connection conn = Conexao.getConnection(conexao);
 						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+						label.setText(++atual + " / " + total);
 						processarRecente(objeto, i, fm);
 						processado = true;
 						repaint();
@@ -1746,7 +1767,6 @@ public class Superficie extends Desktop {
 				label.setText(Mensagens.getString("label.threadRecente"));
 			}
 
-			label.setForeground(Preferencias.getCorComparaRec());
 			menuItem.setEnabled(true);
 		}
 
