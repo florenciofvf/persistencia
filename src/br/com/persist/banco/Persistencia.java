@@ -412,7 +412,11 @@ public class Persistencia {
 			ResultSet rs = m.getExportedKeys(null, conexao.getEsquema(), metadado.getDescricao());
 
 			while (rs.next()) {
-				resposta.add(new Metadado(rs.getString(PKCOLUMN_NAME)));
+				Metadado campo = new Metadado(rs.getString(PKCOLUMN_NAME));
+				resposta.add(campo);
+
+				Metadado ref = new Metadado(rs.getString(FKTABLE_NAME) + "(" + rs.getString(FKCOLUMN_NAME) + ")");
+				campo.add(ref);
 			}
 
 			rs.close();
@@ -452,7 +456,11 @@ public class Persistencia {
 			ResultSet rs = m.getImportedKeys(null, conexao.getEsquema(), metadado.getDescricao());
 
 			while (rs.next()) {
-				resposta.add(new Metadado(rs.getString(FKCOLUMN_NAME)));
+				Metadado campo = new Metadado(rs.getString(FKCOLUMN_NAME));
+				resposta.add(campo);
+
+				Metadado ref = new Metadado(rs.getString(PKTABLE_NAME) + "(" + rs.getString(PKCOLUMN_NAME) + ")");
+				campo.add(ref);
 			}
 
 			rs.close();
