@@ -16,8 +16,10 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.metadado.Metadados;
 import br.com.persist.modelo.MetadadoModelo;
 import br.com.persist.util.Action;
+import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
@@ -47,13 +49,31 @@ public class MetadadosContainer extends Panel {
 			super.ini(janela);
 
 			addButton(atualizarAcao);
-
 			add(true, cmbConexao);
+			add(true, new ButtonInfo());
+
 			eventos();
 		}
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
+		}
+
+		class ButtonInfo extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action pksMultiplasAcao = Action.actionMenu("label.pks_multiplas", null);
+			private Action pksAusentesAcao = Action.actionMenu("label.pks_ausente", null);
+
+			ButtonInfo() {
+				super("label.funcoes", Icones.INFO);
+
+				addMenuItem(pksMultiplasAcao);
+				addMenuItem(true, pksAusentesAcao);
+
+				pksAusentesAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksAusente()));
+				pksMultiplasAcao
+						.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksMultiplas()));
+			}
 		}
 	}
 

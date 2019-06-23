@@ -110,4 +110,38 @@ public class Metadado implements Transferable {
 
 		return sb.toString();
 	}
+
+	public String pksMultiplas() {
+		StringBuilder sb = new StringBuilder();
+
+		for (Metadado table : filhos) {
+			if (table.contem(Constantes.PKS)) {
+				sb.append(table.descricao + Constantes.QL);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public String pksAusente() {
+		StringBuilder sb = new StringBuilder();
+
+		for (Metadado table : filhos) {
+			if (!table.contem(Constantes.PK) && !table.contem(Constantes.PKS)) {
+				sb.append(table.descricao + Constantes.QL);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public boolean contem(String descricao) {
+		for (Metadado m : filhos) {
+			if (m.descricao.equals(descricao)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

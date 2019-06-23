@@ -87,4 +87,16 @@ public class Metadados extends JTree {
 
 		return null;
 	}
+
+	public String pksMultiplas() {
+		MetadadoModelo modelo = (MetadadoModelo) getModel();
+		Metadado raiz = (Metadado) modelo.getRoot();
+		return raiz.pksMultiplas();
+	}
+
+	public String pksAusente() {
+		MetadadoModelo modelo = (MetadadoModelo) getModel();
+		Metadado raiz = (Metadado) modelo.getRoot();
+		return raiz.pksAusente();
+	}
 }
