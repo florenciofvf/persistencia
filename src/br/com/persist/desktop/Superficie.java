@@ -605,12 +605,12 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.configItens(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.xLocal = x;
 				popup2.yLocal = y;
-				popup2.configItens(getAllFrames().length > 0);
+				popup2.preShow(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -669,12 +669,12 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				popup.configItens(selecionadoObjeto != null && selecionadoRelacao == null);
+				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
 				popup2.xLocal = x;
 				popup2.yLocal = y;
-				popup2.configItens(getAllFrames().length > 0);
+				popup2.preShow(getAllFrames().length > 0);
 				popup2.show(Superficie.this, x, y);
 			}
 		}
@@ -1044,6 +1044,7 @@ public class Superficie extends Desktop {
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
+		private Action dadosAcao = Action.actionMenu("label.dados", null);
 
 		MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
 		MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
@@ -1054,6 +1055,7 @@ public class Superficie extends Desktop {
 		Menu menuAlinhamento = new Menu("label.alinhamento");
 		MenuItem itemCopiar = new MenuItem(copiarAcao);
 		MenuDestacar menuDestacar = new MenuDestacar();
+		MenuItem itemDados = new MenuItem(dadosAcao);
 
 		SuperficiePopup() {
 			menuDistribuicao.add(itemDistribuiHorizontal);
@@ -1069,6 +1071,7 @@ public class Superficie extends Desktop {
 			add(true, new MenuUpdate());
 			add(true, new MenuItem(excluirAcao));
 			add(true, itemPartir);
+			add(true, itemDados);
 			add(true, new MenuItem(configuracaoAcao));
 
 			eventos();
@@ -1166,6 +1169,11 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
+			dadosAcao.setActionListener(e -> {
+				MouseEvent evt = new MouseEvent(Superficie.this, 0, 0, 0, 0, 0, 2, false);
+				mouseAdapterSelecao.mouseClicked(evt);
+			});
+
 			excluirAcao.setActionListener(e -> excluirSelecionados());
 
 			configuracaoAcao.setActionListener(e -> {
@@ -1192,7 +1200,9 @@ public class Superficie extends Desktop {
 			copiarAcao.setActionListener(e -> Formulario.copiar(Superficie.this));
 		}
 
-		void configItens(boolean objetoSelecionado) {
+		void preShow(boolean objetoSelecionado) {
+			itemDados.setEnabled(
+					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2()));
 			menuDistribuicao.setEnabled(objetoSelecionado);
 			menuAlinhamento.setEnabled(objetoSelecionado);
 			menuDestacar.setEnabled(objetoSelecionado);
@@ -1382,7 +1392,7 @@ public class Superficie extends Desktop {
 			});
 		}
 
-		void configItens(boolean contemFrames) {
+		void preShow(boolean contemFrames) {
 			itemColar.setEnabled(!Formulario.copiadosIsEmpty());
 			itemAlinharEsquerdo.setEnabled(contemFrames);
 			itemAtualizarForms.setEnabled(contemFrames);
