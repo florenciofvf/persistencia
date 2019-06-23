@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Util;
 
 public class Metadado implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(Metadado.class, "Metadado");
@@ -18,6 +19,9 @@ public class Metadado implements Transferable {
 	private Metadado pai;
 
 	public Metadado(String descricao) {
+		if (Util.estaVazio(descricao)) {
+			throw new IllegalArgumentException();
+		}
 		this.descricao = descricao;
 		filhos = new ArrayList<>();
 	}

@@ -995,15 +995,24 @@ public class Superficie extends Desktop {
 		}
 
 		Objeto novo = new Objeto(point.x, point.y);
-		String descricao = metadado.getDescricao();
-		novo.setId(descricao + "-" + Objeto.getSequencia());
 		novo.setChaves(metadado.getChaves());
-		novo.setTabela(descricao);
+		String id = metadado.getDescricao();
+		novo.setTabela(id);
+
+		if (Preferencias.isNomearArrasto()) {
+			Object resp = Util.getValorInputDialog(Superficie.this, "label.id", id, id);
+
+			if (resp != null && !Util.estaVazio(resp.toString())) {
+				id = resp.toString();
+			}
+		}
+
+		novo.setId(id);
 
 		boolean contem = contem(novo);
 
 		while (contem) {
-			novo.setId(descricao + "-" + Objeto.novaSequencia());
+			novo.setId(id + "-" + Objeto.novaSequencia());
 			contem = contem(novo);
 		}
 

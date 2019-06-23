@@ -143,10 +143,10 @@ public class ConfigContainer extends Panel {
 		container.add(chkAbortarFecharComESC);
 		container.add(chkNomeColunaListener);
 		container.add(chkFecharOrigemAposSoltar);
+		container.add(chkNomearArrasto);
 		container.add(chkFicharioScroll);
 		container.add(chkAbrirComArvore);
 		container.add(chkAbrirComAnexo);
-		container.add(chkNomearArrasto);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
