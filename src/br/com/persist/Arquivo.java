@@ -172,6 +172,11 @@ public class Arquivo {
 		}
 	}
 
+	public void limparIcone() {
+		this.nomeIcone = null;
+		this.icone = null;
+	}
+
 	public String getNomeIcone() {
 		return nomeIcone;
 	}
