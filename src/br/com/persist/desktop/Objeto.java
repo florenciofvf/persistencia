@@ -206,6 +206,11 @@ public class Objeto implements Runnable {
 		}
 	}
 
+	public void limparIcone() {
+		this.icone = null;
+		this.icon = null;
+	}
+
 	public String getFinalConsulta() {
 		if (Util.estaVazio(finalConsulta)) {
 			finalConsulta = "";
