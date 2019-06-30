@@ -21,7 +21,6 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Imagens;
 
 public class ArquivoIconeContainer extends Panel {
@@ -80,7 +79,7 @@ public class ArquivoIconeContainer extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action cancelaAcao = Action.actionIcon("label.limpar", Icones.NOVO);
+		private Action cancelaAcao = Action.actionIconLimpar();
 
 		@Override
 		public void ini(IJanela janela) {
@@ -89,6 +88,7 @@ public class ArquivoIconeContainer extends Panel {
 			addButton(cancelaAcao);
 
 			cancelaAcao.setActionListener(e -> {
+				AnexoModelo.putArquivo(arquivo);
 				arquivo.limparIcone();
 				fechar();
 			});

@@ -21,7 +21,6 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Imagens;
 
 public class IconeContainer extends Panel {
@@ -83,7 +82,7 @@ public class IconeContainer extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action cancelaAcao = Action.actionIcon("label.limpar", Icones.NOVO);
+		private Action cancelaAcao = Action.actionIconLimpar();
 
 		@Override
 		public void ini(IJanela janela) {
