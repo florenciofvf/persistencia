@@ -150,10 +150,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action limparAcao = Action.actionIcon(Constantes.LABEL_LIMPAR, Icones.NOVO,
-				e -> txtComplemento.setText(""));
 		private Action complementoAcao = Action.actionIcon("label.complemento", Icones.BAIXAR2);
 		private Action fragmentoAcao = Action.actionIcon("label.fragmento", Icones.FRAGMENTO);
+		private Action limparAcao = Action.actionIcon(Constantes.LABEL_LIMPAR, Icones.NOVO,
+				e -> txtComplemento.setText(""));
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR,
 				e -> txtComplemento.setText(objeto.getComplemento()));
 		final Button excluir = new Button(new ExcluirRegistrosAcao());
