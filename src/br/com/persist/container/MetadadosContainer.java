@@ -101,9 +101,9 @@ public class MetadadosContainer extends Panel {
 				List<Metadado> eks = Persistencia.listarExportados(conn, conexao, metadado);
 				List<Metadado> pks = Persistencia.listarPrimarias(conn, conexao, metadado);
 
-				criarAtributoMetadado(metadado, pks, Constantes.PKS, Constantes.PK);
-				criarAtributoMetadado(metadado, fks, Constantes.FKS, Constantes.FK);
-				criarAtributoMetadado(metadado, eks, Constantes.EKS, Constantes.EK);
+				criarAtributoMetadado(metadado, pks, Constantes.PKS, Constantes.PK, 'E');
+				criarAtributoMetadado(metadado, fks, Constantes.FKS, Constantes.FK, 'I');
+				criarAtributoMetadado(metadado, eks, Constantes.EKS, Constantes.EK, ' ');
 
 				raiz.add(metadado);
 			}
@@ -114,8 +114,8 @@ public class MetadadosContainer extends Panel {
 		}
 	}
 
-	private void criarAtributoMetadado(Metadado metadado, List<Metadado> listaMetadado, String plural,
-			String singular) {
+	private void criarAtributoMetadado(Metadado metadado, List<Metadado> listaMetadado, String plural, String singular,
+			char chave) {
 		if (listaMetadado.isEmpty()) {
 			return;
 		}
@@ -125,6 +125,12 @@ public class MetadadosContainer extends Panel {
 
 		for (Metadado meta : listaMetadado) {
 			titulo.add(meta);
+
+			if (chave == 'E') {
+				metadado.setTotalExportados(metadado.getTotalExportados() + 1);
+			} else if (chave == 'I') {
+				metadado.setTotalImportados(metadado.getTotalImportados() + 1);
+			}
 		}
 	}
 }

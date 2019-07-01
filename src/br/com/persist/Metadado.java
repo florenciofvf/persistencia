@@ -16,6 +16,8 @@ public class Metadado implements Transferable {
 	private static final DataFlavor[] flavors = { flavor };
 	private final List<Metadado> filhos;
 	private final String descricao;
+	private int totalImportados;
+	private int totalExportados;
 	private boolean tabela;
 	private Metadado pai;
 
@@ -23,6 +25,7 @@ public class Metadado implements Transferable {
 		if (Util.estaVazio(descricao)) {
 			throw new IllegalArgumentException();
 		}
+
 		this.descricao = descricao;
 		filhos = new ArrayList<>();
 	}
@@ -186,5 +189,21 @@ public class Metadado implements Transferable {
 		}
 
 		return false;
+	}
+
+	public int getTotalImportados() {
+		return totalImportados;
+	}
+
+	public void setTotalImportados(int totalImportados) {
+		this.totalImportados = totalImportados;
+	}
+
+	public int getTotalExportados() {
+		return totalExportados;
+	}
+
+	public void setTotalExportados(int totalExportados) {
+		this.totalExportados = totalExportados;
 	}
 }
