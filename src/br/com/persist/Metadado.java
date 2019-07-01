@@ -5,6 +5,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import br.com.persist.util.Constantes;
@@ -13,6 +14,8 @@ import br.com.persist.util.Util;
 
 public class Metadado implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(Metadado.class, "Metadado");
+	private final List<String> ordenadoExportacao = new ArrayList<>();
+	private final List<String> ordenadoImportacao = new ArrayList<>();
 	private static final DataFlavor[] flavors = { flavor };
 	private final List<Metadado> filhos;
 	private final String descricao;
@@ -205,5 +208,23 @@ public class Metadado implements Transferable {
 
 	public void setTotalExportados(int totalExportados) {
 		this.totalExportados = totalExportados;
+	}
+
+	public void montarOrdenacoes() {
+		List<Metadado> temporario = new ArrayList<>(filhos);
+		ordenadoExportacao.clear();
+		ordenadoImportacao.clear();
+
+		Collections.sort(temporario, (o1, o2) -> o2.getTotalExportados() - o1.getTotalExportados());
+
+		for (Metadado meta : temporario) {
+			ordenadoExportacao.add(meta.getDescricao() + " = " + meta.getTotalExportados());
+		}
+
+		Collections.sort(temporario, (o1, o2) -> o2.getTotalImportados() - o1.getTotalImportados());
+
+		for (Metadado meta : temporario) {
+			ordenadoImportacao.add(meta.getDescricao() + " = " + meta.getTotalImportados());
+		}
 	}
 }

@@ -108,6 +108,7 @@ public class MetadadosContainer extends Panel {
 				raiz.add(metadado);
 			}
 
+			raiz.montarOrdenacoes();
 			metadados.setModel(new MetadadoModelo(raiz));
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("META-DADOS", ex, this);
