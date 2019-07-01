@@ -184,6 +184,25 @@ public class Metadado implements Transferable {
 		return sb.toString();
 	}
 
+	public String ordemExpImp(boolean exp) {
+		StringBuilder sb = new StringBuilder(exp ? Mensagens.getString("label.ordenado_exportacao")
+				: Mensagens.getString("label.ordenado_importacao"));
+		sb.append(Constantes.QL);
+		sb.append(Constantes.QL);
+
+		if (exp) {
+			for (String string : ordenadoExportacao) {
+				sb.append(string + Constantes.QL);
+			}
+		} else {
+			for (String string : ordenadoImportacao) {
+				sb.append(string + Constantes.QL);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public boolean contem(String descricao) {
 		for (Metadado m : filhos) {
 			if (m.descricao.equals(descricao)) {
@@ -218,13 +237,13 @@ public class Metadado implements Transferable {
 		Collections.sort(temporario, (o1, o2) -> o2.getTotalExportados() - o1.getTotalExportados());
 
 		for (Metadado meta : temporario) {
-			ordenadoExportacao.add(meta.getDescricao() + " = " + meta.getTotalExportados());
+			ordenadoExportacao.add(meta.getTotalExportados() + " - " + meta.getDescricao());
 		}
 
 		Collections.sort(temporario, (o1, o2) -> o2.getTotalImportados() - o1.getTotalImportados());
 
 		for (Metadado meta : temporario) {
-			ordenadoImportacao.add(meta.getDescricao() + " = " + meta.getTotalImportados());
+			ordenadoImportacao.add(meta.getTotalImportados() + " - " + meta.getDescricao());
 		}
 	}
 }

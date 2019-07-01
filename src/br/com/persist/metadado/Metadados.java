@@ -108,4 +108,8 @@ public class Metadados extends JTree {
 	public String naoExportam() {
 		return getRaiz().naoExportam();
 	}
+
+	public String ordemExpImp(boolean exp) {
+		return getRaiz().ordemExpImp(exp);
+	}
 }

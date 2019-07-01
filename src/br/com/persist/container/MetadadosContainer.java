@@ -63,6 +63,8 @@ public class MetadadosContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 			private Action queExportamAcao = Action.actionMenu("label.tabelas_que_exportam", null);
 			private Action naoExportamAcao = Action.actionMenu("label.tabelas_nao_exportam", null);
+			private Action ordemExportAcao = Action.actionMenu("label.ordenado_exportacao", null);
+			private Action ordemImportAcao = Action.actionMenu("label.ordenado_importacao", null);
 			private Action pksMultiplaAcao = Action.actionMenu("label.pks_multiplas", null);
 			private Action pksAusentesAcao = Action.actionMenu("label.pks_ausente", null);
 
@@ -73,11 +75,17 @@ public class MetadadosContainer extends Panel {
 				addMenuItem(true, naoExportamAcao);
 				addMenuItem(true, queExportamAcao);
 				addMenuItem(true, pksAusentesAcao);
+				addMenuItem(true, ordemExportAcao);
+				addMenuItem(true, ordemImportAcao);
 
 				queExportamAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.queExportam()));
 				naoExportamAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.naoExportam()));
 				pksMultiplaAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksMultipla()));
 				pksAusentesAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksAusente()));
+				ordemImportAcao
+						.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.ordemExpImp(false)));
+				ordemExportAcao
+						.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.ordemExpImp(true)));
 			}
 		}
 	}
@@ -101,9 +109,9 @@ public class MetadadosContainer extends Panel {
 				List<Metadado> eks = Persistencia.listarExportados(conn, conexao, metadado);
 				List<Metadado> pks = Persistencia.listarPrimarias(conn, conexao, metadado);
 
-				criarAtributoMetadado(metadado, pks, Constantes.PKS, Constantes.PK, 'E');
+				criarAtributoMetadado(metadado, pks, Constantes.PKS, Constantes.PK, ' ');
 				criarAtributoMetadado(metadado, fks, Constantes.FKS, Constantes.FK, 'I');
-				criarAtributoMetadado(metadado, eks, Constantes.EKS, Constantes.EK, ' ');
+				criarAtributoMetadado(metadado, eks, Constantes.EKS, Constantes.EK, 'E');
 
 				raiz.add(metadado);
 			}
