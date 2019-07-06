@@ -31,6 +31,7 @@ public class Anexo extends JTree {
 	private final transient List<AnexoListener> ouvintes;
 	private AnexoPopup anexoPopup = new AnexoPopup();
 	private boolean popupDesabilitado;
+	private boolean popupTrigger;
 
 	public Anexo(TreeModel newModel) {
 		super(newModel);
@@ -95,27 +96,6 @@ public class Anexo extends JTree {
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
-		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() >= Constantes.DOIS) {
-				Arquivo arquivo = getObjetoSelecionado();
-
-				if (arquivo == null) {
-					return;
-				}
-
-				if (arquivo.isFile()) {
-					if (arquivo.isPadraoAbrir()) {
-						ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
-					} else {
-						ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
-					}
-				} else if (arquivo.isDirectory()) {
-					ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
-				}
-			}
-		}
-
-		@Override
 		public void mousePressed(MouseEvent e) {
 			processar(e);
 		}
@@ -126,12 +106,15 @@ public class Anexo extends JTree {
 		}
 
 		private void processar(MouseEvent e) {
+			popupTrigger = false;
+
 			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
 				return;
 			}
 
 			TreePath anexoCli = getClosestPathForLocation(e.getX(), e.getY());
 			TreePath anexoSel = getSelectionPath();
+			popupTrigger = true;
 
 			if (anexoCli == null || anexoSel == null) {
 				setSelectionPath(null);
@@ -155,6 +138,31 @@ public class Anexo extends JTree {
 				}
 			} else {
 				setSelectionPath(null);
+			}
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (popupTrigger) {
+				return;
+			}
+
+			if (e.getClickCount() >= Constantes.DOIS) {
+				Arquivo arquivo = getObjetoSelecionado();
+
+				if (arquivo == null) {
+					return;
+				}
+
+				if (arquivo.isFile()) {
+					if (arquivo.isPadraoAbrir()) {
+						ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
+					} else {
+						ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
+					}
+				} else if (arquivo.isDirectory()) {
+					ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
+				}
 			}
 		}
 	};
