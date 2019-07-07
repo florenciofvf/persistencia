@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -58,6 +59,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
+import br.com.persist.util.Vetor;
 import br.com.persist.xml.XMLUtil;
 
 public class Superficie extends Desktop {
@@ -1810,5 +1812,34 @@ public class Superficie extends Desktop {
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao) {
 		List<String> lista = metadado.getListaStringExpImp(exportacao);
+
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+
+		Objeto centro = new Objeto(d.width / 2, d.height / 2);
+		centro.setId(metadado.getDescricao());
+		addObjeto(centro);
+
+		if (lista.isEmpty()) {
+			return;
+		}
+
+		int comp = d.width / 3;
+		int centroX = d.width / 2;
+		int centroY = d.height / 2;
+		int graus = 360 / lista.size();
+		Vetor vetor = new Vetor(0, comp);
+
+		for (int i = 0; i < lista.size(); i++) {
+			String descricao = lista.get(i);
+
+			Objeto objeto = new Objeto(centroX + (int) vetor.getX(), centroY + (int) vetor.getY());
+			objeto.setId(descricao);
+			addObjeto(centro);
+
+			Relacao relacao = new Relacao(centro, !exportacao, objeto, exportacao);
+			addRelacao(relacao);
+
+			vetor.rotacionar(graus);
+		}
 	}
 }
