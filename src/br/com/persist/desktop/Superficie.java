@@ -1823,18 +1823,18 @@ public class Superficie extends Desktop {
 			return;
 		}
 
-		int comp = d.width / 3;
+		int comp = Math.min(d.width, d.height) / 4;
 		int centroX = d.width / 2;
 		int centroY = d.height / 2;
 		int graus = 360 / lista.size();
-		Vetor vetor = new Vetor(0, comp);
+		Vetor vetor = new Vetor(comp, 0);
 
 		for (int i = 0; i < lista.size(); i++) {
 			String descricao = lista.get(i);
 
 			Objeto objeto = new Objeto(centroX + (int) vetor.getX(), centroY + (int) vetor.getY());
 			objeto.setId(descricao);
-			addObjeto(centro);
+			addObjeto(objeto);
 
 			Relacao relacao = new Relacao(centro, !exportacao, objeto, exportacao);
 			addRelacao(relacao);
