@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
@@ -350,7 +351,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
 
 				formularioAcao.setActionListener(e -> {
-					MetadadoFormulario form = new MetadadoFormulario(Formulario.this, null);
+					MetadadoFormulario form = new MetadadoFormulario(Formulario.this, Formulario.this, null);
 					form.setLocationRelativeTo(Formulario.this);
 					form.setVisible(true);
 				});
@@ -613,6 +614,16 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 		}
+	}
+
+	public void abrirExportacaoMetadado(Metadado metadado) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void abrirImportacaoMetadado(Metadado metadado) {
+		// TODO Auto-generated method stub
+
 	}
 }
 

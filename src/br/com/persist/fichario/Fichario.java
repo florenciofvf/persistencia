@@ -27,6 +27,7 @@ import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
+import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -272,7 +273,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Panel novoMetadado(Formulario formulario, Conexao conexao) {
-		MetadadosContainer container = new MetadadosContainer(null, formulario, conexao);
+		MetadadosContainer container = new MetadadosContainer(null, formulario, formulario, conexao);
 		addTab(Mensagens.getString(Constantes.LABEL_METADADOS), container);
 		int ultimoIndice = getTabCount() - 1;
 
@@ -549,5 +550,15 @@ public class Fichario extends JTabbedPane {
 			this.x = x;
 			this.y = y;
 		}
+	}
+
+	public void abrirExportacaoMetadado(Metadado metadado) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void abrirImportacaoMetadado(Metadado metadado) {
+		// TODO Auto-generated method stub
+
 	}
 }

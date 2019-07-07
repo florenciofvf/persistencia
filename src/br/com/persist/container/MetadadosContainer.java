@@ -13,8 +13,10 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.listener.MetadadosListener;
 import br.com.persist.metadado.Metadados;
 import br.com.persist.modelo.MetadadoModelo;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
@@ -23,14 +25,16 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class MetadadosContainer extends Panel {
+public class MetadadosContainer extends Panel implements MetadadosListener {
 	private static final long serialVersionUID = 1L;
 	private Metadados metadados = new Metadados();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
+	private final Formulario formulario;
 
-	public MetadadosContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao) {
+	public MetadadosContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
+		this.formulario = formulario;
 		toolbar.ini(janela);
 		montarLayout();
 	}
@@ -38,6 +42,7 @@ public class MetadadosContainer extends Panel {
 	private void montarLayout() {
 		add(BorderLayout.CENTER, new ScrollPane(metadados));
 		add(BorderLayout.NORTH, toolbar);
+		metadados.adicionarOuvinte(this);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -140,6 +145,42 @@ public class MetadadosContainer extends Panel {
 			} else if (chave == 'I') {
 				metadado.setTotalImportados(metadado.getTotalImportados() + 1);
 			}
+		}
+	}
+
+	@Override
+	public void abrirExportacaoFormArquivo(Metadados metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.abrirExportacaoMetadado(metadado);
+		}
+	}
+
+	@Override
+	public void abrirExportacaoFichArquivo(Metadados metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.getFichario().abrirExportacaoMetadado(metadado);
+		}
+	}
+
+	@Override
+	public void abrirImportacaoFormArquivo(Metadados metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.abrirImportacaoMetadado(metadado);
+		}
+	}
+
+	@Override
+	public void abrirImportacaoFichArquivo(Metadados metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.getFichario().abrirImportacaoMetadado(metadado);
 		}
 	}
 }
