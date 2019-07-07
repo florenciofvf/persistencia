@@ -88,7 +88,12 @@ public class Container extends Panel {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao) {
-		// TODO
+		if (abortarFecharComESCSuperficie) {
+			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+		}
+
+		superficie.abrirExportacaoImportacaoMetadado(metadado, exportacao);
+		btnSelecao.click();
 	}
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
@@ -96,6 +101,7 @@ public class Container extends Panel {
 		if (abortarFecharComESCSuperficie) {
 			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
+
 		superficie.abrir(objetos, relacoes, d);
 		arquivo = file;
 		btnSelecao.click();

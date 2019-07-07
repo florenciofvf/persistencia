@@ -1807,4 +1807,8 @@ public class Superficie extends Desktop {
 			addObjeto(info);
 		}
 	}
+
+	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao) {
+		List<String> lista = metadado.getListaStringExpImp(exportacao);
+	}
 }

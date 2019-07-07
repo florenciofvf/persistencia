@@ -246,4 +246,36 @@ public class Metadado implements Transferable {
 			ordenadoImportacao.add(meta.getTotalImportados() + " - " + meta.getDescricao());
 		}
 	}
+
+	public List<String> getListaStringExpImp(boolean exportacao) {
+		List<String> resposta = new ArrayList<>();
+
+		for (Metadado table : filhos) {
+			table.listaStringExpImp(resposta, exportacao);
+		}
+
+		return resposta;
+	}
+
+	private void listaStringExpImp(List<String> resposta, boolean exportacao) {
+		if (exportacao) {
+			for (Metadado m : filhos) {
+				if (m.descricao.equals(Constantes.EK) || m.descricao.equals(Constantes.EKS)) {
+					m.listaString(resposta);
+				}
+			}
+		} else {
+			for (Metadado m : filhos) {
+				if (m.descricao.equals(Constantes.FK) || m.descricao.equals(Constantes.FKS)) {
+					m.listaString(resposta);
+				}
+			}
+		}
+	}
+
+	private void listaString(List<String> resposta) {
+		for (Metadado m : filhos) {
+			resposta.add(m.descricao);
+		}
+	}
 }
