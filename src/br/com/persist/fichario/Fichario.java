@@ -416,6 +416,18 @@ public class Fichario extends JTabbedPane {
 		setTitleAt(getTabCount() - 1, file.getName());
 	}
 
+	public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado) {
+		Container container = novo(formulario);
+		container.abrirExportacaoImportacaoMetadado(metadado, true);
+		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_exportacao"));
+	}
+
+	public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado) {
+		Container container = novo(formulario);
+		container.abrirExportacaoImportacaoMetadado(metadado, false);
+		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
+	}
+
 	@Override
 	public void remove(int index) {
 		Component cmp = getComponentAt(index);
@@ -550,15 +562,5 @@ public class Fichario extends JTabbedPane {
 			this.x = x;
 			this.y = y;
 		}
-	}
-
-	public void abrirExportacaoMetadado(Metadado metadado) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void abrirImportacaoMetadado(Metadado metadado) {
-		// TODO Auto-generated method stub
-
 	}
 }

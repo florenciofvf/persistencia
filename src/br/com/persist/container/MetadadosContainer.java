@@ -162,7 +162,7 @@ public class MetadadosContainer extends Panel implements MetadadosListener {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().abrirExportacaoMetadado(metadado);
+			formulario.getFichario().abrirExportacaoMetadado(formulario, metadado);
 		}
 	}
 
@@ -180,7 +180,7 @@ public class MetadadosContainer extends Panel implements MetadadosListener {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().abrirImportacaoMetadado(metadado);
+			formulario.getFichario().abrirImportacaoMetadado(formulario, metadado);
 		}
 	}
 }

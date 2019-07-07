@@ -15,6 +15,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
+import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
@@ -84,6 +85,10 @@ public class Container extends Panel {
 
 	public void estadoSelecao() {
 		btnSelecao.click();
+	}
+
+	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao) {
+		// TODO
 	}
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,

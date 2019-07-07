@@ -43,6 +43,7 @@ import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
+import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
@@ -617,13 +618,19 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	}
 
 	public void abrirExportacaoMetadado(Metadado metadado) {
-		// TODO Auto-generated method stub
-
+		ContainerFormulario form = new ContainerFormulario(this,
+				new File(Mensagens.getString("label.abrir_exportacao")));
+		form.abrirExportacaoImportacaoMetadado(metadado, true);
+		form.setLocationRelativeTo(this);
+		form.setVisible(true);
 	}
 
 	public void abrirImportacaoMetadado(Metadado metadado) {
-		// TODO Auto-generated method stub
-
+		ContainerFormulario form = new ContainerFormulario(this,
+				new File(Mensagens.getString("label.abrir_importacao")));
+		form.abrirExportacaoImportacaoMetadado(metadado, false);
+		form.setLocationRelativeTo(this);
+		form.setVisible(true);
 	}
 }
 

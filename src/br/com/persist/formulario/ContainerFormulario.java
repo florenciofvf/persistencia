@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.List;
 
+import br.com.persist.Metadado;
 import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
@@ -30,6 +31,10 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Graphics g, Dimension d) {
 		container.abrir(file, objetos, relacoes, forms, sbConexao, g, d);
+	}
+
+	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao) {
+		container.abrirExportacaoImportacaoMetadado(metadado, exportacao);
 	}
 
 	private void configurar() {
