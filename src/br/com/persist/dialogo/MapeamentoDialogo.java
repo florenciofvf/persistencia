@@ -1,22 +1,30 @@
-package br.com.persist.formulario;
+package br.com.persist.dialogo;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import br.com.persist.container.FragmentoContainer;
-import br.com.persist.principal.Formulario;
+import br.com.persist.container.MapeamentoContainer;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class FragmentoFormulario extends AbstratoFormulario implements IJanela {
+public class MapeamentoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
-	private final FragmentoContainer container;
+	private final MapeamentoContainer container;
 
-	public FragmentoFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_FRAGMENTO));
-		container = new FragmentoContainer(this, null);
+	public MapeamentoDialogo(Dialog dialog) {
+		super(dialog, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
+		container = new MapeamentoContainer(this);
+		montarLayout();
+		configurar();
+	}
+
+	public MapeamentoDialogo(Frame frame) {
+		super(frame, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
+		container = new MapeamentoContainer(this);
 		montarLayout();
 		configurar();
 	}

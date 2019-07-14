@@ -6,6 +6,7 @@ public class Constantes {
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
+	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String LABEL_METADADOS = "label.meta_dados";

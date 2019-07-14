@@ -30,8 +30,8 @@ import br.com.persist.util.Mensagens;
 public class TituloAba extends Panel {
 	private static final long serialVersionUID = 1L;
 	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.PANEL3, Icones.EXPANDIR, Icones.PANEL4,
-			Icones.CONFIG, Icones.BANCO, Icones.FRAGMENTO, Icones.CRIAR, Icones.ATUALIZAR, Icones.ANEXO,
-			Icones.CAMPOS };
+			Icones.CONFIG, Icones.BANCO, Icones.FRAGMENTO, Icones.CRIAR, Icones.ATUALIZAR, Icones.ANEXO, Icones.CAMPOS,
+			Icones.REFERENCIA };
 	private static final Logger LOG = Logger.getGlobal();
 	public static final byte OBJETOS = 0;
 	public static final byte DESKTOP = 1;
@@ -45,6 +45,7 @@ public class TituloAba extends Panel {
 	public static final byte UPDATE = 9;
 	public static final byte ANEXO = 10;
 	public static final byte METADADO = 11;
+	public static final byte MAPEAMENTO = 12;
 	private final Fichario fichario;
 
 	public TituloAba(Fichario fichario, byte tipo) {

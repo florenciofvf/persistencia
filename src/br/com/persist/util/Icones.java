@@ -19,6 +19,7 @@ public class Icones {
 	public static final Icon ASC_NUMERO = criarImagem("asc_numero");
 	public static final Icon DESC_TEXTO = criarImagem("desc_texto");
 	public static final Icon HIERARQUIA = criarImagem("hierarchy");
+	public static final Icon REFERENCIA = criarImagem("reference");
 	public static final Icon ASC_TEXTO = criarImagem("asc_texto");
 	public static final Icon CENTRALIZAR = criarImagem("section");
 	public static final Icon EXECUTAR = criarImagem("executar");

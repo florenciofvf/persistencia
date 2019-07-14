@@ -35,6 +35,7 @@ import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
+import br.com.persist.dialogo.MapeamentoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnexoFormulario;
@@ -46,6 +47,7 @@ import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
+import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.modelo.ConexaoModelo;
@@ -229,6 +231,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(new MenuMetadado());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuFragmento());
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuMapeamento());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConfig());
 			menuArquivo.addSeparator();
@@ -592,6 +596,28 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoFragmento(Formulario.this));
+			}
+		}
+
+		class MenuMapeamento extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuMapeamento() {
+				super(Constantes.LABEL_MAPEAMENTOS, Icones.REFERENCIA);
+
+				formularioAcao.setActionListener(e -> {
+					MapeamentoFormulario form = new MapeamentoFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					MapeamentoDialogo form = new MapeamentoDialogo(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoMapeamento(Formulario.this));
 			}
 		}
 	}
