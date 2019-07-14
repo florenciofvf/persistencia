@@ -8,32 +8,29 @@ import javax.swing.JTable;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
-import br.com.persist.listener.FragmentoListener;
-import br.com.persist.modelo.FragmentoModelo;
+import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
-import br.com.persist.util.Fragmento;
+import br.com.persist.util.ChaveValor;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class FragmentoContainer extends Panel implements IIni {
+public class MapeamentoContainer extends Panel implements IIni {
 	private static final long serialVersionUID = 1L;
-	private final FragmentoModelo modelo = new FragmentoModelo();
-	private final transient FragmentoListener listener;
+	private final MapeamentoModelo modelo = new MapeamentoModelo();
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
 
-	public FragmentoContainer(IJanela janela, FragmentoListener listener) {
-		this.listener = listener;
+	public MapeamentoContainer(IJanela janela) {
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
 	}
 
 	private void montarLayout() {
-		toolbar.configListener();
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabela));
 	}
@@ -69,20 +66,13 @@ public class FragmentoContainer extends Panel implements IIni {
 
 		private void eventos() {
 			abrirAcao.setActionListener(e -> {
-				if (listener != null) {
-					FragmentoModelo.reiniciar();
-					FragmentoModelo.filtar(listener.getGruposFiltro());
-				} else {
-					FragmentoModelo.inicializar();
-				}
-
-				FragmentoModelo.ordenar();
+				MapeamentoModelo.inicializar();
 				modelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
 			});
 
 			novoAcao.setActionListener(e -> {
-				FragmentoModelo.novo();
+				MapeamentoModelo.novo();
 				modelo.fireTableDataChanged();
 			});
 
@@ -91,8 +81,10 @@ public class FragmentoContainer extends Panel implements IIni {
 
 				if (linhas != null && linhas.length > 0) {
 					for (int i : linhas) {
-						Fragmento f = FragmentoModelo.getFragmento(i);
-						FragmentoModelo.adicionar(f.clonar());
+						ChaveValor cv = MapeamentoModelo.getChaveValor(i);
+						ChaveValor clone = cv.clonar();
+						clone.setChave(cv.getChave() + "_" + Constantes.TEMP);
+						MapeamentoModelo.adicionar(clone);
 					}
 
 					modelo.fireTableDataChanged();
@@ -101,30 +93,11 @@ public class FragmentoContainer extends Panel implements IIni {
 
 			salvarAcao.setActionListener(e -> {
 				try {
-					FragmentoModelo.salvar();
+					MapeamentoModelo.salvar();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("SALVAR: ", ex, FragmentoContainer.this);
+					Util.stackTraceAndMessage("SALVAR: ", ex, MapeamentoContainer.this);
 				}
 			});
-		}
-
-		void configListener() {
-			if (listener != null) {
-				Action configAcao = Action.actionIcon("label.fragmento", Icones.SUCESSO, e -> {
-					int[] linhas = tabela.getSelectedRows();
-
-					if (linhas != null && linhas.length == 1) {
-						Fragmento f = FragmentoModelo.getFragmento(linhas[0]);
-						listener.configFragmento(f);
-
-						if (janela != null) {
-							janela.fechar();
-						}
-					}
-				});
-
-				addButton(configAcao);
-			}
 		}
 	}
 }
