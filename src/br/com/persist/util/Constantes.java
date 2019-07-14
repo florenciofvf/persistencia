@@ -37,6 +37,7 @@ public class Constantes {
 	public static final String ICONE = "ICONE:";
 	public static final String FICHA = "FICHA";
 	public static final String FORM = "FORM";
+	public static final String TEMP = "TEMP";
 	public static final String PKS = "pks";
 	public static final String FKS = "fks";
 	public static final String EKS = "eks";

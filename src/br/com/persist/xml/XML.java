@@ -17,6 +17,9 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.exception.XMLException;
+import br.com.persist.modelo.MapeamentoModelo;
+import br.com.persist.util.ChaveValor;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.Util;
@@ -68,6 +71,16 @@ public class XML {
 			SAXParser parser = factory.newSAXParser();
 			HandlerFragmento handler = new HandlerFragmento(fragmentos);
 			parser.parse(file, handler);
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
+	}
+
+	public static void processarMapeamento(File file) throws XMLException {
+		try {
+			SAXParserFactory factory = criarSAXParserFactory();
+			SAXParser parser = factory.newSAXParser();
+			parser.parse(file, new HandlerMapeamento());
 		} catch (Exception e) {
 			throw new XMLException(e);
 		}
@@ -227,6 +240,18 @@ class HandlerFragmento extends DefaultHandler {
 			Fragmento f = new Fragmento();
 			f.aplicar(attributes);
 			fragmentos.add(f);
+		}
+	}
+}
+
+class HandlerMapeamento extends DefaultHandler {
+
+	@Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		if ("chave_valor".equals(qName)) {
+			ChaveValor cv = new ChaveValor(Constantes.TEMP);
+			cv.aplicar(attributes);
+			MapeamentoModelo.adicionar(cv);
 		}
 	}
 }

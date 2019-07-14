@@ -50,6 +50,7 @@ import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
+import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -153,6 +154,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
+				MapeamentoModelo.inicializar();
 				atualizarFragmentos();
 				atualizarConexoes();
 
