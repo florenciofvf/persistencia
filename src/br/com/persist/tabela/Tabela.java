@@ -13,11 +13,14 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.listener.TabelaListener;
+import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Action;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao2;
@@ -29,6 +32,7 @@ public class Tabela extends JTable {
 	private PopupHeader popupHeader = new PopupHeader();
 	private Map<String, List<String>> mapaChaveamento;
 	private transient TabelaListener tabelaListener;
+	private Map<String, String> mapeamento;
 	private boolean arrastado;
 
 	public Tabela() {
@@ -58,6 +62,14 @@ public class Tabela extends JTable {
 
 	public void setTabelaListener(TabelaListener tabelaListener) {
 		this.tabelaListener = tabelaListener;
+	}
+
+	public Map<String, String> getMapeamento() {
+		return mapeamento;
+	}
+
+	public void setMapeamento(Map<String, String> mapeamento) {
+		this.mapeamento = mapeamento;
 	}
 
 	public Map<String, List<String>> getMapaChaveamento() {
@@ -116,7 +128,7 @@ public class Tabela extends JTable {
 			int modelColuna = convertColumnIndexToModel(tableColuna);
 			popupHeader.tag = modelColuna;
 			String coluna = getModel().getColumnName(modelColuna);
-			popupHeader.configurar(coluna);
+			popupHeader.preShow(coluna);
 			popupHeader.show(tableHeader, e.getX(), e.getY());
 		}
 
@@ -164,6 +176,8 @@ public class Tabela extends JTable {
 		private Action copiarNomeAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action infoAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private MenuCopiarIN menuCopiarIN = new MenuCopiarIN();
+		private MenuItemMapa itemMapa = new MenuItemMapa();
+		private Separator separator = new Separator();
 		private int tag;
 
 		PopupHeader() {
@@ -214,7 +228,7 @@ public class Tabela extends JTable {
 			private static final long serialVersionUID = 1L;
 
 			MenuCopiarIN() {
-				super("label.vazio");
+				super(Constantes.LABEL_VAZIO);
 
 				semAspasAcao.setActionListener(e -> copiarIN(false));
 				comAspasAcao.setActionListener(e -> copiarIN(true));
@@ -258,7 +272,7 @@ public class Tabela extends JTable {
 			}
 		}
 
-		public void configurar(String chave) {
+		public void preShow(String chave) {
 			menuCopiarIN.setText("AND IN - " + chave);
 			List<String> lista = mapaChaveamento.get(chave);
 			limparMenuDinamico();
@@ -267,6 +281,17 @@ public class Tabela extends JTable {
 				for (String coluna : lista) {
 					add(new MenuCopiarINDinamico(coluna));
 				}
+			}
+
+			String chaveMapa = mapeamento.get(chave);
+			remove(separator);
+			remove(itemMapa);
+
+			if (chaveMapa != null) {
+				itemMapa.setText(chaveMapa);
+
+				add(separator);
+				add(itemMapa);
 			}
 		}
 
@@ -289,6 +314,19 @@ public class Tabela extends JTable {
 			}
 
 			return null;
+		}
+
+		class MenuItemMapa extends MenuItem {
+			private static final long serialVersionUID = 1L;
+
+			public MenuItemMapa() {
+				super(Constantes.LABEL_VAZIO);
+
+				addActionListener(e -> {
+					ChaveValor cv = MapeamentoModelo.get(getText());
+					Util.mensagem(Tabela.this, cv == null ? "" : cv.getValor());
+				});
+			}
 		}
 	}
 }

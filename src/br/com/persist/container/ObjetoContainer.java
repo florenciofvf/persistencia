@@ -105,6 +105,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
 			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
+		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
 		listaLink = LinkAuto.criarLinksAuto(objeto.getLinkAutomatico());
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		txtComplemento.addMouseListener(complementoListener);

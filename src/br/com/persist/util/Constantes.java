@@ -28,6 +28,7 @@ public class Constantes {
 	public static final String PADRAO_ABRIR = "PADRAO_ABRIR:";
 	public static final String LABEL_LIMPAR = "label.limpar";
 	public static final String LABEL_ANEXOS = "label.anexos";
+	public static final String LABEL_VAZIO = "label.vazio";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
