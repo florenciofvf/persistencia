@@ -61,6 +61,7 @@ public class Objeto implements Runnable {
 	private String chaves;
 	private String icone;
 	private boolean ccsc;
+	private String mapa;
 	private Icon icon;
 	private String id;
 	private long tag;
@@ -113,6 +114,7 @@ public class Objeto implements Runnable {
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.ccsc = ccsc;
+		o.mapa = mapa;
 		o.setId(id);
 
 		for (Instrucao i : instrucoes) {
@@ -237,6 +239,14 @@ public class Objeto implements Runnable {
 		}
 
 		return chaves;
+	}
+
+	public String getMapa() {
+		if (Util.estaVazio(mapa)) {
+			mapa = "";
+		}
+
+		return mapa;
 	}
 
 	public String[] getChavesArray() {
@@ -471,6 +481,7 @@ public class Objeto implements Runnable {
 		setIcone(attr.getValue("icone"));
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
+		mapa = attr.getValue("mapa");
 		id = attr.getValue("id");
 
 		String strIntervalo = attr.getValue("intervalo");
@@ -501,6 +512,7 @@ public class Objeto implements Runnable {
 		util.atributo("chaves", getChaves());
 		util.atributo("linkAuto", linkAuto);
 		util.atributo("cor", cor.getRGB());
+		util.atributo("mapa", getMapa());
 		util.atributo("icone", icone);
 		util.atributo("ccsc", ccsc);
 		util.atributo("x", x);
@@ -674,5 +686,9 @@ public class Objeto implements Runnable {
 
 	public void setTag(long tag) {
 		this.tag = tag;
+	}
+
+	public void setMapa(String mapa) {
+		this.mapa = mapa;
 	}
 }
