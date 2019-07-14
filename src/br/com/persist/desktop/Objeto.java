@@ -52,6 +52,7 @@ public class Objeto implements Runnable {
 	private String chaveamento;
 	private boolean colunaInfo;
 	private boolean abrirAuto;
+	private String mapeamento;
 	private boolean processar;
 	private boolean linkAuto;
 	private String descricao;
@@ -61,7 +62,6 @@ public class Objeto implements Runnable {
 	private String chaves;
 	private String icone;
 	private boolean ccsc;
-	private String mapa;
 	private Icon icon;
 	private String id;
 	private long tag;
@@ -107,6 +107,7 @@ public class Objeto implements Runnable {
 		o.chaveamento = chaveamento;
 		o.desenharId = desenharId;
 		o.colunaInfo = colunaInfo;
+		o.mapeamento = mapeamento;
 		o.abrirAuto = abrirAuto;
 		o.descricao = descricao;
 		o.corFonte = corFonte;
@@ -114,7 +115,6 @@ public class Objeto implements Runnable {
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.ccsc = ccsc;
-		o.mapa = mapa;
 		o.setId(id);
 
 		for (Instrucao i : instrucoes) {
@@ -241,12 +241,12 @@ public class Objeto implements Runnable {
 		return chaves;
 	}
 
-	public String getMapa() {
-		if (Util.estaVazio(mapa)) {
-			mapa = "";
+	public String getMapeamento() {
+		if (Util.estaVazio(mapeamento)) {
+			mapeamento = "";
 		}
 
-		return mapa;
+		return mapeamento;
 	}
 
 	public String[] getChavesArray() {
@@ -478,10 +478,10 @@ public class Objeto implements Runnable {
 		complemento = attr.getValue("complemento");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
+		mapeamento = attr.getValue("mapeamento");
 		setIcone(attr.getValue("icone"));
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
-		mapa = attr.getValue("mapa");
 		id = attr.getValue("id");
 
 		String strIntervalo = attr.getValue("intervalo");
@@ -502,6 +502,7 @@ public class Objeto implements Runnable {
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
+		util.atributo("mapeamento", getMapeamento());
 		util.atributo("intervalo", getIntervalo());
 		util.atributo("desenharId", desenharId);
 		util.atributo("colunaInfo", colunaInfo);
@@ -512,7 +513,6 @@ public class Objeto implements Runnable {
 		util.atributo("chaves", getChaves());
 		util.atributo("linkAuto", linkAuto);
 		util.atributo("cor", cor.getRGB());
-		util.atributo("mapa", getMapa());
 		util.atributo("icone", icone);
 		util.atributo("ccsc", ccsc);
 		util.atributo("x", x);
@@ -688,7 +688,7 @@ public class Objeto implements Runnable {
 		this.tag = tag;
 	}
 
-	public void setMapa(String mapa) {
-		this.mapa = mapa;
+	public void setMapeamento(String mapeamento) {
+		this.mapeamento = mapeamento;
 	}
 }

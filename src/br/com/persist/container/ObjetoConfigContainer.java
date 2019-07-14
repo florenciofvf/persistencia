@@ -72,6 +72,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtChaveamento = new TextField();
 		private TextField txtComplemento = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
+		private TextField txtMapeamento = new TextField();
 		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
@@ -100,6 +101,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
+			txtMapeamento.setText(objeto.getMapeamento());
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
@@ -113,6 +115,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtFinalConsulta.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
 			txtComplemento.addFocusListener(focusListenerInner);
+			txtMapeamento.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
@@ -130,6 +133,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
 			chkColunaInfo.addActionListener(this);
+			txtMapeamento.addActionListener(this);
 			chkAbrirAuto.addActionListener(this);
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
@@ -162,6 +166,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.chaves", txtChaves));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
+			container.add(criarLinha("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
 			container.add(criarLinha("label.linkAuto", txtLinkAutomatico, Mensagens.getString("hint.linkAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.final_consulta", txtFinalConsulta));
@@ -175,6 +180,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
 			txtLinkAutomatico.addMouseListener(linkAutomaticoListener);
 			txtChaveamento.addMouseListener(chaveamentoListener);
+			txtMapeamento.addMouseListener(mapeamentoListener);
 
 			add(BorderLayout.CENTER, container);
 		}
@@ -218,6 +224,21 @@ public class ObjetoConfigContainer extends Panel {
 
 					txtChaveamento.setText(objeto.getChaveamento());
 				}
+			}
+		};
+
+		private transient MouseListener mapeamentoListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// if (e.getClickCount() >= Constantes.DOIS) {
+				// ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null,
+				// objeto,
+				// ChaveBuscaContainer.Tipo.CHAVE);
+				// form.setLocationRelativeTo(ObjetoConfigContainer.this);
+				// form.setVisible(true);
+				//
+				// txtChaveamento.setText(objeto.getChaveamento());
+				// }
 			}
 		};
 
