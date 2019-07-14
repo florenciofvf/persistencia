@@ -162,6 +162,9 @@ public class ChaveBuscaContainer extends Panel {
 
 				} else if (Tipo.CHAVE.equals(tipo)) {
 					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
+
+				} else if (Tipo.MAPA.equals(tipo)) {
+					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
 				}
 
 				fechar();
