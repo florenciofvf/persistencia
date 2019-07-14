@@ -102,7 +102,7 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		CHAVE, BUSCA, LINK
+		CHAVE, BUSCA, LINK, MAPA
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {

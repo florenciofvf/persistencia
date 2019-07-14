@@ -230,15 +230,14 @@ public class ObjetoConfigContainer extends Panel {
 		private transient MouseListener mapeamentoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// if (e.getClickCount() >= Constantes.DOIS) {
-				// ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null,
-				// objeto,
-				// ChaveBuscaContainer.Tipo.CHAVE);
-				// form.setLocationRelativeTo(ObjetoConfigContainer.this);
-				// form.setVisible(true);
-				//
-				// txtChaveamento.setText(objeto.getChaveamento());
-				// }
+				if (e.getClickCount() >= Constantes.DOIS) {
+					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
+							ChaveBuscaContainer.Tipo.MAPA);
+					form.setLocationRelativeTo(ObjetoConfigContainer.this);
+					form.setVisible(true);
+
+					txtMapeamento.setText(objeto.getMapeamento());
+				}
 			}
 		};
 
@@ -278,6 +277,9 @@ public class ObjetoConfigContainer extends Panel {
 
 			} else if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txtChaveamento.getText());
+
+			} else if (txtMapeamento == e.getSource()) {
+				objeto.setMapeamento(txtMapeamento.getText());
 
 			} else if (txtFinalConsulta == e.getSource()) {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
