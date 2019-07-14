@@ -190,6 +190,26 @@ public class Util {
 		return mapa;
 	}
 
+	public static Map<String, String> criarMapaCampoChave(String string) {
+		Map<String, String> mapa = new HashMap<>();
+
+		if (!estaVazio(string)) {
+			String[] strings = string.split(";");
+
+			if (strings != null) {
+				for (String chaveValor : strings) {
+					String[] stringsCV = chaveValor.split("=");
+
+					if (stringsCV != null && stringsCV.length > 1) {
+						mapa.put(stringsCV[0].trim(), stringsCV[1].trim());
+					}
+				}
+			}
+		}
+
+		return mapa;
+	}
+
 	private static void aux(String string, Map<String, List<String>> mapa) {
 		String[] strings = string.split("=");
 

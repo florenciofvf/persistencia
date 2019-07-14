@@ -41,6 +41,8 @@ public class ChaveBuscaContainer extends Panel {
 
 		if (Tipo.CHAVE.equals(tipo)) {
 			chave(builder);
+		} else if (Tipo.MAPA.equals(tipo)) {
+			mapa(builder);
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			buscaAuto(builder);
 		} else if (Tipo.LINK.equals(tipo)) {
@@ -61,6 +63,25 @@ public class ChaveBuscaContainer extends Panel {
 			builder.append(campoDetalhe(chave, nomes));
 
 			if (i + 1 < campoNomes.size()) {
+				builder.append(";");
+			}
+
+			builder.append(Constantes.QL);
+			i++;
+		}
+	}
+
+	private void mapa(StringBuilder builder) {
+		Map<String, String> campoChave = Util.criarMapaCampoChave(!Util.estaVazio(objeto.getMapeamento())
+				? objeto.getMapeamento() : Mensagens.getString("hint.mapeamento"));
+		int i = 0;
+
+		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
+			String chave = entry.getKey();
+			String valor = entry.getValue();
+			builder.append(chave + "=" + valor);
+
+			if (i + 1 < campoChave.size()) {
 				builder.append(";");
 			}
 
