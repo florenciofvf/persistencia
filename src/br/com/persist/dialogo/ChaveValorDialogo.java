@@ -27,6 +27,12 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 	}
 
 	@Override
+	public void dispose() {
+		chaveValor.setValor(textArea.getText());
+		super.dispose();
+	}
+
+	@Override
 	public void fechar() {
 		dispose();
 	}
