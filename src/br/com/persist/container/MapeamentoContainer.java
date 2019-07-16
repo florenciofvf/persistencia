@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
@@ -36,6 +37,7 @@ public class MapeamentoContainer extends Panel implements IIni {
 	}
 
 	private void configurar() {
+		tabela.getColumnModel().getColumn(1).setCellEditor(new ChaveValorEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.abrirAcao.actionPerformed(null);
 	}
