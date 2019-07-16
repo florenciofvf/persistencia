@@ -3,18 +3,16 @@
 <mapeamento>
 	<chave_valor chave="coluna_info">
 		<valor>
-				private final List&lt;Arquivo&gt; arquivos;
-	private boolean arquivoAberto;
-	private boolean padraoAbrir;
-	private boolean processado;
-	private String nomeIcone;
-	private boolean checado;
-	private Color corFonte;
-	private Arquivo pai;
-	private Icon icone;
-	private File file;
-
-
+			private final List&lt;Arquivo&gt; arquivos;
+private boolean arquivoAberto;
+private boolean padraoAbrir;
+private boolean processado;
+private String nomeIcone;
+private boolean checado;
+private Color corFonte;
+private Arquivo pai;
+private Icon icone;
+private File file;
 		</valor>
 	</chave_valor>
 </mapeamento>

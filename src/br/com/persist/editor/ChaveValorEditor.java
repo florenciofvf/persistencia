@@ -57,7 +57,7 @@ public class ChaveValorEditor extends JPanel implements TableCellEditor {
 					new ChaveValorDialogo(cv).setVisible(true);
 				}
 
-				stopCellEditing();
+				cancelCellEditing();
 			}
 		}
 
