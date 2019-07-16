@@ -38,6 +38,7 @@ public class Constantes {
 	public static final String DIALOG = "DIALOG";
 	public static final String ICONE = "ICONE:";
 	public static final String FICHA = "FICHA";
+	public static final String VALOR = "valor";
 	public static final String FORM = "FORM";
 	public static final String TEMP = "TEMP";
 	public static final String PKS = "pks";

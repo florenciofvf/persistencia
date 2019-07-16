@@ -23,14 +23,19 @@ public class ChaveValor {
 
 	public void aplicar(Attributes attr) {
 		chave = attr.getValue("chave");
-		valor = attr.getValue("valor");
+		valor = attr.getValue(Constantes.VALOR);
 	}
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("chave_valor");
 		util.atributo("chave", Util.escapar(chave));
-		util.atributo("valor", Util.escapar(valor));
-		util.fecharTag().finalizarTag("chave_valor");
+		util.fecharTag();
+
+		util.abrirTag2(Constantes.VALOR);
+		util.conteudo(Util.escapar(getValor())).ql();
+		util.finalizarTag(Constantes.VALOR);
+
+		util.finalizarTag("chave_valor");
 	}
 
 	public String getChave() {
@@ -50,6 +55,10 @@ public class ChaveValor {
 	}
 
 	public String getValor() {
+		if (Util.estaVazio(valor)) {
+			valor = "";
+		}
+
 		return valor;
 	}
 
