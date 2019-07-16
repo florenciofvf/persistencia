@@ -151,7 +151,7 @@ class XMLHandler extends DefaultHandler {
 				obj.addInstrucao(i);
 			}
 
-		} else if ("desc".equals(qName) || "valor".equals(qName)) {
+		} else if ("desc".equals(qName) || Constantes.VALOR.equals(qName)) {
 			limpar();
 
 		}
@@ -188,7 +188,7 @@ class XMLHandler extends DefaultHandler {
 
 			limpar();
 
-		} else if ("valor".equals(qName) && selecionado != null) {
+		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();
 
 			if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
@@ -245,13 +245,42 @@ class HandlerFragmento extends DefaultHandler {
 }
 
 class HandlerMapeamento extends DefaultHandler {
+	final StringBuilder builder = new StringBuilder();
+	ChaveValor selecionado;
+
+	private void limpar() {
+		if (builder.length() > 0) {
+			builder.delete(0, builder.length());
+		}
+	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("chave_valor".equals(qName)) {
-			ChaveValor cv = new ChaveValor(Constantes.TEMP);
-			cv.aplicar(attributes);
-			MapeamentoModelo.adicionar(cv);
+			selecionado = new ChaveValor(Constantes.TEMP);
+			selecionado.aplicar(attributes);
+			MapeamentoModelo.adicionar(selecionado);
 		}
+	}
+
+	@Override
+	public void endElement(String uri, String localName, String qName) throws SAXException {
+		if ("chave_valor".equals(qName)) {
+			selecionado = null;
+
+		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
+			String string = builder.toString();
+
+			if (!Util.estaVazio(string)) {
+				selecionado.setValor(string.trim());
+			}
+
+			limpar();
+		}
+	}
+
+	@Override
+	public void characters(char[] ch, int start, int length) throws SAXException {
+		builder.append(new String(ch, start, length));
 	}
 }

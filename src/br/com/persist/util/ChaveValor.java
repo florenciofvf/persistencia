@@ -23,7 +23,6 @@ public class ChaveValor {
 
 	public void aplicar(Attributes attr) {
 		chave = attr.getValue("chave");
-		valor = attr.getValue(Constantes.VALOR);
 	}
 
 	public void salvar(XMLUtil util) {

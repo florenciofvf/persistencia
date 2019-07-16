@@ -1,5 +1,6 @@
 package br.com.persist;
 
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
@@ -48,9 +49,9 @@ public class Instrucao {
 			util.atributo("nome", Util.escapar(nome));
 			util.fecharTag();
 
-			util.abrirTag2("valor");
+			util.abrirTag2(Constantes.VALOR);
 			util.conteudo(Util.escapar(getValor())).ql();
-			util.finalizarTag("valor");
+			util.finalizarTag(Constantes.VALOR);
 
 			util.finalizarTag("instrucao");
 		}

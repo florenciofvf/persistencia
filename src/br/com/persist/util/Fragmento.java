@@ -22,14 +22,14 @@ public class Fragmento {
 	public void aplicar(Attributes attr) {
 		resumo = attr.getValue("resumo");
 		grupo = attr.getValue("grupo");
-		valor = attr.getValue("valor");
+		valor = attr.getValue(Constantes.VALOR);
 	}
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("fragmento");
 		util.atributo("resumo", Util.escapar(resumo));
 		util.atributo("grupo", Util.escapar(grupo));
-		util.atributo("valor", Util.escapar(valor));
+		util.atributo(Constantes.VALOR, Util.escapar(valor));
 		util.fecharTag().finalizarTag("fragmento");
 	}
 
