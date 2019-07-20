@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import org.xml.sax.Attributes;
 
 import br.com.persist.exception.ConexaoException;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
@@ -59,7 +60,7 @@ public class Conexao {
 				fecharConexao(conn);
 				CONEXOES.put(conexao, null);
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "ERRO", e);
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
 
@@ -90,7 +91,7 @@ public class Conexao {
 				fecharConexao(conn);
 				CONEXOES.put(this, null);
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "ERRO", e);
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
 	}

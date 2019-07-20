@@ -1466,7 +1466,7 @@ public class Superficie extends Desktop {
 			util.finalizarTag("fvf");
 			util.close();
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 

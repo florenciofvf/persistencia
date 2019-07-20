@@ -28,6 +28,7 @@ import br.com.persist.container.ObjetoContainer;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
@@ -186,7 +187,7 @@ public class Desktop extends JDesktopPane implements IIni {
 				setPreferredSize(new Dimension(largura, altura));
 				SwingUtilities.updateComponentTreeUI(getParent());
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "ERRO", e);
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
 	}

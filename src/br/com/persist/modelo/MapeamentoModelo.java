@@ -119,7 +119,7 @@ public class MapeamentoModelo extends AbstractTableModel {
 			util.finalizarTag("mapeamento");
 			util.close();
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 
@@ -131,7 +131,7 @@ public class MapeamentoModelo extends AbstractTableModel {
 				XML.processarMapeamento(file);
 			}
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 }

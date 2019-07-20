@@ -15,6 +15,7 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.renderer.ConexaoStatusRenderer;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
@@ -143,7 +144,7 @@ public class ConexaoContainer extends Panel implements IIni {
 					Util.mensagem(ConexaoContainer.this, "SUCESSO");
 					tabela.repaint();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("ERRO", ex, ConexaoContainer.this);
+					Util.stackTraceAndMessage(Constantes.ERRO, ex, ConexaoContainer.this);
 				}
 			}
 		}

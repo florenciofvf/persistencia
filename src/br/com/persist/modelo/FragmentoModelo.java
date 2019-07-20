@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import javax.swing.table.AbstractTableModel;
 
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLUtil;
@@ -118,7 +119,7 @@ public class FragmentoModelo extends AbstractTableModel {
 			util.finalizarTag("fragmentos");
 			util.close();
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 
@@ -131,7 +132,7 @@ public class FragmentoModelo extends AbstractTableModel {
 				XML.processarFragmento(file, fragmentos);
 			}
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 

@@ -15,6 +15,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.modelo.ConexaoModelo;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
@@ -59,7 +60,7 @@ public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
 					try {
 						Conexao.getConnection2(conexao);
 					} catch (Exception ex) {
-						Util.stackTraceAndMessage("ERRO", ex, tabela);
+						Util.stackTraceAndMessage(Constantes.ERRO, ex, tabela);
 					}
 				}
 

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.banco.Conexao;
+import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLUtil;
 
@@ -157,7 +158,7 @@ public class ConexaoModelo extends AbstractTableModel {
 			util.finalizarTag("conexoes");
 			util.close();
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 
@@ -170,7 +171,7 @@ public class ConexaoModelo extends AbstractTableModel {
 				fireTableDataChanged();
 			}
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 }

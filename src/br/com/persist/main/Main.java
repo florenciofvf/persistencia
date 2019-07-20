@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Preferencias;
 
@@ -40,7 +41,7 @@ public class Main {
 			method.setAccessible(true);
 			method.invoke(classLoader, url);
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 
@@ -60,7 +61,7 @@ public class Main {
 				}
 			}
 		} catch (Exception e) {
-			LOG.log(Level.SEVERE, "ERRO", e);
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 
 		return urls.toArray(new URL[urls.size()]);

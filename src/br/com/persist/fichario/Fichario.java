@@ -499,7 +499,7 @@ public class Fichario extends JTabbedPane {
 					}
 				}
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "ERRO", e);
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
 

@@ -76,7 +76,7 @@ public class Util {
 
 		if (ex != null) {
 			if (LOG_CONSOLE) {
-				LOG.log(Level.SEVERE, "ERRO", ex);
+				LOG.log(Level.SEVERE, Constantes.ERRO, ex);
 			} else {
 				PrintWriter pw = new PrintWriter(sw);
 				ex.printStackTrace(pw);
@@ -126,7 +126,7 @@ public class Util {
 				try {
 					return (String) transferable.getTransferData(DataFlavor.stringFlavor);
 				} catch (Exception e) {
-					LOG.log(Level.SEVERE, "ERRO", e);
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
 				}
 			}
 		}
