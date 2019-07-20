@@ -52,16 +52,16 @@ public class Coluna {
 	public String getDetalhe() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("NOME: " + nome + Constantes.QL);
-		sb.append("TIPO: " + tipo + Constantes.QL);
-		sb.append("BLOB: " + blob + Constantes.QL);
-		sb.append("CHAVE: " + chave + Constantes.QL);
-		sb.append("INDICE: " + indice + Constantes.QL);
+		sb.append("AUTO INCR: " + autoInc + Constantes.QL);
+		sb.append("COLUNA: " + tipoBanco + Constantes.QL);
 		sb.append("TAMANHO: " + tamanho + Constantes.QL);
 		sb.append("NUMERICO: " + numero + Constantes.QL);
 		sb.append("NULAVEL: " + nulavel + Constantes.QL);
-		sb.append("COLUNA: " + tipoBanco + Constantes.QL);
-		sb.append("AUTO INCR: " + autoInc + Constantes.QL);
+		sb.append("INDICE: " + indice + Constantes.QL);
+		sb.append("CHAVE: " + chave + Constantes.QL);
+		sb.append("NOME: " + nome + Constantes.QL);
+		sb.append("TIPO: " + tipo + Constantes.QL);
+		sb.append("BLOB: " + blob + Constantes.QL);
 
 		return sb.toString();
 	}

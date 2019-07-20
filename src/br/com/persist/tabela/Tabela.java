@@ -252,7 +252,7 @@ public class Tabela extends JTable {
 			private final String nomeColuna;
 
 			MenuCopiarINDinamico(String coluna) {
-				super("label.vazio");
+				super(Constantes.LABEL_VAZIO);
 				setText("AND IN - " + coluna);
 				this.nomeColuna = coluna;
 
