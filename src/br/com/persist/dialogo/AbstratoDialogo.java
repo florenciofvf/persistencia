@@ -42,7 +42,7 @@ public abstract class AbstratoDialogo extends JDialog {
 		JComponent component = (JComponent) getContentPane();
 
 		InputMap inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "esc");
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), Constantes.ESC);
 
 		Action action = new AbstractAction() {
 			private static final long serialVersionUID = 1L;
@@ -54,6 +54,6 @@ public abstract class AbstratoDialogo extends JDialog {
 		};
 
 		ActionMap actionMap = component.getActionMap();
-		actionMap.put("esc", action);
+		actionMap.put(Constantes.ESC, action);
 	}
 }
