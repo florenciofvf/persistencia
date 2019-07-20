@@ -5,6 +5,7 @@ import java.awt.Component;
 import javax.swing.JToolBar;
 
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 
@@ -16,7 +17,7 @@ public class BarraButton extends JToolBar {
 		this.janela = janela;
 
 		if (janela != null) {
-			Action fecharAcao = Action.actionIcon("label.fechar", Icones.SAIR);
+			Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
 			fecharAcao.setActionListener(e -> janela.fechar());
 			addButton(fecharAcao);
 			addSeparator();

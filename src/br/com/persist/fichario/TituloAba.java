@@ -24,6 +24,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 
@@ -82,7 +83,7 @@ public class TituloAba extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		Icone() {
-			setToolTipText(Mensagens.getString("label.fechar"));
+			setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(17, 17));
 			addMouseListener(mouseListenerInner);

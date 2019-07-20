@@ -160,9 +160,9 @@ public class Arvore extends JTree {
 
 	private class ArvorePopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
 		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
-		private Action fecharAcao = Action.actionMenu("label.fechar", Icones.FECHAR);
 		private MenuAbrir menuAbrir = new MenuAbrir();
 
 		public ArvorePopup() {

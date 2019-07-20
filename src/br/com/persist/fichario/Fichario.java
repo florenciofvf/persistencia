@@ -309,7 +309,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novoAnexo(Formulario formulario) {
 		AnexoContainer container = new AnexoContainer(null, formulario, null);
-		addTab(Mensagens.getString("label.anexos"), container);
+		addTab(Mensagens.getString(Constantes.LABEL_ANEXOS), container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.ANEXO);
@@ -410,7 +410,7 @@ public class Fichario extends JTabbedPane {
 	public Container novo(Formulario formulario) {
 		Container container = new Container(formulario, null);
 		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		addTab(Mensagens.getString("label.novo"), container);
+		addTab(Mensagens.getString(Constantes.LABEL_NOVO), container);
 		container.setAbortarFecharComESCSuperficie(true);
 		int ultimoIndice = getTabCount() - 1;
 

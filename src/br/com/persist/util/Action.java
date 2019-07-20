@@ -77,7 +77,7 @@ public class Action extends Acao {
 	}
 
 	public static Action actionIconNovo() {
-		return Action.actionIcon("label.novo", Icones.NOVO);
+		return Action.actionIcon(Constantes.LABEL_NOVO, Icones.NOVO);
 	}
 
 	public static Action actionIconDestacar() {
@@ -86,7 +86,7 @@ public class Action extends Acao {
 	}
 
 	public static Action actionMenuFormulario() {
-		return new Action(true, Constantes.LABEL_FORMULARIO, null);// Icones.PANEL
+		return new Action(true, Constantes.LABEL_FORMULARIO, null);
 	}
 
 	public static Action actionMenuFichario() {
@@ -94,7 +94,7 @@ public class Action extends Acao {
 	}
 
 	public static Action actionMenuDesktop() {
-		return new Action(true, Constantes.LABEL_DESKTOP, null);// Icones.PANEL2
+		return new Action(true, Constantes.LABEL_DESKTOP, null);
 	}
 
 	public static Action actionMenuDialogo() {
@@ -110,6 +110,6 @@ public class Action extends Acao {
 	}
 
 	public static Action actionMenuFechar() {
-		return Action.actionMenu("label.fechar", Icones.SAIR);
+		return Action.actionMenu(Constantes.LABEL_FECHAR, Icones.SAIR);
 	}
 }
