@@ -282,12 +282,16 @@ public class ConfigContainer extends Panel {
 				if (nomeValor.tipo == NomeValor.POSICAO_ABA) {
 					Preferencias.setPosicaoAbaFichario(nomeValor.valor);
 					formulario.getFichario().setTabPlacement(Preferencias.getPosicaoAbaFichario());
+
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
 					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
+
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_COMPARA) {
 					Preferencias.setIntervaloComparacao(nomeValor.valor);
+
 				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
 					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
+
 				} else if (nomeValor.tipo == NomeValor.LAYOUTS) {
 					Preferencias.setLayoutAbertura(nomeValor.valor);
 				}
