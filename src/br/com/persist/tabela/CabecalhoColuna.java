@@ -64,9 +64,9 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 
 	private class Ordenacao extends Label {
 		private static final long serialVersionUID = 1L;
+		private final boolean numero;
 		private boolean asc = true;
 		private final int indice;
-		private boolean numero;
 
 		Ordenacao(int indice, boolean numero) {
 			setIcon(Icones.ORDEM);
