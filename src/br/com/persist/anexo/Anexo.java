@@ -9,16 +9,14 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.Arquivo;
 import br.com.persist.comp.ItemCheckBox;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
+import br.com.persist.comp.Tree;
 import br.com.persist.listener.AnexoListener;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.renderer.AnexoTreeCellRenderer;
@@ -26,23 +24,17 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 
-public class Anexo extends JTree {
+public class Anexo extends Tree {
 	private static final long serialVersionUID = 1L;
 	private final transient List<AnexoListener> ouvintes;
 	private AnexoPopup anexoPopup = new AnexoPopup();
-	private boolean popupDesabilitado;
-	private boolean popupTrigger;
 
 	public Anexo(TreeModel newModel) {
 		super(newModel);
-		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		setBorder(BorderFactory.createEmptyBorder());
 		setCellRenderer(new AnexoTreeCellRenderer());
 		addMouseListener(mouseListenerInner);
 		addKeyListener(keyListenerInner);
 		ouvintes = new ArrayList<>();
-		setShowsRootHandles(true);
-		setRootVisible(true);
 	}
 
 	public void adicionarOuvinte(AnexoListener listener) {

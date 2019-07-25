@@ -9,14 +9,12 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.Arquivo;
 import br.com.persist.comp.Popup;
+import br.com.persist.comp.Tree;
 import br.com.persist.listener.ArvoreListener;
 import br.com.persist.renderer.ArquivoTreeCellRenderer;
 import br.com.persist.util.Action;
@@ -24,23 +22,17 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao1;
 
-public class Arvore extends JTree {
+public class Arvore extends Tree {
 	private static final long serialVersionUID = 1L;
 	private final transient List<ArvoreListener> ouvintes;
 	private ArvorePopup arvorePopup = new ArvorePopup();
-	private boolean popupDesabilitado;
-	private boolean popupTrigger;
 
 	public Arvore(TreeModel newModel) {
 		super(newModel);
-		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		setCellRenderer(new ArquivoTreeCellRenderer());
-		setBorder(BorderFactory.createEmptyBorder());
 		addMouseListener(mouseListenerInner);
 		addKeyListener(keyListenerInner);
 		ouvintes = new ArrayList<>();
-		setShowsRootHandles(true);
-		setRootVisible(true);
 	}
 
 	public void adicionarOuvinte(ArvoreListener listener) {

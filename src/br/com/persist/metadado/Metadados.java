@@ -15,28 +15,24 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.BorderFactory;
-import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 
 import br.com.persist.Metadado;
 import br.com.persist.comp.Popup;
+import br.com.persist.comp.Tree;
 import br.com.persist.listener.MetadadosListener;
 import br.com.persist.modelo.MetadadoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao1;
 
-public class Metadados extends JTree {
+public class Metadados extends Tree {
 	private static final long serialVersionUID = 1L;
 	private MetadadosPopup metadadosPopup = new MetadadosPopup();
 	private final transient List<MetadadosListener> ouvintes;
 	private static final Logger LOG = Logger.getGlobal();
 	private boolean padraoClickExportacao;
-	private boolean popupDesabilitado;
-	private boolean popupTrigger;
 
 	public Metadados() {
 		this(new MetadadoModelo());
@@ -44,12 +40,8 @@ public class Metadados extends JTree {
 
 	public Metadados(TreeModel newModel) {
 		super(newModel);
-		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		setBorder(BorderFactory.createEmptyBorder());
 		addMouseListener(mouseListenerInner);
 		ouvintes = new ArrayList<>();
-		setShowsRootHandles(true);
-		setRootVisible(true);
 		configurar();
 	}
 
