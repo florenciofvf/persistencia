@@ -1814,8 +1814,12 @@ public class Superficie extends Desktop {
 		List<String> lista = metadado.getListaStringExpImp(exportacao);
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int comprimento = Math.min(d.width, d.height) / 2;
+		Vetor vetor = new Vetor(comprimento, 0);
+		int centroY = d.height / 2;
+		int centroX = d.width / 2;
 
-		Objeto centro = new Objeto(d.width / 2, d.height / 2);
+		Objeto centro = new Objeto(centroX, centroY);
 		centro.setTabela(metadado.getDescricao());
 		centro.setChaves(metadado.getChaves());
 		centro.setId(metadado.getDescricao());
@@ -1826,11 +1830,7 @@ public class Superficie extends Desktop {
 			return;
 		}
 
-		int comp = Math.min(d.width, d.height) / 4;
-		int centroX = d.width / 2;
-		int centroY = d.height / 2;
 		int graus = 360 / lista.size();
-		Vetor vetor = new Vetor(comp, 0);
 
 		for (int i = 0; i < lista.size(); i++) {
 			String tabelaIds = lista.get(i);
