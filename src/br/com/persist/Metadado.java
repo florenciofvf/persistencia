@@ -284,8 +284,8 @@ public class Metadado implements Transferable {
 	}
 
 	private void listaString(List<String> resposta) {
-		for (Metadado tabela : filhos) {
-			resposta.add(tabela.descricao);
+		for (Metadado tabelaIds : filhos) {
+			resposta.add(tabelaIds.descricao);
 		}
 	}
 }
