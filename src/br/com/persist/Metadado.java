@@ -278,14 +278,14 @@ public class Metadado implements Transferable {
 	}
 
 	private void listaStringExpImp(List<String> resposta) {
-		for (Metadado m : filhos) {
-			m.listaString(resposta);
+		for (Metadado campo : filhos) {
+			campo.listaString(resposta);
 		}
 	}
 
 	private void listaString(List<String> resposta) {
-		for (Metadado m : filhos) {
-			resposta.add(m.descricao);
+		for (Metadado tabela : filhos) {
+			resposta.add(tabela.descricao);
 		}
 	}
 }
