@@ -58,6 +58,16 @@ public class Metadado implements Transferable {
 		return filhos.get(index);
 	}
 
+	public Metadado getMetadado(String descricao) {
+		for (Metadado m : filhos) {
+			if (m.descricao.equals(descricao)) {
+				return m;
+			}
+		}
+
+		return null;
+	}
+
 	public Metadado getPai() {
 		return pai;
 	}
@@ -104,7 +114,7 @@ public class Metadado implements Transferable {
 		return null;
 	}
 
-	public String getChaves2() {
+	private String getChaves2() {
 		StringBuilder sb = new StringBuilder();
 
 		if (!filhos.isEmpty()) {
