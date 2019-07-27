@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Util;
 
 public abstract class AbstratoFormulario extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +23,7 @@ public abstract class AbstratoFormulario extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setSize(Constantes.SIZE);
+		Util.configWindowC(this);
 		setActionESC();
 	}
 

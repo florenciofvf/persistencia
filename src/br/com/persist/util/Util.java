@@ -3,6 +3,7 @@ package br.com.persist.util;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -10,6 +11,7 @@ import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -84,6 +86,18 @@ public class Util {
 		}
 
 		return sw.toString();
+	}
+
+	public static void configWindowC(Window window) {
+		if (Sistema.getInstancia().isMac()) {
+			try {
+				Class<?> classe = Class.forName("com.apple.eawt.FullScreenUtilities");
+				Method method = classe.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);
+				method.invoke(classe, window, true);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(window.getClass().getName() + ".setWindowCanFullScreen()", ex, window);
+			}
+		}
 	}
 
 	public static String getStringLista(List<String> lista, boolean apostrofes) {

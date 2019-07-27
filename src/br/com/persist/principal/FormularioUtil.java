@@ -1,8 +1,5 @@
 package br.com.persist.principal;
 
-import java.awt.Window;
-import java.lang.reflect.Method;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
@@ -10,7 +7,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
-import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
 public class FormularioUtil {
@@ -37,19 +33,6 @@ public class FormularioUtil {
 
 			if (titulo.equals(item.getText())) {
 				item.doClick();
-			}
-		}
-	}
-
-	public static void configMAC(Formulario formulario) {
-		if (Sistema.getInstancia().isMac()) {
-			try {
-				Class<?> classe = Class.forName("com.apple.eawt.FullScreenUtilities");
-				Method method = classe.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);
-				method.invoke(classe, formulario, true);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(formulario.getClass().getName() + ".setWindowCanFullScreen()", ex,
-						formulario);
 			}
 		}
 	}

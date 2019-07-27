@@ -78,10 +78,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	public Formulario() {
 		super(Mensagens.getString("label.persistencia"));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		FormularioUtil.configMAC(this);
 		setLayout(new BorderLayout());
 		setJMenuBar(menuPrincipal);
 		setSize(Constantes.SIZE);
+		Util.configWindowC(this);
 		montarLayout();
 		configurar();
 	}
