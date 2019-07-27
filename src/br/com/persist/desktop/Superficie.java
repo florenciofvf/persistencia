@@ -1816,7 +1816,10 @@ public class Superficie extends Desktop {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
 		Objeto centro = new Objeto(d.width / 2, d.height / 2);
+		centro.setTabela(metadado.getDescricao());
+		centro.setChaves(metadado.getChaves());
 		centro.setId(metadado.getDescricao());
+		Metadado raiz = metadado.getPai();
 		addObjeto(centro);
 
 		if (lista.isEmpty()) {
@@ -1830,16 +1833,22 @@ public class Superficie extends Desktop {
 		Vetor vetor = new Vetor(comp, 0);
 
 		for (int i = 0; i < lista.size(); i++) {
-			String descricao = lista.get(i);
+			String tabelaIds = lista.get(i);
 
 			Objeto objeto = new Objeto(centroX + (int) vetor.getX(), centroY + (int) vetor.getY());
-			objeto.setId(descricao);
+			objeto.setId(tabelaIds);
 			addObjeto(objeto);
 
 			Relacao relacao = new Relacao(centro, !exportacao, objeto, exportacao);
 			addRelacao(relacao);
 
 			vetor.rotacionar(graus);
+
+			int pos = tabelaIds.indexOf('(');
+			String nome = tabelaIds.substring(0, pos);
+			Metadado tabela = raiz.getMetadado(nome);
+			objeto.setChaves(tabela.getChaves());
+			objeto.setTabela(nome);
 		}
 	}
 }
