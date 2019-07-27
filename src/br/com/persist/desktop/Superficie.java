@@ -1814,10 +1814,10 @@ public class Superficie extends Desktop {
 		List<String> lista = metadado.getListaStringExpImp(exportacao);
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int comprimento = Math.min(d.width, d.height) / 2;
+		int comprimento = Math.min(d.width, d.height) / 2 - 50;
+		int centroX = d.width / 2 - ((d.width - d.height) / 2);
 		Vetor vetor = new Vetor(comprimento, 0);
-		int centroY = d.height / 2;
-		int centroX = d.width / 2;
+		int centroY = d.height / 2 - 25;
 
 		Objeto centro = new Objeto(centroX, centroY);
 		centro.setTabela(metadado.getDescricao());
