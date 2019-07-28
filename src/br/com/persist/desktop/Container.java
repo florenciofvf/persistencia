@@ -87,12 +87,12 @@ public class Container extends Panel {
 		btnSelecao.click();
 	}
 
-	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao) {
+	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
 		if (abortarFecharComESCSuperficie) {
 			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
 
-		superficie.abrirExportacaoImportacaoMetadado(metadado, exportacao);
+		superficie.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
 		btnSelecao.click();
 	}
 

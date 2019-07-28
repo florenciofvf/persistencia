@@ -645,18 +645,18 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 	}
 
-	public void abrirExportacaoMetadado(Metadado metadado) {
+	public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
 		ContainerFormulario form = new ContainerFormulario(this,
 				new File(Mensagens.getString("label.abrir_exportacao")));
-		form.abrirExportacaoImportacaoMetadado(metadado, true);
+		form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 		form.setLocationRelativeTo(this);
 		form.setVisible(true);
 	}
 
-	public void abrirImportacaoMetadado(Metadado metadado) {
+	public void abrirImportacaoMetadado(Metadado metadado, boolean circular) {
 		ContainerFormulario form = new ContainerFormulario(this,
 				new File(Mensagens.getString("label.abrir_importacao")));
-		form.abrirExportacaoImportacaoMetadado(metadado, false);
+		form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 		form.setLocationRelativeTo(this);
 		form.setVisible(true);
 	}

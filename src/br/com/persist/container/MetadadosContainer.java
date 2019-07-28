@@ -149,38 +149,38 @@ public class MetadadosContainer extends Panel implements MetadadosListener {
 	}
 
 	@Override
-	public void abrirExportacaoFormArquivo(Metadados metadados) {
+	public void abrirExportacaoFormArquivo(Metadados metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.abrirExportacaoMetadado(metadado);
+			formulario.abrirExportacaoMetadado(metadado, circular);
 		}
 	}
 
 	@Override
-	public void abrirExportacaoFichArquivo(Metadados metadados) {
+	public void abrirExportacaoFichArquivo(Metadados metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().abrirExportacaoMetadado(formulario, metadado);
+			formulario.getFichario().abrirExportacaoMetadado(formulario, metadado, circular);
 		}
 	}
 
 	@Override
-	public void abrirImportacaoFormArquivo(Metadados metadados) {
+	public void abrirImportacaoFormArquivo(Metadados metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.abrirImportacaoMetadado(metadado);
+			formulario.abrirImportacaoMetadado(metadado, circular);
 		}
 	}
 
 	@Override
-	public void abrirImportacaoFichArquivo(Metadados metadados) {
+	public void abrirImportacaoFichArquivo(Metadados metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().abrirImportacaoMetadado(formulario, metadado);
+			formulario.getFichario().abrirImportacaoMetadado(formulario, metadado, circular);
 		}
 	}
 }

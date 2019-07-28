@@ -32,7 +32,7 @@ public class Metadados extends Tree {
 	private MetadadosPopup metadadosPopup = new MetadadosPopup();
 	private final transient List<MetadadosListener> ouvintes;
 	private static final Logger LOG = Logger.getGlobal();
-	private boolean padraoClickExportacao;
+	private boolean padraoClickExportacao = true;
 
 	public Metadados() {
 		this(new MetadadoModelo());
@@ -161,9 +161,9 @@ public class Metadados extends Tree {
 
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (padraoClickExportacao) {
-					ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this));
+					ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this, true));
 				} else {
-					ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this));
+					ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this, true));
 				}
 			}
 		}
@@ -195,10 +195,10 @@ public class Metadados extends Tree {
 			MenuAbrirExportacao() {
 				super("label.abrir_exportacao", Icones.ABRIR, false);
 
-				formularioAcao
-						.setActionListener(e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(Metadados.this)));
-				ficharioAcao
-						.setActionListener(e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this)));
+				formularioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(Metadados.this, true)));
+				ficharioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this, true)));
 			}
 		}
 
@@ -208,10 +208,10 @@ public class Metadados extends Tree {
 			MenuAbrirImportacao() {
 				super("label.abrir_importacao", Icones.ABRIR, false);
 
-				formularioAcao
-						.setActionListener(e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(Metadados.this)));
-				ficharioAcao
-						.setActionListener(e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this)));
+				formularioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(Metadados.this, true)));
+				ficharioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this, true)));
 			}
 		}
 	}

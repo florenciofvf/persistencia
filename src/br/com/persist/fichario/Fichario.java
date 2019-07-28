@@ -432,15 +432,15 @@ public class Fichario extends JTabbedPane {
 		setTitleAt(getTabCount() - 1, file.getName());
 	}
 
-	public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado) {
+	public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
 		Container container = novo(formulario);
-		container.abrirExportacaoImportacaoMetadado(metadado, true);
+		container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_exportacao"));
 	}
 
-	public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado) {
+	public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
 		Container container = novo(formulario);
-		container.abrirExportacaoImportacaoMetadado(metadado, false);
+		container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
 	}
 
