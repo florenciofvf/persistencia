@@ -175,10 +175,14 @@ public class Metadados extends Tree {
 
 	private class MetadadosPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private MenuAbrirExportacaoH menuAbrirExportacaoH = new MenuAbrirExportacaoH();
+		private MenuAbrirImportacaoH menuAbrirImportacaoH = new MenuAbrirImportacaoH();
 		private MenuAbrirExportacao menuAbrirExportacao = new MenuAbrirExportacao();
 		private MenuAbrirImportacao menuAbrirImportacao = new MenuAbrirImportacao();
 
 		public MetadadosPopup() {
+			add(menuAbrirExportacaoH);
+			add(menuAbrirImportacaoH);
 			add(menuAbrirExportacao);
 			add(menuAbrirImportacao);
 		}
@@ -202,6 +206,19 @@ public class Metadados extends Tree {
 			}
 		}
 
+		class MenuAbrirExportacaoH extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuAbrirExportacaoH() {
+				super("label.abrir_exportacao_h", Icones.ABRIR, false);
+
+				formularioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(Metadados.this, false)));
+				ficharioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this, false)));
+			}
+		}
+
 		class MenuAbrirImportacao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
@@ -212,6 +229,19 @@ public class Metadados extends Tree {
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(Metadados.this, true)));
 				ficharioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this, true)));
+			}
+		}
+
+		class MenuAbrirImportacaoH extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuAbrirImportacaoH() {
+				super("label.abrir_importacao_h", Icones.ABRIR, false);
+
+				formularioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(Metadados.this, false)));
+				ficharioAcao.setActionListener(
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this, false)));
 			}
 		}
 	}
