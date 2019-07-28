@@ -1855,9 +1855,13 @@ public class Superficie extends Desktop {
 
 			int pos = tabelaIds.indexOf('(');
 			String nome = tabelaIds.substring(0, pos);
-			Metadado tabela = raiz.getMetadado(nome);
-			objeto.setChaves(tabela.getChaves());
 			objeto.setTabela(nome);
+
+			Metadado tabela = raiz.getMetadado(nome);
+
+			if (tabela != null) {
+				objeto.setChaves(tabela.getChaves());
+			}
 
 			if (!circular) {
 				objeto.x = 20;
