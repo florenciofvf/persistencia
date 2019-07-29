@@ -1818,7 +1818,7 @@ public class Superficie extends Desktop {
 		Vetor vetor = new Vetor(comprimento, 0);
 		int centroY = d.height / 2 - 25;
 		int centroX = d.width / 2;
-		int quarenta = 40;
+		final int cem = 100;
 
 		Objeto centro = new Objeto(centroX, centroY);
 		centro.setTabela(metadado.getDescricao());
@@ -1836,10 +1836,8 @@ public class Superficie extends Desktop {
 			return;
 		}
 
-		int delta = (d.height - quarenta) / lista.size() - quarenta;
 		int graus = 360 / lista.size();
-		int y = centro.y + delta;
-		y -= quarenta;
+		int y = centro.y + cem;
 
 		for (int i = 0; i < lista.size(); i++) {
 			String tabelaIds = lista.get(i);
@@ -1866,7 +1864,7 @@ public class Superficie extends Desktop {
 			if (!circular) {
 				objeto.x = 20;
 				objeto.y = y;
-				y += delta;
+				y += cem;
 			}
 		}
 	}
