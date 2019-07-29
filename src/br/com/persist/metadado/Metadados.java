@@ -189,6 +189,8 @@ public class Metadados extends Tree {
 
 		private void preShow(Metadado metadado) {
 			boolean ehTabela = metadado.isTabela();
+			menuAbrirExportacaoH.setEnabled(ehTabela);
+			menuAbrirImportacaoH.setEnabled(ehTabela);
 			menuAbrirExportacao.setEnabled(ehTabela);
 			menuAbrirImportacao.setEnabled(ehTabela);
 		}
