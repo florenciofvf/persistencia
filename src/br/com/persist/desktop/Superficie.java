@@ -1815,9 +1815,9 @@ public class Superficie extends Desktop {
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int comprimento = Math.min(d.width, d.height) / 2 - 50;
-		int centroX = d.width / 2 - ((d.width - d.height) / 2);
 		Vetor vetor = new Vetor(comprimento, 0);
 		int centroY = d.height / 2 - 25;
+		int centroX = d.width / 2;
 		int quarenta = 40;
 
 		Objeto centro = new Objeto(centroX, centroY);
