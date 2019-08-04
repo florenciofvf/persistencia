@@ -579,4 +579,13 @@ public class Fichario extends JTabbedPane {
 			this.y = y;
 		}
 	}
+
+	public void fecharTodos() {
+		int count = getTabCount();
+
+		while (count > 0) {
+			removeTabAt(0);
+			count = getTabCount();
+		}
+	}
 }

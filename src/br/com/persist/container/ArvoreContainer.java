@@ -53,6 +53,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action fecharAcao = Action.actionIcon("label.fechar_todos", Icones.FECHAR);
 		private Action statusAcao = Action.actionIcon("label.status", Icones.HIERARQUIA);
 		private Action atualizarAcao = Action.actionIconBaixar();
 
@@ -68,6 +69,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 			add(chkSempreTopForm);
 			add(chkLinkAuto);
 			add(chkDuplicar);
+			add(fecharAcao);
 
 			chkSempreTopArvo.addActionListener(e -> arvoreFormulario.setAlwaysOnTop(chkSempreTopArvo.isSelected()));
 			chkSempreTopForm.addActionListener(e -> {
@@ -76,6 +78,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 					formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
 				}
 			});
+			fecharAcao.setActionListener(e -> formulario.getFichario().fecharTodos());
 			atualizarAcao.setActionListener(e -> baixarArquivo());
 			statusAcao.setActionListener(e -> statusArquivo());
 		}
