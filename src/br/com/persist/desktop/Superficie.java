@@ -1867,5 +1867,10 @@ public class Superficie extends Desktop {
 				y += cem;
 			}
 		}
+
+		if (!circular) {
+			setPreferredSize(new Dimension(0, y));
+			SwingUtilities.updateComponentTreeUI(getParent());
+		}
 	}
 }
