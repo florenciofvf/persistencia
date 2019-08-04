@@ -1,6 +1,8 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.comp.TextField;
 import br.com.persist.listener.MetadadosListener;
 import br.com.persist.metadado.Metadados;
 import br.com.persist.modelo.MetadadoModelo;
@@ -45,9 +48,10 @@ public class MetadadosContainer extends Panel implements MetadadosListener {
 		metadados.adicionarOuvinte(this);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
+		private final TextField txtMetadado = new TextField(35);
 
 		@Override
 		public void ini(IJanela janela) {
@@ -56,12 +60,23 @@ public class MetadadosContainer extends Panel implements MetadadosListener {
 			addButton(atualizarAcao);
 			add(true, cmbConexao);
 			add(true, new ButtonInfo());
+			add(txtMetadado);
 
 			eventos();
 		}
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (Util.estaVazio(txtMetadado.getText())) {
+				return;
+			}
+
+			metadados.selecionar(txtMetadado.getText().trim());
+		}
+
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
+			txtMetadado.addActionListener(this);
 		}
 
 		class ButtonInfo extends ButtonPopup {

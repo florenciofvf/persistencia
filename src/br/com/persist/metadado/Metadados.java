@@ -272,4 +272,15 @@ public class Metadados extends Tree {
 	public String ordemExpImp(boolean exp) {
 		return getRaiz().ordemExpImp(exp);
 	}
+
+	public void selecionar(String nome) {
+		Metadado raiz = getRaiz();
+		Metadado metadado = raiz.getMetadado(nome);
+
+		if (metadado != null) {
+			MetadadosUtil.selecionarObjeto(this, metadado);
+		} else {
+			setSelectionPath(null);
+		}
+	}
 }
