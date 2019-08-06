@@ -76,6 +76,7 @@ public class CircularContainer extends Panel {
 
 		private void atualizar() {
 			if (selecionados.isEmpty()) {
+				tipo.toString();
 				return;
 			}
 
