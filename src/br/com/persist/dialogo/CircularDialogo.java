@@ -18,6 +18,7 @@ public class CircularDialogo extends AbstratoDialogo implements IJanela {
 		super(frame, Mensagens.getString(Constantes.LABEL_CIRCULAR));
 		container = new CircularContainer(this, superficie, tipo);
 		montarLayout();
+		pack();
 	}
 
 	private void montarLayout() {

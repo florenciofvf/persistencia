@@ -36,7 +36,9 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.container.CircularContainer.Tipo;
 import br.com.persist.container.ObjetoContainer;
+import br.com.persist.dialogo.CircularDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoConfigDialogo;
@@ -1069,6 +1071,7 @@ public class Superficie extends Desktop {
 			add(true, menuDistribuicao);
 			add(true, itemCopiar);
 			add(true, menuDestacar);
+			add(true, new MenuCircular());
 			add(true, new MenuConsulta());
 			add(true, new MenuUpdate());
 			add(true, new MenuItem(excluirAcao));
@@ -1077,6 +1080,39 @@ public class Superficie extends Desktop {
 			add(true, new MenuItem(configuracaoAcao));
 
 			eventos();
+		}
+
+		class MenuCircular extends Menu {
+			private static final long serialVersionUID = 1L;
+			private Action exportacaoAcao = Action.actionMenu("label.exportacao", null);
+			private Action importacaoAcao = Action.actionMenu("label.importacao", null);
+			private Action normalAcao = Action.actionMenu("label.normal", null);
+
+			MenuCircular() {
+				super(Constantes.LABEL_CIRCULAR);
+
+				addMenuItem(exportacaoAcao);
+				addMenuItem(importacaoAcao);
+				addMenuItem(normalAcao);
+
+				exportacaoAcao.setActionListener(e -> abrirModal(Tipo.EXPORTACAO));
+				importacaoAcao.setActionListener(e -> abrirModal(Tipo.IMPORTACAO));
+				normalAcao.setActionListener(e -> abrirModal(Tipo.NORMAL));
+			}
+
+			private void abrirModal(Tipo tipo) {
+				Frame frame = formulario;
+
+				if (container.getContainerFormulario() != null) {
+					frame = container.getContainerFormulario();
+				}
+
+				if (selecionadoObjeto != null) {
+					CircularDialogo form = new CircularDialogo(frame, Superficie.this, tipo);
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				}
+			}
 		}
 
 		class MenuConsulta extends MenuPadrao1 {
