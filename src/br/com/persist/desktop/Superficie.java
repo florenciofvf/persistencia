@@ -1059,6 +1059,7 @@ public class Superficie extends Desktop {
 		Menu menuAlinhamento = new Menu("label.alinhamento");
 		MenuItem itemCopiar = new MenuItem(copiarAcao);
 		MenuDestacar menuDestacar = new MenuDestacar();
+		MenuCircular menuCircular = new MenuCircular();
 		MenuItem itemDados = new MenuItem(dadosAcao);
 
 		SuperficiePopup() {
@@ -1071,7 +1072,7 @@ public class Superficie extends Desktop {
 			add(true, menuDistribuicao);
 			add(true, itemCopiar);
 			add(true, menuDestacar);
-			add(true, new MenuCircular());
+			add(true, menuCircular);
 			add(true, new MenuConsulta());
 			add(true, new MenuUpdate());
 			add(true, new MenuItem(excluirAcao));
@@ -1108,7 +1109,7 @@ public class Superficie extends Desktop {
 				}
 
 				if (selecionadoObjeto != null) {
-					CircularDialogo form = new CircularDialogo(frame, Superficie.this, tipo);
+					CircularDialogo form = new CircularDialogo(frame, Superficie.this, tipo, selecionadoObjeto);
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				}
@@ -1244,6 +1245,7 @@ public class Superficie extends Desktop {
 			menuDistribuicao.setEnabled(objetoSelecionado);
 			menuAlinhamento.setEnabled(objetoSelecionado);
 			menuDestacar.setEnabled(objetoSelecionado);
+			menuCircular.setEnabled(objetoSelecionado);
 			itemPartir.setEnabled(!objetoSelecionado);
 			itemCopiar.setEnabled(objetoSelecionado);
 		}
