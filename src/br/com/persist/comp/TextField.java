@@ -9,6 +9,10 @@ public class TextField extends JTextField {
 		super(columns);
 	}
 
+	public TextField(String text) {
+		super(text);
+	}
+
 	public TextField() {
 	}
 

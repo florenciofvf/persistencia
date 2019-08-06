@@ -21,6 +21,7 @@ public class Constantes {
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
 	public static final String LABEL_ARQUIVOS = "label.arquivos";
+	public static final String LABEL_CIRCULAR = "label.circular";
 	public static final String LABEL_ATENCAO = "label.atencao";
 	public static final String LABEL_CONEXAO = "label.conexao";
 	public static final String LABEL_DIALOGO = "label.dialogo";
