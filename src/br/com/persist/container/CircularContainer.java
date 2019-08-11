@@ -10,6 +10,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextField;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.util.Action;
 import br.com.persist.util.IJanela;
@@ -90,6 +91,21 @@ public class CircularContainer extends Panel {
 				objeto.setY(pivo.getY() + (int) vetor.getY());
 
 				vetor.rotacionar(graus);
+
+				Relacao relacao = superficie.getRelacao(pivo, objeto);
+
+				if (relacao != null && tipo == Tipo.NORMAL) {
+					relacao.setPontoOrigem(false);
+					relacao.setPontoDestino(false);
+
+				} else if (relacao != null && tipo == Tipo.EXPORTACAO) {
+					relacao.setPontoOrigem(pivo != relacao.getOrigem());
+					relacao.setPontoDestino(pivo != relacao.getDestino());
+
+				} else if (relacao != null && tipo == Tipo.IMPORTACAO) {
+					relacao.setPontoOrigem(pivo == relacao.getOrigem());
+					relacao.setPontoDestino(pivo == relacao.getDestino());
+				}
 			}
 
 			superficie.repaint();
