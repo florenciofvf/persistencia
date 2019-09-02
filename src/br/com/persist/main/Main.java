@@ -32,7 +32,7 @@ public class Main {
 		formulario.setVisible(true);
 	}
 
-	public static void addURL(URL url) {
+	private static void addURL(URL url) {
 		try {
 			URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 			Class<?> classe = URLClassLoader.class;
