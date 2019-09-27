@@ -1144,8 +1144,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	private transient TabelaListener tabelaListener = new TabelaListener() {
 		@Override
-		public void copiarNomeColuna(Tabela tabela, String nome) {
-			txtComplemento.setText("AND " + nome + " = ");
+		public void copiarNomeColuna(Tabela tabela, String nome, String anterior) {
+			String string = Util.estaVazio(anterior) ? "" : anterior;
+			txtComplemento.setText("AND " + nome + " = " + string);
 		}
 
 		@Override

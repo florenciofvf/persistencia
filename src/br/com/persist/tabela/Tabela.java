@@ -173,6 +173,7 @@ public class Tabela extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action copiarNomeAcaoConcat = Action.actionMenu("label.copiar_nome_coluna_concat", null);
 		private Action copiarNomeAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action infoAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private MenuCopiarIN menuCopiarIN = new MenuCopiarIN();
@@ -182,20 +183,32 @@ public class Tabela extends JTable {
 
 		PopupHeader() {
 			addMenuItem(infoAcao);
-			addMenuItem(true, copiarNomeAcao);
-			add(new MenuCopiarValor());
+			addMenuItem(true, copiarNomeAcaoConcat);
+			addMenuItem(copiarNomeAcao);
+			add(true, new MenuCopiarValor());
 			add(true, menuCopiarIN);
 
 			eventos();
 		}
 
 		private void eventos() {
+			copiarNomeAcaoConcat.setActionListener(e -> {
+				String string = Util.getContentTransfered();
+
+				String coluna = getModel().getColumnName(tag);
+				Util.setContentTransfered(coluna);
+
+				if (tabelaListener != null && Preferencias.isCopiarNomeColunaListener()) {
+					tabelaListener.copiarNomeColuna(Tabela.this, coluna, string);
+				}
+			});
+
 			copiarNomeAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(tag);
 				Util.setContentTransfered(coluna);
 
 				if (tabelaListener != null && Preferencias.isCopiarNomeColunaListener()) {
-					tabelaListener.copiarNomeColuna(Tabela.this, coluna);
+					tabelaListener.copiarNomeColuna(Tabela.this, coluna, null);
 				}
 			});
 
