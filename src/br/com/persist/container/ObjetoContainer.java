@@ -1162,8 +1162,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					toolbar.update.setEnabled(chaves.length > 0 && linhas.length == 1);
 					toolbar.excluir.setEnabled(chaves.length > 0);
+					toolbar.labelTotal.setText("" + linhas.length);
 				} else {
 					toolbar.excluirAtualizarEnable(false);
+					toolbar.labelTotal.setText("");
 				}
 
 				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaLink.isEmpty()) {
