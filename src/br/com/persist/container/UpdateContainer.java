@@ -129,9 +129,15 @@ public class UpdateContainer extends Panel {
 			return;
 		}
 
+		String instrucao = textArea.getSelectedText();
+
+		if (Util.estaVazio(instrucao)) {
+			instrucao = textArea.getText();
+		}
+
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			int atualizados = Persistencia.executar(textArea.getText(), conn);
+			int atualizados = Persistencia.executar(instrucao, conn);
 			labelStatus.setText("ATUALIZADOS [" + atualizados + "]");
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(PAINEL_UPDATE, ex, this);
