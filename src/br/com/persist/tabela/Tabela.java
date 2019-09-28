@@ -173,7 +173,6 @@ public class Tabela extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action copiarNomeAcaoConcat = Action.actionMenu("label.copiar_nome_coluna_concat", null);
 		private Action copiarNomeAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action infoAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private MenuCopiarIN menuCopiarIN = new MenuCopiarIN();
@@ -183,7 +182,7 @@ public class Tabela extends JTable {
 
 		PopupHeader() {
 			addMenuItem(infoAcao);
-			addMenuItem(true, copiarNomeAcaoConcat);
+			add(true, new MenuCopiarNomeConcat());
 			addMenuItem(copiarNomeAcao);
 			add(true, new MenuCopiarValor());
 			add(true, menuCopiarIN);
@@ -192,17 +191,6 @@ public class Tabela extends JTable {
 		}
 
 		private void eventos() {
-			copiarNomeAcaoConcat.setActionListener(e -> {
-				String string = Util.getContentTransfered();
-
-				String coluna = getModel().getColumnName(tag);
-				Util.setContentTransfered(coluna);
-
-				if (tabelaListener != null && Preferencias.isCopiarNomeColunaListener()) {
-					tabelaListener.copiarNomeColuna(Tabela.this, coluna, string);
-				}
-			});
-
 			copiarNomeAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(tag);
 				Util.setContentTransfered(coluna);
@@ -234,6 +222,32 @@ public class Tabela extends JTable {
 			private void copiar(boolean aspas) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
 				Util.setContentTransfered(Util.getStringLista(lista, aspas));
+			}
+		}
+
+		class MenuCopiarNomeConcat extends MenuPadrao2 {
+			private static final long serialVersionUID = 1L;
+
+			MenuCopiarNomeConcat() {
+				super("label.copiar_nome_coluna_concat");
+
+				semAspasAcao.setActionListener(e -> copiar(false));
+				comAspasAcao.setActionListener(e -> copiar(true));
+			}
+
+			private void copiar(boolean aspas) {
+				String string = Util.getContentTransfered();
+
+				String coluna = Tabela.this.getModel().getColumnName(tag);
+				Util.setContentTransfered(coluna);
+
+				if (tabelaListener != null && Preferencias.isCopiarNomeColunaListener()) {
+					if (aspas && !Util.estaVazio(string)) {
+						string = Util.citar(string);
+					}
+
+					tabelaListener.copiarNomeColuna(Tabela.this, coluna, string);
+				}
 			}
 		}
 

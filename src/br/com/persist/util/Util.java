@@ -118,7 +118,7 @@ public class Util {
 		return sb.toString();
 	}
 
-	private static String citar(String string) {
+	public static String citar(String string) {
 		return "'" + string + "'";
 	}
 
