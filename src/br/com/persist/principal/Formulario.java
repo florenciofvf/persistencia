@@ -37,6 +37,7 @@ import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.MapeamentoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
+import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
@@ -50,6 +51,7 @@ import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.UpdateFormulario;
+import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.modelo.MapeamentoModelo;
@@ -233,6 +235,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(new MenuFragmento());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuMapeamento());
+			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuVariaveis());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConfig());
 			menuArquivo.addSeparator();
@@ -618,6 +622,28 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoMapeamento(Formulario.this));
+			}
+		}
+
+		class MenuVariaveis extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuVariaveis() {
+				super(Constantes.LABEL_VARIAVEIS, Icones.VAR);
+
+				formularioAcao.setActionListener(e -> {
+					VariaveisFormulario form = new VariaveisFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					VariaveisDialogo form = new VariaveisDialogo(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novoVariaveis(Formulario.this));
 			}
 		}
 	}
