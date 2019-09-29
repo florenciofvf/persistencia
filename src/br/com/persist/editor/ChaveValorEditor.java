@@ -15,6 +15,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.dialogo.ChaveValorDialogo;
 import br.com.persist.modelo.MapeamentoModelo;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 
@@ -26,8 +27,8 @@ public class ChaveValorEditor extends JPanel implements TableCellEditor {
 	private int linha;
 
 	public ChaveValorEditor() {
-		listeners = new ArrayList<>();
 		changeEvent = new ChangeEvent(this);
+		listeners = new ArrayList<>();
 	}
 
 	@Override
@@ -54,6 +55,10 @@ public class ChaveValorEditor extends JPanel implements TableCellEditor {
 
 				if (model instanceof MapeamentoModelo) {
 					ChaveValor cv = MapeamentoModelo.getChaveValor(linha);
+					new ChaveValorDialogo(cv).setVisible(true);
+
+				} else if (model instanceof VariaveisModelo) {
+					ChaveValor cv = VariaveisModelo.getChaveValor(linha);
 					new ChaveValorDialogo(cv).setVisible(true);
 				}
 
