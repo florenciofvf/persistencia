@@ -75,6 +75,10 @@ public class VariaveisModelo extends AbstractTableModel {
 		}
 	}
 
+	public static List<ChaveValor> getLista() {
+		return lista;
+	}
+
 	public static ChaveValor getChaveValor(int i) {
 		return lista.get(i);
 	}

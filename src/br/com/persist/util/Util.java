@@ -32,6 +32,7 @@ import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.modelo.ConexaoComboModelo;
+import br.com.persist.modelo.VariaveisModelo;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
@@ -298,6 +299,13 @@ public class Util {
 			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
 			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
 			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
+		}
+
+		Iterator<ChaveValor> iterator = VariaveisModelo.getLista().iterator();
+
+		while (iterator.hasNext()) {
+			ChaveValor cv = iterator.next();
+			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
 		}
 
 		return instrucao;

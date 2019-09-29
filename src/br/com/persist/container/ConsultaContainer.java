@@ -31,8 +31,8 @@ import br.com.persist.util.Util;
 
 public class ConsultaContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private static final String PAINEL_SELECT = "PAINEL SELECT";
 	private static final File file = new File("consultas/consultas");
+	private static final String PAINEL_SELECT = "PAINEL SELECT";
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
