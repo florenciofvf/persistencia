@@ -31,6 +31,7 @@ public class Constantes {
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final String LABEL_FECHAR = "label.fechar";
 	public static final String LABEL_VAZIO = "label.vazio";
+	public static final String CHAVE_VALOR = "chave_valor";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final String LABEL_NOVO = "label.novo";
 	public static final String COR_FONTE = "COR_FONTE:";

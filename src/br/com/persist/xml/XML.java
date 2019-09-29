@@ -18,6 +18,7 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.exception.XMLException;
 import br.com.persist.modelo.MapeamentoModelo;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -81,6 +82,16 @@ public class XML {
 			SAXParserFactory factory = criarSAXParserFactory();
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(file, new HandlerMapeamento());
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
+	}
+
+	public static void processarVariaveis(File file) throws XMLException {
+		try {
+			SAXParserFactory factory = criarSAXParserFactory();
+			SAXParser parser = factory.newSAXParser();
+			parser.parse(file, new HandlerVariaveis());
 		} catch (Exception e) {
 			throw new XMLException(e);
 		}
@@ -256,7 +267,7 @@ class HandlerMapeamento extends DefaultHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if ("chave_valor".equals(qName)) {
+		if (Constantes.CHAVE_VALOR.equals(qName)) {
 			selecionado = new ChaveValor(Constantes.TEMP);
 			selecionado.aplicar(attributes);
 			MapeamentoModelo.adicionar(selecionado);
@@ -265,7 +276,48 @@ class HandlerMapeamento extends DefaultHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if ("chave_valor".equals(qName)) {
+		if (Constantes.CHAVE_VALOR.equals(qName)) {
+			selecionado = null;
+
+		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
+			String string = builder.toString();
+
+			if (!Util.estaVazio(string)) {
+				selecionado.setValor(string.trim());
+			}
+
+			limpar();
+		}
+	}
+
+	@Override
+	public void characters(char[] ch, int start, int length) throws SAXException {
+		builder.append(new String(ch, start, length));
+	}
+}
+
+class HandlerVariaveis extends DefaultHandler {
+	final StringBuilder builder = new StringBuilder();
+	ChaveValor selecionado;
+
+	private void limpar() {
+		if (builder.length() > 0) {
+			builder.delete(0, builder.length());
+		}
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		if (Constantes.CHAVE_VALOR.equals(qName)) {
+			selecionado = new ChaveValor(Constantes.TEMP);
+			selecionado.aplicar(attributes);
+			VariaveisModelo.adicionar(selecionado);
+		}
+	}
+
+	@Override
+	public void endElement(String uri, String localName, String qName) throws SAXException {
+		if (Constantes.CHAVE_VALOR.equals(qName)) {
 			selecionado = null;
 
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
