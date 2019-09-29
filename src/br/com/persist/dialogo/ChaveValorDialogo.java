@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import br.com.persist.comp.TextArea;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 
 public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
@@ -15,7 +16,7 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 	private transient ChaveValor chaveValor;
 
 	public ChaveValorDialogo(ChaveValor chaveValor) {
-		super((Frame) null, "label.chave_valor");
+		super((Frame) null, Mensagens.getString("label.chave_valor"));
 		textArea.setText(chaveValor.getValor());
 		this.chaveValor = chaveValor;
 		montarLayout();
