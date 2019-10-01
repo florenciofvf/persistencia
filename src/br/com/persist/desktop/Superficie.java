@@ -1442,6 +1442,21 @@ public class Superficie extends Desktop {
 		}
 	}
 
+	public void selecionarConexao(Conexao conexao) {
+		if (conexao == null) {
+			return;
+		}
+
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				interno.selecionarConexao(conexao);
+			}
+		}
+	}
+
 	public void criarNovoObjeto(int x, int y) {
 		Objeto novo = new Objeto(x, y);
 

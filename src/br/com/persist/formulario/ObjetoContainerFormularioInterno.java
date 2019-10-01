@@ -142,4 +142,8 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
 	}
+
+	public void selecionarConexao(Conexao conexao) {
+		container.selecionarConexao(conexao);
+	}
 }

@@ -940,6 +940,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		if (ItemEvent.SELECTED != e.getStateChange()) {
+			return;
+		}
+
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
 		if (conexao == null) {
@@ -1203,5 +1207,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	public void setSuporte(Component suporte) {
 		this.suporte = suporte;
+	}
+
+	public void selecionarConexao(Conexao conexao) {
+		if (conexao != null) {
+			cmbConexao.setSelectedItem(conexao);
+		}
 	}
 }

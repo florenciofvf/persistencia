@@ -6,6 +6,7 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -63,6 +64,15 @@ public class Container extends Panel {
 		this.formulario = formulario;
 		toolbar.ini(janela);
 		montarLayout();
+		eventos();
+	}
+
+	private void eventos() {
+		cmbConexao.addItemListener(e -> {
+			if (ItemEvent.SELECTED == e.getStateChange()) {
+				superficie.selecionarConexao(getConexaoPadrao());
+			}
+		});
 	}
 
 	public Superficie getSuperficie() {
