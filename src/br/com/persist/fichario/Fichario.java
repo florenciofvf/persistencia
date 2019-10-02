@@ -26,6 +26,7 @@ import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
@@ -210,7 +211,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		desktop.ini(getGraphics());
-		desktop.distribuir(-20);
+		SwingUtilities.invokeLater(() -> desktop.distribuir(-20));
 	}
 
 	private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie) {

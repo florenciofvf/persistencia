@@ -141,7 +141,17 @@ public class Arvore extends Tree {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this));
 			} else {
-				ouvintes.forEach(o -> o.clickArquivo(Arvore.this));
+				TreePath arvoreCli = getClosestPathForLocation(e.getX(), e.getY());
+
+				if (arvoreCli != null) {
+					Arquivo arquivo = (Arquivo) arvoreCli.getLastPathComponent();
+
+					if (arquivo == null || !arquivo.isFile()) {
+						return;
+					}
+
+					ouvintes.forEach(o -> o.clickArquivo(Arvore.this));
+				}
 			}
 		}
 	};
