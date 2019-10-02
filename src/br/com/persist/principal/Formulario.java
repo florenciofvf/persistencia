@@ -161,7 +161,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
 				MapeamentoModelo.inicializar();
 				VariaveisModelo.inicializar();
-				atualizarFragmentos();
+				FragmentoModelo.inicializar();
 				atualizarConexoes();
 
 				if (Preferencias.isAbrirComAnexo()) {
@@ -180,14 +180,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				FormularioUtil.fechar(Formulario.this);
 			}
 		});
-	}
-
-	public void atualizarFragmentos() {
-		try {
-			FragmentoModelo.inicializar();
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("ATUALIZAR FRAGMENTOS", ex, this);
-		}
 	}
 
 	public void atualizarConexoes() {
