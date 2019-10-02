@@ -55,6 +55,7 @@ import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.modelo.MapeamentoModelo;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -159,15 +160,16 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			public void windowOpened(WindowEvent e) {
 				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus");
 				MapeamentoModelo.inicializar();
+				VariaveisModelo.inicializar();
 				atualizarFragmentos();
 				atualizarConexoes();
 
-				if (Preferencias.isAbrirComArvore()) {
-					fichario.novaArvore(Formulario.this);
-				}
-
 				if (Preferencias.isAbrirComAnexo()) {
 					fichario.novoAnexo(Formulario.this);
+				}
+
+				if (Preferencias.isAbrirComArvore()) {
+					fichario.novaArvore(Formulario.this);
 				}
 
 				menuPrincipal.menuLayout.aplicarLayout();
