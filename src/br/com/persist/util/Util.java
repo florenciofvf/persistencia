@@ -45,6 +45,38 @@ public class Util {
 		return s == null || s.trim().length() == 0;
 	}
 
+	public static String soNumeros(String s) {
+		if (estaVazio(s)) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (char c : s.toCharArray()) {
+			if (c >= '0' && c <= '9') {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static String soLetras(String s) {
+		if (estaVazio(s)) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (char c : s.toCharArray()) {
+			if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static void mensagem(Component componente, String string) {
 		TextArea textArea = new TextArea(string);
 		textArea.setPreferredSize(new Dimension(500, 300));

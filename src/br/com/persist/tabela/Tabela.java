@@ -182,8 +182,10 @@ public class Tabela extends JTable {
 
 		PopupHeader() {
 			addMenuItem(infoAcao);
-			add(true, new MenuCopiarNomeConcat());
-			addMenuItem(copiarNomeAcao);
+			add(true, new MenuCopiarNomeConcat("label.copiar_nome_coluna_concat_n", true, false));
+			add(new MenuCopiarNomeConcat("label.copiar_nome_coluna_concat_l", false, true));
+			add(new MenuCopiarNomeConcat("label.copiar_nome_coluna_concat", false, false));
+			addMenuItem(true, copiarNomeAcao);
 			add(true, new MenuCopiarValor());
 			add(true, menuCopiarIN);
 
@@ -227,10 +229,13 @@ public class Tabela extends JTable {
 
 		class MenuCopiarNomeConcat extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
+			private final boolean numeros;
+			private final boolean letras;
 
-			MenuCopiarNomeConcat() {
-				super("label.copiar_nome_coluna_concat");
-
+			MenuCopiarNomeConcat(String titulo, boolean num, boolean let) {
+				super(titulo);
+				numeros = num;
+				letras = let;
 				semAspasAcao.setActionListener(e -> copiar(false));
 				comAspasAcao.setActionListener(e -> copiar(true));
 			}
@@ -242,6 +247,14 @@ public class Tabela extends JTable {
 				Util.setContentTransfered(coluna);
 
 				if (tabelaListener != null && Preferencias.isCopiarNomeColunaListener()) {
+					if (numeros) {
+						string = Util.soNumeros(string);
+					}
+
+					if (letras) {
+						string = Util.soLetras(string);
+					}
+
 					if (aspas && !Util.estaVazio(string)) {
 						string = Util.citar(string);
 					}
