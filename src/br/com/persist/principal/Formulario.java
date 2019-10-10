@@ -208,6 +208,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
 			menuArquivo.add(new MenuItem(novoAcao));
 			menuArquivo.addSeparator();
+			menuArquivo.add(new MenuAbrir());
+			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuDesktop());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuConsulta());
@@ -215,8 +217,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(new MenuUpdate());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuAnotacao());
-			menuArquivo.addSeparator();
-			menuArquivo.add(new MenuAbrir());
 			menuArquivo.addSeparator();
 			menuArquivo.add(new MenuArvore());
 			menuArquivo.addSeparator();
