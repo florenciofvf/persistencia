@@ -2,6 +2,7 @@ package br.com.persist.comp;
 
 import javax.swing.Icon;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import br.com.persist.util.Action;
 import br.com.persist.util.Mensagens;
@@ -25,5 +26,13 @@ public class Menu extends JMenu {
 
 	protected void addMenuItem(Action action) {
 		add(new MenuItem(action));
+	}
+
+	public void add(boolean separador, JMenuItem menuItem) {
+		if (separador) {
+			addSeparator();
+		}
+
+		add(menuItem);
 	}
 }
