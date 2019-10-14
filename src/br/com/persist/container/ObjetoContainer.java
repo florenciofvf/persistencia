@@ -151,12 +151,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action complementoAcao = Action.actionIcon("label.complemento", Icones.BAIXAR2);
 		private Action fragmentoAcao = Action.actionIcon("label.fragmento", Icones.FRAGMENTO);
 		private Action limparAcao = Action.actionIcon(Constantes.LABEL_LIMPAR, Icones.NOVO,
 				e -> txtComplemento.setText(""));
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR,
 				e -> txtComplemento.setText(objeto.getComplemento()));
+		final ButtonComplemento complemento = new ButtonComplemento();
 		final Button excluir = new Button(new ExcluirRegistrosAcao());
 		final ButtonAtualizar atualizar = new ButtonAtualizar();
 		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
@@ -174,7 +174,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			add(buscaAuto);
 			add(true, update);
 			add(atualizar);
-			addButton(true, complementoAcao);
+			add(true, complemento);
 			add(txtComplemento);
 			add(labelTotal);
 			add(funcoes);
@@ -189,23 +189,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 
 		private void eventos() {
-			complementoAcao.setActionListener(e -> {
-				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-
-				if (conexao == null) {
-					return;
-				}
-
-				String complemento = Util.getContentTransfered();
-
-				if (!Util.estaVazio(complemento)) {
-					txtComplemento.setText(complemento);
-					ObjetoContainer.this.actionPerformed(null);
-				} else {
-					txtComplemento.setText(objeto.getComplemento());
-				}
-			});
-
 			fragmentoAcao.setActionListener(e -> {
 				FragmentoDialogo form = new FragmentoDialogo((Frame) null, fragmentoListener);
 
@@ -258,6 +241,46 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					modelo.iniArray();
 					modelo.fireTableDataChanged();
 					tabelaListener.tabelaMouseClick(tabela, -1);
+				}
+			}
+		}
+
+		class ButtonComplemento extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action concatAcao = Action.actionMenu("label.concatenado", null);
+			private Action normalAcao = Action.actionMenu("label.normal", null);
+
+			ButtonComplemento() {
+				super("label.complemento", Icones.BAIXAR2);
+
+				addMenuItem(concatAcao);
+				addMenuItem(true, normalAcao);
+
+				concatAcao.setActionListener(e -> processar(false));
+				normalAcao.setActionListener(e -> processar(true));
+			}
+
+			private void processar(boolean normal) {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+				if (conexao == null) {
+					return;
+				}
+
+				String complement = Util.getContentTransfered();
+
+				if (Util.estaVazio(complement)) {
+					txtComplemento.setText(objeto.getComplemento());
+
+				} else {
+					if (normal) {
+						txtComplemento.setText(complement);
+					} else {
+						String s = txtComplemento.getText().trim();
+						txtComplemento.setText(s + " " + complement);
+					}
+
+					ObjetoContainer.this.actionPerformed(null);
 				}
 			}
 		}
