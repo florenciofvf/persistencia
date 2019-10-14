@@ -325,6 +325,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				});
 
 				atualizarAcao.setActionListener(e -> ObjetoContainer.this.actionPerformed(null));
+
 				sincronizarAcao.setActionListener(e -> {
 					CabecalhoColuna temp = cabecalhoFiltro;
 					processado.set(true);
