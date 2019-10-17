@@ -48,6 +48,7 @@ import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
+import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
@@ -151,7 +152,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action fragmentoAcao = Action.actionIcon("label.fragmento", Icones.FRAGMENTO);
 		private Action limparAcao = Action.actionIcon(Constantes.LABEL_LIMPAR, Icones.NOVO,
 				e -> txtComplemento.setText(""));
 		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR,
@@ -163,6 +163,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		final ButtonFuncoes funcoes = new ButtonFuncoes();
 		final ButtonUpdate update = new ButtonUpdate();
 		final Label labelTotal = new Label(Color.BLUE);
+		final ButtonUtil util = new ButtonUtil();
 
 		protected void ini(IJanela janela, Objeto objeto) {
 			super.ini(janela);
@@ -170,7 +171,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			add(btnArrasto);
 			add(true, new ButtonInfo());
 			add(true, excluir);
-			addButton(true, fragmentoAcao);
+			add(true, util);
 			add(buscaAuto);
 			add(true, update);
 			add(atualizar);
@@ -184,27 +185,52 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			buscaAuto.complemento(objeto);
 			update.complemento(objeto);
-
-			eventos();
-		}
-
-		private void eventos() {
-			fragmentoAcao.setActionListener(e -> {
-				FragmentoDialogo form = new FragmentoDialogo((Frame) null, fragmentoListener);
-
-				if (listener instanceof Component) {
-					form.setLocationRelativeTo((Component) listener);
-				} else if (suporte instanceof Component) {
-					form.setLocationRelativeTo(suporte);
-				}
-
-				form.setVisible(true);
-			});
 		}
 
 		void excluirAtualizarEnable(boolean b) {
 			excluir.setEnabled(b);
 			update.setEnabled(b);
+		}
+
+		class ButtonUtil extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action fragmentoAcao = Action.actionMenu(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
+			private Action variaveisAcao = Action.actionMenu(Constantes.LABEL_VARIAVEIS, Icones.VAR);
+
+			ButtonUtil() {
+				super("label.util", Icones.FRAGMENTO);
+
+				addMenuItem(fragmentoAcao);
+				addMenuItem(true, variaveisAcao);
+
+				eventos();
+			}
+
+			private void eventos() {
+				fragmentoAcao.setActionListener(e -> {
+					FragmentoDialogo form = new FragmentoDialogo((Frame) null, fragmentoListener);
+
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					} else if (suporte instanceof Component) {
+						form.setLocationRelativeTo(suporte);
+					}
+
+					form.setVisible(true);
+				});
+
+				variaveisAcao.setActionListener(e -> {
+					VariaveisDialogo form = new VariaveisDialogo((Frame) null);
+
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					} else if (suporte instanceof Component) {
+						form.setLocationRelativeTo(suporte);
+					}
+
+					form.setVisible(true);
+				});
+			}
 		}
 
 		class ExcluirRegistrosAcao extends Acao {
