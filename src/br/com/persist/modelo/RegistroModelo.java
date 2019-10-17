@@ -149,6 +149,16 @@ public class RegistroModelo implements TableModel {
 		return null;
 	}
 
+	public String getDelete(int rowIndex) {
+		List<Object> registro = registros.get(rowIndex);
+
+		if (chaves) {
+			return gerarDelete(registro);
+		}
+
+		return null;
+	}
+
 	public int excluir(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 
