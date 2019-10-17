@@ -508,22 +508,22 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						}
 					}
 				}
+			}
 
-				private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-					if (abrirEmForm) {
-						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
-								provedor, conexao, instrucao);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
-						form.setVisible(true);
-					} else {
-						UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
-						form.setVisible(true);
+			private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
+				if (abrirEmForm) {
+					UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
+							provedor, conexao, instrucao);
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
 					}
+					form.setVisible(true);
+				} else {
+					UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
+					if (listener instanceof Component) {
+						form.setLocationRelativeTo((Component) listener);
+					}
+					form.setVisible(true);
 				}
 			}
 
@@ -567,23 +567,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						}
 					}
 				}
-
-				private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-					if (abrirEmForm) {
-						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
-								provedor, conexao, instrucao);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
-						form.setVisible(true);
-					} else {
-						UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
-						form.setVisible(true);
-					}
-				}
 			}
 
 			class MenuInsert extends MenuPadrao3 {
@@ -614,23 +597,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						}
 
 						abrir(abrirEmForm, conexao, instrucao);
-					}
-				}
-
-				private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-					if (abrirEmForm) {
-						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
-								provedor, conexao, instrucao);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
-						form.setVisible(true);
-					} else {
-						UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
-						form.setVisible(true);
 					}
 				}
 			}
