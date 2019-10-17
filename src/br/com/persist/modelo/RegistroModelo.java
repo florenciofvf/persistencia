@@ -159,6 +159,10 @@ public class RegistroModelo implements TableModel {
 		return null;
 	}
 
+	public String getInsert() {
+		return gerarInsert();
+	}
+
 	public int excluir(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 
@@ -257,6 +261,32 @@ public class RegistroModelo implements TableModel {
 		builder.append(getWhere(registro));
 
 		return builder.toString();
+	}
+
+	private String gerarInsert() {
+		if (colunas.isEmpty()) {
+			return null;
+		}
+
+		StringBuilder builder = new StringBuilder("INSERT INTO " + tabela + " (" + Constantes.QL);
+
+		StringBuilder campos = new StringBuilder();
+		StringBuilder values = new StringBuilder("VALUES (" + Constantes.QL);
+
+		Coluna coluna = colunas.get(0);
+		campos.append(Constantes.TAB + coluna.getNome() + Constantes.QL);
+		values.append(Constantes.TAB + coluna.get(coluna.getNome()) + Constantes.QL);
+
+		for (int i = 1; i < colunas.size(); i++) {
+			coluna = colunas.get(i);
+			campos.append(Constantes.TAB + ", " + coluna.getNome() + Constantes.QL);
+			values.append(Constantes.TAB + ", " + coluna.get(coluna.getNome()) + Constantes.QL);
+		}
+
+		campos.append(")" + Constantes.QL);
+		values.append(")" + Constantes.QL);
+
+		return builder.append(campos).append(values).toString();
 	}
 
 	private String gerarDelete(List<Object> registro) {

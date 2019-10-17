@@ -445,6 +445,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				addMenuItem(dadosAcao);
 				addMenu(true, new MenuUpdate());
 				addMenu(true, new MenuDelete());
+				addMenu(true, new MenuInsert());
 
 				eventos();
 			}
@@ -564,6 +565,55 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 							abrir(abrirEmForm, conexao, instrucao);
 						}
+					}
+				}
+
+				private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
+					if (abrirEmForm) {
+						UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
+								provedor, conexao, instrucao);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					} else {
+						UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
+						if (listener instanceof Component) {
+							form.setLocationRelativeTo((Component) listener);
+						}
+						form.setVisible(true);
+					}
+				}
+			}
+
+			class MenuInsert extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				MenuInsert() {
+					super("label.insert", Icones.CRIAR);
+
+					formularioAcao.setActionListener(e -> abrirUpdate(true));
+					dialogoAcao.setActionListener(e -> abrirUpdate(false));
+				}
+
+				private void abrirUpdate(boolean abrirEmForm) {
+					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+					if (conexao == null) {
+						return;
+					}
+
+					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+					TableModel model = modelo.getModel();
+
+					if (model instanceof RegistroModelo) {
+						String instrucao = modelo.getInsert();
+
+						if (Util.estaVazio(instrucao)) {
+							return;
+						}
+
+						abrir(abrirEmForm, conexao, instrucao);
 					}
 				}
 
