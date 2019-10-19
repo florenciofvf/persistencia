@@ -51,6 +51,7 @@ public class Objeto implements Runnable {
 	private String complemento;
 	private String chaveamento;
 	private boolean colunaInfo;
+	private String sequencias;
 	private boolean abrirAuto;
 	private String mapeamento;
 	private boolean processar;
@@ -108,6 +109,7 @@ public class Objeto implements Runnable {
 		o.desenharId = desenharId;
 		o.colunaInfo = colunaInfo;
 		o.mapeamento = mapeamento;
+		o.sequencias = sequencias;
 		o.abrirAuto = abrirAuto;
 		o.descricao = descricao;
 		o.corFonte = corFonte;
@@ -247,6 +249,18 @@ public class Objeto implements Runnable {
 		}
 
 		return mapeamento;
+	}
+
+	public void setSequencias(String sequencias) {
+		this.sequencias = sequencias;
+	}
+
+	public String getSequencias() {
+		if (Util.estaVazio(sequencias)) {
+			sequencias = "";
+		}
+
+		return sequencias;
 	}
 
 	public String[] getChavesArray() {
@@ -479,6 +493,7 @@ public class Objeto implements Runnable {
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
+		sequencias = attr.getValue("sequencias");
 		setIcone(attr.getValue("icone"));
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
@@ -503,6 +518,7 @@ public class Objeto implements Runnable {
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
 		util.atributo("mapeamento", getMapeamento());
+		util.atributo("sequencias", getSequencias());
 		util.atributo("intervalo", getIntervalo());
 		util.atributo("desenharId", desenharId);
 		util.atributo("colunaInfo", colunaInfo);
