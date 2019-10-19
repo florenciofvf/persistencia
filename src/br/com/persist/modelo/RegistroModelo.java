@@ -275,12 +275,22 @@ public class RegistroModelo implements TableModel {
 
 		Coluna coluna = colunas.get(0);
 		campos.append(Constantes.TAB + coluna.getNome() + Constantes.QL);
-		values.append(Constantes.TAB + coluna.get(coluna.getNome()) + Constantes.QL);
+
+		if (Util.estaVazio(coluna.getSequencia())) {
+			values.append(Constantes.TAB + coluna.get(coluna.getNome()) + Constantes.QL);
+		} else {
+			values.append(Constantes.TAB + coluna.getSequencia() + Constantes.QL);
+		}
 
 		for (int i = 1; i < colunas.size(); i++) {
 			coluna = colunas.get(i);
 			campos.append(Constantes.TAB + ", " + coluna.getNome() + Constantes.QL);
-			values.append(Constantes.TAB + ", " + coluna.get(coluna.getNome()) + Constantes.QL);
+
+			if (Util.estaVazio(coluna.getSequencia())) {
+				values.append(Constantes.TAB + ", " + coluna.get(coluna.getNome()) + Constantes.QL);
+			} else {
+				values.append(Constantes.TAB + ", " + coluna.getSequencia() + Constantes.QL);
+			}
 		}
 
 		campos.append(")" + Constantes.QL);
