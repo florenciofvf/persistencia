@@ -285,6 +285,11 @@ public class RegistroModelo implements TableModel {
 
 		for (int i = 1; i < colunas.size(); i++) {
 			coluna = colunas.get(i);
+
+			if (coluna.isColunaInfo()) {
+				continue;
+			}
+
 			campos.append(Constantes.TAB + ", " + coluna.getNome() + Constantes.QL);
 
 			if (Util.estaVazio(coluna.getSequencia())) {
