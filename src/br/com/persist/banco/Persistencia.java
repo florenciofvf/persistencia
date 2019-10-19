@@ -65,7 +65,7 @@ public class Persistencia {
 			Conexao conexao) throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
-				return criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()), objeto);
+				return criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()), objeto, conexao.getEsquema());
 			}
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -91,7 +91,7 @@ public class Persistencia {
 		return mapa;
 	}
 
-	private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[] chaves, Objeto objeto)
+	private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[] chaves, Objeto objeto, String esquema)
 			throws PersistenciaException {
 		Map<String, Boolean> mapa = criarMapaTipos();
 		List<Coluna> colunas = new ArrayList<>();
@@ -122,8 +122,8 @@ public class Persistencia {
 				}
 
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave,
-						tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe,
-						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc, objeto.getSequencia(nome)));
+						tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe, new Coluna.Config(tamanho, tipoBanco,
+								nulavel, false, autoInc, objeto.getSequencia(nome, esquema)));
 				colunas.add(coluna);
 			}
 
@@ -139,14 +139,14 @@ public class Persistencia {
 		}
 	}
 
-	private static RegistroModelo criarModelo(ResultSet rs, String[] chaves, String tabela, Objeto objeto)
-			throws PersistenciaException {
+	private static RegistroModelo criarModelo(ResultSet rs, String[] chaves, String tabela, Objeto objeto,
+			String esquema) throws PersistenciaException {
 
 		try {
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int qtdColunas = rsmd.getColumnCount();
 
-			List<Coluna> colunas = criarColunas(rsmd, chaves, objeto);
+			List<Coluna> colunas = criarColunas(rsmd, chaves, objeto, esquema);
 			List<List<Object>> registros = new ArrayList<>();
 
 			while (rs.next()) {

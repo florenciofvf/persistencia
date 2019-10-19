@@ -11,7 +11,9 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +33,7 @@ public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	private static final Logger LOG = Logger.getGlobal();
+	private Map<String, String> mapaSequencias;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	public static final int DIAMETRO = 36;
@@ -708,7 +711,29 @@ public class Objeto implements Runnable {
 		this.mapeamento = mapeamento;
 	}
 
-	public String getSequencia(String nome) {
-		return null;
+	public String getSequencia(String nomeColuna, String esquema) {
+		String resp = null;
+
+		if (nomeColuna != null) {
+			resp = getMapaSequencias().get(nomeColuna.trim().toLowerCase());
+		}
+
+		if (resp != null) {
+			resp = (Util.estaVazio(esquema) ? "" : esquema + ".") + resp;
+		}
+
+		return resp;
+	}
+
+	public Map<String, String> getMapaSequencias() {
+		if (mapaSequencias == null) {
+			mapaSequencias = new HashMap<>();
+		}
+
+		return mapaSequencias;
+	}
+
+	public void setMapaSequencias(Map<String, String> mapaSequencias) {
+		this.mapaSequencias = mapaSequencias;
 	}
 }
