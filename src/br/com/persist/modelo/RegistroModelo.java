@@ -256,6 +256,11 @@ public class RegistroModelo implements TableModel {
 
 		for (int i = 1; i < colunas.length; i++) {
 			coluna = colunas[i];
+
+			if (coluna.isColunaInfo()) {
+				continue;
+			}
+
 			builder.append(Constantes.QL + ", " + coluna.getNome() + " = " + coluna.get(valores[i]));
 		}
 
