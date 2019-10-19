@@ -123,13 +123,13 @@ public class Persistencia {
 
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave,
 						tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe,
-						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc));
+						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc, objeto.getSequencia(nome)));
 				colunas.add(coluna);
 			}
 
 			if (objeto.isColunaInfo()) {
 				Coluna coluna = new Coluna("INFO", i - 1, false, false, false, "INFO",
-						new Coluna.Config(0, "INFO", true, true, false));
+						new Coluna.Config(0, "INFO", true, true, false, null));
 				colunas.add(coluna);
 			}
 

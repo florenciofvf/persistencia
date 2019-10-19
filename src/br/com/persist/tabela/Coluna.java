@@ -4,6 +4,7 @@ import br.com.persist.util.Constantes;
 
 public class Coluna {
 	private final boolean colunaInfo;
+	private final String sequencia;
 	private final String tipoBanco;
 	private final boolean autoInc;
 	private final boolean nulavel;
@@ -16,13 +17,14 @@ public class Coluna {
 	private final int indice;
 
 	public Coluna(String nome, int indice) {
-		this(nome, indice, false, false, false, null, new Config(-1, null, false, false, false));
+		this(nome, indice, false, false, false, null, new Config(-1, null, false, false, false, null));
 	}
 
 	public Coluna(String nome, int indice, boolean numero, boolean chave, boolean blob, String tipo, Config config) {
 		this.autoInc = config.autoIncremento;
 		this.colunaInfo = config.colunaInfo;
 		this.tipoBanco = config.tipoBanco;
+		this.sequencia = config.sequencia;
 		this.tamanho = config.tamanho;
 		this.nulavel = config.nulavel;
 		this.indice = indice;
@@ -36,14 +38,17 @@ public class Coluna {
 	public static class Config {
 		final boolean autoIncremento;
 		final boolean colunaInfo;
+		final String sequencia;
 		final String tipoBanco;
 		final boolean nulavel;
 		final int tamanho;
 
-		public Config(int tamanho, String tipoBanco, boolean nulavel, boolean colunaInfo, boolean autoIncremento) {
+		public Config(int tamanho, String tipoBanco, boolean nulavel, boolean colunaInfo, boolean autoIncremento,
+				String sequencia) {
 			this.autoIncremento = autoIncremento;
 			this.colunaInfo = colunaInfo;
 			this.tipoBanco = tipoBanco;
+			this.sequencia = sequencia;
 			this.tamanho = tamanho;
 			this.nulavel = nulavel;
 		}
@@ -131,5 +136,9 @@ public class Coluna {
 		}
 
 		return "'" + s + "'";
+	}
+
+	public String getSequencia() {
+		return sequencia;
 	}
 }

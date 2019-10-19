@@ -691,4 +691,8 @@ public class Objeto implements Runnable {
 	public void setMapeamento(String mapeamento) {
 		this.mapeamento = mapeamento;
 	}
+
+	public String getSequencia(String nome) {
+		return null;
+	}
 }
