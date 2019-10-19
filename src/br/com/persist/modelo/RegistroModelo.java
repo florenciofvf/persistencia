@@ -159,8 +159,9 @@ public class RegistroModelo implements TableModel {
 		return null;
 	}
 
-	public String getInsert() {
-		return gerarInsert();
+	public String getInsert(int rowIndex) {
+		List<Object> registro = registros.get(rowIndex);
+		return gerarInsert(registro);
 	}
 
 	public int excluir(int rowIndex) {
@@ -263,7 +264,7 @@ public class RegistroModelo implements TableModel {
 		return builder.toString();
 	}
 
-	private String gerarInsert() {
+	private String gerarInsert(List<Object> registro) {
 		if (colunas.isEmpty()) {
 			return null;
 		}
@@ -277,7 +278,7 @@ public class RegistroModelo implements TableModel {
 		campos.append(Constantes.TAB + coluna.getNome() + Constantes.QL);
 
 		if (Util.estaVazio(coluna.getSequencia())) {
-			values.append(Constantes.TAB + coluna.get(coluna.getNome()) + Constantes.QL);
+			values.append(Constantes.TAB + coluna.get(registro.get(coluna.getIndice())) + Constantes.QL);
 		} else {
 			values.append(Constantes.TAB + coluna.getSequencia() + Constantes.QL);
 		}
@@ -287,7 +288,7 @@ public class RegistroModelo implements TableModel {
 			campos.append(Constantes.TAB + ", " + coluna.getNome() + Constantes.QL);
 
 			if (Util.estaVazio(coluna.getSequencia())) {
-				values.append(Constantes.TAB + ", " + coluna.get(coluna.getNome()) + Constantes.QL);
+				values.append(Constantes.TAB + ", " + coluna.get(registro.get(coluna.getIndice())) + Constantes.QL);
 			} else {
 				values.append(Constantes.TAB + ", " + coluna.getSequencia() + Constantes.QL);
 			}

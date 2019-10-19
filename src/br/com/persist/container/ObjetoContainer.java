@@ -591,13 +591,17 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					TableModel model = modelo.getModel();
 
 					if (model instanceof RegistroModelo) {
-						String instrucao = modelo.getInsert();
+						int[] linhas = tabela.getSelectedRows();
 
-						if (Util.estaVazio(instrucao)) {
-							return;
+						if (linhas != null && linhas.length == 1) {
+							String instrucao = modelo.getInsert(linhas[0]);
+
+							if (Util.estaVazio(instrucao)) {
+								return;
+							}
+
+							abrir(abrirEmForm, conexao, instrucao);
 						}
-
-						abrir(abrirEmForm, conexao, instrucao);
 					}
 				}
 			}

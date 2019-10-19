@@ -100,9 +100,9 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return modelo.getDelete(linhas[rowIndex].indice);
 	}
 
-	public String getInsert() {
+	public String getInsert(int rowIndex) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.getInsert();
+		return modelo.getInsert(linhas[rowIndex].indice);
 	}
 
 	public List<IndiceValor> getValoresChaves(int rowIndex) {
