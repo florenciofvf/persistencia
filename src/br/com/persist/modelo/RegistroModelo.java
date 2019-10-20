@@ -164,6 +164,10 @@ public class RegistroModelo implements TableModel {
 		return gerarInsert(registro);
 	}
 
+	public String getInsert() {
+		return gerarInsert(null);
+	}
+
 	public int excluir(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 
@@ -280,13 +284,7 @@ public class RegistroModelo implements TableModel {
 		StringBuilder values = new StringBuilder("VALUES (" + Constantes.QL);
 
 		Coluna coluna = colunas.get(0);
-		campos.append(Constantes.TAB + coluna.getNome() + Constantes.QL);
-
-		if (Util.estaVazio(coluna.getSequencia())) {
-			values.append(Constantes.TAB + coluna.get(registro.get(coluna.getIndice())) + Constantes.QL);
-		} else {
-			values.append(Constantes.TAB + coluna.getSequencia() + Constantes.QL);
-		}
+		append("", campos, values, coluna, registro);
 
 		for (int i = 1; i < colunas.size(); i++) {
 			coluna = colunas.get(i);
@@ -295,19 +293,27 @@ public class RegistroModelo implements TableModel {
 				continue;
 			}
 
-			campos.append(Constantes.TAB + ", " + coluna.getNome() + Constantes.QL);
-
-			if (Util.estaVazio(coluna.getSequencia())) {
-				values.append(Constantes.TAB + ", " + coluna.get(registro.get(coluna.getIndice())) + Constantes.QL);
-			} else {
-				values.append(Constantes.TAB + ", " + coluna.getSequencia() + Constantes.QL);
-			}
+			append(", ", campos, values, coluna, registro);
 		}
 
 		campos.append(")" + Constantes.QL);
 		values.append(")" + Constantes.QL);
 
 		return builder.append(campos).append(values).toString();
+	}
+
+	private void append(String s, StringBuilder campos, StringBuilder values, Coluna coluna, List<Object> registro) {
+		campos.append(Constantes.TAB + s + coluna.getNome() + Constantes.QL);
+
+		if (Util.estaVazio(coluna.getSequencia())) {
+			if (registro != null) {
+				values.append(Constantes.TAB + s + coluna.get(registro.get(coluna.getIndice())) + Constantes.QL);
+			} else {
+				values.append(Constantes.TAB + s + coluna.get(coluna.getNome()) + Constantes.QL);
+			}
+		} else {
+			values.append(Constantes.TAB + s + coluna.getSequencia() + Constantes.QL);
+		}
 	}
 
 	private String gerarDelete(List<Object> registro) {
