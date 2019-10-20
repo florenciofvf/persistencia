@@ -511,23 +511,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-				if (abrirEmForm) {
-					UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR),
-							provedor, conexao, instrucao);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				} else {
-					UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					}
-					form.setVisible(true);
-				}
-			}
-
 			class MenuDelete extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
 
@@ -783,6 +766,23 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
+		private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
+			if (abrirEmForm) {
+				UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR), provedor,
+						conexao, instrucao);
+				if (listener instanceof Component) {
+					form.setLocationRelativeTo((Component) listener);
+				}
+				form.setVisible(true);
+			} else {
+				UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
+				if (listener instanceof Component) {
+					form.setLocationRelativeTo((Component) listener);
+				}
+				form.setVisible(true);
+			}
+		}
+
 		class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action apelidoAcao = Action.actionMenu("label.apelido", Icones.TAG2);
@@ -797,6 +797,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				addMenuItem(true, new MetaDadosAcao());
 				addMenuItem(true, new InfoBancoAcao());
 				addMenuItem(new EsquemaAcao());
+				addMenu(true, new MenuInsert());
 
 				eventos();
 			}
@@ -815,6 +816,38 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						interno.setApelido(resp.toString());
 					}
 				});
+			}
+
+			class MenuInsert extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				MenuInsert() {
+					super("label.insert", Icones.CRIAR);
+
+					formularioAcao.setActionListener(e -> abrirUpdate(true));
+					dialogoAcao.setActionListener(e -> abrirUpdate(false));
+				}
+
+				private void abrirUpdate(boolean abrirEmForm) {
+					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+					if (conexao == null) {
+						return;
+					}
+
+					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+					TableModel model = modelo.getModel();
+
+					if (model instanceof RegistroModelo) {
+						String instrucao = modelo.getInsert(-1);
+
+						if (Util.estaVazio(instrucao)) {
+							return;
+						}
+
+						abrir(abrirEmForm, conexao, instrucao);
+					}
+				}
 			}
 
 			class ChavesPrimariasAcao extends Action {
