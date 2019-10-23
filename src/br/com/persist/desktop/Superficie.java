@@ -1369,6 +1369,8 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		private Action alinharEsquerdoAcao = Action.actionMenu("label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action alinharDireitoAcao = Action.actionMenu("label.alinhar_direito", Icones.ALINHA_DIREITO);
+		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
+		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
@@ -1394,11 +1396,13 @@ public class Superficie extends Desktop {
 			add(itemCriarObjeto);
 			add(true, itemColar);
 			add(true, itemAtualizarForms);
-			add(true, itemAlinharEsquerdo);
+			add(true, itemMesmaLargura);
 			add(itemAlinharDireito);
-			add(itemMesmaLargura);
-			add(new MenuItem(larTotalAcao));
-			add(itemCentralizar);
+			add(itemAlinharEsquerdo);
+			add(true, new MenuItem(larTotalAcao));
+			add(new MenuItem(larTotalDirAcao));
+			add(new MenuItem(larTotalEsqAcao));
+			add(true, itemCentralizar);
 			add(true, itemDimensoes);
 			add(itemAjustes);
 
@@ -1410,10 +1414,12 @@ public class Superficie extends Desktop {
 			alinharEsquerdoAcao.setActionListener(e -> alinharEsquerdo());
 			alinharDireitoAcao.setActionListener(e -> alinharDireito());
 			mesmaLarguraAcao.setActionListener(e -> mesmaLargura());
+			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
+			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			centralizarAcao.setActionListener(e -> centralizar());
-			larTotalAcao.setActionListener(e -> larguraTotal());
+			larTotalAcao.setActionListener(e -> larguraTotal(0));
 
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();

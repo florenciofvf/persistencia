@@ -108,15 +108,28 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 	}
 
-	protected void larguraTotal() {
+	protected void larguraTotal(int tipo) {
 		int largura = getSize().width - 20;
 
 		for (JInternalFrame frame : getAllFrames()) {
-			frame.setLocation(0, frame.getY());
-			frame.setSize(largura, frame.getHeight());
+			Dimension size = frame.getSize();
+			Point local = frame.getLocation();
+
+			if (tipo == 0) {
+				frame.setLocation(0, local.y);
+				frame.setSize(largura, size.height);
+
+			} else if (tipo == 1) {
+				frame.setSize(largura - local.x, size.height);
+
+			} else if (tipo == 2) {
+
+			}
 		}
 
-		centralizar();
+		if (tipo == 0) {
+			centralizar();
+		}
 	}
 
 	protected void centralizar() {
@@ -325,6 +338,8 @@ public class Desktop extends JDesktopPane implements IIni {
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
+		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
 		private Action centralAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
@@ -332,6 +347,8 @@ public class Desktop extends JDesktopPane implements IIni {
 
 		DesktopPopup() {
 			addMenuItem(larTotalAcao);
+			addMenuItem(larTotalDirAcao);
+			addMenuItem(larTotalEsqAcao);
 			addMenuItem(true, distribuirAcao);
 			addMenuItem(true, centralAcao);
 			addMenuItem(true, dimenAcao);
@@ -340,8 +357,10 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 
 		private void eventos() {
+			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
+			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
 			distribuirAcao.setActionListener(e -> distribuir(0));
-			larTotalAcao.setActionListener(e -> larguraTotal());
+			larTotalAcao.setActionListener(e -> larguraTotal(0));
 			dimenAcao.setActionListener(e -> ajusteDimension());
 			centralAcao.setActionListener(e -> centralizar());
 		}
