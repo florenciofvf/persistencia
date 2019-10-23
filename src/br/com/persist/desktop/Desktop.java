@@ -123,7 +123,9 @@ public class Desktop extends JDesktopPane implements IIni {
 				frame.setSize(largura - local.x, size.height);
 
 			} else if (tipo == 2) {
-
+				int total = (local.x + size.width) - 10;
+				frame.setSize(total, size.height);
+				frame.setLocation(10, local.y);
 			}
 		}
 
