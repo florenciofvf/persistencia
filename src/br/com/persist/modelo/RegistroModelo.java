@@ -149,6 +149,25 @@ public class RegistroModelo implements TableModel {
 		return null;
 	}
 
+	public String getUpdate() {
+		if (chaves) {
+			List<Object> valores = new ArrayList<>();
+			List<Coluna> naoChaves = getNaoChaves();
+
+			if (naoChaves.isEmpty()) {
+				return null;
+			}
+
+			for (Coluna coluna : naoChaves) {
+				valores.add(coluna.getNome());
+			}
+
+			return gerarUpdate(null, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]));
+		}
+
+		return null;
+	}
+
 	public String getDelete(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 
@@ -328,12 +347,22 @@ public class RegistroModelo implements TableModel {
 		Coluna coluna = lista.get(0);
 
 		StringBuilder builder = new StringBuilder(Constantes.QL + " WHERE ");
-		builder.append(coluna.getNome() + " = " + coluna.get(registro.get(coluna.getIndice())));
+
+		if (registro != null) {
+			builder.append(coluna.getNome() + " = " + coluna.get(registro.get(coluna.getIndice())));
+		} else {
+			builder.append(coluna.getNome() + " = " + coluna.get(coluna.getNome()));
+		}
 
 		for (int i = 1; i < lista.size(); i++) {
 			coluna = lista.get(i);
-			builder.append(
-					Constantes.QL + " AND " + coluna.getNome() + " = " + coluna.get(registro.get(coluna.getIndice())));
+
+			if (registro != null) {
+				builder.append(Constantes.QL + " AND " + coluna.getNome() + " = "
+						+ coluna.get(registro.get(coluna.getIndice())));
+			} else {
+				builder.append(Constantes.QL + " AND " + coluna.getNome() + " = " + coluna.get(coluna.getNome()));
+			}
 		}
 
 		return builder.toString();

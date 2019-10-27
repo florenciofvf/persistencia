@@ -442,7 +442,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
 
 			ButtonUpdate() {
-				super("label.update", Icones.UPDATE);
+				super(Constantes.LABEL_UPDATE, Icones.UPDATE);
 
 				addMenuItem(dadosAcao);
 				addMenu(true, new MenuUpdate());
@@ -474,7 +474,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				private static final long serialVersionUID = 1L;
 
 				MenuUpdate() {
-					super("label.update", Icones.UPDATE);
+					super(Constantes.LABEL_UPDATE, Icones.UPDATE);
 
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
 					dialogoAcao.setActionListener(e -> abrirUpdate(false));
@@ -825,6 +825,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				public MenuDML() {
 					super("label.dml", Icones.EXECUTAR);
 					add(false, new MenuInsert());
+					add(true, new MenuUpdate());
 				}
 
 				class MenuInsert extends MenuPadrao3 {
@@ -849,6 +850,38 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 						if (model instanceof RegistroModelo) {
 							String instrucao = modelo.getInsert();
+
+							if (Util.estaVazio(instrucao)) {
+								return;
+							}
+
+							abrir(abrirEmForm, conexao, instrucao);
+						}
+					}
+				}
+
+				class MenuUpdate extends MenuPadrao3 {
+					private static final long serialVersionUID = 1L;
+
+					MenuUpdate() {
+						super(Constantes.LABEL_UPDATE, Icones.UPDATE);
+
+						formularioAcao.setActionListener(e -> abrirUpdate(true));
+						dialogoAcao.setActionListener(e -> abrirUpdate(false));
+					}
+
+					private void abrirUpdate(boolean abrirEmForm) {
+						Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+						if (conexao == null) {
+							return;
+						}
+
+						OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+						TableModel model = modelo.getModel();
+
+						if (model instanceof RegistroModelo) {
+							String instrucao = modelo.getUpdate();
 
 							if (Util.estaVazio(instrucao)) {
 								return;
