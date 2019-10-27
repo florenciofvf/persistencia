@@ -39,13 +39,13 @@ public class ConsultaContainer extends Panel {
 	private final JComboBox<Conexao> cmbConexao;
 
 	public ConsultaContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, String instrucao,
-			Map<String, String> mapaChaveValor) {
+			Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		toolbar.ini(janela, mapaChaveValor);
+		toolbar.ini(janela, mapaChaveValor, abrirArquivo);
 		montarLayout();
-		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+		if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
 			abrir();
 		}
 	}
@@ -80,12 +80,12 @@ public class ConsultaContainer extends Panel {
 		private Action atualizarAcao = Action.actionIconAtualizar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
-		protected void ini(IJanela janela, Map<String, String> mapaChaveValor) {
+		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela);
 
 			addButton(atualizarAcao);
 
-			if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+			if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
 				addButton(true, salvarAcao);
 			}
 

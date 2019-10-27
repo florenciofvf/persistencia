@@ -15,13 +15,13 @@ public class ConsultaFormulario extends AbstratoFormulario implements IJanela {
 	private final ConsultaContainer container;
 
 	public ConsultaFormulario(ConexaoProvedor provedor, Conexao padrao) {
-		this(Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, padrao, null, null);
+		this(Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, padrao, null, null, true);
 	}
 
 	public ConsultaFormulario(String titulo, ConexaoProvedor provedor, Conexao padrao, String instrucao,
-			Map<String, String> mapaChaveValor) {
+			Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 		super(titulo);
-		container = new ConsultaContainer(this, provedor, padrao, instrucao, mapaChaveValor);
+		container = new ConsultaContainer(this, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
 		montarLayout();
 	}
 

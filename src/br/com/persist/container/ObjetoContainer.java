@@ -558,7 +558,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				private static final long serialVersionUID = 1L;
 
 				MenuInsert() {
-					super("label.insert", Icones.CRIAR);
+					super(Constantes.LABEL_INSERT, Icones.CRIAR);
 
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
 					dialogoAcao.setActionListener(e -> abrirUpdate(false));
@@ -650,14 +650,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
 					if (abrirEmForm) {
 						ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), provedor, conexao,
-								instrucao.getValor(), chaves);
+								instrucao.getValor(), chaves, false);
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
 						}
 						form.setVisible(true);
 					} else {
 						ConsultaDialogo form = new ConsultaDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
-								instrucao.getValor(), chaves);
+								instrucao.getValor(), chaves, false);
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
 						}
@@ -827,13 +827,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					add(false, new MenuInsert());
 					add(true, new MenuUpdate());
 					add(true, new MenuDelete());
+					add(true, new MenuSelect());
 				}
 
 				class MenuInsert extends MenuPadrao3 {
 					private static final long serialVersionUID = 1L;
 
 					MenuInsert() {
-						super("label.insert", Icones.CRIAR);
+						super(Constantes.LABEL_INSERT, Icones.CRIAR);
 
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
 						dialogoAcao.setActionListener(e -> abrirUpdate(false));
@@ -921,6 +922,51 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							}
 
 							abrir(abrirEmForm, conexao, instrucao);
+						}
+					}
+				}
+
+				class MenuSelect extends MenuPadrao3 {
+					private static final long serialVersionUID = 1L;
+
+					MenuSelect() {
+						super("label.select", Icones.TABELA);
+
+						formularioAcao.setActionListener(e -> abrirSelect(true));
+						dialogoAcao.setActionListener(e -> abrirSelect(false));
+					}
+
+					private void abrirSelect(boolean abrirEmForm) {
+						Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+						if (conexao == null) {
+							return;
+						}
+
+						String instrucao = getConsulta(conexao, "").toString();
+
+						if (Util.estaVazio(instrucao)) {
+							return;
+						}
+
+						abrir(abrirEmForm, conexao, instrucao);
+					}
+
+					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
+						if (abrirEmForm) {
+							ConsultaFormulario form = new ConsultaFormulario("Select", provedor, conexao, instrucao,
+									null, false);
+							if (listener instanceof Component) {
+								form.setLocationRelativeTo((Component) listener);
+							}
+							form.setVisible(true);
+						} else {
+							ConsultaDialogo form = new ConsultaDialogo((Frame) null, "Select", provedor, conexao,
+									instrucao, null, false);
+							if (listener instanceof Component) {
+								form.setLocationRelativeTo((Component) listener);
+							}
+							form.setVisible(true);
 						}
 					}
 				}

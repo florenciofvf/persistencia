@@ -267,7 +267,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Panel novaConsulta(Formulario formulario, Conexao conexao) {
-		ConsultaContainer container = new ConsultaContainer(null, formulario, conexao, null, null);
+		ConsultaContainer container = new ConsultaContainer(null, formulario, conexao, null, null, true);
 		addTab(Mensagens.getString(Constantes.LABEL_CONSULTA), container);
 		int ultimoIndice = getTabCount() - 1;
 

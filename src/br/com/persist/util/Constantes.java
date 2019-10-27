@@ -30,6 +30,7 @@ public class Constantes {
 	public static final String PADRAO_ABRIR = "PADRAO_ABRIR:";
 	public static final String LABEL_UPDATE = "label.update";
 	public static final String LABEL_DELETE = "label.delete";
+	public static final String LABEL_INSERT = "label.insert";
 	public static final String LABEL_LIMPAR = "label.limpar";
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final String LABEL_FECHAR = "label.fechar";

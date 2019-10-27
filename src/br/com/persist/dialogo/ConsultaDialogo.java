@@ -17,20 +17,20 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 
 	public ConsultaDialogo(Frame frame, ConexaoProvedor provedor) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
-		container = new ConsultaContainer(this, provedor, null, null, null);
+		container = new ConsultaContainer(this, provedor, null, null, null, true);
 		montarLayout();
 	}
 
 	public ConsultaDialogo(Frame frame, ConexaoProvedor provedor, Conexao padrao) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
-		container = new ConsultaContainer(this, provedor, padrao, null, null);
+		container = new ConsultaContainer(this, provedor, padrao, null, null, true);
 		montarLayout();
 	}
 
 	public ConsultaDialogo(Frame frame, String titulo, ConexaoProvedor provedor, Conexao padrao, String instrucao,
-			Map<String, String> mapaChaveValor) {
+			Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 		super(frame, titulo);
-		container = new ConsultaContainer(this, provedor, padrao, instrucao, mapaChaveValor);
+		container = new ConsultaContainer(this, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
 		montarLayout();
 	}
 
