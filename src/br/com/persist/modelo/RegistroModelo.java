@@ -178,6 +178,14 @@ public class RegistroModelo implements TableModel {
 		return null;
 	}
 
+	public String getDelete() {
+		if (chaves) {
+			return gerarDelete(null);
+		}
+
+		return null;
+	}
+
 	public String getInsert(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 		return gerarInsert(registro);

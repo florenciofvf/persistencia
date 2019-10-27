@@ -516,7 +516,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				private static final long serialVersionUID = 1L;
 
 				MenuDelete() {
-					super("label.delete", Icones.EXCLUIR);
+					super(Constantes.LABEL_DELETE, Icones.EXCLUIR);
 
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
 					dialogoAcao.setActionListener(e -> abrirUpdate(false));
@@ -826,6 +826,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					super("label.dml", Icones.EXECUTAR);
 					add(false, new MenuInsert());
 					add(true, new MenuUpdate());
+					add(true, new MenuDelete());
 				}
 
 				class MenuInsert extends MenuPadrao3 {
@@ -882,6 +883,38 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 						if (model instanceof RegistroModelo) {
 							String instrucao = modelo.getUpdate();
+
+							if (Util.estaVazio(instrucao)) {
+								return;
+							}
+
+							abrir(abrirEmForm, conexao, instrucao);
+						}
+					}
+				}
+
+				class MenuDelete extends MenuPadrao3 {
+					private static final long serialVersionUID = 1L;
+
+					MenuDelete() {
+						super(Constantes.LABEL_DELETE, Icones.EXCLUIR);
+
+						formularioAcao.setActionListener(e -> abrirUpdate(true));
+						dialogoAcao.setActionListener(e -> abrirUpdate(false));
+					}
+
+					private void abrirUpdate(boolean abrirEmForm) {
+						Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+						if (conexao == null) {
+							return;
+						}
+
+						OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+						TableModel model = modelo.getModel();
+
+						if (model instanceof RegistroModelo) {
+							String instrucao = modelo.getDelete();
 
 							if (Util.estaVazio(instrucao)) {
 								return;
