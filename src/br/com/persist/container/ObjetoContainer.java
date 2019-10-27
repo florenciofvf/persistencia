@@ -39,6 +39,7 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
+import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -797,7 +798,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				addMenuItem(true, new MetaDadosAcao());
 				addMenuItem(true, new InfoBancoAcao());
 				addMenuItem(new EsquemaAcao());
-				addMenu(true, new MenuInsert());
+				addMenu(true, new MenuDML());
 
 				eventos();
 			}
@@ -818,34 +819,43 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				});
 			}
 
-			class MenuInsert extends MenuPadrao3 {
+			class MenuDML extends Menu {
 				private static final long serialVersionUID = 1L;
 
-				MenuInsert() {
-					super("label.insert", Icones.CRIAR);
-
-					formularioAcao.setActionListener(e -> abrirUpdate(true));
-					dialogoAcao.setActionListener(e -> abrirUpdate(false));
+				public MenuDML() {
+					super("label.dml", Icones.EXECUTAR);
+					add(false, new MenuInsert());
 				}
 
-				private void abrirUpdate(boolean abrirEmForm) {
-					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+				class MenuInsert extends MenuPadrao3 {
+					private static final long serialVersionUID = 1L;
 
-					if (conexao == null) {
-						return;
+					MenuInsert() {
+						super("label.insert", Icones.CRIAR);
+
+						formularioAcao.setActionListener(e -> abrirUpdate(true));
+						dialogoAcao.setActionListener(e -> abrirUpdate(false));
 					}
 
-					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-					TableModel model = modelo.getModel();
+					private void abrirUpdate(boolean abrirEmForm) {
+						Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
-					if (model instanceof RegistroModelo) {
-						String instrucao = modelo.getInsert();
-
-						if (Util.estaVazio(instrucao)) {
+						if (conexao == null) {
 							return;
 						}
 
-						abrir(abrirEmForm, conexao, instrucao);
+						OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+						TableModel model = modelo.getModel();
+
+						if (model instanceof RegistroModelo) {
+							String instrucao = modelo.getInsert();
+
+							if (Util.estaVazio(instrucao)) {
+								return;
+							}
+
+							abrir(abrirEmForm, conexao, instrucao);
+						}
 					}
 				}
 			}
