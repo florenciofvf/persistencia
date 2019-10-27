@@ -1317,6 +1317,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			txtComplemento.setText("AND " + nome + " = " + string);
 		}
 
+		public void concatenarNomeColuna(Tabela tabela, String nome) {
+			String complemento = txtComplemento.getText();
+			txtComplemento.setText(complemento + " AND " + nome + " = ");
+		}
+
 		@Override
 		public void tabelaMouseClick(Tabela tabela, int colunaClick) {
 			OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();

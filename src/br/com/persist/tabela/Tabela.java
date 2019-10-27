@@ -173,6 +173,7 @@ public class Tabela extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action concatNomeAcao = Action.actionMenu("label.concatenar_nome_coluna", null);
 		private Action copiarNomeAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action infoAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private MenuCopiarIN menuCopiarIN = new MenuCopiarIN();
@@ -186,6 +187,7 @@ public class Tabela extends JTable {
 			add(new MenuCopiarNomeConcat("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuCopiarNomeConcat("label.copiar_nome_coluna_concat", false, false));
 			addMenuItem(true, copiarNomeAcao);
+			addMenuItem(true, concatNomeAcao);
 			add(true, new MenuCopiarValor());
 			add(true, menuCopiarIN);
 
@@ -199,6 +201,14 @@ public class Tabela extends JTable {
 
 				if (tabelaListener != null && Preferencias.isCopiarNomeColunaListener()) {
 					tabelaListener.copiarNomeColuna(Tabela.this, coluna, null);
+				}
+			});
+
+			concatNomeAcao.setActionListener(e -> {
+				String coluna = getModel().getColumnName(tag);
+
+				if (tabelaListener != null) {
+					tabelaListener.concatenarNomeColuna(Tabela.this, coluna);
 				}
 			});
 
