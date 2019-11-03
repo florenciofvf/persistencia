@@ -48,13 +48,11 @@ import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
-import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
@@ -1469,42 +1467,6 @@ public class Superficie extends Desktop {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
 				interno.selecionarConexao(conexao);
-			}
-		}
-	}
-
-	public void ajusteObjeto() {
-		JInternalFrame[] frames = getAllFrames();
-
-		boolean salvar = false;
-
-		String chaveDeltaX = "DELTA_X_AJUSTE_FORM_OBJETO";
-		String chaveDeltaY = "DELTA_Y_AJUSTE_FORM_OBJETO";
-
-		ChaveValor cvDeltaX = VariaveisModelo.get(chaveDeltaX);
-		ChaveValor cvDeltaY = VariaveisModelo.get(chaveDeltaY);
-
-		if (cvDeltaX == null) {
-			cvDeltaX = new ChaveValor(chaveDeltaX, "30");
-			VariaveisModelo.adicionar(cvDeltaX);
-			salvar = true;
-		}
-
-		if (cvDeltaY == null) {
-			cvDeltaY = new ChaveValor(chaveDeltaY, "30");
-			VariaveisModelo.adicionar(cvDeltaY);
-			salvar = true;
-		}
-
-		if (salvar) {
-			VariaveisModelo.salvar();
-			VariaveisModelo.inicializar();
-		}
-
-		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-				interno.ajusteObjeto(cvDeltaX.getInteiro(30), cvDeltaY.getInteiro(30));
 			}
 		}
 	}

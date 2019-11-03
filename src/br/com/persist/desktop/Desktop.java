@@ -23,11 +23,14 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
+import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.BuscaAuto.Grupo;
@@ -349,8 +352,13 @@ public class Desktop extends JDesktopPane implements IIni {
 		private Action centralAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
+		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action dimenAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
+		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 		private Action dimenAcao = Action.actionMenu("label.dimensao", Icones.RECT);
+
+		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
+		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 
 		DesktopPopup() {
 			addMenuItem(larTotalAcao);
@@ -359,7 +367,9 @@ public class Desktop extends JDesktopPane implements IIni {
 			addMenuItem(true, distribuirAcao);
 			addMenuItem(true, centralAcao);
 			addMenuItem(true, dimenAcao3);
+			add(itemDimensoes2);
 			addMenuItem(dimenAcao);
+			add(true, itemAjustes);
 
 			eventos();
 		}
@@ -367,8 +377,10 @@ public class Desktop extends JDesktopPane implements IIni {
 		private void eventos() {
 			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
 			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
+			ajustarAcao.setActionListener(e -> ajustarDimension());
 			distribuirAcao.setActionListener(e -> distribuir(0));
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
+			dimensaoAcao2.setActionListener(e -> ajusteObjeto());
 			dimenAcao.setActionListener(e -> ajusteDimension());
 			centralAcao.setActionListener(e -> centralizar());
 			dimenAcao3.setActionListener(e -> ajusteForm());
@@ -417,5 +429,41 @@ public class Desktop extends JDesktopPane implements IIni {
 
 	public void setAbortarFecharComESC(boolean abortarFecharComESC) {
 		this.abortarFecharComESC = abortarFecharComESC;
+	}
+
+	public void ajusteObjeto() {
+		JInternalFrame[] frames = getAllFrames();
+
+		boolean salvar = false;
+
+		String chaveDeltaX = "DELTA_X_AJUSTE_FORM_OBJETO";
+		String chaveDeltaY = "DELTA_Y_AJUSTE_FORM_OBJETO";
+
+		ChaveValor cvDeltaX = VariaveisModelo.get(chaveDeltaX);
+		ChaveValor cvDeltaY = VariaveisModelo.get(chaveDeltaY);
+
+		if (cvDeltaX == null) {
+			cvDeltaX = new ChaveValor(chaveDeltaX, "30");
+			VariaveisModelo.adicionar(cvDeltaX);
+			salvar = true;
+		}
+
+		if (cvDeltaY == null) {
+			cvDeltaY = new ChaveValor(chaveDeltaY, "30");
+			VariaveisModelo.adicionar(cvDeltaY);
+			salvar = true;
+		}
+
+		if (salvar) {
+			VariaveisModelo.salvar();
+			VariaveisModelo.inicializar();
+		}
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				interno.ajusteObjeto(cvDeltaX.getInteiro(30), cvDeltaY.getInteiro(30));
+			}
+		}
 	}
 }
