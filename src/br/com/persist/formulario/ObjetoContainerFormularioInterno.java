@@ -146,4 +146,12 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	public void selecionarConexao(Conexao conexao) {
 		container.selecionarConexao(conexao);
 	}
+
+	public void ajusteObjeto() {
+		Objeto objeto = container.getObjeto();
+
+		if (objeto != null) {
+			setLocation(objeto.getX(), objeto.getY());
+		}
+	}
 }

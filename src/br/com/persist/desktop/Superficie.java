@@ -1375,6 +1375,7 @@ public class Superficie extends Desktop {
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
+		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action dimensaoAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
@@ -1386,6 +1387,7 @@ public class Superficie extends Desktop {
 		MenuItem itemMesmaLargura = new MenuItem(mesmaLarguraAcao);
 		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
 		MenuItem itemCriarObjeto = new MenuItem(criarObjAcao);
+		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
 		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
 		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 		MenuItem itemColar = new MenuItem(colarAcao);
@@ -1403,8 +1405,9 @@ public class Superficie extends Desktop {
 			add(new MenuItem(larTotalDirAcao));
 			add(new MenuItem(larTotalEsqAcao));
 			add(true, itemCentralizar);
-			add(true, itemDimensoes);
-			add(itemAjustes);
+			add(true, itemDimensoes2);
+			add(itemDimensoes);
+			add(true, itemAjustes);
 
 			eventos();
 		}
@@ -1419,6 +1422,7 @@ public class Superficie extends Desktop {
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			centralizarAcao.setActionListener(e -> centralizar());
+			dimensaoAcao2.setActionListener(e -> ajusteObjeto());
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
 
 			atualizarFormAcao.setActionListener(e -> {
@@ -1459,6 +1463,17 @@ public class Superficie extends Desktop {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
 				interno.selecionarConexao(conexao);
+			}
+		}
+	}
+
+	public void ajusteObjeto() {
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				interno.ajusteObjeto();
 			}
 		}
 	}
