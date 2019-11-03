@@ -98,7 +98,8 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		}
 
 		if (desktop != null) {
-			desktop.ajusteForm();
+			desktop.ajusteFormulario();
+			desktop.ajusteObjetoFormulario(false);
 		}
 	}
 

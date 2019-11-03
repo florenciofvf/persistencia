@@ -1424,6 +1424,7 @@ public class Superficie extends Desktop {
 			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true));
 			alinharEsquerdoAcao.setActionListener(e -> alinharEsquerdo());
 			alinharDireitoAcao.setActionListener(e -> alinharDireito());
+			dimensaoAcao3.setActionListener(e -> ajusteFormulario());
 			mesmaLarguraAcao.setActionListener(e -> mesmaLargura());
 			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
 			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
@@ -1431,7 +1432,6 @@ public class Superficie extends Desktop {
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			centralizarAcao.setActionListener(e -> centralizar());
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
-			dimensaoAcao3.setActionListener(e -> ajusteForm());
 
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();
