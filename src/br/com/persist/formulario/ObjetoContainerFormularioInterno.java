@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -24,6 +28,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		implements IJanela, ObjetoContainerListener, IIni {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
+	private boolean redimensionado;
 	private String apelido;
 
 	public ObjetoContainerFormularioInterno(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
@@ -55,6 +60,46 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				container.ini(getGraphics());
 			}
 		});
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				redimensionado = true;
+			}
+		});
+
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				redimensionado = false;
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (redimensionado) {
+					redimensionado = false;
+					configAjustes();
+				}
+			}
+		});
+	}
+
+	public void configAjustes() {
+		Container parent = getParent();
+		Desktop desktop = null;
+
+		while (parent != null) {
+			if (parent instanceof Desktop) {
+				desktop = (Desktop) parent;
+				break;
+			}
+
+			parent = parent.getParent();
+		}
+
+		if (desktop != null) {
+			desktop.ajusteForm();
+		}
 	}
 
 	@Override
@@ -68,7 +113,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				break;
 			}
 
-			parent = getParent();
+			parent = parent.getParent();
 		}
 
 		if (desktop != null) {
@@ -87,7 +132,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				break;
 			}
 
-			parent = getParent();
+			parent = parent.getParent();
 		}
 
 		if (desktop != null) {

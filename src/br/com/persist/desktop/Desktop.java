@@ -173,7 +173,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	protected void ajusteForm() {
+	public void ajusteForm() {
 		JInternalFrame[] frames = getAllFrames();
 
 		if (frames.length > 0) {
