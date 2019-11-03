@@ -504,5 +504,7 @@ public class Desktop extends JDesktopPane implements IIni {
 				interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(30), cvDeltaY.getInteiro(30));
 			}
 		}
+
+		repaint();
 	}
 }
