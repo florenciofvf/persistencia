@@ -1379,6 +1379,7 @@ public class Superficie extends Desktop {
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
+		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action dimensaoAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
@@ -1390,6 +1391,7 @@ public class Superficie extends Desktop {
 		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
 		MenuItem itemCriarObjeto = new MenuItem(criarObjAcao);
 		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
+		MenuItem itemDimensoes3 = new MenuItem(dimensaoAcao3);
 		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
 		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 		MenuItem itemColar = new MenuItem(colarAcao);
@@ -1407,7 +1409,8 @@ public class Superficie extends Desktop {
 			add(new MenuItem(larTotalDirAcao));
 			add(new MenuItem(larTotalEsqAcao));
 			add(true, itemCentralizar);
-			add(true, itemDimensoes2);
+			add(true, itemDimensoes3);
+			add(itemDimensoes2);
 			add(itemDimensoes);
 			add(true, itemAjustes);
 
@@ -1426,6 +1429,7 @@ public class Superficie extends Desktop {
 			centralizarAcao.setActionListener(e -> centralizar());
 			dimensaoAcao2.setActionListener(e -> ajusteObjeto());
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
+			dimensaoAcao3.setActionListener(e -> ajusteForm());
 
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();

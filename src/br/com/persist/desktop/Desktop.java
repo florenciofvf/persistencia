@@ -169,6 +169,10 @@ public class Desktop extends JDesktopPane implements IIni {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
+	protected void ajusteForm() {
+		// fvf
+	}
+
 	public void distribuir(int delta) {
 		int largura = (getSize().width - 20) + delta;
 		int altura = 341;
@@ -345,6 +349,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		private Action centralAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
+		private Action dimenAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action dimenAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 
 		DesktopPopup() {
@@ -353,7 +358,8 @@ public class Desktop extends JDesktopPane implements IIni {
 			addMenuItem(larTotalEsqAcao);
 			addMenuItem(true, distribuirAcao);
 			addMenuItem(true, centralAcao);
-			addMenuItem(true, dimenAcao);
+			addMenuItem(true, dimenAcao3);
+			addMenuItem(dimenAcao);
 
 			eventos();
 		}
@@ -365,6 +371,7 @@ public class Desktop extends JDesktopPane implements IIni {
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
 			dimenAcao.setActionListener(e -> ajusteDimension());
 			centralAcao.setActionListener(e -> centralizar());
+			dimenAcao3.setActionListener(e -> ajusteForm());
 		}
 	}
 
