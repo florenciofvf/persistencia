@@ -1374,6 +1374,7 @@ public class Superficie extends Desktop {
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
+		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
@@ -1390,6 +1391,7 @@ public class Superficie extends Desktop {
 		MenuItem itemCriarObjeto = new MenuItem(criarObjAcao);
 		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
 		MenuItem itemDimensoes3 = new MenuItem(dimensaoAcao3);
+		MenuItem itemDimensoes4 = new MenuItem(dimensaoAcao4);
 		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
 		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 		MenuItem itemColar = new MenuItem(colarAcao);
@@ -1407,7 +1409,8 @@ public class Superficie extends Desktop {
 			add(new MenuItem(larTotalDirAcao));
 			add(new MenuItem(larTotalEsqAcao));
 			add(true, itemCentralizar);
-			add(true, itemDimensoes3);
+			add(true, itemDimensoes4);
+			add(itemDimensoes3);
 			add(itemDimensoes2);
 			add(itemDimensoes);
 			add(true, itemAjustes);
@@ -1417,6 +1420,8 @@ public class Superficie extends Desktop {
 
 		private void eventos() {
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
+			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false));
+			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true));
 			alinharEsquerdoAcao.setActionListener(e -> alinharEsquerdo());
 			alinharDireitoAcao.setActionListener(e -> alinharDireito());
 			mesmaLarguraAcao.setActionListener(e -> mesmaLargura());
@@ -1425,7 +1430,6 @@ public class Superficie extends Desktop {
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			centralizarAcao.setActionListener(e -> centralizar());
-			dimensaoAcao2.setActionListener(e -> ajusteObjeto());
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
 			dimensaoAcao3.setActionListener(e -> ajusteForm());
 

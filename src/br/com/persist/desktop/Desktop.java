@@ -382,6 +382,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
 		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
+		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
@@ -392,6 +393,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
 		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
 		MenuItem itemDimensoes3 = new MenuItem(dimensaoAcao3);
+		MenuItem itemDimensoes4 = new MenuItem(dimensaoAcao4);
 		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
 		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 
@@ -401,7 +403,8 @@ public class Desktop extends JDesktopPane implements IIni {
 			addMenuItem(larTotalEsqAcao);
 			addMenuItem(true, distribuirAcao);
 			add(true, itemCentralizar);
-			add(true, itemDimensoes3);
+			add(true, itemDimensoes4);
+			add(itemDimensoes3);
 			add(itemDimensoes2);
 			add(itemDimensoes);
 			add(true, itemAjustes);
@@ -410,6 +413,8 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 
 		private void eventos() {
+			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false));
+			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true));
 			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
 			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
 			ajustarAcao.setActionListener(e -> ajustarDimension());
@@ -417,7 +422,6 @@ public class Desktop extends JDesktopPane implements IIni {
 			centralizarAcao.setActionListener(e -> centralizar());
 			distribuirAcao.setActionListener(e -> distribuir(0));
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
-			dimensaoAcao2.setActionListener(e -> ajusteObjeto());
 			dimensaoAcao3.setActionListener(e -> ajusteForm());
 		}
 	}
@@ -466,7 +470,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		this.abortarFecharComESC = abortarFecharComESC;
 	}
 
-	public void ajusteObjeto() {
+	public void ajusteObjetoFormulario(boolean aoObjeto) {
 		JInternalFrame[] frames = getAllFrames();
 
 		boolean salvar = false;
@@ -497,7 +501,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-				interno.ajusteObjeto(cvDeltaX.getInteiro(30), cvDeltaY.getInteiro(30));
+				interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(30), cvDeltaY.getInteiro(30));
 			}
 		}
 	}
