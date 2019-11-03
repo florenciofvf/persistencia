@@ -13,6 +13,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,7 +174,38 @@ public class Desktop extends JDesktopPane implements IIni {
 	}
 
 	protected void ajusteForm() {
-		// fvf
+		JInternalFrame[] frames = getAllFrames();
+
+		if (frames.length > 0) {
+			boolean salvar = false;
+
+			String chaveDeltaY = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
+
+			ChaveValor cvDeltaY = VariaveisModelo.get(chaveDeltaY);
+
+			if (cvDeltaY == null) {
+				cvDeltaY = new ChaveValor(chaveDeltaY, "40");
+				VariaveisModelo.adicionar(cvDeltaY);
+				salvar = true;
+			}
+
+			if (salvar) {
+				VariaveisModelo.salvar();
+				VariaveisModelo.inicializar();
+			}
+
+			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
+
+			JInternalFrame frame = frames[0];
+			int deltaY = cvDeltaY.getInteiro(40);
+			int y = frame.getY() + frame.getHeight() + deltaY;
+
+			for (int i = 1; i < frames.length; i++) {
+				frame = frames[i];
+				frame.setLocation(frame.getX(), y);
+				y = frame.getY() + frame.getHeight() + deltaY;
+			}
+		}
 	}
 
 	public void distribuir(int delta) {
