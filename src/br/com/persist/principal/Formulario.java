@@ -80,7 +80,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public Formulario() {
 		super(Mensagens.getString("label.persistencia"));
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setJMenuBar(menuPrincipal);
 		setSize(Constantes.SIZE);
@@ -177,7 +177,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				FormularioUtil.fechar(Formulario.this);
+				menuPrincipal.fecharAcao.actionPerformed(null);
 			}
 		});
 	}
@@ -231,8 +231,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private void eventos() {
 			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
 			fecharAcao.setActionListener(e -> {
-				FormularioUtil.fechar(Formulario.this);
-				System.exit(0);
+				if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
+					FormularioUtil.fechar(Formulario.this);
+					System.exit(0);
+				}
 			});
 		}
 
