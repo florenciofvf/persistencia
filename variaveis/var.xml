@@ -6,4 +6,19 @@
 			SYSDATE
 		</valor>
 	</chave_valor>
+	<chave_valor chave="DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL">
+		<valor>
+			40
+		</valor>
+	</chave_valor>
+	<chave_valor chave="DELTA_X_AJUSTE_FORM_OBJETO">
+		<valor>
+			30
+		</valor>
+	</chave_valor>
+	<chave_valor chave="DELTA_Y_AJUSTE_FORM_OBJETO">
+		<valor>
+			30
+		</valor>
+	</chave_valor>
 </variaveis>
