@@ -150,7 +150,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 	}
 
-	protected void ajusteDimension() {
+	public void ajusteDimension() {
 		int largura = 0;
 		int altura = 0;
 

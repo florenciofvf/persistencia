@@ -100,6 +100,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		if (desktop != null) {
 			desktop.ajusteFormulario();
 			desktop.ajusteObjetoFormulario(false);
+			desktop.ajusteDimension();
 		}
 	}
 
