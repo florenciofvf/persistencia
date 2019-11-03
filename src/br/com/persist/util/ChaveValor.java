@@ -11,8 +11,13 @@ public class ChaveValor {
 	private String valor;
 
 	public ChaveValor(String chave) {
+		this(chave, null);
+	}
+
+	public ChaveValor(String chave, String valor) {
 		Objects.requireNonNull(chave);
 		this.chave = chave;
+		this.valor = valor;
 	}
 
 	public ChaveValor clonar() {
@@ -59,6 +64,18 @@ public class ChaveValor {
 		}
 
 		return valor;
+	}
+
+	public int getInteiro(int padrao) {
+		if (Util.estaVazio(valor)) {
+			return padrao;
+		}
+
+		try {
+			return Integer.parseInt(valor.trim());
+		} catch (Exception e) {
+			return padrao;
+		}
 	}
 
 	@Override
