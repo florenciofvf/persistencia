@@ -347,17 +347,20 @@ public class Desktop extends JDesktopPane implements IIni {
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
 		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
-		private Action centralAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
-		private Action dimenAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
+		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
+		private Action dimensaoAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
-		private Action dimenAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 
+		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
 		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
+		MenuItem itemDimensoes3 = new MenuItem(dimensaoAcao3);
+		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
 		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 
 		DesktopPopup() {
@@ -365,10 +368,10 @@ public class Desktop extends JDesktopPane implements IIni {
 			addMenuItem(larTotalDirAcao);
 			addMenuItem(larTotalEsqAcao);
 			addMenuItem(true, distribuirAcao);
-			addMenuItem(true, centralAcao);
-			addMenuItem(true, dimenAcao3);
+			add(true, itemCentralizar);
+			add(true, itemDimensoes3);
 			add(itemDimensoes2);
-			addMenuItem(dimenAcao);
+			add(itemDimensoes);
 			add(true, itemAjustes);
 
 			eventos();
@@ -378,12 +381,12 @@ public class Desktop extends JDesktopPane implements IIni {
 			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
 			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
 			ajustarAcao.setActionListener(e -> ajustarDimension());
+			dimensaoAcao.setActionListener(e -> ajusteDimension());
+			centralizarAcao.setActionListener(e -> centralizar());
 			distribuirAcao.setActionListener(e -> distribuir(0));
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
 			dimensaoAcao2.setActionListener(e -> ajusteObjeto());
-			dimenAcao.setActionListener(e -> ajusteDimension());
-			centralAcao.setActionListener(e -> centralizar());
-			dimenAcao3.setActionListener(e -> ajusteForm());
+			dimensaoAcao3.setActionListener(e -> ajusteForm());
 		}
 	}
 
