@@ -154,8 +154,8 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 			if (aoObjeto) {
 				setLocation(objeto.getX() + deltaX, objeto.getY() + deltaY);
 			} else {
-				objeto.setX(getX() + deltaX);
-				objeto.setY(getY() + deltaY);
+				objeto.setX(getX() - deltaX);
+				objeto.setY(getY() - deltaY);
 			}
 		}
 	}
