@@ -15,6 +15,7 @@ public class Preferencias {
 	private static boolean abrirAutoDestacado;
 	private static int intervaloPesquisaAuto;
 	private static boolean fecharAposSoltar;
+	private static boolean ajusteAutomatico;
 	private static int intervaloComparacao;
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
@@ -46,6 +47,7 @@ public class Preferencias {
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
 		fecharAposSoltar = pref.getBoolean("fechar_apos_soltar", true);
+		ajusteAutomatico = pref.getBoolean("ajuste_automatico", false);
 		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		abrirComArvore = pref.getBoolean("abrir_com_arvore", true);
@@ -85,6 +87,7 @@ public class Preferencias {
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.putInt("cor_total_atual", corTotalAtual.getRGB());
 		pref.putInt("cor_compara_rec", corComparaRec.getRGB());
+		pref.putBoolean("ajuste_automatico", ajusteAutomatico);
 		pref.putBoolean("abrir_com_arvore", abrirComArvore);
 		pref.putBoolean("abrir_com_anexo", abrirComAnexo);
 		pref.putBoolean("nomear_arrasto", nomearArrasto);
@@ -213,6 +216,14 @@ public class Preferencias {
 
 	public static void setAbrirComAnexo(boolean abrirComAnexo) {
 		Preferencias.abrirComAnexo = abrirComAnexo;
+	}
+
+	public static boolean isAjusteAutomatico() {
+		return ajusteAutomatico;
+	}
+
+	public static void setAjusteAutomatico(boolean ajusteAutomatico) {
+		Preferencias.ajusteAutomatico = ajusteAutomatico;
 	}
 
 	public static int getLayoutAbertura() {

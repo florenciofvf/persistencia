@@ -19,6 +19,7 @@ import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.LinkAuto.Link;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 
@@ -61,7 +62,9 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				configAjustes();
+				if (Preferencias.isAjusteAutomatico()) {
+					configAjustes();
+				}
 			}
 		});
 	}
