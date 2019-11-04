@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -160,17 +161,27 @@ public class Fichario extends JTabbedPane {
 			return;
 		}
 
+		List<Objeto> selecionados = new ArrayList<>();
+
+		for (Objeto objeto : objetos) {
+			if (objeto.isCopiarDestacado()) {
+				selecionados.add(objeto.clonar());
+			} else {
+				selecionados.add(objeto);
+			}
+		}
+
 		if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
-			destacarForm(formulario, objetos, conexao);
+			destacarForm(formulario, selecionados, conexao);
 
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
-			destacarDesk(formulario, objetos, conexao);
+			destacarDesk(formulario, selecionados, conexao);
 
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
-			destacarObjt(formulario, objetos, conexao);
+			destacarObjt(formulario, selecionados, conexao);
 
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
-			destacarProp(formulario, objetos, conexao, superficie);
+			destacarProp(formulario, selecionados, conexao, superficie);
 		}
 	}
 
