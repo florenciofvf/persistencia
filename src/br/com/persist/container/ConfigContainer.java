@@ -42,6 +42,7 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkAbrirComArvore = new CheckBox("label.abrir_com_arvore");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkAbrirComAnexo = new CheckBox("label.abrir_com_anexo");
+	private final CheckBox chkAjusteAutom = new CheckBox("label.ajuste_automatico");
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtFormDialogo = new TextField();
@@ -112,6 +113,7 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkAbrirComArvore.setSelected(Preferencias.isAbrirComArvore());
+		chkAjusteAutom.setSelected(Preferencias.isAjusteAutomatico());
 		chkAbrirComAnexo.setSelected(Preferencias.isAbrirComAnexo());
 		chkNomearArrasto.setSelected(Preferencias.isNomearArrasto());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
@@ -143,6 +145,7 @@ public class ConfigContainer extends Panel {
 		container.add(chkAbortarFecharComESC);
 		container.add(chkNomeColunaListener);
 		container.add(chkFecharOrigemAposSoltar);
+		container.add(chkAjusteAutom);
 		container.add(chkNomearArrasto);
 		container.add(chkFicharioScroll);
 		container.add(chkAbrirComArvore);
@@ -172,6 +175,7 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setMargin(insets);
 		chkAbrirComAnexo.setMargin(insets);
 		chkNomearArrasto.setMargin(insets);
+		chkAjusteAutom.setMargin(insets);
 	}
 
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
@@ -224,6 +228,8 @@ public class ConfigContainer extends Panel {
 		chkNomearArrasto.addActionListener(e -> Preferencias.setNomearArrasto(chkNomearArrasto.isSelected()));
 
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
+
+		chkAjusteAutom.addActionListener(e -> Preferencias.setAjusteAutomatico(chkAjusteAutom.isSelected()));
 
 		chkAreaTransTabelaRegistros.addActionListener(
 				e -> Preferencias.setAreaTransTabelaRegistros(chkAreaTransTabelaRegistros.isSelected()));
