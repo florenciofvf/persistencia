@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -28,7 +26,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		implements IJanela, ObjetoContainerListener, IIni {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
-	private boolean redimensionado;
 	private String apelido;
 
 	public ObjetoContainerFormularioInterno(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
@@ -64,22 +61,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				redimensionado = true;
-			}
-		});
-
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				redimensionado = false;
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (redimensionado) {
-					redimensionado = false;
-					configAjustes();
-				}
+				configAjustes();
 			}
 		});
 	}
