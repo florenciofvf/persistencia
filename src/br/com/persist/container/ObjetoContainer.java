@@ -810,11 +810,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Object resp = Util.getValorInputDialog(ObjetoContainer.this, "label.apelido",
 								interno.getApelido(), interno.getApelido());
 
-						if (resp == null || Util.estaVazio(resp.toString())) {
+						if (resp == null) {
 							return;
 						}
 
-						interno.setApelido(resp.toString());
+						interno.setApelido(resp.toString().trim());
 					}
 				});
 			}
