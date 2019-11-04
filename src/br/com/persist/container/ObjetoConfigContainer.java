@@ -73,6 +73,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtComplemento = new TextField();
 		private TextField txtSequencias = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
+		private CheckBox chkCopiarDestac = new CheckBox();
 		private TextField txtMapeamento = new TextField();
 		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
@@ -91,6 +92,7 @@ public class ObjetoConfigContainer extends Panel {
 
 		PanelGeral() {
 			txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
+			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
 			txtDeslocXId.setText("" + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
 			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
@@ -132,6 +134,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtLinkAutomatico.addActionListener(this);
 			txtFinalConsulta.addActionListener(this);
 			chkTransparente.addActionListener(this);
+			chkCopiarDestac.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			chkDesenharId.addActionListener(this);
@@ -181,6 +184,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
+			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
 
 			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
 			txtLinkAutomatico.addMouseListener(linkAutomaticoListener);
@@ -349,6 +353,11 @@ public class ObjetoConfigContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setTransparente(chk.isSelected());
 				Formulario.macro.transparencia(chk.isSelected());
+
+			} else if (chkCopiarDestac == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setCopiarDestacado(chk.isSelected());
+				Formulario.macro.copiarDestacado(chk.isSelected());
 			}
 		}
 
