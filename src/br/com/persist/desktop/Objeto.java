@@ -40,6 +40,7 @@ public class Objeto implements Runnable {
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
 	private Tabela tabelaPesquisaAuto;
+	private boolean copiarDestacado;
 	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
@@ -104,6 +105,7 @@ public class Objeto implements Runnable {
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
+		o.copiarDestacado = copiarDestacado;
 		o.linkAutomatico = linkAutomatico;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
@@ -308,6 +310,14 @@ public class Objeto implements Runnable {
 		this.colunaInfo = colunaInfo;
 	}
 
+	public boolean isCopiarDestacado() {
+		return copiarDestacado;
+	}
+
+	public void setCopiarDestacado(boolean copiarDestacado) {
+		this.copiarDestacado = copiarDestacado;
+	}
+
 	public boolean isAbrirAuto() {
 		return abrirAuto;
 	}
@@ -477,6 +487,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void aplicar(Attributes attr) {
+		copiarDestacado = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
@@ -517,6 +528,7 @@ public class Objeto implements Runnable {
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("copiarDestac", copiarDestacado);
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
