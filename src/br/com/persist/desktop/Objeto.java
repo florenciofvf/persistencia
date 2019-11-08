@@ -102,6 +102,7 @@ public class Objeto implements Runnable {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 
+		o.tabelaPesquisaAuto = tabelaPesquisaAuto;
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
