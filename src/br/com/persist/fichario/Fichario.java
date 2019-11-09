@@ -36,6 +36,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
+import br.com.persist.container.ComparacaoContainer;
 import br.com.persist.container.ConexaoContainer;
 import br.com.persist.container.ConfigContainer;
 import br.com.persist.container.ConsultaContainer;
@@ -50,8 +51,8 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
-import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.ContainerFormulario;
+import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
@@ -389,6 +390,16 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 
 		container.ini(getGraphics());
+	}
+
+	public void novaComparacao(Formulario formulario) {
+		ComparacaoContainer container = new ComparacaoContainer(null);
+		addTab(Mensagens.getString(Constantes.LABEL_COMPARACAO), container);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.COMPARACAO);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
 	}
 
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {

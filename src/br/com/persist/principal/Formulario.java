@@ -31,6 +31,7 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.AnotacaoDialogo;
+import br.com.persist.dialogo.ComparacaoDialogo;
 import br.com.persist.dialogo.ConexaoDialogo;
 import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
@@ -42,6 +43,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
+import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
@@ -219,6 +221,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(true, new MenuFragmento());
 			menuArquivo.add(true, new MenuMapeamento());
 			menuArquivo.add(true, new MenuVariaveis());
+			menuArquivo.add(true, new MenuComparacao());
 			menuArquivo.add(true, new MenuConfig());
 			menuArquivo.add(true, menuLayout);
 			menuArquivo.add(true, new MenuItem(fecharAcao));
@@ -625,6 +628,28 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoVariaveis(Formulario.this));
+			}
+		}
+
+		class MenuComparacao extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuComparacao() {
+				super(Constantes.LABEL_COMPARACAO, Icones.CENTRALIZAR);
+
+				formularioAcao.setActionListener(e -> {
+					ComparacaoFormulario form = new ComparacaoFormulario(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					ComparacaoDialogo form = new ComparacaoDialogo(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novaComparacao(Formulario.this));
 			}
 		}
 	}
