@@ -9,6 +9,7 @@ public class Constantes {
 	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_FORMULARIO = "label.formulario";
+	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String LABEL_METADADOS = "label.meta_dados";
 	public static final String LABEL_VARIAVEIS = "label.variaveis";
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
