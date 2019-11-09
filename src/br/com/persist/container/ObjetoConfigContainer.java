@@ -370,8 +370,8 @@ public class ObjetoConfigContainer extends Panel {
 
 			Label label = new Label(chaveRotulo);
 			label.setHorizontalAlignment(Label.RIGHT);
-			label.setPreferredSize(new Dimension(100, 0));
-			label.setMinimumSize(new Dimension(100, 0));
+			label.setPreferredSize(new Dimension(120, 0));
+			label.setMinimumSize(new Dimension(120, 0));
 
 			if (!Util.estaVazio(hint)) {
 				label.setToolTipText(hint);
