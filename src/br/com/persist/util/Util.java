@@ -8,7 +8,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
@@ -401,4 +404,66 @@ public class Util {
 	public static final byte ARRAY_INDICE_CON = 1;
 	public static final byte ARRAY_INDICE_DIM = 2;
 	public static final byte ARRAY_INDICE_APE = 3;
+
+	public static List<List<String>> comparar(File file1, File file2) {
+		List<List<String>> resposta = new ArrayList<>();
+
+		List<String> lista1 = new ArrayList<>();
+		List<String> lista2 = new ArrayList<>();
+		resposta.add(lista1);
+		resposta.add(lista2);
+
+		List<String> pool1 = criarLista(file1);
+		List<String> pool2 = criarLista(file2);
+
+		while (!pool1.isEmpty()) {
+			String string1 = pool1.remove(0);
+
+			int pos = pool2.indexOf(string1);
+
+			if (pos >= 0) {
+				pool2.remove(pos);
+				lista1.add(string1 + "," + string1);
+			} else {
+				lista2.add(string1 + ",");
+			}
+		}
+
+		while (!pool2.isEmpty()) {
+			String string2 = pool2.remove(0);
+
+			int pos = pool1.indexOf(string2);
+
+			if (pos >= 0) {
+				pool1.remove(pos);
+				lista1.add(string2 + "," + string2);
+			} else {
+				lista2.add("," + string2);
+			}
+		}
+
+		return resposta;
+	}
+
+	private static List<String> criarLista(File file) {
+		List<String> resposta = new ArrayList<>();
+
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+			String linha = br.readLine();
+
+			while (linha != null) {
+				String string = linha.trim();
+
+				if (!string.isEmpty()) {
+					resposta.add(string);
+				}
+
+				linha = br.readLine();
+			}
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+
+		return resposta;
+	}
 }

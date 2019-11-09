@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -15,6 +16,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
@@ -73,7 +75,7 @@ public class ComparacaoContainer extends Panel {
 			} else if (e.getSource() == btnArquivo2) {
 				selecionar(txtArquivo2);
 			} else if (e.getSource() == btnComparar) {
-				// comparar();
+				comparar();
 			}
 		}
 
@@ -96,6 +98,35 @@ public class ComparacaoContainer extends Panel {
 			}
 
 			return null;
+		}
+
+		private void comparar() {
+			lblStatus.setText("");
+
+			File file1 = new File(txtArquivo1.getText());
+
+			if (!file1.exists()) {
+				lblStatus.setText("Arquivo 1 inexistente!");
+				return;
+			}
+
+			File file2 = new File(txtArquivo2.getText());
+
+			if (!file2.exists()) {
+				lblStatus.setText("Arquivo 2 inexistente!");
+				return;
+			}
+
+			List<List<String>> listas = Util.comparar(file1, file2);
+
+			lblStatus.setText("Comparado");
+			textArea.setText("");
+
+			for (List<String> list : listas) {
+				for (String string : list) {
+					textArea.append(string + Constantes.QL);
+				}
+			}
 		}
 	}
 }
