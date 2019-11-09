@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fvf largura="1000" altura="596" conexao="question&#225;rio">
+	<objeto transparente="true" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" copiarDestac="false" desloc_x_id="26" desloc_y_id="22" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" abrirAuto="false" id="meninas" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" icone="sucesso" ccsc="false" x="175" y="32">
+	</objeto>
+	<objeto transparente="true" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" copiarDestac="false" desloc_x_id="26" desloc_y_id="22" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" abrirAuto="false" id="marcelo" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" icone="sucesso" ccsc="false" x="175" y="63">
+	</objeto>
+	<objeto transparente="true" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" copiarDestac="false" desloc_x_id="26" desloc_y_id="22" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" abrirAuto="false" id="cartao" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" icone="sucesso" ccsc="false" x="175" y="156">
+	</objeto>
+	<objeto transparente="true" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" copiarDestac="false" desloc_x_id="26" desloc_y_id="22" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" abrirAuto="false" id="telefone" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" icone="sucesso" ccsc="false" x="175" y="94">
+	</objeto>
+	<objeto transparente="true" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" copiarDestac="false" desloc_x_id="26" desloc_y_id="22" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" abrirAuto="false" id="agua" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" icone="sucesso" ccsc="false" x="175" y="187">
+	</objeto>
+	<objeto transparente="true" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" copiarDestac="false" desloc_x_id="26" desloc_y_id="22" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" abrirAuto="false" id="luz" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" icone="sucesso" ccsc="false" x="175" y="218">
+	</objeto>
+	<objeto transparente="true" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" copiarDestac="false" desloc_x_id="26" desloc_y_id="22" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" abrirAuto="false" id="piscina" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" icone="sucesso" ccsc="false" x="175" y="125">
+	</objeto>
+
+
+</fvf>
