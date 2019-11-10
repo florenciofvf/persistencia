@@ -223,9 +223,15 @@ public class Tabela extends JTable {
 
 		class MenuCopiarValor extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasQLAcao = Action.actionMenu("label.com_aspas_em_linhas", Icones.ASPAS);
+			private Action semAspasQLAcao = Action.actionMenu("label.sem_aspas_em_linhas", null);
 
 			MenuCopiarValor() {
 				super("label.copiar_header");
+
+				addSeparator();
+				addMenuItem(semAspasQLAcao);
+				addMenuItem(comAspasQLAcao);
 
 				semAspasAcao.setActionListener(e -> copiar(false));
 				comAspasAcao.setActionListener(e -> copiar(true));
