@@ -435,10 +435,10 @@ public class Util {
 		List<String> arquivo1 = new ArrayList<>();
 		List<String> arquivo2 = new ArrayList<>();
 
-		iguais1.add("<<< Iguais 1 >>>");
-		iguais2.add("<<< Iguais 2 >>>");
-		arquivo1.add("<<< Arquivo 1 >>>");
-		arquivo2.add("<<< Arquivo 2 >>>");
+		iguais1.add("<<<################### IGUAIS 1 ###################>>>");
+		iguais2.add("<<<################### IGUAIS 2 ###################>>>");
+		arquivo1.add("<<<################### ARQUIVO 1 ###################>>>");
+		arquivo2.add("<<<################### ARQUIVO 2 ###################>>>");
 
 		resposta.add(iguais1);
 		resposta.add(iguais2);
