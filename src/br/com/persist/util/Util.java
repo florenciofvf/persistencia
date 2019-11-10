@@ -430,10 +430,20 @@ public class Util {
 	public static List<List<String>> comparar(File file1, File file2) {
 		List<List<String>> resposta = new ArrayList<>();
 
-		List<String> lista1 = new ArrayList<>();
-		List<String> lista2 = new ArrayList<>();
-		resposta.add(lista1);
-		resposta.add(lista2);
+		List<String> iguais1 = new ArrayList<>();
+		List<String> iguais2 = new ArrayList<>();
+		List<String> arquivo1 = new ArrayList<>();
+		List<String> arquivo2 = new ArrayList<>();
+
+		iguais1.add("<<< Iguais 1 >>>");
+		iguais2.add("<<< Iguais 2 >>>");
+		arquivo1.add("<<< Arquivo 1 >>>");
+		arquivo2.add("<<< Arquivo 2 >>>");
+
+		resposta.add(iguais1);
+		resposta.add(iguais2);
+		resposta.add(arquivo1);
+		resposta.add(arquivo2);
 
 		List<String> pool1 = criarLista(file1);
 		List<String> pool2 = criarLista(file2);
@@ -445,9 +455,10 @@ public class Util {
 
 			if (pos >= 0) {
 				pool2.remove(pos);
-				lista1.add(string1 + "," + string1);
+				iguais1.add(string1 + "," + string1);
+				iguais2.add(string1 + ",");
 			} else {
-				lista2.add(string1 + ",");
+				arquivo1.add(string1 + ",");
 			}
 		}
 
@@ -458,9 +469,10 @@ public class Util {
 
 			if (pos >= 0) {
 				pool1.remove(pos);
-				lista1.add(string2 + "," + string2);
+				iguais1.add(string2 + "," + string2);
+				iguais2.add(string2 + ",");
 			} else {
-				lista2.add("," + string2);
+				arquivo2.add("," + string2);
 			}
 		}
 
