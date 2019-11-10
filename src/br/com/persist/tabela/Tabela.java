@@ -223,6 +223,8 @@ public class Tabela extends JTable {
 
 		class MenuCopiarValor extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasQLSemVAcao = Action.actionMenu("label.com_aspas_em_linhas_sem_v", Icones.ASPAS);
+			private Action semAspasQLSemVAcao = Action.actionMenu("label.sem_aspas_em_linhas_sem_v", null);
 			private Action comAspasQLAcao = Action.actionMenu("label.com_aspas_em_linhas", Icones.ASPAS);
 			private Action semAspasQLAcao = Action.actionMenu("label.sem_aspas_em_linhas", null);
 
@@ -232,10 +234,14 @@ public class Tabela extends JTable {
 				addSeparator();
 				addMenuItem(semAspasQLAcao);
 				addMenuItem(comAspasQLAcao);
+				addSeparator();
+				addMenuItem(semAspasQLSemVAcao);
+				addMenuItem(comAspasQLSemVAcao);
 
+				semAspasQLSemVAcao.setActionListener(e -> copiarSemV(false));
+				comAspasQLSemVAcao.setActionListener(e -> copiarSemV(true));
 				semAspasQLAcao.setActionListener(e -> copiar(true, false));
 				comAspasQLAcao.setActionListener(e -> copiar(true, true));
-
 				semAspasAcao.setActionListener(e -> copiar(false, false));
 				comAspasAcao.setActionListener(e -> copiar(false, true));
 			}
@@ -243,6 +249,11 @@ public class Tabela extends JTable {
 			private void copiar(boolean emLinhas, boolean aspas) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
 				Util.setContentTransfered(Util.getStringLista(lista, aspas, emLinhas));
+			}
+
+			private void copiarSemV(boolean aspas) {
+				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
+				Util.setContentTransfered(Util.getStringListaSemV(lista, aspas));
 			}
 		}
 

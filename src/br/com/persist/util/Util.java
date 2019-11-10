@@ -158,6 +158,24 @@ public class Util {
 		return sb.toString();
 	}
 
+	public static String getStringListaSemV(List<String> lista, boolean apostrofes) {
+		StringBuilder sb = new StringBuilder();
+
+		for (String string : lista) {
+			if (estaVazio(string)) {
+				continue;
+			}
+
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+
+			sb.append(apostrofes ? citar(string) : string);
+		}
+
+		return sb.toString();
+	}
+
 	public static String citar(String string) {
 		return "'" + string + "'";
 	}
