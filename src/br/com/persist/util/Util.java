@@ -136,7 +136,7 @@ public class Util {
 		}
 	}
 
-	public static String getStringLista(List<String> lista, boolean apostrofes) {
+	public static String getStringLista(List<String> lista, boolean apostrofes, boolean emLinhas) {
 		StringBuilder sb = new StringBuilder();
 
 		for (String string : lista) {
@@ -146,6 +146,10 @@ public class Util {
 
 			if (sb.length() > 0) {
 				sb.append(", ");
+
+				if (emLinhas) {
+					sb.append(Constantes.QL);
+				}
 			}
 
 			sb.append(apostrofes ? citar(string) : string);

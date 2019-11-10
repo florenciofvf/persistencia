@@ -233,13 +233,16 @@ public class Tabela extends JTable {
 				addMenuItem(semAspasQLAcao);
 				addMenuItem(comAspasQLAcao);
 
-				semAspasAcao.setActionListener(e -> copiar(false));
-				comAspasAcao.setActionListener(e -> copiar(true));
+				semAspasQLAcao.setActionListener(e -> copiar(true, false));
+				comAspasQLAcao.setActionListener(e -> copiar(true, true));
+
+				semAspasAcao.setActionListener(e -> copiar(false, false));
+				comAspasAcao.setActionListener(e -> copiar(false, true));
 			}
 
-			private void copiar(boolean aspas) {
+			private void copiar(boolean emLinhas, boolean aspas) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-				Util.setContentTransfered(Util.getStringLista(lista, aspas));
+				Util.setContentTransfered(Util.getStringLista(lista, aspas, emLinhas));
 			}
 		}
 
@@ -292,7 +295,7 @@ public class Tabela extends JTable {
 
 			private void copiarIN(boolean aspas) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-				String complemento = Util.getStringLista(lista, aspas);
+				String complemento = Util.getStringLista(lista, aspas, false);
 
 				if (!Util.estaVazio(complemento)) {
 					String coluna = Tabela.this.getModel().getColumnName(tag);
@@ -318,7 +321,7 @@ public class Tabela extends JTable {
 
 			private void copiarINDinamico(boolean aspas) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-				String complemento = Util.getStringLista(lista, aspas);
+				String complemento = Util.getStringLista(lista, aspas, false);
 
 				if (!Util.estaVazio(complemento)) {
 					Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");

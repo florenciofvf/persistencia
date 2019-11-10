@@ -419,7 +419,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					grupo.setProcessado(false);
 					grupo.setArgumentos(lista);
-					listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes));
+					listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
 
 					if (!objeto.isColunaInfo()) {
