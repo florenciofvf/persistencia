@@ -435,11 +435,6 @@ public class Util {
 		List<String> arquivo1 = new ArrayList<>();
 		List<String> arquivo2 = new ArrayList<>();
 
-		iguais1.add("<<<################### IGUAIS 1 ###################>>>");
-		iguais2.add("<<<################### IGUAIS 2 ###################>>>");
-		arquivo1.add("<<<################### ARQUIVO 1 ###################>>>");
-		arquivo2.add("<<<################### ARQUIVO 2 ###################>>>");
-
 		resposta.add(iguais1);
 		resposta.add(iguais2);
 		resposta.add(arquivo1);
@@ -475,6 +470,14 @@ public class Util {
 				arquivo2.add("," + string2);
 			}
 		}
+
+		final String PREFIXO = "<<<###################";
+		final String SUFIXO = ") ###################>>>";
+
+		iguais1.add(0, PREFIXO + " IGUAIS 1 (" + iguais1.size() + SUFIXO);
+		iguais2.add(0, PREFIXO + " IGUAIS 2 (" + iguais2.size() + SUFIXO);
+		arquivo1.add(0, PREFIXO + " ARQUIVO 1 (" + arquivo1.size() + SUFIXO);
+		arquivo2.add(0, PREFIXO + " ARQUIVO 2 (" + arquivo2.size() + SUFIXO);
 
 		return resposta;
 	}
