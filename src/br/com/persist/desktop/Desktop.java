@@ -169,7 +169,7 @@ public class Desktop extends JDesktopPane implements IIni {
 			}
 		}
 
-		setPreferredSize(new Dimension(largura, altura));
+		setPreferredSize(new Dimension(largura, altura + 41));
 	}
 
 	public void ajusteFormulario() {
