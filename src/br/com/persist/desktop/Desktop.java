@@ -202,7 +202,7 @@ public class Desktop extends JDesktopPane implements IIni {
 			for (int i = 1; i < frames.length; i++) {
 				frame = frames[i];
 				frame.setLocation(frame.getX(), y);
-				y = frame.getY() + frame.getHeight() + deltaY;
+				y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
 			}
 		}
 	}
