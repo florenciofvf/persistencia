@@ -59,6 +59,11 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 			}
 		});
 
+		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> {
+			Object valor = evt.getNewValue();
+			Preferencias.setAjusteAutomatico(Boolean.FALSE.equals(valor));
+		});
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
