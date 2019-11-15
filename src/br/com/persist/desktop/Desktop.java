@@ -45,6 +45,7 @@ public class Desktop extends JDesktopPane implements IIni {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
+	private boolean ajusteAutomatico = true;
 	protected final Formulario formulario;
 	private boolean abortarFecharComESC;
 
@@ -505,5 +506,13 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 
 		repaint();
+	}
+
+	public boolean isAjusteAutomatico() {
+		return ajusteAutomatico;
+	}
+
+	public void setAjusteAutomatico(boolean ajusteAutomatico) {
+		this.ajusteAutomatico = ajusteAutomatico;
 	}
 }

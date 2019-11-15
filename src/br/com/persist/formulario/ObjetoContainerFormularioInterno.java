@@ -27,6 +27,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		implements IJanela, ObjetoContainerListener, IIni {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
+	private Desktop desktop;
 	private String apelido;
 
 	public ObjetoContainerFormularioInterno(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
@@ -51,6 +52,21 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		container.ini(graphics);
 	}
 
+	private void checarDesktop() {
+		if (desktop == null) {
+			Container parent = getParent();
+
+			while (parent != null) {
+				if (parent instanceof Desktop) {
+					desktop = (Desktop) parent;
+					break;
+				}
+
+				parent = parent.getParent();
+			}
+		}
+	}
+
 	private void configurar() {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
@@ -60,14 +76,20 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		});
 
 		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> {
-			Object valor = evt.getNewValue();
-			Preferencias.setAjusteAutomatico(Boolean.FALSE.equals(valor));
+			checarDesktop();
+
+			if (desktop != null) {
+				Object valor = evt.getNewValue();
+				desktop.setAjusteAutomatico(Boolean.FALSE.equals(valor));
+			}
 		});
 
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				if (Preferencias.isAjusteAutomatico()) {
+				checarDesktop();
+
+				if (desktop != null && desktop.isAjusteAutomatico() && Preferencias.isAjusteAutomatico()) {
 					configAjustes();
 				}
 			}
@@ -75,18 +97,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	public void configAjustes() {
-		Container parent = getParent();
-		Desktop desktop = null;
-
-		while (parent != null) {
-			if (parent instanceof Desktop) {
-				desktop = (Desktop) parent;
-				break;
-			}
-
-			parent = parent.getParent();
-		}
-
 		if (desktop != null) {
 			desktop.ajusteFormulario();
 			desktop.ajusteObjetoFormulario(false);
@@ -96,17 +106,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 	@Override
 	public void buscaAutomatica(Grupo grupo, String argumentos) {
-		Container parent = getParent();
-		Desktop desktop = null;
-
-		while (parent != null) {
-			if (parent instanceof Desktop) {
-				desktop = (Desktop) parent;
-				break;
-			}
-
-			parent = parent.getParent();
-		}
+		checarDesktop();
 
 		if (desktop != null) {
 			desktop.buscaAutomatica(grupo, argumentos, container);
@@ -115,17 +115,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 	@Override
 	public void linkAutomatico(Link link, String argumento) {
-		Container parent = getParent();
-		Desktop desktop = null;
-
-		while (parent != null) {
-			if (parent instanceof Desktop) {
-				desktop = (Desktop) parent;
-				break;
-			}
-
-			parent = parent.getParent();
-		}
+		checarDesktop();
 
 		if (desktop != null) {
 			desktop.linkAutomatico(link, argumento, container);
