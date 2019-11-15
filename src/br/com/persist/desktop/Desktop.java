@@ -179,12 +179,10 @@ public class Desktop extends JDesktopPane implements IIni {
 		if (frames.length > 0) {
 			boolean salvar = false;
 
-			String chaveDeltaY = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
-
-			ChaveValor cvDeltaY = VariaveisModelo.get(chaveDeltaY);
+			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
 
 			if (cvDeltaY == null) {
-				cvDeltaY = new ChaveValor(chaveDeltaY, "40");
+				cvDeltaY = new ChaveValor(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL, "" + Constantes.QUARENTA);
 				VariaveisModelo.adicionar(cvDeltaY);
 				salvar = true;
 			}
@@ -197,7 +195,7 @@ public class Desktop extends JDesktopPane implements IIni {
 			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
 
 			JInternalFrame frame = frames[0];
-			int deltaY = cvDeltaY.getInteiro(40);
+			int deltaY = cvDeltaY.getInteiro(Constantes.QUARENTA);
 			int y = frame.getY() + frame.getHeight() + deltaY;
 
 			for (int i = 1; i < frames.length; i++) {

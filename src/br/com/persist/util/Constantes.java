@@ -3,6 +3,7 @@ package br.com.persist.util;
 import java.awt.Dimension;
 
 public class Constantes {
+	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
@@ -59,6 +60,7 @@ public class Constantes {
 	public static final String EKS = "eks";
 	public static final String QL = "\r\n";
 	public static final String SEP = "###";
+	public static final int QUARENTA = 40;
 	public static final String TAB = "\t";
 	public static final String PK = "pk";
 	public static final String FK = "fk";
