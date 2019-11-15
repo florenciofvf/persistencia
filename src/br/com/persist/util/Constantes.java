@@ -3,6 +3,8 @@ package br.com.persist.util;
 import java.awt.Dimension;
 
 public class Constantes {
+	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
+	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";

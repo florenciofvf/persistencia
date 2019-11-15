@@ -475,20 +475,17 @@ public class Desktop extends JDesktopPane implements IIni {
 
 		boolean salvar = false;
 
-		String chaveDeltaX = "DELTA_X_AJUSTE_FORM_OBJETO";
-		String chaveDeltaY = "DELTA_Y_AJUSTE_FORM_OBJETO";
-
-		ChaveValor cvDeltaX = VariaveisModelo.get(chaveDeltaX);
-		ChaveValor cvDeltaY = VariaveisModelo.get(chaveDeltaY);
+		ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
+		ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
 
 		if (cvDeltaX == null) {
-			cvDeltaX = new ChaveValor(chaveDeltaX, "30");
+			cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
 			VariaveisModelo.adicionar(cvDeltaX);
 			salvar = true;
 		}
 
 		if (cvDeltaY == null) {
-			cvDeltaY = new ChaveValor(chaveDeltaY, "30");
+			cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
 			VariaveisModelo.adicionar(cvDeltaY);
 			salvar = true;
 		}
