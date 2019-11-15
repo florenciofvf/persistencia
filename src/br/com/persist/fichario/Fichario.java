@@ -54,8 +54,10 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.LinkAuto.Link;
@@ -227,16 +229,39 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie) {
-		int x = 10;
-		int y = 10;
+		boolean salvar = false;
+
+		String chaveDeltaX = "DELTA_X_AJUSTE_FORM_OBJETO";
+		String chaveDeltaY = "DELTA_Y_AJUSTE_FORM_OBJETO";
+
+		ChaveValor cvDeltaX = VariaveisModelo.get(chaveDeltaX);
+		ChaveValor cvDeltaY = VariaveisModelo.get(chaveDeltaY);
+
+		if (cvDeltaX == null) {
+			cvDeltaX = new ChaveValor(chaveDeltaX, "30");
+			VariaveisModelo.adicionar(cvDeltaX);
+			salvar = true;
+		}
+
+		if (cvDeltaY == null) {
+			cvDeltaY = new ChaveValor(chaveDeltaY, "30");
+			VariaveisModelo.adicionar(cvDeltaY);
+			salvar = true;
+		}
+
+		if (salvar) {
+			VariaveisModelo.salvar();
+			VariaveisModelo.inicializar();
+		}
 
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = Util.criarArray(conexao, objeto, null);
-				superficie.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
+				superficie.addForm(array,
+						new Point(objeto.getX() + cvDeltaX.getInteiro(Constantes.TRINTA),
+								objeto.getY() + cvDeltaY.getInteiro(Constantes.TRINTA)),
+						null, (String) array[Util.ARRAY_INDICE_APE], false);
 				objeto.setSelecionado(false);
-				x += 25;
-				y += 25;
 			}
 		}
 

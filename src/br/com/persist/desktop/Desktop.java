@@ -501,7 +501,8 @@ public class Desktop extends JDesktopPane implements IIni {
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-				interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(30), cvDeltaY.getInteiro(30));
+				interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(Constantes.TRINTA),
+						cvDeltaY.getInteiro(Constantes.TRINTA));
 			}
 		}
 
