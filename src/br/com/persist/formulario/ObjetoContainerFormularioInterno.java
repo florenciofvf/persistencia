@@ -18,6 +18,7 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.IIni;
@@ -101,6 +102,17 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 			desktop.ajusteFormulario();
 			desktop.ajusteObjetoFormulario(false);
 			desktop.ajusteDimension();
+		}
+	}
+
+	@Override
+	public void configAlturaAutomatica(int total) {
+		Dimension d = getDimensoes();
+
+		if (total < 1) {
+			setSize(d.width, Constantes.TRINTA);
+		} else if (d.height == Constantes.TRINTA) {
+			setSize(d.width, Constantes.SESSENTA);
 		}
 	}
 

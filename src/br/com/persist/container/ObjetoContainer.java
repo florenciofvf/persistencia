@@ -99,6 +99,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
+	private boolean tamanhoAutomatico;
 	private final boolean buscaAuto;
 	private transient Thread thread;
 	private Component suporte;
@@ -1340,6 +1341,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabela, -1);
+		configAlturaAutomatica();
+	}
+
+	private void configAlturaAutomatica() {
+		if (tamanhoAutomatico) {
+			listener.configAlturaAutomatica(tabela.getModel().getRowCount());
+		}
 	}
 
 	@Override
@@ -1395,7 +1403,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 
 		txtComplemento.setText("AND " + campo + " IN (" + argumentos + ")");
+		tamanhoAutomatico = true;
 		ObjetoContainer.this.actionPerformed(null);
+		tamanhoAutomatico = false;
 	}
 
 	public void linkAutomatico(String campo, String argumento) {

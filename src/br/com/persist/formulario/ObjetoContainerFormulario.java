@@ -55,6 +55,11 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	}
 
 	@Override
+	public void configAlturaAutomatica(int total) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Dimension getDimensoes() {
 		return getSize();
 	}

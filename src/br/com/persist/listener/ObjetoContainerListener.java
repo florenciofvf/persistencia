@@ -10,6 +10,8 @@ public interface ObjetoContainerListener {
 
 	public void linkAutomatico(Link link, String argumento);
 
+	public void configAlturaAutomatica(int total);
+
 	public void setTitulo(String titulo);
 
 	public Dimension getDimensoes();

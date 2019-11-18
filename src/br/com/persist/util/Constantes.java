@@ -61,6 +61,7 @@ public class Constantes {
 	public static final String QL = "\r\n";
 	public static final String SEP = "###";
 	public static final int QUARENTA = 40;
+	public static final int SESSENTA = 60;
 	public static final String TAB = "\t";
 	public static final String PK = "pk";
 	public static final String FK = "fk";

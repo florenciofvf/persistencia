@@ -436,6 +436,11 @@ public class Fichario extends JTabbedPane {
 		}
 
 		@Override
+		public void configAlturaAutomatica(int total) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public void setTitulo(String titulo) {
 			LOG.log(Level.FINEST, titulo);
 		}
