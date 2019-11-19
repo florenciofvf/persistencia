@@ -139,9 +139,9 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		if (total < 1) {
 			setSize(d.width, minimo);
 		} else if (total < 11) {
-			setSize(d.width, minimoDados + total * 20);
+			setSize(d.width, minimoDados + total * 20 + (total == 1 ? 5 : -total));
 		} else {
-			setSize(d.width, minimoDados + Constantes.DEZ * 20);
+			setSize(d.width, minimoDados + Constantes.DEZ * 20 + (-Constantes.DEZ));
 		}
 	}
 
