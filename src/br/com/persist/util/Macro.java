@@ -11,6 +11,7 @@ import br.com.persist.desktop.Relacao;
 
 public class Macro {
 	public static final String COPIAR_DESTACADO = "copiarDestacado";
+	public static final String AJUSTE_AUTO_FORM = "ajusteAutoForm";
 	public static final String DESENHAR_ID_DESC = "desenharIdDesc";
 	public static final String DESCLOC_X_ID_DESC = "deslocXIdDesc";
 	public static final String DESCLOC_Y_ID_DESC = "deslocYIdDesc";
@@ -37,6 +38,7 @@ public class Macro {
 		mapa.put(DESCLOC_Y_ID_DESC, new DeslocamentoYIdDescricao());
 		mapa.put(DESENHAR_ID_DESC, new DesenharIdDescricao());
 		mapa.put(COPIAR_DESTACADO, new CopiarDestacado());
+		mapa.put(AJUSTE_AUTO_FORM, new AjusteAutoForm());
 		mapa.put(PONTO_DESTINO, new PontoDestino());
 		mapa.put(TRANSPARENTE, new Transparente());
 		mapa.put(PONTO_ORIGEM, new PontoOrigem());
@@ -180,6 +182,18 @@ public class Macro {
 		}
 	}
 
+	class AjusteAutoForm extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setAjusteAutoForm((Boolean) valor);
+		}
+	}
+
 	class PontoDestino extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
@@ -320,6 +334,12 @@ public class Macro {
 
 	public void copiarDestacado(Object valor) {
 		Instrucao instrucao = mapa.get(COPIAR_DESTACADO);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void ajusteAutoForm(Object valor) {
+		Instrucao instrucao = mapa.get(AJUSTE_AUTO_FORM);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}
