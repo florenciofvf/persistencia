@@ -1345,7 +1345,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	}
 
 	private void configAlturaAutomatica() {
-		if (tamanhoAutomatico) {
+		if (objeto.isAjusteAutoForm() && tamanhoAutomatico) {
 			listener.configAlturaAutomatica(tabela.getModel().getRowCount());
 		}
 	}

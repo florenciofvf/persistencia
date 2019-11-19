@@ -40,6 +40,7 @@ public class Objeto implements Runnable {
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
 	private Tabela tabelaPesquisaAuto;
+	protected boolean ajusteAutoForm;
 	private boolean copiarDestacado;
 	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
@@ -108,6 +109,7 @@ public class Objeto implements Runnable {
 		o.deslocamentoYId = deslocamentoYId;
 		o.copiarDestacado = copiarDestacado;
 		o.linkAutomatico = linkAutomatico;
+		o.ajusteAutoForm = ajusteAutoForm;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
 		o.complemento = complemento;
@@ -138,6 +140,14 @@ public class Objeto implements Runnable {
 
 	public static long getSequencia() {
 		return sequencia;
+	}
+
+	public boolean isAjusteAutoForm() {
+		return ajusteAutoForm;
+	}
+
+	public void setAjusteAutoForm(boolean ajusteAutoForm) {
+		this.ajusteAutoForm = ajusteAutoForm;
 	}
 
 	public void setTransparente(boolean transparente) {
@@ -488,6 +498,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void aplicar(Attributes attr) {
+		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
 		copiarDestacado = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
@@ -529,6 +540,7 @@ public class Objeto implements Runnable {
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", copiarDestacado);
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
