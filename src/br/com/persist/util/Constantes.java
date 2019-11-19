@@ -4,8 +4,10 @@ import java.awt.Dimension;
 
 public class Constantes {
 	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
+	public static final String ALTURMA_MINIMA_FORMULARIO_DADOS = "ALTURMA_MINIMA_FORMULARIO_DADOS";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
+	public static final String ALTURMA_MINIMA_FORMULARIO = "ALTURMA_MINIMA_FORMULARIO";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
@@ -61,7 +63,6 @@ public class Constantes {
 	public static final String QL = "\r\n";
 	public static final String SEP = "###";
 	public static final int QUARENTA = 40;
-	public static final int SESSENTA = 60;
 	public static final String TAB = "\t";
 	public static final String PK = "pk";
 	public static final String FK = "fk";

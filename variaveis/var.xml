@@ -21,4 +21,14 @@
 			30
 		</valor>
 	</chave_valor>
+	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_DADOS">
+		<valor>
+			100
+		</valor>
+	</chave_valor>
+	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO">
+		<valor>
+			30
+		</valor>
+	</chave_valor>
 </variaveis>

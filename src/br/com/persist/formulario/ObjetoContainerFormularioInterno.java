@@ -16,8 +16,10 @@ import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.listener.ObjetoContainerListener;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.BuscaAuto.Tabela;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Preferencias;
@@ -109,10 +111,35 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	public void configAlturaAutomatica(int total) {
 		Dimension d = getDimensoes();
 
+		boolean salvar = false;
+
+		ChaveValor cvMinimoDados = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS);
+		ChaveValor cvMinimo = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO);
+
+		if (cvMinimoDados == null) {
+			cvMinimoDados = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS, "" + Constantes.TRINTA * 2);
+			VariaveisModelo.adicionar(cvMinimoDados);
+			salvar = true;
+		}
+
+		if (cvMinimo == null) {
+			cvMinimo = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO, "" + Constantes.TRINTA);
+			VariaveisModelo.adicionar(cvMinimo);
+			salvar = true;
+		}
+
+		if (salvar) {
+			VariaveisModelo.salvar();
+			VariaveisModelo.inicializar();
+		}
+
+		int minimoDados = cvMinimoDados.getInteiro(Constantes.TRINTA * 2);
+		int minimo = cvMinimo.getInteiro(Constantes.TRINTA);
+
 		if (total < 1) {
-			setSize(d.width, Constantes.TRINTA);
-		} else if (d.height == Constantes.TRINTA) {
-			setSize(d.width, Constantes.SESSENTA);
+			setSize(d.width, minimo);
+		} else if (d.height == minimo) {
+			setSize(d.width, minimoDados);
 		}
 	}
 
