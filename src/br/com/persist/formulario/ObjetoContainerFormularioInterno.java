@@ -117,13 +117,13 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		ChaveValor cvMinimo = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO);
 
 		if (cvMinimoDados == null) {
-			cvMinimoDados = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS, "" + Constantes.QUARENTA * 2);
+			cvMinimoDados = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS, "" + Constantes.SETENTA);
 			VariaveisModelo.adicionar(cvMinimoDados);
 			salvar = true;
 		}
 
 		if (cvMinimo == null) {
-			cvMinimo = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO, "" + Constantes.QUARENTA);
+			cvMinimo = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO, "" + Constantes.TRINTA);
 			VariaveisModelo.adicionar(cvMinimo);
 			salvar = true;
 		}
@@ -133,13 +133,15 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 			VariaveisModelo.inicializar();
 		}
 
-		int minimoDados = cvMinimoDados.getInteiro(Constantes.QUARENTA * 2);
-		int minimo = cvMinimo.getInteiro(Constantes.QUARENTA);
+		int minimoDados = cvMinimoDados.getInteiro(Constantes.SETENTA);
+		int minimo = cvMinimo.getInteiro(Constantes.TRINTA);
 
 		if (total < 1) {
 			setSize(d.width, minimo);
-		} else if (d.height <= minimo) {
-			setSize(d.width, minimoDados);
+		} else if (total < 11) {
+			setSize(d.width, minimoDados + total * 20);
+		} else {
+			setSize(d.width, minimoDados + Constantes.DEZ * 20);
 		}
 	}
 

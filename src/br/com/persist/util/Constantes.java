@@ -67,12 +67,14 @@ public class Constantes {
 	public static final String PK = "pk";
 	public static final String FK = "fk";
 	public static final String EK = "ek";
+	public static final int SETENTA = 70;
 	public static final byte ARRASTO = 1;
 	public static final byte RELACAO = 3;
 	public static final byte SELECAO = 5;
 	public static final byte ROTULOS = 7;
 	public static final int TRINTA = 30;
 	public static final int DOIS = 2;
+	public static final int DEZ = 10;
 
 	private Constantes() {
 	}
