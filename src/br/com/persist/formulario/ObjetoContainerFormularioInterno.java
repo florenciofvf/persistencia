@@ -138,7 +138,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 		if (total < 1) {
 			setSize(d.width, minimo);
-		} else if (d.height < minimo) {
+		} else if (d.height <= minimo) {
 			setSize(d.width, minimoDados);
 		}
 	}
