@@ -93,16 +93,16 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				checarDesktop();
 
 				if (desktop != null && desktop.isAjusteAutomatico() && Preferencias.isAjusteAutomatico()) {
-					configAjustes();
+					configAjustes(false);
 				}
 			}
 		});
 	}
 
-	public void configAjustes() {
+	public void configAjustes(boolean updateTree) {
 		if (desktop != null) {
 			desktop.ajusteFormulario();
-			desktop.ajusteObjetoFormulario(false);
+			desktop.ajusteObjetoFormulario(false, updateTree);
 			desktop.ajusteDimension();
 		}
 	}
@@ -143,6 +143,9 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		} else {
 			setSize(d.width, minimoDados + Constantes.DEZ * 20 + (-Constantes.DEZ));
 		}
+
+		checarDesktop();
+		configAjustes(true);
 	}
 
 	@Override

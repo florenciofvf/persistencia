@@ -1420,8 +1420,8 @@ public class Superficie extends Desktop {
 
 		private void eventos() {
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
-			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false));
-			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true));
+			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false, false));
+			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true, false));
 			alinharEsquerdoAcao.setActionListener(e -> alinharEsquerdo());
 			alinharDireitoAcao.setActionListener(e -> alinharDireito());
 			dimensaoAcao3.setActionListener(e -> ajusteFormulario());

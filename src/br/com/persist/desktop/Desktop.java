@@ -411,8 +411,8 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 
 		private void eventos() {
-			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false));
-			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true));
+			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false, false));
+			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true, false));
 			dimensaoAcao3.setActionListener(e -> ajusteFormulario());
 			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
 			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
@@ -468,7 +468,7 @@ public class Desktop extends JDesktopPane implements IIni {
 		this.abortarFecharComESC = abortarFecharComESC;
 	}
 
-	public void ajusteObjetoFormulario(boolean aoObjeto) {
+	public void ajusteObjetoFormulario(boolean aoObjeto, boolean updateTree) {
 		JInternalFrame[] frames = getAllFrames();
 
 		boolean salvar = false;
@@ -501,7 +501,11 @@ public class Desktop extends JDesktopPane implements IIni {
 			}
 		}
 
-		repaint();
+		if (updateTree) {
+			SwingUtilities.updateComponentTreeUI(getParent());
+		} else {
+			repaint();
+		}
 	}
 
 	public boolean isAjusteAutomatico() {
