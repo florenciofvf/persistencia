@@ -75,6 +75,12 @@ public class Container extends Panel {
 		});
 	}
 
+	public void selecionarConexao(Conexao conexao) {
+		if (conexao != null) {
+			cmbConexao.setSelectedItem(conexao);
+		}
+	}
+
 	public Superficie getSuperficie() {
 		return superficie;
 	}

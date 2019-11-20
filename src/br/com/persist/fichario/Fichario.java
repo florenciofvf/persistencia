@@ -572,6 +572,19 @@ public class Fichario extends JTabbedPane {
 		return -1;
 	}
 
+	public void selecionarConexao(Conexao conexao) {
+		int total = getTabCount();
+
+		for (int i = 0; i < total; i++) {
+			Component cmp = getComponentAt(i);
+
+			if (cmp instanceof Container) {
+				Container container = (Container) cmp;
+				container.selecionarConexao(conexao);
+			}
+		}
+	}
+
 	private class Listener extends MouseAdapter {
 		@Override
 		public void mousePressed(MouseEvent e) {

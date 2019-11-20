@@ -56,6 +56,7 @@ public class ConexaoContainer extends Panel implements IIni {
 		private static final long serialVersionUID = 1L;
 		private Action desconectaAcao = Action.actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
+		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
 		private Action salvarAcao = Action.actionIconSalvar();
@@ -70,6 +71,7 @@ public class ConexaoContainer extends Panel implements IIni {
 			addButton(salvarAcao);
 			addButton(true, topAcao);
 			addButton(true, conectaAcao);
+			addButton(true, sucessoAcao);
 			addButton(true, desconectaAcao);
 			addButton(true, novoAcao);
 			addButton(copiarAcao);
@@ -78,6 +80,16 @@ public class ConexaoContainer extends Panel implements IIni {
 		}
 
 		private void eventos() {
+			sucessoAcao.setActionListener(e -> selecionarConexao());
+
+			topAcao.setActionListener(e -> selecionarPrimeiro());
+
+			conectaAcao.setActionListener(e -> conectar());
+
+			novoAcao.setActionListener(e -> modelo.novo());
+
+			copiarAcao.setActionListener(e -> copiar());
+
 			abrirAcao.setActionListener(e -> {
 				try {
 					modelo.abrir();
@@ -88,39 +100,12 @@ public class ConexaoContainer extends Panel implements IIni {
 				}
 			});
 
-			topAcao.setActionListener(e -> {
-				int[] linhas = tabela.getSelectedRows();
-
-				if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
-					modelo.primeiro(linhas[0]);
-					modelo.fireTableDataChanged();
-					tabela.setRowSelectionInterval(0, 0);
-				}
-			});
-
-			conectaAcao.setActionListener(e -> conectar());
-
 			desconectaAcao.setActionListener(e -> {
 				try {
 					Conexao.fecharConexoes();
 					tabela.repaint();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
-				}
-			});
-
-			novoAcao.setActionListener(e -> modelo.novo());
-
-			copiarAcao.setActionListener(e -> {
-				int[] linhas = tabela.getSelectedRows();
-
-				if (linhas != null && linhas.length > 0) {
-					for (int i : linhas) {
-						Conexao c = modelo.getConexao(i);
-						modelo.adicionar(c.clonar());
-					}
-
-					modelo.fireTableDataChanged();
 				}
 			});
 
@@ -132,6 +117,38 @@ public class ConexaoContainer extends Panel implements IIni {
 					Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoContainer.this);
 				}
 			});
+		}
+
+		private void selecionarConexao() {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1) {
+				Conexao c = modelo.getConexao(linhas[0]);
+				formulario.getFichario().selecionarConexao(c);
+			}
+		}
+
+		private void selecionarPrimeiro() {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
+				modelo.primeiro(linhas[0]);
+				modelo.fireTableDataChanged();
+				tabela.setRowSelectionInterval(0, 0);
+			}
+		}
+
+		private void copiar() {
+			int[] linhas = tabela.getSelectedRows();
+
+			if (linhas != null && linhas.length > 0) {
+				for (int i : linhas) {
+					Conexao c = modelo.getConexao(i);
+					modelo.adicionar(c.clonar());
+				}
+
+				modelo.fireTableDataChanged();
+			}
 		}
 
 		private void conectar() {
