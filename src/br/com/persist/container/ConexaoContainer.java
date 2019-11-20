@@ -82,13 +82,13 @@ public class ConexaoContainer extends Panel implements IIni {
 		private void eventos() {
 			sucessoAcao.setActionListener(e -> selecionarConexao());
 
-			topAcao.setActionListener(e -> selecionarPrimeiro());
-
 			conectaAcao.setActionListener(e -> conectar());
 
 			novoAcao.setActionListener(e -> modelo.novo());
 
 			copiarAcao.setActionListener(e -> copiar());
+
+			topAcao.setActionListener(e -> primeiro());
 
 			abrirAcao.setActionListener(e -> {
 				try {
@@ -128,7 +128,7 @@ public class ConexaoContainer extends Panel implements IIni {
 			}
 		}
 
-		private void selecionarPrimeiro() {
+		private void primeiro() {
 			int[] linhas = tabela.getSelectedRows();
 
 			if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
