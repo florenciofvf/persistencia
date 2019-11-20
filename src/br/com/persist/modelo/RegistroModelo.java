@@ -27,10 +27,11 @@ public class RegistroModelo implements TableModel {
 	private final String tabela;
 	private Conexao conexao;
 
-	public RegistroModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela) {
+	public RegistroModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao) {
 		this.registros = registros;
 		this.colunas = colunas;
 		this.tabela = tabela;
+		setConexao(conexao);
 		int total = 0;
 		for (Coluna c : colunas) {
 			if (c.isChave()) {

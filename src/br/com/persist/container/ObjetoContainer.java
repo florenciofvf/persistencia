@@ -729,10 +729,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					if (minimo) {
 						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
-								+ objeto.getTabela(conexao.getEsquema()) + ")");
+								+ objeto.getTabelaEsquema(conexao.getEsquema()) + ")");
 					} else {
 						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
-								+ objeto.getTabela(conexao.getEsquema()) + ")");
+								+ objeto.getTabelaEsquema(conexao.getEsquema()) + ")");
 					}
 
 					ObjetoContainer.this.actionPerformed(null);
@@ -1248,7 +1248,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	private StringBuilder getConsulta(Conexao conexao, String complemento) {
 		StringBuilder builder = new StringBuilder(
-				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1=1");
+				"SELECT * FROM " + objeto.getTabelaEsquema(conexao.getEsquema()) + " WHERE 1=1");
 		builder.append(" " + txtComplemento.getText());
 		builder.append(" " + complemento);
 		builder.append(" " + objeto.getFinalConsulta());

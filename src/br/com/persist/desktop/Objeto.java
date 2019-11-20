@@ -289,7 +289,7 @@ public class Objeto implements Runnable {
 		return chavesTmp.trim().split(",");
 	}
 
-	public String getTabela(String esquema) {
+	public String getTabelaEsquema(String esquema) {
 		if (Util.estaVazio(tabela)) {
 			tabela = "";
 		}

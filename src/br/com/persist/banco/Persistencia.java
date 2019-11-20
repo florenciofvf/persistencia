@@ -45,7 +45,8 @@ public class Persistencia {
 
 	public static int getTotalRegistros(Connection conn, Objeto objeto, String complemento, Conexao conexao)
 			throws PersistenciaException {
-		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + objeto.getTabela(conexao.getEsquema()));
+		StringBuilder builder = new StringBuilder(
+				"SELECT COUNT(*) FROM " + objeto.getTabelaEsquema(conexao.getEsquema()));
 
 		if (!Util.estaVazio(complemento)) {
 			builder.append(" WHERE 1=1 " + complemento);
@@ -65,7 +66,7 @@ public class Persistencia {
 			Conexao conexao) throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
-				return criarModelo(rs, chaves, objeto.getTabela(conexao.getEsquema()), objeto, conexao.getEsquema());
+				return criarModelo(rs, chaves, objeto.getTabela2(), objeto, conexao.getEsquema(), conexao);
 			}
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -140,7 +141,7 @@ public class Persistencia {
 	}
 
 	private static RegistroModelo criarModelo(ResultSet rs, String[] chaves, String tabela, Objeto objeto,
-			String esquema) throws PersistenciaException {
+			String esquema, Conexao conexao) throws PersistenciaException {
 
 		try {
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -164,7 +165,7 @@ public class Persistencia {
 				registros.add(registro);
 			}
 
-			return new RegistroModelo(colunas, registros, tabela);
+			return new RegistroModelo(colunas, registros, tabela, conexao);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
@@ -474,7 +475,7 @@ public class Persistencia {
 	public static ListagemModelo criarModeloMetaDados(Connection conn, Objeto objeto, Conexao conexao)
 			throws PersistenciaException {
 		StringBuilder builder = new StringBuilder(
-				"SELECT * FROM " + objeto.getTabela(conexao.getEsquema()) + " WHERE 1 > 2");
+				"SELECT * FROM " + objeto.getTabelaEsquema(conexao.getEsquema()) + " WHERE 1 > 2");
 
 		try (PreparedStatement psmt = conn.prepareStatement(builder.toString())) {
 			try (ResultSet rs = psmt.executeQuery()) {
