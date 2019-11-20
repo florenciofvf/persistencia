@@ -22,6 +22,7 @@ import javax.swing.Icon;
 import org.xml.sax.Attributes;
 
 import br.com.persist.Instrucao;
+import br.com.persist.banco.Conexao;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Constantes;
@@ -293,6 +294,12 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(tabela)) {
 			tabela = "";
 		}
+
+		return (Util.estaVazio(esquema) ? "" : esquema + ".") + tabela;
+	}
+
+	public static String getTabelaEsquema(Conexao conexao, String tabela) {
+		String esquema = conexao == null ? "" : conexao.getEsquema();
 
 		return (Util.estaVazio(esquema) ? "" : esquema + ".") + tabela;
 	}

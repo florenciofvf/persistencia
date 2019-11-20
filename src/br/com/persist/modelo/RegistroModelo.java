@@ -13,6 +13,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
+import br.com.persist.desktop.Objeto;
 import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Constantes;
@@ -281,7 +282,7 @@ public class RegistroModelo implements TableModel {
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores) {
-		StringBuilder builder = new StringBuilder("UPDATE " + tabela + " SET ");
+		StringBuilder builder = new StringBuilder("UPDATE " + Objeto.getTabelaEsquema(conexao, tabela) + " SET ");
 
 		Coluna coluna = colunas[0];
 		builder.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[0]));
@@ -306,7 +307,8 @@ public class RegistroModelo implements TableModel {
 			return null;
 		}
 
-		StringBuilder builder = new StringBuilder("INSERT INTO " + tabela + " (" + Constantes.QL);
+		StringBuilder builder = new StringBuilder(
+				"INSERT INTO " + Objeto.getTabelaEsquema(conexao, tabela) + " (" + Constantes.QL);
 
 		StringBuilder campos = new StringBuilder();
 		StringBuilder values = new StringBuilder("VALUES (" + Constantes.QL);
@@ -345,7 +347,7 @@ public class RegistroModelo implements TableModel {
 	}
 
 	private String gerarDelete(List<Object> registro) {
-		StringBuilder builder = new StringBuilder("DELETE FROM " + tabela);
+		StringBuilder builder = new StringBuilder("DELETE FROM " + Objeto.getTabelaEsquema(conexao, tabela));
 		builder.append(getWhere(registro));
 
 		return builder.toString();
