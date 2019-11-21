@@ -1439,7 +1439,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return;
 		}
 
+		tamanhoAutomatico = true;
 		ObjetoContainer.this.actionPerformed(null);
+		tamanhoAutomatico = false;
 	}
 
 	private transient TabelaListener tabelaListener = new TabelaListener() {
