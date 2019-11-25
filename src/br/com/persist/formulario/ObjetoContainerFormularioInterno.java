@@ -140,7 +140,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 			VariaveisModelo.inicializar();
 		}
 
-		int minimoRegistros = cvMinimoDados.getInteiro(Constantes.DEZ);
+		int minimoRegistros = cvMinimoRegistros.getInteiro(Constantes.DEZ);
 		int minimoDados = cvMinimoDados.getInteiro(Constantes.SETENTA);
 		int minimo = cvMinimo.getInteiro(Constantes.TRINTA);
 
