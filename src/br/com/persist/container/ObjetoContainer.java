@@ -1358,7 +1358,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				contadorAuto++;
 				toolbar.atualizar.itemAtualizarAuto
 						.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO) + " " + contadorAuto);
+				tamanhoAutomatico = true;
 				actionPerformed(null);
+				tamanhoAutomatico = false;
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
