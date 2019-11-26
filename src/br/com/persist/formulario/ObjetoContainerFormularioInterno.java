@@ -149,7 +149,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		} else if (total <= minimoRegistros) {
 			setSize(d.width, minimoDados + total * 20 + (total == 1 ? 5 : -total));
 		} else {
-			setSize(d.width, minimoDados + Constantes.DEZ * 20 + (-Constantes.DEZ));
+			setSize(d.width, minimoDados + minimoRegistros * 20 + (-minimoRegistros));
 		}
 
 		checarDesktop();
