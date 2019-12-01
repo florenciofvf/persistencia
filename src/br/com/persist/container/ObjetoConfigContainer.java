@@ -69,6 +69,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtBuscaAutomatica = new TextField();
 		private TextField txtLinkAutomatico = new TextField();
 		private TextField txtFinalConsulta = new TextField();
+		private CheckBox chkAjusteAutoEnter = new CheckBox();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
 		private TextField txtChaveamento = new TextField();
 		private TextField txtComplemento = new TextField();
@@ -92,6 +93,7 @@ public class ObjetoConfigContainer extends Panel {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
 			txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
 			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
@@ -133,6 +135,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtY.addFocusListener(focusListenerInner);
 
 			txtBuscaAutomatica.addActionListener(this);
+			chkAjusteAutoEnter.addActionListener(this);
 			chkAjusteAutoForm.addActionListener(this);
 			txtLinkAutomatico.addActionListener(this);
 			txtFinalConsulta.addActionListener(this);
@@ -189,6 +192,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm));
+			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter));
 
 			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
 			txtLinkAutomatico.addMouseListener(linkAutomaticoListener);
@@ -367,6 +371,11 @@ public class ObjetoConfigContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAjusteAutoForm(chk.isSelected());
 				Formulario.macro.ajusteAutoForm(chk.isSelected());
+
+			} else if (chkAjusteAutoEnter == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setAjusteAutoEnter(chk.isSelected());
+				Formulario.macro.ajusteAutoEnter(chk.isSelected());
 			}
 		}
 
