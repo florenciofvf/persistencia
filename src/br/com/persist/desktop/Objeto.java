@@ -41,6 +41,7 @@ public class Objeto implements Runnable {
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
 	private Tabela tabelaPesquisaAuto;
+	protected boolean ajusteAutoEnter;
 	protected boolean ajusteAutoForm;
 	private boolean copiarDestacado;
 	private boolean transparenteBkp;
@@ -109,6 +110,7 @@ public class Objeto implements Runnable {
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.copiarDestacado = copiarDestacado;
+		o.ajusteAutoEnter = ajusteAutoEnter;
 		o.linkAutomatico = linkAutomatico;
 		o.ajusteAutoForm = ajusteAutoForm;
 		o.finalConsulta = finalConsulta;
@@ -149,6 +151,14 @@ public class Objeto implements Runnable {
 
 	public void setAjusteAutoForm(boolean ajusteAutoForm) {
 		this.ajusteAutoForm = ajusteAutoForm;
+	}
+
+	public boolean isAjusteAutoEnter() {
+		return ajusteAutoEnter;
+	}
+
+	public void setAjusteAutoEnter(boolean ajusteAutoEnter) {
+		this.ajusteAutoEnter = ajusteAutoEnter;
 	}
 
 	public void setTransparente(boolean transparente) {
@@ -505,6 +515,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void aplicar(Attributes attr) {
+		ajusteAutoEnter = Boolean.parseBoolean(attr.getValue("ajusteAutoEnter"));
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
 		copiarDestacado = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
@@ -547,6 +558,7 @@ public class Objeto implements Runnable {
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("ajusteAutoEnter", ajusteAutoEnter);
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", copiarDestacado);
 		util.atributo("desloc_x_id", deslocamentoXId);
