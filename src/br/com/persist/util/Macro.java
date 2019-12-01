@@ -10,6 +10,7 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 
 public class Macro {
+	public static final String AJUSTE_AUTO_ENTER = "ajusteAutoEnter";
 	public static final String COPIAR_DESTACADO = "copiarDestacado";
 	public static final String AJUSTE_AUTO_FORM = "ajusteAutoForm";
 	public static final String DESENHAR_ID_DESC = "desenharIdDesc";
@@ -37,6 +38,7 @@ public class Macro {
 		mapa.put(DESCLOC_X_ID_DESC, new DeslocamentoXIdDescricao());
 		mapa.put(DESCLOC_Y_ID_DESC, new DeslocamentoYIdDescricao());
 		mapa.put(DESENHAR_ID_DESC, new DesenharIdDescricao());
+		mapa.put(AJUSTE_AUTO_ENTER, new AjusteAutoEnter());
 		mapa.put(COPIAR_DESTACADO, new CopiarDestacado());
 		mapa.put(AJUSTE_AUTO_FORM, new AjusteAutoForm());
 		mapa.put(PONTO_DESTINO, new PontoDestino());
@@ -194,6 +196,18 @@ public class Macro {
 		}
 	}
 
+	class AjusteAutoEnter extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setAjusteAutoEnter((Boolean) valor);
+		}
+	}
+
 	class PontoDestino extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
@@ -340,6 +354,12 @@ public class Macro {
 
 	public void ajusteAutoForm(Object valor) {
 		Instrucao instrucao = mapa.get(AJUSTE_AUTO_FORM);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void ajusteAutoEnter(Object valor) {
+		Instrucao instrucao = mapa.get(AJUSTE_AUTO_ENTER);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}
