@@ -111,11 +111,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
 		listaLink = LinkAuto.criarLinksAuto(objeto.getLinkAutomatico());
+		txtComplemento.addActionListener(new ActionListenerInner());
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
 		tabela.setTabelaListener(tabelaListener);
-		txtComplemento.addActionListener(this);
 		cmbConexao.addItemListener(this);
 		toolbar.ini(janela, objeto);
 		this.buscaAuto = buscaAuto;
@@ -309,7 +309,15 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						txtComplemento.setText(s + " " + complement);
 					}
 
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = true;
+					}
+
 					ObjetoContainer.this.actionPerformed(null);
+
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = false;
+					}
 				}
 			}
 		}
@@ -353,14 +361,33 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 				});
 
-				atualizarAcao.setActionListener(e -> ObjetoContainer.this.actionPerformed(null));
+				atualizarAcao.setActionListener(e -> {
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = true;
+					}
+
+					ObjetoContainer.this.actionPerformed(null);
+
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = false;
+					}
+				});
 
 				sincronizarAcao.setActionListener(e -> {
 					CabecalhoColuna temp = cabecalhoFiltro;
 					processado.set(true);
 
 					cabecalhoFiltro = null;
+
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = true;
+					}
+
 					ObjetoContainer.this.actionPerformed(null);
+
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = false;
+					}
 
 					if (!processado.get()) {
 						cabecalhoFiltro = temp;
@@ -1391,6 +1418,21 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return colunas;
 		}
 	};
+
+	private class ActionListenerInner implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (objeto.isAjusteAutoEnter()) {
+				tamanhoAutomatico = true;
+			}
+
+			ObjetoContainer.this.actionPerformed(null);
+
+			if (objeto.isAjusteAutoEnter()) {
+				tamanhoAutomatico = false;
+			}
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
