@@ -1402,7 +1402,16 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		@Override
 		public void configFragmento(Fragmento f) {
 			txtComplemento.setText(f.getValor());
+
+			if (objeto.isAjusteAutoEnter()) {
+				tamanhoAutomatico = true;
+			}
+
 			actionPerformed(null);
+
+			if (objeto.isAjusteAutoEnter()) {
+				tamanhoAutomatico = false;
+			}
 		}
 
 		@Override
