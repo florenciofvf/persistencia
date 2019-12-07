@@ -342,7 +342,7 @@ public class RegistroModelo implements TableModel {
 				values.append(Constantes.TAB + s + coluna.get(coluna.getNome()) + Constantes.QL);
 			}
 		} else {
-			values.append(Constantes.TAB + s + coluna.getSequencia() + Constantes.QL);
+			values.append(Constantes.TAB + s + Objeto.prefixarEsquema(conexao, coluna.getSequencia()) + Constantes.QL);
 		}
 	}
 
