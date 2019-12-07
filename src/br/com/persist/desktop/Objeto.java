@@ -308,10 +308,24 @@ public class Objeto implements Runnable {
 		return (Util.estaVazio(esquema) ? "" : esquema + ".") + tabela;
 	}
 
-	public static String getTabelaEsquema(Conexao conexao, String tabela) {
+	public static String prefixarEsquema(Conexao conexao, String string) {
 		String esquema = conexao == null ? "" : conexao.getEsquema();
 
-		return (Util.estaVazio(esquema) ? "" : esquema + ".") + tabela;
+		return (Util.estaVazio(esquema) ? "" : esquema + ".") + string;
+	}
+
+	public String getSequencia(Conexao conexao, String nomeColuna) {
+		String resp = null;
+
+		if (nomeColuna != null) {
+			resp = getMapaSequencias().get(nomeColuna.trim().toLowerCase());
+		}
+
+		if (resp != null) {
+			resp = prefixarEsquema(conexao, resp);
+		}
+
+		return resp;
 	}
 
 	public String getTabela2() {
@@ -753,20 +767,6 @@ public class Objeto implements Runnable {
 
 	public void setMapeamento(String mapeamento) {
 		this.mapeamento = mapeamento;
-	}
-
-	public String getSequencia(String nomeColuna, String esquema) {
-		String resp = null;
-
-		if (nomeColuna != null) {
-			resp = getMapaSequencias().get(nomeColuna.trim().toLowerCase());
-		}
-
-		if (resp != null) {
-			resp = (Util.estaVazio(esquema) ? "" : esquema + ".") + resp;
-		}
-
-		return resp;
 	}
 
 	public Map<String, String> getMapaSequencias() {
