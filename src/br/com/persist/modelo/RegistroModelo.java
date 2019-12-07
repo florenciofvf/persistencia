@@ -282,7 +282,7 @@ public class RegistroModelo implements TableModel {
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores) {
-		StringBuilder builder = new StringBuilder("UPDATE " + Objeto.getTabelaEsquema(conexao, tabela) + " SET ");
+		StringBuilder builder = new StringBuilder("UPDATE " + Objeto.prefixarEsquema(conexao, tabela) + " SET ");
 
 		Coluna coluna = colunas[0];
 		builder.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[0]));
@@ -308,7 +308,7 @@ public class RegistroModelo implements TableModel {
 		}
 
 		StringBuilder builder = new StringBuilder(
-				"INSERT INTO " + Objeto.getTabelaEsquema(conexao, tabela) + " (" + Constantes.QL);
+				"INSERT INTO " + Objeto.prefixarEsquema(conexao, tabela) + " (" + Constantes.QL);
 
 		StringBuilder campos = new StringBuilder();
 		StringBuilder values = new StringBuilder("VALUES (" + Constantes.QL);
@@ -347,7 +347,7 @@ public class RegistroModelo implements TableModel {
 	}
 
 	private String gerarDelete(List<Object> registro) {
-		StringBuilder builder = new StringBuilder("DELETE FROM " + Objeto.getTabelaEsquema(conexao, tabela));
+		StringBuilder builder = new StringBuilder("DELETE FROM " + Objeto.prefixarEsquema(conexao, tabela));
 		builder.append(getWhere(registro));
 
 		return builder.toString();
