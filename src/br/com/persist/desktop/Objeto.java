@@ -314,15 +314,11 @@ public class Objeto implements Runnable {
 		return (Util.estaVazio(esquema) ? "" : esquema + ".") + string;
 	}
 
-	public String getSequencia(Conexao conexao, String nomeColuna) {
+	public String getNomeSequencia(String nomeColuna) {
 		String resp = null;
 
 		if (nomeColuna != null) {
 			resp = getMapaSequencias().get(nomeColuna.trim().toLowerCase());
-		}
-
-		if (resp != null) {
-			resp = prefixarEsquema(conexao, resp);
 		}
 
 		return resp;
