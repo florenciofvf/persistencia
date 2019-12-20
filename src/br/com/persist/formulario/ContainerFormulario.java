@@ -20,6 +20,7 @@ import br.com.persist.util.IJanela;
 public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final Container container;
+	private boolean ativo = true;
 
 	public ContainerFormulario(Formulario formulario, File file) {
 		super(file.getName());
@@ -56,7 +57,9 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				container.excluido();
+				if (ativo) {
+					container.excluido();
+				}
 			}
 		});
 	}
@@ -67,6 +70,15 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 
 	@Override
 	public void fechar() {
+		dispose();
+	}
+
+	public void retornoDestacarEmFormulario() {
+		remove(container);
+		ativo = false;
+		container.setSuperficieFormulario(null);
+		Formulario formulario = container.getFormulario();
+		formulario.getFichario().retornoDestacarEmFormulario(formulario, container);
 		dispose();
 	}
 }

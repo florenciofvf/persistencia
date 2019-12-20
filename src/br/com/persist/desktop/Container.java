@@ -85,6 +85,10 @@ public class Container extends Panel {
 		return superficie;
 	}
 
+	public Formulario getFormulario() {
+		return formulario;
+	}
+
 	private void montarLayout() {
 		ButtonGroup grupo = new ButtonGroup();
 		add(BorderLayout.CENTER, new ScrollPane(superficie));
@@ -291,12 +295,14 @@ public class Container extends Panel {
 		class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 			Action desktopAcao = Action.actionMenuDesktop();
-			Action destacarFrm = Action.actionMenu("label.destac_form", null);
+			Action destacarFrm = Action.actionMenu("label.destac_formulario", null);
+			Action destacarCnt = Action.actionMenu("label.destac_container", null);
 
 			ButtonDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
 				addMenuItem(destacarFrm);
+				addMenuItem(destacarCnt);
 
 				formularioAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
@@ -306,6 +312,11 @@ public class Container extends Panel {
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
 				destacarFrm.setActionListener(
 						e -> formulario.getFichario().destacarEmFormulario(formulario, Container.this));
+				destacarCnt.setActionListener(e -> {
+					if (containerFormulario != null) {
+						containerFormulario.retornoDestacarEmFormulario();
+					}
+				});
 			}
 		}
 
