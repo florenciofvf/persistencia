@@ -75,6 +75,7 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	public void retornoDestacarEmFormulario() {
 		remove(container);
 		ativo = false;
+		container.setJanela(null);
 		container.setSuperficieFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().retornoDestacarEmFormulario(formulario, container);
