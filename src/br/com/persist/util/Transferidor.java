@@ -25,7 +25,7 @@ public class Transferidor implements Transferable {
 		this.dimension = dimension;
 		this.conexao = conexao;
 		this.apelido = apelido;
-		this.objeto = objeto;
+		this.objeto = objeto.isCopiarDestacado() ? objeto.clonar() : objeto;
 	}
 
 	public Dimension getDimension() {
