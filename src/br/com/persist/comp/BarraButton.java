@@ -18,7 +18,7 @@ public class BarraButton extends JToolBar {
 
 		if (janela != null) {
 			Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
-			fecharAcao.setActionListener(e -> janela.fechar());
+			fecharAcao.setActionListener(e -> fechar());
 			addButton(fecharAcao);
 			addSeparator();
 		}
@@ -48,5 +48,13 @@ public class BarraButton extends JToolBar {
 		if (janela != null) {
 			janela.fechar();
 		}
+	}
+
+	public IJanela getJanela() {
+		return janela;
+	}
+
+	public void setJanela(IJanela janela) {
+		this.janela = janela;
 	}
 }

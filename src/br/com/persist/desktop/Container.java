@@ -168,6 +168,10 @@ public class Container extends Panel {
 		}
 	}
 
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
