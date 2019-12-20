@@ -33,6 +33,7 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		super(Constantes.DESTACADO);
 		container.setSuperficieFormulario(this);
 		this.container = container;
+		container.setJanela(this);
 		montarLayout();
 		configurar();
 	}

@@ -291,10 +291,12 @@ public class Container extends Panel {
 		class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 			Action desktopAcao = Action.actionMenuDesktop();
+			Action destacarFrm = Action.actionMenu("label.destac_form", null);
 
 			ButtonDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
+				addMenuItem(destacarFrm);
 
 				formularioAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
@@ -302,6 +304,8 @@ public class Container extends Panel {
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FICHARIO));
 				desktopAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
+				destacarFrm.setActionListener(
+						e -> formulario.getFichario().destacarEmFormulario(formulario, Container.this));
 			}
 		}
 
