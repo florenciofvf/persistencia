@@ -473,6 +473,30 @@ public class Fichario extends JTabbedPane {
 		form.setVisible(true);
 	}
 
+	public void destacarEmFormulario(Formulario formulario, Container container) {
+		int indice = getIndice(container);
+
+		if (indice == -1) {
+			return;
+		}
+
+		super.remove(indice);
+
+		ContainerFormulario form = new ContainerFormulario(formulario, container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoDestacarEmFormulario(Formulario formulario, Container container) {
+		addTab(Constantes.DESTACADO, container);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+		container.estadoSelecao();
+	}
+
 	public Container novo(Formulario formulario) {
 		Container container = new Container(formulario, null);
 		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
@@ -566,6 +590,20 @@ public class Fichario extends JTabbedPane {
 				}
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
+
+		return -1;
+	}
+
+	public int getIndice(Container c) {
+		int total = getTabCount();
+
+		for (int i = 0; i < total; i++) {
+			Component cmp = getComponentAt(i);
+
+			if ((cmp instanceof Container) && cmp == c) {
+				return i;
 			}
 		}
 
