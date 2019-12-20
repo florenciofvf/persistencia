@@ -13,7 +13,6 @@ import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.IJanela;
 
@@ -30,8 +29,8 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		configurar();
 	}
 
-	public ContainerFormulario(Formulario formulario, Container container) {
-		super(Constantes.DESTACADO);
+	public ContainerFormulario(Formulario formulario, Container container, File file) {
+		super(file.getName());
 		container.setSuperficieFormulario(this);
 		this.container = container;
 		container.setJanela(this);

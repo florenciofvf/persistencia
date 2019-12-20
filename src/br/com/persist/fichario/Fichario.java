@@ -482,13 +482,25 @@ public class Fichario extends JTabbedPane {
 
 		super.remove(indice);
 
-		ContainerFormulario form = new ContainerFormulario(formulario, container);
+		File file = container.getArquivo();
+
+		if (file == null) {
+			file = new File(Constantes.DESTACADO);
+		}
+
+		ContainerFormulario form = new ContainerFormulario(formulario, container, file);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
 
 	public void retornoDestacarEmFormulario(Formulario formulario, Container container) {
-		addTab(Constantes.DESTACADO, container);
+		File file = container.getArquivo();
+
+		if (file == null) {
+			file = new File(Constantes.DESTACADO);
+		}
+
+		addTab(file.getName(), container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
