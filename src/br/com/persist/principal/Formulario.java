@@ -201,15 +201,13 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
 		private Action novoAcao = Action.actionMenu(Constantes.LABEL_NOVO, Icones.CUBO);
-		private Action fecharAcao = Action.actionMenuFechar();
-
-		final Menu menuArquivo = new Menu(Constantes.LABEL_ARQUIVO);
-		final Menu menuBanco = new Menu("label.banco");
-		final Menu menuUtil = new Menu(Constantes.LABEL_UTILITARIOS);
-		final Menu menuConfig = new Menu(Constantes.LABEL_CONFIGURACOES);
-		final Menu menuLAF = new Menu(Constantes.LABEL_APARENCIA);
-
-		final MenuLayout menuLayout = new MenuLayout();
+		private final Menu menuConfig = new Menu(Constantes.LABEL_CONFIGURACOES);
+		private final Menu menuUtil = new Menu(Constantes.LABEL_UTILITARIOS);
+		private final Menu menuArquivo = new Menu(Constantes.LABEL_ARQUIVO);
+		private final Menu menuLAF = new Menu(Constantes.LABEL_APARENCIA);
+		private final Menu menuBanco = new Menu(Constantes.LABEL_BANCO);
+		private final Action fecharAcao = Action.actionMenuFechar();
+		private final MenuLayout menuLayout = new MenuLayout();
 
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
@@ -238,7 +236,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuConfig.add(menuLayout);
 			menuConfig.add(true, new MenuConfig());
 			add(menuConfig);
-
 			add(menuLAF);
 
 			eventos();
