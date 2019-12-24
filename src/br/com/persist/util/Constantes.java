@@ -12,6 +12,7 @@ public class Constantes {
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
+	public static final String LABEL_UTILITARIOS = "label.utilitarios";
 	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_FORMULARIO = "label.formulario";
@@ -24,12 +25,14 @@ public class Constantes {
 	public static final String LABEL_ANOTACOES = "label.anotacoes";
 	public static final String LABEL_COM_ASPAS = "label.com_aspas";
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
+	public static final String LABEL_APARENCIA = "label.aparencia";
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
 	public static final String LABEL_ARQUIVOS = "label.arquivos";
 	public static final String LABEL_CIRCULAR = "label.circular";
+	public static final String LABEL_ARQUIVO = "label.arquivo";
 	public static final String LABEL_ATENCAO = "label.atencao";
 	public static final String LABEL_CONEXAO = "label.conexao";
 	public static final String LABEL_DIALOGO = "label.dialogo";
@@ -41,6 +44,7 @@ public class Constantes {
 	public static final String LABEL_LIMPAR = "label.limpar";
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final String LABEL_FECHAR = "label.fechar";
+	public static final String LABEL_BANCO = "label.banco";
 	public static final String LABEL_VAZIO = "label.vazio";
 	public static final String CHAVE_VALOR = "chave_valor";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;

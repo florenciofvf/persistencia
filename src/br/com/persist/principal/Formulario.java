@@ -202,30 +202,43 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private static final long serialVersionUID = 1L;
 		private Action novoAcao = Action.actionMenu(Constantes.LABEL_NOVO, Icones.CUBO);
 		private Action fecharAcao = Action.actionMenuFechar();
-		final Menu menuArquivo = new Menu("label.arquivo");
-		final Menu menuLAF = new Menu("label.aparencia");
+
+		final Menu menuArquivo = new Menu(Constantes.LABEL_ARQUIVO);
+		final Menu menuBanco = new Menu("label.banco");
+		final Menu menuUtil = new Menu(Constantes.LABEL_UTILITARIOS);
+		final Menu menuConfig = new Menu(Constantes.LABEL_CONFIGURACOES);
+		final Menu menuLAF = new Menu(Constantes.LABEL_APARENCIA);
+
 		final MenuLayout menuLayout = new MenuLayout();
 
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
+
 			menuArquivo.add(new MenuItem(novoAcao));
 			menuArquivo.add(true, new MenuAbrir());
 			menuArquivo.add(true, new MenuDesktop());
-			menuArquivo.add(true, new MenuConsulta());
-			menuArquivo.add(true, new MenuUpdate());
-			menuArquivo.add(true, new MenuAnotacao());
-			menuArquivo.add(true, new MenuArvore());
+			menuArquivo.add(true, new MenuArquivo());
 			menuArquivo.add(true, new MenuAnexo());
-			menuArquivo.add(true, new MenuConexao());
-			menuArquivo.add(true, new MenuMetadado());
-			menuArquivo.add(true, new MenuFragmento());
-			menuArquivo.add(true, new MenuMapeamento());
-			menuArquivo.add(true, new MenuVariaveis());
-			menuArquivo.add(true, new MenuComparacao());
-			menuArquivo.add(true, new MenuConfig());
-			menuArquivo.add(true, menuLayout);
 			menuArquivo.add(true, new MenuItem(fecharAcao));
 			add(menuArquivo);
+
+			menuBanco.add(new MenuConexao());
+			menuBanco.add(true, new MenuMetadado());
+			menuBanco.add(true, new MenuConsulta());
+			menuBanco.add(true, new MenuUpdate());
+			add(menuBanco);
+
+			menuUtil.add(new MenuAnotacao());
+			menuUtil.add(true, new MenuFragmento());
+			menuUtil.add(true, new MenuMapeamento());
+			menuUtil.add(true, new MenuVariaveis());
+			menuUtil.add(true, new MenuComparacao());
+			add(menuUtil);
+
+			menuConfig.add(menuLayout);
+			menuConfig.add(true, new MenuConfig());
+			add(menuConfig);
+
 			add(menuLAF);
 
 			eventos();
@@ -323,10 +336,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		class MenuArvore extends MenuPadrao1 {
+		class MenuArquivo extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuArvore() {
+			MenuArquivo() {
 				super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
 
 				formularioAcao.setActionListener(e -> {
