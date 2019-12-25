@@ -6,6 +6,7 @@ import java.awt.Frame;
 import br.com.persist.container.ObjetoConfigContainer;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 
 public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
@@ -14,6 +15,7 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 
 	public ObjetoConfigDialogo(Frame frame, Superficie superficie, Objeto objeto) {
 		super(frame, objeto.getId());
+		setSize(Constantes.SIZE2);
 		container = new ObjetoConfigContainer(this, superficie, objeto);
 		montarLayout();
 	}

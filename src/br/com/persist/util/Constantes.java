@@ -26,6 +26,7 @@ public class Constantes {
 	public static final String LABEL_COM_ASPAS = "label.com_aspas";
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_APARENCIA = "label.aparencia";
+	public static final Dimension SIZE2 = new Dimension(1000, 800);
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
