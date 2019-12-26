@@ -14,12 +14,14 @@ public class Objeto extends Valor {
 		atributos = new LinkedHashMap<>();
 	}
 
-	public void add(String nome, Valor valor) {
+	public Objeto atributo(String nome, Valor valor) {
 		if (nome == null || nome.trim().isEmpty() || valor == null) {
-			return;
+			return this;
 		}
 
 		atributos.put(nome, valor);
+
+		return this;
 	}
 
 	@Override

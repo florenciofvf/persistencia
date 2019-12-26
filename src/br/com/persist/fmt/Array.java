@@ -13,10 +13,12 @@ public class Array extends Valor {
 		lista = new ArrayList<>();
 	}
 
-	public void add(Valor valor) {
+	public Array adicionar(Valor valor) {
 		if (valor != null) {
 			lista.add(valor);
 		}
+
+		return this;
 	}
 
 	@Override

@@ -7,28 +7,28 @@ public class FmtUtil {
 
 	public static Objeto criarAtributo(String nome, String valor) {
 		Objeto objeto = new Objeto();
-		objeto.add(nome, new Texto(valor));
+		objeto.atributo(nome, new Texto(valor));
 
 		return objeto;
 	}
 
 	public static Objeto criarAtributo(String nome, Boolean valor) {
 		Objeto objeto = new Objeto();
-		objeto.add(nome, new Logico(valor));
+		objeto.atributo(nome, new Logico(valor));
 
 		return objeto;
 	}
 
 	public static Objeto criarAtributo(String nome, Long valor) {
 		Objeto objeto = new Objeto();
-		objeto.add(nome, new Numero(valor.toString()));
+		objeto.atributo(nome, new Numero(valor.toString()));
 
 		return objeto;
 	}
 
 	public static Objeto criarAtributo(String nome, Double valor) {
 		Objeto objeto = new Objeto();
-		objeto.add(nome, new Numero(valor.toString()));
+		objeto.atributo(nome, new Numero(valor.toString()));
 
 		return objeto;
 	}
