@@ -20,6 +20,22 @@ public class Array extends Tipo {
 		return this;
 	}
 
+	public Array adicionar(String valor) {
+		return adicionar(new Texto(valor));
+	}
+
+	public Array adicionar(boolean valor) {
+		return adicionar(new Logico(valor));
+	}
+
+	public Array adicionar(long valor) {
+		return adicionar(new Numero("" + valor));
+	}
+
+	public Array adicionar(double valor) {
+		return adicionar(new Numero("" + valor));
+	}
+
 	@Override
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
 		super.toString(sb, comTab, tab);

@@ -56,7 +56,7 @@ public class Objeto extends Tipo {
 			sb.append(getTab(tab + 1) + citar(entry.getKey()) + ": ");
 
 			Tipo t = entry.getValue();
-			t.toString(sb, true, tab + 1);
+			t.toString(sb, false, tab + 1);
 
 			virgula = true;
 		}
