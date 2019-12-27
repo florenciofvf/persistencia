@@ -1,17 +1,12 @@
 package br.com.persist.fmt;
 
-public abstract class Valor {
-	private final String tipo;
+public class Tipo {
 
-	public Valor(String tipo) {
-		this.tipo = tipo;
+	public void toString(StringBuilder sb, boolean comTab, int tab) {
+		if (comTab) {
+			sb.append(getTab(tab));
+		}
 	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public abstract void fmt(StringBuilder sb, int tab);
 
 	public static String getTab(int i) {
 		StringBuilder sb = new StringBuilder();

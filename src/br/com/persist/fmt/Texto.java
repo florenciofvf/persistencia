@@ -2,17 +2,17 @@ package br.com.persist.fmt;
 
 import java.util.Objects;
 
-public class Texto extends Valor {
+public class Texto extends Tipo {
 	private final String conteudo;
 
 	public Texto(String conteudo) {
-		super("Texto");
 		Objects.requireNonNull(conteudo);
 		this.conteudo = conteudo;
 	}
 
 	@Override
-	public void fmt(StringBuilder sb, int tab) {
+	public void toString(StringBuilder sb, boolean comTab, int tab) {
+		super.toString(sb, comTab, tab);
 		sb.append(citar(conteudo));
 	}
 }

@@ -11,7 +11,7 @@ public class FmtParser {
 	private FmtParser() {
 	}
 
-	public static Valor parse(File file) throws IOException {
+	public static Tipo parse(File file) throws IOException {
 		StringBuilder sb = new StringBuilder();
 
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
@@ -26,7 +26,7 @@ public class FmtParser {
 		return parse(sb.toString());
 	}
 
-	public static Valor parse(String string) {
+	public static Tipo parse(String string) {
 		if (string != null) {
 			string = string.trim();
 		} else {
