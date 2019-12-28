@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import br.com.persist.util.Util;
+
 public class Parser {
 	private Tipo selecionado;
 	private Atom ultimoAtom;
@@ -28,20 +30,45 @@ public class Parser {
 		return parse(sb.toString());
 	}
 
+	private void processarDadosBasicos() {
+		if (selecionado instanceof Array) {
+			((Array) selecionado).adicionar(atom.valor);
+			ultimoAtom = null;
+		} else {
+			ultimoAtom = atom;
+		}
+	}
+
+	private void processarDoisPontos() {
+		int bkp = indice;
+		gerarAtom();
+		checarAtom();
+
+		if (dadosBasicos(atom)) {
+			((Objeto) selecionado).atributo(ultimoAtom.valor.toString(), atom.valor);
+			ultimoAtom = null;
+
+		} else {
+			indice = bkp;
+		}
+	}
+
 	public Tipo parse(String string) {
 		Tipo raiz = null;
 		indice = 0;
 
-		if (string != null) {
-			this.string = string.trim();
-		} else {
+		if (Util.estaVazio(string)) {
 			return null;
 		}
 
+		this.string = string.trim();
+
 		gerarAtom();
+
 		if (atom == null) {
 			return null;
 		}
+
 		checarAtom();
 
 		if (atom.tipo == Atom.CHAVE_INI) {
@@ -53,41 +80,22 @@ public class Parser {
 		}
 
 		selecionado = raiz;
+
 		gerarAtom();
 
 		while (atom != null) {
 			checarAtom();
 
 			if (dadosBasicos(atom)) {
-				if (selecionado instanceof Array) {
-					((Array) selecionado).adicionar(atom.valor);
-					ultimoAtom = null;
-				} else {
-					ultimoAtom = atom;
-				}
-
+				processarDadosBasicos();
 			} else if (fimObjeto(atom)) {
 				selecionado = selecionado.pai;
-
 			} else if (atom.tipo == Atom.CHAVE_INI) {
 				adicionar(new Objeto());
-
 			} else if (atom.tipo == Atom.COLCH_INI) {
 				adicionar(new Array());
-
 			} else if (atom.tipo == Atom.DOIS_PONT) {
-				int bkp = indice;
-				gerarAtom();
-				checarAtom();
-
-				if (dadosBasicos(atom)) {
-					((Objeto) selecionado).atributo(ultimoAtom.valor.toString(), atom.valor);
-					ultimoAtom = null;
-
-				} else {
-					indice = bkp;
-				}
-
+				processarDoisPontos();
 			}
 
 			gerarAtom();
