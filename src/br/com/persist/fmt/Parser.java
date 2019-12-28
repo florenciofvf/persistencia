@@ -133,7 +133,7 @@ public class Parser {
 	}
 
 	private boolean numero(char c) {
-		return c >= '0' && c <= '9';
+		return (c >= '0' && c <= '9') || c == '+' || c == '-';
 	}
 
 	private void gerarAtom() {
