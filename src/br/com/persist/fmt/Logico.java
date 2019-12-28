@@ -12,4 +12,9 @@ public class Logico extends Tipo {
 		super.toString(sb, comTab, tab);
 		sb.append(conteudo ? "true" : "false");
 	}
+
+	@Override
+	public String toString() {
+		return "" + conteudo;
+	}
 }

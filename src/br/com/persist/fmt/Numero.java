@@ -15,4 +15,9 @@ public class Numero extends Tipo {
 		super.toString(sb, comTab, tab);
 		sb.append(conteudo);
 	}
+
+	@Override
+	public String toString() {
+		return conteudo;
+	}
 }

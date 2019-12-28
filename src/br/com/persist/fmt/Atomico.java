@@ -26,4 +26,9 @@ public class Atomico {
 		this.valor = valor;
 		this.tipo = tipo;
 	}
+
+	@Override
+	public String toString() {
+		return valor != null ? valor.toString() : "null";
+	}
 }

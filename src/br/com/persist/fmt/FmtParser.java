@@ -142,6 +142,7 @@ public class FmtParser {
 			} else if (c == '\"') {
 				indice++;
 				atomico = new Atomico(Atomico.TEXTO, criarAtomicoString());
+				indice--;
 
 			} else if (c == 't' || c == 'f') {
 				String s = string.substring(indice);

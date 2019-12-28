@@ -15,4 +15,9 @@ public class Texto extends Tipo {
 		super.toString(sb, comTab, tab);
 		sb.append(citar(conteudo));
 	}
+
+	@Override
+	public String toString() {
+		return conteudo;
+	}
 }
