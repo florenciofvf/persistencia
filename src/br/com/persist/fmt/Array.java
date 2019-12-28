@@ -13,50 +13,30 @@ public class Array extends Tipo {
 	}
 
 	public Array adicionar(Tipo tipo) {
-		if (tipo != null) {
-			lista.add(tipo);
-			tipo.pai = this;
-		} else {
+		if (tipo == null) {
 			throw new IllegalArgumentException();
 		}
+
+		lista.add(tipo);
+		tipo.pai = this;
 
 		return this;
 	}
 
-	public Array adicionar(Object valor) {
-		if (valor instanceof String) {
-			return adicionar(valor.toString());
-		}
-
-		if (valor instanceof Boolean) {
-			return adicionar(((Boolean) valor).booleanValue());
-		}
-
-		if (valor instanceof Long) {
-			return adicionar(((Long) valor).longValue());
-		}
-
-		if (valor instanceof Double) {
-			return adicionar(((Double) valor).doubleValue());
-		}
-
-		throw new IllegalStateException();
+	public Tipo getValor(int i) {
+		return lista.get(i);
 	}
 
 	public Array adicionar(String valor) {
 		return adicionar(new Texto(valor));
 	}
 
-	public Array adicionar(boolean valor) {
+	public Array adicionar(Boolean valor) {
 		return adicionar(new Logico(valor));
 	}
 
-	public Array adicionar(long valor) {
-		return adicionar(new Numero("" + valor));
-	}
-
-	public Array adicionar(double valor) {
-		return adicionar(new Numero("" + valor));
+	public Array adicionar(Number valor) {
+		return adicionar(new Numero(valor));
 	}
 
 	@Override

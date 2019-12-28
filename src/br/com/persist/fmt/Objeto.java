@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Util;
 
 public class Objeto extends Tipo {
 	private final Map<String, Tipo> atributos;
@@ -14,7 +15,7 @@ public class Objeto extends Tipo {
 	}
 
 	public Objeto atributo(String nome, Tipo tipo) {
-		if (nome == null || nome.trim().isEmpty() || tipo == null) {
+		if (Util.estaVazio(nome) || tipo == null) {
 			throw new IllegalArgumentException();
 		}
 
@@ -24,40 +25,20 @@ public class Objeto extends Tipo {
 		return this;
 	}
 
-	public Objeto atributo(String nome, Object valor) {
-		if (valor instanceof String) {
-			return atributo(nome, valor.toString());
-		}
-
-		if (valor instanceof Boolean) {
-			return atributo(nome, ((Boolean) valor).booleanValue());
-		}
-
-		if (valor instanceof Long) {
-			return atributo(nome, ((Long) valor).longValue());
-		}
-
-		if (valor instanceof Double) {
-			return atributo(nome, ((Double) valor).doubleValue());
-		}
-
-		throw new IllegalStateException();
+	public Tipo getValor(String att) {
+		return atributos.get(att);
 	}
 
 	public Objeto atributo(String nome, String valor) {
 		return atributo(nome, new Texto(valor));
 	}
 
-	public Objeto atributo(String nome, boolean valor) {
+	public Objeto atributo(String nome, Boolean valor) {
 		return atributo(nome, new Logico(valor));
 	}
 
-	public Objeto atributo(String nome, long valor) {
-		return atributo(nome, new Numero("" + valor));
-	}
-
-	public Objeto atributo(String nome, double valor) {
-		return atributo(nome, new Numero("" + valor));
+	public Objeto atributo(String nome, Number valor) {
+		return atributo(nome, new Numero(valor));
 	}
 
 	@Override
