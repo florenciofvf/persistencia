@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Parser {
-	private Atom ultimoAtomico;
 	private Tipo selecionado;
-	private Atom atomico;
+	private Atom ultimoAtom;
 	private String string;
 	private int indice;
+	private Atom atom;
 
 	public Tipo parse(File file) throws IOException {
 		StringBuilder sb = new StringBuilder();
@@ -38,51 +38,51 @@ public class Parser {
 			return null;
 		}
 
-		gerarAtomico();
-		if (atomico == null) {
+		gerarAtom();
+		if (atom == null) {
 			return null;
 		}
-		checarAtomico();
+		checarAtom();
 
-		if (atomico.tipo == Atom.CHAVE_INI) {
+		if (atom.tipo == Atom.CHAVE_INI) {
 			raiz = new Objeto();
-		} else if (atomico.tipo == Atom.COLCH_INI) {
+		} else if (atom.tipo == Atom.COLCH_INI) {
 			raiz = new Array();
 		} else {
 			throw new IllegalStateException();
 		}
 
 		selecionado = raiz;
-		gerarAtomico();
+		gerarAtom();
 
-		while (atomico != null) {
-			checarAtomico();
+		while (atom != null) {
+			checarAtom();
 
-			if (dadosBasicos(atomico)) {
+			if (dadosBasicos(atom)) {
 				if (selecionado instanceof Array) {
-					((Array) selecionado).adicionar(atomico.valor);
-					ultimoAtomico = null;
+					((Array) selecionado).adicionar(atom.valor);
+					ultimoAtom = null;
 				} else {
-					ultimoAtomico = atomico;
+					ultimoAtom = atom;
 				}
 
-			} else if (fimObjeto(atomico)) {
+			} else if (fimObjeto(atom)) {
 				selecionado = selecionado.pai;
 
-			} else if (atomico.tipo == Atom.CHAVE_INI) {
+			} else if (atom.tipo == Atom.CHAVE_INI) {
 				adicionar(new Objeto());
 
-			} else if (atomico.tipo == Atom.COLCH_INI) {
+			} else if (atom.tipo == Atom.COLCH_INI) {
 				adicionar(new Array());
 
-			} else if (atomico.tipo == Atom.DOIS_PONT) {
+			} else if (atom.tipo == Atom.DOIS_PONT) {
 				int bkp = indice;
-				gerarAtomico();
-				checarAtomico();
+				gerarAtom();
+				checarAtom();
 
-				if (dadosBasicos(atomico)) {
-					((Objeto) selecionado).atributo(ultimoAtomico.valor.toString(), atomico.valor);
-					ultimoAtomico = null;
+				if (dadosBasicos(atom)) {
+					((Objeto) selecionado).atributo(ultimoAtom.valor.toString(), atom.valor);
+					ultimoAtom = null;
 
 				} else {
 					indice = bkp;
@@ -90,7 +90,7 @@ public class Parser {
 
 			}
 
-			gerarAtomico();
+			gerarAtom();
 		}
 
 		return raiz;
@@ -98,29 +98,29 @@ public class Parser {
 
 	private void adicionar(Tipo tipo) {
 		if (selecionado instanceof Objeto) {
-			((Objeto) selecionado).atributo(ultimoAtomico.valor.toString(), tipo);
+			((Objeto) selecionado).atributo(ultimoAtom.valor.toString(), tipo);
 			selecionado = tipo;
-			ultimoAtomico = null;
+			ultimoAtom = null;
 
 		} else if (selecionado instanceof Array) {
 			((Array) selecionado).adicionar(tipo);
 			selecionado = tipo;
-			ultimoAtomico = null;
+			ultimoAtom = null;
 
 		} else {
 			throw new IllegalStateException();
 		}
 	}
 
-	private boolean dadosBasicos(Atom atomico) {
-		return atomico.tipo == Atom.LOGICO || atomico.tipo == Atom.NUMERO || atomico.tipo == Atom.TEXTO;
+	private boolean dadosBasicos(Atom atom) {
+		return atom.tipo == Atom.LOGICO || atom.tipo == Atom.NUMERO || atom.tipo == Atom.TEXTO;
 	}
 
-	private boolean fimObjeto(Atom atomico) {
-		return atomico.tipo == Atom.CHAVE_FIM || atomico.tipo == Atom.COLCH_FIM;
+	private boolean fimObjeto(Atom atom) {
+		return atom.tipo == Atom.CHAVE_FIM || atom.tipo == Atom.COLCH_FIM;
 	}
 
-	private boolean atomico1(char c) {
+	private boolean atom1(char c) {
 		return c == '[' || c == ']' || c == '{' || c == '}' || c == ':' || c == ',';
 	}
 
@@ -128,31 +128,31 @@ public class Parser {
 		return c >= '0' && c <= '9';
 	}
 
-	private void gerarAtomico() {
-		atomico = null;
+	private void gerarAtom() {
 		int delta = 1;
+		atom = null;
 		avancar();
 
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 
-			if (atomico1(c)) {
-				criarAtomico1(c);
+			if (atom1(c)) {
+				criarAtom1(c);
 
 			} else if (c == '\"') {
 				indice++;
-				atomico = new Atom(Atom.TEXTO, criarAtomicoString());
+				atom = new Atom(Atom.TEXTO, criarAtomString());
 				indice--;
 
 			} else if (c == 't' || c == 'f') {
 				String s = string.substring(indice);
 
 				if (s.startsWith("true")) {
-					atomico = new Atom(Atom.LOGICO, true);
+					atom = new Atom(Atom.LOGICO, true);
 					delta = 4;
 
 				} else if (s.startsWith("false")) {
-					atomico = new Atom(Atom.LOGICO, false);
+					atom = new Atom(Atom.LOGICO, false);
 					delta = 5;
 
 				} else {
@@ -160,11 +160,11 @@ public class Parser {
 				}
 
 			} else if (numero(c)) {
-				atomico = new Atom(Atom.NUMERO, criarAtomicoNumero());
+				atom = new Atom(Atom.NUMERO, criarAtomNumero());
 				indice--;
 
 			} else {
-				atomico = new Atom(Atom.INVALIDO);
+				atom = new Atom(Atom.INVALIDO);
 			}
 
 			indice += delta;
@@ -175,7 +175,7 @@ public class Parser {
 		}
 	}
 
-	private String criarAtomicoString() {
+	private String criarAtomString() {
 		StringBuilder sb = new StringBuilder();
 
 		while (indice < string.length()) {
@@ -193,7 +193,7 @@ public class Parser {
 		return sb.toString();
 	}
 
-	private String criarAtomicoNumero() {
+	private String criarAtomNumero() {
 		StringBuilder sb = new StringBuilder();
 
 		while (indice < string.length()) {
@@ -210,24 +210,24 @@ public class Parser {
 		return sb.toString();
 	}
 
-	private void criarAtomico1(char c) {
+	private void criarAtom1(char c) {
 		if (c == '[') {
-			atomico = new Atom(Atom.COLCH_INI);
+			atom = new Atom(Atom.COLCH_INI);
 		} else if (c == ']') {
-			atomico = new Atom(Atom.COLCH_FIM);
+			atom = new Atom(Atom.COLCH_FIM);
 		} else if (c == '{') {
-			atomico = new Atom(Atom.CHAVE_INI);
+			atom = new Atom(Atom.CHAVE_INI);
 		} else if (c == '}') {
-			atomico = new Atom(Atom.CHAVE_FIM);
+			atom = new Atom(Atom.CHAVE_FIM);
 		} else if (c == ':') {
-			atomico = new Atom(Atom.DOIS_PONT);
+			atom = new Atom(Atom.DOIS_PONT);
 		} else if (c == ',') {
-			atomico = new Atom(Atom.VIRGULA);
+			atom = new Atom(Atom.VIRGULA);
 		}
 	}
 
-	private void checarAtomico() {
-		if (atomico.tipo == Atom.INVALIDO) {
+	private void checarAtom() {
+		if (atom.tipo == Atom.INVALIDO) {
 			throw new IllegalStateException();
 		}
 	}
