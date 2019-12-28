@@ -1,6 +1,7 @@
 package br.com.persist.fmt;
 
 public class Tipo {
+	Tipo pai;
 
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
 		if (comTab) {

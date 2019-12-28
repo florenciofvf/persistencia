@@ -15,12 +15,33 @@ public class Objeto extends Tipo {
 
 	public Objeto atributo(String nome, Tipo tipo) {
 		if (nome == null || nome.trim().isEmpty() || tipo == null) {
-			return this;
+			throw new IllegalArgumentException();
 		}
 
 		atributos.put(nome, tipo);
+		tipo.pai = this;
 
 		return this;
+	}
+
+	public Objeto atributo(String nome, Object valor) {
+		if (valor instanceof String) {
+			return atributo(nome, valor.toString());
+		}
+
+		if (valor instanceof Boolean) {
+			return atributo(nome, ((Boolean) valor).booleanValue());
+		}
+
+		if (valor instanceof Long) {
+			return atributo(nome, ((Long) valor).longValue());
+		}
+
+		if (valor instanceof Double) {
+			return atributo(nome, ((Double) valor).doubleValue());
+		}
+
+		throw new IllegalStateException();
 	}
 
 	public Objeto atributo(String nome, String valor) {

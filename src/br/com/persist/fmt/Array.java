@@ -15,9 +15,32 @@ public class Array extends Tipo {
 	public Array adicionar(Tipo tipo) {
 		if (tipo != null) {
 			lista.add(tipo);
+			tipo.pai = this;
+		} else {
+			throw new IllegalArgumentException();
 		}
 
 		return this;
+	}
+
+	public Array adicionar(Object valor) {
+		if (valor instanceof String) {
+			return adicionar(valor.toString());
+		}
+
+		if (valor instanceof Boolean) {
+			return adicionar(((Boolean) valor).booleanValue());
+		}
+
+		if (valor instanceof Long) {
+			return adicionar(((Long) valor).longValue());
+		}
+
+		if (valor instanceof Double) {
+			return adicionar(((Double) valor).doubleValue());
+		}
+
+		throw new IllegalStateException();
 	}
 
 	public Array adicionar(String valor) {
