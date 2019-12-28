@@ -6,10 +6,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class FmtParser {
-	private Atomico ultimoAtomico;
+public class Parser {
+	private Atom ultimoAtomico;
 	private Tipo selecionado;
-	private Atomico atomico;
+	private Atom atomico;
 	private String string;
 	private int indice;
 
@@ -44,9 +44,9 @@ public class FmtParser {
 		}
 		checarAtomico();
 
-		if (atomico.tipo == Atomico.CHAVE_INI) {
+		if (atomico.tipo == Atom.CHAVE_INI) {
 			raiz = new Objeto();
-		} else if (atomico.tipo == Atomico.COLCH_INI) {
+		} else if (atomico.tipo == Atom.COLCH_INI) {
 			raiz = new Array();
 		} else {
 			throw new IllegalStateException();
@@ -69,13 +69,13 @@ public class FmtParser {
 			} else if (fimObjeto(atomico)) {
 				selecionado = selecionado.pai;
 
-			} else if (atomico.tipo == Atomico.CHAVE_INI) {
+			} else if (atomico.tipo == Atom.CHAVE_INI) {
 				adicionar(new Objeto());
 
-			} else if (atomico.tipo == Atomico.COLCH_INI) {
+			} else if (atomico.tipo == Atom.COLCH_INI) {
 				adicionar(new Array());
 
-			} else if (atomico.tipo == Atomico.DOIS_PONT) {
+			} else if (atomico.tipo == Atom.DOIS_PONT) {
 				int bkp = indice;
 				gerarAtomico();
 				checarAtomico();
@@ -112,12 +112,12 @@ public class FmtParser {
 		}
 	}
 
-	private boolean dadosBasicos(Atomico atomico) {
-		return atomico.tipo == Atomico.LOGICO || atomico.tipo == Atomico.NUMERO || atomico.tipo == Atomico.TEXTO;
+	private boolean dadosBasicos(Atom atomico) {
+		return atomico.tipo == Atom.LOGICO || atomico.tipo == Atom.NUMERO || atomico.tipo == Atom.TEXTO;
 	}
 
-	private boolean fimObjeto(Atomico atomico) {
-		return atomico.tipo == Atomico.CHAVE_FIM || atomico.tipo == Atomico.COLCH_FIM;
+	private boolean fimObjeto(Atom atomico) {
+		return atomico.tipo == Atom.CHAVE_FIM || atomico.tipo == Atom.COLCH_FIM;
 	}
 
 	private boolean atomico1(char c) {
@@ -141,18 +141,18 @@ public class FmtParser {
 
 			} else if (c == '\"') {
 				indice++;
-				atomico = new Atomico(Atomico.TEXTO, criarAtomicoString());
+				atomico = new Atom(Atom.TEXTO, criarAtomicoString());
 				indice--;
 
 			} else if (c == 't' || c == 'f') {
 				String s = string.substring(indice);
 
 				if (s.startsWith("true")) {
-					atomico = new Atomico(Atomico.LOGICO, true);
+					atomico = new Atom(Atom.LOGICO, true);
 					delta = 4;
 
 				} else if (s.startsWith("false")) {
-					atomico = new Atomico(Atomico.LOGICO, false);
+					atomico = new Atom(Atom.LOGICO, false);
 					delta = 5;
 
 				} else {
@@ -160,11 +160,11 @@ public class FmtParser {
 				}
 
 			} else if (numero(c)) {
-				atomico = new Atomico(Atomico.NUMERO, criarAtomicoNumero());
+				atomico = new Atom(Atom.NUMERO, criarAtomicoNumero());
 				indice--;
 
 			} else {
-				atomico = new Atomico(Atomico.INVALIDO);
+				atomico = new Atom(Atom.INVALIDO);
 			}
 
 			indice += delta;
@@ -212,22 +212,22 @@ public class FmtParser {
 
 	private void criarAtomico1(char c) {
 		if (c == '[') {
-			atomico = new Atomico(Atomico.COLCH_INI);
+			atomico = new Atom(Atom.COLCH_INI);
 		} else if (c == ']') {
-			atomico = new Atomico(Atomico.COLCH_FIM);
+			atomico = new Atom(Atom.COLCH_FIM);
 		} else if (c == '{') {
-			atomico = new Atomico(Atomico.CHAVE_INI);
+			atomico = new Atom(Atom.CHAVE_INI);
 		} else if (c == '}') {
-			atomico = new Atomico(Atomico.CHAVE_FIM);
+			atomico = new Atom(Atom.CHAVE_FIM);
 		} else if (c == ':') {
-			atomico = new Atomico(Atomico.DOIS_PONT);
+			atomico = new Atom(Atom.DOIS_PONT);
 		} else if (c == ',') {
-			atomico = new Atomico(Atomico.VIRGULA);
+			atomico = new Atom(Atom.VIRGULA);
 		}
 	}
 
 	private void checarAtomico() {
-		if (atomico.tipo == Atomico.INVALIDO) {
+		if (atomico.tipo == Atom.INVALIDO) {
 			throw new IllegalStateException();
 		}
 	}
