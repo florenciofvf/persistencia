@@ -3,9 +3,9 @@ package br.com.persist.fmt;
 import java.util.Objects;
 
 public class Numero extends Tipo {
-	private final String conteudo;
+	private final Number conteudo;
 
-	public Numero(String conteudo) {
+	public Numero(Number conteudo) {
 		Objects.requireNonNull(conteudo);
 		this.conteudo = conteudo;
 	}
@@ -13,11 +13,11 @@ public class Numero extends Tipo {
 	@Override
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
 		super.toString(sb, comTab, tab);
-		sb.append(conteudo);
+		sb.append(conteudo.toString());
 	}
 
 	@Override
 	public String toString() {
-		return conteudo;
+		return conteudo.toString();
 	}
 }

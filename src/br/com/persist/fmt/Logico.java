@@ -1,20 +1,23 @@
 package br.com.persist.fmt;
 
-public class Logico extends Tipo {
-	private final boolean conteudo;
+import java.util.Objects;
 
-	public Logico(boolean conteudo) {
+public class Logico extends Tipo {
+	private final Boolean conteudo;
+
+	public Logico(Boolean conteudo) {
+		Objects.requireNonNull(conteudo);
 		this.conteudo = conteudo;
 	}
 
 	@Override
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
 		super.toString(sb, comTab, tab);
-		sb.append(conteudo ? "true" : "false");
+		sb.append(conteudo.toString());
 	}
 
 	@Override
 	public String toString() {
-		return "" + conteudo;
+		return conteudo.toString();
 	}
 }
