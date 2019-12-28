@@ -39,6 +39,10 @@ public class Array extends Tipo {
 		return this;
 	}
 
+	public List<Tipo> getLista() {
+		return lista;
+	}
+
 	public Tipo getValor(int i) {
 		return lista.get(i);
 	}

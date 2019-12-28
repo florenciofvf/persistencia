@@ -41,6 +41,10 @@ public class Objeto extends Tipo {
 		return this;
 	}
 
+	public Map<String, Tipo> getAtributos() {
+		return atributos;
+	}
+
 	public Tipo getValor(String att) {
 		return atributos.get(att);
 	}
