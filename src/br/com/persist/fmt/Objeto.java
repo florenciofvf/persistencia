@@ -25,20 +25,36 @@ public class Objeto extends Tipo {
 		return this;
 	}
 
+	public Objeto atributo(String nome, Object tipo) {
+		if (tipo instanceof String) {
+			return atributo(nome, (String) tipo);
+		}
+
+		if (tipo instanceof Boolean) {
+			return atributo(nome, (Boolean) tipo);
+		}
+
+		if (tipo instanceof Number) {
+			return atributo(nome, (Number) tipo);
+		}
+
+		return this;
+	}
+
 	public Tipo getValor(String att) {
 		return atributos.get(att);
 	}
 
-	public Objeto atributo(String nome, String valor) {
-		return atributo(nome, new Texto(valor));
+	public Objeto atributo(String nome, String tipo) {
+		return atributo(nome, new Texto(tipo));
 	}
 
-	public Objeto atributo(String nome, Boolean valor) {
-		return atributo(nome, new Logico(valor));
+	public Objeto atributo(String nome, Boolean tipo) {
+		return atributo(nome, new Logico(tipo));
 	}
 
-	public Objeto atributo(String nome, Number valor) {
-		return atributo(nome, new Numero(valor));
+	public Objeto atributo(String nome, Number tipo) {
+		return atributo(nome, new Numero(tipo));
 	}
 
 	@Override

@@ -156,11 +156,11 @@ public class Parser {
 				String s = string.substring(indice);
 
 				if (s.startsWith("true")) {
-					atom = new Atom(Atom.LOGICO, true);
+					atom = new Atom(Atom.LOGICO, Boolean.TRUE);
 					delta = 4;
 
 				} else if (s.startsWith("false")) {
-					atom = new Atom(Atom.LOGICO, false);
+					atom = new Atom(Atom.LOGICO, Boolean.FALSE);
 					delta = 5;
 
 				} else {
@@ -201,7 +201,7 @@ public class Parser {
 		return sb.toString();
 	}
 
-	private String criarAtomNumero() {
+	private Number criarAtomNumero() {
 		StringBuilder sb = new StringBuilder();
 
 		while (indice < string.length()) {
@@ -215,7 +215,9 @@ public class Parser {
 			}
 		}
 
-		return sb.toString();
+		String s = sb.toString();
+
+		return s.indexOf('.') >= 0 ? (Number) Double.valueOf(s) : (Number) Long.valueOf(s);
 	}
 
 	private void criarAtom1(char c) {
