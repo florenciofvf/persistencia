@@ -161,6 +161,7 @@ public class FmtParser {
 
 			} else if (numero(c)) {
 				atomico = new Atomico(Atomico.NUMERO, criarAtomicoNumero());
+				indice--;
 
 			} else {
 				atomico = new Atomico(Atomico.INVALIDO);
