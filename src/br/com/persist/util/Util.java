@@ -9,12 +9,16 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,6 +38,7 @@ import br.com.persist.comp.SplitPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.modelo.ConexaoComboModelo;
 import br.com.persist.modelo.VariaveisModelo;
@@ -506,7 +511,67 @@ public class Util {
 	}
 
 	public static String requisicao(Tipo parametros) {
-		StringBuilder sb = new StringBuilder();
-		return sb.toString();
+		if (parametros instanceof br.com.persist.fmt.Objeto) {
+			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
+
+			Tipo tipoUrl = objeto.getValor("url");
+			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
+			Map<String, String> mapHeader = null;
+
+			Tipo tipoHeader = objeto.getValor("header");
+
+			if (tipoHeader instanceof br.com.persist.fmt.Objeto) {
+				br.com.persist.fmt.Objeto objHeader = (br.com.persist.fmt.Objeto) tipoHeader;
+				mapHeader = objHeader.getAtributosString();
+			}
+
+			return requisicao(url, mapHeader);
+		}
+
+		return null;
+	}
+
+	public static String requisicao(String url, Map<String, String> header) {
+		if (estaVazio(url)) {
+			return null;
+		}
+
+		try {
+			URL url2 = new URL(url);
+			URLConnection conn = url2.openConnection();
+
+			if (header != null) {
+				for (Map.Entry<String, String> entry : header.entrySet()) {
+					conn.addRequestProperty(entry.getKey(), entry.getValue());
+				}
+			}
+
+			conn.setDoOutput(false);
+			conn.connect();
+			return getString(conn.getInputStream());
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+	}
+
+	public static String getString(InputStream is) {
+		if (is == null) {
+			return null;
+		}
+
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			byte[] bytes = new byte[1024];
+			int lidos = is.read(bytes);
+
+			while (lidos > 0) {
+				baos.write(bytes, 0, lidos);
+				lidos = is.read(bytes);
+			}
+
+			return new String(baos.toByteArray());
+		} catch (Exception e) {
+			return e.getMessage();
+		}
 	}
 }

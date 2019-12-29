@@ -45,6 +45,23 @@ public class Objeto extends Tipo {
 		return atributos;
 	}
 
+	public Map<String, String> getAtributosString() {
+		Map<String, String> map = new LinkedHashMap<>();
+
+		Iterator<Map.Entry<String, Tipo>> it = atributos.entrySet().iterator();
+
+		while (it.hasNext()) {
+			Map.Entry<String, Tipo> entry = it.next();
+			Tipo tipo = entry.getValue();
+
+			if (tipo instanceof Texto) {
+				map.put(entry.getKey(), tipo.toString());
+			}
+		}
+
+		return map;
+	}
+
 	public Tipo getValor(String att) {
 		return atributos.get(att);
 	}
