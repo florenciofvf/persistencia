@@ -252,7 +252,11 @@ public class Macro {
 
 		@Override
 		public void executar(Objeto objeto) {
-			objeto.setIcone(valor.toString());
+			if (valor != null) {
+				objeto.setIcone(valor.toString());
+			} else {
+				objeto.limparIcone();
+			}
 		}
 	}
 

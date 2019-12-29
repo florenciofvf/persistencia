@@ -91,6 +91,7 @@ public class IconeContainer extends Panel {
 			addButton(cancelaAcao);
 
 			cancelaAcao.setActionListener(e -> {
+				Formulario.macro.imagem(null);
 				objeto.limparIcone();
 				label.setIcon(null);
 				fechar();
