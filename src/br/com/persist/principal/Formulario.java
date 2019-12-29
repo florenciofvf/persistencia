@@ -37,6 +37,7 @@ import br.com.persist.dialogo.ConfigDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.MapeamentoDialogo;
+import br.com.persist.dialogo.RequisicaoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.fichario.Fichario;
@@ -52,6 +53,7 @@ import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
+import br.com.persist.formulario.RequisicaoFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.modelo.ConexaoModelo;
@@ -231,6 +233,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuUtil.add(true, new MenuMapeamento());
 			menuUtil.add(true, new MenuVariaveis());
 			menuUtil.add(true, new MenuComparacao());
+			menuUtil.add(true, new MenuRequisicao());
 			add(menuUtil);
 
 			menuConfig.add(menuLayout);
@@ -270,6 +273,28 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaAnotacao(Formulario.this));
+			}
+		}
+
+		class MenuRequisicao extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuRequisicao() {
+				super(Constantes.LABEL_REQUISICAO, Icones.URL);
+
+				formularioAcao.setActionListener(e -> {
+					RequisicaoFormulario form = new RequisicaoFormulario();
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				dialogoAcao.setActionListener(e -> {
+					RequisicaoDialogo form = new RequisicaoDialogo(Formulario.this);
+					form.setLocationRelativeTo(Formulario.this);
+					form.setVisible(true);
+				});
+
+				ficharioAcao.setActionListener(e -> fichario.novaRequisicao(Formulario.this));
 			}
 		}
 
