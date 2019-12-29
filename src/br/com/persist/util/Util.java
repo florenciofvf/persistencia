@@ -34,6 +34,7 @@ import br.com.persist.comp.SplitPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.fmt.Tipo;
 import br.com.persist.modelo.ConexaoComboModelo;
 import br.com.persist.modelo.VariaveisModelo;
 
@@ -502,5 +503,10 @@ public class Util {
 		}
 
 		return resposta;
+	}
+
+	public static String requisicao(Tipo parametros) {
+		StringBuilder sb = new StringBuilder();
+		return sb.toString();
 	}
 }
