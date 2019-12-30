@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
@@ -526,28 +527,49 @@ public class Util {
 				mapHeader = objHeader.getAtributosString();
 			}
 
-			return requisicao(url, mapHeader);
+			Tipo tipoBody = objeto.getValor("body");
+			String bodyParams = null;
+
+			if (tipoBody instanceof br.com.persist.fmt.Objeto) {
+				br.com.persist.fmt.Objeto objBody = (br.com.persist.fmt.Objeto) tipoBody;
+				Tipo params = objBody.getValor("parameters");
+				bodyParams = params instanceof Texto ? params.toString() : null;
+			}
+
+			return requisicao(url, mapHeader, bodyParams);
 		}
 
 		return null;
 	}
 
-	public static String requisicao(String url, Map<String, String> header) throws IOException {
+	public static String requisicao(String url, Map<String, String> header, String parametros) throws IOException {
 		if (estaVazio(url)) {
 			return null;
 		}
 
 		URL url2 = new URL(url);
 		URLConnection conn = url2.openConnection();
+		String verbo = null;
 
 		if (header != null) {
+			verbo = header.get("Request-Method");
+
 			for (Map.Entry<String, String> entry : header.entrySet()) {
-				conn.addRequestProperty(entry.getKey(), entry.getValue());
+				conn.setRequestProperty(entry.getKey(), entry.getValue());
 			}
 		}
 
-		conn.setDoOutput(false);
+		if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
+			conn.setDoOutput(true);
+		}
+
 		conn.connect();
+
+		if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
+			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+			osw.write(parametros);
+			osw.flush();
+		}
 
 		return getString(conn.getInputStream());
 	}
