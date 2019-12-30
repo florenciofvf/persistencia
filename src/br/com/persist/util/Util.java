@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -510,7 +511,7 @@ public class Util {
 		return resposta;
 	}
 
-	public static String requisicao(Tipo parametros) {
+	public static String requisicao(Tipo parametros) throws IOException {
 		if (parametros instanceof br.com.persist.fmt.Objeto) {
 			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
 
@@ -531,47 +532,40 @@ public class Util {
 		return null;
 	}
 
-	public static String requisicao(String url, Map<String, String> header) {
+	public static String requisicao(String url, Map<String, String> header) throws IOException {
 		if (estaVazio(url)) {
 			return null;
 		}
 
-		try {
-			URL url2 = new URL(url);
-			URLConnection conn = url2.openConnection();
+		URL url2 = new URL(url);
+		URLConnection conn = url2.openConnection();
 
-			if (header != null) {
-				for (Map.Entry<String, String> entry : header.entrySet()) {
-					conn.addRequestProperty(entry.getKey(), entry.getValue());
-				}
+		if (header != null) {
+			for (Map.Entry<String, String> entry : header.entrySet()) {
+				conn.addRequestProperty(entry.getKey(), entry.getValue());
 			}
-
-			conn.setDoOutput(false);
-			conn.connect();
-			return getString(conn.getInputStream());
-		} catch (Exception e) {
-			return e.getMessage();
 		}
+
+		conn.setDoOutput(false);
+		conn.connect();
+
+		return getString(conn.getInputStream());
 	}
 
-	public static String getString(InputStream is) {
+	public static String getString(InputStream is) throws IOException {
 		if (is == null) {
 			return null;
 		}
 
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			byte[] bytes = new byte[1024];
-			int lidos = is.read(bytes);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] bytes = new byte[1024];
+		int lidos = is.read(bytes);
 
-			while (lidos > 0) {
-				baos.write(bytes, 0, lidos);
-				lidos = is.read(bytes);
-			}
-
-			return new String(baos.toByteArray());
-		} catch (Exception e) {
-			return e.getMessage();
+		while (lidos > 0) {
+			baos.write(bytes, 0, lidos);
+			lidos = is.read(bytes);
 		}
+
+		return new String(baos.toByteArray());
 	}
 }
