@@ -1,11 +1,19 @@
 package br.com.persist.fmt;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 import br.com.persist.util.Constantes;
 
 public class Array extends Tipo {
+	private static final MutableAttributeSet att;
 	private final List<Tipo> lista;
 
 	public Array() {
@@ -74,5 +82,27 @@ public class Array extends Tipo {
 		}
 
 		sb.append(Constantes.QL + getTab(tab) + "]");
+	}
+
+	@Override
+	public void toString(AbstractDocument doc, boolean comTab, int tab) throws BadLocationException {
+		super.toString(doc, comTab, tab);
+		insert(doc, "[" + Constantes.QL, att);
+
+		for (int i = 0; i < lista.size(); i++) {
+			if (i > 0) {
+				insert(doc, "," + Constantes.QL, att);
+			}
+
+			Tipo t = lista.get(i);
+			t.toString(doc, true, tab + 1);
+		}
+
+		insert(doc, Constantes.QL + getTab(tab) + "]", att);
+	}
+
+	static {
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, Color.CYAN);
 	}
 }

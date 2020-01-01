@@ -1,13 +1,21 @@
 package br.com.persist.fmt;
 
+import java.awt.Color;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class Objeto extends Tipo {
+	private static final MutableAttributeSet att;
 	private final Map<String, Tipo> atributos;
 
 	public Objeto() {
@@ -101,5 +109,35 @@ public class Objeto extends Tipo {
 		}
 
 		sb.append(Constantes.QL + getTab(tab) + "}");
+	}
+
+	@Override
+	public void toString(AbstractDocument doc, boolean comTab, int tab) throws BadLocationException {
+		super.toString(doc, comTab, tab);
+		insert(doc, "{" + Constantes.QL, att);
+
+		Iterator<Map.Entry<String, Tipo>> it = atributos.entrySet().iterator();
+		boolean virgula = false;
+
+		while (it.hasNext()) {
+			if (virgula) {
+				insert(doc, "," + Constantes.QL, att);
+			}
+
+			Map.Entry<String, Tipo> entry = it.next();
+			insert(doc, getTab(tab + 1) + citar(entry.getKey()) + ": ", att);
+
+			Tipo t = entry.getValue();
+			t.toString(doc, false, tab + 1);
+
+			virgula = true;
+		}
+
+		insert(doc, Constantes.QL + getTab(tab) + "}", att);
+	}
+
+	static {
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, Color.pink);
 	}
 }
