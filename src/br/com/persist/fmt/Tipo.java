@@ -1,5 +1,9 @@
 package br.com.persist.fmt;
 
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
+
 public class Tipo {
 	Tipo pai;
 
@@ -7,6 +11,17 @@ public class Tipo {
 		if (comTab) {
 			sb.append(getTab(tab));
 		}
+	}
+
+	public void toString(AbstractDocument doc, boolean comTab, int tab) throws BadLocationException {
+		if (comTab) {
+			String s = getTab(tab);
+			doc.insertString(doc.getLength(), s, null);
+		}
+	}
+
+	public void insert(AbstractDocument doc, String s, MutableAttributeSet att) throws BadLocationException {
+		doc.insertString(doc.getLength(), s, att);
 	}
 
 	public static String getTab(int i) {
