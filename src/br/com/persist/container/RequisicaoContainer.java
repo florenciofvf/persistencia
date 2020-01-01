@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.swing.JSplitPane;
+import javax.swing.JTextPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.StyledDocument;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
@@ -26,8 +29,8 @@ public class RequisicaoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("requisicao/requisicoes");
 	private static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
+	private final JTextPane areaResultados = new JTextPane();
 	private final TextArea areaParametros = new TextArea();
-	private final TextArea areaResultados = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 
 	public RequisicaoContainer(IJanela janela) {
@@ -116,19 +119,24 @@ public class RequisicaoContainer extends Panel {
 			return;
 		}
 
+		areaResultados.setText("");
+
 		try {
 			Parser parser = new Parser();
 			Tipo parametros = parser.parse(string);
 			String resposta = Util.requisicao(parametros);
 
 			if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
+				StyledDocument styledDoc = areaResultados.getStyledDocument();
 				Tipo json = parser.parse(resposta);
-				StringBuilder sb = new StringBuilder();
-				json.toString(sb, false, 0);
-				resposta = sb.toString();
-			}
 
-			areaResultados.setText(resposta);
+				if (styledDoc instanceof AbstractDocument) {
+					AbstractDocument doc = (AbstractDocument) styledDoc;
+					json.toString(doc, false, 0);
+				}
+			} else {
+				areaResultados.setText(resposta);
+			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 		}
