@@ -141,6 +141,6 @@ public class Objeto extends Tipo {
 		att2 = new SimpleAttributeSet();
 		att = new SimpleAttributeSet();
 		StyleConstants.setForeground(att, Color.black);
-		StyleConstants.setForeground(att2, Color.red);
+		StyleConstants.setForeground(att2, new Color(125, 0, 0));
 	}
 }

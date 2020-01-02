@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -588,6 +589,6 @@ public class Util {
 			lidos = is.read(bytes);
 		}
 
-		return new String(baos.toByteArray());
+		return new String(baos.toByteArray(), StandardCharsets.UTF_8);
 	}
 }
