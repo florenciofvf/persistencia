@@ -57,7 +57,7 @@ public class RequisicaoContainer extends Panel {
 				String linha = br.readLine();
 
 				while (linha != null) {
-					String s = linha.trim();
+					String s = trim(linha);
 
 					if (!s.isEmpty()) {
 						Document doc = areaParametros.getDocument();
@@ -70,6 +70,18 @@ public class RequisicaoContainer extends Panel {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}
 		}
+	}
+
+	private String trim(String s) {
+		StringBuilder sb = new StringBuilder(s);
+		int length = sb.length();
+
+		while (length > 0 && (sb.charAt(length - 1) == '\r' || sb.charAt(length - 1) == '\n')) {
+			sb.delete(length - 1, length);
+			length = sb.length();
+		}
+
+		return sb.toString();
 	}
 
 	private class Toolbar extends BarraButton {
