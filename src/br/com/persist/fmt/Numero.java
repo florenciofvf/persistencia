@@ -37,6 +37,6 @@ public class Numero extends Tipo {
 
 	static {
 		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.black);
+		StyleConstants.setForeground(att, Color.green);
 	}
 }

@@ -103,6 +103,6 @@ public class Array extends Tipo {
 
 	static {
 		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.CYAN);
+		StyleConstants.setForeground(att, Color.black);
 	}
 }

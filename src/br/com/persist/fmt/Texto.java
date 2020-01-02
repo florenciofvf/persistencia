@@ -37,6 +37,6 @@ public class Texto extends Tipo {
 
 	static {
 		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.green);
+		StyleConstants.setForeground(att, Color.blue);
 	}
 }

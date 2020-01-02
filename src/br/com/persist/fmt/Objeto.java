@@ -15,6 +15,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class Objeto extends Tipo {
+	private static final MutableAttributeSet att2;
 	private static final MutableAttributeSet att;
 	private final Map<String, Tipo> atributos;
 
@@ -125,7 +126,7 @@ public class Objeto extends Tipo {
 			}
 
 			Map.Entry<String, Tipo> entry = it.next();
-			insert(doc, getTab(tab + 1) + citar(entry.getKey()) + ": ", att);
+			insert(doc, getTab(tab + 1) + citar(entry.getKey()) + ": ", att2);
 
 			Tipo t = entry.getValue();
 			t.toString(doc, false, tab + 1);
@@ -137,7 +138,9 @@ public class Objeto extends Tipo {
 	}
 
 	static {
+		att2 = new SimpleAttributeSet();
 		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, Color.pink);
+		StyleConstants.setForeground(att, Color.black);
+		StyleConstants.setForeground(att2, Color.red);
 	}
 }

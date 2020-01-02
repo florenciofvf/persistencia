@@ -110,12 +110,14 @@ public class RequisicaoContainer extends Panel {
 
 	public void atualizar() {
 		if (Util.estaVazio(areaParametros.getText())) {
+			areaResultados.setText("PARAMETROS VAZIO.");
 			return;
 		}
 
 		String string = areaParametros.getSelectedText();
 
 		if (Util.estaVazio(string)) {
+			areaResultados.setText("NENHUM FRAGMENTO SELECIONADO.");
 			return;
 		}
 
