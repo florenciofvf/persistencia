@@ -57,8 +57,13 @@ public class RequisicaoContainer extends Panel {
 				String linha = br.readLine();
 
 				while (linha != null) {
-					Document doc = areaParametros.getDocument();
-					doc.insertString(doc.getLength(), linha + Constantes.QL, null);
+					String s = linha.trim();
+
+					if (!s.isEmpty()) {
+						Document doc = areaParametros.getDocument();
+						doc.insertString(doc.getLength(), s + Constantes.QL, null);
+					}
+
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
