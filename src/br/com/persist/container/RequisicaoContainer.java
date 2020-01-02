@@ -10,13 +10,13 @@ import java.io.PrintWriter;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
-import br.com.persist.comp.TextArea;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.util.Action;
@@ -30,7 +30,7 @@ public class RequisicaoContainer extends Panel {
 	private static final File file = new File("requisicao/requisicoes");
 	private static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
 	private final JTextPane areaResultados = new JTextPane();
-	private final TextArea areaParametros = new TextArea();
+	private final JTextPane areaParametros = new JTextPane();
 	private final Toolbar toolbar = new Toolbar();
 
 	public RequisicaoContainer(IJanela janela) {
@@ -50,14 +50,15 @@ public class RequisicaoContainer extends Panel {
 	}
 
 	private void abrir() {
-		areaParametros.limpar();
+		areaParametros.setText("");
 
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 				String linha = br.readLine();
 
 				while (linha != null) {
-					areaParametros.append(linha + Constantes.QL);
+					Document doc = areaParametros.getDocument();
+					doc.insertString(doc.getLength(), linha + Constantes.QL, null);
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
