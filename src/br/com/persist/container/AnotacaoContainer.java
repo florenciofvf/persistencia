@@ -41,7 +41,7 @@ public class AnotacaoContainer extends Panel {
 				String linha = br.readLine();
 
 				while (linha != null) {
-					textArea.append(linha + Constantes.QL);
+					textArea.append(linha + Constantes.QL2);
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {

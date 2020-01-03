@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.text.AbstractDocument;
-import javax.swing.text.Document;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.comp.BarraButton;
@@ -54,34 +53,19 @@ public class RequisicaoContainer extends Panel {
 
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				StringBuilder sb = new StringBuilder();
 				String linha = br.readLine();
 
 				while (linha != null) {
-					String s = trim(linha);
-
-					if (!s.isEmpty()) {
-						Document doc = areaParametros.getDocument();
-						doc.insertString(doc.getLength(), s + Constantes.QL, null);
-					}
-
+					sb.append(linha + Constantes.QL2);
 					linha = br.readLine();
 				}
+
+				areaParametros.setText(sb.toString());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}
 		}
-	}
-
-	private String trim(String s) {
-		StringBuilder sb = new StringBuilder(s);
-		int length = sb.length();
-
-		while (length > 0 && (sb.charAt(length - 1) == '\r' || sb.charAt(length - 1) == '\n')) {
-			sb.delete(length - 1, length);
-			length = sb.length();
-		}
-
-		return sb.toString();
 	}
 
 	private class Toolbar extends BarraButton {
