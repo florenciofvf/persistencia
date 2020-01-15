@@ -215,8 +215,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
 
 			menuArquivo.add(new MenuItem(novoAcao));
-			menuArquivo.add(true, new MenuAbrir());
 			menuArquivo.add(true, new MenuDesktop());
+			menuArquivo.add(true, new MenuAbrir());
 			menuArquivo.add(true, new MenuArquivo());
 			menuArquivo.add(true, new MenuAnexo());
 			menuArquivo.add(true, new MenuItem(fecharAcao));
