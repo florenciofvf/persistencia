@@ -157,13 +157,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		private static final long serialVersionUID = 1L;
 		private Action limparAcao = Action.actionIcon(Constantes.LABEL_LIMPAR, Icones.NOVO,
 				e -> txtComplemento.setText(""));
-		private Action baixarAcao = Action.actionIcon("label.baixar", Icones.BAIXAR,
-				e -> txtComplemento.setText(objeto.getComplemento()));
 		final ButtonComplemento complemento = new ButtonComplemento();
 		final Button excluir = new Button(new ExcluirRegistrosAcao());
 		final ButtonAtualizar atualizar = new ButtonAtualizar();
 		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
 		final ButtonFuncoes funcoes = new ButtonFuncoes();
+		final ButtonBaixar baixar = new ButtonBaixar();
 		final ButtonUpdate update = new ButtonUpdate();
 		final Label labelTotal = new Label(Color.BLUE);
 		final ButtonUtil util = new ButtonUtil();
@@ -183,7 +182,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			add(labelTotal);
 			add(funcoes);
 			addButton(true, limparAcao);
-			addButton(baixarAcao);
+			add(baixar);
 			add(cmbConexao);
 
 			buscaAuto.complemento(objeto);
@@ -232,6 +231,36 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 
 					form.setVisible(true);
+				});
+			}
+		}
+
+		class ButtonBaixar extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action conexaoAcao = Action.actionMenu(Constantes.LABEL_CONEXAO2, null);
+			private Action objetoAcao = Action.actionMenu(Constantes.LABEL_OBJETO, null);
+
+			ButtonBaixar() {
+				super("label.baixar", Icones.BAIXAR);
+
+				addMenuItem(conexaoAcao);
+				addMenuItem(true, objetoAcao);
+
+				eventos();
+			}
+
+			private void eventos() {
+				objetoAcao.setActionListener(e -> txtComplemento.setText(objeto.getComplemento()));
+
+				conexaoAcao.setActionListener(e -> {
+					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+					String string = "";
+
+					if (conexao != null) {
+						string = conexao.getFinalComplemento();
+					}
+
+					txtComplemento.setText(string);
 				});
 			}
 		}
