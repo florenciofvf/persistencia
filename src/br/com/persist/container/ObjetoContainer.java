@@ -178,9 +178,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			add(true, complemento);
 			add(txtComplemento);
 			add(labelTotal);
-			add(funcoes);
 			add(baixar);
-			add(cmbConexao);
+			add(funcoes);
+			add(true, cmbConexao);
 
 			buscaAuto.complemento(objeto);
 			update.complemento(objeto);
