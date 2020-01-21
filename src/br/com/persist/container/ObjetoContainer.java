@@ -155,8 +155,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action limparAcao = Action.actionIcon(Constantes.LABEL_LIMPAR, Icones.NOVO,
-				e -> txtComplemento.setText(""));
 		final ButtonComplemento complemento = new ButtonComplemento();
 		final Button excluir = new Button(new ExcluirRegistrosAcao());
 		final ButtonAtualizar atualizar = new ButtonAtualizar();
@@ -181,7 +179,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			add(txtComplemento);
 			add(labelTotal);
 			add(funcoes);
-			addButton(true, limparAcao);
 			add(baixar);
 			add(cmbConexao);
 
@@ -237,6 +234,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		class ButtonBaixar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action limparAcao = Action.actionMenu(Constantes.LABEL_LIMPAR, Icones.NOVO);
 			private Action conexaoAcao = Action.actionMenu(Constantes.LABEL_CONEXAO2, null);
 			private Action objetoAcao = Action.actionMenu(Constantes.LABEL_OBJETO, null);
 
@@ -245,12 +243,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				addMenuItem(conexaoAcao);
 				addMenuItem(true, objetoAcao);
+				addMenuItem(true, limparAcao);
 
 				eventos();
 			}
 
 			private void eventos() {
 				objetoAcao.setActionListener(e -> txtComplemento.setText(objeto.getComplemento()));
+				limparAcao.setActionListener(e -> txtComplemento.setText(""));
 
 				conexaoAcao.setActionListener(e -> {
 					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
