@@ -176,7 +176,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.intervalo", txtIntervalo));
 			container.add(criarLinha("label.tabela", txtTabela));
-			container.add(criarLinha("label.chaves", txtChaves));
+			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
