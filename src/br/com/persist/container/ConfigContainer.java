@@ -125,8 +125,10 @@ public class ConfigContainer extends Panel {
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
 		Label tituloLayoutAbr = criarLabelTitulo("label.layout_abertura");
 		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
+		Label email = criarLabelTitulo("contato");
 
 		Panel container = new Panel(new GridLayout(0, 1));
+		container.add(email);
 		container.add(tituloLocalAbas);
 		container.add(panelPosicoes);
 		container.add(new JSeparator());
