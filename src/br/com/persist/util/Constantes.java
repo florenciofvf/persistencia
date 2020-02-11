@@ -40,6 +40,7 @@ public class Constantes {
 	public static final String LABEL_CONEXAO = "label.conexao";
 	public static final String LABEL_DIALOGO = "label.dialogo";
 	public static final String LABEL_DESKTOP = "label.desktop";
+	public static final String LABEL_LIMPAR2 = "label.limpar2";
 	public static final String PADRAO_ABRIR = "PADRAO_ABRIR:";
 	public static final String LABEL_OBJETO = "label.objeto";
 	public static final String LABEL_UPDATE = "label.update";

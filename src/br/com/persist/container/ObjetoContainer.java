@@ -59,6 +59,7 @@ import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.RegistroModelo;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.renderer.CellInfoRenderer;
 import br.com.persist.renderer.CellRenderer;
 import br.com.persist.tabela.CabecalhoColuna;
@@ -71,6 +72,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.BuscaAuto;
 import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.ButtonPopup;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.IIni;
@@ -234,6 +236,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		class ButtonBaixar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action limpar2Acao = Action.actionMenu(Constantes.LABEL_LIMPAR2, Icones.NOVO);
 			private Action limparAcao = Action.actionMenu(Constantes.LABEL_LIMPAR, Icones.NOVO);
 			private Action conexaoAcao = Action.actionMenu(Constantes.LABEL_CONEXAO2, null);
 			private Action objetoAcao = Action.actionMenu(Constantes.LABEL_OBJETO, null);
@@ -244,6 +247,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				addMenuItem(conexaoAcao);
 				addMenuItem(true, objetoAcao);
 				addMenuItem(true, limparAcao);
+				addMenuItem(limpar2Acao);
 
 				eventos();
 			}
@@ -261,6 +265,35 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 
 					txtComplemento.setText(string);
+				});
+
+				limpar2Acao.setActionListener(e -> {
+					boolean salvar = false;
+
+					ChaveValor cv = VariaveisModelo.get("LIMPAR2");
+
+					if (cv == null) {
+						cv = new ChaveValor("LIMPAR2", "AND 1 > 2");
+						VariaveisModelo.adicionar(cv);
+						salvar = true;
+					}
+
+					if (salvar) {
+						VariaveisModelo.salvar();
+						VariaveisModelo.inicializar();
+					}
+
+					txtComplemento.setText(cv.getValor());
+
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = true;
+					}
+
+					ObjetoContainer.this.actionPerformed(null);
+
+					if (objeto.isAjusteAutoEnter()) {
+						tamanhoAutomatico = false;
+					}
 				});
 			}
 		}
