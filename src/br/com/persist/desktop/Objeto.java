@@ -38,12 +38,12 @@ public class Objeto implements Runnable {
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	public static final int DIAMETRO = 36;
-	private String bloqPrefixNomeTabela;
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
 	private Tabela tabelaPesquisaAuto;
 	protected boolean ajusteAutoEnter;
 	protected boolean ajusteAutoForm;
+	private String prefixoNomeTabela;
 	private boolean copiarDestacado;
 	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
@@ -782,20 +782,20 @@ public class Objeto implements Runnable {
 		this.mapaSequencias = mapaSequencias;
 	}
 
-	public String getBloqPrefixNomeTabela() {
-		if (Util.estaVazio(bloqPrefixNomeTabela)) {
-			bloqPrefixNomeTabela = "";
+	public String getPrefixoNomeTabela() {
+		if (Util.estaVazio(prefixoNomeTabela)) {
+			prefixoNomeTabela = "";
 		}
 
-		return bloqPrefixNomeTabela;
+		return prefixoNomeTabela;
 	}
 
-	public void setBloqPrefixNomeTabela(String bloqPrefixNomeTabela) {
+	public void setPrefixoNomeTabela(String prefixoNomeTabela) {
 		if (bpnt) {
 			return;
 		}
 
-		this.bloqPrefixNomeTabela = bloqPrefixNomeTabela;
+		this.prefixoNomeTabela = prefixoNomeTabela;
 	}
 
 	public boolean isBpnt() {

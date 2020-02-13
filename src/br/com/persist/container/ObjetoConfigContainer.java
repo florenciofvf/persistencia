@@ -80,6 +80,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
+		private TextField txtPrefixoNT = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
 		private CheckBox chkColunaInfo = new CheckBox();
 		private CheckBox chkAbrirAuto = new CheckBox();
@@ -103,6 +104,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
+			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
 			txtIntervalo.setText("" + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			chkColunaInfo.setSelected(objeto.isColunaInfo());
@@ -130,6 +132,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
+			txtPrefixoNT.addFocusListener(focusListenerInner);
 			txtTabela.addFocusListener(focusListenerInner);
 			txtChaves.addFocusListener(focusListenerInner);
 			txtId.addFocusListener(focusListenerInner);
@@ -153,6 +156,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
 			txtIntervalo.addActionListener(this);
+			txtPrefixoNT.addActionListener(this);
 			chkLinkAuto.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
@@ -179,6 +183,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.intervalo", txtIntervalo));
 			container.add(criarLinha("label.tabela", txtTabela));
+			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
@@ -310,6 +315,9 @@ public class ObjetoConfigContainer extends Panel {
 
 			} else if (txtTabela == e.getSource()) {
 				objeto.setTabela(txtTabela.getText());
+
+			} else if (txtPrefixoNT == e.getSource()) {
+				objeto.setPrefixoNomeTabela(txtPrefixoNT.getText());
 
 			} else if (txtChaves == e.getSource()) {
 				objeto.setChaves(txtChaves.getText());
