@@ -165,7 +165,7 @@ public class Persistencia {
 				registros.add(registro);
 			}
 
-			return new RegistroModelo(colunas, registros, tabela, conexao);
+			return new RegistroModelo(colunas, registros, tabela, conexao, objeto.getPrefixoNomeTabela());
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}

@@ -308,13 +308,13 @@ public class Objeto implements Runnable {
 			tabela = "";
 		}
 
-		return (Util.estaVazio(esquema) ? "" : esquema + ".") + tabela;
+		return (Util.estaVazio(esquema) ? "" : esquema + ".") + getPrefixoNomeTabela() + tabela;
 	}
 
-	public static String prefixarEsquema(Conexao conexao, String string) {
+	public static String prefixarEsquema(Conexao conexao, String prefixoNomeTabela, String string) {
 		String esquema = conexao == null ? "" : conexao.getEsquema();
 
-		return (Util.estaVazio(esquema) ? "" : esquema + ".") + string;
+		return (Util.estaVazio(esquema) ? "" : esquema + ".") + prefixoNomeTabela + string;
 	}
 
 	public String getNomeSequencia(String nomeColuna) {

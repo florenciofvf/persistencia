@@ -23,12 +23,15 @@ import br.com.persist.util.Util;
 public class RegistroModelo implements TableModel {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<Object>> registros;
+	private final String prefixoNomeTabela;
 	private final List<Coluna> colunas;
 	private final boolean chaves;
 	private final String tabela;
 	private Conexao conexao;
 
-	public RegistroModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao) {
+	public RegistroModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao,
+			String prefixoNomeTabela) {
+		this.prefixoNomeTabela = prefixoNomeTabela;
 		this.registros = registros;
 		this.colunas = colunas;
 		this.tabela = tabela;
@@ -105,7 +108,8 @@ public class RegistroModelo implements TableModel {
 		if (chaves) {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
-				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue });
+				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
+						prefixoNomeTabela);
 				Persistencia.executar(update, Conexao.getConnection(conexao));
 				registro.set(columnIndex, aValue);
 				if (Preferencias.isAreaTransTabelaRegistros()) {
@@ -130,7 +134,7 @@ public class RegistroModelo implements TableModel {
 		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb);
 	}
 
-	public String getUpdate(int rowIndex) {
+	public String getUpdate(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
 
 		if (chaves) {
@@ -145,13 +149,14 @@ public class RegistroModelo implements TableModel {
 				valores.add(registro.get(coluna.getIndice()));
 			}
 
-			return gerarUpdate(registro, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]));
+			return gerarUpdate(registro, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
+					prefixoNomeTabela);
 		}
 
 		return null;
 	}
 
-	public String getUpdate() {
+	public String getUpdate(String prefixoNomeTabela) {
 		if (chaves) {
 			List<Object> valores = new ArrayList<>();
 			List<Coluna> naoChaves = getNaoChaves();
@@ -164,45 +169,46 @@ public class RegistroModelo implements TableModel {
 				valores.add(coluna.getNome());
 			}
 
-			return gerarUpdate(null, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]));
+			return gerarUpdate(null, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
+					prefixoNomeTabela);
 		}
 
 		return null;
 	}
 
-	public String getDelete(int rowIndex) {
+	public String getDelete(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
 
 		if (chaves) {
-			return gerarDelete(registro);
+			return gerarDelete(registro, prefixoNomeTabela);
 		}
 
 		return null;
 	}
 
-	public String getDelete() {
+	public String getDelete(String prefixoNomeTabela) {
 		if (chaves) {
-			return gerarDelete(null);
+			return gerarDelete(null, prefixoNomeTabela);
 		}
 
 		return null;
 	}
 
-	public String getInsert(int rowIndex) {
+	public String getInsert(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
-		return gerarInsert(registro);
+		return gerarInsert(registro, prefixoNomeTabela);
 	}
 
-	public String getInsert() {
-		return gerarInsert(null);
+	public String getInsert(String prefixoNomeTabela) {
+		return gerarInsert(null, prefixoNomeTabela);
 	}
 
-	public int excluir(int rowIndex) {
+	public int excluir(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
 
 		if (chaves) {
 			try {
-				String delete = gerarDelete(registro);
+				String delete = gerarDelete(registro, prefixoNomeTabela);
 				int i = Persistencia.executar(delete, Conexao.getConnection(conexao));
 				if (Preferencias.isAreaTransTabelaRegistros()) {
 					Util.setContentTransfered(delete);
@@ -281,8 +287,9 @@ public class RegistroModelo implements TableModel {
 		}
 	}
 
-	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores) {
-		StringBuilder builder = new StringBuilder("UPDATE " + Objeto.prefixarEsquema(conexao, tabela) + " SET ");
+	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores, String prefixoNomeTabela) {
+		StringBuilder builder = new StringBuilder(
+				"UPDATE " + Objeto.prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " SET ");
 
 		Coluna coluna = colunas[0];
 		builder.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[0]));
@@ -302,19 +309,19 @@ public class RegistroModelo implements TableModel {
 		return builder.toString();
 	}
 
-	private String gerarInsert(List<Object> registro) {
+	private String gerarInsert(List<Object> registro, String prefixoNomeTabela) {
 		if (colunas.isEmpty()) {
 			return null;
 		}
 
 		StringBuilder builder = new StringBuilder(
-				"INSERT INTO " + Objeto.prefixarEsquema(conexao, tabela) + " (" + Constantes.QL);
+				"INSERT INTO " + Objeto.prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " (" + Constantes.QL);
 
 		StringBuilder campos = new StringBuilder();
 		StringBuilder values = new StringBuilder("VALUES (" + Constantes.QL);
 
 		Coluna coluna = colunas.get(0);
-		append("", campos, values, coluna, registro);
+		append("", campos, values, coluna, registro, prefixoNomeTabela);
 
 		for (int i = 1; i < colunas.size(); i++) {
 			coluna = colunas.get(i);
@@ -323,7 +330,7 @@ public class RegistroModelo implements TableModel {
 				continue;
 			}
 
-			append(", ", campos, values, coluna, registro);
+			append(", ", campos, values, coluna, registro, prefixoNomeTabela);
 		}
 
 		campos.append(")" + Constantes.QL);
@@ -332,7 +339,8 @@ public class RegistroModelo implements TableModel {
 		return builder.append(campos).append(values).toString();
 	}
 
-	private void append(String s, StringBuilder campos, StringBuilder values, Coluna coluna, List<Object> registro) {
+	private void append(String s, StringBuilder campos, StringBuilder values, Coluna coluna, List<Object> registro,
+			String prefixoNomeTabela) {
 		campos.append(Constantes.TAB + s + coluna.getNome() + Constantes.QL);
 
 		if (Util.estaVazio(coluna.getSequencia())) {
@@ -342,12 +350,14 @@ public class RegistroModelo implements TableModel {
 				values.append(Constantes.TAB + s + coluna.get(coluna.getNome()) + Constantes.QL);
 			}
 		} else {
-			values.append(Constantes.TAB + s + Objeto.prefixarEsquema(conexao, coluna.getSequencia()) + Constantes.QL);
+			values.append(Constantes.TAB + s + Objeto.prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia())
+					+ Constantes.QL);
 		}
 	}
 
-	private String gerarDelete(List<Object> registro) {
-		StringBuilder builder = new StringBuilder("DELETE FROM " + Objeto.prefixarEsquema(conexao, tabela));
+	private String gerarDelete(List<Object> registro, String prefixoNomeTabela) {
+		StringBuilder builder = new StringBuilder(
+				"DELETE FROM " + Objeto.prefixarEsquema(conexao, prefixoNomeTabela, tabela));
 		builder.append(getWhere(registro));
 
 		return builder.toString();

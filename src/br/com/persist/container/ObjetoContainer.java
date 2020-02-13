@@ -315,7 +315,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
 
 					for (int linha : linhas) {
-						int excluido = modelo.excluirRegistro(linha);
+						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela());
 
 						if (excluido == 0 || excluido == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
@@ -590,7 +590,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 								return;
 							}
 
-							String instrucao = modelo.getUpdate(linhas[0]);
+							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela());
 
 							if (Util.estaVazio(instrucao)) {
 								return;
@@ -632,7 +632,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 								return;
 							}
 
-							String instrucao = modelo.getDelete(linhas[0]);
+							String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela());
 
 							if (Util.estaVazio(instrucao)) {
 								return;
@@ -668,7 +668,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						int[] linhas = tabela.getSelectedRows();
 
 						if (linhas != null && linhas.length == 1) {
-							String instrucao = modelo.getInsert(linhas[0]);
+							String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela());
 
 							if (Util.estaVazio(instrucao)) {
 								return;
@@ -941,7 +941,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						TableModel model = modelo.getModel();
 
 						if (model instanceof RegistroModelo) {
-							String instrucao = modelo.getInsert();
+							String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
 
 							if (Util.estaVazio(instrucao)) {
 								return;
@@ -973,7 +973,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						TableModel model = modelo.getModel();
 
 						if (model instanceof RegistroModelo) {
-							String instrucao = modelo.getUpdate();
+							String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
 
 							if (Util.estaVazio(instrucao)) {
 								return;
@@ -1005,7 +1005,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						TableModel model = modelo.getModel();
 
 						if (model instanceof RegistroModelo) {
-							String instrucao = modelo.getDelete();
+							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
 
 							if (Util.estaVazio(instrucao)) {
 								return;

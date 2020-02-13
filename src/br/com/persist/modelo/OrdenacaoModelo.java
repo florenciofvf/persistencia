@@ -75,9 +75,9 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return null;
 	}
 
-	public int excluirRegistro(int rowIndex) {
+	public int excluirRegistro(int rowIndex, String prefixoNomeTabela) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.excluir(linhas[rowIndex].indice);
+		return modelo.excluir(linhas[rowIndex].indice, prefixoNomeTabela);
 	}
 
 	public List<Object> getRegistro(int rowIndex) {
@@ -90,34 +90,34 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		modelo.getDados(linhas[rowIndex].indice, sb);
 	}
 
-	public String getUpdate(int rowIndex) {
+	public String getUpdate(int rowIndex, String prefixoNomeTabela) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.getUpdate(linhas[rowIndex].indice);
+		return modelo.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela);
 	}
 
-	public String getUpdate() {
+	public String getUpdate(String prefixoNomeTabela) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.getUpdate();
+		return modelo.getUpdate(prefixoNomeTabela);
 	}
 
-	public String getDelete(int rowIndex) {
+	public String getDelete(int rowIndex, String prefixoNomeTabela) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.getDelete(linhas[rowIndex].indice);
+		return modelo.getDelete(linhas[rowIndex].indice, prefixoNomeTabela);
 	}
 
-	public String getDelete() {
+	public String getDelete(String prefixoNomeTabela) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.getDelete();
+		return modelo.getDelete(prefixoNomeTabela);
 	}
 
-	public String getInsert(int rowIndex) {
+	public String getInsert(int rowIndex, String prefixoNomeTabela) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.getInsert(linhas[rowIndex].indice);
+		return modelo.getInsert(linhas[rowIndex].indice, prefixoNomeTabela);
 	}
 
-	public String getInsert() {
+	public String getInsert(String prefixoNomeTabela) {
 		RegistroModelo modelo = (RegistroModelo) model;
-		return modelo.getInsert();
+		return modelo.getInsert(prefixoNomeTabela);
 	}
 
 	public List<IndiceValor> getValoresChaves(int rowIndex) {
