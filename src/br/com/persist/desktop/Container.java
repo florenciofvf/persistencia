@@ -24,6 +24,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.comp.TextField;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
@@ -40,6 +41,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
@@ -186,6 +188,7 @@ public class Container extends Panel {
 		private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
+		private TextField txtPrefixoNomeTabela = new TextField(10);
 		private Action salvarAcao = Action.actionIconSalvar();
 		private Action baixarAcao = Action.actionIconBaixar();
 		private Label labelStatus = new Label();
@@ -214,6 +217,9 @@ public class Container extends Panel {
 			add(true, cmbConexao);
 			add(true, new ButtonInfo());
 			add(true, labelStatus);
+			add(true, txtPrefixoNomeTabela);
+
+			txtPrefixoNomeTabela.setToolTipText(Mensagens.getString("label.prefixo_nt"));
 
 			eventos();
 		}
@@ -399,6 +405,8 @@ public class Container extends Panel {
 				ToggleButton button = (ToggleButton) e.getSource();
 				superficie.transparente(button.isSelected());
 			});
+
+			txtPrefixoNomeTabela.addActionListener(e -> superficie.prefixoNomeTabela(txtPrefixoNomeTabela.getText()));
 		}
 
 		private void titulo() {

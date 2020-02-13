@@ -1944,4 +1944,10 @@ public class Superficie extends Desktop {
 			SwingUtilities.updateComponentTreeUI(getParent());
 		}
 	}
+
+	public void prefixoNomeTabela(String prefixoNomeTabela) {
+		for (Objeto objeto : objetos) {
+			objeto.setPrefixoNomeTabela(prefixoNomeTabela);
+		}
+	}
 }
