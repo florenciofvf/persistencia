@@ -1425,7 +1425,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				objeto.setTabelaPesquisaAuto(null);
 			}
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage("PAINEL OBJETO", ex, this);
+			Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
 		}
 
 		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
