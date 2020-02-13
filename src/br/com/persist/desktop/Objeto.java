@@ -38,6 +38,7 @@ public class Objeto implements Runnable {
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	public static final int DIAMETRO = 36;
+	private String bloqPrefixNomeTabela;
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
 	private Tabela tabelaPesquisaAuto;
@@ -70,6 +71,7 @@ public class Objeto implements Runnable {
 	private String chaves;
 	private String icone;
 	private boolean ccsc;
+	private boolean bpnt;
 	private Icon icon;
 	private String id;
 	private long tag;
@@ -128,6 +130,7 @@ public class Objeto implements Runnable {
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.ccsc = ccsc;
+		o.bpnt = bpnt;
 		o.setId(id);
 
 		for (Instrucao i : instrucoes) {
@@ -539,6 +542,7 @@ public class Objeto implements Runnable {
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
+		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
 		buscaAutomatica = attr.getValue("buscaAutomatica");
 		linkAutomatico = attr.getValue("linkAutomatico");
 		finalConsulta = attr.getValue("finalConsulta");
@@ -588,6 +592,7 @@ public class Objeto implements Runnable {
 		util.atributo("cor", cor.getRGB());
 		util.atributo("icone", icone);
 		util.atributo("ccsc", ccsc);
+		util.atributo("bpnt", bpnt);
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag();
@@ -775,5 +780,29 @@ public class Objeto implements Runnable {
 
 	public void setMapaSequencias(Map<String, String> mapaSequencias) {
 		this.mapaSequencias = mapaSequencias;
+	}
+
+	public String getBloqPrefixNomeTabela() {
+		if (Util.estaVazio(bloqPrefixNomeTabela)) {
+			bloqPrefixNomeTabela = "";
+		}
+
+		return bloqPrefixNomeTabela;
+	}
+
+	public void setBloqPrefixNomeTabela(String bloqPrefixNomeTabela) {
+		if (bpnt) {
+			return;
+		}
+
+		this.bloqPrefixNomeTabela = bloqPrefixNomeTabela;
+	}
+
+	public boolean isBpnt() {
+		return bpnt;
+	}
+
+	public void setBpnt(boolean bpnt) {
+		this.bpnt = bpnt;
 	}
 }

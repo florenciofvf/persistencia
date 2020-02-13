@@ -87,6 +87,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
 		private CheckBox chkCCSC = new CheckBox();
+		private CheckBox chkBPNT = new CheckBox();
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
@@ -114,6 +115,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
 			chkCCSC.setSelected(objeto.isCcsc());
+			chkBPNT.setSelected(objeto.isBpnt());
 			txtX.setText("" + objeto.getX());
 			txtY.setText("" + objeto.getY());
 			txtId.setText(objeto.getId());
@@ -155,6 +157,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtTabela.addActionListener(this);
 			txtChaves.addActionListener(this);
 			chkCCSC.addActionListener(this);
+			chkBPNT.addActionListener(this);
 			txtId.addActionListener(this);
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
@@ -188,6 +191,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
 			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
+			container.add(criarLinha("label.bpnt", chkBPNT, Mensagens.getString("hint.bpnt")));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
@@ -357,7 +361,17 @@ public class ObjetoConfigContainer extends Panel {
 				objeto.setCcsc(chk.isSelected());
 				Formulario.macro.confirmarCsc(chk.isSelected());
 
-			} else if (chkTransparente == e.getSource()) {
+			} else if (chkBPNT == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setBpnt(chk.isSelected());
+				Formulario.macro.bloquearPnt(chk.isSelected());
+			}
+
+			actionPerformedCont2(e);
+		}
+
+		private void actionPerformedCont2(ActionEvent e) {
+			if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setTransparente(chk.isSelected());
 				Formulario.macro.transparencia(chk.isSelected());

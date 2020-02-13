@@ -27,6 +27,7 @@ public class Macro {
 	private final Map<String, Instrucao> mapa;
 	private final List<Instrucao> instrucoes;
 	public static final String CCSC = "ccsc";
+	public static final String BPNT = "bpnt";
 	public static final String COR = "cor";
 	public static final String X = "x";
 	public static final String Y = "y";
@@ -50,6 +51,7 @@ public class Macro {
 		mapa.put(COR_FONTE, new CorFonte());
 		mapa.put(ICONE, new Icone());
 		mapa.put(CCSC, new Ccsc());
+		mapa.put(BPNT, new Bpnt());
 		mapa.put(COR, new Cor());
 		mapa.put(X, new XPos());
 		mapa.put(Y, new YPos());
@@ -157,6 +159,18 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setCcsc((Boolean) valor);
+		}
+	}
+
+	class Bpnt extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setBpnt((Boolean) valor);
 		}
 	}
 
@@ -322,6 +336,12 @@ public class Macro {
 
 	public void confirmarCsc(Object valor) {
 		Instrucao instrucao = mapa.get(CCSC);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void bloquearPnt(Object valor) {
+		Instrucao instrucao = mapa.get(BPNT);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}
