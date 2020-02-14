@@ -41,8 +41,14 @@ public class RequisicaoContainer extends Panel {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(areaParametros),
-				new ScrollPane(areaResultados));
+		Panel panelParametros = new Panel();
+		panelParametros.add(areaParametros);
+
+		Panel panelResultados = new Panel();
+		panelResultados.add(areaResultados);
+
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
+				new ScrollPane(panelResultados));
 		split.setDividerLocation(200);
 
 		add(BorderLayout.CENTER, split);
