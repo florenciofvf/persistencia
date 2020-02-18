@@ -22,6 +22,7 @@ public class Preferencias {
 	private static boolean abrirComArvore;
 	private static boolean nomearArrasto;
 	private static boolean abrirComAnexo;
+	private static boolean tituloAbaMin;
 	private static Color corTotalAtual;
 	private static Color corComparaRec;
 	private static String formDialogo;
@@ -53,6 +54,7 @@ public class Preferencias {
 		abrirComArvore = pref.getBoolean("abrir_com_arvore", true);
 		nomearArrasto = pref.getBoolean("nomear_arrasto", false);
 		abrirComAnexo = pref.getBoolean("abrir_com_anexo", true);
+		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		layoutAbertura = pref.getInt("layout_abertura", 1);
 		abrirAuto = pref.getBoolean("abrir_auto", false);
@@ -92,6 +94,7 @@ public class Preferencias {
 		pref.putBoolean("abrir_com_anexo", abrirComAnexo);
 		pref.putBoolean("nomear_arrasto", nomearArrasto);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
+		pref.putBoolean("titulo_aba_min", tituloAbaMin);
 		pref.putInt("layout_abertura", layoutAbertura);
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
@@ -272,5 +275,13 @@ public class Preferencias {
 
 	public static void setNomearArrasto(boolean nomearArrasto) {
 		Preferencias.nomearArrasto = nomearArrasto;
+	}
+
+	public static boolean isTituloAbaMin() {
+		return tituloAbaMin;
+	}
+
+	public static void setTituloAbaMin(boolean tituloAbaMin) {
+		Preferencias.tituloAbaMin = tituloAbaMin;
 	}
 }

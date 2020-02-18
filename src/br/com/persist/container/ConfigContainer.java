@@ -44,6 +44,7 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkAbrirComAnexo = new CheckBox("label.abrir_com_anexo");
 	private final CheckBox chkAjusteAutom = new CheckBox("label.ajuste_automatico");
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
+	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
@@ -117,6 +118,7 @@ public class ConfigContainer extends Panel {
 		chkAbrirComAnexo.setSelected(Preferencias.isAbrirComAnexo());
 		chkNomearArrasto.setSelected(Preferencias.isNomearArrasto());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
+		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
 
@@ -149,6 +151,7 @@ public class ConfigContainer extends Panel {
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkAjusteAutom);
 		container.add(chkNomearArrasto);
+		container.add(chkTituloAbaMin);
 		container.add(chkFicharioScroll);
 		container.add(chkAbrirComArvore);
 		container.add(chkAbrirComAnexo);
@@ -177,6 +180,7 @@ public class ConfigContainer extends Panel {
 		chkFicharioScroll.setMargin(insets);
 		chkAbrirComAnexo.setMargin(insets);
 		chkNomearArrasto.setMargin(insets);
+		chkTituloAbaMin.setMargin(insets);
 		chkAjusteAutom.setMargin(insets);
 	}
 
@@ -232,6 +236,8 @@ public class ConfigContainer extends Panel {
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
 
 		chkAjusteAutom.addActionListener(e -> Preferencias.setAjusteAutomatico(chkAjusteAutom.isSelected()));
+
+		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
 
 		chkAreaTransTabelaRegistros.addActionListener(
 				e -> Preferencias.setAreaTransTabelaRegistros(chkAreaTransTabelaRegistros.isSelected()));
