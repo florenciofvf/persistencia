@@ -276,10 +276,14 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public void addTab(String title, String titleMin, Component component) {
+		addTab(Preferencias.isTituloAbaMin() ? Mensagens.getString(titleMin) : Mensagens.getString(title), component);
+	}
+
 	public Desktop novoDesktop(Formulario formulario) {
 		Desktop desktop = new Desktop(formulario, false);
 		desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		addTab(Mensagens.getString(Constantes.LABEL_DESKTOP), new ScrollPane(desktop));
+		addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, new ScrollPane(desktop));
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);

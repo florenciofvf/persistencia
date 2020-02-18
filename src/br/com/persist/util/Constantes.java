@@ -15,6 +15,7 @@ public class Constantes {
 	public static final String LABEL_UTILITARIOS = "label.utilitarios";
 	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
+	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String LABEL_REQUISICAO = "label.requisicao";
