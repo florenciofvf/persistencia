@@ -11,12 +11,16 @@ public class Constantes {
 	public static final String ALTURMA_MINIMA_FORMULARIO = "ALTURMA_MINIMA_FORMULARIO";
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
+	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
 	public static final String LABEL_REQUISICAO_MIN = "label.requisicao_min";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
+	public static final String LABEL_COMPARACAO_MIN = "label.comparacao_min";
 	public static final String LABEL_METADADOS_MIN = "label.meta_dados_min";
 	public static final String LABEL_ANOTACOES_MIN = "label.anotacoes_min";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
 	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";
+	public static final String LABEL_FRAGMENTO_MIN = "label.fragmento_min";
+	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
 	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
 	public static final String LABEL_ARQUIVOS_MIN = "label.arquivos_min";
 	public static final String LABEL_UTILITARIOS = "label.utilitarios";
