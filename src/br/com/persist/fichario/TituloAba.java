@@ -30,7 +30,7 @@ import br.com.persist.util.Mensagens;
 
 public class TituloAba extends Panel {
 	private static final long serialVersionUID = 1L;
-	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.PANEL3, Icones.EXPANDIR, Icones.PANEL4,
+	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.TABELA, Icones.EXPANDIR, Icones.PANEL4,
 			Icones.CONFIG, Icones.BANCO, Icones.FRAGMENTO, Icones.CRIAR, Icones.ATUALIZAR, Icones.ANEXO, Icones.CAMPOS,
 			Icones.REFERENCIA, Icones.VAR, Icones.CENTRALIZAR, Icones.URL };
 	private static final Logger LOG = Logger.getGlobal();

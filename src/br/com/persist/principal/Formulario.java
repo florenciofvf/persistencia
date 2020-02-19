@@ -302,7 +302,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			private static final long serialVersionUID = 1L;
 
 			MenuConsulta() {
-				super(Constantes.LABEL_CONSULTA, Icones.PANEL3);
+				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao.setActionListener(e -> {
 					ConsultaFormulario form = new ConsultaFormulario(Formulario.this, null);

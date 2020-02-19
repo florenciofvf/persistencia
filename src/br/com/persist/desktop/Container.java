@@ -254,7 +254,7 @@ public class Container extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			ButtonConsulta() {
-				super(Constantes.LABEL_CONSULTA, Icones.PANEL3);
+				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao.setActionListener(e -> {
 					ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
