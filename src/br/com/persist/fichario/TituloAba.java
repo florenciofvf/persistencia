@@ -62,11 +62,6 @@ public class TituloAba extends Panel {
 		add(new Icone());
 	}
 
-	@Override
-	public void setToolTipText(String text) {
-		super.setToolTipText(null);
-	}
-
 	private class Rotulo extends Label {
 		private static final long serialVersionUID = 1L;
 
