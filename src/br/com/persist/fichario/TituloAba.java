@@ -62,6 +62,11 @@ public class TituloAba extends Panel {
 		add(new Icone());
 	}
 
+	@Override
+	public void setToolTipText(String text) {
+		super.setToolTipText(null);
+	}
+
 	private class Rotulo extends Label {
 		private static final long serialVersionUID = 1L;
 
@@ -86,7 +91,7 @@ public class TituloAba extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		Icone() {
-			setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
+			this.setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(17, 17));
 			addMouseListener(mouseListenerInner);
