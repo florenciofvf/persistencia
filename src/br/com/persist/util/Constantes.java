@@ -10,8 +10,13 @@ public class Constantes {
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final String ALTURMA_MINIMA_FORMULARIO = "ALTURMA_MINIMA_FORMULARIO";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
+	public static final String LABEL_REQUISICAO_MIN = "label.requisicao_min";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
+	public static final String LABEL_METADADOS_MIN = "label.meta_dados_min";
+	public static final String LABEL_ANOTACOES_MIN = "label.anotacoes_min";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
+	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";
+	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
 	public static final String LABEL_UTILITARIOS = "label.utilitarios";
 	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";

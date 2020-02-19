@@ -295,7 +295,7 @@ public class Fichario extends JTabbedPane {
 
 	public Panel novaAnotacao(Formulario formulario) {
 		AnotacaoContainer container = new AnotacaoContainer(null);
-		addTab(Mensagens.getString(Constantes.LABEL_ANOTACOES), container);
+		addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.ANOTACAO);
@@ -307,7 +307,7 @@ public class Fichario extends JTabbedPane {
 
 	public Panel novaRequisicao(Formulario formulario) {
 		RequisicaoContainer container = new RequisicaoContainer(null);
-		addTab(Mensagens.getString(Constantes.LABEL_REQUISICAO), container);
+		addTab(Constantes.LABEL_REQUISICAO, Constantes.LABEL_REQUISICAO_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.REQUISICAO);
@@ -319,7 +319,7 @@ public class Fichario extends JTabbedPane {
 
 	public Panel novaConsulta(Formulario formulario, Conexao conexao) {
 		ConsultaContainer container = new ConsultaContainer(null, formulario, conexao, null, null, true);
-		addTab(Mensagens.getString(Constantes.LABEL_CONSULTA), container);
+		addTab(Constantes.LABEL_CONSULTA, Constantes.LABEL_CONSULTA_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONSULTA);
@@ -331,7 +331,7 @@ public class Fichario extends JTabbedPane {
 
 	public Panel novoMetadado(Formulario formulario, Conexao conexao) {
 		MetadadosContainer container = new MetadadosContainer(null, formulario, formulario, conexao);
-		addTab(Mensagens.getString(Constantes.LABEL_METADADOS), container);
+		addTab(Constantes.LABEL_METADADOS, Constantes.LABEL_METADADOS_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.METADADO);
@@ -343,7 +343,7 @@ public class Fichario extends JTabbedPane {
 
 	public Panel novoUpdate(Formulario formulario, Conexao conexao) {
 		UpdateContainer container = new UpdateContainer(null, formulario, conexao, null, null);
-		addTab(Mensagens.getString(Constantes.LABEL_ATUALIZAR), container);
+		addTab(Constantes.LABEL_ATUALIZAR, Constantes.LABEL_ATUALIZAR_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.UPDATE);
@@ -355,7 +355,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novaArvore(Formulario formulario) {
 		ArvoreContainer container = new ArvoreContainer(null, formulario, null);
-		addTab(Mensagens.getString(Constantes.LABEL_ARQUIVOS), container);
+		addTab(Constantes.LABEL_ARQUIVOS, Constantes.LABEL_ARQUIVOS_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.ARVORE);
@@ -365,7 +365,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novoAnexo(Formulario formulario) {
 		AnexoContainer container = new AnexoContainer(null, formulario, null);
-		addTab(Mensagens.getString(Constantes.LABEL_ANEXOS), container);
+		addTab(Constantes.LABEL_ANEXOS, Constantes.LABEL_ANEXOS_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.ANEXO);
@@ -375,7 +375,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novoConfig(Formulario formulario) {
 		ConfigContainer container = new ConfigContainer(null, formulario);
-		addTab(Mensagens.getString(Constantes.LABEL_CONFIGURACOES), container);
+		addTab(Constantes.LABEL_CONFIGURACOES, Constantes.LABEL_CONFIGURACOES_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONFIG);
@@ -385,7 +385,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novaConexao(Formulario formulario) {
 		ConexaoContainer container = new ConexaoContainer(null, formulario);
-		addTab(Mensagens.getString(Constantes.LABEL_CONEXAO), container);
+		addTab(Constantes.LABEL_CONEXAO, Constantes.LABEL_CONEXAO_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONEXAO);
@@ -397,7 +397,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novoFragmento(Formulario formulario) {
 		FragmentoContainer container = new FragmentoContainer(null, null);
-		addTab(Mensagens.getString(Constantes.LABEL_FRAGMENTO), container);
+		addTab(Constantes.LABEL_FRAGMENTO, Constantes.LABEL_FRAGMENTO_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.FRAGMENTO);
@@ -409,7 +409,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novoMapeamento(Formulario formulario) {
 		MapeamentoContainer container = new MapeamentoContainer(null);
-		addTab(Mensagens.getString(Constantes.LABEL_MAPEAMENTOS), container);
+		addTab(Constantes.LABEL_MAPEAMENTOS, Constantes.LABEL_MAPEAMENTOS_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.FRAGMENTO);
@@ -421,7 +421,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novoVariaveis(Formulario formulario) {
 		VariaveisContainer container = new VariaveisContainer(null);
-		addTab(Mensagens.getString(Constantes.LABEL_VARIAVEIS), container);
+		addTab(Constantes.LABEL_VARIAVEIS, Constantes.LABEL_VARIAVEIS_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.VARIAVEIS);
@@ -433,7 +433,7 @@ public class Fichario extends JTabbedPane {
 
 	public void novaComparacao(Formulario formulario) {
 		ComparacaoContainer container = new ComparacaoContainer(null);
-		addTab(Mensagens.getString(Constantes.LABEL_COMPARACAO), container);
+		addTab(Constantes.LABEL_COMPARACAO, Constantes.LABEL_COMPARACAO_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.COMPARACAO);
