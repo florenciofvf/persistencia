@@ -86,7 +86,7 @@ public class TituloAba extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		Icone() {
-			this.setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
+			setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(17, 17));
 			addMouseListener(mouseListenerInner);
