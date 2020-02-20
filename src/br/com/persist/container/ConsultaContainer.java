@@ -45,6 +45,7 @@ public class ConsultaContainer extends Panel {
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.ini(janela, mapaChaveValor, abrirArquivo);
 		montarLayout();
+
 		if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
 			abrir();
 		}
@@ -78,11 +79,13 @@ public class ConsultaContainer extends Panel {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
+		private Action baixarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela);
 
+			addButton(baixarAcao);
 			addButton(atualizarAcao);
 
 			if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
@@ -95,6 +98,8 @@ public class ConsultaContainer extends Panel {
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
+
+			baixarAcao.setActionListener(e -> abrir());
 
 			salvarAcao.setActionListener(e -> {
 				try {

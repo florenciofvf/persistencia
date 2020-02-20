@@ -423,7 +423,7 @@ public class Fichario extends JTabbedPane {
 		addTab(Constantes.LABEL_MAPEAMENTOS, Constantes.LABEL_MAPEAMENTOS_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
-		TituloAba tituloAba = new TituloAba(this, TituloAba.FRAGMENTO);
+		TituloAba tituloAba = new TituloAba(this, TituloAba.MAPEAMENTO);
 		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);

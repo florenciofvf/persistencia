@@ -39,6 +39,7 @@ public class UpdateContainer extends Panel {
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela, mapaChaveValor);
 		montarLayout();
+
 		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
 			abrir();
 		}
@@ -78,11 +79,13 @@ public class UpdateContainer extends Panel {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconUpdate();
+		private Action baixarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor) {
 			super.ini(janela);
 
+			addButton(baixarAcao);
 			addButton(atualizarAcao);
 
 			if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
@@ -105,6 +108,8 @@ public class UpdateContainer extends Panel {
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
+
+			baixarAcao.setActionListener(e -> abrir());
 
 			salvarAcao.setActionListener(e -> {
 				try {
