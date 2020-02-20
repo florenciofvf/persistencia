@@ -85,8 +85,10 @@ public class RequisicaoContainer extends Panel {
 			super.ini(janela);
 
 			add(chkRespostaJson);
-			addButton(atualizarAcao);
+			addButton(true, atualizarAcao);
 			addButton(true, salvarAcao);
+
+			chkRespostaJson.setSelected(true);
 
 			eventos();
 		}
