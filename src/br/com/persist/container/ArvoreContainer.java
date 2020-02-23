@@ -17,6 +17,7 @@ import br.com.persist.listener.ArvoreListener;
 import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -60,6 +61,7 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ARQUIVO);
 
 			add(new Button(atualizarAcao));
 			add(new Button(statusAcao));

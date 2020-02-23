@@ -64,6 +64,7 @@ public class AnexoContainer extends Panel implements AnexoListener {
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANEXO);
 
 			add(new Button(atualizarAcao));
 			addButton(true, salvarAcao);

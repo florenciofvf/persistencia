@@ -11,6 +11,10 @@ public class Constantes {
 	public static final String ALTURMA_MINIMA_FORMULARIO = "ALTURMA_MINIMA_FORMULARIO";
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
+
+	public static final String ABRIR_AUTO_FICHARIO_ARQUIVO = "abrir_com_arvore";
+	public static final String ABRIR_AUTO_FICHARIO_ANEXO = "abrir_com_anexo";
+
 	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
 	public static final String LABEL_REQUISICAO_MIN = "label.requisicao_min";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
