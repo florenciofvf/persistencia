@@ -199,27 +199,24 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private final Menu menuConfig = new Menu(Constantes.LABEL_CONFIGURACOES);
 		private final Menu menuUtil = new Menu(Constantes.LABEL_UTILITARIOS);
 		private final Menu menuArquivo = new Menu(Constantes.LABEL_ARQUIVO);
-		private final Menu menuLAF = new Menu(Constantes.LABEL_APARENCIA);
-		private final Menu menuBanco = new Menu(Constantes.LABEL_BANCO);
-		private final Action fecharAcao = Action.actionMenuFechar();
-		private final MenuLayout menuLayout = new MenuLayout();
-
-		private final MenuDesktop itemDesktop = new MenuDesktop();
-		private final MenuArquivo itemArquivo = new MenuArquivo();
-		private final MenuAnexo itemAnexo = new MenuAnexo();
-
-		private final MenuConexao itemConexao = new MenuConexao();
-		private final MenuMetadado itemMetadado = new MenuMetadado();
-		private final MenuConsulta itemConsulta = new MenuConsulta();
-		private final MenuUpdate itemUpdate = new MenuUpdate();
-
-		private final MenuAnotacao itemAnotacao = new MenuAnotacao();
-		private final MenuFragmento itemFragmento = new MenuFragmento();
 		private final MenuMapeamento itemMapeamento = new MenuMapeamento();
-		private final MenuVariaveis itemVariavel = new MenuVariaveis();
 		private final MenuComparacao itemComparacao = new MenuComparacao();
 		private final MenuRequisicao itemRequisicao = new MenuRequisicao();
+		private final Menu menuLAF = new Menu(Constantes.LABEL_APARENCIA);
+		private final Menu menuBanco = new Menu(Constantes.LABEL_BANCO);
+		private final MenuFragmento itemFragmento = new MenuFragmento();
+		private final MenuVariaveis itemVariavel = new MenuVariaveis();
+		private final MenuAnotacao itemAnotacao = new MenuAnotacao();
+		private final MenuMetadado itemMetadado = new MenuMetadado();
+		private final MenuConsulta itemConsulta = new MenuConsulta();
+		private final Action fecharAcao = Action.actionMenuFechar();
+		private final MenuDesktop itemDesktop = new MenuDesktop();
+		private final MenuArquivo itemArquivo = new MenuArquivo();
+		private final MenuConexao itemConexao = new MenuConexao();
+		private final MenuUpdate itemUpdate = new MenuUpdate();
 		private final MenuConfig itemConfig = new MenuConfig();
+		private final MenuLayout menuLayout = new MenuLayout();
+		private final MenuAnexo itemAnexo = new MenuAnexo();
 
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
