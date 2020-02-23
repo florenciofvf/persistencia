@@ -557,6 +557,12 @@ public class Fichario extends JTabbedPane {
 
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Dimension d) {
+
+		if (file.getName().equalsIgnoreCase("fvf_separador")) {
+			addTab(null, null);
+			return;
+		}
+
 		Container container = novo(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		setToolTipTextAt(getTabCount() - 1, file.getAbsolutePath());
