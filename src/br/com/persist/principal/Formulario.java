@@ -208,6 +208,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private final MenuArquivo itemArquivo = new MenuArquivo();
 		private final MenuAnexo itemAnexo = new MenuAnexo();
 
+		private final MenuConexao itemConexao = new MenuConexao();
+		private final MenuMetadado itemMetadado = new MenuMetadado();
+		private final MenuConsulta itemConsulta = new MenuConsulta();
+		private final MenuUpdate itemUpdate = new MenuUpdate();
+
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
 
@@ -219,10 +224,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(true, new MenuItem(fecharAcao));
 			add(menuArquivo);
 
-			menuBanco.add(new MenuConexao());
-			menuBanco.add(true, new MenuMetadado());
-			menuBanco.add(true, new MenuConsulta());
-			menuBanco.add(true, new MenuUpdate());
+			menuBanco.add(itemConexao);
+			menuBanco.add(true, itemMetadado);
+			menuBanco.add(true, itemConsulta);
+			menuBanco.add(true, itemUpdate);
 			add(menuBanco);
 
 			menuUtil.add(new MenuAnotacao());
@@ -244,6 +249,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		void abrirAutoFichario() {
 			itemAnexo.abrirAutoFichario();
 			itemArquivo.abrirAutoFichario();
+
+			itemConexao.abrirAutoFichario();
+			itemMetadado.abrirAutoFichario();
+			itemConsulta.abrirAutoFichario();
+			itemUpdate.abrirAutoFichario();
 		}
 
 		private void eventos() {
@@ -320,6 +330,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				ficharioAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this, null));
 			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA)) {
+					ficharioAcao.actionPerformed(null);
+				}
+			}
 		}
 
 		class MenuUpdate extends MenuPadrao1 {
@@ -341,6 +357,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoUpdate(Formulario.this, null));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA)) {
+					ficharioAcao.actionPerformed(null);
+				}
 			}
 		}
 
@@ -395,6 +417,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoMetadado(Formulario.this, null));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_METADADO)) {
+					ficharioAcao.actionPerformed(null);
+				}
 			}
 		}
 
@@ -611,6 +639,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaConexao(Formulario.this));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO)) {
+					ficharioAcao.actionPerformed(null);
+				}
 			}
 		}
 

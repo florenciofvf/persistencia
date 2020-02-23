@@ -84,6 +84,7 @@ public class UpdateContainer extends Panel {
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA);
 
 			addButton(baixarAcao);
 			addButton(atualizarAcao);

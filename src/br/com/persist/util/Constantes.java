@@ -12,6 +12,11 @@ public class Constantes {
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 
+	public static final String ABRIR_AUTO_FICHARIO_CONEXAO = "abrir_com_conexao";
+	public static final String ABRIR_AUTO_FICHARIO_METADADO = "abrir_com_metadado";
+	public static final String ABRIR_AUTO_FICHARIO_CONSULTA = "abrir_com_consulta";
+	public static final String ABRIR_AUTO_FICHARIO_ATUALIZA = "abrir_com_atualiza";
+
 	public static final String ABRIR_AUTO_FICHARIO_ARQUIVO = "abrir_com_arvore";
 	public static final String ABRIR_AUTO_FICHARIO_ANEXO = "abrir_com_anexo";
 

@@ -56,6 +56,7 @@ public class MetadadosContainer extends Panel implements MetadadosListener {
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_METADADO);
 
 			addButton(atualizarAcao);
 			add(true, cmbConexao);

@@ -84,6 +84,7 @@ public class ConsultaContainer extends Panel {
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA);
 
 			addButton(baixarAcao);
 			addButton(atualizarAcao);
