@@ -22,6 +22,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class RequisicaoContainer extends Panel {
@@ -89,12 +90,14 @@ public class RequisicaoContainer extends Panel {
 			addButton(true, atualizarAcao);
 			addButton(true, salvarAcao);
 
-			chkRespostaJson.setSelected(true);
-
 			eventos();
 		}
 
 		private void eventos() {
+			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
+			chkRespostaJson.addActionListener(
+					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
+
 			atualizarAcao.setActionListener(e -> atualizar());
 
 			salvarAcao.setActionListener(e -> {
