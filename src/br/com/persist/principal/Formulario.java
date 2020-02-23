@@ -219,6 +219,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private final MenuVariaveis itemVariavel = new MenuVariaveis();
 		private final MenuComparacao itemComparacao = new MenuComparacao();
 		private final MenuRequisicao itemRequisicao = new MenuRequisicao();
+		private final MenuConfig itemConfig = new MenuConfig();
 
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
@@ -246,7 +247,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			add(menuUtil);
 
 			menuConfig.add(menuLayout);
-			menuConfig.add(true, new MenuConfig());
+			menuConfig.add(true, itemConfig);
 			add(menuConfig);
 			add(menuLAF);
 
@@ -256,18 +257,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		void abrirAutoFichario() {
 			itemAnexo.abrirAutoFichario();
 			itemArquivo.abrirAutoFichario();
-
 			itemConexao.abrirAutoFichario();
 			itemMetadado.abrirAutoFichario();
 			itemConsulta.abrirAutoFichario();
 			itemUpdate.abrirAutoFichario();
-
 			itemAnotacao.abrirAutoFichario();
 			itemFragmento.abrirAutoFichario();
 			itemMapeamento.abrirAutoFichario();
 			itemVariavel.abrirAutoFichario();
 			itemComparacao.abrirAutoFichario();
 			itemRequisicao.abrirAutoFichario();
+			itemConfig.abrirAutoFichario();
 		}
 
 		private void eventos() {
@@ -643,6 +643,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoConfig(Formulario.this));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO)) {
+					ficharioAcao.actionPerformed(null);
+				}
 			}
 		}
 

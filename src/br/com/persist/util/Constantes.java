@@ -6,31 +6,28 @@ public class Constantes {
 	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
 	public static final String ALTURMA_MINIMA_FORMULARIO_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_REGISTROS";
 	public static final String ALTURMA_MINIMA_FORMULARIO_DADOS = "ALTURMA_MINIMA_FORMULARIO_DADOS";
+	public static final String ABRIR_AUTO_FICHARIO_CONFIGURACAO = "abrir_com_configuracao";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final String ALTURMA_MINIMA_FORMULARIO = "ALTURMA_MINIMA_FORMULARIO";
+	public static final String ABRIR_AUTO_FICHARIO_MAPEAMENTO = "abrir_com_mapeamento";
+	public static final String ABRIR_AUTO_FICHARIO_COMPARACAO = "abrir_com_comparacao";
+	public static final String ABRIR_AUTO_FICHARIO_REQUISICAO = "abrir_com_requisicao";
+	public static final String ABRIR_AUTO_FICHARIO_FRAGMENTO = "abrir_com_fragmento";
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
-
-	public static final String ABRIR_AUTO_FICHARIO_CONEXAO = "abrir_com_conexao";
 	public static final String ABRIR_AUTO_FICHARIO_METADADO = "abrir_com_metadado";
 	public static final String ABRIR_AUTO_FICHARIO_CONSULTA = "abrir_com_consulta";
 	public static final String ABRIR_AUTO_FICHARIO_ATUALIZA = "abrir_com_atualiza";
-
-	public static final String ABRIR_AUTO_FICHARIO_ARQUIVO = "abrir_com_arvore";
-	public static final String ABRIR_AUTO_FICHARIO_ANEXO = "abrir_com_anexo";
-
 	public static final String ABRIR_AUTO_FICHARIO_ANOTACAO = "abrir_com_anotacao";
-	public static final String ABRIR_AUTO_FICHARIO_FRAGMENTO = "abrir_com_fragmento";
-	public static final String ABRIR_AUTO_FICHARIO_MAPEAMENTO = "abrir_com_mapeamento";
 	public static final String ABRIR_AUTO_FICHARIO_VARIAVEL = "abrir_com_variavel";
-	public static final String ABRIR_AUTO_FICHARIO_COMPARACAO = "abrir_com_comparacao";
-	public static final String ABRIR_AUTO_FICHARIO_REQUISICAO = "abrir_com_requisicao";
-
+	public static final String ABRIR_AUTO_FICHARIO_CONEXAO = "abrir_com_conexao";
+	public static final String ABRIR_AUTO_FICHARIO_ARQUIVO = "abrir_com_arvore";
 	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
 	public static final String LABEL_REQUISICAO_MIN = "label.requisicao_min";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_COMPARACAO_MIN = "label.comparacao_min";
+	public static final String ABRIR_AUTO_FICHARIO_ANEXO = "abrir_com_anexo";
 	public static final String LABEL_METADADOS_MIN = "label.meta_dados_min";
 	public static final String LABEL_ANOTACOES_MIN = "label.anotacoes_min";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";

@@ -308,6 +308,7 @@ public class ConfigContainer extends Panel {
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO);
 
 			addButton(salvarAcao);
 
