@@ -8,6 +8,8 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Mensagens;
+import br.com.persist.util.Preferencias;
 
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,14 @@ public class BarraButton extends JToolBar {
 			addButton(fecharAcao);
 			addSeparator();
 		}
+	}
+
+	public void configAbrirAutoFichario(String chave) {
+		CheckBox chkAbrirAutoFichario = new CheckBox();
+		chkAbrirAutoFichario.setSelected(Preferencias.getBoolean(chave));
+		chkAbrirAutoFichario.setToolTipText(Mensagens.getString("label.abrir_auto_ficha"));
+		chkAbrirAutoFichario.addActionListener(e -> Preferencias.setBoolean(chave, chkAbrirAutoFichario.isSelected()));
+		add(chkAbrirAutoFichario);
 	}
 
 	protected void addButton(boolean separador, Action action) {
