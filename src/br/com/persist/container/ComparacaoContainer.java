@@ -27,6 +27,8 @@ public class ComparacaoContainer extends Panel {
 
 	public ComparacaoContainer(IJanela janela) {
 		toolbar.ini(janela);
+		toolbar.configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO);
+
 		montarLayout();
 	}
 

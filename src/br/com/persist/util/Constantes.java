@@ -20,6 +20,13 @@ public class Constantes {
 	public static final String ABRIR_AUTO_FICHARIO_ARQUIVO = "abrir_com_arvore";
 	public static final String ABRIR_AUTO_FICHARIO_ANEXO = "abrir_com_anexo";
 
+	public static final String ABRIR_AUTO_FICHARIO_ANOTACAO = "abrir_com_anotacao";
+	public static final String ABRIR_AUTO_FICHARIO_FRAGMENTO = "abrir_com_fragmento";
+	public static final String ABRIR_AUTO_FICHARIO_MAPEAMENTO = "abrir_com_mapeamento";
+	public static final String ABRIR_AUTO_FICHARIO_VARIAVEL = "abrir_com_variavel";
+	public static final String ABRIR_AUTO_FICHARIO_COMPARACAO = "abrir_com_comparacao";
+	public static final String ABRIR_AUTO_FICHARIO_REQUISICAO = "abrir_com_requisicao";
+
 	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
 	public static final String LABEL_REQUISICAO_MIN = "label.requisicao_min";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";

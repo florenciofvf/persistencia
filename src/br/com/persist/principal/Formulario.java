@@ -213,6 +213,13 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private final MenuConsulta itemConsulta = new MenuConsulta();
 		private final MenuUpdate itemUpdate = new MenuUpdate();
 
+		private final MenuAnotacao itemAnotacao = new MenuAnotacao();
+		private final MenuFragmento itemFragmento = new MenuFragmento();
+		private final MenuMapeamento itemMapeamento = new MenuMapeamento();
+		private final MenuVariaveis itemVariavel = new MenuVariaveis();
+		private final MenuComparacao itemComparacao = new MenuComparacao();
+		private final MenuRequisicao itemRequisicao = new MenuRequisicao();
+
 		MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
 
@@ -230,12 +237,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuBanco.add(true, itemUpdate);
 			add(menuBanco);
 
-			menuUtil.add(new MenuAnotacao());
-			menuUtil.add(true, new MenuFragmento());
-			menuUtil.add(true, new MenuMapeamento());
-			menuUtil.add(true, new MenuVariaveis());
-			menuUtil.add(true, new MenuComparacao());
-			menuUtil.add(true, new MenuRequisicao());
+			menuUtil.add(itemAnotacao);
+			menuUtil.add(true, itemFragmento);
+			menuUtil.add(true, itemMapeamento);
+			menuUtil.add(true, itemVariavel);
+			menuUtil.add(true, itemComparacao);
+			menuUtil.add(true, itemRequisicao);
 			add(menuUtil);
 
 			menuConfig.add(menuLayout);
@@ -254,6 +261,13 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			itemMetadado.abrirAutoFichario();
 			itemConsulta.abrirAutoFichario();
 			itemUpdate.abrirAutoFichario();
+
+			itemAnotacao.abrirAutoFichario();
+			itemFragmento.abrirAutoFichario();
+			itemMapeamento.abrirAutoFichario();
+			itemVariavel.abrirAutoFichario();
+			itemComparacao.abrirAutoFichario();
+			itemRequisicao.abrirAutoFichario();
 		}
 
 		private void eventos() {
@@ -286,6 +300,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				ficharioAcao.setActionListener(e -> fichario.novaAnotacao(Formulario.this));
 			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO)) {
+					ficharioAcao.actionPerformed(null);
+				}
+			}
 		}
 
 		class MenuRequisicao extends MenuPadrao1 {
@@ -307,6 +327,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaRequisicao(Formulario.this));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO)) {
+					ficharioAcao.actionPerformed(null);
+				}
 			}
 		}
 
@@ -668,6 +694,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				ficharioAcao.setActionListener(e -> fichario.novoFragmento(Formulario.this));
 			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_FRAGMENTO)) {
+					ficharioAcao.actionPerformed(null);
+				}
+			}
 		}
 
 		class MenuMapeamento extends MenuPadrao1 {
@@ -689,6 +721,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novoMapeamento(Formulario.this));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO)) {
+					ficharioAcao.actionPerformed(null);
+				}
 			}
 		}
 
@@ -712,6 +750,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				ficharioAcao.setActionListener(e -> fichario.novoVariaveis(Formulario.this));
 			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL)) {
+					ficharioAcao.actionPerformed(null);
+				}
+			}
 		}
 
 		class MenuComparacao extends MenuPadrao1 {
@@ -733,6 +777,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				});
 
 				ficharioAcao.setActionListener(e -> fichario.novaComparacao(Formulario.this));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO)) {
+					ficharioAcao.actionPerformed(null);
+				}
 			}
 		}
 	}

@@ -12,6 +12,7 @@ import br.com.persist.listener.FragmentoListener;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
@@ -58,6 +59,7 @@ public class FragmentoContainer extends Panel implements IIni {
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_FRAGMENTO);
 
 			addButton(abrirAcao);
 			addButton(salvarAcao);

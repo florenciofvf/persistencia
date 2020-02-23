@@ -57,6 +57,7 @@ public class MapeamentoContainer extends Panel implements IIni {
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO);
 
 			addButton(abrirAcao);
 			addButton(salvarAcao);

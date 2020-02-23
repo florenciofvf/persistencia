@@ -57,6 +57,7 @@ public class VariaveisContainer extends Panel implements IIni {
 		@Override
 		public void ini(IJanela janela) {
 			super.ini(janela);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL);
 
 			addButton(abrirAcao);
 			addButton(salvarAcao);
