@@ -168,13 +168,13 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				FragmentoModelo.inicializar();
 				atualizarConexoes();
 
-				if (Preferencias.isAbrirComAnexo()) {
-					fichario.novoAnexo(Formulario.this);
-				}
+				// if (Preferencias.isAbrirComAnexo()) {
+				// fichario.novoAnexo(Formulario.this);
+				// }
 
-				if (Preferencias.isAbrirComArvore()) {
-					fichario.novaArvore(Formulario.this);
-				}
+				// if (Preferencias.isAbrirComArvore()) {
+				// fichario.novaArvore(Formulario.this);
+				// }
 
 				menuPrincipal.menuLayout.aplicarLayout();
 			}

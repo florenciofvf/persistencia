@@ -39,9 +39,7 @@ public class ConfigContainer extends Panel {
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkAbortarFecharComESC = new CheckBox("label.abortar_fechar_com_esc");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
-	private final CheckBox chkAbrirComArvore = new CheckBox("label.abrir_com_arvore");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
-	private final CheckBox chkAbrirComAnexo = new CheckBox("label.abrir_com_anexo");
 	private final CheckBox chkAjusteAutom = new CheckBox("label.ajuste_automatico");
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
@@ -113,9 +111,7 @@ public class ConfigContainer extends Panel {
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
-		chkAbrirComArvore.setSelected(Preferencias.isAbrirComArvore());
 		chkAjusteAutom.setSelected(Preferencias.isAjusteAutomatico());
-		chkAbrirComAnexo.setSelected(Preferencias.isAbrirComAnexo());
 		chkNomearArrasto.setSelected(Preferencias.isNomearArrasto());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
@@ -153,8 +149,6 @@ public class ConfigContainer extends Panel {
 		container.add(chkNomearArrasto);
 		container.add(chkTituloAbaMin);
 		container.add(chkFicharioScroll);
-		container.add(chkAbrirComArvore);
-		container.add(chkAbrirComAnexo);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
@@ -176,9 +170,7 @@ public class ConfigContainer extends Panel {
 		chkAbortarFecharComESC.setMargin(insets);
 		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
-		chkAbrirComArvore.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
-		chkAbrirComAnexo.setMargin(insets);
 		chkNomearArrasto.setMargin(insets);
 		chkTituloAbaMin.setMargin(insets);
 		chkAjusteAutom.setMargin(insets);
@@ -226,10 +218,6 @@ public class ConfigContainer extends Panel {
 
 		chkFecharOrigemAposSoltar
 				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));
-
-		chkAbrirComArvore.addActionListener(e -> Preferencias.setAbrirComArvore(chkAbrirComArvore.isSelected()));
-
-		chkAbrirComAnexo.addActionListener(e -> Preferencias.setAbrirComAnexo(chkAbrirComAnexo.isSelected()));
 
 		chkNomearArrasto.addActionListener(e -> Preferencias.setNomearArrasto(chkNomearArrasto.isSelected()));
 
