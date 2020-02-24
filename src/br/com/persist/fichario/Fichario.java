@@ -1,5 +1,6 @@
 package br.com.persist.fichario;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -560,6 +561,11 @@ public class Fichario extends JTabbedPane {
 
 		if (file.getName().equalsIgnoreCase("fvf_separador")) {
 			addTab(null, null);
+			int ultimoIndice = getTabCount() - 1;
+			TituloAbaS tituloAba = new TituloAbaS(this);
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setBackgroundAt(ultimoIndice, Color.MAGENTA);
+			setEnabledAt(ultimoIndice, false);
 			return;
 		}
 
