@@ -23,6 +23,11 @@ public class FormularioUtil {
 			grupo.add(item);
 			menu.add(item);
 		}
+
+		LookAndFeelInfo info = new LookAndFeelInfo("Nimbus2", "br.com.persist.util.NimbusLookAndFeel2");
+		ItemLAF item = new ItemLAF(formulario, info);
+		grupo.add(item);
+		menu.add(item);
 	}
 
 	public static void aparenciaPadrao(Menu menu, String titulo) {

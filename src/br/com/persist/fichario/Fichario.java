@@ -736,7 +736,12 @@ public class Fichario extends JTabbedPane {
 
 			insertTab(titulo, icon, cmp, hint, destino);
 			setTabComponentAt(destino, aba);
-			setSelectedIndex(destino);
+
+			if (aba instanceof TituloAbaS) {
+				setEnabledAt(destino, false);
+			} else {
+				setSelectedIndex(destino);
+			}
 		}
 	}
 

@@ -41,7 +41,7 @@ public class TituloAbaS extends Panel {
 		Icone() {
 			setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
 			setBorder(BorderFactory.createEtchedBorder());
-			setPreferredSize(new Dimension(6, 6));
+			setPreferredSize(new Dimension(17, 17));
 			addMouseListener(mouseListenerInner);
 			setContentAreaFilled(false);
 			setUI(new BasicButtonUI());
