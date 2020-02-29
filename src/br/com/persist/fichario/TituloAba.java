@@ -136,7 +136,7 @@ public class TituloAba extends Panel {
 		}
 	}
 
-	private transient MouseListener mouseListenerInner = new MouseAdapter() {
+	public static final transient MouseListener mouseListenerInner = new MouseAdapter() {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			Component component = e.getComponent();

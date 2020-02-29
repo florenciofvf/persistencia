@@ -1,17 +1,13 @@
 package br.com.persist.fichario;
 
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.plaf.basic.BasicButtonUI;
 
@@ -26,8 +22,11 @@ public class TituloAbaS extends Panel {
 	private final Fichario fichario;
 
 	public TituloAbaS(Fichario fichario) {
+		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
 		Objects.requireNonNull(fichario);
 		this.fichario = fichario;
+		setOpaque(false);
 		add(new Icone());
 	}
 
@@ -36,9 +35,9 @@ public class TituloAbaS extends Panel {
 
 		Icone() {
 			setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
+			addMouseListener(TituloAba.mouseListenerInner);
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(17, 17));
-			addMouseListener(mouseListenerInner);
 			setContentAreaFilled(false);
 			setUI(new BasicButtonUI());
 			setRolloverEnabled(true);
@@ -61,26 +60,4 @@ public class TituloAbaS extends Panel {
 			LOG.log(Level.FINEST, "updateUI");
 		}
 	}
-
-	private transient MouseListener mouseListenerInner = new MouseAdapter() {
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			Component component = e.getComponent();
-
-			if (component instanceof AbstractButton) {
-				AbstractButton button = (AbstractButton) component;
-				button.setBorderPainted(true);
-			}
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			Component component = e.getComponent();
-
-			if (component instanceof AbstractButton) {
-				AbstractButton button = (AbstractButton) component;
-				button.setBorderPainted(false);
-			}
-		}
-	};
 }
