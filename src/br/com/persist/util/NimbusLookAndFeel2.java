@@ -7,24 +7,24 @@ public class NimbusLookAndFeel2 extends NimbusLookAndFeel {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public String getName() {
-		return super.getName() + "2";
+	public String getID() {
+		return super.getID() + Constantes.DOIS;
 	}
 
 	@Override
-	public String getID() {
-		return super.getID() + "2";
+	public String getName() {
+		return super.getName() + Constantes.DOIS;
 	}
 
 	@Override
 	public String getDescription() {
-		return super.getDescription() + "2";
+		return super.getDescription() + Constantes.DOIS;
 	}
 
 	@Override
 	protected void initClassDefaults(UIDefaults table) {
 		super.initClassDefaults(table);
-		table.put("TabbedPaneUI", "br.com.persist.util.SynthTabbedPaneUI2");
+		table.put("TabbedPaneUI", SynthTabbedPaneUI2.class.getName());
 	}
 
 	@Override

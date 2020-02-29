@@ -7,6 +7,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
+import br.com.persist.util.Constantes;
+import br.com.persist.util.NimbusLookAndFeel2;
 import br.com.persist.util.Util;
 
 public class FormularioUtil {
@@ -24,7 +26,7 @@ public class FormularioUtil {
 			menu.add(item);
 		}
 
-		LookAndFeelInfo info = new LookAndFeelInfo("Nimbus2", "br.com.persist.util.NimbusLookAndFeel2");
+		LookAndFeelInfo info = new LookAndFeelInfo("Nimbus" + Constantes.DOIS, NimbusLookAndFeel2.class.getName());
 		ItemLAF item = new ItemLAF(formulario, info);
 		grupo.add(item);
 		menu.add(item);
