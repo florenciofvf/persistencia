@@ -1,11 +1,7 @@
 package br.com.persist.fichario;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -63,29 +59,6 @@ public class TituloAbaS extends Panel {
 		@Override
 		public void updateUI() {
 			LOG.log(Level.FINEST, "updateUI");
-		}
-
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-
-			Graphics2D g2 = (Graphics2D) g.create();
-
-			if (getModel().isPressed()) {
-				g2.translate(1, 1);
-			}
-
-			g2.setStroke(new BasicStroke(2));
-			g2.setColor(Color.BLACK);
-
-			if (getModel().isRollover()) {
-				g2.setColor(Color.MAGENTA);
-			}
-
-			int delta = 3;
-			g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);
-			g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight() - delta - 1);
-			g2.dispose();
 		}
 	}
 
