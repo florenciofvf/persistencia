@@ -691,18 +691,26 @@ public class Fichario extends JTabbedPane {
 				Component aba = getTabComponentAt(i);
 				Component cmp = getComponentAt(i);
 
-				if (cmp instanceof Container) {
-					Container container = (Container) cmp;
-					container.salvarAberto(pw);
-				} else if (aba instanceof TituloAbaS) {
-					TituloAbaS titulo = (TituloAbaS) aba;
-					titulo.salvarAberto(pw);
+				File file = null;
+
+				if (cmp instanceof IFicharioSalvar) {
+					file = ((IFicharioSalvar) cmp).getFileSalvarAberto();
+				} else if (aba instanceof IFicharioSalvar) {
+					file = ((IFicharioSalvar) aba).getFileSalvarAberto();
+				}
+
+				if (file != null) {
+					pw.print(file.getAbsolutePath() + Constantes.QL2);
 				}
 			}
 
 		} catch (Exception ex) {
 			LOG.log(Level.SEVERE, ex.getMessage());
 		}
+	}
+
+	public static interface IFicharioSalvar {
+		File getFileSalvarAberto();
 	}
 
 	public void abrirArquivos(Formulario formulario) {

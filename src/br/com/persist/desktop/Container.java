@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +46,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
-public class Container extends Panel {
+public class Container extends Panel implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
@@ -84,10 +83,9 @@ public class Container extends Panel {
 		}
 	}
 
-	public void salvarAberto(PrintWriter pw) {
-		if (arquivo != null) {
-			pw.print(arquivo.getAbsolutePath() + Constantes.QL2);
-		}
+	@Override
+	public File getFileSalvarAberto() {
+		return getArquivo();
 	}
 
 	public Superficie getSuperficie() {

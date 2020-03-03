@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.PrintWriter;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +17,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 
-public class TituloAbaS extends Panel {
+public class TituloAbaS extends Panel implements Fichario.IFicharioSalvar {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Fichario fichario;
@@ -34,10 +33,9 @@ public class TituloAbaS extends Panel {
 		add(new Icone());
 	}
 
-	public void salvarAberto(PrintWriter pw) {
-		if (arquivo != null) {
-			pw.print(arquivo.getAbsolutePath() + Constantes.QL2);
-		}
+	@Override
+	public File getFileSalvarAberto() {
+		return arquivo;
 	}
 
 	private class Icone extends Button implements ActionListener {
