@@ -16,7 +16,10 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -701,8 +704,23 @@ public class Fichario extends JTabbedPane {
 	public void abrirArquivos(Formulario formulario) {
 		File file = new File(Constantes.ABERTOS_FICHARIO);
 
-		if (file.exists() && file.canRead()) {
+		if (file.exists()) {
+			List<File> files = new ArrayList<>();
 
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+
+				while (linha != null) {
+					files.add(new File(linha));
+					linha = br.readLine();
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("FICHARIO", ex, Fichario.this);
+			}
+
+			for (File f : files) {
+				formulario.abrirArquivo(f, true);
+			}
 		}
 	}
 
