@@ -681,7 +681,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public void salvarAbertos() {
-		try (PrintWriter pw = new PrintWriter("abertos_fichario")) {
+		try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO)) {
 			int total = getTabCount();
 
 			for (int i = 0; i < total; i++) {
@@ -695,6 +695,14 @@ public class Fichario extends JTabbedPane {
 
 		} catch (Exception ex) {
 			LOG.log(Level.SEVERE, ex.getMessage());
+		}
+	}
+
+	public void abrirArquivos(Formulario formulario) {
+		File file = new File(Constantes.ABERTOS_FICHARIO);
+
+		if (file.exists() && file.canRead()) {
+
 		}
 	}
 

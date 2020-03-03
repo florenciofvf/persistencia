@@ -42,6 +42,7 @@ public class Constantes {
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
 	public static final String LABEL_CONEXAO_MIN = "label.conexao_min";
 	public static final String LABEL_FORMULARIO = "label.formulario";
+	public static final String ABERTOS_FICHARIO = "abertos_fichario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String LABEL_REQUISICAO = "label.requisicao";
 	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";

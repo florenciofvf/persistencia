@@ -170,6 +170,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				menuPrincipal.abrirAutoFichario();
 				menuPrincipal.menuLayout.aplicarLayout();
+				fichario.abrirArquivos(Formulario.this);
 			}
 
 			@Override
