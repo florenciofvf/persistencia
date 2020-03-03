@@ -97,6 +97,7 @@ public class Constantes {
 	public static final String ERRO = "ERRO";
 	public static final String FORM = "FORM";
 	public static final String TEMP = "TEMP";
+	public static final String III = "???";
 	public static final String ESC = "esc";
 	public static final String PKS = "pks";
 	public static final String FKS = "fks";

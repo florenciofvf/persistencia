@@ -731,8 +731,59 @@ public class Fichario extends JTabbedPane {
 			}
 
 			for (File f : files) {
-				formulario.abrirArquivo(f, true);
+				abrirArquivo(f, formulario);
 			}
+		}
+	}
+
+	private void abrirArquivo(File f, Formulario formulario) {
+		String nome = f.getName();
+
+		if (nome.startsWith(Constantes.III)) {
+			nome = nome.substring(Constantes.III.length());
+		}
+
+		if (Util.iguais(AnexoContainer.class, nome)) {
+			novoAnexo(formulario);
+
+		} else if (Util.iguais(ArvoreContainer.class, nome)) {
+			novaArvore(formulario);
+
+		} else if (Util.iguais(ConexaoContainer.class, nome)) {
+			novaConexao(formulario);
+
+		} else if (Util.iguais(MetadadosContainer.class, nome)) {
+			novoMetadado(formulario, null);
+
+		} else if (Util.iguais(ConsultaContainer.class, nome)) {
+			novaConsulta(formulario, null);
+
+		} else if (Util.iguais(UpdateContainer.class, nome)) {
+			novoUpdate(formulario, null);
+
+		} else if (Util.iguais(AnotacaoContainer.class, nome)) {
+			novaAnotacao(formulario);
+
+		} else if (Util.iguais(FragmentoContainer.class, nome)) {
+			novoFragmento(formulario);
+
+		} else if (Util.iguais(MapeamentoContainer.class, nome)) {
+			novoMapeamento(formulario);
+
+		} else if (Util.iguais(VariaveisContainer.class, nome)) {
+			novoVariaveis(formulario);
+
+		} else if (Util.iguais(ComparacaoContainer.class, nome)) {
+			novaComparacao(formulario);
+
+		} else if (Util.iguais(RequisicaoContainer.class, nome)) {
+			novaRequisicao(formulario);
+
+		} else if (Util.iguais(ConfigContainer.class, nome)) {
+			novoConfig(formulario);
+
+		} else {
+			formulario.abrirArquivo(f, true);
 		}
 	}
 

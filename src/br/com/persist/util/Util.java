@@ -591,4 +591,8 @@ public class Util {
 
 		return new String(baos.toByteArray(), StandardCharsets.UTF_8);
 	}
+
+	public static boolean iguais(Class<?> klass, String nome) {
+		return klass.getName().equals(nome);
+	}
 }
