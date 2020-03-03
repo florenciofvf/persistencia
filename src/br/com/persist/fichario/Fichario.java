@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -676,6 +677,24 @@ public class Fichario extends JTabbedPane {
 				Container container = (Container) cmp;
 				container.selecionarConexao(conexao);
 			}
+		}
+	}
+
+	public void salvarAbertos() {
+		try (PrintWriter pw = new PrintWriter("abertos_fichario")) {
+			int total = getTabCount();
+
+			for (int i = 0; i < total; i++) {
+				Component cmp = getComponentAt(i);
+
+				if (cmp instanceof Container) {
+					Container container = (Container) cmp;
+					container.salvarAberto(pw);
+				}
+			}
+
+		} catch (Exception ex) {
+			LOG.log(Level.SEVERE, ex.getMessage());
 		}
 	}
 

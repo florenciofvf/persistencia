@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,12 @@ public class Container extends Panel {
 	public void selecionarConexao(Conexao conexao) {
 		if (conexao != null) {
 			cmbConexao.setSelectedItem(conexao);
+		}
+	}
+
+	public void salvarAberto(PrintWriter pw) {
+		if (arquivo != null) {
+			pw.print(arquivo.getAbsolutePath() + Constantes.QL2);
 		}
 	}
 
