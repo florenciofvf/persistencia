@@ -168,7 +168,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				FragmentoModelo.inicializar();
 				atualizarConexoes();
 
-				menuPrincipal.abrirAutoFichario();
+				if (Constantes.ABRIR_AUTO_FICHARIO_SET) {
+					menuPrincipal.abrirAutoFichario();
+				}
+
 				menuPrincipal.menuLayout.aplicarLayout();
 				fichario.abrirArquivos(Formulario.this);
 			}

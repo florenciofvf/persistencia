@@ -31,7 +31,10 @@ public class BarraButton extends JToolBar {
 		chkAbrirAutoFichario.setSelected(Preferencias.getBoolean(chave));
 		chkAbrirAutoFichario.setToolTipText(Mensagens.getString("label.abrir_auto_ficha"));
 		chkAbrirAutoFichario.addActionListener(e -> Preferencias.setBoolean(chave, chkAbrirAutoFichario.isSelected()));
-		add(chkAbrirAutoFichario);
+
+		if (Constantes.ABRIR_AUTO_FICHARIO_SET) {
+			add(chkAbrirAutoFichario);
+		}
 	}
 
 	protected void addButton(boolean separador, Action action) {
