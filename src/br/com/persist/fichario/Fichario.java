@@ -563,10 +563,10 @@ public class Fichario extends JTabbedPane {
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Dimension d) {
 
-		if (file.getName().equalsIgnoreCase("fvf_separador")) {
+		if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
 			addTab(null, null);
 			int ultimoIndice = getTabCount() - 1;
-			TituloAbaS tituloAba = new TituloAbaS(this);
+			TituloAbaS tituloAba = new TituloAbaS(this, file);
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setBackgroundAt(ultimoIndice, Color.MAGENTA);
 			setEnabledAt(ultimoIndice, false);
@@ -688,11 +688,15 @@ public class Fichario extends JTabbedPane {
 			int total = getTabCount();
 
 			for (int i = 0; i < total; i++) {
+				Component aba = getTabComponentAt(i);
 				Component cmp = getComponentAt(i);
 
 				if (cmp instanceof Container) {
 					Container container = (Container) cmp;
 					container.salvarAberto(pw);
+				} else if (aba instanceof TituloAbaS) {
+					TituloAbaS titulo = (TituloAbaS) aba;
+					titulo.salvarAberto(pw);
 				}
 			}
 

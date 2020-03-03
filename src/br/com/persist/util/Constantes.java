@@ -63,6 +63,7 @@ public class Constantes {
 	public static final String LABEL_ARQUIVOS = "label.arquivos";
 	public static final String LABEL_CIRCULAR = "label.circular";
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
+	public static final String FVF_SEPARADOR = "fvf_separador";
 	public static final String LABEL_ARQUIVO = "label.arquivo";
 	public static final String LABEL_ATENCAO = "label.atencao";
 	public static final String LABEL_CONEXAO = "label.conexao";
