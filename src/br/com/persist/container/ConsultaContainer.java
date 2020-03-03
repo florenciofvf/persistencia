@@ -21,6 +21,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.tabela.TabelaUtil;
@@ -29,7 +30,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class ConsultaContainer extends Panel {
+public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("consultas/consultas");
 	private static final String PAINEL_SELECT = "PAINEL SELECT";
@@ -49,6 +50,11 @@ public class ConsultaContainer extends Panel {
 		if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
 			abrir();
 		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

@@ -19,12 +19,13 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class UpdateContainer extends Panel {
+public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("atualizacoes/atualizacoes");
 	private static final String PAINEL_UPDATE = "PAINEL UPDATE";
@@ -43,6 +44,11 @@ public class UpdateContainer extends Panel {
 		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
 			abrir();
 		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	public UpdateContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, String instrucao) {

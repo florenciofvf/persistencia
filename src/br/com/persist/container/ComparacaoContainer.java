@@ -16,11 +16,12 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class ComparacaoContainer extends Panel {
+public class ComparacaoContainer extends Panel implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
 	private final TextArea textArea = new TextArea();
@@ -30,6 +31,11 @@ public class ComparacaoContainer extends Panel {
 		toolbar.configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO);
 
 		montarLayout();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

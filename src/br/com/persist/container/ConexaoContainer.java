@@ -2,6 +2,7 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.io.File;
 
 import javax.swing.JTable;
 
@@ -10,6 +11,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.editor.ConexaoStatusEditor;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.renderer.ConexaoStatusRenderer;
@@ -21,7 +23,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class ConexaoContainer extends Panel implements IIni {
+public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo modelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(modelo);
@@ -33,6 +35,11 @@ public class ConexaoContainer extends Panel implements IIni {
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

@@ -8,6 +8,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -24,6 +25,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -31,7 +33,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 
-public class ConfigContainer extends Panel {
+public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
@@ -95,6 +97,11 @@ public class ConfigContainer extends Panel {
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

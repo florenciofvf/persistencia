@@ -16,6 +16,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.util.Action;
@@ -25,7 +26,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
-public class RequisicaoContainer extends Panel {
+public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("requisicao/requisicoes");
 	private static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
@@ -37,6 +38,11 @@ public class RequisicaoContainer extends Panel {
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

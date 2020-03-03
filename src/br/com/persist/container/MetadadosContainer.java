@@ -3,6 +3,7 @@ package br.com.persist.container;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.listener.MetadadosListener;
 import br.com.persist.metadado.Metadados;
 import br.com.persist.modelo.MetadadoModelo;
@@ -28,7 +30,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class MetadadosContainer extends Panel implements MetadadosListener {
+public class MetadadosContainer extends Panel implements MetadadosListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private Metadados metadados = new Metadados();
 	private final Toolbar toolbar = new Toolbar();
@@ -40,6 +42,11 @@ public class MetadadosContainer extends Panel implements MetadadosListener {
 		this.formulario = formulario;
 		toolbar.ini(janela);
 		montarLayout();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

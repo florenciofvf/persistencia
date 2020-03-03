@@ -2,12 +2,14 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.io.File;
 
 import javax.swing.JTable;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.listener.FragmentoListener;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.tabela.TabelaUtil;
@@ -19,7 +21,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class FragmentoContainer extends Panel implements IIni {
+public class FragmentoContainer extends Panel implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo modelo = new FragmentoModelo();
 	private final transient FragmentoListener listener;
@@ -31,6 +33,11 @@ public class FragmentoContainer extends Panel implements IIni {
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

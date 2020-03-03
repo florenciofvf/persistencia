@@ -3,6 +3,7 @@ package br.com.persist.container;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Frame;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
@@ -19,6 +20,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.dialogo.ArquivoCorDialogo;
 import br.com.persist.dialogo.ArquivoIconeDialogo;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.listener.AnexoListener;
 import br.com.persist.modelo.AnexoModelo;
@@ -29,7 +31,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AnexoContainer extends Panel implements AnexoListener {
+public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopAnex = new CheckBox();
@@ -46,6 +48,11 @@ public class AnexoContainer extends Panel implements AnexoListener {
 		toolbar.ini(janela);
 		montarLayout();
 		baixarArquivo();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {

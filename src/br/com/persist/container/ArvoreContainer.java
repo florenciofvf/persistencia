@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.listener.ArvoreListener;
 import br.com.persist.modelo.ArvoreModelo;
@@ -22,7 +24,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 
-public class ArvoreContainer extends Panel implements ArvoreListener {
+public class ArvoreContainer extends Panel implements ArvoreListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopArvo = new CheckBox();
@@ -39,6 +41,11 @@ public class ArvoreContainer extends Panel implements ArvoreListener {
 		toolbar.ini(janela);
 		montarLayout();
 		baixarArquivo();
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClass().getName());
 	}
 
 	private void montarLayout() {
