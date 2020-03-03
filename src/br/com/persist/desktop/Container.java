@@ -422,6 +422,7 @@ public class Container extends Panel {
 				int indice = fichario.getSelectedIndex();
 
 				if (indice != -1) {
+					fichario.setToolTipTextAt(indice, arquivo.getAbsolutePath());
 					fichario.setTitleAt(indice, arquivo.getName());
 				}
 			} else {
