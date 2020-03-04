@@ -101,7 +101,7 @@ public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
 
 	@Override
 	public File getFileSalvarAberto() {
-		return new File(getClass().getName());
+		return new File(Constantes.III + getClass().getName());
 	}
 
 	private void montarLayout() {

@@ -48,7 +48,7 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 
 	@Override
 	public File getFileSalvarAberto() {
-		return new File(getClass().getName());
+		return new File(Constantes.III + getClass().getName());
 	}
 
 	public UpdateContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, String instrucao) {

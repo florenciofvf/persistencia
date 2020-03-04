@@ -42,7 +42,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 
 	@Override
 	public File getFileSalvarAberto() {
-		return new File(getClass().getName());
+		return new File(Constantes.III + getClass().getName());
 	}
 
 	private void montarLayout() {

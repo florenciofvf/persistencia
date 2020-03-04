@@ -737,10 +737,11 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private void abrirArquivo(File f, Formulario formulario) {
-		String nome = f.getName();
+		String nome = f.getAbsolutePath();
+		int pos = nome.indexOf(Constantes.III);
 
-		if (nome.startsWith(Constantes.III)) {
-			nome = nome.substring(Constantes.III.length());
+		if (pos != -1) {
+			nome = nome.substring(pos + Constantes.III.length());
 		}
 
 		if (Util.iguais(AnexoContainer.class, nome)) {
