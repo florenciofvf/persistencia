@@ -37,7 +37,6 @@ import javax.swing.SwingUtilities;
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Panel;
-import br.com.persist.comp.ScrollPane;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
@@ -288,7 +287,7 @@ public class Fichario extends JTabbedPane {
 	public Desktop novoDesktop(Formulario formulario) {
 		Desktop desktop = new Desktop(formulario, false);
 		desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, new ScrollPane(desktop));
+		addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
 		int ultimoIndice = getTabCount() - 1;
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);
@@ -768,7 +767,13 @@ public class Fichario extends JTabbedPane {
 		} else if (Util.iguais(FragmentoContainer.class, nome)) {
 			novoFragmento(formulario);
 
-		} else if (Util.iguais(MapeamentoContainer.class, nome)) {
+		} else {
+			abrirArquivo(f, formulario, nome);
+		}
+	}
+
+	private void abrirArquivo(File f, Formulario formulario, String nome) {
+		if (Util.iguais(MapeamentoContainer.class, nome)) {
 			novoMapeamento(formulario);
 
 		} else if (Util.iguais(VariaveisContainer.class, nome)) {
@@ -782,6 +787,9 @@ public class Fichario extends JTabbedPane {
 
 		} else if (Util.iguais(ConfigContainer.class, nome)) {
 			novoConfig(formulario);
+
+		} else if (Util.iguais(Desktop.class, nome)) {
+			novoDesktop(formulario);
 
 		} else {
 			formulario.abrirArquivo(f, true);

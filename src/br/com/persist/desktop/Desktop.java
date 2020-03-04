@@ -13,6 +13,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
@@ -41,7 +43,7 @@ import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
-public class Desktop extends JDesktopPane implements IIni {
+public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
@@ -55,6 +57,11 @@ public class Desktop extends JDesktopPane implements IIni {
 		}
 		new DropTarget(this, listener);
 		this.formulario = formulario;
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(Constantes.III + getClass().getName());
 	}
 
 	@Override
