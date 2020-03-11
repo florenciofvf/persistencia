@@ -120,6 +120,7 @@ public class Constantes {
 	public static final int TRES = 3;
 	public static final int DOIS = 2;
 	public static final int DEZ = 10;
+	public static final int UM = 1;
 
 	private Constantes() {
 	}

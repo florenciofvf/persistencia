@@ -76,6 +76,10 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 			atualizarAcao.setActionListener(e -> abrir());
 
 			salvarAcao.setActionListener(e -> {
+				if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.DOIS)) {
+					return;
+				}
+
 				try {
 					PrintWriter pw = new PrintWriter(file);
 					pw.print(textArea.getText());

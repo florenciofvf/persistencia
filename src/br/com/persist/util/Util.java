@@ -106,6 +106,16 @@ public class Util {
 				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
 	}
 
+	public static boolean confirmaSalvar(Component componente, int confirmacoes) {
+		int total = 0;
+
+		while (total < confirmacoes && confirmar(componente, Constantes.LABEL_CONFIRMA_SALVAR)) {
+			total++;
+		}
+
+		return total >= confirmacoes;
+	}
+
 	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem,
 			String valorPadrao) {
 		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),

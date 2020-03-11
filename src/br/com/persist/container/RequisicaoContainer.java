@@ -107,14 +107,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 			atualizarAcao.setActionListener(e -> atualizar());
 
 			salvarAcao.setActionListener(e -> {
-				int total = 0;
-
-				while (total < Constantes.TRES
-						&& Util.confirmar(RequisicaoContainer.this, Constantes.LABEL_CONFIRMA_SALVAR)) {
-					total++;
-				}
-
-				if (total < Constantes.TRES) {
+				if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
 					return;
 				}
 

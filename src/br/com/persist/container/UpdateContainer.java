@@ -119,6 +119,10 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 			baixarAcao.setActionListener(e -> abrir());
 
 			salvarAcao.setActionListener(e -> {
+				if (!Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
+					return;
+				}
+
 				try {
 					PrintWriter pw = new PrintWriter(file);
 					pw.print(textArea.getText());

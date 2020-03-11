@@ -359,6 +359,10 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 			});
 
 			salvarAcao.setActionListener(e -> {
+				if (!Util.confirmaSalvar(Container.this, Constantes.UM)) {
+					return;
+				}
+
 				if (arquivo != null) {
 					superficie.salvar(arquivo, getConexaoPadrao());
 				} else {
