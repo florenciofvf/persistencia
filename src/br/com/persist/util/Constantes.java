@@ -24,6 +24,7 @@ public class Constantes {
 	public static final String ABRIR_AUTO_FICHARIO_CONEXAO = "abrir_com_conexao";
 	public static final String ABRIR_AUTO_FICHARIO_ARQUIVO = "abrir_com_arvore";
 	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
+	public static final String LABEL_CONFIRMA_SALVAR = "label.confirma_salvar";
 	public static final String LABEL_REQUISICAO_MIN = "label.requisicao_min";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_COMPARACAO_MIN = "label.comparacao_min";
@@ -116,6 +117,7 @@ public class Constantes {
 	public static final byte SELECAO = 5;
 	public static final byte ROTULOS = 7;
 	public static final int TRINTA = 30;
+	public static final int TRES = 3;
 	public static final int DOIS = 2;
 	public static final int DEZ = 10;
 
