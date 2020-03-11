@@ -83,6 +83,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
 		private Action salvarAcao = Action.actionIconSalvar();
@@ -94,6 +95,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
+			addButton(true, formatarAcao);
 			addButton(true, salvarAcao);
 
 			eventos();
@@ -105,6 +107,8 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
 
 			atualizarAcao.setActionListener(e -> atualizar());
+
+			formatarAcao.setActionListener(e -> formatar());
 
 			salvarAcao.setActionListener(e -> {
 				if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
@@ -122,9 +126,39 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 		}
 	}
 
+	public void formatar() {
+		if (Util.estaVazio(areaParametros.getText())) {
+			areaResultados.setText("TEXTAREA VAZIA.");
+			return;
+		}
+
+		String string = areaParametros.getSelectedText();
+
+		if (Util.estaVazio(string)) {
+			areaResultados.setText("NENHUM FRAGMENTO SELECIONADO.");
+			return;
+		}
+
+		areaResultados.setText("");
+
+		try {
+			Parser parser = new Parser();
+			Tipo json = parser.parse(string);
+
+			StyledDocument styledDoc = areaResultados.getStyledDocument();
+
+			if (styledDoc instanceof AbstractDocument) {
+				AbstractDocument doc = (AbstractDocument) styledDoc;
+				json.toString(doc, false, 0);
+			}
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+		}
+	}
+
 	public void atualizar() {
 		if (Util.estaVazio(areaParametros.getText())) {
-			areaResultados.setText("PARAMETROS VAZIO.");
+			areaResultados.setText("TEXTAREA VAZIA.");
 			return;
 		}
 
