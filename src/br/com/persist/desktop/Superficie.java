@@ -1376,6 +1376,7 @@ public class Superficie extends Desktop {
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
+		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
@@ -1405,9 +1406,10 @@ public class Superficie extends Desktop {
 			add(true, itemMesmaLargura);
 			add(itemAlinharDireito);
 			add(itemAlinharEsquerdo);
-			add(true, new MenuItem(larTotalAcao));
-			add(new MenuItem(larTotalDirAcao));
-			add(new MenuItem(larTotalEsqAcao));
+			addMenuItem(true, larTotalAcao);
+			addMenuItem(larTotalDirAcao);
+			addMenuItem(larTotalEsqAcao);
+			addMenuItem(true, distribuirAcao);
 			add(true, itemCentralizar);
 			add(true, itemDimensoes4);
 			add(itemDimensoes3);
@@ -1431,6 +1433,7 @@ public class Superficie extends Desktop {
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			centralizarAcao.setActionListener(e -> centralizar());
+			distribuirAcao.setActionListener(e -> distribuir(0));
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
 
 			atualizarFormAcao.setActionListener(e -> {
