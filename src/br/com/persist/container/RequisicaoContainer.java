@@ -94,6 +94,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
+		private Action baixarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		@Override
@@ -101,6 +102,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 			super.ini(janela);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
 
+			addButton(baixarAcao);
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
@@ -117,6 +119,8 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 			atualizarAcao.setActionListener(e -> atualizar());
 
 			formatarAcao.setActionListener(e -> formatar());
+
+			baixarAcao.setActionListener(e -> abrir());
 
 			salvarAcao.setActionListener(e -> {
 				if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
