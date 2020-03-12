@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -46,10 +48,16 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.ini(janela, mapaChaveValor, abrirArquivo);
 		montarLayout();
+		config();
 
 		if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
 			abrir();
 		}
+	}
+
+	private void config() {
+		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "exec");
+		getActionMap().put("exec", toolbar.atualizarAcao);
 	}
 
 	@Override

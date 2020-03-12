@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +10,7 @@ import java.io.PrintWriter;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 
@@ -37,7 +39,13 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 	public RequisicaoContainer(IJanela janela) {
 		toolbar.ini(janela);
 		montarLayout();
+		config();
 		abrir();
+	}
+
+	private void config() {
+		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "exec");
+		getActionMap().put("exec", toolbar.atualizarAcao);
 	}
 
 	@Override

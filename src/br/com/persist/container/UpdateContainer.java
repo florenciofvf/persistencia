@@ -2,6 +2,7 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.util.Map;
 
 import javax.swing.JComboBox;
+import javax.swing.KeyStroke;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -40,10 +42,16 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela, mapaChaveValor);
 		montarLayout();
+		config();
 
 		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
 			abrir();
 		}
+	}
+
+	private void config() {
+		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "exec");
+		getActionMap().put("exec", toolbar.atualizarAcao);
 	}
 
 	@Override
