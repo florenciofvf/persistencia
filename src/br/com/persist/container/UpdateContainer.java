@@ -64,6 +64,7 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela);
 		montarLayout();
+		config();
 	}
 
 	private void montarLayout() {
