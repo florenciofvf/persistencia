@@ -56,8 +56,8 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 	}
 
 	private void config() {
-		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "exec");
-		getActionMap().put("exec", toolbar.atualizarAcao);
+		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
+		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
 	}
 
 	@Override

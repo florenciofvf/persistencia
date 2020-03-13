@@ -151,8 +151,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			dge.startDrag(null, new Transferidor(objeto, conexao, listener.getDimensoes(), apelido), listenerArrasto);
 		});
 
-		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "exec");
-		getActionMap().put("exec", toolbar.atualizar.atualizarAcao);
+		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
+		getActionMap().put(Constantes.EXEC, toolbar.atualizar.atualizarAcao);
 	}
 
 	@Override
