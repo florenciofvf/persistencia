@@ -3,11 +3,13 @@ package br.com.persist.container;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.KeyStroke;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
@@ -42,6 +44,12 @@ public class MetadadosContainer extends Panel implements MetadadosListener, Fich
 		this.formulario = formulario;
 		toolbar.ini(janela);
 		montarLayout();
+		config();
+	}
+
+	private void config() {
+		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
+		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
 	}
 
 	@Override
@@ -73,6 +81,11 @@ public class MetadadosContainer extends Panel implements MetadadosListener, Fich
 			eventos();
 		}
 
+		private void eventos() {
+			atualizarAcao.setActionListener(e -> atualizar());
+			txtMetadado.addActionListener(this);
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (Util.estaVazio(txtMetadado.getText())) {
@@ -80,11 +93,6 @@ public class MetadadosContainer extends Panel implements MetadadosListener, Fich
 			}
 
 			metadados.selecionar(txtMetadado.getText().trim());
-		}
-
-		private void eventos() {
-			atualizarAcao.setActionListener(e -> atualizar());
-			txtMetadado.addActionListener(this);
 		}
 
 		class ButtonInfo extends ButtonPopup {
