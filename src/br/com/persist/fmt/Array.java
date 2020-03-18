@@ -56,6 +56,10 @@ public class Array extends Tipo {
 	}
 
 	public Array adicionar(String tipo) {
+		if (Null.CONTEUDO.equals(tipo)) {
+			return adicionar(new Null());
+		}
+
 		return adicionar(new Texto(tipo));
 	}
 

@@ -14,6 +14,7 @@ public class Atom {
 
 	static final byte DOIS_PONT = 8;
 	static final byte VIRGULA = 9;
+	static final byte NULL = 10;
 
 	Object valor;
 	byte tipo;

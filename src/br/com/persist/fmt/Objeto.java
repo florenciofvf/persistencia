@@ -76,6 +76,10 @@ public class Objeto extends Tipo {
 	}
 
 	public Objeto atributo(String nome, String tipo) {
+		if (Null.CONTEUDO.equals(tipo)) {
+			return atributo(nome, new Null());
+		}
+
 		return atributo(nome, new Texto(tipo));
 	}
 

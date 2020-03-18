@@ -121,7 +121,8 @@ public class Parser {
 	}
 
 	private boolean dadosBasicos(Atom atom) {
-		return atom.tipo == Atom.LOGICO || atom.tipo == Atom.NUMERO || atom.tipo == Atom.TEXTO;
+		return atom.tipo == Atom.LOGICO || atom.tipo == Atom.NULL || atom.tipo == Atom.NUMERO
+				|| atom.tipo == Atom.TEXTO;
 	}
 
 	private boolean fimObjeto(Atom atom) {
@@ -134,6 +135,10 @@ public class Parser {
 
 	private boolean numero(char c) {
 		return (c >= '0' && c <= '9') || c == '+' || c == '-';
+	}
+
+	private boolean literal(char c) {
+		return c == 't' || c == 'f' || c == 'n';
 	}
 
 	private void gerarAtom() {
@@ -152,7 +157,7 @@ public class Parser {
 				atom = new Atom(Atom.TEXTO, criarAtomString());
 				indice--;
 
-			} else if (c == 't' || c == 'f') {
+			} else if (literal(c)) {
 				String s = string.substring(indice);
 
 				if (s.startsWith("true")) {
@@ -162,6 +167,10 @@ public class Parser {
 				} else if (s.startsWith("false")) {
 					atom = new Atom(Atom.LOGICO, Boolean.FALSE);
 					delta = 5;
+
+				} else if (s.startsWith("null")) {
+					atom = new Atom(Atom.NULL, "null");
+					delta = 4;
 
 				} else {
 					throw new IllegalStateException();
