@@ -35,6 +35,10 @@ public class Objeto extends Tipo {
 	}
 
 	public Objeto atributo(String nome, Object tipo) {
+		if (tipo == null) {
+			return atributo(nome);
+		}
+
 		if (tipo instanceof String) {
 			return atributo(nome, (String) tipo);
 		}
@@ -75,11 +79,11 @@ public class Objeto extends Tipo {
 		return atributos.get(att);
 	}
 
-	public Objeto atributo(String nome, String tipo) {
-		if (Null.CONTEUDO.equals(tipo)) {
-			return atributo(nome, new Null());
-		}
+	public Objeto atributo(String nome) {
+		return atributo(nome, new Null());
+	}
 
+	public Objeto atributo(String nome, String tipo) {
 		return atributo(nome, new Texto(tipo));
 	}
 

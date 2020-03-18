@@ -32,6 +32,10 @@ public class Array extends Tipo {
 	}
 
 	public Array adicionar(Object tipo) {
+		if (tipo == null) {
+			return adicionar();
+		}
+
 		if (tipo instanceof String) {
 			return adicionar((String) tipo);
 		}
@@ -55,11 +59,11 @@ public class Array extends Tipo {
 		return lista.get(i);
 	}
 
-	public Array adicionar(String tipo) {
-		if (Null.CONTEUDO.equals(tipo)) {
-			return adicionar(new Null());
-		}
+	public Array adicionar() {
+		return adicionar(new Null());
+	}
 
+	public Array adicionar(String tipo) {
 		return adicionar(new Texto(tipo));
 	}
 

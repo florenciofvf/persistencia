@@ -1,7 +1,6 @@
 package br.com.persist.fmt;
 
 import java.awt.Color;
-import java.util.Objects;
 
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
@@ -12,10 +11,6 @@ import javax.swing.text.StyleConstants;
 public class Null extends Tipo {
 	public static final String CONTEUDO = "null";
 	private static final MutableAttributeSet att;
-
-	public Null() {
-		Objects.requireNonNull(CONTEUDO);
-	}
 
 	@Override
 	public void toString(StringBuilder sb, boolean comTab, int tab) {

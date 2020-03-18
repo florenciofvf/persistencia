@@ -168,8 +168,8 @@ public class Parser {
 					atom = new Atom(Atom.LOGICO, Boolean.FALSE);
 					delta = 5;
 
-				} else if (s.startsWith("null")) {
-					atom = new Atom(Atom.NULL, "null");
+				} else if (s.startsWith(Null.CONTEUDO)) {
+					atom = new Atom(Atom.NULL, null);
 					delta = 4;
 
 				} else {
