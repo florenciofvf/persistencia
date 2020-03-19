@@ -67,7 +67,7 @@ public class CircularContainer extends Panel {
 		private Action atualizarAcao = Action.actionIconAtualizar();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, false);
 
 			addButton(atualizarAcao);
 

@@ -23,13 +23,11 @@ import br.com.persist.util.Util;
 
 public class ComparacaoContainer extends Panel implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private final BarraButton toolbar = new BarraButton();
 	private final TextArea textArea = new TextArea();
+	private final Toolbar toolbar = new Toolbar();
 
 	public ComparacaoContainer(IJanela janela) {
-		toolbar.ini(janela, false);
-		toolbar.configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO);
-
+		toolbar.ini(janela);
 		montarLayout();
 	}
 
@@ -135,6 +133,20 @@ public class ComparacaoContainer extends Panel implements Fichario.IFicharioSalv
 					textArea.append(string + Constantes.QL);
 				}
 			}
+		}
+	}
+
+	private class Toolbar extends BarraButton {
+		private static final long serialVersionUID = 1L;
+
+		public void ini(IJanela janela) {
+			super.ini(janela, true, false);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO);
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
 		}
 	}
 }
