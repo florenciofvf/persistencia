@@ -228,15 +228,15 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(new MenuItem(novoAcao));
 			menuArquivo.add(true, itemDesktop);
 			menuArquivo.add(true, new MenuAbrir());
-			menuArquivo.add(true, itemArquivo);
 			menuArquivo.add(true, itemAnexo);
+			menuArquivo.add(true, itemArquivo);
 			menuArquivo.add(true, new MenuItem(fecharAcao));
 			add(menuArquivo);
 
 			menuBanco.add(itemConexao);
-			menuBanco.add(true, itemMetadado);
 			menuBanco.add(true, itemConsulta);
 			menuBanco.add(true, itemUpdate);
+			menuBanco.add(true, itemMetadado);
 			add(menuBanco);
 
 			menuUtil.add(itemAnotacao);
