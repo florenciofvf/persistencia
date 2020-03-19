@@ -94,25 +94,20 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconUpdate();
-		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor) {
-			super.ini(janela, true);
+			super.ini(janela, true, mapaChaveValor == null || mapaChaveValor.isEmpty());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA);
 			configBaixarAcao(e -> abrir());
 
 			addButton(atualizarAcao);
-
-			if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
-				addButton(true, salvarAcao);
-			}
-
 			add(true, cmbConexao);
+
 			eventos();
 		}
 
 		public void ini(IJanela janela) {
-			super.ini(janela, true);
+			super.ini(janela, true, false);
 
 			addButton(atualizarAcao);
 			addSeparator();
@@ -125,22 +120,21 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 			textArea.limpar();
 		}
 
+		@Override
+		protected void salvar() {
+			if (!Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
+				return;
+			}
+
+			try (PrintWriter pw = new PrintWriter(file)) {
+				pw.print(textArea.getText());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_UPDATE, ex, UpdateContainer.this);
+			}
+		}
+
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
-
-			salvarAcao.setActionListener(e -> {
-				if (!Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
-					return;
-				}
-
-				try {
-					PrintWriter pw = new PrintWriter(file);
-					pw.print(textArea.getText());
-					pw.close();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_UPDATE, ex, UpdateContainer.this);
-				}
-			});
 		}
 	}
 

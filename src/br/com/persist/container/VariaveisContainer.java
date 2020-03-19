@@ -57,19 +57,26 @@ public class VariaveisContainer extends Panel implements IIni, Fichario.IFichari
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-		private Action salvarAcao = Action.actionIconSalvar();
 		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL);
 			configBaixarAcao(null);
 
-			addButton(salvarAcao);
 			addButton(true, novoAcao);
 			addButton(copiarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void salvar() {
+			try {
+				VariaveisModelo.salvar();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SALVAR: ", ex, VariaveisContainer.this);
+			}
 		}
 
 		private void eventos() {
@@ -96,14 +103,6 @@ public class VariaveisContainer extends Panel implements IIni, Fichario.IFichari
 					}
 
 					modelo.fireTableDataChanged();
-				}
-			});
-
-			salvarAcao.setActionListener(e -> {
-				try {
-					VariaveisModelo.salvar();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("SALVAR: ", ex, VariaveisContainer.this);
 				}
 			});
 		}

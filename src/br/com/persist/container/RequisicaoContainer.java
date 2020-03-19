@@ -94,17 +94,15 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
-		private Action salvarAcao = Action.actionIconSalvar();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, true);
+			super.ini(janela, true, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
 			configBaixarAcao(e -> abrir());
 
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
-			addButton(true, salvarAcao);
 
 			eventos();
 		}
@@ -112,6 +110,19 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 		@Override
 		protected void limpar() {
 			areaParametros.setText(Constantes.VAZIO);
+		}
+
+		@Override
+		protected void salvar() {
+			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
+				return;
+			}
+
+			try (PrintWriter pw = new PrintWriter(file)) {
+				pw.print(areaParametros.getText());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+			}
 		}
 
 		private void eventos() {
@@ -122,20 +133,6 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 			atualizarAcao.setActionListener(e -> atualizar());
 
 			formatarAcao.setActionListener(e -> formatar());
-
-			salvarAcao.setActionListener(e -> {
-				if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
-					return;
-				}
-
-				try {
-					PrintWriter pw = new PrintWriter(file);
-					pw.print(areaParametros.getText());
-					pw.close();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
-				}
-			});
 		}
 	}
 
