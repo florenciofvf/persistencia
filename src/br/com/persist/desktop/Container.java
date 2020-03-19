@@ -194,14 +194,12 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 		private TextField txtPrefixoNomeTabela = new TextField(10);
-		private Action salvarAcao = Action.actionIconSalvar();
 		private Label labelStatus = new Label();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, true);
 			configBaixarAcao(null);
 
-			addButton(true, salvarAcao);
 			addButton(salvarComoAcao);
 			addButton(true, copiarAcao);
 			addButton(colarAcao);
@@ -225,6 +223,19 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 			txtPrefixoNomeTabela.setToolTipText(Mensagens.getString("label.prefixo_nt"));
 
 			eventos();
+		}
+
+		@Override
+		protected void salvar() {
+			if (!Util.confirmaSalvar(Container.this, Constantes.UM)) {
+				return;
+			}
+
+			if (arquivo != null) {
+				superficie.salvar(arquivo, getConexaoPadrao());
+			} else {
+				salvarComoAcao.actionPerformed(null);
+			}
 		}
 
 		class ButtonInfo extends ButtonPopup {
@@ -354,18 +365,6 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 				}
 
 				abrirArquivo();
-			});
-
-			salvarAcao.setActionListener(e -> {
-				if (!Util.confirmaSalvar(Container.this, Constantes.UM)) {
-					return;
-				}
-
-				if (arquivo != null) {
-					superficie.salvar(arquivo, getConexaoPadrao());
-				} else {
-					salvarComoAcao.actionPerformed(null);
-				}
 			});
 
 			salvarComoAcao.setActionListener(e -> {
