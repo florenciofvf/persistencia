@@ -69,7 +69,7 @@ public class MetadadosContainer extends Panel implements MetadadosListener, Fich
 		private final TextField txtMetadado = new TextField(35);
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_METADADO);
 
 			addButton(atualizarAcao);

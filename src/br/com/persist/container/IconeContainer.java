@@ -83,7 +83,7 @@ public class IconeContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(IJanela janela) {
-			super.ini(janela, true);
+			super.ini(janela, true, false);
 		}
 
 		@Override

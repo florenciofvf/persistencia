@@ -173,7 +173,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		final ButtonUtil util = new ButtonUtil();
 
 		protected void ini(IJanela janela, Objeto objeto) {
-			super.ini(janela, false);
+			super.ini(janela, false, false);
 
 			add(btnArrasto);
 			add(true, new ButtonInfo());

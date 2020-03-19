@@ -57,19 +57,26 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-		private Action salvarAcao = Action.actionIconSalvar();
 		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO);
 			configBaixarAcao(null);
 
-			addButton(salvarAcao);
 			addButton(true, novoAcao);
 			addButton(copiarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void salvar() {
+			try {
+				MapeamentoModelo.salvar();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SALVAR: ", ex, MapeamentoContainer.this);
+			}
 		}
 
 		private void eventos() {
@@ -96,14 +103,6 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 					}
 
 					modelo.fireTableDataChanged();
-				}
-			});
-
-			salvarAcao.setActionListener(e -> {
-				try {
-					MapeamentoModelo.salvar();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("SALVAR: ", ex, MapeamentoContainer.this);
 				}
 			});
 		}
