@@ -168,15 +168,13 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 
 	public void atualizar() {
 		if (Util.estaVazio(areaParametros.getText())) {
-			areaResultados.setText("TEXTAREA VAZIA.");
 			return;
 		}
 
 		String string = areaParametros.getSelectedText();
 
 		if (Util.estaVazio(string)) {
-			areaResultados.setText("NENHUM FRAGMENTO SELECIONADO.");
-			return;
+			string = areaParametros.getText();
 		}
 
 		areaResultados.setText("");
