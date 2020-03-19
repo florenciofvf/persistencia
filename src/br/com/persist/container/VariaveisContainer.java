@@ -61,9 +61,8 @@ public class VariaveisContainer extends Panel implements IIni, Fichario.IFichari
 		private Action abrirAcao = Action.actionIconBaixar();
 		private Action novoAcao = Action.actionIconNovo();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL);
 
 			addButton(abrirAcao);

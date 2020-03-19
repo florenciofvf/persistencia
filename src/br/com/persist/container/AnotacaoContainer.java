@@ -61,15 +61,19 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 		private Action atualizarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
 
 			addButton(atualizarAcao);
 			addButton(true, salvarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
 		}
 
 		private void eventos() {

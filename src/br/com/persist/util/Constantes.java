@@ -109,6 +109,7 @@ public class Constantes {
 	public static final int QUARENTA = 40;
 	public static final String QL2 = "\n";
 	public static final String TAB = "\t";
+	public static final String VAZIO = "";
 	public static final String PK = "pk";
 	public static final String FK = "fk";
 	public static final String EK = "ek";

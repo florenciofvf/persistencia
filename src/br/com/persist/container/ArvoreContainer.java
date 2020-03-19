@@ -65,9 +65,8 @@ public class ArvoreContainer extends Panel implements ArvoreListener, Fichario.I
 		private Action statusAcao = Action.actionIcon("label.status", Icones.HIERARQUIA);
 		private Action atualizarAcao = Action.actionIconBaixar();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ARQUIVO);
 
 			add(new Button(atualizarAcao));

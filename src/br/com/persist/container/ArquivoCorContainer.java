@@ -11,7 +11,6 @@ import br.com.persist.Arquivo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.modelo.AnexoModelo;
-import br.com.persist.util.Action;
 import br.com.persist.util.IJanela;
 
 public class ArquivoCorContainer extends Panel implements ChangeListener {
@@ -48,18 +47,15 @@ public class ArquivoCorContainer extends Panel implements ChangeListener {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action cancelaAcao = Action.actionIconLimpar();
+
+		public void ini(IJanela janela) {
+			super.ini(janela, true);
+		}
 
 		@Override
-		public void ini(IJanela janela) {
-			super.ini(janela);
-
-			addButton(cancelaAcao);
-
-			cancelaAcao.setActionListener(e -> {
-				arquivo.setCorFonte(null);
-				fechar();
-			});
+		protected void limpar() {
+			arquivo.setCorFonte(null);
+			fechar();
 		}
 	}
 }

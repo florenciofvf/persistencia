@@ -98,7 +98,7 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor) {
-			super.ini(janela);
+			super.ini(janela, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA);
 
 			addButton(baixarAcao);
@@ -112,14 +112,18 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 			eventos();
 		}
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, true);
 
 			addButton(atualizarAcao);
 			addSeparator();
 			add(cmbConexao);
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
 		}
 
 		private void eventos() {

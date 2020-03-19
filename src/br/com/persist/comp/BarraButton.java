@@ -13,9 +13,10 @@ import br.com.persist.util.Preferencias;
 
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
+	protected Action limparAcao = Action.actionIconLimpar();
 	protected transient IJanela janela;
 
-	public void ini(IJanela janela) {
+	public void ini(IJanela janela, boolean limpar) {
 		this.janela = janela;
 
 		if (janela != null) {
@@ -24,6 +25,15 @@ public class BarraButton extends JToolBar {
 			addButton(fecharAcao);
 			addSeparator();
 		}
+
+		if (limpar) {
+			limparAcao.setActionListener(e -> limpar());
+			addButton(limparAcao);
+		}
+	}
+
+	protected void limpar() {
+		throw new UnsupportedOperationException();
 	}
 
 	public void configAbrirAutoFichario(String chave) {

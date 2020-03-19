@@ -27,7 +27,7 @@ public class ComparacaoContainer extends Panel implements Fichario.IFicharioSalv
 	private final TextArea textArea = new TextArea();
 
 	public ComparacaoContainer(IJanela janela) {
-		toolbar.ini(janela);
+		toolbar.ini(janela, false);
 		toolbar.configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO);
 
 		montarLayout();

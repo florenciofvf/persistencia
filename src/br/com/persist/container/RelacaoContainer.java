@@ -47,9 +47,9 @@ public class RelacaoContainer extends Panel {
 
 	public RelacaoContainer(IJanela janela, Superficie superficie, Relacao relacao) {
 		this.superficie = superficie;
+		toolbar.ini(janela, false);
 		Formulario.macro.limpar();
 		this.relacao = relacao;
-		toolbar.ini(janela);
 		montarLayout();
 	}
 

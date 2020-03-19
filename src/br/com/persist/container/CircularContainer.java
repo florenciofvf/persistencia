@@ -66,9 +66,8 @@ public class CircularContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 
 			addButton(atualizarAcao);
 

@@ -97,7 +97,7 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
-			super.ini(janela);
+			super.ini(janela, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA);
 
 			addButton(baixarAcao);
@@ -109,6 +109,11 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 
 			add(true, cmbConexao);
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
 		}
 
 		private void eventos() {

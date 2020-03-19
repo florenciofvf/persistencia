@@ -70,7 +70,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 	}
 
 	private void abrir() {
-		areaParametros.setText("");
+		areaParametros.setText(Constantes.VAZIO);
 
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
@@ -97,9 +97,8 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 		private Action baixarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
 
 			addButton(baixarAcao);
@@ -109,6 +108,11 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 			addButton(true, salvarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			areaParametros.setText(Constantes.VAZIO);
 		}
 
 		private void eventos() {

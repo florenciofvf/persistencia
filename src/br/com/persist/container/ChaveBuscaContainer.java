@@ -147,9 +147,8 @@ public class ChaveBuscaContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 
 			addButton(sucessoAcao);
 

@@ -68,9 +68,8 @@ public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFi
 		private Action atualizarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANEXO);
 
 			add(new Button(atualizarAcao));

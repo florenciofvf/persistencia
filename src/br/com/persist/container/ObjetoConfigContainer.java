@@ -53,9 +53,9 @@ public class ObjetoConfigContainer extends Panel {
 
 	public ObjetoConfigContainer(IJanela janela, Superficie superficie, Objeto objeto) {
 		this.superficie = superficie;
+		toolbar.ini(janela, false);
 		Formulario.macro.limpar();
 		this.objeto = objeto;
-		toolbar.ini(janela);
 		montarLayout();
 	}
 

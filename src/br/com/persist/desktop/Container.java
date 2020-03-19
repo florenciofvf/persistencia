@@ -198,9 +198,8 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 		private Action baixarAcao = Action.actionIconBaixar();
 		private Label labelStatus = new Label();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 
 			addButton(baixarAcao);
 			addButton(true, salvarAcao);

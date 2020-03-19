@@ -312,9 +312,8 @@ public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
 		private static final long serialVersionUID = 1L;
 		private Action salvarAcao = Action.actionIconSalvar();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO);
 
 			addButton(salvarAcao);

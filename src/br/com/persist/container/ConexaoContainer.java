@@ -70,9 +70,8 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 		private Action abrirAcao = Action.actionIconBaixar();
 		private Action novoAcao = Action.actionIconNovo();
 
-		@Override
 		public void ini(IJanela janela) {
-			super.ini(janela);
+			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
 
 			addButton(abrirAcao);

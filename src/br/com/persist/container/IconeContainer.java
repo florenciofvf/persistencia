@@ -19,7 +19,6 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Action;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Imagens;
 
@@ -82,20 +81,17 @@ public class IconeContainer extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action cancelaAcao = Action.actionIconLimpar();
+
+		public void ini(IJanela janela) {
+			super.ini(janela, true);
+		}
 
 		@Override
-		public void ini(IJanela janela) {
-			super.ini(janela);
-
-			addButton(cancelaAcao);
-
-			cancelaAcao.setActionListener(e -> {
-				Formulario.macro.imagem(null);
-				objeto.limparIcone();
-				label.setIcon(null);
-				fechar();
-			});
+		protected void limpar() {
+			Formulario.macro.imagem(null);
+			objeto.limparIcone();
+			label.setIcon(null);
+			fechar();
 		}
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class TextArea extends JScrollPane {
@@ -47,7 +48,7 @@ public class TextArea extends JScrollPane {
 	}
 
 	public void limpar() {
-		textAreaInner.setText("");
+		textAreaInner.setText(Constantes.VAZIO);
 	}
 
 	@Override
