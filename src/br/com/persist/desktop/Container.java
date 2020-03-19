@@ -195,13 +195,12 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 		private TextField txtPrefixoNomeTabela = new TextField(10);
 		private Action salvarAcao = Action.actionIconSalvar();
-		private Action baixarAcao = Action.actionIconBaixar();
 		private Label labelStatus = new Label();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false);
+			configBaixarAcao(null);
 
-			addButton(baixarAcao);
 			addButton(true, salvarAcao);
 			addButton(salvarComoAcao);
 			addButton(true, copiarAcao);

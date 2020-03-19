@@ -94,14 +94,13 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconUpdate();
-		private Action baixarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor) {
 			super.ini(janela, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA);
+			configBaixarAcao(e -> abrir());
 
-			addButton(baixarAcao);
 			addButton(atualizarAcao);
 
 			if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
@@ -128,8 +127,6 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
-
-			baixarAcao.setActionListener(e -> abrir());
 
 			salvarAcao.setActionListener(e -> {
 				if (!Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {

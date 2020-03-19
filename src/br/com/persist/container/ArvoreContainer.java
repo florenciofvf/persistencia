@@ -63,13 +63,12 @@ public class ArvoreContainer extends Panel implements ArvoreListener, Fichario.I
 		private static final long serialVersionUID = 1L;
 		private Action fecharAcao = Action.actionIcon("label.fechar_todos", Icones.FECHAR);
 		private Action statusAcao = Action.actionIcon("label.status", Icones.HIERARQUIA);
-		private Action atualizarAcao = Action.actionIconBaixar();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ARQUIVO);
+			configBaixarAcao(e -> baixarArquivo());
 
-			add(new Button(atualizarAcao));
 			add(new Button(statusAcao));
 			if (arvoreFormulario != null) {
 				add(chkSempreTopArvo);
@@ -87,7 +86,6 @@ public class ArvoreContainer extends Panel implements ArvoreListener, Fichario.I
 				}
 			});
 			fecharAcao.setActionListener(e -> formulario.getFichario().fecharTodos());
-			atualizarAcao.setActionListener(e -> baixarArquivo());
 			statusAcao.setActionListener(e -> statusArquivo());
 		}
 

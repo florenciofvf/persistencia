@@ -14,7 +14,6 @@ import br.com.persist.Arquivo;
 import br.com.persist.anexo.Anexo;
 import br.com.persist.anexo.AnexoUtil;
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
@@ -65,14 +64,13 @@ public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFi
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANEXO);
+			configBaixarAcao(e -> baixarArquivo());
 
-			add(new Button(atualizarAcao));
 			addButton(true, salvarAcao);
 			if (anexoFormulario != null) {
 				add(chkSempreTopAnex);
@@ -86,7 +84,6 @@ public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFi
 					formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
 				}
 			});
-			atualizarAcao.setActionListener(e -> baixarArquivo());
 			salvarAcao.setActionListener(e -> salvarMapaAnexos());
 		}
 

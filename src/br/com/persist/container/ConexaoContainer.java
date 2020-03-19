@@ -51,7 +51,7 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new ConexaoStatusRenderer());
 		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoStatusEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		toolbar.abrirAcao.actionPerformed(null);
+		toolbar.getBaixarAcao().actionPerformed(null);
 	}
 
 	@Override
@@ -67,14 +67,13 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
 		private Action salvarAcao = Action.actionIconSalvar();
-		private Action abrirAcao = Action.actionIconBaixar();
 		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
+			configBaixarAcao(null);
 
-			addButton(abrirAcao);
 			addButton(salvarAcao);
 			addButton(true, topAcao);
 			addButton(true, conectaAcao);
@@ -97,7 +96,7 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 
 			topAcao.setActionListener(e -> primeiro());
 
-			abrirAcao.setActionListener(e -> {
+			baixarAcao.setActionListener(e -> {
 				try {
 					modelo.abrir();
 					formulario.atualizarConexoes();

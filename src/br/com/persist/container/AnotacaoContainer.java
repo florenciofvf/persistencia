@@ -58,14 +58,13 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
+			configBaixarAcao(e -> abrir());
 
-			addButton(atualizarAcao);
 			addButton(true, salvarAcao);
 
 			eventos();
@@ -77,8 +76,6 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 		}
 
 		private void eventos() {
-			atualizarAcao.setActionListener(e -> abrir());
-
 			salvarAcao.setActionListener(e -> {
 				if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.DOIS)) {
 					return;

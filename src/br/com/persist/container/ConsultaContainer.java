@@ -93,14 +93,13 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
-		private Action baixarAcao = Action.actionIconBaixar();
 		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA);
+			configBaixarAcao(e -> abrir());
 
-			addButton(baixarAcao);
 			addButton(atualizarAcao);
 
 			if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
@@ -118,8 +117,6 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
-
-			baixarAcao.setActionListener(e -> abrir());
 
 			salvarAcao.setActionListener(e -> {
 				if (!Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {

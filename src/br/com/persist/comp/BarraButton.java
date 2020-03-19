@@ -1,6 +1,7 @@
 package br.com.persist.comp;
 
 import java.awt.Component;
+import java.awt.event.ActionListener;
 
 import javax.swing.JToolBar;
 
@@ -13,7 +14,8 @@ import br.com.persist.util.Preferencias;
 
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
-	protected Action limparAcao = Action.actionIconLimpar();
+	protected Action baixarAcao = Action.actionIconBaixar();
+	private Action limparAcao = Action.actionIconLimpar();
 	protected transient IJanela janela;
 
 	public void ini(IJanela janela, boolean limpar) {
@@ -34,6 +36,15 @@ public class BarraButton extends JToolBar {
 
 	protected void limpar() {
 		throw new UnsupportedOperationException();
+	}
+
+	protected void configBaixarAcao(ActionListener listener) {
+		baixarAcao.setActionListener(listener);
+		addButton(baixarAcao);
+	}
+
+	public Action getBaixarAcao() {
+		return baixarAcao;
 	}
 
 	public void configAbrirAutoFichario(String chave) {

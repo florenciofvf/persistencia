@@ -46,7 +46,7 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 	private void configurar() {
 		tabela.getColumnModel().getColumn(1).setCellEditor(new ChaveValorEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		toolbar.abrirAcao.actionPerformed(null);
+		toolbar.getBaixarAcao().actionPerformed(null);
 	}
 
 	@Override
@@ -58,14 +58,13 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action salvarAcao = Action.actionIconSalvar();
-		private Action abrirAcao = Action.actionIconBaixar();
 		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO);
+			configBaixarAcao(null);
 
-			addButton(abrirAcao);
 			addButton(salvarAcao);
 			addButton(true, novoAcao);
 			addButton(copiarAcao);
@@ -74,7 +73,7 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 		}
 
 		private void eventos() {
-			abrirAcao.setActionListener(e -> {
+			baixarAcao.setActionListener(e -> {
 				MapeamentoModelo.inicializar();
 				modelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());

@@ -48,7 +48,7 @@ public class FragmentoContainer extends Panel implements IIni, Fichario.IFichari
 
 	private void configurar() {
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		toolbar.abrirAcao.actionPerformed(null);
+		toolbar.getBaixarAcao().actionPerformed(null);
 	}
 
 	@Override
@@ -60,14 +60,13 @@ public class FragmentoContainer extends Panel implements IIni, Fichario.IFichari
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action salvarAcao = Action.actionIconSalvar();
-		private Action abrirAcao = Action.actionIconBaixar();
 		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_FRAGMENTO);
+			configBaixarAcao(null);
 
-			addButton(abrirAcao);
 			addButton(salvarAcao);
 			addButton(true, novoAcao);
 			addButton(copiarAcao);
@@ -76,7 +75,7 @@ public class FragmentoContainer extends Panel implements IIni, Fichario.IFichari
 		}
 
 		private void eventos() {
-			abrirAcao.setActionListener(e -> {
+			baixarAcao.setActionListener(e -> {
 				if (listener != null) {
 					FragmentoModelo.reiniciar();
 					FragmentoModelo.filtar(listener.getGruposFiltro());
