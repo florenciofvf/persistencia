@@ -93,7 +93,6 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
-		private Action salvarAcao = Action.actionIconSalvar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela, true);

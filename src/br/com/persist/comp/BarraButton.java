@@ -15,10 +15,11 @@ import br.com.persist.util.Preferencias;
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	protected Action baixarAcao = Action.actionIconBaixar();
+	protected Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient IJanela janela;
 
-	public void ini(IJanela janela, boolean limpar) {
+	public void ini(IJanela janela, boolean limpar, boolean salvar) {
 		this.janela = janela;
 
 		if (janela != null) {
@@ -32,9 +33,18 @@ public class BarraButton extends JToolBar {
 			limparAcao.setActionListener(e -> limpar());
 			addButton(limparAcao);
 		}
+
+		if (salvar) {
+			salvarAcao.setActionListener(e -> salvar());
+			addButton(salvarAcao);
+		}
 	}
 
 	protected void limpar() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void salvar() {
 		throw new UnsupportedOperationException();
 	}
 
