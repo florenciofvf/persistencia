@@ -66,15 +66,13 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
-		private Action salvarAcao = Action.actionIconSalvar();
 		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
 			configBaixarAcao(null);
 
-			addButton(salvarAcao);
 			addButton(true, topAcao);
 			addButton(true, conectaAcao);
 			addButton(true, sucessoAcao);
@@ -83,6 +81,16 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 			addButton(copiarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void salvar() {
+			try {
+				modelo.salvar();
+				formulario.atualizarConexoes();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoContainer.this);
+			}
 		}
 
 		private void eventos() {
@@ -112,15 +120,6 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 					tabela.repaint();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
-				}
-			});
-
-			salvarAcao.setActionListener(e -> {
-				try {
-					modelo.salvar();
-					formulario.atualizarConexoes();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("SALVAR: ", ex, ConexaoContainer.this);
 				}
 			});
 		}

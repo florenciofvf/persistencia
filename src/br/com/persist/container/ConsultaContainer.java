@@ -95,17 +95,13 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 		private Action atualizarAcao = Action.actionIconAtualizar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
-			super.ini(janela, true);
+			super.ini(janela, true, (mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA);
 			configBaixarAcao(e -> abrir());
 
 			addButton(atualizarAcao);
-
-			if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
-				addButton(true, salvarAcao);
-			}
-
 			add(true, cmbConexao);
+
 			eventos();
 		}
 
@@ -114,22 +110,21 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 			textArea.limpar();
 		}
 
+		@Override
+		protected void salvar() {
+			if (!Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {
+				return;
+			}
+
+			try (PrintWriter pw = new PrintWriter(file)) {
+				pw.print(textArea.getText());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_SELECT, ex, ConsultaContainer.this);
+			}
+		}
+
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
-
-			salvarAcao.setActionListener(e -> {
-				if (!Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {
-					return;
-				}
-
-				try {
-					PrintWriter pw = new PrintWriter(file);
-					pw.print(textArea.getText());
-					pw.close();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_SELECT, ex, ConsultaContainer.this);
-				}
-			});
 		}
 	}
 

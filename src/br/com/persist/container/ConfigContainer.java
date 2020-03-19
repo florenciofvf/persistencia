@@ -27,7 +27,6 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
@@ -310,15 +309,15 @@ public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action salvarAcao = Action.actionIconSalvar();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO);
+		}
 
-			addButton(salvarAcao);
-
-			salvarAcao.setActionListener(e -> Preferencias.salvar());
+		@Override
+		protected void salvar() {
+			Preferencias.salvar();
 		}
 	}
 
