@@ -24,7 +24,6 @@ import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.listener.AnexoListener;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
@@ -64,14 +63,12 @@ public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFi
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action salvarAcao = Action.actionIconSalvar();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false);
+			super.ini(janela, false, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANEXO);
 			configBaixarAcao(e -> baixarArquivo());
 
-			addButton(true, salvarAcao);
 			if (anexoFormulario != null) {
 				add(chkSempreTopAnex);
 			}
@@ -84,10 +81,10 @@ public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFi
 					formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
 				}
 			});
-			salvarAcao.setActionListener(e -> salvarMapaAnexos());
 		}
 
-		private void salvarMapaAnexos() {
+		@Override
+		public void salvar() {
 			try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo)) {
 				Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
 
@@ -235,7 +232,7 @@ public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFi
 		}
 
 		if (removido) {
-			toolbar.salvarMapaAnexos();
+			toolbar.getSalvarAcao().actionPerformed(null);
 		}
 	}
 }

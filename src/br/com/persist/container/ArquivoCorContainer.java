@@ -49,7 +49,7 @@ public class ArquivoCorContainer extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(IJanela janela) {
-			super.ini(janela, true);
+			super.ini(janela, true, false);
 		}
 
 		@Override

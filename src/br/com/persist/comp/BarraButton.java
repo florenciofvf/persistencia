@@ -15,7 +15,7 @@ import br.com.persist.util.Preferencias;
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	protected Action baixarAcao = Action.actionIconBaixar();
-	protected Action salvarAcao = Action.actionIconSalvar();
+	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient IJanela janela;
 
@@ -55,6 +55,10 @@ public class BarraButton extends JToolBar {
 
 	public Action getBaixarAcao() {
 		return baixarAcao;
+	}
+
+	public Action getSalvarAcao() {
+		return salvarAcao;
 	}
 
 	public void configAbrirAutoFichario(String chave) {

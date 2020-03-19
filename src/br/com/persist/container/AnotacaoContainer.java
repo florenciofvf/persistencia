@@ -11,7 +11,6 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
@@ -58,16 +57,11 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action salvarAcao = Action.actionIconSalvar();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, true);
+			super.ini(janela, true, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
 			configBaixarAcao(e -> abrir());
-
-			addButton(true, salvarAcao);
-
-			eventos();
 		}
 
 		@Override
@@ -75,20 +69,17 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 			textArea.limpar();
 		}
 
-		private void eventos() {
-			salvarAcao.setActionListener(e -> {
-				if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.DOIS)) {
-					return;
-				}
+		@Override
+		protected void salvar() {
+			if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.DOIS)) {
+				return;
+			}
 
-				try {
-					PrintWriter pw = new PrintWriter(file);
-					pw.print(textArea.getText());
-					pw.close();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
-				}
-			});
+			try (PrintWriter pw = new PrintWriter(file)) {
+				pw.print(textArea.getText());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
+			}
 		}
 	}
 }
