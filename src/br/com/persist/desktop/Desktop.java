@@ -175,6 +175,8 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			if (y + a > altura) {
 				altura = y + a;
 			}
+
+			frame.moveToFront();
 		}
 
 		setPreferredSize(new Dimension(largura, altura + 41));
