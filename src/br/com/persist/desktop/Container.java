@@ -315,6 +315,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 		class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 			Action desktopAcao = Action.actionMenuDesktop();
+			Action abrirEmForm = Action.actionMenu("label.abrir_em_formulario", null);
 			Action destacarFrm = Action.actionMenu("label.destac_formulario", null);
 			Action destacarCnt = Action.actionMenu("label.destac_container", null);
 
@@ -323,6 +324,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 				addMenuItem(desktopAcao);
 				addMenuItem(destacarFrm);
 				addMenuItem(destacarCnt);
+				addMenuItem(abrirEmForm);
 
 				formularioAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
@@ -332,6 +334,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
 				destacarFrm.setActionListener(
 						e -> formulario.getFichario().destacarEmFormulario(formulario, Container.this));
+				abrirEmForm.setActionListener(e -> formulario.abrirArquivo(getArquivo(), false));
 				destacarCnt.setActionListener(e -> {
 					if (containerFormulario != null) {
 						containerFormulario.retornoDestacarEmFormulario();
