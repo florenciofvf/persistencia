@@ -66,10 +66,9 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
-		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false, true);
+			super.ini(janela, true, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
 			configBaixarAcao(null);
 
@@ -77,10 +76,14 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 			addButton(true, conectaAcao);
 			addButton(true, sucessoAcao);
 			addButton(true, desconectaAcao);
-			addButton(true, novoAcao);
 			addButton(copiarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			modelo.novo();
 		}
 
 		@Override
@@ -94,11 +97,11 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 		}
 
 		private void eventos() {
+			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
+
 			sucessoAcao.setActionListener(e -> selecionarConexao());
 
 			conectaAcao.setActionListener(e -> conectar());
-
-			novoAcao.setActionListener(e -> modelo.novo());
 
 			copiarAcao.setActionListener(e -> copiar());
 

@@ -61,6 +61,10 @@ public class BarraButton extends JToolBar {
 		return salvarAcao;
 	}
 
+	public Action getLimparAcao() {
+		return limparAcao;
+	}
+
 	public void configAbrirAutoFichario(String chave) {
 		CheckBox chkAbrirAutoFichario = new CheckBox();
 		chkAbrirAutoFichario.setSelected(Preferencias.getBoolean(chave));

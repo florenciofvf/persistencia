@@ -59,17 +59,21 @@ public class FragmentoContainer extends Panel implements IIni, Fichario.IFichari
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false, true);
+			super.ini(janela, true, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_FRAGMENTO);
 			configBaixarAcao(null);
 
-			addButton(true, novoAcao);
 			addButton(copiarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			FragmentoModelo.novo();
+			modelo.fireTableDataChanged();
 		}
 
 		@Override
@@ -82,6 +86,8 @@ public class FragmentoContainer extends Panel implements IIni, Fichario.IFichari
 		}
 
 		private void eventos() {
+			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
+
 			baixarAcao.setActionListener(e -> {
 				if (listener != null) {
 					FragmentoModelo.reiniciar();
@@ -93,11 +99,6 @@ public class FragmentoContainer extends Panel implements IIni, Fichario.IFichari
 				FragmentoModelo.ordenar();
 				modelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
-			});
-
-			novoAcao.setActionListener(e -> {
-				FragmentoModelo.novo();
-				modelo.fireTableDataChanged();
 			});
 
 			copiarAcao.setActionListener(e -> {

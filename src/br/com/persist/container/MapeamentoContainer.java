@@ -57,17 +57,21 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false, true);
+			super.ini(janela, true, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO);
 			configBaixarAcao(null);
 
-			addButton(true, novoAcao);
 			addButton(copiarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			MapeamentoModelo.novo();
+			modelo.fireTableDataChanged();
 		}
 
 		@Override
@@ -80,15 +84,12 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 		}
 
 		private void eventos() {
+			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
+
 			baixarAcao.setActionListener(e -> {
 				MapeamentoModelo.inicializar();
 				modelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
-			});
-
-			novoAcao.setActionListener(e -> {
-				MapeamentoModelo.novo();
-				modelo.fireTableDataChanged();
 			});
 
 			copiarAcao.setActionListener(e -> {

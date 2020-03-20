@@ -57,17 +57,21 @@ public class VariaveisContainer extends Panel implements IIni, Fichario.IFichari
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-		private Action novoAcao = Action.actionIconNovo();
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false, true);
+			super.ini(janela, true, true);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL);
 			configBaixarAcao(null);
 
-			addButton(true, novoAcao);
 			addButton(copiarAcao);
 
 			eventos();
+		}
+
+		@Override
+		protected void limpar() {
+			VariaveisModelo.novo();
+			modelo.fireTableDataChanged();
 		}
 
 		@Override
@@ -80,15 +84,12 @@ public class VariaveisContainer extends Panel implements IIni, Fichario.IFichari
 		}
 
 		private void eventos() {
+			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
+
 			baixarAcao.setActionListener(e -> {
 				VariaveisModelo.inicializar();
 				modelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
-			});
-
-			novoAcao.setActionListener(e -> {
-				VariaveisModelo.novo();
-				modelo.fireTableDataChanged();
 			});
 
 			copiarAcao.setActionListener(e -> {
