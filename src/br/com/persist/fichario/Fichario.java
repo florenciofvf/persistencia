@@ -675,9 +675,9 @@ public class Fichario extends JTabbedPane {
 		for (int i = 0; i < total; i++) {
 			Component cmp = getComponentAt(i);
 
-			if (cmp instanceof Container) {
-				Container container = (Container) cmp;
-				container.selecionarConexao(conexao);
+			if (cmp instanceof IFicharioConexao) {
+				IFicharioConexao aba = (IFicharioConexao) cmp;
+				aba.selecionarConexao(conexao);
 			}
 		}
 	}
@@ -710,6 +710,10 @@ public class Fichario extends JTabbedPane {
 
 	public static interface IFicharioSalvar {
 		File getFileSalvarAberto();
+	}
+
+	public static interface IFicharioConexao {
+		void selecionarConexao(Conexao conexao);
 	}
 
 	public void abrirArquivos(Formulario formulario) {
