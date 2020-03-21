@@ -27,7 +27,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
+public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("atualizacoes/atualizacoes");
 	private static final String PAINEL_UPDATE = "PAINEL UPDATE";
@@ -52,6 +52,13 @@ public class UpdateContainer extends Panel implements Fichario.IFicharioSalvar {
 	private void config() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
+	}
+
+	@Override
+	public void selecionarConexao(Conexao conexao) {
+		if (conexao != null) {
+			cmbConexao.setSelectedItem(conexao);
+		}
 	}
 
 	@Override

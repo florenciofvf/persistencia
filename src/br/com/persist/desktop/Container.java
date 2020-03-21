@@ -46,7 +46,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
-public class Container extends Panel implements Fichario.IFicharioSalvar {
+public class Container extends Panel implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
@@ -77,6 +77,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar {
 		});
 	}
 
+	@Override
 	public void selecionarConexao(Conexao conexao) {
 		if (conexao != null) {
 			cmbConexao.setSelectedItem(conexao);

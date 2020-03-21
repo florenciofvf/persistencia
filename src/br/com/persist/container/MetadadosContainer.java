@@ -32,7 +32,8 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class MetadadosContainer extends Panel implements MetadadosListener, Fichario.IFicharioSalvar {
+public class MetadadosContainer extends Panel
+		implements MetadadosListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private Metadados metadados = new Metadados();
 	private final Toolbar toolbar = new Toolbar();
@@ -50,6 +51,13 @@ public class MetadadosContainer extends Panel implements MetadadosListener, Fich
 	private void config() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
+	}
+
+	@Override
+	public void selecionarConexao(Conexao conexao) {
+		if (conexao != null) {
+			cmbConexao.setSelectedItem(conexao);
+		}
 	}
 
 	@Override
