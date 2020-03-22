@@ -22,6 +22,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.util.Action;
+import br.com.persist.util.Base64Util;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
@@ -92,6 +93,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
+		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
 
@@ -103,6 +105,7 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
+			addButton(true, base64Acao);
 
 			eventos();
 		}
@@ -133,6 +136,8 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 			atualizarAcao.setActionListener(e -> atualizar());
 
 			formatarAcao.setActionListener(e -> formatar());
+
+			base64Acao.setActionListener(e -> base64());
 		}
 	}
 
@@ -159,6 +164,26 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 				AbstractDocument doc = (AbstractDocument) styledDoc;
 				json.toString(doc, false, 0);
 			}
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+		}
+	}
+
+	public void base64() {
+		if (Util.estaVazio(areaParametros.getText())) {
+			return;
+		}
+
+		String string = areaParametros.getSelectedText();
+
+		if (Util.estaVazio(string)) {
+			string = areaParametros.getText();
+		}
+
+		areaResultados.setText("");
+
+		try {
+			areaResultados.setText(Base64Util.criarBase64(string));
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 		}
