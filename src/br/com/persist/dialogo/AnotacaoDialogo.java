@@ -14,7 +14,7 @@ public class AnotacaoDialogo extends AbstratoDialogo implements IJanela {
 
 	public AnotacaoDialogo(Frame frame) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ANOTACOES));
-		container = new AnotacaoContainer(this);
+		container = new AnotacaoContainer(this, null);
 		montarLayout();
 	}
 

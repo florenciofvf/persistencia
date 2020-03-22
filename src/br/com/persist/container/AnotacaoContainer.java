@@ -8,21 +8,21 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar {
+public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final String PAINEL_ANOTACAO = "PAINEL ANOTACAO";
 	private static final File file = new File("anotacoes/anotacoes");
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 
-	public AnotacaoContainer(IJanela janela) {
+	public AnotacaoContainer(IJanela janela, Fichario fichario) {
+		super(fichario);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
@@ -60,6 +60,9 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
+			if (fichario != null) {
+				configButtonDestacar(e -> destacarForm(), e -> abrirEmFormul(), e -> destacarFicha());
+			}
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
 			configBaixarAcao(e -> abrir());
 		}

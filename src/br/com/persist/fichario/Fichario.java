@@ -299,7 +299,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Panel novaAnotacao(Formulario formulario) {
-		AnotacaoContainer container = new AnotacaoContainer(null);
+		AnotacaoContainer container = new AnotacaoContainer(null, this);
 		addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 

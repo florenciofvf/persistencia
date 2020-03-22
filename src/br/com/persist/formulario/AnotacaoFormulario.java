@@ -13,7 +13,7 @@ public class AnotacaoFormulario extends AbstratoFormulario implements IJanela {
 
 	public AnotacaoFormulario() {
 		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
-		container = new AnotacaoContainer(this);
+		container = new AnotacaoContainer(this, null);
 		montarLayout();
 	}
 
