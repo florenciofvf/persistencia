@@ -71,7 +71,7 @@ public class AnotacaoContainer extends Panel implements Fichario.IFicharioSalvar
 
 		@Override
 		protected void salvar() {
-			if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.DOIS)) {
+			if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.TRES)) {
 				return;
 			}
 
