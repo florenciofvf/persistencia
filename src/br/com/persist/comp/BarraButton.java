@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JToolBar;
 
 import br.com.persist.util.Action;
+import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
@@ -17,6 +18,7 @@ public class BarraButton extends JToolBar {
 	protected Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
+	protected transient ButtonDestacar buttonDestacar;
 	protected transient IJanela janela;
 
 	public void ini(IJanela janela, boolean limpar, boolean salvar) {
@@ -40,6 +42,26 @@ public class BarraButton extends JToolBar {
 		}
 	}
 
+	protected class ButtonDestacar extends ButtonPopup {
+		private static final long serialVersionUID = 1L;
+		protected Action abrirEmForm = Action.actionMenu("label.abrir_em_formulario", null);
+		protected Action destacarFrm = Action.actionMenu("label.destac_formulario", null);
+		protected Action destacarCnt = Action.actionMenu("label.destac_container", null);
+
+		ButtonDestacar(ActionListener destacarForm, ActionListener abrirEmFormul, ActionListener destacarFicha) {
+			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
+			addMenuItem(destacarFrm);
+			addMenuItem(destacarCnt);
+			addMenuItem(abrirEmForm);
+
+			destacarFrm.setActionListener(destacarForm);
+
+			abrirEmForm.setActionListener(abrirEmFormul);
+
+			destacarCnt.setActionListener(destacarFicha);
+		}
+	}
+
 	protected void limpar() {
 		throw new UnsupportedOperationException();
 	}
@@ -51,6 +73,12 @@ public class BarraButton extends JToolBar {
 	protected void configBaixarAcao(ActionListener listener) {
 		baixarAcao.setActionListener(listener);
 		addButton(baixarAcao);
+	}
+
+	protected void configButtonDestacar(ActionListener destacarForm, ActionListener abrirEmFormul,
+			ActionListener destacarFicha) {
+		buttonDestacar = new ButtonDestacar(destacarForm, abrirEmFormul, destacarFicha);
+		add(true, buttonDestacar);
 	}
 
 	public Action getBaixarAcao() {
