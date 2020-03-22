@@ -21,19 +21,19 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	private final Container container;
 	private boolean ativo = true;
 
-	public ContainerFormulario(Formulario formulario, File file) {
-		super(file.getName());
-		container = new Container(formulario, this);
-		container.setSuperficieFormulario(this);
-		montarLayout();
-		configurar();
-	}
-
 	public ContainerFormulario(Formulario formulario, Container container, File file) {
 		super(file.getName());
 		container.setSuperficieFormulario(this);
 		this.container = container;
 		container.setJanela(this);
+		montarLayout();
+		configurar();
+	}
+
+	public ContainerFormulario(Formulario formulario, File file) {
+		super(file.getName());
+		container = new Container(formulario, this);
+		container.setSuperficieFormulario(this);
 		montarLayout();
 		configurar();
 	}

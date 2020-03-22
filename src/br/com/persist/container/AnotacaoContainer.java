@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.TextArea;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
@@ -53,6 +54,17 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 				Util.stackTraceAndMessage(PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
+	}
+
+	@Override
+	protected void abrirEmFormul() {
+		AnotacaoFormulario form = new AnotacaoFormulario();
+		form.setVisible(true);
+	}
+
+	@Override
+	protected void destacarForm() {
+		fichario.destacarEmFormularioAnotacao(null, this);
 	}
 
 	private class Toolbar extends BarraButton {

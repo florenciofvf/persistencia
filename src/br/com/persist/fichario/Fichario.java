@@ -56,6 +56,7 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
@@ -309,6 +310,20 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 
 		return container;
+	}
+
+	public void destacarEmFormularioAnotacao(Formulario formulario, AnotacaoContainer container) {
+		int indice = getIndice(container);
+
+		if (indice == -1) {
+			return;
+		}
+
+		super.remove(indice);
+
+		AnotacaoFormulario form = new AnotacaoFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
 	}
 
 	public Panel novaRequisicao(Formulario formulario) {
@@ -649,6 +664,22 @@ public class Fichario extends JTabbedPane {
 				}
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
+
+		return -1;
+	}
+
+	public int getIndice(Component cmpConteudo) {
+		int total = getTabCount();
+
+		if (cmpConteudo != null) {
+			for (int i = 0; i < total; i++) {
+				Component cmp = getComponentAt(i);
+
+				if (cmpConteudo == cmp) {
+					return i;
+				}
 			}
 		}
 
