@@ -13,9 +13,9 @@ public class AnotacaoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final AnotacaoContainer container;
 
-	public AnotacaoDialogo(Frame frame) {
+	public AnotacaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ANOTACOES));
-		container = new AnotacaoContainer(this, null, null);
+		container = new AnotacaoContainer(this, formulario, null);
 		montarLayout();
 	}
 
@@ -29,7 +29,7 @@ public class AnotacaoDialogo extends AbstratoDialogo implements IJanela {
 	}
 
 	public static void criar(Formulario formulario) {
-		AnotacaoDialogo form = new AnotacaoDialogo(formulario);
+		AnotacaoDialogo form = new AnotacaoDialogo(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
