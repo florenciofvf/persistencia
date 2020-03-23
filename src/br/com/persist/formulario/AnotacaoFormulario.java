@@ -12,18 +12,18 @@ public class AnotacaoFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final AnotacaoContainer container;
 
+	public AnotacaoFormulario(Formulario formulario, String conteudo) {
+		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
+		container = new AnotacaoContainer(this, formulario, conteudo);
+		container.setAnotacaoFormulario(this);
+		montarLayout();
+	}
+
 	public AnotacaoFormulario(AnotacaoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
 		container.setAnotacaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);
-		montarLayout();
-	}
-
-	public AnotacaoFormulario(Formulario formulario, String conteudo) {
-		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
-		container = new AnotacaoContainer(this, formulario, conteudo);
-		container.setAnotacaoFormulario(this);
 		montarLayout();
 	}
 
