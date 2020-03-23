@@ -57,12 +57,14 @@ public class BarraButton extends JToolBar {
 			addMenuItem(clonarEmForm);
 
 			destaEmForm.setActionListener(destacarEmFormulario);
-
 			clonarEmForm.setActionListener(clonarEmFormulario);
-
 			abrirEmForm.setActionListener(abrirEmFormulario);
-
 			retorAoFich.setActionListener(retornoAoFichario);
+
+			destaEmForm.setEnabled(destacarEmFormulario != null);
+			clonarEmForm.setEnabled(clonarEmFormulario != null);
+			abrirEmForm.setEnabled(abrirEmFormulario != null);
+			retorAoFich.setEnabled(retornoAoFichario != null);
 		}
 	}
 

@@ -299,7 +299,11 @@ public class Fichario extends JTabbedPane {
 		return desktop;
 	}
 
-	public final transient Anotacao anotacao = new Anotacao();
+	private final transient Anotacao anotacao = new Anotacao();
+
+	public Anotacao getAnotacao() {
+		return anotacao;
+	}
 
 	public class Anotacao {
 		public Panel nova(Formulario formulario) {
