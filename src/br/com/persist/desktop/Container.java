@@ -520,7 +520,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		return containerFormulario;
 	}
 
-	public void setSuperficieFormulario(ContainerFormulario containerFormulario) {
+	public void setContainerFormulario(ContainerFormulario containerFormulario) {
 		this.containerFormulario = containerFormulario;
 	}
 

@@ -23,7 +23,7 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 
 	public ContainerFormulario(Formulario formulario, Container container, File file) {
 		super(file.getName());
-		container.setSuperficieFormulario(this);
+		container.setContainerFormulario(this);
 		this.container = container;
 		container.setJanela(this);
 		montarLayout();
@@ -33,7 +33,7 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	public ContainerFormulario(Formulario formulario, File file) {
 		super(file.getName());
 		container = new Container(formulario, this);
-		container.setSuperficieFormulario(this);
+		container.setContainerFormulario(this);
 		montarLayout();
 		configurar();
 	}
@@ -82,7 +82,7 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		remove(container);
 		ativo = false;
 		container.setJanela(null);
-		container.setSuperficieFormulario(null);
+		container.setContainerFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().retornoAoFichario(formulario, container);
 		dispose();
