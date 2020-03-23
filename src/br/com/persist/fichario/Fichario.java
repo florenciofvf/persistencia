@@ -59,6 +59,7 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
+import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
@@ -302,11 +303,16 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private final transient Anotacao anotacao = new Anotacao();
+	private final transient Conexoes conexoes = new Conexoes();
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
 
 	public Anotacao getAnotacao() {
 		return anotacao;
+	}
+
+	public Conexoes getConexoes() {
+		return conexoes;
 	}
 
 	public Anexos getAnexos() {
@@ -315,6 +321,54 @@ public class Fichario extends JTabbedPane {
 
 	public Arvore getArvore() {
 		return arvore;
+	}
+
+	public class Conexoes {
+		public void nova(Formulario formulario) {
+			ConexaoContainer container = new ConexaoContainer(null, formulario);
+			addTab(Constantes.LABEL_CONEXAO, Constantes.LABEL_CONEXAO_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONEXAO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONEXAO));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+
+			container.ini(getGraphics());
+		}
+
+		public void destacarEmFormulario(Formulario formulario, ConexaoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			ConexaoFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, ConexaoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			ConexaoFormulario.criar(formulario);
+		}
+
+		public void retornoAoFichario(Formulario formulario, ConexaoContainer container) {
+			addTab(Constantes.LABEL_CONEXAO, Constantes.LABEL_CONEXAO_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONEXAO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONEXAO));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+
+			container.ini(getGraphics());
+		}
 	}
 
 	public class Anotacao {
@@ -512,19 +566,6 @@ public class Fichario extends JTabbedPane {
 		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
-	}
-
-	public void novaConexao(Formulario formulario) {
-		ConexaoContainer container = new ConexaoContainer(null, formulario);
-		addTab(Constantes.LABEL_CONEXAO, Constantes.LABEL_CONEXAO_MIN, container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.CONEXAO);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONEXAO));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-
-		container.ini(getGraphics());
 	}
 
 	public void novoFragmento(Formulario formulario) {
@@ -886,7 +927,7 @@ public class Fichario extends JTabbedPane {
 			arvore.nova(formulario);
 
 		} else if (Util.iguais(ConexaoContainer.class, nome)) {
-			novaConexao(formulario);
+			conexoes.nova(formulario);
 
 		} else if (Util.iguais(MetadadosContainer.class, nome)) {
 			novoMetadado(formulario, null);

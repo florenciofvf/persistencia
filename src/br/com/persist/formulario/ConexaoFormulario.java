@@ -14,9 +14,19 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoContainer container;
 
+	public ConexaoFormulario(ConexaoContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_CONEXAO));
+		container.setConexaoFormulario(this);
+		this.container = container;
+		container.setJanela(this);
+		montarLayout();
+		configurar();
+	}
+
 	public ConexaoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_CONEXAO));
 		container = new ConexaoContainer(this, formulario);
+		container.setConexaoFormulario(this);
 		montarLayout();
 		configurar();
 	}
@@ -27,6 +37,27 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 
 	@Override
 	public void fechar() {
+		dispose();
+	}
+
+	public static void criar(Formulario formulario, ConexaoContainer container) {
+		ConexaoFormulario form = new ConexaoFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario) {
+		ConexaoFormulario form = new ConexaoFormulario(formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		remove(container);
+		container.setJanela(null);
+		container.setConexaoFormulario(null);
+		Formulario formulario = container.getFormulario();
+		formulario.getFichario().getConexoes().retornoAoFichario(formulario, container);
 		dispose();
 	}
 

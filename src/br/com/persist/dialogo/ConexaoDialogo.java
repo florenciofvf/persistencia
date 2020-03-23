@@ -31,6 +31,12 @@ public class ConexaoDialogo extends AbstratoDialogo implements IJanela {
 		dispose();
 	}
 
+	public static void criar(Formulario formulario) {
+		ConexaoDialogo form = new ConexaoDialogo(formulario, formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override

@@ -8,10 +8,10 @@ import javax.swing.JTable;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.editor.ConexaoStatusEditor;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.renderer.ConexaoStatusRenderer;
@@ -23,18 +23,26 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioSalvar {
+public class ConexaoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo modelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
-	private final Formulario formulario;
+	private ConexaoFormulario conexaoFormulario;
 
 	public ConexaoContainer(IJanela janela, Formulario formulario) {
-		this.formulario = formulario;
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	public ConexaoFormulario getConexaoFormulario() {
+		return conexaoFormulario;
+	}
+
+	public void setConexaoFormulario(ConexaoFormulario conexaoFormulario) {
+		this.conexaoFormulario = conexaoFormulario;
 	}
 
 	@Override
@@ -59,6 +67,32 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 		TabelaUtil.ajustar(tabela, graphics);
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getConexoes().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getConexoes().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ConexaoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (conexaoFormulario != null) {
+			conexaoFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action desconectaAcao = Action.actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
@@ -69,6 +103,8 @@ public class ConexaoContainer extends Panel implements IIni, Fichario.IFicharioS
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
 			configBaixarAcao(null);
 
