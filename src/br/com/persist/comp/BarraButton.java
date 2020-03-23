@@ -15,6 +15,7 @@ import br.com.persist.util.Preferencias;
 
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
+	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
 	protected Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
@@ -24,12 +25,10 @@ public class BarraButton extends JToolBar {
 	public void ini(IJanela janela, boolean limpar, boolean salvar) {
 		this.janela = janela;
 
-		if (janela != null) {
-			Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
-			fecharAcao.setActionListener(e -> fechar());
-			addButton(fecharAcao);
-			addSeparator();
-		}
+		fecharAcao.setActionListener(e -> fechar());
+		addButton(fecharAcao);
+		setJanela(janela);
+		addSeparator();
 
 		if (limpar) {
 			limparAcao.setActionListener(e -> limpar());
@@ -76,9 +75,9 @@ public class BarraButton extends JToolBar {
 		addButton(baixarAcao);
 	}
 
-	protected void configButtonDestacar(ActionListener destacarForm, ActionListener abrirEmFormul,
-			ActionListener destacarFicha) {
-		buttonDestacar = new ButtonDestacar(destacarForm, abrirEmFormul, destacarFicha);
+	protected void configButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
+			ActionListener retornoAoFichario) {
+		buttonDestacar = new ButtonDestacar(destacarEmFormulario, abrirEmFormulario, retornoAoFichario);
 		add(true, buttonDestacar);
 	}
 
@@ -136,6 +135,7 @@ public class BarraButton extends JToolBar {
 	}
 
 	public void setJanela(IJanela janela) {
+		fecharAcao.setEnabled(janela != null);
 		this.janela = janela;
 	}
 }
