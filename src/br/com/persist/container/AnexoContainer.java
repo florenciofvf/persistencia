@@ -15,7 +15,6 @@ import br.com.persist.anexo.Anexo;
 import br.com.persist.anexo.AnexoUtil;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.dialogo.ArquivoCorDialogo;
 import br.com.persist.dialogo.ArquivoIconeDialogo;
@@ -29,23 +28,29 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFicharioSalvar {
+public class AnexoContainer extends AbstratoContainer implements AnexoListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopAnex = new CheckBox();
 	private Anexo anexo = new Anexo(new AnexoModelo(true));
-	private final AnexoFormulario anexoFormulario;
 	private final Toolbar toolbar = new Toolbar();
+	private AnexoFormulario anexoFormulario;
 	private final transient Desktop desktop;
-	private final Formulario formulario;
 
-	public AnexoContainer(IJanela janela, Formulario formulario, AnexoFormulario anexoFormulario) {
-		this.anexoFormulario = anexoFormulario;
+	public AnexoContainer(IJanela janela, Formulario formulario) {
+		super(formulario);
 		this.desktop = Desktop.getDesktop();
-		this.formulario = formulario;
 		toolbar.ini(janela);
 		montarLayout();
 		baixarArquivo();
+	}
+
+	public AnexoFormulario getAnexoFormulario() {
+		return anexoFormulario;
+	}
+
+	public void setAnexoFormulario(AnexoFormulario anexoFormulario) {
+		this.anexoFormulario = anexoFormulario;
 	}
 
 	@Override
@@ -61,11 +66,39 @@ public class AnexoContainer extends Panel implements AnexoListener, Fichario.IFi
 		anexo.adicionarOuvinte(this);
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getAnexos().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getAnexos().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		AnexoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (anexoFormulario != null) {
+			anexoFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANEXO);
 			configBaixarAcao(e -> baixarArquivo());
 
