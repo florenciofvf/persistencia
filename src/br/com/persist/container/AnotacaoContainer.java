@@ -11,6 +11,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnotacaoFormulario;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
@@ -21,12 +22,21 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 	private static final File file = new File("anotacoes/anotacoes");
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
+	private AnotacaoFormulario anotacaoFormulario;
 
-	public AnotacaoContainer(IJanela janela, Fichario fichario) {
-		super(fichario);
+	public AnotacaoContainer(IJanela janela, Formulario formulario) {
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir();
+	}
+
+	public AnotacaoFormulario getAnotacaoFormulario() {
+		return anotacaoFormulario;
+	}
+
+	public void setAnotacaoFormulario(AnotacaoFormulario anotacaoFormulario) {
+		this.anotacaoFormulario = anotacaoFormulario;
 	}
 
 	@Override
@@ -57,14 +67,24 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 	}
 
 	@Override
-	protected void abrirEmFormul() {
-		AnotacaoFormulario form = new AnotacaoFormulario();
-		form.setVisible(true);
+	protected void destacarEmFormulario() {
+		formulario.getFichario().destacarEmFormularioAnotacao(formulario, this);
 	}
 
 	@Override
-	protected void destacarForm() {
-		fichario.destacarEmFormularioAnotacao(null, this);
+	protected void abrirEmFormulario() {
+		AnotacaoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (anotacaoFormulario != null) {
+			anotacaoFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -72,9 +92,7 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
-			if (fichario != null) {
-				configButtonDestacar(e -> destacarForm(), e -> abrirEmFormul(), e -> destacarFicha());
-			}
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
 			configBaixarAcao(e -> abrir());
 		}

@@ -300,7 +300,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Panel novaAnotacao(Formulario formulario) {
-		AnotacaoContainer container = new AnotacaoContainer(null, this);
+		AnotacaoContainer container = new AnotacaoContainer(null, formulario);
 		addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
@@ -320,10 +320,17 @@ public class Fichario extends JTabbedPane {
 		}
 
 		super.remove(indice);
+		AnotacaoFormulario.criar(formulario, container);
+	}
 
-		AnotacaoFormulario form = new AnotacaoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
+	public void retornoDestacarEmFormularioAnotacao(Formulario formulario, AnotacaoContainer container) {
+		addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.ANOTACAO);
+		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ANOTACOES));
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
 	}
 
 	public Panel novaRequisicao(Formulario formulario) {

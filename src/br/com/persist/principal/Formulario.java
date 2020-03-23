@@ -287,19 +287,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuAnotacao() {
 				super(Constantes.LABEL_ANOTACOES, Icones.PANEL4);
 
-				formularioAcao.setActionListener(e -> {
-					AnotacaoFormulario form = new AnotacaoFormulario();
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					AnotacaoDialogo form = new AnotacaoDialogo(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
+				formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(Formulario.this));
 
 				ficharioAcao.setActionListener(e -> fichario.novaAnotacao(Formulario.this));
+
+				dialogoAcao.setActionListener(e -> AnotacaoDialogo.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {

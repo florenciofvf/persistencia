@@ -1,33 +1,29 @@
 package br.com.persist.container;
 
 import br.com.persist.comp.Panel;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.principal.Formulario;
+import br.com.persist.util.IJanela;
 
 public abstract class AbstratoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	protected transient Fichario fichario;
+	protected final Formulario formulario;
 
-	public AbstratoContainer(Fichario fichario) {
-		this.fichario = fichario;
+	public AbstratoContainer(Formulario formulario) {
+		this.formulario = formulario;
 	}
 
-	public AbstratoContainer() {
+	public Formulario getFormulario() {
+		return formulario;
 	}
 
-	public Fichario getFichario() {
-		return fichario;
+	protected void destacarEmFormulario() {
 	}
 
-	public void setFichario(Fichario fichario) {
-		this.fichario = fichario;
+	protected void abrirEmFormulario() {
 	}
 
-	protected void destacarForm() {
+	protected void retornoAoFichario() {
 	}
 
-	protected void abrirEmFormul() {
-	}
-
-	protected void destacarFicha() {
-	}
+	public abstract void setJanela(IJanela janela);
 }
