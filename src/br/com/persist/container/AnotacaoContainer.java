@@ -24,11 +24,11 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 	private final Toolbar toolbar = new Toolbar();
 	private AnotacaoFormulario anotacaoFormulario;
 
-	public AnotacaoContainer(IJanela janela, Formulario formulario) {
+	public AnotacaoContainer(IJanela janela, Formulario formulario, String conteudo) {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
-		abrir();
+		abrir(conteudo);
 	}
 
 	public AnotacaoFormulario getAnotacaoFormulario() {
@@ -49,7 +49,16 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 		add(BorderLayout.NORTH, toolbar);
 	}
 
-	private void abrir() {
+	public String getConteudo() {
+		return textArea.getText();
+	}
+
+	private void abrir(String conteudo) {
+		if (!Util.estaVazio(conteudo)) {
+			textArea.setText(conteudo);
+			return;
+		}
+
 		textArea.limpar();
 
 		if (file.exists()) {
@@ -72,8 +81,13 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 	}
 
 	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().clonarEmFormularioAnotacao(formulario, this);
+	}
+
+	@Override
 	protected void abrirEmFormulario() {
-		AnotacaoFormulario.criar(formulario);
+		AnotacaoFormulario.criar(formulario, Constantes.VAZIO);
 	}
 
 	@Override
@@ -92,9 +106,10 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
-			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario());
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
-			configBaixarAcao(e -> abrir());
+			configBaixarAcao(e -> abrir(null));
 		}
 
 		@Override

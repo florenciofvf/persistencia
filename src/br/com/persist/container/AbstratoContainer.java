@@ -19,6 +19,9 @@ public abstract class AbstratoContainer extends Panel {
 	protected void destacarEmFormulario() {
 	}
 
+	protected void clonarEmFormulario() {
+	}
+
 	protected void abrirEmFormulario() {
 	}
 

@@ -43,18 +43,22 @@ public class BarraButton extends JToolBar {
 
 	protected class ButtonDestacar extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
+		protected Action clonarEmForm = Action.actionMenu("label.clonar_em_formulario", null);
 		protected Action abrirEmForm = Action.actionMenu("label.abrir_em_formulario", null);
 		protected Action destaEmForm = Action.actionMenu("label.destac_formulario", null);
 		protected Action retorAoFich = Action.actionMenu("label.destac_container", null);
 
 		ButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
-				ActionListener retornoAoFichario) {
+				ActionListener retornoAoFichario, ActionListener clonarEmFormulario) {
 			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
 			addMenuItem(destaEmForm);
 			addMenuItem(retorAoFich);
 			addMenuItem(abrirEmForm);
+			addMenuItem(clonarEmForm);
 
 			destaEmForm.setActionListener(destacarEmFormulario);
+
+			clonarEmForm.setActionListener(clonarEmFormulario);
 
 			abrirEmForm.setActionListener(abrirEmFormulario);
 
@@ -76,8 +80,9 @@ public class BarraButton extends JToolBar {
 	}
 
 	protected void configButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
-			ActionListener retornoAoFichario) {
-		buttonDestacar = new ButtonDestacar(destacarEmFormulario, abrirEmFormulario, retornoAoFichario);
+			ActionListener retornoAoFichario, ActionListener clonarEmFormulario) {
+		buttonDestacar = new ButtonDestacar(destacarEmFormulario, abrirEmFormulario, retornoAoFichario,
+				clonarEmFormulario);
 		add(true, buttonDestacar);
 	}
 

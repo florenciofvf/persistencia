@@ -300,7 +300,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public Panel novaAnotacao(Formulario formulario) {
-		AnotacaoContainer container = new AnotacaoContainer(null, formulario);
+		AnotacaoContainer container = new AnotacaoContainer(null, formulario, null);
 		addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
@@ -321,6 +321,16 @@ public class Fichario extends JTabbedPane {
 
 		super.remove(indice);
 		AnotacaoFormulario.criar(formulario, container);
+	}
+
+	public void clonarEmFormularioAnotacao(Formulario formulario, AnotacaoContainer container) {
+		int indice = getIndice(container);
+
+		if (indice == -1) {
+			return;
+		}
+
+		AnotacaoFormulario.criar(formulario, container.getConteudo());
 	}
 
 	public void retornoAoFicharioAnotacao(Formulario formulario, AnotacaoContainer container) {

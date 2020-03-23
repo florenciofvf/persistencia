@@ -287,7 +287,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuAnotacao() {
 				super(Constantes.LABEL_ANOTACOES, Icones.PANEL4);
 
-				formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(Formulario.this));
+				formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(Formulario.this, Constantes.VAZIO));
 
 				ficharioAcao.setActionListener(e -> fichario.novaAnotacao(Formulario.this));
 

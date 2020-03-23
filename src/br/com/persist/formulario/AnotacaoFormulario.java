@@ -20,9 +20,9 @@ public class AnotacaoFormulario extends AbstratoFormulario implements IJanela {
 		montarLayout();
 	}
 
-	public AnotacaoFormulario(Formulario formulario) {
+	public AnotacaoFormulario(Formulario formulario, String conteudo) {
 		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
-		container = new AnotacaoContainer(this, formulario);
+		container = new AnotacaoContainer(this, formulario, conteudo);
 		container.setAnotacaoFormulario(this);
 		montarLayout();
 	}
@@ -42,8 +42,8 @@ public class AnotacaoFormulario extends AbstratoFormulario implements IJanela {
 		form.setVisible(true);
 	}
 
-	public static void criar(Formulario formulario) {
-		AnotacaoFormulario form = new AnotacaoFormulario(formulario);
+	public static void criar(Formulario formulario, String conteudo) {
+		AnotacaoFormulario form = new AnotacaoFormulario(formulario, conteudo);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
