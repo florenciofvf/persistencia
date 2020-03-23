@@ -405,13 +405,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuArquivo() {
 				super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
 
-				formularioAcao.setActionListener(e -> {
-					ArvoreFormulario form = new ArvoreFormulario(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novaArvore(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getArvore().nova(Formulario.this));
+				formularioAcao.setActionListener(e -> ArvoreFormulario.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {
@@ -546,7 +541,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				Formulario.this.remove(splitPane);
 				Formulario.this.remove(fichario);
 
-				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this, null);
+				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this);
 				AnexoContainer anexo = new AnexoContainer(null, Formulario.this);
 				SplitPane esquerdo = Util.splitPaneVertical(arvore, anexo, d.height / 2);
 				splitPane = Util.splitPaneHorizontal(esquerdo, fichario, d.width / 2);
@@ -559,7 +554,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				Formulario.this.remove(splitPane);
 				Formulario.this.remove(fichario);
 
-				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this, null);
+				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this);
 				AnexoContainer anexo = new AnexoContainer(null, Formulario.this);
 				SplitPane esquerdo = Util.splitPaneVertical(anexo, arvore, d.height / 2);
 				splitPane = Util.splitPaneHorizontal(esquerdo, fichario, d.width / 2);
@@ -572,7 +567,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				Formulario.this.remove(splitPane);
 				Formulario.this.remove(fichario);
 
-				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this, null);
+				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this);
 				AnexoContainer anexo = new AnexoContainer(null, Formulario.this);
 				SplitPane abaixo = Util.splitPaneHorizontal(arvore, anexo, d.width / 2);
 				splitPane = Util.splitPaneVertical(fichario, abaixo, d.height / 2);
@@ -585,7 +580,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				Formulario.this.remove(splitPane);
 				Formulario.this.remove(fichario);
 
-				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this, null);
+				ArvoreContainer arvore = new ArvoreContainer(null, Formulario.this);
 				AnexoContainer anexo = new AnexoContainer(null, Formulario.this);
 				SplitPane abaixo = Util.splitPaneHorizontal(anexo, arvore, d.width / 2);
 				splitPane = Util.splitPaneVertical(fichario, abaixo, d.height / 2);

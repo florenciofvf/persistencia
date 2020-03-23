@@ -11,7 +11,6 @@ import br.com.persist.arvore.ArvoreUtil;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ArvoreFormulario;
@@ -24,23 +23,29 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 
-public class ArvoreContainer extends Panel implements ArvoreListener, Fichario.IFicharioSalvar {
+public class ArvoreContainer extends AbstratoContainer implements ArvoreListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopArvo = new CheckBox();
 	private Arvore arvore = new Arvore(new ArvoreModelo());
 	private final CheckBox chkLinkAuto = new CheckBox();
 	private final CheckBox chkDuplicar = new CheckBox();
-	private final ArvoreFormulario arvoreFormulario;
 	private final Toolbar toolbar = new Toolbar();
-	private final Formulario formulario;
+	private ArvoreFormulario arvoreFormulario;
 
-	public ArvoreContainer(IJanela janela, Formulario formulario, ArvoreFormulario arvoreFormulario) {
-		this.arvoreFormulario = arvoreFormulario;
-		this.formulario = formulario;
+	public ArvoreContainer(IJanela janela, Formulario formulario) {
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		baixarArquivo();
+	}
+
+	public ArvoreFormulario getArvoreFormulario() {
+		return arvoreFormulario;
+	}
+
+	public void setArvoreFormulario(ArvoreFormulario arvoreFormulario) {
+		this.arvoreFormulario = arvoreFormulario;
 	}
 
 	@Override
@@ -59,6 +64,32 @@ public class ArvoreContainer extends Panel implements ArvoreListener, Fichario.I
 		chkLinkAuto.setSelected(true);
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getArvore().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getArvore().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ArvoreFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (arvoreFormulario != null) {
+			arvoreFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action fecharAcao = Action.actionIcon("label.fechar_todos", Icones.FECHAR);
@@ -66,6 +97,8 @@ public class ArvoreContainer extends Panel implements ArvoreListener, Fichario.I
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, false);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario(), false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ARQUIVO);
 			configBaixarAcao(e -> baixarArquivo());
 

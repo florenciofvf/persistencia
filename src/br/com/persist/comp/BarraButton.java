@@ -82,10 +82,15 @@ public class BarraButton extends JToolBar {
 	}
 
 	protected void configButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
-			ActionListener retornoAoFichario, ActionListener clonarEmFormulario) {
+			ActionListener retornoAoFichario, ActionListener clonarEmFormulario, boolean separado) {
 		buttonDestacar = new ButtonDestacar(destacarEmFormulario, abrirEmFormulario, retornoAoFichario,
 				clonarEmFormulario);
-		add(true, buttonDestacar);
+		add(separado, buttonDestacar);
+	}
+
+	protected void configButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
+			ActionListener retornoAoFichario, ActionListener clonarEmFormulario) {
+		configButtonDestacar(destacarEmFormulario, abrirEmFormulario, retornoAoFichario, clonarEmFormulario, false);
 	}
 
 	public Action getBaixarAcao() {

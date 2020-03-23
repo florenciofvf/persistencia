@@ -14,7 +14,16 @@ public class ArvoreFormulario extends AbstratoFormulario implements IJanela {
 
 	public ArvoreFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_ARQUIVOS));
-		container = new ArvoreContainer(this, formulario, this);
+		container = new ArvoreContainer(this, formulario);
+		container.setArvoreFormulario(this);
+		montarLayout();
+	}
+
+	public ArvoreFormulario(ArvoreContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_ARQUIVOS));
+		container.setArvoreFormulario(this);
+		this.container = container;
+		container.setJanela(this);
 		montarLayout();
 	}
 
@@ -24,6 +33,27 @@ public class ArvoreFormulario extends AbstratoFormulario implements IJanela {
 
 	@Override
 	public void fechar() {
+		dispose();
+	}
+
+	public static void criar(Formulario formulario, ArvoreContainer container) {
+		ArvoreFormulario form = new ArvoreFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario) {
+		ArvoreFormulario form = new ArvoreFormulario(formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		remove(container);
+		container.setJanela(null);
+		container.setArvoreFormulario(null);
+		Formulario formulario = container.getFormulario();
+		formulario.getFichario().getArvore().retornoAoFichario(formulario, container);
 		dispose();
 	}
 }
