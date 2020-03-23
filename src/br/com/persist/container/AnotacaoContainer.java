@@ -77,12 +77,12 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 
 	@Override
 	protected void destacarEmFormulario() {
-		formulario.getFichario().destacarEmFormularioAnotacao(formulario, this);
+		formulario.getFichario().anotacao.destacarEmFormulario(formulario, this);
 	}
 
 	@Override
 	protected void clonarEmFormulario() {
-		formulario.getFichario().clonarEmFormularioAnotacao(formulario, this);
+		formulario.getFichario().anotacao.clonarEmFormulario(formulario, this);
 	}
 
 	@Override
