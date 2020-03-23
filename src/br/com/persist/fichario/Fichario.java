@@ -323,7 +323,7 @@ public class Fichario extends JTabbedPane {
 		AnotacaoFormulario.criar(formulario, container);
 	}
 
-	public void retornoDestacarEmFormularioAnotacao(Formulario formulario, AnotacaoContainer container) {
+	public void retornoAoFicharioAnotacao(Formulario formulario, AnotacaoContainer container) {
 		addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
 		int ultimoIndice = getTabCount() - 1;
 
@@ -545,12 +545,10 @@ public class Fichario extends JTabbedPane {
 			file = new File(Constantes.DESTACADO);
 		}
 
-		ContainerFormulario form = new ContainerFormulario(formulario, container, file);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
+		ContainerFormulario.criar(formulario, container, file);
 	}
 
-	public void retornoDestacarEmFormulario(Formulario formulario, Container container) {
+	public void retornoAoFichario(Formulario formulario, Container container) {
 		File file = container.getArquivo();
 
 		if (file == null) {

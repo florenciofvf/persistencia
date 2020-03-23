@@ -338,7 +338,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				abrirEmForm.setActionListener(e -> formulario.abrirArquivo(getArquivo(), false));
 				destacarCnt.setActionListener(e -> {
 					if (containerFormulario != null) {
-						containerFormulario.retornoDestacarEmFormulario();
+						containerFormulario.retornoAoFichario();
 					}
 				});
 			}

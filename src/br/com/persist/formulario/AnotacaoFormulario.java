@@ -53,7 +53,7 @@ public class AnotacaoFormulario extends AbstratoFormulario implements IJanela {
 		container.setJanela(null);
 		container.setAnotacaoFormulario(null);
 		Formulario formulario = container.getFormulario();
-		formulario.getFichario().retornoDestacarEmFormularioAnotacao(formulario, container);
+		formulario.getFichario().retornoAoFicharioAnotacao(formulario, container);
 		dispose();
 	}
 }
