@@ -37,8 +37,8 @@ public class MetadadosContainer extends AbstratoContainer
 	private static final long serialVersionUID = 1L;
 	private Metadados metadados = new Metadados();
 	private final Toolbar toolbar = new Toolbar();
-	private final JComboBox<Conexao> cmbConexao;
 	private MetadadoFormulario metadadoFormulario;
+	private final JComboBox<Conexao> cmbConexao;
 
 	public MetadadosContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		super(formulario);
