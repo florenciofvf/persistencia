@@ -59,6 +59,7 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
+import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ContainerFormulario;
@@ -306,6 +307,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private final transient Configuracao configuracao = new Configuracao();
+	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
 	private final transient Metadados metadados = new Metadados();
 	private final transient Anotacao anotacao = new Anotacao();
@@ -315,6 +317,10 @@ public class Fichario extends JTabbedPane {
 
 	public Configuracao getConfiguracao() {
 		return configuracao;
+	}
+
+	public Comparacao getComparacao() {
+		return comparacao;
 	}
 
 	public Requisicao getRequisicao() {
@@ -525,6 +531,50 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public class Comparacao {
+		public void nova(Formulario formulario) {
+			ComparacaoContainer container = new ComparacaoContainer(null, formulario);
+			addTab(Constantes.LABEL_COMPARACAO, Constantes.LABEL_COMPARACAO_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.COMPARACAO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_COMPARACAO));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
+
+		public void destacarEmFormulario(Formulario formulario, ComparacaoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			ComparacaoFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, ComparacaoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			ComparacaoFormulario.criar(formulario);
+		}
+
+		public void retornoAoFichario(Formulario formulario, ComparacaoContainer container) {
+			addTab(Constantes.LABEL_COMPARACAO, Constantes.LABEL_COMPARACAO_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.COMPARACAO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_COMPARACAO));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
+	}
+
 	public class Anotacao {
 		public Panel nova(Formulario formulario) {
 			AnotacaoContainer container = new AnotacaoContainer(null, formulario, null);
@@ -722,17 +772,6 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 
 		container.ini(getGraphics());
-	}
-
-	public void novaComparacao(Formulario formulario) {
-		ComparacaoContainer container = new ComparacaoContainer(null);
-		addTab(Constantes.LABEL_COMPARACAO, Constantes.LABEL_COMPARACAO_MIN, container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.COMPARACAO);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_COMPARACAO));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
 	}
 
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
@@ -1074,7 +1113,7 @@ public class Fichario extends JTabbedPane {
 			novoVariaveis(formulario);
 
 		} else if (Util.iguais(ComparacaoContainer.class, nome)) {
-			novaComparacao(formulario);
+			comparacao.nova(formulario);
 
 		} else if (Util.iguais(RequisicaoContainer.class, nome)) {
 			requisicao.nova(formulario);

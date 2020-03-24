@@ -17,18 +17,30 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.ComparacaoFormulario;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class ComparacaoContainer extends Panel implements Fichario.IFicharioSalvar {
+public class ComparacaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
+	private ComparacaoFormulario comparacaoFormulario;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 
-	public ComparacaoContainer(IJanela janela) {
+	public ComparacaoContainer(IJanela janela, Formulario formulario) {
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
+	}
+
+	public ComparacaoFormulario getComparacaoFormulario() {
+		return comparacaoFormulario;
+	}
+
+	public void setComparacaoFormulario(ComparacaoFormulario comparacaoFormulario) {
+		this.comparacaoFormulario = comparacaoFormulario;
 	}
 
 	@Override
@@ -136,11 +148,39 @@ public class ComparacaoContainer extends Panel implements Fichario.IFicharioSalv
 		}
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getComparacao().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getComparacao().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ComparacaoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (comparacaoFormulario != null) {
+			comparacaoFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, false);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO);
 		}
 

@@ -14,7 +14,16 @@ public class ComparacaoFormulario extends AbstratoFormulario implements IJanela 
 
 	public ComparacaoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_COMPARACAO));
-		container = new ComparacaoContainer(this);
+		container = new ComparacaoContainer(this, formulario);
+		container.setComparacaoFormulario(this);
+		montarLayout();
+	}
+
+	public ComparacaoFormulario(ComparacaoContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_COMPARACAO));
+		container.setComparacaoFormulario(this);
+		this.container = container;
+		container.setJanela(this);
 		montarLayout();
 	}
 
@@ -24,6 +33,27 @@ public class ComparacaoFormulario extends AbstratoFormulario implements IJanela 
 
 	@Override
 	public void fechar() {
+		dispose();
+	}
+
+	public static void criar(Formulario formulario, ComparacaoContainer container) {
+		ComparacaoFormulario form = new ComparacaoFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario) {
+		ComparacaoFormulario form = new ComparacaoFormulario(formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		remove(container);
+		container.setJanela(null);
+		container.setComparacaoFormulario(null);
+		Formulario formulario = container.getFormulario();
+		formulario.getFichario().getComparacao().retornoAoFichario(formulario, container);
 		dispose();
 	}
 }

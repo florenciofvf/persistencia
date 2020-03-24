@@ -716,19 +716,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuComparacao() {
 				super(Constantes.LABEL_COMPARACAO, Icones.CENTRALIZAR);
 
-				formularioAcao.setActionListener(e -> {
-					ComparacaoFormulario form = new ComparacaoFormulario(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					ComparacaoDialogo form = new ComparacaoDialogo(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novaComparacao(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getComparacao().nova(Formulario.this));
+				formularioAcao.setActionListener(e -> ComparacaoFormulario.criar(Formulario.this));
+				dialogoAcao.setActionListener(e -> ComparacaoDialogo.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {
