@@ -17,7 +17,7 @@ public class ConfigDialogo extends AbstratoDialogo implements IJanela {
 	private final ConfigContainer container;
 
 	public ConfigDialogo(Frame frame, Formulario formulario) {
-		super(frame, Mensagens.getString(Constantes.LABEL_ANOTACOES));
+		super(frame, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfigContainer(this, formulario);
 		montarLayout();
 		configurar();
@@ -30,6 +30,12 @@ public class ConfigDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static void criar(Formulario formulario) {
+		ConfigDialogo form = new ConfigDialogo(formulario, formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
 	}
 
 	private void configurar() {

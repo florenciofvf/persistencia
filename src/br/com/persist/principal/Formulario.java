@@ -596,19 +596,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuConfig() {
 				super(Constantes.LABEL_CONFIGURACOES, Icones.CONFIG);
 
-				formularioAcao.setActionListener(e -> {
-					ConfigFormulario form = new ConfigFormulario(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					ConfigDialogo form = new ConfigDialogo(Formulario.this, Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novoConfig(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getConfiguracao().nova(Formulario.this));
+				formularioAcao.setActionListener(e -> ConfigFormulario.criar(Formulario.this));
+				dialogoAcao.setActionListener(e -> ConfigDialogo.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {

@@ -16,10 +16,19 @@ public class ConfigFormulario extends AbstratoFormulario implements IJanela {
 	private final ConfigContainer container;
 
 	public ConfigFormulario(Formulario formulario) {
-		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
+		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfigContainer(this, formulario);
+		container.setConfigFormulario(this);
 		montarLayout();
 		configurar();
+	}
+
+	public ConfigFormulario(ConfigContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
+		container.setConfigFormulario(this);
+		this.container = container;
+		container.setJanela(this);
+		montarLayout();
 	}
 
 	private void montarLayout() {
@@ -28,6 +37,27 @@ public class ConfigFormulario extends AbstratoFormulario implements IJanela {
 
 	@Override
 	public void fechar() {
+		dispose();
+	}
+
+	public static void criar(Formulario formulario, ConfigContainer container) {
+		ConfigFormulario form = new ConfigFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario) {
+		ConfigFormulario form = new ConfigFormulario(formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		remove(container);
+		container.setJanela(null);
+		container.setConfigFormulario(null);
+		Formulario formulario = container.getFormulario();
+		formulario.getFichario().getConfiguracao().retornoAoFichario(formulario, container);
 		dispose();
 	}
 

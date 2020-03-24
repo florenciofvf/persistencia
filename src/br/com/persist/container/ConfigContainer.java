@@ -26,13 +26,14 @@ import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 
-public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
+public class ConfigContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
@@ -48,6 +49,7 @@ public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
 	private final Toolbar toolbar = new Toolbar();
+	private ConfigFormulario configFormulario;
 
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
@@ -89,13 +91,19 @@ public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
 			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
 			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
 
-	private final Formulario formulario;
-
 	public ConfigContainer(IJanela janela, Formulario formulario) {
-		this.formulario = formulario;
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	public ConfigFormulario getConfigFormulario() {
+		return configFormulario;
+	}
+
+	public void setConfigFormulario(ConfigFormulario configFormulario) {
+		this.configFormulario = configFormulario;
 	}
 
 	@Override
@@ -307,11 +315,39 @@ public class ConfigContainer extends Panel implements Fichario.IFicharioSalvar {
 		}
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getConfiguracao().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getConfiguracao().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ConfigFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (configFormulario != null) {
+			configFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO);
 		}
 
