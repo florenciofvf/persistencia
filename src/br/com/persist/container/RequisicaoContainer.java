@@ -21,6 +21,8 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
+import br.com.persist.formulario.RequisicaoFormulario;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Base64Util;
 import br.com.persist.util.Constantes;
@@ -29,19 +31,29 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
-public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalvar {
+public class RequisicaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("requisicao/requisicoes");
 	private static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
 	private final JTextPane areaResultados = new JTextPane();
 	private final JTextPane areaParametros = new JTextPane();
+	private RequisicaoFormulario requisicaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 
-	public RequisicaoContainer(IJanela janela) {
+	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo) {
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		config();
-		abrir();
+		abrir(conteudo);
+	}
+
+	public RequisicaoFormulario getRequisicaoFormulario() {
+		return requisicaoFormulario;
+	}
+
+	public void setRequisicaoFormulario(RequisicaoFormulario requisicaoFormulario) {
+		this.requisicaoFormulario = requisicaoFormulario;
 	}
 
 	private void config() {
@@ -70,7 +82,16 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 		add(BorderLayout.CENTER, split);
 	}
 
-	private void abrir() {
+	public String getConteudo() {
+		return areaParametros.getText();
+	}
+
+	private void abrir(String conteudo) {
+		if (!Util.estaVazio(conteudo)) {
+			areaParametros.setText(conteudo);
+			return;
+		}
+
 		areaParametros.setText(Constantes.VAZIO);
 
 		if (file.exists()) {
@@ -90,6 +111,32 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 		}
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getRequisicao().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getRequisicao().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		RequisicaoFormulario.criar(formulario, Constantes.VAZIO);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (requisicaoFormulario != null) {
+			requisicaoFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
@@ -99,8 +146,10 @@ public class RequisicaoContainer extends Panel implements Fichario.IFicharioSalv
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
-			configBaixarAcao(e -> abrir());
+			configBaixarAcao(e -> abrir(null));
 
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
