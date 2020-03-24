@@ -17,6 +17,15 @@ public class MetadadoFormulario extends AbstratoFormulario implements IJanela {
 	public MetadadoFormulario(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		super(Mensagens.getString(Constantes.LABEL_METADADOS));
 		container = new MetadadosContainer(this, formulario, provedor, padrao);
+		container.setMetadadoFormulario(this);
+		montarLayout();
+	}
+
+	public MetadadoFormulario(MetadadosContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_METADADOS));
+		container.setMetadadoFormulario(this);
+		this.container = container;
+		container.setJanela(this);
 		montarLayout();
 	}
 
@@ -26,6 +35,27 @@ public class MetadadoFormulario extends AbstratoFormulario implements IJanela {
 
 	@Override
 	public void fechar() {
+		dispose();
+	}
+
+	public static void criar(Formulario formulario, MetadadosContainer container) {
+		MetadadoFormulario form = new MetadadoFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+		MetadadoFormulario form = new MetadadoFormulario(formulario, provedor, padrao);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		remove(container);
+		container.setJanela(null);
+		container.setMetadadoFormulario(null);
+		Formulario formulario = container.getFormulario();
+		formulario.getFichario().getMetadados().retornoAoFichario(formulario, container);
 		dispose();
 	}
 }

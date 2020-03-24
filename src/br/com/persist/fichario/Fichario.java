@@ -62,6 +62,7 @@ import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
+import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
@@ -302,10 +303,15 @@ public class Fichario extends JTabbedPane {
 		return desktop;
 	}
 
+	private final transient Metadados metadados = new Metadados();
 	private final transient Anotacao anotacao = new Anotacao();
 	private final transient Conexoes conexoes = new Conexoes();
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
+
+	public Metadados getMetadados() {
+		return metadados;
+	}
 
 	public Anotacao getAnotacao() {
 		return anotacao;
@@ -321,6 +327,52 @@ public class Fichario extends JTabbedPane {
 
 	public Arvore getArvore() {
 		return arvore;
+	}
+
+	public class Metadados {
+		public Panel novo(Formulario formulario, Conexao conexao) {
+			MetadadosContainer container = new MetadadosContainer(null, formulario, formulario, conexao);
+			addTab(Constantes.LABEL_METADADOS, Constantes.LABEL_METADADOS_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.METADADO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_METADADOS));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+
+			return container;
+		}
+
+		public void destacarEmFormulario(Formulario formulario, MetadadosContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			MetadadoFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, MetadadosContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			MetadadoFormulario.criar(formulario, formulario, container.getConexaoPadrao());
+		}
+
+		public void retornoAoFichario(Formulario formulario, MetadadosContainer container) {
+			addTab(Constantes.LABEL_METADADOS, Constantes.LABEL_METADADOS_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.METADADO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_METADADOS));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
 	}
 
 	public class Conexoes {
@@ -525,19 +577,6 @@ public class Fichario extends JTabbedPane {
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.CONSULTA);
 		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONSULTA));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-
-		return container;
-	}
-
-	public Panel novoMetadado(Formulario formulario, Conexao conexao) {
-		MetadadosContainer container = new MetadadosContainer(null, formulario, formulario, conexao);
-		addTab(Constantes.LABEL_METADADOS, Constantes.LABEL_METADADOS_MIN, container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.METADADO);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_METADADOS));
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 
@@ -930,7 +969,7 @@ public class Fichario extends JTabbedPane {
 			conexoes.nova(formulario);
 
 		} else if (Util.iguais(MetadadosContainer.class, nome)) {
-			novoMetadado(formulario, null);
+			metadados.novo(formulario, null);
 
 		} else if (Util.iguais(ConsultaContainer.class, nome)) {
 			novaConsulta(formulario, null);

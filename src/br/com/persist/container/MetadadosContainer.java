@@ -16,10 +16,10 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.listener.MetadadosListener;
 import br.com.persist.metadado.Metadados;
 import br.com.persist.modelo.MetadadoModelo;
@@ -32,20 +32,28 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class MetadadosContainer extends Panel
+public class MetadadosContainer extends AbstratoContainer
 		implements MetadadosListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private Metadados metadados = new Metadados();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
-	private final Formulario formulario;
+	private MetadadoFormulario metadadoFormulario;
 
 	public MetadadosContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+		super(formulario);
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
-		this.formulario = formulario;
 		toolbar.ini(janela);
 		montarLayout();
 		config();
+	}
+
+	public MetadadoFormulario getMetadadoFormulario() {
+		return metadadoFormulario;
+	}
+
+	public void setMetadadoFormulario(MetadadoFormulario metadadoFormulario) {
+		this.metadadoFormulario = metadadoFormulario;
 	}
 
 	private void config() {
@@ -60,6 +68,10 @@ public class MetadadosContainer extends Panel
 		}
 	}
 
+	public Conexao getConexaoPadrao() {
+		return (Conexao) cmbConexao.getSelectedItem();
+	}
+
 	@Override
 	public File getFileSalvarAberto() {
 		return new File(Constantes.III + getClass().getName());
@@ -71,6 +83,32 @@ public class MetadadosContainer extends Panel
 		metadados.adicionarOuvinte(this);
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getMetadados().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getMetadados().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		MetadadoFormulario.criar(formulario, formulario, getConexaoPadrao());
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (metadadoFormulario != null) {
+			metadadoFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
@@ -78,6 +116,8 @@ public class MetadadosContainer extends Panel
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, false);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario(), false);
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_METADADO);
 
 			addButton(atualizarAcao);
