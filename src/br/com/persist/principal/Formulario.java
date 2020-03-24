@@ -660,19 +660,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuMapeamento() {
 				super(Constantes.LABEL_MAPEAMENTOS, Icones.REFERENCIA);
 
-				formularioAcao.setActionListener(e -> {
-					MapeamentoFormulario form = new MapeamentoFormulario(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					MapeamentoDialogo form = new MapeamentoDialogo(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novoMapeamento(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getMapeamento().novo(Formulario.this));
+				formularioAcao.setActionListener(e -> MapeamentoFormulario.criar(Formulario.this));
+				dialogoAcao.setActionListener(e -> MapeamentoDialogo.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {

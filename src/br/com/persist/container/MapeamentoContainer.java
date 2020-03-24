@@ -7,11 +7,12 @@ import java.io.File;
 import javax.swing.JTable;
 
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.modelo.MapeamentoModelo;
+import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.ChaveValor;
@@ -21,16 +22,26 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class MapeamentoContainer extends Panel implements IIni, Fichario.IFicharioSalvar {
+public class MapeamentoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final MapeamentoModelo modelo = new MapeamentoModelo();
+	private MapeamentoFormulario mapeamentoFormulario;
 	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
 
-	public MapeamentoContainer(IJanela janela) {
+	public MapeamentoContainer(IJanela janela, Formulario formulario) {
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	public MapeamentoFormulario getMapeamentoFormulario() {
+		return mapeamentoFormulario;
+	}
+
+	public void setMapeamentoFormulario(MapeamentoFormulario mapeamentoFormulario) {
+		this.mapeamentoFormulario = mapeamentoFormulario;
 	}
 
 	@Override
@@ -54,12 +65,40 @@ public class MapeamentoContainer extends Panel implements IIni, Fichario.IFichar
 		TabelaUtil.ajustar(tabela, graphics);
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getMapeamento().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getMapeamento().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		MapeamentoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (mapeamentoFormulario != null) {
+			mapeamentoFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO);
 			configBaixarAcao(null);
 

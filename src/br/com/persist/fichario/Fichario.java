@@ -64,6 +64,7 @@ import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
+import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
@@ -293,6 +294,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private final transient Configuracao configuracao = new Configuracao();
+	private final transient Mapeamento mapeamento = new Mapeamento();
 	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
 	private final transient Metadados metadados = new Metadados();
@@ -303,6 +305,10 @@ public class Fichario extends JTabbedPane {
 
 	public Configuracao getConfiguracao() {
 		return configuracao;
+	}
+
+	public Mapeamento getMapeamento() {
+		return mapeamento;
 	}
 
 	public Comparacao getComparacao() {
@@ -561,6 +567,52 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public class Mapeamento {
+		public void novo(Formulario formulario) {
+			MapeamentoContainer container = new MapeamentoContainer(null, formulario);
+			addTab(Constantes.LABEL_MAPEAMENTOS, Constantes.LABEL_MAPEAMENTOS_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.MAPEAMENTO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+
+			container.ini(getGraphics());
+		}
+
+		public void destacarEmFormulario(Formulario formulario, MapeamentoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			MapeamentoFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, MapeamentoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			MapeamentoFormulario.criar(formulario);
+		}
+
+		public void retornoAoFichario(Formulario formulario, MapeamentoContainer container) {
+			addTab(Constantes.LABEL_MAPEAMENTOS, Constantes.LABEL_MAPEAMENTOS_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.MAPEAMENTO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
+	}
+
 	public class Anotacao {
 		public Panel nova(Formulario formulario) {
 			AnotacaoContainer container = new AnotacaoContainer(null, formulario, null);
@@ -742,19 +794,6 @@ public class Fichario extends JTabbedPane {
 
 		TituloAba tituloAba = new TituloAba(this, TituloAba.FRAGMENTO);
 		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-
-		container.ini(getGraphics());
-	}
-
-	public void novoMapeamento(Formulario formulario) {
-		MapeamentoContainer container = new MapeamentoContainer(null);
-		addTab(Constantes.LABEL_MAPEAMENTOS, Constantes.LABEL_MAPEAMENTOS_MIN, container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.MAPEAMENTO);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		setTabComponentAt(ultimoIndice, tituloAba);
 		setSelectedIndex(ultimoIndice);
 
@@ -1107,7 +1146,7 @@ public class Fichario extends JTabbedPane {
 
 	private void abrirArquivo(File f, Formulario formulario, String nome) {
 		if (Util.iguais(MapeamentoContainer.class, nome)) {
-			novoMapeamento(formulario);
+			mapeamento.novo(formulario);
 
 		} else if (Util.iguais(VariaveisContainer.class, nome)) {
 			novoVariaveis(formulario);

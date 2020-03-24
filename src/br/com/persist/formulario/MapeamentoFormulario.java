@@ -16,7 +16,17 @@ public class MapeamentoFormulario extends AbstratoFormulario implements IJanela 
 
 	public MapeamentoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
-		container = new MapeamentoContainer(this);
+		container = new MapeamentoContainer(this, formulario);
+		container.setMapeamentoFormulario(this);
+		montarLayout();
+		configurar();
+	}
+
+	public MapeamentoFormulario(MapeamentoContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
+		container.setMapeamentoFormulario(this);
+		this.container = container;
+		container.setJanela(this);
 		montarLayout();
 		configurar();
 	}
@@ -27,6 +37,27 @@ public class MapeamentoFormulario extends AbstratoFormulario implements IJanela 
 
 	@Override
 	public void fechar() {
+		dispose();
+	}
+
+	public static void criar(Formulario formulario, MapeamentoContainer container) {
+		MapeamentoFormulario form = new MapeamentoFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario) {
+		MapeamentoFormulario form = new MapeamentoFormulario(formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		remove(container);
+		container.setJanela(null);
+		container.setMapeamentoFormulario(null);
+		Formulario formulario = container.getFormulario();
+		formulario.getFichario().getMapeamento().retornoAoFichario(formulario, container);
 		dispose();
 	}
 
