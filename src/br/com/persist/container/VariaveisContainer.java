@@ -7,11 +7,12 @@ import java.io.File;
 import javax.swing.JTable;
 
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.modelo.VariaveisModelo;
+import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.ChaveValor;
@@ -21,16 +22,26 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class VariaveisContainer extends Panel implements IIni, Fichario.IFicharioSalvar {
+public class VariaveisContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final VariaveisModelo modelo = new VariaveisModelo();
 	private final JTable tabela = new JTable(modelo);
+	private VariaveisFormulario variaveisFormulario;
 	private final Toolbar toolbar = new Toolbar();
 
-	public VariaveisContainer(IJanela janela) {
+	public VariaveisContainer(IJanela janela, Formulario formulario) {
+		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
+	}
+
+	public VariaveisFormulario getVariaveisFormulario() {
+		return variaveisFormulario;
+	}
+
+	public void setVariaveisFormulario(VariaveisFormulario variaveisFormulario) {
+		this.variaveisFormulario = variaveisFormulario;
 	}
 
 	@Override
@@ -54,12 +65,44 @@ public class VariaveisContainer extends Panel implements IIni, Fichario.IFichari
 		TabelaUtil.ajustar(tabela, graphics);
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario != null) {
+			formulario.getFichario().getVariaveis().destacarEmFormulario(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario != null) {
+			formulario.getFichario().getVariaveis().clonarEmFormulario(formulario, this);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		VariaveisFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (variaveisFormulario != null) {
+			variaveisFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL);
 			configBaixarAcao(null);
 

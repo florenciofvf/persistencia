@@ -678,19 +678,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuVariaveis() {
 				super(Constantes.LABEL_VARIAVEIS, Icones.VAR);
 
-				formularioAcao.setActionListener(e -> {
-					VariaveisFormulario form = new VariaveisFormulario(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					VariaveisDialogo form = new VariaveisDialogo(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novoVariaveis(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getVariaveis().novo(Formulario.this));
+				formularioAcao.setActionListener(e -> VariaveisFormulario.criar(Formulario.this));
+				dialogoAcao.setActionListener(e -> VariaveisDialogo.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {

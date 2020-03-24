@@ -16,7 +16,17 @@ public class VariaveisFormulario extends AbstratoFormulario implements IJanela {
 
 	public VariaveisFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_VARIAVEIS));
-		container = new VariaveisContainer(this);
+		container = new VariaveisContainer(this, formulario);
+		container.setVariaveisFormulario(this);
+		montarLayout();
+		configurar();
+	}
+
+	public VariaveisFormulario(VariaveisContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_VARIAVEIS));
+		container.setVariaveisFormulario(this);
+		this.container = container;
+		container.setJanela(this);
 		montarLayout();
 		configurar();
 	}
@@ -28,6 +38,30 @@ public class VariaveisFormulario extends AbstratoFormulario implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static void criar(Formulario formulario, VariaveisContainer container) {
+		VariaveisFormulario form = new VariaveisFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario) {
+		VariaveisFormulario form = new VariaveisFormulario(formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		Formulario formulario = container.getFormulario();
+
+		if (formulario != null) {
+			remove(container);
+			container.setJanela(null);
+			container.setVariaveisFormulario(null);
+			formulario.getFichario().getVariaveis().retornoAoFichario(formulario, container);
+			dispose();
+		}
 	}
 
 	private void configurar() {

@@ -226,7 +226,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				});
 
 				variaveisAcao.setActionListener(e -> {
-					VariaveisDialogo form = new VariaveisDialogo((Frame) null);
+					VariaveisDialogo form = new VariaveisDialogo((Frame) null, null);
 
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);
