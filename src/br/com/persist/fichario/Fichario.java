@@ -292,20 +292,6 @@ public class Fichario extends JTabbedPane {
 		addTab(Preferencias.isTituloAbaMin() ? Mensagens.getString(titleMin) : Mensagens.getString(title), component);
 	}
 
-	public Desktop novoDesktop(Formulario formulario) {
-		Desktop desktop = new Desktop(formulario, false);
-		desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_DESKTOP));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-
-		return desktop;
-	}
-
 	private final transient Configuracao configuracao = new Configuracao();
 	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
@@ -707,6 +693,20 @@ public class Fichario extends JTabbedPane {
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
 		}
+	}
+
+	public Desktop novoDesktop(Formulario formulario) {
+		Desktop desktop = new Desktop(formulario, false);
+		desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+		addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);
+		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_DESKTOP));
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+
+		return desktop;
 	}
 
 	public Panel novaConsulta(Formulario formulario, Conexao conexao) {
