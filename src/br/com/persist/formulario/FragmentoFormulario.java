@@ -16,7 +16,17 @@ public class FragmentoFormulario extends AbstratoFormulario implements IJanela {
 
 	public FragmentoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_FRAGMENTO));
-		container = new FragmentoContainer(this, null);
+		container = new FragmentoContainer(this, formulario, null);
+		container.setFragmentoFormulario(this);
+		montarLayout();
+		configurar();
+	}
+
+	public FragmentoFormulario(FragmentoContainer container) {
+		super(Mensagens.getString(Constantes.LABEL_FRAGMENTO));
+		container.setFragmentoFormulario(this);
+		this.container = container;
+		container.setJanela(this);
 		montarLayout();
 		configurar();
 	}
@@ -28,6 +38,30 @@ public class FragmentoFormulario extends AbstratoFormulario implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static void criar(Formulario formulario, FragmentoContainer container) {
+		FragmentoFormulario form = new FragmentoFormulario(container);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Formulario formulario) {
+		FragmentoFormulario form = new FragmentoFormulario(formulario);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public void retornoAoFichario() {
+		Formulario formulario = container.getFormulario();
+
+		if (formulario != null) {
+			remove(container);
+			container.setJanela(null);
+			container.setFragmentoFormulario(null);
+			formulario.getFichario().getFragmento().retornoAoFichario(formulario, container);
+			dispose();
+		}
 	}
 
 	private void configurar() {

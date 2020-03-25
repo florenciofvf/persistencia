@@ -214,7 +214,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			private void eventos() {
 				fragmentoAcao.setActionListener(e -> {
-					FragmentoDialogo form = new FragmentoDialogo((Frame) null, fragmentoListener);
+					FragmentoDialogo form = new FragmentoDialogo((Frame) null, null, fragmentoListener);
 
 					if (listener instanceof Component) {
 						form.setLocationRelativeTo((Component) listener);

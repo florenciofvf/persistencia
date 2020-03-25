@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.listener.FragmentoListener;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
@@ -16,16 +17,16 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoContainer container;
 
-	public FragmentoDialogo(Dialog dialog, FragmentoListener listener) {
+	public FragmentoDialogo(Dialog dialog, Formulario formulario, FragmentoListener listener) {
 		super(dialog, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
-		container = new FragmentoContainer(this, listener);
+		container = new FragmentoContainer(this, formulario, listener);
 		montarLayout();
 		configurar();
 	}
 
-	public FragmentoDialogo(Frame frame, FragmentoListener listener) {
+	public FragmentoDialogo(Frame frame, Formulario formulario, FragmentoListener listener) {
 		super(frame, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
-		container = new FragmentoContainer(this, listener);
+		container = new FragmentoContainer(this, formulario, listener);
 		montarLayout();
 		configurar();
 	}
@@ -37,6 +38,12 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static void criar(Formulario formulario) {
+		FragmentoDialogo form = new FragmentoDialogo(formulario, formulario, null);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
 	}
 
 	private void configurar() {

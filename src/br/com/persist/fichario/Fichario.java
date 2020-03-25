@@ -64,6 +64,7 @@ import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
+import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
@@ -300,6 +301,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Requisicao requisicao = new Requisicao();
 	private final transient Variaveis variaveis = new Variaveis();
 	private final transient Metadados metadados = new Metadados();
+	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Anotacao anotacao = new Anotacao();
 	private final transient Conexoes conexoes = new Conexoes();
 	private final transient Anexos anexos = new Anexos();
@@ -327,6 +329,10 @@ public class Fichario extends JTabbedPane {
 
 	public Metadados getMetadados() {
 		return metadados;
+	}
+
+	public Fragmento getFragmento() {
+		return fragmento;
 	}
 
 	public Anotacao getAnotacao() {
@@ -665,6 +671,52 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public class Fragmento {
+		public void novo(Formulario formulario) {
+			FragmentoContainer container = new FragmentoContainer(null, formulario, null);
+			addTab(Constantes.LABEL_FRAGMENTO, Constantes.LABEL_FRAGMENTO_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.FRAGMENTO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+
+			container.ini(getGraphics());
+		}
+
+		public void destacarEmFormulario(Formulario formulario, FragmentoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			FragmentoFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, FragmentoContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			FragmentoFormulario.criar(formulario);
+		}
+
+		public void retornoAoFichario(Formulario formulario, FragmentoContainer container) {
+			addTab(Constantes.LABEL_FRAGMENTO, Constantes.LABEL_FRAGMENTO_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.FRAGMENTO);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
+	}
+
 	public class Anotacao {
 		public Panel nova(Formulario formulario) {
 			AnotacaoContainer container = new AnotacaoContainer(null, formulario, null);
@@ -837,19 +889,6 @@ public class Fichario extends JTabbedPane {
 		setSelectedIndex(ultimoIndice);
 
 		return container;
-	}
-
-	public void novoFragmento(Formulario formulario) {
-		FragmentoContainer container = new FragmentoContainer(null, null);
-		addTab(Constantes.LABEL_FRAGMENTO, Constantes.LABEL_FRAGMENTO_MIN, container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.FRAGMENTO);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-
-		container.ini(getGraphics());
 	}
 
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
@@ -1176,7 +1215,7 @@ public class Fichario extends JTabbedPane {
 			anotacao.nova(formulario);
 
 		} else if (Util.iguais(FragmentoContainer.class, nome)) {
-			novoFragmento(formulario);
+			fragmento.novo(formulario);
 
 		} else {
 			abrirArquivo(f, formulario, nome);

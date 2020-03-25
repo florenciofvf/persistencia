@@ -632,19 +632,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuFragmento() {
 				super(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
 
-				formularioAcao.setActionListener(e -> {
-					FragmentoFormulario form = new FragmentoFormulario(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					FragmentoDialogo form = new FragmentoDialogo(Formulario.this, null);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novoFragmento(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getFragmento().novo(Formulario.this));
+				formularioAcao.setActionListener(e -> FragmentoFormulario.criar(Formulario.this));
+				dialogoAcao.setActionListener(e -> FragmentoDialogo.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {
