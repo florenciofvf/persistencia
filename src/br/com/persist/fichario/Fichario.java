@@ -62,12 +62,14 @@ import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
+import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
+import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.VariaveisModelo;
@@ -83,8 +85,22 @@ import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
+	private final transient Configuracao configuracao = new Configuracao();
+	private final transient Mapeamento mapeamento = new Mapeamento();
+	private final transient Comparacao comparacao = new Comparacao();
+	private final transient Requisicao requisicao = new Requisicao();
+	private final transient Variaveis variaveis = new Variaveis();
+	private final transient Metadados metadados = new Metadados();
+	private final transient Fragmento fragmento = new Fragmento();
+	private final transient Anotacao anotacao = new Anotacao();
+	private final transient Conexoes conexoes = new Conexoes();
+	private final transient Consulta consulta = new Consulta();
 	private final transient Listener listener = new Listener();
+	private final transient Update update = new Update();
+	private final transient Anexos anexos = new Anexos();
+	private final transient Arvore arvore = new Arvore();
 	private static final Logger LOG = Logger.getGlobal();
+
 	private transient Ponto ponto;
 	private Rectangle rectangle;
 	private int ultX;
@@ -295,18 +311,6 @@ public class Fichario extends JTabbedPane {
 		addTab(Preferencias.isTituloAbaMin() ? Mensagens.getString(titleMin) : Mensagens.getString(title), component);
 	}
 
-	private final transient Configuracao configuracao = new Configuracao();
-	private final transient Mapeamento mapeamento = new Mapeamento();
-	private final transient Comparacao comparacao = new Comparacao();
-	private final transient Requisicao requisicao = new Requisicao();
-	private final transient Variaveis variaveis = new Variaveis();
-	private final transient Metadados metadados = new Metadados();
-	private final transient Fragmento fragmento = new Fragmento();
-	private final transient Anotacao anotacao = new Anotacao();
-	private final transient Conexoes conexoes = new Conexoes();
-	private final transient Anexos anexos = new Anexos();
-	private final transient Arvore arvore = new Arvore();
-
 	public Configuracao getConfiguracao() {
 		return configuracao;
 	}
@@ -343,12 +347,113 @@ public class Fichario extends JTabbedPane {
 		return conexoes;
 	}
 
+	public Consulta getConsulta() {
+		return consulta;
+	}
+
+	public Update getUpdate() {
+		return update;
+	}
+
 	public Anexos getAnexos() {
 		return anexos;
 	}
 
 	public Arvore getArvore() {
 		return arvore;
+	}
+
+	public class Consulta {
+		public Panel nova(Formulario formulario, Conexao conexao) {
+			ConsultaContainer container = new ConsultaContainer(null, formulario, formulario, conexao, null, null,
+					true);
+			addTab(Constantes.LABEL_CONSULTA, Constantes.LABEL_CONSULTA_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONSULTA);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONSULTA));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+
+			return container;
+		}
+
+		public void destacarEmFormulario(Formulario formulario, ConsultaContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			ConsultaFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, ConsultaContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			ConsultaFormulario.criar(formulario, formulario, container.getConexaoPadrao(), container.getConteudo());
+		}
+
+		public void retornoAoFichario(Formulario formulario, ConsultaContainer container) {
+			addTab(Constantes.LABEL_CONSULTA, Constantes.LABEL_CONSULTA_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONSULTA);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONSULTA));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
+	}
+
+	public class Update {
+		public Panel novo(Formulario formulario, Conexao conexao) {
+			UpdateContainer container = new UpdateContainer(null, formulario, formulario, conexao, null, null);
+			addTab(Constantes.LABEL_ATUALIZAR, Constantes.LABEL_ATUALIZAR_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.UPDATE);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+
+			return container;
+		}
+
+		public void destacarEmFormulario(Formulario formulario, UpdateContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			UpdateFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, UpdateContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			UpdateFormulario.criar(formulario, formulario, container.getConexaoPadrao(), container.getConteudo());
+		}
+
+		public void retornoAoFichario(Formulario formulario, UpdateContainer container) {
+			addTab(Constantes.LABEL_ATUALIZAR, Constantes.LABEL_ATUALIZAR_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.UPDATE);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
 	}
 
 	public class Metadados {
@@ -865,32 +970,6 @@ public class Fichario extends JTabbedPane {
 		return desktop;
 	}
 
-	public Panel novaConsulta(Formulario formulario, Conexao conexao) {
-		ConsultaContainer container = new ConsultaContainer(null, formulario, conexao, null, null, true);
-		addTab(Constantes.LABEL_CONSULTA, Constantes.LABEL_CONSULTA_MIN, container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.CONSULTA);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONSULTA));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-
-		return container;
-	}
-
-	public Panel novoUpdate(Formulario formulario, Conexao conexao) {
-		UpdateContainer container = new UpdateContainer(null, formulario, conexao, null, null);
-		addTab(Constantes.LABEL_ATUALIZAR, Constantes.LABEL_ATUALIZAR_MIN, container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.UPDATE);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-
-		return container;
-	}
-
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
 		@Override
 		public void buscaAutomatica(Grupo grupo, String argumentos) {
@@ -1206,10 +1285,10 @@ public class Fichario extends JTabbedPane {
 			metadados.novo(formulario, null);
 
 		} else if (Util.iguais(ConsultaContainer.class, nome)) {
-			novaConsulta(formulario, null);
+			consulta.nova(formulario, null);
 
 		} else if (Util.iguais(UpdateContainer.class, nome)) {
-			novoUpdate(formulario, null);
+			update.novo(formulario, null);
 
 		} else if (Util.iguais(AnotacaoContainer.class, nome)) {
 			anotacao.nova(formulario);

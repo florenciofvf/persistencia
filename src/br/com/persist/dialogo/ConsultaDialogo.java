@@ -7,6 +7,7 @@ import java.util.Map;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.container.ConsultaContainer;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
@@ -15,22 +16,22 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ConsultaContainer container;
 
-	public ConsultaDialogo(Frame frame, ConexaoProvedor provedor) {
+	public ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
-		container = new ConsultaContainer(this, provedor, null, null, null, true);
+		container = new ConsultaContainer(this, formulario, provedor, null, null, null, true);
 		montarLayout();
 	}
 
-	public ConsultaDialogo(Frame frame, ConexaoProvedor provedor, Conexao padrao) {
+	public ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
-		container = new ConsultaContainer(this, provedor, padrao, null, null, true);
+		container = new ConsultaContainer(this, formulario, provedor, padrao, null, null, true);
 		montarLayout();
 	}
 
-	public ConsultaDialogo(Frame frame, String titulo, ConexaoProvedor provedor, Conexao padrao, String instrucao,
-			Map<String, String> mapaChaveValor, boolean abrirArquivo) {
-		super(frame, titulo);
-		container = new ConsultaContainer(this, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
+	public ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
+			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
+		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
+		container = new ConsultaContainer(this, formulario, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
 		montarLayout();
 	}
 
@@ -41,5 +42,11 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static void criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+		ConsultaDialogo form = new ConsultaDialogo(formulario, formulario, provedor, padrao);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
 	}
 }

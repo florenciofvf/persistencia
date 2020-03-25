@@ -1129,7 +1129,8 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					ConsultaFormulario form = new ConsultaFormulario(formulario, container.getConexaoPadrao());
+					ConsultaFormulario form = new ConsultaFormulario(formulario, formulario,
+							container.getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
@@ -1141,13 +1142,14 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, container.getConexaoPadrao());
+					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, formulario,
+							container.getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
 
 				ficharioAcao.setActionListener(
-						e -> formulario.getFichario().novaConsulta(formulario, container.getConexaoPadrao()));
+						e -> formulario.getFichario().getConsulta().nova(formulario, container.getConexaoPadrao()));
 			}
 		}
 
@@ -1164,7 +1166,7 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					UpdateFormulario form = new UpdateFormulario(formulario, container.getConexaoPadrao());
+					UpdateFormulario form = new UpdateFormulario(formulario, formulario, container.getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
@@ -1176,13 +1178,13 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					UpdateDialogo form = new UpdateDialogo(frame, formulario, container.getConexaoPadrao());
+					UpdateDialogo form = new UpdateDialogo(frame, formulario, formulario, container.getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
 
 				ficharioAcao.setActionListener(
-						e -> formulario.getFichario().novoUpdate(formulario, container.getConexaoPadrao()));
+						e -> formulario.getFichario().getUpdate().novo(formulario, container.getConexaoPadrao()));
 			}
 		}
 

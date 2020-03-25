@@ -744,15 +744,16 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
 					if (abrirEmForm) {
-						ConsultaFormulario form = new ConsultaFormulario(instrucao.getNome(), provedor, conexao,
+						ConsultaFormulario form = new ConsultaFormulario(null, instrucao.getNome(), provedor, conexao,
 								instrucao.getValor(), chaves, false);
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
 						}
 						form.setVisible(true);
 					} else {
-						ConsultaDialogo form = new ConsultaDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
+						ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao,
 								instrucao.getValor(), chaves, false);
+						form.setTitle(instrucao.getNome());
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
 						}
@@ -762,15 +763,15 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
 					if (abrirEmForm) {
-						UpdateFormulario form = new UpdateFormulario(instrucao.getNome(), provedor, conexao,
+						UpdateFormulario form = new UpdateFormulario(null, instrucao.getNome(), provedor, conexao,
 								instrucao.getValor(), chaves);
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
 						}
 						form.setVisible(true);
 					} else {
-						UpdateDialogo form = new UpdateDialogo((Frame) null, instrucao.getNome(), provedor, conexao,
-								instrucao.getValor(), chaves);
+						UpdateDialogo form = new UpdateDialogo((Frame) null, null, instrucao.getNome(), provedor,
+								conexao, instrucao.getValor(), chaves);
 						if (listener instanceof Component) {
 							form.setLocationRelativeTo((Component) listener);
 						}
@@ -864,14 +865,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
 			if (abrirEmForm) {
-				UpdateFormulario form = new UpdateFormulario(Mensagens.getString(Constantes.LABEL_ATUALIZAR), provedor,
-						conexao, instrucao);
+				UpdateFormulario form = new UpdateFormulario(null, Mensagens.getString(Constantes.LABEL_ATUALIZAR),
+						provedor, conexao, instrucao);
 				if (listener instanceof Component) {
 					form.setLocationRelativeTo((Component) listener);
 				}
 				form.setVisible(true);
 			} else {
-				UpdateDialogo form = new UpdateDialogo((Frame) null, provedor, conexao, instrucao);
+				UpdateDialogo form = new UpdateDialogo((Frame) null, null, provedor, conexao, instrucao);
 				if (listener instanceof Component) {
 					form.setLocationRelativeTo((Component) listener);
 				}
@@ -1049,15 +1050,16 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
 						if (abrirEmForm) {
-							ConsultaFormulario form = new ConsultaFormulario("Select", provedor, conexao, instrucao,
-									null, false);
+							ConsultaFormulario form = new ConsultaFormulario(null,
+									Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, conexao, instrucao, null,
+									false);
 							if (listener instanceof Component) {
 								form.setLocationRelativeTo((Component) listener);
 							}
 							form.setVisible(true);
 						} else {
-							ConsultaDialogo form = new ConsultaDialogo((Frame) null, "Select", provedor, conexao,
-									instrucao, null, false);
+							ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao, instrucao,
+									null, false);
 							if (listener instanceof Component) {
 								form.setLocationRelativeTo((Component) listener);
 							}

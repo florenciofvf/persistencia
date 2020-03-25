@@ -272,20 +272,21 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao.setActionListener(e -> {
-					ConsultaFormulario form = new ConsultaFormulario(formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(containerFormulario != null ? containerFormulario : formulario);
+					Frame frame = containerFormulario != null ? containerFormulario : formulario;
+					ConsultaFormulario form = new ConsultaFormulario(formulario, formulario, getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
 
 				dialogoAcao.setActionListener(e -> {
 					Frame frame = containerFormulario != null ? containerFormulario : formulario;
-					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, getConexaoPadrao());
+					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, formulario, getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
 
-				ficharioAcao
-						.setActionListener(e -> formulario.getFichario().novaConsulta(formulario, getConexaoPadrao()));
+				ficharioAcao.setActionListener(
+						e -> formulario.getFichario().getConsulta().nova(formulario, getConexaoPadrao()));
 			}
 		}
 
@@ -296,20 +297,21 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
 				formularioAcao.setActionListener(e -> {
-					UpdateFormulario form = new UpdateFormulario(formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(containerFormulario != null ? containerFormulario : formulario);
+					Frame frame = containerFormulario != null ? containerFormulario : formulario;
+					UpdateFormulario form = new UpdateFormulario(formulario, formulario, getConexaoPadrao());
+					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
 
 				dialogoAcao.setActionListener(e -> {
 					Frame frame = containerFormulario != null ? containerFormulario : formulario;
-					UpdateDialogo form = new UpdateDialogo(frame, formulario, getConexaoPadrao());
+					UpdateDialogo form = new UpdateDialogo(frame, formulario, formulario, getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
 
-				ficharioAcao
-						.setActionListener(e -> formulario.getFichario().novoUpdate(formulario, getConexaoPadrao()));
+				ficharioAcao.setActionListener(
+						e -> formulario.getFichario().getUpdate().novo(formulario, getConexaoPadrao()));
 			}
 		}
 

@@ -323,19 +323,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuConsulta() {
 				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
-				formularioAcao.setActionListener(e -> {
-					ConsultaFormulario form = new ConsultaFormulario(Formulario.this, null);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					ConsultaDialogo form = new ConsultaDialogo(Formulario.this, Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novaConsulta(Formulario.this, null));
+				formularioAcao
+						.setActionListener(e -> ConsultaFormulario.criar(Formulario.this, Formulario.this, null, null));
+				dialogoAcao.setActionListener(e -> ConsultaDialogo.criar(Formulario.this, Formulario.this, null));
+				ficharioAcao.setActionListener(e -> fichario.getConsulta().nova(Formulario.this, null));
 			}
 
 			void abrirAutoFichario() {
@@ -351,19 +342,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuUpdate() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
-				formularioAcao.setActionListener(e -> {
-					UpdateFormulario form = new UpdateFormulario(Formulario.this, null);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				dialogoAcao.setActionListener(e -> {
-					UpdateDialogo form = new UpdateDialogo(Formulario.this, Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novoUpdate(Formulario.this, null));
+				formularioAcao
+						.setActionListener(e -> UpdateFormulario.criar(Formulario.this, Formulario.this, null, null));
+				dialogoAcao.setActionListener(e -> UpdateDialogo.criar(Formulario.this, Formulario.this, null));
+				ficharioAcao.setActionListener(e -> fichario.getUpdate().novo(Formulario.this, null));
 			}
 
 			void abrirAutoFichario() {

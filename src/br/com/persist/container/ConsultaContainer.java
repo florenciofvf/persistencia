@@ -19,30 +19,34 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
+import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
+public class ConsultaContainer extends AbstratoContainer
+		implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("consultas/consultas");
 	private static final String PAINEL_SELECT = "PAINEL SELECT";
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
+	private ConsultaFormulario consultaFormulario;
 	private final JComboBox<Conexao> cmbConexao;
 
-	public ConsultaContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, String instrucao,
-			Map<String, String> mapaChaveValor, boolean abrirArquivo) {
+	public ConsultaContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
+			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
+		super(formulario);
 		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -53,6 +57,14 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 		if ((mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo) {
 			abrir();
 		}
+	}
+
+	public ConsultaFormulario getConsultaFormulario() {
+		return consultaFormulario;
+	}
+
+	public void setConsultaFormulario(ConsultaFormulario consultaFormulario) {
+		this.consultaFormulario = consultaFormulario;
 	}
 
 	private void config() {
@@ -67,6 +79,10 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 		}
 	}
 
+	public Conexao getConexaoPadrao() {
+		return (Conexao) cmbConexao.getSelectedItem();
+	}
+
 	@Override
 	public File getFileSalvarAberto() {
 		return new File(Constantes.III + getClass().getName());
@@ -78,6 +94,16 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
 		split.setDividerLocation(200);
 		add(BorderLayout.CENTER, split);
+	}
+
+	public String getConteudo() {
+		return textArea.getText();
+	}
+
+	public void setConteudo(String conteudo) {
+		if (!Util.estaVazio(conteudo)) {
+			textArea.setText(conteudo);
+		}
 	}
 
 	private void abrir() {
@@ -97,12 +123,44 @@ public class ConsultaContainer extends Panel implements Fichario.IFicharioSalvar
 		}
 	}
 
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario != null) {
+			formulario.getFichario().getConsulta().destacarEmFormulario(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario != null) {
+			formulario.getFichario().getConsulta().clonarEmFormulario(formulario, this);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ConsultaFormulario.criar(formulario, formulario, getConexaoPadrao(), null);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (consultaFormulario != null) {
+			consultaFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela, true, (mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA);
 			configBaixarAcao(e -> abrir());
 
