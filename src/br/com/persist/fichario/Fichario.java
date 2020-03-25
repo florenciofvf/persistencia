@@ -100,7 +100,6 @@ public class Fichario extends JTabbedPane {
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
 	private static final Logger LOG = Logger.getGlobal();
-
 	private transient Ponto ponto;
 	private Rectangle rectangle;
 	private int ultX;
