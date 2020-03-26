@@ -251,14 +251,15 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuUtil.add(true, itemRequisicao);
 			add(menuUtil);
 
+			menuConfig.add(menuLayout);
+			menuConfig.add(true, itemConfig);
+			add(menuConfig);
+
 			for (MenuAmbiente item : listaMenuAmbiente()) {
 				menuAmbiente.add(item);
 			}
 			add(menuAmbiente);
 
-			menuConfig.add(menuLayout);
-			menuConfig.add(true, itemConfig);
-			add(menuConfig);
 			add(menuLAF);
 
 			eventos();
