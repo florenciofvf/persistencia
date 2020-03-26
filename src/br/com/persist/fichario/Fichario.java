@@ -36,7 +36,6 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
-import br.com.persist.comp.Panel;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
@@ -97,6 +96,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Conexoes conexoes = new Conexoes();
 	private final transient Consulta consulta = new Consulta();
 	private final transient Listener listener = new Listener();
+	private final transient Desktops desktops = new Desktops();
 	private final transient Update update = new Update();
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
@@ -241,7 +241,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
-		Desktop desktop = novoDesktop(formulario);
+		Desktop desktop = desktops.novo(formulario);
 
 		int x = 10;
 		int y = 10;
@@ -351,6 +351,10 @@ public class Fichario extends JTabbedPane {
 		return conexoes;
 	}
 
+	public Desktops getDesktops() {
+		return desktops;
+	}
+
 	public Consulta getConsulta() {
 		return consulta;
 	}
@@ -368,11 +372,10 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Consulta {
-		public Panel nova(Formulario formulario, Conexao conexao) {
+		public void nova(Formulario formulario, Conexao conexao) {
 			ConsultaContainer container = new ConsultaContainer(null, formulario, formulario, conexao, null, null,
 					true);
 			retornoAoFichario(formulario, container);
-			return container;
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ConsultaContainer container) {
@@ -408,10 +411,9 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Update {
-		public Panel novo(Formulario formulario, Conexao conexao) {
+		public void novo(Formulario formulario, Conexao conexao) {
 			UpdateContainer container = new UpdateContainer(null, formulario, formulario, conexao, null, null);
 			retornoAoFichario(formulario, container);
-			return container;
 		}
 
 		public void destacarEmFormulario(Formulario formulario, UpdateContainer container) {
@@ -447,10 +449,9 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Metadados {
-		public Panel novo(Formulario formulario, Conexao conexao) {
+		public void novo(Formulario formulario, Conexao conexao) {
 			MetadadosContainer container = new MetadadosContainer(null, formulario, formulario, conexao);
 			retornoAoFichario(formulario, container);
-			return container;
 		}
 
 		public void destacarEmFormulario(Formulario formulario, MetadadosContainer container) {
@@ -526,10 +527,9 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Requisicao {
-		public Panel nova(Formulario formulario) {
+		public void nova(Formulario formulario) {
 			RequisicaoContainer container = new RequisicaoContainer(null, formulario, null);
 			retornoAoFichario(formulario, container);
-			return container;
 		}
 
 		public void destacarEmFormulario(Formulario formulario, RequisicaoContainer container) {
@@ -814,10 +814,9 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Anotacao {
-		public Panel nova(Formulario formulario) {
+		public void nova(Formulario formulario) {
 			AnotacaoContainer container = new AnotacaoContainer(null, formulario, null);
 			retornoAoFichario(formulario, container);
-			return container;
 		}
 
 		public void destacarEmFormulario(Formulario formulario, AnotacaoContainer container) {
@@ -928,18 +927,20 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public Desktop novoDesktop(Formulario formulario) {
-		Desktop desktop = new Desktop(formulario, false);
-		desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
-		int ultimoIndice = getTabCount() - 1;
+	public class Desktops {
+		public Desktop novo(Formulario formulario) {
+			Desktop desktop = new Desktop(formulario, false);
+			desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+			addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
+			int ultimoIndice = getTabCount() - 1;
 
-		TituloAba tituloAba = new TituloAba(this, TituloAba.DESKTOP);
-		setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_DESKTOP));
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.DESKTOP);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_DESKTOP));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
 
-		return desktop;
+			return desktop;
+		}
 	}
 
 	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
@@ -1241,7 +1242,7 @@ public class Fichario extends JTabbedPane {
 			configuracao.nova(formulario);
 
 		} else if (Util.iguais(Desktop.class, nome)) {
-			novoDesktop(formulario);
+			desktops.novo(formulario);
 
 		} else {
 			formulario.abrirArquivo(f, true);

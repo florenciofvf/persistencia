@@ -362,13 +362,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuDesktop() {
 				super(Constantes.LABEL_DESKTOP, Icones.PANEL2, false);
 
-				formularioAcao.setActionListener(e -> {
-					DesktopFormulario form = new DesktopFormulario(Formulario.this);
-					form.setLocationRelativeTo(Formulario.this);
-					form.setVisible(true);
-				});
-
-				ficharioAcao.setActionListener(e -> fichario.novoDesktop(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getDesktops().novo(Formulario.this));
+				formularioAcao.setActionListener(e -> DesktopFormulario.criar(Formulario.this));
 			}
 		}
 
