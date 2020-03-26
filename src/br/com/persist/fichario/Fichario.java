@@ -371,14 +371,7 @@ public class Fichario extends JTabbedPane {
 		public Panel nova(Formulario formulario, Conexao conexao) {
 			ConsultaContainer container = new ConsultaContainer(null, formulario, formulario, conexao, null, null,
 					true);
-			addTab(Constantes.LABEL_CONSULTA, Constantes.LABEL_CONSULTA_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONSULTA);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONSULTA));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
+			retornoAoFichario(formulario, container);
 			return container;
 		}
 
@@ -417,14 +410,7 @@ public class Fichario extends JTabbedPane {
 	public class Update {
 		public Panel novo(Formulario formulario, Conexao conexao) {
 			UpdateContainer container = new UpdateContainer(null, formulario, formulario, conexao, null, null);
-			addTab(Constantes.LABEL_ATUALIZAR, Constantes.LABEL_ATUALIZAR_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.UPDATE);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
+			retornoAoFichario(formulario, container);
 			return container;
 		}
 
@@ -463,14 +449,7 @@ public class Fichario extends JTabbedPane {
 	public class Metadados {
 		public Panel novo(Formulario formulario, Conexao conexao) {
 			MetadadosContainer container = new MetadadosContainer(null, formulario, formulario, conexao);
-			addTab(Constantes.LABEL_METADADOS, Constantes.LABEL_METADADOS_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.METADADO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_METADADOS));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
+			retornoAoFichario(formulario, container);
 			return container;
 		}
 
@@ -509,15 +488,7 @@ public class Fichario extends JTabbedPane {
 	public class Conexoes {
 		public void nova(Formulario formulario) {
 			ConexaoContainer container = new ConexaoContainer(null, formulario);
-			addTab(Constantes.LABEL_CONEXAO, Constantes.LABEL_CONEXAO_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONEXAO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONEXAO));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
-			container.ini(getGraphics());
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ConexaoContainer container) {
@@ -557,14 +528,7 @@ public class Fichario extends JTabbedPane {
 	public class Requisicao {
 		public Panel nova(Formulario formulario) {
 			RequisicaoContainer container = new RequisicaoContainer(null, formulario, null);
-			addTab(Constantes.LABEL_REQUISICAO, Constantes.LABEL_REQUISICAO_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.REQUISICAO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_REQUISICAO));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
+			retornoAoFichario(formulario, container);
 			return container;
 		}
 
@@ -603,13 +567,7 @@ public class Fichario extends JTabbedPane {
 	public class Configuracao {
 		public void nova(Formulario formulario) {
 			ConfigContainer container = new ConfigContainer(null, formulario);
-			addTab(Constantes.LABEL_CONFIGURACOES, Constantes.LABEL_CONFIGURACOES_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONFIG);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ConfigContainer container) {
@@ -647,13 +605,7 @@ public class Fichario extends JTabbedPane {
 	public class Comparacao {
 		public void nova(Formulario formulario) {
 			ComparacaoContainer container = new ComparacaoContainer(null, formulario);
-			addTab(Constantes.LABEL_COMPARACAO, Constantes.LABEL_COMPARACAO_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.COMPARACAO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_COMPARACAO));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ComparacaoContainer container) {
@@ -691,15 +643,7 @@ public class Fichario extends JTabbedPane {
 	public class Mapeamento {
 		public void novo(Formulario formulario) {
 			MapeamentoContainer container = new MapeamentoContainer(null, formulario);
-			addTab(Constantes.LABEL_MAPEAMENTOS, Constantes.LABEL_MAPEAMENTOS_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.MAPEAMENTO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
-			container.ini(getGraphics());
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, MapeamentoContainer container) {
@@ -731,21 +675,14 @@ public class Fichario extends JTabbedPane {
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
+			container.ini(getGraphics());
 		}
 	}
 
 	public class Variaveis {
 		public void novo(Formulario formulario) {
 			VariaveisContainer container = new VariaveisContainer(null, formulario);
-			addTab(Constantes.LABEL_VARIAVEIS, Constantes.LABEL_VARIAVEIS_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.VARIAVEIS);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
-			container.ini(getGraphics());
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, VariaveisContainer container) {
@@ -777,21 +714,14 @@ public class Fichario extends JTabbedPane {
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
+			container.ini(getGraphics());
 		}
 	}
 
 	public class Fragmento {
 		public void novo(Formulario formulario) {
 			FragmentoContainer container = new FragmentoContainer(null, formulario, null);
-			addTab(Constantes.LABEL_FRAGMENTO, Constantes.LABEL_FRAGMENTO_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.FRAGMENTO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
-			container.ini(getGraphics());
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, FragmentoContainer container) {
@@ -823,6 +753,7 @@ public class Fichario extends JTabbedPane {
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
+			container.ini(getGraphics());
 		}
 	}
 
@@ -869,6 +800,9 @@ public class Fichario extends JTabbedPane {
 
 			addTab(file.getName(), container);
 			int ultimoIndice = getTabCount() - 1;
+
+			container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+			container.setAbortarFecharComESCSuperficie(true);
 
 			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.OBJETOS);
 			setTabComponentAt(ultimoIndice, tituloAba);
@@ -921,13 +855,7 @@ public class Fichario extends JTabbedPane {
 	public class Anexos {
 		public void novo(Formulario formulario) {
 			AnexoContainer container = new AnexoContainer(null, formulario);
-			addTab(Constantes.LABEL_ANEXOS, Constantes.LABEL_ANEXOS_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.ANEXO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ANEXOS));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, AnexoContainer container) {
@@ -965,13 +893,7 @@ public class Fichario extends JTabbedPane {
 	public class Arvore {
 		public void nova(Formulario formulario) {
 			ArvoreContainer container = new ArvoreContainer(null, formulario);
-			addTab(Constantes.LABEL_ARQUIVOS, Constantes.LABEL_ARQUIVOS_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.ARVORE);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ARQUIVOS));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
+			retornoAoFichario(formulario, container);
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ArvoreContainer container) {
