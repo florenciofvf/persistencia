@@ -882,14 +882,7 @@ public class Fichario extends JTabbedPane {
 	public class Anotacao {
 		public Panel nova(Formulario formulario) {
 			AnotacaoContainer container = new AnotacaoContainer(null, formulario, null);
-			addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.ANOTACAO);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ANOTACOES));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
+			retornoAoFichario(formulario, container);
 			return container;
 		}
 
