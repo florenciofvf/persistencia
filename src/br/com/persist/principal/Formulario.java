@@ -305,7 +305,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			private static final long serialVersionUID = 1L;
 
 			MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
-				super("label." + ambiente.getChave(), null);
+				super(ambiente.getChaveLabel(), null);
 
 				formularioAcao
 						.setActionListener(e -> AmbienteFormulario.criar(Formulario.this, Constantes.VAZIO, ambiente));

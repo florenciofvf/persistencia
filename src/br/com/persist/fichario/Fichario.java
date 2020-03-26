@@ -861,8 +861,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void retornoAoFichario(Formulario formulario, AmbienteContainer container) {
-			addTab("label." + container.getAmbiente().getChave(),
-					"label." + container.getAmbiente().getChave() + "_min", container);
+			addTab(container.getAmbiente().getChaveLabel(), container.getAmbiente().getChaveLabelMin(), container);
 			int ultimoIndice = getTabCount() - 1;
 
 			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.AMBIENTE);

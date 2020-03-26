@@ -14,6 +14,7 @@ import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class AmbienteContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
@@ -39,14 +40,22 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 	}
 
 	public enum Ambiente {
-		DESENVOLVIMENTO("desenv", "Desenvolvimento"), TESTE("teste", "Teste"), HOLOMOGACAO("homolog",
-				"Homologação"), PRODUCAO("producao", "Produção"), ESTUDO("estudo", "Estudo"), TREINAMENTO1("treina1",
-						"Treinamento 1"), TREINAMENTO2("treina2",
-								"Treinamento 2"), TREINAMENTO3("treina3", "Treinamento 3");
+		DESENVOLVIMENTO("desenv", Mensagens.getString("label.desenv")), TESTE("teste",
+				Mensagens.getString("label.teste")), HOLOMOGACAO("homolog",
+						Mensagens.getString("label.homolog")), PRODUCAO("producao",
+								Mensagens.getString("label.producao")), ESTUDO("estudo",
+										Mensagens.getString("label.estudo")), TREINAMENTO1("treina1",
+												Mensagens.getString("label.treina1")), TREINAMENTO2("treina2",
+														Mensagens.getString("label.treina2")), TREINAMENTO3("treina3",
+																Mensagens.getString("label.treina3"));
+		final String chaveLabelMin;
+		final String chaveLabel;
 		final String descricao;
 		final String chave;
 
 		private Ambiente(String chave, String descricao) {
+			chaveLabelMin = "label." + chave + "_min";
+			chaveLabel = "label." + chave;
 			this.chave = chave;
 			this.descricao = descricao;
 		}
@@ -57,6 +66,14 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 
 		public String getDescricao() {
 			return descricao;
+		}
+
+		public String getChaveLabelMin() {
+			return chaveLabelMin;
+		}
+
+		public String getChaveLabel() {
+			return chaveLabel;
 		}
 
 		public static Ambiente get(String nome) {
