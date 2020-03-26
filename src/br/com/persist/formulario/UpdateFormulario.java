@@ -23,6 +23,7 @@ public class UpdateFormulario extends AbstratoFormulario implements IJanela {
 			String instrucao, Map<String, String> mapaChaveValor) {
 		super(titulo);
 		container = new UpdateContainer(this, formulario, provedor, padrao, instrucao, mapaChaveValor);
+		container.setUpdateFormulario(this);
 		montarLayout();
 	}
 
@@ -30,6 +31,7 @@ public class UpdateFormulario extends AbstratoFormulario implements IJanela {
 			String instrucao) {
 		super(titulo);
 		container = new UpdateContainer(this, formulario, provedor, padrao, instrucao);
+		container.setUpdateFormulario(this);
 		montarLayout();
 	}
 

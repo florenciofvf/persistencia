@@ -23,6 +23,7 @@ public class ConsultaFormulario extends AbstratoFormulario implements IJanela {
 			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 		super(titulo);
 		container = new ConsultaContainer(this, formulario, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
+		container.setConsultaFormulario(this);
 		montarLayout();
 	}
 
