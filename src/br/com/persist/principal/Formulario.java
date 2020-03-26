@@ -25,11 +25,13 @@ import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.SplitPane;
+import br.com.persist.container.AmbienteContainer;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.ArvoreContainer;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.dialogo.AmbienteDialogo;
 import br.com.persist.dialogo.AnotacaoDialogo;
 import br.com.persist.dialogo.ComparacaoDialogo;
 import br.com.persist.dialogo.ConexaoDialogo;
@@ -41,6 +43,7 @@ import br.com.persist.dialogo.RequisicaoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
@@ -201,6 +204,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private static final long serialVersionUID = 1L;
 		private Action novoAcao = Action.actionMenu(Constantes.LABEL_NOVO, Icones.CUBO);
 		private final Menu menuConfig = new Menu(Constantes.LABEL_CONFIGURACOES);
+		private final Menu menuAmbiente = new Menu(Constantes.LABEL_AMBIENTES);
 		private final Menu menuUtil = new Menu(Constantes.LABEL_UTILITARIOS);
 		private final Menu menuArquivo = new Menu(Constantes.LABEL_ARQUIVO);
 		private final MenuMapeamento itemMapeamento = new MenuMapeamento();
@@ -247,6 +251,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuUtil.add(true, itemRequisicao);
 			add(menuUtil);
 
+			for (MenuAmbiente item : listaMenuAmbiente()) {
+				menuAmbiente.add(item);
+			}
+			add(menuAmbiente);
+
 			menuConfig.add(menuLayout);
 			menuConfig.add(true, itemConfig);
 			add(menuConfig);
@@ -280,6 +289,29 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 					System.exit(0);
 				}
 			});
+		}
+
+		private List<MenuAmbiente> listaMenuAmbiente() {
+			List<MenuAmbiente> lista = new ArrayList<>();
+
+			for (AmbienteContainer.Ambiente ambiente : AmbienteContainer.Ambiente.values()) {
+				lista.add(new MenuAmbiente(ambiente));
+			}
+
+			return lista;
+		}
+
+		class MenuAmbiente extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
+				super("label." + ambiente.getChave(), null);
+
+				formularioAcao
+						.setActionListener(e -> AmbienteFormulario.criar(Formulario.this, Constantes.VAZIO, ambiente));
+				ficharioAcao.setActionListener(e -> fichario.getAmbientes().novo(Formulario.this, ambiente));
+				dialogoAcao.setActionListener(e -> AmbienteDialogo.criar(Formulario.this, ambiente));
+			}
 		}
 
 		class MenuAnotacao extends MenuPadrao1 {

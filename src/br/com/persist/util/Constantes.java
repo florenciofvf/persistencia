@@ -48,6 +48,7 @@ public class Constantes {
 	public static final String LABEL_REQUISICAO = "label.requisicao";
 	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";
 	public static final String LABEL_METADADOS = "label.meta_dados";
+	public static final String LABEL_AMBIENTES = "label.ambientes";
 	public static final String LABEL_VARIAVEIS = "label.variaveis";
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
 	public static final String LABEL_ATUALIZAR = "label.atualizar";

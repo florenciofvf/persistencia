@@ -1,0 +1,161 @@
+package br.com.persist.container;
+
+import java.awt.BorderLayout;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+import br.com.persist.comp.BarraButton;
+import br.com.persist.comp.TextArea;
+import br.com.persist.fichario.Fichario;
+import br.com.persist.formulario.AmbienteFormulario;
+import br.com.persist.principal.Formulario;
+import br.com.persist.util.Constantes;
+import br.com.persist.util.IJanela;
+import br.com.persist.util.Util;
+
+public class AmbienteContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
+	private static final long serialVersionUID = 1L;
+	private static final String PAINEL_AMBIENTE = "PAINEL AMBIENTE";
+	private final TextArea textArea = new TextArea();
+	private final Toolbar toolbar = new Toolbar();
+	private AmbienteFormulario ambienteFormulario;
+	private final Ambiente ambiente;
+	private final File file;
+
+	public AmbienteContainer(IJanela janela, Formulario formulario, String conteudo, Ambiente ambiente) {
+		super(formulario);
+		file = new File("ambientes/" + ambiente.chave);
+		this.ambiente = ambiente;
+		toolbar.ini(janela);
+		montarLayout();
+		abrir(conteudo);
+	}
+
+	public Ambiente getAmbiente() {
+		return ambiente;
+	}
+
+	public enum Ambiente {
+		DESENVOLVIMENTO("desenv", "Desenvolvimento"), TESTE("teste", "Teste"), HOLOMOGACAO("homolog",
+				"Homologação"), PRODUCAO("producao", "Produção"), ESTUDO("estudo", "Estudo"), TREINAMENTO1("treina1",
+						"Treinamento 1"), TREINAMENTO2("treina2",
+								"Treinamento 2"), TREINAMENTO3("treina3", "Treinamento 3");
+		final String descricao;
+		final String chave;
+
+		private Ambiente(String chave, String descricao) {
+			this.chave = chave;
+			this.descricao = descricao;
+		}
+
+		public String getChave() {
+			return chave;
+		}
+
+		public String getDescricao() {
+			return descricao;
+		}
+	}
+
+	public AmbienteFormulario getAmbienteFormulario() {
+		return ambienteFormulario;
+	}
+
+	public void setAmbienteFormulario(AmbienteFormulario ambienteFormulario) {
+		this.ambienteFormulario = ambienteFormulario;
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(Constantes.III + getClass().getName());
+	}
+
+	private void montarLayout() {
+		add(BorderLayout.CENTER, textArea);
+		add(BorderLayout.NORTH, toolbar);
+	}
+
+	public String getConteudo() {
+		return textArea.getText();
+	}
+
+	private void abrir(String conteudo) {
+		if (!Util.estaVazio(conteudo)) {
+			textArea.setText(conteudo);
+			return;
+		}
+
+		textArea.limpar();
+
+		if (file.exists()) {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+
+				while (linha != null) {
+					textArea.append(linha + Constantes.QL2);
+					linha = br.readLine();
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+			}
+		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		formulario.getFichario().getAmbientes().destacarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		formulario.getFichario().getAmbientes().clonarEmFormulario(formulario, this);
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		AmbienteFormulario.criar(formulario, Constantes.VAZIO, ambiente);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (ambienteFormulario != null) {
+			ambienteFormulario.retornoAoFichario();
+		}
+	}
+
+	public void setJanela(IJanela janela) {
+		toolbar.setJanela(janela);
+	}
+
+	private class Toolbar extends BarraButton {
+		private static final long serialVersionUID = 1L;
+
+		public void ini(IJanela janela) {
+			super.ini(janela, true, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
+			configBaixarAcao(e -> abrir(null));
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
+		}
+
+		@Override
+		protected void salvar() {
+			if (!Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
+				return;
+			}
+
+			try (PrintWriter pw = new PrintWriter(file)) {
+				pw.print(textArea.getText());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+			}
+		}
+	}
+}

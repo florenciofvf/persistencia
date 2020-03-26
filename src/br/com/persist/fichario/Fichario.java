@@ -36,6 +36,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
+import br.com.persist.container.AmbienteContainer;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
@@ -55,6 +56,7 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.formulario.AnexoFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
@@ -89,6 +91,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
 	private final transient Variaveis variaveis = new Variaveis();
+	private final transient Ambientes ambientes = new Ambientes();
 	private final transient Metadados metadados = new Metadados();
 	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Conteiner conteiner = new Conteiner();
@@ -329,6 +332,10 @@ public class Fichario extends JTabbedPane {
 
 	public Requisicao getRequisicao() {
 		return requisicao;
+	}
+
+	public Ambientes getAmbientes() {
+		return ambientes;
 	}
 
 	public Variaveis getVariaveis() {
@@ -818,6 +825,45 @@ public class Fichario extends JTabbedPane {
 			setTitleAt(ultimoIndice, file.getName());
 			setSelectedIndex(ultimoIndice);
 			container.estadoSelecao();
+		}
+	}
+
+	public class Ambientes {
+		public void novo(Formulario formulario, AmbienteContainer.Ambiente ambiente) {
+			AmbienteContainer container = new AmbienteContainer(null, formulario, null, ambiente);
+			retornoAoFichario(formulario, container);
+		}
+
+		public void destacarEmFormulario(Formulario formulario, AmbienteContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			AmbienteFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, AmbienteContainer container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			AmbienteFormulario.criar(formulario, container.getConteudo(), container.getAmbiente());
+		}
+
+		public void retornoAoFichario(Formulario formulario, AmbienteContainer container) {
+			addTab("label." + container.getAmbiente().getChave(),
+					"label." + container.getAmbiente().getChave() + "_min", container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.AMBIENTE);
+			setToolTipTextAt(ultimoIndice, container.getAmbiente().getDescricao());
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
 		}
 	}
 
