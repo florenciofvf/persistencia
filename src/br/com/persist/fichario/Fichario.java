@@ -87,6 +87,7 @@ import br.com.persist.util.Util;
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 	private final transient Configuracao configuracao = new Configuracao();
+	private final transient SalvarAberto salvarAberto = new SalvarAberto();
 	private final transient Mapeamento mapeamento = new Mapeamento();
 	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
@@ -316,6 +317,10 @@ public class Fichario extends JTabbedPane {
 
 	public void addTab(String title, String titleMin, Component component) {
 		addTab(Preferencias.isTituloAbaMin() ? Mensagens.getString(titleMin) : Mensagens.getString(title), component);
+	}
+
+	public SalvarAberto getSalvarAberto() {
+		return salvarAberto;
 	}
 
 	public Configuracao getConfiguracao() {
@@ -1185,29 +1190,119 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void salvarAbertos() {
-		try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO)) {
-			int total = getTabCount();
+	public class SalvarAberto {
+		public void salvar() {
+			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO)) {
+				int total = getTabCount();
 
-			for (int i = 0; i < total; i++) {
-				Component aba = getTabComponentAt(i);
-				Component cmp = getComponentAt(i);
+				for (int i = 0; i < total; i++) {
+					Component aba = getTabComponentAt(i);
+					Component cmp = getComponentAt(i);
 
-				File file = null;
+					File file = null;
 
-				if (cmp instanceof IFicharioSalvar) {
-					file = ((IFicharioSalvar) cmp).getFileSalvarAberto();
-				} else if (aba instanceof IFicharioSalvar) {
-					file = ((IFicharioSalvar) aba).getFileSalvarAberto();
+					if (cmp instanceof IFicharioSalvar) {
+						file = ((IFicharioSalvar) cmp).getFileSalvarAberto();
+					} else if (aba instanceof IFicharioSalvar) {
+						file = ((IFicharioSalvar) aba).getFileSalvarAberto();
+					}
+
+					if (file != null) {
+						pw.print(file.getAbsolutePath() + Constantes.QL2);
+					}
 				}
 
-				if (file != null) {
-					pw.print(file.getAbsolutePath() + Constantes.QL2);
+			} catch (Exception ex) {
+				LOG.log(Level.SEVERE, ex.getMessage());
+			}
+		}
+
+		public void abrir(Formulario formulario) {
+			File file = new File(Constantes.ABERTOS_FICHARIO);
+
+			if (file.exists()) {
+				List<File> files = new ArrayList<>();
+
+				try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+					String linha = br.readLine();
+
+					while (linha != null) {
+						files.add(new File(linha));
+						linha = br.readLine();
+					}
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("FICHARIO", ex, Fichario.this);
+				}
+
+				for (File f : files) {
+					abrirArquivo(f, formulario);
 				}
 			}
+		}
 
-		} catch (Exception ex) {
-			LOG.log(Level.SEVERE, ex.getMessage());
+		private void abrirArquivo(File f, Formulario formulario) {
+			String nome = f.getAbsolutePath();
+			int pos = nome.indexOf(Constantes.III);
+
+			if (pos != -1) {
+				nome = nome.substring(pos + Constantes.III.length());
+			}
+
+			if (Util.iguais(AnexoContainer.class, nome)) {
+				anexos.novo(formulario);
+
+			} else if (Util.iguais(ArvoreContainer.class, nome)) {
+				arvore.nova(formulario);
+
+			} else if (Util.iguais(ConexaoContainer.class, nome)) {
+				conexoes.nova(formulario);
+
+			} else if (Util.iguais(MetadadosContainer.class, nome)) {
+				metadados.novo(formulario, null);
+
+			} else if (Util.iguais(ConsultaContainer.class, nome)) {
+				consulta.nova(formulario, null);
+
+			} else if (Util.iguais(UpdateContainer.class, nome)) {
+				update.novo(formulario, null);
+
+			} else if (Util.iguais(AnotacaoContainer.class, nome)) {
+				anotacao.nova(formulario);
+
+			} else if (Util.iguais(FragmentoContainer.class, nome)) {
+				fragmento.novo(formulario);
+
+			} else {
+				abrirArquivo(f, formulario, nome);
+			}
+		}
+
+		private void abrirArquivo(File f, Formulario formulario, String nome) {
+			if (Util.iguais(MapeamentoContainer.class, nome)) {
+				mapeamento.novo(formulario);
+
+			} else if (Util.iguais(VariaveisContainer.class, nome)) {
+				variaveis.novo(formulario);
+
+			} else if (Util.iguais(ComparacaoContainer.class, nome)) {
+				comparacao.nova(formulario);
+
+			} else if (Util.iguais(RequisicaoContainer.class, nome)) {
+				requisicao.nova(formulario);
+
+			} else if (Util.iguais(ConfigContainer.class, nome)) {
+				configuracao.nova(formulario);
+
+			} else if (Util.iguais(Desktop.class, nome)) {
+				desktops.novo(formulario);
+
+			} else if (nome.startsWith(AmbienteContainer.class.getName())) {
+				String ambiente = nome.substring(AmbienteContainer.class.getName().length() + 1);
+				ambientes.novo(formulario, AmbienteContainer.Ambiente.get(ambiente));
+
+			} else {
+				formulario.abrirArquivo(f, true);
+			}
 		}
 	}
 
@@ -1217,90 +1312,6 @@ public class Fichario extends JTabbedPane {
 
 	public static interface IFicharioConexao {
 		void selecionarConexao(Conexao conexao);
-	}
-
-	public void abrirArquivos(Formulario formulario) {
-		File file = new File(Constantes.ABERTOS_FICHARIO);
-
-		if (file.exists()) {
-			List<File> files = new ArrayList<>();
-
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-				String linha = br.readLine();
-
-				while (linha != null) {
-					files.add(new File(linha));
-					linha = br.readLine();
-				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("FICHARIO", ex, Fichario.this);
-			}
-
-			for (File f : files) {
-				abrirArquivo(f, formulario);
-			}
-		}
-	}
-
-	private void abrirArquivo(File f, Formulario formulario) {
-		String nome = f.getAbsolutePath();
-		int pos = nome.indexOf(Constantes.III);
-
-		if (pos != -1) {
-			nome = nome.substring(pos + Constantes.III.length());
-		}
-
-		if (Util.iguais(AnexoContainer.class, nome)) {
-			anexos.novo(formulario);
-
-		} else if (Util.iguais(ArvoreContainer.class, nome)) {
-			arvore.nova(formulario);
-
-		} else if (Util.iguais(ConexaoContainer.class, nome)) {
-			conexoes.nova(formulario);
-
-		} else if (Util.iguais(MetadadosContainer.class, nome)) {
-			metadados.novo(formulario, null);
-
-		} else if (Util.iguais(ConsultaContainer.class, nome)) {
-			consulta.nova(formulario, null);
-
-		} else if (Util.iguais(UpdateContainer.class, nome)) {
-			update.novo(formulario, null);
-
-		} else if (Util.iguais(AnotacaoContainer.class, nome)) {
-			anotacao.nova(formulario);
-
-		} else if (Util.iguais(FragmentoContainer.class, nome)) {
-			fragmento.novo(formulario);
-
-		} else {
-			abrirArquivo(f, formulario, nome);
-		}
-	}
-
-	private void abrirArquivo(File f, Formulario formulario, String nome) {
-		if (Util.iguais(MapeamentoContainer.class, nome)) {
-			mapeamento.novo(formulario);
-
-		} else if (Util.iguais(VariaveisContainer.class, nome)) {
-			variaveis.novo(formulario);
-
-		} else if (Util.iguais(ComparacaoContainer.class, nome)) {
-			comparacao.nova(formulario);
-
-		} else if (Util.iguais(RequisicaoContainer.class, nome)) {
-			requisicao.nova(formulario);
-
-		} else if (Util.iguais(ConfigContainer.class, nome)) {
-			configuracao.nova(formulario);
-
-		} else if (Util.iguais(Desktop.class, nome)) {
-			desktops.novo(formulario);
-
-		} else {
-			formulario.abrirArquivo(f, true);
-		}
 	}
 
 	private class Listener extends MouseAdapter {

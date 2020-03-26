@@ -46,7 +46,7 @@ public class FormularioUtil {
 
 	public static void fechar(Formulario formulario) {
 		try {
-			formulario.getFichario().salvarAbertos();
+			formulario.getFichario().getSalvarAberto().salvar();
 			Conexao.fecharConexoes();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(formulario.getClass().getName() + ".fechar()", ex, formulario);

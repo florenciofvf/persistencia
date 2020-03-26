@@ -58,6 +58,16 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 		public String getDescricao() {
 			return descricao;
 		}
+
+		public static Ambiente get(String nome) {
+			for (Ambiente a : values()) {
+				if (a.chave.equals(nome)) {
+					return a;
+				}
+			}
+
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public AmbienteFormulario getAmbienteFormulario() {
@@ -70,7 +80,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 
 	@Override
 	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
+		return new File(Constantes.III + getClass().getName() + "_" + ambiente.chave);
 	}
 
 	private void montarLayout() {
