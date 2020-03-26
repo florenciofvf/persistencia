@@ -79,12 +79,15 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	}
 
 	public void retornoAoFichario() {
-		remove(container);
-		ativo = false;
-		container.setJanela(null);
-		container.setContainerFormulario(null);
 		Formulario formulario = container.getFormulario();
-		formulario.getFichario().retornoAoFichario(formulario, container);
-		dispose();
+
+		if (formulario != null) {
+			remove(container);
+			ativo = false;
+			container.setJanela(null);
+			container.setContainerFormulario(null);
+			formulario.getFichario().getConteiner().retornoAoFichario(formulario, container);
+			dispose();
+		}
 	}
 }

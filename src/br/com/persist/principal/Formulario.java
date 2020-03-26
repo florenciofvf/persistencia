@@ -272,7 +272,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		private void eventos() {
-			novoAcao.setActionListener(e -> fichario.novo(Formulario.this));
+			novoAcao.setActionListener(e -> fichario.getConteiner().novo(Formulario.this));
+
 			fecharAcao.setActionListener(e -> {
 				if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
 					FormularioUtil.fechar(Formulario.this);

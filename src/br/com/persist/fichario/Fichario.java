@@ -92,6 +92,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Variaveis variaveis = new Variaveis();
 	private final transient Metadados metadados = new Metadados();
 	private final transient Fragmento fragmento = new Fragmento();
+	private final transient Conteiner conteiner = new Conteiner();
 	private final transient Anotacao anotacao = new Anotacao();
 	private final transient Conexoes conexoes = new Conexoes();
 	private final transient Consulta consulta = new Consulta();
@@ -336,6 +337,10 @@ public class Fichario extends JTabbedPane {
 
 	public Fragmento getFragmento() {
 		return fragmento;
+	}
+
+	public Conteiner getConteiner() {
+		return conteiner;
 	}
 
 	public Anotacao getAnotacao() {
@@ -821,6 +826,59 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public class Conteiner {
+		public Container novo(Formulario formulario) {
+			Container container = new Container(formulario, null);
+			container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+			addTab(Mensagens.getString(Constantes.LABEL_NOVO), container);
+			container.setAbortarFecharComESCSuperficie(true);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.OBJETOS);
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+			container.estadoSelecao();
+
+			return container;
+		}
+
+		public void destacarEmFormulario(Formulario formulario, Container container) {
+			int indice = getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+
+			File file = container.getArquivo();
+
+			if (file == null) {
+				file = new File(Constantes.DESTACADO);
+			}
+
+			ContainerFormulario.criar(formulario, container, file);
+		}
+
+		public void retornoAoFichario(Formulario formulario, Container container) {
+			File file = container.getArquivo();
+
+			if (file == null) {
+				file = new File(Constantes.DESTACADO);
+			}
+
+			addTab(file.getName(), container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.OBJETOS);
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
+			setTitleAt(ultimoIndice, file.getName());
+			setSelectedIndex(ultimoIndice);
+			container.estadoSelecao();
+		}
+	}
+
 	public class Anotacao {
 		public Panel nova(Formulario formulario) {
 			AnotacaoContainer container = new AnotacaoContainer(null, formulario, null);
@@ -1018,55 +1076,6 @@ public class Fichario extends JTabbedPane {
 		form.setVisible(true);
 	}
 
-	public void destacarEmFormulario(Formulario formulario, Container container) {
-		int indice = getIndice(container);
-
-		if (indice == -1) {
-			return;
-		}
-
-		super.remove(indice);
-
-		File file = container.getArquivo();
-
-		if (file == null) {
-			file = new File(Constantes.DESTACADO);
-		}
-
-		ContainerFormulario.criar(formulario, container, file);
-	}
-
-	public void retornoAoFichario(Formulario formulario, Container container) {
-		File file = container.getArquivo();
-
-		if (file == null) {
-			file = new File(Constantes.DESTACADO);
-		}
-
-		addTab(file.getName(), container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-		container.estadoSelecao();
-	}
-
-	public Container novo(Formulario formulario) {
-		Container container = new Container(formulario, null);
-		container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		addTab(Mensagens.getString(Constantes.LABEL_NOVO), container);
-		container.setAbortarFecharComESCSuperficie(true);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETOS);
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-		container.estadoSelecao();
-
-		return container;
-	}
-
 	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
 			StringBuilder sbConexao, Dimension d) {
 
@@ -1080,20 +1089,20 @@ public class Fichario extends JTabbedPane {
 			return;
 		}
 
-		Container container = novo(formulario);
+		Container container = conteiner.novo(formulario);
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		setToolTipTextAt(getTabCount() - 1, file.getAbsolutePath());
 		setTitleAt(getTabCount() - 1, file.getName());
 	}
 
 	public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-		Container container = novo(formulario);
+		Container container = conteiner.novo(formulario);
 		container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_exportacao"));
 	}
 
 	public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-		Container container = novo(formulario);
+		Container container = conteiner.novo(formulario);
 		container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
 	}

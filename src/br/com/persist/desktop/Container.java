@@ -336,7 +336,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				desktopAcao.setActionListener(
 						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
 				destacarFrm.setActionListener(
-						e -> formulario.getFichario().destacarEmFormulario(formulario, Container.this));
+						e -> formulario.getFichario().getConteiner().destacarEmFormulario(formulario, Container.this));
 				abrirEmForm.setActionListener(e -> formulario.abrirArquivo(getArquivo(), false));
 				destacarCnt.setActionListener(e -> {
 					if (containerFormulario != null) {
