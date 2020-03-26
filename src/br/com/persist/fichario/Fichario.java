@@ -92,6 +92,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Metadados metadados = new Metadados();
 	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Conteiner conteiner = new Conteiner();
+	private final transient Destacar destacar = new Destacar();
 	private final transient Anotacao anotacao = new Anotacao();
 	private final transient Conexoes conexoes = new Conexoes();
 	private final transient Consulta consulta = new Consulta();
@@ -181,128 +182,131 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void destacar(Formulario formulario, Conexao conexao, Superficie superficie, int tipoContainer) {
-		List<Objeto> objetos = superficie.getSelecionados();
-		boolean continua = false;
+	public class Destacar {
+		public void destacar(Formulario formulario, Conexao conexao, Superficie superficie, int tipoContainer) {
+			List<Objeto> objetos = superficie.getSelecionados();
+			boolean continua = false;
 
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
-				continua = true;
-				break;
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
+					continua = true;
+					break;
+				}
+			}
+
+			if (!continua) {
+				return;
+			}
+
+			List<Objeto> selecionados = new ArrayList<>();
+
+			for (Objeto objeto : objetos) {
+				if (objeto.isCopiarDestacado()) {
+					selecionados.add(objeto.clonar());
+				} else {
+					selecionados.add(objeto);
+				}
+			}
+
+			if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
+				destacarForm(formulario, selecionados, conexao);
+
+			} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
+				destacarDesk(formulario, selecionados, conexao);
+
+			} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
+				destacarObjt(formulario, selecionados, conexao);
+
+			} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
+				destacarProp(formulario, selecionados, conexao, superficie);
 			}
 		}
 
-		if (!continua) {
-			return;
-		}
+		private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+			DesktopFormulario form = new DesktopFormulario(formulario);
 
-		List<Objeto> selecionados = new ArrayList<>();
+			int x = 10;
+			int y = 10;
 
-		for (Objeto objeto : objetos) {
-			if (objeto.isCopiarDestacado()) {
-				selecionados.add(objeto.clonar());
-			} else {
-				selecionados.add(objeto);
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
+					Object[] array = Util.criarArray(conexao, objeto, null);
+					form.getDesktop().addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE],
+							false);
+					objeto.setSelecionado(false);
+					x += 25;
+					y += 25;
+				}
 			}
+
+			form.setLocationRelativeTo(formulario);
+			form.setVisible(true);
 		}
 
-		if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
-			destacarForm(formulario, selecionados, conexao);
+		private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+			Desktop desktop = desktops.novo(formulario);
 
-		} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
-			destacarDesk(formulario, selecionados, conexao);
+			int x = 10;
+			int y = 10;
 
-		} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
-			destacarObjt(formulario, selecionados, conexao);
-
-		} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
-			destacarProp(formulario, selecionados, conexao, superficie);
-		}
-	}
-
-	private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
-		DesktopFormulario form = new DesktopFormulario(formulario);
-
-		int x = 10;
-		int y = 10;
-
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
-				Object[] array = Util.criarArray(conexao, objeto, null);
-				form.getDesktop().addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
-				objeto.setSelecionado(false);
-				x += 25;
-				y += 25;
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
+					Object[] array = Util.criarArray(conexao, objeto, null);
+					desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
+					objeto.setSelecionado(false);
+					x += 25;
+					y += 25;
+				}
 			}
+
+			desktop.ini(getGraphics());
+			SwingUtilities.invokeLater(() -> desktop.distribuir(-20));
 		}
 
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
-	}
+		private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie) {
+			boolean salvar = false;
 
-	private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
-		Desktop desktop = desktops.novo(formulario);
+			ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
+			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
 
-		int x = 10;
-		int y = 10;
-
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
-				Object[] array = Util.criarArray(conexao, objeto, null);
-				desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
-				objeto.setSelecionado(false);
-				x += 25;
-				y += 25;
+			if (cvDeltaX == null) {
+				cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
+				VariaveisModelo.adicionar(cvDeltaX);
+				salvar = true;
 			}
-		}
 
-		desktop.ini(getGraphics());
-		SwingUtilities.invokeLater(() -> desktop.distribuir(-20));
-	}
-
-	private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie) {
-		boolean salvar = false;
-
-		ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
-		ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-
-		if (cvDeltaX == null) {
-			cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
-			VariaveisModelo.adicionar(cvDeltaX);
-			salvar = true;
-		}
-
-		if (cvDeltaY == null) {
-			cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
-			VariaveisModelo.adicionar(cvDeltaY);
-			salvar = true;
-		}
-
-		if (salvar) {
-			VariaveisModelo.salvar();
-			VariaveisModelo.inicializar();
-		}
-
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
-				Object[] array = Util.criarArray(conexao, objeto, null);
-				superficie.addForm(array,
-						new Point(objeto.getX() + cvDeltaX.getInteiro(Constantes.TRINTA),
-								objeto.getY() + cvDeltaY.getInteiro(Constantes.TRINTA)),
-						null, (String) array[Util.ARRAY_INDICE_APE], false);
-				objeto.setSelecionado(false);
+			if (cvDeltaY == null) {
+				cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
+				VariaveisModelo.adicionar(cvDeltaY);
+				salvar = true;
 			}
+
+			if (salvar) {
+				VariaveisModelo.salvar();
+				VariaveisModelo.inicializar();
+			}
+
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
+					Object[] array = Util.criarArray(conexao, objeto, null);
+					superficie.addForm(array,
+							new Point(objeto.getX() + cvDeltaX.getInteiro(Constantes.TRINTA),
+									objeto.getY() + cvDeltaY.getInteiro(Constantes.TRINTA)),
+							null, (String) array[Util.ARRAY_INDICE_APE], false);
+					objeto.setSelecionado(false);
+				}
+			}
+
+			superficie.repaint();
 		}
 
-		superficie.repaint();
-	}
-
-	private void destacarObjt(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
-		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
-				Superficie.setComplemento(conexao, objeto);
-				novoObjeto(formulario, conexao, objeto);
-				objeto.setSelecionado(false);
+		private void destacarObjt(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+			for (Objeto objeto : objetos) {
+				if (!Util.estaVazio(objeto.getTabela2())) {
+					Superficie.setComplemento(conexao, objeto);
+					novoObjeto(formulario, conexao, objeto);
+					objeto.setSelecionado(false);
+				}
 			}
 		}
 	}
@@ -341,6 +345,10 @@ public class Fichario extends JTabbedPane {
 
 	public Conteiner getConteiner() {
 		return conteiner;
+	}
+
+	public Destacar getDestacar() {
+		return destacar;
 	}
 
 	public Anotacao getAnotacao() {

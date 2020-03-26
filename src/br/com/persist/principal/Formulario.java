@@ -94,7 +94,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	}
 
 	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer) {
-		fichario.destacar(this, conexao, superficie, tipoContainer);
+		fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer);
 	}
 
 	public static void copiar(Superficie superficie) {
