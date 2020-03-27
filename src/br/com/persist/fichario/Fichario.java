@@ -102,6 +102,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Consulta consulta = new Consulta();
 	private final transient Listener listener = new Listener();
 	private final transient Desktops desktops = new Desktops();
+	private final transient Objetos objetos = new Objetos();
 	private final transient Update update = new Update();
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
@@ -188,10 +189,10 @@ public class Fichario extends JTabbedPane {
 
 	public class Destacar {
 		public void destacar(Formulario formulario, Conexao conexao, Superficie superficie, int tipoContainer) {
-			List<Objeto> objetos = superficie.getSelecionados();
+			List<Objeto> lista = superficie.getSelecionados();
 			boolean continua = false;
 
-			for (Objeto objeto : objetos) {
+			for (Objeto objeto : lista) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					continua = true;
 					break;
@@ -204,7 +205,7 @@ public class Fichario extends JTabbedPane {
 
 			List<Objeto> selecionados = new ArrayList<>();
 
-			for (Objeto objeto : objetos) {
+			for (Objeto objeto : lista) {
 				if (objeto.isCopiarDestacado()) {
 					selecionados.add(objeto.clonar());
 				} else {
@@ -304,11 +305,11 @@ public class Fichario extends JTabbedPane {
 			superficie.repaint();
 		}
 
-		private void destacarObjt(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
-			for (Objeto objeto : objetos) {
+		private void destacarObjt(Formulario formulario, List<Objeto> listaObjetos, Conexao conexao) {
+			for (Objeto objeto : listaObjetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					Superficie.setComplemento(conexao, objeto);
-					novoObjeto(formulario, conexao, objeto);
+					objetos.novo(formulario, conexao, objeto);
 					objeto.setSelecionado(false);
 				}
 			}
@@ -377,6 +378,10 @@ public class Fichario extends JTabbedPane {
 
 	public Consulta getConsulta() {
 		return consulta;
+	}
+
+	public Objetos getObjetos() {
+		return objetos;
 	}
 
 	public Update getUpdate() {
@@ -831,6 +836,18 @@ public class Fichario extends JTabbedPane {
 			setSelectedIndex(ultimoIndice);
 			container.estadoSelecao();
 		}
+
+		public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
+			Container container = novo(formulario);
+			container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+			setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_exportacao"));
+		}
+
+		public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
+			Container container = novo(formulario);
+			container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+			setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
+		}
 	}
 
 	public class Ambientes {
@@ -1001,45 +1018,47 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	private transient ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
-		@Override
-		public void buscaAutomatica(Grupo grupo, String argumentos) {
-			throw new UnsupportedOperationException();
+	public class Objetos {
+		public void novo(Formulario formulario, Conexao padrao, Objeto objeto) {
+			ObjetoContainer container = new ObjetoContainer(null, formulario, padrao, objeto, objetoContainerListener,
+					getGraphics(), false);
+			addTab(objeto.getId(), container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.OBJETO);
+			setTabComponentAt(ultimoIndice, tituloAba);
+			container.setSuporte(Fichario.this);
+			setSelectedIndex(ultimoIndice);
+
+			container.ini(getGraphics());
 		}
 
-		@Override
-		public void linkAutomatico(Link link, String argumento) {
-			throw new UnsupportedOperationException();
-		}
+		private ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
+			@Override
+			public void buscaAutomatica(Grupo grupo, String argumentos) {
+				throw new UnsupportedOperationException();
+			}
 
-		@Override
-		public void configAlturaAutomatica(int total) {
-			throw new UnsupportedOperationException();
-		}
+			@Override
+			public void linkAutomatico(Link link, String argumento) {
+				throw new UnsupportedOperationException();
+			}
 
-		@Override
-		public void setTitulo(String titulo) {
-			LOG.log(Level.FINEST, titulo);
-		}
+			@Override
+			public void configAlturaAutomatica(int total) {
+				throw new UnsupportedOperationException();
+			}
 
-		@Override
-		public Dimension getDimensoes() {
-			return getSize();
-		}
-	};
+			@Override
+			public void setTitulo(String titulo) {
+				LOG.log(Level.FINEST, titulo);
+			}
 
-	public void novoObjeto(Formulario formulario, Conexao padrao, Objeto objeto) {
-		ObjetoContainer container = new ObjetoContainer(null, formulario, padrao, objeto, objetoContainerListener,
-				getGraphics(), false);
-		addTab(objeto.getId(), container);
-		int ultimoIndice = getTabCount() - 1;
-
-		TituloAba tituloAba = new TituloAba(this, TituloAba.OBJETO);
-		setTabComponentAt(ultimoIndice, tituloAba);
-		setSelectedIndex(ultimoIndice);
-		container.setSuporte(this);
-
-		container.ini(getGraphics());
+			@Override
+			public Dimension getDimensoes() {
+				return Fichario.this.getSize();
+			}
+		};
 	}
 
 	public void abrirFormulario(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
@@ -1067,18 +1086,6 @@ public class Fichario extends JTabbedPane {
 		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
 		setToolTipTextAt(getTabCount() - 1, file.getAbsolutePath());
 		setTitleAt(getTabCount() - 1, file.getName());
-	}
-
-	public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-		Container container = conteiner.novo(formulario);
-		container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_exportacao"));
-	}
-
-	public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-		Container container = conteiner.novo(formulario);
-		container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-		setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
 	}
 
 	@Override

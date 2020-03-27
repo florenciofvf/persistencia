@@ -240,7 +240,7 @@ public class MetadadosContainer extends AbstratoContainer
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().abrirExportacaoMetadado(formulario, metadado, circular);
+			formulario.getFichario().getConteiner().abrirExportacaoMetadado(formulario, metadado, circular);
 		}
 	}
 
@@ -258,7 +258,7 @@ public class MetadadosContainer extends AbstratoContainer
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().abrirImportacaoMetadado(formulario, metadado, circular);
+			formulario.getFichario().getConteiner().abrirImportacaoMetadado(formulario, metadado, circular);
 		}
 	}
 }
