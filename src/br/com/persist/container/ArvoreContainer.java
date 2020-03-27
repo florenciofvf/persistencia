@@ -118,7 +118,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 					formulario.setExtendedState(Formulario.MAXIMIZED_BOTH);
 				}
 			});
-			fecharAcao.setActionListener(e -> formulario.getFichario().fecharTodos());
+			fecharAcao.setActionListener(e -> formulario.getFichario().getArquivos().fecharTodos());
 			statusAcao.setActionListener(e -> statusArquivo());
 		}
 
@@ -129,7 +129,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 			modelo.listar(lista);
 
 			for (Arquivo arquivo : lista) {
-				arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+				arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
 
 				if (arquivo.isArquivoAberto()) {
 					ArvoreUtil.selecionarObjeto(arvore, arquivo);
@@ -141,7 +141,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 			arvore.clearSelection();
 
 			for (Arquivo arquivo : lista) {
-				if (formulario.getFichario().isAtivo(arquivo.getFile())) {
+				if (formulario.getFichario().getArquivos().isAtivo(arquivo.getFile())) {
 					ArvoreUtil.selecionarObjeto(arvore, arquivo);
 				}
 			}
@@ -165,13 +165,13 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 			if (chkDuplicar.isSelected()) {
 				formulario.getArquivos().abrir(arquivo.getFile(), true);
 			} else {
-				if (!formulario.getFichario().isAberto(arquivo.getFile())) {
+				if (!formulario.getFichario().getArquivos().isAberto(arquivo.getFile())) {
 					formulario.getArquivos().abrir(arquivo.getFile(), true);
 				}
 			}
 
-			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
-			formulario.getFichario().selecionarAba(arquivo.getFile());
+			arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
+			formulario.getFichario().getArquivos().selecionarAba(arquivo.getFile());
 			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 		}
 	}
@@ -181,8 +181,8 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
 		if (arquivo != null) {
-			formulario.getFichario().selecionarAba(arquivo.getFile());
-			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			formulario.getFichario().getArquivos().selecionarAba(arquivo.getFile());
+			arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
 			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 
 			if (arquivo.isFile()) {
@@ -196,8 +196,8 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
 		if (arquivo != null && chkLinkAuto.isSelected()) {
-			formulario.getFichario().selecionarAba(arquivo.getFile());
-			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			formulario.getFichario().getArquivos().selecionarAba(arquivo.getFile());
+			arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
 			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 
 			if (arquivo.isFile()) {
@@ -211,7 +211,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
 		if (arquivo != null) {
-			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
 			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 		}
 	}
@@ -224,7 +224,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 		modelo.listar(lista);
 
 		for (Arquivo arquivo : lista) {
-			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
 		}
 	}
 
@@ -233,8 +233,8 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
 		if (arquivo != null) {
-			formulario.getFichario().fecharArquivo(arquivo.getFile());
-			arquivo.setArquivoAberto(formulario.getFichario().isAberto(arquivo.getFile()));
+			formulario.getFichario().getArquivos().fecharArquivo(arquivo.getFile());
+			arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
 			ArvoreUtil.refreshEstrutura(arvore, arquivo);
 		}
 	}

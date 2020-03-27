@@ -238,13 +238,21 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
 
 				if (abrirNoFichario) {
-					fichario.abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
+					fichario.getArquivos().abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
 				} else {
-					fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
+					abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 			}
+		}
+
+		public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
+				List<Form> forms, StringBuilder sbConexao, Dimension d) {
+			ContainerFormulario form = new ContainerFormulario(formulario, file);
+			form.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
+			form.setLocationRelativeTo(formulario);
+			form.setVisible(true);
 		}
 	}
 

@@ -96,6 +96,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Metadados metadados = new Metadados();
 	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Conteiner conteiner = new Conteiner();
+	private final transient Arquivos arquivos = new Arquivos();
 	private final transient Destacar destacar = new Destacar();
 	private final transient Anotacao anotacao = new Anotacao();
 	private final transient Conexoes conexoes = new Conexoes();
@@ -372,6 +373,10 @@ public class Fichario extends JTabbedPane {
 		return conexoes;
 	}
 
+	public Arquivos getArquivos() {
+		return arquivos;
+	}
+
 	public Desktops getDesktops() {
 		return desktops;
 	}
@@ -404,7 +409,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ConsultaContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -415,7 +420,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, ConsultaContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -442,7 +447,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, UpdateContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -453,7 +458,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, UpdateContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -480,7 +485,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, MetadadosContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -491,7 +496,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, MetadadosContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -518,7 +523,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ConexaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -529,7 +534,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, ConexaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -558,7 +563,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, RequisicaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -569,7 +574,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, RequisicaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -596,7 +601,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ConfigContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -607,7 +612,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, ConfigContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -634,7 +639,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ComparacaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -645,7 +650,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, ComparacaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -672,7 +677,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, MapeamentoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -683,7 +688,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, MapeamentoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -711,7 +716,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, VariaveisContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -722,7 +727,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, VariaveisContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -750,7 +755,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, FragmentoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -761,7 +766,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, FragmentoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -799,7 +804,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, Container container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -857,7 +862,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, AmbienteContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -868,7 +873,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, AmbienteContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -895,7 +900,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, AnotacaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -906,7 +911,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, AnotacaoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -933,7 +938,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, AnexoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -944,7 +949,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, AnexoContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -971,7 +976,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void destacarEmFormulario(Formulario formulario, ArvoreContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -982,7 +987,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void clonarEmFormulario(Formulario formulario, ArvoreContainer container) {
-			int indice = getIndice(container);
+			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
@@ -1061,31 +1066,119 @@ public class Fichario extends JTabbedPane {
 		};
 	}
 
-	public void abrirFormulario(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
-			List<Form> forms, StringBuilder sbConexao, Dimension d) {
-		ContainerFormulario form = new ContainerFormulario(formulario, file);
-		form.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
-	}
+	public class Arquivos {
+		public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
+				List<Form> forms, StringBuilder sbConexao, Dimension d) {
 
-	public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao, Dimension d) {
+			if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
+				addTab(null, null);
+				int ultimoIndice = getTabCount() - 1;
+				TituloAbaS tituloAba = new TituloAbaS(Fichario.this, file);
+				setTabComponentAt(ultimoIndice, tituloAba);
+				setBackgroundAt(ultimoIndice, Color.MAGENTA);
+				setEnabledAt(ultimoIndice, false);
+				return;
+			}
 
-		if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
-			addTab(null, null);
+			Container container = conteiner.novo(formulario);
 			int ultimoIndice = getTabCount() - 1;
-			TituloAbaS tituloAba = new TituloAbaS(this, file);
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setBackgroundAt(ultimoIndice, Color.MAGENTA);
-			setEnabledAt(ultimoIndice, false);
-			return;
+			container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
+			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
+			setTitleAt(ultimoIndice, file.getName());
 		}
 
-		Container container = conteiner.novo(formulario);
-		container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
-		setToolTipTextAt(getTabCount() - 1, file.getAbsolutePath());
-		setTitleAt(getTabCount() - 1, file.getName());
+		public void selecionarAba(File file) {
+			int indice = getIndice(file);
+
+			if (indice >= 0) {
+				setSelectedIndex(indice);
+			}
+		}
+
+		public void fecharArquivo(File file) {
+			if (file == null || !file.isFile()) {
+				return;
+			}
+
+			int indice = getIndice(file);
+
+			while (indice >= 0) {
+				remove(indice);
+				indice = getIndice(file);
+			}
+		}
+
+		public boolean isAberto(File file) {
+			return getIndice(file) >= 0;
+		}
+
+		public boolean isAtivo(File file) {
+			int pos = getIndice(file);
+			int sel = getSelectedIndex();
+			return pos != -1 && pos == sel;
+		}
+
+		public int getIndice(File file) {
+			int total = getTabCount();
+
+			for (int i = 0; i < total; i++) {
+				try {
+					Component cmp = getComponentAt(i);
+
+					if (cmp instanceof Container) {
+						Container c = (Container) cmp;
+
+						if (c.getArquivo() != null && file != null
+								&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {
+							return i;
+						}
+					}
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
+			}
+
+			return -1;
+		}
+
+		public int getIndice(Component cmpConteudo) {
+			int total = getTabCount();
+
+			if (cmpConteudo != null) {
+				for (int i = 0; i < total; i++) {
+					Component cmp = getComponentAt(i);
+
+					if (cmpConteudo == cmp) {
+						return i;
+					}
+				}
+			}
+
+			return -1;
+		}
+
+		public int getIndice(Container c) {
+			int total = getTabCount();
+
+			for (int i = 0; i < total; i++) {
+				Component cmp = getComponentAt(i);
+
+				if ((cmp instanceof Container) && cmp == c) {
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
+		public void fecharTodos() {
+			int count = getTabCount();
+
+			while (count > 0) {
+				removeTabAt(0);
+				count = getTabCount();
+			}
+		}
 	}
 
 	@Override
@@ -1097,90 +1190,6 @@ public class Fichario extends JTabbedPane {
 		}
 
 		super.remove(index);
-	}
-
-	public void selecionarAba(File file) {
-		int indice = getIndice(file);
-
-		if (indice >= 0) {
-			setSelectedIndex(indice);
-		}
-	}
-
-	public void fecharArquivo(File file) {
-		if (file == null || !file.isFile()) {
-			return;
-		}
-
-		int indice = getIndice(file);
-
-		while (indice >= 0) {
-			remove(indice);
-			indice = getIndice(file);
-		}
-	}
-
-	public boolean isAberto(File file) {
-		return getIndice(file) >= 0;
-	}
-
-	public boolean isAtivo(File file) {
-		int pos = getIndice(file);
-		int sel = getSelectedIndex();
-		return pos != -1 && pos == sel;
-	}
-
-	public int getIndice(File file) {
-		int total = getTabCount();
-
-		for (int i = 0; i < total; i++) {
-			try {
-				Component cmp = getComponentAt(i);
-
-				if (cmp instanceof Container) {
-					Container c = (Container) cmp;
-
-					if (c.getArquivo() != null && file != null
-							&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {
-						return i;
-					}
-				}
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
-			}
-		}
-
-		return -1;
-	}
-
-	public int getIndice(Component cmpConteudo) {
-		int total = getTabCount();
-
-		if (cmpConteudo != null) {
-			for (int i = 0; i < total; i++) {
-				Component cmp = getComponentAt(i);
-
-				if (cmpConteudo == cmp) {
-					return i;
-				}
-			}
-		}
-
-		return -1;
-	}
-
-	public int getIndice(Container c) {
-		int total = getTabCount();
-
-		for (int i = 0; i < total; i++) {
-			Component cmp = getComponentAt(i);
-
-			if ((cmp instanceof Container) && cmp == c) {
-				return i;
-			}
-		}
-
-		return -1;
 	}
 
 	public void selecionarConexao(Conexao conexao) {
@@ -1393,15 +1402,6 @@ public class Fichario extends JTabbedPane {
 		Ponto(int x, int y) {
 			this.x = x;
 			this.y = y;
-		}
-	}
-
-	public void fecharTodos() {
-		int count = getTabCount();
-
-		while (count > 0) {
-			removeTabAt(0);
-			count = getTabCount();
 		}
 	}
 }
