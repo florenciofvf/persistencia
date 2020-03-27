@@ -1238,7 +1238,7 @@ public class Superficie extends Desktop {
 
 			inputMap().put(getKeyStroke(KeyEvent.VK_C), copiarAcao.getChave());
 			Superficie.this.getActionMap().put(copiarAcao.getChave(), copiarAcao);
-			copiarAcao.setActionListener(e -> Formulario.copiar(Superficie.this));
+			copiarAcao.setActionListener(e -> Formulario.CopiarColar.copiar(Superficie.this));
 		}
 
 		void preShow(boolean objetoSelecionado) {
@@ -1449,14 +1449,12 @@ public class Superficie extends Desktop {
 				}
 			});
 
-			colarAcao.setActionListener(e -> {
-				Formulario.colar(Superficie.this, true, popup2.xLocal, popup2.yLocal);
-				Superficie.this.repaint();
-			});
+			colarAcao.setActionListener(
+					e -> Formulario.CopiarColar.colar(Superficie.this, true, popup2.xLocal, popup2.yLocal));
 		}
 
 		void preShow(boolean contemFrames) {
-			itemColar.setEnabled(!Formulario.copiadosIsEmpty());
+			itemColar.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
 			itemAlinharEsquerdo.setEnabled(contemFrames);
 			itemAtualizarForms.setEnabled(contemFrames);
 			itemAlinharDireito.setEnabled(contemFrames);

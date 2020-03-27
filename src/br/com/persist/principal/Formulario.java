@@ -79,7 +79,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
 	private final transient List<Conexao> conexoes = new ListaArray<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
-	private static final List<Objeto> copiados = new ArrayList<>();
+	private final transient Conteiner conteiner = new Conteiner();
 	private SplitPane splitPane = Util.criarSplitPane(0);
 	private final Fichario fichario = new Fichario();
 	public static final Macro macro = new Macro();
@@ -100,53 +100,66 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer);
 	}
 
-	public static void copiar(Superficie superficie) {
-		copiados.clear();
+	public static class CopiarColar {
+		private static final List<Objeto> copiados = new ArrayList<>();
 
-		for (Objeto objeto : superficie.getSelecionados()) {
-			copiados.add(objeto.clonar());
+		private CopiarColar() {
 		}
-	}
 
-	public static boolean copiadosIsEmpty() {
-		return copiados.isEmpty();
-	}
+		public static void copiar(Superficie superficie) {
+			copiados.clear();
 
-	public static void colar(Superficie superficie, boolean b, int x, int y) {
-		superficie.limparSelecao();
-
-		for (Objeto objeto : copiados) {
-			Objeto clone = get(objeto, superficie);
-			superficie.addObjeto(clone);
-			clone.setSelecionado(true);
-			clone.setControlado(true);
-
-			if (b) {
-				clone.setX(x);
-				clone.setY(y);
+			for (Objeto objeto : superficie.getSelecionados()) {
+				copiados.add(objeto.clonar());
 			}
 		}
-	}
 
-	private static Objeto get(Objeto objeto, Superficie superficie) {
-		Objeto o = objeto.clonar();
-		o.deltaX(Objeto.DIAMETRO);
-		o.deltaY(Objeto.DIAMETRO);
-		o.setId(objeto.getId() + "-" + Objeto.getSequencia());
+		public static void colar(Superficie superficie, boolean b, int x, int y) {
+			superficie.limparSelecao();
 
-		boolean contem = superficie.contem(o);
+			for (Objeto objeto : copiados) {
+				Objeto clone = get(objeto, superficie);
+				superficie.addObjeto(clone);
+				clone.setSelecionado(true);
+				clone.setControlado(true);
 
-		while (contem) {
-			o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
-			contem = superficie.contem(o);
+				if (b) {
+					clone.setX(x);
+					clone.setY(y);
+				}
+			}
+
+			superficie.repaint();
 		}
 
-		return o;
+		public static boolean copiadosIsEmpty() {
+			return copiados.isEmpty();
+		}
+
+		private static Objeto get(Objeto objeto, Superficie superficie) {
+			Objeto o = objeto.clonar();
+			o.deltaX(Objeto.DIAMETRO);
+			o.deltaY(Objeto.DIAMETRO);
+			o.setId(objeto.getId() + "-" + Objeto.getSequencia());
+
+			boolean contem = superficie.contem(o);
+
+			while (contem) {
+				o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
+				contem = superficie.contem(o);
+			}
+
+			return o;
+		}
 	}
 
 	@Override
 	public List<Conexao> getConexoes() {
 		return conexoes;
+	}
+
+	public Conteiner getConteiner() {
+		return conteiner;
 	}
 
 	public Fichario getFichario() {
@@ -155,6 +168,24 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, fichario);
+	}
+
+	public class Conteiner {
+		public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
+			ContainerFormulario form = new ContainerFormulario(Formulario.this,
+					new File(Mensagens.getString("label.abrir_exportacao")));
+			form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+			form.setLocationRelativeTo(Formulario.this);
+			form.setVisible(true);
+		}
+
+		public void abrirImportacaoMetadado(Metadado metadado, boolean circular) {
+			ContainerFormulario form = new ContainerFormulario(Formulario.this,
+					new File(Mensagens.getString("label.abrir_importacao")));
+			form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+			form.setLocationRelativeTo(Formulario.this);
+			form.setVisible(true);
+		}
 	}
 
 	private void configurar() {
@@ -731,22 +762,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 		}
-	}
-
-	public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
-		ContainerFormulario form = new ContainerFormulario(this,
-				new File(Mensagens.getString("label.abrir_exportacao")));
-		form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-		form.setLocationRelativeTo(this);
-		form.setVisible(true);
-	}
-
-	public void abrirImportacaoMetadado(Metadado metadado, boolean circular) {
-		ContainerFormulario form = new ContainerFormulario(this,
-				new File(Mensagens.getString("label.abrir_importacao")));
-		form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-		form.setLocationRelativeTo(this);
-		form.setVisible(true);
 	}
 }
 

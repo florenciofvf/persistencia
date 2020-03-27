@@ -362,7 +362,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		}
 
 		private void eventos() {
-			copiarAcao.setActionListener(e -> Formulario.copiar(superficie));
+			copiarAcao.setActionListener(e -> Formulario.CopiarColar.copiar(superficie));
 
 			baixarAcao.setActionListener(e -> {
 				if (arquivo == null) {
@@ -389,10 +389,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			});
 
 			configAtalho(colarAcao, KeyEvent.VK_V);
-			colarAcao.setActionListener(e -> {
-				Formulario.colar(superficie, false, 0, 0);
-				superficie.repaint();
-			});
+			colarAcao.setActionListener(e -> Formulario.CopiarColar.colar(superficie, false, 0, 0));
 
 			configAtalho(excluirAcao, KeyEvent.VK_D);
 			excluirAcao.setActionListener(e -> superficie.excluirSelecionados());
