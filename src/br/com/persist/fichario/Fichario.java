@@ -1307,7 +1307,7 @@ public class Fichario extends JTabbedPane {
 				ambientes.novo(formulario, AmbienteContainer.Ambiente.get(ambiente));
 
 			} else {
-				formulario.abrirArquivo(f, true);
+				formulario.getArquivos().abrir(f, true);
 			}
 		}
 	}

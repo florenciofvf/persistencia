@@ -80,10 +80,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	private final transient List<Conexao> conexoes = new ListaArray<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private final transient Conteiner conteiner = new Conteiner();
+	private final transient Arquivos arquivos = new Arquivos();
 	private SplitPane splitPane = Util.criarSplitPane(0);
 	private final Fichario fichario = new Fichario();
 	public static final Macro macro = new Macro();
-	private File arquivo;
 
 	public Formulario() {
 		super(Mensagens.getString("label.persistencia"));
@@ -94,6 +94,35 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		Util.configWindowC(this);
 		montarLayout();
 		configurar();
+	}
+
+	private void configurar() {
+		fichario.setTabLayoutPolicy(
+				Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+		fichario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus" + Constantes.DOIS);
+				MapeamentoModelo.inicializar();
+				VariaveisModelo.inicializar();
+				FragmentoModelo.inicializar();
+				atualizarConexoes();
+
+				if (Constantes.ABRIR_AUTO_FICHARIO_SET) {
+					menuPrincipal.abrirAutoFichario();
+				}
+
+				menuPrincipal.menuLayout.aplicarLayout();
+				fichario.getSalvarAberto().abrir(Formulario.this);
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				menuPrincipal.fecharAcao.actionPerformed(null);
+			}
+		});
 	}
 
 	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer) {
@@ -162,6 +191,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		return conteiner;
 	}
 
+	public Arquivos getArquivos() {
+		return arquivos;
+	}
+
 	public Fichario getFichario() {
 		return fichario;
 	}
@@ -188,33 +221,31 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 	}
 
-	private void configurar() {
-		fichario.setTabLayoutPolicy(
-				Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
-		fichario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
+	public class Arquivos {
+		File arquivoParent;
 
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus" + Constantes.DOIS);
-				MapeamentoModelo.inicializar();
-				VariaveisModelo.inicializar();
-				FragmentoModelo.inicializar();
-				atualizarConexoes();
+		public void abrir(File file, boolean abrirNoFichario) {
+			if (file == null || !file.isFile()) {
+				return;
+			}
 
-				if (Constantes.ABRIR_AUTO_FICHARIO_SET) {
-					menuPrincipal.abrirAutoFichario();
+			try {
+				StringBuilder sbConexao = new StringBuilder();
+				List<Relacao> relacoes = new ArrayList<>();
+				List<Objeto> objetos = new ArrayList<>();
+				arquivoParent = file.getParentFile();
+				List<Form> forms = new ArrayList<>();
+				Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
+
+				if (abrirNoFichario) {
+					fichario.abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
+				} else {
+					fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
 				}
-
-				menuPrincipal.menuLayout.aplicarLayout();
-				fichario.getSalvarAberto().abrir(Formulario.this);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-				menuPrincipal.fecharAcao.actionPerformed(null);
-			}
-		});
+		}
 	}
 
 	public void atualizarConexoes() {
@@ -496,26 +527,26 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			void eventos() {
 				formularioAcao.setActionListener(e -> {
-					File[] files = getSelectedFiles(arquivo, true);
+					File[] files = getSelectedFiles(arquivos.arquivoParent, true);
 
 					if (files == null || files.length == 0) {
 						return;
 					}
 
 					for (File file : files) {
-						abrirArquivo(file, false);
+						arquivos.abrir(file, false);
 					}
 				});
 
 				ficharioAcao.setActionListener(e -> {
-					File[] files = getSelectedFiles(arquivo, true);
+					File[] files = getSelectedFiles(arquivos.arquivoParent, true);
 
 					if (files == null || files.length == 0) {
 						return;
 					}
 
 					for (File file : files) {
-						abrirArquivo(file, true);
+						arquivos.abrir(file, true);
 					}
 				});
 			}
@@ -738,29 +769,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
-		}
-	}
-
-	public void abrirArquivo(File file, boolean abrirNoFichario) {
-		if (file == null || !file.isFile()) {
-			return;
-		}
-
-		try {
-			arquivo = file.getParentFile();
-			StringBuilder sbConexao = new StringBuilder();
-			List<Relacao> relacoes = new ArrayList<>();
-			List<Objeto> objetos = new ArrayList<>();
-			List<Form> forms = new ArrayList<>();
-			Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
-
-			if (abrirNoFichario) {
-				fichario.abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
-			} else {
-				fichario.abrirFormulario(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
-			}
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 		}
 	}
 }
