@@ -45,6 +45,7 @@ import br.com.persist.util.Util;
 
 public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
+	protected final transient Alinhamento alinhamento = new Alinhamento();
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
 	private boolean ajusteAutomatico = true;
@@ -76,34 +77,52 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 	}
 
-	protected void alinharDireito() {
-		JInternalFrame[] frames = getAllFrames();
-
-		if (frames.length > 0) {
-			int l = frames[0].getWidth();
-			int x = frames[0].getX();
-			int xlAux = x + l;
-
-			for (int i = 1; i < frames.length; i++) {
-				JInternalFrame frame = frames[i];
-				int lAux = frame.getWidth();
-				int xAux = frame.getX();
-				int xlAux2 = xAux + lAux;
-				int diff = xlAux - xlAux2;
-
-				frame.setLocation(xAux + diff, frame.getY());
-			}
-		}
+	public Alinhamento getAlinhamento() {
+		return alinhamento;
 	}
 
-	protected void alinharEsquerdo() {
-		JInternalFrame[] frames = getAllFrames();
+	public class Alinhamento {
+		public void esquerdo() {
+			JInternalFrame[] frames = getAllFrames();
 
-		if (frames.length > 0) {
-			int x = frames[0].getX();
+			if (frames.length > 0) {
+				int x = frames[0].getX();
 
-			for (int i = 1; i < frames.length; i++) {
-				frames[i].setLocation(x, frames[i].getY());
+				for (int i = 1; i < frames.length; i++) {
+					frames[i].setLocation(x, frames[i].getY());
+				}
+			}
+		}
+
+		public void direito() {
+			JInternalFrame[] frames = getAllFrames();
+
+			if (frames.length > 0) {
+				int l = frames[0].getWidth();
+				int x = frames[0].getX();
+				int xlAux = x + l;
+
+				for (int i = 1; i < frames.length; i++) {
+					JInternalFrame frame = frames[i];
+					int lAux = frame.getWidth();
+					int xAux = frame.getX();
+					int xlAux2 = xAux + lAux;
+					int diff = xlAux - xlAux2;
+
+					frame.setLocation(xAux + diff, frame.getY());
+				}
+			}
+		}
+
+		public void centralizar() {
+			double largura = getSize().getWidth();
+
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame.getWidth() >= largura) {
+					frame.setLocation(0, frame.getY());
+				} else {
+					frame.setLocation((int) ((largura - frame.getWidth()) / 2), frame.getY());
+				}
 			}
 		}
 	}
@@ -142,19 +161,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 
 		if (tipo == 0) {
-			centralizar();
-		}
-	}
-
-	protected void centralizar() {
-		double largura = getSize().getWidth();
-
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame.getWidth() >= largura) {
-				frame.setLocation(0, frame.getY());
-			} else {
-				frame.setLocation((int) ((largura - frame.getWidth()) / 2), frame.getY());
-			}
+			alinhamento.centralizar();
 		}
 	}
 
@@ -226,7 +233,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			y += altura + 20;
 		}
 
-		centralizar();
+		alinhamento.centralizar();
 		ajusteDimension();
 	}
 
@@ -427,7 +434,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
-			centralizarAcao.setActionListener(e -> centralizar());
+			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuir(0));
 			larTotalAcao.setActionListener(e -> larguraTotal(0));
 		}
