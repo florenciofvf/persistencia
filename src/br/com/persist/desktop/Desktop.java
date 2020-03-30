@@ -46,6 +46,7 @@ import br.com.persist.util.Util;
 public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	protected final transient Alinhamento alinhamento = new Alinhamento();
+	protected final transient Larguras larguras = new Larguras();
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
 	private boolean ajusteAutomatico = true;
@@ -79,6 +80,10 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 
 	public Alinhamento getAlinhamento() {
 		return alinhamento;
+	}
+
+	public Larguras getLarguras() {
+		return larguras;
 	}
 
 	public class Alinhamento {
@@ -127,41 +132,43 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 	}
 
-	protected void mesmaLargura() {
-		JInternalFrame[] frames = getAllFrames();
+	public class Larguras {
+		public void mesma() {
+			JInternalFrame[] frames = getAllFrames();
 
-		if (frames.length > 0) {
-			int largura = frames[0].getWidth();
+			if (frames.length > 0) {
+				int largura = frames[0].getWidth();
 
-			for (int i = 1; i < frames.length; i++) {
-				frames[i].setSize(largura, frames[i].getHeight());
+				for (int i = 1; i < frames.length; i++) {
+					frames[i].setSize(largura, frames[i].getHeight());
+				}
 			}
 		}
-	}
 
-	protected void larguraTotal(int tipo) {
-		int largura = getSize().width - 20;
+		public void total(int tipo) {
+			int largura = getSize().width - 20;
 
-		for (JInternalFrame frame : getAllFrames()) {
-			Dimension size = frame.getSize();
-			Point local = frame.getLocation();
+			for (JInternalFrame frame : getAllFrames()) {
+				Dimension size = frame.getSize();
+				Point local = frame.getLocation();
+
+				if (tipo == 0) {
+					frame.setLocation(0, local.y);
+					frame.setSize(largura, size.height);
+
+				} else if (tipo == 1) {
+					frame.setSize(largura - local.x, size.height);
+
+				} else if (tipo == 2) {
+					int total = (local.x + size.width) - 10;
+					frame.setSize(total, size.height);
+					frame.setLocation(10, local.y);
+				}
+			}
 
 			if (tipo == 0) {
-				frame.setLocation(0, local.y);
-				frame.setSize(largura, size.height);
-
-			} else if (tipo == 1) {
-				frame.setSize(largura - local.x, size.height);
-
-			} else if (tipo == 2) {
-				int total = (local.x + size.width) - 10;
-				frame.setSize(total, size.height);
-				frame.setLocation(10, local.y);
+				alinhamento.centralizar();
 			}
-		}
-
-		if (tipo == 0) {
-			alinhamento.centralizar();
 		}
 	}
 
@@ -430,13 +437,13 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true, false));
 			dimensaoAcao3.setActionListener(e -> ajusteFormulario());
-			larTotalDirAcao.setActionListener(e -> larguraTotal(1));
-			larTotalEsqAcao.setActionListener(e -> larguraTotal(2));
+			larTotalDirAcao.setActionListener(e -> larguras.total(1));
+			larTotalEsqAcao.setActionListener(e -> larguras.total(2));
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuir(0));
-			larTotalAcao.setActionListener(e -> larguraTotal(0));
+			larTotalAcao.setActionListener(e -> larguras.total(0));
 		}
 	}
 
