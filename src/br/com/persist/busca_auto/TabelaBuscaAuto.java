@@ -5,15 +5,15 @@ import java.util.List;
 
 public class TabelaBuscaAuto {
 	private List<ContaBuscaAuto> liscaContaBuscaAuto;
+	private final String apelidoTabelaCampo;
 	private List<String> argumentos;
-	private final String descricao;
 	private final String apelido;
 	private final String campo;
 	private boolean processado;
 	private final String nome;
 
 	public TabelaBuscaAuto(String apelidoTabelaCampo) {
-		this.descricao = apelidoTabelaCampo;
+		this.apelidoTabelaCampo = apelidoTabelaCampo;
 		int pos = apelidoTabelaCampo.indexOf('.');
 		String n = apelidoTabelaCampo.substring(0, pos);
 
@@ -73,16 +73,16 @@ public class TabelaBuscaAuto {
 		this.processado = processado;
 	}
 
+	public String getApelidoTabelaCampo() {
+		return apelidoTabelaCampo;
+	}
+
 	public List<String> getArgumentos() {
 		return argumentos;
 	}
 
 	public boolean isProcessado() {
 		return processado;
-	}
-
-	public String getDescricao() {
-		return descricao;
 	}
 
 	public String getApelido() {

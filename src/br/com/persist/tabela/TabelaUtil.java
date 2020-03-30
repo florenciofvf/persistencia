@@ -118,10 +118,10 @@ public class TabelaUtil {
 		StringBuilder sb = new StringBuilder();
 
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
-			ContaBuscaAuto contabil = t.getContaBuscaAuto(id);
+			ContaBuscaAuto contaBuscaAuto = t.getContaBuscaAuto(id);
 
-			if (contabil.getValor() > 0) {
-				sb.append(t.getNome() + " [" + contabil.getValor() + "]   ");
+			if (contaBuscaAuto.getValor() > 0) {
+				sb.append(t.getNome() + " [" + contaBuscaAuto.getValor() + "]   ");
 			}
 		}
 

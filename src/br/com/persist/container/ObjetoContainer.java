@@ -492,7 +492,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				private final transient GrupoBuscaAuto grupo;
 
 				MenuBuscaAuto(GrupoBuscaAuto grupo) {
-					super(grupo.getDescricao(), Icones.CONFIG2, "nao_chave");
+					super(grupo.getNomeGrupoCampo(), Icones.CONFIG2, "nao_chave");
 
 					this.grupo = grupo;
 

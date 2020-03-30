@@ -43,7 +43,7 @@ public class GrupoBuscaAuto {
 		return tabelas;
 	}
 
-	public String getDescricao() {
+	public String getNomeGrupoCampo() {
 		return nomeGrupoCampo;
 	}
 
@@ -61,7 +61,7 @@ public class GrupoBuscaAuto {
 
 		for (int i = 0; i < tabelas.size(); i++) {
 			TabelaBuscaAuto tabela = tabelas.get(i);
-			sb.append(Constantes.TAB + tabela.getDescricao());
+			sb.append(Constantes.TAB + tabela.getApelidoTabelaCampo());
 
 			if (i + 1 < tabelas.size()) {
 				sb.append(",");
