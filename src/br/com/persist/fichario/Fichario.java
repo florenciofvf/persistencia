@@ -266,7 +266,7 @@ public class Fichario extends JTabbedPane {
 			}
 
 			desktop.ini(getGraphics());
-			SwingUtilities.invokeLater(() -> desktop.distribuir(-20));
+			SwingUtilities.invokeLater(() -> desktop.getDistribuicao().distribuir(-20));
 		}
 
 		private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie) {

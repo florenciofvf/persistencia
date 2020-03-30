@@ -45,6 +45,7 @@ import br.com.persist.util.Util;
 
 public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
+	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
 	protected final transient Larguras larguras = new Larguras();
 	private static final Logger LOG = Logger.getGlobal();
@@ -76,6 +77,10 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 				interno.ini(graphics);
 			}
 		}
+	}
+
+	public Distribuicao getDistribuicao() {
+		return distribuicao;
 	}
 
 	public Alinhamento getAlinhamento() {
@@ -229,19 +234,21 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 	}
 
-	public void distribuir(int delta) {
-		int largura = (getSize().width - 20) + delta;
-		int altura = 341;
-		int y = 10;
+	public class Distribuicao {
+		public void distribuir(int delta) {
+			int largura = (getSize().width - 20) + delta;
+			int altura = 341;
+			int y = 10;
 
-		for (JInternalFrame frame : getAllFrames()) {
-			frame.setSize(largura, altura);
-			frame.setLocation(0, y);
-			y += altura + 20;
+			for (JInternalFrame frame : getAllFrames()) {
+				frame.setSize(largura, altura);
+				frame.setLocation(0, y);
+				y += altura + 20;
+			}
+
+			alinhamento.centralizar();
+			ajusteDimension();
 		}
-
-		alinhamento.centralizar();
-		ajusteDimension();
 	}
 
 	protected void ajustarDimension() {
@@ -442,7 +449,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
-			distribuirAcao.setActionListener(e -> distribuir(0));
+			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 			larTotalAcao.setActionListener(e -> larguras.total(0));
 		}
 	}

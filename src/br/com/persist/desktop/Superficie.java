@@ -1435,7 +1435,7 @@ public class Superficie extends Desktop {
 			dimensaoAcao.setActionListener(e -> ajusteDimension());
 			ajustarAcao.setActionListener(e -> ajustarDimension());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
-			distribuirAcao.setActionListener(e -> distribuir(0));
+			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 			larTotalAcao.setActionListener(e -> larguras.total(0));
 
 			atualizarFormAcao.setActionListener(e -> {
