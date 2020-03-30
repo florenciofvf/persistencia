@@ -58,6 +58,8 @@ import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
+import br.com.persist.link_auto.GrupoLinkAuto;
+import br.com.persist.link_auto.LinkAuto;
 import br.com.persist.listener.FragmentoListener;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.listener.TabelaListener;
@@ -81,8 +83,6 @@ import br.com.persist.util.Fragmento;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
-import br.com.persist.util.LinkAuto;
-import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuPadrao2;
 import br.com.persist.util.MenuPadrao3;
@@ -96,10 +96,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private final AtomicBoolean processado = new AtomicBoolean();
 	private final TextField txtComplemento = new TextField(35);
 	private final transient ObjetoContainerListener listener;
+	private final transient List<GrupoLinkAuto> listaLink;
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient ConexaoProvedor provedor;
 	private final Toolbar toolbar = new Toolbar();
-	private final transient List<Link> listaLink;
 	private final JComboBox<Conexao> cmbConexao;
 	private final Tabela tabela = new Tabela();
 	private CabecalhoColuna cabecalhoFiltro;
@@ -115,7 +115,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
-		listaLink = LinkAuto.criarLinksAuto(objeto.getLinkAutomatico());
+		listaLink = LinkAuto.listaGrupoLinkAuto(objeto.getLinkAutomatico());
 		txtComplemento.addActionListener(new ActionListenerInner());
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		txtComplemento.addMouseListener(complementoListener);
@@ -1602,7 +1602,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					int indiceLinkSelecionado = -1;
 
 					for (int i = 0; i < listaLink.size(); i++) {
-						Link link = listaLink.get(i);
+						GrupoLinkAuto link = listaLink.get(i);
 
 						if (TabelaUtil.getIndiceColuna(tabela, link.getCampo()) == colunaClick) {
 							indiceLinkSelecionado = i;

@@ -11,8 +11,8 @@ import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
-import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.IJanela;
 
 public class ObjetoContainerFormulario extends AbstratoFormulario implements IJanela, ObjetoContainerListener {
@@ -50,7 +50,7 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	}
 
 	@Override
-	public void linkAutomatico(Link link, String argumento) {
+	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -73,13 +73,13 @@ import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
+import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
-import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
@@ -1045,7 +1045,7 @@ public class Fichario extends JTabbedPane {
 			}
 
 			@Override
-			public void linkAutomatico(Link link, String argumento) {
+			public void linkAutomatico(GrupoLinkAuto link, String argumento) {
 				throw new UnsupportedOperationException();
 			}
 

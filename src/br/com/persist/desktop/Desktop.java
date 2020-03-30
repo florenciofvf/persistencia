@@ -32,6 +32,8 @@ import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
+import br.com.persist.link_auto.GrupoLinkAuto;
+import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
@@ -39,7 +41,6 @@ import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.Icones;
-import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 
@@ -521,15 +522,15 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 	}
 
-	public void linkAutomatico(Link link, String argumento, ObjetoContainer container) {
+	public void linkAutomatico(GrupoLinkAuto link, String argumento, ObjetoContainer container) {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-				List<br.com.persist.util.LinkAuto.Tabela> tabelas = link.getTabelas();
+				List<TabelaLinkAuto> tabelas = link.getTabelas();
 
-				for (br.com.persist.util.LinkAuto.Tabela tabela : tabelas) {
+				for (TabelaLinkAuto tabela : tabelas) {
 					if (interno.ehTabela(tabela)) {
 						interno.linkAutomatico(tabela.getCampo(), argumento);
 					}

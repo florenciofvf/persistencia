@@ -10,13 +10,13 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.link_auto.GrupoLinkAuto;
+import br.com.persist.link_auto.LinkAuto;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
-import br.com.persist.util.LinkAuto;
 import br.com.persist.util.Mensagens;
-import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Util;
 
 public class ChaveBuscaContainer extends Panel {
@@ -107,11 +107,11 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	private void linkAuto(StringBuilder builder) {
-		List<Link> listaLink = LinkAuto.criarLinksAuto(!Util.estaVazio(objeto.getLinkAutomatico())
+		List<GrupoLinkAuto> listaLink = LinkAuto.listaGrupoLinkAuto(!Util.estaVazio(objeto.getLinkAutomatico())
 				? objeto.getLinkAutomatico() : Mensagens.getString("hint.linkAuto"));
 
 		for (int i = 0; i < listaLink.size(); i++) {
-			Link link = listaLink.get(i);
+			GrupoLinkAuto link = listaLink.get(i);
 			builder.append(link.getDetalhe());
 
 			if (i + 1 < listaLink.size()) {

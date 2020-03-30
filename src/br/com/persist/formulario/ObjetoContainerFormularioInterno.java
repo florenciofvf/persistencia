@@ -17,11 +17,12 @@ import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.link_auto.GrupoLinkAuto;
+import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
@@ -166,7 +167,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	@Override
-	public void linkAutomatico(Link link, String argumento) {
+	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
 		checarDesktop();
 
 		if (desktop != null) {
@@ -189,7 +190,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
-	public boolean ehTabela(br.com.persist.util.LinkAuto.Tabela tabela) {
+	public boolean ehTabela(TabelaLinkAuto tabela) {
 		return getApelido().equalsIgnoreCase(tabela.getApelido())
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
