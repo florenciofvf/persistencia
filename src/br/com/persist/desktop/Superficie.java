@@ -1424,16 +1424,16 @@ public class Superficie extends Desktop {
 
 		private void eventos() {
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
-			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false, false));
-			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true, false));
+			dimensaoAcao4.setActionListener(e -> ajuste.ajusteObjetoFormulario(false, false));
+			dimensaoAcao2.setActionListener(e -> ajuste.ajusteObjetoFormulario(true, false));
 			alinharEsquerdoAcao.setActionListener(e -> alinhamento.esquerdo());
 			alinharDireitoAcao.setActionListener(e -> alinhamento.direito());
-			dimensaoAcao3.setActionListener(e -> ajusteFormulario());
+			dimensaoAcao3.setActionListener(e -> ajuste.ajusteFormulario());
 			mesmaLarguraAcao.setActionListener(e -> larguras.mesma());
 			larTotalDirAcao.setActionListener(e -> larguras.total(1));
 			larTotalEsqAcao.setActionListener(e -> larguras.total(2));
-			dimensaoAcao.setActionListener(e -> ajusteDimension());
-			ajustarAcao.setActionListener(e -> ajustarDimension());
+			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktop());
+			ajustarAcao.setActionListener(e -> ajuste.ajustarDesktop());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 			larTotalAcao.setActionListener(e -> larguras.total(0));

@@ -48,6 +48,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
 	protected final transient Larguras larguras = new Larguras();
+	protected final transient Ajuste ajuste = new Ajuste();
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
 	private boolean ajusteAutomatico = true;
@@ -89,6 +90,10 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 
 	public Larguras getLarguras() {
 		return larguras;
+	}
+
+	public Ajuste getAjuste() {
+		return ajuste;
 	}
 
 	public class Alinhamento {
@@ -177,40 +182,104 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 	}
 
-	public void ajusteDimension() {
-		int largura = 0;
-		int altura = 0;
+	public class Ajuste {
+		public void ajusteDesktop() {
+			int largura = 0;
+			int altura = 0;
 
-		for (JInternalFrame frame : getAllFrames()) {
-			int x = frame.getX();
-			int y = frame.getY();
-			int l = frame.getWidth();
-			int a = frame.getHeight();
+			for (JInternalFrame frame : getAllFrames()) {
+				int x = frame.getX();
+				int y = frame.getY();
+				int l = frame.getWidth();
+				int a = frame.getHeight();
 
-			if (x + l > largura) {
-				largura = x + l;
+				if (x + l > largura) {
+					largura = x + l;
+				}
+
+				if (y + a > altura) {
+					altura = y + a;
+				}
+
+				frame.moveToFront();
 			}
 
-			if (y + a > altura) {
-				altura = y + a;
-			}
-
-			frame.moveToFront();
+			setPreferredSize(new Dimension(largura, altura + 41));
 		}
 
-		setPreferredSize(new Dimension(largura, altura + 41));
-	}
+		public void ajustarDesktop() {
+			String string = getWidth() + "," + getHeight();
+			Object resp = Util.getValorInputDialog(Desktop.this, "label.largura_altura", string, string);
 
-	public void ajusteFormulario() {
-		JInternalFrame[] frames = getAllFrames();
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return;
+			}
 
-		if (frames.length > 0) {
+			String[] strings = resp.toString().split(",");
+
+			if (strings != null && strings.length == 2) {
+				try {
+					int largura = Integer.parseInt(strings[0].trim());
+					int altura = Integer.parseInt(strings[1].trim());
+
+					setPreferredSize(new Dimension(largura, altura));
+					SwingUtilities.updateComponentTreeUI(getParent());
+				} catch (Exception e) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, e);
+				}
+			}
+		}
+
+		public void ajusteFormulario() {
+			JInternalFrame[] frames = getAllFrames();
+
+			if (frames.length > 0) {
+				boolean salvar = false;
+
+				ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
+
+				if (cvDeltaY == null) {
+					cvDeltaY = new ChaveValor(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
+							"" + Constantes.QUARENTA);
+					VariaveisModelo.adicionar(cvDeltaY);
+					salvar = true;
+				}
+
+				if (salvar) {
+					VariaveisModelo.salvar();
+					VariaveisModelo.inicializar();
+				}
+
+				Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
+
+				JInternalFrame frame = frames[0];
+				int deltaY = cvDeltaY.getInteiro(Constantes.QUARENTA);
+				int y = frame.getY() + frame.getHeight() + deltaY;
+
+				for (int i = 1; i < frames.length; i++) {
+					frame = frames[i];
+					frame.setLocation(frame.getX(), y);
+					y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
+				}
+			}
+		}
+
+		public void ajusteObjetoFormulario(boolean aoObjeto, boolean updateTree) {
+			JInternalFrame[] frames = getAllFrames();
+
 			boolean salvar = false;
 
-			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
+			ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
+			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
+
+			if (cvDeltaX == null) {
+				cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
+				VariaveisModelo.adicionar(cvDeltaX);
+				salvar = true;
+			}
 
 			if (cvDeltaY == null) {
-				cvDeltaY = new ChaveValor(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL, "" + Constantes.QUARENTA);
+				cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
 				VariaveisModelo.adicionar(cvDeltaY);
 				salvar = true;
 			}
@@ -220,16 +289,18 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 				VariaveisModelo.inicializar();
 			}
 
-			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
+			for (JInternalFrame frame : frames) {
+				if (frame instanceof ObjetoContainerFormularioInterno) {
+					ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+					interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(Constantes.TRINTA),
+							cvDeltaY.getInteiro(Constantes.TRINTA));
+				}
+			}
 
-			JInternalFrame frame = frames[0];
-			int deltaY = cvDeltaY.getInteiro(Constantes.QUARENTA);
-			int y = frame.getY() + frame.getHeight() + deltaY;
-
-			for (int i = 1; i < frames.length; i++) {
-				frame = frames[i];
-				frame.setLocation(frame.getX(), y);
-				y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
+			if (updateTree) {
+				SwingUtilities.updateComponentTreeUI(getParent());
+			} else {
+				repaint();
 			}
 		}
 	}
@@ -247,30 +318,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			}
 
 			alinhamento.centralizar();
-			ajusteDimension();
-		}
-	}
-
-	protected void ajustarDimension() {
-		String string = getWidth() + "," + getHeight();
-		Object resp = Util.getValorInputDialog(this, "label.largura_altura", string, string);
-
-		if (resp == null || Util.estaVazio(resp.toString())) {
-			return;
-		}
-
-		String[] strings = resp.toString().split(",");
-
-		if (strings != null && strings.length == 2) {
-			try {
-				int largura = Integer.parseInt(strings[0].trim());
-				int altura = Integer.parseInt(strings[1].trim());
-
-				setPreferredSize(new Dimension(largura, altura));
-				SwingUtilities.updateComponentTreeUI(getParent());
-			} catch (Exception e) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, e);
-			}
+			ajuste.ajusteDesktop();
 		}
 	}
 
@@ -441,13 +489,13 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 
 		private void eventos() {
-			dimensaoAcao4.setActionListener(e -> ajusteObjetoFormulario(false, false));
-			dimensaoAcao2.setActionListener(e -> ajusteObjetoFormulario(true, false));
-			dimensaoAcao3.setActionListener(e -> ajusteFormulario());
+			dimensaoAcao4.setActionListener(e -> ajuste.ajusteObjetoFormulario(false, false));
+			dimensaoAcao2.setActionListener(e -> ajuste.ajusteObjetoFormulario(true, false));
+			dimensaoAcao3.setActionListener(e -> ajuste.ajusteFormulario());
 			larTotalDirAcao.setActionListener(e -> larguras.total(1));
 			larTotalEsqAcao.setActionListener(e -> larguras.total(2));
-			ajustarAcao.setActionListener(e -> ajustarDimension());
-			dimensaoAcao.setActionListener(e -> ajusteDimension());
+			ajustarAcao.setActionListener(e -> ajuste.ajustarDesktop());
+			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktop());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 			larTotalAcao.setActionListener(e -> larguras.total(0));
@@ -496,46 +544,6 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 
 	public void setAbortarFecharComESC(boolean abortarFecharComESC) {
 		this.abortarFecharComESC = abortarFecharComESC;
-	}
-
-	public void ajusteObjetoFormulario(boolean aoObjeto, boolean updateTree) {
-		JInternalFrame[] frames = getAllFrames();
-
-		boolean salvar = false;
-
-		ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
-		ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-
-		if (cvDeltaX == null) {
-			cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
-			VariaveisModelo.adicionar(cvDeltaX);
-			salvar = true;
-		}
-
-		if (cvDeltaY == null) {
-			cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
-			VariaveisModelo.adicionar(cvDeltaY);
-			salvar = true;
-		}
-
-		if (salvar) {
-			VariaveisModelo.salvar();
-			VariaveisModelo.inicializar();
-		}
-
-		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-				interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(Constantes.TRINTA),
-						cvDeltaY.getInteiro(Constantes.TRINTA));
-			}
-		}
-
-		if (updateTree) {
-			SwingUtilities.updateComponentTreeUI(getParent());
-		} else {
-			repaint();
-		}
 	}
 
 	public boolean isAjusteAutomatico() {
