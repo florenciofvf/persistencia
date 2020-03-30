@@ -11,9 +11,10 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import br.com.persist.busca_auto.ContaBuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.modelo.OrdenacaoModelo;
-import br.com.persist.util.BuscaAuto.Grupo;
-import br.com.persist.util.BuscaAuto.Tabela.Contabil;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {
@@ -97,8 +98,7 @@ public class TabelaUtil {
 		return resposta;
 	}
 
-	public static void contabilizarTabela(Tabela tabela, br.com.persist.util.BuscaAuto.Tabela tabelaPesquisaAuto,
-			int coluna) {
+	public static void contabilizarTabela(Tabela tabela, TabelaBuscaAuto tabelaPesquisaAuto, int coluna) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		int total = modelo.getRowCount();
 
@@ -111,14 +111,14 @@ public class TabelaUtil {
 		}
 	}
 
-	public static void atualizarIndice(int i, Tabela tabela, Grupo grupo, int coluna) {
+	public static void atualizarIndice(int i, Tabela tabela, GrupoBuscaAuto grupo, int coluna) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<Object> registro = modelo.getRegistro(i);
 		String id = registro.get(coluna).toString();
 		StringBuilder sb = new StringBuilder();
 
-		for (br.com.persist.util.BuscaAuto.Tabela t : grupo.getTabelas()) {
-			Contabil contabil = t.getContabil(id);
+		for (TabelaBuscaAuto t : grupo.getTabelas()) {
+			ContaBuscaAuto contabil = t.getContaBuscaAuto(id);
 
 			if (contabil.getValor() > 0) {
 				sb.append(t.getNome() + " [" + contabil.getValor() + "]   ");

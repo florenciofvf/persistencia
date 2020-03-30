@@ -36,6 +36,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.container.AmbienteContainer;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.AnotacaoContainer;
@@ -75,7 +76,6 @@ import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
@@ -1040,7 +1040,7 @@ public class Fichario extends JTabbedPane {
 
 		private ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
 			@Override
-			public void buscaAutomatica(Grupo grupo, String argumentos) {
+			public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
 				throw new UnsupportedOperationException();
 			}
 

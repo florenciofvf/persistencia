@@ -12,13 +12,13 @@ import javax.swing.event.InternalFrameEvent;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.VariaveisModelo;
-import br.com.persist.util.BuscaAuto.Grupo;
-import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.LinkAuto.Link;
@@ -157,7 +157,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos) {
+	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
 		checarDesktop();
 
 		if (desktop != null) {
@@ -184,7 +184,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		setTitle(titulo);
 	}
 
-	public boolean ehTabela(Tabela tabela) {
+	public boolean ehTabela(TabelaBuscaAuto tabela) {
 		return getApelido().equalsIgnoreCase(tabela.getApelido())
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}

@@ -32,6 +32,8 @@ import javax.swing.SwingUtilities;
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
@@ -51,8 +53,6 @@ import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
-import br.com.persist.util.BuscaAuto.Grupo;
-import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
@@ -1646,13 +1646,13 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer objContainer) {
+	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, ObjetoContainer objContainer) {
 		super.buscaAutomatica(grupo, argumentos, objContainer);
 
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
 
-			for (Tabela tabela : grupo.getTabelas()) {
+			for (TabelaBuscaAuto tabela : grupo.getTabelas()) {
 				if (!tabela.isProcessado()) {
 					buscaAutomaticaFinal(tabela, argumentos);
 				}
@@ -1665,7 +1665,7 @@ public class Superficie extends Desktop {
 		}
 	}
 
-	private void buscaAutomaticaFinal(Tabela tabela, String argumentos) {
+	private void buscaAutomaticaFinal(TabelaBuscaAuto tabela, String argumentos) {
 		Objeto objeto = null;
 
 		for (Objeto obj : objetos) {

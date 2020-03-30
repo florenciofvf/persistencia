@@ -25,6 +25,8 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
@@ -36,8 +38,6 @@ import br.com.persist.util.Action;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
-import br.com.persist.util.BuscaAuto.Grupo;
-import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.Transferidor;
@@ -502,15 +502,15 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 	}
 
-	public void buscaAutomatica(Grupo grupo, String argumentos, ObjetoContainer container) {
+	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, ObjetoContainer container) {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-				List<Tabela> tabelas = grupo.getTabelas();
+				List<TabelaBuscaAuto> tabelas = grupo.getTabelas();
 
-				for (Tabela tabela : tabelas) {
+				for (TabelaBuscaAuto tabela : tabelas) {
 					if (interno.ehTabela(tabela)) {
 						interno.getObjetoContainer().getObjeto().setTabelaPesquisaAuto(tabela);
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);

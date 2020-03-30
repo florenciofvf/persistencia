@@ -8,10 +8,10 @@ import java.awt.event.WindowEvent;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.listener.ObjetoContainerListener;
-import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.LinkAuto.Link;
 import br.com.persist.util.IJanela;
 
@@ -45,7 +45,7 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	}
 
 	@Override
-	public void buscaAutomatica(Grupo grupo, String argumentos) {
+	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -38,6 +38,9 @@ import br.com.persist.Instrucao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
+import br.com.persist.busca_auto.BuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
@@ -71,8 +74,6 @@ import br.com.persist.tabela.Tabela;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
-import br.com.persist.util.BuscaAuto;
-import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
@@ -472,9 +473,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 
 			void complemento(Objeto objeto) {
-				List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(objeto.getBuscaAutomatica());
+				List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
 
-				for (Grupo grupo : listaGrupo) {
+				for (GrupoBuscaAuto grupo : listaGrupo) {
 					addMenu(new MenuBuscaAuto(grupo));
 				}
 
@@ -488,9 +489,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			class MenuBuscaAuto extends MenuPadrao2 {
 				private static final long serialVersionUID = 1L;
-				private final transient Grupo grupo;
+				private final transient GrupoBuscaAuto grupo;
 
-				MenuBuscaAuto(Grupo grupo) {
+				MenuBuscaAuto(GrupoBuscaAuto grupo) {
 					super(grupo.getDescricao(), Icones.CONFIG2, "nao_chave");
 
 					this.grupo = grupo;
@@ -1420,7 +1421,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g);
 
-			br.com.persist.util.BuscaAuto.Tabela tabelaPesquisaAuto = objeto.getTabelaPesquisaAuto();
+			TabelaBuscaAuto tabelaPesquisaAuto = objeto.getTabelaPesquisaAuto();
 
 			if (tabelaPesquisaAuto != null) {
 				int coluna = TabelaUtil.getIndiceColuna(tabela, tabelaPesquisaAuto.getCampo());

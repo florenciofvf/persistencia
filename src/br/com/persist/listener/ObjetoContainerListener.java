@@ -2,11 +2,11 @@ package br.com.persist.listener;
 
 import java.awt.Dimension;
 
-import br.com.persist.util.BuscaAuto.Grupo;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.util.LinkAuto.Link;
 
 public interface ObjetoContainerListener {
-	public void buscaAutomatica(Grupo grupo, String argumentos);
+	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos);
 
 	public void linkAutomatico(Link link, String argumento);
 

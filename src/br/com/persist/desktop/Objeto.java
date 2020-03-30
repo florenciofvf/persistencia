@@ -23,8 +23,8 @@ import org.xml.sax.Attributes;
 
 import br.com.persist.Instrucao;
 import br.com.persist.banco.Conexao;
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.modelo.OrdenacaoModelo;
-import br.com.persist.util.BuscaAuto.Tabela;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
@@ -34,13 +34,13 @@ public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	private static final Logger LOG = Logger.getGlobal();
+	private TabelaBuscaAuto tabelaPesquisaAuto;
 	private Map<String, String> mapaSequencias;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	public static final int DIAMETRO = 36;
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
-	private Tabela tabelaPesquisaAuto;
 	protected boolean ajusteAutoEnter;
 	protected boolean ajusteAutoForm;
 	private String prefixoNomeTabela;
@@ -742,11 +742,11 @@ public class Objeto implements Runnable {
 		this.controlado = controlado;
 	}
 
-	public Tabela getTabelaPesquisaAuto() {
+	public TabelaBuscaAuto getTabelaPesquisaAuto() {
 		return tabelaPesquisaAuto;
 	}
 
-	public void setTabelaPesquisaAuto(Tabela tabelaPesquisaAuto) {
+	public void setTabelaPesquisaAuto(TabelaBuscaAuto tabelaPesquisaAuto) {
 		this.tabelaPesquisaAuto = tabelaPesquisaAuto;
 	}
 

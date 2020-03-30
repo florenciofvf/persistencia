@@ -4,13 +4,13 @@ import java.awt.BorderLayout;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.busca_auto.BuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.util.Action;
-import br.com.persist.util.BuscaAuto;
-import br.com.persist.util.BuscaAuto.Grupo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
@@ -91,11 +91,11 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	private void buscaAuto(StringBuilder builder) {
-		List<Grupo> listaGrupo = BuscaAuto.criarGruposAuto(!Util.estaVazio(objeto.getBuscaAutomatica())
+		List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(!Util.estaVazio(objeto.getBuscaAutomatica())
 				? objeto.getBuscaAutomatica() : Mensagens.getString("hint.buscaAuto"));
 
 		for (int i = 0; i < listaGrupo.size(); i++) {
-			Grupo grupo = listaGrupo.get(i);
+			GrupoBuscaAuto grupo = listaGrupo.get(i);
 			builder.append(grupo.getDetalhe());
 
 			if (i + 1 < listaGrupo.size()) {
