@@ -106,7 +106,7 @@ public class TabelaUtil {
 			Object obj = modelo.getValueAt(i, coluna);
 
 			if (obj != null && !Util.estaVazio(obj.toString())) {
-				tabelaPesquisaAuto.contabilizar(obj.toString());
+				tabelaPesquisaAuto.votar(obj.toString());
 			}
 		}
 	}
@@ -118,10 +118,10 @@ public class TabelaUtil {
 		StringBuilder sb = new StringBuilder();
 
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
-			Candidato contaBuscaAuto = t.getContaBuscaAuto(id);
+			Candidato candidato = t.getCandidato(id);
 
-			if (contaBuscaAuto.getVotos() > 0) {
-				sb.append(t.getNome() + " [" + contaBuscaAuto.getVotos() + "]   ");
+			if (candidato.getVotos() > 0) {
+				sb.append(t.getNome() + " [" + candidato.getVotos() + "]   ");
 			}
 		}
 

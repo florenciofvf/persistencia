@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.persist.util.Candidato;
 
 public class TabelaBuscaAuto {
-	private List<Candidato> liscaContaBuscaAuto;
+	private final List<Candidato> candidatos;
 	private final String apelidoTabelaCampo;
 	private List<String> argumentos;
 	private final String apelido;
@@ -18,6 +18,7 @@ public class TabelaBuscaAuto {
 		this.apelidoTabelaCampo = apelidoTabelaCampo;
 		int pos = apelidoTabelaCampo.indexOf('.');
 		String n = apelidoTabelaCampo.substring(0, pos);
+		candidatos = new ArrayList<>();
 
 		if (n.startsWith("(")) {
 			int pos2 = n.indexOf(')');
@@ -33,25 +34,18 @@ public class TabelaBuscaAuto {
 
 	public void setArgumentos(List<String> argumentos) {
 		this.argumentos = argumentos;
+		candidatos.clear();
 
 		if (argumentos != null) {
-			liscaContaBuscaAuto = new ArrayList<>();
-
-			for (String string : argumentos) {
-				liscaContaBuscaAuto.add(new Candidato(string));
+			for (String numero : argumentos) {
+				candidatos.add(new Candidato(numero));
 			}
-		} else {
-			liscaContaBuscaAuto = null;
 		}
 	}
 
-	public Candidato getContaBuscaAuto(String tag) {
-		if (liscaContaBuscaAuto == null) {
-			return null;
-		}
-
-		for (Candidato c : liscaContaBuscaAuto) {
-			if (c.getNumero().equals(tag)) {
+	public Candidato getCandidato(String numero) {
+		for (Candidato c : candidatos) {
+			if (c.getNumero().equals(numero)) {
 				return c;
 			}
 		}
@@ -59,13 +53,9 @@ public class TabelaBuscaAuto {
 		return null;
 	}
 
-	public void contabilizar(String valor) {
-		if (liscaContaBuscaAuto == null) {
-			return;
-		}
-
-		for (Candidato c : liscaContaBuscaAuto) {
-			if (c.getNumero().equals(valor)) {
+	public void votar(String numero) {
+		for (Candidato c : candidatos) {
+			if (c.getNumero().equals(numero)) {
 				c.somarVoto();
 			}
 		}
