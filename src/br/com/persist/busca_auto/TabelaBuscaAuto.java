@@ -96,4 +96,9 @@ public class TabelaBuscaAuto {
 	public String getNome() {
 		return nome;
 	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
 }
