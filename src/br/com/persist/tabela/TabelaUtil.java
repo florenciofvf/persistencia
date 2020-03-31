@@ -113,14 +113,14 @@ public class TabelaUtil {
 		}
 	}
 
-	public static void atualizarIndice(Tabela tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
+	public static void atualizarIndicesVoto(Tabela tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<Object> registro = modelo.getRegistro(linha);
-		String id = registro.get(coluna).toString();
+		String numero = registro.get(coluna).toString();
 		StringBuilder sb = new StringBuilder();
 
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
-			Candidato candidato = t.getCandidato(id);
+			Candidato candidato = t.getCandidato(numero);
 
 			if (candidato.getVotos() > 0) {
 				sb.append(t.getNome() + " [" + candidato.getVotos() + "]   ");
