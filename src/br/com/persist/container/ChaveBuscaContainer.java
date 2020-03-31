@@ -45,6 +45,8 @@ public class ChaveBuscaContainer extends Panel {
 			mapa(builder);
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			buscaAuto(builder);
+		} else if (Tipo.BUSCA_APOS.equals(tipo)) {
+			buscaAutoApos(builder);
 		} else if (Tipo.LINK.equals(tipo)) {
 			linkAuto(builder);
 		}
@@ -106,6 +108,24 @@ public class ChaveBuscaContainer extends Panel {
 		}
 	}
 
+	private void buscaAutoApos(StringBuilder builder) {
+		// List<GrupoBuscaAuto> listaGrupo =
+		// BuscaAuto.listaGrupoBuscaAuto(!Util.estaVazio(objeto.getBuscaAutomatica())
+		// ? objeto.getBuscaAutomatica() :
+		// Mensagens.getString("hint.buscaAuto"));
+		//
+		// for (int i = 0; i < listaGrupo.size(); i++) {
+		// GrupoBuscaAuto grupo = listaGrupo.get(i);
+		// builder.append(grupo.getDetalhe());
+		//
+		// if (i + 1 < listaGrupo.size()) {
+		// builder.append(";");
+		// }
+		//
+		// builder.append(Constantes.QL);
+		// }
+	}
+
 	private void linkAuto(StringBuilder builder) {
 		List<GrupoLinkAuto> listaLink = LinkAuto.listaGrupoLinkAuto(!Util.estaVazio(objeto.getLinkAutomatico())
 				? objeto.getLinkAutomatico() : Mensagens.getString("hint.linkAuto"));
@@ -123,7 +143,7 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		CHAVE, BUSCA, LINK, MAPA
+		CHAVE, BUSCA, LINK, MAPA, BUSCA_APOS
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -153,7 +173,10 @@ public class ChaveBuscaContainer extends Panel {
 			addButton(sucessoAcao);
 
 			sucessoAcao.setActionListener(e -> {
-				if (Tipo.BUSCA.equals(tipo)) {
+				if (Tipo.BUSCA_APOS.equals(tipo)) {
+					objeto.setBuscaAutomaticaApos(Util.normalizar(textArea.getText(), false));
+
+				} else if (Tipo.BUSCA.equals(tipo)) {
 					objeto.setBuscaAutomatica(Util.normalizar(textArea.getText(), false));
 
 				} else if (Tipo.LINK.equals(tipo)) {

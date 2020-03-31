@@ -18,12 +18,18 @@ public class ChaveBuscaDialogo extends AbstratoDialogo implements IJanela {
 		container = new ChaveBuscaContainer(this, objeto, tipo);
 		montarLayout();
 
-		if (Tipo.CHAVE.equals(tipo)) {
+		if (Tipo.BUSCA_APOS.equals(tipo)) {
+			setTitle(Mensagens.getString("label.buscaAutoApos") + " - " + getTitle());
+
+		} else if (Tipo.CHAVE.equals(tipo)) {
 			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
+
 		} else if (Tipo.MAPA.equals(tipo)) {
 			setTitle(Mensagens.getString("label.mapeamento") + " - " + getTitle());
+
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			setTitle(Mensagens.getString("label.buscaAuto") + " - " + getTitle());
+
 		} else if (Tipo.LINK.equals(tipo)) {
 			setTitle(Mensagens.getString("label.linkAuto") + " - " + getTitle());
 		}

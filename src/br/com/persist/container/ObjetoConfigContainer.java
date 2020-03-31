@@ -66,6 +66,7 @@ public class ObjetoConfigContainer extends Panel {
 
 	private class PanelGeral extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private TextField txtBuscaAutomaticaApos = new TextField();
 		private TextField txtBuscaAutomatica = new TextField();
 		private TextField txtLinkAutomatico = new TextField();
 		private TextField txtFinalConsulta = new TextField();
@@ -95,6 +96,7 @@ public class ObjetoConfigContainer extends Panel {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			txtBuscaAutomaticaApos.setText(objeto.getBuscaAutomaticaApos());
 			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
 			txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
@@ -122,6 +124,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtY.setText("" + objeto.getY());
 			txtId.setText(objeto.getId());
 
+			txtBuscaAutomaticaApos.addFocusListener(focusListenerInner);
 			txtBuscaAutomatica.addFocusListener(focusListenerInner);
 			txtLinkAutomatico.addFocusListener(focusListenerInner);
 			txtFinalConsulta.addFocusListener(focusListenerInner);
@@ -139,6 +142,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
 
+			txtBuscaAutomaticaApos.addActionListener(this);
 			txtBuscaAutomatica.addActionListener(this);
 			chkAjusteAutoEnter.addActionListener(this);
 			chkAjusteAutoForm.addActionListener(this);
@@ -188,6 +192,8 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
+			container.add(criarLinha("label.buscaAutoApos", txtBuscaAutomaticaApos,
+					Mensagens.getString("hint.buscaAutoApos")));
 			container.add(criarLinha("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
 			container.add(criarLinha("label.linkAuto", txtLinkAutomatico, Mensagens.getString("hint.linkAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
@@ -203,6 +209,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm));
 			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter));
 
+			txtBuscaAutomaticaApos.addMouseListener(buscaAutomaticaAposListener);
 			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
 			txtLinkAutomatico.addMouseListener(linkAutomaticoListener);
 			txtChaveamento.addMouseListener(chaveamentoListener);
@@ -210,6 +217,20 @@ public class ObjetoConfigContainer extends Panel {
 
 			add(BorderLayout.CENTER, container);
 		}
+
+		private transient MouseListener buscaAutomaticaAposListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
+							ChaveBuscaContainer.Tipo.BUSCA_APOS);
+					form.setLocationRelativeTo(ObjetoConfigContainer.this);
+					form.setVisible(true);
+
+					txtBuscaAutomaticaApos.setText(objeto.getBuscaAutomaticaApos());
+				}
+			}
+		};
 
 		private transient MouseListener buscaAutomaticaListener = new MouseAdapter() {
 			@Override
@@ -379,7 +400,10 @@ public class ObjetoConfigContainer extends Panel {
 		}
 
 		private void actionPerformedCont2(ActionEvent e) {
-			if (chkTransparente == e.getSource()) {
+			if (txtBuscaAutomaticaApos == e.getSource()) {
+				objeto.setBuscaAutomaticaApos(txtBuscaAutomaticaApos.getText());
+
+			} else if (chkTransparente == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setTransparente(chk.isSelected());
 				Formulario.macro.transparencia(chk.isSelected());

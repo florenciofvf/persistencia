@@ -41,6 +41,7 @@ public class Objeto implements Runnable {
 	public static final int DIAMETRO = 36;
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
+	private String buscaAutomaticaApos;
 	protected boolean ajusteAutoEnter;
 	protected boolean ajusteAutoForm;
 	private String prefixoNomeTabela;
@@ -107,6 +108,7 @@ public class Objeto implements Runnable {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 
+		o.buscaAutomaticaApos = buscaAutomaticaApos;
 		o.tabelaPesquisaAuto = tabelaPesquisaAuto;
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
@@ -421,6 +423,14 @@ public class Objeto implements Runnable {
 		return buscaAutomatica;
 	}
 
+	public String getBuscaAutomaticaApos() {
+		if (Util.estaVazio(buscaAutomaticaApos)) {
+			buscaAutomaticaApos = "";
+		}
+
+		return buscaAutomaticaApos;
+	}
+
 	public String getLinkAutomatico() {
 		if (Util.estaVazio(linkAutomatico)) {
 			linkAutomatico = "";
@@ -443,6 +453,10 @@ public class Objeto implements Runnable {
 
 	public void setBuscaAutomatica(String buscaAutomatica) {
 		this.buscaAutomatica = buscaAutomatica;
+	}
+
+	public void setBuscaAutomaticaApos(String buscaAutomaticaApos) {
+		this.buscaAutomaticaApos = buscaAutomaticaApos;
 	}
 
 	public void setLinkAutomatico(String linkAutomatico) {
@@ -539,6 +553,7 @@ public class Objeto implements Runnable {
 		colunaInfo = Boolean.parseBoolean(attr.getValue("colunaInfo"));
 		abrirAuto = Boolean.parseBoolean(attr.getValue("abrirAuto"));
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
+		buscaAutomaticaApos = attr.getValue("buscaAutomaticaApos");
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
@@ -567,6 +582,7 @@ public class Objeto implements Runnable {
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
+		util.atributo("buscaAutomaticaApos", Util.escapar(getBuscaAutomaticaApos()));
 		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
 		util.atributo("linkAutomatico", Util.escapar(getLinkAutomatico()));
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
