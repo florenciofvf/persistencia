@@ -1,13 +1,13 @@
 package br.com.persist.link_auto;
 
 public class TabelaLinkAuto {
-	private final String descricao;
+	private final String apelidoTabelaCampo;
 	private final String apelido;
 	private final String campo;
 	private final String nome;
 
 	public TabelaLinkAuto(String apelidoTabelaCampo) {
-		this.descricao = apelidoTabelaCampo;
+		this.apelidoTabelaCampo = apelidoTabelaCampo;
 		int pos = apelidoTabelaCampo.indexOf('.');
 		String n = apelidoTabelaCampo.substring(0, pos);
 
@@ -23,8 +23,8 @@ public class TabelaLinkAuto {
 		campo = apelidoTabelaCampo.substring(pos + 1);
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getApelidoTabelaCampo() {
+		return apelidoTabelaCampo;
 	}
 
 	public String getApelido() {

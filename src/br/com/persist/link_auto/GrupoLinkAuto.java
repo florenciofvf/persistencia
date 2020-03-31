@@ -32,7 +32,7 @@ public class GrupoLinkAuto {
 
 		for (int i = 0; i < tabelas.size(); i++) {
 			TabelaLinkAuto tabela = tabelas.get(i);
-			sb.append(Constantes.TAB + tabela.getDescricao());
+			sb.append(Constantes.TAB + tabela.getApelidoTabelaCampo());
 
 			if (i + 1 < tabelas.size()) {
 				sb.append(",");
