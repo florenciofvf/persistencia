@@ -11,10 +11,10 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import br.com.persist.busca_auto.ContaBuscaAuto;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.modelo.OrdenacaoModelo;
+import br.com.persist.util.Candidato;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {
@@ -118,10 +118,10 @@ public class TabelaUtil {
 		StringBuilder sb = new StringBuilder();
 
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
-			ContaBuscaAuto contaBuscaAuto = t.getContaBuscaAuto(id);
+			Candidato contaBuscaAuto = t.getContaBuscaAuto(id);
 
-			if (contaBuscaAuto.getValor() > 0) {
-				sb.append(t.getNome() + " [" + contaBuscaAuto.getValor() + "]   ");
+			if (contaBuscaAuto.getVotos() > 0) {
+				sb.append(t.getNome() + " [" + contaBuscaAuto.getVotos() + "]   ");
 			}
 		}
 

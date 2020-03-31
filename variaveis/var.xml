@@ -31,4 +31,9 @@
 			30
 		</valor>
 	</chave_valor>
+	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_REGISTROS">
+		<valor>
+			10
+		</valor>
+	</chave_valor>
 </variaveis>

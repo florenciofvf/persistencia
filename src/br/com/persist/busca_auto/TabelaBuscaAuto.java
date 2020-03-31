@@ -3,8 +3,10 @@ package br.com.persist.busca_auto;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.util.Candidato;
+
 public class TabelaBuscaAuto {
-	private List<ContaBuscaAuto> liscaContaBuscaAuto;
+	private List<Candidato> liscaContaBuscaAuto;
 	private final String apelidoTabelaCampo;
 	private List<String> argumentos;
 	private final String apelido;
@@ -36,20 +38,20 @@ public class TabelaBuscaAuto {
 			liscaContaBuscaAuto = new ArrayList<>();
 
 			for (String string : argumentos) {
-				liscaContaBuscaAuto.add(new ContaBuscaAuto(string));
+				liscaContaBuscaAuto.add(new Candidato(string));
 			}
 		} else {
 			liscaContaBuscaAuto = null;
 		}
 	}
 
-	public ContaBuscaAuto getContaBuscaAuto(String tag) {
+	public Candidato getContaBuscaAuto(String tag) {
 		if (liscaContaBuscaAuto == null) {
 			return null;
 		}
 
-		for (ContaBuscaAuto c : liscaContaBuscaAuto) {
-			if (c.tag.equals(tag)) {
+		for (Candidato c : liscaContaBuscaAuto) {
+			if (c.getNumero().equals(tag)) {
 				return c;
 			}
 		}
@@ -62,9 +64,9 @@ public class TabelaBuscaAuto {
 			return;
 		}
 
-		for (ContaBuscaAuto c : liscaContaBuscaAuto) {
-			if (c.tag.equals(valor)) {
-				c.valor++;
+		for (Candidato c : liscaContaBuscaAuto) {
+			if (c.getNumero().equals(valor)) {
+				c.somarVoto();
 			}
 		}
 	}
