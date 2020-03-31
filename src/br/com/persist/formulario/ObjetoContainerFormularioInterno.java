@@ -14,6 +14,8 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
+import br.com.persist.busca_auto_apos.TabelaBuscaAutoApos;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
@@ -176,6 +178,15 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	@Override
+	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos) {
+		checarDesktop();
+
+		if (desktop != null) {
+			desktop.buscaAutomaticaApos(grupoApos, container);
+		}
+	}
+
+	@Override
 	public Dimension getDimensoes() {
 		return getSize();
 	}
@@ -186,6 +197,11 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	public boolean ehTabela(TabelaBuscaAuto tabela) {
+		return getApelido().equalsIgnoreCase(tabela.getApelido())
+				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
+	}
+
+	public boolean ehTabela(TabelaBuscaAutoApos tabela) {
 		return getApelido().equalsIgnoreCase(tabela.getApelido())
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
@@ -201,6 +217,10 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 	public void buscaAutomatica(String campo, String argumentos) {
 		container.buscaAutomatica(campo, argumentos);
+	}
+
+	public void buscaAutomaticaApos() {
+		container.buscaAutomaticaApos();
 	}
 
 	public void linkAutomatico(String campo, String argumento) {

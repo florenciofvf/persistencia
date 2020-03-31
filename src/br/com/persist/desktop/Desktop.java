@@ -27,6 +27,8 @@ import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
+import br.com.persist.busca_auto_apos.TabelaBuscaAutoApos;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
@@ -516,6 +518,23 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 						interno.getObjetoContainer().getObjeto().setTabelaPesquisaAuto(tabela);
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 						tabela.setProcessado(true);
+					}
+				}
+			}
+		}
+	}
+
+	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos, ObjetoContainer container) {
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				List<TabelaBuscaAutoApos> tabelas = grupoApos.getTabelas();
+
+				for (TabelaBuscaAutoApos tabela : tabelas) {
+					if (interno.ehTabela(tabela)) {
+						interno.buscaAutomaticaApos();
 					}
 				}
 			}

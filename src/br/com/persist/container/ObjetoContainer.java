@@ -543,6 +543,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
 
+					if (grupo.isProcessado() && grupoApos != null) {
+						listener.buscaAutomaticaApos(grupoApos);
+					}
+
 					if (!objeto.isColunaInfo()) {
 						return;
 					}
@@ -1554,6 +1558,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		tamanhoAutomatico = true;
 		ObjetoContainer.this.actionPerformed(null);
 		tamanhoAutomatico = false;
+	}
+
+	public void buscaAutomaticaApos() {
+		toolbar.baixar.limpar2Acao.actionPerformed(null);
 	}
 
 	public void linkAutomatico(String campo, String argumento) {
