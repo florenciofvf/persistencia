@@ -6,6 +6,8 @@ import java.util.Map;
 
 import br.com.persist.busca_auto.BuscaAuto;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto_apos.BuscaAutoApos;
+import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
@@ -41,12 +43,16 @@ public class ChaveBuscaContainer extends Panel {
 
 		if (Tipo.CHAVE.equals(tipo)) {
 			chave(builder);
+
 		} else if (Tipo.MAPA.equals(tipo)) {
 			mapa(builder);
+
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			buscaAuto(builder);
+
 		} else if (Tipo.BUSCA_APOS.equals(tipo)) {
 			buscaAutoApos(builder);
+
 		} else if (Tipo.LINK.equals(tipo)) {
 			linkAuto(builder);
 		}
@@ -109,21 +115,20 @@ public class ChaveBuscaContainer extends Panel {
 	}
 
 	private void buscaAutoApos(StringBuilder builder) {
-		// List<GrupoBuscaAuto> listaGrupo =
-		// BuscaAuto.listaGrupoBuscaAuto(!Util.estaVazio(objeto.getBuscaAutomatica())
-		// ? objeto.getBuscaAutomatica() :
-		// Mensagens.getString("hint.buscaAuto"));
-		//
-		// for (int i = 0; i < listaGrupo.size(); i++) {
-		// GrupoBuscaAuto grupo = listaGrupo.get(i);
-		// builder.append(grupo.getDetalhe());
-		//
-		// if (i + 1 < listaGrupo.size()) {
-		// builder.append(";");
-		// }
-		//
-		// builder.append(Constantes.QL);
-		// }
+		List<GrupoBuscaAutoApos> listaGrupoApos = BuscaAutoApos
+				.listaGrupoBuscaAutoApos(!Util.estaVazio(objeto.getBuscaAutomaticaApos())
+						? objeto.getBuscaAutomaticaApos() : Mensagens.getString("hint.buscaAutoApos"));
+
+		for (int i = 0; i < listaGrupoApos.size(); i++) {
+			GrupoBuscaAutoApos grupoApos = listaGrupoApos.get(i);
+			builder.append(grupoApos.getDetalhe());
+
+			if (i + 1 < listaGrupoApos.size()) {
+				builder.append(";");
+			}
+
+			builder.append(Constantes.QL);
+		}
 	}
 
 	private void linkAuto(StringBuilder builder) {
