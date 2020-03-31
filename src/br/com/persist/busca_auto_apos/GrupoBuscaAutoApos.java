@@ -3,6 +3,7 @@ package br.com.persist.busca_auto_apos;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.util.Constantes;
 
 public class GrupoBuscaAutoApos {
@@ -15,6 +16,10 @@ public class GrupoBuscaAutoApos {
 		this.campo = nomeGrupoCampo.substring(pos + 1);
 		this.nomeGrupoCampo = nomeGrupoCampo;
 		tabelas = new ArrayList<>();
+	}
+
+	public boolean igual(GrupoBuscaAuto grupo) {
+		return grupo != null && nomeGrupoCampo.equals(grupo.getNomeGrupoCampo());
 	}
 
 	public List<TabelaBuscaAutoApos> getTabelas() {

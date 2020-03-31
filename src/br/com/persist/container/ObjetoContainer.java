@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -41,6 +42,8 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.busca_auto.BuscaAuto;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.busca_auto_apos.BuscaAutoApos;
+import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.Label;
@@ -473,14 +476,34 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 
 			void complemento(Objeto objeto) {
+				List<GrupoBuscaAutoApos> listaGrupoApos = BuscaAutoApos
+						.listaGrupoBuscaAutoApos(objeto.getBuscaAutomatica());
 				List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
 
 				for (GrupoBuscaAuto grupo : listaGrupo) {
-					addMenu(new MenuBuscaAuto(grupo));
+					GrupoBuscaAutoApos grupoApos = proximo(listaGrupoApos, grupo);
+					addMenu(new MenuBuscaAuto(grupo, grupoApos));
 				}
 
 				habilitado = !listaGrupo.isEmpty();
 				setEnabled(habilitado);
+			}
+
+			GrupoBuscaAutoApos proximo(List<GrupoBuscaAutoApos> listaGrupoApos, GrupoBuscaAuto grupo) {
+				GrupoBuscaAutoApos resp = null;
+
+				Iterator<GrupoBuscaAutoApos> it = listaGrupoApos.iterator();
+
+				while (it.hasNext()) {
+					GrupoBuscaAutoApos apos = it.next();
+
+					if (apos.igual(grupo)) {
+						resp = apos;
+						it.remove();
+					}
+				}
+
+				return resp;
 			}
 
 			void habilitar(boolean b) {
@@ -489,11 +512,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			class MenuBuscaAuto extends MenuPadrao2 {
 				private static final long serialVersionUID = 1L;
+				private final transient GrupoBuscaAutoApos grupoApos;
 				private final transient GrupoBuscaAuto grupo;
 
-				MenuBuscaAuto(GrupoBuscaAuto grupo) {
+				MenuBuscaAuto(GrupoBuscaAuto grupo, GrupoBuscaAutoApos grupoApos) {
 					super(grupo.getNomeGrupoCampo(), Icones.CONFIG2, "nao_chave");
 
+					this.grupoApos = grupoApos;
 					this.grupo = grupo;
 
 					semAspasAcao.setActionListener(e -> processar(false));
