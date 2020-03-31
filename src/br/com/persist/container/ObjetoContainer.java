@@ -1450,7 +1450,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g);
 
-			TabelaBuscaAuto tabelaPesquisaAuto = objeto.getTabelaPesquisaAuto();
+			TabelaBuscaAuto tabelaPesquisaAuto = objeto.getTabelaBuscaAuto();
 
 			if (tabelaPesquisaAuto != null) {
 				int coluna = TabelaUtil.getIndiceColuna(tabela, tabelaPesquisaAuto.getCampo());
@@ -1459,7 +1459,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					TabelaUtil.contabilizarTabela(tabela, tabelaPesquisaAuto, coluna);
 				}
 
-				objeto.setTabelaPesquisaAuto(null);
+				objeto.setTabelaBuscaAuto(null);
 			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);

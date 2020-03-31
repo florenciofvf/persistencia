@@ -515,7 +515,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 
 				for (TabelaBuscaAuto tabela : tabelas) {
 					if (interno.ehTabela(tabela)) {
-						interno.getObjetoContainer().getObjeto().setTabelaPesquisaAuto(tabela);
+						interno.getObjetoContainer().getObjeto().setTabelaBuscaAuto(tabela);
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 						tabela.setProcessado(true);
 					}

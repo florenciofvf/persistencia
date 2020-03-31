@@ -34,10 +34,10 @@ public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	private static final Logger LOG = Logger.getGlobal();
-	private TabelaBuscaAuto tabelaPesquisaAuto;
 	private Map<String, String> mapaSequencias;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
+	private TabelaBuscaAuto tabelaBuscaAuto;
 	public static final int DIAMETRO = 36;
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
@@ -109,7 +109,7 @@ public class Objeto implements Runnable {
 		Objeto o = new Objeto(x, y, cor, icone);
 
 		o.buscaAutomaticaApos = buscaAutomaticaApos;
-		o.tabelaPesquisaAuto = tabelaPesquisaAuto;
+		o.tabelaBuscaAuto = tabelaBuscaAuto;
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
@@ -758,12 +758,12 @@ public class Objeto implements Runnable {
 		this.controlado = controlado;
 	}
 
-	public TabelaBuscaAuto getTabelaPesquisaAuto() {
-		return tabelaPesquisaAuto;
+	public TabelaBuscaAuto getTabelaBuscaAuto() {
+		return tabelaBuscaAuto;
 	}
 
-	public void setTabelaPesquisaAuto(TabelaBuscaAuto tabelaPesquisaAuto) {
-		this.tabelaPesquisaAuto = tabelaPesquisaAuto;
+	public void setTabelaBuscaAuto(TabelaBuscaAuto tabelaBuscaAuto) {
+		this.tabelaBuscaAuto = tabelaBuscaAuto;
 	}
 
 	public boolean isCcsc() {

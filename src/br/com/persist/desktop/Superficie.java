@@ -1687,7 +1687,7 @@ public class Superficie extends Desktop {
 
 		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 		Conexao conexao = container.getConexaoPadrao();
-		objeto.setTabelaPesquisaAuto(tabela);
+		objeto.setTabelaBuscaAuto(tabela);
 
 		if (Preferencias.isAbrirAutoDestacado()) {
 			ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());

@@ -8,7 +8,6 @@ import br.com.persist.util.Candidato;
 public class TabelaBuscaAuto {
 	private final List<Candidato> candidatos;
 	private final String apelidoTabelaCampo;
-	private List<String> argumentos;
 	private final String apelido;
 	private final String campo;
 	private boolean processado;
@@ -33,7 +32,6 @@ public class TabelaBuscaAuto {
 	}
 
 	public void setArgumentos(List<String> argumentos) {
-		this.argumentos = argumentos;
 		candidatos.clear();
 
 		if (argumentos != null) {
@@ -67,10 +65,6 @@ public class TabelaBuscaAuto {
 
 	public String getApelidoTabelaCampo() {
 		return apelidoTabelaCampo;
-	}
-
-	public List<String> getArgumentos() {
-		return argumentos;
 	}
 
 	public boolean isProcessado() {
