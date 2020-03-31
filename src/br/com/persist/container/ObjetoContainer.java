@@ -536,7 +536,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
 
 					for (int linha : indices) {
-						TabelaUtil.atualizarIndice(linha, coluna, tabela, grupo);
+						TabelaUtil.atualizarIndice(tabela, linha, coluna, grupo);
 					}
 
 					TabelaUtil.ajustar(tabela, ObjetoContainer.this.getGraphics());

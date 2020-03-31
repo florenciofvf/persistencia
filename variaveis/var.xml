@@ -28,12 +28,12 @@
 	</chave_valor>
 	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO">
 		<valor>
-			30
+			40
 		</valor>
 	</chave_valor>
 	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_REGISTROS">
 		<valor>
-			10
+			25
 		</valor>
 	</chave_valor>
 </variaveis>

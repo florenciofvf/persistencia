@@ -113,9 +113,9 @@ public class TabelaUtil {
 		}
 	}
 
-	public static void atualizarIndice(int i, int coluna, Tabela tabela, GrupoBuscaAuto grupo) {
+	public static void atualizarIndice(Tabela tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
-		List<Object> registro = modelo.getRegistro(i);
+		List<Object> registro = modelo.getRegistro(linha);
 		String id = registro.get(coluna).toString();
 		StringBuilder sb = new StringBuilder();
 
