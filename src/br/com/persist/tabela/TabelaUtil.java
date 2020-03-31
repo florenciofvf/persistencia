@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -11,6 +12,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.modelo.OrdenacaoModelo;
@@ -111,7 +113,7 @@ public class TabelaUtil {
 		}
 	}
 
-	public static void atualizarIndice(int i, Tabela tabela, GrupoBuscaAuto grupo, int coluna) {
+	public static void atualizarIndice(int i, int coluna, Tabela tabela, GrupoBuscaAuto grupo) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<Object> registro = modelo.getRegistro(i);
 		String id = registro.get(coluna).toString();
@@ -130,5 +132,22 @@ public class TabelaUtil {
 		}
 
 		registro.set(registro.size() - 1, sb.toString());
+	}
+
+	public static GrupoBuscaAutoApos proximo(List<GrupoBuscaAutoApos> listaGrupoApos, GrupoBuscaAuto grupo) {
+		GrupoBuscaAutoApos resp = null;
+
+		Iterator<GrupoBuscaAutoApos> it = listaGrupoApos.iterator();
+
+		while (it.hasNext()) {
+			GrupoBuscaAutoApos apos = it.next();
+
+			if (apos.igual(grupo)) {
+				resp = apos;
+				it.remove();
+			}
+		}
+
+		return resp;
 	}
 }

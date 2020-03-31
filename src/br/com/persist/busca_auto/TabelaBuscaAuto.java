@@ -31,11 +31,11 @@ public class TabelaBuscaAuto {
 		campo = apelidoTabelaCampo.substring(pos + 1);
 	}
 
-	public void setArgumentos(List<String> argumentos) {
+	public void setNumeroCandidatos(List<String> numeros) {
 		candidatos.clear();
 
-		if (argumentos != null) {
-			for (String numero : argumentos) {
+		if (numeros != null) {
+			for (String numero : numeros) {
 				candidatos.add(new Candidato(numero));
 			}
 		}

@@ -17,9 +17,9 @@ public class GrupoBuscaAuto {
 		tabelas = new ArrayList<>();
 	}
 
-	public void setArgumentos(List<String> argumentos) {
+	public void setNumeroCandidatos(List<String> numeros) {
 		for (TabelaBuscaAuto tabela : tabelas) {
-			tabela.setArgumentos(argumentos);
+			tabela.setNumeroCandidatos(numeros);
 		}
 	}
 
