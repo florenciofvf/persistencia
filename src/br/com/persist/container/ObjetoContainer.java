@@ -477,7 +477,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			void complemento(Objeto objeto) {
 				List<GrupoBuscaAutoApos> listaGrupoApos = BuscaAutoApos
-						.listaGrupoBuscaAutoApos(objeto.getBuscaAutomatica());
+						.listaGrupoBuscaAutoApos(objeto.getBuscaAutomaticaApos());
 				List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
 
 				for (GrupoBuscaAuto grupo : listaGrupo) {
