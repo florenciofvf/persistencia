@@ -98,7 +98,7 @@ public class TabelaUtil {
 		return resposta;
 	}
 
-	public static void contabilizarTabela(Tabela tabela, TabelaBuscaAuto tabelaPesquisaAuto, int coluna) {
+	public static void contabilizarVotos(Tabela tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		int total = modelo.getRowCount();
 
@@ -106,7 +106,7 @@ public class TabelaUtil {
 			Object obj = modelo.getValueAt(i, coluna);
 
 			if (obj != null && !Util.estaVazio(obj.toString())) {
-				tabelaPesquisaAuto.votar(obj.toString());
+				tabelaBuscaAuto.votar(obj.toString());
 			}
 		}
 	}

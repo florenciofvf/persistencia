@@ -1450,13 +1450,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			TabelaUtil.ajustar(tabela, g == null ? getGraphics() : g);
 
-			TabelaBuscaAuto tabelaPesquisaAuto = objeto.getTabelaBuscaAuto();
+			TabelaBuscaAuto tabelaBuscaAuto = objeto.getTabelaBuscaAuto();
 
-			if (tabelaPesquisaAuto != null) {
-				int coluna = TabelaUtil.getIndiceColuna(tabela, tabelaPesquisaAuto.getCampo());
+			if (tabelaBuscaAuto != null) {
+				int coluna = TabelaUtil.getIndiceColuna(tabela, tabelaBuscaAuto.getCampo());
 
 				if (coluna != -1) {
-					TabelaUtil.contabilizarTabela(tabela, tabelaPesquisaAuto, coluna);
+					TabelaUtil.contabilizarVotos(tabela, coluna, tabelaBuscaAuto);
 				}
 
 				objeto.setTabelaBuscaAuto(null);
