@@ -8,8 +8,8 @@ import java.awt.event.WindowEvent;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
+import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
-import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.link_auto.GrupoLinkAuto;

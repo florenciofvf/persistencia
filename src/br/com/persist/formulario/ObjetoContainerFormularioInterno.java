@@ -12,10 +12,10 @@ import javax.swing.event.InternalFrameEvent;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
+import br.com.persist.busca_apos.GrupoBuscaAutoApos;
+import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
-import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
-import br.com.persist.busca_auto_apos.TabelaBuscaAutoApos;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;

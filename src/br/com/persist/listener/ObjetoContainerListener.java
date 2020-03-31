@@ -2,8 +2,8 @@ package br.com.persist.listener;
 
 import java.awt.Dimension;
 
+import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
-import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
 import br.com.persist.link_auto.GrupoLinkAuto;
 
 public interface ObjetoContainerListener {

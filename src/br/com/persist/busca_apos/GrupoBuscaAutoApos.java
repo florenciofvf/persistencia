@@ -1,4 +1,4 @@
-package br.com.persist.busca_auto_apos;
+package br.com.persist.busca_apos;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -25,10 +25,10 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
+import br.com.persist.busca_apos.GrupoBuscaAutoApos;
+import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
-import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
-import br.com.persist.busca_auto_apos.TabelaBuscaAutoApos;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;

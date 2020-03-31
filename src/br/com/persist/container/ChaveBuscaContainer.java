@@ -4,10 +4,10 @@ import java.awt.BorderLayout;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.busca_apos.BuscaAutoApos;
+import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.BuscaAuto;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
-import br.com.persist.busca_auto_apos.BuscaAutoApos;
-import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;

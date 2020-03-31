@@ -36,8 +36,8 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
+import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
-import br.com.persist.busca_auto_apos.GrupoBuscaAutoApos;
 import br.com.persist.container.AmbienteContainer;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.AnotacaoContainer;

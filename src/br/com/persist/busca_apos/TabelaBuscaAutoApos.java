@@ -1,4 +1,4 @@
-package br.com.persist.busca_auto_apos;
+package br.com.persist.busca_apos;
 
 public class TabelaBuscaAutoApos {
 	private final String apelidoTabela;
