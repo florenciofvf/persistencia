@@ -581,6 +581,7 @@ public class Objeto implements Runnable {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
+		util.atributo("id", Util.escapar(id));
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
 		util.atributo("buscaAutomaticaApos", Util.escapar(getBuscaAutomaticaApos()));
 		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
@@ -600,7 +601,6 @@ public class Objeto implements Runnable {
 		util.atributo("desenharId", desenharId);
 		util.atributo("colunaInfo", colunaInfo);
 		util.atributo("abrirAuto", abrirAuto);
-		util.atributo("id", Util.escapar(id));
 		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
 		util.atributo("chaves", getChaves());
