@@ -1438,7 +1438,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				int coluna = TabelaUtil.getIndiceColuna(tabela, tabelaBuscaAuto.getCampo());
 
 				if (coluna != -1) {
-					TabelaUtil.contabilizarColetores(tabela, coluna, tabelaBuscaAuto);
+					TabelaUtil.checarColetores(tabela, coluna, tabelaBuscaAuto);
 				}
 
 				objeto.setTabelaBuscaAuto(null);

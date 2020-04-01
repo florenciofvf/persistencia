@@ -100,7 +100,7 @@ public class TabelaUtil {
 		return resposta;
 	}
 
-	public static void contabilizarColetores(Tabela tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
+	public static void checarColetores(Tabela tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		int total = modelo.getRowCount();
 

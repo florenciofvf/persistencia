@@ -6,8 +6,8 @@ import java.util.List;
 import br.com.persist.util.Coletor;
 
 public class TabelaBuscaAuto {
-	private final List<Coletor> coletores;
 	private final String apelidoTabelaCampo;
+	private final List<Coletor> coletores;
 	private final String apelido;
 	private final String campo;
 	private boolean processado;
