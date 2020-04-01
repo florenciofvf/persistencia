@@ -3,13 +3,13 @@ package br.com.persist.util;
 import java.awt.Dimension;
 
 public class Constantes {
+	public static final String ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER = "ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER";
+	public static final String ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS";
+	public static final String ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS";
 	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
-	public static final String ALTURMA_MINIMA_FORMULARIO_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_REGISTROS";
-	public static final String ALTURMA_MINIMA_FORMULARIO_DADOS = "ALTURMA_MINIMA_FORMULARIO_DADOS";
 	public static final String ABRIR_AUTO_FICHARIO_CONFIGURACAO = "abrir_com_configuracao";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
-	public static final String ALTURMA_MINIMA_FORMULARIO = "ALTURMA_MINIMA_FORMULARIO";
 	public static final String ABRIR_AUTO_FICHARIO_MAPEAMENTO = "abrir_com_mapeamento";
 	public static final String ABRIR_AUTO_FICHARIO_COMPARACAO = "abrir_com_comparacao";
 	public static final String ABRIR_AUTO_FICHARIO_REQUISICAO = "abrir_com_requisicao";

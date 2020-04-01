@@ -21,19 +21,19 @@
 			30
 		</valor>
 	</chave_valor>
-	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_DADOS">
+	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER">
 		<valor>
 			70
 		</valor>
 	</chave_valor>
-	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO">
+	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS">
 		<valor>
-			40
+			10
 		</valor>
 	</chave_valor>
-	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_REGISTROS">
+	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS">
 		<valor>
-			25
+			30
 		</valor>
 	</chave_valor>
 </variaveis>

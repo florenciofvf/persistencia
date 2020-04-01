@@ -116,25 +116,28 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 		boolean salvar = false;
 
-		ChaveValor cvMinimoRegistros = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO_REGISTROS);
-		ChaveValor cvMinimoDados = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS);
-		ChaveValor cvMinimo = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO);
+		ChaveValor cvDadosToolbarTableHeader = VariaveisModelo
+				.get(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
+		ChaveValor cvMaximoRegistros = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
+		ChaveValor cvMinimoForm = VariaveisModelo.get(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
 
-		if (cvMinimoRegistros == null) {
-			cvMinimoRegistros = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_REGISTROS, "" + Constantes.DEZ);
-			VariaveisModelo.adicionar(cvMinimoRegistros);
+		if (cvDadosToolbarTableHeader == null) {
+			cvDadosToolbarTableHeader = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
+					"" + Constantes.SETENTA);
+			VariaveisModelo.adicionar(cvDadosToolbarTableHeader);
 			salvar = true;
 		}
 
-		if (cvMinimoDados == null) {
-			cvMinimoDados = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS, "" + Constantes.SETENTA);
-			VariaveisModelo.adicionar(cvMinimoDados);
+		if (cvMaximoRegistros == null) {
+			cvMaximoRegistros = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
+					"" + Constantes.DEZ);
+			VariaveisModelo.adicionar(cvMaximoRegistros);
 			salvar = true;
 		}
 
-		if (cvMinimo == null) {
-			cvMinimo = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO, "" + Constantes.TRINTA);
-			VariaveisModelo.adicionar(cvMinimo);
+		if (cvMinimoForm == null) {
+			cvMinimoForm = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS, "" + Constantes.TRINTA);
+			VariaveisModelo.adicionar(cvMinimoForm);
 			salvar = true;
 		}
 
@@ -143,16 +146,18 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 			VariaveisModelo.inicializar();
 		}
 
-		int minimoRegistros = cvMinimoRegistros.getInteiro(Constantes.DEZ);
-		int minimoDados = cvMinimoDados.getInteiro(Constantes.SETENTA);
-		int minimo = cvMinimo.getInteiro(Constantes.TRINTA);
+		int dadosToolbarTableHeader = cvDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
+		int maximoRegistros = cvMaximoRegistros.getInteiro(Constantes.DEZ);
+		int minimoForm = cvMinimoForm.getInteiro(Constantes.TRINTA);
 
 		if (total < 1) {
-			setSize(d.width, minimo);
-		} else if (total <= minimoRegistros) {
-			setSize(d.width, minimoDados + total * 20 + (total == 1 ? 5 : -total));
+			setSize(d.width, minimoForm);
+
+		} else if (total <= maximoRegistros) {
+			setSize(d.width, dadosToolbarTableHeader + total * 20 + (total == 1 ? 5 : -total));
+
 		} else {
-			setSize(d.width, minimoDados + minimoRegistros * 20 + (-minimoRegistros));
+			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 20 + (-maximoRegistros));
 		}
 
 		checarDesktop();
