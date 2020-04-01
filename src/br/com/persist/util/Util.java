@@ -605,4 +605,10 @@ public class Util {
 	public static boolean iguais(Class<?> klass, String nome) {
 		return klass.getName().equals(nome);
 	}
+
+	public static void checarPos(int pos, String msg) {
+		if (pos < 0) {
+			throw new IllegalStateException(msg);
+		}
+	}
 }

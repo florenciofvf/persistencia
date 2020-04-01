@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.desktop.Objeto;
 import br.com.persist.util.Util;
 
 public class LinkAuto {
@@ -12,7 +13,7 @@ public class LinkAuto {
 	private LinkAuto() {
 	}
 
-	public static List<GrupoLinkAuto> listaGrupoLinkAuto(String string) {
+	public static List<GrupoLinkAuto> listaGrupoLinkAuto(Objeto objeto, String string) {
 		Map<String, GrupoLinkAuto> mapa = new LinkedHashMap<>();
 
 		if (!Util.estaVazio(string)) {
@@ -20,7 +21,7 @@ public class LinkAuto {
 
 			if (links != null) {
 				for (String link : links) {
-					processarGrupoLinkAuto(link, mapa);
+					processarGrupoLinkAuto(objeto, link, mapa);
 				}
 			}
 		}
@@ -28,7 +29,7 @@ public class LinkAuto {
 		return new ArrayList<>(mapa.values());
 	}
 
-	private static void processarGrupoLinkAuto(String stringLink, Map<String, GrupoLinkAuto> mapa) {
+	private static void processarGrupoLinkAuto(Objeto objeto, String stringLink, Map<String, GrupoLinkAuto> mapa) {
 		String[] campoTabelasDoLink = stringLink.split("=");
 
 		if (campoTabelasDoLink != null && campoTabelasDoLink.length > 1) {
@@ -47,7 +48,8 @@ public class LinkAuto {
 			String[] tabelas = tabelasDoLink.split(",");
 
 			for (String apelidoTabelaCampo : tabelas) {
-				grupoLinkAuto.getTabelas().add(new TabelaLinkAuto(apelidoTabelaCampo.trim()));
+				grupoLinkAuto.getTabelas()
+						.add(new TabelaLinkAuto(apelidoTabelaCampo.trim(), objeto.getId() + " > " + campo));
 			}
 		}
 	}

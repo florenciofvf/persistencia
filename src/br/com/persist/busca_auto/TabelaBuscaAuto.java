@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.util.Coletor;
+import br.com.persist.util.Util;
 
 public class TabelaBuscaAuto {
 	private final String apelidoTabelaCampo;
@@ -13,9 +14,10 @@ public class TabelaBuscaAuto {
 	private boolean processado;
 	private final String nome;
 
-	public TabelaBuscaAuto(String apelidoTabelaCampo) {
+	public TabelaBuscaAuto(String apelidoTabelaCampo, String contextoDebug) {
 		this.apelidoTabelaCampo = apelidoTabelaCampo;
 		int pos = apelidoTabelaCampo.indexOf('.');
+		Util.checarPos(pos, "SEM CAMPO DEFINIDO NA BUSCA AUTO -> " + contextoDebug + " > " + apelidoTabelaCampo);
 		String n = apelidoTabelaCampo.substring(0, pos);
 		coletores = new ArrayList<>();
 

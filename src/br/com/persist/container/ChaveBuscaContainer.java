@@ -32,10 +32,10 @@ public class ChaveBuscaContainer extends Panel {
 		this.objeto = objeto;
 		toolbar.ini(janela);
 		this.tipo = tipo;
-		montarLayout();
+		montarLayout(objeto);
 	}
 
-	private void montarLayout() {
+	private void montarLayout(Objeto objeto) {
 		add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.NORTH, toolbar);
 
@@ -48,13 +48,13 @@ public class ChaveBuscaContainer extends Panel {
 			mapa(builder);
 
 		} else if (Tipo.BUSCA.equals(tipo)) {
-			buscaAuto(builder);
+			buscaAuto(objeto, builder);
 
 		} else if (Tipo.BUSCA_APOS.equals(tipo)) {
 			buscaAutoApos(builder);
 
 		} else if (Tipo.LINK.equals(tipo)) {
-			linkAuto(builder);
+			linkAuto(objeto, builder);
 		}
 
 		textArea.setText(builder.toString().trim());
@@ -98,9 +98,10 @@ public class ChaveBuscaContainer extends Panel {
 		}
 	}
 
-	private void buscaAuto(StringBuilder builder) {
-		List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(!Util.estaVazio(objeto.getBuscaAutomatica())
-				? objeto.getBuscaAutomatica() : Mensagens.getString("hint.buscaAuto"));
+	private void buscaAuto(Objeto objeto, StringBuilder builder) {
+		List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto,
+				!Util.estaVazio(objeto.getBuscaAutomatica()) ? objeto.getBuscaAutomatica()
+						: Mensagens.getString("hint.buscaAuto"));
 
 		for (int i = 0; i < listaGrupo.size(); i++) {
 			GrupoBuscaAuto grupo = listaGrupo.get(i);
@@ -131,8 +132,8 @@ public class ChaveBuscaContainer extends Panel {
 		}
 	}
 
-	private void linkAuto(StringBuilder builder) {
-		List<GrupoLinkAuto> listaLink = LinkAuto.listaGrupoLinkAuto(!Util.estaVazio(objeto.getLinkAutomatico())
+	private void linkAuto(Objeto objeto, StringBuilder builder) {
+		List<GrupoLinkAuto> listaLink = LinkAuto.listaGrupoLinkAuto(objeto, !Util.estaVazio(objeto.getLinkAutomatico())
 				? objeto.getLinkAutomatico() : Mensagens.getString("hint.linkAuto"));
 
 		for (int i = 0; i < listaLink.size(); i++) {

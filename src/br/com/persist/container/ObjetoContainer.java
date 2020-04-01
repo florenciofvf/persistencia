@@ -115,9 +115,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
 			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
+		listaLink = LinkAuto.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
-		listaLink = LinkAuto.listaGrupoLinkAuto(objeto.getLinkAutomatico());
 		txtComplemento.addActionListener(new ActionListenerInner());
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		txtComplemento.addMouseListener(complementoListener);
@@ -477,7 +477,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			void complemento(Objeto objeto) {
 				List<GrupoBuscaAutoApos> listaGrupoApos = BuscaAutoApos
 						.listaGrupoBuscaAutoApos(objeto.getBuscaAutomaticaApos());
-				List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
+				List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto, objeto.getBuscaAutomatica());
 
 				for (GrupoBuscaAuto grupo : listaGrupo) {
 					GrupoBuscaAutoApos grupoApos = TabelaUtil.proximo(listaGrupoApos, grupo);

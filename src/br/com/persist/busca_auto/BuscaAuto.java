@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.desktop.Objeto;
 import br.com.persist.util.Util;
 
 public class BuscaAuto {
@@ -12,7 +13,7 @@ public class BuscaAuto {
 	private BuscaAuto() {
 	}
 
-	public static List<GrupoBuscaAuto> listaGrupoBuscaAuto(String string) {
+	public static List<GrupoBuscaAuto> listaGrupoBuscaAuto(Objeto objeto, String string) {
 		Map<String, GrupoBuscaAuto> mapa = new LinkedHashMap<>();
 
 		if (!Util.estaVazio(string)) {
@@ -20,7 +21,7 @@ public class BuscaAuto {
 
 			if (grupos != null) {
 				for (String grupo : grupos) {
-					processarGrupoBuscaAuto(grupo, mapa);
+					processarGrupoBuscaAuto(objeto, grupo, mapa);
 				}
 			}
 		}
@@ -28,7 +29,7 @@ public class BuscaAuto {
 		return new ArrayList<>(mapa.values());
 	}
 
-	private static void processarGrupoBuscaAuto(String stringGrupo, Map<String, GrupoBuscaAuto> mapa) {
+	private static void processarGrupoBuscaAuto(Objeto objeto, String stringGrupo, Map<String, GrupoBuscaAuto> mapa) {
 		String[] grupoCampoTabelasDoGrupo = stringGrupo.split("=");
 
 		if (grupoCampoTabelasDoGrupo != null && grupoCampoTabelasDoGrupo.length > 1) {
@@ -47,7 +48,8 @@ public class BuscaAuto {
 			String[] tabelas = tabelasDoGrupo.split(",");
 
 			for (String apelidoTabelaCampo : tabelas) {
-				grupoBuscaAuto.getTabelas().add(new TabelaBuscaAuto(apelidoTabelaCampo.trim()));
+				grupoBuscaAuto.getTabelas()
+						.add(new TabelaBuscaAuto(apelidoTabelaCampo.trim(), objeto.getId() + " > " + grupoCampo));
 			}
 		}
 	}
