@@ -179,23 +179,31 @@ public class ChaveBuscaContainer extends Panel {
 			addButton(sucessoAcao);
 
 			sucessoAcao.setActionListener(e -> {
-				if (Tipo.BUSCA_APOS.equals(tipo)) {
-					objeto.setBuscaAutomaticaApos(Util.normalizar(textArea.getText(), false));
+				try {
+					if (Tipo.BUSCA_APOS.equals(tipo)) {
+						objeto.setBuscaAutomaticaApos(Util.normalizar(textArea.getText(), false));
 
-				} else if (Tipo.BUSCA.equals(tipo)) {
-					objeto.setBuscaAutomatica(Util.normalizar(textArea.getText(), false));
+					} else if (Tipo.BUSCA.equals(tipo)) {
+						String string = Util.normalizar(textArea.getText(), false);
+						BuscaAuto.listaGrupoBuscaAuto(objeto, string);
+						objeto.setBuscaAutomatica(string);
 
-				} else if (Tipo.LINK.equals(tipo)) {
-					objeto.setLinkAutomatico(Util.normalizar(textArea.getText(), false));
+					} else if (Tipo.LINK.equals(tipo)) {
+						String string = Util.normalizar(textArea.getText(), false);
+						LinkAuto.listaGrupoLinkAuto(objeto, string);
+						objeto.setLinkAutomatico(string);
 
-				} else if (Tipo.CHAVE.equals(tipo)) {
-					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
+					} else if (Tipo.CHAVE.equals(tipo)) {
+						objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
 
-				} else if (Tipo.MAPA.equals(tipo)) {
-					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
+					} else if (Tipo.MAPA.equals(tipo)) {
+						objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
+					}
+
+					fechar();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("CONFIG OBJETO", ex, ChaveBuscaContainer.this);
 				}
-
-				fechar();
 			});
 		}
 	}

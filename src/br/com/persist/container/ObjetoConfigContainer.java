@@ -216,6 +216,9 @@ public class ObjetoConfigContainer extends Panel {
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
 
+			txtBuscaAutomatica.setEnabled(false);
+			txtLinkAutomatico.setEnabled(false);
+
 			add(BorderLayout.CENTER, container);
 		}
 
