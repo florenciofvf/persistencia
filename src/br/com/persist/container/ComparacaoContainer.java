@@ -27,6 +27,7 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 	private static final long serialVersionUID = 1L;
 	private ComparacaoFormulario comparacaoFormulario;
 	private final TextArea textArea = new TextArea();
+	private final Controle controle = new Controle();
 	private final Toolbar toolbar = new Toolbar();
 
 	public ComparacaoContainer(IJanela janela, Formulario formulario) {
@@ -50,7 +51,7 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 
 	private void montarLayout() {
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, new Controle());
+		panel.add(BorderLayout.NORTH, controle);
 		panel.add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.CENTER, panel);
 		add(BorderLayout.NORTH, toolbar);
@@ -119,7 +120,7 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 		}
 
 		private void comparar() {
-			lblStatus.setText("");
+			lblStatus.setText(Constantes.VAZIO);
 
 			File file1 = new File(txtArquivo1.getText());
 
@@ -138,7 +139,7 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 			List<List<String>> listas = Util.comparar(file1, file2);
 
 			lblStatus.setText("Comparado");
-			textArea.setText("");
+			textArea.setText(Constantes.VAZIO);
 
 			for (List<String> list : listas) {
 				for (String string : list) {
@@ -186,6 +187,7 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 
 		@Override
 		protected void limpar() {
+			controle.lblStatus.setText(Constantes.VAZIO);
 			textArea.limpar();
 		}
 	}
