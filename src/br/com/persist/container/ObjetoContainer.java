@@ -521,7 +521,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 
 					grupo.setProcessado(false);
-					grupo.setNumeroCandidatos(lista);
+					grupo.setNumeroColetores(lista);
 					listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
 
@@ -536,7 +536,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
 
 					for (int linha : indices) {
-						TabelaUtil.atualizarLinhaVotos(tabela, linha, coluna, grupo);
+						TabelaUtil.atualizarLinhaColetores(tabela, linha, coluna, grupo);
 					}
 
 					TabelaUtil.ajustar(tabela, ObjetoContainer.this.getGraphics());
@@ -1438,7 +1438,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				int coluna = TabelaUtil.getIndiceColuna(tabela, tabelaBuscaAuto.getCampo());
 
 				if (coluna != -1) {
-					TabelaUtil.contabilizarVotos(tabela, coluna, tabelaBuscaAuto);
+					TabelaUtil.contabilizarColetores(tabela, coluna, tabelaBuscaAuto);
 				}
 
 				objeto.setTabelaBuscaAuto(null);

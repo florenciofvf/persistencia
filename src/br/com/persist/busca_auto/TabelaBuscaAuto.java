@@ -3,10 +3,10 @@ package br.com.persist.busca_auto;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.util.Candidato;
+import br.com.persist.util.Coletor;
 
 public class TabelaBuscaAuto {
-	private final List<Candidato> candidatos;
+	private final List<Coletor> coletores;
 	private final String apelidoTabelaCampo;
 	private final String apelido;
 	private final String campo;
@@ -17,7 +17,7 @@ public class TabelaBuscaAuto {
 		this.apelidoTabelaCampo = apelidoTabelaCampo;
 		int pos = apelidoTabelaCampo.indexOf('.');
 		String n = apelidoTabelaCampo.substring(0, pos);
-		candidatos = new ArrayList<>();
+		coletores = new ArrayList<>();
 
 		if (n.startsWith("(")) {
 			int pos2 = n.indexOf(')');
@@ -31,18 +31,18 @@ public class TabelaBuscaAuto {
 		campo = apelidoTabelaCampo.substring(pos + 1);
 	}
 
-	public void setNumeroCandidatos(List<String> numeros) {
-		candidatos.clear();
+	public void setNumeroColetores(List<String> numeros) {
+		coletores.clear();
 
 		if (numeros != null) {
 			for (String numero : numeros) {
-				candidatos.add(new Candidato(numero));
+				coletores.add(new Coletor(numero));
 			}
 		}
 	}
 
-	public Candidato getCandidato(String numero) {
-		for (Candidato c : candidatos) {
+	public Coletor getColetor(String numero) {
+		for (Coletor c : coletores) {
 			if (c.getNumero().equals(numero)) {
 				return c;
 			}
@@ -52,9 +52,9 @@ public class TabelaBuscaAuto {
 	}
 
 	public void votar(String numero) {
-		for (Candidato c : candidatos) {
+		for (Coletor c : coletores) {
 			if (c.getNumero().equals(numero)) {
-				c.somarVoto();
+				c.incrementarTotal();
 			}
 		}
 	}

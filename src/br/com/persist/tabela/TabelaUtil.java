@@ -16,7 +16,7 @@ import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.modelo.OrdenacaoModelo;
-import br.com.persist.util.Candidato;
+import br.com.persist.util.Coletor;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {
@@ -100,7 +100,7 @@ public class TabelaUtil {
 		return resposta;
 	}
 
-	public static void contabilizarVotos(Tabela tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
+	public static void contabilizarColetores(Tabela tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		int total = modelo.getRowCount();
 
@@ -113,17 +113,17 @@ public class TabelaUtil {
 		}
 	}
 
-	public static void atualizarLinhaVotos(Tabela tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
+	public static void atualizarLinhaColetores(Tabela tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<Object> registro = modelo.getRegistro(linha);
 		String numero = registro.get(coluna).toString();
 		StringBuilder sb = new StringBuilder();
 
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
-			Candidato candidato = t.getCandidato(numero);
+			Coletor coletor = t.getColetor(numero);
 
-			if (candidato.getVotos() > 0) {
-				sb.append(t.getNome() + " [" + candidato.getVotos() + "]   ");
+			if (coletor.getTotal() > 0) {
+				sb.append(t.getNome() + " [" + coletor.getTotal() + "]   ");
 			}
 		}
 
