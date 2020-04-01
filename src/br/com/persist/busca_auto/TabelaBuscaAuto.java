@@ -51,7 +51,7 @@ public class TabelaBuscaAuto {
 		return null;
 	}
 
-	public void checarTotal(String numero) {
+	public void checarColetores(String numero) {
 		for (Coletor c : coletores) {
 			if (c.getNumero().equals(numero)) {
 				c.incrementarTotal();

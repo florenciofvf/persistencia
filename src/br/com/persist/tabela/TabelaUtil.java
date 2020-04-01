@@ -108,7 +108,7 @@ public class TabelaUtil {
 			Object obj = modelo.getValueAt(i, coluna);
 
 			if (obj != null && !Util.estaVazio(obj.toString())) {
-				tabelaBuscaAuto.checarTotal(obj.toString());
+				tabelaBuscaAuto.checarColetores(obj.toString());
 			}
 		}
 	}
