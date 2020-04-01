@@ -207,7 +207,8 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm));
-			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter));
+			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter,
+					Mensagens.getString("hint.ajuste_auto_enter", Mensagens.getString("label.ajuste_auto_form"))));
 
 			txtBuscaAutomaticaApos.addMouseListener(buscaAutomaticaAposListener);
 			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
