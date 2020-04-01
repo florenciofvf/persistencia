@@ -536,7 +536,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
 
 					for (int linha : indices) {
-						TabelaUtil.atualizarIndicesVoto(tabela, linha, coluna, grupo);
+						TabelaUtil.atualizarLinhaVotos(tabela, linha, coluna, grupo);
 					}
 
 					TabelaUtil.ajustar(tabela, ObjetoContainer.this.getGraphics());
@@ -1547,7 +1547,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	}
 
 	public void linkAutomatico(String campo, String argumento) {
-		if (!objeto.isLinkAuto()) {
+		if (!objeto.isLinkAuto() || argumento == null) {
 			return;
 		}
 

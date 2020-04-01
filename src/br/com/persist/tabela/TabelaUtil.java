@@ -113,7 +113,7 @@ public class TabelaUtil {
 		}
 	}
 
-	public static void atualizarIndicesVoto(Tabela tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
+	public static void atualizarLinhaVotos(Tabela tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
 		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 		List<Object> registro = modelo.getRegistro(linha);
 		String numero = registro.get(coluna).toString();
