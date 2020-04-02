@@ -93,7 +93,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action fecharAcao = Action.actionIcon("label.fechar_todos", Icones.FECHAR);
-		private Action statusAcao = Action.actionIcon("label.status", Icones.HIERARQUIA);
+		private Action statusAcao = Action.actionIcon("label.abertos", Icones.HIERARQUIA);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, false);
