@@ -325,7 +325,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			ButtonDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
-				addMenuItem(destacarFrm);
+				addMenuItem(true, destacarFrm);
 				addMenuItem(destacarCnt);
 				addMenuItem(abrirEmForm);
 
