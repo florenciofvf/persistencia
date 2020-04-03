@@ -5,19 +5,19 @@ import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
 
-public class PanelCenter extends JPanel {
+public class PanelLeft extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	public PanelCenter(Component... componentes) {
-		super(new FlowLayout(FlowLayout.CENTER));
+	public PanelLeft(Component... componentes) {
+		super(new FlowLayout(FlowLayout.LEFT));
 		adicionar(componentes);
 	}
 
-	public PanelCenter() {
-		super(new FlowLayout(FlowLayout.CENTER));
+	public PanelLeft() {
+		super(new FlowLayout(FlowLayout.LEFT));
 	}
 
-	public PanelCenter adicionar(Component... compts) {
+	public PanelLeft adicionar(Component... compts) {
 		for (Component comp : compts) {
 			add(comp);
 		}

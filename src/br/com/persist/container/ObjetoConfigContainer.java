@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -16,11 +17,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -30,7 +29,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
-import br.com.persist.comp.PanelCenter;
+import br.com.persist.comp.PanelLeft;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
@@ -174,8 +173,7 @@ public class ObjetoConfigContainer extends Panel {
 				labelIcone.setIcon(objeto.getIcon());
 			}
 
-			PanelCenter panelIcone = new PanelCenter(labelIcone);
-			panelIcone.setBorder(BorderFactory.createEtchedBorder());
+			PanelLeft panelIcone = new PanelLeft(labelIcone);
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 
 			Box container = Box.createVerticalBox();
@@ -429,38 +427,28 @@ public class ObjetoConfigContainer extends Panel {
 			}
 		}
 
-		private Box criarLinha(String chaveRotulo, JComponent componente) {
+		private Component criarLinha(String chaveRotulo, JComponent componente) {
 			return criarLinha(chaveRotulo, componente, null);
 		}
 
-		private Box criarLinha(String chaveRotulo, JComponent componente, String hint) {
-			Box box = Box.createHorizontalBox();
+		private Component criarLinha(String chaveRotulo, JComponent componente, String hint) {
+			Dimension largura = new Dimension(120, 0);
+			Panel linha = new Panel();
 
 			Label label = new Label(chaveRotulo);
 			label.setHorizontalAlignment(Label.RIGHT);
-			label.setPreferredSize(new Dimension(140, 0));
-			label.setMinimumSize(new Dimension(140, 0));
+			label.setPreferredSize(largura);
+			label.setMinimumSize(largura);
+			label.setMaximumSize(largura);
 
 			if (!Util.estaVazio(hint)) {
 				label.setToolTipText(hint);
 			}
 
-			box.add(label);
+			linha.add(BorderLayout.CENTER, componente);
+			linha.add(BorderLayout.WEST, label);
 
-			if (componente instanceof CheckBox) {
-				box.add(componente);
-				box.add(Box.createHorizontalGlue());
-
-			} else if (componente instanceof JPanel) {
-				box.add(Box.createHorizontalStrut(3));
-				box.add(componente);
-				box.add(Box.createHorizontalStrut(2));
-
-			} else {
-				box.add(componente);
-			}
-
-			return box;
+			return linha;
 		}
 	}
 
