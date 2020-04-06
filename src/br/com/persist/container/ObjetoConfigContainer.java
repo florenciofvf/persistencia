@@ -72,6 +72,7 @@ public class ObjetoConfigContainer extends Panel {
 		private CheckBox chkAjusteAutoEnter = new CheckBox();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
 		private TextField txtChaveamento = new TextField();
+		private TextField txtSelectAlter = new TextField();
 		private TextField txtComplemento = new TextField();
 		private TextField txtSequencias = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
@@ -84,9 +85,11 @@ public class ObjetoConfigContainer extends Panel {
 		private CheckBox chkDesenharId = new CheckBox();
 		private CheckBox chkColunaInfo = new CheckBox();
 		private CheckBox chkAbrirAuto = new CheckBox();
+		private TextField txtTabelas = new TextField();
 		private CheckBox chkLinkAuto = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
+		private TextField txtJoins = new TextField();
 		private CheckBox chkCCSC = new CheckBox();
 		private CheckBox chkBPNT = new CheckBox();
 		private TextField txtId = new TextField();
@@ -111,14 +114,17 @@ public class ObjetoConfigContainer extends Panel {
 			chkColunaInfo.setSelected(objeto.isColunaInfo());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
+			txtSelectAlter.setText(objeto.getSelectAlter());
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
 			txtSequencias.setText(objeto.getSequencias());
 			txtMapeamento.setText(objeto.getMapeamento());
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
+			txtTabelas.setText(objeto.getTabelas());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
 			chkCCSC.setSelected(objeto.isCcsc());
 			chkBPNT.setSelected(objeto.isBpnt());
+			txtJoins.setText(objeto.getJoins());
 			txtX.setText("" + objeto.getX());
 			txtY.setText("" + objeto.getY());
 			txtId.setText(objeto.getId());
@@ -129,14 +135,17 @@ public class ObjetoConfigContainer extends Panel {
 			txtFinalConsulta.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
 			txtComplemento.addFocusListener(focusListenerInner);
+			txtSelectAlter.addFocusListener(focusListenerInner);
 			txtMapeamento.addFocusListener(focusListenerInner);
 			txtSequencias.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
 			txtPrefixoNT.addFocusListener(focusListenerInner);
+			txtTabelas.addFocusListener(focusListenerInner);
 			txtTabela.addFocusListener(focusListenerInner);
 			txtChaves.addFocusListener(focusListenerInner);
+			txtJoins.addFocusListener(focusListenerInner);
 			txtId.addFocusListener(focusListenerInner);
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
@@ -151,6 +160,7 @@ public class ObjetoConfigContainer extends Panel {
 			chkCopiarDestac.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
+			txtSelectAlter.addActionListener(this);
 			chkDesenharId.addActionListener(this);
 			chkColunaInfo.addActionListener(this);
 			txtMapeamento.addActionListener(this);
@@ -161,8 +171,10 @@ public class ObjetoConfigContainer extends Panel {
 			txtIntervalo.addActionListener(this);
 			txtPrefixoNT.addActionListener(this);
 			chkLinkAuto.addActionListener(this);
-			txtTabela.addActionListener(this);
+			txtTabelas.addActionListener(this);
 			txtChaves.addActionListener(this);
+			txtTabela.addActionListener(this);
+			txtJoins.addActionListener(this);
 			chkCCSC.addActionListener(this);
 			chkBPNT.addActionListener(this);
 			txtId.addActionListener(this);
@@ -185,8 +197,11 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.intervalo", txtIntervalo));
 			container.add(criarLinha("label.tabela", txtTabela));
-			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
+			container.add(criarLinha("label.tabelas", txtTabelas));
+			container.add(criarLinha("label.select_alter", txtSelectAlter));
+			container.add(criarLinha("label.joins", txtJoins, Mensagens.getString("hint.joins")));
+			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
@@ -424,6 +439,15 @@ public class ObjetoConfigContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAjusteAutoEnter(chk.isSelected());
 				Formulario.macro.ajusteAutoEnter(chk.isSelected());
+
+			} else if (txtTabelas == e.getSource()) {
+				objeto.setTabelas(txtTabelas.getText());
+
+			} else if (txtSelectAlter == e.getSource()) {
+				objeto.setSelectAlter(txtSelectAlter.getText());
+
+			} else if (txtJoins == e.getSource()) {
+				objeto.setJoins(txtJoins.getText());
 			}
 		}
 
