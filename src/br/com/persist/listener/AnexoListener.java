@@ -15,5 +15,7 @@ public interface AnexoListener {
 
 	public void abrirArquivo(Anexo anexo);
 
+	public void pastaArquivo(Anexo anexo);
+
 	public void iconeArquivo(Anexo anexo);
 }

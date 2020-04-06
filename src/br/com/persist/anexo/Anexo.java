@@ -205,18 +205,22 @@ public class Anexo extends Tree {
 		class MenuAbrir extends Menu {
 			private static final long serialVersionUID = 1L;
 			private Action imprimirAcao = Action.actionMenu("label.imprimir", Icones.PRINT);
+			private Action pastaAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 			private Action editarAcao = Action.actionMenu("label.editar", Icones.EDIT);
 			private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
 
 			MenuAbrir() {
 				super("label.opcoes", Icones.CONFIG);
 				addMenuItem(abrirAcao);
+				addMenuItem(pastaAcao);
+				addSeparator();
 				addMenuItem(editarAcao);
 				addMenuItem(imprimirAcao);
 
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirArquivo(Anexo.this)));
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarArquivo(Anexo.this)));
 				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(Anexo.this)));
+				pastaAcao.setActionListener(e -> ouvintes.forEach(o -> o.pastaArquivo(Anexo.this)));
 			}
 		}
 	}
