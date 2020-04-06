@@ -188,6 +188,26 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 	}
 
 	@Override
+	public void pastaArquivo(Anexo anexo) {
+		Arquivo arquivo = anexo.getObjetoSelecionado();
+
+		if (arquivo == null) {
+			return;
+		}
+
+		try {
+			File file = arquivo.getFile();
+			File parent = file.getParentFile();
+
+			if (parent != null) {
+				desktop.open(parent);
+			}
+		} catch (IOException e) {
+			Util.mensagem(AnexoContainer.this, e.getMessage());
+		}
+	}
+
+	@Override
 	public void excluirArquivo(Anexo anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 

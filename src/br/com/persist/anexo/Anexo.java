@@ -212,10 +212,10 @@ public class Anexo extends Tree {
 			MenuAbrir() {
 				super("label.opcoes", Icones.CONFIG);
 				addMenuItem(abrirAcao);
-				addMenuItem(pastaAcao);
-				addSeparator();
 				addMenuItem(editarAcao);
 				addMenuItem(imprimirAcao);
+				addSeparator();
+				addMenuItem(pastaAcao);
 
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirArquivo(Anexo.this)));
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarArquivo(Anexo.this)));
