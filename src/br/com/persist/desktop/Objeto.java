@@ -60,16 +60,19 @@ public class Objeto implements Runnable {
 	private String complemento;
 	private String chaveamento;
 	private boolean colunaInfo;
+	private String selectAlter;
 	private String sequencias;
 	private boolean abrirAuto;
 	private String mapeamento;
 	private boolean processar;
 	private boolean linkAuto;
 	private String descricao;
+	private String tabelas;
 	private String tabela;
 	private Thread thread;
 	private int intervalo;
 	private String chaves;
+	private String joins;
 	private String icone;
 	private boolean ccsc;
 	private boolean bpnt;
@@ -121,6 +124,7 @@ public class Objeto implements Runnable {
 		o.transparente = transparente;
 		o.complemento = complemento;
 		o.chaveamento = chaveamento;
+		o.selectAlter = selectAlter;
 		o.desenharId = desenharId;
 		o.colunaInfo = colunaInfo;
 		o.mapeamento = mapeamento;
@@ -129,8 +133,10 @@ public class Objeto implements Runnable {
 		o.descricao = descricao;
 		o.corFonte = corFonte;
 		o.linkAuto = linkAuto;
+		o.tabelas = tabelas;
 		o.tabela = tabela;
 		o.chaves = chaves;
+		o.joins = joins;
 		o.ccsc = ccsc;
 		o.bpnt = bpnt;
 		o.setId(id);
@@ -226,6 +232,18 @@ public class Objeto implements Runnable {
 
 	public void setTabela(String tabela) {
 		this.tabela = tabela;
+	}
+
+	public void setSelectAlter(String selectAlter) {
+		this.selectAlter = selectAlter;
+	}
+
+	public void setTabelas(String tabelas) {
+		this.tabelas = tabelas;
+	}
+
+	public void setJoins(String joins) {
+		this.joins = joins;
 	}
 
 	public void setChaves(String chaves) {
@@ -335,6 +353,30 @@ public class Objeto implements Runnable {
 		}
 
 		return tabela;
+	}
+
+	public String getSelectAlter() {
+		if (Util.estaVazio(selectAlter)) {
+			selectAlter = "";
+		}
+
+		return selectAlter;
+	}
+
+	public String getTabelas() {
+		if (Util.estaVazio(tabelas)) {
+			tabelas = "";
+		}
+
+		return tabelas;
+	}
+
+	public String getJoins() {
+		if (Util.estaVazio(joins)) {
+			joins = "";
+		}
+
+		return joins;
 	}
 
 	public boolean isSelecionado() {
@@ -563,13 +605,16 @@ public class Objeto implements Runnable {
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
+		selectAlter = attr.getValue("selectAlter");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
 		sequencias = attr.getValue("sequencias");
+		tabelas = attr.getValue("tabelas");
 		setIcone(attr.getValue("icone"));
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
+		joins = attr.getValue("joins");
 		id = attr.getValue("id");
 
 		String strIntervalo = attr.getValue("intervalo");
@@ -592,6 +637,7 @@ public class Objeto implements Runnable {
 		util.atributo("ajusteAutoEnter", ajusteAutoEnter);
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", copiarDestacado);
+		util.atributo("selectAlter", getSelectAlter());
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
@@ -600,12 +646,14 @@ public class Objeto implements Runnable {
 		util.atributo("intervalo", getIntervalo());
 		util.atributo("desenharId", desenharId);
 		util.atributo("colunaInfo", colunaInfo);
+		util.atributo("tabelas", getTabelas());
 		util.atributo("abrirAuto", abrirAuto);
 		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
 		util.atributo("chaves", getChaves());
 		util.atributo("linkAuto", linkAuto);
 		util.atributo("cor", cor.getRGB());
+		util.atributo("joins", getJoins());
 		util.atributo("icone", icone);
 		util.atributo("ccsc", ccsc);
 		util.atributo("bpnt", bpnt);
