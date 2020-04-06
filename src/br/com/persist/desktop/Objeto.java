@@ -331,6 +331,46 @@ public class Objeto implements Runnable {
 		return (Util.estaVazio(esquema) ? "" : esquema + ".") + getPrefixoNomeTabela() + tabela;
 	}
 
+	public void select(StringBuilder sb, Conexao conexao) {
+		String sel = getSelectAlter();
+
+		if (Util.estaVazio(sel)) {
+			sb.append("SELECT * FROM " + getTabelaEsquema(conexao.getEsquema()));
+		} else {
+			sb.append(sel + " FROM " + getTabelaEsquema(conexao.getEsquema()));
+		}
+	}
+
+	public void joins(StringBuilder sb, Conexao conexao, String prefixoNomeTabela) {
+		String tabs = getTabelas();
+		String jois = getJoins();
+
+		if (Util.estaVazio(tabs) || Util.estaVazio(jois)) {
+			return;
+		}
+
+		String[] tabsArray = tabs.split(",");
+		String[] joisArray = jois.split(",");
+
+		if (tabsArray.length != joisArray.length) {
+			return;
+		}
+
+		for (int i = 0; i < tabsArray.length; i++) {
+			String tab = tabsArray[i];
+			String on = joisArray[i];
+
+			sb.append(" INNER JOIN");
+			sb.append(" " + prefixarEsquema(conexao, prefixoNomeTabela, tab));
+			sb.append(" " + on);
+			sb.append(Constantes.QL);
+		}
+	}
+
+	public void where(StringBuilder sb) {
+		sb.append(" WHERE 1=1");
+	}
+
 	public static String prefixarEsquema(Conexao conexao, String prefixoNomeTabela, String string) {
 		String esquema = conexao == null ? "" : conexao.getEsquema();
 

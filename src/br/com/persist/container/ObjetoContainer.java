@@ -1355,8 +1355,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	}
 
 	private StringBuilder getConsulta(Conexao conexao, String complemento) {
-		StringBuilder builder = new StringBuilder(
-				"SELECT * FROM " + objeto.getTabelaEsquema(conexao.getEsquema()) + " WHERE 1=1");
+		StringBuilder builder = new StringBuilder();
+		objeto.select(builder, conexao);
+		objeto.joins(builder, conexao, objeto.getPrefixoNomeTabela());
+		objeto.where(builder);
 		builder.append(" " + txtComplemento.getText());
 		builder.append(" " + complemento);
 		builder.append(" " + objeto.getFinalConsulta());
