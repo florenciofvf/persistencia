@@ -517,6 +517,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					List<String> lista = TabelaUtil.getValoresColuna(tabela, coluna);
 
 					if (lista.isEmpty()) {
+						Util.mensagem(ObjetoContainer.this, grupo.getCampo() + " vazio.");
 						return;
 					}
 
