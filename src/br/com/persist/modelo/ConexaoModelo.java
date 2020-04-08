@@ -48,6 +48,11 @@ public class ConexaoModelo extends AbstractTableModel {
 		}
 
 		@Override
+		public String getValor() {
+			return conexao.getUrlBanco();
+		}
+
+		@Override
 		public void setValor(String valor) {
 			conexao.setUrlBanco(valor);
 		}
