@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.editor.ConexaoStatusEditor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ConexaoFormulario;
@@ -58,6 +59,7 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 	private void configurar() {
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new ConexaoStatusRenderer());
 		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoStatusEditor());
+		tabela.getColumnModel().getColumn(3).setCellEditor(new ChaveValorEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.getBaixarAcao().actionPerformed(null);
 	}

@@ -14,6 +14,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
 import br.com.persist.dialogo.ChaveValorDialogo;
+import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
@@ -55,11 +56,15 @@ public class ChaveValorEditor extends JPanel implements TableCellEditor {
 
 				if (model instanceof MapeamentoModelo) {
 					ChaveValor cv = MapeamentoModelo.getChaveValor(linha);
-					new ChaveValorDialogo(cv).setVisible(true);
+					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
 
 				} else if (model instanceof VariaveisModelo) {
 					ChaveValor cv = VariaveisModelo.getChaveValor(linha);
-					new ChaveValorDialogo(cv).setVisible(true);
+					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
+
+				} else if (model instanceof ConexaoModelo) {
+					ChaveValor cv = ((ConexaoModelo) model).getChaveValor(linha);
+					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
 				}
 
 				cancelCellEditing();

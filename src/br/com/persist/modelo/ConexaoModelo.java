@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.banco.Conexao;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLUtil;
@@ -31,6 +32,35 @@ public class ConexaoModelo extends AbstractTableModel {
 
 	public Conexao getConexao(int i) {
 		return conexoes.get(i);
+	}
+
+	public ChaveValor getChaveValor(int i) {
+		Conexao conexao = getConexao(i);
+		return new URLChaveValor(conexao);
+	}
+
+	public class URLChaveValor extends ChaveValor {
+		private final Conexao conexao;
+
+		public URLChaveValor(Conexao conexao) {
+			super(conexao.getNome(), conexao.getUrlBanco());
+			this.conexao = conexao;
+		}
+
+		@Override
+		public void setValor(String valor) {
+			conexao.setUrlBanco(valor);
+		}
+
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj);
+		}
 	}
 
 	public void adicionar(Conexao c) {
