@@ -1422,7 +1422,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					tableColumn.setCellRenderer(new CellInfoRenderer());
 				}
 
-				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna, true);
+				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna,
+						!coluna.isColunaInfo());
 
 				if (cabecalhoColuna.equals(cabecalho)) {
 					cabecalhoColuna.copiar(cabecalho);
