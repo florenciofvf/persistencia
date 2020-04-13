@@ -60,7 +60,7 @@ public class Metadado implements Transferable {
 
 	public Metadado getMetadado(String descricao) {
 		for (Metadado m : filhos) {
-			if (m.descricao.equals(descricao)) {
+			if (m.descricao.equalsIgnoreCase(descricao)) {
 				return m;
 			}
 		}
