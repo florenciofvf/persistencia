@@ -45,5 +45,4 @@ public class ConexaoStatusRenderer extends DefaultTableCellRenderer {
 
 		return this;
 	}
-
 }
