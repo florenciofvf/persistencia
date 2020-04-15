@@ -114,8 +114,8 @@ public class Fichario extends JTabbedPane {
 	private final transient Update update = new Update();
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
+	private final transient Change change = new Change();
 	private static final Logger LOG = Logger.getGlobal();
-	private final Change change = new Change();
 	private transient Ponto ponto;
 	private Rectangle rectangle;
 	private int ultX;
@@ -140,7 +140,16 @@ public class Fichario extends JTabbedPane {
 			super(esquerdo ? WEST : EAST, UIManager.getColor("TabbedPane.selected"),
 					UIManager.getColor("TabbedPane.shadow"), UIManager.getColor("TabbedPane.darkShadow"),
 					UIManager.getColor("TabbedPane.highlight"));
+			addActionListener(e -> click());
 			this.esquerdo = esquerdo;
+		}
+
+		private void click() {
+			if (esquerdo) {
+				change.voltar();
+			} else {
+				change.avancar();
+			}
 		}
 
 		@Override
