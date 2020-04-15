@@ -32,7 +32,11 @@ import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.plaf.UIResource;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
@@ -119,7 +123,26 @@ public class Fichario extends JTabbedPane {
 		new DropTarget(this, listenerSoltar);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
+		add(new Naveg(true));
+		add(new Naveg(false));
 		config();
+	}
+
+	public class Naveg extends BasicArrowButton implements UIResource, SwingConstants {
+		private static final long serialVersionUID = 1L;
+		final boolean esquerdo;
+
+		public Naveg(boolean esquerdo) {
+			super(esquerdo ? WEST : EAST, UIManager.getColor("TabbedPane.selected"),
+					UIManager.getColor("TabbedPane.shadow"), UIManager.getColor("TabbedPane.darkShadow"),
+					UIManager.getColor("TabbedPane.highlight"));
+			this.esquerdo = esquerdo;
+		}
+
+		@Override
+		public void setBounds(int x, int y, int width, int height) {
+			super.setBounds(esquerdo ? 0 : 15, 0, 15, 10);
+		}
 	}
 
 	private void config() {
