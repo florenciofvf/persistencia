@@ -171,6 +171,7 @@ public class Fichario extends JTabbedPane {
 		public void stateChanged(ChangeEvent e) {
 			if (habilitado) {
 				indices.add(getSelectedIndex());
+				ponteiro++;
 			}
 		}
 
