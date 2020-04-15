@@ -35,6 +35,8 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
@@ -113,6 +115,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
 	private static final Logger LOG = Logger.getGlobal();
+	private final Change change = new Change();
 	private transient Ponto ponto;
 	private Rectangle rectangle;
 	private int ultX;
@@ -123,6 +126,7 @@ public class Fichario extends JTabbedPane {
 		new DropTarget(this, listenerSoltar);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
+		addChangeListener(change);
 		add(new Naveg(true));
 		add(new Naveg(false));
 		config();
@@ -142,6 +146,49 @@ public class Fichario extends JTabbedPane {
 		@Override
 		public void setBounds(int x, int y, int width, int height) {
 			super.setBounds(esquerdo ? 0 : 15, 0, 15, 10);
+		}
+	}
+
+	public class Change implements ChangeListener {
+		private final List<Integer> indices;
+		private boolean habilitado = true;
+		private int ponteiro;
+
+		public Change() {
+			indices = new ArrayList<>();
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			if (habilitado) {
+				indices.add(getSelectedIndex());
+			}
+		}
+
+		void voltar() {
+			if (ponteiro > 0) {
+				ponteiro--;
+			}
+
+			if (ponteiro < indices.size()) {
+				Integer indice = indices.get(ponteiro);
+				habilitado = false;
+				setSelectedIndex(indice);
+				habilitado = true;
+			}
+		}
+
+		void avancar() {
+			if (ponteiro < indices.size() - 1) {
+				ponteiro++;
+			}
+
+			if (ponteiro < indices.size()) {
+				Integer indice = indices.get(ponteiro);
+				habilitado = false;
+				setSelectedIndex(indice);
+				habilitado = true;
+			}
 		}
 	}
 
