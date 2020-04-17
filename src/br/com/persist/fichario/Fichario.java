@@ -216,10 +216,10 @@ public class Fichario extends JTabbedPane {
 
 				if (indice < getTabCount()) {
 					habilitado = false;
-					ultimo = getSelectedIndex();
+					Integer ultim = getSelectedIndex();
 					setSelectedIndex(indice);
 					habilitado = true;
-					push(direito, ultimo);
+					push(direito, ultim);
 				}
 			}
 		}
@@ -230,10 +230,10 @@ public class Fichario extends JTabbedPane {
 
 				if (indice < getTabCount()) {
 					habilitado = false;
-					ultimo = getSelectedIndex();
+					Integer ultim = getSelectedIndex();
 					setSelectedIndex(indice);
 					habilitado = true;
-					push(esquerdo, ultimo);
+					push(esquerdo, ultim);
 				}
 			}
 		}
