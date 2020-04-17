@@ -116,6 +116,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				menuPrincipal.menuLayout.aplicarLayout();
 				fichario.getSalvarAberto().abrir(Formulario.this);
+				fichario.ativarNavegacao();
 			}
 
 			@Override

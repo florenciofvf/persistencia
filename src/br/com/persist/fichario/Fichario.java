@@ -103,6 +103,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Metadados metadados = new Metadados();
 	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Conteiner conteiner = new Conteiner();
+	private final transient NavegacaoListener navegacaoListener;
 	private final transient Arquivos arquivos = new Arquivos();
 	private final transient Destacar destacar = new Destacar();
 	private final transient Anotacao anotacao = new Anotacao();
@@ -114,7 +115,6 @@ public class Fichario extends JTabbedPane {
 	private final transient Update update = new Update();
 	private final transient Anexos anexos = new Anexos();
 	private final transient Arvore arvore = new Arvore();
-	private final transient Change change = new Change();
 	private static final Logger LOG = Logger.getGlobal();
 	private transient Ponto ponto;
 	private Rectangle rectangle;
@@ -122,14 +122,20 @@ public class Fichario extends JTabbedPane {
 	private int ultY;
 
 	public Fichario() {
+		navegacaoListener = new NavegacaoListener();
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 		new DropTarget(this, listenerSoltar);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
-		addChangeListener(change);
 		add(new Naveg(true));
 		add(new Naveg(false));
 		config();
+	}
+
+	public void ativarNavegacao() {
+		navegacaoListener.ini();
+		removeChangeListener(navegacaoListener);
+		addChangeListener(navegacaoListener);
 	}
 
 	public class Naveg extends BasicArrowButton implements UIResource, SwingConstants {
@@ -146,9 +152,9 @@ public class Fichario extends JTabbedPane {
 
 		private void click() {
 			if (esquerdo) {
-				change.voltar();
+				navegacaoListener.voltar();
 			} else {
-				change.avancar();
+				navegacaoListener.avancar();
 			}
 		}
 
@@ -158,13 +164,17 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public class Change implements ChangeListener {
+	public class NavegacaoListener implements ChangeListener {
 		private final List<Integer> indices;
 		private boolean habilitado = true;
 		private int ponteiro;
 
-		public Change() {
+		public NavegacaoListener() {
 			indices = new ArrayList<>();
+		}
+
+		void ini() {
+
 		}
 
 		@Override
