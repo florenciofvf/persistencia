@@ -21,7 +21,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,49 +167,60 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class NavegacaoListener implements ChangeListener {
-		private final List<Integer> indices;
-		private boolean habilitado = true;
-		private int ponteiro;
+		private final Deque<Integer> esquerdo;
+		private final Deque<Integer> direito;
+		private boolean habilitado;
+		private Integer ultimo;
 
 		public NavegacaoListener() {
-			indices = new ArrayList<>();
+			esquerdo = new ArrayDeque<>();
+			direito = new ArrayDeque<>();
+			habilitado = true;
 		}
 
 		void ini() {
-
+			habilitado = true;
+			esquerdo.clear();
+			direito.clear();
+			ultimo = null;
 		}
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			if (habilitado) {
-				indices.add(getSelectedIndex());
-				ponteiro++;
+				direito.clear();
+
+				if (ultimo != null) {
+					esquerdo.push(ultimo);
+				}
+
+				ultimo = getSelectedIndex();
 			}
 		}
 
 		void voltar() {
-			if (ponteiro > 0) {
-				ponteiro--;
-			}
+			if (!esquerdo.isEmpty()) {
+				Integer indice = esquerdo.pop();
 
-			if (ponteiro < indices.size()) {
-				Integer indice = indices.get(ponteiro);
-				habilitado = false;
-				setSelectedIndex(indice);
-				habilitado = true;
+				if (indice < getTabCount()) {
+					habilitado = false;
+					setSelectedIndex(indice);
+					habilitado = true;
+					direito.push(indice);
+				}
 			}
 		}
 
 		void avancar() {
-			if (ponteiro < indices.size() - 1) {
-				ponteiro++;
-			}
+			if (!direito.isEmpty()) {
+				Integer indice = direito.pop();
 
-			if (ponteiro < indices.size()) {
-				Integer indice = indices.get(ponteiro);
-				habilitado = false;
-				setSelectedIndex(indice);
-				habilitado = true;
+				if (indice < getTabCount()) {
+					habilitado = false;
+					setSelectedIndex(indice);
+					habilitado = true;
+					esquerdo.push(indice);
+				}
 			}
 		}
 	}
