@@ -135,7 +135,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public void ativarNavegacao() {
-		navegacaoListener.ini();
+		navegacaoListener.inicializacao();
 		removeChangeListener(navegacaoListener);
 		addChangeListener(navegacaoListener);
 	}
@@ -178,15 +178,15 @@ public class Fichario extends JTabbedPane {
 			habilitado = true;
 		}
 
-		void ini() {
+		void inicializacao() {
+			ultimo = getSelectedIndex();
 			habilitado = true;
 			esquerdo.clear();
 			direito.clear();
-			ultimo = null;
 		}
 
 		void push(Deque<Integer> deque, Integer i) {
-			if (deque == null || i == null) {
+			if (deque == null || i == null || i == -1) {
 				return;
 			}
 
@@ -216,10 +216,10 @@ public class Fichario extends JTabbedPane {
 
 				if (indice < getTabCount()) {
 					habilitado = false;
-					Integer ultim = getSelectedIndex();
+					Integer ult = getSelectedIndex();
 					setSelectedIndex(indice);
+					push(direito, ult);
 					habilitado = true;
-					push(direito, ultim);
 				}
 			}
 		}
@@ -230,10 +230,10 @@ public class Fichario extends JTabbedPane {
 
 				if (indice < getTabCount()) {
 					habilitado = false;
-					Integer ultim = getSelectedIndex();
+					Integer ult = getSelectedIndex();
 					setSelectedIndex(indice);
+					push(esquerdo, ult);
 					habilitado = true;
-					push(esquerdo, ultim);
 				}
 			}
 		}
