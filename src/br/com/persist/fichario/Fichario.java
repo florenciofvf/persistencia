@@ -95,6 +95,8 @@ import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
+	private final transient NavegButton navegButtonEsquerdo = new NavegButton(true);
+	private final transient NavegButton navegButtonDireito = new NavegButton(false);
 	private final transient Configuracao configuracao = new Configuracao();
 	private final transient SalvarAberto salvarAberto = new SalvarAberto();
 	private final transient Mapeamento mapeamento = new Mapeamento();
@@ -129,8 +131,8 @@ public class Fichario extends JTabbedPane {
 		new DropTarget(this, listenerSoltar);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
-		add(new Naveg(true));
-		add(new Naveg(false));
+		add(navegButtonEsquerdo);
+		add(navegButtonDireito);
 		config();
 	}
 
@@ -140,11 +142,11 @@ public class Fichario extends JTabbedPane {
 		addChangeListener(navegacaoListener);
 	}
 
-	public class Naveg extends BasicArrowButton implements UIResource, SwingConstants {
+	public class NavegButton extends BasicArrowButton implements UIResource, SwingConstants {
 		private static final long serialVersionUID = 1L;
 		final boolean esquerdo;
 
-		public Naveg(boolean esquerdo) {
+		public NavegButton(boolean esquerdo) {
 			super(esquerdo ? WEST : EAST, UIManager.getColor("TabbedPane.selected"),
 					UIManager.getColor("TabbedPane.shadow"), UIManager.getColor("TabbedPane.darkShadow"),
 					UIManager.getColor("TabbedPane.highlight"));
