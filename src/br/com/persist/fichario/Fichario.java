@@ -177,6 +177,11 @@ public class Fichario extends JTabbedPane {
 	}
 
 	void checarEstadoNavegacao() {
+		if (getTabCount() < 1) {
+			navegacaoListener.esquerdo.clear();
+			navegacaoListener.direito.clear();
+		}
+
 		navegButtonEsquerdo.checarEstado();
 		navegButtonDireito.checarEstado();
 	}
