@@ -784,19 +784,22 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 class ItemLAF extends JRadioButtonMenuItem {
 	private static final long serialVersionUID = 1L;
+	private final Formulario formulario;
 	private final String classe;
 
 	public ItemLAF(Formulario formulario, LookAndFeelInfo info) {
+		addActionListener(e -> processar());
+		this.formulario = formulario;
 		classe = info.getClassName();
 		setText(info.getName());
+	}
 
-		addActionListener(e -> {
-			try {
-				UIManager.setLookAndFeel(classe);
-				SwingUtilities.updateComponentTreeUI(formulario);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(getClass().getName() + ".ItemMenu()", ex, formulario);
-			}
-		});
+	public void processar() {
+		try {
+			UIManager.setLookAndFeel(classe);
+			SwingUtilities.updateComponentTreeUI(formulario);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(getClass().getName(), ex, formulario);
+		}
 	}
 }
