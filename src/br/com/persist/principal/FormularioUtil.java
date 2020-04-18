@@ -38,9 +38,8 @@ public class FormularioUtil {
 		for (int i = 0; i < total; i++) {
 			JMenuItem item = menu.getItem(i);
 
-			if (titulo.equals(item.getText()) && item instanceof ItemLAF) {
-				ItemLAF itemLAF = (ItemLAF) item;
-				itemLAF.processar();
+			if (titulo.equals(item.getText())) {
+				item.doClick();
 			}
 		}
 	}
