@@ -235,7 +235,9 @@ public class Fichario extends JTabbedPane {
 					habilitado = false;
 					Integer ult = getSelectedIndex();
 					setSelectedIndex(indice);
-					push(direito, ult);
+					if (!indice.equals(ult)) {
+						push(direito, ult);
+					}
 					habilitado = true;
 				}
 			}
@@ -251,7 +253,9 @@ public class Fichario extends JTabbedPane {
 					habilitado = false;
 					Integer ult = getSelectedIndex();
 					setSelectedIndex(indice);
-					push(esquerdo, ult);
+					if (!indice.equals(ult)) {
+						push(esquerdo, ult);
+					}
 					habilitado = true;
 				}
 			}
