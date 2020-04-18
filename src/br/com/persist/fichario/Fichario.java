@@ -162,10 +162,23 @@ public class Fichario extends JTabbedPane {
 			}
 		}
 
+		void checarEstado() {
+			if (esquerdo) {
+				setEnabled(!navegacaoListener.esquerdo.isEmpty());
+			} else {
+				setEnabled(!navegacaoListener.direito.isEmpty());
+			}
+		}
+
 		@Override
 		public void setBounds(int x, int y, int width, int height) {
 			super.setBounds(esquerdo ? 0 : 15, 0, 15, 10);
 		}
+	}
+
+	void checarEstadoNavegacao() {
+		navegButtonEsquerdo.checarEstado();
+		navegButtonDireito.checarEstado();
 	}
 
 	public class NavegacaoListener implements ChangeListener {
@@ -185,6 +198,7 @@ public class Fichario extends JTabbedPane {
 			habilitado = true;
 			esquerdo.clear();
 			direito.clear();
+			checarEstadoNavegacao();
 		}
 
 		void push(Deque<Integer> deque, Integer i) {
@@ -209,6 +223,7 @@ public class Fichario extends JTabbedPane {
 				direito.clear();
 				push(esquerdo, ultimo);
 				ultimo = getSelectedIndex();
+				checarEstadoNavegacao();
 			}
 		}
 
@@ -224,6 +239,8 @@ public class Fichario extends JTabbedPane {
 					habilitado = true;
 				}
 			}
+
+			checarEstadoNavegacao();
 		}
 
 		void avancar() {
@@ -238,6 +255,8 @@ public class Fichario extends JTabbedPane {
 					habilitado = true;
 				}
 			}
+
+			checarEstadoNavegacao();
 		}
 	}
 
