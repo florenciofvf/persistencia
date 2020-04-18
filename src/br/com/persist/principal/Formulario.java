@@ -104,7 +104,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus" + Constantes.DOIS);
 				MapeamentoModelo.inicializar();
 				VariaveisModelo.inicializar();
 				FragmentoModelo.inicializar();
