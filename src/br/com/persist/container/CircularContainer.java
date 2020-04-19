@@ -27,14 +27,15 @@ public class CircularContainer extends Panel {
 	private TextField txtGrauOrigem = new TextField("0");
 	private TextField txtRaio = new TextField("300");
 	private final JComboBox<Objeto> cmbObjeto;
+	private final JComboBox<Tipo> cmbTipo;
 	private final Superficie superficie;
-	private final Tipo tipo;
 
 	public CircularContainer(IJanela janela, Superficie superficie, Tipo tipo) {
 		cmbObjeto = Util.criarComboObjetosSel(superficie);
+		cmbTipo = new JComboBox<>(Tipo.values());
+		cmbTipo.setSelectedItem(tipo);
 		this.superficie = superficie;
 		toolbar.ini(janela);
-		this.tipo = tipo;
 		montarLayout();
 	}
 
@@ -43,9 +44,11 @@ public class CircularContainer extends Panel {
 	}
 
 	private void montarLayout() {
-		Panel panel = new Panel(new GridLayout(4, 2, 10, 10));
+		Panel panel = new Panel(new GridLayout(5, 2, 10, 10));
 		panel.add(new Label("label.pivo"));
 		panel.add(cmbObjeto);
+		panel.add(new Label("label.tipo"));
+		panel.add(cmbTipo);
 		panel.add(new Label("label.raio"));
 		panel.add(txtRaio);
 		panel.add(new Label("label.grau_origem"));
@@ -85,8 +88,9 @@ public class CircularContainer extends Panel {
 
 		private void atualizar() {
 			Objeto pivo = (Objeto) cmbObjeto.getSelectedItem();
+			Tipo tipo = (Tipo) cmbTipo.getSelectedItem();
 
-			if (pivo == null) {
+			if (pivo == null || tipo == null) {
 				return;
 			}
 
