@@ -568,6 +568,11 @@ public class Objeto implements Runnable {
 		return id.hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return id;
+	}
+
 	public void desenhar(Component c, Graphics2D g2) {
 		Composite composite = g2.getComposite();
 		Shape shape = g2.getClip();
