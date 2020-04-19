@@ -2,8 +2,11 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.swing.JComboBox;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
@@ -22,27 +25,17 @@ public class CircularContainer extends Panel {
 	private final Toolbar toolbar = new Toolbar();
 	private TextField txtGrauTotal = new TextField("360");
 	private TextField txtGrauOrigem = new TextField("0");
-	private final transient List<Objeto> selecionados;
 	private TextField txtRaio = new TextField("300");
+	private final JComboBox<Objeto> cmbObjeto;
 	private final Superficie superficie;
-	private final transient Objeto pivo;
 	private final Tipo tipo;
 
-	public CircularContainer(IJanela janela, Superficie superficie, Tipo tipo, Objeto pivo) {
-		selecionados = superficie.getSelecionados();
+	public CircularContainer(IJanela janela, Superficie superficie, Tipo tipo) {
+		cmbObjeto = Util.criarComboObjetosSel(superficie);
 		this.superficie = superficie;
 		toolbar.ini(janela);
-		this.pivo = pivo;
 		this.tipo = tipo;
 		montarLayout();
-
-		Iterator<Objeto> it = selecionados.iterator();
-
-		while (it.hasNext()) {
-			if (it.next().equals(pivo)) {
-				it.remove();
-			}
-		}
 	}
 
 	public enum Tipo {
@@ -50,7 +43,9 @@ public class CircularContainer extends Panel {
 	}
 
 	private void montarLayout() {
-		Panel panel = new Panel(new GridLayout(3, 2, 10, 10));
+		Panel panel = new Panel(new GridLayout(4, 2, 10, 10));
+		panel.add(new Label("label.pivo"));
+		panel.add(cmbObjeto);
 		panel.add(new Label("label.raio"));
 		panel.add(txtRaio);
 		panel.add(new Label("label.grau_origem"));
@@ -74,9 +69,30 @@ public class CircularContainer extends Panel {
 			atualizarAcao.setActionListener(e -> atualizar());
 		}
 
+		private List<Objeto> getSelecionados(Objeto pivo) {
+			List<Objeto> resposta = new ArrayList<>(superficie.getSelecionados());
+
+			Iterator<Objeto> it = resposta.iterator();
+
+			while (it.hasNext()) {
+				if (it.next().equals(pivo)) {
+					it.remove();
+				}
+			}
+
+			return resposta;
+		}
+
 		private void atualizar() {
+			Objeto pivo = (Objeto) cmbObjeto.getSelectedItem();
+
+			if (pivo == null) {
+				return;
+			}
+
+			List<Objeto> selecionados = getSelecionados(pivo);
+
 			if (selecionados.isEmpty()) {
-				tipo.toString();
 				return;
 			}
 

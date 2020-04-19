@@ -5,7 +5,6 @@ import java.awt.Frame;
 
 import br.com.persist.container.CircularContainer;
 import br.com.persist.container.CircularContainer.Tipo;
-import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
@@ -15,9 +14,9 @@ public class CircularDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final CircularContainer container;
 
-	public CircularDialogo(Frame frame, Superficie superficie, Tipo tipo, Objeto pivo) {
+	public CircularDialogo(Frame frame, Superficie superficie, Tipo tipo) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CIRCULAR));
-		container = new CircularContainer(this, superficie, tipo, pivo);
+		container = new CircularContainer(this, superficie, tipo);
 		montarLayout();
 		pack();
 	}

@@ -1108,8 +1108,8 @@ public class Superficie extends Desktop {
 					frame = container.getContainerFormulario();
 				}
 
-				if (selecionadoObjeto != null) {
-					CircularDialogo form = new CircularDialogo(frame, Superficie.this, tipo, selecionadoObjeto);
+				if (getSelecionados().size() > Constantes.UM) {
+					CircularDialogo form = new CircularDialogo(frame, Superficie.this, tipo);
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				}

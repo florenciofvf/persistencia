@@ -44,6 +44,7 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.modelo.ConexaoComboModelo;
+import br.com.persist.modelo.ObjetoComboModelo;
 import br.com.persist.modelo.VariaveisModelo;
 
 public class Util {
@@ -368,6 +369,10 @@ public class Util {
 		}
 
 		return cmbConexao;
+	}
+
+	public static JComboBox<Objeto> criarComboObjetosSel(Superficie superficie) {
+		return new JComboBox<>(new ObjetoComboModelo(superficie.getSelecionados()));
 	}
 
 	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
