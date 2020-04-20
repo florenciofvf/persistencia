@@ -43,6 +43,10 @@ public class TextArea extends JScrollPane {
 		return textAreaInner.getSelectedText();
 	}
 
+	public JTextArea getTextAreaInner() {
+		return textAreaInner;
+	}
+
 	public String getText() {
 		return textAreaInner.getText();
 	}

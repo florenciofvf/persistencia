@@ -198,6 +198,12 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		String string = areaParametros.getSelectedText();
 
 		if (Util.estaVazio(string)) {
+			Util.selecionarTexto(areaParametros);
+		}
+
+		string = areaParametros.getSelectedText();
+
+		if (Util.estaVazio(string)) {
 			string = areaParametros.getText();
 		}
 
