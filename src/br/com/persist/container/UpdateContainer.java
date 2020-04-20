@@ -215,17 +215,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			return;
 		}
 
-		String instrucao = textArea.getSelectedText();
-
-		if (Util.estaVazio(instrucao)) {
-			Util.selecionarTexto(textArea.getTextAreaInner());
-		}
-
-		instrucao = textArea.getSelectedText();
-
-		if (Util.estaVazio(instrucao)) {
-			instrucao = textArea.getText();
-		}
+		String instrucao = Util.getString(textArea.getTextAreaInner());
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);

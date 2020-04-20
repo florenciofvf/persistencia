@@ -195,7 +195,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			return;
 		}
 
-		String string = getString();
+		String string = Util.getString(areaParametros);
 		areaResultados.setText("");
 
 		try {
@@ -213,28 +213,12 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 	}
 
-	private String getString() {
-		String string = areaParametros.getSelectedText();
-
-		if (Util.estaVazio(string)) {
-			Util.selecionarTexto(areaParametros);
-		}
-
-		string = areaParametros.getSelectedText();
-
-		if (Util.estaVazio(string)) {
-			string = areaParametros.getText();
-		}
-
-		return string;
-	}
-
 	public void base64() {
 		if (Util.estaVazio(areaParametros.getText())) {
 			return;
 		}
 
-		String string = getString();
+		String string = Util.getString(areaParametros);
 		areaResultados.setText("");
 
 		try {
@@ -249,7 +233,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			return;
 		}
 
-		String string = getString();
+		String string = Util.getString(areaParametros);
 		areaResultados.setText("");
 
 		try {

@@ -204,17 +204,7 @@ public class ConsultaContainer extends AbstratoContainer
 			return;
 		}
 
-		String consulta = textArea.getSelectedText();
-
-		if (Util.estaVazio(consulta)) {
-			Util.selecionarTexto(textArea.getTextAreaInner());
-		}
-
-		consulta = textArea.getSelectedText();
-
-		if (Util.estaVazio(consulta)) {
-			consulta = textArea.getText();
-		}
+		String consulta = Util.getString(textArea.getTextAreaInner());
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);

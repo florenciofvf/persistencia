@@ -620,6 +620,10 @@ public class Util {
 	}
 
 	public static void selecionarTexto(JTextComponent area) {
+		if (area == null) {
+			return;
+		}
+
 		Caret caret = area.getCaret();
 
 		if (caret == null) {
@@ -674,5 +678,25 @@ public class Util {
 		}
 
 		return fim;
+	}
+
+	public static String getString(JTextComponent area) {
+		if (area == null) {
+			return Constantes.VAZIO;
+		}
+
+		String string = area.getSelectedText();
+
+		if (estaVazio(string)) {
+			selecionarTexto(area);
+		}
+
+		string = area.getSelectedText();
+
+		if (estaVazio(string)) {
+			string = area.getText();
+		}
+
+		return string;
 	}
 }
