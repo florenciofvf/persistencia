@@ -34,6 +34,8 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.text.Caret;
+import javax.swing.text.JTextComponent;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -615,5 +617,62 @@ public class Util {
 		if (pos < 0) {
 			throw new IllegalStateException(msg);
 		}
+	}
+
+	public static void selecionarTexto(JTextComponent area) {
+		Caret caret = area.getCaret();
+
+		if (caret == null) {
+			return;
+		}
+
+		String string = area.getText();
+		int ini = getIni(caret.getDot(), string);
+		int fim = getFim(caret.getDot(), string);
+
+		if (ini < fim) {
+			area.setSelectionStart(ini);
+			area.setSelectionEnd(fim);
+		}
+	}
+
+	private static int getIni(int pos, String string) {
+		int ini = pos;
+
+		while (ini >= 0 && ini < string.length()) {
+			char c = string.charAt(ini);
+
+			if (ini - 1 >= 0) {
+				char d = string.charAt(ini - 1);
+
+				if (c == '\n' && d == '\n') {
+					break;
+				}
+			}
+
+			ini--;
+		}
+
+		return ini;
+	}
+
+	private static int getFim(int pos, String string) {
+		int fim = pos;
+
+		while (fim < string.length()) {
+			char c = string.charAt(fim);
+
+			if (fim + 1 < string.length()) {
+				char d = string.charAt(fim + 1);
+
+				if (c == '\n' && d == '\n') {
+					break;
+				}
+			}
+
+			fim++;
+		}
+
+		return fim;
 	}
 }
