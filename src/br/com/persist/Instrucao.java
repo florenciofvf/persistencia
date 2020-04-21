@@ -22,7 +22,7 @@ public class Instrucao {
 
 	public String getValor() {
 		if (Util.estaVazio(valor)) {
-			valor = "";
+			valor = Constantes.VAZIO;
 		}
 
 		return valor;

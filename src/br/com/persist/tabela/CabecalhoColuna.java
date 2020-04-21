@@ -19,6 +19,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextField;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.modelo.OrdenacaoModelo;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
@@ -189,7 +190,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 
 	public String getFiltroComplemento() {
 		String string = filtro.filtroString;
-		return string == null ? "" : string;
+		return string == null ? Constantes.VAZIO : string;
 	}
 
 	public void copiar(CabecalhoColuna cabecalho) {

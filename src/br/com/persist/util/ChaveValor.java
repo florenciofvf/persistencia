@@ -60,7 +60,7 @@ public class ChaveValor {
 
 	public String getValor() {
 		if (Util.estaVazio(valor)) {
-			valor = "";
+			valor = Constantes.VAZIO;
 		}
 
 		return valor;

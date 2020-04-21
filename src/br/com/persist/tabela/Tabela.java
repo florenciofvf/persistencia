@@ -394,7 +394,7 @@ public class Tabela extends JTable {
 
 				addActionListener(e -> {
 					ChaveValor cv = MapeamentoModelo.get(getText());
-					Util.mensagem(Tabela.this, cv == null ? "" : cv.getValor());
+					Util.mensagem(Tabela.this, cv == null ? Constantes.VAZIO : cv.getValor());
 				});
 			}
 		}

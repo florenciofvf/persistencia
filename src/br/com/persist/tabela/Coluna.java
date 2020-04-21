@@ -118,7 +118,7 @@ public class Coluna {
 
 	public String get(Object o) {
 		if (o == null) {
-			return "";
+			return Constantes.VAZIO;
 		}
 
 		String s = o.toString();

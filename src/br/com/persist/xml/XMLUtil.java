@@ -23,15 +23,15 @@ public class XMLUtil {
 	}
 
 	public XMLUtil atributo(String nome, boolean valor) {
-		return print(" " + nome + "=" + citar("" + valor));
+		return print(" " + nome + "=" + citar(Constantes.VAZIO + valor));
 	}
 
 	public XMLUtil atributo(String nome, double valor) {
-		return print(" " + nome + "=" + citar("" + valor));
+		return print(" " + nome + "=" + citar(Constantes.VAZIO + valor));
 	}
 
 	public XMLUtil atributo(String nome, long valor) {
-		return print(" " + nome + "=" + citar("" + valor));
+		return print(" " + nome + "=" + citar(Constantes.VAZIO + valor));
 	}
 
 	public XMLUtil atributo(String nome, String valor) {

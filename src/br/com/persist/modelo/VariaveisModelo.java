@@ -61,7 +61,7 @@ public class VariaveisModelo extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		String valor = aValue == null ? "" : aValue.toString();
+		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
 		ChaveValor cv = lista.get(rowIndex);
 
 		switch (columnIndex) {

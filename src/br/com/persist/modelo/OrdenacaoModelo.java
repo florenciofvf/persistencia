@@ -10,6 +10,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.tabela.Coluna;
 import br.com.persist.tabela.IndiceValor;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class OrdenacaoModelo extends AbstractTableModel {
@@ -175,8 +176,8 @@ public class OrdenacaoModelo extends AbstractTableModel {
 
 				return outro.compareTo(valor);
 			} else {
-				string = Util.estaVazio(string) ? "" : string;
-				outra = Util.estaVazio(outra) ? "" : outra;
+				string = Util.estaVazio(string) ? Constantes.VAZIO : string;
+				outra = Util.estaVazio(outra) ? Constantes.VAZIO : outra;
 
 				if (descendente) {
 					return string.compareTo(outra);

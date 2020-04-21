@@ -321,7 +321,7 @@ public class RegistroModelo implements TableModel {
 		StringBuilder values = new StringBuilder("VALUES (" + Constantes.QL);
 
 		Coluna coluna = colunas.get(0);
-		append("", campos, values, coluna, registro, prefixoNomeTabela);
+		append(Constantes.VAZIO, campos, values, coluna, registro, prefixoNomeTabela);
 
 		for (int i = 1; i < colunas.size(); i++) {
 			coluna = colunas.get(i);

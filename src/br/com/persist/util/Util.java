@@ -62,7 +62,7 @@ public class Util {
 
 	public static String soNumeros(String s) {
 		if (estaVazio(s)) {
-			return "";
+			return Constantes.VAZIO;
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -78,7 +78,7 @@ public class Util {
 
 	public static String soLetras(String s) {
 		if (estaVazio(s)) {
-			return "";
+			return Constantes.VAZIO;
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -230,7 +230,7 @@ public class Util {
 
 	public static String escapar(String s) {
 		if (s == null) {
-			return "";
+			return Constantes.VAZIO;
 		}
 
 		StringBuilder builder = new StringBuilder();
@@ -388,7 +388,7 @@ public class Util {
 
 	public static String substituir(String instrucao, Map<String, String> mapaChaveValor) {
 		if (instrucao == null) {
-			instrucao = "";
+			instrucao = Constantes.VAZIO;
 		}
 
 		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
