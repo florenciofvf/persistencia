@@ -243,7 +243,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 
 				if (cvDeltaY == null) {
 					cvDeltaY = new ChaveValor(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
-							"" + Constantes.QUARENTA);
+							Constantes.VAZIO + Constantes.QUARENTA);
 					VariaveisModelo.adicionar(cvDeltaY);
 					salvar = true;
 				}

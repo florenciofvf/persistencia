@@ -36,6 +36,7 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
@@ -76,8 +77,8 @@ public class RelacaoContainer extends Panel {
 		private CheckBox chkDesenharDesc = new CheckBox();
 
 		PanelDesc() {
-			txtDeslocXDesc.setText("" + relacao.getDeslocamentoXDesc());
-			txtDeslocYDesc.setText("" + relacao.getDeslocamentoYDesc());
+			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
+			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
 
 			txtDeslocXDesc.addFocusListener(focusListenerInner);

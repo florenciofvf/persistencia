@@ -196,7 +196,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 
 		String string = Util.getString(areaParametros);
-		areaResultados.setText("");
+		areaResultados.setText(Constantes.VAZIO);
 
 		try {
 			Parser parser = new Parser();
@@ -219,7 +219,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 
 		String string = Util.getString(areaParametros);
-		areaResultados.setText("");
+		areaResultados.setText(Constantes.VAZIO);
 
 		try {
 			areaResultados.setText(Base64Util.criarBase64(string));
@@ -234,7 +234,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 
 		String string = Util.getString(areaParametros);
-		areaResultados.setText("");
+		areaResultados.setText(Constantes.VAZIO);
 
 		try {
 			Parser parser = new Parser();

@@ -131,7 +131,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		this.objeto = objeto;
 		montarLayout();
 		configurar();
-		processarObjeto("", g, null);
+		processarObjeto(Constantes.VAZIO, g, null);
 	}
 
 	private void montarLayout() {
@@ -262,11 +262,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			private void eventos() {
 				objetoAcao.setActionListener(e -> txtComplemento.setText(objeto.getComplemento()));
-				limparAcao.setActionListener(e -> txtComplemento.setText(""));
+				limparAcao.setActionListener(e -> txtComplemento.limpar());
 
 				conexaoAcao.setActionListener(e -> {
 					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-					String string = "";
+					String string = Constantes.VAZIO;
 
 					if (conexao != null) {
 						string = conexao.getFinalComplemento();
@@ -867,8 +867,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					try {
 						Connection conn = Conexao.getConnection(conexao);
 						int i = Persistencia.getTotalRegistros(conn, objeto,
-								complemento ? txtComplemento.getText() : "", conexao);
-						toolbar.labelTotal.setText("" + i);
+								complemento ? txtComplemento.getText() : Constantes.VAZIO, conexao);
+						toolbar.labelTotal.setText(Constantes.VAZIO + i);
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("TOTAL", ex, ObjetoContainer.this);
 					}
@@ -1052,7 +1052,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							return;
 						}
 
-						String instrucao = getConsulta(conexao, "").toString();
+						String instrucao = getConsulta(conexao, Constantes.VAZIO).toString();
 
 						if (Util.estaVazio(instrucao)) {
 							return;
@@ -1530,7 +1530,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		processarObjeto(cabecalhoFiltro == null ? "" : cabecalhoFiltro.getFiltroComplemento(), null, cabecalhoFiltro);
+		processarObjeto(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
+				cabecalhoFiltro);
 	}
 
 	public void buscaAutomatica(String campo, String argumentos) {
@@ -1589,7 +1590,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private transient TabelaListener tabelaListener = new TabelaListener() {
 		@Override
 		public void copiarNomeColuna(Tabela tabela, String nome, String anterior) {
-			String string = Util.estaVazio(anterior) ? "" : anterior;
+			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
 			txtComplemento.setText("AND " + nome + " = " + string);
 		}
 
@@ -1611,10 +1612,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					toolbar.update.setEnabled(chaves.length > 0 && linhas.length == 1);
 					toolbar.excluir.setEnabled(chaves.length > 0);
-					toolbar.labelTotal.setText("" + linhas.length);
+					toolbar.labelTotal.setText(Constantes.VAZIO + linhas.length);
 				} else {
 					toolbar.excluirAtualizarEnable(false);
-					toolbar.labelTotal.setText("");
+					toolbar.labelTotal.limpar();
 				}
 
 				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaLink.isEmpty()) {
