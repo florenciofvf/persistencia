@@ -123,20 +123,21 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 		if (cvDadosToolbarTableHeader == null) {
 			cvDadosToolbarTableHeader = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
-					"" + Constantes.SETENTA);
+					Constantes.VAZIO + Constantes.SETENTA);
 			VariaveisModelo.adicionar(cvDadosToolbarTableHeader);
 			salvar = true;
 		}
 
 		if (cvMaximoRegistros == null) {
 			cvMaximoRegistros = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
-					"" + Constantes.DEZ);
+					Constantes.VAZIO + Constantes.DEZ);
 			VariaveisModelo.adicionar(cvMaximoRegistros);
 			salvar = true;
 		}
 
 		if (cvMinimoForm == null) {
-			cvMinimoForm = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS, "" + Constantes.TRINTA);
+			cvMinimoForm = new ChaveValor(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
+					Constantes.VAZIO + Constantes.TRINTA);
 			VariaveisModelo.adicionar(cvMinimoForm);
 			salvar = true;
 		}
@@ -238,7 +239,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 	public String getApelido() {
 		if (apelido == null) {
-			apelido = "";
+			apelido = Constantes.VAZIO;
 		}
 
 		return apelido;

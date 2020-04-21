@@ -1,5 +1,6 @@
 package br.com.persist.link_auto;
 
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class TabelaLinkAuto {
@@ -19,7 +20,7 @@ public class TabelaLinkAuto {
 			apelido = n.substring(1, pos2);
 			nome = n.substring(pos2 + 1);
 		} else {
-			apelido = "";
+			apelido = Constantes.VAZIO;
 			nome = n;
 		}
 

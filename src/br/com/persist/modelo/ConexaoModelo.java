@@ -135,7 +135,7 @@ public class ConexaoModelo extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		Conexao conexao = conexoes.get(rowIndex);
-		String valor = aValue == null ? "" : aValue.toString();
+		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
 
 		switch (columnIndex) {
 		case 1:

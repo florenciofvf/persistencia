@@ -66,7 +66,7 @@ public class FragmentoModelo extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		String valor = aValue == null ? "" : aValue.toString();
+		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
 		Fragmento f = fragmentos.get(rowIndex);
 
 		switch (columnIndex) {
@@ -162,8 +162,8 @@ public class FragmentoModelo extends AbstractTableModel {
 
 	public static void ordenar() {
 		Collections.sort(fragmentos, (o1, o2) -> {
-			String s1 = o1.getGrupo() != null ? o1.getGrupo().toUpperCase() : "";
-			String s2 = o2.getGrupo() != null ? o2.getGrupo().toUpperCase() : "";
+			String s1 = o1.getGrupo() != null ? o1.getGrupo().toUpperCase() : Constantes.VAZIO;
+			String s2 = o2.getGrupo() != null ? o2.getGrupo().toUpperCase() : Constantes.VAZIO;
 			return s1.compareTo(s2);
 		});
 	}
