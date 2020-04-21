@@ -1,5 +1,7 @@
 package br.com.persist.busca_apos;
 
+import br.com.persist.util.Constantes;
+
 public class TabelaBuscaAutoApos {
 	private final String apelidoTabela;
 	private final String apelido;
@@ -14,7 +16,7 @@ public class TabelaBuscaAutoApos {
 			apelido = n.substring(1, pos2);
 			nome = n.substring(pos2 + 1);
 		} else {
-			apelido = "";
+			apelido = Constantes.VAZIO;
 			nome = n;
 		}
 	}

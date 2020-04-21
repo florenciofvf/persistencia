@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.util.Coletor;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class TabelaBuscaAuto {
@@ -26,7 +27,7 @@ public class TabelaBuscaAuto {
 			apelido = n.substring(1, pos2);
 			nome = n.substring(pos2 + 1);
 		} else {
-			apelido = "";
+			apelido = Constantes.VAZIO;
 			nome = n;
 		}
 

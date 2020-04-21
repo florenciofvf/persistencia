@@ -2,6 +2,8 @@ package br.com.persist.comp;
 
 import javax.swing.JTextField;
 
+import br.com.persist.util.Constantes;
+
 public class TextField extends JTextField {
 	private static final long serialVersionUID = 1L;
 
@@ -17,6 +19,6 @@ public class TextField extends JTextField {
 	}
 
 	public void limpar() {
-		setText("");
+		setText(Constantes.VAZIO);
 	}
 }

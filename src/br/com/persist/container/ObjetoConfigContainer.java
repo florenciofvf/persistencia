@@ -98,18 +98,19 @@ public class ObjetoConfigContainer extends Panel {
 		private Label labelIcone = new Label();
 
 		PanelGeral() {
+			final String VAZIO = Constantes.VAZIO;
 			txtBuscaAutomaticaApos.setText(objeto.getBuscaAutomaticaApos());
 			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
 			txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
 			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
-			txtDeslocXId.setText("" + objeto.getDeslocamentoXId());
-			txtDeslocYId.setText("" + objeto.getDeslocamentoYId());
+			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
+			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
 			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
 			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
-			txtIntervalo.setText("" + objeto.getIntervalo());
+			txtIntervalo.setText(VAZIO + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
 			chkColunaInfo.setSelected(objeto.isColunaInfo());
 			txtChaveamento.setText(objeto.getChaveamento());
@@ -125,8 +126,8 @@ public class ObjetoConfigContainer extends Panel {
 			chkCCSC.setSelected(objeto.isCcsc());
 			chkBPNT.setSelected(objeto.isBpnt());
 			txtJoins.setText(objeto.getJoins());
-			txtX.setText("" + objeto.getX());
-			txtY.setText("" + objeto.getY());
+			txtX.setText(VAZIO + objeto.getX());
+			txtY.setText(VAZIO + objeto.getY());
 			txtId.setText(objeto.getId());
 
 			txtBuscaAutomaticaApos.addFocusListener(focusListenerInner);

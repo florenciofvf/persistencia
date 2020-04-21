@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 
 public class Label extends JLabel {
@@ -27,6 +28,6 @@ public class Label extends JLabel {
 	}
 
 	public void limpar() {
-		setText("");
+		setText(Constantes.VAZIO);
 	}
 }
