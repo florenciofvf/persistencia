@@ -18,6 +18,7 @@ import br.com.persist.exception.PersistenciaException;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.tabela.Coluna;
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
 public class Persistencia {
@@ -155,11 +156,11 @@ public class Persistencia {
 
 				for (int i = 1; i <= qtdColunas; i++) {
 					Object valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
-					registro.add(valor == null ? "" : valor);
+					registro.add(valor == null ? Constantes.VAZIO : valor);
 				}
 
 				if (objeto.isColunaInfo()) {
-					registro.add("");
+					registro.add(Constantes.VAZIO);
 				}
 
 				registros.add(registro);
@@ -318,7 +319,7 @@ public class Persistencia {
 	}
 
 	private static List<String> criar(String nome, Object object) {
-		return Arrays.asList(nome, object == null ? "" : object.toString());
+		return Arrays.asList(nome, object == null ? Constantes.VAZIO : object.toString());
 	}
 
 	private static List<String> criar(String... strings) {
@@ -488,29 +489,31 @@ public class Persistencia {
 						"ReadOnly", "Writable", "DefinitelyWritable");
 				List<List<String>> dados = new ArrayList<>();
 
+				final String VAZIO = Constantes.VAZIO;
+
 				for (int i = 1; i <= totalColunas; i++) {
 					List<String> linha = new ArrayList<>();
 
 					linha.add(rsmd.getColumnClassName(i));
 					linha.add(rsmd.getColumnLabel(i));
 					linha.add(rsmd.getColumnName(i));
-					linha.add("" + rsmd.isAutoIncrement(i));
-					linha.add("" + rsmd.isCaseSensitive(i));
-					linha.add("" + rsmd.isSearchable(i));
-					linha.add("" + rsmd.isCurrency(i));
-					linha.add("" + rsmd.isNullable(i));
-					linha.add("" + rsmd.isSigned(i));
-					linha.add("" + rsmd.getColumnDisplaySize(i));
+					linha.add(VAZIO + rsmd.isAutoIncrement(i));
+					linha.add(VAZIO + rsmd.isCaseSensitive(i));
+					linha.add(VAZIO + rsmd.isSearchable(i));
+					linha.add(VAZIO + rsmd.isCurrency(i));
+					linha.add(VAZIO + rsmd.isNullable(i));
+					linha.add(VAZIO + rsmd.isSigned(i));
+					linha.add(VAZIO + rsmd.getColumnDisplaySize(i));
 					linha.add(rsmd.getSchemaName(i));
-					linha.add("" + rsmd.getPrecision(i));
-					linha.add("" + rsmd.getScale(i));
+					linha.add(VAZIO + rsmd.getPrecision(i));
+					linha.add(VAZIO + rsmd.getScale(i));
 					linha.add(rsmd.getTableName(i));
 					linha.add(rsmd.getCatalogName(i));
-					linha.add("" + rsmd.getColumnType(i));
+					linha.add(VAZIO + rsmd.getColumnType(i));
 					linha.add(rsmd.getColumnTypeName(i));
-					linha.add("" + rsmd.isReadOnly(i));
-					linha.add("" + rsmd.isWritable(i));
-					linha.add("" + rsmd.isDefinitelyWritable(i));
+					linha.add(VAZIO + rsmd.isReadOnly(i));
+					linha.add(VAZIO + rsmd.isWritable(i));
+					linha.add(VAZIO + rsmd.isDefinitelyWritable(i));
 
 					dados.add(linha);
 				}
@@ -527,7 +530,7 @@ public class Persistencia {
 			List<Metadado> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getTables("", conexao.getEsquema(), "%", new String[] { "TABLE" });
+			ResultSet rs = m.getTables(Constantes.VAZIO, conexao.getEsquema(), "%", new String[] { "TABLE" });
 
 			while (rs.next()) {
 				resposta.add(new Metadado(rs.getString(TABLE_NAME)));
