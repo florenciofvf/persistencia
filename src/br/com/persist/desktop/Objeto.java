@@ -99,8 +99,8 @@ public class Objeto implements Runnable {
 	}
 
 	public Objeto(int x, int y, Color cor, String icone) {
+		id = Constantes.VAZIO + (++sequencia);
 		instrucoes = new ArrayList<>();
-		id = "" + (++sequencia);
 		desenharId = true;
 		setIcone(icone);
 		setCor(cor);
@@ -254,7 +254,7 @@ public class Objeto implements Runnable {
 		this.icone = icone;
 
 		if (Util.estaVazio(this.icone)) {
-			this.icone = "";
+			this.icone = Constantes.VAZIO;
 		} else {
 			icon = Imagens.getIcon(this.icone);
 		}
@@ -267,7 +267,7 @@ public class Objeto implements Runnable {
 
 	public String getFinalConsulta() {
 		if (Util.estaVazio(finalConsulta)) {
-			finalConsulta = "";
+			finalConsulta = Constantes.VAZIO;
 		}
 
 		return finalConsulta;
@@ -279,7 +279,7 @@ public class Objeto implements Runnable {
 
 	public String getComplemento() {
 		if (Util.estaVazio(complemento)) {
-			complemento = "";
+			complemento = Constantes.VAZIO;
 		}
 
 		return complemento;
@@ -287,7 +287,7 @@ public class Objeto implements Runnable {
 
 	public String getChaves() {
 		if (Util.estaVazio(chaves)) {
-			chaves = "";
+			chaves = Constantes.VAZIO;
 		}
 
 		return chaves;
@@ -295,7 +295,7 @@ public class Objeto implements Runnable {
 
 	public String getMapeamento() {
 		if (Util.estaVazio(mapeamento)) {
-			mapeamento = "";
+			mapeamento = Constantes.VAZIO;
 		}
 
 		return mapeamento;
@@ -307,7 +307,7 @@ public class Objeto implements Runnable {
 
 	public String getSequencias() {
 		if (Util.estaVazio(sequencias)) {
-			sequencias = "";
+			sequencias = Constantes.VAZIO;
 		}
 
 		return sequencias;
@@ -325,10 +325,10 @@ public class Objeto implements Runnable {
 
 	public String getTabelaEsquema(String esquema) {
 		if (Util.estaVazio(tabela)) {
-			tabela = "";
+			tabela = Constantes.VAZIO;
 		}
 
-		return (Util.estaVazio(esquema) ? "" : esquema + ".") + getPrefixoNomeTabela() + tabela;
+		return (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + getPrefixoNomeTabela() + tabela;
 	}
 
 	public void select(StringBuilder sb, Conexao conexao) {
@@ -372,9 +372,9 @@ public class Objeto implements Runnable {
 	}
 
 	public static String prefixarEsquema(Conexao conexao, String prefixoNomeTabela, String string) {
-		String esquema = conexao == null ? "" : conexao.getEsquema();
+		String esquema = conexao == null ? Constantes.VAZIO : conexao.getEsquema();
 
-		return (Util.estaVazio(esquema) ? "" : esquema + ".") + prefixoNomeTabela + string;
+		return (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + prefixoNomeTabela + string;
 	}
 
 	public String getNomeSequencia(String nomeColuna) {
@@ -389,7 +389,7 @@ public class Objeto implements Runnable {
 
 	public String getTabela2() {
 		if (Util.estaVazio(tabela)) {
-			tabela = "";
+			tabela = Constantes.VAZIO;
 		}
 
 		return tabela;
@@ -397,7 +397,7 @@ public class Objeto implements Runnable {
 
 	public String getSelectAlter() {
 		if (Util.estaVazio(selectAlter)) {
-			selectAlter = "";
+			selectAlter = Constantes.VAZIO;
 		}
 
 		return selectAlter;
@@ -405,7 +405,7 @@ public class Objeto implements Runnable {
 
 	public String getTabelas() {
 		if (Util.estaVazio(tabelas)) {
-			tabelas = "";
+			tabelas = Constantes.VAZIO;
 		}
 
 		return tabelas;
@@ -413,7 +413,7 @@ public class Objeto implements Runnable {
 
 	public String getJoins() {
 		if (Util.estaVazio(joins)) {
-			joins = "";
+			joins = Constantes.VAZIO;
 		}
 
 		return joins;
@@ -455,7 +455,7 @@ public class Objeto implements Runnable {
 
 	public String getDescricao() {
 		if (descricao == null) {
-			descricao = "";
+			descricao = Constantes.VAZIO;
 		}
 
 		return descricao;
@@ -499,7 +499,7 @@ public class Objeto implements Runnable {
 
 	public String getBuscaAutomatica() {
 		if (Util.estaVazio(buscaAutomatica)) {
-			buscaAutomatica = "";
+			buscaAutomatica = Constantes.VAZIO;
 		}
 
 		return buscaAutomatica;
@@ -507,7 +507,7 @@ public class Objeto implements Runnable {
 
 	public String getBuscaAutomaticaApos() {
 		if (Util.estaVazio(buscaAutomaticaApos)) {
-			buscaAutomaticaApos = "";
+			buscaAutomaticaApos = Constantes.VAZIO;
 		}
 
 		return buscaAutomaticaApos;
@@ -515,7 +515,7 @@ public class Objeto implements Runnable {
 
 	public String getLinkAutomatico() {
 		if (Util.estaVazio(linkAutomatico)) {
-			linkAutomatico = "";
+			linkAutomatico = Constantes.VAZIO;
 		}
 
 		return linkAutomatico;
@@ -523,7 +523,7 @@ public class Objeto implements Runnable {
 
 	public String getChaveamento() {
 		if (Util.estaVazio(chaveamento)) {
-			chaveamento = "";
+			chaveamento = Constantes.VAZIO;
 		}
 
 		return chaveamento;
@@ -893,7 +893,7 @@ public class Objeto implements Runnable {
 
 	public String getPrefixoNomeTabela() {
 		if (Util.estaVazio(prefixoNomeTabela)) {
-			prefixoNomeTabela = "";
+			prefixoNomeTabela = Constantes.VAZIO;
 		}
 
 		return prefixoNomeTabela;

@@ -1269,7 +1269,7 @@ public class Superficie extends Desktop {
 					boolean contem = contem(novo);
 
 					while (contem) {
-						novo.setId("" + Objeto.novaSequencia());
+						novo.setId(Constantes.VAZIO + Objeto.novaSequencia());
 						contem = contem(novo);
 					}
 
@@ -1484,7 +1484,7 @@ public class Superficie extends Desktop {
 		boolean contem = contem(novo);
 
 		while (contem) {
-			novo.setId("" + Objeto.novaSequencia());
+			novo.setId(Constantes.VAZIO + Objeto.novaSequencia());
 			contem = contem(novo);
 		}
 
@@ -1753,7 +1753,7 @@ public class Superficie extends Desktop {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					try {
 						Connection conn = Conexao.getConnection(conexao);
-						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+						int i = Persistencia.getTotalRegistros(conn, objeto, Constantes.VAZIO, conexao);
 						objeto.setCorFonte(Preferencias.getCorTotalAtual());
 						label.setText(++atual + " / " + total);
 						processado = true;
@@ -1846,7 +1846,7 @@ public class Superficie extends Desktop {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					try {
 						Connection conn = Conexao.getConnection(conexao);
-						int i = Persistencia.getTotalRegistros(conn, objeto, "", conexao);
+						int i = Persistencia.getTotalRegistros(conn, objeto, Constantes.VAZIO, conexao);
 						label.setText(++atual + " / " + total);
 						processarRecente(objeto, i, fm);
 						processado = true;

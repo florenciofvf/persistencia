@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
@@ -109,7 +110,7 @@ public class Relacao {
 
 	public String getDescricao() {
 		if (descricao == null) {
-			descricao = "";
+			descricao = Constantes.VAZIO;
 		}
 
 		return descricao;

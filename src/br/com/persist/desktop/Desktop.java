@@ -276,13 +276,13 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
 
 			if (cvDeltaX == null) {
-				cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
+				cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
 				VariaveisModelo.adicionar(cvDeltaX);
 				salvar = true;
 			}
 
 			if (cvDeltaY == null) {
-				cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, "" + Constantes.TRINTA);
+				cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
 				VariaveisModelo.adicionar(cvDeltaY);
 				salvar = true;
 			}
