@@ -153,6 +153,9 @@ public class Fichario extends JTabbedPane {
 					UIManager.getColor("TabbedPane.shadow"), UIManager.getColor("TabbedPane.darkShadow"),
 					UIManager.getColor("TabbedPane.highlight"));
 			addActionListener(e -> click());
+			if (tipo == 0) {
+				setDirection(0);
+			}
 			this.tipo = tipo;
 		}
 
