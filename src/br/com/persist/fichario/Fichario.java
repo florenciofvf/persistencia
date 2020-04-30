@@ -1380,6 +1380,27 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public void infoConexao() {
+		int total = getTabCount();
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < total; i++) {
+			Component cmp = getComponentAt(i);
+
+			if (cmp instanceof IFicharioConexao) {
+				IFicharioConexao aba = (IFicharioConexao) cmp;
+				InfoConexao info = aba.getInfoConexao();
+
+				sb.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL2);
+				sb.append("FILE: " + info.getConexaoFile() + Constantes.QL2);
+				sb.append("ABA: " + info.getNomeAba() + Constantes.QL2);
+				sb.append(Constantes.QL2);
+			}
+		}
+
+		Util.mensagem(Fichario.this, sb.toString());
+	}
+
 	public class SalvarAberto {
 		public void salvar() {
 			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO)) {
