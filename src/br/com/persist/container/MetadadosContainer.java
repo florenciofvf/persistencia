@@ -19,6 +19,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.listener.MetadadosListener;
 import br.com.persist.metadado.Metadados;
@@ -66,6 +67,14 @@ public class MetadadosContainer extends AbstratoContainer
 		if (conexao != null) {
 			cmbConexao.setSelectedItem(conexao);
 		}
+	}
+
+	@Override
+	public InfoConexao getInfoConexao() {
+		Conexao conexao = getConexaoPadrao();
+		String conexaoAtual = conexao == null ? "null" : conexao.getNome();
+		String nomeAba = getFileSalvarAberto().getAbsolutePath();
+		return new InfoConexao(conexaoAtual, conexaoAtual, nomeAba);
 	}
 
 	public Conexao getConexaoPadrao() {

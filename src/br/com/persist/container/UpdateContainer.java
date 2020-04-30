@@ -21,6 +21,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.TextArea;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
@@ -80,6 +81,14 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 		if (conexao != null) {
 			cmbConexao.setSelectedItem(conexao);
 		}
+	}
+
+	@Override
+	public InfoConexao getInfoConexao() {
+		Conexao conexao = getConexaoPadrao();
+		String conexaoAtual = conexao == null ? "null" : conexao.getNome();
+		String nomeAba = getFileSalvarAberto().getAbsolutePath();
+		return new InfoConexao(conexaoAtual, conexaoAtual, nomeAba);
 	}
 
 	public Conexao getConexaoPadrao() {

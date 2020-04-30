@@ -1502,6 +1502,32 @@ public class Fichario extends JTabbedPane {
 
 	public static interface IFicharioConexao {
 		void selecionarConexao(Conexao conexao);
+
+		public InfoConexao getInfoConexao();
+	}
+
+	public static class InfoConexao {
+		final String conexaoAtual;
+		final String conexaoFile;
+		final String nomeAba;
+
+		public InfoConexao(String conexaoAtual, String conexaoFile, String nomeAba) {
+			this.conexaoAtual = conexaoAtual;
+			this.conexaoFile = conexaoFile;
+			this.nomeAba = nomeAba;
+		}
+
+		public String getConexaoAtual() {
+			return conexaoAtual;
+		}
+
+		public String getConexaoFile() {
+			return conexaoFile;
+		}
+
+		public String getNomeAba() {
+			return nomeAba;
+		}
 	}
 
 	private class Listener extends MouseAdapter {

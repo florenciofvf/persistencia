@@ -29,6 +29,7 @@ import br.com.persist.comp.ToggleButton;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.UpdateFormulario;
@@ -58,6 +59,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 	private final JComboBox<Conexao> cmbConexao;
 	private final Formulario formulario;
 	private final Superficie superficie;
+	private String conexaoFile;
 	private File arquivo;
 
 	public Container(Formulario formulario, IJanela janela) {
@@ -82,6 +84,14 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		if (conexao != null) {
 			cmbConexao.setSelectedItem(conexao);
 		}
+	}
+
+	@Override
+	public InfoConexao getInfoConexao() {
+		Conexao conexao = getConexaoPadrao();
+		String conexaoAtual = conexao == null ? "null" : conexao.getNome();
+		String nomeAba = arquivo == null ? "null" : arquivo.getAbsolutePath();
+		return new InfoConexao(conexaoAtual, conexaoFile == null ? "null" : conexaoFile, nomeAba);
 	}
 
 	@Override
@@ -135,13 +145,13 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		btnSelecao.click();
 
 		if (!Util.estaVazio(sbConexao.toString())) {
-			String nomeConexao = sbConexao.toString();
+			conexaoFile = sbConexao.toString();
 			Conexao conexao = null;
 
 			for (int i = 0; i < cmbConexao.getItemCount(); i++) {
 				Conexao c = cmbConexao.getItemAt(i);
 
-				if (nomeConexao.equalsIgnoreCase(c.getNome())) {
+				if (conexaoFile.equalsIgnoreCase(c.getNome())) {
 					conexao = c;
 					break;
 				}
