@@ -1383,6 +1383,7 @@ public class Fichario extends JTabbedPane {
 	public void infoConexao() {
 		int total = getTabCount();
 		StringBuilder sb = new StringBuilder();
+		int cont = 0;
 
 		for (int i = 0; i < total; i++) {
 			Component cmp = getComponentAt(i);
@@ -1395,7 +1396,13 @@ public class Fichario extends JTabbedPane {
 				sb.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL2);
 				sb.append("FILE: " + info.getConexaoFile() + Constantes.QL2);
 				sb.append(Constantes.QL2);
+
+				cont++;
 			}
+		}
+
+		if (sb.length() > 0) {
+			sb.insert(0, "TOTAL = " + cont + Constantes.QL2 + Constantes.QL2);
 		}
 
 		Util.mensagem(Fichario.this, sb.toString());
