@@ -102,6 +102,7 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
+		private Action infoAcao = Action.actionIcon("label.info", Icones.INFO);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
@@ -113,6 +114,7 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 			addButton(true, topAcao);
 			addButton(true, conectaAcao);
 			addButton(true, sucessoAcao);
+			addButton(true, infoAcao);
 			addButton(true, desconectaAcao);
 			addButton(copiarAcao);
 
@@ -136,6 +138,8 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 
 		private void eventos() {
 			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
+
+			infoAcao.setActionListener(e -> formulario.getFichario().infoConexao());
 
 			sucessoAcao.setActionListener(e -> selecionarConexao());
 
