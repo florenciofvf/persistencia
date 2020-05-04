@@ -56,6 +56,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 	private DesktopPopup popup = new DesktopPopup();
 	private boolean ajusteAutomatico = true;
 	protected final Formulario formulario;
+	private boolean ajusteAutomaticoForm;
 	private boolean abortarFecharComESC;
 
 	public Desktop(Formulario formulario, boolean superficie) {
@@ -572,5 +573,13 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 
 	public void setAjusteAutomatico(boolean ajusteAutomatico) {
 		this.ajusteAutomatico = ajusteAutomatico;
+	}
+
+	public boolean isAjusteAutomaticoForm() {
+		return ajusteAutomaticoForm;
+	}
+
+	public void setAjusteAutomaticoForm(boolean ajusteAutomaticoForm) {
+		this.ajusteAutomaticoForm = ajusteAutomaticoForm;
 	}
 }

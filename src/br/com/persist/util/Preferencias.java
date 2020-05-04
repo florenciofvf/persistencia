@@ -209,14 +209,6 @@ public class Preferencias {
 		Preferencias.formFicha = formFicha;
 	}
 
-	public static boolean isAjusteAutomatico() {
-		return ajusteAutomatico;
-	}
-
-	public static void setAjusteAutomatico(boolean ajusteAutomatico) {
-		Preferencias.ajusteAutomatico = ajusteAutomatico;
-	}
-
 	public static int getLayoutAbertura() {
 		return layoutAbertura;
 	}

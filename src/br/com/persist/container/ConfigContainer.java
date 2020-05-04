@@ -42,7 +42,6 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 	private final CheckBox chkAbortarFecharComESC = new CheckBox("label.abortar_fechar_com_esc");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
-	private final CheckBox chkAjusteAutom = new CheckBox("label.ajuste_automatico");
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
@@ -125,7 +124,6 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
-		chkAjusteAutom.setSelected(Preferencias.isAjusteAutomatico());
 		chkNomearArrasto.setSelected(Preferencias.isNomearArrasto());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
@@ -159,7 +157,6 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 		container.add(chkAbortarFecharComESC);
 		container.add(chkNomeColunaListener);
 		container.add(chkFecharOrigemAposSoltar);
-		container.add(chkAjusteAutom);
 		container.add(chkNomearArrasto);
 		container.add(chkTituloAbaMin);
 		container.add(chkFicharioScroll);
@@ -187,7 +184,6 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 		chkFicharioScroll.setMargin(insets);
 		chkNomearArrasto.setMargin(insets);
 		chkTituloAbaMin.setMargin(insets);
-		chkAjusteAutom.setMargin(insets);
 	}
 
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
@@ -236,8 +232,6 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 		chkNomearArrasto.addActionListener(e -> Preferencias.setNomearArrasto(chkNomearArrasto.isSelected()));
 
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
-
-		chkAjusteAutom.addActionListener(e -> Preferencias.setAjusteAutomatico(chkAjusteAutom.isSelected()));
 
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
 
