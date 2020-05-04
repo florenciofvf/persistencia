@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -136,12 +137,13 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 	}
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao, Graphics g, Dimension d) {
+			StringBuilder sbConexao, Graphics g, Config config) {
 		if (abortarFecharComESCSuperficie) {
 			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
 
-		superficie.abrir(objetos, relacoes, d);
+		superficie.setAjusteAutomaticoForm(config.ajusteAutoForm);
+		superficie.abrir(objetos, relacoes, config.dimension);
 		arquivo = file;
 		btnSelecao.click();
 
@@ -170,6 +172,16 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		}
 
 		adicionarForm(conexao, forms, objetos, g);
+	}
+
+	public static class Config {
+		final boolean ajusteAutoForm;
+		final Dimension dimension;
+
+		public Config(boolean ajusteAutoForm, Dimension dimension) {
+			this.ajusteAutoForm = ajusteAutoForm;
+			this.dimension = dimension;
+		}
 	}
 
 	private void adicionarForm(Conexao conexao, List<Form> forms, List<Objeto> objetos, Graphics g) {
@@ -363,12 +375,13 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		private void abrirArquivo() {
 			try {
 				excluido();
+				AtomicBoolean atomicBoolean = new AtomicBoolean();
 				StringBuilder sbConexao = new StringBuilder();
 				List<Relacao> relacoes = new ArrayList<>();
 				List<Objeto> objetos = new ArrayList<>();
 				List<Form> forms = new ArrayList<>();
 				Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao);
-				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, d);
+				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, new Config(atomicBoolean.get(), d));
 				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);

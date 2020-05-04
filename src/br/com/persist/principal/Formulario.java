@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -28,6 +29,7 @@ import br.com.persist.comp.SplitPane;
 import br.com.persist.container.AmbienteContainer;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.ArvoreContainer;
+import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
@@ -230,6 +232,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 
 			try {
+				AtomicBoolean atomicBoolean = new AtomicBoolean();
 				StringBuilder sbConexao = new StringBuilder();
 				List<Relacao> relacoes = new ArrayList<>();
 				List<Objeto> objetos = new ArrayList<>();
@@ -238,9 +241,11 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
 
 				if (abrirNoFichario) {
-					fichario.getArquivos().abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
+					fichario.getArquivos().abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao,
+							new Container.Config(atomicBoolean.get(), d));
 				} else {
-					abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao, d);
+					abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao,
+							new Container.Config(atomicBoolean.get(), d));
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
@@ -248,9 +253,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
-				List<Form> forms, StringBuilder sbConexao, Dimension d) {
+				List<Form> forms, StringBuilder sbConexao, Container.Config config) {
 			ContainerFormulario form = new ContainerFormulario(formulario, file);
-			form.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
+			form.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), config);
 			form.setLocationRelativeTo(formulario);
 			form.setVisible(true);
 		}

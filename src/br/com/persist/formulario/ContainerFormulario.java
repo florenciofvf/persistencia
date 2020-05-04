@@ -1,7 +1,6 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,8 +38,8 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	}
 
 	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao, Graphics g, Dimension d) {
-		container.abrir(file, objetos, relacoes, forms, sbConexao, g, d);
+			StringBuilder sbConexao, Graphics g, Container.Config config) {
+		container.abrir(file, objetos, relacoes, forms, sbConexao, g, config);
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {

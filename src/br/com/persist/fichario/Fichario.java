@@ -1243,7 +1243,7 @@ public class Fichario extends JTabbedPane {
 
 	public class Arquivos {
 		public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
-				List<Form> forms, StringBuilder sbConexao, Dimension d) {
+				List<Form> forms, StringBuilder sbConexao, Container.Config config) {
 
 			if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
 				addTab(null, null);
@@ -1257,7 +1257,7 @@ public class Fichario extends JTabbedPane {
 
 			Container container = conteiner.novo(formulario);
 			int ultimoIndice = getTabCount() - 1;
-			container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), d);
+			container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), config);
 			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
 			setTitleAt(ultimoIndice, file.getName());
 		}
