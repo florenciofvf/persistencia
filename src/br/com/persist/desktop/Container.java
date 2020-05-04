@@ -20,6 +20,7 @@ import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
+import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Panel;
@@ -205,6 +206,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 		private TextField txtPrefixoNomeTabela = new TextField(10);
+		private final CheckBox chkAjusteAutom = new CheckBox();
 		private Label labelStatus = new Label();
 
 		public void ini(IJanela janela) {
@@ -226,11 +228,13 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			add(true, new ToggleButton(desenharIdAcao));
 			add(new ToggleButton(desenharDescAcao));
 			add(true, new ToggleButton(transpAcao));
+			add(chkAjusteAutom);
 			add(true, cmbConexao);
 			add(true, new ButtonInfo());
 			add(true, labelStatus);
 			add(true, txtPrefixoNomeTabela);
 
+			chkAjusteAutom.setToolTipText(Mensagens.getString("label.ajuste_automatico"));
 			txtPrefixoNomeTabela.setToolTipText(Mensagens.getString("label.prefixo_nt"));
 
 			eventos();
@@ -372,6 +376,8 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		}
 
 		private void eventos() {
+			chkAjusteAutom.addActionListener(e -> superficie.setAjusteAutomaticoForm(chkAjusteAutom.isSelected()));
+
 			copiarAcao.setActionListener(e -> Formulario.CopiarColar.copiar(superficie));
 
 			baixarAcao.setActionListener(e -> {
