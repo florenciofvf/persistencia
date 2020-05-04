@@ -64,7 +64,6 @@ import br.com.persist.container.VariaveisContainer;
 import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
-import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.formulario.AnexoFormulario;
@@ -88,10 +87,10 @@ import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Form;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
+import br.com.persist.xml.XMLColetor;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
@@ -1242,8 +1241,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Arquivos {
-		public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
-				List<Form> forms, StringBuilder sbConexao, Container.Config config) {
+		public void abrir(Formulario formulario, File file, XMLColetor coletor) {
 
 			if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
 				addTab(null, null);
@@ -1257,7 +1255,7 @@ public class Fichario extends JTabbedPane {
 
 			Container container = conteiner.novo(formulario);
 			int ultimoIndice = getTabCount() - 1;
-			container.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), config);
+			container.abrir(file, coletor, getGraphics());
 			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
 			setTitleAt(ultimoIndice, file.getName());
 		}

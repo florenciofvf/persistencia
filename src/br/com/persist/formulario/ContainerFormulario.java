@@ -5,15 +5,12 @@ import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.util.List;
 
 import br.com.persist.Metadado;
 import br.com.persist.desktop.Container;
-import br.com.persist.desktop.Objeto;
-import br.com.persist.desktop.Relacao;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Form;
 import br.com.persist.util.IJanela;
+import br.com.persist.xml.XMLColetor;
 
 public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
@@ -37,9 +34,8 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		configurar();
 	}
 
-	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao, Graphics g, Container.Config config) {
-		container.abrir(file, objetos, relacoes, forms, sbConexao, g, config);
+	public void abrir(File file, XMLColetor coletor, Graphics g) {
+		container.abrir(file, coletor, g);
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {

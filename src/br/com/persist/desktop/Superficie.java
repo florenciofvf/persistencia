@@ -62,6 +62,7 @@ import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.util.Vetor;
+import br.com.persist.xml.XMLColetor;
 import br.com.persist.xml.XMLUtil;
 
 public class Superficie extends Desktop {
@@ -1545,14 +1546,14 @@ public class Superficie extends Desktop {
 		}
 	}
 
-	public void abrir(List<Objeto> objetos, List<Relacao> relacoes, Dimension d) {
+	public void abrir(XMLColetor coletor) {
 		limpar();
 
-		for (Objeto objeto : objetos) {
+		for (Objeto objeto : coletor.getObjetos()) {
 			addObjeto(objeto);
 		}
 
-		for (Relacao relacao : relacoes) {
+		for (Relacao relacao : coletor.getRelacoes()) {
 			addRelacao(relacao);
 		}
 
@@ -1560,10 +1561,10 @@ public class Superficie extends Desktop {
 
 		alinharNomes();
 		repaint();
-		setPreferredSize(d);
+		setPreferredSize(coletor.getDimension());
 		SwingUtilities.updateComponentTreeUI(getParent());
 
-		for (Objeto objeto : objetos) {
+		for (Objeto objeto : coletor.getObjetos()) {
 			objeto.ativar();
 		}
 	}

@@ -9,9 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -48,6 +45,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
+import br.com.persist.xml.XMLColetor;
 
 public class Container extends Panel implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
@@ -136,20 +134,19 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao, Graphics g, Config config) {
+	public void abrir(File file, XMLColetor coletor, Graphics g) {
 		if (abortarFecharComESCSuperficie) {
 			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
 
-		superficie.setAjusteAutomaticoForm(config.ajusteAutoForm);
-		toolbar.chkAjusteAutom.setSelected(config.ajusteAutoForm);
-		superficie.abrir(objetos, relacoes, config.dimension);
+		superficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
+		toolbar.chkAjusteAutom.setSelected(coletor.getAjusteAutoForm().get());
+		superficie.abrir(coletor);
 		arquivo = file;
 		btnSelecao.click();
 
-		if (!Util.estaVazio(sbConexao.toString())) {
-			conexaoFile = sbConexao.toString();
+		if (!Util.estaVazio(coletor.getSbConexao().toString())) {
+			conexaoFile = coletor.getSbConexao().toString();
 			Conexao conexao = null;
 
 			for (int i = 0; i < cmbConexao.getItemCount(); i++) {
@@ -172,24 +169,14 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			return;
 		}
 
-		adicionarForm(conexao, forms, objetos, g);
+		adicionarForm(conexao, coletor, g);
 	}
 
-	public static class Config {
-		final boolean ajusteAutoForm;
-		final Dimension dimension;
-
-		public Config(boolean ajusteAutoForm, Dimension dimension) {
-			this.ajusteAutoForm = ajusteAutoForm;
-			this.dimension = dimension;
-		}
-	}
-
-	private void adicionarForm(Conexao conexao, List<Form> forms, List<Objeto> objetos, Graphics g) {
-		for (Form form : forms) {
+	private void adicionarForm(Conexao conexao, XMLColetor coletor, Graphics g) {
+		for (Form form : coletor.getForms()) {
 			Objeto instancia = null;
 
-			for (Objeto objeto : objetos) {
+			for (Objeto objeto : coletor.getObjetos()) {
 				if (form.getObjeto().equals(objeto.getId())) {
 					instancia = objeto;
 				}
@@ -376,13 +363,9 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		private void abrirArquivo() {
 			try {
 				excluido();
-				AtomicBoolean ajusteAutoForm = new AtomicBoolean();
-				StringBuilder sbConexao = new StringBuilder();
-				List<Relacao> relacoes = new ArrayList<>();
-				List<Objeto> objetos = new ArrayList<>();
-				List<Form> forms = new ArrayList<>();
-				Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao, ajusteAutoForm);
-				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, new Config(ajusteAutoForm.get(), d));
+				XMLColetor coletor = new XMLColetor();
+				XML.processar(arquivo, coletor);
+				abrir(arquivo, coletor, null);
 				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);

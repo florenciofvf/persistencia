@@ -8,7 +8,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,9 +28,7 @@ import br.com.persist.comp.SplitPane;
 import br.com.persist.container.AmbienteContainer;
 import br.com.persist.container.AnexoContainer;
 import br.com.persist.container.ArvoreContainer;
-import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Objeto;
-import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.AmbienteDialogo;
 import br.com.persist.dialogo.AnotacaoDialogo;
@@ -67,7 +64,6 @@ import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
 import br.com.persist.util.ListaArray;
 import br.com.persist.util.Macro;
@@ -76,6 +72,7 @@ import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
+import br.com.persist.xml.XMLColetor;
 
 public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
@@ -232,30 +229,23 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 
 			try {
-				AtomicBoolean ajusteAutoForm = new AtomicBoolean();
-				StringBuilder sbConexao = new StringBuilder();
-				List<Relacao> relacoes = new ArrayList<>();
-				List<Objeto> objetos = new ArrayList<>();
+				XMLColetor coletor = new XMLColetor();
 				arquivoParent = file.getParentFile();
-				List<Form> forms = new ArrayList<>();
-				Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao, ajusteAutoForm);
+				XML.processar(file, coletor);
 
 				if (abrirNoFichario) {
-					fichario.getArquivos().abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao,
-							new Container.Config(ajusteAutoForm.get(), d));
+					fichario.getArquivos().abrir(Formulario.this, file, coletor);
 				} else {
-					abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao,
-							new Container.Config(ajusteAutoForm.get(), d));
+					abrir(Formulario.this, file, coletor);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 			}
 		}
 
-		public void abrir(Formulario formulario, File file, List<Objeto> objetos, List<Relacao> relacoes,
-				List<Form> forms, StringBuilder sbConexao, Container.Config config) {
+		public void abrir(Formulario formulario, File file, XMLColetor coletor) {
 			ContainerFormulario form = new ContainerFormulario(formulario, file);
-			form.abrir(file, objetos, relacoes, forms, sbConexao, getGraphics(), config);
+			form.abrir(file, coletor, getGraphics());
 			form.setLocationRelativeTo(formulario);
 			form.setVisible(true);
 		}
