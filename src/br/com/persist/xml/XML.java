@@ -1,7 +1,6 @@
 package br.com.persist.xml;
 
 import java.io.File;
-import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
@@ -48,22 +47,22 @@ public class XML {
 		}
 	}
 
-	public static void processarConexao(File file, List<Conexao> conexoes) throws XMLException {
+	public static void processarConexao(File file, XMLColetor coletor) throws XMLException {
 		try {
 			SAXParserFactory factory = criarSAXParserFactory();
 			SAXParser parser = factory.newSAXParser();
-			HandlerConn handler = new HandlerConn(conexoes);
+			HandlerConn handler = new HandlerConn(coletor);
 			parser.parse(file, handler);
 		} catch (Exception e) {
 			throw new XMLException(e);
 		}
 	}
 
-	public static void processarFragmento(File file, List<Fragmento> fragmentos) throws XMLException {
+	public static void processarFragmento(File file, XMLColetor coletor) throws XMLException {
 		try {
 			SAXParserFactory factory = criarSAXParserFactory();
 			SAXParser parser = factory.newSAXParser();
-			HandlerFragmento handler = new HandlerFragmento(fragmentos);
+			HandlerFragmento handler = new HandlerFragmento(coletor);
 			parser.parse(file, handler);
 		} catch (Exception e) {
 			throw new XMLException(e);
@@ -92,10 +91,11 @@ public class XML {
 }
 
 class HandlerConn extends DefaultHandler {
-	final List<Conexao> conexoes;
+	private final XMLColetor coletor;
 
-	HandlerConn(List<Conexao> conexoes) {
-		this.conexoes = conexoes;
+	HandlerConn(XMLColetor coletor) {
+		this.coletor = coletor;
+		coletor.init();
 	}
 
 	@Override
@@ -103,16 +103,17 @@ class HandlerConn extends DefaultHandler {
 		if ("conexao".equals(qName)) {
 			Conexao conexao = new Conexao();
 			conexao.aplicar(attributes);
-			conexoes.add(conexao);
+			coletor.getConexoes().add(conexao);
 		}
 	}
 }
 
 class HandlerFragmento extends DefaultHandler {
-	final List<Fragmento> fragmentos;
+	private final XMLColetor coletor;
 
-	HandlerFragmento(List<Fragmento> fragmentos) {
-		this.fragmentos = fragmentos;
+	HandlerFragmento(XMLColetor coletor) {
+		this.coletor = coletor;
+		coletor.init();
 	}
 
 	@Override
@@ -120,7 +121,7 @@ class HandlerFragmento extends DefaultHandler {
 		if ("fragmento".equals(qName)) {
 			Fragmento f = new Fragmento();
 			f.aplicar(attributes);
-			fragmentos.add(f);
+			coletor.getFragmentos().add(f);
 		}
 	}
 }

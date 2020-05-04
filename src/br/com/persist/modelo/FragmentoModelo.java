@@ -13,6 +13,7 @@ import javax.swing.table.AbstractTableModel;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.xml.XML;
+import br.com.persist.xml.XMLColetor;
 import br.com.persist.xml.XMLUtil;
 
 public class FragmentoModelo extends AbstractTableModel {
@@ -128,9 +129,13 @@ public class FragmentoModelo extends AbstractTableModel {
 		auxiliares.clear();
 
 		try {
+			XMLColetor coletor = new XMLColetor();
+
 			if (file.exists() && file.canRead()) {
-				XML.processarFragmento(file, fragmentos);
+				XML.processarFragmento(file, coletor);
 			}
+
+			fragmentos.addAll(coletor.getFragmentos());
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}

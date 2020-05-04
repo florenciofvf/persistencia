@@ -12,6 +12,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
+import br.com.persist.xml.XMLColetor;
 import br.com.persist.xml.XMLUtil;
 
 public class ConexaoModelo extends AbstractTableModel {
@@ -201,10 +202,14 @@ public class ConexaoModelo extends AbstractTableModel {
 		conexoes.clear();
 
 		try {
+			XMLColetor coletor = new XMLColetor();
+
 			if (file.exists() && file.canRead()) {
-				XML.processarConexao(file, conexoes);
+				XML.processarConexao(file, coletor);
 				fireTableDataChanged();
 			}
+
+			conexoes.addAll(coletor.getConexoes());
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
