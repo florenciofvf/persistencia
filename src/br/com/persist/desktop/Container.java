@@ -143,6 +143,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		}
 
 		superficie.setAjusteAutomaticoForm(config.ajusteAutoForm);
+		toolbar.chkAjusteAutom.setSelected(config.ajusteAutoForm);
 		superficie.abrir(objetos, relacoes, config.dimension);
 		arquivo = file;
 		btnSelecao.click();

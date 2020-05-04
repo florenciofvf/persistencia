@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<fvf largura="1049" altura="688" conexao="elei&#231;&#227;o">
+<fvf ajusteAutoForm="true" largura="1049" altura="688" conexao="elei&#231;&#227;o">
 	<objeto id="elei&#231;&#227;o" transparente="true" buscaAutomaticaApos="" buscaAutomatica="Candidados da Elei&#231;&#227;o.id=candidato.eleicao_id,(2)candidato2.eleicao_id" linkAutomatico="id=candidato.eleicao_id,(2)candidato2.eleicao_id" finalConsulta="order by id" chaveamento="teste=escola,filho;teste=campo" complemento="" ajusteAutoEnter="false" ajusteAutoForm="false" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="INFO=coluna_info" sequencias="" intervalo="1000" desenharId="true" colunaInfo="true" tabelas="" abrirAuto="false" processar="false" tabela="eleicao" chaves="id" linkAuto="true" cor="-12555904" joins="" icone="executar" ccsc="false" bpnt="false" x="18" y="3">
 	</objeto>
 	<objeto id="candidato" transparente="true" buscaAutomaticaApos="" buscaAutomatica="Endere&#231;os.id=endereco.id_candidato" linkAutomatico="eleicao_id=eleicao.id" finalConsulta="" chaveamento="" complemento="" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" selectAlter="select c.id, c.nome, e.descricao" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" tabelas="eleicao e" abrirAuto="true" processar="false" tabela="candidato c" chaves="id" linkAuto="true" cor="-12555904" joins="on e.id = c.eleicao_id" icone="boss" ccsc="false" bpnt="false" x="18" y="177">
@@ -45,12 +45,12 @@ WHERE id = #id#
 	<relacao destino="endere&#231;o" desenharDescricao="false" origem="9" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" cor="-16777216">
 	</relacao>
 
-	<form apelido="" objeto="candidato" largura="922" altura="140" x="48" y="207">
-	</form>
-	<form apelido="" objeto="endere&#231;o" largura="886" altura="125" x="83" y="387">
+	<form apelido="" objeto="elei&#231;&#227;o" largura="922" altura="134" x="48" y="33">
 	</form>
 	<form apelido="2" objeto="candidato2" largura="922" altura="95" x="48" y="552">
 	</form>
-	<form apelido="" objeto="elei&#231;&#227;o" largura="922" altura="134" x="48" y="33">
+	<form apelido="" objeto="endere&#231;o" largura="886" altura="125" x="83" y="387">
+	</form>
+	<form apelido="" objeto="candidato" largura="922" altura="140" x="48" y="207">
 	</form>
 </fvf>
