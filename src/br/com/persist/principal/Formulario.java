@@ -232,20 +232,20 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 
 			try {
-				AtomicBoolean atomicBoolean = new AtomicBoolean();
+				AtomicBoolean ajusteAutoForm = new AtomicBoolean();
 				StringBuilder sbConexao = new StringBuilder();
 				List<Relacao> relacoes = new ArrayList<>();
 				List<Objeto> objetos = new ArrayList<>();
 				arquivoParent = file.getParentFile();
 				List<Form> forms = new ArrayList<>();
-				Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao);
+				Dimension d = XML.processar(file, objetos, relacoes, forms, sbConexao, ajusteAutoForm);
 
 				if (abrirNoFichario) {
 					fichario.getArquivos().abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao,
-							new Container.Config(atomicBoolean.get(), d));
+							new Container.Config(ajusteAutoForm.get(), d));
 				} else {
 					abrir(Formulario.this, file, objetos, relacoes, forms, sbConexao,
-							new Container.Config(atomicBoolean.get(), d));
+							new Container.Config(ajusteAutoForm.get(), d));
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);

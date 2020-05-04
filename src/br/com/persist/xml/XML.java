@@ -3,6 +3,7 @@ package br.com.persist.xml;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
@@ -43,11 +44,11 @@ public class XML {
 	}
 
 	public static Dimension processar(File file, List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms,
-			StringBuilder sbConexao) throws XMLException {
+			StringBuilder sbConexao, AtomicBoolean ajusteAutoForm) throws XMLException {
 		try {
 			SAXParserFactory factory = criarSAXParserFactory();
 			SAXParser parser = factory.newSAXParser();
-			XMLHandler handler = new XMLHandler(objetos, relacoes, forms, sbConexao);
+			XMLHandler handler = new XMLHandler(objetos, relacoes, forms, sbConexao, ajusteAutoForm);
 			parser.parse(file, handler);
 			return handler.getDimension();
 		} catch (Exception e) {
@@ -99,15 +100,18 @@ public class XML {
 }
 
 class XMLHandler extends DefaultHandler {
-	private final Dimension dimension = new Dimension();
 	final StringBuilder builder = new StringBuilder();
+	final Dimension dimension = new Dimension();
+	final AtomicBoolean ajusteAutoForm;
 	final StringBuilder sbConexao;
 	final List<Relacao> relacoes;
 	final List<Objeto> objetos;
 	final List<Form> forms;
 	Object selecionado;
 
-	XMLHandler(List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, StringBuilder sbConexao) {
+	XMLHandler(List<Objeto> objetos, List<Relacao> relacoes, List<Form> forms, StringBuilder sbConexao,
+			AtomicBoolean ajusteAutoForm) {
+		this.ajusteAutoForm = ajusteAutoForm;
 		this.sbConexao = sbConexao;
 		this.relacoes = relacoes;
 		this.objetos = objetos;
@@ -123,6 +127,7 @@ class XMLHandler extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("fvf".equals(qName)) {
+			ajusteAutoForm.set(Boolean.parseBoolean(attributes.getValue("ajusteAutoForm")));
 			dimension.width = Integer.parseInt(attributes.getValue("largura"));
 			dimension.height = Integer.parseInt(attributes.getValue("altura"));
 

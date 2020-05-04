@@ -375,13 +375,13 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		private void abrirArquivo() {
 			try {
 				excluido();
-				AtomicBoolean atomicBoolean = new AtomicBoolean();
+				AtomicBoolean ajusteAutoForm = new AtomicBoolean();
 				StringBuilder sbConexao = new StringBuilder();
 				List<Relacao> relacoes = new ArrayList<>();
 				List<Objeto> objetos = new ArrayList<>();
 				List<Form> forms = new ArrayList<>();
-				Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao);
-				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, new Config(atomicBoolean.get(), d));
+				Dimension d = XML.processar(arquivo, objetos, relacoes, forms, sbConexao, ajusteAutoForm);
+				abrir(arquivo, objetos, relacoes, forms, sbConexao, null, new Config(ajusteAutoForm.get(), d));
 				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
