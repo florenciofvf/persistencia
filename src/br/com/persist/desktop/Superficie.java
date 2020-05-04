@@ -1507,6 +1507,7 @@ public class Superficie extends Desktop {
 			util.prologo();
 
 			util.abrirTag("fvf");
+			util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
 			util.atributo("largura", getWidth());
 			util.atributo("altura", getHeight());
 
