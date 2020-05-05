@@ -74,7 +74,7 @@ public class MetadadosContainer extends AbstratoContainer
 		Conexao conexao = getConexaoPadrao();
 		String conexaoAtual = conexao == null ? "null" : conexao.getNome();
 		String nomeAba = getFileSalvarAberto().getAbsolutePath();
-		return new InfoConexao(conexaoAtual, conexaoAtual, nomeAba);
+		return new InfoConexao(conexaoAtual, null, nomeAba);
 	}
 
 	public Conexao getConexaoPadrao() {

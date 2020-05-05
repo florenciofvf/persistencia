@@ -1392,7 +1392,11 @@ public class Fichario extends JTabbedPane {
 
 				sb.append("ABA: " + info.getNomeAba() + Constantes.QL2);
 				sb.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL2);
-				sb.append("FILE: " + info.getConexaoFile() + Constantes.QL2);
+
+				if (!Util.estaVazio(info.getConexaoFile())) {
+					sb.append("FILE: " + info.getConexaoFile() + Constantes.QL2);
+				}
+
 				sb.append(Constantes.QL2);
 
 				cont++;

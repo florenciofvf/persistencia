@@ -88,7 +88,7 @@ public class ConsultaContainer extends AbstratoContainer
 		Conexao conexao = getConexaoPadrao();
 		String conexaoAtual = conexao == null ? "null" : conexao.getNome();
 		String nomeAba = getFileSalvarAberto().getAbsolutePath();
-		return new InfoConexao(conexaoAtual, conexaoAtual, nomeAba);
+		return new InfoConexao(conexaoAtual, null, nomeAba);
 	}
 
 	public Conexao getConexaoPadrao() {
@@ -204,6 +204,7 @@ public class ConsultaContainer extends AbstratoContainer
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
+
 			copiarAcao.setActionListener(e -> copiar());
 		}
 
