@@ -408,7 +408,7 @@ public class RegistroModelo implements TableModel {
 	}
 
 	public String getValores(List<Integer> indices) {
-		if (colunas.isEmpty() || indices == null || indices.isEmpty()) {
+		if (colunas.isEmpty() || indices == null) {
 			return Constantes.VAZIO;
 		}
 
