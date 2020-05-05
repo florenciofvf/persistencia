@@ -406,4 +406,33 @@ public class RegistroModelo implements TableModel {
 	public void removeTableModelListener(TableModelListener l) {
 		LOG.log(Level.FINEST, "removeTableModelListener");
 	}
+
+	public String getValores(List<Integer> indices) {
+		if (colunas.isEmpty() || indices == null || indices.isEmpty()) {
+			return Constantes.VAZIO;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Coluna c : colunas) {
+			sb.append(c.getNome() + Constantes.TAB);
+		}
+
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append(Constantes.QL2);
+
+		for (Integer i : indices) {
+			for (Coluna c : colunas) {
+				Object obj = getValueAt(i, c.getIndice());
+				sb.append((obj == null ? Constantes.VAZIO : obj.toString()) + Constantes.TAB);
+			}
+
+			sb.deleteCharAt(sb.length() - 1);
+			sb.append(Constantes.QL2);
+		}
+
+		sb.deleteCharAt(sb.length() - 1);
+
+		return sb.toString();
+	}
 }

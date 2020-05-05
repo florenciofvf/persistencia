@@ -8,12 +8,14 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.TableModel;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -32,6 +34,7 @@ import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class ConsultaContainer extends AbstratoContainer
@@ -165,6 +168,7 @@ public class ConsultaContainer extends AbstratoContainer
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
+		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela, true, (mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo);
@@ -174,6 +178,7 @@ public class ConsultaContainer extends AbstratoContainer
 			configBaixarAcao(e -> abrir());
 
 			addButton(atualizarAcao);
+			addButton(copiarAcao);
 			add(true, cmbConexao);
 
 			eventos();
@@ -199,6 +204,18 @@ public class ConsultaContainer extends AbstratoContainer
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
+			copiarAcao.setActionListener(e -> copiar());
+		}
+
+		private void copiar() {
+			TableModel model = tabela.getModel();
+
+			if (model instanceof RegistroModelo) {
+				RegistroModelo modelo = (RegistroModelo) model;
+				List<Integer> indices = TabelaUtil.getIndices(tabela);
+				String dados = modelo.getValores(indices);
+				Util.setContentTransfered(dados);
+			}
 		}
 	}
 
