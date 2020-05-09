@@ -827,9 +827,14 @@ public class Superficie extends Desktop {
 
 	public void excluirSelecionados() {
 		Objeto objeto = getPrimeiroObjetoSelecionado();
+		boolean confirmado = false;
 
-		if (objeto != null && !Util.confirmaExclusao(Superficie.this)) {
-			return;
+		if (objeto != null) {
+			if (Util.confirmaExclusao(Superficie.this)) {
+				confirmado = true;
+			} else {
+				return;
+			}
 		}
 
 		while (objeto != null) {
@@ -838,6 +843,10 @@ public class Superficie extends Desktop {
 		}
 
 		Relacao relacao = getPrimeiroRelacaoSelecionado();
+
+		if (relacao != null && !confirmado && !Util.confirmaExclusao(Superficie.this)) {
+			return;
+		}
 
 		while (relacao != null) {
 			excluir(relacao);
