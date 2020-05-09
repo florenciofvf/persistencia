@@ -209,8 +209,34 @@ public class Relacao {
 		int y1 = origem.y + raio;
 		int x2 = destino.x + raio;
 		int y2 = destino.y + raio;
-		g2.drawLine(x1, y1, x2, y2);
 
+		if (quebrado && origem.y != destino.y) {
+			desenharLinhaQuebrada(g2, x1, y1, x2, y2, origem.y < destino.y);
+		} else {
+			g2.drawLine(x1, y1, x2, y2);
+		}
+
+		desenharPontos(g2, x1, y1, x2, y2, raio, meta);
+
+		if (desenharDescricao && descricao != null) {
+			g2.setColor(corFonte);
+			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
+		}
+	}
+
+	private void desenharLinhaQuebrada(Graphics2D g2, int x1, int y1, int x2, int y2, boolean origemMenor) {
+		if (origemMenor) {
+			int delta = x2 - x1;
+			g2.drawLine(x1, y1, x1, y2);
+			g2.drawLine(x1, y2, x1 + delta, y2);
+		} else {
+			int delta = x1 - x2;
+			g2.drawLine(x2, y2, x2, y1);
+			g2.drawLine(x2, y1, x2 + delta, y1);
+		}
+	}
+
+	private void desenharPontos(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
 		if (pontoOrigem || pontoDestino) {
 			int x = x2 - x1;
 			int y = y2 - y1;
@@ -231,11 +257,6 @@ public class Relacao {
 				int auxY2 = (int) (auxY * (h - valor));
 				g2.fillOval(x1 + auxX2 - m, y1 + auxY2 - m, diametro, diametro);
 			}
-		}
-
-		if (desenharDescricao && descricao != null) {
-			g2.setColor(corFonte);
-			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
 		}
 	}
 
