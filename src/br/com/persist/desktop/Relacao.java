@@ -21,6 +21,7 @@ public class Relacao {
 	private Color cor = COR_PADRAO;
 	static int m = diametro / 2;
 	private boolean selecionado;
+	private boolean quebrado;
 	private String descricao;
 	final Objeto destino;
 	boolean pontoDestino;
@@ -86,6 +87,14 @@ public class Relacao {
 
 	public void setDesenharDescricao(boolean desenharDescricao) {
 		this.desenharDescricao = desenharDescricao;
+	}
+
+	public boolean isQuebrado() {
+		return quebrado;
+	}
+
+	public void setQuebrado(boolean quebrado) {
+		this.quebrado = quebrado;
 	}
 
 	public boolean isPontoDestino() {
@@ -247,6 +256,7 @@ public class Relacao {
 		deslocamentoXDesc = Integer.parseInt(attr.getValue("desloc_x_desc"));
 		deslocamentoYDesc = Integer.parseInt(attr.getValue("desloc_y_desc"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
+		quebrado = Boolean.parseBoolean(attr.getValue("quebrado"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 	}
 
@@ -260,6 +270,7 @@ public class Relacao {
 		util.atributo("corFonte", corFonte.getRGB());
 		util.atributo("pontoDestino", pontoDestino);
 		util.atributo("pontoOrigem", pontoOrigem);
+		util.atributo("quebrado", quebrado);
 		util.atributo("cor", cor.getRGB());
 		util.fecharTag();
 		if (!Util.estaVazio(getDescricao())) {

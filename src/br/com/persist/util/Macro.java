@@ -23,6 +23,7 @@ public class Macro {
 	public static final String ABRIR_AUTO = "abrirAuto";
 	public static final String COR_FONTE = "corFonte";
 	public static final String LINK_AUTO = "linkAuto";
+	public static final String QUEBRADO = "quebrado";
 	public static final String ICONE = "icone";
 	private final Map<String, Instrucao> mapa;
 	private final List<Instrucao> instrucoes;
@@ -49,6 +50,7 @@ public class Macro {
 		mapa.put(ABRIR_AUTO, new AbrirAuto());
 		mapa.put(LINK_AUTO, new LinkAuto());
 		mapa.put(COR_FONTE, new CorFonte());
+		mapa.put(QUEBRADO, new Quebrado());
 		mapa.put(ICONE, new Icone());
 		mapa.put(CCSC, new Ccsc());
 		mapa.put(BPNT, new Bpnt());
@@ -111,6 +113,18 @@ public class Macro {
 		@Override
 		public void executar(Objeto objeto) {
 			objeto.setDesenharId((Boolean) valor);
+		}
+	}
+
+	class Quebrado extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			relacao.setQuebrado((Boolean) valor);
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			throw new UnsupportedOperationException();
 		}
 	}
 
@@ -312,6 +326,12 @@ public class Macro {
 
 	public void desenharIdDescricao(Object valor) {
 		Instrucao instrucao = mapa.get(DESENHAR_ID_DESC);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public void linhaQuebrada(Object valor) {
+		Instrucao instrucao = mapa.get(QUEBRADO);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

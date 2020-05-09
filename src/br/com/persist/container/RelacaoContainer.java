@@ -75,16 +75,19 @@ public class RelacaoContainer extends Panel {
 		private TextField txtDeslocXDesc = new TextField();
 		private TextField txtDeslocYDesc = new TextField();
 		private CheckBox chkDesenharDesc = new CheckBox();
+		private CheckBox chkQuebrado = new CheckBox();
 
 		PanelDesc() {
 			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
 			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
+			chkQuebrado.setSelected(relacao.isQuebrado());
 
 			txtDeslocXDesc.addFocusListener(focusListenerInner);
 			txtDeslocYDesc.addFocusListener(focusListenerInner);
 
 			chkDesenharDesc.addActionListener(this);
+			chkQuebrado.addActionListener(this);
 			txtDeslocXDesc.addActionListener(this);
 			txtDeslocYDesc.addActionListener(this);
 
@@ -97,6 +100,7 @@ public class RelacaoContainer extends Panel {
 			container.add(criarLinha("label.desloc_x_desc", txtDeslocXDesc));
 			container.add(criarLinha("label.desloc_y_desc", txtDeslocYDesc));
 			container.add(criarLinha("label.desenhar_desc", chkDesenharDesc));
+			container.add(criarLinha("label.quebrado", chkQuebrado));
 
 			add(BorderLayout.SOUTH, container);
 		}
@@ -122,6 +126,11 @@ public class RelacaoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setDesenharDescricao(chk.isSelected());
 				Formulario.macro.desenharIdDescricao(chk.isSelected());
+
+			} else if (chkQuebrado == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				relacao.setQuebrado(chk.isSelected());
+				Formulario.macro.linhaQuebrada(chk.isSelected());
 			}
 
 			superficie.repaint();
