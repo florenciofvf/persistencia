@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<fvf ajusteAutoForm="true" largura="1049" altura="688" conexao="elei&#231;&#227;o">
-	<objeto id="elei&#231;&#227;o" transparente="true" buscaAutomaticaApos="" buscaAutomatica="Candidados da Elei&#231;&#227;o.id=candidato.eleicao_id,(2)candidato2.eleicao_id" linkAutomatico="id=candidato.eleicao_id,(2)candidato2.eleicao_id" finalConsulta="order by id" chaveamento="teste=escola,filho;teste=campo" complemento="" ajusteAutoEnter="false" ajusteAutoForm="false" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="INFO=coluna_info" sequencias="" intervalo="1000" desenharId="true" colunaInfo="true" tabelas="" abrirAuto="false" processar="false" tabela="eleicao" chaves="id" linkAuto="true" cor="-12555904" joins="" icone="executar" ccsc="false" bpnt="false" x="18" y="3">
+<fvf ajusteAutoForm="true" largura="970" altura="609" conexao="elei&#231;&#227;o">
+	<objeto id="elei&#231;&#227;o" transparente="true" buscaAutomaticaApos="" buscaAutomatica="Candidados da Elei&#231;&#227;o.id=candidato.eleicao_id,(2)candidato2.eleicao_id" linkAutomatico="id=candidato.eleicao_id,(2)candidato2.eleicao_id" finalConsulta="order by id" chaveamento="teste=escola,filho;teste=campo" complemento="" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="INFO=coluna_info" sequencias="" intervalo="1000" desenharId="true" colunaInfo="true" tabelas="" abrirAuto="false" processar="false" tabela="eleicao" chaves="id" linkAuto="true" cor="-12555904" joins="" icone="executar" ccsc="false" bpnt="false" x="18" y="3">
 	</objeto>
-	<objeto id="candidato" transparente="true" buscaAutomaticaApos="" buscaAutomatica="Endere&#231;os.id=endereco.id_candidato" linkAutomatico="eleicao_id=eleicao.id" finalConsulta="" chaveamento="" complemento="" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" selectAlter="select c.id, c.nome, e.descricao" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" tabelas="eleicao e" abrirAuto="true" processar="false" tabela="candidato c" chaves="id" linkAuto="true" cor="-12555904" joins="on e.id = c.eleicao_id" icone="boss" ccsc="false" bpnt="false" x="18" y="177">
+	<objeto id="candidato" transparente="true" buscaAutomaticaApos="" buscaAutomatica="Endere&#231;os.id=endereco.id_candidato" linkAutomatico="eleicao_id=eleicao.id" finalConsulta="" chaveamento="" complemento="" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" selectAlter="select c.id, c.nome, e.descricao" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" tabelas="eleicao e" abrirAuto="true" processar="false" tabela="candidato c" chaves="id" linkAuto="true" cor="-12555904" joins="on e.id = c.eleicao_id" icone="boss" ccsc="false" bpnt="false" x="35" y="151">
 		<instrucao nome="total votos">
 			<valor>
 				UPDATE candidato 
@@ -29,28 +29,24 @@ WHERE id = #id#
 			</valor>
 		</instrucao>
 	</objeto>
-	<objeto id="endere&#231;o" transparente="true" buscaAutomaticaApos="" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="AND id_candidato IN (52)" ajusteAutoEnter="false" ajusteAutoForm="false" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="700" desenharId="true" colunaInfo="false" tabelas="" abrirAuto="false" processar="false" tabela="endereco" chaves="id" linkAuto="false" cor="-12555904" joins="" icone="home" ccsc="false" bpnt="false" x="53" y="357">
+	<objeto id="endere&#231;o" transparente="true" buscaAutomaticaApos="" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="AND id_candidato IN (52)" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="700" desenharId="true" colunaInfo="false" tabelas="" abrirAuto="false" processar="false" tabela="endereco" chaves="id" linkAuto="false" cor="-12555904" joins="" icone="home" ccsc="false" bpnt="false" x="55" y="318">
 	</objeto>
-	<objeto id="candidato2" transparente="true" buscaAutomaticaApos="" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="AND eleicao_id IN (2)" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" tabelas="" abrirAuto="true" processar="false" tabela="candidato2" chaves="id" linkAuto="true" cor="-12555904" joins="" icone="boss" ccsc="false" bpnt="false" x="18" y="522">
-	</objeto>
-	<objeto id="9" transparente="true" buscaAutomaticaApos="" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="" ajusteAutoEnter="false" ajusteAutoForm="false" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-16777216" mapeamento="" sequencias="" intervalo="500" desenharId="false" colunaInfo="false" tabelas="" abrirAuto="false" processar="false" tabela="" chaves="" linkAuto="false" cor="-12555904" joins="" icone="" ccsc="false" bpnt="false" x="19" y="364">
+	<objeto id="candidato2" transparente="true" buscaAutomaticaApos="" buscaAutomatica="" linkAutomatico="" finalConsulta="" chaveamento="" complemento="AND eleicao_id IN (2)" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" selectAlter="" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" tabelas="" abrirAuto="true" processar="false" tabela="candidato2" chaves="id" linkAuto="true" cor="-12555904" joins="" icone="boss" ccsc="false" bpnt="false" x="43" y="388">
 	</objeto>
 
-	<relacao destino="candidato" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="true" pontoOrigem="false" cor="-16777216">
+	<relacao destino="candidato" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
 	</relacao>
-	<relacao destino="candidato2" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="true" pontoOrigem="false" cor="-16777216">
+	<relacao destino="candidato2" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
 	</relacao>
-	<relacao destino="9" desenharDescricao="false" origem="candidato" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" cor="-16777216">
-	</relacao>
-	<relacao destino="endere&#231;o" desenharDescricao="false" origem="9" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" cor="-16777216">
+	<relacao destino="endere&#231;o" desenharDescricao="false" origem="candidato" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
 	</relacao>
 
-	<form apelido="" objeto="elei&#231;&#227;o" largura="922" altura="134" x="48" y="33">
+	<form apelido="" objeto="elei&#231;&#227;o" largura="922" altura="108" x="48" y="33">
 	</form>
-	<form apelido="2" objeto="candidato2" largura="922" altura="95" x="48" y="552">
+	<form apelido="" objeto="candidato" largura="905" altura="127" x="65" y="181">
 	</form>
-	<form apelido="" objeto="endere&#231;o" largura="886" altura="125" x="83" y="387">
+	<form apelido="" objeto="endere&#231;o" largura="884" altura="30" x="85" y="348">
 	</form>
-	<form apelido="" objeto="candidato" largura="922" altura="140" x="48" y="207">
+	<form apelido="2" objeto="candidato2" largura="897" altura="95" x="73" y="418">
 	</form>
 </fvf>
