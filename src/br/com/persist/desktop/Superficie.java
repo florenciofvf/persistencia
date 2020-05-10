@@ -610,9 +610,11 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
+				setComponentPopupMenu(popup);
 				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
+				setComponentPopupMenu(popup2);
 				popup2.xLocal = x;
 				popup2.yLocal = y;
 				popup2.preShow(getAllFrames().length > 0);
@@ -674,9 +676,11 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
+				setComponentPopupMenu(popup);
 				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
+				setComponentPopupMenu(popup2);
 				popup2.xLocal = x;
 				popup2.yLocal = y;
 				popup2.preShow(getAllFrames().length > 0);
