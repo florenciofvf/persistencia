@@ -67,9 +67,9 @@ import br.com.persist.xml.XMLUtil;
 
 public class Superficie extends Desktop {
 	private static final long serialVersionUID = 1L;
-	private final SuperficiePopup2 popup2 = new SuperficiePopup2();
-	private final SuperficiePopup popup = new SuperficiePopup();
 	private final transient Inversao inversao = new Inversao();
+	private SuperficiePopup2 popup2 = new SuperficiePopup2();
+	private SuperficiePopup popup = new SuperficiePopup();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
 	private final transient Area area = new Area();
@@ -104,8 +104,19 @@ public class Superficie extends Desktop {
 		getActionMap().put("zoom_menos", zoomMenos);
 		getActionMap().put("zoom_mais", zoomMais);
 		getActionMap().put("macro", macro);
+	}
 
-		setComponentPopupMenu(popup);
+	@Override
+	public void updateUI() {
+		super.updateUI();
+
+		if (popup != null) {
+			SwingUtilities.updateComponentTreeUI(popup);
+		}
+
+		if (popup2 != null) {
+			SwingUtilities.updateComponentTreeUI(popup2);
+		}
 	}
 
 	transient javax.swing.Action threadProcessar = new AbstractAction() {
@@ -612,11 +623,9 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				setComponentPopupMenu(popup);
 				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
-				setComponentPopupMenu(popup2);
 				popup2.xLocal = x;
 				popup2.yLocal = y;
 				popup2.preShow(getAllFrames().length > 0);
@@ -678,11 +687,9 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
-				setComponentPopupMenu(popup);
 				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(Superficie.this, x, y);
 			} else if (e.isPopupTrigger()) {
-				setComponentPopupMenu(popup2);
 				popup2.xLocal = x;
 				popup2.yLocal = y;
 				popup2.preShow(getAllFrames().length > 0);
