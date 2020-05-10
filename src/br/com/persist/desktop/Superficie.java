@@ -104,6 +104,8 @@ public class Superficie extends Desktop {
 		getActionMap().put("zoom_menos", zoomMenos);
 		getActionMap().put("zoom_mais", zoomMais);
 		getActionMap().put("macro", macro);
+
+		setComponentPopupMenu(popup);
 	}
 
 	transient javax.swing.Action threadProcessar = new AbstractAction() {
