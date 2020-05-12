@@ -65,7 +65,6 @@ import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
-import br.com.persist.util.ListaArray;
 import br.com.persist.util.Macro;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuPadrao1;
@@ -76,7 +75,7 @@ import br.com.persist.xml.XMLColetor;
 
 public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
-	private final transient List<Conexao> conexoes = new ListaArray<>();
+	private final transient List<Conexao> conexoes = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private final transient Conteiner conteiner = new Conteiner();
 	private final transient Arquivos arquivos = new Arquivos();
