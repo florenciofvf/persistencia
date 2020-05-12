@@ -175,14 +175,14 @@ public class Conexao {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("conexao");
+		util.atributo("nome", Util.escapar(nome));
+		util.atributo("usuario", Util.escapar(usuario));
+		util.atributo("senha", Util.escapar(senha));
 		util.atributo("inicioComplemento", Util.escapar(inicioComplemento));
 		util.atributo("finalComplemento", Util.escapar(finalComplemento));
 		util.atributo("urlBanco", Util.escapar(urlBanco));
 		util.atributo("esquema", Util.escapar(esquema));
-		util.atributo("usuario", Util.escapar(usuario));
 		util.atributo("driver", Util.escapar(driver));
-		util.atributo("senha", Util.escapar(senha));
-		util.atributo("nome", Util.escapar(nome));
 		util.fecharTag().finalizarTag("conexao");
 	}
 
