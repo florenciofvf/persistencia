@@ -214,7 +214,7 @@ public class ConsultaContainer extends AbstratoContainer
 			if (model instanceof RegistroModelo) {
 				RegistroModelo modelo = (RegistroModelo) model;
 				List<Integer> indices = TabelaUtil.getIndices(tabela);
-				String dados = modelo.getValores(indices);
+				String dados = modelo.getValoresTexto(indices);
 				Util.setContentTransfered(dados);
 			}
 		}

@@ -407,7 +407,7 @@ public class RegistroModelo implements TableModel {
 		LOG.log(Level.FINEST, "removeTableModelListener");
 	}
 
-	public String getValores(List<Integer> indices) {
+	public String getValoresTexto(List<Integer> indices) {
 		if (colunas.isEmpty() || indices == null) {
 			return Constantes.VAZIO;
 		}
@@ -432,6 +432,44 @@ public class RegistroModelo implements TableModel {
 		}
 
 		sb.deleteCharAt(sb.length() - 1);
+
+		return sb.toString();
+	}
+
+	public String getValoresHtml(List<Integer> indices) {
+		if (colunas.isEmpty() || indices == null) {
+			return Constantes.VAZIO;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html>").append(Constantes.QL2);
+		sb.append("<body>").append(Constantes.QL2);
+		sb.append("<table>").append(Constantes.QL2);
+
+		sb.append("<tr>").append(Constantes.QL2);
+
+		for (Coluna c : colunas) {
+			sb.append("<td>" + c.getNome() + "</td>").append(Constantes.QL2);
+		}
+
+		sb.append("</tr>").append(Constantes.QL2);
+
+		for (Integer i : indices) {
+			sb.append("<tr>").append(Constantes.QL2);
+
+			for (Coluna c : colunas) {
+				Object obj = getValueAt(i, c.getIndice());
+				sb.append("<td>");
+				sb.append((obj == null ? Constantes.VAZIO : obj.toString()) + Constantes.TAB);
+				sb.append("</td>").append(Constantes.QL2);
+			}
+
+			sb.append("</tr>").append(Constantes.QL2);
+		}
+
+		sb.append("</table>").append(Constantes.QL2);
+		sb.append("</body>").append(Constantes.QL2);
+		sb.append("</html>").append(Constantes.QL2);
 
 		return sb.toString();
 	}
