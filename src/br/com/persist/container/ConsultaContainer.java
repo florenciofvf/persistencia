@@ -32,9 +32,11 @@ import br.com.persist.modelo.VazioModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
+import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.TransferidorHtml;
 import br.com.persist.util.Util;
 
 public class ConsultaContainer extends AbstratoContainer
@@ -168,7 +170,7 @@ public class ConsultaContainer extends AbstratoContainer
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarAcao = Action.actionIconAtualizar();
-		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
+		private ButtonCopiar copiar = new ButtonCopiar();
 
 		protected void ini(IJanela janela, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 			super.ini(janela, true, (mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo);
@@ -178,7 +180,7 @@ public class ConsultaContainer extends AbstratoContainer
 			configBaixarAcao(e -> abrir());
 
 			addButton(atualizarAcao);
-			addButton(copiarAcao);
+			add(copiar);
 			add(true, cmbConexao);
 
 			eventos();
@@ -204,18 +206,47 @@ public class ConsultaContainer extends AbstratoContainer
 
 		private void eventos() {
 			atualizarAcao.setActionListener(e -> atualizar());
-
-			copiarAcao.setActionListener(e -> copiar());
 		}
 
-		private void copiar() {
-			TableModel model = tabela.getModel();
+		class ButtonCopiar extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action transfAcao = Action.actionMenu("label.transferidor", null);
+			private Action textoAcao = Action.actionMenu("label.texto", null);
+			private Action htmlAcao = Action.actionMenu("label.html", null);
 
-			if (model instanceof RegistroModelo) {
-				RegistroModelo modelo = (RegistroModelo) model;
-				List<Integer> indices = TabelaUtil.getIndices(tabela);
-				String dados = modelo.getValoresTexto(indices);
-				Util.setContentTransfered(dados);
+			ButtonCopiar() {
+				super("label.copiar", Icones.COPIA);
+
+				addMenuItem(textoAcao);
+				addMenuItem(true, htmlAcao);
+				addMenuItem(true, transfAcao);
+
+				transfAcao.setActionListener(e -> processar(0));
+				textoAcao.setActionListener(e -> processar(1));
+				htmlAcao.setActionListener(e -> processar(2));
+			}
+
+			private void processar(int tipo) {
+				TableModel model = tabela.getModel();
+
+				if (model instanceof RegistroModelo) {
+					RegistroModelo modelo = (RegistroModelo) model;
+					List<Integer> indices = TabelaUtil.getIndices(tabela);
+
+					if (tipo == 0) {
+						String html = modelo.getValoresHtml(indices);
+						String texto = modelo.getValoresTexto(indices);
+						Util.setTransfered(new TransferidorHtml(html, texto));
+
+					} else if (tipo == 1) {
+						String texto = modelo.getValoresTexto(indices);
+						Util.setContentTransfered(texto);
+
+					} else if (tipo == 2) {
+						String html = modelo.getValoresHtml(indices);
+						Util.setContentTransfered(html);
+					}
+				}
 			}
 		}
 	}

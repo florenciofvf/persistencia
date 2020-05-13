@@ -212,6 +212,14 @@ public class Util {
 		}
 	}
 
+	public static void setTransfered(Transferable transferable) {
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+		if (clipboard != null) {
+			clipboard.setContents(transferable, null);
+		}
+	}
+
 	public static String getContentTransfered() {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
