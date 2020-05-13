@@ -38,6 +38,10 @@ public class ConexaoComboModelo extends AbstractListModel<Conexao> implements Co
 		}
 	};
 
+	public void notificarMudancas() {
+		fireContentsChanged(ConexaoComboModelo.this, 0, conexoes.size() - 1);
+	}
+
 	@Override
 	public int getSize() {
 		return conexoes.size();

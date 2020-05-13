@@ -34,6 +34,8 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
@@ -364,13 +366,42 @@ public class Util {
 	}
 
 	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor, Conexao padrao) {
-		JComboBox<Conexao> cmbConexao = new JComboBox<>(new ConexaoComboModelo(provedor.getConexoes()));
+		Combo cmbConexao = new Combo(new ConexaoComboModelo(provedor.getConexoes()));
 
 		if (padrao != null) {
 			cmbConexao.setSelectedItem(padrao);
 		}
 
 		return cmbConexao;
+	}
+
+	public static class Combo extends JComboBox<Conexao> implements PopupMenuListener {
+		private static final long serialVersionUID = 1L;
+		private int total;
+
+		public Combo(ConexaoComboModelo modelo) {
+			super(modelo);
+			total = modelo.getSize();
+			addPopupMenuListener(this);
+		}
+
+		@Override
+		public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+			if (total != getModel().getSize()) {
+				total = getModel().getSize();
+				((ConexaoComboModelo) getModel()).notificarMudancas();
+			}
+		}
+
+		@Override
+		public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+			LOG.log(Level.FINEST, "popupMenuWillBecomeInvisible");
+		}
+
+		@Override
+		public void popupMenuCanceled(PopupMenuEvent e) {
+			LOG.log(Level.FINEST, "popupMenuCanceled");
+		}
 	}
 
 	public static JComboBox<Objeto> criarComboObjetosSel(Superficie superficie) {
