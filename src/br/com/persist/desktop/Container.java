@@ -142,24 +142,24 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		superficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
 		toolbar.chkAjusteAutom.setSelected(coletor.getAjusteAutoForm().get());
 		superficie.abrir(coletor);
+		Conexao conexaoSel = null;
 		arquivo = file;
 		btnSelecao.click();
 
 		if (!Util.estaVazio(coletor.getSbConexao().toString())) {
 			conexaoFile = coletor.getSbConexao().toString();
-			Conexao conexao = null;
 
 			for (int i = 0; i < cmbConexao.getItemCount(); i++) {
 				Conexao c = cmbConexao.getItemAt(i);
 
 				if (conexaoFile.equalsIgnoreCase(c.getNome())) {
-					conexao = c;
+					conexaoSel = c;
 					break;
 				}
 			}
 
-			if (conexao != null) {
-				cmbConexao.setSelectedItem(conexao);
+			if (conexaoSel != null) {
+				cmbConexao.setSelectedItem(conexaoSel);
 			}
 		}
 
@@ -169,7 +169,9 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			return;
 		}
 
-		adicionarForm(conexao, coletor, g);
+		if (conexaoSel != null && conexaoSel.equals(conexao)) {
+			adicionarForm(conexao, coletor, g);
+		}
 	}
 
 	private void adicionarForm(Conexao conexao, XMLColetor coletor, Graphics g) {
