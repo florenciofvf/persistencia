@@ -460,7 +460,7 @@ public class RegistroModelo implements TableModel {
 			for (Coluna c : colunas) {
 				Object obj = getValueAt(i, c.getIndice());
 				sb.append("<td>");
-				sb.append((obj == null ? Constantes.VAZIO : obj.toString()) + Constantes.TAB);
+				sb.append((obj == null ? Constantes.VAZIO : obj.toString()));
 				sb.append("</td>").append(Constantes.QL2);
 			}
 

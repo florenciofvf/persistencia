@@ -381,6 +381,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			}
 
 			DataFlavor[] flavors = transferable.getTransferDataFlavors();
+
 			if (flavors == null || flavors.length < 1) {
 				return;
 			}

@@ -11,8 +11,10 @@ import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TransferidorHtml implements Transferable {
-	private static DataFlavor[] flavors = new DataFlavor[6];
+import javax.swing.plaf.UIResource;
+
+public class TransferidorHtml implements Transferable, UIResource {
+	private static DataFlavor[] flavors = new DataFlavor[8];
 	private static final Logger LOG = Logger.getGlobal();
 	private final String texto;
 	private final String html;
@@ -26,6 +28,8 @@ public class TransferidorHtml implements Transferable {
 			flavors[indice++] = new DataFlavor("text/plain;class=java.lang.String");
 			flavors[indice++] = new DataFlavor("text/plain;class=java.io.Reader");
 			flavors[indice++] = new DataFlavor("text/plain;charset=unicode;class=java.io.InputStream");
+			flavors[indice++] = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=java.lang.String");
+			flavors[indice++] = DataFlavor.stringFlavor;
 		} catch (ClassNotFoundException cle) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, cle);
 		}
@@ -68,6 +72,9 @@ public class TransferidorHtml implements Transferable {
 			} else if (InputStream.class.equals(flavor.getRepresentationClass())) {
 				return createInputStream(flavor, html);
 			}
+
+		} else if (isStringFlavor(flavor)) {
+			return texto;
 		}
 
 		throw new UnsupportedFlavorException(flavor);
@@ -95,7 +102,17 @@ public class TransferidorHtml implements Transferable {
 	}
 
 	private boolean isPlainFlavor(DataFlavor flavor) {
-		for (int i = 3; i < flavors.length; i++) {
+		for (int i = 3; i < 6; i++) {
+			if (flavors[i].equals(flavor)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isStringFlavor(DataFlavor flavor) {
+		for (int i = 6; i < flavors.length; i++) {
 			if (flavors[i].equals(flavor)) {
 				return true;
 			}
