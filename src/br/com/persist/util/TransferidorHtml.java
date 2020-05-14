@@ -57,20 +57,20 @@ public class TransferidorHtml implements Transferable, UIResource {
 	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
 		if (isHTMLFlavor(flavor)) {
 			if (String.class.equals(flavor.getRepresentationClass())) {
-				return texto;
-			} else if (Reader.class.equals(flavor.getRepresentationClass())) {
-				return new StringReader(texto);
-			} else if (InputStream.class.equals(flavor.getRepresentationClass())) {
-				return createInputStream(flavor, texto);
-			}
-
-		} else if (isPlainFlavor(flavor)) {
-			if (String.class.equals(flavor.getRepresentationClass())) {
 				return html;
 			} else if (Reader.class.equals(flavor.getRepresentationClass())) {
 				return new StringReader(html);
 			} else if (InputStream.class.equals(flavor.getRepresentationClass())) {
 				return createInputStream(flavor, html);
+			}
+
+		} else if (isPlainFlavor(flavor)) {
+			if (String.class.equals(flavor.getRepresentationClass())) {
+				return texto;
+			} else if (Reader.class.equals(flavor.getRepresentationClass())) {
+				return new StringReader(texto);
+			} else if (InputStream.class.equals(flavor.getRepresentationClass())) {
+				return createInputStream(flavor, texto);
 			}
 
 		} else if (isStringFlavor(flavor)) {
