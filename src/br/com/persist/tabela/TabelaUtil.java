@@ -195,7 +195,7 @@ public class TabelaUtil {
 		for (int i = 0; i < colunas; i++) {
 			String coluna = model.getColumnName(i);
 
-			html.append("<td>" + coluna + "</td>").append(Constantes.QL2);
+			html.append("<th>" + coluna + "</th>").append(Constantes.QL2);
 			tabular.append(coluna + Constantes.TAB);
 		}
 
