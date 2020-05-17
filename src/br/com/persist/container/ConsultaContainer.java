@@ -211,18 +211,18 @@ public class ConsultaContainer extends AbstratoContainer
 		class ButtonCopiar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action transfAcao = Action.actionMenu("label.transferidor", null);
-			private Action textoAcao = Action.actionMenu("label.texto", null);
+			private Action tabularAcao = Action.actionMenu("label.tabular", null);
 			private Action htmlAcao = Action.actionMenu("label.html", null);
 
 			ButtonCopiar() {
 				super("label.copiar", Icones.COPIA);
 
-				addMenuItem(textoAcao);
-				addMenuItem(true, htmlAcao);
+				addMenuItem(htmlAcao);
+				addMenuItem(true, tabularAcao);
 				addMenuItem(true, transfAcao);
 
 				transfAcao.setActionListener(e -> processar(0));
-				textoAcao.setActionListener(e -> processar(1));
+				tabularAcao.setActionListener(e -> processar(1));
 				htmlAcao.setActionListener(e -> processar(2));
 			}
 
