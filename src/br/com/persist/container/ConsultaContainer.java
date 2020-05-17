@@ -15,7 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import javax.swing.table.TableModel;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -227,24 +226,16 @@ public class ConsultaContainer extends AbstratoContainer
 			}
 
 			private void processar(int tipo) {
-				TableModel model = tabela.getModel();
+				List<Integer> indices = TabelaUtil.getIndices(tabela);
+				TransferidorDados transferidor = TabelaUtil.getTransferidorDados(tabela, indices);
 
-				if (model instanceof RegistroModelo) {
-					RegistroModelo modelo = (RegistroModelo) model;
-					List<Integer> indices = TabelaUtil.getIndices(tabela);
-
+				if (transferidor != null) {
 					if (tipo == 0) {
-						String html = modelo.getValoresHtml(indices);
-						String texto = modelo.getValoresTexto(indices);
-						Util.setTransfered(new TransferidorDados(html, texto));
-
+						Util.setTransfered(transferidor);
 					} else if (tipo == 1) {
-						String texto = modelo.getValoresTexto(indices);
-						Util.setContentTransfered(texto);
-
+						Util.setContentTransfered(transferidor.getTabular());
 					} else if (tipo == 2) {
-						String html = modelo.getValoresHtml(indices);
-						Util.setContentTransfered(html);
+						Util.setContentTransfered(transferidor.getHtml());
 					}
 				}
 			}

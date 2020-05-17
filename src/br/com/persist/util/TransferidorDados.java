@@ -120,4 +120,12 @@ public class TransferidorDados implements Transferable, UIResource {
 
 		return false;
 	}
+
+	public String getTabular() {
+		return tabular;
+	}
+
+	public String getHtml() {
+		return html;
+	}
 }
