@@ -90,6 +90,7 @@ import br.com.persist.util.MenuPadrao2;
 import br.com.persist.util.MenuPadrao3;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Transferidor;
+import br.com.persist.util.TransferidorDados;
 import br.com.persist.util.Util;
 
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable, IIni {
@@ -908,6 +909,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				addMenuItem(true, new InfoBancoAcao());
 				addMenuItem(new EsquemaAcao());
 				addMenu(true, new MenuDML());
+				addMenu(true, new MenuCopiar());
 
 				eventos();
 			}
@@ -926,6 +928,42 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						interno.setApelido(resp.toString().trim());
 					}
 				});
+			}
+
+			class MenuCopiar extends Menu {
+				private static final long serialVersionUID = 1L;
+				private Action transfAcao = Action.actionMenu("label.transferidor", null);
+				private Action tabularAcao = Action.actionMenu("label.tabular", null);
+				private Action htmlAcao = Action.actionMenu("label.html", null);
+
+				public MenuCopiar() {
+					super("label.copiar", Icones.COPIA);
+
+					addMenuItem(htmlAcao);
+					addSeparator();
+					addMenuItem(tabularAcao);
+					addSeparator();
+					addMenuItem(transfAcao);
+
+					transfAcao.setActionListener(e -> processar(0));
+					tabularAcao.setActionListener(e -> processar(1));
+					htmlAcao.setActionListener(e -> processar(2));
+				}
+
+				private void processar(int tipo) {
+					List<Integer> indices = TabelaUtil.getIndices(tabela);
+					TransferidorDados transferidor = TabelaUtil.getTransferidorDados(tabela, indices);
+
+					if (transferidor != null) {
+						if (tipo == 0) {
+							Util.setTransfered(transferidor);
+						} else if (tipo == 1) {
+							Util.setContentTransfered(transferidor.getTabular());
+						} else if (tipo == 2) {
+							Util.setContentTransfered(transferidor.getHtml());
+						}
+					}
+				}
 			}
 
 			class MenuDML extends Menu {
