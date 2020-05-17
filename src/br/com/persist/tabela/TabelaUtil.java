@@ -11,12 +11,15 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Coletor;
+import br.com.persist.util.Constantes;
+import br.com.persist.util.TransferidorDados;
 import br.com.persist.util.Util;
 
 public class TabelaUtil {
@@ -167,5 +170,61 @@ public class TabelaUtil {
 		}
 
 		return resp;
+	}
+
+	public static TransferidorDados getTransferidorDados(JTable table, List<Integer> indices) {
+		if (table == null || indices == null) {
+			return null;
+		}
+
+		TableModel model = table.getModel();
+
+		if (model == null || model.getColumnCount() < 1 || model.getRowCount() < 1) {
+			return null;
+		}
+
+		StringBuilder tabular = new StringBuilder();
+		StringBuilder html = new StringBuilder();
+		html.append("<html>").append(Constantes.QL2);
+		html.append("<body>").append(Constantes.QL2);
+		html.append("<table>").append(Constantes.QL2);
+		html.append("<tr>").append(Constantes.QL2);
+
+		int colunas = model.getColumnCount();
+
+		for (int i = 0; i < colunas; i++) {
+			String coluna = model.getColumnName(i);
+
+			html.append("<td>" + coluna + "</td>").append(Constantes.QL2);
+			tabular.append(coluna + Constantes.TAB);
+		}
+
+		html.append("</tr>").append(Constantes.QL2);
+		tabular.deleteCharAt(tabular.length() - 1);
+		tabular.append(Constantes.QL2);
+
+		for (Integer i : indices) {
+			html.append("<tr>").append(Constantes.QL2);
+
+			for (int j = 0; j < colunas; j++) {
+				Object obj = model.getValueAt(i, j);
+				String val = obj == null ? Constantes.VAZIO : obj.toString();
+
+				tabular.append(val + Constantes.TAB);
+				html.append("<td>" + val + "</td>");
+				html.append(Constantes.QL2);
+			}
+
+			html.append("</tr>").append(Constantes.QL2);
+			tabular.deleteCharAt(tabular.length() - 1);
+			tabular.append(Constantes.QL2);
+		}
+
+		html.append("</table>").append(Constantes.QL2);
+		html.append("</body>").append(Constantes.QL2);
+		html.append("</html>");
+		tabular.deleteCharAt(tabular.length() - 1);
+
+		return new TransferidorDados(html.toString(), tabular.toString());
 	}
 }
