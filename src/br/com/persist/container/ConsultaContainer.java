@@ -36,7 +36,7 @@ import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
-import br.com.persist.util.TransferidorHtml;
+import br.com.persist.util.TransferidorDados;
 import br.com.persist.util.Util;
 
 public class ConsultaContainer extends AbstratoContainer
@@ -236,7 +236,7 @@ public class ConsultaContainer extends AbstratoContainer
 					if (tipo == 0) {
 						String html = modelo.getValoresHtml(indices);
 						String texto = modelo.getValoresTexto(indices);
-						Util.setTransfered(new TransferidorHtml(html, texto));
+						Util.setTransfered(new TransferidorDados(html, texto));
 
 					} else if (tipo == 1) {
 						String texto = modelo.getValoresTexto(indices);

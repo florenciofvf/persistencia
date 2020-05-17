@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 
 import javax.swing.plaf.UIResource;
 
-public class TransferidorHtml implements Transferable, UIResource {
+public class TransferidorDados implements Transferable, UIResource {
 	private static DataFlavor[] flavors = new DataFlavor[8];
 	private static final Logger LOG = Logger.getGlobal();
-	private final String texto;
+	private final String tabular;
 	private final String html;
 
 	static {
@@ -35,8 +35,8 @@ public class TransferidorHtml implements Transferable, UIResource {
 		}
 	}
 
-	public TransferidorHtml(String html, String texto) {
-		this.texto = texto;
+	public TransferidorDados(String html, String tabular) {
+		this.tabular = tabular;
 		this.html = html;
 	}
 
@@ -66,15 +66,15 @@ public class TransferidorHtml implements Transferable, UIResource {
 
 		} else if (isPlainFlavor(flavor)) {
 			if (String.class.equals(flavor.getRepresentationClass())) {
-				return texto;
+				return tabular;
 			} else if (Reader.class.equals(flavor.getRepresentationClass())) {
-				return new StringReader(texto);
+				return new StringReader(tabular);
 			} else if (InputStream.class.equals(flavor.getRepresentationClass())) {
-				return createInputStream(flavor, texto);
+				return createInputStream(flavor, tabular);
 			}
 
 		} else if (isStringFlavor(flavor)) {
-			return texto;
+			return tabular;
 		}
 
 		throw new UnsupportedFlavorException(flavor);
