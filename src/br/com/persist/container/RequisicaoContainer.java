@@ -145,7 +145,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
 
 		public void ini(IJanela janela) {
-			super.ini(janela, true, true);
+			super.ini(janela, true, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
@@ -157,6 +157,10 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			addButton(true, base64Acao);
 
 			eventos();
+		}
+
+		@Override
+		protected void novo() {
 		}
 
 		@Override

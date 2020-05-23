@@ -16,19 +16,25 @@ import br.com.persist.util.Preferencias;
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
+	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
 	protected Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
 	protected transient IJanela janela;
 
-	public void ini(IJanela janela, boolean limpar, boolean salvar) {
+	public void ini(IJanela janela, boolean novo, boolean limpar, boolean salvar) {
 		this.janela = janela;
 
 		fecharAcao.setActionListener(e -> fechar());
 		addButton(fecharAcao);
 		setJanela(janela);
 		addSeparator();
+
+		if (novo) {
+			novoAcao.setActionListener(e -> novo());
+			addButton(novoAcao);
+		}
 
 		if (limpar) {
 			limparAcao.setActionListener(e -> limpar());
@@ -39,6 +45,10 @@ public class BarraButton extends JToolBar {
 			salvarAcao.setActionListener(e -> salvar());
 			addButton(salvarAcao);
 		}
+	}
+
+	public void ini(IJanela janela, boolean limpar, boolean salvar) {
+		this.ini(janela, false, limpar, salvar);
 	}
 
 	protected class ButtonDestacar extends ButtonPopup {
@@ -66,6 +76,10 @@ public class BarraButton extends JToolBar {
 			abrirEmForm.setEnabled(abrirEmFormulario != null);
 			retorAoFich.setEnabled(retornoAoFichario != null);
 		}
+	}
+
+	protected void novo() {
+		throw new UnsupportedOperationException();
 	}
 
 	protected void limpar() {
