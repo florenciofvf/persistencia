@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -29,6 +30,7 @@ import br.com.persist.util.Base64Util;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
@@ -164,6 +166,30 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 		@Override
 		protected void novo() {
+			Object resp = Util.getValorInputDialog(RequisicaoContainer.this, "label.id",
+					Mensagens.getString("label.nome_arquivo"), Constantes.VAZIO);
+
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return;
+			}
+
+			String nome = resp.toString();
+
+			File f = new File(file, nome);
+
+			if (f.exists()) {
+				Util.mensagem(RequisicaoContainer.this, Mensagens.getString("label.indentf_existente"));
+				return;
+			}
+
+			try {
+				if (f.createNewFile()) {
+					Pagina pagina = new Pagina(f);
+					fichario.pagina(pagina);
+				}
+			} catch (IOException ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+			}
 		}
 
 		private void atualizar() {
@@ -214,6 +240,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 		public void pagina(Pagina pag) {
 			addTab(pag.getNome(), pag);
+			int ultimoIndice = getTabCount() - 1;
+			setSelectedIndex(ultimoIndice);
 		}
 
 		public int getIndice() {
@@ -272,12 +300,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			return file.getName();
 		}
 
-		private void abrir(/* String conteudo */File file) {
-			/*
-			 * if (!Util.estaVazio(conteudo)) {
-			 * areaParametros.setText(conteudo); return; }
-			 */
-
+		private void abrir(File file) {
 			areaParametros.setText(Constantes.VAZIO);
 
 			if (file.exists()) {
