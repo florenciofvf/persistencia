@@ -405,7 +405,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				super(Constantes.LABEL_REQUISICAO, Icones.URL);
 
 				formularioAcao
-						.setActionListener(e -> RequisicaoFormulario.criar(Formulario.this, Constantes.VAZIO, -1));
+						.setActionListener(e -> RequisicaoFormulario.criar(Formulario.this, Constantes.VAZIO, null));
 				ficharioAcao.setActionListener(e -> fichario.getRequisicao().nova(Formulario.this));
 				dialogoAcao.setActionListener(e -> RequisicaoDialogo.criar(Formulario.this));
 			}

@@ -727,7 +727,7 @@ public class Fichario extends JTabbedPane {
 
 	public class Requisicao {
 		public void nova(Formulario formulario) {
-			RequisicaoContainer container = new RequisicaoContainer(null, formulario, null, -1);
+			RequisicaoContainer container = new RequisicaoContainer(null, formulario, null, null);
 			retornoAoFichario(formulario, container);
 		}
 
@@ -749,7 +749,7 @@ public class Fichario extends JTabbedPane {
 				return;
 			}
 
-			RequisicaoFormulario.criar(formulario, container.getConteudo(), container.getIndice());
+			RequisicaoFormulario.criar(formulario, container.getConteudo(), container.getIdPagina());
 		}
 
 		public void retornoAoFichario(Formulario formulario, RequisicaoContainer container) {

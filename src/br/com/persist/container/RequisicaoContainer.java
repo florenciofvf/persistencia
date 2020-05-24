@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,12 +43,12 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 	private final Toolbar toolbar = new Toolbar();
 	private Fichario fichario = new Fichario();
 
-	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo, int indice) {
+	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		config();
-		abrir(conteudo, indice);
+		abrir(conteudo, idPagina);
 	}
 
 	public RequisicaoFormulario getRequisicaoFormulario() {
@@ -83,11 +84,23 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		return null;
 	}
 
+	public String getIdPagina() {
+		Pagina ativa = fichario.getPaginaAtiva();
+
+		if (ativa != null) {
+			ativa.getNome();
+		}
+
+		return null;
+	}
+
 	public int getIndice() {
 		return fichario.getIndice();
 	}
 
-	private void abrir(String conteudo, int indice) {
+	private void abrir(String conteudo, String idPagina) {
+		fichario.limpar();
+
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 
@@ -101,7 +114,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			}
 		}
 
-		fichario.conteudo(conteudo, indice);
+		fichario.conteudo(conteudo, idPagina);
 	}
 
 	@Override
@@ -116,7 +129,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 	@Override
 	protected void abrirEmFormulario() {
-		RequisicaoFormulario.criar(formulario, Constantes.VAZIO, -1);
+		RequisicaoFormulario.criar(formulario, Constantes.VAZIO, null);
 	}
 
 	@Override
@@ -142,7 +155,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
-			configBaixarAcao(e -> abrir(null, -1));
+			configBaixarAcao(e -> abrir(null, null));
 
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
@@ -244,6 +257,15 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			setSelectedIndex(ultimoIndice);
 		}
 
+		public void limpar() {
+			int count = getTabCount();
+
+			while (count > 0) {
+				removeTabAt(0);
+				count = getTabCount();
+			}
+		}
+
 		public int getIndice() {
 			return getSelectedIndex();
 		}
@@ -258,10 +280,31 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			return null;
 		}
 
-		public void conteudo(String conteudo, int indice) {
-			if (!Util.estaVazio(conteudo) && indice != -1 && indice < getTabCount()) {
-				Pagina pagina = (Pagina) getComponentAt(indice);
-				pagina.areaParametros.setText(conteudo);
+		public Pagina getPagina(String idPagina) {
+			int total = getTabCount();
+
+			for (int i = 0; i < total; i++) {
+				Component cmp = getComponentAt(i);
+
+				if (cmp instanceof Pagina) {
+					Pagina p = (Pagina) cmp;
+
+					if (p.getNome().equals(idPagina)) {
+						return p;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		public void conteudo(String conteudo, String idPagina) {
+			if (!Util.estaVazio(conteudo) && !Util.estaVazio(idPagina)) {
+				Pagina pagina = getPagina(idPagina);
+
+				if (pagina != null) {
+					pagina.areaParametros.setText(conteudo);
+				}
 			}
 		}
 	}

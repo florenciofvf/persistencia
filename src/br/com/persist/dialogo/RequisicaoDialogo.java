@@ -15,7 +15,7 @@ public class RequisicaoDialogo extends AbstratoDialogo implements IJanela {
 
 	public RequisicaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_REQUISICAO));
-		container = new RequisicaoContainer(this, formulario, null, -1);
+		container = new RequisicaoContainer(this, formulario, null, null);
 		montarLayout();
 	}
 
