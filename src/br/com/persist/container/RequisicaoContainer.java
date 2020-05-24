@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.text.AbstractDocument;
@@ -33,12 +34,11 @@ import br.com.persist.util.Util;
 
 public class RequisicaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private static final File file = new File("requisicao/requisicoes");
 	private static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
-	private final JTextPane areaResultados = new JTextPane();
-	private final JTextPane areaParametros = new JTextPane();
+	private static final File file = new File("requisicoes");
 	private RequisicaoFormulario requisicaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
+	private Fichario fichario = new Fichario();
 
 	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo) {
 		super(formulario);
@@ -68,45 +68,37 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-
-		Panel panelParametros = new Panel();
-		panelParametros.add(areaParametros);
-
-		Panel panelResultados = new Panel();
-		panelResultados.add(areaResultados);
-
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
-				new ScrollPane(panelResultados));
-		split.setDividerLocation(200);
-
-		add(BorderLayout.CENTER, split);
+		add(BorderLayout.CENTER, fichario);
 	}
 
 	public String getConteudo() {
-		return areaParametros.getText();
+		Pagina ativa = fichario.getPaginaAtiva();
+
+		if (ativa != null) {
+			ativa.getConteudo();
+		}
+
+		return null;
 	}
 
 	private void abrir(String conteudo) {
-		if (!Util.estaVazio(conteudo)) {
-			areaParametros.setText(conteudo);
-			return;
-		}
+		/*
+		 * if (!Util.estaVazio(conteudo)) { areaParametros.setText(conteudo);
+		 * return; }
+		 * 
+		 * areaParametros.setText(Constantes.VAZIO);
+		 */
 
-		areaParametros.setText(Constantes.VAZIO);
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
 
-		if (file.exists()) {
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-				StringBuilder sb = new StringBuilder();
-				String linha = br.readLine();
+			if (files == null) {
+				return;
+			}
 
-				while (linha != null) {
-					sb.append(linha + Constantes.QL2);
-					linha = br.readLine();
-				}
-
-				areaParametros.setText(sb.toString());
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+			for (File f : files) {
+				Pagina pagina = new Pagina(f);
+				fichario.pagina(pagina);
 			}
 		}
 	}
@@ -159,28 +151,6 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			eventos();
 		}
 
-		@Override
-		protected void novo() {
-		}
-
-		@Override
-		protected void limpar() {
-			areaParametros.setText(Constantes.VAZIO);
-		}
-
-		@Override
-		protected void salvar() {
-			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
-				return;
-			}
-
-			try (PrintWriter pw = new PrintWriter(file)) {
-				pw.print(areaParametros.getText());
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
-			}
-		}
-
 		private void eventos() {
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
 			chkRespostaJson.addActionListener(
@@ -192,72 +162,212 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 			base64Acao.setActionListener(e -> base64());
 		}
-	}
 
-	public void formatar() {
-		if (Util.estaVazio(areaParametros.getText())) {
-			return;
+		@Override
+		protected void novo() {
 		}
 
-		String string = Util.getString(areaParametros);
-		areaResultados.setText(Constantes.VAZIO);
+		private void atualizar() {
+			Pagina ativa = fichario.getPaginaAtiva();
 
-		try {
-			Parser parser = new Parser();
-			Tipo json = parser.parse(string);
-
-			StyledDocument styledDoc = areaResultados.getStyledDocument();
-
-			if (styledDoc instanceof AbstractDocument) {
-				AbstractDocument doc = (AbstractDocument) styledDoc;
-				json.toString(doc, false, 0);
+			if (ativa != null) {
+				ativa.atualizar();
 			}
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+		}
+
+		private void formatar() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.formatar();
+			}
+		}
+
+		private void base64() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.base64();
+			}
+		}
+
+		@Override
+		protected void limpar() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.limpar();
+			}
+		}
+
+		@Override
+		protected void salvar() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.salvar();
+			}
 		}
 	}
 
-	public void base64() {
-		if (Util.estaVazio(areaParametros.getText())) {
-			return;
+	public class Fichario extends JTabbedPane {
+		private static final long serialVersionUID = 1L;
+
+		public void pagina(Pagina pag) {
+			addTab(pag.getNome(), pag);
 		}
 
-		String string = Util.getString(areaParametros);
-		areaResultados.setText(Constantes.VAZIO);
+		public Pagina getPaginaAtiva() {
+			int indice = getSelectedIndex();
 
-		try {
-			areaResultados.setText(Base64Util.criarBase64(string));
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+			if (indice != -1) {
+				return (Pagina) getComponentAt(indice);
+			}
+
+			return null;
 		}
 	}
 
-	public void atualizar() {
-		if (Util.estaVazio(areaParametros.getText())) {
-			return;
+	public class Pagina extends Panel {
+		private static final long serialVersionUID = 1L;
+		private final JTextPane areaParametros = new JTextPane();
+		private final JTextPane areaResultados = new JTextPane();
+		private final File file;
+
+		public Pagina(File file) {
+			this.file = file;
+			montarLayout();
+			abrir(file);
 		}
 
-		String string = Util.getString(areaParametros);
-		areaResultados.setText(Constantes.VAZIO);
+		private void montarLayout() {
+			Panel panelParametros = new Panel();
+			panelParametros.add(areaParametros);
 
-		try {
-			Parser parser = new Parser();
-			Tipo parametros = parser.parse(string);
-			String resposta = Util.requisicao(parametros);
+			Panel panelResultados = new Panel();
+			panelResultados.add(areaResultados);
 
-			if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
+			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
+					new ScrollPane(panelResultados));
+			split.setDividerLocation(200);
+
+			add(BorderLayout.CENTER, split);
+		}
+
+		public String getConteudo() {
+			return areaParametros.getText();
+		}
+
+		public String getNome() {
+			return file.getName();
+		}
+
+		private void abrir(/* String conteudo */File file) {
+			/*
+			 * if (!Util.estaVazio(conteudo)) {
+			 * areaParametros.setText(conteudo); return; }
+			 */
+
+			areaParametros.setText(Constantes.VAZIO);
+
+			if (file.exists()) {
+				try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+					StringBuilder sb = new StringBuilder();
+					String linha = br.readLine();
+
+					while (linha != null) {
+						sb.append(linha + Constantes.QL2);
+						linha = br.readLine();
+					}
+
+					areaParametros.setText(sb.toString());
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+				}
+			}
+		}
+
+		public void limpar() {
+			areaParametros.setText(Constantes.VAZIO);
+		}
+
+		public void salvar() {
+			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
+				return;
+			}
+
+			try (PrintWriter pw = new PrintWriter(file)) {
+				pw.print(areaParametros.getText());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+			}
+		}
+
+		public void formatar() {
+			if (Util.estaVazio(areaParametros.getText())) {
+				return;
+			}
+
+			String string = Util.getString(areaParametros);
+			areaResultados.setText(Constantes.VAZIO);
+
+			try {
+				Parser parser = new Parser();
+				Tipo json = parser.parse(string);
+
 				StyledDocument styledDoc = areaResultados.getStyledDocument();
-				Tipo json = parser.parse(resposta);
 
 				if (styledDoc instanceof AbstractDocument) {
 					AbstractDocument doc = (AbstractDocument) styledDoc;
 					json.toString(doc, false, 0);
 				}
-			} else {
-				areaResultados.setText(resposta);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 			}
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+		}
+
+		public void base64() {
+			if (Util.estaVazio(areaParametros.getText())) {
+				return;
+			}
+
+			String string = Util.getString(areaParametros);
+			areaResultados.setText(Constantes.VAZIO);
+
+			try {
+				areaResultados.setText(Base64Util.criarBase64(string));
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+			}
+		}
+
+		public void atualizar() {
+			if (Util.estaVazio(areaParametros.getText())) {
+				return;
+			}
+
+			String string = Util.getString(areaParametros);
+			areaResultados.setText(Constantes.VAZIO);
+
+			try {
+				Parser parser = new Parser();
+				Tipo parametros = parser.parse(string);
+				String resposta = Util.requisicao(parametros);
+
+				if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
+					StyledDocument styledDoc = areaResultados.getStyledDocument();
+					Tipo json = parser.parse(resposta);
+
+					if (styledDoc instanceof AbstractDocument) {
+						AbstractDocument doc = (AbstractDocument) styledDoc;
+						json.toString(doc, false, 0);
+					}
+				} else {
+					areaResultados.setText(resposta);
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+			}
 		}
 	}
 }
