@@ -18,7 +18,6 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.fichario.Fichario;
@@ -27,17 +26,15 @@ import br.com.persist.fmt.Tipo;
 import br.com.persist.formulario.RuntimeExecFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
-import br.com.persist.util.Base64Util;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class RuntimeExecContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private static final String PAINEL_REQUISICAO = "PAINEL RUNTIME_EXEC";
+	private static final String PAINEL_RUNTIME_EXEC = "PAINEL RUNTIME_EXEC";
 	private static final File file = new File("runtime_exec");
 	private RuntimeExecFormulario runtimeExecFormulario;
 	private final Toolbar toolbar = new Toolbar();
@@ -145,40 +142,26 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
-		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
-		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
-		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
+		private Action atualizarAcao = Action.actionIcon("label.runtime_exec", Icones.EXECUTAR);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_RUNTIME_EXEC);
 			configBaixarAcao(e -> abrir(null, null));
 			addButton(baixarAtivoAcao);
 
-			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
-			addButton(true, formatarAcao);
-			addButton(true, base64Acao);
 
 			eventos();
 		}
 
 		private void eventos() {
-			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
-			chkRespostaJson.addActionListener(
-					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
-
 			baixarAtivoAcao.setActionListener(e -> abrirAtivo());
 
 			atualizarAcao.setActionListener(e -> atualizar());
-
-			formatarAcao.setActionListener(e -> formatar());
-
-			base64Acao.setActionListener(e -> base64());
 		}
 
 		@Override
@@ -205,7 +188,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 					fichario.pagina(pagina);
 				}
 			} catch (IOException ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RuntimeExecContainer.this);
+				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
 
@@ -222,22 +205,6 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 			if (ativa != null) {
 				ativa.atualizar();
-			}
-		}
-
-		private void formatar() {
-			Pagina ativa = fichario.getPaginaAtiva();
-
-			if (ativa != null) {
-				ativa.formatar();
-			}
-		}
-
-		private void base64() {
-			Pagina ativa = fichario.getPaginaAtiva();
-
-			if (ativa != null) {
-				ativa.base64();
 			}
 		}
 
@@ -370,7 +337,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 					areaParametros.setText(sb.toString());
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RuntimeExecContainer.this);
+					Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 				}
 			}
 		}
@@ -387,45 +354,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			try (PrintWriter pw = new PrintWriter(file)) {
 				pw.print(areaParametros.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RuntimeExecContainer.this);
-			}
-		}
-
-		public void formatar() {
-			if (Util.estaVazio(areaParametros.getText())) {
-				return;
-			}
-
-			String string = Util.getString(areaParametros);
-			areaResultados.setText(Constantes.VAZIO);
-
-			try {
-				Parser parser = new Parser();
-				Tipo json = parser.parse(string);
-
-				StyledDocument styledDoc = areaResultados.getStyledDocument();
-
-				if (styledDoc instanceof AbstractDocument) {
-					AbstractDocument doc = (AbstractDocument) styledDoc;
-					json.toString(doc, false, 0);
-				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
-			}
-		}
-
-		public void base64() {
-			if (Util.estaVazio(areaParametros.getText())) {
-				return;
-			}
-
-			String string = Util.getString(areaParametros);
-			areaResultados.setText(Constantes.VAZIO);
-
-			try {
-				areaResultados.setText(Base64Util.criarBase64(string));
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
 
@@ -454,7 +383,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 					areaResultados.setText(resposta);
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, this);
 			}
 		}
 	}
