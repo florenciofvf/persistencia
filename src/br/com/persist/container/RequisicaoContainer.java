@@ -40,12 +40,12 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 	private final Toolbar toolbar = new Toolbar();
 	private Fichario fichario = new Fichario();
 
-	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo) {
+	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo, int indice) {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		config();
-		abrir(conteudo);
+		abrir(conteudo, indice);
 	}
 
 	public RequisicaoFormulario getRequisicaoFormulario() {
@@ -81,14 +81,11 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		return null;
 	}
 
-	private void abrir(String conteudo) {
-		/*
-		 * if (!Util.estaVazio(conteudo)) { areaParametros.setText(conteudo);
-		 * return; }
-		 * 
-		 * areaParametros.setText(Constantes.VAZIO);
-		 */
+	public int getIndice() {
+		return fichario.getIndice();
+	}
 
+	private void abrir(String conteudo, int indice) {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 
@@ -101,6 +98,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				fichario.pagina(pagina);
 			}
 		}
+
+		fichario.conteudo(conteudo, indice);
 	}
 
 	@Override
@@ -115,7 +114,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 	@Override
 	protected void abrirEmFormulario() {
-		RequisicaoFormulario.criar(formulario, Constantes.VAZIO);
+		RequisicaoFormulario.criar(formulario, Constantes.VAZIO, -1);
 	}
 
 	@Override
@@ -141,7 +140,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
-			configBaixarAcao(e -> abrir(null));
+			configBaixarAcao(e -> abrir(null, -1));
 
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
@@ -217,6 +216,10 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			addTab(pag.getNome(), pag);
 		}
 
+		public int getIndice() {
+			return getSelectedIndex();
+		}
+
 		public Pagina getPaginaAtiva() {
 			int indice = getSelectedIndex();
 
@@ -225,6 +228,13 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			}
 
 			return null;
+		}
+
+		public void conteudo(String conteudo, int indice) {
+			if (!Util.estaVazio(conteudo) && indice != -1 && indice < getTabCount()) {
+				Pagina pagina = (Pagina) getComponentAt(indice);
+				pagina.areaParametros.setText(conteudo);
+			}
 		}
 	}
 

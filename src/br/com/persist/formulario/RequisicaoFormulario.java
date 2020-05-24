@@ -12,9 +12,9 @@ public class RequisicaoFormulario extends AbstratoFormulario implements IJanela 
 	private static final long serialVersionUID = 1L;
 	private final RequisicaoContainer container;
 
-	public RequisicaoFormulario(Formulario formulario, String conteudo) {
+	public RequisicaoFormulario(Formulario formulario, String conteudo, int indice) {
 		super(Mensagens.getString(Constantes.LABEL_REQUISICAO));
-		container = new RequisicaoContainer(this, formulario, conteudo);
+		container = new RequisicaoContainer(this, formulario, conteudo, indice);
 		container.setRequisicaoFormulario(this);
 		montarLayout();
 	}
@@ -42,8 +42,8 @@ public class RequisicaoFormulario extends AbstratoFormulario implements IJanela 
 		form.setVisible(true);
 	}
 
-	public static void criar(Formulario formulario, String conteudo) {
-		RequisicaoFormulario form = new RequisicaoFormulario(formulario, conteudo);
+	public static void criar(Formulario formulario, String conteudo, int indice) {
+		RequisicaoFormulario form = new RequisicaoFormulario(formulario, conteudo, indice);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
