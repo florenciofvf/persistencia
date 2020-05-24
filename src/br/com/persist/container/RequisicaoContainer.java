@@ -147,6 +147,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		private static final long serialVersionUID = 1L;
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
+		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
 
@@ -156,6 +157,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
 			configBaixarAcao(e -> abrir(null, null));
+			addButton(baixarAtivoAcao);
 
 			add(chkRespostaJson);
 			addButton(true, atualizarAcao);
@@ -169,6 +171,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
 			chkRespostaJson.addActionListener(
 					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
+
+			baixarAtivoAcao.setActionListener(e -> abrirAtivo());
 
 			atualizarAcao.setActionListener(e -> atualizar());
 
@@ -202,6 +206,14 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				}
 			} catch (IOException ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+			}
+		}
+
+		private void abrirAtivo() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.abrir();
 			}
 		}
 
@@ -318,7 +330,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		public Pagina(File file) {
 			this.file = file;
 			montarLayout();
-			abrir(file);
+			abrir();
 		}
 
 		private void montarLayout() {
@@ -343,7 +355,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			return file.getName();
 		}
 
-		private void abrir(File file) {
+		private void abrir() {
 			areaParametros.setText(Constantes.VAZIO);
 
 			if (file.exists()) {
