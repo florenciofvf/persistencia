@@ -371,18 +371,19 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 				Tipo parametros = parser.parse(string);
 				String resposta = Util.requisicao(parametros);
 
-
-//				if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
-//					StyledDocument styledDoc = areaResultados.getStyledDocument();
-//					Tipo json = parser.parse(resposta);
-//
-//					if (styledDoc instanceof AbstractDocument) {
-//						AbstractDocument doc = (AbstractDocument) styledDoc;
-//						json.toString(doc, false, 0);
-//					}
-//				} else {
-//					areaResultados.setText(resposta);
-//				}
+				// if (!Util.estaVazio(resposta) &&
+				// toolbar.chkRespostaJson.isSelected()) {
+				// StyledDocument styledDoc =
+				// areaResultados.getStyledDocument();
+				// Tipo json = parser.parse(resposta);
+				//
+				// if (styledDoc instanceof AbstractDocument) {
+				// AbstractDocument doc = (AbstractDocument) styledDoc;
+				// json.toString(doc, false, 0);
+				// }
+				// } else {
+				// areaResultados.setText(resposta);
+				// }
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, this);
 			}
