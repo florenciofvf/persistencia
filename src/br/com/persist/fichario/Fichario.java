@@ -80,6 +80,7 @@ import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
+import br.com.persist.formulario.RuntimeExecFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.link_auto.GrupoLinkAuto;
