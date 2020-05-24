@@ -78,7 +78,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		Pagina ativa = fichario.getPaginaAtiva();
 
 		if (ativa != null) {
-			ativa.getConteudo();
+			return ativa.getConteudo();
 		}
 
 		return null;
@@ -88,7 +88,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		Pagina ativa = fichario.getPaginaAtiva();
 
 		if (ativa != null) {
-			ativa.getNome();
+			return ativa.getNome();
 		}
 
 		return null;
