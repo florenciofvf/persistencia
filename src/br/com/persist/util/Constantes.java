@@ -8,6 +8,7 @@ public class Constantes {
 	public static final String ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS";
 	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
 	public static final String ABRIR_AUTO_FICHARIO_CONFIGURACAO = "abrir_com_configuracao";
+	public static final String ABRIR_AUTO_FICHARIO_RUNTIME_EXEC = "abrir_com_runtime_exec";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final String ABRIR_AUTO_FICHARIO_MAPEAMENTO = "abrir_com_mapeamento";
@@ -21,6 +22,7 @@ public class Constantes {
 	public static final String ABRIR_AUTO_FICHARIO_ATUALIZA = "abrir_com_atualiza";
 	public static final String ABRIR_AUTO_FICHARIO_ANOTACAO = "abrir_com_anotacao";
 	public static final String ABRIR_AUTO_FICHARIO_VARIAVEL = "abrir_com_variavel";
+	public static final String LABEL_RUNTIME_EXEC_MIN = "label.runtime_exec_min";
 	public static final String ABRIR_AUTO_FICHARIO_CONEXAO = "abrir_com_conexao";
 	public static final String ABRIR_AUTO_FICHARIO_ARQUIVO = "abrir_com_arvore";
 	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
@@ -37,6 +39,7 @@ public class Constantes {
 	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
 	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
 	public static final String LABEL_ARQUIVOS_MIN = "label.arquivos_min";
+	public static final String LABEL_RUNTIME_EXEC = "label.runtime_exec";
 	public static final String LABEL_UTILITARIOS = "label.utilitarios";
 	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";

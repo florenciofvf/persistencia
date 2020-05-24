@@ -32,7 +32,7 @@ public class TituloAba extends Panel {
 	private static final long serialVersionUID = 1L;
 	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.TABELA, Icones.EXPANDIR, Icones.PANEL4,
 			Icones.CONFIG, Icones.BANCO, Icones.FRAGMENTO, Icones.CRIAR, Icones.UPDATE, Icones.ANEXO, Icones.CAMPOS,
-			Icones.REFERENCIA, Icones.VAR, Icones.CENTRALIZAR, Icones.URL, Icones.BOLA_VERDE };
+			Icones.REFERENCIA, Icones.VAR, Icones.CENTRALIZAR, Icones.URL, Icones.BOLA_VERDE, Icones.EXECUTAR };
 	private static final Logger LOG = Logger.getGlobal();
 	public static final byte OBJETOS = 0;
 	public static final byte DESKTOP = 1;
@@ -51,6 +51,7 @@ public class TituloAba extends Panel {
 	public static final byte COMPARACAO = 14;
 	public static final byte REQUISICAO = 15;
 	public static final byte AMBIENTE = 16;
+	public static final byte RUNTIME_EXEC = 17;
 	private final Fichario fichario;
 
 	public TituloAba(Fichario fichario, byte tipo) {

@@ -39,6 +39,7 @@ import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.MapeamentoDialogo;
 import br.com.persist.dialogo.RequisicaoDialogo;
+import br.com.persist.dialogo.RuntimeExecDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.fichario.Fichario;
@@ -56,6 +57,7 @@ import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
 import br.com.persist.formulario.MetadadoFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
+import br.com.persist.formulario.RuntimeExecFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.modelo.ConexaoModelo;
@@ -270,6 +272,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private Action novoAcao = Action.actionMenu(Constantes.LABEL_NOVO, Icones.CUBO);
 		private final Menu menuConfig = new Menu(Constantes.LABEL_CONFIGURACOES);
 		private final Menu menuAmbiente = new Menu(Constantes.LABEL_AMBIENTES);
+		private final MenuRuntimeExec itemRuntimeExec = new MenuRuntimeExec();
 		private final Menu menuUtil = new Menu(Constantes.LABEL_UTILITARIOS);
 		private final Menu menuArquivo = new Menu(Constantes.LABEL_ARQUIVO);
 		private final MenuMapeamento itemMapeamento = new MenuMapeamento();
@@ -314,6 +317,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuUtil.add(true, itemVariavel);
 			menuUtil.add(true, itemComparacao);
 			menuUtil.add(true, itemRequisicao);
+			menuUtil.add(true, itemRuntimeExec);
 			add(menuUtil);
 
 			menuConfig.add(menuLayout);
@@ -343,6 +347,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			itemVariavel.abrirAutoFichario();
 			itemComparacao.abrirAutoFichario();
 			itemRequisicao.abrirAutoFichario();
+			itemRuntimeExec.abrirAutoFichario();
 			itemConfig.abrirAutoFichario();
 		}
 
@@ -412,6 +417,25 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO)) {
+					ficharioAcao.actionPerformed(null);
+				}
+			}
+		}
+
+		class MenuRuntimeExec extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuRuntimeExec() {
+				super(Constantes.LABEL_RUNTIME_EXEC, Icones.EXECUTAR);
+
+				formularioAcao
+						.setActionListener(e -> RuntimeExecFormulario.criar(Formulario.this, Constantes.VAZIO, null));
+				ficharioAcao.setActionListener(e -> fichario.getRuntimeExec().nova(Formulario.this));
+				dialogoAcao.setActionListener(e -> RuntimeExecDialogo.criar(Formulario.this));
+			}
+
+			void abrirAutoFichario() {
+				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_RUNTIME_EXEC)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}

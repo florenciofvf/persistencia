@@ -59,6 +59,7 @@ import br.com.persist.container.MapeamentoContainer;
 import br.com.persist.container.MetadadosContainer;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.container.RequisicaoContainer;
+import br.com.persist.container.RuntimeExecContainer;
 import br.com.persist.container.UpdateContainer;
 import br.com.persist.container.VariaveisContainer;
 import br.com.persist.desktop.Container;
@@ -99,6 +100,7 @@ public class Fichario extends JTabbedPane {
 	private final transient NavegButton navegButtonLimpar = new NavegButton(0);
 	private final transient Configuracao configuracao = new Configuracao();
 	private final transient SalvarAberto salvarAberto = new SalvarAberto();
+	private final transient RuntimeExec runtimeExec = new RuntimeExec();
 	private final transient Mapeamento mapeamento = new Mapeamento();
 	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
@@ -498,6 +500,10 @@ public class Fichario extends JTabbedPane {
 		return configuracao;
 	}
 
+	public RuntimeExec getRuntimeExec() {
+		return runtimeExec;
+	}
+
 	public Mapeamento getMapeamento() {
 		return mapeamento;
 	}
@@ -758,6 +764,44 @@ public class Fichario extends JTabbedPane {
 
 			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.REQUISICAO);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_REQUISICAO));
+			setTabComponentAt(ultimoIndice, tituloAba);
+			setSelectedIndex(ultimoIndice);
+		}
+	}
+
+	public class RuntimeExec {
+		public void nova(Formulario formulario) {
+			RuntimeExecContainer container = new RuntimeExecContainer(null, formulario, null, null);
+			retornoAoFichario(formulario, container);
+		}
+
+		public void destacarEmFormulario(Formulario formulario, RuntimeExecContainer container) {
+			int indice = arquivos.getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			remove(indice);
+			RuntimeExecFormulario.criar(formulario, container);
+		}
+
+		public void clonarEmFormulario(Formulario formulario, RuntimeExecContainer container) {
+			int indice = arquivos.getIndice(container);
+
+			if (indice == -1) {
+				return;
+			}
+
+			RuntimeExecFormulario.criar(formulario, container.getConteudo(), container.getIdPagina());
+		}
+
+		public void retornoAoFichario(Formulario formulario, RuntimeExecContainer container) {
+			addTab(Constantes.LABEL_RUNTIME_EXEC, Constantes.LABEL_RUNTIME_EXEC_MIN, container);
+			int ultimoIndice = getTabCount() - 1;
+
+			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.RUNTIME_EXEC);
+			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_RUNTIME_EXEC));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
 		}
