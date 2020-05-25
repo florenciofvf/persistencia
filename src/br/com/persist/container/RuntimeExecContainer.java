@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -14,8 +15,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.StyledDocument;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
@@ -368,24 +367,57 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 			try {
 				Parser parser = new Parser();
-				Tipo parametros = parser.parse(string);
-				String resposta = Util.requisicao(parametros);
+				Tipo param = parser.parse(string);
+				Process process = montarProcess(param);
 
-				// if (!Util.estaVazio(resposta) &&
-				// toolbar.chkRespostaJson.isSelected()) {
-				// StyledDocument styledDoc =
-				// areaResultados.getStyledDocument();
-				// Tipo json = parser.parse(resposta);
-				//
-				// if (styledDoc instanceof AbstractDocument) {
-				// AbstractDocument doc = (AbstractDocument) styledDoc;
-				// json.toString(doc, false, 0);
-				// }
-				// } else {
-				// areaResultados.setText(resposta);
-				// }
+				if (process == null) {
+					return;
+				}
+
+				new ThreadInputStream(process.getErrorStream(), areaResultados, "ERROS").start();
+				new ThreadInputStream(process.getInputStream(), areaResultados, "SAIDA").start();
+
+				int exit = process.waitFor();
+				String conteudo = areaResultados.getText();
+				areaResultados.setText(conteudo + Constantes.QL2 + "EXIT=" + exit);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, this);
+			}
+		}
+
+		private Process montarProcess(Tipo objeto) throws IOException {
+			return Runtime.getRuntime().exec("");
+		}
+	}
+
+	private class ThreadInputStream extends Thread {
+		private final InputStream is;
+		private final JTextPane area;
+		private final String tipo;
+
+		public ThreadInputStream(InputStream is, JTextPane area, String tipo) {
+			this.area = area;
+			this.tipo = tipo;
+			this.is = is;
+		}
+
+		@Override
+		public void run() {
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+				StringBuilder sb = new StringBuilder();
+				String linha = br.readLine();
+
+				while (linha != null) {
+					sb.append(linha + Constantes.QL2);
+					linha = br.readLine();
+				}
+
+				if (sb.length() > 0) {
+					sb.append(tipo);
+					area.setText(sb.toString());
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
 	}
