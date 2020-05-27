@@ -569,6 +569,36 @@ public class Util {
 		return resposta;
 	}
 
+	public static ProcessBuilder criarProcessBuilder(Tipo parametros) {
+		if (parametros instanceof br.com.persist.fmt.Objeto) {
+//			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
+//
+//			Tipo tipoUrl = objeto.getValor("url");
+//			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
+//			Map<String, String> mapHeader = null;
+//
+//			Tipo tipoHeader = objeto.getValor("header");
+//
+//			if (tipoHeader instanceof br.com.persist.fmt.Objeto) {
+//				br.com.persist.fmt.Objeto objHeader = (br.com.persist.fmt.Objeto) tipoHeader;
+//				mapHeader = objHeader.getAtributosString();
+//			}
+//
+//			Tipo tipoBody = objeto.getValor("body");
+//			String bodyParams = null;
+//
+//			if (tipoBody instanceof br.com.persist.fmt.Objeto) {
+//				br.com.persist.fmt.Objeto objBody = (br.com.persist.fmt.Objeto) tipoBody;
+//				Tipo params = objBody.getValor("parameters");
+//				bodyParams = params instanceof Texto ? params.toString() : null;
+//			}
+//
+//			return requisicao(url, mapHeader, bodyParams);
+		}
+
+		return null;
+	}
+
 	public static String requisicao(Tipo parametros) throws IOException {
 		if (parametros instanceof br.com.persist.fmt.Objeto) {
 			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
