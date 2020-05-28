@@ -1,6 +1,7 @@
 package br.com.persist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -121,6 +122,10 @@ public class Arquivo {
 	private void processar() {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
+
+			if (files != null) {
+				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
+			}
 
 			for (File f : files) {
 				Arquivo arq = new Arquivo(f);
