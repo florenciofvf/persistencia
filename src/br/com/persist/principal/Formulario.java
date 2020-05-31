@@ -430,7 +430,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				formularioAcao
 						.setActionListener(e -> RuntimeExecFormulario.criar(Formulario.this, Constantes.VAZIO, null));
-				ficharioAcao.setActionListener(e -> fichario.getRuntimeExec().nova(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getRuntimeExec().novo(Formulario.this));
 				dialogoAcao.setActionListener(e -> RuntimeExecDialogo.criar(Formulario.this));
 			}
 

@@ -771,7 +771,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class RuntimeExec {
-		public void nova(Formulario formulario) {
+		public void novo(Formulario formulario) {
 			RuntimeExecContainer container = new RuntimeExecContainer(null, formulario, null, null);
 			retornoAoFichario(formulario, container);
 		}
@@ -1554,6 +1554,9 @@ public class Fichario extends JTabbedPane {
 
 			} else if (Util.iguais(RequisicaoContainer.class, nome)) {
 				requisicao.nova(formulario);
+
+			} else if (Util.iguais(RuntimeExecContainer.class, nome)) {
+				runtimeExec.novo(formulario);
 
 			} else if (Util.iguais(ConfigContainer.class, nome)) {
 				configuracao.nova(formulario);

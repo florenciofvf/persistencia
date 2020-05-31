@@ -1,0 +1,6 @@
+{
+     "comando": "open",
+     "parametros": [
+        "-a /System/Applications/Utilities/Terminal.app /Users/florenciovieirafilho/desenv/projetos/siproquim/siproquim-rest"
+     ]
+}
