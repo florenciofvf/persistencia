@@ -45,6 +45,7 @@ import br.com.persist.comp.SplitPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.fmt.Array;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.modelo.ConexaoComboModelo;
@@ -571,33 +572,42 @@ public class Util {
 
 	public static ProcessBuilder criarProcessBuilder(Tipo parametros) {
 		if (parametros instanceof br.com.persist.fmt.Objeto) {
-			// br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto)
-			// parametros;
-			//
-			// Tipo tipoUrl = objeto.getValor("url");
-			// String url = tipoUrl instanceof Texto ? tipoUrl.toString() :
-			// null;
-			// Map<String, String> mapHeader = null;
-			//
-			// Tipo tipoHeader = objeto.getValor("header");
-			//
-			// if (tipoHeader instanceof br.com.persist.fmt.Objeto) {
-			// br.com.persist.fmt.Objeto objHeader = (br.com.persist.fmt.Objeto)
-			// tipoHeader;
-			// mapHeader = objHeader.getAtributosString();
-			// }
-			//
-			// Tipo tipoBody = objeto.getValor("body");
-			// String bodyParams = null;
-			//
-			// if (tipoBody instanceof br.com.persist.fmt.Objeto) {
-			// br.com.persist.fmt.Objeto objBody = (br.com.persist.fmt.Objeto)
-			// tipoBody;
-			// Tipo params = objBody.getValor("parameters");
-			// bodyParams = params instanceof Texto ? params.toString() : null;
-			// }
-			//
-			// return requisicao(url, mapHeader, bodyParams);
+			List<String> lista = new ArrayList<>();
+
+			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
+
+			Tipo tipoComando = objeto.getValor("comando");
+			String comando = tipoComando instanceof Texto ? tipoComando.toString() : null;
+			if (comando == null) {
+				return null;
+			}
+
+			lista.add(comando);
+
+			Tipo tipoArray = objeto.getValor("parametros");
+			if (tipoArray instanceof Array) {
+				Array array = (Array) tipoArray;
+
+				for (Tipo arg : array.getLista()) {
+					lista.add(" " + arg.toString());
+				}
+			}
+
+			ProcessBuilder builder = new ProcessBuilder(lista);
+
+			Tipo variaveis = objeto.getValor("variaveis");
+			if (variaveis instanceof br.com.persist.fmt.Objeto) {
+				br.com.persist.fmt.Objeto objVariaveis = (br.com.persist.fmt.Objeto) variaveis;
+				Map<String, String> mapVariaveis = objVariaveis.getAtributosString();
+
+				Map<String, String> env = builder.environment();
+
+				for (Entry<String, String> entry : mapVariaveis.entrySet()) {
+					env.put(entry.getKey(), entry.getValue());
+				}
+			}
+
+			return builder;
 		}
 
 		return null;
