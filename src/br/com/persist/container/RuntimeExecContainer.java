@@ -386,7 +386,13 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		}
 
 		private Process montarProcess(Tipo objeto) throws IOException {
-			return Runtime.getRuntime().exec("");
+			ProcessBuilder builder = Util.criarProcessBuilder(objeto);
+
+			if (builder != null) {
+				return builder.start();
+			}
+
+			return null;
 		}
 	}
 
