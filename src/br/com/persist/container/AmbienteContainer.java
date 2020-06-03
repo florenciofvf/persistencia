@@ -12,8 +12,10 @@ import br.com.persist.comp.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
@@ -160,12 +162,21 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
 			configBaixarAcao(e -> abrir(null));
+			addButton(copiarAcao);
+
+			copiarAcao.setActionListener(e -> copiar());
+		}
+
+		private void copiar() {
+			String string = Util.getString(textArea.getTextAreaInner());
+			Util.setContentTransfered(string);
 		}
 
 		@Override
