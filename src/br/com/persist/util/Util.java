@@ -572,45 +572,63 @@ public class Util {
 
 	public static ProcessBuilder criarProcessBuilder(Tipo parametros) {
 		if (parametros instanceof br.com.persist.fmt.Objeto) {
-			List<String> lista = new ArrayList<>();
+			List<String> comandos = new ArrayList<>();
 
 			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
 
 			Tipo tipoComando = objeto.getValor("comando");
 			String comando = tipoComando instanceof Texto ? tipoComando.toString() : null;
-			if (comando == null) {
+
+			if (estaVazio(comando)) {
 				return null;
 			}
 
-			lista.add(comando);
+			comandos.add(comando);
 
-			Tipo tipoArray = objeto.getValor("parametros");
-			if (tipoArray instanceof Array) {
-				Array array = (Array) tipoArray;
+			Tipo tipoParametros = objeto.getValor("parametros");
+
+			if (tipoParametros instanceof Array) {
+				Array array = (Array) tipoParametros;
 
 				for (Tipo arg : array.getLista()) {
-					lista.add(" " + arg.toString());
+					comandos.add(" " + arg.toString());
 				}
 			}
 
-			ProcessBuilder builder = new ProcessBuilder(lista);
+			Tipo tipoVariaveis = objeto.getValor("variaveis");
+			Map<String, String> variaveis = null;
 
-			Tipo variaveis = objeto.getValor("variaveis");
-			if (variaveis instanceof br.com.persist.fmt.Objeto) {
-				br.com.persist.fmt.Objeto objVariaveis = (br.com.persist.fmt.Objeto) variaveis;
-				Map<String, String> mapVariaveis = objVariaveis.getAtributosString();
-
-				Map<String, String> env = builder.environment();
-
-				for (Entry<String, String> entry : mapVariaveis.entrySet()) {
-					env.put(entry.getKey(), entry.getValue());
-				}
+			if (tipoVariaveis instanceof br.com.persist.fmt.Objeto) {
+				br.com.persist.fmt.Objeto objVariaveis = (br.com.persist.fmt.Objeto) tipoVariaveis;
+				variaveis = objVariaveis.getAtributosString();
 			}
 
-			return builder;
+			Tipo tipoDiretorio = objeto.getValor("diretorio");
+			String diretorio = tipoDiretorio instanceof Texto ? tipoDiretorio.toString() : null;
+
+			return criarProcessBuilder(comandos, variaveis, diretorio);
 		}
 
 		return null;
+	}
+
+	private static ProcessBuilder criarProcessBuilder(List<String> comandos, Map<String, String> variaveis,
+			String diretorio) {
+		ProcessBuilder builder = new ProcessBuilder(comandos);
+
+		Map<String, String> env = builder.environment();
+
+		if (variaveis != null) {
+			for (Entry<String, String> entry : variaveis.entrySet()) {
+				env.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		if (!estaVazio(diretorio)) {
+			builder.directory(new File(diretorio));
+		}
+
+		return builder;
 	}
 
 	public static String requisicao(Tipo parametros) throws IOException {
