@@ -133,6 +133,31 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			}
 		}
 
+		public void somenteDireito() {
+			JInternalFrame[] frames = getAllFrames();
+
+			if (frames.length > 0) {
+				int l = frames[0].getWidth();
+				int x = frames[0].getX();
+				int xlAux = x + l;
+
+				for (int i = 1; i < frames.length; i++) {
+					JInternalFrame frame = frames[i];
+					int lAux = frame.getWidth();
+					int xAux = frame.getX();
+					int xlAux2 = xAux + lAux;
+					int diff = xlAux - xlAux2;
+					int newL = lAux + diff;
+
+					if (newL <= Constantes.DEZ) {
+						continue;
+					}
+
+					frame.setSize(newL, frame.getHeight());
+				}
+			}
+		}
+
 		public void centralizar() {
 			double largura = getSize().getWidth();
 

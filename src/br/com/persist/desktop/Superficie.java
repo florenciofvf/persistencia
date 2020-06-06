@@ -1392,6 +1392,8 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action alinharSomenteDireitoAcao = Action.actionMenu("label.alinhar_somente_direito",
+				Icones.ALINHA_DIREITO);
 		private Action alinharEsquerdoAcao = Action.actionMenu("label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action alinharDireitoAcao = Action.actionMenu("label.alinhar_direito", Icones.ALINHA_DIREITO);
 		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
@@ -1409,6 +1411,7 @@ public class Superficie extends Desktop {
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 
+		MenuItem itemAlinharSomenteDireito = new MenuItem(alinharSomenteDireitoAcao);
 		MenuItem itemAlinharEsquerdo = new MenuItem(alinharEsquerdoAcao);
 		MenuItem itemAlinharDireito = new MenuItem(alinharDireitoAcao);
 		MenuItem itemAtualizarForms = new MenuItem(atualizarFormAcao);
@@ -1430,6 +1433,7 @@ public class Superficie extends Desktop {
 			add(true, itemAtualizarForms);
 			add(true, itemMesmaLargura);
 			add(itemAlinharDireito);
+			add(itemAlinharSomenteDireito);
 			add(itemAlinharEsquerdo);
 			addMenuItem(true, larTotalAcao);
 			addMenuItem(larTotalDirAcao);
@@ -1449,6 +1453,7 @@ public class Superficie extends Desktop {
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
 			dimensaoAcao4.setActionListener(e -> ajuste.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajuste.ajusteObjetoFormulario(true, false));
+			alinharSomenteDireitoAcao.setActionListener(e -> alinhamento.somenteDireito());
 			alinharEsquerdoAcao.setActionListener(e -> alinhamento.esquerdo());
 			alinharDireitoAcao.setActionListener(e -> alinhamento.direito());
 			dimensaoAcao3.setActionListener(e -> ajuste.ajusteFormulario());
@@ -1478,6 +1483,7 @@ public class Superficie extends Desktop {
 
 		void preShow(boolean contemFrames) {
 			itemColar.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
+			itemAlinharSomenteDireito.setEnabled(contemFrames);
 			itemAlinharEsquerdo.setEnabled(contemFrames);
 			itemAtualizarForms.setEnabled(contemFrames);
 			itemAlinharDireito.setEnabled(contemFrames);
