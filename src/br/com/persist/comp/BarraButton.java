@@ -16,6 +16,8 @@ import br.com.persist.util.Preferencias;
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
+	protected Action copiar1Acao = Action.actionIcon("label.copiar", Icones.COPIA);
+	protected Action copiar2Acao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
 	protected Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
@@ -93,6 +95,24 @@ public class BarraButton extends JToolBar {
 	protected void configBaixarAcao(ActionListener listener) {
 		baixarAcao.setActionListener(listener);
 		addButton(baixarAcao);
+	}
+
+	protected void configCopiar1Acao() {
+		copiar1Acao.setActionListener(e -> copiar1());
+		addButton(copiar1Acao);
+	}
+
+	protected void copiar1() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void configCopiar2Acao() {
+		copiar2Acao.setActionListener(e -> copiar2());
+		addButton(copiar2Acao);
+	}
+
+	protected void copiar2() {
+		throw new UnsupportedOperationException();
 	}
 
 	protected void configButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
