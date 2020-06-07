@@ -110,6 +110,13 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
 			configBaixarAcao(e -> abrir(null));
+			configCopiar1Acao();
+		}
+
+		@Override
+		protected void copiar1() {
+			String string = Util.getString(textArea.getTextAreaInner());
+			Util.setContentTransfered(string);
 		}
 
 		@Override
