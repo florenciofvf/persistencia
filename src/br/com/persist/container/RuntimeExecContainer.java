@@ -151,8 +151,9 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_RUNTIME_EXEC);
 			configBaixarAcao(e -> abrir(null, null));
 			addButton(baixarAtivoAcao);
-
 			addButton(true, atualizarAcao);
+			configCopiar1Acao();
+			configCopiar2Acao();
 
 			eventos();
 		}
@@ -188,6 +189,24 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 				}
 			} catch (IOException ex) {
 				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+			}
+		}
+
+		@Override
+		protected void copiar1() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.copiar1();
+			}
+		}
+
+		@Override
+		protected void copiar2() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.copiar2();
 			}
 		}
 
@@ -319,6 +338,16 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 		public String getNome() {
 			return file.getName();
+		}
+
+		public void copiar1() {
+			String string = Util.getString(areaParametros);
+			Util.setContentTransfered(string);
+		}
+
+		public void copiar2() {
+			String string = Util.getString(areaResultados);
+			Util.setContentTransfered(string);
 		}
 
 		private void abrir() {

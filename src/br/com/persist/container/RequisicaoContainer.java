@@ -163,6 +163,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
 			addButton(true, base64Acao);
+			configCopiar1Acao();
+			configCopiar2Acao();
 
 			eventos();
 		}
@@ -206,6 +208,24 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				}
 			} catch (IOException ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+			}
+		}
+
+		@Override
+		protected void copiar1() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.copiar1();
+			}
+		}
+
+		@Override
+		protected void copiar2() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.copiar2();
 			}
 		}
 
@@ -412,6 +432,16 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 			}
+		}
+
+		public void copiar1() {
+			String string = Util.getString(areaParametros);
+			Util.setContentTransfered(string);
+		}
+
+		public void copiar2() {
+			String string = Util.getString(areaResultados);
+			Util.setContentTransfered(string);
 		}
 
 		public void base64() {
