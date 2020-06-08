@@ -165,21 +165,25 @@ public class Arvore extends Tree {
 		private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
 		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
+		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 		private MenuAbrir menuAbrir = new MenuAbrir();
 
 		public ArvorePopup() {
 			add(menuAbrir);
 			addMenuItem(true, selecionarAcao);
 			addMenuItem(true, fecharAcao);
+			addMenuItem(true, excluirAcao);
 			addMenuItem(true, atualizarAcao);
 
 			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(Arvore.this)));
 			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArvore(Arvore.this)));
+			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Arvore.this)));
 			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(Arvore.this)));
 		}
 
 		private void preShow(Arquivo arquivo) {
 			boolean ehArquivo = arquivo.isFile();
+			excluirAcao.setEnabled(ehArquivo && arquivo.getPai() != null);
 			selecionarAcao.setEnabled(ehArquivo);
 			atualizarAcao.setEnabled(ehArquivo);
 			fecharAcao.setEnabled(ehArquivo);

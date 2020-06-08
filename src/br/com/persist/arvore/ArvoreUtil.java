@@ -1,5 +1,6 @@
 package br.com.persist.arvore;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +70,15 @@ public class ArvoreUtil {
 		arvore.setSelectionPath(path);
 		arvore.scrollPathToVisible(path);
 		SwingUtilities.updateComponentTreeUI(arvore);
+	}
+
+	public static File getRoot(Arvore arvore) {
+		Object root = arvore.getModel().getRoot();
+
+		if (root instanceof Arquivo) {
+			return ((Arquivo) root).getFile();
+		}
+
+		return null;
 	}
 }

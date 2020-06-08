@@ -22,6 +22,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Util;
 
 public class ArvoreContainer extends AbstratoContainer implements ArvoreListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
@@ -203,6 +204,18 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 			if (arquivo.isFile()) {
 				formulario.toFront();
 			}
+		}
+	}
+
+	@Override
+	public void excluirArquivo(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+		File root = ArvoreUtil.getRoot(this.arvore);
+
+		if (arquivo != null && arquivo.getPai() != null && root != null && !root.equals(arquivo.getFile())
+				&& Util.confirmaExclusao(ArvoreContainer.this)) {
+			arquivo.excluir();
+			ArvoreUtil.excluirEstrutura(arvore, arquivo);
 		}
 	}
 
