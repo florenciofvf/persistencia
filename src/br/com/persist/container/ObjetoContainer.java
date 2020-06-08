@@ -97,7 +97,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private static final long serialVersionUID = 1L;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private final AtomicBoolean processado = new AtomicBoolean();
-	private final TextField txtComplemento = new TextField(20);
+	private final TextField txtComplemento = new TextField(33);
 	private final transient ObjetoContainerListener listener;
 	private final transient List<GrupoLinkAuto> listaLink;
 	private static final Logger LOG = Logger.getGlobal();
