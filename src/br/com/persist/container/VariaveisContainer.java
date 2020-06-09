@@ -105,7 +105,6 @@ public class VariaveisContainer extends AbstratoContainer implements IIni, Ficha
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL);
 			configBaixarAcao(null);
-
 			addButton(copiarAcao);
 
 			eventos();

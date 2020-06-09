@@ -185,8 +185,9 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			super.ini(janela, true, false);
 
 			addButton(atualizarAcao);
-			addSeparator();
-			add(cmbConexao);
+			configCopiar1Acao();
+			add(true, cmbConexao);
+
 			eventos();
 		}
 
