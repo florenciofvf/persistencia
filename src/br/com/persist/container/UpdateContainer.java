@@ -174,8 +174,8 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA);
 			configBaixarAcao(e -> abrir());
-
 			addButton(atualizarAcao);
+			configCopiar1Acao();
 			add(true, cmbConexao);
 
 			eventos();
@@ -188,6 +188,12 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			addSeparator();
 			add(cmbConexao);
 			eventos();
+		}
+
+		@Override
+		protected void copiar1() {
+			String string = Util.getString(textArea.getTextAreaInner());
+			Util.setContentTransfered(string);
 		}
 
 		@Override
