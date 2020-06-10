@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.TextArea;
@@ -62,7 +63,8 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 		textArea.limpar();
 
 		if (file.exists()) {
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 
 				while (linha != null) {

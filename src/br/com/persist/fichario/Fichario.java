@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -1488,7 +1489,8 @@ public class Fichario extends JTabbedPane {
 			if (file.exists()) {
 				List<File> files = new ArrayList<>();
 
-				try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				try (BufferedReader br = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 					String linha = br.readLine();
 
 					while (linha != null) {

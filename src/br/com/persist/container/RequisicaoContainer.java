@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -379,7 +380,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			areaParametros.setText(Constantes.VAZIO);
 
 			if (file.exists()) {
-				try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				try (BufferedReader br = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 					StringBuilder sb = new StringBuilder();
 					String linha = br.readLine();
 
