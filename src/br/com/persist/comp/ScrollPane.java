@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 
 public class ScrollPane extends JScrollPane {
 	private static final long serialVersionUID = 1L;
-	private static final int LARGURA = 9;
+	private static final int LARGURA = 12;
 
 	public ScrollPane(Component view) {
 		super(view);
