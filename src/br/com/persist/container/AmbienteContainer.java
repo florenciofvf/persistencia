@@ -188,7 +188,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 				return;
 			}
 
-			try (PrintWriter pw = new PrintWriter(file)) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_AMBIENTE, ex, AmbienteContainer.this);

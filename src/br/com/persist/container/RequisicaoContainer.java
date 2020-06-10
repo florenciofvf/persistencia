@@ -406,7 +406,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				return;
 			}
 
-			try (PrintWriter pw = new PrintWriter(file)) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(areaParametros.getText());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);

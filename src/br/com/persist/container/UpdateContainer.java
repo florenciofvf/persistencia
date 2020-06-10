@@ -210,7 +210,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 				return;
 			}
 
-			try (PrintWriter pw = new PrintWriter(file)) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_UPDATE, ex, UpdateContainer.this);

@@ -6,6 +6,7 @@ import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -118,7 +119,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 
 		@Override
 		public void salvar() {
-			try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo)) {
+			try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo, StandardCharsets.UTF_8.name())) {
 				Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
 
 				for (Entry<String, Arquivo> entry : entrySet) {

@@ -2,6 +2,7 @@ package br.com.persist.xml;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import br.com.persist.exception.XMLException;
 import br.com.persist.util.Constantes;
@@ -12,14 +13,15 @@ public class XMLUtil {
 
 	public XMLUtil(File file) throws XMLException {
 		try {
-			pw = new PrintWriter(file, Constantes.ENCODING);
+			pw = new PrintWriter(file, StandardCharsets.UTF_8.name());
 		} catch (Exception e) {
 			throw new XMLException(e);
 		}
 	}
 
 	public XMLUtil prologo() {
-		return print("<?xml").atributo("version", 1.0).atributo("encoding", Constantes.ENCODING).print("?>").ql().ql();
+		return print("<?xml").atributo("version", 1.0).atributo("encoding", StandardCharsets.UTF_8.name()).print("?>")
+				.ql().ql();
 	}
 
 	public XMLUtil atributo(String nome, boolean valor) {

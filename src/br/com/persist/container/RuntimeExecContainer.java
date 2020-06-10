@@ -381,7 +381,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 				return;
 			}
 
-			try (PrintWriter pw = new PrintWriter(file)) {
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(areaParametros.getText());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);

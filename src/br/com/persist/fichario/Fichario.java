@@ -1458,7 +1458,7 @@ public class Fichario extends JTabbedPane {
 
 	public class SalvarAberto {
 		public void salvar() {
-			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO)) {
+			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
 				int total = getTabCount();
 
 				for (int i = 0; i < total; i++) {
