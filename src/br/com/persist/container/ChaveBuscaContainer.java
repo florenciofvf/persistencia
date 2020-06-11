@@ -177,6 +177,7 @@ public class ChaveBuscaContainer extends Panel {
 			super.ini(janela, false, false);
 
 			addButton(sucessoAcao);
+			configCopiar1Acao();
 
 			sucessoAcao.setActionListener(e -> {
 				try {
@@ -205,6 +206,12 @@ public class ChaveBuscaContainer extends Panel {
 					Util.stackTraceAndMessage("CONFIG OBJETO", ex, ChaveBuscaContainer.this);
 				}
 			});
+		}
+
+		@Override
+		protected void copiar1() {
+			String string = Util.getString(textArea.getTextAreaInner());
+			Util.setContentTransfered(string);
 		}
 	}
 }
