@@ -174,7 +174,7 @@ public class ChaveBuscaContainer extends Panel {
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false, false);
+			super.ini(janela, true, false);
 
 			addButton(sucessoAcao);
 			configCopiar1Acao();
@@ -212,6 +212,11 @@ public class ChaveBuscaContainer extends Panel {
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
 		}
 	}
 }
