@@ -151,6 +151,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
+		private CheckBox chkCopiarAcessT = new CheckBox();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true, true);
@@ -161,11 +162,15 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			addButton(baixarAtivoAcao);
 
 			add(chkRespostaJson);
+			add(chkCopiarAcessT);
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
 			addButton(true, base64Acao);
 			configCopiar1Acao();
 			configCopiar2Acao();
+
+			String hint = Mensagens.getString("label.copiar_acess_token", Mensagens.getString("label.resposta_json"));
+			chkCopiarAcessT.setToolTipText(hint);
 
 			eventos();
 		}
@@ -174,6 +179,10 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
 			chkRespostaJson.addActionListener(
 					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
+
+			chkCopiarAcessT.setSelected(Preferencias.getBoolean("copiar_acess_token"));
+			chkCopiarAcessT.addActionListener(
+					e -> Preferencias.setBoolean("copiar_acess_token", chkCopiarAcessT.isSelected()));
 
 			baixarAtivoAcao.setActionListener(e -> abrirAtivo());
 
@@ -481,6 +490,14 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 					if (styledDoc instanceof AbstractDocument) {
 						AbstractDocument doc = (AbstractDocument) styledDoc;
 						json.toString(doc, false, 0);
+					}
+
+					if (toolbar.chkCopiarAcessT.isSelected()) {
+						String acessToken = Util.getAcessToken(json);
+
+						if (!Util.estaVazio(acessToken)) {
+							Util.setContentTransfered(acessToken);
+						}
 					}
 				} else {
 					areaResultados.setText(resposta);

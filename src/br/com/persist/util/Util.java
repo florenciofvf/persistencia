@@ -661,6 +661,17 @@ public class Util {
 		return null;
 	}
 
+	public static String getAcessToken(Tipo tipo) {
+		if (tipo instanceof br.com.persist.fmt.Objeto) {
+			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) tipo;
+
+			Tipo tipoAcessToken = objeto.getValor("acess_token");
+			return tipoAcessToken instanceof Texto ? tipoAcessToken.toString() : null;
+		}
+
+		return null;
+	}
+
 	public static String requisicao(String url, Map<String, String> header, String parametros) throws IOException {
 		if (estaVazio(url)) {
 			return null;
