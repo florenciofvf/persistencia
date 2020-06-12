@@ -661,12 +661,12 @@ public class Util {
 		return null;
 	}
 
-	public static String getAcessToken(Tipo tipo) {
+	public static String getAccessToken(Tipo tipo) {
 		if (tipo instanceof br.com.persist.fmt.Objeto) {
 			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) tipo;
 
-			Tipo tipoAcessToken = objeto.getValor("acess_token");
-			return tipoAcessToken instanceof Texto ? tipoAcessToken.toString() : null;
+			Tipo tipoAccessToken = objeto.getValor("access_token");
+			return tipoAccessToken instanceof Texto ? tipoAccessToken.toString() : null;
 		}
 
 		return null;
