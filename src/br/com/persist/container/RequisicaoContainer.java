@@ -26,9 +26,11 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.formulario.RequisicaoFormulario;
+import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Base64Util;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Icones;
@@ -480,6 +482,13 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 			try {
 				Parser parser = new Parser();
+
+				ChaveValor cvAccessToken = VariaveisModelo.get(Constantes.VAR_ACCESS_TOKEN);
+
+				if (cvAccessToken != null) {
+					string = Util.substituir(string, cvAccessToken);
+				}
+
 				Tipo parametros = parser.parse(string);
 				String resposta = Util.requisicao(parametros);
 
@@ -492,18 +501,30 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 						json.toString(doc, false, 0);
 					}
 
-					if (toolbar.chkCopiarAccessT.isSelected()) {
-						String accessToken = Util.getAccessToken(json);
-
-						if (!Util.estaVazio(accessToken)) {
-							Util.setContentTransfered(accessToken);
-						}
-					}
+					String accessToken = Util.getAccessToken(json);
+					setAccesToken(accessToken);
 				} else {
 					areaResultados.setText(resposta);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+			}
+		}
+
+		private void setAccesToken(String accessToken) {
+			if (!Util.estaVazio(accessToken)) {
+				ChaveValor cvAccessToken = VariaveisModelo.get(Constantes.VAR_ACCESS_TOKEN);
+
+				if (cvAccessToken == null) {
+					cvAccessToken = new ChaveValor(Constantes.VAR_ACCESS_TOKEN, accessToken);
+					VariaveisModelo.adicionar(cvAccessToken);
+				} else {
+					cvAccessToken.setValor(accessToken);
+				}
+
+				if (toolbar.chkCopiarAccessT.isSelected()) {
+					Util.setContentTransfered(accessToken);
+				}
 			}
 		}
 	}

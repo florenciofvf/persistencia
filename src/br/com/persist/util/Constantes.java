@@ -50,6 +50,7 @@ public class Constantes {
 	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String LABEL_REQUISICAO = "label.requisicao";
 	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";
+	public static final String VAR_ACCESS_TOKEN = "VAR_ACCESS_TOKEN";
 	public static final String LABEL_METADADOS = "label.meta_dados";
 	public static final String LABEL_AMBIENTES = "label.ambientes";
 	public static final String LABEL_VARIAVEIS = "label.variaveis";

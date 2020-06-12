@@ -454,6 +454,18 @@ public class Util {
 		return instrucao;
 	}
 
+	public static String substituir(String instrucao, ChaveValor cv) {
+		if (instrucao == null) {
+			instrucao = Constantes.VAZIO;
+		}
+
+		if (cv != null && cv.getChave() != null) {
+			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
+		}
+
+		return instrucao;
+	}
+
 	public static JFileChooser criarFileChooser(File arquivo, boolean multiSelection) {
 		JFileChooser fileChooser = new JFileChooser(".");
 		fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
