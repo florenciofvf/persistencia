@@ -35,6 +35,11 @@ public class TextArea extends JScrollPane {
 		textAreaInner.setText(string);
 	}
 
+	@Override
+	public void requestFocus() {
+		textAreaInner.requestFocus();
+	}
+
 	public boolean estaVazio() {
 		return Util.estaVazio(getText());
 	}

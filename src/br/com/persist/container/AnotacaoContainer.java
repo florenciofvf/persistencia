@@ -119,6 +119,7 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+			textArea.requestFocus();
 		}
 
 		@Override
