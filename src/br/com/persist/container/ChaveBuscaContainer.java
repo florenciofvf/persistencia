@@ -212,6 +212,7 @@ public class ChaveBuscaContainer extends Panel {
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+			textArea.requestFocus();
 		}
 
 		@Override

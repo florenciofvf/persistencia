@@ -197,6 +197,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+			textArea.requestFocus();
 		}
 
 		@Override

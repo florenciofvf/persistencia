@@ -450,6 +450,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		public void copiar1() {
 			String string = Util.getString(areaParametros);
 			Util.setContentTransfered(string);
+			areaParametros.requestFocus();
 		}
 
 		public void copiar2() {

@@ -344,6 +344,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		public void copiar1() {
 			String string = Util.getString(areaParametros);
 			Util.setContentTransfered(string);
+			areaParametros.requestFocus();
 		}
 
 		public void copiar2() {

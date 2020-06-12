@@ -64,6 +64,7 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+			textArea.requestFocus();
 		}
 
 		@Override
