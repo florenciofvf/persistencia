@@ -442,6 +442,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 					AbstractDocument doc = (AbstractDocument) styledDoc;
 					json.toString(doc, false, 0);
 				}
+				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 			}
@@ -456,6 +457,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		public void copiar2() {
 			String string = Util.getString(areaResultados);
 			Util.setContentTransfered(string);
+			areaResultados.requestFocus();
 		}
 
 		public void base64() {
@@ -468,6 +470,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 			try {
 				areaResultados.setText(Base64Util.criarBase64(string));
+				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 			}
@@ -507,6 +510,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				} else {
 					areaResultados.setText(resposta);
 				}
+				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 			}

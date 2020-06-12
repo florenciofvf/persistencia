@@ -263,6 +263,7 @@ public class ConsultaContainer extends AbstratoContainer
 					new Objeto(), conexao);
 			tabela.setModel(modeloRegistro);
 			TabelaUtil.ajustar(tabela, getGraphics());
+			textArea.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(PAINEL_SELECT, ex, this);
 		}

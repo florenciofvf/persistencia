@@ -240,6 +240,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			Connection conn = Conexao.getConnection(conexao);
 			int atualizados = Persistencia.executar(instrucao, conn);
 			labelStatus.setText("ATUALIZADOS [" + atualizados + "]");
+			textArea.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(PAINEL_UPDATE, ex, this);
 		}

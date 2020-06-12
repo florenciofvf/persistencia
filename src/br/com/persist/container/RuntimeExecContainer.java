@@ -350,6 +350,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		public void copiar2() {
 			String string = Util.getString(areaResultados);
 			Util.setContentTransfered(string);
+			areaResultados.requestFocus();
 		}
 
 		private void abrir() {
@@ -412,6 +413,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 				int exit = process.waitFor();
 				String conteudo = areaResultados.getText();
 				areaResultados.setText(conteudo + Constantes.QL2 + "EXIT=" + exit);
+				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, this);
 			}
