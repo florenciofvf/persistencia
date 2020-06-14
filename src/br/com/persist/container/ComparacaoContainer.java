@@ -99,7 +99,17 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 		}
 
 		private void selecionar(TextField txt) {
-			File file = getSelectedFile();
+			File parent = null;
+
+			if (!Util.estaVazio(txt.getText())) {
+				File f = new File(txt.getText());
+
+				if (f.exists()) {
+					parent = f.getParentFile();
+				}
+			}
+
+			File file = getSelectedFile(parent);
 
 			if (file == null) {
 				return;
@@ -108,8 +118,8 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 			txt.setText(file.getAbsolutePath());
 		}
 
-		private File getSelectedFile() {
-			JFileChooser fileChooser = Util.criarFileChooser(null, false);
+		private File getSelectedFile(File parent) {
+			JFileChooser fileChooser = Util.criarFileChooser(parent, false);
 			int opcao = fileChooser.showOpenDialog(ComparacaoContainer.this);
 
 			if (opcao == JFileChooser.APPROVE_OPTION) {
