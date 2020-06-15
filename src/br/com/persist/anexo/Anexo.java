@@ -194,7 +194,7 @@ public class Anexo extends Tree {
 			excluirAcao.setEnabled(arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile()));
 			chkAbrirVisivel.setSelected(arquivo.isAbrirVisivel());
 			chkPadraoAbrir.setSelected(arquivo.isPadraoAbrir());
-			chkAbrirVisivel.setEnabled(arquivo.isFile());
+			chkAbrirVisivel.setEnabled(arquivo.isDirectory());
 			chkPadraoAbrir.setEnabled(arquivo.isFile());
 		}
 
