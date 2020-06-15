@@ -23,6 +23,7 @@ public class Arquivo {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<Arquivo> arquivos;
 	private boolean arquivoAberto;
+	private boolean abrirVisivel;
 	private boolean padraoAbrir;
 	private boolean processado;
 	private String nomeIcone;
@@ -194,11 +195,20 @@ public class Arquivo {
 		this.padraoAbrir = padraoAbrir;
 	}
 
+	public boolean isAbrirVisivel() {
+		return abrirVisivel;
+	}
+
+	public void setAbrirVisivel(boolean abrirVisivel) {
+		this.abrirVisivel = abrirVisivel;
+	}
+
 	private void config(StringBuilder sb) {
 		Arquivo arq = AnexoModelo.getArquivos().get(criarChave(sb).toString());
 
 		if (arq != null) {
 			setIcone(arq.getIcone(), arq.getNomeIcone());
+			setAbrirVisivel(arq.isAbrirVisivel());
 			setPadraoAbrir(arq.isPadraoAbrir());
 			setCorFonte(arq.getCorFonte());
 			arq.setChecado(true);

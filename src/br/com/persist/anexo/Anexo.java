@@ -165,6 +165,7 @@ public class Anexo extends Tree {
 
 	private class AnexoPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private ItemCheckBox chkAbrirVisivel = new ItemCheckBox("label.abrir_visivel", Icones.HIERARQUIA);
 		private ItemCheckBox chkPadraoAbrir = new ItemCheckBox("label.padrao_abrir", Icones.EXECUTAR);
 		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
@@ -174,6 +175,7 @@ public class Anexo extends Tree {
 		public AnexoPopup() {
 			add(new MenuAbrir());
 			add(true, chkPadraoAbrir);
+			add(chkAbrirVisivel);
 			addMenuItem(true, renomearAcao);
 			addMenuItem(true, excluirAcao);
 			addMenuItem(true, corFonteAcao);
@@ -183,6 +185,7 @@ public class Anexo extends Tree {
 			corFonteAcao.setActionListener(e -> ouvintes.forEach(o -> o.corFonteArquivo(Anexo.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));
 			iconeAcao.setActionListener(e -> ouvintes.forEach(o -> o.iconeArquivo(Anexo.this)));
+			chkAbrirVisivel.addActionListener(e -> abrirVisivel(chkAbrirVisivel.isSelected()));
 			chkPadraoAbrir.addActionListener(e -> padraoAbrir(chkPadraoAbrir.isSelected()));
 		}
 
@@ -190,6 +193,7 @@ public class Anexo extends Tree {
 			renomearAcao.setEnabled(arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile()));
 			excluirAcao.setEnabled(arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile()));
 			chkPadraoAbrir.setSelected(arquivo.isPadraoAbrir());
+			chkAbrirVisivel.setEnabled(arquivo.isFile());
 			chkPadraoAbrir.setEnabled(arquivo.isFile());
 		}
 
@@ -198,6 +202,15 @@ public class Anexo extends Tree {
 
 			if (arquivo != null) {
 				arquivo.setPadraoAbrir(b);
+				AnexoModelo.putArquivo(arquivo);
+			}
+		}
+
+		private void abrirVisivel(boolean b) {
+			Arquivo arquivo = getObjetoSelecionado();
+
+			if (arquivo != null) {
+				arquivo.setAbrirVisivel(b);
 				AnexoModelo.putArquivo(arquivo);
 			}
 		}
