@@ -70,6 +70,7 @@ public class Constantes {
 	public static final String LABEL_CIRCULAR = "label.circular";
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
 	public static final boolean ABRIR_AUTO_FICHARIO_SET = false;
+	public static final String ABRIR_VISIVEL = "ABRIR_VISIVEL:";
 	public static final String FVF_SEPARADOR = "fvf_separador";
 	public static final String LABEL_ARQUIVO = "label.arquivo";
 	public static final String LABEL_ATENCAO = "label.atencao";

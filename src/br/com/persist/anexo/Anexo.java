@@ -192,6 +192,7 @@ public class Anexo extends Tree {
 		private void preShow(Arquivo arquivo) {
 			renomearAcao.setEnabled(arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile()));
 			excluirAcao.setEnabled(arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile()));
+			chkAbrirVisivel.setSelected(arquivo.isAbrirVisivel());
 			chkPadraoAbrir.setSelected(arquivo.isPadraoAbrir());
 			chkAbrirVisivel.setEnabled(arquivo.isFile());
 			chkPadraoAbrir.setEnabled(arquivo.isFile());

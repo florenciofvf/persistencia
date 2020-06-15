@@ -125,6 +125,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 				for (Entry<String, Arquivo> entry : entrySet) {
 					Arquivo arquivo = entry.getValue();
 					pw.println(entry.getKey());
+					pw.println(Constantes.ABRIR_VISIVEL + arquivo.isAbrirVisivel());
 					pw.println(Constantes.PADRAO_ABRIR + arquivo.isPadraoAbrir());
 
 					if (!Util.estaVazio(arquivo.getNomeIcone())) {
@@ -288,5 +289,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 		if (removido) {
 			toolbar.getSalvarAcao().actionPerformed(null);
 		}
+
+		anexo.abrirVisivel();
 	}
 }
