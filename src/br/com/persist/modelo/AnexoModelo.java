@@ -21,6 +21,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.Arquivo;
+import br.com.persist.anexo.Anexo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 
@@ -43,6 +44,10 @@ public class AnexoModelo implements TreeModel {
 		raiz.inflar(anexos, new StringBuilder());
 	}
 
+	public void abrirVisivel(Anexo anexo) {
+		raiz.abrirVisivel(anexo);
+	}
+
 	private void inicializar(boolean anexos) {
 		if (!anexos) {
 			return;
@@ -61,18 +66,8 @@ public class AnexoModelo implements TreeModel {
 						sel = new Arquivo(new File(linha));
 						arquivos.put(linha, sel);
 
-					} else if (sel != null && linha.startsWith(Constantes.ICONE)) {
-						String nome = linha.substring(Constantes.ICONE.length());
-						Icon icone = Imagens.getIcon(nome);
-						sel.setIcone(icone, nome);
-
-					} else if (sel != null && linha.startsWith(Constantes.PADRAO_ABRIR)) {
-						String padraoAbrir = linha.substring(Constantes.PADRAO_ABRIR.length());
-						sel.setPadraoAbrir(Boolean.parseBoolean(padraoAbrir));
-
-					} else if (sel != null && linha.startsWith(Constantes.COR_FONTE)) {
-						String cor = linha.substring(Constantes.COR_FONTE.length());
-						sel.setCorFonte(new Color(Integer.parseInt(cor)));
+					} else {
+						configurar(sel, linha);
 					}
 
 					linha = br.readLine();
@@ -80,6 +75,30 @@ public class AnexoModelo implements TreeModel {
 			} catch (Exception e) {
 				LOG.log(Level.FINEST, "AnexoModelo.inicializar");
 			}
+		}
+	}
+
+	private void configurar(Arquivo sel, String linha) {
+		if (sel == null || linha == null) {
+			return;
+		}
+
+		if (linha.startsWith(Constantes.ICONE)) {
+			String nome = linha.substring(Constantes.ICONE.length());
+			Icon icone = Imagens.getIcon(nome);
+			sel.setIcone(icone, nome);
+
+		} else if (linha.startsWith(Constantes.ABRIR_VISIVEL)) {
+			String abrirVisivel = linha.substring(Constantes.ABRIR_VISIVEL.length());
+			sel.setAbrirVisivel(Boolean.parseBoolean(abrirVisivel));
+
+		} else if (linha.startsWith(Constantes.PADRAO_ABRIR)) {
+			String padraoAbrir = linha.substring(Constantes.PADRAO_ABRIR.length());
+			sel.setPadraoAbrir(Boolean.parseBoolean(padraoAbrir));
+
+		} else if (linha.startsWith(Constantes.COR_FONTE)) {
+			String cor = linha.substring(Constantes.COR_FONTE.length());
+			sel.setCorFonte(new Color(Integer.parseInt(cor)));
 		}
 	}
 

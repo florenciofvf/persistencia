@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import br.com.persist.anexo.Anexo;
+import br.com.persist.anexo.AnexoUtil;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.Constantes;
 
@@ -48,6 +50,16 @@ public class Arquivo {
 
 		for (Arquivo a : arquivos) {
 			a.inflar(anexos, sb);
+		}
+	}
+
+	public void abrirVisivel(Anexo anexo) {
+		if (abrirVisivel) {
+			AnexoUtil.selecionarObjeto(anexo, this);
+		}
+
+		for (Arquivo a : arquivos) {
+			a.abrirVisivel(anexo);
 		}
 	}
 

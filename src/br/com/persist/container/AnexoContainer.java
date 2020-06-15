@@ -290,6 +290,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 			toolbar.getSalvarAcao().actionPerformed(null);
 		}
 
-		anexo.abrirVisivel();
+		modelo.abrirVisivel(anexo);
 	}
 }
