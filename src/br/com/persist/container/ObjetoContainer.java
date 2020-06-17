@@ -1583,6 +1583,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 
 		txtComplemento.setText("AND " + campo + " IN (" + argumentos + ")");
+		destacarTitulo = true;
 		tamanhoAutomatico = true;
 		ObjetoContainer.this.actionPerformed(null);
 		tamanhoAutomatico = false;
