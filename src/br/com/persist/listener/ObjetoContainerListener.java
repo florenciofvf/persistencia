@@ -17,5 +17,7 @@ public interface ObjetoContainerListener {
 
 	public void setTitulo(String titulo);
 
+	public void selecionar(boolean b);
+
 	public Dimension getDimensoes();
 }

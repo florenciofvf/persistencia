@@ -1280,6 +1280,11 @@ public class Fichario extends JTabbedPane {
 			}
 
 			@Override
+			public void selecionar(boolean b) {
+				LOG.log(Level.FINEST, "{0}", b);
+			}
+
+			@Override
 			public Dimension getDimensoes() {
 				return Fichario.this.getSize();
 			}

@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
@@ -17,6 +19,7 @@ import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.util.IJanela;
 
 public class ObjetoContainerFormulario extends AbstratoFormulario implements IJanela, ObjetoContainerListener {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
 
@@ -73,5 +76,10 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	@Override
 	public void setTitulo(String titulo) {
 		setTitle(titulo);
+	}
+
+	@Override
+	public void selecionar(boolean b) {
+		LOG.log(Level.FINEST, "{0}", b);
 	}
 }

@@ -1738,8 +1738,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			destacarTitulo = false;
 		}
 
-		private String esq = "<<<<<<<<<<";
-		private String dir = ">>>>>>>>>>";
+		private String esq = "<<<<<<";
+		private String dir = ">>>>>>";
 		private int indice = esq.length() - 1;
 
 		private void destacarTitulo(String titulo) {
@@ -1749,6 +1749,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			if (listener != null) {
 				listener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
+				listener.selecionar(indice % 2 == 0);
 			}
 
 			indice--;

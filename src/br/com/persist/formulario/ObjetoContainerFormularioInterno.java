@@ -6,6 +6,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -30,6 +33,7 @@ import br.com.persist.util.IJanela;
 
 public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		implements IJanela, ObjetoContainerListener, IIni {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
 	private Desktop desktop;
@@ -199,6 +203,15 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	@Override
 	public void setTitulo(String titulo) {
 		setTitle(titulo);
+	}
+
+	@Override
+	public void selecionar(boolean b) {
+		try {
+			setSelected(b);
+		} catch (PropertyVetoException e) {
+			LOG.log(Level.FINEST, "{0}", b);
+		}
 	}
 
 	public boolean ehTabela(TabelaBuscaAuto tabela) {
