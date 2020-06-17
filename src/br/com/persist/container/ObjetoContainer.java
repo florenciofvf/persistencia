@@ -110,6 +110,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private boolean tamanhoAutomatico;
 	private final boolean buscaAuto;
 	private transient Thread thread;
+	private boolean destacarTitulo;
 	private Component suporte;
 	private int contadorAuto;
 
@@ -1440,11 +1441,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(),
 					objeto.getChavesArray(), objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
-			listener.setTitulo(objeto.getTitle(modeloOrdenacao));
+			String titulo = objeto.getTitle(modeloOrdenacao);
 			objeto.setComplemento(txtComplemento.getText());
 			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
+			listener.setTitulo(titulo);
 			cabecalhoFiltro = null;
+			threadTitulo(titulo);
 
 			TableColumnModel columnModel = tabela.getColumnModel();
 			List<Coluna> colunas = modeloRegistro.getColunas();
@@ -1700,7 +1703,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	}
 
 	private void threadTitulo(String titulo) {
-		if (listener == null) {
+		if (listener == null || !destacarTitulo) {
 			return;
 		}
 
@@ -1717,11 +1720,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		@Override
 		public void run() {
-			while (contador < 50 && !Thread.currentThread().isInterrupted()) {
+			while (destacarTitulo && contador < 50 && !Thread.currentThread().isInterrupted()) {
 				try {
 					destacarTitulo(original);
-					contador++;
 					Thread.sleep(500);
+					contador++;
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 				}
@@ -1730,6 +1733,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			if (listener != null) {
 				listener.setTitulo(original);
 			}
+
+			destacarTitulo = false;
 		}
 
 		private byte indiceDestaque;
