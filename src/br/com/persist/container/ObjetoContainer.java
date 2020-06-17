@@ -1721,7 +1721,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		@Override
 		public void run() {
-			while (destacarTitulo && contador < Constantes.VINTE && !Thread.currentThread().isInterrupted()) {
+			while (destacarTitulo && contador < Constantes.DEZ && !Thread.currentThread().isInterrupted()) {
 				try {
 					destacarTitulo(original);
 					Thread.sleep(300);
