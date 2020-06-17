@@ -1698,4 +1698,54 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			cmbConexao.setSelectedItem(conexao);
 		}
 	}
+
+	private void threadTitulo(String titulo) {
+		if (listener == null) {
+			return;
+		}
+
+		new Thread(new DestaqueTitulo(titulo)).start();
+	}
+
+	private class DestaqueTitulo implements Runnable {
+		private final String original;
+		private int contador;
+
+		public DestaqueTitulo(String original) {
+			this.original = original;
+		}
+
+		@Override
+		public void run() {
+			while (contador < 50 && !Thread.currentThread().isInterrupted()) {
+				try {
+					destacarTitulo(original);
+					contador++;
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+				}
+			}
+
+			if (listener != null) {
+				listener.setTitulo(original);
+			}
+		}
+
+		private byte indiceDestaque;
+		private String esq = "<<<<<";
+		private String dir = ">>>>>";
+
+		private void destacarTitulo(String titulo) {
+			if (indiceDestaque >= esq.length()) {
+				indiceDestaque = 0;
+			}
+
+			if (listener != null) {
+				listener.setTitulo(esq.charAt(indiceDestaque) + titulo + dir.charAt(indiceDestaque));
+			}
+
+			indiceDestaque++;
+		}
+	}
 }
