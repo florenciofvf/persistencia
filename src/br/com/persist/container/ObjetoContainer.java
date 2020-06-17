@@ -1738,20 +1738,20 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			destacarTitulo = false;
 		}
 
-		private byte indice;
-		private String esq = "#####";
-		private String dir = "#####";
+		private String esq = "<<<<<<<<<<";
+		private String dir = ">>>>>>>>>>";
+		private int indice = esq.length() - 1;
 
 		private void destacarTitulo(String titulo) {
-			if (indice >= esq.length()) {
-				indice = 0;
+			if (indice < 0) {
+				indice = esq.length() - 1;
 			}
 
 			if (listener != null) {
 				listener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
 			}
 
-			indice++;
+			indice--;
 		}
 	}
 }
