@@ -1721,10 +1721,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		@Override
 		public void run() {
-			while (destacarTitulo && contador < 50 && !Thread.currentThread().isInterrupted()) {
+			while (destacarTitulo && contador < Constantes.VINTE && !Thread.currentThread().isInterrupted()) {
 				try {
 					destacarTitulo(original);
-					Thread.sleep(500);
+					Thread.sleep(300);
 					contador++;
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
@@ -1738,20 +1738,20 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			destacarTitulo = false;
 		}
 
-		private byte indiceDestaque;
-		private String esq = "<<<<<";
-		private String dir = ">>>>>";
+		private byte indice;
+		private String esq = "#####";
+		private String dir = "#####";
 
 		private void destacarTitulo(String titulo) {
-			if (indiceDestaque >= esq.length()) {
-				indiceDestaque = 0;
+			if (indice >= esq.length()) {
+				indice = 0;
 			}
 
 			if (listener != null) {
-				listener.setTitulo(esq.charAt(indiceDestaque) + titulo + dir.charAt(indiceDestaque));
+				listener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
 			}
 
-			indiceDestaque++;
+			indice++;
 		}
 	}
 }
