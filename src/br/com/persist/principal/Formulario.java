@@ -280,6 +280,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private final MenuRequisicao itemRequisicao = new MenuRequisicao();
 		private final Menu menuLAF = new Menu(Constantes.LABEL_APARENCIA);
 		private final Menu menuBanco = new Menu(Constantes.LABEL_BANCO);
+		private final Action fecharConnAcao = Action.actionMenuFechar();
 		private final MenuFragmento itemFragmento = new MenuFragmento();
 		private final MenuVariaveis itemVariavel = new MenuVariaveis();
 		private final MenuAnotacao itemAnotacao = new MenuAnotacao();
@@ -302,7 +303,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			menuArquivo.add(true, new MenuAbrir());
 			menuArquivo.add(true, itemAnexo);
 			menuArquivo.add(true, itemArquivo);
-			menuArquivo.add(true, new MenuItem(fecharAcao));
+			menuArquivo.add(true, new MenuItem(fecharConnAcao));
+			menuArquivo.add(new MenuItem(fecharAcao));
 			add(menuArquivo);
 
 			menuBanco.add(itemConexao);
@@ -352,14 +354,19 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		private void eventos() {
+			fecharConnAcao.rotulo("label.fechar_com_conexao");
 			novoAcao.setActionListener(e -> fichario.getConteiner().novo(Formulario.this));
 
-			fecharAcao.setActionListener(e -> {
-				if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
-					FormularioUtil.fechar(Formulario.this);
-					System.exit(0);
-				}
-			});
+			fecharConnAcao.setActionListener(e -> fecharFormulario(true));
+			fecharAcao.setActionListener(e -> fecharFormulario(false));
+		}
+
+		private void fecharFormulario(boolean fecharConexao) {
+			if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
+				Preferencias.setFecharConexao(fecharConexao);
+				FormularioUtil.fechar(Formulario.this);
+				System.exit(0);
+			}
 		}
 
 		private List<MenuAmbiente> listaMenuAmbiente() {

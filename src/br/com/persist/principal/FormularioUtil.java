@@ -9,6 +9,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.comp.Menu;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.NimbusLookAndFeel2;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class FormularioUtil {
@@ -47,7 +48,10 @@ public class FormularioUtil {
 	public static void fechar(Formulario formulario) {
 		try {
 			formulario.getFichario().getSalvarAberto().salvar();
-			Conexao.fecharConexoes();
+
+			if (Preferencias.isFecharConexao()) {
+				Conexao.fecharConexoes();
+			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(formulario.getClass().getName() + ".fechar()", ex, formulario);
 		}

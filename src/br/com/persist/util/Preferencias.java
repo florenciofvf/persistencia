@@ -19,6 +19,7 @@ public class Preferencias {
 	private static int intervaloComparacao;
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
+	private static boolean fecharConexao;
 	private static boolean nomearArrasto;
 	private static boolean tituloAbaMin;
 	private static Color corTotalAtual;
@@ -263,5 +264,13 @@ public class Preferencias {
 
 	public static void setTituloAbaMin(boolean tituloAbaMin) {
 		Preferencias.tituloAbaMin = tituloAbaMin;
+	}
+
+	public static boolean isFecharConexao() {
+		return fecharConexao;
+	}
+
+	public static void setFecharConexao(boolean fecharConexao) {
+		Preferencias.fecharConexao = fecharConexao;
 	}
 }
