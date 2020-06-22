@@ -82,7 +82,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 	@Override
 	public void selecionarConexao(Conexao conexao) {
 		if (conexao != null) {
-			cmbConexao.setSelectedItem(conexao);
+			superficie.selecionarConexao(conexao);
 		}
 	}
 
