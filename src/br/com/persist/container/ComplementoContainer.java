@@ -35,14 +35,27 @@ public class ComplementoContainer extends Panel {
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 
 		public void ini(IJanela janela) {
-			super.ini(janela, false, false);
+			super.ini(janela, true, false);
 
 			addButton(sucessoAcao);
+			configCopiar1Acao();
 
 			sucessoAcao.setActionListener(e -> {
 				txtComplemento.setText(Util.normalizar(textArea.getText(), true));
 				fechar();
 			});
+		}
+
+		@Override
+		protected void copiar1() {
+			String string = Util.getString(textArea.getTextAreaInner());
+			Util.setContentTransfered(string);
+			textArea.requestFocus();
+		}
+
+		@Override
+		protected void limpar() {
+			textArea.limpar();
 		}
 	}
 }
