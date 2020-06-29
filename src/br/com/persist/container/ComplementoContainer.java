@@ -38,7 +38,7 @@ public class ComplementoContainer extends Panel {
 			super.ini(janela, true, false);
 
 			addButton(sucessoAcao);
-			configCopiar1Acao();
+			configCopiar1Acao(true);
 
 			sucessoAcao.setActionListener(e -> {
 				txtComplemento.setText(Util.normalizar(textArea.getText(), true));
@@ -51,6 +51,11 @@ public class ComplementoContainer extends Panel {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
 			textArea.requestFocus();
+		}
+
+		@Override
+		protected void colar1() {
+			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
 		@Override

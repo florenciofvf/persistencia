@@ -177,7 +177,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA);
 			configBaixarAcao(e -> abrir());
 			addButton(atualizarAcao);
-			configCopiar1Acao();
+			configCopiar1Acao(true);
 			add(true, cmbConexao);
 
 			eventos();
@@ -187,7 +187,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			super.ini(janela, true, false);
 
 			addButton(atualizarAcao);
-			configCopiar1Acao();
+			configCopiar1Acao(true);
 			add(true, cmbConexao);
 
 			eventos();
@@ -198,6 +198,11 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
 			textArea.requestFocus();
+		}
+
+		@Override
+		protected void colar1() {
+			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
 		@Override

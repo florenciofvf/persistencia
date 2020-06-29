@@ -153,8 +153,8 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			configBaixarAcao(e -> abrir(null, null));
 			addButton(baixarAtivoAcao);
 			addButton(true, atualizarAcao);
-			configCopiar1Acao();
-			configCopiar2Acao();
+			configCopiar1Acao(true);
+			configCopiar2Acao(true);
 
 			eventos();
 		}
@@ -203,11 +203,29 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		}
 
 		@Override
+		protected void colar1() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.colar1();
+			}
+		}
+
+		@Override
 		protected void copiar2() {
 			Pagina ativa = fichario.getPaginaAtiva();
 
 			if (ativa != null) {
 				ativa.copiar2();
+			}
+		}
+
+		@Override
+		protected void colar2() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.colar2();
 			}
 		}
 
@@ -347,10 +365,18 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			areaParametros.requestFocus();
 		}
 
+		public void colar1() {
+			Util.getContentTransfered(areaParametros);
+		}
+
 		public void copiar2() {
 			String string = Util.getString(areaResultados);
 			Util.setContentTransfered(string);
 			areaResultados.requestFocus();
+		}
+
+		public void colar2() {
+			Util.getContentTransfered(areaResultados);
 		}
 
 		private void abrir() {

@@ -57,7 +57,7 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 		public void ini(IJanela janela) {
 			super.ini(janela, true, false);
 
-			configCopiar1Acao();
+			configCopiar1Acao(true);
 		}
 
 		@Override
@@ -65,6 +65,11 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
 			textArea.requestFocus();
+		}
+
+		@Override
+		protected void colar1() {
+			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
 		@Override

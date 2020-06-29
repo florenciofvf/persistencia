@@ -168,8 +168,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
 			addButton(true, base64Acao);
-			configCopiar1Acao();
-			configCopiar2Acao();
+			configCopiar1Acao(true);
+			configCopiar2Acao(true);
 
 			String hint = Mensagens.getString("label.copiar_access_token", Mensagens.getString("label.resposta_json"));
 			chkCopiarAccessT.setToolTipText(hint);
@@ -233,11 +233,29 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 
 		@Override
+		protected void colar1() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.colar1();
+			}
+		}
+
+		@Override
 		protected void copiar2() {
 			Pagina ativa = fichario.getPaginaAtiva();
 
 			if (ativa != null) {
 				ativa.copiar2();
+			}
+		}
+
+		@Override
+		protected void colar2() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.colar2();
 			}
 		}
 
@@ -454,10 +472,18 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			areaParametros.requestFocus();
 		}
 
+		public void colar1() {
+			Util.getContentTransfered(areaParametros);
+		}
+
 		public void copiar2() {
 			String string = Util.getString(areaResultados);
 			Util.setContentTransfered(string);
 			areaResultados.requestFocus();
+		}
+
+		public void colar2() {
+			Util.getContentTransfered(areaResultados);
 		}
 
 		public void base64() {

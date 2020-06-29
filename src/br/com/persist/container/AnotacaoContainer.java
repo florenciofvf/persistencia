@@ -112,7 +112,7 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 					e -> clonarEmFormulario());
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
 			configBaixarAcao(e -> abrir(null));
-			configCopiar1Acao();
+			configCopiar1Acao(true);
 		}
 
 		@Override
@@ -120,6 +120,11 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
 			textArea.requestFocus();
+		}
+
+		@Override
+		protected void colar1() {
+			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
 		@Override
