@@ -168,7 +168,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
 			configBaixarAcao(e -> abrir(null));
-			configCopiar1Acao();
+			configCopiar1Acao(true);
 		}
 
 		@Override
@@ -176,6 +176,11 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
 			textArea.requestFocus();
+		}
+
+		@Override
+		protected void colar1() {
+			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
 		@Override

@@ -18,6 +18,8 @@ public class BarraButton extends JToolBar {
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
 	protected Action copiar1Acao = Action.actionIcon("label.copiar", Icones.COPIA);
 	protected Action copiar2Acao = Action.actionIcon("label.copiar", Icones.COPIA);
+	private Action colar1Acao = Action.actionIcon("label.colar", Icones.COLAR);
+	private Action colar2Acao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
 	protected Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
@@ -97,21 +99,39 @@ public class BarraButton extends JToolBar {
 		addButton(baixarAcao);
 	}
 
-	protected void configCopiar1Acao() {
+	protected void configCopiar1Acao(boolean colar) {
 		copiar1Acao.setActionListener(e -> copiar1());
 		addButton(copiar1Acao);
+
+		if (colar) {
+			colar1Acao.setActionListener(e -> colar1());
+			addButton(colar1Acao);
+		}
 	}
 
 	protected void copiar1() {
 		throw new UnsupportedOperationException();
 	}
 
-	protected void configCopiar2Acao() {
+	protected void colar1() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void configCopiar2Acao(boolean colar) {
 		copiar2Acao.setActionListener(e -> copiar2());
 		addButton(copiar2Acao);
+
+		if (colar) {
+			colar2Acao.setActionListener(e -> colar2());
+			addButton(colar2Acao);
+		}
 	}
 
 	protected void copiar2() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void colar2() {
 		throw new UnsupportedOperationException();
 	}
 

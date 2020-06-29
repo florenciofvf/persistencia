@@ -823,4 +823,16 @@ public class Util {
 
 		return string;
 	}
+
+	public static void getContentTransfered(JTextComponent area) {
+		String string = getContentTransfered();
+
+		if (area == null || estaVazio(string)) {
+			return;
+		}
+
+		String text = area.getText();
+
+		area.setText(text + Constantes.QL2 + string);
+	}
 }
