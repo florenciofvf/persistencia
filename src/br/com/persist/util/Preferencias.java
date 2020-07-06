@@ -8,6 +8,7 @@ import br.com.persist.desktop.Objeto;
 public class Preferencias {
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
+	private static boolean exibiuMensagemConnection;
 	private static int tipoContainerPesquisaAuto;
 	private static boolean erroCriarConnection;
 	private static boolean abortarFecharComESC;
@@ -281,5 +282,13 @@ public class Preferencias {
 
 	public static void setErroCriarConnection(boolean erroCriarConnection) {
 		Preferencias.erroCriarConnection = erroCriarConnection;
+	}
+
+	public static boolean isExibiuMensagemConnection() {
+		return exibiuMensagemConnection;
+	}
+
+	public static void setExibiuMensagemConnection(boolean exibiuMensagemConnection) {
+		Preferencias.exibiuMensagemConnection = exibiuMensagemConnection;
 	}
 }

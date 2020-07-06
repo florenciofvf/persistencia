@@ -1481,14 +1481,23 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				objeto.setTabelaBuscaAuto(null);
 			}
 		} catch (Exception ex) {
-			if (!Preferencias.isErroCriarConnection()) {
-				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
-			}
+			mensagemException(ex);
 		}
 
 		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabela, -1);
 		configAlturaAutomatica();
+	}
+
+	private void mensagemException(Exception ex) {
+		if (Preferencias.isErroCriarConnection()) {
+			if (!Preferencias.isExibiuMensagemConnection()) {
+				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
+				Preferencias.setExibiuMensagemConnection(true);
+			}
+		} else {
+			Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
+		}
 	}
 
 	private void configTableColumn(TableColumn tableColumn, Coluna coluna) {
