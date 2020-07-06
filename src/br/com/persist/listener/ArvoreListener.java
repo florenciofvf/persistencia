@@ -16,4 +16,6 @@ public interface ArvoreListener {
 	public void fecharArquivo(Arvore arvore);
 
 	public void clickArquivo(Arvore arvore);
+
+	public void pastaArquivo(Arvore arvore);
 }

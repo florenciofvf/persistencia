@@ -192,12 +192,16 @@ public class Arvore extends Tree {
 
 		class MenuAbrir extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
+			private Action pastaAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 
 			MenuAbrir() {
 				super("label.abrir", Icones.ABRIR, false);
+				addSeparator();
+				addMenuItem(pastaAcao);
 
 				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
 				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));
+				pastaAcao.setActionListener(e -> ouvintes.forEach(o -> o.pastaArquivo(Arvore.this)));
 			}
 		}
 	}

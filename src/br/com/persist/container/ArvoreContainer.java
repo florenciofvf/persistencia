@@ -1,7 +1,9 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,6 +157,28 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 
 		if (arquivo != null) {
 			formulario.getArquivos().abrir(arquivo.getFile(), false);
+		}
+	}
+
+	@Override
+	public void pastaArquivo(Arvore arvore) {
+		Arquivo arquivo = arvore.getObjetoSelecionado();
+
+		if (arquivo == null) {
+			return;
+		}
+
+		Desktop desktop = Desktop.getDesktop();
+
+		try {
+			File file = arquivo.getFile();
+			File parent = file.getParentFile();
+
+			if (parent != null) {
+				desktop.open(parent);
+			}
+		} catch (IOException e) {
+			Util.mensagem(ArvoreContainer.this, e.getMessage());
 		}
 	}
 
