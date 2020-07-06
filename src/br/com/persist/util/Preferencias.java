@@ -9,6 +9,7 @@ public class Preferencias {
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
 	private static int tipoContainerPesquisaAuto;
+	private static boolean erroCriarConnection;
 	private static boolean abortarFecharComESC;
 	private static boolean ficharioComRolagem;
 	private static Color corAntesTotalRecente;
@@ -272,5 +273,13 @@ public class Preferencias {
 
 	public static void setFecharConexao(boolean fecharConexao) {
 		Preferencias.fecharConexao = fecharConexao;
+	}
+
+	public static boolean isErroCriarConnection() {
+		return erroCriarConnection;
+	}
+
+	public static void setErroCriarConnection(boolean erroCriarConnection) {
+		Preferencias.erroCriarConnection = erroCriarConnection;
 	}
 }

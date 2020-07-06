@@ -13,6 +13,7 @@ import org.xml.sax.Attributes;
 
 import br.com.persist.exception.ConexaoException;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
@@ -46,8 +47,11 @@ public class Conexao {
 				CONEXOES.put(conexao, conn);
 			}
 
+			Preferencias.setErroCriarConnection(false);
+
 			return conn;
 		} catch (Exception ex) {
+			Preferencias.setErroCriarConnection(true);
 			throw new ConexaoException(ex);
 		}
 	}

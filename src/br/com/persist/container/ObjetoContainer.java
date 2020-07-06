@@ -1455,15 +1455,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			for (int i = 0; i < colunas.size(); i++) {
 				TableColumn tableColumn = columnModel.getColumn(i);
 				Coluna coluna = colunas.get(i);
-
-				if (coluna.isChave()) {
-					tableColumn.setCellRenderer(new CellRenderer());
-				}
-
-				if (coluna.isColunaInfo()) {
-					tableColumn.setCellRenderer(new CellInfoRenderer());
-				}
-
+				configTableColumn(tableColumn, coluna);
 				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(this, modeloOrdenacao, coluna,
 						!coluna.isColunaInfo());
 
@@ -1489,12 +1481,24 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				objeto.setTabelaBuscaAuto(null);
 			}
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
+			if (!Preferencias.isErroCriarConnection()) {
+				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
+			}
 		}
 
 		toolbar.buscaAuto.habilitar(tabela.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabela, -1);
 		configAlturaAutomatica();
+	}
+
+	private void configTableColumn(TableColumn tableColumn, Coluna coluna) {
+		if (coluna.isChave()) {
+			tableColumn.setCellRenderer(new CellRenderer());
+		}
+
+		if (coluna.isColunaInfo()) {
+			tableColumn.setCellRenderer(new CellInfoRenderer());
+		}
 	}
 
 	private void configAlturaAutomatica() {
