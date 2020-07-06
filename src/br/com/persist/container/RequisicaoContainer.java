@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -151,6 +154,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
+		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
 		private CheckBox chkCopiarAccessT = new CheckBox();
@@ -162,6 +166,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
 			configBaixarAcao(e -> abrir(null, null));
 			addButton(baixarAtivoAcao);
+			addButton(excluirAtivoAcao);
 
 			add(chkRespostaJson);
 			add(chkCopiarAccessT);
@@ -185,6 +190,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			chkCopiarAccessT.setSelected(Preferencias.getBoolean("copiar_access_token"));
 			chkCopiarAccessT.addActionListener(
 					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessT.isSelected()));
+
+			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 
 			baixarAtivoAcao.setActionListener(e -> abrirAtivo());
 
@@ -256,6 +263,16 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 			if (ativa != null) {
 				ativa.colar2();
+			}
+		}
+
+		private void excluirAtivo() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				int indice = fichario.getSelectedIndex();
+				ativa.excluir();
+				fichario.remove(indice);
 			}
 		}
 
@@ -422,6 +439,18 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 					areaParametros.setText(sb.toString());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+				}
+			}
+		}
+
+		private void excluir() {
+			if (file.exists()) {
+				Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
+
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					Util.stackTraceAndMessage(PAINEL_REQUISICAO, e, RequisicaoContainer.this);
 				}
 			}
 		}

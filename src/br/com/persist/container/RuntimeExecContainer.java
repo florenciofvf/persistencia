@@ -11,6 +11,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -144,6 +147,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		private static final long serialVersionUID = 1L;
 		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
 		private Action atualizarAcao = Action.actionIcon("label.runtime_exec", Icones.EXECUTAR);
+		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true, true);
@@ -152,6 +156,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_RUNTIME_EXEC);
 			configBaixarAcao(e -> abrir(null, null));
 			addButton(baixarAtivoAcao);
+			addButton(excluirAtivoAcao);
 			addButton(true, atualizarAcao);
 			configCopiar1Acao(true);
 			configCopiar2Acao(true);
@@ -160,6 +165,8 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		}
 
 		private void eventos() {
+			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
+
 			baixarAtivoAcao.setActionListener(e -> abrirAtivo());
 
 			atualizarAcao.setActionListener(e -> atualizar());
@@ -226,6 +233,16 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 			if (ativa != null) {
 				ativa.colar2();
+			}
+		}
+
+		private void excluirAtivo() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				int indice = fichario.getSelectedIndex();
+				ativa.excluir();
+				fichario.remove(indice);
 			}
 		}
 
@@ -396,6 +413,18 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 					areaParametros.setText(sb.toString());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+				}
+			}
+		}
+
+		private void excluir() {
+			if (file.exists()) {
+				Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
+
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, e, RuntimeExecContainer.this);
 				}
 			}
 		}
