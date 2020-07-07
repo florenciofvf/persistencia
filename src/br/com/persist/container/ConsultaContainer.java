@@ -182,9 +182,22 @@ public class ConsultaContainer extends AbstratoContainer
 
 			addButton(atualizarAcao);
 			add(copiar);
+			configCopiar1Acao(true);
 			add(true, cmbConexao);
 
 			eventos();
+		}
+
+		@Override
+		protected void copiar1() {
+			String string = Util.getString(textArea.getTextAreaInner());
+			Util.setContentTransfered(string);
+			textArea.requestFocus();
+		}
+
+		@Override
+		protected void colar1() {
+			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
 		@Override
@@ -216,7 +229,7 @@ public class ConsultaContainer extends AbstratoContainer
 			private Action htmlAcao = Action.actionMenu("label.html", null);
 
 			ButtonCopiar() {
-				super("label.copiar", Icones.COPIA);
+				super("label.copiar_tabela", Icones.COPIA);
 
 				addMenuItem(htmlAcao);
 				addMenuItem(true, tabularAcao);
