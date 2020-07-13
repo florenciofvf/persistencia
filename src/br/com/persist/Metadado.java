@@ -134,7 +134,8 @@ public class Metadado implements Transferable {
 
 		for (Metadado table : filhos) {
 			if (table.contem(Constantes.PKS)) {
-				sb.append(table.descricao + Constantes.QL);
+				Metadado meta = table.getMetadado(Constantes.PKS);
+				sb.append(table.descricao + " - " + meta.getTotal() + Constantes.QL);
 				total++;
 			}
 		}
