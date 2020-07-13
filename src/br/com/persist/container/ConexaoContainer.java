@@ -100,8 +100,9 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 		private Action desconectaAcao = Action.actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
+		private Action descerAcao = Action.actionIcon("label.descer", Icones.BAIXAR2);
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-		private Action topAcao = Action.actionIcon("label.primeiro", Icones.TOP);
+		private Action subirAcao = Action.actionIcon("label.subir", Icones.TOP);
 		private Action infoAcao = Action.actionIcon("label.info", Icones.INFO);
 
 		public void ini(IJanela janela) {
@@ -111,7 +112,8 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
 			configBaixarAcao(null);
 
-			addButton(true, topAcao);
+			addButton(true, subirAcao);
+			addButton(descerAcao);
 			addButton(true, conectaAcao);
 			addButton(true, sucessoAcao);
 			addButton(true, infoAcao);
@@ -147,7 +149,9 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 
 			copiarAcao.setActionListener(e -> copiar());
 
-			topAcao.setActionListener(e -> primeiro());
+			descerAcao.setActionListener(e -> descer());
+
+			subirAcao.setActionListener(e -> subir());
 
 			baixarAcao.setActionListener(e -> {
 				try {
@@ -178,13 +182,31 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 			}
 		}
 
-		private void primeiro() {
+		private void subir() {
 			int[] linhas = tabela.getSelectedRows();
+			int registros = modelo.getRowCount();
 
-			if (linhas != null && linhas.length == 1 && modelo.getColumnCount() > 1 && linhas[0] > 0) {
-				modelo.primeiro(linhas[0]);
+			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] > 0) {
+				int i = modelo.anterior(linhas[0]);
 				modelo.fireTableDataChanged();
-				tabela.setRowSelectionInterval(0, 0);
+
+				if (i != -1) {
+					tabela.setRowSelectionInterval(i, i);
+				}
+			}
+		}
+
+		private void descer() {
+			int[] linhas = tabela.getSelectedRows();
+			int registros = modelo.getRowCount();
+
+			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] + 1 < registros) {
+				int i = modelo.proximo(linhas[0]);
+				modelo.fireTableDataChanged();
+
+				if (i != -1) {
+					tabela.setRowSelectionInterval(i, i);
+				}
 			}
 		}
 

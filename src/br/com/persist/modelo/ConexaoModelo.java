@@ -75,11 +75,39 @@ public class ConexaoModelo extends AbstractTableModel {
 		}
 	}
 
-	public void primeiro(int indice) {
+	public int primeiro(int indice) {
 		if (indice > 0 && indice < getRowCount()) {
 			Conexao conexao = conexoes.remove(indice);
 			conexoes.add(0, conexao);
+
+			return 0;
 		}
+
+		return -1;
+	}
+
+	public int anterior(int indice) {
+		if (indice > 0 && indice < getRowCount()) {
+			Conexao conexao = conexoes.remove(indice);
+			indice--;
+			conexoes.add(indice, conexao);
+
+			return indice;
+		}
+
+		return -1;
+	}
+
+	public int proximo(int indice) {
+		if (indice + 1 < getRowCount()) {
+			Conexao conexao = conexoes.remove(indice);
+			indice++;
+			conexoes.add(indice, conexao);
+
+			return indice;
+		}
+
+		return -1;
 	}
 
 	@Override
