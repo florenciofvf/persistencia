@@ -112,8 +112,8 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
 			configBaixarAcao(null);
 
-			addButton(true, subirAcao);
-			addButton(descerAcao);
+			addButton(true, descerAcao);
+			addButton(subirAcao);
 			addButton(true, conectaAcao);
 			addButton(true, sucessoAcao);
 			addButton(true, infoAcao);
