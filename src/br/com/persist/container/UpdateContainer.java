@@ -247,6 +247,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			labelStatus.setText("ATUALIZADOS [" + atualizados + "]");
 			textArea.requestFocus();
 		} catch (Exception ex) {
+			labelStatus.limpar();
 			Util.stackTraceAndMessage(PAINEL_UPDATE, ex, this);
 		}
 	}

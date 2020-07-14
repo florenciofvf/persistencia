@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,6 +22,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
+import br.com.persist.comp.Label;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
@@ -49,6 +51,7 @@ public class ConsultaContainer extends AbstratoContainer
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
 	private final JComboBox<Conexao> cmbConexao;
+	private Label labelStatus = new Label();
 
 	public ConsultaContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
@@ -103,11 +106,13 @@ public class ConsultaContainer extends AbstratoContainer
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.NORTH, toolbar);
-
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
 		split.setDividerLocation(200);
+
+		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
+		add(BorderLayout.SOUTH, labelStatus);
+		labelStatus.setForeground(Color.BLUE);
 	}
 
 	public String getConteudo() {
@@ -276,8 +281,10 @@ public class ConsultaContainer extends AbstratoContainer
 					new Objeto(), conexao);
 			tabela.setModel(modeloRegistro);
 			TabelaUtil.ajustar(tabela, getGraphics());
+			labelStatus.setText("REGISTROS [" + modeloRegistro.getRowCount() + "]");
 			textArea.requestFocus();
 		} catch (Exception ex) {
+			labelStatus.limpar();
 			Util.stackTraceAndMessage(PAINEL_SELECT, ex, this);
 		}
 	}
