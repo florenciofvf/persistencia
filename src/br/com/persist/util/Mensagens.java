@@ -16,4 +16,8 @@ public class Mensagens {
 
 		return MessageFormat.format(bundle.getString(chave), argumentos);
 	}
+
+	public static String getTituloAplicacao() {
+		return getString("label.persistencia");
+	}
 }

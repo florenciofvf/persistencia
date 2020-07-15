@@ -1,13 +1,24 @@
 package br.com.persist.principal;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -82,11 +93,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	private final transient Conteiner conteiner = new Conteiner();
 	private final transient Arquivos arquivos = new Arquivos();
 	private SplitPane splitPane = Util.criarSplitPane(0);
+	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 	public static final Macro macro = new Macro();
 
 	public Formulario() {
-		super(Mensagens.getString("label.persistencia"));
+		super(Mensagens.getTituloAplicacao());
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setJMenuBar(menuPrincipal);
@@ -117,6 +129,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				menuPrincipal.menuLayout.aplicarLayout();
 				fichario.getSalvarAberto().abrir(Formulario.this);
 				fichario.ativarNavegacao();
+				iconeBandeja();
 			}
 
 			@Override
@@ -359,14 +372,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			fecharConnAcao.setActionListener(e -> fecharFormulario(true));
 			fecharAcao.setActionListener(e -> fecharFormulario(false));
-		}
-
-		private void fecharFormulario(boolean fecharConexao) {
-			if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
-				Preferencias.setFecharConexao(fecharConexao);
-				FormularioUtil.fechar(Formulario.this);
-				System.exit(0);
-			}
 		}
 
 		private List<MenuAmbiente> listaMenuAmbiente() {
@@ -804,6 +809,45 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
+		}
+	}
+
+	private void fecharFormulario(boolean fecharConexao) {
+		if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
+			Preferencias.setFecharConexao(fecharConexao);
+			FormularioUtil.fechar(Formulario.this);
+			System.exit(0);
+		}
+	}
+
+	private void iconeBandeja() {
+		PopupMenu popup = new PopupMenu();
+
+		java.awt.MenuItem itemFechar = new java.awt.MenuItem(Mensagens.getString(Constantes.LABEL_FECHAR));
+		itemFechar.addActionListener(e -> fecharFormulario(false));
+		popup.add(itemFechar);
+
+		URL url = getClass().getResource(Constantes.IMAGEM_TRAY_ICON);
+		Image image = Toolkit.getDefaultToolkit().getImage(url);
+		SystemTray systemTray = SystemTray.getSystemTray();
+
+		TrayIcon trayIcon = new TrayIcon(image, Mensagens.getTituloAplicacao(), popup);
+		trayIcon.setImageAutoSize(true);
+
+		try {
+			systemTray.add(trayIcon);
+			trayIcon.displayMessage(Mensagens.getTituloAplicacao(), Mensagens.getTituloAplicacao(),
+					TrayIcon.MessageType.INFO);
+			trayIcon.addActionListener(new IconeBandejaListener());
+		} catch (AWTException ex) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
+		}
+	}
+
+	private class IconeBandejaListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LOG.log(Level.FINEST, "IconeBandejaListener.actionPerformed");
 		}
 	}
 }
