@@ -72,16 +72,6 @@ public class Preferencias {
 		}
 	}
 
-	public static boolean getBoolean(String chave) {
-		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
-		return pref.getBoolean(chave, false);
-	}
-
-	public static void setBoolean(String chave, boolean valor) {
-		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
-		pref.putBoolean(chave, valor);
-	}
-
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
 
@@ -106,6 +96,16 @@ public class Preferencias {
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
+	}
+
+	public static boolean getBoolean(String chave) {
+		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		return pref.getBoolean(chave, false);
+	}
+
+	public static void setBoolean(String chave, boolean valor) {
+		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		pref.putBoolean(chave, valor);
 	}
 
 	public static boolean isAreaTransTabelaRegistros() {
