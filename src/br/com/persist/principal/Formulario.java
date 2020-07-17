@@ -705,9 +705,18 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		class MenuConfig extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
+			private Action exportarAcao = Action.actionMenu("label.exportar", Icones.TOP);
+			private Action importarAcao = Action.actionMenu("label.importar", Icones.BAIXAR);
 
 			MenuConfig() {
 				super(Constantes.LABEL_CONFIGURACOES, Icones.CONFIG);
+
+				addSeparator();
+				addMenuItem(exportarAcao);
+				addMenuItem(importarAcao);
+
+				exportarAcao.setActionListener(e -> exportar());
+				importarAcao.setActionListener(e -> importar());
 
 				ficharioAcao.setActionListener(e -> fichario.getConfiguracao().nova(Formulario.this));
 				formularioAcao.setActionListener(e -> ConfigFormulario.criar(Formulario.this));
@@ -717,6 +726,24 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO)) {
 					ficharioAcao.actionPerformed(null);
+				}
+			}
+
+			private void exportar() {
+				try {
+					Preferencias.exportar();
+					Util.mensagem(this, "SUCESSO");
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(getClass().getName(), ex, this);
+				}
+			}
+
+			private void importar() {
+				try {
+					Preferencias.importar();
+					Util.mensagem(this, "SUCESSO");
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(getClass().getName(), ex, this);
 				}
 			}
 		}
