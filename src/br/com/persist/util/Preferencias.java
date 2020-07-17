@@ -1,6 +1,11 @@
 package br.com.persist.util;
 
 import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
 
 import br.com.persist.desktop.Objeto;
@@ -9,6 +14,7 @@ public class Preferencias {
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
 	private static boolean exibiuMensagemConnection;
+	private static String arqPref = "preferencias";
 	private static int tipoContainerPesquisaAuto;
 	private static boolean erroCriarConnection;
 	private static boolean abortarFecharComESC;
@@ -96,6 +102,15 @@ public class Preferencias {
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
+	}
+
+	public static void exportar() throws IOException, BackingStoreException {
+		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		pref.exportSubtree(new FileOutputStream(arqPref));
+	}
+
+	public static void importar() throws IOException, InvalidPreferencesFormatException {
+		Preferences.importPreferences(new FileInputStream(arqPref));
 	}
 
 	public static boolean getBoolean(String chave) {
