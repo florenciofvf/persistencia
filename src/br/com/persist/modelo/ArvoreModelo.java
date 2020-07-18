@@ -17,11 +17,12 @@ import br.com.persist.util.Constantes;
 
 public class ArvoreModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
+	public static final File FILE = new File(Constantes.ARQUIVOS);
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
 
 	public ArvoreModelo() {
-		this(new Arquivo(new File(Constantes.ARQUIVOS)));
+		this(new Arquivo(FILE));
 	}
 
 	public ArvoreModelo(Arquivo raiz) {
