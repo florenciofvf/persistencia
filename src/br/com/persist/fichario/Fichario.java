@@ -86,6 +86,7 @@ import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
+import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ChaveValor;
@@ -1464,6 +1465,7 @@ public class Fichario extends JTabbedPane {
 	public class SalvarAberto {
 		public void salvar() {
 			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
+				String caminhoArquvos = ArvoreModelo.FILE.getAbsolutePath();
 				int total = getTabCount();
 
 				for (int i = 0; i < total; i++) {
@@ -1479,7 +1481,18 @@ public class Fichario extends JTabbedPane {
 					}
 
 					if (file != null) {
-						pw.print(file.getAbsolutePath() + Constantes.QL2);
+						String name = file.getName();
+						String absolutePath = file.getAbsolutePath();
+						int pos = absolutePath.indexOf(caminhoArquvos);
+
+						if (pos != -1) {
+							String restante = absolutePath.substring(pos + caminhoArquvos.length());
+							absolutePath = restante.replaceAll(Constantes.SEPARADOR, Constantes.SEP);
+						} else if (name.startsWith(Constantes.III)) {
+							absolutePath = name;
+						}
+
+						pw.print(absolutePath + Constantes.QL2);
 					}
 				}
 
