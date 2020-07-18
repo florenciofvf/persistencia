@@ -13,6 +13,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.Arquivo;
+import br.com.persist.util.Constantes;
 
 public class ArvoreModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
@@ -20,7 +21,7 @@ public class ArvoreModelo implements TreeModel {
 	private final Arquivo raiz;
 
 	public ArvoreModelo() {
-		this(new Arquivo(new File("arquivos")));
+		this(new Arquivo(new File(Constantes.ARQUIVOS)));
 	}
 
 	public ArvoreModelo(Arquivo raiz) {
