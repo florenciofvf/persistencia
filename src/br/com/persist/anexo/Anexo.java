@@ -167,6 +167,8 @@ public class Anexo extends Tree {
 		private static final long serialVersionUID = 1L;
 		private ItemCheckBox chkAbrirVisivel = new ItemCheckBox("label.abrir_visivel", Icones.HIERARQUIA);
 		private ItemCheckBox chkPadraoAbrir = new ItemCheckBox("label.padrao_abrir", Icones.EXECUTAR);
+		private Action copiarAcao = Action.actionIcon("label.copiar_atributos", Icones.COPIA);
+		private Action colarAcao = Action.actionIcon("label.colar_atributos", Icones.COLAR);
 		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
 		private Action corFonteAcao = Action.actionMenu("label.cor_fonte", Icones.COR);
@@ -180,7 +182,11 @@ public class Anexo extends Tree {
 			addMenuItem(true, excluirAcao);
 			addMenuItem(true, corFonteAcao);
 			addMenuItem(true, iconeAcao);
+			addMenuItem(true, copiarAcao);
+			addMenuItem(colarAcao);
 
+			copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarAtributosArquivo(Anexo.this)));
+			colarAcao.setActionListener(e -> ouvintes.forEach(o -> o.colarAtributosArquivo(Anexo.this)));
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(Anexo.this)));
 			corFonteAcao.setActionListener(e -> ouvintes.forEach(o -> o.corFonteArquivo(Anexo.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));

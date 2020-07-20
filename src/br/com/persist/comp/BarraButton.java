@@ -16,8 +16,8 @@ import br.com.persist.util.Preferencias;
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
-	protected Action copiar1Acao = Action.actionIcon("label.copiar", Icones.COPIA);
-	protected Action copiar2Acao = Action.actionIcon("label.copiar", Icones.COPIA);
+	private Action copiar1Acao = Action.actionIcon("label.copiar", Icones.COPIA);
+	private Action copiar2Acao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action colar1Acao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action colar2Acao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);

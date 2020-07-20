@@ -16,7 +16,9 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -90,6 +92,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
 	private final transient List<Conexao> conexoes = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
+	private static final Map<String, Object> map = new HashMap<>();
 	private final transient Conteiner conteiner = new Conteiner();
 	private final transient Arquivos arquivos = new Arquivos();
 	private SplitPane splitPane = Util.criarSplitPane(0);
@@ -876,6 +879,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		public void actionPerformed(ActionEvent e) {
 			LOG.log(Level.FINEST, "IconeBandejaListener.actionPerformed");
 		}
+	}
+
+	public static Map<String, Object> getMap() {
+		return map;
 	}
 }
 

@@ -269,6 +269,16 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 		AnexoUtil.refreshEstrutura(anexo, arquivo);
 	}
 
+	@Override
+	public void copiarAtributosArquivo(Anexo anexo) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void colarAtributosArquivo(Anexo anexo) {
+		// TODO Auto-generated method stub
+	}
+
 	private void baixarArquivo() {
 		AnexoModelo modelo = new AnexoModelo(true);
 		anexo.setModel(modelo);
