@@ -1,6 +1,7 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Frame;
 import java.io.File;
@@ -9,6 +10,9 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import javax.swing.Icon;
+
 import java.util.Set;
 
 import br.com.persist.Arquivo;
@@ -26,6 +30,7 @@ import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Imagens;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
@@ -271,12 +276,53 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 
 	@Override
 	public void copiarAtributosArquivo(Anexo anexo) {
-		// TODO Auto-generated method stub
+		Arquivo arquivo = anexo.getObjetoSelecionado();
+
+		if (arquivo == null) {
+			return;
+		}
+
+		Formulario.getMap().put(Constantes.ABRIR_VISIVEL, arquivo.isAbrirVisivel());
+		Formulario.getMap().put(Constantes.PADRAO_ABRIR, arquivo.isPadraoAbrir());
+		Formulario.getMap().put(Constantes.COR_FONTE, arquivo.getCorFonte());
+		Formulario.getMap().put(Constantes.ICONE, arquivo.getNomeIcone());
 	}
 
 	@Override
 	public void colarAtributosArquivo(Anexo anexo) {
-		// TODO Auto-generated method stub
+		Arquivo arquivo = anexo.getObjetoSelecionado();
+
+		if (arquivo == null) {
+			return;
+		}
+
+		Boolean abrirVisivel = (Boolean) Formulario.getMap().get(Constantes.ABRIR_VISIVEL);
+
+		if (abrirVisivel != null) {
+			arquivo.setAbrirVisivel(abrirVisivel);
+		}
+
+		Boolean padraoAbrir = (Boolean) Formulario.getMap().get(Constantes.PADRAO_ABRIR);
+
+		if (padraoAbrir != null) {
+			arquivo.setPadraoAbrir(padraoAbrir);
+		}
+
+		Color corFonte = (Color) Formulario.getMap().get(Constantes.COR_FONTE);
+
+		if (corFonte != null) {
+			arquivo.setCorFonte(corFonte);
+		}
+
+		String nome = (String) Formulario.getMap().get(Constantes.ICONE);
+
+		if (!Util.estaVazio(nome)) {
+			Icon icone = Imagens.getIcon(nome);
+			arquivo.setIcone(icone, nome);
+		}
+
+		AnexoModelo.putArquivo(arquivo);
+		AnexoUtil.refreshEstrutura(anexo, arquivo);
 	}
 
 	private void baixarArquivo() {
