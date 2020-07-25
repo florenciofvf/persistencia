@@ -430,7 +430,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 				try {
 					Metadado metadado = (Metadado) transferable.getTransferData(flavor);
 
-					if (processadoMetadado(metadado, e.getLocation())) {
+					if (processadoMetadado(metadado, e.getLocation(), false)) {
 						completado = true;
 					}
 				} catch (Exception ex) {
@@ -459,7 +459,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		return false;
 	}
 
-	protected boolean processadoMetadado(Metadado metadado, Point point) {
+	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito) {
 		return false;
 	}
 

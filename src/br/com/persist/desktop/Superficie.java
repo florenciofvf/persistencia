@@ -1016,7 +1016,7 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	protected boolean processadoMetadado(Metadado metadado, Point point) {
+	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito) {
 		if (metadado == null) {
 			return false;
 		}
@@ -1025,6 +1025,11 @@ public class Superficie extends Desktop {
 		novo.setChaves(metadado.getChaves());
 		String id = metadado.getDescricao();
 		novo.setTabela(id);
+
+		if (labelDireito) {
+			novo.setDeslocamentoXId(Objeto.DIAMETRO);
+			novo.setDeslocamentoYId(Objeto.DIAMETRO / 2);
+		}
 
 		if (Preferencias.isNomearArrasto()) {
 			Object resp = Util.getValorInputDialog(Superficie.this, "label.id", id, id);
@@ -1915,7 +1920,17 @@ public class Superficie extends Desktop {
 	}
 
 	public void exportarMetadadoRaiz(Metadado metadado) {
+		boolean bkp = Preferencias.isNomearArrasto();
+		Preferencias.setNomearArrasto(false);
+		int y = 20;
 
+		for (int i = 0; i < metadado.getTotal(); i++) {
+			Metadado filho = metadado.getMetadado(i);
+			processadoMetadado(filho, new Point(10, y), true);
+			y += 30;
+		}
+
+		Preferencias.setNomearArrasto(bkp);
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
