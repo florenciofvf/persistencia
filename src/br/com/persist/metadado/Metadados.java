@@ -179,9 +179,11 @@ public class Metadados extends Tree {
 		private MenuAbrirImportacaoH menuAbrirImportacaoH = new MenuAbrirImportacaoH();
 		private MenuAbrirExportacao menuAbrirExportacao = new MenuAbrirExportacao();
 		private MenuAbrirImportacao menuAbrirImportacao = new MenuAbrirImportacao();
+		private MenuExportacao menuExportacao = new MenuExportacao();
 
 		public MetadadosPopup() {
-			add(menuAbrirExportacaoH);
+			add(menuExportacao);
+			add(true, menuAbrirExportacaoH);
 			add(menuAbrirImportacaoH);
 			add(menuAbrirExportacao);
 			add(menuAbrirImportacao);

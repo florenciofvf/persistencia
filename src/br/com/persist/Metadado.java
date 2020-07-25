@@ -21,6 +21,7 @@ public class Metadado implements Transferable {
 	private final String descricao;
 	private int totalImportados;
 	private int totalExportados;
+	private boolean ehRaiz;
 	private boolean tabela;
 	private Metadado pai;
 
@@ -288,5 +289,13 @@ public class Metadado implements Transferable {
 		for (Metadado tabelaIds : filhos) {
 			resposta.add(tabelaIds.descricao);
 		}
+	}
+
+	public boolean getEhRaiz() {
+		return ehRaiz;
+	}
+
+	public void setEhRaiz(boolean ehRaiz) {
+		this.ehRaiz = ehRaiz;
 	}
 }

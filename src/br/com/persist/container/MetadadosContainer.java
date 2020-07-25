@@ -193,6 +193,7 @@ public class MetadadosContainer extends AbstratoContainer
 			Connection conn = Conexao.getConnection(conexao);
 			List<Metadado> lista = Persistencia.listarMetadados(conn, conexao);
 			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_METADADOS) + " - " + lista.size());
+			raiz.setEhRaiz(true);
 
 			for (Metadado metadado : lista) {
 				metadado.setTabela(true);
