@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <conexoes>
-	<conexao inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/questionario" esquema="" usuario="root" driver="com.mysql.jdbc.Driver" senha="root" nome="question&#225;rio">
+	<conexao nome="question&#225;rio" usuario="root" senha="root" inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/questionario" catalogo="" esquema="" driver="com.mysql.jdbc.Driver">
 	</conexao>
-	<conexao inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/eleicao" esquema="" usuario="root" driver="com.mysql.cj.jdbc.Driver" senha="@Dnhi1ey" nome="elei&#231;&#227;o">
+	<conexao nome="elei&#231;&#227;o" usuario="root" senha="@Dnhi1ey" inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/eleicao" catalogo="eleicao" esquema="" driver="com.mysql.cj.jdbc.Driver">
 	</conexao>
-	<conexao inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/carrodb" esquema="" usuario="root" driver="com.mysql.jdbc.Driver" senha="root" nome="carro">
+	<conexao nome="carro" usuario="root" senha="root" inicioComplemento="" finalComplemento="" urlBanco="jdbc:mysql://localhost/carrodb" catalogo="" esquema="" driver="com.mysql.jdbc.Driver">
 	</conexao>
 </conexoes>

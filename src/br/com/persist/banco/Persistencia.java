@@ -351,7 +351,7 @@ public class Persistencia {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getPrimaryKeys(null, conexao.getEsquema(), objeto.getTabela2());
+			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), objeto.getTabela2());
 
 			while (rs.next()) {
 				dados.add(criar(rs.getString(COLUMN_NAME), rs.getString(KEY_SEQ), rs.getString(PK_NAME)));
@@ -371,7 +371,7 @@ public class Persistencia {
 			List<Metadado> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getPrimaryKeys(null, conexao.getEsquema(), metadado.getDescricao());
+			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), metadado.getDescricao());
 
 			while (rs.next()) {
 				resposta.add(new Metadado(rs.getString(COLUMN_NAME)));
@@ -391,7 +391,7 @@ public class Persistencia {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getExportedKeys(null, conexao.getEsquema(), objeto.getTabela2());
+			ResultSet rs = m.getExportedKeys(conexao.getCatalogo(), conexao.getEsquema(), objeto.getTabela2());
 
 			while (rs.next()) {
 				dados.add(criar(rs.getString(PKCOLUMN_NAME), rs.getString(FKTABLE_NAME), rs.getString(FKCOLUMN_NAME)));
@@ -411,7 +411,7 @@ public class Persistencia {
 			List<Metadado> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getExportedKeys(null, conexao.getEsquema(), metadado.getDescricao());
+			ResultSet rs = m.getExportedKeys(conexao.getCatalogo(), conexao.getEsquema(), metadado.getDescricao());
 
 			while (rs.next()) {
 				Metadado campo = new Metadado(rs.getString(PKCOLUMN_NAME));
@@ -435,7 +435,7 @@ public class Persistencia {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getImportedKeys(null, conexao.getEsquema(), objeto.getTabela2());
+			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), objeto.getTabela2());
 
 			while (rs.next()) {
 				dados.add(criar(rs.getString(PKTABLE_NAME), rs.getString(PKCOLUMN_NAME), rs.getString(FKCOLUMN_NAME)));
@@ -455,7 +455,7 @@ public class Persistencia {
 			List<Metadado> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getImportedKeys(null, conexao.getEsquema(), metadado.getDescricao());
+			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), metadado.getDescricao());
 
 			while (rs.next()) {
 				Metadado campo = new Metadado(rs.getString(FKCOLUMN_NAME));
