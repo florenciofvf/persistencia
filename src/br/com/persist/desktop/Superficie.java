@@ -1914,6 +1914,10 @@ public class Superficie extends Desktop {
 		}
 	}
 
+	public void exportarMetadadoRaiz(Metadado metadado) {
+
+	}
+
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
 		List<String> lista = metadado.getListaStringExpImp(exportacao);
 

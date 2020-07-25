@@ -42,6 +42,10 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		container.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
 	}
 
+	public void exportarMetadadoRaiz(Metadado metadado) {
+		container.exportarMetadadoRaiz(metadado);
+	}
+
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override

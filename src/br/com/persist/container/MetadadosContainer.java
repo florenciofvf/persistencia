@@ -246,11 +246,29 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	@Override
+	public void exportarFormArquivo(Metadados metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.getConteiner().exportarMetadadoRaiz(metadado);
+		}
+	}
+
+	@Override
 	public void abrirExportacaoFichArquivo(Metadados metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
 			formulario.getFichario().getConteiner().abrirExportacaoMetadado(formulario, metadado, circular);
+		}
+	}
+
+	@Override
+	public void exportarFichArquivo(Metadados metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.getFichario().getConteiner().exportarMetadadoRaiz(formulario, metadado);
 		}
 	}
 

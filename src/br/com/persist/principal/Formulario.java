@@ -236,6 +236,16 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			form.setLocationRelativeTo(Formulario.this);
 			form.setVisible(true);
 		}
+
+		public void exportarMetadadoRaiz(Metadado metadado) {
+			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
+				ContainerFormulario form = new ContainerFormulario(Formulario.this,
+						new File(Mensagens.getString("label.exportar")));
+				form.exportarMetadadoRaiz(metadado);
+				form.setLocationRelativeTo(Formulario.this);
+				form.setVisible(true);
+			}
+		}
 	}
 
 	public class Arquivos {

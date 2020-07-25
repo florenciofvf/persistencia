@@ -191,10 +191,22 @@ public class Metadados extends Tree {
 
 		private void preShow(Metadado metadado) {
 			boolean ehTabela = metadado.isTabela();
+			menuExportacao.setEnabled(metadado.getEhRaiz() && !metadado.estaVazio());
 			menuAbrirExportacaoH.setEnabled(ehTabela);
 			menuAbrirImportacaoH.setEnabled(ehTabela);
 			menuAbrirExportacao.setEnabled(ehTabela);
 			menuAbrirImportacao.setEnabled(ehTabela);
+		}
+
+		class MenuExportacao extends MenuPadrao1 {
+			private static final long serialVersionUID = 1L;
+
+			MenuExportacao() {
+				super("label.exportar", Icones.ABRIR, false);
+
+				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFormArquivo(Metadados.this)));
+				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFichArquivo(Metadados.this)));
+			}
 		}
 
 		class MenuAbrirExportacao extends MenuPadrao1 {

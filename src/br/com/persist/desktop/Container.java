@@ -135,6 +135,15 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		btnSelecao.click();
 	}
 
+	public void exportarMetadadoRaiz(Metadado metadado) {
+		if (abortarFecharComESCSuperficie) {
+			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+		}
+
+		superficie.exportarMetadadoRaiz(metadado);
+		btnSelecao.click();
+	}
+
 	public void abrir(File file, XMLColetor coletor, Graphics g) {
 		if (abortarFecharComESCSuperficie) {
 			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());

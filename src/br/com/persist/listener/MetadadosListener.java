@@ -10,4 +10,8 @@ public interface MetadadosListener {
 	public void abrirImportacaoFormArquivo(Metadados metadados, boolean circular);
 
 	public void abrirImportacaoFichArquivo(Metadados metadados, boolean circular);
+
+	public void exportarFormArquivo(Metadados metadados);
+
+	public void exportarFichArquivo(Metadados metadados);
 }

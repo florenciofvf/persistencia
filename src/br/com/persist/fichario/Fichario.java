@@ -1069,6 +1069,14 @@ public class Fichario extends JTabbedPane {
 			container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 			setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
 		}
+
+		public void exportarMetadadoRaiz(Formulario formulario, Metadado metadado) {
+			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
+				Container container = novo(formulario);
+				container.exportarMetadadoRaiz(metadado);
+				setTitleAt(getTabCount() - 1, Mensagens.getString("label.exportar"));
+			}
+		}
 	}
 
 	public class Ambientes {
