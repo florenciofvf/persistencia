@@ -1931,6 +1931,8 @@ public class Superficie extends Desktop {
 		}
 
 		Preferencias.setNomearArrasto(bkp);
+		setPreferredSize(new Dimension(0, y));
+		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
