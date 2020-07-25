@@ -23,6 +23,7 @@ public class Conexao {
 	private String inicioComplemento;
 	private String finalComplemento;
 	private String urlBanco;
+	private String catalogo;
 	private String usuario;
 	private String esquema;
 	private String driver;
@@ -158,6 +159,7 @@ public class Conexao {
 		c.inicioComplemento = inicioComplemento;
 		c.finalComplemento = finalComplemento;
 		c.urlBanco = urlBanco;
+		c.catalogo = catalogo;
 		c.esquema = esquema;
 		c.usuario = usuario;
 		c.driver = driver;
@@ -170,6 +172,7 @@ public class Conexao {
 		inicioComplemento = attr.getValue("inicioComplemento");
 		finalComplemento = attr.getValue("finalComplemento");
 		urlBanco = attr.getValue("urlBanco");
+		catalogo = attr.getValue("catalogo");
 		esquema = attr.getValue("esquema");
 		usuario = attr.getValue("usuario");
 		driver = attr.getValue("driver");
@@ -185,6 +188,7 @@ public class Conexao {
 		util.atributo("inicioComplemento", Util.escapar(inicioComplemento));
 		util.atributo("finalComplemento", Util.escapar(finalComplemento));
 		util.atributo("urlBanco", Util.escapar(urlBanco));
+		util.atributo("catalogo", Util.escapar(catalogo));
 		util.atributo("esquema", Util.escapar(esquema));
 		util.atributo("driver", Util.escapar(driver));
 		util.fecharTag().finalizarTag("conexao");
@@ -232,5 +236,13 @@ public class Conexao {
 
 	public void setEsquema(String esquema) {
 		this.esquema = esquema;
+	}
+
+	public String getCatalogo() {
+		return catalogo;
+	}
+
+	public void setCatalogo(String catalogo) {
+		this.catalogo = catalogo;
 	}
 }

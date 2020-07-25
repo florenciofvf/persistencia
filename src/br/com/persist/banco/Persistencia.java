@@ -530,7 +530,7 @@ public class Persistencia {
 			List<Metadado> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 
-			ResultSet rs = m.getTables(Constantes.VAZIO, conexao.getEsquema(), "%", new String[] { "TABLE" });
+			ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(), "%", new String[] { "TABLE" });
 
 			while (rs.next()) {
 				resposta.add(new Metadado(rs.getString(TABLE_NAME)));
