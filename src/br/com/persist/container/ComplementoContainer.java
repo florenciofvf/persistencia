@@ -1,9 +1,13 @@
 package br.com.persist.container;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JList;
 import javax.swing.JSplitPane;
+import javax.swing.ListSelectionModel;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
@@ -27,6 +31,7 @@ public class ComplementoContainer extends Panel {
 
 	public ComplementoContainer(IJanela janela, Objeto objeto, TextField txtComplemento) {
 		complementos = new JList<>(new ListaStringModelo(objeto.getComplementos()));
+		complementos.addMouseListener(mouseListenerInner);
 		textArea.setText(txtComplemento.getText());
 		this.txtComplemento = txtComplemento;
 		toolbar.ini(janela);
@@ -35,11 +40,24 @@ public class ComplementoContainer extends Panel {
 
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, textArea, new ScrollPane(complementos));
+		complementos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		split.setDividerLocation(Constantes.SIZE.width / 2);
 
 		add(BorderLayout.CENTER, split);
 		add(BorderLayout.NORTH, toolbar);
 	}
+
+	private transient MouseListener mouseListenerInner = new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			String sel = complementos.getSelectedValue();
+
+			if (!Util.estaVazio(sel)) {
+				String string = textArea.getText();
+				textArea.setText(string + " " + sel);
+			}
+		}
+	};
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;

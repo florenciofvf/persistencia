@@ -194,6 +194,10 @@ public class Objeto implements Runnable {
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+
+		if (!Util.estaVazio(complemento)) {
+			complementos.add(complemento);
+		}
 	}
 
 	public void setDesenharId(boolean desenharId) {
