@@ -107,7 +107,7 @@ public class ConsultaContainer extends AbstratoContainer
 
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
-		split.setDividerLocation(200);
+		split.setDividerLocation(Constantes.SIZE.height / 2);
 
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);

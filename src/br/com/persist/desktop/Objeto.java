@@ -12,8 +12,10 @@ import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,6 +40,7 @@ public class Objeto implements Runnable {
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	private TabelaBuscaAuto tabelaBuscaAuto;
+	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
 	protected int deslocamentoXId = -5;
 	protected int deslocamentoYId = -5;
@@ -100,6 +103,7 @@ public class Objeto implements Runnable {
 
 	public Objeto(int x, int y, Color cor, String icone) {
 		id = Constantes.VAZIO + (++sequencia);
+		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
 		desenharId = true;
 		setIcone(icone);
@@ -913,5 +917,9 @@ public class Objeto implements Runnable {
 
 	public void setBpnt(boolean bpnt) {
 		this.bpnt = bpnt;
+	}
+
+	public Set<String> getComplementos() {
+		return complementos;
 	}
 }
