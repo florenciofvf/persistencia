@@ -158,7 +158,7 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, Ficha
 			});
 		}
 
-		void configListener() {
+		private void configListener() {
 			if (listener != null) {
 				Action configAcao = Action.actionIcon("label.fragmento", Icones.SUCESSO, e -> {
 					int[] linhas = tabela.getSelectedRows();

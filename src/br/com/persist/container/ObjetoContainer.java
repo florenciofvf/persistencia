@@ -62,6 +62,7 @@ import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.LinkAuto;
+import br.com.persist.listener.ComplementoListener;
 import br.com.persist.listener.FragmentoListener;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.listener.TabelaListener;
@@ -121,8 +122,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
 		txtComplemento.addActionListener(new ActionListenerInner());
+		txtComplemento.addMouseListener(mouseComplementoListener);
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
-		txtComplemento.addMouseListener(complementoListener);
 		txtComplemento.setText(objeto.getComplemento());
 		tabela.setTabelaListener(tabelaListener);
 		cmbConexao.addItemListener(this);
@@ -1323,11 +1324,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
-	private transient MouseListener complementoListener = new MouseAdapter() {
+	private transient MouseListener mouseComplementoListener = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ComplementoDialogo form = new ComplementoDialogo((Dialog) null, objeto, txtComplemento);
+				ComplementoDialogo form = new ComplementoDialogo((Dialog) null, objeto, txtComplemento,
+						complementoListener);
 
 				if (listener instanceof Component) {
 					form.setLocationRelativeTo((Component) listener);
@@ -1337,6 +1339,28 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				form.setVisible(true);
 			}
+		}
+	};
+
+	private transient ComplementoListener complementoListener = new ComplementoListener() {
+		@Override
+		public void processarComplemento(String string) {
+			txtComplemento.setText(string);
+
+			if (objeto.isAjusteAutoEnter()) {
+				tamanhoAutomatico = true;
+			}
+
+			actionPerformed(null);
+
+			if (objeto.isAjusteAutoEnter()) {
+				tamanhoAutomatico = false;
+			}
+		}
+
+		@Override
+		public void limparComplemento() {
+			txtComplemento.setText(Constantes.VAZIO);
 		}
 	};
 
