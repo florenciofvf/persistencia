@@ -41,15 +41,17 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 	}
 
 	public enum Ambiente {
-		DESENVOLVIMENTO("desenv", Mensagens.getString("label.desenv")), TREINAMENTO1("treina1",
-				Mensagens.getString("label.treina1")), TREINAMENTO2("treina2",
-						Mensagens.getString("label.treina2")), TREINAMENTO3("treina3",
-								Mensagens.getString("label.treina3")), HOLOMOGACAO("homolog",
+		DESENVOLVIMENTO("desenv",
+				Mensagens.getString("label.desenv")), TREINAMENTO1("treina1", Mensagens.getString(
+						"label.treina1")), TREINAMENTO2("treina2", Mensagens.getString("label.treina2")), TREINAMENTO3(
+								"treina3", Mensagens.getString("label.treina3")), HOLOMOGACAO("homolog",
 										Mensagens.getString("label.homolog")), PRODUCAO("producao",
 												Mensagens.getString("label.producao")), RASCUNHO("rascunho",
 														Mensagens.getString("label.rascunho")), ESTUDO("estudo",
 																Mensagens.getString("label.estudo")), TESTE("teste",
-																		Mensagens.getString("label.teste"));
+																		Mensagens.getString("label.teste")), BUGS(
+																				"bugs",
+																				Mensagens.getString("label.bugs"));
 		final String chaveLabelMin;
 		final String chaveLabel;
 		final String descricao;
