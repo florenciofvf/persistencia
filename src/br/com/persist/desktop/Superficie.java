@@ -46,11 +46,13 @@ import br.com.persist.dialogo.MacroDialogo;
 import br.com.persist.dialogo.ObjetoConfigDialogo;
 import br.com.persist.dialogo.RelacaoDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.PropriedadesFormulario;
 import br.com.persist.formulario.UpdateFormulario;
+import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -1502,7 +1504,15 @@ public class Superficie extends Desktop {
 
 		private void propriedades() {
 			StringBuilder sb = new StringBuilder();
-			sb.append("Objetos: " + objetos.length + Constantes.QL2);
+			sb.append("Total de objetos: " + objetos.length + Constantes.QL2);
+
+			File file = container.getFileSalvarAberto();
+
+			if (file != null) {
+				sb.append("Local absoluto do arquivo: " + file.getAbsolutePath() + Constantes.QL2);
+				sb.append("Local relativo do arquivo: " + Fichario.getAbsRelativoArquivo(ArvoreModelo.FILE, file)
+						+ Constantes.QL2);
+			}
 
 			PropriedadesFormulario.criar(formulario, sb.toString());
 		}
