@@ -37,6 +37,7 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPadrao1;
 import br.com.persist.util.ButtonPopup;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.IJanela;
@@ -144,7 +145,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, XMLColetor coletor, Graphics g) {
+	public void abrir(File file, XMLColetor coletor, Graphics g, ConfigArquivo config) {
 		if (abortarFecharComESCSuperficie) {
 			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
@@ -180,11 +181,11 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		}
 
 		if (conexaoSel != null && conexaoSel.equals(conexao)) {
-			adicionarForm(conexao, coletor, g);
+			adicionarForm(conexao, coletor, g, config);
 		}
 	}
 
-	private void adicionarForm(Conexao conexao, XMLColetor coletor, Graphics g) {
+	private void adicionarForm(Conexao conexao, XMLColetor coletor, Graphics g, ConfigArquivo config) {
 		for (Form form : coletor.getForms()) {
 			Objeto instancia = null;
 
@@ -198,7 +199,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				Object[] array = Util.criarArray(conexao, instancia, new Dimension(form.getLargura(), form.getAltura()),
 						form.getApelido());
 				superficie.addForm(array, new Point(form.getX(), form.getY()), g, (String) array[Util.ARRAY_INDICE_APE],
-						true);
+						true, config);
 			}
 		}
 	}
@@ -355,12 +356,12 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				addMenuItem(destacarCnt);
 				addMenuItem(abrirEmForm);
 
-				formularioAcao.setActionListener(
-						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FORMULARIO));
-				ficharioAcao.setActionListener(
-						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_FICHARIO));
-				desktopAcao.setActionListener(
-						e -> formulario.destacar(getConexaoPadrao(), superficie, Constantes.TIPO_CONTAINER_DESKTOP));
+				formularioAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie,
+						Constantes.TIPO_CONTAINER_FORMULARIO, null));
+				ficharioAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie,
+						Constantes.TIPO_CONTAINER_FICHARIO, null));
+				desktopAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie,
+						Constantes.TIPO_CONTAINER_DESKTOP, null));
 				destacarFrm.setActionListener(
 						e -> formulario.getFichario().getConteiner().destacarEmFormulario(formulario, Container.this));
 				abrirEmForm.setActionListener(e -> formulario.getArquivos().abrir(getArquivo(), false, null));
@@ -377,7 +378,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				excluido();
 				XMLColetor coletor = new XMLColetor();
 				XML.processar(arquivo, coletor);
-				abrir(arquivo, coletor, null);
+				abrir(arquivo, coletor, null, null);
 				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);

@@ -364,7 +364,8 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Destacar {
-		public void destacar(Formulario formulario, Conexao conexao, Superficie superficie, int tipoContainer) {
+		public void destacar(Formulario formulario, Conexao conexao, Superficie superficie, int tipoContainer,
+				ConfigArquivo config) {
 			List<Objeto> lista = superficie.getSelecionados();
 			boolean continua = false;
 
@@ -390,20 +391,20 @@ public class Fichario extends JTabbedPane {
 			}
 
 			if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
-				destacarForm(formulario, selecionados, conexao);
+				destacarForm(formulario, selecionados, conexao, config);
 
 			} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
-				destacarDesk(formulario, selecionados, conexao);
+				destacarDesk(formulario, selecionados, conexao, config);
 
 			} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
 				destacarObjt(formulario, selecionados, conexao);
 
 			} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
-				destacarProp(formulario, selecionados, conexao, superficie);
+				destacarProp(formulario, selecionados, conexao, superficie, config);
 			}
 		}
 
-		private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+		private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao, ConfigArquivo config) {
 			DesktopFormulario form = new DesktopFormulario(formulario);
 
 			int x = 10;
@@ -413,7 +414,7 @@ public class Fichario extends JTabbedPane {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					Object[] array = Util.criarArray(conexao, objeto, null);
 					form.getDesktop().addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE],
-							false);
+							false, config);
 					objeto.setSelecionado(false);
 					x += 25;
 					y += 25;
@@ -424,7 +425,7 @@ public class Fichario extends JTabbedPane {
 			form.setVisible(true);
 		}
 
-		private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao) {
+		private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao, ConfigArquivo config) {
 			Desktop desktop = desktops.novo(formulario);
 
 			int x = 10;
@@ -433,7 +434,7 @@ public class Fichario extends JTabbedPane {
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					Object[] array = Util.criarArray(conexao, objeto, null);
-					desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false);
+					desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false, config);
 					objeto.setSelecionado(false);
 					x += 25;
 					y += 25;
@@ -444,7 +445,8 @@ public class Fichario extends JTabbedPane {
 			SwingUtilities.invokeLater(() -> desktop.getDistribuicao().distribuir(-20));
 		}
 
-		private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie) {
+		private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie,
+				ConfigArquivo config) {
 			boolean salvar = false;
 
 			ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
@@ -473,7 +475,7 @@ public class Fichario extends JTabbedPane {
 					superficie.addForm(array,
 							new Point(objeto.getX() + cvDeltaX.getInteiro(Constantes.TRINTA),
 									objeto.getY() + cvDeltaY.getInteiro(Constantes.TRINTA)),
-							null, (String) array[Util.ARRAY_INDICE_APE], false);
+							null, (String) array[Util.ARRAY_INDICE_APE], false, config);
 					objeto.setSelecionado(false);
 				}
 			}
@@ -1316,7 +1318,7 @@ public class Fichario extends JTabbedPane {
 
 			Container container = conteiner.novo(formulario);
 			int ultimoIndice = getTabCount() - 1;
-			container.abrir(file, coletor, getGraphics());
+			container.abrir(file, coletor, getGraphics(), config);
 			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
 			setTitleAt(ultimoIndice, file.getName());
 		}

@@ -1256,13 +1256,13 @@ public class Superficie extends Desktop {
 				addMenuItem(proprioAcao);
 
 				formularioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Constantes.TIPO_CONTAINER_FORMULARIO));
+						Constantes.TIPO_CONTAINER_FORMULARIO, null));
 				ficharioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Constantes.TIPO_CONTAINER_FICHARIO));
+						Constantes.TIPO_CONTAINER_FICHARIO, null));
 				desktopAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Constantes.TIPO_CONTAINER_DESKTOP));
+						Constantes.TIPO_CONTAINER_DESKTOP, null));
 				proprioAcao.setActionListener(e -> formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Constantes.TIPO_CONTAINER_PROPRIO));
+						Constantes.TIPO_CONTAINER_PROPRIO, null));
 			}
 		}
 
@@ -1742,7 +1742,7 @@ public class Superficie extends Desktop {
 
 			if (getPrimeiroObjetoSelecionado() != null) {
 				formulario.destacar(container.getConexaoPadrao(), Superficie.this,
-						Preferencias.getTipoContainerPesquisaAuto());
+						Preferencias.getTipoContainerPesquisaAuto(), null);
 			}
 		}
 	}

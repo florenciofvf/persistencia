@@ -81,6 +81,7 @@ import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.ChaveValor;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Fragmento;
 import br.com.persist.util.IIni;
@@ -1796,5 +1797,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			indice--;
 		}
+	}
+
+	public void aplicarConfigArquivo(ConfigArquivo config) {
+		// TODO
 	}
 }

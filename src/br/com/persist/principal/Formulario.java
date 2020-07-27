@@ -143,8 +143,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		});
 	}
 
-	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer) {
-		fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer);
+	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer, ConfigArquivo config) {
+		fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer, config);
 	}
 
 	public static class CopiarColar {
@@ -274,7 +274,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
 			ContainerFormulario form = new ContainerFormulario(formulario, file);
-			form.abrir(file, coletor, getGraphics());
+			form.abrir(file, coletor, getGraphics(), config);
 			form.setLocationRelativeTo(formulario);
 			form.setVisible(true);
 		}

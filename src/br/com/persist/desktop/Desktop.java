@@ -40,6 +40,7 @@ import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.ChaveValor;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.Icones;
@@ -420,7 +421,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 					Objeto objeto = (Objeto) array[Util.ARRAY_INDICE_OBJ];
 
 					if (!contemReferencia(objeto)) {
-						addForm(array, e.getLocation(), null, (String) array[Util.ARRAY_INDICE_APE], false);
+						addForm(array, e.getLocation(), null, (String) array[Util.ARRAY_INDICE_APE], false, null);
 						completado = true;
 					}
 				} catch (Exception ex) {
@@ -463,7 +464,8 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		return false;
 	}
 
-	public void addForm(Object[] array, Point point, Graphics g, String apelido, boolean buscaAuto) {
+	public void addForm(Object[] array, Point point, Graphics g, String apelido, boolean buscaAuto,
+			ConfigArquivo config) {
 		Dimension dimension = (Dimension) array[Util.ARRAY_INDICE_DIM];
 		Conexao conexao = (Conexao) array[Util.ARRAY_INDICE_CON];
 		Objeto objeto = (Objeto) array[Util.ARRAY_INDICE_OBJ];
@@ -479,6 +481,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		form.setLocation(point);
 		form.setSize(dimension);
 		form.setVisible(true);
+		form.aplicarConfigArquivo(config);
 
 		add(form);
 	}

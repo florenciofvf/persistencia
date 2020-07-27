@@ -27,6 +27,7 @@ import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
@@ -284,5 +285,9 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				objeto.setY(getY() - deltaY);
 			}
 		}
+	}
+
+	public void aplicarConfigArquivo(ConfigArquivo config) {
+		container.aplicarConfigArquivo(config);
 	}
 }

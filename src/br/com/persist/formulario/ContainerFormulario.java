@@ -9,6 +9,7 @@ import java.io.File;
 import br.com.persist.Metadado;
 import br.com.persist.desktop.Container;
 import br.com.persist.principal.Formulario;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.IJanela;
 import br.com.persist.xml.XMLColetor;
 
@@ -34,8 +35,8 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		configurar();
 	}
 
-	public void abrir(File file, XMLColetor coletor, Graphics g) {
-		container.abrir(file, coletor, g);
+	public void abrir(File file, XMLColetor coletor, Graphics g, ConfigArquivo config) {
+		container.abrir(file, coletor, g, config);
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
