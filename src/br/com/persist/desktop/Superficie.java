@@ -713,27 +713,40 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (e.getClickCount() >= Constantes.DOIS) {
-				Frame frame = formulario;
-
-				if (container.getContainerFormulario() != null) {
-					frame = container.getContainerFormulario();
-				}
-
 				if (selecionadoObjeto != null) {
-					if (!Util.estaVazio(selecionadoObjeto.getTabela2())) {
-						Conexao conexao = container.getConexaoPadrao();
-						setComplemento(conexao, selecionadoObjeto);
-						ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao,
-								selecionadoObjeto, getGraphics());
-						form.setLocationRelativeTo(frame);
-						form.setVisible(true);
-					} else {
-						popup.configuracaoAcao.actionPerformed(null);
-					}
+					abrirObjeto(selecionadoObjeto);
 				} else if (selecionadoRelacao != null) {
 					popup.configuracaoAcao.actionPerformed(null);
 				}
 			}
+		}
+
+		private void abrirObjeto(Objeto objeto) {
+			Frame frame = formulario;
+
+			if (container.getContainerFormulario() != null) {
+				frame = container.getContainerFormulario();
+			}
+
+			if (!Util.estaVazio(objeto.getTabela2())) {
+				Conexao conexao = container.getConexaoPadrao();
+				setComplemento(conexao, objeto);
+
+				if (Util.estaVazio(objeto.getArquivo())) {
+					ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto,
+							getGraphics());
+					form.setLocationRelativeTo(frame);
+					form.setVisible(true);
+				} else {
+					abrirArquivo(conexao, objeto);
+				}
+			} else {
+				popup.configuracaoAcao.actionPerformed(null);
+			}
+		}
+
+		private void abrirArquivo(Conexao conexao, Objeto objeto) {
+			// TODO
 		}
 	};
 
