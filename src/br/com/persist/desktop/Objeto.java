@@ -70,6 +70,7 @@ public class Objeto implements Runnable {
 	private boolean processar;
 	private boolean linkAuto;
 	private String descricao;
+	private String arquivo;
 	private String tabelas;
 	private String tabela;
 	private Thread thread;
@@ -138,6 +139,7 @@ public class Objeto implements Runnable {
 		o.corFonte = corFonte;
 		o.linkAuto = linkAuto;
 		o.tabelas = tabelas;
+		o.arquivo = arquivo;
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.joins = joins;
@@ -663,6 +665,7 @@ public class Objeto implements Runnable {
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
 		sequencias = attr.getValue("sequencias");
+		arquivo = attr.getValue("arquivo");
 		tabelas = attr.getValue("tabelas");
 		setIcone(attr.getValue("icone"));
 		tabela = attr.getValue("tabela");
@@ -699,6 +702,7 @@ public class Objeto implements Runnable {
 		util.atributo("intervalo", getIntervalo());
 		util.atributo("desenharId", desenharId);
 		util.atributo("colunaInfo", colunaInfo);
+		util.atributo("arquivo", getArquivo());
 		util.atributo("tabelas", getTabelas());
 		util.atributo("abrirAuto", abrirAuto);
 		util.atributo("processar", processar);
@@ -925,5 +929,17 @@ public class Objeto implements Runnable {
 
 	public Set<String> getComplementos() {
 		return complementos;
+	}
+
+	public String getArquivo() {
+		if (Util.estaVazio(arquivo)) {
+			arquivo = Constantes.VAZIO;
+		}
+
+		return arquivo;
+	}
+
+	public void setArquivo(String arquivo) {
+		this.arquivo = arquivo;
 	}
 }

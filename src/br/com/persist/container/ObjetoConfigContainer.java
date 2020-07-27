@@ -84,6 +84,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtPrefixoNT = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
 		private CheckBox chkColunaInfo = new CheckBox();
+		private TextField txtArquivo = new TextField();
 		private CheckBox chkAbrirAuto = new CheckBox();
 		private TextField txtTabelas = new TextField();
 		private CheckBox chkLinkAuto = new CheckBox();
@@ -120,6 +121,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtSequencias.setText(objeto.getSequencias());
 			txtMapeamento.setText(objeto.getMapeamento());
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
+			txtArquivo.setText(objeto.getArquivo());
 			txtTabelas.setText(objeto.getTabelas());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
@@ -143,6 +145,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
 			txtPrefixoNT.addFocusListener(focusListenerInner);
+			txtArquivo.addFocusListener(focusListenerInner);
 			txtTabelas.addFocusListener(focusListenerInner);
 			txtTabela.addFocusListener(focusListenerInner);
 			txtChaves.addFocusListener(focusListenerInner);
@@ -172,6 +175,7 @@ public class ObjetoConfigContainer extends Panel {
 			txtIntervalo.addActionListener(this);
 			txtPrefixoNT.addActionListener(this);
 			chkLinkAuto.addActionListener(this);
+			txtArquivo.addActionListener(this);
 			txtTabelas.addActionListener(this);
 			txtChaves.addActionListener(this);
 			txtTabela.addActionListener(this);
@@ -205,6 +209,7 @@ public class ObjetoConfigContainer extends Panel {
 			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
+			container.add(criarLinha("label.arquivo", txtArquivo, Mensagens.getString("hint.arquivo_absoluto")));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.buscaAutoApos", txtBuscaAutomaticaApos,
 					Mensagens.getString("hint.buscaAutoApos")));
@@ -384,6 +389,9 @@ public class ObjetoConfigContainer extends Panel {
 						superficie.alinharNome(objeto);
 					}
 				}
+			} else if (txtArquivo == e.getSource()) {
+				objeto.setArquivo(txtArquivo.getText());
+
 			} else if (chkDesenharId == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
