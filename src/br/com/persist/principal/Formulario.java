@@ -78,6 +78,7 @@ import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.Action;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Macro;
@@ -251,7 +252,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	public class Arquivos {
 		File arquivoParent;
 
-		public void abrir(File file, boolean abrirNoFichario) {
+		public void abrir(File file, boolean abrirNoFichario, ConfigArquivo config) {
 			if (file == null || !file.isFile()) {
 				return;
 			}
@@ -262,16 +263,16 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				XML.processar(file, coletor);
 
 				if (abrirNoFichario) {
-					fichario.getArquivos().abrir(Formulario.this, file, coletor);
+					fichario.getArquivos().abrir(Formulario.this, file, coletor, config);
 				} else {
-					abrir(Formulario.this, file, coletor);
+					abrir(Formulario.this, file, coletor, config);
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
 			}
 		}
 
-		public void abrir(Formulario formulario, File file, XMLColetor coletor) {
+		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
 			ContainerFormulario form = new ContainerFormulario(formulario, file);
 			form.abrir(file, coletor, getGraphics());
 			form.setLocationRelativeTo(formulario);
@@ -587,7 +588,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 					}
 
 					for (File file : files) {
-						arquivos.abrir(file, false);
+						arquivos.abrir(file, false, null);
 					}
 				});
 
@@ -599,7 +600,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 					}
 
 					for (File file : files) {
-						arquivos.abrir(file, true);
+						arquivos.abrir(file, true, null);
 					}
 				});
 			}

@@ -90,6 +90,7 @@ import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ChaveValor;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
@@ -1301,7 +1302,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Arquivos {
-		public void abrir(Formulario formulario, File file, XMLColetor coletor) {
+		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
 
 			if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
 				addTab(null, null);
@@ -1607,7 +1608,7 @@ public class Fichario extends JTabbedPane {
 				ambientes.novo(formulario, AmbienteContainer.Ambiente.get(ambiente));
 
 			} else {
-				formulario.getArquivos().abrir(getArquivoNormalizado(f), true);
+				formulario.getArquivos().abrir(getArquivoNormalizado(f), true, null);
 			}
 		}
 	}

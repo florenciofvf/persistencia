@@ -56,6 +56,7 @@ import br.com.persist.modelo.ArvoreModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
+import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Icones;
@@ -746,7 +747,19 @@ public class Superficie extends Desktop {
 		}
 
 		private void abrirArquivo(Conexao conexao, Objeto objeto) {
-			// TODO
+			ObjetoContainerFormularioInterno interno = getObjetoContainerFormularioInterno(objeto);
+
+			ConfigArquivo config = new ConfigArquivo();
+			config.setTabela(objeto.getTabela2());
+			config.setConexao(conexao.getNome());
+
+			if (interno != null) {
+				config.setApelido(interno.getApelido());
+				config.setComplemento(interno.getComplementoChaves());
+			}
+
+			File f = new File(objeto.getArquivo());
+			formulario.getArquivos().abrir(Fichario.getArquivoNormalizado(f), false, config);
 		}
 	};
 

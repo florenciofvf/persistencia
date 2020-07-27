@@ -551,6 +551,22 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		}
 	}
 
+	protected ObjetoContainerFormularioInterno getObjetoContainerFormularioInterno(Objeto objeto) {
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+
+				if (interno.ehTabela(objeto)) {
+					return interno;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos, ObjetoContainer container) {
 		JInternalFrame[] frames = getAllFrames();
 

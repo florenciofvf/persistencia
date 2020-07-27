@@ -156,7 +156,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 		Arquivo arquivo = arvore.getObjetoSelecionado();
 
 		if (arquivo != null) {
-			formulario.getArquivos().abrir(arquivo.getFile(), false);
+			formulario.getArquivos().abrir(arquivo.getFile(), false, null);
 		}
 	}
 
@@ -188,10 +188,10 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 
 		if (arquivo != null) {
 			if (chkDuplicar.isSelected()) {
-				formulario.getArquivos().abrir(arquivo.getFile(), true);
+				formulario.getArquivos().abrir(arquivo.getFile(), true, null);
 			} else {
 				if (!formulario.getFichario().getArquivos().isAberto(arquivo.getFile())) {
-					formulario.getArquivos().abrir(arquivo.getFile(), true);
+					formulario.getArquivos().abrir(arquivo.getFile(), true, null);
 				}
 			}
 

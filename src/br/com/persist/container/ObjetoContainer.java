@@ -1740,6 +1740,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
+	public String getComplementoChaves() {
+		// TODO
+		return null;
+	}
+
 	private void threadTitulo(String titulo) {
 		if (listener == null || !destacarTitulo) {
 			return;

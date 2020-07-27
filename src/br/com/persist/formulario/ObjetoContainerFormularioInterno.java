@@ -229,6 +229,10 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
+	public boolean ehTabela(Objeto objeto) {
+		return container.getObjeto().getTabela2().equalsIgnoreCase(objeto.getTabela2());
+	}
+
 	public ObjetoContainer getObjetoContainer() {
 		return container;
 	}
@@ -247,6 +251,10 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 	public void atualizarFormulario() {
 		container.atualizarFormulario();
+	}
+
+	public String getComplementoChaves() {
+		return container.getComplementoChaves();
 	}
 
 	public String getApelido() {
