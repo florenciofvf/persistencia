@@ -36,4 +36,9 @@
 			30
 		</valor>
 	</chave_valor>
+	<chave_valor chave="LIMPAR2">
+		<valor>
+			AND 1 &gt; 2
+		</valor>
+	</chave_valor>
 </variaveis>

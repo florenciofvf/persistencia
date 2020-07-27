@@ -1647,10 +1647,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		if (!Util.estaVazio(config.getComplemento())) {
-			txtComplemento.setText(config.getComplemento());
-		}
-
+		txtComplemento.setText(config.getComplemento());
 		destacarTitulo = true;
 		tamanhoAutomatico = true;
 		ObjetoContainer.this.actionPerformed(null);
