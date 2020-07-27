@@ -1627,6 +1627,34 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		tamanhoAutomatico = false;
 	}
 
+	public void aplicarConfigArquivo(ConfigArquivo config) {
+		Conexao conexaoSel = null;
+
+		if (!Util.estaVazio(config.getConexao())) {
+			for (int i = 0; i < cmbConexao.getItemCount(); i++) {
+				Conexao c = cmbConexao.getItemAt(i);
+
+				if (config.getConexao().equalsIgnoreCase(c.getNome())) {
+					conexaoSel = c;
+					break;
+				}
+			}
+
+			if (conexaoSel != null) {
+				cmbConexao.setSelectedItem(conexaoSel);
+			}
+		}
+
+		if (!Util.estaVazio(config.getComplemento())) {
+			txtComplemento.setText(config.getComplemento());
+		}
+
+		destacarTitulo = true;
+		tamanhoAutomatico = true;
+		ObjetoContainer.this.actionPerformed(null);
+		tamanhoAutomatico = false;
+	}
+
 	public void buscaAutomaticaApos() {
 		toolbar.baixar.limpar2Acao.actionPerformed(null);
 	}
@@ -1797,9 +1825,5 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			indice--;
 		}
-	}
-
-	public void aplicarConfigArquivo(ConfigArquivo config) {
-		// TODO
 	}
 }
