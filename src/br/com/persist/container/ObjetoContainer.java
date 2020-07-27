@@ -22,8 +22,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1683,6 +1685,79 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
+	private String getComplementoChavesAux(Map<String, String> map) {
+		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+		StringBuilder sb = new StringBuilder("(");
+
+		if (it.hasNext()) {
+			Entry<String, String> entry = it.next();
+			sb.append(entry.getKey() + "=" + entry.getValue());
+		}
+
+		while (it.hasNext()) {
+			Entry<String, String> entry = it.next();
+			sb.append(" AND " + entry.getKey() + "=" + entry.getValue());
+		}
+
+		sb.append(")");
+
+		return sb.toString();
+	}
+
+	private String[] getComplementoChave(Map<String, String> map) {
+		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+		String[] array = new String[2];
+
+		if (it.hasNext()) {
+			Entry<String, String> entry = it.next();
+			array[0] = entry.getKey();
+			array[1] = entry.getValue();
+		}
+
+		return array;
+	}
+
+	public String getComplementoChaves() {
+		StringBuilder sb = new StringBuilder();
+
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		TableModel model = modelo.getModel();
+
+		if (model instanceof RegistroModelo) {
+			List<Integer> indices = TabelaUtil.getIndicesColuna(tabela);
+
+			if (!indices.isEmpty()) {
+				Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
+
+				if (chaves.size() > 1) {
+					sb.append("AND (");
+					sb.append(getComplementoChavesAux(chaves));
+
+					for (int i = 1; i < indices.size(); i++) {
+						sb.append(" OR ");
+						chaves = modelo.getMapaChaves(indices.get(i));
+						sb.append(getComplementoChavesAux(chaves));
+					}
+					sb.append(")");
+				} else if (chaves.size() == 1) {
+					String[] array = getComplementoChave(chaves);
+					String chave = array[0];
+
+					sb.append("AND " + chave + " IN(" + array[1]);
+
+					for (int i = 1; i < indices.size(); i++) {
+						sb.append(", ");
+						chaves = modelo.getMapaChaves(indices.get(i));
+						sb.append(chaves.get(chave));
+					}
+					sb.append(")");
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public void atualizarFormulario() {
 		Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
 
@@ -1767,11 +1842,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		if (conexao != null) {
 			cmbConexao.setSelectedItem(conexao);
 		}
-	}
-
-	public String getComplementoChaves() {
-		// TODO
-		return null;
 	}
 
 	private void threadTitulo(String titulo) {

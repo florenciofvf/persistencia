@@ -234,6 +234,11 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		return container.getObjeto().getTabela2().equalsIgnoreCase(objeto.getTabela2());
 	}
 
+	public boolean ehTabela(ConfigArquivo config) {
+		return getApelido().equalsIgnoreCase(config.getApelido())
+				&& container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
+	}
+
 	public ObjetoContainer getObjetoContainer() {
 		return container;
 	}
@@ -288,6 +293,8 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	public void aplicarConfigArquivo(ConfigArquivo config) {
-		container.aplicarConfigArquivo(config);
+		if (ehTabela(config)) {
+			container.aplicarConfigArquivo(config);
+		}
 	}
 }
