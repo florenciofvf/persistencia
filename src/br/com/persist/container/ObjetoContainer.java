@@ -1655,6 +1655,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		tamanhoAutomatico = true;
 		ObjetoContainer.this.actionPerformed(null);
 		tamanhoAutomatico = false;
+		TabelaUtil.ajustar(tabela, config.getGraphics());
 	}
 
 	public void buscaAutomaticaApos() {

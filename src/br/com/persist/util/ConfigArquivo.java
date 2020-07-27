@@ -1,7 +1,10 @@
 package br.com.persist.util;
 
+import java.awt.Graphics;
+
 public class ConfigArquivo {
 	private String complemento;
+	private Graphics graphics;
 	private String conexao;
 	private String apelido;
 	private String tabela;
@@ -36,5 +39,13 @@ public class ConfigArquivo {
 
 	public void setTabela(String tabela) {
 		this.tabela = tabela;
+	}
+
+	public Graphics getGraphics() {
+		return graphics;
+	}
+
+	public void setGraphics(Graphics graphics) {
+		this.graphics = graphics;
 	}
 }

@@ -752,6 +752,7 @@ public class Superficie extends Desktop {
 			ConfigArquivo config = new ConfigArquivo();
 			config.setTabela(objeto.getTabela2());
 			config.setConexao(conexao.getNome());
+			config.setGraphics(getGraphics());
 
 			if (interno != null) {
 				config.setApelido(interno.getApelido());
