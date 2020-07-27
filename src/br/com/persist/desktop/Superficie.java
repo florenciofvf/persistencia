@@ -49,6 +49,7 @@ import br.com.persist.dialogo.UpdateDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
+import br.com.persist.formulario.PropriedadesFormulario;
 import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
@@ -1412,6 +1413,7 @@ public class Superficie extends Desktop {
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
+		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action dimensaoAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
@@ -1450,6 +1452,7 @@ public class Superficie extends Desktop {
 			add(itemDimensoes2);
 			add(itemDimensoes);
 			add(true, itemAjustes);
+			addMenuItem(true, propriedadesAcao);
 
 			eventos();
 		}
@@ -1470,6 +1473,7 @@ public class Superficie extends Desktop {
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 			larTotalAcao.setActionListener(e -> larguras.total(0));
+			propriedadesAcao.setActionListener(e -> propriedades());
 
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();
@@ -1494,6 +1498,13 @@ public class Superficie extends Desktop {
 			itemAlinharDireito.setEnabled(contemFrames);
 			itemMesmaLargura.setEnabled(contemFrames);
 			itemCentralizar.setEnabled(contemFrames);
+		}
+
+		private void propriedades() {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Objetos: " + objetos.length + Constantes.QL2);
+
+			PropriedadesFormulario.criar(formulario, sb.toString());
 		}
 	}
 

@@ -1470,10 +1470,29 @@ public class Fichario extends JTabbedPane {
 		Util.mensagem(Fichario.this, sb.toString());
 	}
 
+	public static String getAbsRelativoArquivo(File arquivos, File file) {
+		if (arquivos != null && file != null) {
+			String name = file.getName();
+			String absolutePath = file.getAbsolutePath();
+			String caminhoArquivos = arquivos.getAbsolutePath();
+			int pos = absolutePath.indexOf(caminhoArquivos);
+
+			if (pos != -1) {
+				String restante = absolutePath.substring(pos + caminhoArquivos.length());
+				absolutePath = restante.replaceAll(Constantes.SEPARADOR, Constantes.SEP);
+			} else if (name.startsWith(Constantes.III)) {
+				absolutePath = name;
+			}
+
+			return absolutePath;
+		}
+
+		return null;
+	}
+
 	public class SalvarAberto {
 		public void salvar() {
 			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
-				String caminhoArquivos = ArvoreModelo.FILE.getAbsolutePath();
 				int total = getTabCount();
 
 				for (int i = 0; i < total; i++) {
@@ -1488,19 +1507,10 @@ public class Fichario extends JTabbedPane {
 						file = ((IFicharioSalvar) aba).getFileSalvarAberto();
 					}
 
-					if (file != null) {
-						String name = file.getName();
-						String absolutePath = file.getAbsolutePath();
-						int pos = absolutePath.indexOf(caminhoArquivos);
+					String absRelativoArquivo = getAbsRelativoArquivo(ArvoreModelo.FILE, file);
 
-						if (pos != -1) {
-							String restante = absolutePath.substring(pos + caminhoArquivos.length());
-							absolutePath = restante.replaceAll(Constantes.SEPARADOR, Constantes.SEP);
-						} else if (name.startsWith(Constantes.III)) {
-							absolutePath = name;
-						}
-
-						pw.print(absolutePath + Constantes.QL2);
+					if (absRelativoArquivo != null) {
+						pw.print(absRelativoArquivo + Constantes.QL2);
 					}
 				}
 
@@ -1597,16 +1607,22 @@ public class Fichario extends JTabbedPane {
 				ambientes.novo(formulario, AmbienteContainer.Ambiente.get(ambiente));
 
 			} else {
-				String name = f.getName();
-
-				if (name.startsWith(Constantes.SEP)) {
-					name = name.replaceAll(Constantes.SEP, Constantes.SEPARADOR);
-					f = new File(ArvoreModelo.FILE.getAbsolutePath() + name);
-				}
-
-				formulario.getArquivos().abrir(f, true);
+				formulario.getArquivos().abrir(getArquivoNormalizado(f), true);
 			}
 		}
+	}
+
+	public static File getArquivoNormalizado(File f) {
+		if (f != null) {
+			String name = f.getName();
+
+			if (name.startsWith(Constantes.SEP)) {
+				name = name.replaceAll(Constantes.SEP, Constantes.SEPARADOR);
+				f = new File(ArvoreModelo.FILE.getAbsolutePath() + name);
+			}
+		}
+
+		return f;
 	}
 
 	public static interface IFicharioSalvar {
