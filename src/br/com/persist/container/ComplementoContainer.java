@@ -29,12 +29,14 @@ public class ComplementoContainer extends Panel {
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JList<String> complementos;
+	private final transient Objeto objeto;
 
 	public ComplementoContainer(IJanela janela, Objeto objeto, TextField txtComplemento, ComplementoListener listener) {
 		complementos = new JList<>(new ListaStringModelo(objeto.getComplementos()));
 		complementos.addMouseListener(mouseListenerInner);
 		textArea.setText(txtComplemento.getText());
 		this.listener = listener;
+		this.objeto = objeto;
 		toolbar.ini(janela);
 		montarLayout();
 	}
@@ -63,10 +65,12 @@ public class ComplementoContainer extends Panel {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
+		private Action limparCompleAcao = Action.actionIcon("label.limpar_complementos", Icones.NOVO);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, false);
 
+			addButton(limparCompleAcao);
 			addButton(sucessoAcao);
 			configCopiar1Acao(true);
 
@@ -75,6 +79,8 @@ public class ComplementoContainer extends Panel {
 				listener.processarComplemento(string);
 				fechar();
 			});
+
+			limparCompleAcao.setActionListener(e -> limparComplementos());
 		}
 
 		@Override
@@ -92,6 +98,13 @@ public class ComplementoContainer extends Panel {
 		@Override
 		protected void limpar() {
 			textArea.limpar();
+		}
+
+		private void limparComplementos() {
+			if (Util.confirmaExclusao(ComplementoContainer.this)) {
+				objeto.getComplementos().clear();
+				complementos.setModel(new ListaStringModelo(objeto.getComplementos()));
+			}
 		}
 	}
 }
