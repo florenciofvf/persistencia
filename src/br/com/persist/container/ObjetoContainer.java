@@ -1768,6 +1768,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		tamanhoAutomatico = false;
 	}
 
+	public void limpar() {
+		toolbar.baixar.limpar2Acao.actionPerformed(null);
+	}
+
 	private transient TabelaListener tabelaListener = new TabelaListener() {
 		@Override
 		public void copiarNomeColuna(Tabela tabela, String nome, String anterior) {

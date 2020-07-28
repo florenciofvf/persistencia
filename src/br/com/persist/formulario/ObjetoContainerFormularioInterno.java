@@ -259,6 +259,10 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		container.atualizarFormulario();
 	}
 
+	public void limpar() {
+		container.limpar();
+	}
+
 	public String getComplementoChaves() {
 		return container.getComplementoChaves();
 	}

@@ -1433,6 +1433,7 @@ public class Superficie extends Desktop {
 		private Action alinharDireitoAcao = Action.actionMenu("label.alinhar_direito", Icones.ALINHA_DIREITO);
 		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
 		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
+		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
@@ -1467,6 +1468,7 @@ public class Superficie extends Desktop {
 			add(itemCriarObjeto);
 			add(true, itemColar);
 			add(true, itemAtualizarForms);
+			addMenuItem(limparFormulariosAcao);
 			add(true, itemMesmaLargura);
 			add(itemAlinharDireito);
 			add(itemAlinharSomenteDireito);
@@ -1515,6 +1517,17 @@ public class Superficie extends Desktop {
 				}
 			});
 
+			limparFormulariosAcao.setActionListener(e -> {
+				JInternalFrame[] frames = getAllFrames();
+
+				for (JInternalFrame frame : frames) {
+					if (frame instanceof ObjetoContainerFormularioInterno) {
+						ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+						interno.limpar();
+					}
+				}
+			});
+
 			colarAcao.setActionListener(
 					e -> Formulario.CopiarColar.colar(Superficie.this, true, popup2.xLocal, popup2.yLocal));
 		}
@@ -1522,6 +1535,7 @@ public class Superficie extends Desktop {
 		void preShow(boolean contemFrames) {
 			itemColar.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
 			itemAlinharSomenteDireito.setEnabled(contemFrames);
+			limparFormulariosAcao.setEnabled(contemFrames);
 			itemAlinharEsquerdo.setEnabled(contemFrames);
 			itemAtualizarForms.setEnabled(contemFrames);
 			itemAlinharDireito.setEnabled(contemFrames);
