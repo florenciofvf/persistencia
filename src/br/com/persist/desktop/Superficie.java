@@ -721,55 +721,55 @@ public class Superficie extends Desktop {
 				}
 			}
 		}
-
-		private void abrirObjeto(Objeto objeto, boolean checarApelido, boolean checarArquivo) {
-			Frame frame = formulario;
-
-			if (container.getContainerFormulario() != null) {
-				frame = container.getContainerFormulario();
-			}
-
-			if (!Util.estaVazio(objeto.getTabela2())) {
-				Conexao conexao = container.getConexaoPadrao();
-				setComplemento(conexao, objeto);
-
-				if (Util.estaVazio(objeto.getArquivo())) {
-					abrirObjetoDados(conexao, objeto, frame);
-				} else {
-					if (checarArquivo) {
-						abrirArquivo(conexao, objeto, checarApelido);
-					} else {
-						abrirObjetoDados(conexao, objeto, frame);
-					}
-				}
-			} else {
-				popup.configuracaoAcao.actionPerformed(null);
-			}
-		}
-
-		private void abrirObjetoDados(Conexao conexao, Objeto objeto, Frame frame) {
-			ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());
-			form.setLocationRelativeTo(frame);
-			form.setVisible(true);
-		}
-
-		private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarApelido) {
-			ObjetoContainerFormularioInterno interno = getObjetoContainerFormularioInterno(objeto);
-
-			ConfigArquivo config = new ConfigArquivo(checarApelido);
-			config.setTabela(objeto.getTabela2());
-			config.setConexao(conexao.getNome());
-			config.setGraphics(getGraphics());
-
-			if (interno != null) {
-				config.setApelido(interno.getApelido());
-				config.setComplemento(interno.getComplementoChaves());
-			}
-
-			File f = new File(objeto.getArquivo());
-			formulario.getArquivos().abrir(Fichario.getArquivoNormalizado(f), false, config);
-		}
 	};
+
+	private void abrirObjeto(Objeto objeto, boolean checarApelido, boolean checarArquivo) {
+		Frame frame = formulario;
+
+		if (container.getContainerFormulario() != null) {
+			frame = container.getContainerFormulario();
+		}
+
+		if (!Util.estaVazio(objeto.getTabela2())) {
+			Conexao conexao = container.getConexaoPadrao();
+			setComplemento(conexao, objeto);
+
+			if (Util.estaVazio(objeto.getArquivo())) {
+				abrirObjetoDados(conexao, objeto, frame);
+			} else {
+				if (checarArquivo) {
+					abrirArquivo(conexao, objeto, checarApelido);
+				} else {
+					abrirObjetoDados(conexao, objeto, frame);
+				}
+			}
+		} else {
+			popup.configuracaoAcao.actionPerformed(null);
+		}
+	}
+
+	private void abrirObjetoDados(Conexao conexao, Objeto objeto, Frame frame) {
+		ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());
+		form.setLocationRelativeTo(frame);
+		form.setVisible(true);
+	}
+
+	private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarApelido) {
+		ObjetoContainerFormularioInterno interno = getObjetoContainerFormularioInterno(objeto);
+
+		ConfigArquivo config = new ConfigArquivo(checarApelido);
+		config.setTabela(objeto.getTabela2());
+		config.setConexao(conexao.getNome());
+		config.setGraphics(getGraphics());
+
+		if (interno != null) {
+			config.setApelido(interno.getApelido());
+			config.setComplemento(interno.getComplementoChaves());
+		}
+
+		File f = new File(objeto.getArquivo());
+		formulario.getArquivos().abrir(Fichario.getArquivoNormalizado(f), false, config);
+	}
 
 	public static void setComplemento(Conexao conexao, Objeto objeto) {
 		if (conexao != null && objeto != null && Util.estaVazio(objeto.getComplemento())) {
@@ -1276,8 +1276,12 @@ public class Superficie extends Desktop {
 
 		private void eventos() {
 			dadosAcao.setActionListener(e -> {
-				MouseEvent evt = new MouseEvent(Superficie.this, 0, 0, 0, 0, 0, 2, false);
-				mouseAdapterSelecao.mouseClicked(evt);
+				Object object = itemDados.getObject();
+
+				if (object instanceof Objeto) {
+					Objeto objeto = (Objeto) object;
+					abrirObjeto(objeto, false, false);
+				}
 			});
 
 			excluirAcao.setActionListener(e -> excluirSelecionados());
@@ -1309,6 +1313,7 @@ public class Superficie extends Desktop {
 		void preShow(boolean objetoSelecionado) {
 			itemDados.setEnabled(
 					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2()));
+			itemDados.setObject(itemDados.isEnabled() ? selecionadoObjeto : null);
 			menuDistribuicao.setEnabled(objetoSelecionado);
 			menuAlinhamento.setEnabled(objetoSelecionado);
 			menuDestacar.setEnabled(objetoSelecionado);
