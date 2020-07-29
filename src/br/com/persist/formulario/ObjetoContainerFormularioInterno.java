@@ -265,6 +265,14 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		container.limpar();
 	}
 
+	public boolean ehObjeto(Objeto objeto) {
+		if (objeto == null) {
+			return false;
+		}
+
+		return container.getObjeto() == objeto || container.getObjeto().getId().equals(objeto.getId());
+	}
+
 	public String getComplementoChaves() {
 		return container.getComplementoChaves();
 	}
