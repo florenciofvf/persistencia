@@ -715,14 +715,14 @@ public class Superficie extends Desktop {
 
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (selecionadoObjeto != null) {
-					abrirObjeto(selecionadoObjeto, false );
+					abrirObjeto(selecionadoObjeto, false, true);
 				} else if (selecionadoRelacao != null) {
 					popup.configuracaoAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		private void abrirObjeto(Objeto objeto, boolean checarApelido) {
+		private void abrirObjeto(Objeto objeto, boolean checarApelido, boolean checarArquivo) {
 			Frame frame = formulario;
 
 			if (container.getContainerFormulario() != null) {
@@ -734,16 +734,23 @@ public class Superficie extends Desktop {
 				setComplemento(conexao, objeto);
 
 				if (Util.estaVazio(objeto.getArquivo())) {
-					ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto,
-							getGraphics());
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					abrirObjetoDados(conexao, objeto, frame);
 				} else {
-					abrirArquivo(conexao, objeto, checarApelido);
+					if (checarArquivo) {
+						abrirArquivo(conexao, objeto, checarApelido);
+					} else {
+						abrirObjetoDados(conexao, objeto, frame);
+					}
 				}
 			} else {
 				popup.configuracaoAcao.actionPerformed(null);
 			}
+		}
+
+		private void abrirObjetoDados(Conexao conexao, Objeto objeto, Frame frame) {
+			ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());
+			form.setLocationRelativeTo(frame);
+			form.setVisible(true);
 		}
 
 		private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarApelido) {
