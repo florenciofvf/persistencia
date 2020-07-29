@@ -749,7 +749,7 @@ public class Superficie extends Desktop {
 		private void abrirArquivo(Conexao conexao, Objeto objeto) {
 			ObjetoContainerFormularioInterno interno = getObjetoContainerFormularioInterno(objeto);
 
-			ConfigArquivo config = new ConfigArquivo();
+			ConfigArquivo config = new ConfigArquivo(false);
 			config.setTabela(objeto.getTabela2());
 			config.setConexao(conexao.getNome());
 			config.setGraphics(getGraphics());

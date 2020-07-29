@@ -235,8 +235,10 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	public boolean ehTabela(ConfigArquivo config) {
-		return getApelido().equalsIgnoreCase(config.getApelido())
-				&& container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
+		return config.isChecarApelido()
+				? getApelido().equalsIgnoreCase(config.getApelido())
+						&& container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela())
+				: container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
 	}
 
 	public ObjetoContainer getObjetoContainer() {

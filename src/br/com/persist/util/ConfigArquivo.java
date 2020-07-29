@@ -3,11 +3,16 @@ package br.com.persist.util;
 import java.awt.Graphics;
 
 public class ConfigArquivo {
+	private final boolean checarApelido;
 	private String complemento;
 	private Graphics graphics;
 	private String conexao;
 	private String apelido;
 	private String tabela;
+
+	public ConfigArquivo(boolean checarApelido) {
+		this.checarApelido = checarApelido;
+	}
 
 	public String getComplemento() {
 		return complemento;
@@ -47,5 +52,9 @@ public class ConfigArquivo {
 
 	public void setGraphics(Graphics graphics) {
 		this.graphics = graphics;
+	}
+
+	public boolean isChecarApelido() {
+		return checarApelido;
 	}
 }
