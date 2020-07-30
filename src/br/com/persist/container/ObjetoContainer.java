@@ -99,6 +99,7 @@ import br.com.persist.util.Util;
 
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable, IIni {
 	private static final long serialVersionUID = 1L;
+	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private final AtomicBoolean processado = new AtomicBoolean();
 	private final TextField txtComplemento = new TextField(33);
@@ -124,8 +125,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		listaLink = LinkAuto.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
-		txtComplemento.addActionListener(new ActionListenerInner());
 		txtComplemento.addMouseListener(mouseComplementoListener);
+		txtComplemento.addActionListener(actionListenerInner);
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		txtComplemento.setText(objeto.getComplemento());
 		tabela.setTabelaListener(tabelaListener);
@@ -298,16 +299,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 
 					txtComplemento.setText(cv.getValor());
-
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = true;
-					}
-
-					ObjetoContainer.this.actionPerformed(null);
-
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = false;
-					}
+					actionListenerInner.actionPerformed(null);
 				});
 			}
 		}
@@ -385,15 +377,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						txtComplemento.setText(s + " " + complement);
 					}
 
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = true;
-					}
-
-					ObjetoContainer.this.actionPerformed(null);
-
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = false;
-					}
+					actionListenerInner.actionPerformed(null);
 				}
 			}
 		}
@@ -437,33 +421,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 				});
 
-				atualizarAcao.setActionListener(e -> {
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = true;
-					}
-
-					ObjetoContainer.this.actionPerformed(null);
-
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = false;
-					}
-				});
+				atualizarAcao.setActionListener(e -> actionListenerInner.actionPerformed(null));
 
 				sincronizarAcao.setActionListener(e -> {
 					CabecalhoColuna temp = cabecalhoFiltro;
 					processado.set(true);
 
 					cabecalhoFiltro = null;
-
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = true;
-					}
-
-					ObjetoContainer.this.actionPerformed(null);
-
-					if (objeto.isAjusteAutoEnter()) {
-						tamanhoAutomatico = false;
-					}
+					actionListenerInner.actionPerformed(null);
 
 					if (!processado.get()) {
 						cabecalhoFiltro = temp;
@@ -849,7 +814,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 								+ objeto.getTabelaEsquema(conexao.getEsquema()) + ")");
 					}
 
-					ObjetoContainer.this.actionPerformed(null);
+					actionListenerInner.actionPerformed(null);
 				}
 			}
 
@@ -1349,16 +1314,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		@Override
 		public void processarComplemento(String string) {
 			txtComplemento.setText(string);
-
-			if (objeto.isAjusteAutoEnter()) {
-				tamanhoAutomatico = true;
-			}
-
-			actionPerformed(null);
-
-			if (objeto.isAjusteAutoEnter()) {
-				tamanhoAutomatico = false;
-			}
+			actionListenerInner.actionPerformed(null);
 		}
 
 		@Override
@@ -1568,16 +1524,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		@Override
 		public void configFragmento(Fragmento f) {
 			txtComplemento.setText(f.getValor());
-
-			if (objeto.isAjusteAutoEnter()) {
-				tamanhoAutomatico = true;
-			}
-
-			actionPerformed(null);
-
-			if (objeto.isAjusteAutoEnter()) {
-				tamanhoAutomatico = false;
-			}
+			actionListenerInner.actionPerformed(null);
 		}
 
 		@Override
@@ -1608,6 +1555,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 	}
+
+	//
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
