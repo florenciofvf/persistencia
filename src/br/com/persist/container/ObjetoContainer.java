@@ -1507,9 +1507,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				contadorAuto++;
 				toolbar.atualizar.itemAtualizarAuto
 						.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO) + " " + contadorAuto);
-				tamanhoAutomatico = true;
-				actionPerformed(null);
-				tamanhoAutomatico = false;
+				actionListenerInner.processar();
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
@@ -1554,9 +1552,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				tamanhoAutomatico = false;
 			}
 		}
-	}
 
-	//
+		private void processar() {
+			tamanhoAutomatico = true;
+			ObjetoContainer.this.actionPerformed(null);
+			tamanhoAutomatico = false;
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1573,9 +1575,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		txtComplemento.setText("AND " + campo + " IN (" + argumentos + ")");
 		destacarTitulo = true;
-		tamanhoAutomatico = true;
-		ObjetoContainer.this.actionPerformed(null);
-		tamanhoAutomatico = false;
+		actionListenerInner.processar();
 	}
 
 	public void aplicarConfigArquivo(ConfigArquivo config) {
@@ -1598,9 +1598,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		txtComplemento.setText(config.getComplemento());
 		destacarTitulo = true;
-		tamanhoAutomatico = true;
-		ObjetoContainer.this.actionPerformed(null);
-		tamanhoAutomatico = false;
+		actionListenerInner.processar();
 		TabelaUtil.ajustar(tabela, config.getGraphics());
 	}
 
@@ -1712,9 +1710,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return;
 		}
 
-		tamanhoAutomatico = true;
-		ObjetoContainer.this.actionPerformed(null);
-		tamanhoAutomatico = false;
+		actionListenerInner.processar();
 	}
 
 	public void limpar() {
