@@ -363,7 +363,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
 					new ScrollPane(panelResultados));
-			split.setDividerLocation(200);
+			split.setDividerLocation(Constantes.SIZE.height / 2);
 
 			add(BorderLayout.CENTER, split);
 		}
