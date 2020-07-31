@@ -1620,7 +1620,13 @@ public class Fichario extends JTabbedPane {
 			String name = f.getName();
 
 			if (name.startsWith(Constantes.SEP)) {
-				name = name.replaceAll(Constantes.SEP, Constantes.SEPARADOR);
+				String string = Constantes.SEPARADOR;
+
+				if (string.equals("\\")) {
+					string += "\\";
+				}
+
+				name = name.replaceAll(Constantes.SEP, string);
 				f = new File(ArvoreModelo.FILE.getAbsolutePath() + name);
 			}
 		}
