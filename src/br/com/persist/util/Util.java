@@ -835,4 +835,23 @@ public class Util {
 
 		area.setText(text + Constantes.QL2 + string);
 	}
+
+	public static String replaceAll(String string, String atual, String novo) {
+		if (estaVazio(string) || atual == null || novo == null) {
+			return null;
+		}
+
+		int indice = 0;
+		int pos = string.indexOf(atual);
+
+		while (pos != -1) {
+			String antes = string.substring(0, pos);
+			String apos = string.substring(pos + atual.length());
+			string = antes + novo + apos;
+			indice = antes.length() + novo.length();
+			pos = string.indexOf(atual, indice);
+		}
+
+		return string;
+	}
 }

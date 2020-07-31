@@ -1482,7 +1482,7 @@ public class Fichario extends JTabbedPane {
 
 			if (pos != -1) {
 				String restante = absolutePath.substring(pos + caminhoArquivos.length());
-				absolutePath = restante.replaceAll(Constantes.SEPARADOR, Constantes.SEP);
+				absolutePath = Util.replaceAll(restante, Constantes.SEPARADOR, Constantes.SEP);
 			} else if (name.startsWith(Constantes.III)) {
 				absolutePath = name;
 			}
@@ -1620,13 +1620,7 @@ public class Fichario extends JTabbedPane {
 			String name = f.getName();
 
 			if (name.startsWith(Constantes.SEP)) {
-				String string = Constantes.SEPARADOR;
-
-				if (string.equals("\\")) {
-					string += "\\";
-				}
-
-				name = name.replaceAll(Constantes.SEP, string);
+				name = Util.replaceAll(name, Constantes.SEP, Constantes.SEPARADOR);
 				f = new File(ArvoreModelo.FILE.getAbsolutePath() + name);
 			}
 		}
