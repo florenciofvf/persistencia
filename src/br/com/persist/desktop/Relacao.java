@@ -168,6 +168,10 @@ public class Relacao {
 		int x2 = destino.x + raio;
 		int y2 = destino.y + raio;
 
+		return quebrado ? contemQuebrada(posX, posY, x1, y1, x2, y2) : contemVet(posX, posY, x1, y1, x2, y2);
+	}
+
+	private boolean contemVet(int posX, int posY, int x1, int y1, int x2, int y2) {
 		int x = x2 - x1;
 		int y = y2 - y1;
 		double h = Math.sqrt((double) (x * x + y * y));
@@ -210,8 +214,8 @@ public class Relacao {
 		int x2 = destino.x + raio;
 		int y2 = destino.y + raio;
 
-		if (quebrado && origem.y != destino.y) {
-			desenharLinhaQuebrada(g2, x1, y1, x2, y2, origem.y < destino.y);
+		if (quebrado) {
+			desenharLinhaQuebrada(g2, x1, y1, x2, y2);
 		} else {
 			g2.drawLine(x1, y1, x2, y2);
 		}
@@ -224,16 +228,84 @@ public class Relacao {
 		}
 	}
 
-	private void desenharLinhaQuebrada(Graphics2D g2, int x1, int y1, int x2, int y2, boolean origemMenor) {
-		if (origemMenor) {
-			int delta = x2 - x1;
-			g2.drawLine(x1, y1, x1, y2);
-			g2.drawLine(x1, y2, x1 + delta, y2);
-		} else {
-			int delta = x1 - x2;
-			g2.drawLine(x2, y2, x2, y1);
-			g2.drawLine(x2, y1, x2 + delta, y1);
+	private boolean contemQuebrada(int posX, int posY, int x1, int y1, int x2, int y2) {
+		if (x1 == x2 || y1 == y2) {
+			return contemVet(posX, posY, x1, y1, x2, y2);
 		}
+
+		int[] x1x2Aux = x1x2(x1, x2);
+		int[] y1y2Aux = y1y2(y1, y2);
+
+		if (contemV(posX, posY, y1y2Aux[0], y1y2Aux[1], x1x2Aux[0])) {
+			return true;
+		}
+
+		int y = 0;
+
+		if (x1 < x2) {
+			if (y1 < y2) {
+				y = y1y2Aux[1];
+			} else {
+				y = y1y2Aux[0];
+			}
+		} else {
+			if (y1 < y2) {
+				y = y1y2Aux[0];
+			} else {
+				y = y1y2Aux[1];
+			}
+		}
+
+		return contemH(posX, posY, x1x2Aux[0], x1x2Aux[1], y);
+	}
+
+	private void desenharLinhaQuebrada(Graphics2D g2, int x1, int y1, int x2, int y2) {
+		if (x1 == x2 || y1 == y2) {
+			g2.drawLine(x1, y1, x2, y2);
+		} else {
+			int[] x1x2Aux = x1x2(x1, x2);
+			int[] y1y2Aux = y1y2(y1, y2);
+
+			g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1]);
+
+			if (x1 < x2) {
+				if (y1 < y2) {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+				} else {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+				}
+			} else {
+				if (y1 < y2) {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+				} else {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+				}
+			}
+		}
+	}
+
+	private int[] x1x2(int x1, int x2) {
+		return x1 < x2 ? new int[] { x1, x2 } : new int[] { x2, x1 };
+	}
+
+	private int[] y1y2(int y1, int y2) {
+		return y1 < y2 ? new int[] { y1, y2 } : new int[] { y2, y1 };
+	}
+
+	private boolean contemH(int posX, int posY, int x1, int x2, int y) {
+		int l = x2 - x1;
+		y -= 4;
+		return contem(posX, posY, x1, y, l, 8);
+	}
+
+	private boolean contemV(int posX, int posY, int y1, int y2, int x) {
+		int a = y2 - y1;
+		x -= 4;
+		return contem(posX, posY, x, y1, 8, a);
+	}
+
+	private boolean contem(int posX, int posY, int x, int y, int l, int a) {
+		return (posX >= x && posX <= x + l) && (posY >= y && posY <= y + a);
 	}
 
 	private void desenharPontos(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
