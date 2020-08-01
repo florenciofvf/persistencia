@@ -103,8 +103,8 @@ public class Util {
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
-	public static boolean confirmaExclusao(Component componente) {
-		return confirmar(componente, "msg.confirma_exclusao");
+	public static boolean confirmaExclusao(Component componente, boolean objetos) {
+		return confirmar(componente, objetos ? "msg.confirma_exclusao_objetos" : "msg.confirma_exclusao_registros");
 	}
 
 	public static boolean confirmar(Component componente, String chaveMsg) {

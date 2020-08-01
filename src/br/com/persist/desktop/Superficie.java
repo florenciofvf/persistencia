@@ -882,7 +882,7 @@ public class Superficie extends Desktop {
 		boolean confirmado = false;
 
 		if (objeto != null) {
-			if (Util.confirmaExclusao(Superficie.this)) {
+			if (Util.confirmaExclusao(Superficie.this, true)) {
 				confirmado = true;
 			} else {
 				return;
@@ -896,7 +896,7 @@ public class Superficie extends Desktop {
 
 		Relacao relacao = getPrimeiroRelacaoSelecionado();
 
-		if (relacao != null && !confirmado && !Util.confirmaExclusao(Superficie.this)) {
+		if (relacao != null && !confirmado && !Util.confirmaExclusao(Superficie.this, true)) {
 			return;
 		}
 
@@ -1895,7 +1895,7 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		if (contem && Util.confirmaExclusao(Superficie.this)) {
+		if (contem && Util.confirmaExclusao(Superficie.this, true)) {
 			for (Objeto objeto : objetos) {
 				if (Util.estaVazio(objeto.getTabela2())) {
 					excluir(objeto);

@@ -101,7 +101,7 @@ public class ComplementoContainer extends Panel {
 		}
 
 		private void limparComplementos() {
-			if (Util.confirmaExclusao(ComplementoContainer.this)) {
+			if (Util.confirmaExclusao(ComplementoContainer.this, false)) {
 				objeto.getComplementos().clear();
 				complementos.setModel(new ListaStringModelo(objeto.getComplementos()));
 			}

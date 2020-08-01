@@ -219,7 +219,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo != null && arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile())
-				&& Util.confirmaExclusao(AnexoContainer.this)) {
+				&& Util.confirmaExclusao(AnexoContainer.this, false)) {
 			arquivo.excluir();
 			AnexoUtil.excluirEstrutura(anexo, arquivo);
 		}

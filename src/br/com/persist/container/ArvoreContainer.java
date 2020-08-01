@@ -237,7 +237,7 @@ public class ArvoreContainer extends AbstratoContainer implements ArvoreListener
 		File root = ArvoreUtil.getRoot(this.arvore);
 
 		if (arquivo != null && arquivo.getPai() != null && root != null && !root.equals(arquivo.getFile())
-				&& Util.confirmaExclusao(ArvoreContainer.this)) {
+				&& Util.confirmaExclusao(ArvoreContainer.this, false)) {
 			arquivo.excluir();
 			ArvoreUtil.excluirEstrutura(arvore, arquivo);
 		}

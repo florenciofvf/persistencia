@@ -315,7 +315,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			public void actionPerformed(ActionEvent e) {
 				int[] linhas = tabela.getSelectedRows();
 
-				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(ObjetoContainer.this)) {
+				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(ObjetoContainer.this, false)) {
 					OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
 
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
