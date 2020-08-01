@@ -60,6 +60,7 @@ public class Objeto implements Runnable {
 	protected boolean controlado;
 	private String finalConsulta;
 	private boolean selecionado;
+	private boolean ccsc = true;
 	private boolean desenharId;
 	private String complemento;
 	private String chaveamento;
@@ -79,7 +80,6 @@ public class Objeto implements Runnable {
 	private String chaves;
 	private String joins;
 	private String icone;
-	private boolean ccsc;
 	private boolean bpnt;
 	private Icon icon;
 	private String id;
