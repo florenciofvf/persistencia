@@ -2,6 +2,7 @@ package br.com.persist.desktop;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.util.Objects;
 
 import org.xml.sax.Attributes;
@@ -199,13 +200,14 @@ public class Relacao {
 		return (int) Math.sqrt((double) (x * x + y * y));
 	}
 
-	public void desenhar(Graphics2D g2) {
+	public void desenhar(Graphics2D g2, Stroke stroke) {
 		int raio = Objeto.DIAMETRO / 2;
 		int meta = raio / 2;
 
 		g2.setColor(cor);
 
 		if (selecionado) {
+			g2.setStroke(Constantes.STROKE_PADRAO);
 			g2.setColor(Color.CYAN);
 		}
 
@@ -225,6 +227,10 @@ public class Relacao {
 		if (desenharDescricao && descricao != null) {
 			g2.setColor(corFonte);
 			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
+		}
+
+		if (selecionado) {
+			g2.setStroke(stroke);
 		}
 	}
 

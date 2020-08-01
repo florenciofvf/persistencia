@@ -1,6 +1,5 @@
 package br.com.persist.fichario;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -124,7 +123,7 @@ public class TituloAba extends Panel {
 				g2.translate(1, 1);
 			}
 
-			g2.setStroke(new BasicStroke(2));
+			g2.setStroke(Constantes.STROKE_PADRAO);
 			g2.setColor(Color.BLACK);
 
 			if (getModel().isRollover()) {

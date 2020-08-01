@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -858,6 +859,7 @@ public class Superficie extends Desktop {
 		super.paint(g);
 
 		Graphics2D g2 = (Graphics2D) g;
+		Stroke stroke = g2.getStroke();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		if (estado == Constantes.RELACAO) {
@@ -865,11 +867,11 @@ public class Superficie extends Desktop {
 		}
 
 		for (Relacao relacao : relacoes) {
-			relacao.desenhar(g2);
+			relacao.desenhar(g2, stroke);
 		}
 
 		for (Objeto objeto : objetos) {
-			objeto.desenhar(this, g2);
+			objeto.desenhar(this, g2, stroke);
 		}
 
 		area.desenhar(g2);

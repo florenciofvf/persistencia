@@ -1,6 +1,8 @@
 package br.com.persist.util;
 
+import java.awt.BasicStroke;
 import java.awt.Dimension;
+import java.awt.Stroke;
 import java.io.File;
 
 public class Constantes {
@@ -65,6 +67,7 @@ public class Constantes {
 	public static final String LABEL_APARENCIA = "label.aparencia";
 	public static final Dimension SIZE2 = new Dimension(1000, 800);
 	public static final Dimension SIZE = new Dimension(1000, 700);
+	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";

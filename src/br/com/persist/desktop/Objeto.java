@@ -9,6 +9,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -583,7 +584,7 @@ public class Objeto implements Runnable {
 		return id;
 	}
 
-	public void desenhar(Component c, Graphics2D g2) {
+	public void desenhar(Component c, Graphics2D g2, Stroke stroke) {
 		Composite composite = g2.getComposite();
 		Shape shape = g2.getClip();
 
@@ -633,8 +634,10 @@ public class Objeto implements Runnable {
 		}
 
 		if (selecionado) {
+			g2.setStroke(Constantes.STROKE_PADRAO);
 			g2.setColor(Color.CYAN);
 			g2.drawOval(x - margem3, y - margem3, DIAMETRO + margem4, DIAMETRO + margem4);
+			g2.setStroke(stroke);
 		}
 	}
 
