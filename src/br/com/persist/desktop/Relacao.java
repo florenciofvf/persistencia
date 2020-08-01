@@ -190,7 +190,7 @@ public class Relacao {
 		int auxX1 = (int) (auxX * hPos);
 		int auxY1 = (int) (auxY * hPos);
 
-		return comprimento(auxX1, auxY1, xPos, yPos) < 7;
+		return comprimento(auxX1, auxY1, xPos, yPos) < 9;
 	}
 
 	private int comprimento(int x1, int y1, int x2, int y2) {
@@ -294,14 +294,14 @@ public class Relacao {
 
 	private boolean contemH(int posX, int posY, int x1, int x2, int y) {
 		int l = x2 - x1;
-		y -= 4;
-		return contem(posX, posY, x1, y, l, 8);
+		y -= 8;
+		return contem(posX, posY, x1, y, l, 16);
 	}
 
 	private boolean contemV(int posX, int posY, int y1, int y2, int x) {
 		int a = y2 - y1;
-		x -= 4;
-		return contem(posX, posY, x, y1, 8, a);
+		x -= 8;
+		return contem(posX, posY, x, y1, 16, a);
 	}
 
 	private boolean contem(int posX, int posY, int x, int y, int l, int a) {
