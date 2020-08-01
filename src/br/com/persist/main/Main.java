@@ -15,12 +15,15 @@ import javax.swing.UIManager;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 
 public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
+		ini();
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		} catch (Exception e) {
@@ -73,5 +76,15 @@ public class Main {
 		}
 
 		return urls.toArray(new URL[urls.size()]);
+	}
+
+	private static void ini() {
+		String can = Mensagens.getString("label.cancelar");
+		String sim = Mensagens.getString("label.sim");
+		String nao = Mensagens.getString("label.nao");
+
+		UIManager.put("OptionPane.cancelButtonText", can);
+		UIManager.put("OptionPane.yesButtonText", sim);
+		UIManager.put("OptionPane.noButtonText", nao);
 	}
 }
