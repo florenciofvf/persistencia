@@ -1543,7 +1543,11 @@ public class Superficie extends Desktop {
 			alinharDireitoAcao.setEnabled(contemFrames);
 			atualizarFormAcao.setEnabled(contemFrames);
 			mesmaLarguraAcao.setEnabled(contemFrames);
+			larTotalDirAcao.setEnabled(contemFrames);
 			centralizarAcao.setEnabled(contemFrames);
+			larTotalEsqAcao.setEnabled(contemFrames);
+			distribuirAcao.setEnabled(contemFrames);
+			larTotalAcao.setEnabled(contemFrames);
 		}
 
 		private void propriedades() {
