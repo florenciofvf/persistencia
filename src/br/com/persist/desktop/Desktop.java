@@ -213,7 +213,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 	}
 
 	public class Ajuste {
-		public void ajusteDesktop() {
+		public void ajusteDesktopUsandoForms() {
 			int largura = 0;
 			int altura = 0;
 
@@ -348,7 +348,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			}
 
 			alinhamento.centralizar();
-			ajuste.ajusteDesktop();
+			ajuste.ajusteDesktopUsandoForms();
 		}
 	}
 
@@ -491,19 +491,18 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
 		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
+		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
-		private Action dimensaoAcao = Action.actionMenu("label.dimensao", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 
 		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
 		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
 		MenuItem itemDimensoes3 = new MenuItem(dimensaoAcao3);
 		MenuItem itemDimensoes4 = new MenuItem(dimensaoAcao4);
-		MenuItem itemDimensoes = new MenuItem(dimensaoAcao);
 		MenuItem itemAjustes = new MenuItem(ajustarAcao);
 
 		DesktopPopup() {
@@ -515,8 +514,8 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			add(true, itemDimensoes4);
 			add(itemDimensoes3);
 			add(itemDimensoes2);
-			add(itemDimensoes);
-			add(true, itemAjustes);
+			addMenuItem(true, dimensaoAcao);
+			add(itemAjustes);
 
 			eventos();
 		}
@@ -528,7 +527,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			larTotalDirAcao.setActionListener(e -> larguras.total(1));
 			larTotalEsqAcao.setActionListener(e -> larguras.total(2));
 			ajustarAcao.setActionListener(e -> ajuste.ajustarDesktop());
-			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktop());
+			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 			larTotalAcao.setActionListener(e -> larguras.total(0));
