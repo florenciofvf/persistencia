@@ -213,6 +213,11 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 	}
 
 	public class Ajuste {
+		public void ajusteDesktopRetirarRolagem() {
+			setPreferredSize(new Dimension(1, 1));
+			SwingUtilities.updateComponentTreeUI(getParent());
+		}
+
 		public void ajusteDesktopUsandoForms() {
 			int largura = 0;
 			int altura = 0;
@@ -491,6 +496,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
 		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
+		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
 		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
@@ -515,6 +521,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 			add(itemDimensoes3);
 			add(itemDimensoes2);
 			addMenuItem(true, dimensaoAcao);
+			addMenuItem(retirarRolagemAcao);
 			add(itemAjustes);
 
 			eventos();
@@ -523,6 +530,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		private void eventos() {
 			dimensaoAcao4.setActionListener(e -> ajuste.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajuste.ajusteObjetoFormulario(true, false));
+			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
 			dimensaoAcao3.setActionListener(e -> ajuste.ajusteFormulario());
 			larTotalDirAcao.setActionListener(e -> larguras.total(1));
 			larTotalEsqAcao.setActionListener(e -> larguras.total(2));
