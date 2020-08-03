@@ -29,7 +29,6 @@ import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
-import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.fichario.Fichario;
@@ -505,24 +504,18 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 
-		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
-		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
-		MenuItem itemDimensoes3 = new MenuItem(dimensaoAcao3);
-		MenuItem itemDimensoes4 = new MenuItem(dimensaoAcao4);
-		MenuItem itemAjustes = new MenuItem(ajustarAcao);
-
 		DesktopPopup() {
 			addMenuItem(larTotalAcao);
 			addMenuItem(larTotalDirAcao);
 			addMenuItem(larTotalEsqAcao);
 			addMenuItem(true, distribuirAcao);
-			add(true, itemCentralizar);
-			add(true, itemDimensoes4);
-			add(itemDimensoes3);
-			add(itemDimensoes2);
+			addMenuItem(true, centralizarAcao);
+			addMenuItem(true, dimensaoAcao4);
+			addMenuItem(dimensaoAcao3);
+			addMenuItem(dimensaoAcao2);
 			addMenuItem(true, dimensaoAcao);
 			addMenuItem(retirarRolagemAcao);
-			add(itemAjustes);
+			addMenuItem(ajustarAcao);
 
 			eventos();
 		}
