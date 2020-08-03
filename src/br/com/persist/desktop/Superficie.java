@@ -1124,7 +1124,6 @@ public class Superficie extends Desktop {
 		Menu menuDistribuicao = new Menu("label.distribuicao");
 		MenuItem itemPartir = new MenuItem(new PartirAcao());
 		Menu menuAlinhamento = new Menu("label.alinhamento");
-		MenuItem itemCopiar = new MenuItem(copiarAcao);
 		MenuDestacar menuDestacar = new MenuDestacar();
 		MenuCircular menuCircular = new MenuCircular();
 		MenuItem itemDados = new MenuItem(dadosAcao);
@@ -1137,15 +1136,15 @@ public class Superficie extends Desktop {
 
 			add(menuAlinhamento);
 			add(true, menuDistribuicao);
-			add(true, itemCopiar);
+			addMenuItem(true, copiarAcao);
 			add(true, menuDestacar);
 			add(true, menuCircular);
 			add(true, new MenuConsulta());
 			add(true, new MenuUpdate());
-			add(true, new MenuItem(excluirAcao));
+			addMenuItem(true, excluirAcao);
 			add(true, itemPartir);
 			add(true, itemDados);
-			add(true, new MenuItem(configuracaoAcao));
+			addMenuItem(true, configuracaoAcao);
 
 			eventos();
 		}
@@ -1321,7 +1320,7 @@ public class Superficie extends Desktop {
 			menuDestacar.setEnabled(objetoSelecionado);
 			menuCircular.setEnabled(objetoSelecionado);
 			itemPartir.setEnabled(!objetoSelecionado);
-			itemCopiar.setEnabled(objetoSelecionado);
+			copiarAcao.setEnabled(objetoSelecionado);
 		}
 
 		class PartirAcao extends Acao {
@@ -1463,41 +1462,29 @@ public class Superficie extends Desktop {
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 
-		MenuItem itemAlinharSomenteDireito = new MenuItem(alinharSomenteDireitoAcao);
-		MenuItem itemAlinharEsquerdo = new MenuItem(alinharEsquerdoAcao);
-		MenuItem itemAlinharDireito = new MenuItem(alinharDireitoAcao);
-		MenuItem itemAtualizarForms = new MenuItem(atualizarFormAcao);
-		MenuItem itemMesmaLargura = new MenuItem(mesmaLarguraAcao);
-		MenuItem itemCentralizar = new MenuItem(centralizarAcao);
-		MenuItem itemCriarObjeto = new MenuItem(criarObjAcao);
-		MenuItem itemDimensoes2 = new MenuItem(dimensaoAcao2);
-		MenuItem itemDimensoes3 = new MenuItem(dimensaoAcao3);
-		MenuItem itemDimensoes4 = new MenuItem(dimensaoAcao4);
-		MenuItem itemAjustes = new MenuItem(ajustarAcao);
-		MenuItem itemColar = new MenuItem(colarAcao);
 		int xLocal;
 		int yLocal;
 
 		SuperficiePopup2() {
-			add(itemCriarObjeto);
-			add(true, itemColar);
-			add(true, itemAtualizarForms);
+			addMenuItem(criarObjAcao);
+			addMenuItem(true, colarAcao);
+			addMenuItem(true, atualizarFormAcao);
 			addMenuItem(limparFormulariosAcao);
-			add(true, itemMesmaLargura);
-			add(itemAlinharDireito);
-			add(itemAlinharSomenteDireito);
-			add(itemAlinharEsquerdo);
+			addMenuItem(true, mesmaLarguraAcao);
+			addMenuItem(alinharDireitoAcao);
+			addMenuItem(alinharSomenteDireitoAcao);
+			addMenuItem(alinharEsquerdoAcao);
 			addMenuItem(true, larTotalAcao);
 			addMenuItem(larTotalDirAcao);
 			addMenuItem(larTotalEsqAcao);
 			addMenuItem(true, distribuirAcao);
-			add(true, itemCentralizar);
-			add(true, itemDimensoes4);
-			add(itemDimensoes3);
-			add(itemDimensoes2);
+			addMenuItem(true, centralizarAcao);
+			addMenuItem(true, dimensaoAcao4);
+			addMenuItem(dimensaoAcao3);
+			addMenuItem(dimensaoAcao2);
 			addMenuItem(true, dimensaoAcao);
 			addMenuItem(retirarRolagemAcao);
-			add(itemAjustes);
+			addMenuItem(ajustarAcao);
 			addMenuItem(true, propriedadesAcao);
 
 			eventos();
@@ -1549,14 +1536,14 @@ public class Superficie extends Desktop {
 		}
 
 		void preShow(boolean contemFrames) {
-			itemColar.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
-			itemAlinharSomenteDireito.setEnabled(contemFrames);
+			colarAcao.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
+			alinharSomenteDireitoAcao.setEnabled(contemFrames);
 			limparFormulariosAcao.setEnabled(contemFrames);
-			itemAlinharEsquerdo.setEnabled(contemFrames);
-			itemAtualizarForms.setEnabled(contemFrames);
-			itemAlinharDireito.setEnabled(contemFrames);
-			itemMesmaLargura.setEnabled(contemFrames);
-			itemCentralizar.setEnabled(contemFrames);
+			alinharEsquerdoAcao.setEnabled(contemFrames);
+			alinharDireitoAcao.setEnabled(contemFrames);
+			atualizarFormAcao.setEnabled(contemFrames);
+			mesmaLarguraAcao.setEnabled(contemFrames);
+			centralizarAcao.setEnabled(contemFrames);
 		}
 
 		private void propriedades() {
