@@ -63,6 +63,20 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getColumnName(column);
 	}
 
+	public String getNomeColunas() {
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < getColumnCount(); i++) {
+			if (sb.length() > 0) {
+				sb.append(", ");
+			}
+
+			sb.append(getColumnName(i));
+		}
+
+		return sb.toString();
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return model.getColumnClass(columnIndex);

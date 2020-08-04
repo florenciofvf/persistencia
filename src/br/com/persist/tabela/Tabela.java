@@ -56,6 +56,10 @@ public class Tabela extends JTable {
 		super.setModel(dataModel);
 	}
 
+	public String getNomeColunas() {
+		return ((OrdenacaoModelo) getModel()).getNomeColunas();
+	}
+
 	public TabelaListener getTabelaListener() {
 		return tabelaListener;
 	}

@@ -945,6 +945,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					add(true, new MenuUpdate());
 					add(true, new MenuDelete());
 					add(true, new MenuSelect());
+					add(true, new MenuSelectColuna());
 				}
 
 				class MenuInsert extends MenuPadrao3 {
@@ -1067,6 +1068,66 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						}
 
 						abrir(abrirEmForm, conexao, instrucao);
+					}
+
+					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
+						if (abrirEmForm) {
+							ConsultaFormulario form = new ConsultaFormulario(null,
+									Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, conexao, instrucao, null,
+									false);
+							if (listener instanceof Component) {
+								form.setLocationRelativeTo((Component) listener);
+							}
+							form.setVisible(true);
+						} else {
+							ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao, instrucao,
+									null, false);
+							if (listener instanceof Component) {
+								form.setLocationRelativeTo((Component) listener);
+							}
+							form.setVisible(true);
+						}
+					}
+				}
+
+				class MenuSelectColuna extends MenuPadrao3 {
+					private static final long serialVersionUID = 1L;
+
+					MenuSelectColuna() {
+						super("label.select_colunas", Icones.TABELA);
+
+						formularioAcao.setActionListener(e -> abrirSelect(true));
+						dialogoAcao.setActionListener(e -> abrirSelect(false));
+					}
+
+					private void abrirSelect(boolean abrirEmForm) {
+						Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+
+						if (conexao == null) {
+							return;
+						}
+
+						String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
+
+						if (Util.estaVazio(instrucao)) {
+							return;
+						}
+
+						abrir(abrirEmForm, conexao, instrucao);
+					}
+
+					private StringBuilder getConsultaColuna(Conexao conexao, String complemento) {
+						String selectAlter = objeto.getSelectAlter();
+						objeto.setSelectAlter("SELECT " + tabela.getNomeColunas());
+						StringBuilder builder = new StringBuilder();
+						objeto.select(builder, conexao);
+						objeto.where(builder);
+						builder.append(" " + txtComplemento.getText());
+						builder.append(" " + complemento);
+						builder.append(" " + objeto.getFinalConsulta());
+						objeto.setSelectAlter(selectAlter);
+
+						return builder;
 					}
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
