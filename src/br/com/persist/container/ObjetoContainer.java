@@ -1450,7 +1450,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		return builder;
 	}
 
-	private boolean continuar(String complemento, String chaveMsg) {
+	private boolean continuar(String complemento) {
 		if (!Util.estaVazio(txtComplemento.getText())) {
 			return true;
 		}
@@ -1463,7 +1463,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return true;
 		}
 
-		return Util.confirmar(ObjetoContainer.this, chaveMsg);
+		String msg = Mensagens.getString("msg.ccsc", objeto.getId());
+		return Util.confirmar(ObjetoContainer.this, msg, false);
 	}
 
 	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
@@ -1473,7 +1474,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return;
 		}
 
-		if (!continuar(complemento, "msg.ccsc")) {
+		if (!continuar(complemento)) {
 			processado.set(false);
 			return;
 		}

@@ -107,9 +107,13 @@ public class Util {
 		return confirmar(componente, objetos ? "msg.confirma_exclusao_objetos" : "msg.confirma_exclusao_registros");
 	}
 
-	public static boolean confirmar(Component componente, String chaveMsg) {
-		return JOptionPane.showConfirmDialog(componente, Mensagens.getString(chaveMsg),
+	public static boolean confirmar(Component componente, String msg, boolean msgEhChave) {
+		return JOptionPane.showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
 				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
+	}
+
+	public static boolean confirmar(Component componente, String chaveMsg) {
+		return confirmar(componente, chaveMsg, true);
 	}
 
 	public static boolean confirmaSalvar(Component componente, int confirmacoes) {
