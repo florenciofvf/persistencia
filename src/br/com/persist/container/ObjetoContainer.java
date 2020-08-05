@@ -1463,7 +1463,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			return true;
 		}
 
-		String msg = Mensagens.getString("msg.ccsc", objeto.getId());
+		String msg = Mensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
 		return Util.confirmar(ObjetoContainer.this, msg, false);
 	}
 
