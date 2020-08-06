@@ -1537,11 +1537,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private void mensagemException(Exception ex) {
 		if (Preferencias.isErroCriarConnection()) {
 			if (!Preferencias.isExibiuMensagemConnection()) {
-				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
+				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela()
+						+ objeto.getTabela2(), ex, this);
 				Preferencias.setExibiuMensagemConnection(true);
 			}
 		} else {
-			Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getTabela2(), ex, this);
+			Util.stackTraceAndMessage(
+					"PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela() + objeto.getTabela2(),
+					ex, this);
 		}
 	}
 
