@@ -379,6 +379,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 				XMLColetor coletor = new XMLColetor();
 				XML.processar(arquivo, coletor);
 				abrir(arquivo, coletor, null, null);
+				txtPrefixoNomeTabela.limpar();
 				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
