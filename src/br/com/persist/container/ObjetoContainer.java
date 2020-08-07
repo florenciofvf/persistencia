@@ -344,17 +344,25 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		class ButtonComplemento extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action concatAcao = Action.actionMenu("label.concatenado", null);
-			private Action normalAcao = Action.actionMenu("label.normal", null);
+			private Action copiarAcao = Action.actionMenu("label.copiar_complemento", null);
+			private Action concatAcao = Action.actionMenu("label.baixar_concatenado", null);
+			private Action normalAcao = Action.actionMenu("label.baixar_normal", null);
 
 			ButtonComplemento() {
 				super("label.complemento", Icones.BAIXAR2);
 
-				addMenuItem(concatAcao);
-				addMenuItem(true, normalAcao);
+				addMenuItem(normalAcao);
+				addMenuItem(true, concatAcao);
+				addMenuItem(true, copiarAcao);
 
+				copiarAcao.setActionListener(e -> copiarComplemento());
 				concatAcao.setActionListener(e -> processar(false));
 				normalAcao.setActionListener(e -> processar(true));
+			}
+
+			private void copiarComplemento() {
+				String string = txtComplemento.getText().trim();
+				Util.setContentTransfered(string);
 			}
 
 			private void processar(boolean normal) {
