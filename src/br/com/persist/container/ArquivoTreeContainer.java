@@ -69,12 +69,12 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 
 	@Override
 	protected void destacarEmFormulario() {
-		formulario.getFichario().getArvore().destacarEmFormulario(formulario, this);
+		formulario.getFichario().getArquivoTree().destacarEmFormulario(formulario, this);
 	}
 
 	@Override
 	protected void clonarEmFormulario() {
-		formulario.getFichario().getArvore().clonarEmFormulario(formulario, this);
+		formulario.getFichario().getArquivoTree().clonarEmFormulario(formulario, this);
 	}
 
 	@Override

@@ -74,12 +74,12 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 
 	@Override
 	protected void destacarEmFormulario() {
-		formulario.getFichario().getAnexos().destacarEmFormulario(formulario, this);
+		formulario.getFichario().getAnexoTree().destacarEmFormulario(formulario, this);
 	}
 
 	@Override
 	protected void clonarEmFormulario() {
-		formulario.getFichario().getAnexos().clonarEmFormulario(formulario, this);
+		formulario.getFichario().getAnexoTree().clonarEmFormulario(formulario, this);
 	}
 
 	@Override

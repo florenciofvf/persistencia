@@ -105,6 +105,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Configuracao configuracao = new Configuracao();
 	private final transient SalvarAberto salvarAberto = new SalvarAberto();
 	private final transient RuntimeExec runtimeExec = new RuntimeExec();
+	private final transient ArquivoTree arquivoTree = new ArquivoTree();
 	private final transient Mapeamento mapeamento = new Mapeamento();
 	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
@@ -113,6 +114,7 @@ public class Fichario extends JTabbedPane {
 	private final transient Metadados metadados = new Metadados();
 	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Conteiner conteiner = new Conteiner();
+	private final transient AnexoTree anexoTree = new AnexoTree();
 	private final transient NavegacaoListener navegacaoListener;
 	private final transient Arquivos arquivos = new Arquivos();
 	private final transient Destacar destacar = new Destacar();
@@ -123,8 +125,6 @@ public class Fichario extends JTabbedPane {
 	private final transient Desktops desktops = new Desktops();
 	private final transient Objetos objetos = new Objetos();
 	private final transient Update update = new Update();
-	private final transient Anexos anexos = new Anexos();
-	private final transient Arvore arvore = new Arvore();
 	private static final Logger LOG = Logger.getGlobal();
 	private transient Ponto ponto;
 	private Rectangle rectangle;
@@ -574,12 +574,12 @@ public class Fichario extends JTabbedPane {
 		return update;
 	}
 
-	public Anexos getAnexos() {
-		return anexos;
+	public AnexoTree getAnexoTree() {
+		return anexoTree;
 	}
 
-	public Arvore getArvore() {
-		return arvore;
+	public ArquivoTree getArquivoTree() {
+		return arquivoTree;
 	}
 
 	public class Consulta {
@@ -1158,7 +1158,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public class Anexos {
+	public class AnexoTree {
 		public void novo(Formulario formulario) {
 			AnexoTreeContainer container = new AnexoTreeContainer(null, formulario);
 			retornoAoFichario(formulario, container);
@@ -1196,7 +1196,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public class Arvore {
+	public class ArquivoTree {
 		public void nova(Formulario formulario) {
 			ArquivoTreeContainer container = new ArquivoTreeContainer(null, formulario);
 			retornoAoFichario(formulario, container);
@@ -1555,10 +1555,10 @@ public class Fichario extends JTabbedPane {
 			}
 
 			if (Util.iguais(AnexoTreeContainer.class, nome)) {
-				anexos.novo(formulario);
+				anexoTree.novo(formulario);
 
 			} else if (Util.iguais(ArquivoTreeContainer.class, nome)) {
-				arvore.nova(formulario);
+				arquivoTree.nova(formulario);
 
 			} else if (Util.iguais(ConexaoContainer.class, nome)) {
 				conexoes.nova(formulario);

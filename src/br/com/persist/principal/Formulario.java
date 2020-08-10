@@ -522,7 +522,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuArquivo() {
 				super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
 
-				ficharioAcao.setActionListener(e -> fichario.getArvore().nova(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getArquivoTree().nova(Formulario.this));
 				formularioAcao.setActionListener(e -> ArquivoTreeFormulario.criar(Formulario.this));
 			}
 
@@ -556,7 +556,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuAnexo() {
 				super(Constantes.LABEL_ANEXOS, Icones.ANEXO, false);
 
-				ficharioAcao.setActionListener(e -> fichario.getAnexos().novo(Formulario.this));
+				ficharioAcao.setActionListener(e -> fichario.getAnexoTree().novo(Formulario.this));
 				formularioAcao.setActionListener(e -> AnexoTreeFormulario.criar(Formulario.this));
 			}
 

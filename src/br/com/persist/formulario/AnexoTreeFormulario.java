@@ -53,7 +53,7 @@ public class AnexoTreeFormulario extends AbstratoFormulario implements IJanela {
 		container.setJanela(null);
 		container.setAnexoTreeFormulario(null);
 		Formulario formulario = container.getFormulario();
-		formulario.getFichario().getAnexos().retornoAoFichario(formulario, container);
+		formulario.getFichario().getAnexoTree().retornoAoFichario(formulario, container);
 		dispose();
 	}
 }
