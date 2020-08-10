@@ -23,7 +23,7 @@ import java.nio.file.Path;
 
 public class Arquivo {
 	private static final Logger LOG = Logger.getGlobal();
-	private final List<Arquivo> arquivos;
+	private final List<Arquivo> filhos;
 	private boolean arquivoAberto;
 	private boolean abrirVisivel;
 	private boolean padraoAbrir;
@@ -37,7 +37,7 @@ public class Arquivo {
 
 	public Arquivo(File file) {
 		Objects.requireNonNull(file);
-		arquivos = new ArrayList<>();
+		filhos = new ArrayList<>();
 		this.file = file;
 	}
 
@@ -46,9 +46,9 @@ public class Arquivo {
 			config(sb);
 		}
 
-		getArquivos();
+		getFilhos();
 
-		for (Arquivo a : arquivos) {
+		for (Arquivo a : filhos) {
 			a.inflar(anexos, sb);
 		}
 	}
@@ -58,13 +58,13 @@ public class Arquivo {
 			AnexoUtil.selecionarObjeto(anexo, this);
 		}
 
-		for (Arquivo a : arquivos) {
+		for (Arquivo a : filhos) {
 			a.abrirVisivel(anexo);
 		}
 	}
 
 	public void excluir() {
-		for (Arquivo a : arquivos) {
+		for (Arquivo a : filhos) {
 			a.excluir();
 		}
 
@@ -99,37 +99,37 @@ public class Arquivo {
 			lista.add(this);
 		}
 
-		for (Arquivo a : arquivos) {
+		for (Arquivo a : filhos) {
 			a.listar(lista);
 		}
 	}
 
-	public List<Arquivo> getArquivos() {
+	public List<Arquivo> getFilhos() {
 		if (!processado) {
 			processar();
 		}
 
-		return arquivos;
+		return filhos;
 	}
 
 	public void excluir(Arquivo arquivo) {
-		getArquivos().remove(arquivo);
+		getFilhos().remove(arquivo);
 	}
 
 	public int getIndice(Arquivo arquivo) {
-		return getArquivos().indexOf(arquivo);
+		return getFilhos().indexOf(arquivo);
 	}
 
 	public int getTotal() {
-		return getArquivos().size();
+		return getFilhos().size();
 	}
 
 	public boolean estaVazio() {
-		return getArquivos().isEmpty();
+		return getFilhos().isEmpty();
 	}
 
 	public Arquivo getArquivo(int index) {
-		return arquivos.get(index);
+		return filhos.get(index);
 	}
 
 	private void processar() {
@@ -142,7 +142,7 @@ public class Arquivo {
 
 			for (File f : files) {
 				Arquivo arq = new Arquivo(f);
-				arquivos.add(arq);
+				filhos.add(arq);
 				arq.pai = this;
 			}
 		}
