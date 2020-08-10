@@ -131,7 +131,7 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, Ficha
 		private void eventos() {
 			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
 
-			baixarAcao.setActionListener(e -> {
+			getBaixarAcao().setActionListener(e -> {
 				if (listener != null) {
 					FragmentoModelo.reiniciar();
 					FragmentoModelo.filtar(listener.getGruposFiltro());

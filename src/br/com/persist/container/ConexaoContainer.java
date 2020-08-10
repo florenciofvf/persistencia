@@ -153,7 +153,7 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 
 			subirAcao.setActionListener(e -> subir());
 
-			baixarAcao.setActionListener(e -> {
+			getBaixarAcao().setActionListener(e -> {
 				try {
 					modelo.abrir();
 					formulario.atualizarConexoes();

@@ -128,7 +128,7 @@ public class VariaveisContainer extends AbstratoContainer implements IIni, Ficha
 		private void eventos() {
 			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
 
-			baixarAcao.setActionListener(e -> {
+			getBaixarAcao().setActionListener(e -> {
 				VariaveisModelo.inicializar();
 				modelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());

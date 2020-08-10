@@ -125,7 +125,7 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 		private void eventos() {
 			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
 
-			baixarAcao.setActionListener(e -> {
+			getBaixarAcao().setActionListener(e -> {
 				MapeamentoModelo.inicializar();
 				modelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());

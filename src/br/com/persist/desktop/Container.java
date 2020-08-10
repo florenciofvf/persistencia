@@ -391,7 +391,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 
 			copiarAcao.setActionListener(e -> Formulario.CopiarColar.copiar(superficie));
 
-			baixarAcao.setActionListener(e -> {
+			getBaixarAcao().setActionListener(e -> {
 				if (arquivo == null) {
 					btnSelecao.click();
 					return;
