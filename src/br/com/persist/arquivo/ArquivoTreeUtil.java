@@ -9,7 +9,7 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.Arquivo;
-import br.com.persist.modelo.ArvoreModelo;
+import br.com.persist.modelo.ArquivoModelo;
 
 public class ArquivoTreeUtil {
 
@@ -30,7 +30,7 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void atualizarEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArvoreModelo modelo = (ArvoreModelo) arquivoTree.getModel();
+		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -39,7 +39,7 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void refreshEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArvoreModelo modelo = (ArvoreModelo) arquivoTree.getModel();
+		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -48,7 +48,7 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void excluirEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArvoreModelo modelo = (ArvoreModelo) arquivoTree.getModel();
+		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);

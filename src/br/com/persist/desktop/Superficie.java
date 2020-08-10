@@ -53,7 +53,7 @@ import br.com.persist.formulario.ObjetoContainerFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.PropriedadesFormulario;
 import br.com.persist.formulario.UpdateFormulario;
-import br.com.persist.modelo.ArvoreModelo;
+import br.com.persist.modelo.ArquivoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;
@@ -1562,7 +1562,7 @@ public class Superficie extends Desktop {
 
 			if (file != null) {
 				sb.append("Local absoluto do arquivo: " + file.getAbsolutePath() + Constantes.QL2);
-				sb.append("Local relativo do arquivo: " + Fichario.getAbsRelativoArquivo(ArvoreModelo.FILE, file)
+				sb.append("Local relativo do arquivo: " + Fichario.getAbsRelativoArquivo(ArquivoModelo.FILE, file)
 						+ Constantes.QL2);
 			}
 

@@ -17,7 +17,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ArquivoTreeFormulario;
 import br.com.persist.listener.ArquivoTreeListener;
-import br.com.persist.modelo.ArvoreModelo;
+import br.com.persist.modelo.ArquivoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -28,7 +28,7 @@ import br.com.persist.util.Util;
 
 public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTreeListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private ArquivoTree arquivoTree = new ArquivoTree(new ArvoreModelo());
+	private ArquivoTree arquivoTree = new ArquivoTree(new ArquivoModelo());
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopArvo = new CheckBox();
 	private final CheckBox chkLinkAuto = new CheckBox();
@@ -127,7 +127,7 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 		}
 
 		private void statusArquivo() {
-			ArvoreModelo modelo = (ArvoreModelo) arquivoTree.getModel();
+			ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
 
 			List<Arquivo> lista = new ArrayList<>();
 			modelo.listar(lista);
@@ -255,7 +255,7 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 	}
 
 	private void baixarArquivo() {
-		ArvoreModelo modelo = new ArvoreModelo();
+		ArquivoModelo modelo = new ArquivoModelo();
 		arquivoTree.setModel(modelo);
 
 		List<Arquivo> lista = new ArrayList<>();

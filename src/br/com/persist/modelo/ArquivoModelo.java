@@ -15,17 +15,17 @@ import javax.swing.tree.TreePath;
 import br.com.persist.Arquivo;
 import br.com.persist.util.Constantes;
 
-public class ArvoreModelo implements TreeModel {
+public class ArquivoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	public static final File FILE = new File(Constantes.ARQUIVOS);
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
 
-	public ArvoreModelo() {
+	public ArquivoModelo() {
 		this(new Arquivo(FILE));
 	}
 
-	public ArvoreModelo(Arquivo raiz) {
+	public ArquivoModelo(Arquivo raiz) {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
 		raiz.inflar(false, null);

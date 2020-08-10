@@ -3,19 +3,19 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 
-import br.com.persist.container.ChaveBuscaContainer;
-import br.com.persist.container.ChaveBuscaContainer.Tipo;
+import br.com.persist.container.ValorContainer;
+import br.com.persist.container.ValorContainer.Tipo;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class ChaveBuscaDialogo extends AbstratoDialogo implements IJanela {
+public class ValorDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
-	private final ChaveBuscaContainer container;
+	private final ValorContainer container;
 
-	public ChaveBuscaDialogo(Dialog dialog, Objeto objeto, Tipo tipo) {
+	public ValorDialogo(Dialog dialog, Objeto objeto, Tipo tipo) {
 		super(dialog, objeto.getId());
-		container = new ChaveBuscaContainer(this, objeto, tipo);
+		container = new ValorContainer(this, objeto, tipo);
 		montarLayout();
 
 		if (Tipo.BUSCA_APOS.equals(tipo)) {

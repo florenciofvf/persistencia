@@ -24,9 +24,9 @@ import br.com.persist.util.Util;
 
 public class MapeamentoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private final MapeamentoModelo modelo = new MapeamentoModelo();
+	private final MapeamentoModelo mapeamentoModelo = new MapeamentoModelo();
+	private final JTable tabela = new JTable(mapeamentoModelo);
 	private MapeamentoFormulario mapeamentoFormulario;
-	private final JTable tabela = new JTable(modelo);
 	private final Toolbar toolbar = new Toolbar();
 
 	public MapeamentoContainer(IJanela janela, Formulario formulario) {
@@ -110,7 +110,7 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 		@Override
 		protected void limpar() {
 			MapeamentoModelo.novo();
-			modelo.fireTableDataChanged();
+			mapeamentoModelo.fireTableDataChanged();
 		}
 
 		@Override
@@ -127,7 +127,7 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 
 			getBaixarAcao().setActionListener(e -> {
 				MapeamentoModelo.inicializar();
-				modelo.fireTableDataChanged();
+				mapeamentoModelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
 			});
 
@@ -142,7 +142,7 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 						MapeamentoModelo.adicionar(clone);
 					}
 
-					modelo.fireTableDataChanged();
+					mapeamentoModelo.fireTableDataChanged();
 				}
 			});
 		}

@@ -24,9 +24,9 @@ import br.com.persist.util.Util;
 
 public class FragmentoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private final FragmentoModelo modelo = new FragmentoModelo();
+	private final FragmentoModelo fragmentoModelo = new FragmentoModelo();
+	private final JTable tabela = new JTable(fragmentoModelo);
 	private final transient FragmentoListener listener;
-	private final JTable tabela = new JTable(modelo);
 	private FragmentoFormulario fragmentoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 
@@ -116,7 +116,7 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, Ficha
 		@Override
 		protected void limpar() {
 			FragmentoModelo.novo();
-			modelo.fireTableDataChanged();
+			fragmentoModelo.fireTableDataChanged();
 		}
 
 		@Override
@@ -140,7 +140,7 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, Ficha
 				}
 
 				FragmentoModelo.ordenar();
-				modelo.fireTableDataChanged();
+				fragmentoModelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
 			});
 
@@ -153,7 +153,7 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, Ficha
 						FragmentoModelo.adicionar(f.clonar());
 					}
 
-					modelo.fireTableDataChanged();
+					fragmentoModelo.fireTableDataChanged();
 				}
 			});
 		}

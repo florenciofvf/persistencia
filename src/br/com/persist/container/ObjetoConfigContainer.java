@@ -36,7 +36,7 @@ import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
-import br.com.persist.dialogo.ChaveBuscaDialogo;
+import br.com.persist.dialogo.ValorDialogo;
 import br.com.persist.dialogo.IconeDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
@@ -246,8 +246,7 @@ public class ObjetoConfigContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
-							ChaveBuscaContainer.Tipo.BUSCA_APOS);
+					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.BUSCA_APOS);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -260,8 +259,7 @@ public class ObjetoConfigContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
-							ChaveBuscaContainer.Tipo.BUSCA);
+					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.BUSCA);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -274,8 +272,7 @@ public class ObjetoConfigContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
-							ChaveBuscaContainer.Tipo.LINK);
+					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.LINK);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -288,8 +285,7 @@ public class ObjetoConfigContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
-							ChaveBuscaContainer.Tipo.CHAVE);
+					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.CHAVE);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -302,8 +298,7 @@ public class ObjetoConfigContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ChaveBuscaDialogo form = new ChaveBuscaDialogo((Dialog) null, objeto,
-							ChaveBuscaContainer.Tipo.MAPA);
+					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.MAPA);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 

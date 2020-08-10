@@ -21,14 +21,14 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class ChaveBuscaContainer extends Panel {
+public class ValorContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Objeto objeto;
 	private final Tipo tipo;
 
-	public ChaveBuscaContainer(IJanela janela, Objeto objeto, Tipo tipo) {
+	public ValorContainer(IJanela janela, Objeto objeto, Tipo tipo) {
 		this.objeto = objeto;
 		toolbar.ini(janela);
 		this.tipo = tipo;
@@ -203,7 +203,7 @@ public class ChaveBuscaContainer extends Panel {
 
 					fechar();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("CONFIG OBJETO", ex, ChaveBuscaContainer.this);
+					Util.stackTraceAndMessage("CONFIG OBJETO", ex, ValorContainer.this);
 				}
 			});
 		}

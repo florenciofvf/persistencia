@@ -86,7 +86,7 @@ import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
-import br.com.persist.modelo.ArvoreModelo;
+import br.com.persist.modelo.ArquivoModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ChaveValor;
@@ -1510,7 +1510,7 @@ public class Fichario extends JTabbedPane {
 						file = ((IFicharioSalvar) aba).getFileSalvarAberto();
 					}
 
-					String absRelativoArquivo = getAbsRelativoArquivo(ArvoreModelo.FILE, file);
+					String absRelativoArquivo = getAbsRelativoArquivo(ArquivoModelo.FILE, file);
 
 					if (absRelativoArquivo != null) {
 						pw.print(absRelativoArquivo + Constantes.QL2);
@@ -1621,7 +1621,7 @@ public class Fichario extends JTabbedPane {
 
 			if (name.startsWith(Constantes.SEP)) {
 				name = Util.replaceAll(name, Constantes.SEP, Constantes.SEPARADOR);
-				f = new File(ArvoreModelo.FILE.getAbsolutePath() + name);
+				f = new File(ArquivoModelo.FILE.getAbsolutePath() + name);
 			}
 		}
 

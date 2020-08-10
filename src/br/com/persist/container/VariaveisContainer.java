@@ -24,8 +24,8 @@ import br.com.persist.util.Util;
 
 public class VariaveisContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private final VariaveisModelo modelo = new VariaveisModelo();
-	private final JTable tabela = new JTable(modelo);
+	private final VariaveisModelo variaveisModelo = new VariaveisModelo();
+	private final JTable tabela = new JTable(variaveisModelo);
 	private VariaveisFormulario variaveisFormulario;
 	private final Toolbar toolbar = new Toolbar();
 
@@ -113,7 +113,7 @@ public class VariaveisContainer extends AbstratoContainer implements IIni, Ficha
 		@Override
 		protected void limpar() {
 			VariaveisModelo.novo();
-			modelo.fireTableDataChanged();
+			variaveisModelo.fireTableDataChanged();
 		}
 
 		@Override
@@ -130,7 +130,7 @@ public class VariaveisContainer extends AbstratoContainer implements IIni, Ficha
 
 			getBaixarAcao().setActionListener(e -> {
 				VariaveisModelo.inicializar();
-				modelo.fireTableDataChanged();
+				variaveisModelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
 			});
 
@@ -145,7 +145,7 @@ public class VariaveisContainer extends AbstratoContainer implements IIni, Ficha
 						VariaveisModelo.adicionar(clone);
 					}
 
-					modelo.fireTableDataChanged();
+					variaveisModelo.fireTableDataChanged();
 				}
 			});
 		}
