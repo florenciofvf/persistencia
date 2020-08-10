@@ -228,7 +228,7 @@ public class RegistroModelo implements TableModel {
 		List<IndiceValor> resp = new ArrayList<>();
 
 		for (Coluna coluna : getChaves()) {
-			IndiceValor obj = new IndiceValor(registro.get(coluna.getIndice()), coluna.getIndice());
+			IndiceValor obj = new IndiceValor(coluna.getIndice(), registro.get(coluna.getIndice()));
 			resp.add(obj);
 		}
 
