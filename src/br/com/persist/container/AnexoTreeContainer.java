@@ -24,7 +24,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.dialogo.ArquivoCorDialogo;
 import br.com.persist.dialogo.ArquivoIconeDialogo;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.AnexoFormulario;
+import br.com.persist.formulario.AnexoTreeFormulario;
 import br.com.persist.listener.AnexoTreeListener;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.principal.Formulario;
@@ -34,16 +34,16 @@ import br.com.persist.util.Imagens;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AnexoContainer extends AbstratoContainer implements AnexoTreeListener, Fichario.IFicharioSalvar {
+public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
+	private AnexoTree anexoTree = new AnexoTree(new AnexoModelo(true));
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopAnex = new CheckBox();
-	private AnexoTree anexo = new AnexoTree(new AnexoModelo(true));
+	private AnexoTreeFormulario anexoTreeFormulario;
 	private final Toolbar toolbar = new Toolbar();
-	private AnexoFormulario anexoFormulario;
 	private final transient Desktop desktop;
 
-	public AnexoContainer(IJanela janela, Formulario formulario) {
+	public AnexoTreeContainer(IJanela janela, Formulario formulario) {
 		super(formulario);
 		this.desktop = Desktop.getDesktop();
 		toolbar.ini(janela);
@@ -51,12 +51,12 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		baixarArquivo();
 	}
 
-	public AnexoFormulario getAnexoFormulario() {
-		return anexoFormulario;
+	public AnexoTreeFormulario getAnexoTreeFormulario() {
+		return anexoTreeFormulario;
 	}
 
-	public void setAnexoFormulario(AnexoFormulario anexoFormulario) {
-		this.anexoFormulario = anexoFormulario;
+	public void setAnexoFormulario(AnexoTreeFormulario anexoTreeFormulario) {
+		this.anexoTreeFormulario = anexoTreeFormulario;
 	}
 
 	@Override
@@ -67,9 +67,9 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	private void montarLayout() {
 		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
 		chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.anexo.sempreTopAnex"));
-		add(BorderLayout.CENTER, new ScrollPane(anexo));
+		add(BorderLayout.CENTER, new ScrollPane(anexoTree));
 		add(BorderLayout.NORTH, toolbar);
-		anexo.adicionarOuvinte(this);
+		anexoTree.adicionarOuvinte(this);
 	}
 
 	@Override
@@ -84,13 +84,13 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 	@Override
 	protected void abrirEmFormulario() {
-		AnexoFormulario.criar(formulario);
+		AnexoTreeFormulario.criar(formulario);
 	}
 
 	@Override
 	protected void retornoAoFichario() {
-		if (anexoFormulario != null) {
-			anexoFormulario.retornoAoFichario();
+		if (anexoTreeFormulario != null) {
+			anexoTreeFormulario.retornoAoFichario();
 		}
 	}
 
@@ -108,12 +108,12 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANEXO);
 			configBaixarAcao(e -> baixarArquivo());
 
-			if (anexoFormulario != null) {
+			if (anexoTreeFormulario != null) {
 				add(chkSempreTopAnex);
 			}
 			add(chkSempreTopForm);
 
-			chkSempreTopAnex.addActionListener(e -> anexoFormulario.setAlwaysOnTop(chkSempreTopAnex.isSelected()));
+			chkSempreTopAnex.addActionListener(e -> anexoTreeFormulario.setAlwaysOnTop(chkSempreTopAnex.isSelected()));
 			chkSempreTopForm.addActionListener(e -> {
 				formulario.setAlwaysOnTop(chkSempreTopForm.isSelected());
 				if (chkSempreTopForm.isSelected()) {
@@ -144,7 +144,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 					pw.println();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoContainer.this);
+				Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoTreeContainer.this);
 			}
 		}
 	}
@@ -160,7 +160,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		try {
 			desktop.print(arquivo.getFile());
 		} catch (IOException e) {
-			Util.mensagem(AnexoContainer.this, e.getMessage());
+			Util.mensagem(AnexoTreeContainer.this, e.getMessage());
 		}
 	}
 
@@ -175,7 +175,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		try {
 			desktop.edit(arquivo.getFile());
 		} catch (IOException e) {
-			Util.mensagem(AnexoContainer.this, e.getMessage());
+			Util.mensagem(AnexoTreeContainer.this, e.getMessage());
 		}
 	}
 
@@ -190,7 +190,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		try {
 			desktop.open(arquivo.getFile());
 		} catch (IOException e) {
-			Util.mensagem(AnexoContainer.this, e.getMessage());
+			Util.mensagem(AnexoTreeContainer.this, e.getMessage());
 		}
 	}
 
@@ -210,7 +210,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 				desktop.open(parent);
 			}
 		} catch (IOException e) {
-			Util.mensagem(AnexoContainer.this, e.getMessage());
+			Util.mensagem(AnexoTreeContainer.this, e.getMessage());
 		}
 	}
 
@@ -219,7 +219,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo != null && arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile())
-				&& Util.confirmaExclusao(AnexoContainer.this, false)) {
+				&& Util.confirmaExclusao(AnexoTreeContainer.this, false)) {
 			arquivo.excluir();
 			AnexoTreeUtil.excluirEstrutura(anexo, arquivo);
 		}
@@ -233,7 +233,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			return;
 		}
 
-		Object resp = Util.getValorInputDialog(AnexoContainer.this, "label.renomear", arquivo.toString(),
+		Object resp = Util.getValorInputDialog(AnexoTreeContainer.this, "label.renomear", arquivo.toString(),
 				arquivo.toString());
 
 		if (resp == null || Util.estaVazio(resp.toString())) {
@@ -255,7 +255,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		}
 
 		ArquivoCorDialogo form = new ArquivoCorDialogo((Frame) null, arquivo);
-		form.setLocationRelativeTo(AnexoContainer.this);
+		form.setLocationRelativeTo(AnexoTreeContainer.this);
 		form.setVisible(true);
 		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 	}
@@ -269,7 +269,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		}
 
 		ArquivoIconeDialogo form = new ArquivoIconeDialogo((Frame) null, arquivo);
-		form.setLocationRelativeTo(AnexoContainer.this);
+		form.setLocationRelativeTo(AnexoTreeContainer.this);
 		form.setVisible(true);
 		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 	}
@@ -327,7 +327,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 	private void baixarArquivo() {
 		AnexoModelo modelo = new AnexoModelo(true);
-		anexo.setModel(modelo);
+		anexoTree.setModel(modelo);
 
 		Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
 		Iterator<Entry<String, Arquivo>> iterator = entrySet.iterator();
@@ -346,6 +346,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			toolbar.getSalvarAcao().actionPerformed(null);
 		}
 
-		modelo.abrirVisivel(anexo);
+		modelo.abrirVisivel(anexoTree);
 	}
 }

@@ -2,24 +2,24 @@ package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.container.AnexoContainer;
+import br.com.persist.container.AnexoTreeContainer;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class AnexoFormulario extends AbstratoFormulario implements IJanela {
+public class AnexoTreeFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
-	private final AnexoContainer container;
+	private final AnexoTreeContainer container;
 
-	public AnexoFormulario(Formulario formulario) {
+	public AnexoTreeFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_ANEXOS));
-		container = new AnexoContainer(this, formulario);
+		container = new AnexoTreeContainer(this, formulario);
 		container.setAnexoFormulario(this);
 		montarLayout();
 	}
 
-	public AnexoFormulario(AnexoContainer container) {
+	public AnexoTreeFormulario(AnexoTreeContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_ANEXOS));
 		container.setAnexoFormulario(this);
 		this.container = container;
@@ -36,14 +36,14 @@ public class AnexoFormulario extends AbstratoFormulario implements IJanela {
 		dispose();
 	}
 
-	public static void criar(Formulario formulario, AnexoContainer container) {
-		AnexoFormulario form = new AnexoFormulario(container);
+	public static void criar(Formulario formulario, AnexoTreeContainer container) {
+		AnexoTreeFormulario form = new AnexoTreeFormulario(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
 
 	public static void criar(Formulario formulario) {
-		AnexoFormulario form = new AnexoFormulario(formulario);
+		AnexoTreeFormulario form = new AnexoTreeFormulario(formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}

@@ -48,7 +48,7 @@ import br.com.persist.banco.Conexao;
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.container.AmbienteContainer;
-import br.com.persist.container.AnexoContainer;
+import br.com.persist.container.AnexoTreeContainer;
 import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArvoreContainer;
 import br.com.persist.container.ComparacaoContainer;
@@ -68,7 +68,7 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.AmbienteFormulario;
-import br.com.persist.formulario.AnexoFormulario;
+import br.com.persist.formulario.AnexoTreeFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArvoreFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
@@ -1160,11 +1160,11 @@ public class Fichario extends JTabbedPane {
 
 	public class Anexos {
 		public void novo(Formulario formulario) {
-			AnexoContainer container = new AnexoContainer(null, formulario);
+			AnexoTreeContainer container = new AnexoTreeContainer(null, formulario);
 			retornoAoFichario(formulario, container);
 		}
 
-		public void destacarEmFormulario(Formulario formulario, AnexoContainer container) {
+		public void destacarEmFormulario(Formulario formulario, AnexoTreeContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
@@ -1172,20 +1172,20 @@ public class Fichario extends JTabbedPane {
 			}
 
 			remove(indice);
-			AnexoFormulario.criar(formulario, container);
+			AnexoTreeFormulario.criar(formulario, container);
 		}
 
-		public void clonarEmFormulario(Formulario formulario, AnexoContainer container) {
+		public void clonarEmFormulario(Formulario formulario, AnexoTreeContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
 			}
 
-			AnexoFormulario.criar(formulario);
+			AnexoTreeFormulario.criar(formulario);
 		}
 
-		public void retornoAoFichario(Formulario formulario, AnexoContainer container) {
+		public void retornoAoFichario(Formulario formulario, AnexoTreeContainer container) {
 			addTab(Constantes.LABEL_ANEXOS, Constantes.LABEL_ANEXOS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
@@ -1554,7 +1554,7 @@ public class Fichario extends JTabbedPane {
 				nome = nome.substring(pos + Constantes.III.length());
 			}
 
-			if (Util.iguais(AnexoContainer.class, nome)) {
+			if (Util.iguais(AnexoTreeContainer.class, nome)) {
 				anexos.novo(formulario);
 
 			} else if (Util.iguais(ArvoreContainer.class, nome)) {

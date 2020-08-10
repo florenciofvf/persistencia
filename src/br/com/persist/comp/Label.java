@@ -20,7 +20,6 @@ public class Label extends JLabel {
 	}
 
 	public Label(Color corFonte) {
-		super();
 		setForeground(corFonte);
 	}
 
