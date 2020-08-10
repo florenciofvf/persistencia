@@ -57,7 +57,7 @@ import br.com.persist.container.ConfigContainer;
 import br.com.persist.container.ConsultaContainer;
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.container.MapeamentoContainer;
-import br.com.persist.container.MetadadosContainer;
+import br.com.persist.container.MetadadoTreeContainer;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.container.RequisicaoContainer;
 import br.com.persist.container.RuntimeExecContainer;
@@ -79,7 +79,7 @@ import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
-import br.com.persist.formulario.MetadadoFormulario;
+import br.com.persist.formulario.MetadadoTreeFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
 import br.com.persist.formulario.RuntimeExecFormulario;
 import br.com.persist.formulario.UpdateFormulario;
@@ -661,11 +661,11 @@ public class Fichario extends JTabbedPane {
 
 	public class Metadados {
 		public void novo(Formulario formulario, Conexao conexao) {
-			MetadadosContainer container = new MetadadosContainer(null, formulario, formulario, conexao);
+			MetadadoTreeContainer container = new MetadadoTreeContainer(null, formulario, formulario, conexao);
 			retornoAoFichario(formulario, container);
 		}
 
-		public void destacarEmFormulario(Formulario formulario, MetadadosContainer container) {
+		public void destacarEmFormulario(Formulario formulario, MetadadoTreeContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
@@ -673,20 +673,20 @@ public class Fichario extends JTabbedPane {
 			}
 
 			remove(indice);
-			MetadadoFormulario.criar(formulario, container);
+			MetadadoTreeFormulario.criar(formulario, container);
 		}
 
-		public void clonarEmFormulario(Formulario formulario, MetadadosContainer container) {
+		public void clonarEmFormulario(Formulario formulario, MetadadoTreeContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
 			}
 
-			MetadadoFormulario.criar(formulario, formulario, container.getConexaoPadrao());
+			MetadadoTreeFormulario.criar(formulario, formulario, container.getConexaoPadrao());
 		}
 
-		public void retornoAoFichario(Formulario formulario, MetadadosContainer container) {
+		public void retornoAoFichario(Formulario formulario, MetadadoTreeContainer container) {
 			addTab(Constantes.LABEL_METADADOS, Constantes.LABEL_METADADOS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
@@ -1563,7 +1563,7 @@ public class Fichario extends JTabbedPane {
 			} else if (Util.iguais(ConexaoContainer.class, nome)) {
 				conexoes.nova(formulario);
 
-			} else if (Util.iguais(MetadadosContainer.class, nome)) {
+			} else if (Util.iguais(MetadadoTreeContainer.class, nome)) {
 				metadados.novo(formulario, null);
 
 			} else if (Util.iguais(ConsultaContainer.class, nome)) {

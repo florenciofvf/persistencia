@@ -8,9 +8,9 @@ import javax.swing.tree.TreePath;
 
 import br.com.persist.Metadado;
 
-public class MetadadosUtil {
+public class MetadadoTreeUtil {
 
-	private MetadadosUtil() {
+	private MetadadoTreeUtil() {
 	}
 
 	private static TreePath getTreePath(Metadado metadado) {
@@ -26,13 +26,13 @@ public class MetadadosUtil {
 		return new TreePath(caminho.toArray(new Object[] {}));
 	}
 
-	public static void selecionarObjeto(Metadados metadados, Metadado metadado) {
+	public static void selecionarObjeto(MetadadoTree metadadoTree, Metadado metadado) {
 		TreePath path = getTreePath(metadado);
 
-		metadados.expandPath(path);
-		metadados.makeVisible(path);
-		metadados.setSelectionPath(path);
-		metadados.scrollPathToVisible(path);
-		SwingUtilities.updateComponentTreeUI(metadados);
+		metadadoTree.expandPath(path);
+		metadadoTree.makeVisible(path);
+		metadadoTree.setSelectionPath(path);
+		metadadoTree.scrollPathToVisible(path);
+		SwingUtilities.updateComponentTreeUI(metadadoTree);
 	}
 }

@@ -27,18 +27,18 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao1;
 
-public class Metadados extends Tree {
+public class MetadadoTree extends Tree {
 	private static final long serialVersionUID = 1L;
 	private MetadadosPopup metadadosPopup = new MetadadosPopup();
 	private final transient List<MetadadosListener> ouvintes;
 	private static final Logger LOG = Logger.getGlobal();
 	private boolean padraoClickExportacao = true;
 
-	public Metadados() {
+	public MetadadoTree() {
 		this(new MetadadoModelo());
 	}
 
-	public Metadados(TreeModel newModel) {
+	public MetadadoTree(TreeModel newModel) {
 		super(newModel);
 		addMouseListener(mouseListenerInner);
 		ouvintes = new ArrayList<>();
@@ -144,7 +144,7 @@ public class Metadados extends Tree {
 				if (arvoreSel.getLastPathComponent() instanceof Metadado) {
 					Metadado metadado = (Metadado) arvoreSel.getLastPathComponent();
 					metadadosPopup.preShow(metadado);
-					metadadosPopup.show(Metadados.this, e.getX(), e.getY());
+					metadadosPopup.show(MetadadoTree.this, e.getX(), e.getY());
 				} else {
 					setSelectionPath(null);
 				}
@@ -161,9 +161,9 @@ public class Metadados extends Tree {
 
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (padraoClickExportacao) {
-					ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this, true));
+					ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, true));
 				} else {
-					ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this, true));
+					ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(MetadadoTree.this, true));
 				}
 			}
 		}
@@ -204,8 +204,8 @@ public class Metadados extends Tree {
 			MenuExportacao() {
 				super("label.exportar", Icones.ABRIR, false);
 
-				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFormArquivo(Metadados.this)));
-				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFichArquivo(Metadados.this)));
+				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFormArquivo(MetadadoTree.this)));
+				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFichArquivo(MetadadoTree.this)));
 			}
 		}
 
@@ -216,9 +216,9 @@ public class Metadados extends Tree {
 				super("label.abrir_exportacao", Icones.ABRIR, false);
 
 				formularioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(Metadados.this, true)));
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, true)));
 				ficharioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this, true)));
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, true)));
 			}
 		}
 
@@ -229,9 +229,9 @@ public class Metadados extends Tree {
 				super("label.abrir_exportacao_h", Icones.ABRIR, false);
 
 				formularioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(Metadados.this, false)));
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(Metadados.this, false)));
+						e -> ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, false)));
 			}
 		}
 
@@ -242,9 +242,9 @@ public class Metadados extends Tree {
 				super("label.abrir_importacao", Icones.ABRIR, false);
 
 				formularioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(Metadados.this, true)));
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, true)));
 				ficharioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this, true)));
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(MetadadoTree.this, true)));
 			}
 		}
 
@@ -255,9 +255,9 @@ public class Metadados extends Tree {
 				super("label.abrir_importacao_h", Icones.ABRIR, false);
 
 				formularioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(Metadados.this, false)));
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(
-						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(Metadados.this, false)));
+						e -> ouvintes.forEach(o -> o.abrirImportacaoFichArquivo(MetadadoTree.this, false)));
 			}
 		}
 	}
@@ -292,7 +292,7 @@ public class Metadados extends Tree {
 		Metadado metadado = raiz.getMetadado(nome);
 
 		if (metadado != null) {
-			MetadadosUtil.selecionarObjeto(this, metadado);
+			MetadadoTreeUtil.selecionarObjeto(this, metadado);
 		} else {
 			setSelectionPath(null);
 		}

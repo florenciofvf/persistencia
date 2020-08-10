@@ -20,9 +20,9 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
-import br.com.persist.formulario.MetadadoFormulario;
+import br.com.persist.formulario.MetadadoTreeFormulario;
 import br.com.persist.listener.MetadadosListener;
-import br.com.persist.metadado.Metadados;
+import br.com.persist.metadado.MetadadoTree;
 import br.com.persist.modelo.MetadadoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
@@ -33,15 +33,15 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class MetadadosContainer extends AbstratoContainer
+public class MetadadoTreeContainer extends AbstratoContainer
 		implements MetadadosListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
-	private Metadados metadados = new Metadados();
+	private MetadadoTree metadadoTree = new MetadadoTree();
 	private final Toolbar toolbar = new Toolbar();
-	private MetadadoFormulario metadadoFormulario;
+	private MetadadoTreeFormulario metadadoFormulario;
 	private final JComboBox<Conexao> cmbConexao;
 
-	public MetadadosContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+	public MetadadoTreeContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		super(formulario);
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela);
@@ -49,12 +49,12 @@ public class MetadadosContainer extends AbstratoContainer
 		config();
 	}
 
-	public MetadadoFormulario getMetadadoFormulario() {
+	public MetadadoTreeFormulario getMetadadoTreeFormulario() {
 		return metadadoFormulario;
 	}
 
-	public void setMetadadoFormulario(MetadadoFormulario metadadoFormulario) {
-		this.metadadoFormulario = metadadoFormulario;
+	public void setMetadadoTreeFormulario(MetadadoTreeFormulario metadadoTreeFormulario) {
+		this.metadadoFormulario = metadadoTreeFormulario;
 	}
 
 	private void config() {
@@ -87,9 +87,9 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, new ScrollPane(metadados));
+		add(BorderLayout.CENTER, new ScrollPane(metadadoTree));
 		add(BorderLayout.NORTH, toolbar);
-		metadados.adicionarOuvinte(this);
+		metadadoTree.adicionarOuvinte(this);
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class MetadadosContainer extends AbstratoContainer
 
 	@Override
 	protected void abrirEmFormulario() {
-		MetadadoFormulario.criar(formulario, formulario, getConexaoPadrao());
+		MetadadoTreeFormulario.criar(formulario, formulario, getConexaoPadrao());
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class MetadadosContainer extends AbstratoContainer
 				return;
 			}
 
-			metadados.selecionar(txtMetadado.getText().trim());
+			metadadoTree.selecionar(txtMetadado.getText().trim());
 		}
 
 		class ButtonInfo extends ButtonPopup {
@@ -170,14 +170,18 @@ public class MetadadosContainer extends AbstratoContainer
 				addMenuItem(true, ordemExportAcao);
 				addMenuItem(true, ordemImportAcao);
 
-				queExportamAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.queExportam()));
-				naoExportamAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.naoExportam()));
-				pksMultiplaAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksMultipla()));
-				pksAusentesAcao.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.pksAusente()));
-				ordemImportAcao
-						.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.ordemExpImp(false)));
-				ordemExportAcao
-						.setActionListener(e -> Util.mensagem(MetadadosContainer.this, metadados.ordemExpImp(true)));
+				queExportamAcao
+						.setActionListener(e -> Util.mensagem(MetadadoTreeContainer.this, metadadoTree.queExportam()));
+				naoExportamAcao
+						.setActionListener(e -> Util.mensagem(MetadadoTreeContainer.this, metadadoTree.naoExportam()));
+				pksMultiplaAcao
+						.setActionListener(e -> Util.mensagem(MetadadoTreeContainer.this, metadadoTree.pksMultipla()));
+				pksAusentesAcao
+						.setActionListener(e -> Util.mensagem(MetadadoTreeContainer.this, metadadoTree.pksAusente()));
+				ordemImportAcao.setActionListener(
+						e -> Util.mensagem(MetadadoTreeContainer.this, metadadoTree.ordemExpImp(false)));
+				ordemExportAcao.setActionListener(
+						e -> Util.mensagem(MetadadoTreeContainer.this, metadadoTree.ordemExpImp(true)));
 			}
 		}
 	}
@@ -210,7 +214,7 @@ public class MetadadosContainer extends AbstratoContainer
 			}
 
 			raiz.montarOrdenacoes();
-			metadados.setModel(new MetadadoModelo(raiz));
+			metadadoTree.setModel(new MetadadoModelo(raiz));
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("META-DADOS", ex, this);
 		}
@@ -237,7 +241,7 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	@Override
-	public void abrirExportacaoFormArquivo(Metadados metadados, boolean circular) {
+	public void abrirExportacaoFormArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
@@ -246,7 +250,7 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	@Override
-	public void exportarFormArquivo(Metadados metadados) {
+	public void exportarFormArquivo(MetadadoTree metadados) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
@@ -255,7 +259,7 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	@Override
-	public void abrirExportacaoFichArquivo(Metadados metadados, boolean circular) {
+	public void abrirExportacaoFichArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
@@ -264,7 +268,7 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	@Override
-	public void exportarFichArquivo(Metadados metadados) {
+	public void exportarFichArquivo(MetadadoTree metadados) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
@@ -273,7 +277,7 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	@Override
-	public void abrirImportacaoFormArquivo(Metadados metadados, boolean circular) {
+	public void abrirImportacaoFormArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
@@ -282,7 +286,7 @@ public class MetadadosContainer extends AbstratoContainer
 	}
 
 	@Override
-	public void abrirImportacaoFichArquivo(Metadados metadados, boolean circular) {
+	public void abrirImportacaoFichArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {

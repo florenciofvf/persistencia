@@ -68,7 +68,7 @@ import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
 import br.com.persist.formulario.FragmentoFormulario;
 import br.com.persist.formulario.MapeamentoFormulario;
-import br.com.persist.formulario.MetadadoFormulario;
+import br.com.persist.formulario.MetadadoTreeFormulario;
 import br.com.persist.formulario.RequisicaoFormulario;
 import br.com.persist.formulario.RuntimeExecFormulario;
 import br.com.persist.formulario.UpdateFormulario;
@@ -539,7 +539,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			MenuMetadado() {
 				super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
 
-				formularioAcao.setActionListener(e -> MetadadoFormulario.criar(Formulario.this, Formulario.this, null));
+				formularioAcao
+						.setActionListener(e -> MetadadoTreeFormulario.criar(Formulario.this, Formulario.this, null));
 				ficharioAcao.setActionListener(e -> fichario.getMetadados().novo(Formulario.this, null));
 			}
 
