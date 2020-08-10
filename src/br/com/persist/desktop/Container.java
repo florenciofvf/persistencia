@@ -344,10 +344,10 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 
 		class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action desktopAcao = Action.actionMenuDesktop();
-			Action abrirEmForm = Action.actionMenu("label.abrir_em_formulario", null);
-			Action destacarFrm = Action.actionMenu("label.destac_formulario", null);
-			Action destacarCnt = Action.actionMenu("label.destac_container", null);
+			private Action desktopAcao = Action.actionMenuDesktop();
+			private Action abrirEmForm = Action.actionMenu("label.abrir_em_formulario", null);
+			private Action destacarFrm = Action.actionMenu("label.destac_formulario", null);
+			private Action destacarCnt = Action.actionMenu("label.destac_container", null);
 
 			ButtonDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
