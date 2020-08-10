@@ -1,4 +1,4 @@
-package br.com.persist.arvore;
+package br.com.persist.arquivo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ import javax.swing.tree.TreePath;
 import br.com.persist.Arquivo;
 import br.com.persist.modelo.ArvoreModelo;
 
-public class ArvoreUtil {
+public class ArquivoTreeUtil {
 
-	private ArvoreUtil() {
+	private ArquivoTreeUtil() {
 	}
 
 	private static TreePath getTreePath(Arquivo arquivo) {
@@ -29,8 +29,8 @@ public class ArvoreUtil {
 		return new TreePath(caminho.toArray(new Object[] {}));
 	}
 
-	public static void atualizarEstrutura(Arvore arvore, Arquivo arquivo) {
-		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
+	public static void atualizarEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
+		ArvoreModelo modelo = (ArvoreModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -38,8 +38,8 @@ public class ArvoreUtil {
 		modelo.treeStructureChanged(event);
 	}
 
-	public static void refreshEstrutura(Arvore arvore, Arquivo arquivo) {
-		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
+	public static void refreshEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
+		ArvoreModelo modelo = (ArvoreModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -47,8 +47,8 @@ public class ArvoreUtil {
 		modelo.treeNodesChanged(event);
 	}
 
-	public static void excluirEstrutura(Arvore arvore, Arquivo arquivo) {
-		ArvoreModelo modelo = (ArvoreModelo) arvore.getModel();
+	public static void excluirEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
+		ArvoreModelo modelo = (ArvoreModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -58,22 +58,22 @@ public class ArvoreUtil {
 		}
 
 		modelo.treeNodesRemoved(event);
-		arvore.setSelectionPath(null);
-		SwingUtilities.updateComponentTreeUI(arvore);
+		arquivoTree.setSelectionPath(null);
+		SwingUtilities.updateComponentTreeUI(arquivoTree);
 	}
 
-	public static void selecionarObjeto(Arvore arvore, Arquivo arquivo) {
+	public static void selecionarObjeto(ArquivoTree arquivoTree, Arquivo arquivo) {
 		TreePath path = getTreePath(arquivo);
 
-		arvore.expandPath(path);
-		arvore.makeVisible(path);
-		arvore.setSelectionPath(path);
-		arvore.scrollPathToVisible(path);
-		SwingUtilities.updateComponentTreeUI(arvore);
+		arquivoTree.expandPath(path);
+		arquivoTree.makeVisible(path);
+		arquivoTree.setSelectionPath(path);
+		arquivoTree.scrollPathToVisible(path);
+		SwingUtilities.updateComponentTreeUI(arquivoTree);
 	}
 
-	public static File getRoot(Arvore arvore) {
-		Object root = arvore.getModel().getRoot();
+	public static File getRoot(ArquivoTree arquivoTree) {
+		Object root = arquivoTree.getModel().getRoot();
 
 		if (root instanceof Arquivo) {
 			return ((Arquivo) root).getFile();

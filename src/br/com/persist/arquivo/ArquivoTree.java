@@ -1,4 +1,4 @@
-package br.com.persist.arvore;
+package br.com.persist.arquivo;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
@@ -15,19 +15,19 @@ import javax.swing.tree.TreePath;
 import br.com.persist.Arquivo;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
-import br.com.persist.listener.ArvoreListener;
+import br.com.persist.listener.ArquivoTreeListener;
 import br.com.persist.renderer.ArquivoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao1;
 
-public class Arvore extends Tree {
+public class ArquivoTree extends Tree {
 	private static final long serialVersionUID = 1L;
-	private final transient List<ArvoreListener> ouvintes;
-	private ArvorePopup arvorePopup = new ArvorePopup();
+	private final transient List<ArquivoTreeListener> ouvintes;
+	private ArquivoPopup arvorePopup = new ArquivoPopup();
 
-	public Arvore(TreeModel newModel) {
+	public ArquivoTree(TreeModel newModel) {
 		super(newModel);
 		setCellRenderer(new ArquivoTreeCellRenderer());
 		addMouseListener(mouseListenerInner);
@@ -35,7 +35,7 @@ public class Arvore extends Tree {
 		ouvintes = new ArrayList<>();
 	}
 
-	public void adicionarOuvinte(ArvoreListener listener) {
+	public void adicionarOuvinte(ArquivoTreeListener listener) {
 		if (listener == null) {
 			return;
 		}
@@ -62,7 +62,7 @@ public class Arvore extends Tree {
 			return;
 		}
 
-		ArvoreUtil.selecionarObjeto(this, arquivo);
+		ArquivoTreeUtil.selecionarObjeto(this, arquivo);
 	}
 
 	public void excluirSelecionado() {
@@ -72,7 +72,7 @@ public class Arvore extends Tree {
 			return;
 		}
 
-		ArvoreUtil.excluirEstrutura(this, selecionado);
+		ArquivoTreeUtil.excluirEstrutura(this, selecionado);
 	}
 
 	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
@@ -80,7 +80,8 @@ public class Arvore extends Tree {
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				popupTrigger = false;
-				mouseListenerInner.mouseClicked(new MouseEvent(Arvore.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+				mouseListenerInner
+						.mouseClicked(new MouseEvent(ArquivoTree.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
 			}
 		}
 	};
@@ -123,7 +124,7 @@ public class Arvore extends Tree {
 				if (arvoreSel.getLastPathComponent() instanceof Arquivo) {
 					Arquivo arquivo = (Arquivo) arvoreSel.getLastPathComponent();
 					arvorePopup.preShow(arquivo);
-					arvorePopup.show(Arvore.this, e.getX(), e.getY());
+					arvorePopup.show(ArquivoTree.this, e.getX(), e.getY());
 				} else {
 					setSelectionPath(null);
 				}
@@ -139,7 +140,7 @@ public class Arvore extends Tree {
 			}
 
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this));
+				ouvintes.forEach(o -> o.abrirFichArquivo(ArquivoTree.this));
 			} else {
 				TreePath arvoreCli = getClosestPathForLocation(e.getX(), e.getY());
 
@@ -150,7 +151,7 @@ public class Arvore extends Tree {
 						return;
 					}
 
-					ouvintes.forEach(o -> o.clickArquivo(Arvore.this));
+					ouvintes.forEach(o -> o.clickArquivo(ArquivoTree.this));
 				}
 			}
 		}
@@ -160,7 +161,7 @@ public class Arvore extends Tree {
 		popupDesabilitado = true;
 	}
 
-	private class ArvorePopup extends Popup {
+	private class ArquivoPopup extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
@@ -168,17 +169,17 @@ public class Arvore extends Tree {
 		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 		private MenuAbrir menuAbrir = new MenuAbrir();
 
-		public ArvorePopup() {
+		public ArquivoPopup() {
 			add(menuAbrir);
 			addMenuItem(true, selecionarAcao);
 			addMenuItem(true, fecharAcao);
 			addMenuItem(true, excluirAcao);
 			addMenuItem(true, atualizarAcao);
 
-			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(Arvore.this)));
-			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArvore(Arvore.this)));
-			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Arvore.this)));
-			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(Arvore.this)));
+			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(ArquivoTree.this)));
+			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArvore(ArquivoTree.this)));
+			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTree.this)));
+			fecharAcao.setActionListener(e -> ouvintes.forEach(o -> o.fecharArquivo(ArquivoTree.this)));
 		}
 
 		private void preShow(Arquivo arquivo) {
@@ -190,7 +191,7 @@ public class Arvore extends Tree {
 			menuAbrir.setEnabled(ehArquivo);
 		}
 
-		class MenuAbrir extends MenuPadrao1 {
+		private class MenuAbrir extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 			private Action pastaAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 
@@ -199,9 +200,9 @@ public class Arvore extends Tree {
 				addSeparator();
 				addMenuItem(pastaAcao);
 
-				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(Arvore.this)));
-				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(Arvore.this)));
-				pastaAcao.setActionListener(e -> ouvintes.forEach(o -> o.pastaArquivo(Arvore.this)));
+				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFormArquivo(ArquivoTree.this)));
+				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirFichArquivo(ArquivoTree.this)));
+				pastaAcao.setActionListener(e -> ouvintes.forEach(o -> o.pastaArquivo(ArquivoTree.this)));
 			}
 		}
 	}
