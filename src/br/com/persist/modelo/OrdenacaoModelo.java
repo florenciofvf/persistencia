@@ -9,8 +9,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import br.com.persist.tabela.Coluna;
-import br.com.persist.tabela.IndiceValor;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.IndiceValor;
 import br.com.persist.util.Util;
 
 public class OrdenacaoModelo extends AbstractTableModel {

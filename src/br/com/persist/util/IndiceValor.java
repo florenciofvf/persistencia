@@ -1,4 +1,4 @@
-package br.com.persist.tabela;
+package br.com.persist.util;
 
 import java.util.List;
 import java.util.Objects;
