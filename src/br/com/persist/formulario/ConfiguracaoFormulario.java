@@ -4,26 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import br.com.persist.container.ConfigContainer;
+import br.com.persist.container.ConfiguracaoContainer;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 
-public class ConfigFormulario extends AbstratoFormulario implements IJanela {
+public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
-	private final ConfigContainer container;
+	private final ConfiguracaoContainer container;
 
-	public ConfigFormulario(Formulario formulario) {
+	public ConfiguracaoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
-		container = new ConfigContainer(this, formulario);
+		container = new ConfiguracaoContainer(this, formulario);
 		container.setConfigFormulario(this);
 		montarLayout();
 		configurar();
 	}
 
-	public ConfigFormulario(ConfigContainer container) {
+	public ConfiguracaoFormulario(ConfiguracaoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container.setConfigFormulario(this);
 		this.container = container;
@@ -40,14 +40,14 @@ public class ConfigFormulario extends AbstratoFormulario implements IJanela {
 		dispose();
 	}
 
-	public static void criar(Formulario formulario, ConfigContainer container) {
-		ConfigFormulario form = new ConfigFormulario(container);
+	public static void criar(Formulario formulario, ConfiguracaoContainer container) {
+		ConfiguracaoFormulario form = new ConfiguracaoFormulario(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
 
 	public static void criar(Formulario formulario) {
-		ConfigFormulario form = new ConfigFormulario(formulario);
+		ConfiguracaoFormulario form = new ConfiguracaoFormulario(formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}

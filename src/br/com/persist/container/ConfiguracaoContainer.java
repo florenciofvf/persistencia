@@ -26,14 +26,14 @@ import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.ConfigFormulario;
+import br.com.persist.formulario.ConfiguracaoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 
-public class ConfigContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
+public class ConfiguracaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
@@ -48,7 +48,7 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
 	private final Toolbar toolbar = new Toolbar();
-	private ConfigFormulario configFormulario;
+	private ConfiguracaoFormulario configFormulario;
 
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
@@ -90,18 +90,18 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
 			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
 
-	public ConfigContainer(IJanela janela, Formulario formulario) {
+	public ConfiguracaoContainer(IJanela janela, Formulario formulario) {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
 	}
 
-	public ConfigFormulario getConfigFormulario() {
+	public ConfiguracaoFormulario getConfigFormulario() {
 		return configFormulario;
 	}
 
-	public void setConfigFormulario(ConfigFormulario configFormulario) {
+	public void setConfigFormulario(ConfiguracaoFormulario configFormulario) {
 		this.configFormulario = configFormulario;
 	}
 
@@ -321,7 +321,7 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 
 	@Override
 	protected void abrirEmFormulario() {
-		ConfigFormulario.criar(formulario);
+		ConfiguracaoFormulario.criar(formulario);
 	}
 
 	@Override
@@ -386,7 +386,8 @@ public class ConfigContainer extends AbstratoContainer implements Fichario.IFich
 			public void mouseClicked(MouseEvent e) {
 				Label label = (Label) e.getSource();
 
-				Color color = JColorChooser.showDialog(ConfigContainer.this, label.getText(), label.getForeground());
+				Color color = JColorChooser.showDialog(ConfiguracaoContainer.this, label.getText(),
+						label.getForeground());
 
 				if (color == null) {
 					return;

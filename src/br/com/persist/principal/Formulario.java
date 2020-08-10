@@ -47,7 +47,7 @@ import br.com.persist.dialogo.AmbienteDialogo;
 import br.com.persist.dialogo.AnotacaoDialogo;
 import br.com.persist.dialogo.ComparacaoDialogo;
 import br.com.persist.dialogo.ConexaoDialogo;
-import br.com.persist.dialogo.ConfigDialogo;
+import br.com.persist.dialogo.ConfiguracaoDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.FragmentoDialogo;
 import br.com.persist.dialogo.MapeamentoDialogo;
@@ -62,7 +62,7 @@ import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArquivoTreeFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
-import br.com.persist.formulario.ConfigFormulario;
+import br.com.persist.formulario.ConfiguracaoFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
@@ -734,8 +734,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				importarAcao.setActionListener(e -> importar());
 
 				ficharioAcao.setActionListener(e -> fichario.getConfiguracao().nova(Formulario.this));
-				formularioAcao.setActionListener(e -> ConfigFormulario.criar(Formulario.this));
-				dialogoAcao.setActionListener(e -> ConfigDialogo.criar(Formulario.this));
+				formularioAcao.setActionListener(e -> ConfiguracaoFormulario.criar(Formulario.this));
+				dialogoAcao.setActionListener(e -> ConfiguracaoDialogo.criar(Formulario.this));
 			}
 
 			void abrirAutoFichario() {

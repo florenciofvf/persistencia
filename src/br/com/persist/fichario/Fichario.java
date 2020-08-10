@@ -53,7 +53,7 @@ import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.container.ArquivoTreeContainer;
 import br.com.persist.container.ComparacaoContainer;
 import br.com.persist.container.ConexaoContainer;
-import br.com.persist.container.ConfigContainer;
+import br.com.persist.container.ConfiguracaoContainer;
 import br.com.persist.container.ConsultaContainer;
 import br.com.persist.container.FragmentoContainer;
 import br.com.persist.container.MapeamentoContainer;
@@ -73,7 +73,7 @@ import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArquivoTreeFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
-import br.com.persist.formulario.ConfigFormulario;
+import br.com.persist.formulario.ConfiguracaoFormulario;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.DesktopFormulario;
@@ -815,11 +815,11 @@ public class Fichario extends JTabbedPane {
 
 	public class Configuracao {
 		public void nova(Formulario formulario) {
-			ConfigContainer container = new ConfigContainer(null, formulario);
+			ConfiguracaoContainer container = new ConfiguracaoContainer(null, formulario);
 			retornoAoFichario(formulario, container);
 		}
 
-		public void destacarEmFormulario(Formulario formulario, ConfigContainer container) {
+		public void destacarEmFormulario(Formulario formulario, ConfiguracaoContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
@@ -827,20 +827,20 @@ public class Fichario extends JTabbedPane {
 			}
 
 			remove(indice);
-			ConfigFormulario.criar(formulario, container);
+			ConfiguracaoFormulario.criar(formulario, container);
 		}
 
-		public void clonarEmFormulario(Formulario formulario, ConfigContainer container) {
+		public void clonarEmFormulario(Formulario formulario, ConfiguracaoContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
 			}
 
-			ConfigFormulario.criar(formulario);
+			ConfiguracaoFormulario.criar(formulario);
 		}
 
-		public void retornoAoFichario(Formulario formulario, ConfigContainer container) {
+		public void retornoAoFichario(Formulario formulario, ConfiguracaoContainer container) {
 			addTab(Constantes.LABEL_CONFIGURACOES, Constantes.LABEL_CONFIGURACOES_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
@@ -1599,7 +1599,7 @@ public class Fichario extends JTabbedPane {
 			} else if (Util.iguais(RuntimeExecContainer.class, nome)) {
 				runtimeExec.novo(formulario);
 
-			} else if (Util.iguais(ConfigContainer.class, nome)) {
+			} else if (Util.iguais(ConfiguracaoContainer.class, nome)) {
 				configuracao.nova(formulario);
 
 			} else if (Util.iguais(Desktop.class, nome)) {
