@@ -55,7 +55,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 		return anexoTreeFormulario;
 	}
 
-	public void setAnexoFormulario(AnexoTreeFormulario anexoTreeFormulario) {
+	public void setAnexoTreeFormulario(AnexoTreeFormulario anexoTreeFormulario) {
 		this.anexoTreeFormulario = anexoTreeFormulario;
 	}
 

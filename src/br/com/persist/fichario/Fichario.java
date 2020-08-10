@@ -50,7 +50,7 @@ import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.container.AmbienteContainer;
 import br.com.persist.container.AnexoTreeContainer;
 import br.com.persist.container.AnotacaoContainer;
-import br.com.persist.container.ArvoreContainer;
+import br.com.persist.container.ArquivoTreeContainer;
 import br.com.persist.container.ComparacaoContainer;
 import br.com.persist.container.ConexaoContainer;
 import br.com.persist.container.ConfigContainer;
@@ -70,7 +70,7 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.formulario.AnexoTreeFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
-import br.com.persist.formulario.ArvoreFormulario;
+import br.com.persist.formulario.ArquivoTreeFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfigFormulario;
@@ -1198,11 +1198,11 @@ public class Fichario extends JTabbedPane {
 
 	public class Arvore {
 		public void nova(Formulario formulario) {
-			ArvoreContainer container = new ArvoreContainer(null, formulario);
+			ArquivoTreeContainer container = new ArquivoTreeContainer(null, formulario);
 			retornoAoFichario(formulario, container);
 		}
 
-		public void destacarEmFormulario(Formulario formulario, ArvoreContainer container) {
+		public void destacarEmFormulario(Formulario formulario, ArquivoTreeContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
@@ -1210,20 +1210,20 @@ public class Fichario extends JTabbedPane {
 			}
 
 			remove(indice);
-			ArvoreFormulario.criar(formulario, container);
+			ArquivoTreeFormulario.criar(formulario, container);
 		}
 
-		public void clonarEmFormulario(Formulario formulario, ArvoreContainer container) {
+		public void clonarEmFormulario(Formulario formulario, ArquivoTreeContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
 				return;
 			}
 
-			ArvoreFormulario.criar(formulario);
+			ArquivoTreeFormulario.criar(formulario);
 		}
 
-		public void retornoAoFichario(Formulario formulario, ArvoreContainer container) {
+		public void retornoAoFichario(Formulario formulario, ArquivoTreeContainer container) {
 			addTab(Constantes.LABEL_ARQUIVOS, Constantes.LABEL_ARQUIVOS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
@@ -1557,7 +1557,7 @@ public class Fichario extends JTabbedPane {
 			if (Util.iguais(AnexoTreeContainer.class, nome)) {
 				anexos.novo(formulario);
 
-			} else if (Util.iguais(ArvoreContainer.class, nome)) {
+			} else if (Util.iguais(ArquivoTreeContainer.class, nome)) {
 				arvore.nova(formulario);
 
 			} else if (Util.iguais(ConexaoContainer.class, nome)) {
