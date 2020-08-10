@@ -541,7 +541,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				formularioAcao
 						.setActionListener(e -> MetadadoTreeFormulario.criar(Formulario.this, Formulario.this, null));
-				ficharioAcao.setActionListener(e -> fichario.getMetadados().novo(Formulario.this, null));
+				ficharioAcao.setActionListener(e -> fichario.getMetadadoTree().novo(Formulario.this, null));
 			}
 
 			void abrirAutoFichario() {

@@ -55,7 +55,7 @@ public class MetadadoTreeFormulario extends AbstratoFormulario implements IJanel
 		container.setJanela(null);
 		container.setMetadadoTreeFormulario(null);
 		Formulario formulario = container.getFormulario();
-		formulario.getFichario().getMetadados().retornoAoFichario(formulario, container);
+		formulario.getFichario().getMetadadoTree().retornoAoFichario(formulario, container);
 		dispose();
 	}
 }

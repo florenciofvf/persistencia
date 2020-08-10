@@ -104,6 +104,7 @@ public class Fichario extends JTabbedPane {
 	private final transient NavegButton navegButtonLimpar = new NavegButton(0);
 	private final transient Configuracao configuracao = new Configuracao();
 	private final transient SalvarAberto salvarAberto = new SalvarAberto();
+	private final transient MetadadoTree metadadoTree = new MetadadoTree();
 	private final transient RuntimeExec runtimeExec = new RuntimeExec();
 	private final transient ArquivoTree arquivoTree = new ArquivoTree();
 	private final transient Mapeamento mapeamento = new Mapeamento();
@@ -111,7 +112,6 @@ public class Fichario extends JTabbedPane {
 	private final transient Requisicao requisicao = new Requisicao();
 	private final transient Variaveis variaveis = new Variaveis();
 	private final transient Ambientes ambientes = new Ambientes();
-	private final transient Metadados metadados = new Metadados();
 	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Conteiner conteiner = new Conteiner();
 	private final transient AnexoTree anexoTree = new AnexoTree();
@@ -530,8 +530,8 @@ public class Fichario extends JTabbedPane {
 		return variaveis;
 	}
 
-	public Metadados getMetadados() {
-		return metadados;
+	public MetadadoTree getMetadadoTree() {
+		return metadadoTree;
 	}
 
 	public Fragmento getFragmento() {
@@ -659,7 +659,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public class Metadados {
+	public class MetadadoTree {
 		public void novo(Formulario formulario, Conexao conexao) {
 			MetadadoTreeContainer container = new MetadadoTreeContainer(null, formulario, formulario, conexao);
 			retornoAoFichario(formulario, container);
@@ -1564,7 +1564,7 @@ public class Fichario extends JTabbedPane {
 				conexoes.nova(formulario);
 
 			} else if (Util.iguais(MetadadoTreeContainer.class, nome)) {
-				metadados.novo(formulario, null);
+				metadadoTree.novo(formulario, null);
 
 			} else if (Util.iguais(ConsultaContainer.class, nome)) {
 				consulta.nova(formulario, null);

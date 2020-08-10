@@ -21,7 +21,7 @@ import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.formulario.MetadadoTreeFormulario;
-import br.com.persist.listener.MetadadosListener;
+import br.com.persist.listener.MetadadoTreeListener;
 import br.com.persist.metadado.MetadadoTree;
 import br.com.persist.modelo.MetadadoModelo;
 import br.com.persist.principal.Formulario;
@@ -34,7 +34,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class MetadadoTreeContainer extends AbstratoContainer
-		implements MetadadosListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
+		implements MetadadoTreeListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private MetadadoTree metadadoTree = new MetadadoTree();
 	private final Toolbar toolbar = new Toolbar();
@@ -94,12 +94,12 @@ public class MetadadoTreeContainer extends AbstratoContainer
 
 	@Override
 	protected void destacarEmFormulario() {
-		formulario.getFichario().getMetadados().destacarEmFormulario(formulario, this);
+		formulario.getFichario().getMetadadoTree().destacarEmFormulario(formulario, this);
 	}
 
 	@Override
 	protected void clonarEmFormulario() {
-		formulario.getFichario().getMetadados().clonarEmFormulario(formulario, this);
+		formulario.getFichario().getMetadadoTree().clonarEmFormulario(formulario, this);
 	}
 
 	@Override

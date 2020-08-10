@@ -21,7 +21,7 @@ import javax.swing.tree.TreePath;
 import br.com.persist.Metadado;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
-import br.com.persist.listener.MetadadosListener;
+import br.com.persist.listener.MetadadoTreeListener;
 import br.com.persist.modelo.MetadadoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -30,7 +30,7 @@ import br.com.persist.util.MenuPadrao1;
 public class MetadadoTree extends Tree {
 	private static final long serialVersionUID = 1L;
 	private MetadadosPopup metadadosPopup = new MetadadosPopup();
-	private final transient List<MetadadosListener> ouvintes;
+	private final transient List<MetadadoTreeListener> ouvintes;
 	private static final Logger LOG = Logger.getGlobal();
 	private boolean padraoClickExportacao = true;
 
@@ -45,7 +45,7 @@ public class MetadadoTree extends Tree {
 		configurar();
 	}
 
-	public void adicionarOuvinte(MetadadosListener listener) {
+	public void adicionarOuvinte(MetadadoTreeListener listener) {
 		if (listener == null) {
 			return;
 		}
