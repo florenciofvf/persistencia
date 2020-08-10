@@ -16,8 +16,8 @@ import javax.swing.Icon;
 import java.util.Set;
 
 import br.com.persist.Arquivo;
-import br.com.persist.anexo.Anexo;
-import br.com.persist.anexo.AnexoUtil;
+import br.com.persist.anexo.AnexoTree;
+import br.com.persist.anexo.AnexoTreeUtil;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.ScrollPane;
@@ -25,7 +25,7 @@ import br.com.persist.dialogo.ArquivoCorDialogo;
 import br.com.persist.dialogo.ArquivoIconeDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AnexoFormulario;
-import br.com.persist.listener.AnexoListener;
+import br.com.persist.listener.AnexoTreeListener;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
@@ -34,11 +34,11 @@ import br.com.persist.util.Imagens;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AnexoContainer extends AbstratoContainer implements AnexoListener, Fichario.IFicharioSalvar {
+public class AnexoContainer extends AbstratoContainer implements AnexoTreeListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopAnex = new CheckBox();
-	private Anexo anexo = new Anexo(new AnexoModelo(true));
+	private AnexoTree anexo = new AnexoTree(new AnexoModelo(true));
 	private final Toolbar toolbar = new Toolbar();
 	private AnexoFormulario anexoFormulario;
 	private final transient Desktop desktop;
@@ -150,7 +150,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 	}
 
 	@Override
-	public void imprimirArquivo(Anexo anexo) {
+	public void imprimirArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -165,7 +165,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 	}
 
 	@Override
-	public void editarArquivo(Anexo anexo) {
+	public void editarArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -180,7 +180,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 	}
 
 	@Override
-	public void abrirArquivo(Anexo anexo) {
+	public void abrirArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -195,7 +195,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 	}
 
 	@Override
-	public void pastaArquivo(Anexo anexo) {
+	public void pastaArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -215,18 +215,18 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 	}
 
 	@Override
-	public void excluirArquivo(Anexo anexo) {
+	public void excluirArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo != null && arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile())
 				&& Util.confirmaExclusao(AnexoContainer.this, false)) {
 			arquivo.excluir();
-			AnexoUtil.excluirEstrutura(anexo, arquivo);
+			AnexoTreeUtil.excluirEstrutura(anexo, arquivo);
 		}
 	}
 
 	@Override
-	public void renomearArquivo(Anexo anexo) {
+	public void renomearArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null || arquivo.getPai() == null || AnexoModelo.anexosInfo.equals(arquivo.getFile())) {
@@ -241,13 +241,13 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 		}
 
 		if (arquivo.renomear(resp.toString())) {
-			AnexoUtil.refreshEstrutura(anexo, arquivo);
+			AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 			AnexoModelo.putArquivo(arquivo);
 		}
 	}
 
 	@Override
-	public void corFonteArquivo(Anexo anexo) {
+	public void corFonteArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -257,11 +257,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 		ArquivoCorDialogo form = new ArquivoCorDialogo((Frame) null, arquivo);
 		form.setLocationRelativeTo(AnexoContainer.this);
 		form.setVisible(true);
-		AnexoUtil.refreshEstrutura(anexo, arquivo);
+		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 	}
 
 	@Override
-	public void iconeArquivo(Anexo anexo) {
+	public void iconeArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -271,11 +271,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 		ArquivoIconeDialogo form = new ArquivoIconeDialogo((Frame) null, arquivo);
 		form.setLocationRelativeTo(AnexoContainer.this);
 		form.setVisible(true);
-		AnexoUtil.refreshEstrutura(anexo, arquivo);
+		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 	}
 
 	@Override
-	public void copiarAtributosArquivo(Anexo anexo) {
+	public void copiarAtributosArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -289,7 +289,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 	}
 
 	@Override
-	public void colarAtributosArquivo(Anexo anexo) {
+	public void colarAtributosArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo == null) {
@@ -322,7 +322,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoListener, 
 		}
 
 		AnexoModelo.putArquivo(arquivo);
-		AnexoUtil.refreshEstrutura(anexo, arquivo);
+		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 	}
 
 	private void baixarArquivo() {

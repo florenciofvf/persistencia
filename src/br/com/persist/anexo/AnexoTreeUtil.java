@@ -10,9 +10,9 @@ import javax.swing.tree.TreePath;
 import br.com.persist.Arquivo;
 import br.com.persist.modelo.AnexoModelo;
 
-public class AnexoUtil {
+public class AnexoTreeUtil {
 
-	private AnexoUtil() {
+	private AnexoTreeUtil() {
 	}
 
 	private static TreePath getTreePath(Arquivo arquivo) {
@@ -28,8 +28,8 @@ public class AnexoUtil {
 		return new TreePath(caminho.toArray(new Object[] {}));
 	}
 
-	public static void atualizarEstrutura(Anexo anexo, Arquivo arquivo) {
-		AnexoModelo modelo = (AnexoModelo) anexo.getModel();
+	public static void atualizarEstrutura(AnexoTree anexoTree, Arquivo arquivo) {
+		AnexoModelo modelo = (AnexoModelo) anexoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -37,8 +37,8 @@ public class AnexoUtil {
 		modelo.treeStructureChanged(event);
 	}
 
-	public static void refreshEstrutura(Anexo anexo, Arquivo arquivo) {
-		AnexoModelo modelo = (AnexoModelo) anexo.getModel();
+	public static void refreshEstrutura(AnexoTree anexoTree, Arquivo arquivo) {
+		AnexoModelo modelo = (AnexoModelo) anexoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -46,8 +46,8 @@ public class AnexoUtil {
 		modelo.treeNodesChanged(event);
 	}
 
-	public static void excluirEstrutura(Anexo anexo, Arquivo arquivo) {
-		AnexoModelo modelo = (AnexoModelo) anexo.getModel();
+	public static void excluirEstrutura(AnexoTree anexoTree, Arquivo arquivo) {
+		AnexoModelo modelo = (AnexoModelo) anexoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -57,17 +57,17 @@ public class AnexoUtil {
 		}
 
 		modelo.treeNodesRemoved(event);
-		anexo.setSelectionPath(null);
-		SwingUtilities.updateComponentTreeUI(anexo);
+		anexoTree.setSelectionPath(null);
+		SwingUtilities.updateComponentTreeUI(anexoTree);
 	}
 
-	public static void selecionarObjeto(Anexo anexo, Arquivo arquivo) {
+	public static void selecionarObjeto(AnexoTree anexoTree, Arquivo arquivo) {
 		TreePath path = getTreePath(arquivo);
 
-		anexo.expandPath(path);
-		anexo.makeVisible(path);
-		anexo.setSelectionPath(path);
-		anexo.scrollPathToVisible(path);
-		SwingUtilities.updateComponentTreeUI(anexo);
+		anexoTree.expandPath(path);
+		anexoTree.makeVisible(path);
+		anexoTree.setSelectionPath(path);
+		anexoTree.scrollPathToVisible(path);
+		SwingUtilities.updateComponentTreeUI(anexoTree);
 	}
 }

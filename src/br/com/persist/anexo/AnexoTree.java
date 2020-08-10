@@ -17,19 +17,19 @@ import br.com.persist.comp.ItemCheckBox;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
-import br.com.persist.listener.AnexoListener;
+import br.com.persist.listener.AnexoTreeListener;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.renderer.AnexoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 
-public class Anexo extends Tree {
+public class AnexoTree extends Tree {
 	private static final long serialVersionUID = 1L;
-	private final transient List<AnexoListener> ouvintes;
+	private final transient List<AnexoTreeListener> ouvintes;
 	private AnexoPopup anexoPopup = new AnexoPopup();
 
-	public Anexo(TreeModel newModel) {
+	public AnexoTree(TreeModel newModel) {
 		super(newModel);
 		setCellRenderer(new AnexoTreeCellRenderer());
 		addMouseListener(mouseListenerInner);
@@ -37,7 +37,7 @@ public class Anexo extends Tree {
 		ouvintes = new ArrayList<>();
 	}
 
-	public void adicionarOuvinte(AnexoListener listener) {
+	public void adicionarOuvinte(AnexoTreeListener listener) {
 		if (listener == null) {
 			return;
 		}
@@ -64,7 +64,7 @@ public class Anexo extends Tree {
 			return;
 		}
 
-		AnexoUtil.selecionarObjeto(this, arquivo);
+		AnexoTreeUtil.selecionarObjeto(this, arquivo);
 	}
 
 	public void excluirSelecionado() {
@@ -74,14 +74,14 @@ public class Anexo extends Tree {
 			return;
 		}
 
-		AnexoUtil.excluirEstrutura(this, selecionado);
+		AnexoTreeUtil.excluirEstrutura(this, selecionado);
 	}
 
 	private transient KeyAdapter keyListenerInner = new KeyAdapter() {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				mouseListenerInner.mouseClicked(new MouseEvent(Anexo.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+				mouseListenerInner.mouseClicked(new MouseEvent(AnexoTree.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
 			}
 		}
 	};
@@ -124,7 +124,7 @@ public class Anexo extends Tree {
 				if (anexoSel.getLastPathComponent() instanceof Arquivo) {
 					Arquivo arquivo = (Arquivo) anexoSel.getLastPathComponent();
 					anexoPopup.preShow(arquivo);
-					anexoPopup.show(Anexo.this, e.getX(), e.getY());
+					anexoPopup.show(AnexoTree.this, e.getX(), e.getY());
 				} else {
 					setSelectionPath(null);
 				}
@@ -148,12 +148,12 @@ public class Anexo extends Tree {
 
 				if (arquivo.isFile()) {
 					if (arquivo.isPadraoAbrir()) {
-						ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
+						ouvintes.forEach(o -> o.abrirArquivo(AnexoTree.this));
 					} else {
-						ouvintes.forEach(o -> o.editarArquivo(Anexo.this));
+						ouvintes.forEach(o -> o.editarArquivo(AnexoTree.this));
 					}
 				} else if (arquivo.isDirectory()) {
-					ouvintes.forEach(o -> o.abrirArquivo(Anexo.this));
+					ouvintes.forEach(o -> o.abrirArquivo(AnexoTree.this));
 				}
 			}
 		}
@@ -185,12 +185,12 @@ public class Anexo extends Tree {
 			addMenuItem(true, copiarAcao);
 			addMenuItem(colarAcao);
 
-			copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarAtributosArquivo(Anexo.this)));
-			colarAcao.setActionListener(e -> ouvintes.forEach(o -> o.colarAtributosArquivo(Anexo.this)));
-			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(Anexo.this)));
-			corFonteAcao.setActionListener(e -> ouvintes.forEach(o -> o.corFonteArquivo(Anexo.this)));
-			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(Anexo.this)));
-			iconeAcao.setActionListener(e -> ouvintes.forEach(o -> o.iconeArquivo(Anexo.this)));
+			copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarAtributosArquivo(AnexoTree.this)));
+			colarAcao.setActionListener(e -> ouvintes.forEach(o -> o.colarAtributosArquivo(AnexoTree.this)));
+			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(AnexoTree.this)));
+			corFonteAcao.setActionListener(e -> ouvintes.forEach(o -> o.corFonteArquivo(AnexoTree.this)));
+			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(AnexoTree.this)));
+			iconeAcao.setActionListener(e -> ouvintes.forEach(o -> o.iconeArquivo(AnexoTree.this)));
 			chkAbrirVisivel.addActionListener(e -> abrirVisivel(chkAbrirVisivel.isSelected()));
 			chkPadraoAbrir.addActionListener(e -> padraoAbrir(chkPadraoAbrir.isSelected()));
 		}
@@ -237,10 +237,10 @@ public class Anexo extends Tree {
 				addSeparator();
 				addMenuItem(pastaAcao);
 
-				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirArquivo(Anexo.this)));
-				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarArquivo(Anexo.this)));
-				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(Anexo.this)));
-				pastaAcao.setActionListener(e -> ouvintes.forEach(o -> o.pastaArquivo(Anexo.this)));
+				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirArquivo(AnexoTree.this)));
+				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarArquivo(AnexoTree.this)));
+				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(AnexoTree.this)));
+				pastaAcao.setActionListener(e -> ouvintes.forEach(o -> o.pastaArquivo(AnexoTree.this)));
 			}
 		}
 	}

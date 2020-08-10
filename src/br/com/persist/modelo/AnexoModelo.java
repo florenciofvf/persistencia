@@ -21,7 +21,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.Arquivo;
-import br.com.persist.anexo.Anexo;
+import br.com.persist.anexo.AnexoTree;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 
@@ -44,7 +44,7 @@ public class AnexoModelo implements TreeModel {
 		raiz.inflar(anexos, new StringBuilder());
 	}
 
-	public void abrirVisivel(Anexo anexo) {
+	public void abrirVisivel(AnexoTree anexo) {
 		raiz.abrirVisivel(anexo);
 	}
 

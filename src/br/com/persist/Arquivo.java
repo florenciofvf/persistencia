@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import br.com.persist.anexo.Anexo;
-import br.com.persist.anexo.AnexoUtil;
+import br.com.persist.anexo.AnexoTree;
+import br.com.persist.anexo.AnexoTreeUtil;
 import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.Constantes;
 
@@ -53,9 +53,9 @@ public class Arquivo {
 		}
 	}
 
-	public void abrirVisivel(Anexo anexo) {
+	public void abrirVisivel(AnexoTree anexo) {
 		if (abrirVisivel) {
-			AnexoUtil.selecionarObjeto(anexo, this);
+			AnexoTreeUtil.selecionarObjeto(anexo, this);
 		}
 
 		for (Arquivo a : filhos) {
