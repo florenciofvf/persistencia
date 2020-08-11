@@ -185,7 +185,7 @@ public class Tabela extends JTable {
 		private Separator separator = new Separator();
 		private int tag;
 
-		PopupHeader() {
+		private PopupHeader() {
 			addMenuItem(infoAcao);
 			add(true, new MenuCopiarNomeConcat("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuCopiarNomeConcat("label.copiar_nome_coluna_concat_l", false, true));
@@ -225,14 +225,14 @@ public class Tabela extends JTable {
 			});
 		}
 
-		class MenuCopiarValor extends MenuPadrao2 {
+		private class MenuCopiarValor extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
 			private Action comAspasQLSemVAcao = Action.actionMenu("label.com_aspas_em_linhas_sem_v", Icones.ASPAS);
 			private Action semAspasQLSemVAcao = Action.actionMenu("label.sem_aspas_em_linhas_sem_v", null);
 			private Action comAspasQLAcao = Action.actionMenu("label.com_aspas_em_linhas", Icones.ASPAS);
 			private Action semAspasQLAcao = Action.actionMenu("label.sem_aspas_em_linhas", null);
 
-			MenuCopiarValor() {
+			private MenuCopiarValor() {
 				super("label.copiar_header");
 
 				addSeparator();
@@ -261,12 +261,12 @@ public class Tabela extends JTable {
 			}
 		}
 
-		class MenuCopiarNomeConcat extends MenuPadrao2 {
+		private class MenuCopiarNomeConcat extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
 			private final boolean numeros;
 			private final boolean letras;
 
-			MenuCopiarNomeConcat(String titulo, boolean num, boolean let) {
+			private MenuCopiarNomeConcat(String titulo, boolean num, boolean let) {
 				super(titulo);
 				numeros = num;
 				letras = let;
@@ -298,10 +298,10 @@ public class Tabela extends JTable {
 			}
 		}
 
-		class MenuCopiarIN extends MenuPadrao2 {
+		private class MenuCopiarIN extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
 
-			MenuCopiarIN() {
+			private MenuCopiarIN() {
 				super(Constantes.LABEL_VAZIO);
 
 				semAspasAcao.setActionListener(e -> copiarIN(false));
@@ -321,11 +321,11 @@ public class Tabela extends JTable {
 			}
 		}
 
-		class MenuCopiarINDinamico extends MenuPadrao2 {
+		private class MenuCopiarINDinamico extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
 			private final String nomeColuna;
 
-			MenuCopiarINDinamico(String coluna) {
+			private MenuCopiarINDinamico(String coluna) {
 				super(Constantes.LABEL_VAZIO);
 				setText("AND IN - " + coluna);
 				this.nomeColuna = coluna;
@@ -346,7 +346,7 @@ public class Tabela extends JTable {
 			}
 		}
 
-		public void preShow(String chave) {
+		private void preShow(String chave) {
 			menuCopiarIN.setText("AND IN - " + chave);
 			List<String> lista = mapaChaveamento.get(chave);
 			limparMenuDinamico();
@@ -390,7 +390,7 @@ public class Tabela extends JTable {
 			return null;
 		}
 
-		class MenuItemMapa extends MenuItem {
+		private class MenuItemMapa extends MenuItem {
 			private static final long serialVersionUID = 1L;
 
 			public MenuItemMapa() {
