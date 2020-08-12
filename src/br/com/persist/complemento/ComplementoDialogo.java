@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Frame;
 
-import br.com.persist.comp.TextField;
+import br.com.persist.componente.TextField;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.listener.ComplementoListener;
 import br.com.persist.objeto.Objeto;

@@ -27,7 +27,7 @@ import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
-import br.com.persist.comp.Popup;
+import br.com.persist.componente.Popup;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;

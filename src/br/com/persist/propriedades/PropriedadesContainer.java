@@ -2,8 +2,8 @@ package br.com.persist.propriedades;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.TextArea;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.TextArea;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.IJanela;

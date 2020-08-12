@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Button;
-import br.com.persist.comp.CheckBox;
-import br.com.persist.comp.ScrollPane;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
+import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;

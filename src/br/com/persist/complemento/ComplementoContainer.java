@@ -9,11 +9,11 @@ import javax.swing.JList;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
-import br.com.persist.comp.ScrollPane;
-import br.com.persist.comp.TextArea;
-import br.com.persist.comp.TextField;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextField;
 import br.com.persist.icone.Icones;
 import br.com.persist.listener.ComplementoListener;
 import br.com.persist.modelo.ListaStringModelo;

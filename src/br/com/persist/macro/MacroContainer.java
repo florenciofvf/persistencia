@@ -10,7 +10,7 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
-import br.com.persist.comp.Panel;
+import br.com.persist.componente.Panel;
 import br.com.persist.principal.Formulario;
 
 public class MacroContainer extends Panel {

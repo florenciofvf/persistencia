@@ -3,7 +3,7 @@ package br.com.persist.icone;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 
-import br.com.persist.comp.Label;
+import br.com.persist.componente.Label;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.IJanela;

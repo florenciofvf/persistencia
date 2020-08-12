@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Label;
-import br.com.persist.comp.Panel;
-import br.com.persist.comp.TextField;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Label;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.TextField;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.relacao.Relacao;
 import br.com.persist.superficie.Superficie;

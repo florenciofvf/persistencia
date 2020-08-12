@@ -13,8 +13,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import br.com.persist.comp.MenuItem;
-import br.com.persist.comp.Popup;
+import br.com.persist.componente.MenuItem;
+import br.com.persist.componente.Popup;
 import br.com.persist.icone.Icones;
 import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.modelo.OrdenacaoModelo;

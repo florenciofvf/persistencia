@@ -5,7 +5,7 @@ import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import br.com.persist.comp.Menu;
+import br.com.persist.componente.Menu;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.NimbusLookAndFeel2;

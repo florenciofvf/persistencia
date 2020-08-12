@@ -5,8 +5,8 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.TextArea;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.TextArea;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.IJanela;

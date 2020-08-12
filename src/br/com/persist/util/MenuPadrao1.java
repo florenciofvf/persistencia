@@ -4,8 +4,8 @@ import java.awt.Component;
 
 import javax.swing.Icon;
 
-import br.com.persist.comp.Menu;
-import br.com.persist.comp.MenuItem;
+import br.com.persist.componente.Menu;
+import br.com.persist.componente.MenuItem;
 
 public class MenuPadrao1 extends Menu {
 	private static final long serialVersionUID = 1L;

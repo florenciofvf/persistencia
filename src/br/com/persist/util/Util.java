@@ -39,8 +39,8 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
-import br.com.persist.comp.SplitPane;
-import br.com.persist.comp.TextArea;
+import br.com.persist.componente.SplitPane;
+import br.com.persist.componente.TextArea;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoComboModelo;
 import br.com.persist.conexao.ConexaoProvedor;

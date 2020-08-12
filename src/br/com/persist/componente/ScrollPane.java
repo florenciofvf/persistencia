@@ -1,4 +1,4 @@
-package br.com.persist.comp;
+package br.com.persist.componente;
 
 import java.awt.Component;
 import java.awt.Dimension;

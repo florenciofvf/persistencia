@@ -1,4 +1,4 @@
-package br.com.persist.comp;
+package br.com.persist.componente;
 
 import javax.swing.Action;
 import javax.swing.Icon;

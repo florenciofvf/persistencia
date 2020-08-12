@@ -1,6 +1,6 @@
 package br.com.persist.container;
 
-import br.com.persist.comp.Panel;
+import br.com.persist.componente.Panel;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.IJanela;
 

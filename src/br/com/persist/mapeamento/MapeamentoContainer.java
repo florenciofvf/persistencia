@@ -6,8 +6,8 @@ import java.io.File;
 
 import javax.swing.JTable;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.ScrollPane;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;

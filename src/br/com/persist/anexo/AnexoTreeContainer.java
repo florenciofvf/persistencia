@@ -17,9 +17,9 @@ import java.util.Set;
 
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoIconeDialogo;
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.CheckBox;
-import br.com.persist.comp.ScrollPane;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;

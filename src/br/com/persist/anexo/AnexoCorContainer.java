@@ -8,8 +8,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.arquivo.Arquivo;
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Panel;
 import br.com.persist.util.IJanela;
 
 public class AnexoCorContainer extends Panel implements ChangeListener {

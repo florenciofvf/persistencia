@@ -20,9 +20,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Panel;
-import br.com.persist.comp.ScrollPane;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fmt.Parser;

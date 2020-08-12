@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.plaf.basic.BasicButtonUI;
 
-import br.com.persist.comp.Button;
-import br.com.persist.comp.Panel;
+import br.com.persist.componente.Button;
+import br.com.persist.componente.Panel;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 

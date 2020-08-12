@@ -14,9 +14,9 @@ import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-import br.com.persist.comp.Label;
-import br.com.persist.comp.Panel;
-import br.com.persist.comp.TextField;
+import br.com.persist.componente.Label;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.TextField;
 import br.com.persist.icone.Icones;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.objeto.ObjetoContainer;

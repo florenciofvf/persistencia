@@ -18,10 +18,10 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Label;
-import br.com.persist.comp.ScrollPane;
-import br.com.persist.comp.TextArea;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Label;
+import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextArea;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.container.AbstratoContainer;

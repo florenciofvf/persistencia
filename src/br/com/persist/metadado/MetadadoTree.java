@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.comp.Popup;
-import br.com.persist.comp.Tree;
+import br.com.persist.componente.Popup;
+import br.com.persist.componente.Tree;
 import br.com.persist.icone.Icones;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.MenuPadrao1;

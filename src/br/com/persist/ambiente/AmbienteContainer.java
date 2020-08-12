@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.TextArea;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.TextArea;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;

@@ -20,9 +20,9 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.plaf.basic.BasicButtonUI;
 
-import br.com.persist.comp.Button;
-import br.com.persist.comp.Label;
-import br.com.persist.comp.Panel;
+import br.com.persist.componente.Button;
+import br.com.persist.componente.Label;
+import br.com.persist.componente.Panel;
 import br.com.persist.icone.Icones;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;

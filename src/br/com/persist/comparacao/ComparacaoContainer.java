@@ -10,12 +10,12 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 
-import br.com.persist.comp.BarraButton;
-import br.com.persist.comp.Button;
-import br.com.persist.comp.Label;
-import br.com.persist.comp.Panel;
-import br.com.persist.comp.TextArea;
-import br.com.persist.comp.TextField;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
+import br.com.persist.componente.Label;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextField;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;
