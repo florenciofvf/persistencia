@@ -6,7 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import br.com.persist.Instrucao;
 import br.com.persist.desktop.Objeto;
-import br.com.persist.desktop.Relacao;
+import br.com.persist.relacao.Relacao;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Form;
 import br.com.persist.util.Util;

@@ -53,12 +53,12 @@ public class Objeto implements Runnable {
 	private boolean transparenteBkp;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
-	protected boolean transparente;
 	private String linkAutomatico;
 	private static long sequencia;
 	private Superficie superficie;
 	protected boolean controlado;
 	private String finalConsulta;
+	public boolean transparente;
 	private boolean selecionado;
 	private boolean ccsc = true;
 	private boolean desenharId;
@@ -84,8 +84,8 @@ public class Objeto implements Runnable {
 	private Icon icon;
 	private String id;
 	private long tag;
-	protected int x;
-	protected int y;
+	public int x;
+	public int y;
 
 	public Objeto() {
 		this(0, 0, null, null);

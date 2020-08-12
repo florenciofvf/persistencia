@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.desktop.Objeto;
-import br.com.persist.desktop.Relacao;
+import br.com.persist.relacao.Relacao;
 
 public class Macro {
 	public static final String AJUSTE_AUTO_ENTER = "ajusteAutoEnter";

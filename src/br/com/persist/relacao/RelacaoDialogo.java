@@ -1,11 +1,11 @@
-package br.com.persist.dialogo;
+package br.com.persist.relacao;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.container.RelacaoContainer;
-import br.com.persist.desktop.Relacao;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.IJanela;
 
 public class RelacaoDialogo extends AbstratoDialogo implements IJanela {

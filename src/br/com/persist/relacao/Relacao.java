@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.relacao;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.desktop.Objeto;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
