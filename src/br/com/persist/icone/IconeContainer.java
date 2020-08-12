@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.icone;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

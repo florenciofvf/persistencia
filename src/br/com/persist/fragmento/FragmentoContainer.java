@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.fragmento;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -8,40 +8,39 @@ import javax.swing.JTable;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
-import br.com.persist.editor.ChaveValorEditor;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;
-import br.com.persist.mapeamento.MapeamentoFormulario;
-import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class MapeamentoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
+public class FragmentoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private final MapeamentoModelo mapeamentoModelo = new MapeamentoModelo();
-	private final JTable tabela = new JTable(mapeamentoModelo);
-	private MapeamentoFormulario mapeamentoFormulario;
+	private final FragmentoModelo fragmentoModelo = new FragmentoModelo();
+	private final JTable tabela = new JTable(fragmentoModelo);
+	private final transient FragmentoListener listener;
+	private FragmentoFormulario fragmentoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 
-	public MapeamentoContainer(IJanela janela, Formulario formulario) {
+	public FragmentoContainer(IJanela janela, Formulario formulario, FragmentoListener listener) {
 		super(formulario);
+		this.listener = listener;
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
 	}
 
-	public MapeamentoFormulario getMapeamentoFormulario() {
-		return mapeamentoFormulario;
+	public FragmentoFormulario getFragmentoFormulario() {
+		return fragmentoFormulario;
 	}
 
-	public void setMapeamentoFormulario(MapeamentoFormulario mapeamentoFormulario) {
-		this.mapeamentoFormulario = mapeamentoFormulario;
+	public void setFragmentoFormulario(FragmentoFormulario fragmentoFormulario) {
+		this.fragmentoFormulario = fragmentoFormulario;
 	}
 
 	@Override
@@ -50,12 +49,12 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 	}
 
 	private void montarLayout() {
+		toolbar.configListener();
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabela));
 	}
 
 	private void configurar() {
-		tabela.getColumnModel().getColumn(1).setCellEditor(new ChaveValorEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.getBaixarAcao().actionPerformed(null);
 	}
@@ -67,23 +66,27 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 
 	@Override
 	protected void destacarEmFormulario() {
-		formulario.getFichario().getMapeamento().destacarEmFormulario(formulario, this);
+		if (formulario != null) {
+			formulario.getFichario().getFragmento().destacarEmFormulario(formulario, this);
+		}
 	}
 
 	@Override
 	protected void clonarEmFormulario() {
-		formulario.getFichario().getMapeamento().clonarEmFormulario(formulario, this);
+		if (formulario != null) {
+			formulario.getFichario().getFragmento().clonarEmFormulario(formulario, this);
+		}
 	}
 
 	@Override
 	protected void abrirEmFormulario() {
-		MapeamentoFormulario.criar(formulario);
+		FragmentoFormulario.criar(formulario);
 	}
 
 	@Override
 	protected void retornoAoFichario() {
-		if (mapeamentoFormulario != null) {
-			mapeamentoFormulario.retornoAoFichario();
+		if (fragmentoFormulario != null) {
+			fragmentoFormulario.retornoAoFichario();
 		}
 	}
 
@@ -99,7 +102,7 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 			super.ini(janela, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_FRAGMENTO);
 			configBaixarAcao(null);
 
 			addButton(copiarAcao);
@@ -109,16 +112,16 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 
 		@Override
 		protected void limpar() {
-			MapeamentoModelo.novo();
-			mapeamentoModelo.fireTableDataChanged();
+			FragmentoModelo.novo();
+			fragmentoModelo.fireTableDataChanged();
 		}
 
 		@Override
 		protected void salvar() {
 			try {
-				MapeamentoModelo.salvar();
+				FragmentoModelo.salvar();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("SALVAR: ", ex, MapeamentoContainer.this);
+				Util.stackTraceAndMessage("SALVAR: ", ex, FragmentoContainer.this);
 			}
 		}
 
@@ -126,8 +129,15 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
 
 			getBaixarAcao().setActionListener(e -> {
-				MapeamentoModelo.inicializar();
-				mapeamentoModelo.fireTableDataChanged();
+				if (listener != null) {
+					FragmentoModelo.reiniciar();
+					FragmentoModelo.filtar(listener.getGruposFiltro());
+				} else {
+					FragmentoModelo.inicializar();
+				}
+
+				FragmentoModelo.ordenar();
+				fragmentoModelo.fireTableDataChanged();
 				TabelaUtil.ajustar(tabela, getGraphics());
 			});
 
@@ -136,15 +146,32 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, Fich
 
 				if (linhas != null && linhas.length > 0) {
 					for (int i : linhas) {
-						ChaveValor cv = MapeamentoModelo.getChaveValor(i);
-						ChaveValor clone = cv.clonar();
-						clone.setChave(cv.getChave() + "_" + Constantes.TEMP);
-						MapeamentoModelo.adicionar(clone);
+						Fragmento f = FragmentoModelo.getFragmento(i);
+						FragmentoModelo.adicionar(f.clonar());
 					}
 
-					mapeamentoModelo.fireTableDataChanged();
+					fragmentoModelo.fireTableDataChanged();
 				}
 			});
+		}
+
+		private void configListener() {
+			if (listener != null) {
+				Action configAcao = Action.actionIcon("label.fragmento", Icones.SUCESSO, e -> {
+					int[] linhas = tabela.getSelectedRows();
+
+					if (linhas != null && linhas.length == 1) {
+						Fragmento f = FragmentoModelo.getFragmento(linhas[0]);
+						listener.configFragmento(f);
+
+						if (janela != null) {
+							janela.fechar();
+						}
+					}
+				});
+
+				addButton(configAcao);
+			}
 		}
 	}
 }

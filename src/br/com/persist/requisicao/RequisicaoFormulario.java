@@ -2,7 +2,6 @@ package br.com.persist.requisicao;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.container.RequisicaoContainer;
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;

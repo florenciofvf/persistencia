@@ -32,6 +32,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import br.com.persist.ambiente.AmbienteContainer;
 import br.com.persist.ambiente.AmbienteDialogo;
 import br.com.persist.ambiente.AmbienteFormulario;
 import br.com.persist.anexo.AnexoTreeContainer;
@@ -54,7 +55,6 @@ import br.com.persist.configuracao.ConfiguracaoDialogo;
 import br.com.persist.configuracao.ConfiguracaoFormulario;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
-import br.com.persist.container.AmbienteContainer;
 import br.com.persist.desktop.DesktopFormulario;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;

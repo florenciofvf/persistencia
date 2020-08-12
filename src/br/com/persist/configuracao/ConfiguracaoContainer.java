@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.configuracao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,7 +25,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.PanelCenter;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
-import br.com.persist.configuracao.ConfiguracaoFormulario;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;

@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.banco;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -6,13 +6,9 @@ import java.io.File;
 
 import javax.swing.JTable;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.banco.ConexaoFormulario;
-import br.com.persist.banco.ConexaoModelo;
-import br.com.persist.banco.ConexaoStatusEditor;
-import br.com.persist.banco.ConexaoStatusRenderer;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;

@@ -3,7 +3,6 @@ package br.com.persist.anotacao;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
-import br.com.persist.container.AnotacaoContainer;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;

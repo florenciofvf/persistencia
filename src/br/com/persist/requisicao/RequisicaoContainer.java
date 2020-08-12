@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.requisicao;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -19,31 +18,38 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.StyledDocument;
 
 import br.com.persist.comp.BarraButton;
+import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
-import br.com.persist.runtime_exec.RuntimeExecFormulario;
 import br.com.persist.util.Action;
+import br.com.persist.util.Base64Util;
+import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
+import br.com.persist.variaveis.VariaveisModelo;
 
-public class RuntimeExecContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
+public class RequisicaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private static final String PAINEL_RUNTIME_EXEC = "PAINEL RUNTIME_EXEC";
-	private static final File file = new File("runtime_exec");
-	private RuntimeExecFormulario runtimeExecFormulario;
+	private static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
+	private static final File file = new File("requisicoes");
+	private RequisicaoFormulario requisicaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private Fichario fichario = new Fichario();
 
-	public RuntimeExecContainer(IJanela janela, Formulario formulario, String conteudo, String idPagina) {
+	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
@@ -51,12 +57,12 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		abrir(conteudo, idPagina);
 	}
 
-	public RuntimeExecFormulario getRuntimeExecFormulario() {
-		return runtimeExecFormulario;
+	public RequisicaoFormulario getRequisicaoFormulario() {
+		return requisicaoFormulario;
 	}
 
-	public void setRuntimeExecFormulario(RuntimeExecFormulario runtimeExecFormulario) {
-		this.runtimeExecFormulario = runtimeExecFormulario;
+	public void setRequisicaoFormulario(RequisicaoFormulario requisicaoFormulario) {
+		this.requisicaoFormulario = requisicaoFormulario;
 	}
 
 	private void config() {
@@ -119,23 +125,23 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 	@Override
 	protected void destacarEmFormulario() {
-		formulario.getFichario().getRuntimeExec().destacarEmFormulario(formulario, this);
+		formulario.getFichario().getRequisicao().destacarEmFormulario(formulario, this);
 	}
 
 	@Override
 	protected void clonarEmFormulario() {
-		formulario.getFichario().getRuntimeExec().clonarEmFormulario(formulario, this);
+		formulario.getFichario().getRequisicao().clonarEmFormulario(formulario, this);
 	}
 
 	@Override
 	protected void abrirEmFormulario() {
-		RuntimeExecFormulario.criar(formulario, Constantes.VAZIO, null);
+		RequisicaoFormulario.criar(formulario, Constantes.VAZIO, null);
 	}
 
 	@Override
 	protected void retornoAoFichario() {
-		if (runtimeExecFormulario != null) {
-			runtimeExecFormulario.retornoAoFichario();
+		if (requisicaoFormulario != null) {
+			requisicaoFormulario.retornoAoFichario();
 		}
 	}
 
@@ -145,36 +151,60 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
+		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
-		private Action atualizarAcao = Action.actionIcon("label.runtime_exec", Icones.EXECUTAR);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
+		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
+		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
+		private CheckBox chkCopiarAccessT = new CheckBox();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, true, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_RUNTIME_EXEC);
+			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
 			configBaixarAcao(e -> abrir(null, null));
 			addButton(baixarAtivoAcao);
 			addButton(excluirAtivoAcao);
+
+			add(chkRespostaJson);
+			add(chkCopiarAccessT);
 			addButton(true, atualizarAcao);
+			addButton(true, formatarAcao);
+			addButton(true, base64Acao);
 			configCopiar1Acao(true);
 			configCopiar2Acao(true);
+
+			String hint = Mensagens.getString("label.copiar_access_token", Mensagens.getString("label.resposta_json"));
+			chkCopiarAccessT.setToolTipText(hint);
 
 			eventos();
 		}
 
 		private void eventos() {
+			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
+			chkRespostaJson.addActionListener(
+					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
+
+			chkCopiarAccessT.setSelected(Preferencias.getBoolean("copiar_access_token"));
+			chkCopiarAccessT.addActionListener(
+					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessT.isSelected()));
+
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 
 			baixarAtivoAcao.setActionListener(e -> abrirAtivo());
 
 			atualizarAcao.setActionListener(e -> atualizar());
+
+			formatarAcao.setActionListener(e -> formatar());
+
+			base64Acao.setActionListener(e -> base64());
 		}
 
 		@Override
 		protected void novo() {
-			Object resp = Util.getValorInputDialog(RuntimeExecContainer.this, "label.id",
+			Object resp = Util.getValorInputDialog(RequisicaoContainer.this, "label.id",
 					Mensagens.getString("label.nome_arquivo"), Constantes.VAZIO);
 
 			if (resp == null || Util.estaVazio(resp.toString())) {
@@ -186,7 +216,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			File f = new File(file, nome);
 
 			if (f.exists()) {
-				Util.mensagem(RuntimeExecContainer.this, Mensagens.getString("label.indentf_existente"));
+				Util.mensagem(RequisicaoContainer.this, Mensagens.getString("label.indentf_existente"));
 				return;
 			}
 
@@ -196,7 +226,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 					fichario.pagina(pagina);
 				}
 			} catch (IOException ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}
 		}
 
@@ -259,6 +289,22 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 			if (ativa != null) {
 				ativa.atualizar();
+			}
+		}
+
+		private void formatar() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.formatar();
+			}
+		}
+
+		private void base64() {
+			Pagina ativa = fichario.getPaginaAtiva();
+
+			if (ativa != null) {
+				ativa.base64();
 			}
 		}
 
@@ -376,6 +422,79 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			return file.getName();
 		}
 
+		private void abrir() {
+			areaParametros.setText(Constantes.VAZIO);
+
+			if (file.exists()) {
+				try (BufferedReader br = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+					StringBuilder sb = new StringBuilder();
+					String linha = br.readLine();
+
+					while (linha != null) {
+						sb.append(linha + Constantes.QL2);
+						linha = br.readLine();
+					}
+
+					areaParametros.setText(sb.toString());
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+				}
+			}
+		}
+
+		private void excluir() {
+			if (file.exists()) {
+				Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
+
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					Util.stackTraceAndMessage(PAINEL_REQUISICAO, e, RequisicaoContainer.this);
+				}
+			}
+		}
+
+		public void limpar() {
+			areaParametros.setText(Constantes.VAZIO);
+		}
+
+		public void salvar() {
+			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
+				return;
+			}
+
+			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
+				pw.print(areaParametros.getText());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+			}
+		}
+
+		public void formatar() {
+			if (Util.estaVazio(areaParametros.getText())) {
+				return;
+			}
+
+			String string = Util.getString(areaParametros);
+			areaResultados.setText(Constantes.VAZIO);
+
+			try {
+				Parser parser = new Parser();
+				Tipo json = parser.parse(string);
+
+				StyledDocument styledDoc = areaResultados.getStyledDocument();
+
+				if (styledDoc instanceof AbstractDocument) {
+					AbstractDocument doc = (AbstractDocument) styledDoc;
+					json.toString(doc, false, 0);
+				}
+				areaParametros.requestFocus();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+			}
+		}
+
 		public void copiar1() {
 			String string = Util.getString(areaParametros);
 			Util.setContentTransfered(string);
@@ -396,52 +515,19 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			Util.getContentTransfered(areaResultados);
 		}
 
-		private void abrir() {
-			areaParametros.setText(Constantes.VAZIO);
-
-			if (file.exists()) {
-				try (BufferedReader br = new BufferedReader(
-						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-					StringBuilder sb = new StringBuilder();
-					String linha = br.readLine();
-
-					while (linha != null) {
-						sb.append(linha + Constantes.QL2);
-						linha = br.readLine();
-					}
-
-					areaParametros.setText(sb.toString());
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
-				}
-			}
-		}
-
-		private void excluir() {
-			if (file.exists()) {
-				Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
-
-				try {
-					Files.delete(path);
-				} catch (IOException e) {
-					Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, e, RuntimeExecContainer.this);
-				}
-			}
-		}
-
-		public void limpar() {
-			areaParametros.setText(Constantes.VAZIO);
-		}
-
-		public void salvar() {
-			if (!Util.confirmaSalvar(RuntimeExecContainer.this, Constantes.TRES)) {
+		public void base64() {
+			if (Util.estaVazio(areaParametros.getText())) {
 				return;
 			}
 
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(areaParametros.getText());
+			String string = Util.getString(areaParametros);
+			areaResultados.setText(Constantes.VAZIO);
+
+			try {
+				areaResultados.setText(Base64Util.criarBase64(string));
+				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
@@ -455,64 +541,50 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 			try {
 				Parser parser = new Parser();
-				Tipo param = parser.parse(string);
-				Process process = montarProcess(param);
 
-				if (process == null) {
-					return;
+				ChaveValor cvAccessToken = VariaveisModelo.get(Constantes.VAR_ACCESS_TOKEN);
+
+				if (cvAccessToken != null) {
+					string = Util.substituir(string, cvAccessToken);
 				}
 
-				new ThreadInputStream(process.getErrorStream(), areaResultados, "ERROS").start();
-				new ThreadInputStream(process.getInputStream(), areaResultados, "SAIDA").start();
+				Tipo parametros = parser.parse(string);
+				String resposta = Util.requisicao(parametros);
 
-				int exit = process.waitFor();
-				String conteudo = areaResultados.getText();
-				areaResultados.setText(conteudo + Constantes.QL2 + "EXIT=" + exit);
+				if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
+					StyledDocument styledDoc = areaResultados.getStyledDocument();
+					Tipo json = parser.parse(resposta);
+
+					if (styledDoc instanceof AbstractDocument) {
+						AbstractDocument doc = (AbstractDocument) styledDoc;
+						json.toString(doc, false, 0);
+					}
+
+					String accessToken = Util.getAccessToken(json);
+					setAccesToken(accessToken);
+				} else {
+					areaResultados.setText(resposta);
+				}
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, this);
+				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
-		private Process montarProcess(Tipo objeto) throws IOException {
-			ProcessBuilder builder = Util.criarProcessBuilder(objeto);
+		private void setAccesToken(String accessToken) {
+			if (!Util.estaVazio(accessToken)) {
+				ChaveValor cvAccessToken = VariaveisModelo.get(Constantes.VAR_ACCESS_TOKEN);
 
-			if (builder != null) {
-				return builder.start();
-			}
-
-			return null;
-		}
-	}
-
-	private class ThreadInputStream extends Thread {
-		private final InputStream is;
-		private final JTextPane area;
-		private final String tipo;
-
-		public ThreadInputStream(InputStream is, JTextPane area, String tipo) {
-			this.area = area;
-			this.tipo = tipo;
-			this.is = is;
-		}
-
-		@Override
-		public void run() {
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-				StringBuilder sb = new StringBuilder();
-				String linha = br.readLine();
-
-				while (linha != null) {
-					sb.append(linha + Constantes.QL2);
-					linha = br.readLine();
+				if (cvAccessToken == null) {
+					cvAccessToken = new ChaveValor(Constantes.VAR_ACCESS_TOKEN, accessToken);
+					VariaveisModelo.adicionar(cvAccessToken);
+				} else {
+					cvAccessToken.setValor(accessToken);
 				}
 
-				if (sb.length() > 0) {
-					sb.append(tipo);
-					area.setText(sb.toString());
+				if (toolbar.chkCopiarAccessT.isSelected()) {
+					Util.setContentTransfered(accessToken);
 				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
 	}

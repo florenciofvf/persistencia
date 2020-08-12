@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.comparacao;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -16,7 +16,7 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
-import br.com.persist.comparacao.ComparacaoFormulario;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;

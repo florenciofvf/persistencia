@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.macro;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
@@ -11,7 +11,6 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
 import br.com.persist.comp.Panel;
-import br.com.persist.macro.Macro;
 import br.com.persist.principal.Formulario;
 
 public class MacroContainer extends Panel {

@@ -5,7 +5,6 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import br.com.persist.container.ConexaoContainer;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
