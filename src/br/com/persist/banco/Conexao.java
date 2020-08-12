@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.exception.ConexaoException;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;

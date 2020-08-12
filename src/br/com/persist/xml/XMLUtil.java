@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import br.com.persist.exception.XMLException;
 import br.com.persist.util.Constantes;
 
 public class XMLUtil {

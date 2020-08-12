@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import br.com.persist.banco.Conexao;
-import br.com.persist.exception.XMLException;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
