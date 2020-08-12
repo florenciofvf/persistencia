@@ -57,7 +57,6 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.dialogo.ComplementoDialogo;
 import br.com.persist.dialogo.ConsultaDialogo;
 import br.com.persist.dialogo.UpdateDialogo;
-import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.UpdateFormulario;
@@ -72,7 +71,6 @@ import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.RegistroModelo;
-import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.renderer.CellInfoRenderer;
 import br.com.persist.renderer.CellRenderer;
 import br.com.persist.tabela.CabecalhoColuna;
@@ -96,6 +94,8 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.TransferidorDados;
 import br.com.persist.util.Util;
+import br.com.persist.variaveis.VariaveisDialogo;
+import br.com.persist.variaveis.VariaveisModelo;
 
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable, IIni {
 	private static final long serialVersionUID = 1L;

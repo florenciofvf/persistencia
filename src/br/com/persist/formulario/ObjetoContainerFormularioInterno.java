@@ -25,12 +25,12 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
-import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
+import br.com.persist.variaveis.VariaveisModelo;
 
 public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		implements IJanela, ObjetoContainerListener, IIni {

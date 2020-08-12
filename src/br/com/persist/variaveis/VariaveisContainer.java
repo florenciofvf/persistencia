@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.variaveis;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -8,11 +8,10 @@ import javax.swing.JTable;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.icone.Icones;
-import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;

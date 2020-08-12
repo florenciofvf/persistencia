@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.fragmento;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.persist.fragmento.Fragmento;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLColetor;

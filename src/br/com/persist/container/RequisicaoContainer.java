@@ -29,7 +29,6 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.icone.Icones;
-import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.requisicao.RequisicaoFormulario;
 import br.com.persist.util.Action;
@@ -40,6 +39,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
+import br.com.persist.variaveis.VariaveisModelo;
 
 public class RequisicaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;

@@ -12,7 +12,7 @@ import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;
 import br.com.persist.mapeamento.MapeamentoFormulario;
-import br.com.persist.modelo.MapeamentoModelo;
+import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;

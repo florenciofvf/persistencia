@@ -50,7 +50,7 @@ import br.com.persist.fmt.Array;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.modelo.ObjetoComboModelo;
-import br.com.persist.modelo.VariaveisModelo;
+import br.com.persist.variaveis.VariaveisModelo;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();

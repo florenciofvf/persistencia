@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.variaveis;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLUtil;
 
-public class MapeamentoModelo extends AbstractTableModel {
-	private static final File file = new File("mapeamento/mapa.xml");
+public class VariaveisModelo extends AbstractTableModel {
+	private static final File file = new File("variaveis/var.xml");
 	private static final List<ChaveValor> lista = new ArrayList<>();
 	private static final String[] COLUNAS = { "CHAVE", "VALOR" };
 	private static final Logger LOG = Logger.getGlobal();
@@ -75,6 +75,10 @@ public class MapeamentoModelo extends AbstractTableModel {
 		}
 	}
 
+	public static List<ChaveValor> getLista() {
+		return lista;
+	}
+
 	public static ChaveValor getChaveValor(int i) {
 		return lista.get(i);
 	}
@@ -108,7 +112,7 @@ public class MapeamentoModelo extends AbstractTableModel {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
 
-			util.abrirTag2("mapeamento");
+			util.abrirTag2("variaveis");
 
 			for (ChaveValor cv : lista) {
 				if (cv.isValida()) {
@@ -116,7 +120,7 @@ public class MapeamentoModelo extends AbstractTableModel {
 				}
 			}
 
-			util.finalizarTag("mapeamento");
+			util.finalizarTag("variaveis");
 			util.close();
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
@@ -128,7 +132,7 @@ public class MapeamentoModelo extends AbstractTableModel {
 
 		try {
 			if (file.exists() && file.canRead()) {
-				XML.processarMapeamento(file);
+				XML.processarVariaveis(file);
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);

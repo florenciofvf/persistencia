@@ -36,7 +36,6 @@ import br.com.persist.icone.Icones;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.metadado.Metadado;
-import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.ChaveValor;
@@ -45,6 +44,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
+import br.com.persist.variaveis.VariaveisModelo;
 
 public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
