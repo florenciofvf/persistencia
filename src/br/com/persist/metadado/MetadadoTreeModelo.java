@@ -1,7 +1,5 @@
-package br.com.persist.arquivo;
+package br.com.persist.metadado;
 
-import java.io.File;
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,26 +10,18 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.util.Constantes;
-
-public class ArquivoModelo implements TreeModel {
+public class MetadadoTreeModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
-	public static final File FILE = new File(Constantes.ARQUIVOS);
 	private static final Logger LOG = Logger.getGlobal();
-	private final Arquivo raiz;
+	private final Metadado raiz;
 
-	public ArquivoModelo() {
-		this(new Arquivo(FILE));
+	public MetadadoTreeModelo() {
+		this(new Metadado("Raiz"));
 	}
 
-	public ArquivoModelo(Arquivo raiz) {
+	public MetadadoTreeModelo(Metadado raiz) {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
-		raiz.inflar(false, null);
-	}
-
-	public void listar(List<Arquivo> lista) {
-		raiz.listar(lista);
 	}
 
 	@Override
@@ -41,22 +31,22 @@ public class ArquivoModelo implements TreeModel {
 
 	@Override
 	public Object getChild(Object parent, int index) {
-		return ((Arquivo) parent).getArquivo(index);
+		return ((Metadado) parent).getMetadado(index);
 	}
 
 	@Override
 	public int getChildCount(Object parent) {
-		return ((Arquivo) parent).getTotal();
+		return ((Metadado) parent).getTotal();
 	}
 
 	@Override
 	public boolean isLeaf(Object parent) {
-		return ((Arquivo) parent).estaVazio();
+		return ((Metadado) parent).estaVazio();
 	}
 
 	@Override
 	public int getIndexOfChild(Object parent, Object child) {
-		return ((Arquivo) parent).getIndice((Arquivo) child);
+		return ((Metadado) parent).getIndice((Metadado) child);
 	}
 
 	@Override

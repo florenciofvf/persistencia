@@ -193,8 +193,8 @@ public class AnexoTree extends Tree {
 		}
 
 		private void preShow(Arquivo arquivo) {
-			renomearAcao.setEnabled(arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile()));
-			excluirAcao.setEnabled(arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile()));
+			renomearAcao.setEnabled(arquivo.getPai() != null && !AnexoTreeModelo.anexosInfo.equals(arquivo.getFile()));
+			excluirAcao.setEnabled(arquivo.getPai() != null && !AnexoTreeModelo.anexosInfo.equals(arquivo.getFile()));
 			chkAbrirVisivel.setSelected(arquivo.isAbrirVisivel());
 			chkPadraoAbrir.setSelected(arquivo.isPadraoAbrir());
 			chkAbrirVisivel.setEnabled(arquivo.isDirectory());
@@ -206,7 +206,7 @@ public class AnexoTree extends Tree {
 
 			if (arquivo != null) {
 				arquivo.setPadraoAbrir(b);
-				AnexoModelo.putArquivo(arquivo);
+				AnexoTreeModelo.putArquivo(arquivo);
 			}
 		}
 
@@ -215,7 +215,7 @@ public class AnexoTree extends Tree {
 
 			if (arquivo != null) {
 				arquivo.setAbrirVisivel(b);
-				AnexoModelo.putArquivo(arquivo);
+				AnexoTreeModelo.putArquivo(arquivo);
 			}
 		}
 

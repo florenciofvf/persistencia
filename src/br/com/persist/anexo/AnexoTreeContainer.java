@@ -31,7 +31,7 @@ import br.com.persist.util.Util;
 
 public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private AnexoTree anexoTree = new AnexoTree(new AnexoModelo(true));
+	private AnexoTree anexoTree = new AnexoTree(new AnexoTreeModelo(true));
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopAnex = new CheckBox();
 	private AnexoTreeFormulario anexoTreeFormulario;
@@ -119,8 +119,8 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 
 		@Override
 		public void salvar() {
-			try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo, StandardCharsets.UTF_8.name())) {
-				Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
+			try (PrintWriter pw = new PrintWriter(AnexoTreeModelo.anexosInfo, StandardCharsets.UTF_8.name())) {
+				Set<Entry<String, Arquivo>> entrySet = AnexoTreeModelo.getArquivos().entrySet();
 
 				for (Entry<String, Arquivo> entry : entrySet) {
 					Arquivo arquivo = entry.getValue();
@@ -213,7 +213,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 	public void excluirArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
-		if (arquivo != null && arquivo.getPai() != null && !AnexoModelo.anexosInfo.equals(arquivo.getFile())
+		if (arquivo != null && arquivo.getPai() != null && !AnexoTreeModelo.anexosInfo.equals(arquivo.getFile())
 				&& Util.confirmaExclusao(AnexoTreeContainer.this, false)) {
 			arquivo.excluir();
 			AnexoTreeUtil.excluirEstrutura(anexo, arquivo);
@@ -224,7 +224,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 	public void renomearArquivo(AnexoTree anexo) {
 		Arquivo arquivo = anexo.getObjetoSelecionado();
 
-		if (arquivo == null || arquivo.getPai() == null || AnexoModelo.anexosInfo.equals(arquivo.getFile())) {
+		if (arquivo == null || arquivo.getPai() == null || AnexoTreeModelo.anexosInfo.equals(arquivo.getFile())) {
 			return;
 		}
 
@@ -237,7 +237,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 
 		if (arquivo.renomear(resp.toString())) {
 			AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
-			AnexoModelo.putArquivo(arquivo);
+			AnexoTreeModelo.putArquivo(arquivo);
 		}
 	}
 
@@ -316,15 +316,15 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 			arquivo.setIcone(icone, nome);
 		}
 
-		AnexoModelo.putArquivo(arquivo);
+		AnexoTreeModelo.putArquivo(arquivo);
 		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 	}
 
 	private void baixarArquivo() {
-		AnexoModelo modelo = new AnexoModelo(true);
+		AnexoTreeModelo modelo = new AnexoTreeModelo(true);
 		anexoTree.setModel(modelo);
 
-		Set<Entry<String, Arquivo>> entrySet = AnexoModelo.getArquivos().entrySet();
+		Set<Entry<String, Arquivo>> entrySet = AnexoTreeModelo.getArquivos().entrySet();
 		Iterator<Entry<String, Arquivo>> iterator = entrySet.iterator();
 		boolean removido = false;
 

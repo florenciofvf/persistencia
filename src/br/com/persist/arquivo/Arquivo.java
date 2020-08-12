@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import br.com.persist.anexo.AnexoModelo;
+import br.com.persist.anexo.AnexoTreeModelo;
 import br.com.persist.anexo.AnexoTree;
 import br.com.persist.anexo.AnexoTreeUtil;
 import br.com.persist.util.Constantes;
@@ -216,7 +216,7 @@ public class Arquivo {
 	}
 
 	private void config(StringBuilder sb) {
-		Arquivo arq = AnexoModelo.getArquivos().get(criarChave(sb).toString());
+		Arquivo arq = AnexoTreeModelo.getArquivos().get(criarChave(sb).toString());
 
 		if (arq != null) {
 			setIcone(arq.getIcone(), arq.getNomeIcone());

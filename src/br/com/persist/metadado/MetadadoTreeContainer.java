@@ -210,7 +210,7 @@ public class MetadadoTreeContainer extends AbstratoContainer
 			}
 
 			raiz.montarOrdenacoes();
-			metadadoTree.setModel(new MetadadoModelo(raiz));
+			metadadoTree.setModel(new MetadadoTreeModelo(raiz));
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("META-DADOS", ex, this);
 		}

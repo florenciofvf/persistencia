@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
-import br.com.persist.anexo.AnexoModelo;
+import br.com.persist.anexo.AnexoTreeModelo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
@@ -69,7 +69,7 @@ public class ArquivoIconeContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				arquivo.setIcone(getIcon(), nome);
-				AnexoModelo.putArquivo(arquivo);
+				AnexoTreeModelo.putArquivo(arquivo);
 				toolbar.fechar();
 			}
 		};
@@ -84,7 +84,7 @@ public class ArquivoIconeContainer extends Panel {
 
 		@Override
 		protected void limpar() {
-			AnexoModelo.putArquivo(arquivo);
+			AnexoTreeModelo.putArquivo(arquivo);
 			arquivo.limparIcone();
 			fechar();
 		}

@@ -30,7 +30,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.arquivo.ArquivoModelo;
+import br.com.persist.arquivo.ArquivoTreeModelo;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
@@ -1566,7 +1566,7 @@ public class Superficie extends Desktop {
 
 			if (file != null) {
 				sb.append("Local absoluto do arquivo: " + file.getAbsolutePath() + Constantes.QL2);
-				sb.append("Local relativo do arquivo: " + Fichario.getAbsRelativoArquivo(ArquivoModelo.FILE, file)
+				sb.append("Local relativo do arquivo: " + Fichario.getAbsRelativoArquivo(ArquivoTreeModelo.FILE, file)
 						+ Constantes.QL2);
 			}
 

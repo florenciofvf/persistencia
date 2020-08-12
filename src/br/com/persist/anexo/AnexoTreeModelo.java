@@ -24,7 +24,7 @@ import br.com.persist.arquivo.Arquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 
-public class AnexoModelo implements TreeModel {
+public class AnexoTreeModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Map<String, Arquivo> arquivos = new HashMap<>();
 	private static final File anexosRaiz = new File("anexos");
@@ -32,11 +32,11 @@ public class AnexoModelo implements TreeModel {
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;
 
-	public AnexoModelo(boolean anexos) {
+	public AnexoTreeModelo(boolean anexos) {
 		this(new Arquivo(anexosRaiz), anexos);
 	}
 
-	public AnexoModelo(Arquivo raiz, boolean anexos) {
+	public AnexoTreeModelo(Arquivo raiz, boolean anexos) {
 		Objects.requireNonNull(raiz);
 		this.raiz = raiz;
 		inicializar(anexos);

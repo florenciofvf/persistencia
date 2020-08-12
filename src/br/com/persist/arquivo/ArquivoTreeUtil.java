@@ -27,7 +27,7 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void atualizarEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
+		ArquivoTreeModelo modelo = (ArquivoTreeModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -36,7 +36,7 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void refreshEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
+		ArquivoTreeModelo modelo = (ArquivoTreeModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -45,7 +45,7 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void excluirEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
+		ArquivoTreeModelo modelo = (ArquivoTreeModelo) arquivoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);

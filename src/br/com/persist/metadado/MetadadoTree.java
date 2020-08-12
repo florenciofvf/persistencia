@@ -32,7 +32,7 @@ public class MetadadoTree extends Tree {
 	private boolean padraoClickExportacao = true;
 
 	public MetadadoTree() {
-		this(new MetadadoModelo());
+		this(new MetadadoTreeModelo());
 	}
 
 	public MetadadoTree(TreeModel newModel) {
@@ -260,7 +260,7 @@ public class MetadadoTree extends Tree {
 	}
 
 	public Metadado getRaiz() {
-		MetadadoModelo modelo = (MetadadoModelo) getModel();
+		MetadadoTreeModelo modelo = (MetadadoTreeModelo) getModel();
 		return (Metadado) modelo.getRoot();
 	}
 

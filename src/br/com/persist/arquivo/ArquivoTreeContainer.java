@@ -23,7 +23,7 @@ import br.com.persist.util.Util;
 
 public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTreeListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private ArquivoTree arquivoTree = new ArquivoTree(new ArquivoModelo());
+	private ArquivoTree arquivoTree = new ArquivoTree(new ArquivoTreeModelo());
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopArvo = new CheckBox();
 	private final CheckBox chkLinkAuto = new CheckBox();
@@ -122,7 +122,7 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 		}
 
 		private void statusArquivo() {
-			ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
+			ArquivoTreeModelo modelo = (ArquivoTreeModelo) arquivoTree.getModel();
 
 			List<Arquivo> lista = new ArrayList<>();
 			modelo.listar(lista);
@@ -250,7 +250,7 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 	}
 
 	private void baixarArquivo() {
-		ArquivoModelo modelo = new ArquivoModelo();
+		ArquivoTreeModelo modelo = new ArquivoTreeModelo();
 		arquivoTree.setModel(modelo);
 
 		List<Arquivo> lista = new ArrayList<>();

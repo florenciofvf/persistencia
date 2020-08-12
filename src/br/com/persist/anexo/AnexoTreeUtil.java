@@ -28,7 +28,7 @@ public class AnexoTreeUtil {
 	}
 
 	public static void atualizarEstrutura(AnexoTree anexoTree, Arquivo arquivo) {
-		AnexoModelo modelo = (AnexoModelo) anexoTree.getModel();
+		AnexoTreeModelo modelo = (AnexoTreeModelo) anexoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -37,7 +37,7 @@ public class AnexoTreeUtil {
 	}
 
 	public static void refreshEstrutura(AnexoTree anexoTree, Arquivo arquivo) {
-		AnexoModelo modelo = (AnexoModelo) anexoTree.getModel();
+		AnexoTreeModelo modelo = (AnexoTreeModelo) anexoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
@@ -46,7 +46,7 @@ public class AnexoTreeUtil {
 	}
 
 	public static void excluirEstrutura(AnexoTree anexoTree, Arquivo arquivo) {
-		AnexoModelo modelo = (AnexoModelo) anexoTree.getModel();
+		AnexoTreeModelo modelo = (AnexoTreeModelo) anexoTree.getModel();
 
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);

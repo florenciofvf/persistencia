@@ -40,7 +40,7 @@ public class AnexoCorContainer extends Panel implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		arquivo.setCorFonte(colorChooser.getColor());
-		AnexoModelo.putArquivo(arquivo);
+		AnexoTreeModelo.putArquivo(arquivo);
 		toolbar.fechar();
 	}
 
