@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.valor;
 
 import java.awt.BorderLayout;
 import java.util.List;

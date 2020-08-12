@@ -14,10 +14,10 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
 import br.com.persist.banco.ConexaoModelo;
-import br.com.persist.dialogo.ChaveValorDialogo;
 import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
+import br.com.persist.valor.ChaveValorDialogo;
 import br.com.persist.variaveis.VariaveisModelo;
 
 public class ChaveValorEditor extends JPanel implements TableCellEditor {

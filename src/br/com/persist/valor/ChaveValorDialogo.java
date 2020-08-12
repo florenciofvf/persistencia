@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.valor;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.TextArea;
+import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
