@@ -5,8 +5,8 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import br.com.persist.listener.ListaListener;
-import br.com.persist.util.ListaArray;
+import br.com.persist.lista.ListaArray;
+import br.com.persist.lista.ListaArrayListener;
 
 public class ConexaoComboModelo extends AbstractListModel<Conexao> implements ComboBoxModel<Conexao> {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class ConexaoComboModelo extends AbstractListModel<Conexao> implements Co
 		}
 	}
 
-	transient ListaListener listener = new ListaListener() {
+	transient ListaArrayListener listener = new ListaArrayListener() {
 		@Override
 		public void adicionado(int indice) {
 			fireIntervalAdded(ConexaoComboModelo.this, indice, indice);

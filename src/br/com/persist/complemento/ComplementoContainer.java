@@ -15,7 +15,6 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.icone.Icones;
-import br.com.persist.listener.ComplementoListener;
 import br.com.persist.modelo.ListaStringModelo;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Action;

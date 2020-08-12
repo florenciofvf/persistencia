@@ -1,4 +1,4 @@
-package br.com.persist.listener;
+package br.com.persist.complemento;
 
 public interface ComplementoListener {
 	public void processarComplemento(String string);

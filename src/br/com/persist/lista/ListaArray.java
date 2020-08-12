@@ -1,12 +1,10 @@
-package br.com.persist.util;
+package br.com.persist.lista;
 
 import java.util.ArrayList;
 
-import br.com.persist.listener.ListaListener;
-
 public class ListaArray<E> extends ArrayList<E> {
 	private static final long serialVersionUID = 1L;
-	private transient ListaListener listener;
+	private transient ListaArrayListener listener;
 
 	@Override
 	public boolean add(E e) {
@@ -37,11 +35,11 @@ public class ListaArray<E> extends ArrayList<E> {
 		}
 	}
 
-	public ListaListener getListener() {
+	public ListaArrayListener getListener() {
 		return listener;
 	}
 
-	public void setListener(ListaListener listener) {
+	public void setListener(ListaArrayListener listener) {
 		this.listener = listener;
 	}
 
