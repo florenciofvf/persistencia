@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.metadado;
 
 import java.util.Objects;
 import java.util.logging.Level;

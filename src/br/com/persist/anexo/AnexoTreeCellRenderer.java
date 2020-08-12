@@ -1,4 +1,4 @@
-package br.com.persist.renderer;
+package br.com.persist.anexo;
 
 import java.awt.Component;
 

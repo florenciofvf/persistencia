@@ -14,7 +14,6 @@ import javax.swing.tree.TreePath;
 
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
-import br.com.persist.renderer.ArquivoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;

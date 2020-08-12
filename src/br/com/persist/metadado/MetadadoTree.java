@@ -21,8 +21,6 @@ import javax.swing.tree.TreePath;
 import br.com.persist.Metadado;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
-import br.com.persist.listener.MetadadoTreeListener;
-import br.com.persist.modelo.MetadadoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao1;

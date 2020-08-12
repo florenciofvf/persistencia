@@ -1,6 +1,4 @@
-package br.com.persist.listener;
-
-import br.com.persist.metadado.MetadadoTree;
+package br.com.persist.metadado;
 
 public interface MetadadoTreeListener {
 	public void abrirExportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular);
