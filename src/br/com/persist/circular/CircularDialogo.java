@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.circular;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
@@ -6,6 +6,7 @@ import java.awt.Frame;
 import br.com.persist.container.CircularContainer;
 import br.com.persist.container.CircularContainer.Tipo;
 import br.com.persist.desktop.Superficie;
+import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
