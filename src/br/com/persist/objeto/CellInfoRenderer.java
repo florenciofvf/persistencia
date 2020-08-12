@@ -1,4 +1,4 @@
-package br.com.persist.renderer;
+package br.com.persist.objeto;
 
 import java.awt.Color;
 import java.awt.Component;

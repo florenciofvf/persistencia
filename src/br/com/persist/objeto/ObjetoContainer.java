@@ -64,7 +64,6 @@ import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.LinkAuto;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.persistencia.Persistencia;
-import br.com.persist.renderer.CellInfoRenderer;
 import br.com.persist.renderer.CellRenderer;
 import br.com.persist.tabela.CabecalhoColuna;
 import br.com.persist.tabela.Coluna;
