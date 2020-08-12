@@ -24,7 +24,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import br.com.persist.Instrucao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.Label;

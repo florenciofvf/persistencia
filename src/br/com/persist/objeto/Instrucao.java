@@ -1,4 +1,4 @@
-package br.com.persist;
+package br.com.persist.objeto;
 
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;

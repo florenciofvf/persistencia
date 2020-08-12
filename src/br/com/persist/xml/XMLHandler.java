@@ -4,7 +4,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import br.com.persist.Instrucao;
+import br.com.persist.objeto.Instrucao;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.relacao.Relacao;
 import br.com.persist.util.Constantes;

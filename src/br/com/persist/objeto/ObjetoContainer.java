@@ -36,7 +36,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import br.com.persist.Instrucao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
