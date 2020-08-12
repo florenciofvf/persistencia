@@ -24,8 +24,8 @@ import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.banco.Conexao;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.conexao.Conexao;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.superficie.Superficie;
 import br.com.persist.util.Constantes;

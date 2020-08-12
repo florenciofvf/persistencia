@@ -8,10 +8,10 @@ import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.conexao.Conexao;
+import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.objeto.Objeto;

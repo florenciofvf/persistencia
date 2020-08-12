@@ -2,8 +2,8 @@ package br.com.persist.metadado;
 
 import java.awt.BorderLayout;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.banco.ConexaoProvedor;
+import br.com.persist.conexao.Conexao;
+import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;

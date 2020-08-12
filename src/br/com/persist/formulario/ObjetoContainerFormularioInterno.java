@@ -13,12 +13,12 @@ import java.util.logging.Logger;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.conexao.Conexao;
+import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;

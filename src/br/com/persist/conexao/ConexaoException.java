@@ -1,4 +1,4 @@
-package br.com.persist.banco;
+package br.com.persist.conexao;
 
 public class ConexaoException extends Exception {
 	private static final long serialVersionUID = 1L;

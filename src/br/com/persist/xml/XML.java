@@ -10,7 +10,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import br.com.persist.banco.Conexao;
+import br.com.persist.conexao.Conexao;
 import br.com.persist.fragmento.Fragmento;
 import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.util.ChaveValor;

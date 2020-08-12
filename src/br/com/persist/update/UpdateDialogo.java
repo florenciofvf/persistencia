@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.util.Map;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.banco.ConexaoProvedor;
+import br.com.persist.conexao.Conexao;
+import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;

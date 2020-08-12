@@ -14,7 +14,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
-import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
@@ -24,6 +23,7 @@ import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.comp.ToggleButton;
+import br.com.persist.conexao.Conexao;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.fichario.Fichario;

@@ -7,7 +7,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.Objects;
 
-import br.com.persist.banco.Conexao;
+import br.com.persist.conexao.Conexao;
 import br.com.persist.objeto.Objeto;
 
 public class Transferidor implements Transferable {

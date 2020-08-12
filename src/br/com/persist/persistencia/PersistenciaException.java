@@ -1,4 +1,4 @@
-package br.com.persist.banco;
+package br.com.persist.persistencia;
 
 public class PersistenciaException extends Exception {
 	private static final long serialVersionUID = 1L;

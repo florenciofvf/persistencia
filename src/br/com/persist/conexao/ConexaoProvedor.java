@@ -1,4 +1,4 @@
-package br.com.persist.banco;
+package br.com.persist.conexao;
 
 import java.util.List;
 

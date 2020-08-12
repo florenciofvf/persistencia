@@ -1,4 +1,4 @@
-package br.com.persist.banco;
+package br.com.persist.persistencia;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.conexao.Conexao;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.RegistroModelo;

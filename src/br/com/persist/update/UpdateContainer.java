@@ -15,15 +15,15 @@ import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.banco.ConexaoProvedor;
-import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.TextArea;
+import br.com.persist.conexao.Conexao;
+import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
+import br.com.persist.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;

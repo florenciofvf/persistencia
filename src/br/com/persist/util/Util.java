@@ -39,11 +39,11 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.banco.ConexaoComboModelo;
-import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.SplitPane;
 import br.com.persist.comp.TextArea;
+import br.com.persist.conexao.Conexao;
+import br.com.persist.conexao.ConexaoComboModelo;
+import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.fmt.Array;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
