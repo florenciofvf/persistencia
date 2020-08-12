@@ -12,22 +12,22 @@ import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
 public class Relacao {
-	public static final Color COR_PADRAO_FONTE = Color.BLACK;
-	public static final Color COR_PADRAO = Color.BLACK;
+	private static final Color COR_PADRAO_FONTE = Color.BLACK;
+	private static final Color COR_PADRAO = Color.BLACK;
 	private Color corFonte = COR_PADRAO_FONTE;
-	protected int deslocamentoXDesc = -5;
-	protected int deslocamentoYDesc = -5;
+	public int deslocamentoXDesc = -5;
+	public int deslocamentoYDesc = -5;
 	private boolean desenharDescricao;
-	protected static int diametro = 6;
+	private static int diametro = 6;
 	private Color cor = COR_PADRAO;
 	static int m = diametro / 2;
+	private final Objeto destino;
+	private boolean pontoDestino;
+	private boolean pontoOrigem;
+	private final Objeto origem;
 	private boolean selecionado;
 	private boolean quebrado;
 	private String descricao;
-	final Objeto destino;
-	boolean pontoDestino;
-	boolean pontoOrigem;
-	final Objeto origem;
 
 	public Relacao(Objeto origem, Objeto destino) {
 		this(origem, false, destino, false);
