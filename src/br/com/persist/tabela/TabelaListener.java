@@ -1,6 +1,4 @@
-package br.com.persist.listener;
-
-import br.com.persist.tabela.Tabela;
+package br.com.persist.tabela;
 
 public interface TabelaListener {
 	public void tabelaMouseClick(Tabela tabela, int colunaClick);

@@ -15,7 +15,6 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
-import br.com.persist.listener.TabelaListener;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.VazioModelo;

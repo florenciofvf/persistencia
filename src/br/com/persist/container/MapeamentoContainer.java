@@ -10,7 +10,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.MapeamentoFormulario;
+import br.com.persist.mapeamento.MapeamentoFormulario;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
