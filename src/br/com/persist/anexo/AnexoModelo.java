@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.anexo;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -21,7 +21,6 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.Arquivo;
-import br.com.persist.anexo.AnexoTree;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 

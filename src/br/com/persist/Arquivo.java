@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import br.com.persist.anexo.AnexoModelo;
 import br.com.persist.anexo.AnexoTree;
 import br.com.persist.anexo.AnexoTreeUtil;
-import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.Constantes;
 
 import java.awt.Color;

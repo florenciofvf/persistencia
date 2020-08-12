@@ -14,11 +14,11 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
 import br.com.persist.Arquivo;
+import br.com.persist.anexo.AnexoModelo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
-import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Imagens;
 

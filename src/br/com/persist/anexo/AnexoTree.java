@@ -17,8 +17,6 @@ import br.com.persist.comp.ItemCheckBox;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
-import br.com.persist.listener.AnexoTreeListener;
-import br.com.persist.modelo.AnexoModelo;
 import br.com.persist.renderer.AnexoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;

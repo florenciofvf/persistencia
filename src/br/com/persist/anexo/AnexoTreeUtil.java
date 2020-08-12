@@ -8,7 +8,6 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.Arquivo;
-import br.com.persist.modelo.AnexoModelo;
 
 public class AnexoTreeUtil {
 

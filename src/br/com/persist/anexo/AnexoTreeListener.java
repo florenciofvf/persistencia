@@ -1,6 +1,4 @@
-package br.com.persist.listener;
-
-import br.com.persist.anexo.AnexoTree;
+package br.com.persist.anexo;
 
 public interface AnexoTreeListener {
 	public void copiarAtributosArquivo(AnexoTree anexoTree);

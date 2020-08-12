@@ -44,6 +44,7 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import br.com.persist.Metadado;
+import br.com.persist.anexo.AnexoTreeFormulario;
 import br.com.persist.banco.Conexao;
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
@@ -68,7 +69,6 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.formulario.AmbienteFormulario;
-import br.com.persist.formulario.AnexoTreeFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ArquivoTreeFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
