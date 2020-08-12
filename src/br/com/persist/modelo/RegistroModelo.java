@@ -13,7 +13,7 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.tabela.Coluna;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IndiceValor;

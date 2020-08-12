@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.relacao.Relacao;
 
 public class Macro {

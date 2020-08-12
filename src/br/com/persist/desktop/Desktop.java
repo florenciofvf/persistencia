@@ -36,6 +36,7 @@ import br.com.persist.icone.Icones;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.metadado.Metadado;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.ChaveValor;

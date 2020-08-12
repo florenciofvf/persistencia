@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.objeto;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -27,6 +27,7 @@ import org.xml.sax.Attributes;
 import br.com.persist.Instrucao;
 import br.com.persist.banco.Conexao;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.desktop.Superficie;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
@@ -43,8 +44,8 @@ public class Objeto implements Runnable {
 	private TabelaBuscaAuto tabelaBuscaAuto;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
-	protected int deslocamentoXId = -5;
-	protected int deslocamentoYId = -5;
+	public int deslocamentoXId = -5;
+	public int deslocamentoYId = -5;
 	private String buscaAutomaticaApos;
 	protected boolean ajusteAutoEnter;
 	protected boolean ajusteAutoForm;
@@ -56,11 +57,11 @@ public class Objeto implements Runnable {
 	private String linkAutomatico;
 	private static long sequencia;
 	private Superficie superficie;
-	protected boolean controlado;
 	private String finalConsulta;
 	public boolean transparente;
 	private boolean selecionado;
 	private boolean ccsc = true;
+	private boolean controlado;
 	private boolean desenharId;
 	private String complemento;
 	private String chaveamento;

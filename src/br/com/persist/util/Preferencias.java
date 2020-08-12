@@ -8,7 +8,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
 
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 
 public class Preferencias {
 	private static boolean areaTransTabelaRegistros;

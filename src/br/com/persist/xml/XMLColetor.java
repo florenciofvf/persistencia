@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.banco.Conexao;
-import br.com.persist.desktop.Objeto;
 import br.com.persist.fragmento.Fragmento;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.relacao.Relacao;
 import br.com.persist.util.Form;
 

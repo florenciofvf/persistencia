@@ -31,6 +31,7 @@ import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.icone.Icones;
 import br.com.persist.metadado.Metadado;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.principal.Formulario;
 import br.com.persist.update.UpdateDialogo;
 import br.com.persist.update.UpdateFormulario;

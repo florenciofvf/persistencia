@@ -52,6 +52,7 @@ import br.com.persist.icone.Icones;
 import br.com.persist.macro.MacroDialogo;
 import br.com.persist.macro.Macro.Instrucao;
 import br.com.persist.metadado.Metadado;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.principal.Formulario;
 import br.com.persist.propriedades.PropriedadesFormulario;
 import br.com.persist.relacao.Relacao;
@@ -368,7 +369,7 @@ public class Superficie extends Desktop {
 			} else {
 				if (selecionadoObjeto != null) {
 					selecionadoObjeto.setSelecionado(false);
-					selecionadoObjeto.controlado = false;
+					selecionadoObjeto.setControlado(false);
 				}
 
 				if (selecionadoRelacao != null) {
@@ -591,8 +592,8 @@ public class Superficie extends Desktop {
 					objeto.setSelecionado(true);
 					selecionadoObjeto = objeto;
 
-					if (!objeto.controlado) {
-						objeto.controlado = e.isShiftDown();
+					if (!objeto.isControlado()) {
+						objeto.setControlado(e.isShiftDown());
 					}
 
 					break;
@@ -600,10 +601,10 @@ public class Superficie extends Desktop {
 			}
 
 			if (selecionadoObjeto != null) {
-				if (selecionadoObjeto.controlado) {
+				if (selecionadoObjeto.isControlado()) {
 					for (Objeto objeto : objetos) {
 						if (objeto.isSelecionado()) {
-							objeto.controlado = true;
+							objeto.setControlado(true);
 						}
 					}
 				} else {
@@ -682,7 +683,7 @@ public class Superficie extends Desktop {
 				for (Objeto objeto : objetos) {
 					if (area.contem(objeto)) {
 						objeto.setSelecionado(true);
-						objeto.controlado = true;
+						objeto.setControlado(true);
 					}
 				}
 			}

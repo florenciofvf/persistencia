@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;

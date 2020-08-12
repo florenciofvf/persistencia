@@ -5,7 +5,7 @@ import java.awt.Dialog;
 
 import br.com.persist.container.ValorContainer;
 import br.com.persist.container.ValorContainer.Tipo;
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 

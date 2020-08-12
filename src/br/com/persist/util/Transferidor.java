@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import br.com.persist.banco.Conexao;
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 
 public class Transferidor implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(Transferidor.class, "Transferidor");

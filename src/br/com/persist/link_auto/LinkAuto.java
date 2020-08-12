@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Util;
 
 public class LinkAuto {

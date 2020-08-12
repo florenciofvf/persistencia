@@ -17,7 +17,7 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.ScrollPane;
-import br.com.persist.desktop.Objeto;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Imagens;

@@ -5,9 +5,9 @@ import java.awt.Dialog;
 import java.awt.Frame;
 
 import br.com.persist.comp.TextField;
-import br.com.persist.desktop.Objeto;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.listener.ComplementoListener;
+import br.com.persist.objeto.Objeto;
 import br.com.persist.util.IJanela;
 
 public class ComplementoDialogo extends AbstratoDialogo implements IJanela {
