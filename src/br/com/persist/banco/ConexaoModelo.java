@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.banco;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.persist.banco.Conexao;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;

@@ -1,4 +1,4 @@
-package br.com.persist.editor;
+package br.com.persist.banco;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;
@@ -13,8 +13,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 

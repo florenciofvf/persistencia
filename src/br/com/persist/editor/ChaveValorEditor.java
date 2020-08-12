@@ -13,8 +13,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
+import br.com.persist.banco.ConexaoModelo;
 import br.com.persist.dialogo.ChaveValorDialogo;
-import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;

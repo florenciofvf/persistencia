@@ -1,11 +1,10 @@
-package br.com.persist.modelo;
+package br.com.persist.banco;
 
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import br.com.persist.banco.Conexao;
 import br.com.persist.listener.ListaListener;
 import br.com.persist.util.ListaArray;
 

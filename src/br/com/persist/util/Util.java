@@ -40,6 +40,7 @@ import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
 import br.com.persist.banco.Conexao;
+import br.com.persist.banco.ConexaoComboModelo;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.SplitPane;
 import br.com.persist.comp.TextArea;
@@ -48,7 +49,6 @@ import br.com.persist.desktop.Superficie;
 import br.com.persist.fmt.Array;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
-import br.com.persist.modelo.ConexaoComboModelo;
 import br.com.persist.modelo.ObjetoComboModelo;
 import br.com.persist.modelo.VariaveisModelo;
 

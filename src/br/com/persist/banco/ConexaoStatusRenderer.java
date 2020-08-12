@@ -1,4 +1,4 @@
-package br.com.persist.renderer;
+package br.com.persist.banco;
 
 import java.awt.Component;
 import java.sql.Connection;
@@ -7,8 +7,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import br.com.persist.banco.Conexao;
-import br.com.persist.modelo.ConexaoModelo;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
