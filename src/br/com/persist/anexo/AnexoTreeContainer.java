@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.anexo;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,15 +15,11 @@ import javax.swing.Icon;
 
 import java.util.Set;
 
-import br.com.persist.anexo.AnexoModelo;
-import br.com.persist.anexo.AnexoTree;
-import br.com.persist.anexo.AnexoTreeFormulario;
-import br.com.persist.anexo.AnexoTreeListener;
-import br.com.persist.anexo.AnexoTreeUtil;
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.dialogo.ArquivoCorDialogo;
 import br.com.persist.dialogo.ArquivoIconeDialogo;
 import br.com.persist.fichario.Fichario;

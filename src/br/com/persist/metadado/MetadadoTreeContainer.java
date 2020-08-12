@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.metadado;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -17,13 +17,9 @@ import br.com.persist.banco.Persistencia;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
-import br.com.persist.metadado.Metadado;
-import br.com.persist.metadado.MetadadoModelo;
-import br.com.persist.metadado.MetadadoTree;
-import br.com.persist.metadado.MetadadoTreeFormulario;
-import br.com.persist.metadado.MetadadoTreeListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPopup;

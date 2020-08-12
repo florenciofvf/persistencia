@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
-import br.com.persist.container.MetadadoTreeContainer;
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;

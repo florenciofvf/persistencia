@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.arquivo;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -7,16 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.arquivo.Arquivo;
-import br.com.persist.arquivo.ArquivoModelo;
-import br.com.persist.arquivo.ArquivoTree;
-import br.com.persist.arquivo.ArquivoTreeFormulario;
-import br.com.persist.arquivo.ArquivoTreeListener;
-import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.ScrollPane;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;

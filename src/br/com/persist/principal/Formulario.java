@@ -32,7 +32,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import br.com.persist.anexo.AnexoTreeContainer;
 import br.com.persist.anexo.AnexoTreeFormulario;
+import br.com.persist.arquivo.ArquivoTreeContainer;
 import br.com.persist.arquivo.ArquivoTreeFormulario;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoDialogo;
@@ -43,8 +45,6 @@ import br.com.persist.comp.Menu;
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.SplitPane;
 import br.com.persist.container.AmbienteContainer;
-import br.com.persist.container.AnexoTreeContainer;
-import br.com.persist.container.ArquivoTreeContainer;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.AmbienteDialogo;
