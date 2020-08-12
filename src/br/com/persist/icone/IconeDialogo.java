@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.icone;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -6,6 +6,7 @@ import java.awt.Dialog;
 import br.com.persist.comp.Label;
 import br.com.persist.container.IconeContainer;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.IJanela;
 
 public class IconeDialogo extends AbstratoDialogo implements IJanela {

@@ -12,6 +12,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fragmento.Fragmento;
 import br.com.persist.fragmento.FragmentoFormulario;
 import br.com.persist.fragmento.FragmentoListener;
+import br.com.persist.icone.Icones;
 import br.com.persist.modelo.FragmentoModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
@@ -19,7 +20,6 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class FragmentoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {

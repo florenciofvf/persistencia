@@ -32,6 +32,7 @@ import br.com.persist.comp.Popup;
 import br.com.persist.container.ObjetoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
+import br.com.persist.icone.Icones;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.metadado.Metadado;
@@ -42,7 +43,6 @@ import br.com.persist.util.ChaveValor;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 

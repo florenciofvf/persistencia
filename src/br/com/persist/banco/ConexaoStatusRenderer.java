@@ -7,7 +7,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import br.com.persist.util.Icones;
+import br.com.persist.icone.Icones;
 import br.com.persist.util.Util;
 
 public class ConexaoStatusRenderer extends DefaultTableCellRenderer {

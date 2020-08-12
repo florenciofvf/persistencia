@@ -20,8 +20,8 @@ import javax.swing.tree.TreePath;
 
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
+import br.com.persist.icone.Icones;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao1;
 
 public class MetadadoTree extends Tree {

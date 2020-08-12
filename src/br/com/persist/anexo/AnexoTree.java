@@ -17,9 +17,9 @@ import br.com.persist.comp.ItemCheckBox;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
+import br.com.persist.icone.Icones;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
 
 public class AnexoTree extends Tree {
 	private static final long serialVersionUID = 1L;

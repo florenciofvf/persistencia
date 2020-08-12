@@ -12,12 +12,12 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextArea;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.icone.Icones;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.LinkAuto;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 

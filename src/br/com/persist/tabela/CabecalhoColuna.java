@@ -18,9 +18,9 @@ import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;
 import br.com.persist.comp.TextField;
 import br.com.persist.container.ObjetoContainer;
+import br.com.persist.icone.Icones;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 

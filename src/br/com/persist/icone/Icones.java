@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.icone;
 
 import java.net.URL;
 import java.util.HashMap;

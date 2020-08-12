@@ -29,6 +29,7 @@ import br.com.persist.desktop.Objeto;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.formulario.ConsultaFormulario;
+import br.com.persist.icone.Icones;
 import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.principal.Formulario;
@@ -37,7 +38,6 @@ import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.TransferidorDados;
 import br.com.persist.util.Util;
 

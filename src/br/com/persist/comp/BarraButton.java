@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JToolBar;
 
+import br.com.persist.icone.Icones;
 import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 

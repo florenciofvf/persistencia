@@ -15,12 +15,12 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.desktop.Objeto;
+import br.com.persist.icone.Icones;
 import br.com.persist.listener.ComplementoListener;
 import br.com.persist.modelo.ListaStringModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class ComplementoContainer extends Panel {

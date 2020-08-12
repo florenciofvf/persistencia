@@ -37,7 +37,7 @@ import br.com.persist.comp.TextField;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.ValorDialogo;
-import br.com.persist.dialogo.IconeDialogo;
+import br.com.persist.icone.IconeDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;

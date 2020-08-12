@@ -13,11 +13,11 @@ import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 

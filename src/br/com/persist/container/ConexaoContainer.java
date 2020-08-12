@@ -15,13 +15,13 @@ import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.ScrollPane;
 import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
 public class ConexaoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {

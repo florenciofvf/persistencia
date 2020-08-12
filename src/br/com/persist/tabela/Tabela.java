@@ -15,13 +15,13 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
+import br.com.persist.icone.Icones;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Action;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
 import br.com.persist.util.MenuPadrao2;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
