@@ -1,9 +1,10 @@
-package br.com.persist.dialogo;
+package br.com.persist.runtime_exec;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.container.RuntimeExecContainer;
+import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
