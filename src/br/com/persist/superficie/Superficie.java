@@ -350,12 +350,12 @@ public class Superficie extends Desktop {
 				}
 			} else if (selecionadoRelacao != null) {
 				if (alt && !shift) {
-					selecionadoRelacao.deslocamentoXDesc += recX - ultX;
+					selecionadoRelacao.deslocamentoXDescDelta(recX - ultX);
 				} else if (!alt && shift) {
-					selecionadoRelacao.deslocamentoYDesc += recY - ultY;
+					selecionadoRelacao.deslocamentoYDescDelta(recY - ultY);
 				} else {
-					selecionadoRelacao.deslocamentoXDesc += recX - ultX;
-					selecionadoRelacao.deslocamentoYDesc += recY - ultY;
+					selecionadoRelacao.deslocamentoXDescDelta(recX - ultX);
+					selecionadoRelacao.deslocamentoYDescDelta(recY - ultY);
 				}
 			}
 

@@ -16,8 +16,8 @@ public class Relacao {
 	private static final Color COR_PADRAO_FONTE = Color.BLACK;
 	private static final Color COR_PADRAO = Color.BLACK;
 	private Color corFonte = COR_PADRAO_FONTE;
-	public int deslocamentoXDesc = -5;
-	public int deslocamentoYDesc = -5;
+	private int deslocamentoXDesc = -5;
+	private int deslocamentoYDesc = -5;
 	private boolean desenharDescricao;
 	private static int diametro = 6;
 	private Color cor = COR_PADRAO;
@@ -389,11 +389,19 @@ public class Relacao {
 		this.deslocamentoXDesc = deslocamentoXDesc;
 	}
 
+	public void deslocamentoXDescDelta(int delta) {
+		this.deslocamentoXDesc += delta;
+	}
+
 	public int getDeslocamentoYDesc() {
 		return deslocamentoYDesc;
 	}
 
 	public void setDeslocamentoYDesc(int deslocamentoYDesc) {
 		this.deslocamentoYDesc = deslocamentoYDesc;
+	}
+
+	public void deslocamentoYDescDelta(int delta) {
+		this.deslocamentoYDesc += delta;
 	}
 }
