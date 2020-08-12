@@ -341,12 +341,12 @@ public class Superficie extends Desktop {
 
 			if (selecionadoObjeto != null) {
 				if (alt && !shift) {
-					selecionadoObjeto.deslocamentoXId += recX - ultX;
+					selecionadoObjeto.deslocamentoXIdDelta(recX - ultX);
 				} else if (!alt && shift) {
-					selecionadoObjeto.deslocamentoYId += recY - ultY;
+					selecionadoObjeto.deslocamentoYIdDelta(recY - ultY);
 				} else {
-					selecionadoObjeto.deslocamentoXId += recX - ultX;
-					selecionadoObjeto.deslocamentoYId += recY - ultY;
+					selecionadoObjeto.deslocamentoXIdDelta(recX - ultX);
+					selecionadoObjeto.deslocamentoYIdDelta(recY - ultY);
 				}
 			} else if (selecionadoRelacao != null) {
 				if (alt && !shift) {
@@ -1988,8 +1988,8 @@ public class Superficie extends Desktop {
 			int largura = fm.stringWidth(objeto.getId());
 			Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create2" : "delete");
 			info.setId(diff + " - " + recente + " - " + Objeto.novaSequencia());
-			info.deslocamentoXId = objeto.deslocamentoXId;
-			info.deslocamentoYId = objeto.deslocamentoYId;
+			info.setDeslocamentoXId(objeto.getDeslocamentoXId());
+			info.setDeslocamentoYId(objeto.getDeslocamentoYId());
 			info.setCorFonte(objeto.getCorFonte());
 			info.setTransparente(true);
 			addObjeto(info);

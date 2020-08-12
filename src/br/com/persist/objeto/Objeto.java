@@ -43,10 +43,10 @@ public class Objeto implements Runnable {
 	private TabelaBuscaAuto tabelaBuscaAuto;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
-	public int deslocamentoXId = -5;
-	public int deslocamentoYId = -5;
 	private String buscaAutomaticaApos;
 	protected boolean ajusteAutoEnter;
+	private int deslocamentoXId = -5;
+	private int deslocamentoYId = -5;
 	protected boolean ajusteAutoForm;
 	private String prefixoNomeTabela;
 	private boolean copiarDestacado;
@@ -57,7 +57,7 @@ public class Objeto implements Runnable {
 	private static long sequencia;
 	private Superficie superficie;
 	private String finalConsulta;
-	public boolean transparente;
+	private boolean transparente;
 	private boolean selecionado;
 	private boolean ccsc = true;
 	private boolean controlado;
@@ -826,12 +826,20 @@ public class Objeto implements Runnable {
 		this.deslocamentoXId = deslocamentoXId;
 	}
 
+	public void deslocamentoXIdDelta(int delta) {
+		this.deslocamentoXId += delta;
+	}
+
 	public int getDeslocamentoYId() {
 		return deslocamentoYId;
 	}
 
 	public void setDeslocamentoYId(int deslocamentoYId) {
 		this.deslocamentoYId = deslocamentoYId;
+	}
+
+	public void deslocamentoYIdDelta(int delta) {
+		this.deslocamentoYId += delta;
 	}
 
 	public int getX() {

@@ -324,14 +324,14 @@ public class Relacao {
 			double auxY = y / h;
 
 			if (pontoOrigem) {
-				int valor = origem.transparente ? meta : raio;
+				int valor = origem.isTransparente() ? meta : raio;
 				int auxX1 = (int) (auxX * valor);
 				int auxY1 = (int) (auxY * valor);
 				g2.fillOval(x1 + auxX1 - m, y1 + auxY1 - m, diametro, diametro);
 			}
 
 			if (pontoDestino) {
-				int valor = destino.transparente ? meta : raio;
+				int valor = destino.isTransparente() ? meta : raio;
 				int auxX2 = (int) (auxX * (h - valor));
 				int auxY2 = (int) (auxY * (h - valor));
 				g2.fillOval(x1 + auxX2 - m, y1 + auxY2 - m, diametro, diametro);
