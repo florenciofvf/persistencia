@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -34,10 +34,11 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
+import br.com.persist.container.ValorContainer;
+import br.com.persist.container.ValorContainer.Tipo;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.ValorDialogo;
 import br.com.persist.icone.IconeDialogo;
-import br.com.persist.objeto.Objeto;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;

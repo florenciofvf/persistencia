@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.arquivo.Arquivo;
-import br.com.persist.container.ArquivoIconeContainer;
+import br.com.persist.arquivo.ArquivoIconeContainer;
 import br.com.persist.util.IJanela;
 
 public class ArquivoIconeDialogo extends AbstratoDialogo implements IJanela {

@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -68,7 +68,6 @@ import br.com.persist.listener.ObjetoContainerListener;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.modelo.RegistroModelo;
-import br.com.persist.objeto.Objeto;
 import br.com.persist.renderer.CellInfoRenderer;
 import br.com.persist.renderer.CellRenderer;
 import br.com.persist.tabela.CabecalhoColuna;

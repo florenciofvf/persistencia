@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.relacao;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,7 +34,6 @@ import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.principal.Formulario;
-import br.com.persist.relacao.Relacao;
 import br.com.persist.desktop.Superficie;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Constantes;
