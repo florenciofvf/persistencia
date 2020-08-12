@@ -15,12 +15,12 @@ import javax.swing.Icon;
 
 import java.util.Set;
 
-import br.com.persist.Arquivo;
 import br.com.persist.anexo.AnexoModelo;
 import br.com.persist.anexo.AnexoTree;
 import br.com.persist.anexo.AnexoTreeFormulario;
 import br.com.persist.anexo.AnexoTreeListener;
 import br.com.persist.anexo.AnexoTreeUtil;
+import br.com.persist.arquivo.Arquivo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
 import br.com.persist.comp.ScrollPane;

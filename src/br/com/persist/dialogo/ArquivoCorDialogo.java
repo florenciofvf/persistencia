@@ -3,7 +3,7 @@ package br.com.persist.dialogo;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
-import br.com.persist.Arquivo;
+import br.com.persist.arquivo.Arquivo;
 import br.com.persist.container.ArquivoCorContainer;
 import br.com.persist.util.IJanela;
 

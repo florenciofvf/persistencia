@@ -1,4 +1,4 @@
-package br.com.persist;
+package br.com.persist.arquivo;
 
 import java.util.ArrayList;
 import java.util.Arrays;

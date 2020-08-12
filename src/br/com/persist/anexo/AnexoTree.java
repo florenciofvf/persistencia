@@ -12,7 +12,7 @@ import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.Arquivo;
+import br.com.persist.arquivo.Arquivo;
 import br.com.persist.comp.ItemCheckBox;
 import br.com.persist.comp.Menu;
 import br.com.persist.comp.Popup;

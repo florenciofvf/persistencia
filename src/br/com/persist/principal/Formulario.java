@@ -34,6 +34,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import br.com.persist.Metadado;
 import br.com.persist.anexo.AnexoTreeFormulario;
+import br.com.persist.arquivo.ArquivoTreeFormulario;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.comp.Menu;
@@ -59,7 +60,6 @@ import br.com.persist.dialogo.VariaveisDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
-import br.com.persist.formulario.ArquivoTreeFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConexaoFormulario;
 import br.com.persist.formulario.ConfiguracaoFormulario;

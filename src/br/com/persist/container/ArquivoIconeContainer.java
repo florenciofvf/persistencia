@@ -13,8 +13,8 @@ import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
-import br.com.persist.Arquivo;
 import br.com.persist.anexo.AnexoModelo;
+import br.com.persist.arquivo.Arquivo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Label;
 import br.com.persist.comp.Panel;

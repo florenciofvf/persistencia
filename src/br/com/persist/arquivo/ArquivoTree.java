@@ -12,10 +12,8 @@ import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.Arquivo;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
-import br.com.persist.listener.ArquivoTreeListener;
 import br.com.persist.renderer.ArquivoTreeCellRenderer;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;

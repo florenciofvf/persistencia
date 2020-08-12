@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import br.com.persist.Arquivo;
+import br.com.persist.arquivo.Arquivo;
 import br.com.persist.util.Icones;
 
 public class ArquivoTreeCellRenderer extends DefaultTreeCellRenderer {

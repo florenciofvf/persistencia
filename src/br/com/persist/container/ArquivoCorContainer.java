@@ -7,8 +7,8 @@ import javax.swing.JColorChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import br.com.persist.Arquivo;
 import br.com.persist.anexo.AnexoModelo;
+import br.com.persist.arquivo.Arquivo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.util.IJanela;

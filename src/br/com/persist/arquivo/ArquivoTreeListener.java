@@ -1,6 +1,4 @@
-package br.com.persist.listener;
-
-import br.com.persist.arquivo.ArquivoTree;
+package br.com.persist.arquivo;
 
 public interface ArquivoTreeListener {
 	public void selecionarArquivo(ArquivoTree arquivoTree);
