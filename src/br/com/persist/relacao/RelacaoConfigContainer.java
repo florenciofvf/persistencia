@@ -34,19 +34,19 @@ import br.com.persist.comp.TabbedPane;
 import br.com.persist.comp.TextArea;
 import br.com.persist.comp.TextField;
 import br.com.persist.principal.Formulario;
-import br.com.persist.desktop.Superficie;
+import br.com.persist.superficie.Superficie;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class RelacaoContainer extends Panel {
+public class RelacaoConfigContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
 	private final transient Relacao relacao;
 	private final Superficie superficie;
 
-	public RelacaoContainer(IJanela janela, Superficie superficie, Relacao relacao) {
+	public RelacaoConfigContainer(IJanela janela, Superficie superficie, Relacao relacao) {
 		toolbar.ini(janela, false, false);
 		this.superficie = superficie;
 		Formulario.macro.limpar();

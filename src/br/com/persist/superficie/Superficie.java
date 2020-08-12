@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.superficie;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -44,6 +44,7 @@ import br.com.persist.comp.Popup;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.container.Container;
+import br.com.persist.desktop.Desktop;
 import br.com.persist.dialogo.ObjetoConfigDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ObjetoContainerFormulario;
@@ -57,7 +58,7 @@ import br.com.persist.objeto.ObjetoContainer;
 import br.com.persist.principal.Formulario;
 import br.com.persist.propriedades.PropriedadesFormulario;
 import br.com.persist.relacao.Relacao;
-import br.com.persist.relacao.RelacaoDialogo;
+import br.com.persist.relacao.RelacaoConfigDialogo;
 import br.com.persist.update.UpdateDialogo;
 import br.com.persist.update.UpdateFormulario;
 import br.com.persist.util.Acao;
@@ -558,7 +559,7 @@ public class Superficie extends Desktop {
 					frame = container.getContainerFormulario();
 				}
 
-				RelacaoDialogo form = new RelacaoDialogo(frame, Superficie.this, relacao);
+				RelacaoConfigDialogo form = new RelacaoConfigDialogo(frame, Superficie.this, relacao);
 				form.setLocationRelativeTo(frame);
 				form.setVisible(true);
 			}
@@ -1303,7 +1304,7 @@ public class Superficie extends Desktop {
 					form.setVisible(true);
 
 				} else if (selecionadoRelacao != null) {
-					RelacaoDialogo form = new RelacaoDialogo(frame, Superficie.this, selecionadoRelacao);
+					RelacaoConfigDialogo form = new RelacaoConfigDialogo(frame, Superficie.this, selecionadoRelacao);
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				}

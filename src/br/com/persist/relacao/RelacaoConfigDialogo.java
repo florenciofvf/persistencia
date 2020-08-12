@@ -3,17 +3,17 @@ package br.com.persist.relacao;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
-import br.com.persist.desktop.Superficie;
 import br.com.persist.dialogo.AbstratoDialogo;
+import br.com.persist.superficie.Superficie;
 import br.com.persist.util.IJanela;
 
-public class RelacaoDialogo extends AbstratoDialogo implements IJanela {
+public class RelacaoConfigDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
-	private final RelacaoContainer container;
+	private final RelacaoConfigContainer container;
 
-	public RelacaoDialogo(Frame frame, Superficie superficie, Relacao relacao) {
+	public RelacaoConfigDialogo(Frame frame, Superficie superficie, Relacao relacao) {
 		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId());
-		container = new RelacaoContainer(this, superficie, relacao);
+		container = new RelacaoConfigContainer(this, superficie, relacao);
 		montarLayout();
 	}
 
