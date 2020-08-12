@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.complemento;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;

@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.circular;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
