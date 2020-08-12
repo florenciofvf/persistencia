@@ -1,8 +1,6 @@
-package br.com.persist.listener;
+package br.com.persist.fragmento;
 
 import java.util.List;
-
-import br.com.persist.util.Fragmento;
 
 public interface FragmentoListener {
 	public void configFragmento(Fragmento f);

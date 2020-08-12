@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 
 import javax.swing.table.AbstractTableModel;
 
+import br.com.persist.fragmento.Fragmento;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Fragmento;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLColetor;
 import br.com.persist.xml.XMLUtil;

@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.fragmento;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -7,7 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import br.com.persist.container.FragmentoContainer;
-import br.com.persist.listener.FragmentoListener;
+import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;

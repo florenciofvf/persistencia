@@ -1,7 +1,9 @@
-package br.com.persist.util;
+package br.com.persist.fragmento;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.util.Constantes;
+import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
 public class Fragmento {

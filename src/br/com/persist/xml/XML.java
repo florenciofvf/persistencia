@@ -11,11 +11,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import br.com.persist.banco.Conexao;
+import br.com.persist.fragmento.Fragmento;
 import br.com.persist.modelo.MapeamentoModelo;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Fragmento;
 import br.com.persist.util.Util;
 
 public class XML {

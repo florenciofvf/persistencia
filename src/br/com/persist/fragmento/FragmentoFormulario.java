@@ -1,10 +1,11 @@
-package br.com.persist.formulario;
+package br.com.persist.fragmento;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import br.com.persist.container.FragmentoContainer;
+import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;

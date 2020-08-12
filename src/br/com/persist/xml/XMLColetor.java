@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.banco.Conexao;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Relacao;
+import br.com.persist.fragmento.Fragmento;
 import br.com.persist.util.Form;
-import br.com.persist.util.Fragmento;
 
 public class XMLColetor {
 	private final AtomicBoolean ajusteAutoForm;
