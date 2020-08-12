@@ -1,11 +1,10 @@
-package br.com.persist.valor;
+package br.com.persist.chave_valor;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.TextArea;
 import br.com.persist.dialogo.AbstratoDialogo;
