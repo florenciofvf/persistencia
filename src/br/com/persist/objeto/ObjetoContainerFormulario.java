@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,10 +12,8 @@ import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
+import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.link_auto.GrupoLinkAuto;
-import br.com.persist.listener.ObjetoContainerListener;
-import br.com.persist.objeto.Objeto;
-import br.com.persist.objeto.ObjetoContainer;
 import br.com.persist.util.IJanela;
 
 public class ObjetoContainerFormulario extends AbstratoFormulario implements IJanela, ObjetoContainerListener {

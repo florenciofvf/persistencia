@@ -15,9 +15,9 @@ import java.util.Map;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.modelo.ListagemModelo;
-import br.com.persist.modelo.RegistroModelo;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.tabela.Coluna;
+import br.com.persist.tabela.RegistroModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 

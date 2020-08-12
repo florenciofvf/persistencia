@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -17,15 +17,13 @@ import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.desktop.Desktop;
+import br.com.persist.formulario.AbstratoInternalFrame;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
-import br.com.persist.listener.ObjetoContainerListener;
-import br.com.persist.objeto.Objeto;
-import br.com.persist.objeto.ObjetoContainer;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;

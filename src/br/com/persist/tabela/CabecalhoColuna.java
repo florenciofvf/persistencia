@@ -18,7 +18,6 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
 import br.com.persist.icone.Icones;
-import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.objeto.ObjetoContainer;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Sistema;

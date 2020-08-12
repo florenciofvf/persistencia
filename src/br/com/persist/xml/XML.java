@@ -10,10 +10,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.fragmento.Fragmento;
 import br.com.persist.mapeamento.MapeamentoModelo;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;

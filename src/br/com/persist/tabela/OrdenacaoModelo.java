@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.tabela;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +8,6 @@ import java.util.Objects;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import br.com.persist.tabela.Coluna;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IndiceValor;
 import br.com.persist.util.Util;

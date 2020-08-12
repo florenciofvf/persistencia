@@ -1,11 +1,9 @@
-package br.com.persist.modelo;
+package br.com.persist.objeto;
 
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-
-import br.com.persist.objeto.Objeto;
 
 public class ObjetoComboModelo extends AbstractListModel<Objeto> implements ComboBoxModel<Objeto> {
 	private static final long serialVersionUID = 1L;

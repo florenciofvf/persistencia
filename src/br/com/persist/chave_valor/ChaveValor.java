@@ -1,9 +1,11 @@
-package br.com.persist.util;
+package br.com.persist.chave_valor;
 
 import java.util.Objects;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.util.Constantes;
+import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
 public class ChaveValor {

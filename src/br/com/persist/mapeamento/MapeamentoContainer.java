@@ -6,16 +6,16 @@ import java.io.File;
 
 import javax.swing.JTable;
 
+import br.com.persist.chave_valor.ChaveValor;
+import br.com.persist.chave_valor.ChaveValorEditor;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.editor.ChaveValorEditor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
 import br.com.persist.util.Action;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;

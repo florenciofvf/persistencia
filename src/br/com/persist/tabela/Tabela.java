@@ -13,14 +13,12 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.Popup;
 import br.com.persist.icone.Icones;
 import br.com.persist.mapeamento.MapeamentoModelo;
-import br.com.persist.modelo.OrdenacaoModelo;
-import br.com.persist.modelo.VazioModelo;
 import br.com.persist.util.Action;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.MenuPadrao2;
 import br.com.persist.util.Preferencias;

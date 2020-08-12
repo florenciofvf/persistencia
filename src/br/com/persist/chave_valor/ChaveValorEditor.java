@@ -1,4 +1,4 @@
-package br.com.persist.editor;
+package br.com.persist.chave_valor;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;
@@ -15,7 +15,6 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.conexao.ConexaoModelo;
 import br.com.persist.mapeamento.MapeamentoModelo;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.valor.ChaveValorDialogo;
 import br.com.persist.variaveis.VariaveisModelo;

@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.tabela;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

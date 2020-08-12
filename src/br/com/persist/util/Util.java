@@ -39,6 +39,7 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
+import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.conexao.Conexao;
@@ -47,8 +48,8 @@ import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.fmt.Array;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
-import br.com.persist.modelo.ObjetoComboModelo;
 import br.com.persist.objeto.Objeto;
+import br.com.persist.objeto.ObjetoComboModelo;
 import br.com.persist.superficie.Superficie;
 import br.com.persist.variaveis.VariaveisModelo;
 

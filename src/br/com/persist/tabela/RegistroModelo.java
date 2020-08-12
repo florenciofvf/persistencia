@@ -1,4 +1,4 @@
-package br.com.persist.modelo;
+package br.com.persist.tabela;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,6 @@ import javax.swing.table.TableModel;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.persistencia.Persistencia;
-import br.com.persist.tabela.Coluna;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IndiceValor;
 import br.com.persist.util.Preferencias;

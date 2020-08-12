@@ -1,4 +1,4 @@
-package br.com.persist.listener;
+package br.com.persist.objeto;
 
 import java.awt.Dimension;
 

@@ -21,6 +21,7 @@ import javax.swing.KeyStroke;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 
+import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Panel;
@@ -33,7 +34,6 @@ import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Base64Util;
-import br.com.persist.util.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;

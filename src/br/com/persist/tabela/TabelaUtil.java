@@ -16,7 +16,6 @@ import javax.swing.table.TableModel;
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
-import br.com.persist.modelo.OrdenacaoModelo;
 import br.com.persist.util.Coletor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.TransferidorDados;

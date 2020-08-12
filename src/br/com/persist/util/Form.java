@@ -2,7 +2,7 @@ package br.com.persist.util;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.formulario.ObjetoContainerFormularioInterno;
+import br.com.persist.objeto.ObjetoContainerFormularioInterno;
 import br.com.persist.xml.XMLUtil;
 
 public class Form {
