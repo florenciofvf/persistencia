@@ -16,7 +16,6 @@ import javax.swing.Icon;
 import java.util.Set;
 
 import br.com.persist.arquivo.Arquivo;
-import br.com.persist.arquivo.ArquivoCorDialogo;
 import br.com.persist.arquivo.ArquivoIconeDialogo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.CheckBox;
@@ -250,7 +249,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 			return;
 		}
 
-		ArquivoCorDialogo form = new ArquivoCorDialogo((Frame) null, arquivo);
+		AnexoCorDialogo form = new AnexoCorDialogo((Frame) null, arquivo);
 		form.setLocationRelativeTo(AnexoTreeContainer.this);
 		form.setVisible(true);
 		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
