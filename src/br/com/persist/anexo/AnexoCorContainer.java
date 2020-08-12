@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.anexo;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,19 +7,18 @@ import javax.swing.JColorChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import br.com.persist.anexo.AnexoModelo;
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Panel;
 import br.com.persist.util.IJanela;
 
-public class ArquivoCorContainer extends Panel implements ChangeListener {
+public class AnexoCorContainer extends Panel implements ChangeListener {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final JColorChooser colorChooser;
 	private final transient Arquivo arquivo;
 
-	public ArquivoCorContainer(IJanela janela, Arquivo arquivo) {
+	public AnexoCorContainer(IJanela janela, Arquivo arquivo) {
 		colorChooser = new JColorChooser();
 		colorChooser.getSelectionModel().addChangeListener(this);
 		this.arquivo = arquivo;
