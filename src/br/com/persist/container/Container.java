@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,9 +26,9 @@ import br.com.persist.comp.TextField;
 import br.com.persist.comp.ToggleButton;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
+import br.com.persist.desktop.Superficie;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
-import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.icone.Icones;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.objeto.Objeto;

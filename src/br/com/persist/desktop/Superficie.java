@@ -43,6 +43,7 @@ import br.com.persist.comp.MenuItem;
 import br.com.persist.comp.Popup;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
+import br.com.persist.container.Container;
 import br.com.persist.dialogo.ObjetoConfigDialogo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ObjetoContainerFormulario;

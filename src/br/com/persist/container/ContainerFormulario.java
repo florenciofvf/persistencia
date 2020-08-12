@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -6,7 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import br.com.persist.desktop.Container;
+import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ConfigArquivo;
