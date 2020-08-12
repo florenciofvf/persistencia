@@ -43,6 +43,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
+import br.com.persist.ambiente.AmbienteFormulario;
 import br.com.persist.anexo.AnexoTreeContainer;
 import br.com.persist.anexo.AnexoTreeFormulario;
 import br.com.persist.arquivo.ArquivoModelo;
@@ -69,7 +70,6 @@ import br.com.persist.desktop.Container;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.Objeto;
 import br.com.persist.desktop.Superficie;
-import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.formulario.AnotacaoFormulario;
 import br.com.persist.formulario.ComparacaoFormulario;
 import br.com.persist.formulario.ConfiguracaoFormulario;

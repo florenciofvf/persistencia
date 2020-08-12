@@ -11,8 +11,8 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
 import br.com.persist.comp.Panel;
+import br.com.persist.macro.Macro;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Macro;
 
 public class MacroContainer extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -60,7 +60,7 @@ public class MacroContainer extends Panel {
 		}
 
 		@Override
-		public br.com.persist.util.Macro.Instrucao getElementAt(int index) {
+		public br.com.persist.macro.Macro.Instrucao getElementAt(int index) {
 			return Formulario.macro.getInstrucoes().get(index);
 		}
 

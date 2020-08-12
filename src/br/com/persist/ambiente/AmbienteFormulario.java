@@ -1,8 +1,9 @@
-package br.com.persist.formulario;
+package br.com.persist.ambiente;
 
 import java.awt.BorderLayout;
 
 import br.com.persist.container.AmbienteContainer;
+import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.IJanela;
 

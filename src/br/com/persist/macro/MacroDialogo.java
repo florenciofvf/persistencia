@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.macro;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import br.com.persist.container.MacroContainer;
+import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.IJanela;
 
 public class MacroDialogo extends AbstratoDialogo implements IJanela {

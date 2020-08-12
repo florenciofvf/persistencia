@@ -8,10 +8,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
+import br.com.persist.ambiente.AmbienteFormulario;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.TextArea;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.formulario.AmbienteFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
