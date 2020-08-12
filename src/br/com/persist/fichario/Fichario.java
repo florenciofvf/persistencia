@@ -43,7 +43,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import br.com.persist.Metadado;
 import br.com.persist.anexo.AnexoTreeFormulario;
 import br.com.persist.arquivo.ArquivoModelo;
 import br.com.persist.arquivo.ArquivoTreeFormulario;
@@ -86,6 +85,7 @@ import br.com.persist.formulario.UpdateFormulario;
 import br.com.persist.formulario.VariaveisFormulario;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.listener.ObjetoContainerListener;
+import br.com.persist.metadado.Metadado;
 import br.com.persist.metadado.MetadadoTreeFormulario;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;

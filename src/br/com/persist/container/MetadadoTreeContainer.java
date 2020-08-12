@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 
-import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.ConexaoProvedor;
 import br.com.persist.banco.Persistencia;
@@ -20,6 +19,7 @@ import br.com.persist.comp.ScrollPane;
 import br.com.persist.comp.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
+import br.com.persist.metadado.Metadado;
 import br.com.persist.metadado.MetadadoModelo;
 import br.com.persist.metadado.MetadadoTree;
 import br.com.persist.metadado.MetadadoTreeFormulario;

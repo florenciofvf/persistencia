@@ -14,7 +14,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
-import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.comp.BarraButton;
 import br.com.persist.comp.Button;
@@ -32,6 +31,7 @@ import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.formulario.ConsultaFormulario;
 import br.com.persist.formulario.ContainerFormulario;
 import br.com.persist.formulario.UpdateFormulario;
+import br.com.persist.metadado.Metadado;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;

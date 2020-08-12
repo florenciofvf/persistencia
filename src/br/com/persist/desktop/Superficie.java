@@ -30,7 +30,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.Metadado;
 import br.com.persist.arquivo.ArquivoModelo;
 import br.com.persist.banco.Conexao;
 import br.com.persist.banco.Persistencia;
@@ -54,6 +53,7 @@ import br.com.persist.formulario.ObjetoContainerFormulario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.formulario.PropriedadesFormulario;
 import br.com.persist.formulario.UpdateFormulario;
+import br.com.persist.metadado.Metadado;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Acao;
 import br.com.persist.util.Action;

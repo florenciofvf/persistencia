@@ -10,8 +10,6 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.Metadado;
-
 public class MetadadoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Logger LOG = Logger.getGlobal();

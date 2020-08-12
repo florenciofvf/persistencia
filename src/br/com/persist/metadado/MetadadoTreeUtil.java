@@ -6,8 +6,6 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.Metadado;
-
 public class MetadadoTreeUtil {
 
 	private MetadadoTreeUtil() {

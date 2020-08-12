@@ -23,7 +23,6 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.Metadado;
 import br.com.persist.banco.Conexao;
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_apos.TabelaBuscaAutoApos;
@@ -35,6 +34,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.ObjetoContainerFormularioInterno;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
+import br.com.persist.metadado.Metadado;
 import br.com.persist.modelo.VariaveisModelo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;

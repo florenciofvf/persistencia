@@ -6,8 +6,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import br.com.persist.Metadado;
 import br.com.persist.desktop.Container;
+import br.com.persist.metadado.Metadado;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.IJanela;

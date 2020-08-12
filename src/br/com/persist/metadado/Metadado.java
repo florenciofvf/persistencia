@@ -1,4 +1,4 @@
-package br.com.persist;
+package br.com.persist.metadado;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;

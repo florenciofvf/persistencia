@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.Metadado;
 import br.com.persist.comp.Popup;
 import br.com.persist.comp.Tree;
 import br.com.persist.util.Constantes;
