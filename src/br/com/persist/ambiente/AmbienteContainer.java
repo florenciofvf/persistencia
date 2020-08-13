@@ -52,10 +52,10 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 																		Mensagens.getString("label.teste")), BUGS(
 																				"bugs",
 																				Mensagens.getString("label.bugs"));
-		final String chaveLabelMin;
-		final String chaveLabel;
-		final String descricao;
-		final String chave;
+		private final String chaveLabelMin;
+		private final String chaveLabel;
+		private final String descricao;
+		private final String chave;
 
 		private Ambiente(String chave, String descricao) {
 			chaveLabelMin = "label." + chave + "_min";
@@ -158,6 +158,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
