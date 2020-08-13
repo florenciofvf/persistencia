@@ -62,7 +62,7 @@ public class BarraButton extends JToolBar {
 		protected Action destaEmForm = Action.actionMenu("label.destac_formulario", null);
 		protected Action retorAoFich = Action.actionMenu("label.destac_container", null);
 
-		ButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
+		protected ButtonDestacar(ActionListener destacarEmFormulario, ActionListener abrirEmFormulario,
 				ActionListener retornoAoFichario, ActionListener clonarEmFormulario) {
 			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
 			addMenuItem(destaEmForm);

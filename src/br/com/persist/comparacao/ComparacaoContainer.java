@@ -68,7 +68,7 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 		private TextField txtArquivo2 = new TextField();
 		private Label lblStatus = new Label();
 
-		Controle() {
+		private Controle() {
 			super(new GridLayout(3, 1));
 			add(criarPainel(lblArquivo1, txtArquivo1, btnArquivo1));
 			add(criarPainel(lblArquivo2, txtArquivo2, btnArquivo2));
@@ -181,6 +181,7 @@ public class ComparacaoContainer extends AbstratoContainer implements Fichario.I
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
