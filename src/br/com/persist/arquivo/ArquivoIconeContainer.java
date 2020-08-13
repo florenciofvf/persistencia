@@ -54,7 +54,7 @@ public class ArquivoIconeContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final String nome;
 
-		LabelIcone(Map.Entry<String, Icon> entry) {
+		private LabelIcone(Map.Entry<String, Icon> entry) {
 			addMouseListener(mouseListenerInner);
 			setHorizontalAlignment(CENTER);
 			setIcon(entry.getValue());

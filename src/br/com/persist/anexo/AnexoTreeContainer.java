@@ -89,6 +89,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}

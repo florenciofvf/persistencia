@@ -171,7 +171,7 @@ public class AnexoTree extends Tree {
 		private Action corFonteAcao = Action.actionMenu("label.cor_fonte", Icones.COR);
 		private Action iconeAcao = Action.actionMenu("label.icone", Icones.ICON);
 
-		public AnexoPopup() {
+		private AnexoPopup() {
 			add(new MenuAbrir());
 			add(true, chkPadraoAbrir);
 			add(chkAbrirVisivel);
@@ -219,14 +219,14 @@ public class AnexoTree extends Tree {
 			}
 		}
 
-		class MenuAbrir extends Menu {
+		private class MenuAbrir extends Menu {
 			private static final long serialVersionUID = 1L;
 			private Action imprimirAcao = Action.actionMenu("label.imprimir", Icones.PRINT);
 			private Action pastaAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 			private Action editarAcao = Action.actionMenu("label.editar", Icones.EDIT);
 			private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
 
-			MenuAbrir() {
+			private MenuAbrir() {
 				super("label.opcoes", Icones.CONFIG);
 				addMenuItem(abrirAcao);
 				addMenuItem(editarAcao);

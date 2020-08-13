@@ -84,6 +84,7 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}

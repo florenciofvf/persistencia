@@ -53,13 +53,13 @@ public class Arquivo {
 		}
 	}
 
-	public void abrirVisivel(AnexoTree anexo) {
+	public void abrirVisivel(AnexoTree anexoTree) {
 		if (abrirVisivel) {
-			AnexoTreeUtil.selecionarObjeto(anexo, this);
+			AnexoTreeUtil.selecionarObjeto(anexoTree, this);
 		}
 
 		for (Arquivo a : filhos) {
-			a.abrirVisivel(anexo);
+			a.abrirVisivel(anexoTree);
 		}
 	}
 

@@ -166,7 +166,7 @@ public class ArquivoTree extends Tree {
 		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 		private MenuAbrir menuAbrir = new MenuAbrir();
 
-		public ArquivoPopup() {
+		private ArquivoPopup() {
 			add(menuAbrir);
 			addMenuItem(true, selecionarAcao);
 			addMenuItem(true, fecharAcao);
@@ -192,7 +192,7 @@ public class ArquivoTree extends Tree {
 			private static final long serialVersionUID = 1L;
 			private Action pastaAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 
-			MenuAbrir() {
+			private MenuAbrir() {
 				super("label.abrir", Icones.ABRIR, false);
 				addSeparator();
 				addMenuItem(pastaAcao);

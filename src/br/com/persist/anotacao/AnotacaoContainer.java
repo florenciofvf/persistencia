@@ -99,6 +99,7 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
