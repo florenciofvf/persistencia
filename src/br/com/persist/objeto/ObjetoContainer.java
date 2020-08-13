@@ -1792,7 +1792,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			txtComplemento.setText("AND " + nome + " = " + string);
 
 			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarConcatenado()) {
-
+				actionListenerInner.actionPerformed(null);
 			}
 		}
 
