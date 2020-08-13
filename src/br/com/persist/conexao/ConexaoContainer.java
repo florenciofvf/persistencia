@@ -87,6 +87,7 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
