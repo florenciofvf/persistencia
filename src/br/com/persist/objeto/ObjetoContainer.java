@@ -1790,6 +1790,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		public void copiarNomeColuna(Tabela tabela, String nome, String anterior) {
 			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
 			txtComplemento.setText("AND " + nome + " = " + string);
+
+			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarConcatenado()) {
+
+			}
 		}
 
 		public void concatenarNomeColuna(Tabela tabela, String nome) {

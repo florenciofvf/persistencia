@@ -11,6 +11,7 @@ import java.util.prefs.Preferences;
 import br.com.persist.objeto.Objeto;
 
 public class Preferencias {
+	private static boolean execAposCopiarConcatenado;
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
 	private static boolean exibiuMensagemConnection;
@@ -45,6 +46,7 @@ public class Preferencias {
 
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
+		execAposCopiarConcatenado = pref.getBoolean("exec_apos_copiar_concatenado", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
 		copiarNomeColunaListener = pref.getBoolean("copiar_nome_coluna_listener", false);
@@ -81,6 +83,7 @@ public class Preferencias {
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
 
+		pref.putBoolean("exec_apos_copiar_concatenado", execAposCopiarConcatenado);
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
 		pref.putBoolean("copiar_nome_coluna_listener", copiarNomeColunaListener);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
@@ -305,5 +308,13 @@ public class Preferencias {
 
 	public static void setExibiuMensagemConnection(boolean exibiuMensagemConnection) {
 		Preferencias.exibiuMensagemConnection = exibiuMensagemConnection;
+	}
+
+	public static boolean isExecAposCopiarConcatenado() {
+		return execAposCopiarConcatenado;
+	}
+
+	public static void setExecAposCopiarConcatenado(boolean execAposCopiarConcatenado) {
+		Preferencias.execAposCopiarConcatenado = execAposCopiarConcatenado;
 	}
 }
