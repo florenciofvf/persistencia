@@ -48,22 +48,22 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 
 	@Override
 	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
-		throw new UnsupportedOperationException();
+		LOG.log(Level.FINEST, "buscaAutomatica");
 	}
 
 	@Override
 	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
-		throw new UnsupportedOperationException();
+		LOG.log(Level.FINEST, "linkAutomatico");
 	}
 
 	@Override
 	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos) {
-		throw new UnsupportedOperationException();
+		LOG.log(Level.FINEST, "buscaAutomaticaApos");
 	}
 
 	@Override
 	public void configAlturaAutomatica(int total) {
-		throw new UnsupportedOperationException();
+		LOG.log(Level.FINEST, "configAlturaAutomatica");
 	}
 
 	@Override
