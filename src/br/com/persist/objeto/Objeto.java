@@ -44,13 +44,13 @@ public class Objeto implements Runnable {
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
 	private String buscaAutomaticaApos;
-	protected boolean ajusteAutoEnter;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
-	protected boolean ajusteAutoForm;
 	private String prefixoNomeTabela;
+	private boolean ajusteAutoEnter;
 	private boolean copiarDestacado;
 	private boolean transparenteBkp;
+	private boolean ajusteAutoForm;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
 	private String linkAutomatico;
