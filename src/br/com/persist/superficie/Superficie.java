@@ -128,7 +128,7 @@ public class Superficie extends Desktop {
 		}
 	}
 
-	transient javax.swing.Action threadProcessar = new AbstractAction() {
+	private transient javax.swing.Action threadProcessar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -144,7 +144,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	transient javax.swing.Action threadDesativar = new AbstractAction() {
+	private transient javax.swing.Action threadDesativar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -159,7 +159,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	transient javax.swing.Action macroLista = new AbstractAction() {
+	private transient javax.swing.Action macroLista = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -180,16 +180,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	transient javax.swing.Action excluirAction = new AbstractAction() {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			container.excluir();
-		}
-	};
-
-	transient javax.swing.Action macro = new AbstractAction() {
+	private transient javax.swing.Action macro = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -220,7 +211,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	transient javax.swing.Action zoomMenos = new AbstractAction() {
+	private transient javax.swing.Action zoomMenos = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -233,7 +224,7 @@ public class Superficie extends Desktop {
 		}
 	};
 
-	transient javax.swing.Action zoomMais = new AbstractAction() {
+	private transient javax.swing.Action zoomMais = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -1121,18 +1112,18 @@ public class Superficie extends Desktop {
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 		private Action dadosAcao = Action.actionMenu("label.dados", null);
 
-		MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
-		MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
-		MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
-		MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
-		Menu menuDistribuicao = new Menu("label.distribuicao");
-		MenuItem itemPartir = new MenuItem(new PartirAcao());
-		Menu menuAlinhamento = new Menu("label.alinhamento");
-		MenuDestacar menuDestacar = new MenuDestacar();
-		MenuCircular menuCircular = new MenuCircular();
-		MenuItem itemDados = new MenuItem(dadosAcao);
+		private MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
+		private MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
+		private MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
+		private MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
+		private Menu menuDistribuicao = new Menu("label.distribuicao");
+		private MenuItem itemPartir = new MenuItem(new PartirAcao());
+		private Menu menuAlinhamento = new Menu("label.alinhamento");
+		private MenuDestacar menuDestacar = new MenuDestacar();
+		private MenuCircular menuCircular = new MenuCircular();
+		private MenuItem itemDados = new MenuItem(dadosAcao);
 
-		SuperficiePopup() {
+		private SuperficiePopup() {
 			menuDistribuicao.add(itemDistribuiHorizontal);
 			menuDistribuicao.add(itemDistribuiVertical);
 			menuAlinhamento.add(itemAlinhaHorizontal);
@@ -1153,13 +1144,13 @@ public class Superficie extends Desktop {
 			eventos();
 		}
 
-		class MenuCircular extends Menu {
+		private class MenuCircular extends Menu {
 			private static final long serialVersionUID = 1L;
 			private Action exportacaoAcao = Action.actionMenu("label.exportacao", null);
 			private Action importacaoAcao = Action.actionMenu("label.importacao", null);
 			private Action normalAcao = Action.actionMenu("label.normal", null);
 
-			MenuCircular() {
+			private MenuCircular() {
 				super(Constantes.LABEL_CIRCULAR);
 
 				addMenuItem(exportacaoAcao);
@@ -1186,10 +1177,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class MenuConsulta extends MenuPadrao1 {
+		private class MenuConsulta extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuConsulta() {
+			private MenuConsulta() {
 				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao.setActionListener(e -> {
@@ -1223,10 +1214,10 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class MenuUpdate extends MenuPadrao1 {
+		private class MenuUpdate extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuUpdate() {
+			private MenuUpdate() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
 				formularioAcao.setActionListener(e -> {
@@ -1258,12 +1249,12 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class MenuDestacar extends MenuPadrao1 {
+		private class MenuDestacar extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 			Action proprioAcao = Action.actionMenu("label.proprio", null);
 			Action desktopAcao = Action.actionMenuDesktop();
 
-			MenuDestacar() {
+			private MenuDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
 				addMenuItem(proprioAcao);
@@ -1315,7 +1306,7 @@ public class Superficie extends Desktop {
 			copiarAcao.setActionListener(e -> Formulario.CopiarColar.copiar(Superficie.this));
 		}
 
-		void preShow(boolean objetoSelecionado) {
+		private void preShow(boolean objetoSelecionado) {
 			itemDados.setEnabled(
 					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2()));
 			itemDados.setObject(itemDados.isEnabled() ? selecionadoObjeto : null);
@@ -1327,10 +1318,10 @@ public class Superficie extends Desktop {
 			copiarAcao.setEnabled(objetoSelecionado);
 		}
 
-		class PartirAcao extends Acao {
+		private class PartirAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			PartirAcao() {
+			private PartirAcao() {
 				super(true, "label.partir", Icones.PARTIR);
 			}
 
@@ -1362,11 +1353,11 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class AlinhamentoAcao extends Acao {
+		private class AlinhamentoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 			private final boolean horizontal;
 
-			AlinhamentoAcao(boolean horizontal, String chave) {
+			private AlinhamentoAcao(boolean horizontal, String chave) {
 				super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
 				this.horizontal = horizontal;
 			}
@@ -1387,11 +1378,11 @@ public class Superficie extends Desktop {
 			}
 		}
 
-		class DistribuicaoAcao extends Acao {
+		private class DistribuicaoAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 			private final boolean horizontal;
 
-			DistribuicaoAcao(boolean horizontal, String chave) {
+			private DistribuicaoAcao(boolean horizontal, String chave) {
 				super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
 				this.horizontal = horizontal;
 			}
@@ -1433,7 +1424,7 @@ public class Superficie extends Desktop {
 				}
 			}
 
-			class Compara implements Comparator<Objeto> {
+			private class Compara implements Comparator<Objeto> {
 				@Override
 				public int compare(Objeto o1, Objeto o2) {
 					return horizontal ? o1.x - o2.x : o1.y - o2.y;
@@ -1469,7 +1460,7 @@ public class Superficie extends Desktop {
 		int xLocal;
 		int yLocal;
 
-		SuperficiePopup2() {
+		private SuperficiePopup2() {
 			addMenuItem(criarObjAcao);
 			addMenuItem(true, colarAcao);
 			addMenuItem(true, atualizarFormAcao);
@@ -1539,7 +1530,7 @@ public class Superficie extends Desktop {
 					e -> Formulario.CopiarColar.colar(Superficie.this, true, popup2.xLocal, popup2.yLocal));
 		}
 
-		void preShow(boolean contemFrames) {
+		private void preShow(boolean contemFrames) {
 			colarAcao.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
 			alinharSomenteDireitoAcao.setEnabled(contemFrames);
 			limparFormulariosAcao.setEnabled(contemFrames);
@@ -1846,7 +1837,7 @@ public class Superficie extends Desktop {
 		final Label label;
 		final int total;
 
-		public ThreadTotal(Conexao conexao, MenuItem menuItem, Label label, int total) {
+		private ThreadTotal(Conexao conexao, MenuItem menuItem, Label label, int total) {
 			this.menuItem = menuItem;
 			this.conexao = conexao;
 			this.label = label;
@@ -1938,7 +1929,7 @@ public class Superficie extends Desktop {
 		final Label label;
 		final int total;
 
-		ThreadRecente(Conexao conexao, FontMetrics fm, MenuItem menuItem, Label label, int total) {
+		private ThreadRecente(Conexao conexao, FontMetrics fm, MenuItem menuItem, Label label, int total) {
 			this.menuItem = menuItem;
 			this.conexao = conexao;
 			this.label = label;
