@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Window;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceDragEvent;
@@ -95,10 +97,18 @@ import br.com.persist.variaveis.VariaveisModelo;
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable, IIni {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
+	private transient ObjetoContainerListener.ConfigAlturaAutomatica configAlturaAutomaticaListener;
+	private transient ObjetoContainerListener.BuscaAutomaticaApos buscaAutomaticaAposListener;
+	private transient ObjetoContainerListener.BuscaAutomatica buscaAutomaticaListener;
+	private transient ObjetoContainerListener.LinkAutomatico linkAutomaticoListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
+	private transient ObjetoContainerListener.Componente componenteListener;
+	private transient ObjetoContainerListener.Dimensao dimensaoListener;
+	private transient ObjetoContainerListener.Selecao selecaoListener;
+	private transient ObjetoContainerListener.Apelido apelidoListener;
+	private transient ObjetoContainerListener.Titulo tituloListener;
 	private final AtomicBoolean processado = new AtomicBoolean();
 	private final TextField txtComplemento = new TextField(33);
-	private final transient ObjetoContainerListener listener;
 	private final transient List<GrupoLinkAuto> listaLink;
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient ConexaoProvedor provedor;
@@ -114,8 +124,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private Component suporte;
 	private int contadorAuto;
 
-	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
-			ObjetoContainerListener listener, Graphics g, boolean buscaAuto) {
+	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
+			boolean buscaAuto) {
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		listaLink = LinkAuto.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
@@ -129,7 +139,6 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		toolbar.ini(janela, objeto);
 		this.buscaAuto = buscaAuto;
 		this.provedor = provedor;
-		this.listener = listener;
 		this.objeto = objeto;
 		montarLayout();
 		configurar();
@@ -146,14 +155,22 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
 			Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+			Dimension dimension = null;
 			String apelido = null;
 
-			if (listener instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) listener;
-				apelido = interno.getApelido();
+			if (apelidoListener != null) {
+				apelido = apelidoListener.getApelido();
 			}
 
-			dge.startDrag(null, new Transferidor(objeto, conexao, listener.getDimensoes(), apelido), listenerArrasto);
+			if (dimensaoListener != null) {
+				dimension = dimensaoListener.getDimensoes();
+			}
+
+			if (dimension == null) {
+				dimension = Constantes.SIZE;
+			}
+
+			dge.startDrag(null, new Transferidor(objeto, conexao, dimension, apelido), listenerArrasto);
 		});
 
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
@@ -220,25 +237,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			private void eventos() {
 				fragmentoAcao.setActionListener(e -> {
 					FragmentoDialogo form = new FragmentoDialogo((Frame) null, null, fragmentoListener);
-
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					} else if (suporte instanceof Component) {
-						form.setLocationRelativeTo(suporte);
-					}
-
+					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
 
 				variaveisAcao.setActionListener(e -> {
 					VariaveisDialogo form = new VariaveisDialogo((Frame) null, null);
-
-					if (listener instanceof Component) {
-						form.setLocationRelativeTo((Component) listener);
-					} else if (suporte instanceof Component) {
-						form.setLocationRelativeTo(suporte);
-					}
-
+					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
 			}
@@ -482,6 +487,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 
 				private void processar(boolean apostrofes) {
+					if (buscaAutomaticaListener == null) {
+						return;
+					}
+
 					int coluna = TabelaUtil.getIndiceColuna(tabela, grupo.getCampo());
 
 					if (coluna == -1) {
@@ -497,11 +506,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					grupo.setProcessado(false);
 					grupo.setNumeroColetores(lista);
-					listener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
+					buscaAutomaticaListener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
 
-					if (grupo.isProcessado() && grupoApos != null) {
-						listener.buscaAutomaticaApos(grupoApos);
+					if (grupo.isProcessado() && grupoApos != null && buscaAutomaticaAposListener != null) {
+						buscaAutomaticaAposListener.buscaAutomaticaApos(grupoApos);
 					}
 
 					if (!objeto.isColunaInfo()) {
@@ -733,17 +742,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					if (abrirEmForm) {
 						ConsultaFormulario form = new ConsultaFormulario(null, instrucao.getNome(), provedor, conexao,
 								instrucao.getValor(), chaves, false);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
+						configLocationRelativeTo(form);
 						form.setVisible(true);
 					} else {
 						ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao,
 								instrucao.getValor(), chaves, false);
 						form.setTitle(instrucao.getNome());
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
+						configLocationRelativeTo(form);
 						form.setVisible(true);
 					}
 				}
@@ -752,16 +757,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					if (abrirEmForm) {
 						UpdateFormulario form = new UpdateFormulario(null, instrucao.getNome(), provedor, conexao,
 								instrucao.getValor(), chaves);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
+						configLocationRelativeTo(form);
 						form.setVisible(true);
 					} else {
 						UpdateDialogo form = new UpdateDialogo((Frame) null, null, instrucao.getNome(), provedor,
 								conexao, instrucao.getValor(), chaves);
-						if (listener instanceof Component) {
-							form.setLocationRelativeTo((Component) listener);
-						}
+						configLocationRelativeTo(form);
 						form.setVisible(true);
 					}
 				}
@@ -854,15 +855,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			if (abrirEmForm) {
 				UpdateFormulario form = new UpdateFormulario(null, Mensagens.getString(Constantes.LABEL_ATUALIZAR),
 						provedor, conexao, instrucao);
-				if (listener instanceof Component) {
-					form.setLocationRelativeTo((Component) listener);
-				}
+				configLocationRelativeTo(form);
 				form.setVisible(true);
 			} else {
 				UpdateDialogo form = new UpdateDialogo((Frame) null, null, provedor, conexao, instrucao);
-				if (listener instanceof Component) {
-					form.setLocationRelativeTo((Component) listener);
-				}
+				configLocationRelativeTo(form);
 				form.setVisible(true);
 			}
 		}
@@ -889,16 +886,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			private void eventos() {
 				apelidoAcao.setActionListener(e -> {
-					if (listener instanceof ObjetoContainerFormularioInterno) {
-						ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) listener;
-						Object resp = Util.getValorInputDialog(ObjetoContainer.this, "label.apelido",
-								interno.getApelido(), interno.getApelido());
-
-						if (resp == null) {
-							return;
-						}
-
-						interno.setApelido(resp.toString().trim());
+					if (apelidoListener != null) {
+						String apelido = apelidoListener.selecionarApelido();
+						apelidoListener.setApelido(apelido);
 					}
 				});
 			}
@@ -1078,16 +1068,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							ConsultaFormulario form = new ConsultaFormulario(null,
 									Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, conexao, instrucao, null,
 									false);
-							if (listener instanceof Component) {
-								form.setLocationRelativeTo((Component) listener);
-							}
+							configLocationRelativeTo(form);
 							form.setVisible(true);
 						} else {
 							ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao, instrucao,
 									null, false);
-							if (listener instanceof Component) {
-								form.setLocationRelativeTo((Component) listener);
-							}
+							configLocationRelativeTo(form);
 							form.setVisible(true);
 						}
 					}
@@ -1138,16 +1124,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							ConsultaFormulario form = new ConsultaFormulario(null,
 									Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, conexao, instrucao, null,
 									false);
-							if (listener instanceof Component) {
-								form.setLocationRelativeTo((Component) listener);
-							}
+							configLocationRelativeTo(form);
 							form.setVisible(true);
 						} else {
 							ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao, instrucao,
 									null, false);
-							if (listener instanceof Component) {
-								form.setLocationRelativeTo((Component) listener);
-							}
+							configLocationRelativeTo(form);
 							form.setVisible(true);
 						}
 					}
@@ -1173,7 +1155,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Connection conn = Conexao.getConnection(conexao);
 						ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto, conexao);
 						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-						listener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVE-PRIMARIA"));
+
+						if (tituloListener != null) {
+							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVE-PRIMARIA"));
+						}
 
 						tabela.setModel(modeloOrdenacao);
 						configCabecalhoColuna(modeloListagem);
@@ -1203,7 +1188,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Connection conn = Conexao.getConnection(conexao);
 						ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto, conexao);
 						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-						listener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-IMPORTADAS"));
+
+						if (tituloListener != null) {
+							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-IMPORTADAS"));
+						}
 
 						tabela.setModel(modeloOrdenacao);
 						configCabecalhoColuna(modeloListagem);
@@ -1233,7 +1221,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Connection conn = Conexao.getConnection(conexao);
 						ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto, conexao);
 						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-						listener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-EXPORTADAS"));
+
+						if (tituloListener != null) {
+							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-EXPORTADAS"));
+						}
 
 						tabela.setModel(modeloOrdenacao);
 						configCabecalhoColuna(modeloListagem);
@@ -1263,7 +1254,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Connection conn = Conexao.getConnection(conexao);
 						ListagemModelo modeloListagem = Persistencia.criarModeloInfoBanco(conn);
 						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-						listener.setTitulo(objeto.getTitle(modeloOrdenacao, "INFO-BANCO"));
+
+						if (tituloListener != null) {
+							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "INFO-BANCO"));
+						}
 
 						tabela.setModel(modeloOrdenacao);
 						configCabecalhoColuna(modeloListagem);
@@ -1293,8 +1287,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Connection conn = Conexao.getConnection(conexao);
 						ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto, conexao);
 						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-						listener.setTitulo(
-								objeto.getTitle(modeloOrdenacao, Mensagens.getString(Constantes.LABEL_METADADOS)));
+
+						if (tituloListener != null) {
+							tituloListener.setTitulo(
+									objeto.getTitle(modeloOrdenacao, Mensagens.getString(Constantes.LABEL_METADADOS)));
+						}
 
 						tabela.setModel(modeloOrdenacao);
 						configCabecalhoColuna(modeloListagem);
@@ -1324,7 +1321,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						Connection conn = Conexao.getConnection(conexao);
 						ListagemModelo modeloListagem = Persistencia.criarModeloEsquema(conn);
 						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-						listener.setTitulo(objeto.getTitle(modeloOrdenacao, "ESQUEMA"));
+
+						if (tituloListener != null) {
+							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "ESQUEMA"));
+						}
 
 						tabela.setModel(modeloOrdenacao);
 						configCabecalhoColuna(modeloListagem);
@@ -1356,19 +1356,34 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
+	private Component getComponente() {
+		Component resp = null;
+
+		if (componenteListener != null && componenteListener.getComponente() != null) {
+			resp = componenteListener.getComponente();
+
+		} else if (suporte instanceof Component) {
+			resp = suporte;
+		}
+
+		return resp;
+	}
+
+	private void configLocationRelativeTo(Window window) {
+		Component componente = getComponente();
+
+		if (componente != null) {
+			window.setLocationRelativeTo(componente);
+		}
+	}
+
 	private transient MouseListener mouseComplementoListener = new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				ComplementoDialogo form = new ComplementoDialogo((Dialog) null, objeto, txtComplemento,
 						complementoListener);
-
-				if (listener instanceof Component) {
-					form.setLocationRelativeTo((Component) listener);
-				} else if (suporte instanceof Component) {
-					form.setLocationRelativeTo(suporte);
-				}
-
+				configLocationRelativeTo(form);
 				form.setVisible(true);
 			}
 		}
@@ -1489,13 +1504,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			RegistroModelo modeloRegistro = Persistencia.criarModeloRegistro(conn, builder.toString(),
 					objeto.getChavesArray(), objeto, conexao);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
-			String titulo = objeto.getTitle(modeloOrdenacao);
 			objeto.setComplemento(txtComplemento.getText());
 			modeloRegistro.setConexao(conexao);
 			tabela.setModel(modeloOrdenacao);
-			listener.setTitulo(titulo);
+			threadTitulo(getTituloAtualizado());
 			cabecalhoFiltro = null;
-			threadTitulo(titulo);
+			atualizarTitulo();
 
 			TableColumnModel columnModel = tabela.getColumnModel();
 			List<Coluna> colunas = modeloRegistro.getColunas();
@@ -1562,8 +1576,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	}
 
 	private void configAlturaAutomatica() {
-		if (objeto.isAjusteAutoForm() && tamanhoAutomatico) {
-			listener.configAlturaAutomatica(tabela.getModel().getRowCount());
+		if (objeto.isAjusteAutoForm() && tamanhoAutomatico && configAlturaAutomaticaListener != null) {
+			configAlturaAutomaticaListener.configAlturaAutomatica(tabela.getModel().getRowCount());
 		}
 	}
 
@@ -1698,6 +1712,18 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		}
 	}
 
+	public String getTituloAtualizado() {
+		OrdenacaoModelo modelo = (OrdenacaoModelo) tabela.getModel();
+		return objeto.getTitle(modelo);
+	}
+
+	public void atualizarTitulo() {
+		if (tituloListener != null) {
+			String titulo = getTituloAtualizado();
+			tituloListener.setTitulo(titulo);
+		}
+	}
+
 	private String getComplementoChavesAux(Map<String, String> map) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 		StringBuilder sb = new StringBuilder("(");
@@ -1820,7 +1846,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					toolbar.labelTotal.limpar();
 				}
 
-				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaLink.isEmpty()) {
+				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaLink.isEmpty()
+						&& linkAutomaticoListener != null) {
 					int indiceLinkSelecionado = -1;
 
 					for (int i = 0; i < listaLink.size(); i++) {
@@ -1841,7 +1868,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						return;
 					}
 
-					listener.linkAutomatico(listaLink.get(indiceLinkSelecionado), lista.get(0));
+					linkAutomaticoListener.linkAutomatico(listaLink.get(indiceLinkSelecionado), lista.get(0));
 				}
 			} else {
 				toolbar.excluirAtualizarEnable(false);
@@ -1864,7 +1891,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	}
 
 	private void threadTitulo(String titulo) {
-		if (listener == null || !destacarTitulo) {
+		if (tituloListener == null || !destacarTitulo) {
 			return;
 		}
 
@@ -1891,8 +1918,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			if (listener != null) {
-				listener.setTitulo(original);
+			if (tituloListener != null) {
+				tituloListener.setTitulo(original);
+			}
+
+			if (selecaoListener != null) {
+				selecaoListener.selecionar(false);
 			}
 
 			destacarTitulo = false;
@@ -1907,12 +1938,93 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				indice = esq.length() - 1;
 			}
 
-			if (listener != null) {
-				listener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
-				listener.selecionar(indice % 2 == 0);
+			if (tituloListener != null) {
+				tituloListener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
+			}
+
+			if (selecaoListener != null) {
+				selecaoListener.selecionar(indice % 2 == 0);
 			}
 
 			indice--;
 		}
+	}
+
+	public ObjetoContainerListener.BuscaAutomatica getBuscaAutomaticaListener() {
+		return buscaAutomaticaListener;
+	}
+
+	public void setBuscaAutomaticaListener(ObjetoContainerListener.BuscaAutomatica buscaAutomaticaListener) {
+		this.buscaAutomaticaListener = buscaAutomaticaListener;
+	}
+
+	public ObjetoContainerListener.LinkAutomatico getLinkAutomaticoListener() {
+		return linkAutomaticoListener;
+	}
+
+	public void setLinkAutomaticoListener(ObjetoContainerListener.LinkAutomatico linkAutomaticoListener) {
+		this.linkAutomaticoListener = linkAutomaticoListener;
+	}
+
+	public ObjetoContainerListener.BuscaAutomaticaApos getBuscaAutomaticaAposListener() {
+		return buscaAutomaticaAposListener;
+	}
+
+	public void setBuscaAutomaticaAposListener(
+			ObjetoContainerListener.BuscaAutomaticaApos buscaAutomaticaAposListener) {
+		this.buscaAutomaticaAposListener = buscaAutomaticaAposListener;
+	}
+
+	public ObjetoContainerListener.ConfigAlturaAutomatica getConfigAlturaAutomaticaListener() {
+		return configAlturaAutomaticaListener;
+	}
+
+	public void setConfigAlturaAutomaticaListener(
+			ObjetoContainerListener.ConfigAlturaAutomatica configAlturaAutomaticaListener) {
+		this.configAlturaAutomaticaListener = configAlturaAutomaticaListener;
+	}
+
+	public ObjetoContainerListener.Titulo getTituloListener() {
+		return tituloListener;
+	}
+
+	public void setTituloListener(ObjetoContainerListener.Titulo tituloListener) {
+		this.tituloListener = tituloListener;
+
+		if (tituloListener != null) {
+			atualizarTitulo();
+		}
+	}
+
+	public ObjetoContainerListener.Selecao getSelecaoListener() {
+		return selecaoListener;
+	}
+
+	public void setSelecaoListener(ObjetoContainerListener.Selecao selecaoListener) {
+		this.selecaoListener = selecaoListener;
+	}
+
+	public ObjetoContainerListener.Dimensao getDimensaoListener() {
+		return dimensaoListener;
+	}
+
+	public void setDimensaoListener(ObjetoContainerListener.Dimensao dimensaoListener) {
+		this.dimensaoListener = dimensaoListener;
+	}
+
+	public ObjetoContainerListener.Apelido getApelidoListener() {
+		return apelidoListener;
+	}
+
+	public void setApelidoListener(ObjetoContainerListener.Apelido apelidoListener) {
+		this.apelidoListener = apelidoListener;
+	}
+
+	public ObjetoContainerListener.Componente getComponenteListener() {
+		return componenteListener;
+	}
+
+	public void setComponenteListener(ObjetoContainerListener.Componente componenteListener) {
+		this.componenteListener = componenteListener;
 	}
 }

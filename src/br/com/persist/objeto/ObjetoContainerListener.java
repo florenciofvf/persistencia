@@ -1,5 +1,6 @@
 package br.com.persist.objeto;
 
+import java.awt.Component;
 import java.awt.Dimension;
 
 import br.com.persist.busca_apos.GrupoBuscaAutoApos;
@@ -7,17 +8,44 @@ import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.link_auto.GrupoLinkAuto;
 
 public interface ObjetoContainerListener {
-	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos);
 
-	public void linkAutomatico(GrupoLinkAuto link, String argumento);
+	public interface BuscaAutomatica {
+		public void buscaAutomatica(GrupoBuscaAuto grupoBusca, String argumentos);
+	}
 
-	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos);
+	public interface LinkAutomatico {
+		public void linkAutomatico(GrupoLinkAuto grupoLink, String argumento);
+	}
 
-	public void configAlturaAutomatica(int total);
+	public interface BuscaAutomaticaApos {
+		public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos);
+	}
 
-	public void setTitulo(String titulo);
+	public interface ConfigAlturaAutomatica {
+		public void configAlturaAutomatica(int total);
+	}
 
-	public void selecionar(boolean b);
+	public interface Titulo {
+		public void setTitulo(String titulo);
+	}
 
-	public Dimension getDimensoes();
+	public interface Selecao {
+		public void selecionar(boolean b);
+	}
+
+	public interface Componente {
+		public Component getComponente();
+	}
+
+	public interface Dimensao {
+		public Dimension getDimensoes();
+	}
+
+	public interface Apelido {
+		public void setApelido(String string);
+
+		public String selecionarApelido();
+
+		public String getApelido();
+	}
 }

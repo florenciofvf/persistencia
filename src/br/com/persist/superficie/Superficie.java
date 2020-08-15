@@ -759,7 +759,7 @@ public class Superficie extends Desktop {
 		config.setGraphics(getGraphics());
 
 		if (interno != null) {
-			config.setApelido(interno.getApelido());
+			config.setApelido(interno.getApelidoListener().getApelido());
 			config.setComplemento(interno.getComplementoChaves());
 		}
 

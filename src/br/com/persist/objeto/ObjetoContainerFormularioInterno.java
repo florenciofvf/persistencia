@@ -1,6 +1,7 @@
 package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -28,10 +29,10 @@ import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;
 
-public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
-		implements IJanela, ObjetoContainerListener, IIni {
+public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame implements IJanela, IIni {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
@@ -41,13 +42,26 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	public ObjetoContainerFormularioInterno(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
 			boolean buscaAuto) {
 		super(objeto.getId());
-		container = new ObjetoContainer(this, provedor, padrao, objeto, this, g, buscaAuto);
+		container = new ObjetoContainer(this, provedor, padrao, objeto, g, buscaAuto);
+		container.setTituloListener(ObjetoContainerFormularioInterno.this::setTitle);
+		container.setDimensaoListener(ObjetoContainerFormularioInterno.this::getSize);
+		container.setSelecaoListener(ObjetoContainerFormularioInterno.this::selecionar);
+		container.setComponenteListener(ObjetoContainerFormularioInterno.this::getThis);
+		container.setLinkAutomaticoListener(ObjetoContainerFormularioInterno.this::linkAutomatico);
+		container.setBuscaAutomaticaListener(ObjetoContainerFormularioInterno.this::buscaAutomatica);
+		container.setBuscaAutomaticaAposListener(ObjetoContainerFormularioInterno.this::buscaAutomaticaApos);
+		container.setConfigAlturaAutomaticaListener(ObjetoContainerFormularioInterno.this::configAlturaAutomatica);
+		container.setApelidoListener(apelidoListener);
 		montarLayout();
 		configurar();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
+	}
+
+	public Component getThis() {
+		return this;
 	}
 
 	@Override
@@ -112,9 +126,8 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		}
 	}
 
-	@Override
 	public void configAlturaAutomatica(int total) {
-		Dimension d = getDimensoes();
+		Dimension d = getSize();
 
 		boolean salvar = false;
 
@@ -167,7 +180,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		configAjustes(true);
 	}
 
-	@Override
 	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
 		checarDesktop();
 
@@ -176,7 +188,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		}
 	}
 
-	@Override
 	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
 		checarDesktop();
 
@@ -185,7 +196,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		}
 	}
 
-	@Override
 	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos) {
 		checarDesktop();
 
@@ -194,17 +204,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		}
 	}
 
-	@Override
-	public Dimension getDimensoes() {
-		return getSize();
-	}
-
-	@Override
-	public void setTitulo(String titulo) {
-		setTitle(titulo);
-	}
-
-	@Override
 	public void selecionar(boolean b) {
 		try {
 			setSelected(b);
@@ -214,17 +213,17 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 	}
 
 	public boolean ehTabela(TabelaBuscaAuto tabela) {
-		return getApelido().equalsIgnoreCase(tabela.getApelido())
+		return apelidoListener.getApelido().equalsIgnoreCase(tabela.getApelido())
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
 	public boolean ehTabela(TabelaBuscaAutoApos tabela) {
-		return getApelido().equalsIgnoreCase(tabela.getApelido())
+		return apelidoListener.getApelido().equalsIgnoreCase(tabela.getApelido())
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
 	public boolean ehTabela(TabelaLinkAuto tabela) {
-		return getApelido().equalsIgnoreCase(tabela.getApelido())
+		return apelidoListener.getApelido().equalsIgnoreCase(tabela.getApelido())
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
@@ -234,7 +233,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 
 	public boolean ehTabela(ConfigArquivo config) {
 		return config.isChecarApelido()
-				? getApelido().equalsIgnoreCase(config.getApelido())
+				? apelidoListener.getApelido().equalsIgnoreCase(config.getApelido())
 						&& container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela())
 				: container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
 	}
@@ -275,16 +274,36 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame
 		return container.getComplementoChaves();
 	}
 
-	public String getApelido() {
-		if (apelido == null) {
-			apelido = Constantes.VAZIO;
+	private transient ObjetoContainerListener.Apelido apelidoListener = new ObjetoContainerListener.Apelido() {
+		@Override
+		public void setApelido(String string) {
+			apelido = string;
 		}
 
-		return apelido;
-	}
+		@Override
+		public String selecionarApelido() {
+			Object resp = Util.getValorInputDialog(ObjetoContainerFormularioInterno.this, "label.apelido", getApelido(),
+					getApelido());
 
-	public void setApelido(String apelido) {
-		this.apelido = apelido;
+			if (resp == null) {
+				return Constantes.VAZIO;
+			}
+
+			return resp.toString().trim();
+		}
+
+		@Override
+		public String getApelido() {
+			if (apelido == null) {
+				apelido = Constantes.VAZIO;
+			}
+
+			return apelido.trim();
+		}
+	};
+
+	public ObjetoContainerListener.Apelido getApelidoListener() {
+		return apelidoListener;
 	}
 
 	public void selecionarConexao(Conexao conexao) {

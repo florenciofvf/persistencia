@@ -2,7 +2,6 @@ package br.com.persist.fichario;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -52,8 +51,6 @@ import br.com.persist.anotacao.AnotacaoFormulario;
 import br.com.persist.arquivo.ArquivoTreeModelo;
 import br.com.persist.arquivo.ArquivoTreeContainer;
 import br.com.persist.arquivo.ArquivoTreeFormulario;
-import br.com.persist.busca_apos.GrupoBuscaAutoApos;
-import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.comparacao.ComparacaoContainer;
 import br.com.persist.comparacao.ComparacaoFormulario;
@@ -70,7 +67,6 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.DesktopFormulario;
 import br.com.persist.fragmento.FragmentoContainer;
 import br.com.persist.fragmento.FragmentoFormulario;
-import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.mapeamento.MapeamentoContainer;
 import br.com.persist.mapeamento.MapeamentoFormulario;
 import br.com.persist.metadado.Metadado;
@@ -78,7 +74,6 @@ import br.com.persist.metadado.MetadadoTreeContainer;
 import br.com.persist.metadado.MetadadoTreeFormulario;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.objeto.ObjetoContainer;
-import br.com.persist.objeto.ObjetoContainerListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.requisicao.RequisicaoContainer;
 import br.com.persist.requisicao.RequisicaoFormulario;
@@ -299,6 +294,10 @@ public class Fichario extends JTabbedPane {
 	private void config() {
 		inputMap().put(getKeyStroke(KeyEvent.VK_Q), "excluir_action");
 		getActionMap().put("excluir_action", excluirAction);
+	}
+
+	public Component getThis() {
+		return this;
 	}
 
 	private transient Action excluirAction = new AbstractAction() {
@@ -1252,8 +1251,9 @@ public class Fichario extends JTabbedPane {
 
 	public class Objetos {
 		public void novo(Formulario formulario, Conexao padrao, Objeto objeto) {
-			ObjetoContainer container = new ObjetoContainer(null, formulario, padrao, objeto, objetoContainerListener,
-					getGraphics(), false);
+			ObjetoContainer container = new ObjetoContainer(null, formulario, padrao, objeto, getGraphics(), false);
+			container.setComponenteListener(Fichario.this::getThis);
+			container.setDimensaoListener(Fichario.this::getSize);
 			addTab(objeto.getId(), container);
 			int ultimoIndice = getTabCount() - 1;
 
@@ -1264,43 +1264,6 @@ public class Fichario extends JTabbedPane {
 
 			container.ini(getGraphics());
 		}
-
-		private ObjetoContainerListener objetoContainerListener = new ObjetoContainerListener() {
-			@Override
-			public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
-				LOG.log(Level.FINEST, "buscaAutomatica");
-			}
-
-			@Override
-			public void linkAutomatico(GrupoLinkAuto link, String argumento) {
-				LOG.log(Level.FINEST, "linkAutomatico");
-			}
-
-			@Override
-			public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos) {
-				LOG.log(Level.FINEST, "buscaAutomaticaApos");
-			}
-
-			@Override
-			public void configAlturaAutomatica(int total) {
-				LOG.log(Level.FINEST, "configAlturaAutomatica");
-			}
-
-			@Override
-			public void setTitulo(String titulo) {
-				LOG.log(Level.FINEST, titulo);
-			}
-
-			@Override
-			public void selecionar(boolean b) {
-				LOG.log(Level.FINEST, "{0}", b);
-			}
-
-			@Override
-			public Dimension getDimensoes() {
-				return Fichario.this.getSize();
-			}
-		};
 	}
 
 	public class Arquivos {

@@ -482,7 +482,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		ObjetoContainerFormularioInterno form = new ObjetoContainerFormularioInterno(formulario, conexao, objeto, g,
 				buscaAuto);
 		form.setAbortarFecharComESC(abortarFecharComESC);
-		form.setApelido(apelido);
+		form.getApelidoListener().setApelido(apelido);
 		form.setLocation(point);
 		form.setSize(dimension);
 		form.setVisible(true);

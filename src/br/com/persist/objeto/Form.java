@@ -15,7 +15,7 @@ public class Form {
 
 	public void copiar(ObjetoContainerFormularioInterno interno) {
 		objeto = interno.getObjetoContainer().getObjeto().getId();
-		apelido = interno.getApelido();
+		apelido = interno.getApelidoListener().getApelido();
 		largura = interno.getWidth();
 		altura = interno.getHeight();
 		x = interno.getX();
