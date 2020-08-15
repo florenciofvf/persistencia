@@ -203,9 +203,9 @@ public class MetadadoTreeContainer extends AbstratoContainer
 				List<Metadado> camposExportados = Persistencia.listarCamposExportados(conn, conexao, tabela);
 				List<Metadado> chavesPrimarias = Persistencia.listarChavesPrimarias(conn, conexao, tabela);
 
-				criarAtributoMetadado(tabela, chavesPrimarias, Constantes.PKS, Constantes.PK, ' ');
-				criarAtributoMetadado(tabela, camposImportados, Constantes.FKS, Constantes.FK, 'I');
-				criarAtributoMetadado(tabela, camposExportados, Constantes.EKS, Constantes.EK, 'E');
+				adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
+				adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
+				adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');
 
 				raiz.add(tabela);
 			}
@@ -217,24 +217,25 @@ public class MetadadoTreeContainer extends AbstratoContainer
 		}
 	}
 
-	private void criarAtributoMetadado(Metadado metadado, List<Metadado> listaMetadado, String plural, String singular,
+	private void adicionarLista(Metadado objeto, List<Metadado> filhos, String rotuloPlural, String rotuloSingular,
 			char chave) {
-		if (listaMetadado.isEmpty()) {
+		if (filhos.isEmpty()) {
 			return;
 		}
 
-		Metadado titulo = new Metadado(listaMetadado.size() > 1 ? plural : singular);
-		metadado.add(titulo);
+		Metadado rotulo = new Metadado(filhos.size() > 1 ? rotuloPlural : rotuloSingular);
 
-		for (Metadado meta : listaMetadado) {
-			titulo.add(meta);
+		for (Metadado obj : filhos) {
+			rotulo.add(obj);
 
 			if (chave == 'E') {
-				metadado.setTotalExportados(metadado.getTotalExportados() + 1);
+				objeto.setTotalExportados(objeto.getTotalExportados() + 1);
 			} else if (chave == 'I') {
-				metadado.setTotalImportados(metadado.getTotalImportados() + 1);
+				objeto.setTotalImportados(objeto.getTotalImportados() + 1);
 			}
 		}
+
+		objeto.add(rotulo);
 	}
 
 	@Override

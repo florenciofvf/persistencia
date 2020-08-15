@@ -49,6 +49,9 @@ public class Constantes {
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
 	public static final String LABEL_CONEXAO_MIN = "label.conexao_min";
+	public static final String CAMPOS_IMPORTADOS = "CAMPOS_IMPORTADOS";
+	public static final String CAMPOS_EXPORTADOS = "CAMPOS_EXPORTADOS";
+	public static final String CHAVES_PRIMARIAS = "CHAVES_PRIMARIAS";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String ABERTOS_FICHARIO = "abertos_fichario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
@@ -56,6 +59,8 @@ public class Constantes {
 	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";
 	public static final String VAR_ACCESS_TOKEN = "VAR_ACCESS_TOKEN";
 	public static final String LABEL_METADADOS = "label.meta_dados";
+	public static final String CAMPO_IMPORTADO = "CAMPO_IMPORTADO";
+	public static final String CAMPO_EXPORTADO = "CAMPO_EXPORTADO";
 	public static final String LABEL_AMBIENTES = "label.ambientes";
 	public static final String LABEL_VARIAVEIS = "label.variaveis";
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
@@ -68,6 +73,7 @@ public class Constantes {
 	public static final Dimension SIZE2 = new Dimension(1000, 800);
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
+	public static final String CHAVE_PRIMARIA = "CHAVE_PRIMARIA";
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
@@ -115,18 +121,12 @@ public class Constantes {
 	public static final String EXEC = "exec";
 	public static final String III = "???";
 	public static final String ESC = "esc";
-	public static final String PKS = "pks";
-	public static final String FKS = "fks";
-	public static final String EKS = "eks";
 	public static final String QL = "\r\n";
 	public static final String SEP = "###";
 	public static final int QUARENTA = 40;
 	public static final String QL2 = "\n";
 	public static final String TAB = "\t";
 	public static final String VAZIO = "";
-	public static final String PK = "pk";
-	public static final String FK = "fk";
-	public static final String EK = "ek";
 	public static final int SETENTA = 70;
 	public static final byte ARRASTO = 1;
 	public static final byte RELACAO = 3;

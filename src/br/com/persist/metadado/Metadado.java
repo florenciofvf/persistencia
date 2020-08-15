@@ -107,7 +107,8 @@ public class Metadado implements Transferable {
 
 	public String getChaves() {
 		for (Metadado titulo : filhos) {
-			if (Constantes.PK.equals(titulo.descricao) || Constantes.PKS.equals(titulo.descricao)) {
+			if (Constantes.CHAVE_PRIMARIA.equals(titulo.descricao)
+					|| Constantes.CHAVES_PRIMARIAS.equals(titulo.descricao)) {
 				return titulo.getChaves2();
 			}
 		}
@@ -134,8 +135,8 @@ public class Metadado implements Transferable {
 		int total = 0;
 
 		for (Metadado table : filhos) {
-			if (table.contem(Constantes.PKS)) {
-				Metadado meta = table.getMetadado(Constantes.PKS);
+			if (table.contem(Constantes.CHAVES_PRIMARIAS)) {
+				Metadado meta = table.getMetadado(Constantes.CHAVES_PRIMARIAS);
 				sb.append(table.descricao + " - " + meta.getTotal() + Constantes.QL);
 				total++;
 			}
@@ -151,7 +152,7 @@ public class Metadado implements Transferable {
 		int total = 0;
 
 		for (Metadado table : filhos) {
-			if (!table.contem(Constantes.PK) && !table.contem(Constantes.PKS)) {
+			if (!table.contem(Constantes.CHAVE_PRIMARIA) && !table.contem(Constantes.CHAVES_PRIMARIAS)) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}
@@ -167,7 +168,7 @@ public class Metadado implements Transferable {
 		int total = 0;
 
 		for (Metadado table : filhos) {
-			if (table.contem(Constantes.EK) || table.contem(Constantes.EKS)) {
+			if (table.contem(Constantes.CAMPO_EXPORTADO) || table.contem(Constantes.CAMPOS_EXPORTADOS)) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}
@@ -184,7 +185,7 @@ public class Metadado implements Transferable {
 		int total = 0;
 
 		for (Metadado table : filhos) {
-			if (!table.contem(Constantes.EK) && !table.contem(Constantes.EKS)) {
+			if (!table.contem(Constantes.CAMPO_EXPORTADO) && !table.contem(Constantes.CAMPOS_EXPORTADOS)) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}
@@ -264,13 +265,15 @@ public class Metadado implements Transferable {
 
 		if (exportacao) {
 			for (Metadado tipo : filhos) {
-				if (tipo.descricao.equals(Constantes.EK) || tipo.descricao.equals(Constantes.EKS)) {
+				if (tipo.descricao.equals(Constantes.CAMPO_EXPORTADO)
+						|| tipo.descricao.equals(Constantes.CAMPOS_EXPORTADOS)) {
 					tipo.listaStringExpImp(resposta);
 				}
 			}
 		} else {
 			for (Metadado tipo : filhos) {
-				if (tipo.descricao.equals(Constantes.FK) || tipo.descricao.equals(Constantes.FKS)) {
+				if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
+						|| tipo.descricao.equals(Constantes.CAMPOS_IMPORTADOS)) {
 					tipo.listaStringExpImp(resposta);
 				}
 			}
