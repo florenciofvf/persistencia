@@ -365,26 +365,6 @@ public class Persistencia {
 		}
 	}
 
-	public static List<Metadado> listarPrimarias(Connection conn, Conexao conexao, Metadado metadado)
-			throws PersistenciaException {
-		try {
-			List<Metadado> resposta = new ArrayList<>();
-			DatabaseMetaData m = conn.getMetaData();
-
-			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), metadado.getDescricao());
-
-			while (rs.next()) {
-				resposta.add(new Metadado(rs.getString(COLUMN_NAME)));
-			}
-
-			rs.close();
-
-			return resposta;
-		} catch (Exception ex) {
-			throw new PersistenciaException(ex);
-		}
-	}
-
 	public static ListagemModelo criarModeloChavesExportadas(Connection conn, Objeto objeto, Conexao conexao)
 			throws PersistenciaException {
 		try {
@@ -405,7 +385,70 @@ public class Persistencia {
 		}
 	}
 
-	public static List<Metadado> listarExportados(Connection conn, Conexao conexao, Metadado metadado)
+	public static List<Metadado> listarNomeTabelas(Connection conn, Conexao conexao) throws PersistenciaException {
+		try {
+			List<Metadado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+
+			ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(), "%", new String[] { "TABLE" });
+
+			while (rs.next()) {
+				resposta.add(new Metadado(rs.getString(TABLE_NAME)));
+			}
+
+			rs.close();
+
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static List<Metadado> listarChavesPrimarias(Connection conn, Conexao conexao, Metadado metadado)
+			throws PersistenciaException {
+		try {
+			List<Metadado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+
+			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), metadado.getDescricao());
+
+			while (rs.next()) {
+				resposta.add(new Metadado(rs.getString(COLUMN_NAME)));
+			}
+
+			rs.close();
+
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static List<Metadado> listarCamposImportados(Connection conn, Conexao conexao, Metadado metadado)
+			throws PersistenciaException {
+		try {
+			List<Metadado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+
+			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), metadado.getDescricao());
+
+			while (rs.next()) {
+				Metadado campo = new Metadado(rs.getString(FKCOLUMN_NAME));
+				resposta.add(campo);
+
+				Metadado ref = new Metadado(rs.getString(PKTABLE_NAME) + "(" + rs.getString(PKCOLUMN_NAME) + ")");
+				campo.add(ref);
+			}
+
+			rs.close();
+
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static List<Metadado> listarCamposExportados(Connection conn, Conexao conexao, Metadado metadado)
 			throws PersistenciaException {
 		try {
 			List<Metadado> resposta = new ArrayList<>();
@@ -444,30 +487,6 @@ public class Persistencia {
 			rs.close();
 
 			return new ListagemModelo(Arrays.asList(PKTABLE_NAME, PKCOLUMN_NAME, FKCOLUMN_NAME), dados);
-		} catch (Exception ex) {
-			throw new PersistenciaException(ex);
-		}
-	}
-
-	public static List<Metadado> listarImportados(Connection conn, Conexao conexao, Metadado metadado)
-			throws PersistenciaException {
-		try {
-			List<Metadado> resposta = new ArrayList<>();
-			DatabaseMetaData m = conn.getMetaData();
-
-			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), metadado.getDescricao());
-
-			while (rs.next()) {
-				Metadado campo = new Metadado(rs.getString(FKCOLUMN_NAME));
-				resposta.add(campo);
-
-				Metadado ref = new Metadado(rs.getString(PKTABLE_NAME) + "(" + rs.getString(PKCOLUMN_NAME) + ")");
-				campo.add(ref);
-			}
-
-			rs.close();
-
-			return resposta;
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
@@ -520,25 +539,6 @@ public class Persistencia {
 
 				return new ListagemModelo(colunas, dados);
 			}
-		} catch (Exception ex) {
-			throw new PersistenciaException(ex);
-		}
-	}
-
-	public static List<Metadado> listarMetadados(Connection conn, Conexao conexao) throws PersistenciaException {
-		try {
-			List<Metadado> resposta = new ArrayList<>();
-			DatabaseMetaData m = conn.getMetaData();
-
-			ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(), "%", new String[] { "TABLE" });
-
-			while (rs.next()) {
-				resposta.add(new Metadado(rs.getString(TABLE_NAME)));
-			}
-
-			rs.close();
-
-			return resposta;
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}

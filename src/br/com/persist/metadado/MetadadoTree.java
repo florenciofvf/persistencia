@@ -178,7 +178,7 @@ public class MetadadoTree extends Tree {
 		private MenuAbrirImportacao menuAbrirImportacao = new MenuAbrirImportacao();
 		private MenuExportacao menuExportacao = new MenuExportacao();
 
-		public MetadadosPopup() {
+		private MetadadosPopup() {
 			add(menuExportacao);
 			add(true, menuAbrirExportacaoH);
 			add(menuAbrirImportacaoH);
@@ -195,7 +195,7 @@ public class MetadadoTree extends Tree {
 			menuAbrirImportacao.setEnabled(ehTabela);
 		}
 
-		class MenuExportacao extends MenuPadrao1 {
+		private class MenuExportacao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
 			MenuExportacao() {
@@ -206,7 +206,7 @@ public class MetadadoTree extends Tree {
 			}
 		}
 
-		class MenuAbrirExportacao extends MenuPadrao1 {
+		private class MenuAbrirExportacao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirExportacao() {
@@ -219,7 +219,7 @@ public class MetadadoTree extends Tree {
 			}
 		}
 
-		class MenuAbrirExportacaoH extends MenuPadrao1 {
+		private class MenuAbrirExportacaoH extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirExportacaoH() {
@@ -232,7 +232,7 @@ public class MetadadoTree extends Tree {
 			}
 		}
 
-		class MenuAbrirImportacao extends MenuPadrao1 {
+		private class MenuAbrirImportacao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirImportacao() {
@@ -245,7 +245,7 @@ public class MetadadoTree extends Tree {
 			}
 		}
 
-		class MenuAbrirImportacaoH extends MenuPadrao1 {
+		private class MenuAbrirImportacaoH extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirImportacaoH() {

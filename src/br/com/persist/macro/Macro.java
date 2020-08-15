@@ -80,7 +80,7 @@ public class Macro {
 		}
 	}
 
-	class DeslocamentoXIdDescricao extends Instrucao {
+	private class DeslocamentoXIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setDeslocamentoXDesc((Integer) valor);
@@ -92,7 +92,7 @@ public class Macro {
 		}
 	}
 
-	class DeslocamentoYIdDescricao extends Instrucao {
+	private class DeslocamentoYIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setDeslocamentoYDesc((Integer) valor);
@@ -104,7 +104,7 @@ public class Macro {
 		}
 	}
 
-	class DesenharIdDescricao extends Instrucao {
+	private class DesenharIdDescricao extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setDesenharDescricao((Boolean) valor);
@@ -116,7 +116,7 @@ public class Macro {
 		}
 	}
 
-	class Quebrado extends Instrucao {
+	private class Quebrado extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setQuebrado((Boolean) valor);
@@ -128,7 +128,7 @@ public class Macro {
 		}
 	}
 
-	class ColunaInfo extends Instrucao {
+	private class ColunaInfo extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -140,7 +140,7 @@ public class Macro {
 		}
 	}
 
-	class AbrirAuto extends Instrucao {
+	private class AbrirAuto extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -152,7 +152,7 @@ public class Macro {
 		}
 	}
 
-	class LinkAuto extends Instrucao {
+	private class LinkAuto extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -164,7 +164,7 @@ public class Macro {
 		}
 	}
 
-	class Ccsc extends Instrucao {
+	private class Ccsc extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -176,7 +176,7 @@ public class Macro {
 		}
 	}
 
-	class Bpnt extends Instrucao {
+	private class Bpnt extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -188,7 +188,7 @@ public class Macro {
 		}
 	}
 
-	class Transparente extends Instrucao {
+	private class Transparente extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -200,7 +200,7 @@ public class Macro {
 		}
 	}
 
-	class CopiarDestacado extends Instrucao {
+	private class CopiarDestacado extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -212,7 +212,7 @@ public class Macro {
 		}
 	}
 
-	class AjusteAutoForm extends Instrucao {
+	private class AjusteAutoForm extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -224,7 +224,7 @@ public class Macro {
 		}
 	}
 
-	class AjusteAutoEnter extends Instrucao {
+	private class AjusteAutoEnter extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -236,7 +236,7 @@ public class Macro {
 		}
 	}
 
-	class PontoDestino extends Instrucao {
+	private class PontoDestino extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setPontoDestino((Boolean) valor);
@@ -248,7 +248,7 @@ public class Macro {
 		}
 	}
 
-	class PontoOrigem extends Instrucao {
+	private class PontoOrigem extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setPontoOrigem((Boolean) valor);
@@ -260,7 +260,7 @@ public class Macro {
 		}
 	}
 
-	class CorFonte extends Instrucao {
+	private class CorFonte extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setCorFonte((Color) valor);
@@ -272,7 +272,7 @@ public class Macro {
 		}
 	}
 
-	class Icone extends Instrucao {
+	private class Icone extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -288,7 +288,7 @@ public class Macro {
 		}
 	}
 
-	class Cor extends Instrucao {
+	private class Cor extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			relacao.setCor((Color) valor);
@@ -300,7 +300,7 @@ public class Macro {
 		}
 	}
 
-	class XPos extends Instrucao {
+	private class XPos extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();
@@ -312,7 +312,7 @@ public class Macro {
 		}
 	}
 
-	class YPos extends Instrucao {
+	private class YPos extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
 			throw new UnsupportedOperationException();

@@ -33,8 +33,8 @@ public class MetadadoTreeContainer extends AbstratoContainer
 		implements MetadadoTreeListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private MetadadoTree metadadoTree = new MetadadoTree();
-	private final Toolbar toolbar = new Toolbar();
 	private MetadadoTreeFormulario metadadoFormulario;
+	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
 
 	public MetadadoTreeContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
@@ -110,6 +110,7 @@ public class MetadadoTreeContainer extends AbstratoContainer
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
@@ -147,7 +148,7 @@ public class MetadadoTreeContainer extends AbstratoContainer
 			metadadoTree.selecionar(txtMetadado.getText().trim());
 		}
 
-		class ButtonInfo extends ButtonPopup {
+		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action queExportamAcao = Action.actionMenu("label.tabelas_que_exportam", null);
 			private Action naoExportamAcao = Action.actionMenu("label.tabelas_nao_exportam", null);
@@ -156,7 +157,7 @@ public class MetadadoTreeContainer extends AbstratoContainer
 			private Action pksMultiplaAcao = Action.actionMenu("label.pks_multiplas", null);
 			private Action pksAusentesAcao = Action.actionMenu("label.pks_ausente", null);
 
-			ButtonInfo() {
+			private ButtonInfo() {
 				super("label.funcoes", Icones.INFO);
 
 				addMenuItem(pksMultiplaAcao);
@@ -191,22 +192,22 @@ public class MetadadoTreeContainer extends AbstratoContainer
 
 		try {
 			Connection conn = Conexao.getConnection(conexao);
-			List<Metadado> lista = Persistencia.listarMetadados(conn, conexao);
-			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_METADADOS) + " - " + lista.size());
+			List<Metadado> tabelas = Persistencia.listarNomeTabelas(conn, conexao);
+			Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS) + " - " + tabelas.size());
 			raiz.setEhRaiz(true);
 
-			for (Metadado metadado : lista) {
-				metadado.setTabela(true);
+			for (Metadado tabela : tabelas) {
+				tabela.setTabela(true);
 
-				List<Metadado> fks = Persistencia.listarImportados(conn, conexao, metadado);
-				List<Metadado> eks = Persistencia.listarExportados(conn, conexao, metadado);
-				List<Metadado> pks = Persistencia.listarPrimarias(conn, conexao, metadado);
+				List<Metadado> camposImportados = Persistencia.listarCamposImportados(conn, conexao, tabela);
+				List<Metadado> camposExportados = Persistencia.listarCamposExportados(conn, conexao, tabela);
+				List<Metadado> chavesPrimarias = Persistencia.listarChavesPrimarias(conn, conexao, tabela);
 
-				criarAtributoMetadado(metadado, pks, Constantes.PKS, Constantes.PK, ' ');
-				criarAtributoMetadado(metadado, fks, Constantes.FKS, Constantes.FK, 'I');
-				criarAtributoMetadado(metadado, eks, Constantes.EKS, Constantes.EK, 'E');
+				criarAtributoMetadado(tabela, chavesPrimarias, Constantes.PKS, Constantes.PK, ' ');
+				criarAtributoMetadado(tabela, camposImportados, Constantes.FKS, Constantes.FK, 'I');
+				criarAtributoMetadado(tabela, camposExportados, Constantes.EKS, Constantes.EK, 'E');
 
-				raiz.add(metadado);
+				raiz.add(tabela);
 			}
 
 			raiz.montarOrdenacoes();
