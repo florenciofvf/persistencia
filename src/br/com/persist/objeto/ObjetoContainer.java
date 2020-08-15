@@ -167,15 +167,15 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		final ButtonComplemento complemento = new ButtonComplemento();
-		final Button excluir = new Button(new ExcluirRegistrosAcao());
-		final ButtonAtualizar atualizar = new ButtonAtualizar();
-		final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
-		final ButtonFuncoes funcoes = new ButtonFuncoes();
-		final ButtonBaixar baixar = new ButtonBaixar();
-		final ButtonUpdate update = new ButtonUpdate();
-		final Label labelTotal = new Label(Color.BLUE);
-		final ButtonUtil util = new ButtonUtil();
+		private final ButtonComplemento complemento = new ButtonComplemento();
+		private final Button excluir = new Button(new ExcluirRegistrosAcao());
+		private final ButtonAtualizar atualizar = new ButtonAtualizar();
+		private final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
+		private final ButtonFuncoes funcoes = new ButtonFuncoes();
+		private final ButtonBaixar baixar = new ButtonBaixar();
+		private final ButtonUpdate update = new ButtonUpdate();
+		private final Label labelTotal = new Label(Color.BLUE);
+		private final ButtonUtil util = new ButtonUtil();
 
 		protected void ini(IJanela janela, Objeto objeto) {
 			super.ini(janela, false, false);
@@ -198,17 +198,17 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			update.complemento(objeto);
 		}
 
-		void excluirAtualizarEnable(boolean b) {
+		private void excluirAtualizarEnable(boolean b) {
 			excluir.setEnabled(b);
 			update.setEnabled(b);
 		}
 
-		class ButtonUtil extends ButtonPopup {
+		private class ButtonUtil extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action fragmentoAcao = Action.actionMenu(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
 			private Action variaveisAcao = Action.actionMenu(Constantes.LABEL_VARIAVEIS, Icones.VAR);
 
-			ButtonUtil() {
+			private ButtonUtil() {
 				super("label.util", Icones.FRAGMENTO);
 
 				addMenuItem(fragmentoAcao);
@@ -244,14 +244,14 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ButtonBaixar extends ButtonPopup {
+		private class ButtonBaixar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action limpar2Acao = Action.actionMenu(Constantes.LABEL_LIMPAR2, Icones.NOVO);
 			private Action limparAcao = Action.actionMenu(Constantes.LABEL_LIMPAR, Icones.NOVO);
 			private Action conexaoAcao = Action.actionMenu(Constantes.LABEL_CONEXAO2, null);
 			private Action objetoAcao = Action.actionMenu(Constantes.LABEL_OBJETO, null);
 
-			ButtonBaixar() {
+			private ButtonBaixar() {
 				super("label.baixar", Icones.BAIXAR);
 
 				addMenuItem(conexaoAcao);
@@ -299,10 +299,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ExcluirRegistrosAcao extends Acao {
+		private class ExcluirRegistrosAcao extends Acao {
 			private static final long serialVersionUID = 1L;
 
-			ExcluirRegistrosAcao() {
+			private ExcluirRegistrosAcao() {
 				super(false, "label.excluir_registro", Icones.EXCLUIR);
 			}
 
@@ -337,13 +337,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ButtonComplemento extends ButtonPopup {
+		private class ButtonComplemento extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action copiarAcao = Action.actionMenu("label.copiar_complemento", null);
 			private Action concatAcao = Action.actionMenu("label.baixar_concatenado", null);
 			private Action normalAcao = Action.actionMenu("label.baixar_normal", null);
 
-			ButtonComplemento() {
+			private ButtonComplemento() {
 				super("label.complemento", Icones.BAIXAR2);
 
 				addMenuItem(normalAcao);
@@ -385,13 +385,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ButtonAtualizar extends ButtonPopup {
+		private class ButtonAtualizar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
 			private MenuItem itemAtualizarAuto = new MenuItem(Constantes.LABEL_ATUALIZAR_AUTO, Icones.ATUALIZAR);
 			private Action atualizarAcao = Action.actionMenuAtualizar();
 
-			ButtonAtualizar() {
+			private ButtonAtualizar() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
 
 				addMenuItem(atualizarAcao);
@@ -440,15 +440,15 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ButtonBuscaAuto extends ButtonPopup {
+		private class ButtonBuscaAuto extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private boolean habilitado;
 
-			ButtonBuscaAuto() {
+			private ButtonBuscaAuto() {
 				super("label.buscaAuto", Icones.FIELDS);
 			}
 
-			void complemento(Objeto objeto) {
+			private void complemento(Objeto objeto) {
 				List<GrupoBuscaAutoApos> listaGrupoApos = BuscaAutoApos
 						.listaGrupoBuscaAutoApos(objeto.getBuscaAutomaticaApos());
 				List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto, objeto.getBuscaAutomatica());
@@ -462,16 +462,16 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				setEnabled(habilitado);
 			}
 
-			void habilitar(boolean b) {
+			private void habilitar(boolean b) {
 				setEnabled(habilitado && b);
 			}
 
-			class MenuBuscaAuto extends MenuPadrao2 {
+			private class MenuBuscaAuto extends MenuPadrao2 {
 				private static final long serialVersionUID = 1L;
 				private final transient GrupoBuscaAutoApos grupoApos;
 				private final transient GrupoBuscaAuto grupo;
 
-				MenuBuscaAuto(GrupoBuscaAuto grupo, GrupoBuscaAutoApos grupoApos) {
+				private MenuBuscaAuto(GrupoBuscaAuto grupo, GrupoBuscaAutoApos grupoApos) {
 					super(grupo.getNomeGrupoCampo(), Icones.CONFIG2, "nao_chave");
 
 					this.grupoApos = grupoApos;
@@ -519,11 +519,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ButtonUpdate extends ButtonPopup {
+		private class ButtonUpdate extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
 
-			ButtonUpdate() {
+			private ButtonUpdate() {
 				super(Constantes.LABEL_UPDATE, Icones.UPDATE);
 
 				addMenuItem(dadosAcao);
@@ -552,10 +552,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				});
 			}
 
-			class MenuUpdate extends MenuPadrao3 {
+			private class MenuUpdate extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
 
-				MenuUpdate() {
+				private MenuUpdate() {
 					super(Constantes.LABEL_UPDATE, Icones.UPDATE);
 
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
@@ -594,10 +594,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class MenuDelete extends MenuPadrao3 {
+			private class MenuDelete extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
 
-				MenuDelete() {
+				private MenuDelete() {
 					super(Constantes.LABEL_DELETE, Icones.EXCLUIR);
 
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
@@ -636,10 +636,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class MenuInsert extends MenuPadrao3 {
+			private class MenuInsert extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
 
-				MenuInsert() {
+				private MenuInsert() {
 					super(Constantes.LABEL_INSERT, Icones.CRIAR);
 
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
@@ -672,7 +672,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			void complemento(Objeto objeto) {
+			private void complemento(Objeto objeto) {
 				if (objeto == null || objeto.getInstrucoes().isEmpty()) {
 					return;
 				}
@@ -684,11 +684,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class MenuInstrucao extends MenuPadrao3 {
+			private class MenuInstrucao extends MenuPadrao3 {
 				private static final long serialVersionUID = 1L;
 				private final transient Instrucao instrucao;
 
-				MenuInstrucao(Instrucao instrucao) {
+				private MenuInstrucao(Instrucao instrucao) {
 					super(instrucao.getNome(), instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC, "nao_chave");
 					this.instrucao = instrucao;
 
@@ -768,10 +768,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ButtonFuncoes extends ButtonPopup {
+		private class ButtonFuncoes extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 
-			ButtonFuncoes() {
+			private ButtonFuncoes() {
 				super("label.funcoes", Icones.SOMA);
 
 				MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
@@ -785,11 +785,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				addMenuItem(maximo);
 			}
 
-			class MinimoMaximoAcao extends Action {
+			private class MinimoMaximoAcao extends Action {
 				private static final long serialVersionUID = 1L;
 				private final boolean minimo;
 
-				MinimoMaximoAcao(boolean minimo) {
+				private MinimoMaximoAcao(boolean minimo) {
 					super(true, minimo ? "label.minimo" : "label.maximo", Icones.VAR);
 					this.minimo = minimo;
 				}
@@ -821,11 +821,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class TotalizarRegistrosAcao extends Action {
+			private class TotalizarRegistrosAcao extends Action {
 				private static final long serialVersionUID = 1L;
 				private final boolean complemento;
 
-				TotalizarRegistrosAcao(boolean complemento) {
+				private TotalizarRegistrosAcao(boolean complemento) {
 					super(true, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
 					this.complemento = complemento;
 				}
@@ -867,11 +867,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 		}
 
-		class ButtonInfo extends ButtonPopup {
+		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action apelidoAcao = Action.actionMenu("label.apelido", Icones.TAG2);
 
-			ButtonInfo() {
+			private ButtonInfo() {
 				super("label.meta_dados", Icones.INFO);
 
 				addMenuItem(apelidoAcao);
@@ -903,13 +903,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				});
 			}
 
-			class MenuCopiar extends Menu {
+			private class MenuCopiar extends Menu {
 				private static final long serialVersionUID = 1L;
 				private Action transfAcao = Action.actionMenu("label.transferidor", null);
 				private Action tabularAcao = Action.actionMenu("label.tabular", null);
 				private Action htmlAcao = Action.actionMenu("label.html", null);
 
-				public MenuCopiar() {
+				private MenuCopiar() {
 					super("label.copiar", Icones.COPIA);
 
 					addMenuItem(htmlAcao);
@@ -939,10 +939,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class MenuDML extends Menu {
+			private class MenuDML extends Menu {
 				private static final long serialVersionUID = 1L;
 
-				public MenuDML() {
+				private MenuDML() {
 					super("label.dml", Icones.EXECUTAR);
 					add(false, new MenuInsert());
 					add(true, new MenuUpdate());
@@ -951,10 +951,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					add(true, new MenuSelectColuna());
 				}
 
-				class MenuInsert extends MenuPadrao3 {
+				private class MenuInsert extends MenuPadrao3 {
 					private static final long serialVersionUID = 1L;
 
-					MenuInsert() {
+					private MenuInsert() {
 						super(Constantes.LABEL_INSERT, Icones.CRIAR);
 
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
@@ -983,10 +983,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 				}
 
-				class MenuUpdate extends MenuPadrao3 {
+				private class MenuUpdate extends MenuPadrao3 {
 					private static final long serialVersionUID = 1L;
 
-					MenuUpdate() {
+					private MenuUpdate() {
 						super(Constantes.LABEL_UPDATE, Icones.UPDATE);
 
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
@@ -1015,10 +1015,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 				}
 
-				class MenuDelete extends MenuPadrao3 {
+				private class MenuDelete extends MenuPadrao3 {
 					private static final long serialVersionUID = 1L;
 
-					MenuDelete() {
+					private MenuDelete() {
 						super(Constantes.LABEL_DELETE, Icones.EXCLUIR);
 
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
@@ -1047,10 +1047,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 				}
 
-				class MenuSelect extends MenuPadrao3 {
+				private class MenuSelect extends MenuPadrao3 {
 					private static final long serialVersionUID = 1L;
 
-					MenuSelect() {
+					private MenuSelect() {
 						super("label.select", Icones.TABELA);
 
 						formularioAcao.setActionListener(e -> abrirSelect(true));
@@ -1093,10 +1093,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 				}
 
-				class MenuSelectColuna extends MenuPadrao3 {
+				private class MenuSelectColuna extends MenuPadrao3 {
 					private static final long serialVersionUID = 1L;
 
-					MenuSelectColuna() {
+					private MenuSelectColuna() {
 						super("label.select_colunas", Icones.TABELA);
 
 						formularioAcao.setActionListener(e -> abrirSelect(true));
@@ -1154,10 +1154,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class ChavesPrimariasAcao extends Action {
+			private class ChavesPrimariasAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
-				ChavesPrimariasAcao() {
+				private ChavesPrimariasAcao() {
 					super(true, "label.chave_primaria", Icones.PKEY);
 				}
 
@@ -1184,10 +1184,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class ChavesImportadasAcao extends Action {
+			private class ChavesImportadasAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
-				ChavesImportadasAcao() {
+				private ChavesImportadasAcao() {
 					super(true, "label.chaves_importadas", Icones.KEY);
 				}
 
@@ -1214,10 +1214,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class ChavesExportadasAcao extends Action {
+			private class ChavesExportadasAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
-				ChavesExportadasAcao() {
+				private ChavesExportadasAcao() {
 					super(true, "label.chaves_exportadas", Icones.KEY);
 				}
 
@@ -1244,10 +1244,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class InfoBancoAcao extends Action {
+			private class InfoBancoAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
-				InfoBancoAcao() {
+				private InfoBancoAcao() {
 					super(true, "label.info_banco", null);
 				}
 
@@ -1274,10 +1274,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class MetaDadosAcao extends Action {
+			private class MetaDadosAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
-				MetaDadosAcao() {
+				private MetaDadosAcao() {
 					super(true, "label.meta_dados", null);
 				}
 
@@ -1305,10 +1305,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			class EsquemaAcao extends Action {
+			private class EsquemaAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
-				EsquemaAcao() {
+				private EsquemaAcao() {
 					super(true, "label.esquema", null);
 				}
 
@@ -1335,7 +1335,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				}
 			}
 
-			void configCabecalhoColuna(ListagemModelo modelo) {
+			private void configCabecalhoColuna(ListagemModelo modelo) {
 				OrdenacaoModelo modeloOrdenacao = (OrdenacaoModelo) tabela.getModel();
 				TableColumnModel columnModel = tabela.getColumnModel();
 				List<Coluna> colunas = modelo.getColunasInfo();

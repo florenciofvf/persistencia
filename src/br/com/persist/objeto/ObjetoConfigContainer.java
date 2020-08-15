@@ -97,7 +97,7 @@ public class ObjetoConfigContainer extends Panel {
 		private TextField txtY = new TextField();
 		private Label labelIcone = new Label();
 
-		PanelGeral() {
+		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
 			txtBuscaAutomaticaApos.setText(objeto.getBuscaAutomaticaApos());
 			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
@@ -484,7 +484,7 @@ public class ObjetoConfigContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
 
-		PanelDesc() {
+		private PanelDesc() {
 			textArea.setText(objeto.getDescricao());
 			textArea.addKeyListener(keyListenerInner);
 			add(BorderLayout.CENTER, textArea);
@@ -502,7 +502,7 @@ public class ObjetoConfigContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Panel panelLista;
 
-		PanelInstrucao() {
+		private PanelInstrucao() {
 			panelLista = new Panel(new GridLayout(0, 1, 0, 20));
 
 			add(BorderLayout.NORTH, new PanelNome());
@@ -513,7 +513,7 @@ public class ObjetoConfigContainer extends Panel {
 			}
 		}
 
-		class PanelNome extends Panel implements ActionListener {
+		private class PanelNome extends Panel implements ActionListener {
 			private static final long serialVersionUID = 1L;
 			TextField nome = new TextField();
 
@@ -536,13 +536,13 @@ public class ObjetoConfigContainer extends Panel {
 			}
 		}
 
-		class PanelInst extends Panel {
+		private class PanelInst extends Panel {
 			private static final long serialVersionUID = 1L;
 			final transient Instrucao instrucao;
 			TextField nome = new TextField();
 			TextArea valor = new TextArea();
 
-			PanelInst(Instrucao i) {
+			private PanelInst(Instrucao i) {
 				this.instrucao = i;
 				nome.setEnabled(false);
 				nome.setText(i.getNome());
@@ -567,7 +567,7 @@ public class ObjetoConfigContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 
-		PanelCorFonte() {
+		private PanelCorFonte() {
 			colorChooser = new JColorChooser(objeto.getCorFonte());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
@@ -585,7 +585,7 @@ public class ObjetoConfigContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 
-		PanelCor() {
+		private PanelCor() {
 			colorChooser = new JColorChooser(objeto.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
@@ -603,7 +603,7 @@ public class ObjetoConfigContainer extends Panel {
 		private final Objeto objeto;
 		private final Label label;
 
-		IconeListener(Objeto objeto, Label label) {
+		private IconeListener(Objeto objeto, Label label) {
 			this.objeto = objeto;
 			this.label = label;
 		}
@@ -620,7 +620,7 @@ public class ObjetoConfigContainer extends Panel {
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 
-		Fichario() {
+		private Fichario() {
 			addTab("label.geral", new ScrollPane(new PanelGeral()));
 			addTab("label.desc", new PanelDesc());
 			addTab("label.cor", new PanelCor());

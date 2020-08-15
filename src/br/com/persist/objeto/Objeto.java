@@ -155,6 +155,156 @@ public class Objeto implements Runnable {
 		return o;
 	}
 
+	public void aplicar(Attributes attr) {
+		ajusteAutoEnter = Boolean.parseBoolean(attr.getValue("ajusteAutoEnter"));
+		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
+		copiarDestacado = Boolean.parseBoolean(attr.getValue("copiarDestac"));
+		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
+		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
+		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
+		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
+		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
+		colunaInfo = Boolean.parseBoolean(attr.getValue("colunaInfo"));
+		abrirAuto = Boolean.parseBoolean(attr.getValue("abrirAuto"));
+		processar = Boolean.parseBoolean(attr.getValue("processar"));
+		buscaAutomaticaApos = attr.getValue("buscaAutomaticaApos");
+		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
+		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
+		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
+		buscaAutomatica = attr.getValue("buscaAutomatica");
+		linkAutomatico = attr.getValue("linkAutomatico");
+		finalConsulta = attr.getValue("finalConsulta");
+		chaveamento = attr.getValue("chaveamento");
+		complemento = attr.getValue("complemento");
+		selectAlter = attr.getValue("selectAlter");
+		x = Integer.parseInt(attr.getValue("x"));
+		y = Integer.parseInt(attr.getValue("y"));
+		mapeamento = attr.getValue("mapeamento");
+		sequencias = attr.getValue("sequencias");
+		arquivo = attr.getValue("arquivo");
+		tabelas = attr.getValue("tabelas");
+		setIcone(attr.getValue("icone"));
+		tabela = attr.getValue("tabela");
+		chaves = attr.getValue("chaves");
+		joins = attr.getValue("joins");
+		id = attr.getValue("id");
+
+		String strIntervalo = attr.getValue("intervalo");
+
+		if (!Util.estaVazio(strIntervalo)) {
+			intervalo = Integer.parseInt(strIntervalo);
+		}
+	}
+
+	public void salvar(XMLUtil util) {
+		util.abrirTag("objeto");
+		util.atributo("id", Util.escapar(id));
+		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
+		util.atributo("buscaAutomaticaApos", Util.escapar(getBuscaAutomaticaApos()));
+		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
+		util.atributo("linkAutomatico", Util.escapar(getLinkAutomatico()));
+		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
+		util.atributo("chaveamento", Util.escapar(getChaveamento()));
+		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("ajusteAutoEnter", ajusteAutoEnter);
+		util.atributo("ajusteAutoForm", ajusteAutoForm);
+		util.atributo("copiarDestac", copiarDestacado);
+		util.atributo("selectAlter", getSelectAlter());
+		util.atributo("desloc_x_id", deslocamentoXId);
+		util.atributo("desloc_y_id", deslocamentoYId);
+		util.atributo("corFonte", corFonte.getRGB());
+		util.atributo("mapeamento", getMapeamento());
+		util.atributo("sequencias", getSequencias());
+		util.atributo("intervalo", getIntervalo());
+		util.atributo("desenharId", desenharId);
+		util.atributo("colunaInfo", colunaInfo);
+		util.atributo("arquivo", getArquivo());
+		util.atributo("tabelas", getTabelas());
+		util.atributo("abrirAuto", abrirAuto);
+		util.atributo("processar", processar);
+		util.atributo("tabela", getTabela2());
+		util.atributo("chaves", getChaves());
+		util.atributo("linkAuto", linkAuto);
+		util.atributo("cor", cor.getRGB());
+		util.atributo("joins", getJoins());
+		util.atributo("icone", icone);
+		util.atributo("ccsc", ccsc);
+		util.atributo("bpnt", bpnt);
+		util.atributo("x", x);
+		util.atributo("y", y);
+		util.fecharTag();
+
+		if (!Util.estaVazio(getDescricao())) {
+			util.abrirTag2("desc");
+			util.conteudo(Util.escapar(getDescricao())).ql();
+			util.finalizarTag("desc");
+		}
+
+		for (Instrucao i : instrucoes) {
+			i.salvar(util);
+		}
+
+		util.finalizarTag("objeto");
+	}
+
+	public void desenhar(Component c, Graphics2D g2, Stroke stroke) {
+		Composite composite = g2.getComposite();
+		Shape shape = g2.getClip();
+
+		final int raio = DIAMETRO / 2;
+		final int margem2 = 2;
+		final int margem3 = 3;
+		final int margem4 = 4;
+		final int largura = DIAMETRO - margem2;
+		final int altura = DIAMETRO - margem2;
+		final int largura2 = largura - margem4;
+		final int altura2 = altura - margem4;
+		final int altura22 = altura2 / 2;
+		final int altura3 = altura2 / 3;
+
+		if (!transparente) {
+			g2.setColor(Color.DARK_GRAY);
+			g2.fillRoundRect(x, y, largura + 1, altura + 1, DIAMETRO, DIAMETRO);
+
+			Color inicio = cor.darker();
+			Color finall = cor.brighter();
+			Paint paint = new GradientPaint(x, y, inicio, x, (float) (y + altura), finall, false);
+			g2.setPaint(paint);
+			g2.fillRoundRect(x, y, largura, altura, DIAMETRO, DIAMETRO);
+
+			inicio = Color.WHITE;
+			paint = new GradientPaint(x, (float) (y + margem3), inicio, x, (float) (y + margem3 + altura22), finall,
+					false);
+
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+			g2.setPaint(paint);
+
+			g2.setClip(new RoundRectangle2D.Float((float) (x + margem3), (float) (y + margem3), (float) (largura2 - 2),
+					altura22, altura3, altura3));
+			g2.fillRoundRect(x + margem3, y + margem3, largura2 - 2, altura2, altura2, altura2);
+
+			g2.setComposite(composite);
+			g2.setClip(shape);
+		}
+
+		if (icon != null) {
+			icon.paintIcon(c, g2, x + raio - 8, y + raio - 8);
+		}
+
+		if (desenharId) {
+			g2.setColor(corFonte);
+			g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
+		}
+
+		if (selecionado) {
+			g2.setStroke(Constantes.STROKE_PADRAO);
+			g2.setColor(Color.CYAN);
+			g2.drawOval(x - margem3, y - margem3, DIAMETRO + margem4, DIAMETRO + margem4);
+			g2.setStroke(stroke);
+		}
+	}
+
 	public static long novaSequencia() {
 		return ++sequencia;
 	}
@@ -582,156 +732,6 @@ public class Objeto implements Runnable {
 	@Override
 	public String toString() {
 		return id;
-	}
-
-	public void desenhar(Component c, Graphics2D g2, Stroke stroke) {
-		Composite composite = g2.getComposite();
-		Shape shape = g2.getClip();
-
-		final int raio = DIAMETRO / 2;
-		final int margem2 = 2;
-		final int margem3 = 3;
-		final int margem4 = 4;
-		final int largura = DIAMETRO - margem2;
-		final int altura = DIAMETRO - margem2;
-		final int largura2 = largura - margem4;
-		final int altura2 = altura - margem4;
-		final int altura22 = altura2 / 2;
-		final int altura3 = altura2 / 3;
-
-		if (!transparente) {
-			g2.setColor(Color.DARK_GRAY);
-			g2.fillRoundRect(x, y, largura + 1, altura + 1, DIAMETRO, DIAMETRO);
-
-			Color inicio = cor.darker();
-			Color finall = cor.brighter();
-			Paint paint = new GradientPaint(x, y, inicio, x, (float) (y + altura), finall, false);
-			g2.setPaint(paint);
-			g2.fillRoundRect(x, y, largura, altura, DIAMETRO, DIAMETRO);
-
-			inicio = Color.WHITE;
-			paint = new GradientPaint(x, (float) (y + margem3), inicio, x, (float) (y + margem3 + altura22), finall,
-					false);
-
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-			g2.setPaint(paint);
-
-			g2.setClip(new RoundRectangle2D.Float((float) (x + margem3), (float) (y + margem3), (float) (largura2 - 2),
-					altura22, altura3, altura3));
-			g2.fillRoundRect(x + margem3, y + margem3, largura2 - 2, altura2, altura2, altura2);
-
-			g2.setComposite(composite);
-			g2.setClip(shape);
-		}
-
-		if (icon != null) {
-			icon.paintIcon(c, g2, x + raio - 8, y + raio - 8);
-		}
-
-		if (desenharId) {
-			g2.setColor(corFonte);
-			g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
-		}
-
-		if (selecionado) {
-			g2.setStroke(Constantes.STROKE_PADRAO);
-			g2.setColor(Color.CYAN);
-			g2.drawOval(x - margem3, y - margem3, DIAMETRO + margem4, DIAMETRO + margem4);
-			g2.setStroke(stroke);
-		}
-	}
-
-	public void aplicar(Attributes attr) {
-		ajusteAutoEnter = Boolean.parseBoolean(attr.getValue("ajusteAutoEnter"));
-		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
-		copiarDestacado = Boolean.parseBoolean(attr.getValue("copiarDestac"));
-		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
-		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
-		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
-		deslocamentoYId = Integer.parseInt(attr.getValue("desloc_y_id"));
-		desenharId = Boolean.parseBoolean(attr.getValue("desenharId"));
-		colunaInfo = Boolean.parseBoolean(attr.getValue("colunaInfo"));
-		abrirAuto = Boolean.parseBoolean(attr.getValue("abrirAuto"));
-		processar = Boolean.parseBoolean(attr.getValue("processar"));
-		buscaAutomaticaApos = attr.getValue("buscaAutomaticaApos");
-		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
-		cor = new Color(Integer.parseInt(attr.getValue("cor")));
-		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
-		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
-		buscaAutomatica = attr.getValue("buscaAutomatica");
-		linkAutomatico = attr.getValue("linkAutomatico");
-		finalConsulta = attr.getValue("finalConsulta");
-		chaveamento = attr.getValue("chaveamento");
-		complemento = attr.getValue("complemento");
-		selectAlter = attr.getValue("selectAlter");
-		x = Integer.parseInt(attr.getValue("x"));
-		y = Integer.parseInt(attr.getValue("y"));
-		mapeamento = attr.getValue("mapeamento");
-		sequencias = attr.getValue("sequencias");
-		arquivo = attr.getValue("arquivo");
-		tabelas = attr.getValue("tabelas");
-		setIcone(attr.getValue("icone"));
-		tabela = attr.getValue("tabela");
-		chaves = attr.getValue("chaves");
-		joins = attr.getValue("joins");
-		id = attr.getValue("id");
-
-		String strIntervalo = attr.getValue("intervalo");
-
-		if (!Util.estaVazio(strIntervalo)) {
-			intervalo = Integer.parseInt(strIntervalo);
-		}
-	}
-
-	public void salvar(XMLUtil util) {
-		util.abrirTag("objeto");
-		util.atributo("id", Util.escapar(id));
-		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
-		util.atributo("buscaAutomaticaApos", Util.escapar(getBuscaAutomaticaApos()));
-		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
-		util.atributo("linkAutomatico", Util.escapar(getLinkAutomatico()));
-		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
-		util.atributo("chaveamento", Util.escapar(getChaveamento()));
-		util.atributo("complemento", Util.escapar(getComplemento()));
-		util.atributo("ajusteAutoEnter", ajusteAutoEnter);
-		util.atributo("ajusteAutoForm", ajusteAutoForm);
-		util.atributo("copiarDestac", copiarDestacado);
-		util.atributo("selectAlter", getSelectAlter());
-		util.atributo("desloc_x_id", deslocamentoXId);
-		util.atributo("desloc_y_id", deslocamentoYId);
-		util.atributo("corFonte", corFonte.getRGB());
-		util.atributo("mapeamento", getMapeamento());
-		util.atributo("sequencias", getSequencias());
-		util.atributo("intervalo", getIntervalo());
-		util.atributo("desenharId", desenharId);
-		util.atributo("colunaInfo", colunaInfo);
-		util.atributo("arquivo", getArquivo());
-		util.atributo("tabelas", getTabelas());
-		util.atributo("abrirAuto", abrirAuto);
-		util.atributo("processar", processar);
-		util.atributo("tabela", getTabela2());
-		util.atributo("chaves", getChaves());
-		util.atributo("linkAuto", linkAuto);
-		util.atributo("cor", cor.getRGB());
-		util.atributo("joins", getJoins());
-		util.atributo("icone", icone);
-		util.atributo("ccsc", ccsc);
-		util.atributo("bpnt", bpnt);
-		util.atributo("x", x);
-		util.atributo("y", y);
-		util.fecharTag();
-
-		if (!Util.estaVazio(getDescricao())) {
-			util.abrirTag2("desc");
-			util.conteudo(Util.escapar(getDescricao())).ql();
-			util.finalizarTag("desc");
-		}
-
-		for (Instrucao i : instrucoes) {
-			i.salvar(util);
-		}
-
-		util.finalizarTag("objeto");
 	}
 
 	public void alinhar(FontMetrics fm) {
