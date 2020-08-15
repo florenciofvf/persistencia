@@ -21,9 +21,9 @@ public class Relacao {
 	private boolean desenharDescricao;
 	private static int diametro = 6;
 	private Color cor = COR_PADRAO;
-	static int m = diametro / 2;
 	private final Objeto destino;
 	private boolean pontoDestino;
+	static int m = diametro / 2;
 	private boolean pontoOrigem;
 	private final Objeto origem;
 	private boolean selecionado;
@@ -170,74 +170,12 @@ public class Relacao {
 		int x2 = destino.x + raio;
 		int y2 = destino.y + raio;
 
-		return quebrado ? contemQuebrada(posX, posY, x1, y1, x2, y2) : contemVet(posX, posY, x1, y1, x2, y2);
-	}
-
-	private boolean contemVet(int posX, int posY, int x1, int y1, int x2, int y2) {
-		int x = x2 - x1;
-		int y = y2 - y1;
-		double h = Math.sqrt((double) (x * x + y * y));
-
-		int xPos = posX - x1;
-		int yPos = posY - y1;
-		double hPos = Math.sqrt((double) (xPos * xPos + yPos * yPos));
-
-		if (hPos > h) {
-			return false;
-		}
-
-		double auxX = x / h;
-		double auxY = y / h;
-
-		int auxX1 = (int) (auxX * hPos);
-		int auxY1 = (int) (auxY * hPos);
-
-		return comprimento(auxX1, auxY1, xPos, yPos) < 9;
-	}
-
-	private int comprimento(int x1, int y1, int x2, int y2) {
-		int x = x2 - x1;
-		int y = y2 - y1;
-		return (int) Math.sqrt((double) (x * x + y * y));
-	}
-
-	public void desenhar(Graphics2D g2, Stroke stroke) {
-		int raio = Objeto.DIAMETRO / 2;
-		int meta = raio / 2;
-
-		g2.setColor(cor);
-
-		if (selecionado) {
-			g2.setStroke(Constantes.STROKE_PADRAO);
-			g2.setColor(Color.CYAN);
-		}
-
-		int x1 = origem.x + raio;
-		int y1 = origem.y + raio;
-		int x2 = destino.x + raio;
-		int y2 = destino.y + raio;
-
-		if (quebrado) {
-			desenharLinhaQuebrada(g2, x1, y1, x2, y2);
-		} else {
-			g2.drawLine(x1, y1, x2, y2);
-		}
-
-		desenharPontos(g2, x1, y1, x2, y2, raio, meta);
-
-		if (desenharDescricao && descricao != null) {
-			g2.setColor(corFonte);
-			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
-		}
-
-		if (selecionado) {
-			g2.setStroke(stroke);
-		}
+		return quebrado ? contemQuebrada(posX, posY, x1, y1, x2, y2) : contemVetor(posX, posY, x1, y1, x2, y2);
 	}
 
 	private boolean contemQuebrada(int posX, int posY, int x1, int y1, int x2, int y2) {
 		if (x1 == x2 || y1 == y2) {
-			return contemVet(posX, posY, x1, y1, x2, y2);
+			return contemVetor(posX, posY, x1, y1, x2, y2);
 		}
 
 		int[] x1x2Aux = x1x2(x1, x2);
@@ -266,29 +204,32 @@ public class Relacao {
 		return contemH(posX, posY, x1x2Aux[0], x1x2Aux[1], y);
 	}
 
-	private void desenharLinhaQuebrada(Graphics2D g2, int x1, int y1, int x2, int y2) {
-		if (x1 == x2 || y1 == y2) {
-			g2.drawLine(x1, y1, x2, y2);
-		} else {
-			int[] x1x2Aux = x1x2(x1, x2);
-			int[] y1y2Aux = y1y2(y1, y2);
+	private boolean contemVetor(int posX, int posY, int x1, int y1, int x2, int y2) {
+		int x = x2 - x1;
+		int y = y2 - y1;
+		double h = Math.sqrt((double) (x * x + y * y));
 
-			g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1]);
+		int xPos = posX - x1;
+		int yPos = posY - y1;
+		double hPos = Math.sqrt((double) (xPos * xPos + yPos * yPos));
 
-			if (x1 < x2) {
-				if (y1 < y2) {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
-				} else {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
-				}
-			} else {
-				if (y1 < y2) {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
-				} else {
-					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
-				}
-			}
+		if (hPos > h) {
+			return false;
 		}
+
+		double auxX = x / h;
+		double auxY = y / h;
+
+		int auxX1 = (int) (auxX * hPos);
+		int auxY1 = (int) (auxY * hPos);
+
+		return comprimento(auxX1, auxY1, xPos, yPos) < 9;
+	}
+
+	private int comprimento(int x1, int y1, int x2, int y2) {
+		int x = x2 - x1;
+		int y = y2 - y1;
+		return (int) Math.sqrt((double) (x * x + y * y));
 	}
 
 	private int[] x1x2(int x1, int x2) {
@@ -313,30 +254,6 @@ public class Relacao {
 
 	private boolean contem(int posX, int posY, int x, int y, int l, int a) {
 		return (posX >= x && posX <= x + l) && (posY >= y && posY <= y + a);
-	}
-
-	private void desenharPontos(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
-		if (pontoOrigem || pontoDestino) {
-			int x = x2 - x1;
-			int y = y2 - y1;
-			double h = Math.sqrt((double) (x * x + y * y));
-			double auxX = x / h;
-			double auxY = y / h;
-
-			if (pontoOrigem) {
-				int valor = origem.isTransparente() ? meta : raio;
-				int auxX1 = (int) (auxX * valor);
-				int auxY1 = (int) (auxY * valor);
-				g2.fillOval(x1 + auxX1 - m, y1 + auxY1 - m, diametro, diametro);
-			}
-
-			if (pontoDestino) {
-				int valor = destino.isTransparente() ? meta : raio;
-				int auxX2 = (int) (auxX * (h - valor));
-				int auxY2 = (int) (auxY * (h - valor));
-				g2.fillOval(x1 + auxX2 - m, y1 + auxY2 - m, diametro, diametro);
-			}
-		}
 	}
 
 	public Objeto criarObjetoMeio() {
@@ -379,6 +296,89 @@ public class Relacao {
 			util.finalizarTag("desc");
 		}
 		util.finalizarTag("relacao");
+	}
+
+	public void desenhar(Graphics2D g2, Stroke stroke) {
+		int raio = Objeto.DIAMETRO / 2;
+		int meta = raio / 2;
+
+		g2.setColor(cor);
+
+		if (selecionado) {
+			g2.setStroke(Constantes.STROKE_PADRAO);
+			g2.setColor(Color.CYAN);
+		}
+
+		int x1 = origem.x + raio;
+		int y1 = origem.y + raio;
+		int x2 = destino.x + raio;
+		int y2 = destino.y + raio;
+
+		if (quebrado) {
+			desenharLinhaQuebrada(g2, x1, y1, x2, y2);
+		} else {
+			g2.drawLine(x1, y1, x2, y2);
+		}
+
+		desenharPontos(g2, x1, y1, x2, y2, raio, meta);
+
+		if (desenharDescricao && descricao != null) {
+			g2.setColor(corFonte);
+			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
+		}
+
+		if (selecionado) {
+			g2.setStroke(stroke);
+		}
+	}
+
+	private void desenharLinhaQuebrada(Graphics2D g2, int x1, int y1, int x2, int y2) {
+		if (x1 == x2 || y1 == y2) {
+			g2.drawLine(x1, y1, x2, y2);
+		} else {
+			int[] x1x2Aux = x1x2(x1, x2);
+			int[] y1y2Aux = y1y2(y1, y2);
+
+			g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1]);
+
+			if (x1 < x2) {
+				if (y1 < y2) {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+				} else {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+				}
+			} else {
+				if (y1 < y2) {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[1], y1y2Aux[0]);
+				} else {
+					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
+				}
+			}
+		}
+	}
+
+	private void desenharPontos(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
+		if (pontoOrigem || pontoDestino) {
+			int x = x2 - x1;
+			int y = y2 - y1;
+			double h = Math.sqrt((double) (x * x + y * y));
+			double auxX = x / h;
+			double auxY = y / h;
+
+			if (pontoOrigem) {
+				int valor = origem.isTransparente() ? meta : raio;
+				int auxX1 = (int) (auxX * valor);
+				int auxY1 = (int) (auxY * valor);
+				g2.fillOval(x1 + auxX1 - m, y1 + auxY1 - m, diametro, diametro);
+			}
+
+			if (pontoDestino) {
+				int valor = destino.isTransparente() ? meta : raio;
+				int auxX2 = (int) (auxX * (h - valor));
+				int auxY2 = (int) (auxY * (h - valor));
+				g2.fillOval(x1 + auxX2 - m, y1 + auxY2 - m, diametro, diametro);
+			}
+		}
 	}
 
 	public int getDeslocamentoXDesc() {

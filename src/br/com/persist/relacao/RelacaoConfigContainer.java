@@ -62,7 +62,7 @@ public class RelacaoConfigContainer extends Panel {
 	private class PanelGeral extends Panel {
 		private static final long serialVersionUID = 1L;
 
-		PanelGeral() {
+		private PanelGeral() {
 			super(new GridLayout(1, 2));
 			add(new PanelLado(true));
 			add(new PanelLado(false));
@@ -77,7 +77,7 @@ public class RelacaoConfigContainer extends Panel {
 		private CheckBox chkDesenharDesc = new CheckBox();
 		private CheckBox chkQuebrado = new CheckBox();
 
-		PanelDesc() {
+		private PanelDesc() {
 			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
 			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
@@ -177,7 +177,7 @@ public class RelacaoConfigContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 
-		PanelCorFonte() {
+		private PanelCorFonte() {
 			colorChooser = new JColorChooser(relacao.getCorFonte());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
@@ -195,7 +195,7 @@ public class RelacaoConfigContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final JColorChooser colorChooser;
 
-		PanelCor() {
+		private PanelCor() {
 			colorChooser = new JColorChooser(relacao.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
@@ -214,7 +214,7 @@ public class RelacaoConfigContainer extends Panel {
 		private final CheckBox chkPonto = new CheckBox("label.ponto");
 		private final boolean origem;
 
-		PanelLado(boolean origem) {
+		private PanelLado(boolean origem) {
 			super(new GridLayout(5, 1));
 			this.origem = origem;
 			chkPonto.setSelected(origem ? relacao.isPontoOrigem() : relacao.isPontoDestino());
@@ -251,7 +251,7 @@ public class RelacaoConfigContainer extends Panel {
 	private class PanelTitulo extends Panel {
 		private static final long serialVersionUID = 1L;
 
-		PanelTitulo(String chave) {
+		private PanelTitulo(String chave) {
 			setLayout(new GridBagLayout());
 			add(new Label(chave));
 		}
@@ -261,7 +261,7 @@ public class RelacaoConfigContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final transient Objeto objeto;
 
-		PanelObjeto(Objeto objeto) {
+		private PanelObjeto(Objeto objeto) {
 			super(null);
 			final int lado = Objeto.DIAMETRO + 10;
 			this.objeto = new Objeto(5, 5, objeto.getCor(), objeto.getIcone());
@@ -283,7 +283,7 @@ public class RelacaoConfigContainer extends Panel {
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 
-		Fichario() {
+		private Fichario() {
 			addTab("label.geral", new PanelGeral());
 			addTab("label.desc", new PanelDesc());
 			addTab("label.cor", new PanelCor());
