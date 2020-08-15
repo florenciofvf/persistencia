@@ -220,7 +220,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 		private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 		private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 		private TextField txtPrefixoNomeTabela = new TextField(10);
-		private final CheckBox chkAjusteAutom = new CheckBox();
+		private CheckBox chkAjusteAutom = new CheckBox();
 		private Label labelStatus = new Label();
 
 		public void ini(IJanela janela) {
@@ -267,7 +267,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			}
 		}
 
-		class ButtonInfo extends ButtonPopup {
+		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action excluirSemTabelaAcao = Action.actionMenu("label.excluir_sem_tabela", null);
 			private Action totalAtualAcao = Action.actionMenu("label.total_atual", null);
@@ -275,7 +275,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			private MenuItem itemTotalAtual = new MenuItem(totalAtualAcao);
 			private MenuItem itemComparaRec = new MenuItem(comparaRecAcao);
 
-			ButtonInfo() {
+			private ButtonInfo() {
 				super("label.comparar", Icones.INFO);
 
 				addMenuItem(itemTotalAtual);
@@ -293,10 +293,10 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			}
 		}
 
-		class ButtonConsulta extends ButtonPadrao1 {
+		private class ButtonConsulta extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			ButtonConsulta() {
+			private ButtonConsulta() {
 				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao.setActionListener(e -> {
@@ -318,10 +318,10 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			}
 		}
 
-		class ButtonUpdate extends ButtonPadrao1 {
+		private class ButtonUpdate extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			ButtonUpdate() {
+			private ButtonUpdate() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
 				formularioAcao.setActionListener(e -> {
@@ -343,14 +343,14 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 			}
 		}
 
-		class ButtonDestacar extends ButtonPadrao1 {
+		private class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 			private Action desktopAcao = Action.actionMenuDesktop();
 			private Action abrirEmForm = Action.actionMenu("label.abrir_em_formulario", null);
 			private Action destacarFrm = Action.actionMenu("label.destac_formulario", null);
 			private Action destacarCnt = Action.actionMenu("label.destac_container", null);
 
-			ButtonDestacar() {
+			private ButtonDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
 				addMenuItem(true, destacarFrm);
@@ -389,7 +389,6 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 
 		private void eventos() {
 			chkAjusteAutom.addActionListener(e -> superficie.setAjusteAutomaticoForm(chkAjusteAutom.isSelected()));
-
 			copiarAcao.setActionListener(e -> Formulario.CopiarColar.copiar(superficie));
 
 			getBaixarAcao().setActionListener(e -> {
@@ -482,7 +481,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 	private class ArrastoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		ArrastoAcao() {
+		private ArrastoAcao() {
 			super(false, "label.arrastar", Icones.MAO);
 		}
 
@@ -498,7 +497,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 	private class RotulosAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		RotulosAcao() {
+		private RotulosAcao() {
 			super(false, "label.rotulos", Icones.TEXTO);
 		}
 
@@ -514,7 +513,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 	private class RelacaoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		RelacaoAcao() {
+		private RelacaoAcao() {
 			super(false, "label.criar_relacao", Icones.SETA);
 		}
 
@@ -530,7 +529,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 	private class SelecaoAcao extends Acao {
 		private static final long serialVersionUID = 1L;
 
-		SelecaoAcao() {
+		private SelecaoAcao() {
 			super(false, "label.selecao", Icones.CURSOR);
 		}
 

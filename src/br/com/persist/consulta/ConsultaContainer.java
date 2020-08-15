@@ -169,6 +169,7 @@ public class ConsultaContainer extends AbstratoContainer
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
@@ -227,13 +228,13 @@ public class ConsultaContainer extends AbstratoContainer
 			atualizarAcao.setActionListener(e -> atualizar());
 		}
 
-		class ButtonCopiar extends ButtonPopup {
+		private class ButtonCopiar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action transfAcao = Action.actionMenu("label.transferidor", null);
 			private Action tabularAcao = Action.actionMenu("label.tabular", null);
 			private Action htmlAcao = Action.actionMenu("label.html", null);
 
-			ButtonCopiar() {
+			private ButtonCopiar() {
 				super("label.copiar_tabela", Icones.COPIA);
 
 				addMenuItem(htmlAcao);

@@ -505,7 +505,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 
-		DesktopPopup() {
+		private DesktopPopup() {
 			addMenuItem(larTotalAcao);
 			addMenuItem(larTotalDirAcao);
 			addMenuItem(larTotalEsqAcao);
