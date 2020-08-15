@@ -36,12 +36,12 @@ public class Coluna {
 	}
 
 	public static class Config {
-		final boolean autoIncremento;
-		final boolean colunaInfo;
-		final String sequencia;
-		final String tipoBanco;
-		final boolean nulavel;
-		final int tamanho;
+		private final boolean autoIncremento;
+		private final boolean colunaInfo;
+		private final String sequencia;
+		private final String tipoBanco;
+		private final boolean nulavel;
+		private final int tamanho;
 
 		public Config(int tamanho, String tipoBanco, boolean nulavel, boolean colunaInfo, boolean autoIncremento,
 				String sequencia) {

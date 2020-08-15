@@ -55,7 +55,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 	private class Descricao extends Label {
 		private static final long serialVersionUID = 1L;
 
-		Descricao(String nome) {
+		private Descricao(String nome) {
 			setHorizontalAlignment(CENTER);
 			setToolTipText(nome);
 			setText(nome);
@@ -68,13 +68,13 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		private boolean asc = true;
 		private final int indice;
 
-		Ordenacao(int indice, boolean numero) {
+		private Ordenacao(int indice, boolean numero) {
 			setIcon(Icones.ORDEM);
 			this.indice = indice;
 			this.numero = numero;
 		}
 
-		void ordenar() {
+		private void ordenar() {
 			if (numero) {
 				setIcon(asc ? Icones.ASC_NUMERO : Icones.DESC_NUMERO);
 			} else {
@@ -91,16 +91,16 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		private final String coluna;
 		private String filtroString;
 
-		Filtro(String coluna) {
+		private Filtro(String coluna) {
 			setIcon(Icones.FILTRO);
 			this.coluna = coluna;
 		}
 
-		void filtrar(int x, int y) {
+		private void filtrar(int x, int y) {
 			new FiltroCaixa(this, x, y);
 		}
 
-		void restaurar() {
+		private void restaurar() {
 			if (!Util.estaVazio(filtroString)) {
 				setIcon(Icones.OLHO);
 			}
@@ -118,7 +118,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		final TextField textField = new TextField();
 		final Filtro filtro;
 
-		FiltroCaixa(Filtro filtro, int x, int y) {
+		private FiltroCaixa(Filtro filtro, int x, int y) {
 			super((Frame) null, true);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			textField.addKeyListener(keyListenerInner);
@@ -138,7 +138,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 			setVisible(true);
 		}
 
-		transient KeyListener keyListenerInner = new KeyAdapter() {
+		private transient KeyListener keyListenerInner = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -151,7 +151,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 			}
 		};
 
-		transient WindowListener windowListenerInner = new WindowAdapter() {
+		private transient WindowListener windowListenerInner = new WindowAdapter() {
 			@Override
 			public void windowOpened(java.awt.event.WindowEvent e) {
 				if (Sistema.getInstancia().isMac()) {

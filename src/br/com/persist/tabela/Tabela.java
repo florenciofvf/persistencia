@@ -390,7 +390,7 @@ public class Tabela extends JTable {
 		private class MenuItemMapa extends MenuItem {
 			private static final long serialVersionUID = 1L;
 
-			public MenuItemMapa() {
+			private MenuItemMapa() {
 				super(Constantes.LABEL_VAZIO);
 
 				addActionListener(e -> {

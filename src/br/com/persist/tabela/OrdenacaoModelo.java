@@ -170,7 +170,7 @@ public class OrdenacaoModelo extends AbstractTableModel {
 	private class Linha implements Comparable<Linha> {
 		private final int indice;
 
-		Linha(int indice) {
+		private Linha(int indice) {
 			this.indice = indice;
 		}
 
