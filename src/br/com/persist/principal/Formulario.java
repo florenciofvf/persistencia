@@ -25,12 +25,9 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import br.com.persist.ambiente.AmbienteContainer;
 import br.com.persist.ambiente.AmbienteDialogo;
@@ -322,7 +319,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		private final MenuLayout menuLayout = new MenuLayout();
 		private final MenuAnexo itemAnexo = new MenuAnexo();
 
-		MenuPrincipal() {
+		private MenuPrincipal() {
 			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
 
 			menuArquivo.add(new MenuItem(novoAcao));
@@ -363,7 +360,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			eventos();
 		}
 
-		void abrirAutoFichario() {
+		private void abrirAutoFichario() {
 			itemAnexo.abrirAutoFichario();
 			itemArquivo.abrirAutoFichario();
 			itemConexao.abrirAutoFichario();
@@ -398,10 +395,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			return lista;
 		}
 
-		class MenuAmbiente extends MenuPadrao1 {
+		private class MenuAmbiente extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
+			private MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
 				super(ambiente.getChaveLabel(), null);
 
 				formularioAcao
@@ -411,10 +408,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		class MenuAnotacao extends MenuPadrao1 {
+		private class MenuAnotacao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuAnotacao() {
+			private MenuAnotacao() {
 				super(Constantes.LABEL_ANOTACOES, Icones.PANEL4);
 
 				formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(Formulario.this, Constantes.VAZIO));
@@ -422,17 +419,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> AnotacaoDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuRequisicao extends MenuPadrao1 {
+		private class MenuRequisicao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuRequisicao() {
+			private MenuRequisicao() {
 				super(Constantes.LABEL_REQUISICAO, Icones.URL);
 
 				formularioAcao
@@ -441,17 +438,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> RequisicaoDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuRuntimeExec extends MenuPadrao1 {
+		private class MenuRuntimeExec extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuRuntimeExec() {
+			private MenuRuntimeExec() {
 				super(Constantes.LABEL_RUNTIME_EXEC, Icones.EXECUTAR);
 
 				formularioAcao
@@ -460,17 +457,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> RuntimeExecDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_RUNTIME_EXEC)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuConsulta extends MenuPadrao1 {
+		private class MenuConsulta extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuConsulta() {
+			private MenuConsulta() {
 				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao
@@ -479,17 +476,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getConsulta().nova(Formulario.this, null));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuUpdate extends MenuPadrao1 {
+		private class MenuUpdate extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuUpdate() {
+			private MenuUpdate() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
 				formularioAcao
@@ -498,17 +495,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getUpdate().novo(Formulario.this, null));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuDesktop extends MenuPadrao1 {
+		private class MenuDesktop extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuDesktop() {
+			private MenuDesktop() {
 				super(Constantes.LABEL_DESKTOP, Icones.PANEL2, false);
 
 				ficharioAcao.setActionListener(e -> fichario.getDesktops().novo(Formulario.this));
@@ -516,27 +513,27 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		class MenuArquivo extends MenuPadrao1 {
+		private class MenuArquivo extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuArquivo() {
+			private MenuArquivo() {
 				super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
 
 				ficharioAcao.setActionListener(e -> fichario.getArquivoTree().nova(Formulario.this));
 				formularioAcao.setActionListener(e -> ArquivoTreeFormulario.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ARQUIVO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuMetadado extends MenuPadrao1 {
+		private class MenuMetadado extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuMetadado() {
+			private MenuMetadado() {
 				super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
 
 				formularioAcao
@@ -544,34 +541,34 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getMetadadoTree().novo(Formulario.this, null));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_METADADO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuAnexo extends MenuPadrao1 {
+		private class MenuAnexo extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuAnexo() {
+			private MenuAnexo() {
 				super(Constantes.LABEL_ANEXOS, Icones.ANEXO, false);
 
 				ficharioAcao.setActionListener(e -> fichario.getAnexoTree().novo(Formulario.this));
 				formularioAcao.setActionListener(e -> AnexoTreeFormulario.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ANEXO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuAbrir extends MenuPadrao1 {
+		private class MenuAbrir extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuAbrir() {
+			private MenuAbrir() {
 				super("label.abrir", Icones.ABRIR, false);
 
 				formularioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
@@ -580,7 +577,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				eventos();
 			}
 
-			void eventos() {
+			private void eventos() {
 				formularioAcao.setActionListener(e -> {
 					File[] files = getSelectedFiles(arquivos.arquivoParent, true);
 
@@ -618,7 +615,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		class MenuLayout extends Menu {
+		private class MenuLayout extends Menu {
 			private static final long serialVersionUID = 1L;
 			private Action layout1Acao = Action.actionMenu("label.layout_1", null);
 			private Action layout2Acao = Action.actionMenu("label.layout_2", null);
@@ -626,7 +623,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			private Action layout4Acao = Action.actionMenu("label.layout_4", null);
 			private Action layout5Acao = Action.actionMenu("label.layout_5", null);
 
-			MenuLayout() {
+			private MenuLayout() {
 				super("label.layout", Icones.REGION);
 				addMenuItem(layout1Acao);
 				addMenuItem(layout2Acao);
@@ -701,7 +698,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 
-			void aplicarLayout() {
+			private void aplicarLayout() {
 				int valor = Preferencias.getLayoutAbertura();
 
 				if (valor == 1) {
@@ -718,12 +715,12 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		class MenuConfig extends MenuPadrao1 {
+		private class MenuConfig extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 			private Action exportarAcao = Action.actionMenu("label.exportar", Icones.TOP);
 			private Action importarAcao = Action.actionMenu("label.importar", Icones.BAIXAR2);
 
-			MenuConfig() {
+			private MenuConfig() {
 				super(Constantes.LABEL_CONFIGURACOES, Icones.CONFIG);
 
 				addSeparator();
@@ -738,7 +735,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> ConfiguracaoDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO)) {
 					ficharioAcao.actionPerformed(null);
 				}
@@ -763,10 +760,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		class MenuConexao extends MenuPadrao1 {
+		private class MenuConexao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuConexao() {
+			private MenuConexao() {
 				super(Constantes.LABEL_CONEXAO, Icones.BANCO);
 
 				ficharioAcao.setActionListener(e -> fichario.getConexoes().nova(Formulario.this));
@@ -774,17 +771,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> ConexaoDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuFragmento extends MenuPadrao1 {
+		private class MenuFragmento extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuFragmento() {
+			private MenuFragmento() {
 				super(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
 
 				ficharioAcao.setActionListener(e -> fichario.getFragmento().novo(Formulario.this));
@@ -792,17 +789,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> FragmentoDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_FRAGMENTO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuMapeamento extends MenuPadrao1 {
+		private class MenuMapeamento extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuMapeamento() {
+			private MenuMapeamento() {
 				super(Constantes.LABEL_MAPEAMENTOS, Icones.REFERENCIA);
 
 				ficharioAcao.setActionListener(e -> fichario.getMapeamento().novo(Formulario.this));
@@ -810,17 +807,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> MapeamentoDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuVariaveis extends MenuPadrao1 {
+		private class MenuVariaveis extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuVariaveis() {
+			private MenuVariaveis() {
 				super(Constantes.LABEL_VARIAVEIS, Icones.VAR);
 
 				ficharioAcao.setActionListener(e -> fichario.getVariaveis().novo(Formulario.this));
@@ -828,17 +825,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> VariaveisDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL)) {
 					ficharioAcao.actionPerformed(null);
 				}
 			}
 		}
 
-		class MenuComparacao extends MenuPadrao1 {
+		private class MenuComparacao extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuComparacao() {
+			private MenuComparacao() {
 				super(Constantes.LABEL_COMPARACAO, Icones.CENTRALIZAR);
 
 				ficharioAcao.setActionListener(e -> fichario.getComparacao().nova(Formulario.this));
@@ -846,7 +843,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				dialogoAcao.setActionListener(e -> ComparacaoDialogo.criar(Formulario.this));
 			}
 
-			void abrirAutoFichario() {
+			private void abrirAutoFichario() {
 				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO)) {
 					ficharioAcao.actionPerformed(null);
 				}
@@ -895,27 +892,5 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public static Map<String, Object> getMap() {
 		return map;
-	}
-}
-
-class ItemLAF extends JRadioButtonMenuItem {
-	private static final long serialVersionUID = 1L;
-	private final Formulario formulario;
-	private final String classe;
-
-	public ItemLAF(Formulario formulario, LookAndFeelInfo info) {
-		addActionListener(e -> processar());
-		this.formulario = formulario;
-		classe = info.getClassName();
-		setText(info.getName());
-	}
-
-	public void processar() {
-		try {
-			UIManager.setLookAndFeel(classe);
-			SwingUtilities.updateComponentTreeUI(formulario);
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage(getClass().getName(), ex, formulario);
-		}
 	}
 }

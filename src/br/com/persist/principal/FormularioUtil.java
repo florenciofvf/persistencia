@@ -22,13 +22,13 @@ public class FormularioUtil {
 		ButtonGroup grupo = new ButtonGroup();
 
 		for (LookAndFeelInfo info : installedLookAndFeels) {
-			ItemLAF item = new ItemLAF(formulario, info);
+			FormularioItemLAF item = new FormularioItemLAF(formulario, info);
 			grupo.add(item);
 			menu.add(item);
 		}
 
 		LookAndFeelInfo info = new LookAndFeelInfo("Nimbus" + Constantes.DOIS, NimbusLookAndFeel2.class.getName());
-		ItemLAF item = new ItemLAF(formulario, info);
+		FormularioItemLAF item = new FormularioItemLAF(formulario, info);
 		grupo.add(item);
 		menu.add(item);
 	}
