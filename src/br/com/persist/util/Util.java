@@ -1,7 +1,9 @@
 package br.com.persist.util;
 
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
@@ -45,6 +47,7 @@ import br.com.persist.componente.TextArea;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoComboModelo;
 import br.com.persist.conexao.ConexaoProvedor;
+import br.com.persist.dialogo.MensagemDialogo;
 import br.com.persist.fmt.Array;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
@@ -97,11 +100,40 @@ public class Util {
 	}
 
 	public static void mensagem(Component componente, String string) {
-		TextArea textArea = new TextArea(string);
-		textArea.setPreferredSize(new Dimension(500, 300));
+		Component view = componente;
 
-		JOptionPane.showMessageDialog(componente, textArea, Mensagens.getString(Constantes.LABEL_ATENCAO),
-				JOptionPane.PLAIN_MESSAGE);
+		while (view != null) {
+			if (view instanceof Frame || view instanceof Dialog) {
+				break;
+			}
+
+			view = view.getParent();
+		}
+
+		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
+		Dimension dimension = new Dimension(500, 300);
+		MensagemDialogo mensagem = null;
+
+		if (view instanceof Frame) {
+			Frame frame = (Frame) view;
+			mensagem = new MensagemDialogo(frame, titulo, string);
+			mensagem.setSize(dimension);
+			mensagem.setLocationRelativeTo(frame);
+			mensagem.setVisible(true);
+
+		} else if (view instanceof Dialog) {
+			Dialog dialog = (Dialog) view;
+			mensagem = new MensagemDialogo(dialog, titulo, string);
+			mensagem.setSize(dimension);
+			mensagem.setLocationRelativeTo(dialog);
+			mensagem.setVisible(true);
+
+		} else {
+			TextArea textArea = new TextArea(string);
+			textArea.setPreferredSize(dimension);
+
+			JOptionPane.showMessageDialog(componente, textArea, titulo, JOptionPane.PLAIN_MESSAGE);
+		}
 	}
 
 	public static boolean confirmaExclusao(Component componente, boolean objetos) {
