@@ -254,7 +254,7 @@ public class Tabela extends JTable {
 
 			private void copiarSemV(boolean aspas) {
 				List<String> lista = TabelaUtil.getValoresColuna(Tabela.this, tag);
-				Util.setContentTransfered(Util.getStringListaSemV(lista, aspas));
+				Util.setContentTransfered(Util.getStringListaSemVirgula(lista, aspas));
 			}
 		}
 

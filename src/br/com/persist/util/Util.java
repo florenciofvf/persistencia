@@ -188,7 +188,7 @@ public class Util {
 		return sb.toString();
 	}
 
-	public static String getStringListaSemV(List<String> lista, boolean apostrofes) {
+	public static String getStringListaSemVirgula(List<String> lista, boolean apostrofes) {
 		StringBuilder sb = new StringBuilder();
 
 		for (String string : lista) {

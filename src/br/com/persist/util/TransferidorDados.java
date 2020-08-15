@@ -19,22 +19,6 @@ public class TransferidorDados implements Transferable, UIResource {
 	private final String tabular;
 	private final String html;
 
-	static {
-		try {
-			int indice = 0;
-			flavors[indice++] = new DataFlavor("text/html;class=java.lang.String");
-			flavors[indice++] = new DataFlavor("text/html;class=java.io.Reader");
-			flavors[indice++] = new DataFlavor("text/html;charset=unicode;class=java.io.InputStream");
-			flavors[indice++] = new DataFlavor("text/plain;class=java.lang.String");
-			flavors[indice++] = new DataFlavor("text/plain;class=java.io.Reader");
-			flavors[indice++] = new DataFlavor("text/plain;charset=unicode;class=java.io.InputStream");
-			flavors[indice++] = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=java.lang.String");
-			flavors[indice++] = DataFlavor.stringFlavor;
-		} catch (ClassNotFoundException cle) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, cle);
-		}
-	}
-
 	public TransferidorDados(String html, String tabular) {
 		this.tabular = tabular;
 		this.html = html;
@@ -127,5 +111,21 @@ public class TransferidorDados implements Transferable, UIResource {
 
 	public String getHtml() {
 		return html;
+	}
+
+	static {
+		try {
+			int indice = 0;
+			flavors[indice++] = new DataFlavor("text/html;class=java.lang.String");
+			flavors[indice++] = new DataFlavor("text/html;class=java.io.Reader");
+			flavors[indice++] = new DataFlavor("text/html;charset=unicode;class=java.io.InputStream");
+			flavors[indice++] = new DataFlavor("text/plain;class=java.lang.String");
+			flavors[indice++] = new DataFlavor("text/plain;class=java.io.Reader");
+			flavors[indice++] = new DataFlavor("text/plain;charset=unicode;class=java.io.InputStream");
+			flavors[indice++] = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=java.lang.String");
+			flavors[indice++] = DataFlavor.stringFlavor;
+		} catch (ClassNotFoundException cle) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, cle);
+		}
 	}
 }

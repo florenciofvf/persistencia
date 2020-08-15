@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.conexao.Conexao;
 import br.com.persist.fragmento.Fragmento;
+import br.com.persist.objeto.Form;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.relacao.Relacao;
-import br.com.persist.util.Form;
 
 public class XMLColetor {
 	private final AtomicBoolean ajusteAutoForm;

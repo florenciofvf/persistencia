@@ -162,6 +162,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
@@ -183,7 +184,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			eventos();
 		}
 
-		public void ini(IJanela janela) {
+		protected void ini(IJanela janela) {
 			super.ini(janela, true, false);
 
 			addButton(atualizarAcao);

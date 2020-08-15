@@ -90,6 +90,7 @@ public class VariaveisContainer extends AbstratoContainer implements IIni, Ficha
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
