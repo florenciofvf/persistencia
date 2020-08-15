@@ -139,15 +139,10 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, Fichari
 			getLimparAcao().rotulo(Constantes.LABEL_NOVO);
 
 			infoAcao.setActionListener(e -> formulario.getFichario().infoConexao());
-
 			sucessoAcao.setActionListener(e -> selecionarConexao());
-
 			conectaAcao.setActionListener(e -> conectar());
-
 			copiarAcao.setActionListener(e -> copiar());
-
 			descerAcao.setActionListener(e -> descer());
-
 			subirAcao.setActionListener(e -> subir());
 
 			getBaixarAcao().setActionListener(e -> {

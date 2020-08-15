@@ -48,8 +48,8 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
+	private ConfiguracaoFormulario configuracaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
-	private ConfiguracaoFormulario configFormulario;
 
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
@@ -98,12 +98,12 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		configurar();
 	}
 
-	public ConfiguracaoFormulario getConfigFormulario() {
-		return configFormulario;
+	public ConfiguracaoFormulario getConfiguracaoFormulario() {
+		return configuracaoFormulario;
 	}
 
-	public void setConfigFormulario(ConfiguracaoFormulario configFormulario) {
-		this.configFormulario = configFormulario;
+	public void setConfiguracaoFormulario(ConfiguracaoFormulario configuracaoFormulario) {
+		this.configuracaoFormulario = configuracaoFormulario;
 	}
 
 	@Override
@@ -333,11 +333,12 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 
 	@Override
 	protected void retornoAoFichario() {
-		if (configFormulario != null) {
-			configFormulario.retornoAoFichario();
+		if (configuracaoFormulario != null) {
+			configuracaoFormulario.retornoAoFichario();
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}

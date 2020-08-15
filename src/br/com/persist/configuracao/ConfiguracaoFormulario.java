@@ -18,14 +18,14 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 	public ConfiguracaoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfiguracaoContainer(this, formulario);
-		container.setConfigFormulario(this);
+		container.setConfiguracaoFormulario(this);
 		montarLayout();
 		configurar();
 	}
 
 	public ConfiguracaoFormulario(ConfiguracaoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
-		container.setConfigFormulario(this);
+		container.setConfiguracaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);
 		montarLayout();
@@ -55,7 +55,7 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 	public void retornoAoFichario() {
 		remove(container);
 		container.setJanela(null);
-		container.setConfigFormulario(null);
+		container.setConfiguracaoFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getConfiguracao().retornoAoFichario(formulario, container);
 		dispose();
