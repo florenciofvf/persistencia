@@ -145,6 +145,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
@@ -327,16 +328,16 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 	}
 
-	public class Fichario extends JTabbedPane {
+	private class Fichario extends JTabbedPane {
 		private static final long serialVersionUID = 1L;
 
-		public void pagina(Pagina pag) {
+		private void pagina(Pagina pag) {
 			addTab(pag.getNome(), pag);
 			int ultimoIndice = getTabCount() - 1;
 			setSelectedIndex(ultimoIndice);
 		}
 
-		public void limpar() {
+		private void limpar() {
 			int count = getTabCount();
 
 			while (count > 0) {
@@ -345,11 +346,11 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			}
 		}
 
-		public int getIndice() {
+		private int getIndice() {
 			return getSelectedIndex();
 		}
 
-		public Pagina getPaginaAtiva() {
+		private Pagina getPaginaAtiva() {
 			int indice = getSelectedIndex();
 
 			if (indice != -1) {
@@ -359,7 +360,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			return null;
 		}
 
-		public Pagina getPagina(String idPagina) {
+		private Pagina getPagina(String idPagina) {
 			int total = getTabCount();
 
 			for (int i = 0; i < total; i++) {
@@ -377,7 +378,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			return null;
 		}
 
-		public void conteudo(String conteudo, String idPagina) {
+		private void conteudo(String conteudo, String idPagina) {
 			if (!Util.estaVazio(conteudo) && !Util.estaVazio(idPagina)) {
 				Pagina pagina = getPagina(idPagina);
 
@@ -388,13 +389,13 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 		}
 	}
 
-	public class Pagina extends Panel {
+	private class Pagina extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final JTextPane areaParametros = new JTextPane();
 		private final JTextPane areaResultados = new JTextPane();
 		private final File file;
 
-		public Pagina(File file) {
+		private Pagina(File file) {
 			this.file = file;
 			montarLayout();
 			abrir();
@@ -414,11 +415,11 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			add(BorderLayout.CENTER, split);
 		}
 
-		public String getConteudo() {
+		private String getConteudo() {
 			return areaParametros.getText();
 		}
 
-		public String getNome() {
+		private String getNome() {
 			return file.getName();
 		}
 
@@ -455,11 +456,11 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			}
 		}
 
-		public void limpar() {
+		private void limpar() {
 			areaParametros.setText(Constantes.VAZIO);
 		}
 
-		public void salvar() {
+		private void salvar() {
 			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
 				return;
 			}
@@ -471,7 +472,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			}
 		}
 
-		public void formatar() {
+		private void formatar() {
 			if (Util.estaVazio(areaParametros.getText())) {
 				return;
 			}
@@ -495,27 +496,27 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			}
 		}
 
-		public void copiar1() {
+		private void copiar1() {
 			String string = Util.getString(areaParametros);
 			Util.setContentTransfered(string);
 			areaParametros.requestFocus();
 		}
 
-		public void colar1() {
+		private void colar1() {
 			Util.getContentTransfered(areaParametros);
 		}
 
-		public void copiar2() {
+		private void copiar2() {
 			String string = Util.getString(areaResultados);
 			Util.setContentTransfered(string);
 			areaResultados.requestFocus();
 		}
 
-		public void colar2() {
+		private void colar2() {
 			Util.getContentTransfered(areaResultados);
 		}
 
-		public void base64() {
+		private void base64() {
 			if (Util.estaVazio(areaParametros.getText())) {
 				return;
 			}
@@ -531,7 +532,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			}
 		}
 
-		public void atualizar() {
+		private void atualizar() {
 			if (Util.estaVazio(areaParametros.getText())) {
 				return;
 			}
