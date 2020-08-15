@@ -41,7 +41,7 @@ public class TituloAbaS extends Panel implements Fichario.IFicharioSalvar {
 	private class Icone extends Button implements ActionListener {
 		private static final long serialVersionUID = 1L;
 
-		Icone() {
+		private Icone() {
 			setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
 			addMouseListener(TituloAba.mouseListenerInner);
 			setBorder(BorderFactory.createEtchedBorder());

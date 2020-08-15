@@ -66,7 +66,7 @@ public class TituloAba extends Panel {
 	private class Rotulo extends Label {
 		private static final long serialVersionUID = 1L;
 
-		Rotulo(byte tipo) {
+		private Rotulo(byte tipo) {
 			setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
 			setIcon(ICONES[tipo]);
 		}
@@ -86,7 +86,7 @@ public class TituloAba extends Panel {
 	private class Icone extends Button implements ActionListener {
 		private static final long serialVersionUID = 1L;
 
-		Icone() {
+		private Icone() {
 			setToolTipText(Mensagens.getString(Constantes.LABEL_FECHAR));
 			setBorder(BorderFactory.createEtchedBorder());
 			setPreferredSize(new Dimension(17, 17));

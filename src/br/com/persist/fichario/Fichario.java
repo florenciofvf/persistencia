@@ -176,7 +176,7 @@ public class Fichario extends JTabbedPane {
 			}
 		}
 
-		void checarEstado() {
+		private void checarEstado() {
 			if (tipo == 0) {
 				setEnabled(!navegacaoListener.esquerdo.isEmpty() || !navegacaoListener.direito.isEmpty());
 			} else if (tipo == 1) {
@@ -202,18 +202,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	void checarEstadoNavegacao() {
-		if (getTabCount() < 1) {
-			navegacaoListener.esquerdo.clear();
-			navegacaoListener.direito.clear();
-		}
-
-		navegButtonEsquerdo.checarEstado();
-		navegButtonDireito.checarEstado();
-		navegButtonLimpar.checarEstado();
-	}
-
-	public class NavegacaoListener implements ChangeListener {
+	private class NavegacaoListener implements ChangeListener {
 		private final Deque<Integer> esquerdo;
 		private final Deque<Integer> direito;
 		private boolean habilitado;
@@ -225,7 +214,18 @@ public class Fichario extends JTabbedPane {
 			habilitado = true;
 		}
 
-		void inicializacao() {
+		private void checarEstadoNavegacao() {
+			if (getTabCount() < 1) {
+				navegacaoListener.esquerdo.clear();
+				navegacaoListener.direito.clear();
+			}
+
+			navegButtonEsquerdo.checarEstado();
+			navegButtonDireito.checarEstado();
+			navegButtonLimpar.checarEstado();
+		}
+
+		private void inicializacao() {
 			ultimo = getSelectedIndex();
 			habilitado = true;
 			esquerdo.clear();
@@ -233,7 +233,7 @@ public class Fichario extends JTabbedPane {
 			checarEstadoNavegacao();
 		}
 
-		void push(Deque<Integer> deque, Integer i) {
+		private void push(Deque<Integer> deque, Integer i) {
 			if (deque == null || i == null || i == -1) {
 				return;
 			}
@@ -259,7 +259,7 @@ public class Fichario extends JTabbedPane {
 			}
 		}
 
-		void voltar() {
+		private void voltar() {
 			if (!esquerdo.isEmpty()) {
 				Integer indice = esquerdo.pop();
 
@@ -277,7 +277,7 @@ public class Fichario extends JTabbedPane {
 			checarEstadoNavegacao();
 		}
 
-		void avancar() {
+		private void avancar() {
 			if (!direito.isEmpty()) {
 				Integer indice = direito.pop();
 
@@ -301,7 +301,7 @@ public class Fichario extends JTabbedPane {
 		getActionMap().put("excluir_action", excluirAction);
 	}
 
-	transient Action excluirAction = new AbstractAction() {
+	private transient Action excluirAction = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
