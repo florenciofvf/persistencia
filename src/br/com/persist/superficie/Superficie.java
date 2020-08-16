@@ -1486,23 +1486,23 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
+			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
+			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
-			dimensaoAcao4.setActionListener(e -> ajuste.ajusteObjetoFormulario(false, false));
-			dimensaoAcao2.setActionListener(e -> ajuste.ajusteObjetoFormulario(true, false));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
 			alinharSomenteDireitoAcao.setActionListener(e -> alinhamento.somenteDireito());
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
+			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
 			alinharEsquerdoAcao.setActionListener(e -> alinhamento.esquerdo());
+			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 			alinharDireitoAcao.setActionListener(e -> alinhamento.direito());
-			dimensaoAcao3.setActionListener(e -> ajuste.ajusteFormulario());
 			mesmaLarguraAcao.setActionListener(e -> larguras.mesma());
 			larTotalDirAcao.setActionListener(e -> larguras.total(1));
 			larTotalEsqAcao.setActionListener(e -> larguras.total(2));
-			ajustarAcao.setActionListener(e -> ajuste.ajustarDesktop());
-			larTotalAcao.setActionListener(e -> larguras.total(0));
 			propriedadesAcao.setActionListener(e -> propriedades());
+			larTotalAcao.setActionListener(e -> larguras.total(0));
 
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();
