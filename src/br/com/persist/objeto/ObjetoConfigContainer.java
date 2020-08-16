@@ -19,6 +19,7 @@ import java.awt.event.MouseListener;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -505,6 +506,7 @@ public class ObjetoConfigContainer extends Panel {
 
 	private class PanelInstrucao extends Panel implements InstrucaoContainerFormularioListener {
 		private static final long serialVersionUID = 1L;
+		private final Dimension dimension = new Dimension(Constantes.QUARENTA, Constantes.TREZENTOS_QUARENTA_UM);
 		private final Desktop desktop;
 
 		private PanelInstrucao() {
@@ -534,10 +536,12 @@ public class ObjetoConfigContainer extends Panel {
 			}
 
 			desktop.getDistribuicao().distribuir(0);
+			SwingUtilities.invokeLater(desktop::repaint);
 		}
 
 		private void criarFormInstrucao(Instrucao instrucao) {
 			InstrucaoContainerFormularioInterno form = new InstrucaoContainerFormularioInterno(instrucao, this);
+			form.setSize(dimension);
 			form.setVisible(true);
 			form.moveToFront();
 			desktop.add(form);
@@ -551,6 +555,7 @@ public class ObjetoConfigContainer extends Panel {
 			private PanelNomeInstrucao() {
 				textFielNome.setToolTipText(Mensagens.getString("hint.nome_enter"));
 				Button button = new Button(criarAcao);
+				criarAcao.setActionListener(this);
 				add(BorderLayout.WEST, button);
 				add(BorderLayout.CENTER, textFielNome);
 				textFielNome.addActionListener(this);
