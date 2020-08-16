@@ -30,7 +30,7 @@ public class DesktopFormulario extends AbstratoFormulario {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				desktop.ini(getGraphics());
-				desktop.getDistribuicao().distribuir(-20);
+				desktop.getDistribuicao().distribuir(-Constantes.VINTE);
 			}
 		});
 	}

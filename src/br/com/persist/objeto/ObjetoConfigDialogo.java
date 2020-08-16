@@ -2,6 +2,8 @@ package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.superficie.Superficie;
@@ -17,6 +19,7 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 		setSize(Constantes.SIZE2);
 		container = new ObjetoConfigContainer(this, superficie, objeto);
 		montarLayout();
+		configurar();
 	}
 
 	private void montarLayout() {
@@ -26,5 +29,14 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
 	}
 }

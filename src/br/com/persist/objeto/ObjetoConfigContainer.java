@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -19,7 +20,6 @@ import java.awt.event.MouseListener;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -43,29 +43,37 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.superficie.Superficie;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 import br.com.persist.valor.ValorContainer;
 import br.com.persist.valor.ValorDialogo;
 
-public class ObjetoConfigContainer extends Panel {
+public class ObjetoConfigContainer extends Panel implements IIni {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
 	private final transient Objeto objeto;
 	private final Superficie superficie;
+	private final Fichario fichario;
 
 	public ObjetoConfigContainer(IJanela janela, Superficie superficie, Objeto objeto) {
 		toolbar.ini(janela, false, false);
 		this.superficie = superficie;
 		Formulario.macro.limpar();
 		this.objeto = objeto;
+		fichario = new Fichario();
 		montarLayout();
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, new Fichario());
+		add(BorderLayout.CENTER, fichario);
 		add(BorderLayout.NORTH, toolbar);
+	}
+
+	@Override
+	public void ini(Graphics graphics) {
+		fichario.ini();
 	}
 
 	private class PanelGeral extends Panel implements ActionListener {
@@ -507,14 +515,11 @@ public class ObjetoConfigContainer extends Panel {
 	private class PanelInstrucao extends Panel implements InstrucaoContainerFormularioListener {
 		private static final long serialVersionUID = 1L;
 		private final Dimension dimension = new Dimension(Constantes.QUARENTA, Constantes.TREZENTOS_QUARENTA_UM);
-		private final Desktop desktop;
+		private final Desktop desktop = new Desktop();
 
 		private PanelInstrucao() {
-			desktop = new Desktop();
-
 			add(BorderLayout.NORTH, new PanelNomeInstrucao());
 			add(BorderLayout.CENTER, new ScrollPane(desktop));
-			adicionarInstrucoes(objeto);
 		}
 
 		private class Desktop extends AbstratoDesktop {
@@ -535,15 +540,13 @@ public class ObjetoConfigContainer extends Panel {
 				criarFormInstrucao(instrucao);
 			}
 
-			desktop.getDistribuicao().distribuir(0);
-			SwingUtilities.invokeLater(desktop::repaint);
+			desktop.getDistribuicao().distribuir(-Constantes.VINTE);
 		}
 
 		private void criarFormInstrucao(Instrucao instrucao) {
 			InstrucaoContainerFormularioInterno form = new InstrucaoContainerFormularioInterno(instrucao, this);
 			form.setSize(dimension);
 			form.setVisible(true);
-			form.moveToFront();
 			desktop.add(form);
 		}
 
@@ -567,7 +570,7 @@ public class ObjetoConfigContainer extends Panel {
 					Instrucao instrucao = new Instrucao(textFielNome.getText().trim());
 					objeto.addInstrucao(instrucao);
 					criarFormInstrucao(instrucao);
-					desktop.getDistribuicao().distribuir(0);
+					desktop.getDistribuicao().distribuir(-Constantes.VINTE);
 				}
 			}
 		}
@@ -629,13 +632,18 @@ public class ObjetoConfigContainer extends Panel {
 
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
+		private PanelInstrucao panelInstrucao = new PanelInstrucao();
 
 		private Fichario() {
 			addTab("label.geral", new ScrollPane(new PanelGeral()));
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
-			addTab("label.instrucoes", new PanelInstrucao());
+			addTab("label.instrucoes", panelInstrucao);
+		}
+
+		private void ini() {
+			panelInstrucao.adicionarInstrucoes(objeto);
 		}
 	}
 }
