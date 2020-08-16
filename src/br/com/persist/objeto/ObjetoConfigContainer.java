@@ -20,6 +20,7 @@ import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -521,8 +522,55 @@ public class ObjetoConfigContainer extends Panel {
 		private class Desktop extends JDesktopPane {
 			private static final long serialVersionUID = 1L;
 
-			private void organizar() {
-				// TODO
+			private void distribuir(int delta) {
+				int largura = (getSize().width - 20) + delta;
+				int altura = Constantes.TREZENTOS_QUARENTA_UM;
+				int y = 10;
+
+				for (JInternalFrame frame : getAllFrames()) {
+					frame.setSize(largura, altura);
+					frame.setLocation(0, y);
+					y += altura + 20;
+				}
+
+				centralizar();
+				ajusteDesktopUsandoForms();
+			}
+
+			private void centralizar() {
+				double largura = getSize().getWidth();
+
+				for (JInternalFrame frame : getAllFrames()) {
+					if (frame.getWidth() >= largura) {
+						frame.setLocation(0, frame.getY());
+					} else {
+						frame.setLocation((int) ((largura - frame.getWidth()) / 2), frame.getY());
+					}
+				}
+			}
+
+			private void ajusteDesktopUsandoForms() {
+				int largura = 0;
+				int altura = 0;
+
+				for (JInternalFrame frame : getAllFrames()) {
+					int x = frame.getX();
+					int y = frame.getY();
+					int l = frame.getWidth();
+					int a = frame.getHeight();
+
+					if (x + l > largura) {
+						largura = x + l;
+					}
+
+					if (y + a > altura) {
+						altura = y + a;
+					}
+
+					frame.moveToFront();
+				}
+
+				setPreferredSize(new Dimension(largura, altura + Constantes.QUARENTA_UM));
 			}
 		}
 
@@ -536,7 +584,7 @@ public class ObjetoConfigContainer extends Panel {
 					PanelInstrucao.this);
 			form.setVisible(true);
 			desktop.add(form);
-			desktop.organizar();
+			desktop.distribuir(0);
 		}
 
 		private class PanelNomeInstrucao extends Panel implements ActionListener {

@@ -239,7 +239,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 				frame.moveToFront();
 			}
 
-			setPreferredSize(new Dimension(largura, altura + 41));
+			setPreferredSize(new Dimension(largura, altura + Constantes.QUARENTA_UM));
 		}
 
 		public void ajustarDesktop() {
@@ -343,7 +343,7 @@ public class Desktop extends JDesktopPane implements IIni, Fichario.IFicharioSal
 	public class Distribuicao {
 		public void distribuir(int delta) {
 			int largura = (getSize().width - 20) + delta;
-			int altura = 341;
+			int altura = Constantes.TREZENTOS_QUARENTA_UM;
 			int y = 10;
 
 			for (JInternalFrame frame : getAllFrames()) {

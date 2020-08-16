@@ -106,6 +106,7 @@ public class Constantes {
 	public static final String LABEL_NOVO = "label.novo";
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
+	public static final int TREZENTOS_QUARENTA_UM = 341;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
 	public static final String DESTACADO = "DESTACADO";
@@ -119,6 +120,7 @@ public class Constantes {
 	public static final String FORM = "FORM";
 	public static final String TEMP = "TEMP";
 	public static final String EXEC = "exec";
+	public static final int QUARENTA_UM = 41;
 	public static final String III = "???";
 	public static final String ESC = "esc";
 	public static final String QL = "\r\n";
