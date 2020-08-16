@@ -34,7 +34,19 @@ public class AbstratoDesktop extends JDesktopPane {
 	}
 
 	public class Alinhamento {
-		public void esquerdo() {
+		public void alinhar(Alinhar alinhar) {
+			if (Alinhar.ESQUERDO == alinhar) {
+				esquerdo();
+			} else if (Alinhar.DIREITO == alinhar) {
+				direito();
+			} else if (Alinhar.SOMENTE_DIREITO == alinhar) {
+				somenteDireito();
+			} else if (Alinhar.CENTRALIZAR == alinhar) {
+				centralizar();
+			}
+		}
+
+		private void esquerdo() {
 			JInternalFrame[] frames = getAllFrames();
 
 			if (frames.length > 0) {
@@ -46,7 +58,7 @@ public class AbstratoDesktop extends JDesktopPane {
 			}
 		}
 
-		public void direito() {
+		private void direito() {
 			JInternalFrame[] frames = getAllFrames();
 
 			if (frames.length > 0) {
@@ -66,7 +78,7 @@ public class AbstratoDesktop extends JDesktopPane {
 			}
 		}
 
-		public void somenteDireito() {
+		private void somenteDireito() {
 			JInternalFrame[] frames = getAllFrames();
 
 			if (frames.length > 0) {
@@ -91,7 +103,7 @@ public class AbstratoDesktop extends JDesktopPane {
 			}
 		}
 
-		public void centralizar() {
+		private void centralizar() {
 			double largura = getSize().getWidth();
 
 			for (JInternalFrame frame : getAllFrames()) {
@@ -117,28 +129,28 @@ public class AbstratoDesktop extends JDesktopPane {
 			}
 		}
 
-		public void total(int tipo) {
+		public void total(Largura larguraEnum) {
 			int largura = getSize().width - 20;
 
 			for (JInternalFrame frame : getAllFrames()) {
 				Dimension size = frame.getSize();
 				Point local = frame.getLocation();
 
-				if (tipo == 0) {
+				if (Largura.TOTAL == larguraEnum) {
 					frame.setLocation(0, local.y);
 					frame.setSize(largura, size.height);
 
-				} else if (tipo == 1) {
+				} else if (Largura.TOTAL_A_DIREITA == larguraEnum) {
 					frame.setSize(largura - local.x, size.height);
 
-				} else if (tipo == 2) {
+				} else if (Largura.TOTAL_A_ESQUERDA == larguraEnum) {
 					int total = (local.x + size.width) - 10;
 					frame.setSize(total, size.height);
 					frame.setLocation(10, local.y);
 				}
 			}
 
-			if (tipo == 0) {
+			if (Largura.TOTAL == larguraEnum) {
 				alinhamento.centralizar();
 			}
 		}

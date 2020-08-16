@@ -43,7 +43,9 @@ import br.com.persist.conexao.Conexao;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.container.Container;
+import br.com.persist.desktop.Alinhar;
 import br.com.persist.desktop.Desktop;
+import br.com.persist.desktop.Largura;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;
 import br.com.persist.macro.MacroDialogo;
@@ -1486,23 +1488,23 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
+			alinharSomenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.SOMENTE_DIREITO));
 			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
+			alinharEsquerdoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.ESQUERDO));
+			larTotalEsqAcao.setActionListener(e -> larguras.total(Largura.TOTAL_A_ESQUERDA));
+			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
-			alinharSomenteDireitoAcao.setActionListener(e -> alinhamento.somenteDireito());
+			larTotalDirAcao.setActionListener(e -> larguras.total(Largura.TOTAL_A_DIREITA));
+			alinharDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.DIREITO));
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
 			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
-			alinharEsquerdoAcao.setActionListener(e -> alinhamento.esquerdo());
 			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
-			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
+			larTotalAcao.setActionListener(e -> larguras.total(Largura.TOTAL));
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
-			alinharDireitoAcao.setActionListener(e -> alinhamento.direito());
 			mesmaLarguraAcao.setActionListener(e -> larguras.mesma());
-			larTotalDirAcao.setActionListener(e -> larguras.total(1));
-			larTotalEsqAcao.setActionListener(e -> larguras.total(2));
 			propriedadesAcao.setActionListener(e -> propriedades());
-			larTotalAcao.setActionListener(e -> larguras.total(0));
 
 			atualizarFormAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();
