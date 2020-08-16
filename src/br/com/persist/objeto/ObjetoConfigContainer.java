@@ -20,6 +20,7 @@ import java.awt.event.MouseListener;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -531,6 +532,8 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			objeto.getInstrucoes().remove(instrucao);
 			desktop.removeAll();
 			adicionarInstrucoes(objeto);
+			SwingUtilities.updateComponentTreeUI(getParent());
+			SwingUtilities.invokeLater(this::repaint);
 		}
 
 		private void adicionarInstrucoes(Objeto objeto) {

@@ -82,10 +82,10 @@ public class InstrucaoContainer extends Panel {
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, false);
+			textFieldOrdem.setToolTipText(Mensagens.getString("label.ordem"));
 			textFieldOrdem.setText(Integer.toString(instrucao.getOrdem()));
 			textFieldOrdem.addActionListener(e -> configurarOrdem());
 			textFieldOrdem.addFocusListener(focusOrdemListener);
-
 			addButton(excluirAcao);
 			configCopiar1Acao(true);
 			add(textFieldOrdem);
