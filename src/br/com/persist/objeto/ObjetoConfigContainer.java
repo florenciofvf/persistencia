@@ -525,6 +525,7 @@ public class ObjetoConfigContainer extends Panel {
 		@Override
 		public void excluirInstrucao(Instrucao instrucao) {
 			objeto.getInstrucoes().remove(instrucao);
+			desktop.getDistribuicao().distribuir(0);
 		}
 
 		private void criarFormInstrucao(Instrucao instrucao) {

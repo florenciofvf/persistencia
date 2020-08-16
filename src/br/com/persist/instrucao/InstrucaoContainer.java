@@ -77,7 +77,7 @@ public class InstrucaoContainer extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
+		private Action excluirAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, false);
