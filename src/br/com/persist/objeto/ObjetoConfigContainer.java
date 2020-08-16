@@ -34,6 +34,7 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.icone.IconeDialogo;
+import br.com.persist.instrucao.Instrucao;
 import br.com.persist.principal.Formulario;
 import br.com.persist.superficie.Superficie;
 import br.com.persist.util.Constantes;

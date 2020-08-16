@@ -62,6 +62,7 @@ import br.com.persist.fragmento.Fragmento;
 import br.com.persist.fragmento.FragmentoDialogo;
 import br.com.persist.fragmento.FragmentoListener;
 import br.com.persist.icone.Icones;
+import br.com.persist.instrucao.Instrucao;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.LinkAuto;
 import br.com.persist.modelo.ListagemModelo;
