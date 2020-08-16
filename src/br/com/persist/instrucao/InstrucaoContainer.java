@@ -14,6 +14,7 @@ import br.com.persist.componente.TextField;
 import br.com.persist.icone.Icones;
 import br.com.persist.util.Action;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class InstrucaoContainer extends Panel {
@@ -37,12 +38,12 @@ public class InstrucaoContainer extends Panel {
 	}
 
 	private void montarLayout() {
+		textArea.setToolTipText(Mensagens.getString("hint.instrucoes"));
 		add(BorderLayout.NORTH, toolbar);
 
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, textFieldNome);
 		panel.add(BorderLayout.CENTER, textArea);
-
 		add(BorderLayout.CENTER, panel);
 	}
 

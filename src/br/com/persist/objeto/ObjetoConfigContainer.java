@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -20,11 +19,12 @@ import java.awt.event.MouseListener;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
+import javax.swing.JDesktopPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
@@ -34,9 +34,13 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.icone.IconeDialogo;
+import br.com.persist.icone.Icones;
 import br.com.persist.instrucao.Instrucao;
+import br.com.persist.instrucao.InstrucaoContainerFormularioInterno;
+import br.com.persist.instrucao.InstrucaoContainerFormularioListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.superficie.Superficie;
+import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
@@ -481,11 +485,11 @@ public class ObjetoConfigContainer extends Panel {
 		}
 	}
 
-	private class PanelDesc extends Panel {
+	private class PanelDescricao extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
 
-		private PanelDesc() {
+		private PanelDescricao() {
 			textArea.setText(objeto.getDescricao());
 			textArea.addKeyListener(keyListenerInner);
 			add(BorderLayout.CENTER, textArea);
@@ -499,68 +503,63 @@ public class ObjetoConfigContainer extends Panel {
 		};
 	}
 
-	private class PanelInstrucao extends Panel {
+	private class PanelInstrucao extends Panel implements InstrucaoContainerFormularioListener {
 		private static final long serialVersionUID = 1L;
-		private final Panel panelLista;
+		private final Desktop desktop;
 
 		private PanelInstrucao() {
-			panelLista = new Panel(new GridLayout(0, 1, 0, 20));
+			desktop = new Desktop();
 
-			add(BorderLayout.NORTH, new PanelNome());
-			add(BorderLayout.CENTER, new ScrollPane(panelLista));
+			add(BorderLayout.NORTH, new PanelNomeInstrucao());
+			add(BorderLayout.CENTER, new ScrollPane(desktop));
 
-			for (Instrucao i : objeto.getInstrucoes()) {
-				panelLista.add(new ScrollPane(new PanelInst(i)));
+			for (Instrucao instrucao : objeto.getInstrucoes()) {
+				criarFormInstrucao(instrucao);
 			}
 		}
 
-		private class PanelNome extends Panel implements ActionListener {
+		private class Desktop extends JDesktopPane {
 			private static final long serialVersionUID = 1L;
-			TextField nome = new TextField();
 
-			PanelNome() {
-				Label label = new Label("label.nome_enter");
-				label.setToolTipText(Mensagens.getString("hint.instrucoes"));
-				add(BorderLayout.WEST, label);
-				add(BorderLayout.CENTER, nome);
-				nome.addActionListener(this);
+			private void organizar() {
+				// TODO
+			}
+		}
+
+		@Override
+		public void excluirInstrucao(Instrucao instrucao) {
+			objeto.getInstrucoes().remove(instrucao);
+		}
+
+		private void criarFormInstrucao(Instrucao instrucao) {
+			InstrucaoContainerFormularioInterno form = new InstrucaoContainerFormularioInterno(instrucao,
+					PanelInstrucao.this);
+			form.setVisible(true);
+			desktop.add(form);
+			desktop.organizar();
+		}
+
+		private class PanelNomeInstrucao extends Panel implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private Action criarAcao = Action.actionMenu("label.criar_instrucao", Icones.CRIAR);
+			private TextField textFielNome = new TextField();
+
+			private PanelNomeInstrucao() {
+				textFielNome.setToolTipText(Mensagens.getString("hint.nome_enter"));
+				Button button = new Button(criarAcao);
+				add(BorderLayout.WEST, button);
+				add(BorderLayout.CENTER, textFielNome);
+				textFielNome.addActionListener(this);
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!Util.estaVazio(nome.getText())) {
-					Instrucao i = new Instrucao(nome.getText().trim());
-					objeto.addInstrucao(i);
-					panelLista.add(new PanelInst(i));
-					SwingUtilities.updateComponentTreeUI(ObjetoConfigContainer.this);
+				if (!Util.estaVazio(textFielNome.getText())) {
+					Instrucao instrucao = new Instrucao(textFielNome.getText().trim());
+					objeto.addInstrucao(instrucao);
+					criarFormInstrucao(instrucao);
 				}
 			}
-		}
-
-		private class PanelInst extends Panel {
-			private static final long serialVersionUID = 1L;
-			final transient Instrucao instrucao;
-			TextField nome = new TextField();
-			TextArea valor = new TextArea();
-
-			private PanelInst(Instrucao i) {
-				this.instrucao = i;
-				nome.setEnabled(false);
-				nome.setText(i.getNome());
-				valor.setText(i.getValor());
-
-				add(BorderLayout.NORTH, nome);
-				add(BorderLayout.CENTER, valor);
-
-				valor.addKeyListener(keyListenerInner);
-			}
-
-			private transient KeyListener keyListenerInner = new KeyAdapter() {
-				@Override
-				public void keyReleased(KeyEvent e) {
-					instrucao.setValor(valor.getText());
-				}
-			};
 		}
 	}
 
@@ -623,7 +622,7 @@ public class ObjetoConfigContainer extends Panel {
 
 		private Fichario() {
 			addTab("label.geral", new ScrollPane(new PanelGeral()));
-			addTab("label.desc", new PanelDesc());
+			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
 			addTab("label.instrucoes", new PanelInstrucao());

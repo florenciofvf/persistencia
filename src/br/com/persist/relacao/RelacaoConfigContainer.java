@@ -69,7 +69,7 @@ public class RelacaoConfigContainer extends Panel {
 		}
 	}
 
-	private class PanelDesc extends Panel implements ActionListener {
+	private class PanelDescricao extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
 		private TextField txtDeslocXDesc = new TextField();
@@ -77,7 +77,7 @@ public class RelacaoConfigContainer extends Panel {
 		private CheckBox chkDesenharDesc = new CheckBox();
 		private CheckBox chkQuebrado = new CheckBox();
 
-		private PanelDesc() {
+		private PanelDescricao() {
 			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
 			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
@@ -285,7 +285,7 @@ public class RelacaoConfigContainer extends Panel {
 
 		private Fichario() {
 			addTab("label.geral", new PanelGeral());
-			addTab("label.desc", new PanelDesc());
+			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
 		}
