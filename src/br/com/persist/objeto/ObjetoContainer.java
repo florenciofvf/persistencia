@@ -687,6 +687,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					return;
 				}
 
+				objeto.ordenarInstrucoes();
+
 				for (Instrucao i : objeto.getInstrucoes()) {
 					if (!Util.estaVazio(i.getValor())) {
 						addMenu(true, new MenuInstrucao(i));

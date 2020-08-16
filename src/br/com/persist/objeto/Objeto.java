@@ -12,6 +12,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -953,5 +954,9 @@ public class Objeto implements Runnable {
 
 	public void setArquivo(String arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public void ordenarInstrucoes() {
+		Collections.sort(instrucoes);
 	}
 }

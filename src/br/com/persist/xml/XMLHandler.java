@@ -65,6 +65,12 @@ public class XMLHandler extends DefaultHandler {
 		} else if ("instrucao".equals(qName)) {
 			Instrucao i = new Instrucao(attributes.getValue("nome"));
 
+			String ordem = attributes.getValue("ordem");
+
+			if (!Util.estaVazio(ordem)) {
+				i.setOrdem(Integer.parseInt(ordem));
+			}
+
 			if (selecionado instanceof Objeto) {
 				Objeto obj = (Objeto) selecionado;
 				obj.addInstrucao(i);

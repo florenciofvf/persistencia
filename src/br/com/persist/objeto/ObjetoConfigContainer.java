@@ -512,10 +512,7 @@ public class ObjetoConfigContainer extends Panel {
 
 			add(BorderLayout.NORTH, new PanelNomeInstrucao());
 			add(BorderLayout.CENTER, new ScrollPane(desktop));
-
-			for (Instrucao instrucao : objeto.getInstrucoes()) {
-				criarFormInstrucao(instrucao);
-			}
+			adicionarInstrucoes(objeto);
 		}
 
 		private class Desktop extends AbstratoDesktop {
@@ -525,15 +522,25 @@ public class ObjetoConfigContainer extends Panel {
 		@Override
 		public void excluirInstrucao(Instrucao instrucao) {
 			objeto.getInstrucoes().remove(instrucao);
+			desktop.removeAll();
+			adicionarInstrucoes(objeto);
+		}
+
+		private void adicionarInstrucoes(Objeto objeto) {
+			objeto.ordenarInstrucoes();
+
+			for (Instrucao instrucao : objeto.getInstrucoes()) {
+				criarFormInstrucao(instrucao);
+			}
+
 			desktop.getDistribuicao().distribuir(0);
 		}
 
 		private void criarFormInstrucao(Instrucao instrucao) {
-			InstrucaoContainerFormularioInterno form = new InstrucaoContainerFormularioInterno(instrucao,
-					PanelInstrucao.this);
+			InstrucaoContainerFormularioInterno form = new InstrucaoContainerFormularioInterno(instrucao, this);
 			form.setVisible(true);
+			form.moveToFront();
 			desktop.add(form);
-			desktop.getDistribuicao().distribuir(0);
 		}
 
 		private class PanelNomeInstrucao extends Panel implements ActionListener {
@@ -555,6 +562,7 @@ public class ObjetoConfigContainer extends Panel {
 					Instrucao instrucao = new Instrucao(textFielNome.getText().trim());
 					objeto.addInstrucao(instrucao);
 					criarFormInstrucao(instrucao);
+					desktop.getDistribuicao().distribuir(0);
 				}
 			}
 		}

@@ -78,12 +78,35 @@ public class InstrucaoContainer extends Panel {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action excluirAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
+		private final TextField textFieldOrdem = new TextField();
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, false);
+			textFieldOrdem.setText(Integer.toString(instrucao.getOrdem()));
+			textFieldOrdem.addActionListener(e -> configurarOrdem());
+			textFieldOrdem.addFocusListener(focusOrdemListener);
+
 			addButton(excluirAcao);
 			configCopiar1Acao(true);
+			add(textFieldOrdem);
 			excluirAcao.setActionListener(e -> listener.excluirInstrucao(instrucao));
+		}
+
+		private transient FocusListener focusOrdemListener = new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				configurarOrdem();
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				configurarOrdem();
+			}
+		};
+
+		private void configurarOrdem() {
+			int atual = instrucao.getOrdem();
+			instrucao.setOrdem(Util.getInt(textFieldOrdem.getText(), atual));
 		}
 
 		@Override
