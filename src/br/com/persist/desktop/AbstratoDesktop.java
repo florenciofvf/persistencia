@@ -129,7 +129,7 @@ public class AbstratoDesktop extends JDesktopPane {
 			}
 		}
 
-		public void total(Largura larguraEnum) {
+		public void configurar(Largura larguraEnum) {
 			int largura = getSize().width - 20;
 
 			for (JInternalFrame frame : getAllFrames()) {

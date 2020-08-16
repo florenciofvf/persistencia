@@ -351,13 +351,13 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		private void eventos() {
 			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
-			larTotalEsqAcao.setActionListener(e -> larguras.total(Largura.TOTAL_A_ESQUERDA));
+			larTotalEsqAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_ESQUERDA));
+			larTotalDirAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_DIREITA));
 			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
-			larTotalDirAcao.setActionListener(e -> larguras.total(Largura.TOTAL_A_DIREITA));
+			larTotalAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL));
 			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
-			larTotalAcao.setActionListener(e -> larguras.total(Largura.TOTAL));
 			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 		}
