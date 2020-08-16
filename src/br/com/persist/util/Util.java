@@ -804,6 +804,10 @@ public class Util {
 	private static int getIni(int pos, String string) {
 		int ini = pos;
 
+		if (ini == string.length() && !string.isEmpty()) {
+			ini--;
+		}
+
 		while (ini >= 0 && ini < string.length()) {
 			char c = string.charAt(ini);
 
