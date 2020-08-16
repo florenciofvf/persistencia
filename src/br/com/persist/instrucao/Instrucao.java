@@ -5,7 +5,7 @@ import br.com.persist.util.Util;
 import br.com.persist.xml.XMLUtil;
 
 public class Instrucao {
-	private final String nome;
+	private String nome;
 	private String valor;
 
 	public Instrucao(String nome) {
@@ -26,6 +26,14 @@ public class Instrucao {
 		}
 
 		return valor;
+	}
+
+	public void setNome(String nome) {
+		if (Util.estaVazio(nome)) {
+			return;
+		}
+
+		this.nome = nome;
 	}
 
 	public void setValor(String valor) {
