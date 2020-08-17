@@ -891,7 +891,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				apelidoAcao.setActionListener(e -> {
 					if (apelidoListener != null) {
 						String apelido = apelidoListener.selecionarApelido();
-						apelidoListener.setApelido(apelido);
+
+						if (apelido != null) {
+							apelidoListener.setApelido(apelido);
+						}
 					}
 				});
 			}

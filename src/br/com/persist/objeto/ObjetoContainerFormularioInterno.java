@@ -285,11 +285,11 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 			Object resp = Util.getValorInputDialog(ObjetoContainerFormularioInterno.this, "label.apelido", getApelido(),
 					getApelido());
 
-			if (resp == null) {
-				return Constantes.VAZIO;
+			if (resp != null) {
+				return resp.toString().trim();
 			}
 
-			return resp.toString().trim();
+			return null;
 		}
 
 		@Override
