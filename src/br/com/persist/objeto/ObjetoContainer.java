@@ -1109,15 +1109,15 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					}
 
 					private StringBuilder getConsultaColuna(Conexao conexao, String complemento) {
-						String selectAlter = objeto.getSelectAlter();
-						objeto.setSelectAlter("SELECT " + tabela.getNomeColunas());
+						String selectAlter = objeto.getSelectAlternativo();
+						objeto.setSelectAlternativo("SELECT " + tabela.getNomeColunas());
 						StringBuilder builder = new StringBuilder();
 						objeto.select(builder, conexao);
 						objeto.where(builder);
 						builder.append(" " + txtComplemento.getText());
 						builder.append(" " + complemento);
 						builder.append(" " + objeto.getFinalConsulta());
-						objeto.setSelectAlter(selectAlter);
+						objeto.setSelectAlternativo(selectAlter);
 
 						return builder;
 					}

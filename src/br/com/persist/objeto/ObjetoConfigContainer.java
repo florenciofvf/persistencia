@@ -121,6 +121,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
+			txtSelectAlter.setText(objeto.getSelectAlternativo());
 			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
@@ -130,7 +131,6 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			chkColunaInfo.setSelected(objeto.isColunaInfo());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
-			txtSelectAlter.setText(objeto.getSelectAlter());
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
 			txtSequencias.setText(objeto.getSequencias());
 			txtMapeamento.setText(objeto.getMapeamento());
@@ -463,7 +463,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 				objeto.setTabelas(txtTabelas.getText());
 
 			} else if (txtSelectAlter == e.getSource()) {
-				objeto.setSelectAlter(txtSelectAlter.getText());
+				objeto.setSelectAlternativo(txtSelectAlter.getText());
 
 			} else if (txtJoins == e.getSource()) {
 				objeto.setJoins(txtJoins.getText());

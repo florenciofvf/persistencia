@@ -48,6 +48,7 @@ public class Objeto implements Runnable {
 	private String buscaAutomaticaApos;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
+	private String selectAlternativo;
 	private String prefixoNomeTabela;
 	private boolean ajusteAutoEnter;
 	private boolean copiarDestacado;
@@ -67,7 +68,6 @@ public class Objeto implements Runnable {
 	private String complemento;
 	private String chaveamento;
 	private boolean colunaInfo;
-	private String selectAlter;
 	private String sequencias;
 	private boolean abrirAuto;
 	private String mapeamento;
@@ -120,6 +120,7 @@ public class Objeto implements Runnable {
 		Objeto o = new Objeto(x, y, cor, icone);
 
 		o.buscaAutomaticaApos = buscaAutomaticaApos;
+		o.selectAlternativo = selectAlternativo;
 		o.tabelaBuscaAuto = tabelaBuscaAuto;
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
@@ -132,7 +133,6 @@ public class Objeto implements Runnable {
 		o.transparente = transparente;
 		o.complemento = complemento;
 		o.chaveamento = chaveamento;
-		o.selectAlter = selectAlter;
 		o.desenharId = desenharId;
 		o.colunaInfo = colunaInfo;
 		o.mapeamento = mapeamento;
@@ -172,6 +172,7 @@ public class Objeto implements Runnable {
 		buscaAutomaticaApos = attr.getValue("buscaAutomaticaApos");
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		selectAlternativo = attr.getValue("selectAlternativo");
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
 		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
 		buscaAutomatica = attr.getValue("buscaAutomatica");
@@ -179,7 +180,6 @@ public class Objeto implements Runnable {
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
-		selectAlter = attr.getValue("selectAlter");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
@@ -209,10 +209,10 @@ public class Objeto implements Runnable {
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("selectAlternativo", getSelectAlternativo());
 		util.atributo("ajusteAutoEnter", ajusteAutoEnter);
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", copiarDestacado);
-		util.atributo("selectAlter", getSelectAlter());
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
@@ -397,8 +397,8 @@ public class Objeto implements Runnable {
 		this.tabela = tabela;
 	}
 
-	public void setSelectAlter(String selectAlter) {
-		this.selectAlter = selectAlter;
+	public void setSelectAlternativo(String selectAlternativo) {
+		this.selectAlternativo = selectAlternativo;
 	}
 
 	public void setTabelas(String tabelas) {
@@ -495,7 +495,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void select(StringBuilder sb, Conexao conexao) {
-		String sel = getSelectAlter();
+		String sel = getSelectAlternativo();
 
 		if (Util.estaVazio(sel)) {
 			sb.append("SELECT * FROM " + getTabelaEsquema(conexao.getEsquema()));
@@ -558,12 +558,12 @@ public class Objeto implements Runnable {
 		return tabela;
 	}
 
-	public String getSelectAlter() {
-		if (Util.estaVazio(selectAlter)) {
-			selectAlter = Constantes.VAZIO;
+	public String getSelectAlternativo() {
+		if (Util.estaVazio(selectAlternativo)) {
+			selectAlternativo = Constantes.VAZIO;
 		}
 
-		return selectAlter;
+		return selectAlternativo;
 	}
 
 	public String getTabelas() {
