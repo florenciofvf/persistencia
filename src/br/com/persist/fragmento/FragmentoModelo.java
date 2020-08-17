@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import javax.swing.table.AbstractTableModel;
 
+import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLColetor;
@@ -95,6 +96,40 @@ public class FragmentoModelo extends AbstractTableModel {
 
 	public static void novo() {
 		fragmentos.add(new Fragmento());
+	}
+
+	public ChaveValor getChaveValor(int i) {
+		Fragmento fragmento = getFragmento(i);
+		return new FragmentoChaveValor(fragmento);
+	}
+
+	public class FragmentoChaveValor extends ChaveValor {
+		private final Fragmento fragmento;
+
+		public FragmentoChaveValor(Fragmento fragmento) {
+			super(fragmento.getResumo(), fragmento.getValor());
+			this.fragmento = fragmento;
+		}
+
+		@Override
+		public String getValor() {
+			return fragmento.getValor();
+		}
+
+		@Override
+		public void setValor(String valor) {
+			fragmento.setValor(valor);
+		}
+
+		@Override
+		public int hashCode() {
+			return super.hashCode();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj);
+		}
 	}
 
 	public static void salvar() {

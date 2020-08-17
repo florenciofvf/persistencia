@@ -14,6 +14,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
 import br.com.persist.conexao.ConexaoModelo;
+import br.com.persist.fragmento.FragmentoModelo;
 import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.variaveis.VariaveisModelo;
@@ -62,6 +63,10 @@ public class ChaveValorEditor extends JPanel implements TableCellEditor {
 
 				} else if (model instanceof ConexaoModelo) {
 					ChaveValor cv = ((ConexaoModelo) model).getChaveValor(linha);
+					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
+
+				} else if (model instanceof FragmentoModelo) {
+					ChaveValor cv = ((FragmentoModelo) model).getChaveValor(linha);
 					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
 				}
 

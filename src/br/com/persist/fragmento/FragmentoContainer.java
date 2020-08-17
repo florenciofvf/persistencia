@@ -6,6 +6,7 @@ import java.io.File;
 
 import javax.swing.JTable;
 
+import br.com.persist.chave_valor.ChaveValorEditor;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
@@ -55,6 +56,7 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, Ficha
 	}
 
 	private void configurar() {
+		tabela.getColumnModel().getColumn(2).setCellEditor(new ChaveValorEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.getBaixarAcao().actionPerformed(null);
 	}
