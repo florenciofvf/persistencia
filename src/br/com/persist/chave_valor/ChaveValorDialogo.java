@@ -17,8 +17,8 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 	private TextArea textArea = new TextArea();
 	private transient ChaveValor chaveValor;
 
-	public ChaveValorDialogo(ChaveValor chaveValor, String titulo) {
-		super((Frame) null, titulo);
+	public ChaveValorDialogo(ChaveValor chaveValor) {
+		super((Frame) null, chaveValor.getChave());
 		textArea.setText(chaveValor.getValor());
 		this.chaveValor = chaveValor;
 		toolbar.ini(null);

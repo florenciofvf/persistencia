@@ -55,19 +55,19 @@ public class ChaveValorEditor extends JPanel implements TableCellEditor {
 
 				if (model instanceof MapeamentoModelo) {
 					ChaveValor cv = MapeamentoModelo.getChaveValor(linha);
-					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
+					new ChaveValorDialogo(cv).setVisible(true);
 
 				} else if (model instanceof VariaveisModelo) {
 					ChaveValor cv = VariaveisModelo.getChaveValor(linha);
-					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
+					new ChaveValorDialogo(cv).setVisible(true);
 
 				} else if (model instanceof ConexaoModelo) {
 					ChaveValor cv = ((ConexaoModelo) model).getChaveValor(linha);
-					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
+					new ChaveValorDialogo(cv).setVisible(true);
 
 				} else if (model instanceof FragmentoModelo) {
 					ChaveValor cv = ((FragmentoModelo) model).getChaveValor(linha);
-					new ChaveValorDialogo(cv, cv.getChave()).setVisible(true);
+					new ChaveValorDialogo(cv).setVisible(true);
 				}
 
 				cancelCellEditing();
