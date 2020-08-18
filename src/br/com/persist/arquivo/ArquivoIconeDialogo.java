@@ -10,7 +10,7 @@ public class ArquivoIconeDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ArquivoIconeContainer container;
 
-	public ArquivoIconeDialogo(Frame frame, Arquivo arquivo) {
+	ArquivoIconeDialogo(Frame frame, Arquivo arquivo) {
 		super(frame, arquivo.toString());
 		container = new ArquivoIconeContainer(this, arquivo);
 		setTitle(container.getTotalIcones() + " - " + getTitle());
@@ -24,5 +24,12 @@ public class ArquivoIconeDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static ArquivoIconeDialogo criar(Frame frame, Arquivo arquivo) {
+		ArquivoIconeDialogo form = new ArquivoIconeDialogo(frame, arquivo);
+		form.setLocationRelativeTo(frame);
+		form.setVisible(true);
+		return form;
 	}
 }

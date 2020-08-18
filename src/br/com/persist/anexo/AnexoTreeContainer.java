@@ -250,7 +250,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 			return;
 		}
 
-		AnexoCorDialogo form = new AnexoCorDialogo((Frame) null, arquivo);
+		AnexoCorDialogo form = AnexoCorDialogo.criar((Frame) null, arquivo);
 		form.setLocationRelativeTo(AnexoTreeContainer.this);
 		form.setVisible(true);
 		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
@@ -264,7 +264,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 			return;
 		}
 
-		ArquivoIconeDialogo form = new ArquivoIconeDialogo((Frame) null, arquivo);
+		ArquivoIconeDialogo form = ArquivoIconeDialogo.criar((Frame) null, arquivo);
 		form.setLocationRelativeTo(AnexoTreeContainer.this);
 		form.setVisible(true);
 		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);

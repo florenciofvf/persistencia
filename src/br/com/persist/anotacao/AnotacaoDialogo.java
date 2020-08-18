@@ -13,7 +13,7 @@ public class AnotacaoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final AnotacaoContainer container;
 
-	public AnotacaoDialogo(Frame frame, Formulario formulario) {
+	private AnotacaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ANOTACOES));
 		container = new AnotacaoContainer(this, formulario, null);
 		montarLayout();

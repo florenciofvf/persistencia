@@ -11,7 +11,7 @@ public class AnexoCorDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final AnexoCorContainer container;
 
-	public AnexoCorDialogo(Frame frame, Arquivo arquivo) {
+	private AnexoCorDialogo(Frame frame, Arquivo arquivo) {
 		super(frame, arquivo.toString());
 		container = new AnexoCorContainer(this, arquivo);
 		montarLayout();
@@ -24,5 +24,9 @@ public class AnexoCorDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static AnexoCorDialogo criar(Frame frame, Arquivo arquivo) {
+		return new AnexoCorDialogo(frame, arquivo);
 	}
 }

@@ -11,7 +11,7 @@ public class AmbienteDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final AmbienteContainer container;
 
-	public AmbienteDialogo(Frame frame, Formulario formulario, AmbienteContainer.Ambiente ambiente) {
+	private AmbienteDialogo(Frame frame, Formulario formulario, AmbienteContainer.Ambiente ambiente) {
 		super(frame, ambiente.getDescricao());
 		container = new AmbienteContainer(this, formulario, null, ambiente);
 		montarLayout();
