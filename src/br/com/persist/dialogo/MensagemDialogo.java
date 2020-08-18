@@ -10,13 +10,13 @@ public class MensagemDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final MensagemContainer container;
 
-	public MensagemDialogo(Dialog dialog, String titulo, String msg) {
+	private MensagemDialogo(Dialog dialog, String titulo, String msg) {
 		super(dialog, titulo);
 		container = new MensagemContainer(this, msg);
 		montarLayout();
 	}
 
-	public MensagemDialogo(Frame frame, String titulo, String msg) {
+	private MensagemDialogo(Frame frame, String titulo, String msg) {
 		super(frame, titulo);
 		container = new MensagemContainer(this, msg);
 		montarLayout();
@@ -29,5 +29,13 @@ public class MensagemDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static MensagemDialogo criar(Dialog dialog, String titulo, String msg) {
+		return new MensagemDialogo(dialog, titulo, msg);
+	}
+
+	public static MensagemDialogo criar(Frame frame, String titulo, String msg) {
+		return new MensagemDialogo(frame, titulo, msg);
 	}
 }

@@ -16,14 +16,14 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoContainer container;
 
-	public FragmentoDialogo(Dialog dialog, Formulario formulario, FragmentoListener listener) {
+	private FragmentoDialogo(Dialog dialog, Formulario formulario, FragmentoListener listener) {
 		super(dialog, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container = new FragmentoContainer(this, formulario, listener);
 		montarLayout();
 		configurar();
 	}
 
-	public FragmentoDialogo(Frame frame, Formulario formulario, FragmentoListener listener) {
+	private FragmentoDialogo(Frame frame, Formulario formulario, FragmentoListener listener) {
 		super(frame, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container = new FragmentoContainer(this, formulario, listener);
 		montarLayout();
@@ -40,9 +40,17 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 	}
 
 	public static void criar(Formulario formulario) {
-		FragmentoDialogo form = new FragmentoDialogo(formulario, formulario, null);
+		FragmentoDialogo form = criar(formulario, formulario, null);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+	}
+
+	public static FragmentoDialogo criar(Dialog dialog, Formulario formulario, FragmentoListener listener) {
+		return new FragmentoDialogo(dialog, formulario, listener);
+	}
+
+	public static FragmentoDialogo criar(Frame frame, Formulario formulario, FragmentoListener listener) {
+		return new FragmentoDialogo(frame, formulario, listener);
 	}
 
 	private void configurar() {

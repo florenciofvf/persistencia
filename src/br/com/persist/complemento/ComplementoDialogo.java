@@ -13,13 +13,13 @@ public class ComplementoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ComplementoContainer container;
 
-	public ComplementoDialogo(Dialog dialog, Objeto objeto, TextField txtComplemento, ComplementoListener listener) {
+	private ComplementoDialogo(Dialog dialog, Objeto objeto, TextField txtComplemento, ComplementoListener listener) {
 		super(dialog, objeto.getId());
 		container = new ComplementoContainer(this, objeto, txtComplemento, listener);
 		montarLayout();
 	}
 
-	public ComplementoDialogo(Frame frame, Objeto objeto, TextField txtComplemento, ComplementoListener listener) {
+	private ComplementoDialogo(Frame frame, Objeto objeto, TextField txtComplemento, ComplementoListener listener) {
 		super(frame, objeto.getId());
 		container = new ComplementoContainer(this, objeto, txtComplemento, listener);
 		montarLayout();
@@ -32,5 +32,15 @@ public class ComplementoDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static ComplementoDialogo criar(Dialog dialog, Objeto objeto, TextField txtComplemento,
+			ComplementoListener listener) {
+		return new ComplementoDialogo(dialog, objeto, txtComplemento, listener);
+	}
+
+	public static ComplementoDialogo criar(Frame frame, Objeto objeto, TextField txtComplemento,
+			ComplementoListener listener) {
+		return new ComplementoDialogo(frame, objeto, txtComplemento, listener);
 	}
 }

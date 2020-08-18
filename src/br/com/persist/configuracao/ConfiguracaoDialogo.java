@@ -16,7 +16,7 @@ public class ConfiguracaoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ConfiguracaoContainer container;
 
-	public ConfiguracaoDialogo(Frame frame, Formulario formulario) {
+	private ConfiguracaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfiguracaoContainer(this, formulario);
 		montarLayout();
