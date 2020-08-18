@@ -260,7 +260,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.BUSCA_APOS);
+					ValorDialogo form = ValorDialogo.criar((Dialog) null, objeto, ValorContainer.Tipo.BUSCA_APOS);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -273,7 +273,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.BUSCA);
+					ValorDialogo form = ValorDialogo.criar((Dialog) null, objeto, ValorContainer.Tipo.BUSCA);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -286,7 +286,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.LINK);
+					ValorDialogo form = ValorDialogo.criar((Dialog) null, objeto, ValorContainer.Tipo.LINK);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -299,7 +299,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.CHAVE);
+					ValorDialogo form = ValorDialogo.criar((Dialog) null, objeto, ValorContainer.Tipo.CHAVE);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -312,7 +312,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					ValorDialogo form = new ValorDialogo((Dialog) null, objeto, ValorContainer.Tipo.MAPA);
+					ValorDialogo form = ValorDialogo.criar((Dialog) null, objeto, ValorContainer.Tipo.MAPA);
 					form.setLocationRelativeTo(ObjetoConfigContainer.this);
 					form.setVisible(true);
 
@@ -626,7 +626,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			IconeDialogo form = new IconeDialogo((Dialog) null, objeto, label);
+			IconeDialogo form = IconeDialogo.criar((Dialog) null, objeto, label);
 			form.setLocationRelativeTo(ObjetoConfigContainer.this);
 			form.setVisible(true);
 			superficie.repaint();

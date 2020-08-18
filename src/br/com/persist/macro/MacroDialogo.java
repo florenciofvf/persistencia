@@ -12,7 +12,7 @@ public class MacroDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final MacroContainer container;
 
-	public MacroDialogo(Frame frame) {
+	private MacroDialogo(Frame frame) {
 		super(frame, "Macro");
 		container = new MacroContainer();
 		montarLayout();
@@ -36,5 +36,13 @@ public class MacroDialogo extends AbstratoDialogo implements IJanela {
 				container.getLista().setSelectedIndex(0);
 			}
 		});
+	}
+
+	public static MacroDialogo criar(Frame frame) {
+		MacroDialogo form = new MacroDialogo(frame);
+		form.setLocationRelativeTo(frame);
+		form.setVisible(true);
+
+		return form;
 	}
 }

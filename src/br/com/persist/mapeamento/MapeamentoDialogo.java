@@ -16,14 +16,14 @@ public class MapeamentoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final MapeamentoContainer container;
 
-	public MapeamentoDialogo(Dialog dialog, Formulario formulario) {
+	private MapeamentoDialogo(Dialog dialog, Formulario formulario) {
 		super(dialog, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		container = new MapeamentoContainer(this, formulario);
 		montarLayout();
 		configurar();
 	}
 
-	public MapeamentoDialogo(Frame frame, Formulario formulario) {
+	private MapeamentoDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		container = new MapeamentoContainer(this, formulario);
 		montarLayout();
@@ -40,9 +40,17 @@ public class MapeamentoDialogo extends AbstratoDialogo implements IJanela {
 	}
 
 	public static void criar(Formulario formulario) {
-		MapeamentoDialogo form = new MapeamentoDialogo(formulario, formulario);
+		MapeamentoDialogo form = criar(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+	}
+
+	public static MapeamentoDialogo criar(Dialog dialog, Formulario formulario) {
+		return new MapeamentoDialogo(dialog, formulario);
+	}
+
+	public static MapeamentoDialogo criar(Frame frame, Formulario formulario) {
+		return new MapeamentoDialogo(frame, formulario);
 	}
 
 	private void configurar() {

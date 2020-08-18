@@ -14,7 +14,7 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoConfigContainer container;
 
-	public ObjetoConfigDialogo(Frame frame, Superficie superficie, Objeto objeto) {
+	private ObjetoConfigDialogo(Frame frame, Superficie superficie, Objeto objeto) {
 		super(frame, objeto.getId());
 		setSize(Constantes.SIZE2);
 		container = new ObjetoConfigContainer(this, superficie, objeto);
@@ -38,5 +38,13 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 				container.ini(getGraphics());
 			}
 		});
+	}
+
+	public static ObjetoConfigDialogo criar(Frame frame, Superficie superficie, Objeto objeto) {
+		ObjetoConfigDialogo form = new ObjetoConfigDialogo(frame, superficie, objeto);
+		form.setLocationRelativeTo(frame);
+		form.setVisible(true);
+
+		return form;
 	}
 }

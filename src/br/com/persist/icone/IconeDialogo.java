@@ -12,7 +12,7 @@ public class IconeDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final IconeContainer container;
 
-	public IconeDialogo(Dialog dialog, Objeto objeto, Label label) {
+	private IconeDialogo(Dialog dialog, Objeto objeto, Label label) {
 		super(dialog, objeto.getId());
 		container = new IconeContainer(this, objeto, label);
 		setTitle(container.getTotalIcones() + " - " + getTitle());
@@ -26,5 +26,9 @@ public class IconeDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static IconeDialogo criar(Dialog dialog, Objeto objeto, Label label) {
+		return new IconeDialogo(dialog, objeto, label);
 	}
 }

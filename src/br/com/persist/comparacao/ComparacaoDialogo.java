@@ -36,9 +36,7 @@ public class ComparacaoDialogo extends AbstratoDialogo implements IJanela {
 	}
 
 	public static void criar(Formulario formulario) {
-		ComparacaoDialogo form = new ComparacaoDialogo(formulario, formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
+		criar(formulario, formulario);
 	}
 
 	public static void criar(Dialog dialog, Formulario formulario) {
