@@ -116,14 +116,14 @@ public class Util {
 
 		if (view instanceof Frame) {
 			Frame frame = (Frame) view;
-			mensagem = new MensagemDialogo(frame, titulo, string);
+			mensagem = MensagemDialogo.criar(frame, titulo, string);
 			mensagem.setSize(dimension);
 			mensagem.setLocationRelativeTo(frame);
 			mensagem.setVisible(true);
 
 		} else if (view instanceof Dialog) {
 			Dialog dialog = (Dialog) view;
-			mensagem = new MensagemDialogo(dialog, titulo, string);
+			mensagem = MensagemDialogo.criar(dialog, titulo, string);
 			mensagem.setSize(dimension);
 			mensagem.setLocationRelativeTo(dialog);
 			mensagem.setVisible(true);

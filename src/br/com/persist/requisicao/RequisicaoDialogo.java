@@ -13,7 +13,7 @@ public class RequisicaoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final RequisicaoContainer container;
 
-	public RequisicaoDialogo(Frame frame, Formulario formulario) {
+	private RequisicaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_REQUISICAO));
 		container = new RequisicaoContainer(this, formulario, null, null);
 		montarLayout();

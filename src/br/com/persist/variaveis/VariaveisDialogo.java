@@ -16,14 +16,14 @@ public class VariaveisDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final VariaveisContainer container;
 
-	public VariaveisDialogo(Dialog dialog, Formulario formulario) {
+	private VariaveisDialogo(Dialog dialog, Formulario formulario) {
 		super(dialog, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container = new VariaveisContainer(this, formulario);
 		montarLayout();
 		configurar();
 	}
 
-	public VariaveisDialogo(Frame frame, Formulario formulario) {
+	VariaveisDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container = new VariaveisContainer(this, formulario);
 		montarLayout();
@@ -40,9 +40,17 @@ public class VariaveisDialogo extends AbstratoDialogo implements IJanela {
 	}
 
 	public static void criar(Formulario formulario) {
-		VariaveisDialogo form = new VariaveisDialogo(formulario, formulario);
+		VariaveisDialogo form = criar(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+	}
+
+	public static VariaveisDialogo criar(Dialog dialog, Formulario formulario) {
+		return new VariaveisDialogo(dialog, formulario);
+	}
+
+	public static VariaveisDialogo criar(Frame frame, Formulario formulario) {
+		return new VariaveisDialogo(frame, formulario);
 	}
 
 	private void configurar() {

@@ -13,7 +13,7 @@ public class RuntimeExecDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final RuntimeExecContainer container;
 
-	public RuntimeExecDialogo(Frame frame, Formulario formulario) {
+	private RuntimeExecDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_RUNTIME_EXEC));
 		container = new RuntimeExecContainer(this, formulario, null, null);
 		montarLayout();

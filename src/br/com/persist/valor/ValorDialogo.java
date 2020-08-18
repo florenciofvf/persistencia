@@ -12,7 +12,7 @@ public class ValorDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ValorContainer container;
 
-	public ValorDialogo(Dialog dialog, Objeto objeto, ValorContainer.Tipo tipo) {
+	private ValorDialogo(Dialog dialog, Objeto objeto, ValorContainer.Tipo tipo) {
 		super(dialog, objeto.getId());
 		container = new ValorContainer(this, objeto, tipo);
 		montarLayout();
@@ -41,5 +41,9 @@ public class ValorDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static ValorDialogo criar(Dialog dialog, Objeto objeto, ValorContainer.Tipo tipo) {
+		return new ValorDialogo(dialog, objeto, tipo);
 	}
 }
