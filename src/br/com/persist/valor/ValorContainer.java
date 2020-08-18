@@ -212,6 +212,7 @@ public class ValorContainer extends Panel {
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+			copiar1Mensagem(string);
 			textArea.requestFocus();
 		}
 

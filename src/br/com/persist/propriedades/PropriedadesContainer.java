@@ -46,6 +46,7 @@ public class PropriedadesContainer extends AbstratoContainer {
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+			copiar1Mensagem(string);
 			textArea.requestFocus();
 		}
 	}
