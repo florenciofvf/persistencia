@@ -14,13 +14,13 @@ public class ComparacaoDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ComparacaoContainer container;
 
-	public ComparacaoDialogo(Dialog dialog, Formulario formulario) {
+	private ComparacaoDialogo(Dialog dialog, Formulario formulario) {
 		super(dialog, Mensagens.getString(Constantes.LABEL_COMPARACAO));
 		container = new ComparacaoContainer(this, formulario);
 		montarLayout();
 	}
 
-	public ComparacaoDialogo(Frame frame, Formulario formulario) {
+	private ComparacaoDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_COMPARACAO));
 		container = new ComparacaoContainer(this, formulario);
 		montarLayout();
@@ -38,6 +38,18 @@ public class ComparacaoDialogo extends AbstratoDialogo implements IJanela {
 	public static void criar(Formulario formulario) {
 		ComparacaoDialogo form = new ComparacaoDialogo(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+	}
+
+	public static void criar(Dialog dialog, Formulario formulario) {
+		ComparacaoDialogo form = new ComparacaoDialogo(dialog, formulario);
+		form.setLocationRelativeTo(dialog);
+		form.setVisible(true);
+	}
+
+	public static void criar(Frame frame, Formulario formulario) {
+		ComparacaoDialogo form = new ComparacaoDialogo(frame, formulario);
+		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
 	}
 }

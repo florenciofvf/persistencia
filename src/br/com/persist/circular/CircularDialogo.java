@@ -14,7 +14,7 @@ public class CircularDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final CircularContainer container;
 
-	public CircularDialogo(Frame frame, Superficie superficie, Tipo tipo) {
+	private CircularDialogo(Frame frame, Superficie superficie, Tipo tipo) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CIRCULAR));
 		container = new CircularContainer(this, superficie, tipo);
 		montarLayout();
@@ -28,5 +28,11 @@ public class CircularDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static void criar(Frame frame, Superficie superficie, Tipo tipo) {
+		CircularDialogo form = new CircularDialogo(frame, superficie, tipo);
+		form.setLocationRelativeTo(frame);
+		form.setVisible(true);
 	}
 }
