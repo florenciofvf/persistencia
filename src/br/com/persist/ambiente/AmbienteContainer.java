@@ -178,6 +178,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 		protected void copiar1() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
+			copiar1Mensagem(string);
 			textArea.requestFocus();
 		}
 

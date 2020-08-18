@@ -12,6 +12,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
+import br.com.persist.util.Util;
 
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +21,7 @@ public class BarraButton extends JToolBar {
 	private Action copiar2Acao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action colar1Acao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action colar2Acao = Action.actionIcon("label.colar", Icones.COLAR);
+	private MensagemTemporaria mensagemTempCopiado = new MensagemTemporaria();
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
 	private Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
@@ -102,10 +104,17 @@ public class BarraButton extends JToolBar {
 	protected void configCopiar1Acao(boolean colar) {
 		copiar1Acao.setActionListener(e -> copiar1());
 		addButton(copiar1Acao);
+		add(mensagemTempCopiado);
 
 		if (colar) {
 			colar1Acao.setActionListener(e -> colar1());
 			addButton(colar1Acao);
+		}
+	}
+
+	protected void copiar1Mensagem(String string) {
+		if (!Util.estaVazio(string)) {
+			mensagemTempCopiado.mensagemChave("msg.copiado");
 		}
 	}
 
