@@ -14,7 +14,7 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoContainer container;
 
-	public ConexaoFormulario(ConexaoContainer container) {
+	private ConexaoFormulario(ConexaoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_CONEXAO));
 		container.setConexaoFormulario(this);
 		this.container = container;
@@ -23,7 +23,7 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 		configurar();
 	}
 
-	public ConexaoFormulario(Formulario formulario) {
+	private ConexaoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_CONEXAO));
 		container = new ConexaoContainer(this, formulario);
 		container.setConexaoFormulario(this);

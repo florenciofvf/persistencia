@@ -12,14 +12,14 @@ public class AnexoTreeFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final AnexoTreeContainer container;
 
-	public AnexoTreeFormulario(Formulario formulario) {
+	private AnexoTreeFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_ANEXOS));
 		container = new AnexoTreeContainer(this, formulario);
 		container.setAnexoTreeFormulario(this);
 		montarLayout();
 	}
 
-	public AnexoTreeFormulario(AnexoTreeContainer container) {
+	private AnexoTreeFormulario(AnexoTreeContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_ANEXOS));
 		container.setAnexoTreeFormulario(this);
 		this.container = container;

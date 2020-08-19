@@ -12,14 +12,14 @@ public class ComparacaoFormulario extends AbstratoFormulario implements IJanela 
 	private static final long serialVersionUID = 1L;
 	private final ComparacaoContainer container;
 
-	public ComparacaoFormulario(Formulario formulario) {
+	private ComparacaoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_COMPARACAO));
 		container = new ComparacaoContainer(this, formulario);
 		container.setComparacaoFormulario(this);
 		montarLayout();
 	}
 
-	public ComparacaoFormulario(ComparacaoContainer container) {
+	private ComparacaoFormulario(ComparacaoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_COMPARACAO));
 		container.setComparacaoFormulario(this);
 		this.container = container;

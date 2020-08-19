@@ -12,14 +12,14 @@ public class ArquivoTreeFormulario extends AbstratoFormulario implements IJanela
 	private static final long serialVersionUID = 1L;
 	private final ArquivoTreeContainer container;
 
-	public ArquivoTreeFormulario(Formulario formulario) {
+	private ArquivoTreeFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_ARQUIVOS));
 		container = new ArquivoTreeContainer(this, formulario);
 		container.setArquivoTreeFormulario(this);
 		montarLayout();
 	}
 
-	public ArquivoTreeFormulario(ArquivoTreeContainer container) {
+	private ArquivoTreeFormulario(ArquivoTreeContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_ARQUIVOS));
 		container.setArquivoTreeFormulario(this);
 		this.container = container;

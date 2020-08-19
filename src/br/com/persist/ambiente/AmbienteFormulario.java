@@ -10,14 +10,14 @@ public class AmbienteFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final AmbienteContainer container;
 
-	public AmbienteFormulario(Formulario formulario, String conteudo, AmbienteContainer.Ambiente ambiente) {
+	private AmbienteFormulario(Formulario formulario, String conteudo, AmbienteContainer.Ambiente ambiente) {
 		super(ambiente.getDescricao());
 		container = new AmbienteContainer(this, formulario, conteudo, ambiente);
 		container.setAmbienteFormulario(this);
 		montarLayout();
 	}
 
-	public AmbienteFormulario(AmbienteContainer container) {
+	private AmbienteFormulario(AmbienteContainer container) {
 		super(container.getAmbiente().getDescricao());
 		container.setAmbienteFormulario(this);
 		this.container = container;

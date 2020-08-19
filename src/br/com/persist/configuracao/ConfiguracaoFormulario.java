@@ -15,7 +15,7 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 	private static final long serialVersionUID = 1L;
 	private final ConfiguracaoContainer container;
 
-	public ConfiguracaoFormulario(Formulario formulario) {
+	private ConfiguracaoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfiguracaoContainer(this, formulario);
 		container.setConfiguracaoFormulario(this);
@@ -23,7 +23,7 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 		configurar();
 	}
 
-	public ConfiguracaoFormulario(ConfiguracaoContainer container) {
+	private ConfiguracaoFormulario(ConfiguracaoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container.setConfiguracaoFormulario(this);
 		this.container = container;
