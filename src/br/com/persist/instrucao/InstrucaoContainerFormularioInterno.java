@@ -11,7 +11,7 @@ public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame
 	private final transient InstrucaoContainerFormularioListener listener;
 	private final InstrucaoContainer container;
 
-	public InstrucaoContainerFormularioInterno(Instrucao instrucao, InstrucaoContainerFormularioListener listener) {
+	private InstrucaoContainerFormularioInterno(Instrucao instrucao, InstrucaoContainerFormularioListener listener) {
 		super(instrucao.getNome());
 		container = new InstrucaoContainer(this, instrucao, this);
 		this.listener = listener;
@@ -31,5 +31,10 @@ public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame
 	public void excluirInstrucao(Instrucao instrucao) {
 		listener.excluirInstrucao(instrucao);
 		fechar();
+	}
+
+	public static InstrucaoContainerFormularioInterno criar(Instrucao instrucao,
+			InstrucaoContainerFormularioListener listener) {
+		return new InstrucaoContainerFormularioInterno(instrucao, listener);
 	}
 }

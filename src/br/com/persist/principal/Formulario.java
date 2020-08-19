@@ -220,7 +220,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public class Conteiner {
 		public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
-			ContainerFormulario form = new ContainerFormulario(Formulario.this,
+			ContainerFormulario form = ContainerFormulario.criar(Formulario.this,
 					new File(Mensagens.getString("label.abrir_exportacao")));
 			form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 			form.setLocationRelativeTo(Formulario.this);
@@ -228,7 +228,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		public void abrirImportacaoMetadado(Metadado metadado, boolean circular) {
-			ContainerFormulario form = new ContainerFormulario(Formulario.this,
+			ContainerFormulario form = ContainerFormulario.criar(Formulario.this,
 					new File(Mensagens.getString("label.abrir_importacao")));
 			form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 			form.setLocationRelativeTo(Formulario.this);
@@ -237,7 +237,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		public void exportarMetadadoRaiz(Metadado metadado) {
 			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-				ContainerFormulario form = new ContainerFormulario(Formulario.this,
+				ContainerFormulario form = ContainerFormulario.criar(Formulario.this,
 						new File(Mensagens.getString("label.exportar")));
 				form.exportarMetadadoRaiz(metadado);
 				form.setLocationRelativeTo(Formulario.this);
@@ -270,7 +270,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
-			ContainerFormulario form = new ContainerFormulario(formulario, file);
+			ContainerFormulario form = ContainerFormulario.criar(formulario, file);
 			form.abrir(file, coletor, getGraphics(), config);
 			form.setLocationRelativeTo(formulario);
 			form.setVisible(true);

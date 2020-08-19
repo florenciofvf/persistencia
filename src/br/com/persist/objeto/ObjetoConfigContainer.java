@@ -547,7 +547,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 		}
 
 		private void criarFormInstrucao(Instrucao instrucao) {
-			InstrucaoContainerFormularioInterno form = new InstrucaoContainerFormularioInterno(instrucao, this);
+			InstrucaoContainerFormularioInterno form = InstrucaoContainerFormularioInterno.criar(instrucao, this);
 			form.setSize(dimension);
 			form.setVisible(true);
 			desktop.add(form);

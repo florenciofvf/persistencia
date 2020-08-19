@@ -14,7 +14,7 @@ public class MapeamentoFormulario extends AbstratoFormulario implements IJanela 
 	private static final long serialVersionUID = 1L;
 	private final MapeamentoContainer container;
 
-	public MapeamentoFormulario(Formulario formulario) {
+	private MapeamentoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		container = new MapeamentoContainer(this, formulario);
 		container.setMapeamentoFormulario(this);
@@ -22,7 +22,7 @@ public class MapeamentoFormulario extends AbstratoFormulario implements IJanela 
 		configurar();
 	}
 
-	public MapeamentoFormulario(MapeamentoContainer container) {
+	private MapeamentoFormulario(MapeamentoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 		container.setMapeamentoFormulario(this);
 		this.container = container;

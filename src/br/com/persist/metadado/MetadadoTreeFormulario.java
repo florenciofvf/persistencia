@@ -14,14 +14,14 @@ public class MetadadoTreeFormulario extends AbstratoFormulario implements IJanel
 	private static final long serialVersionUID = 1L;
 	private final MetadadoTreeContainer container;
 
-	public MetadadoTreeFormulario(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+	private MetadadoTreeFormulario(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		super(Mensagens.getString(Constantes.LABEL_METADADOS));
 		container = new MetadadoTreeContainer(this, formulario, provedor, padrao);
 		container.setMetadadoTreeFormulario(this);
 		montarLayout();
 	}
 
-	public MetadadoTreeFormulario(MetadadoTreeContainer container) {
+	private MetadadoTreeFormulario(MetadadoTreeContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_METADADOS));
 		container.setMetadadoTreeFormulario(this);
 		this.container = container;

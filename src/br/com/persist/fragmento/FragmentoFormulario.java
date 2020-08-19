@@ -14,7 +14,7 @@ public class FragmentoFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoContainer container;
 
-	public FragmentoFormulario(Formulario formulario) {
+	private FragmentoFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container = new FragmentoContainer(this, formulario, null);
 		container.setFragmentoFormulario(this);
@@ -22,7 +22,7 @@ public class FragmentoFormulario extends AbstratoFormulario implements IJanela {
 		configurar();
 	}
 
-	public FragmentoFormulario(FragmentoContainer container) {
+	private FragmentoFormulario(FragmentoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 		container.setFragmentoFormulario(this);
 		this.container = container;
