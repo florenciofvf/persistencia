@@ -15,11 +15,11 @@ public class ConsultaFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ConsultaContainer container;
 
-	public ConsultaFormulario(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+	private ConsultaFormulario(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		this(formulario, Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, padrao, null, null, true);
 	}
 
-	public ConsultaFormulario(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
+	private ConsultaFormulario(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 		super(titulo);
 		container = new ConsultaContainer(this, formulario, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
@@ -27,7 +27,7 @@ public class ConsultaFormulario extends AbstratoFormulario implements IJanela {
 		montarLayout();
 	}
 
-	public ConsultaFormulario(ConsultaContainer container) {
+	private ConsultaFormulario(ConsultaContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_CONSULTA));
 		container.setConsultaFormulario(this);
 		this.container = container;
@@ -54,11 +54,20 @@ public class ConsultaFormulario extends AbstratoFormulario implements IJanela {
 		form.setVisible(true);
 	}
 
+	public static ConsultaFormulario criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+		return new ConsultaFormulario(formulario, provedor, padrao);
+	}
+
 	public static void criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao, String conteudo) {
-		ConsultaFormulario form = new ConsultaFormulario(formulario, provedor, padrao);
+		ConsultaFormulario form = criar(formulario, provedor, padrao);
 		form.setLocationRelativeTo(formulario);
 		form.setConteudo(conteudo);
 		form.setVisible(true);
+	}
+
+	public static ConsultaFormulario criar(Formulario formulario, String titulo, ConexaoProvedor provedor,
+			Conexao padrao, String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
+		return new ConsultaFormulario(formulario, titulo, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
 	}
 
 	public void retornoAoFichario() {

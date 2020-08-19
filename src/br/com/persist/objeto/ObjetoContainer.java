@@ -743,7 +743,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
 					if (abrirEmForm) {
-						ConsultaFormulario form = new ConsultaFormulario(null, instrucao.getNome(), provedor, conexao,
+						ConsultaFormulario form = ConsultaFormulario.criar(null, instrucao.getNome(), provedor, conexao,
 								instrucao.getValor(), chaves, false);
 						configLocationRelativeTo(form);
 						form.setVisible(true);
@@ -1071,7 +1071,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
 						if (abrirEmForm) {
-							ConsultaFormulario form = new ConsultaFormulario(null,
+							ConsultaFormulario form = ConsultaFormulario.criar(null,
 									Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, conexao, instrucao, null,
 									false);
 							configLocationRelativeTo(form);
@@ -1127,7 +1127,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
 						if (abrirEmForm) {
-							ConsultaFormulario form = new ConsultaFormulario(null,
+							ConsultaFormulario form = ConsultaFormulario.criar(null,
 									Mensagens.getString(Constantes.LABEL_CONSULTA), provedor, conexao, instrucao, null,
 									false);
 							configLocationRelativeTo(form);

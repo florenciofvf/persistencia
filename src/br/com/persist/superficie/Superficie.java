@@ -1186,7 +1186,7 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					ConsultaFormulario form = new ConsultaFormulario(formulario, formulario,
+					ConsultaFormulario form = ConsultaFormulario.criar(formulario, formulario,
 							container.getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);

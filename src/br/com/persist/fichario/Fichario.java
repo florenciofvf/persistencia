@@ -404,7 +404,7 @@ public class Fichario extends JTabbedPane {
 		}
 
 		private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao, ConfigArquivo config) {
-			DesktopFormulario form = new DesktopFormulario(formulario);
+			DesktopFormulario form = DesktopFormulario.criar(formulario);
 
 			int x = 10;
 			int y = 10;
