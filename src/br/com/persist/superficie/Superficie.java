@@ -176,9 +176,7 @@ public class Superficie extends Desktop {
 				frame = container.getContainerFormulario();
 			}
 
-			MacroDialogo form = new MacroDialogo(frame);
-			form.setLocationRelativeTo(frame);
-			form.setVisible(true);
+			MacroDialogo.criar(frame);
 		}
 	};
 
@@ -552,9 +550,7 @@ public class Superficie extends Desktop {
 					frame = container.getContainerFormulario();
 				}
 
-				RelacaoConfigDialogo form = new RelacaoConfigDialogo(frame, Superficie.this, relacao);
-				form.setLocationRelativeTo(frame);
-				form.setVisible(true);
+				RelacaoConfigDialogo.criar(frame, Superficie.this, relacao);
 			}
 		}
 
@@ -1172,9 +1168,7 @@ public class Superficie extends Desktop {
 				}
 
 				if (getSelecionados().size() > Constantes.UM) {
-					CircularDialogo form = new CircularDialogo(frame, Superficie.this, tipo);
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					CircularDialogo.criar(frame, Superficie.this, tipo);
 				}
 			}
 		}
@@ -1205,10 +1199,7 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, formulario,
-							container.getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					ConsultaDialogo.criar(frame, formulario, formulario, container.getConexaoPadrao());
 				});
 
 				ficharioAcao.setActionListener(
@@ -1241,9 +1232,7 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					UpdateDialogo form = new UpdateDialogo(frame, formulario, formulario, container.getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					UpdateDialogo.criar(frame, formulario, formulario, container.getConexaoPadrao());
 				});
 
 				ficharioAcao.setActionListener(
@@ -1292,14 +1281,10 @@ public class Superficie extends Desktop {
 				}
 
 				if (selecionadoObjeto != null) {
-					ObjetoConfigDialogo form = new ObjetoConfigDialogo(frame, Superficie.this, selecionadoObjeto);
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					ObjetoConfigDialogo.criar(frame, Superficie.this, selecionadoObjeto);
 
 				} else if (selecionadoRelacao != null) {
-					RelacaoConfigDialogo form = new RelacaoConfigDialogo(frame, Superficie.this, selecionadoRelacao);
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					RelacaoConfigDialogo.criar(frame, Superficie.this, selecionadoRelacao);
 				}
 			});
 

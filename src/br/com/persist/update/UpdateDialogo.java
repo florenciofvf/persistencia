@@ -16,26 +16,25 @@ public class UpdateDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final UpdateContainer container;
 
-	public UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor) {
+	private UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 		container = new UpdateContainer(this, formulario, provedor, null, null, null);
 		montarLayout();
 	}
 
-	public UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao) {
+	private UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 		container = new UpdateContainer(this, formulario, provedor, conexao, null, null);
 		montarLayout();
 	}
 
-	public UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao,
-			String instrucao) {
+	private UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao, String instrucao) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 		container = new UpdateContainer(this, formulario, provedor, conexao, instrucao);
 		montarLayout();
 	}
 
-	public UpdateDialogo(Frame frame, Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao conexao,
+	private UpdateDialogo(Frame frame, Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao conexao,
 			String instrucao, Map<String, String> mapaChaveValor) {
 		super(frame, titulo);
 		container = new UpdateContainer(this, formulario, provedor, conexao, instrucao, mapaChaveValor);
@@ -51,8 +50,30 @@ public class UpdateDialogo extends AbstratoDialogo implements IJanela {
 		dispose();
 	}
 
+	public static UpdateDialogo criar(Frame frame, Formulario formulario, ConexaoProvedor provedor) {
+		return new UpdateDialogo(frame, formulario, provedor);
+	}
+
+	public static UpdateDialogo criar(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao) {
+		UpdateDialogo form = new UpdateDialogo(frame, formulario, provedor, conexao);
+		form.setLocationRelativeTo(frame);
+		form.setVisible(true);
+
+		return form;
+	}
+
+	public static UpdateDialogo criar(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao,
+			String instrucao) {
+		return new UpdateDialogo(frame, formulario, provedor, conexao, instrucao);
+	}
+
+	public static UpdateDialogo criar(Frame frame, Formulario formulario, String titulo, ConexaoProvedor provedor,
+			Conexao conexao, String instrucao, Map<String, String> mapaChaveValor) {
+		return new UpdateDialogo(frame, formulario, titulo, provedor, conexao, instrucao, mapaChaveValor);
+	}
+
 	public static void criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
-		UpdateDialogo form = new UpdateDialogo(formulario, formulario, provedor, padrao);
+		UpdateDialogo form = criar(formulario, formulario, provedor, padrao);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}

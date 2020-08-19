@@ -308,9 +308,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 
 				dialogoAcao.setActionListener(e -> {
 					Frame frame = containerFormulario != null ? containerFormulario : formulario;
-					ConsultaDialogo form = new ConsultaDialogo(frame, formulario, formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					ConsultaDialogo.criar(frame, formulario, formulario, getConexaoPadrao());
 				});
 
 				ficharioAcao.setActionListener(
@@ -333,9 +331,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 
 				dialogoAcao.setActionListener(e -> {
 					Frame frame = containerFormulario != null ? containerFormulario : formulario;
-					UpdateDialogo form = new UpdateDialogo(frame, formulario, formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
-					form.setVisible(true);
+					UpdateDialogo.criar(frame, formulario, formulario, getConexaoPadrao());
 				});
 
 				ficharioAcao.setActionListener(

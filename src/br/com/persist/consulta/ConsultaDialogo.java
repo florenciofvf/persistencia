@@ -16,19 +16,19 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final ConsultaContainer container;
 
-	public ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor) {
+	private ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
 		container = new ConsultaContainer(this, formulario, provedor, null, null, null, true);
 		montarLayout();
 	}
 
-	public ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+	private ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
 		container = new ConsultaContainer(this, formulario, provedor, padrao, null, null, true);
 		montarLayout();
 	}
 
-	public ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
+	private ConsultaDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONSULTA));
 		container = new ConsultaContainer(this, formulario, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
@@ -44,8 +44,25 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 		dispose();
 	}
 
+	public static ConsultaDialogo criar(Frame frame, Formulario formulario, ConexaoProvedor provedor) {
+		return new ConsultaDialogo(frame, formulario, provedor);
+	}
+
+	public static ConsultaDialogo criar(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+		ConsultaDialogo form = new ConsultaDialogo(frame, formulario, provedor, padrao);
+		form.setLocationRelativeTo(frame);
+		form.setVisible(true);
+
+		return form;
+	}
+
+	public static ConsultaDialogo criar(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
+			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
+		return new ConsultaDialogo(frame, formulario, provedor, padrao, instrucao, mapaChaveValor, abrirArquivo);
+	}
+
 	public static void criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
-		ConsultaDialogo form = new ConsultaDialogo(formulario, formulario, provedor, padrao);
+		ConsultaDialogo form = criar(formulario, formulario, provedor, padrao);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}

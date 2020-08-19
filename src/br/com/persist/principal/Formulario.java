@@ -472,7 +472,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				formularioAcao
 						.setActionListener(e -> ConsultaFormulario.criar(Formulario.this, Formulario.this, null, null));
-				dialogoAcao.setActionListener(e -> ConsultaDialogo.criar(Formulario.this, Formulario.this, null));
+				dialogoAcao.setActionListener(
+						e -> ConsultaDialogo.criar(Formulario.this, Formulario.this, (Conexao) null));
 				ficharioAcao.setActionListener(e -> fichario.getConsulta().nova(Formulario.this, null));
 			}
 
@@ -491,7 +492,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				formularioAcao
 						.setActionListener(e -> UpdateFormulario.criar(Formulario.this, Formulario.this, null, null));
-				dialogoAcao.setActionListener(e -> UpdateDialogo.criar(Formulario.this, Formulario.this, null));
+				dialogoAcao
+						.setActionListener(e -> UpdateDialogo.criar(Formulario.this, Formulario.this, (Conexao) null));
 				ficharioAcao.setActionListener(e -> fichario.getUpdate().novo(Formulario.this, null));
 			}
 

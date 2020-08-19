@@ -237,13 +237,13 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 			private void eventos() {
 				fragmentoAcao.setActionListener(e -> {
-					FragmentoDialogo form = new FragmentoDialogo((Frame) null, null, fragmentoListener);
+					FragmentoDialogo form = FragmentoDialogo.criar((Frame) null, null, fragmentoListener);
 					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
 
 				variaveisAcao.setActionListener(e -> {
-					VariaveisDialogo form = new VariaveisDialogo((Frame) null, null);
+					VariaveisDialogo form = VariaveisDialogo.criar((Frame) null, null);
 					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
@@ -748,7 +748,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						configLocationRelativeTo(form);
 						form.setVisible(true);
 					} else {
-						ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao,
+						ConsultaDialogo form = ConsultaDialogo.criar((Frame) null, null, provedor, conexao,
 								instrucao.getValor(), chaves, false);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
@@ -763,7 +763,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						configLocationRelativeTo(form);
 						form.setVisible(true);
 					} else {
-						UpdateDialogo form = new UpdateDialogo((Frame) null, null, instrucao.getNome(), provedor,
+						UpdateDialogo form = UpdateDialogo.criar((Frame) null, null, instrucao.getNome(), provedor,
 								conexao, instrucao.getValor(), chaves);
 						configLocationRelativeTo(form);
 						form.setVisible(true);
@@ -861,7 +861,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				configLocationRelativeTo(form);
 				form.setVisible(true);
 			} else {
-				UpdateDialogo form = new UpdateDialogo((Frame) null, null, provedor, conexao, instrucao);
+				UpdateDialogo form = UpdateDialogo.criar((Frame) null, null, provedor, conexao, instrucao);
 				configLocationRelativeTo(form);
 				form.setVisible(true);
 			}
@@ -1077,8 +1077,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							configLocationRelativeTo(form);
 							form.setVisible(true);
 						} else {
-							ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao, instrucao,
-									null, false);
+							ConsultaDialogo form = ConsultaDialogo.criar((Frame) null, null, provedor, conexao,
+									instrucao, null, false);
 							configLocationRelativeTo(form);
 							form.setVisible(true);
 						}
@@ -1133,8 +1133,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 							configLocationRelativeTo(form);
 							form.setVisible(true);
 						} else {
-							ConsultaDialogo form = new ConsultaDialogo((Frame) null, null, provedor, conexao, instrucao,
-									null, false);
+							ConsultaDialogo form = ConsultaDialogo.criar((Frame) null, null, provedor, conexao,
+									instrucao, null, false);
 							configLocationRelativeTo(form);
 							form.setVisible(true);
 						}
@@ -1387,7 +1387,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ComplementoDialogo form = new ComplementoDialogo((Dialog) null, objeto, txtComplemento,
+				ComplementoDialogo form = ComplementoDialogo.criar((Dialog) null, objeto, txtComplemento,
 						complementoListener);
 				configLocationRelativeTo(form);
 				form.setVisible(true);
