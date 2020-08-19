@@ -28,7 +28,8 @@ public class UpdateDialogo extends AbstratoDialogo implements IJanela {
 		montarLayout();
 	}
 
-	private UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao, String instrucao) {
+	private UpdateDialogo(Frame frame, Formulario formulario, ConexaoProvedor provedor, Conexao conexao,
+			String instrucao) {
 		super(frame, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 		container = new UpdateContainer(this, formulario, provedor, conexao, instrucao);
 		montarLayout();
