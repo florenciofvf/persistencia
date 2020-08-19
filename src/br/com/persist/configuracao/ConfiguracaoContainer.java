@@ -77,11 +77,13 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 			new NomeValor("label.40000", 40000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.60000", 60000, NomeValor.INTERVALO_AUTO) };
 
-	private final transient NomeValor[] layouts = { new NomeValor("label.layout_1", 1, NomeValor.LAYOUTS),
-			new NomeValor("label.layout_2", 2, NomeValor.LAYOUTS),
-			new NomeValor("label.layout_3", 3, NomeValor.LAYOUTS),
-			new NomeValor("label.layout_4", 4, NomeValor.LAYOUTS),
-			new NomeValor("label.layout_5", 5, NomeValor.LAYOUTS) };
+	private final transient NomeValor[] layouts = { new NomeValor("label.somente_fichario", 1, NomeValor.LAYOUTS),
+			new NomeValor("label.arquivo_anexo_esquerdo", 2, NomeValor.LAYOUTS),
+			new NomeValor("label.anexo_arquivo_esquerdo", 3, NomeValor.LAYOUTS),
+			new NomeValor("label.arquivo_anexo_abaixo", 4, NomeValor.LAYOUTS),
+			new NomeValor("label.anexo_arquivo_abaixo", 5, NomeValor.LAYOUTS),
+			new NomeValor("label.arquivo_abaixo", 6, NomeValor.LAYOUTS),
+			new NomeValor("label.anexo_abaixo", 5, NomeValor.LAYOUTS) };
 
 	private final transient NomeValor[] destacados = {
 			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
