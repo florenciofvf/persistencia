@@ -14,7 +14,7 @@ public class VariaveisFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final VariaveisContainer container;
 
-	public VariaveisFormulario(Formulario formulario) {
+	private VariaveisFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container = new VariaveisContainer(this, formulario);
 		container.setVariaveisFormulario(this);
@@ -22,7 +22,7 @@ public class VariaveisFormulario extends AbstratoFormulario implements IJanela {
 		configurar();
 	}
 
-	public VariaveisFormulario(VariaveisContainer container) {
+	private VariaveisFormulario(VariaveisContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container.setVariaveisFormulario(this);
 		this.container = container;

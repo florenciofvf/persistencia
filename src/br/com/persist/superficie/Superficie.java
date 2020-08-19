@@ -743,7 +743,7 @@ public class Superficie extends Desktop {
 	}
 
 	private void abrirObjetoDados(Conexao conexao, Objeto objeto, Frame frame) {
-		ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());
+		ObjetoContainerFormulario form = ObjetoContainerFormulario.criar(formulario, conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
 	}
@@ -1220,7 +1220,8 @@ public class Superficie extends Desktop {
 						frame = container.getContainerFormulario();
 					}
 
-					UpdateFormulario form = new UpdateFormulario(formulario, formulario, container.getConexaoPadrao());
+					UpdateFormulario form = UpdateFormulario.criar(formulario, formulario,
+							container.getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});
@@ -1780,7 +1781,8 @@ public class Superficie extends Desktop {
 		objeto.setTabelaBuscaAuto(tabela);
 
 		if (Preferencias.isAbrirAutoDestacado()) {
-			ObjetoContainerFormulario form = new ObjetoContainerFormulario(formulario, conexao, objeto, getGraphics());
+			ObjetoContainerFormulario form = ObjetoContainerFormulario.criar(formulario, conexao, objeto,
+					getGraphics());
 			form.setLocationRelativeTo(frame);
 			form.setVisible(true);
 		} else {

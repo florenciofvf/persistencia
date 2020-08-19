@@ -11,7 +11,7 @@ public class PropriedadesFormulario extends AbstratoFormulario implements IJanel
 	private static final long serialVersionUID = 1L;
 	private final PropriedadesContainer container;
 
-	public PropriedadesFormulario(Formulario formulario, String conteudo) {
+	private PropriedadesFormulario(Formulario formulario, String conteudo) {
 		super(Mensagens.getString("label.propriedades"));
 		container = new PropriedadesContainer(this, formulario, conteudo);
 		montarLayout();

@@ -12,14 +12,14 @@ public class RequisicaoFormulario extends AbstratoFormulario implements IJanela 
 	private static final long serialVersionUID = 1L;
 	private final RequisicaoContainer container;
 
-	public RequisicaoFormulario(Formulario formulario, String conteudo, String idPagina) {
+	private RequisicaoFormulario(Formulario formulario, String conteudo, String idPagina) {
 		super(Mensagens.getString(Constantes.LABEL_REQUISICAO));
 		container = new RequisicaoContainer(this, formulario, conteudo, idPagina);
 		container.setRequisicaoFormulario(this);
 		montarLayout();
 	}
 
-	public RequisicaoFormulario(RequisicaoContainer container) {
+	private RequisicaoFormulario(RequisicaoContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_REQUISICAO));
 		container.setRequisicaoFormulario(this);
 		this.container = container;

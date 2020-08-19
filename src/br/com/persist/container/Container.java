@@ -324,7 +324,7 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 
 				formularioAcao.setActionListener(e -> {
 					Frame frame = containerFormulario != null ? containerFormulario : formulario;
-					UpdateFormulario form = new UpdateFormulario(formulario, formulario, getConexaoPadrao());
+					UpdateFormulario form = UpdateFormulario.criar(formulario, formulario, getConexaoPadrao());
 					form.setLocationRelativeTo(frame);
 					form.setVisible(true);
 				});

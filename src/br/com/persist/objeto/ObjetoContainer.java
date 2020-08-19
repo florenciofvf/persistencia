@@ -758,7 +758,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 				private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
 					if (abrirEmForm) {
-						UpdateFormulario form = new UpdateFormulario(null, instrucao.getNome(), provedor, conexao,
+						UpdateFormulario form = UpdateFormulario.criar(null, instrucao.getNome(), provedor, conexao,
 								instrucao.getValor(), chaves);
 						configLocationRelativeTo(form);
 						form.setVisible(true);
@@ -856,7 +856,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 		private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
 			if (abrirEmForm) {
-				UpdateFormulario form = new UpdateFormulario(null, Mensagens.getString(Constantes.LABEL_ATUALIZAR),
+				UpdateFormulario form = UpdateFormulario.criar(null, Mensagens.getString(Constantes.LABEL_ATUALIZAR),
 						provedor, conexao, instrucao);
 				configLocationRelativeTo(form);
 				form.setVisible(true);

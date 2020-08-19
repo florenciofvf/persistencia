@@ -15,7 +15,7 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
 
-	public ObjetoContainerFormulario(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g) {
+	private ObjetoContainerFormulario(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g) {
 		super(objeto.getId());
 		container = new ObjetoContainer(this, provedor, padrao, objeto, g, false);
 		container.setComponenteListener(ObjetoContainerFormulario.this::getThis);
@@ -36,6 +36,10 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 	@Override
 	public void fechar() {
 		dispose();
+	}
+
+	public static ObjetoContainerFormulario criar(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g) {
+		return new ObjetoContainerFormulario(provedor, padrao, objeto, g);
 	}
 
 	private void configurar() {

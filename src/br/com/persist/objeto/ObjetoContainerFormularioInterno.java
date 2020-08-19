@@ -69,6 +69,11 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		dispose();
 	}
 
+	public static ObjetoContainerFormularioInterno criar(ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
+			Graphics g, boolean buscaAuto) {
+		return new ObjetoContainerFormularioInterno(provedor, padrao, objeto, g, buscaAuto);
+	}
+
 	@Override
 	public void ini(Graphics graphics) {
 		container.ini(graphics);

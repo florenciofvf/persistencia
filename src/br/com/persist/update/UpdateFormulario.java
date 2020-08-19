@@ -15,19 +15,11 @@ public class UpdateFormulario extends AbstratoFormulario implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private final UpdateContainer container;
 
-	public UpdateFormulario(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+	private UpdateFormulario(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
 		this(formulario, Mensagens.getString(Constantes.LABEL_UPDATE), provedor, padrao, null, null);
 	}
 
-	public UpdateFormulario(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
-			String instrucao, Map<String, String> mapaChaveValor) {
-		super(titulo);
-		container = new UpdateContainer(this, formulario, provedor, padrao, instrucao, mapaChaveValor);
-		container.setUpdateFormulario(this);
-		montarLayout();
-	}
-
-	public UpdateFormulario(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
+	private UpdateFormulario(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao) {
 		super(titulo);
 		container = new UpdateContainer(this, formulario, provedor, padrao, instrucao);
@@ -35,7 +27,15 @@ public class UpdateFormulario extends AbstratoFormulario implements IJanela {
 		montarLayout();
 	}
 
-	public UpdateFormulario(UpdateContainer container) {
+	private UpdateFormulario(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
+			String instrucao, Map<String, String> mapaChaveValor) {
+		super(titulo);
+		container = new UpdateContainer(this, formulario, provedor, padrao, instrucao, mapaChaveValor);
+		container.setUpdateFormulario(this);
+		montarLayout();
+	}
+
+	private UpdateFormulario(UpdateContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_UPDATE));
 		container.setUpdateFormulario(this);
 		this.container = container;
@@ -56,14 +56,32 @@ public class UpdateFormulario extends AbstratoFormulario implements IJanela {
 		container.setConteudo(conteudo);
 	}
 
+	public static UpdateFormulario criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao) {
+		return new UpdateFormulario(formulario, provedor, padrao);
+	}
+
+	public static UpdateFormulario criar(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
+			String instrucao) {
+		return new UpdateFormulario(formulario, titulo, provedor, padrao, instrucao);
+	}
+
+	public static UpdateFormulario criar(Formulario formulario, String titulo, ConexaoProvedor provedor, Conexao padrao,
+			String instrucao, Map<String, String> mapaChaveValor) {
+		return new UpdateFormulario(formulario, titulo, provedor, padrao, instrucao, mapaChaveValor);
+	}
+
+	public static UpdateFormulario criar(UpdateContainer container) {
+		return new UpdateFormulario(container);
+	}
+
 	public static void criar(Formulario formulario, UpdateContainer container) {
-		UpdateFormulario form = new UpdateFormulario(container);
+		UpdateFormulario form = criar(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
 
 	public static void criar(Formulario formulario, ConexaoProvedor provedor, Conexao padrao, String conteudo) {
-		UpdateFormulario form = new UpdateFormulario(formulario, provedor, padrao);
+		UpdateFormulario form = criar(formulario, provedor, padrao);
 		form.setLocationRelativeTo(formulario);
 		form.setConteudo(conteudo);
 		form.setVisible(true);

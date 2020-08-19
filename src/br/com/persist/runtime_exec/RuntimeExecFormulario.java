@@ -12,14 +12,14 @@ public class RuntimeExecFormulario extends AbstratoFormulario implements IJanela
 	private static final long serialVersionUID = 1L;
 	private final RuntimeExecContainer container;
 
-	public RuntimeExecFormulario(Formulario formulario, String conteudo, String idPagina) {
+	private RuntimeExecFormulario(Formulario formulario, String conteudo, String idPagina) {
 		super(Mensagens.getString(Constantes.LABEL_RUNTIME_EXEC));
 		container = new RuntimeExecContainer(this, formulario, conteudo, idPagina);
 		container.setRuntimeExecFormulario(this);
 		montarLayout();
 	}
 
-	public RuntimeExecFormulario(RuntimeExecContainer container) {
+	private RuntimeExecFormulario(RuntimeExecContainer container) {
 		super(Mensagens.getString(Constantes.LABEL_RUNTIME_EXEC));
 		container.setRuntimeExecFormulario(this);
 		this.container = container;
