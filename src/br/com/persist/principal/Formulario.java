@@ -88,12 +88,12 @@ import br.com.persist.xml.XMLColetor;
 
 public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
+	private SplitPane splitPanePrincipal = Util.criarSplitPane(SplitPane.VERTICAL_SPLIT);
 	private final transient List<Conexao> conexoes = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private static final Map<String, Object> map = new HashMap<>();
 	private final transient Conteiner conteiner = new Conteiner();
 	private final transient Arquivos arquivos = new Arquivos();
-	private SplitPane splitPane = Util.criarSplitPane(0);
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 	public static final Macro macro = new Macro();
@@ -619,84 +619,112 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		private class MenuLayout extends Menu {
 			private static final long serialVersionUID = 1L;
-			private Action layout1Acao = Action.actionMenu("label.layout_1", null);
-			private Action layout2Acao = Action.actionMenu("label.layout_2", null);
-			private Action layout3Acao = Action.actionMenu("label.layout_3", null);
-			private Action layout4Acao = Action.actionMenu("label.layout_4", null);
-			private Action layout5Acao = Action.actionMenu("label.layout_5", null);
+			private Action arquivoAnexoEsquerdoAcao = Action.actionMenu("label.arquivo_anexo_esquerdo", null);
+			private Action anexoArquivoEsquerdoAcao = Action.actionMenu("label.anexo_arquivo_esquerdo", null);
+			private Action arquivoAnexoAbaixoAcao = Action.actionMenu("label.arquivo_anexo_abaixo", null);
+			private Action anexoArquivoAbaixoAcao = Action.actionMenu("label.anexo_arquivo_abaixo", null);
+			private Action somenteFicharioAcao = Action.actionMenu("label.somente_fichario", null);
+			private Action arquivoAbaixoAcao = Action.actionMenu("label.arquivo_abaixo", null);
+			private Action anexoAbaixoAcao = Action.actionMenu("label.anexo_abaixo", null);
 
 			private MenuLayout() {
 				super("label.layout", Icones.REGION);
-				addMenuItem(layout1Acao);
-				addMenuItem(layout2Acao);
-				addMenuItem(layout3Acao);
-				addMenuItem(layout4Acao);
-				addMenuItem(layout5Acao);
+				addMenuItem(somenteFicharioAcao);
+				addMenuItem(arquivoAnexoEsquerdoAcao);
+				addMenuItem(anexoArquivoEsquerdoAcao);
+				addMenuItem(arquivoAnexoAbaixoAcao);
+				addMenuItem(anexoArquivoAbaixoAcao);
+				addMenuItem(arquivoAbaixoAcao);
+				addMenuItem(anexoAbaixoAcao);
 
-				layout1Acao.setActionListener(e -> layout1());
-				layout2Acao.setActionListener(e -> layout2());
-				layout3Acao.setActionListener(e -> layout3());
-				layout4Acao.setActionListener(e -> layout4());
-				layout5Acao.setActionListener(e -> layout5());
+				somenteFicharioAcao.setActionListener(e -> somenteFichario());
+				arquivoAnexoEsquerdoAcao.setActionListener(e -> arquivoAnexoEsquerdo());
+				anexoArquivoEsquerdoAcao.setActionListener(e -> anexoArquivoEsquerdo());
+				arquivoAnexoAbaixoAcao.setActionListener(e -> arquivoAnexoAbaixo());
+				anexoArquivoAbaixoAcao.setActionListener(e -> anexoArquivoAbaixo());
+				arquivoAbaixoAcao.setActionListener(e -> arquivoAbaixo());
+				anexoAbaixoAcao.setActionListener(e -> anexoAbaixo());
 			}
 
-			private void layout1() {
-				Formulario.this.remove(splitPane);
+			private void somenteFichario() {
+				Formulario.this.remove(splitPanePrincipal);
 				Formulario.this.remove(fichario);
 
 				Formulario.this.add(BorderLayout.CENTER, fichario);
 				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 
-			private void layout2() {
-				Dimension d = Formulario.this.getSize();
-				Formulario.this.remove(splitPane);
+			private void arquivoAnexoEsquerdo() {
+				Dimension sizePrincipal = Formulario.this.getSize();
+				Formulario.this.remove(splitPanePrincipal);
 				Formulario.this.remove(fichario);
 
-				ArquivoTreeContainer arvore = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexo = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane esquerdo = Util.splitPaneVertical(arvore, anexo, d.height / 2);
-				splitPane = Util.splitPaneHorizontal(esquerdo, fichario, d.width / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPane);
+				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+				SplitPane splitEsquerdo = Util.splitPaneVertical(arquivoTree, anexoTree, sizePrincipal.height / 2);
+				splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
+				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
 				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 
-			private void layout3() {
-				Dimension d = Formulario.this.getSize();
-				Formulario.this.remove(splitPane);
+			private void anexoArquivoEsquerdo() {
+				Dimension sizePrincipal = Formulario.this.getSize();
+				Formulario.this.remove(splitPanePrincipal);
 				Formulario.this.remove(fichario);
 
-				ArquivoTreeContainer arvore = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexo = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane esquerdo = Util.splitPaneVertical(anexo, arvore, d.height / 2);
-				splitPane = Util.splitPaneHorizontal(esquerdo, fichario, d.width / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPane);
+				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+				SplitPane splitEsquerdo = Util.splitPaneVertical(anexoTree, arquivoTree, sizePrincipal.height / 2);
+				splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
+				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
 				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 
-			private void layout4() {
-				Dimension d = Formulario.this.getSize();
-				Formulario.this.remove(splitPane);
+			private void arquivoAnexoAbaixo() {
+				Dimension sizePrincipal = Formulario.this.getSize();
+				Formulario.this.remove(splitPanePrincipal);
 				Formulario.this.remove(fichario);
 
-				ArquivoTreeContainer arvore = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexo = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane abaixo = Util.splitPaneHorizontal(arvore, anexo, d.width / 2);
-				splitPane = Util.splitPaneVertical(fichario, abaixo, d.height / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPane);
+				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+				SplitPane splitAbaixo = Util.splitPaneHorizontal(arquivoTree, anexoTree, sizePrincipal.width / 2);
+				splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
+				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
 				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 
-			private void layout5() {
-				Dimension d = Formulario.this.getSize();
-				Formulario.this.remove(splitPane);
+			private void arquivoAbaixo() {
+				Dimension sizePrincipal = Formulario.this.getSize();
+				Formulario.this.remove(splitPanePrincipal);
 				Formulario.this.remove(fichario);
 
-				ArquivoTreeContainer arvore = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexo = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane abaixo = Util.splitPaneHorizontal(anexo, arvore, d.width / 2);
-				splitPane = Util.splitPaneVertical(fichario, abaixo, d.height / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPane);
+				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+				splitPanePrincipal = Util.splitPaneVertical(fichario, arquivoTree, sizePrincipal.height / 2);
+				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+				SwingUtilities.updateComponentTreeUI(Formulario.this);
+			}
+
+			private void anexoArquivoAbaixo() {
+				Dimension sizePrincipal = Formulario.this.getSize();
+				Formulario.this.remove(splitPanePrincipal);
+				Formulario.this.remove(fichario);
+
+				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+				SplitPane splitAbaixo = Util.splitPaneHorizontal(anexoTree, arquivoTree, sizePrincipal.width / 2);
+				splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
+				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+				SwingUtilities.updateComponentTreeUI(Formulario.this);
+			}
+
+			private void anexoAbaixo() {
+				Dimension sizePrincipal = Formulario.this.getSize();
+				Formulario.this.remove(splitPanePrincipal);
+				Formulario.this.remove(fichario);
+
+				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+				splitPanePrincipal = Util.splitPaneVertical(fichario, anexoTree, sizePrincipal.height / 2);
+				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
 				SwingUtilities.updateComponentTreeUI(Formulario.this);
 			}
 
@@ -704,15 +732,19 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				int valor = Preferencias.getLayoutAbertura();
 
 				if (valor == 1) {
-					layout1();
+					somenteFichario();
 				} else if (valor == 2) {
-					layout2();
+					arquivoAnexoEsquerdo();
 				} else if (valor == 3) {
-					layout3();
+					anexoArquivoEsquerdo();
 				} else if (valor == 4) {
-					layout4();
+					arquivoAnexoAbaixo();
 				} else if (valor == 5) {
-					layout5();
+					anexoArquivoAbaixo();
+				} else if (valor == 6) {
+					arquivoAbaixo();
+				} else if (valor == 7) {
+					anexoAbaixo();
 				}
 			}
 		}
