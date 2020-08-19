@@ -35,7 +35,10 @@ import br.com.persist.util.Preferencias;
 
 public class ConfiguracaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private final CheckBox chkExecAposCopiarConcatenado = new CheckBox("label.executar_apos_copiar_concatenado");
+	private final CheckBox chkExecAposCopiarColunaConcatenado = new CheckBox(
+			"label.executar_apos_copiar_coluna_concatenado");
+	private final CheckBox chkExecAposBaixarParaComplemento = new CheckBox(
+			"label.executar_apos_baixar_para_complemento");
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
 	private final CheckBox chkNomeColunaListener = new CheckBox("label.copiar_nome_coluna_listener");
@@ -118,7 +121,8 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 		PanelCenter panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
 
-		chkExecAposCopiarConcatenado.setSelected(Preferencias.isExecAposCopiarConcatenado());
+		chkExecAposCopiarColunaConcatenado.setSelected(Preferencias.isExecAposCopiarColunaConcatenado());
+		chkExecAposBaixarParaComplemento.setSelected(Preferencias.isExecAposBaixarParaComplemento());
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkNomeColunaListener.setSelected(Preferencias.isCopiarNomeColunaListener());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
@@ -157,7 +161,8 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkAbortarFecharComESC);
-		container.add(chkExecAposCopiarConcatenado);
+		container.add(chkExecAposBaixarParaComplemento);
+		container.add(chkExecAposCopiarColunaConcatenado);
 		container.add(chkNomeColunaListener);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkNomearArrasto);
@@ -178,7 +183,8 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 
 		Insets insets = new Insets(5, 10, 5, 5);
 
-		chkExecAposCopiarConcatenado.setMargin(insets);
+		chkExecAposCopiarColunaConcatenado.setMargin(insets);
+		chkExecAposBaixarParaComplemento.setMargin(insets);
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
@@ -219,10 +225,16 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 					Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
 		});
 
+		chkExecAposCopiarColunaConcatenado.addActionListener(
+				e -> Preferencias.setExecAposCopiarColunaConcatenado(chkExecAposCopiarColunaConcatenado.isSelected()));
+
 		chkNomeColunaListener
 				.addActionListener(e -> Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected()));
 
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
+
+		chkExecAposBaixarParaComplemento.addActionListener(
+				e -> Preferencias.setExecAposBaixarParaComplemento(chkExecAposBaixarParaComplemento.isSelected()));
 
 		chkAtivarAbrirAutoDestac
 				.addActionListener(e -> Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected()));
@@ -238,9 +250,6 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
 
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
-
-		chkExecAposCopiarConcatenado.addActionListener(
-				e -> Preferencias.setExecAposCopiarConcatenado(chkExecAposCopiarConcatenado.isSelected()));
 
 		chkAreaTransTabelaRegistros.addActionListener(
 				e -> Preferencias.setAreaTransTabelaRegistros(chkAreaTransTabelaRegistros.isSelected()));

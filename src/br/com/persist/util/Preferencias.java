@@ -11,7 +11,8 @@ import java.util.prefs.Preferences;
 import br.com.persist.objeto.Objeto;
 
 public class Preferencias {
-	private static boolean execAposCopiarConcatenado;
+	private static boolean execAposCopiarColunaConcatenado;
+	private static boolean execAposBaixarParaComplemento;
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
 	private static boolean exibiuMensagemConnection;
@@ -45,8 +46,9 @@ public class Preferencias {
 		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
 
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
+		execAposCopiarColunaConcatenado = pref.getBoolean("exec_apos_copiar_coluna_concatenado", false);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
-		execAposCopiarConcatenado = pref.getBoolean("exec_apos_copiar_concatenado", false);
+		execAposBaixarParaComplemento = pref.getBoolean("exec_apos_baixar_para_complemento", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
 		copiarNomeColunaListener = pref.getBoolean("copiar_nome_coluna_listener", false);
@@ -83,7 +85,8 @@ public class Preferencias {
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
 
-		pref.putBoolean("exec_apos_copiar_concatenado", execAposCopiarConcatenado);
+		pref.putBoolean("exec_apos_copiar_coluna_concatenado", execAposCopiarColunaConcatenado);
+		pref.putBoolean("exec_apos_baixar_para_complemento", execAposBaixarParaComplemento);
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
 		pref.putBoolean("copiar_nome_coluna_listener", copiarNomeColunaListener);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
@@ -310,11 +313,19 @@ public class Preferencias {
 		Preferencias.exibiuMensagemConnection = exibiuMensagemConnection;
 	}
 
-	public static boolean isExecAposCopiarConcatenado() {
-		return execAposCopiarConcatenado;
+	public static boolean isExecAposCopiarColunaConcatenado() {
+		return execAposCopiarColunaConcatenado;
 	}
 
-	public static void setExecAposCopiarConcatenado(boolean execAposCopiarConcatenado) {
-		Preferencias.execAposCopiarConcatenado = execAposCopiarConcatenado;
+	public static void setExecAposCopiarColunaConcatenado(boolean execAposCopiarColunaConcatenado) {
+		Preferencias.execAposCopiarColunaConcatenado = execAposCopiarColunaConcatenado;
+	}
+
+	public static boolean isExecAposBaixarParaComplemento() {
+		return execAposBaixarParaComplemento;
+	}
+
+	public static void setExecAposBaixarParaComplemento(boolean execAposBaixarParaComplemento) {
+		Preferencias.execAposBaixarParaComplemento = execAposBaixarParaComplemento;
 	}
 }

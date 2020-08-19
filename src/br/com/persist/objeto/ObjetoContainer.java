@@ -386,7 +386,9 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						txtComplemento.setText(s + " " + complement);
 					}
 
-					actionListenerInner.actionPerformed(null);
+					if (Preferencias.isExecAposBaixarParaComplemento()) {
+						actionListenerInner.actionPerformed(null);
+					}
 				}
 			}
 		}
@@ -1823,7 +1825,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
 			txtComplemento.setText("AND " + nome + " = " + string);
 
-			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarConcatenado()) {
+			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarColunaConcatenado()) {
 				actionListenerInner.actionPerformed(null);
 			}
 		}
