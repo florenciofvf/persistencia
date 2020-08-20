@@ -57,14 +57,15 @@ public class DesktopFormulario extends AbstratoFormulario {
 		Dimension principalSize = principal.getSize();
 		Rectangle configuraSize = principal.getGraphicsConfiguration().getBounds();
 
-		if (!Util.porcentagemMaiorQue(principalSize.height, configuraSize.height, 70)) {
+		if (principalLocation.y < 100 && !Util.porcentagemMaiorQue(principalSize.height, configuraSize.height, 70)) {
 			int x = principalLocation.x;
 			int y = principalLocation.y + principalSize.height + espaco;
 			int l = principalSize.width;
 			int a = configuraSize.height - (principalLocation.y + principalSize.height) - espaco;
 			formulario.setBounds(x, y, l, a);
 
-		} else if (!Util.porcentagemMaiorQue(principalSize.width, configuraSize.width, 70)) {
+		} else if (principalLocation.x < 100
+				&& !Util.porcentagemMaiorQue(principalSize.width, configuraSize.width, 70)) {
 			int x = principalLocation.x + principalSize.width + espaco;
 			int y = principalLocation.y;
 			int l = configuraSize.width - (principalLocation.x + principalSize.width) - espaco;
