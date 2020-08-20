@@ -61,14 +61,14 @@ public class DesktopFormulario extends AbstratoFormulario {
 			int x = principalLocation.x;
 			int y = principalLocation.y + principalSize.height + espaco;
 			int l = principalSize.width;
-			int a = configuraSize.height - (principalLocation.y + principalSize.height) - espaco;
+			int a = configuraSize.height - principalSize.height - espaco;
 			formulario.setBounds(x, y, l, a);
 
 		} else if (principalLocation.x < 100
 				&& !Util.porcentagemMaiorQue(principalSize.width, configuraSize.width, 70)) {
 			int x = principalLocation.x + principalSize.width + espaco;
 			int y = principalLocation.y;
-			int l = configuraSize.width - (principalLocation.x + principalSize.width) - espaco;
+			int l = configuraSize.width - principalSize.width - espaco;
 			int a = principalSize.height;
 			formulario.setBounds(x, y, l, a);
 
