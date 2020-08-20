@@ -420,7 +420,7 @@ public class Fichario extends JTabbedPane {
 				}
 			}
 
-			form.setLocationRelativeTo(formulario);
+			DesktopFormulario.posicionar(formulario, form);
 			form.setVisible(true);
 		}
 
