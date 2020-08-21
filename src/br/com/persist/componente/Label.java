@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 
 public class Label extends JLabel {
 	private static final long serialVersionUID = 1L;
-	private LabelLinkListener linkListener;
+	private transient LabelLinkListener linkListener;
 
 	public Label(String chaveRotulo, Color corFonte) {
 		super(Mensagens.getString(chaveRotulo));
