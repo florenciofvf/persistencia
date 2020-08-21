@@ -79,7 +79,11 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 	}
 
 	public static ContainerFormulario criar(Formulario formulario, File file) {
-		return new ContainerFormulario(formulario, file);
+		ContainerFormulario form = new ContainerFormulario(formulario, file);
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+
+		return form;
 	}
 
 	public void retornoAoFichario() {
