@@ -32,6 +32,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
+import br.com.persist.util.Util;
 
 public class ConfiguracaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
@@ -49,6 +50,8 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
+	private final TextField txtDefinirLargura = new TextField();
+	private final TextField txtDefinirAltura = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
 	private ConfiguracaoFormulario configuracaoFormulario;
@@ -128,8 +131,10 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkNomeColunaListener.setSelected(Preferencias.isCopiarNomeColunaListener());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
+		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		chkAbortarFecharComESC.setSelected(Preferencias.isAbortarFecharComESC());
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
+		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkNomearArrasto.setSelected(Preferencias.isNomearArrasto());
@@ -179,6 +184,9 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		container.add(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo));
 		container.add(new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo));
 		container.add(new PanelCenter(new Label("label.form_ficha"), txtFormFicha));
+		container.add(new JSeparator());
+		container.add(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura));
+		container.add(new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura));
 
 		add(BorderLayout.CENTER, new ScrollPane(container));
 		add(BorderLayout.NORTH, toolbar);
@@ -259,6 +267,9 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
 
+		txtDefinirLargura.addActionListener(e -> definirLargura());
+		txtDefinirAltura.addActionListener(e -> definirAltura());
+
 		txtFormFichaDialogo.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -279,6 +290,32 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 				Preferencias.setFormFicha(txtFormFicha.getText());
 			}
 		});
+
+		txtDefinirLargura.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				definirLargura();
+			}
+		});
+
+		txtDefinirAltura.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				definirAltura();
+			}
+		});
+	}
+
+	private void definirLargura() {
+		int porcentagem = Util.getInt(txtDefinirLargura.getText(), Preferencias.getPorcHorizontalLocalForm());
+		formulario.definirLarguraEmPorcentagem(porcentagem);
+		Preferencias.setPorcHorizontalLocalForm(porcentagem);
+	}
+
+	private void definirAltura() {
+		int porcentagem = Util.getInt(txtDefinirAltura.getText(), Preferencias.getPorcVerticalLocalForm());
+		formulario.definirAlturaEmPorcentagem(porcentagem);
+		Preferencias.setPorcVerticalLocalForm(porcentagem);
 	}
 
 	private class NomeValor {

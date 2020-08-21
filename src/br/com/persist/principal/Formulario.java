@@ -945,16 +945,16 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		Point principalLocation = getLocation();
 		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
 
-		if (principalLocation.y < 100 && !Util.porcentagemMaiorQue(principalSize.height, configuraSize.height,
-				Preferencias.getPorcVerticalLocalForm())) {
+		if (principalLocation.y < 100 && !Util.menorEmPorcentagemMaiorQuePorc(principalSize.height,
+				configuraSize.height, Preferencias.getPorcVerticalLocalForm())) {
 			int x = principalLocation.x;
 			int y = principalLocation.y + principalSize.height + espaco;
 			int l = principalSize.width;
 			int a = configuraSize.height - principalSize.height - espaco;
 			return new PosicaoDimensao(x, y, l, a);
 
-		} else if (principalLocation.x < 100 && !Util.porcentagemMaiorQue(principalSize.width, configuraSize.width,
-				Preferencias.getPorcHorizontalLocalForm())) {
+		} else if (principalLocation.x < 100 && !Util.menorEmPorcentagemMaiorQuePorc(principalSize.width,
+				configuraSize.width, Preferencias.getPorcHorizontalLocalForm())) {
 			int x = principalLocation.x + principalSize.width + espaco;
 			int y = principalLocation.y;
 			int l = configuraSize.width - principalSize.width - espaco;
@@ -963,5 +963,19 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		return null;
+	}
+
+	public void definirAlturaEmPorcentagem(int porcentagem) {
+		Dimension principalSize = getSize();
+		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
+		double altura = Util.porcentagemEmValor(porcentagem, configuraSize.height);
+		setSize(principalSize.width, (int) altura);
+	}
+
+	public void definirLarguraEmPorcentagem(int porcentagem) {
+		Dimension principalSize = getSize();
+		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
+		double largura = Util.porcentagemEmValor(porcentagem, configuraSize.width);
+		setSize((int) largura, principalSize.height);
 	}
 }
