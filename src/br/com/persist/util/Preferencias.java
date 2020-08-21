@@ -18,14 +18,15 @@ public class Preferencias {
 	private static boolean exibiuMensagemConnection;
 	private static String arqPref = "preferencias";
 	private static int tipoContainerPesquisaAuto;
+	private static int porcHorizontalLocalForm;
 	private static boolean erroCriarConnection;
 	private static boolean abortarFecharComESC;
 	private static boolean ficharioComRolagem;
 	private static Color corAntesTotalRecente;
 	private static boolean abrirAutoDestacado;
 	private static int intervaloPesquisaAuto;
+	private static int porcVerticalLocalForm;
 	private static boolean fecharAposSoltar;
-	private static boolean ajusteAutomatico;
 	private static int intervaloComparacao;
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
@@ -53,13 +54,14 @@ public class Preferencias {
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
 		copiarNomeColunaListener = pref.getBoolean("copiar_nome_coluna_listener", false);
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
+		porcHorizontalLocalForm = pref.getInt("porc_horizontal_local_form", 70);
 		formFichaDialogo = pref.get("form_ficha_dialogo", "FORM,FICHA,DIALOG");
 		abortarFecharComESC = pref.getBoolean("abortar_fechar_com_ESC", false);
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
+		porcVerticalLocalForm = pref.getInt("porc_vertical_local_form", 70);
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
 		fecharAposSoltar = pref.getBoolean("fechar_apos_soltar", true);
-		ajusteAutomatico = pref.getBoolean("ajuste_automatico", false);
 		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		nomearArrasto = pref.getBoolean("nomear_arrasto", false);
@@ -91,6 +93,8 @@ public class Preferencias {
 		pref.putBoolean("copiar_nome_coluna_listener", copiarNomeColunaListener);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
+		pref.putInt("porc_horizontal_local_form", porcHorizontalLocalForm);
+		pref.putInt("porc_vertical_local_form", porcVerticalLocalForm);
 		pref.putBoolean("abortar_fechar_com_ESC", abortarFecharComESC);
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
@@ -100,7 +104,6 @@ public class Preferencias {
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.putInt("cor_total_atual", corTotalAtual.getRGB());
 		pref.putInt("cor_compara_rec", corComparaRec.getRGB());
-		pref.putBoolean("ajuste_automatico", ajusteAutomatico);
 		pref.putBoolean("nomear_arrasto", nomearArrasto);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
@@ -327,5 +330,21 @@ public class Preferencias {
 
 	public static void setExecAposBaixarParaComplemento(boolean execAposBaixarParaComplemento) {
 		Preferencias.execAposBaixarParaComplemento = execAposBaixarParaComplemento;
+	}
+
+	public static int getPorcHorizontalLocalForm() {
+		return porcHorizontalLocalForm;
+	}
+
+	public static void setPorcHorizontalLocalForm(int porcHorizontalLocalForm) {
+		Preferencias.porcHorizontalLocalForm = porcHorizontalLocalForm;
+	}
+
+	public static int getPorcVerticalLocalForm() {
+		return porcVerticalLocalForm;
+	}
+
+	public static void setPorcVerticalLocalForm(int porcVerticalLocalForm) {
+		Preferencias.porcVerticalLocalForm = porcVerticalLocalForm;
 	}
 }
