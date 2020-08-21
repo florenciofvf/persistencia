@@ -28,6 +28,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
+import br.com.persist.componente.LabelLinkListener;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.ScrollPane;
@@ -223,7 +224,9 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
-			container.add(criarLinha("label.arquivo", txtArquivo, Mensagens.getString("hint.arquivo_absoluto")));
+			container.add(criarLinhaComLink("label.arquivo", txtArquivo,
+					Mensagens.getString("hint.arquivo_absoluto_relativo"),
+					PanelGeral.this::mensagemPropriedadeArquivo));
 			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.buscaAutoApos", txtBuscaAutomaticaApos,
 					Mensagens.getString("hint.buscaAutoApos")));
@@ -254,6 +257,10 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			txtLinkAutomatico.setEnabled(false);
 
 			add(BorderLayout.CENTER, container);
+		}
+
+		private void mensagemPropriedadeArquivo(Label label) {
+			Util.mensagem(ObjetoConfigContainer.this, Mensagens.getString("msg.propriedade_arquivo"));
 		}
 
 		private transient MouseListener buscaAutomaticaAposListener = new MouseAdapter() {
@@ -475,6 +482,11 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 		}
 
 		private Component criarLinha(String chaveRotulo, JComponent componente, String hint) {
+			return criarLinhaComLink(chaveRotulo, componente, hint, null);
+		}
+
+		private Component criarLinhaComLink(String chaveRotulo, JComponent componente, String hint,
+				LabelLinkListener linkListener) {
 			Dimension largura = new Dimension(120, 0);
 			Panel linha = new Panel();
 
@@ -490,6 +502,11 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 
 			linha.add(BorderLayout.CENTER, componente);
 			linha.add(BorderLayout.WEST, label);
+
+			if (linkListener != null) {
+				label.setLinkListener(linkListener);
+				label.modoLink();
+			}
 
 			return linha;
 		}
