@@ -47,7 +47,7 @@ public class Label extends JLabel {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setForeground(Color.PINK);
+				setForeground(Color.MAGENTA);
 			}
 
 			@Override

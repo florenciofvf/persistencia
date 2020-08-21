@@ -4,7 +4,9 @@ import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.PopupMenu;
+import java.awt.Rectangle;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
@@ -78,6 +80,7 @@ import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuPadrao1;
+import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisDialogo;
@@ -272,7 +275,15 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
 			ContainerFormulario form = ContainerFormulario.criar(formulario, file);
 			form.abrir(file, coletor, getGraphics(), config);
-			form.setLocationRelativeTo(formulario);
+
+			PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
+
+			if (pd != null) {
+				form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
+			} else {
+				form.setLocationRelativeTo(formulario);
+			}
+
 			form.setVisible(true);
 		}
 	}
@@ -926,5 +937,30 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public static Map<String, Object> getMap() {
 		return map;
+	}
+
+	public PosicaoDimensao criarPosicaoDimensaoSeValido() {
+		final int espaco = 3;
+		Dimension principalSize = getSize();
+		Point principalLocation = getLocation();
+		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
+
+		if (principalLocation.y < 100 && !Util.porcentagemMaiorQue(principalSize.height, configuraSize.height, 70)) {
+			int x = principalLocation.x;
+			int y = principalLocation.y + principalSize.height + espaco;
+			int l = principalSize.width;
+			int a = configuraSize.height - principalSize.height - espaco;
+			return new PosicaoDimensao(x, y, l, a);
+
+		} else if (principalLocation.x < 100
+				&& !Util.porcentagemMaiorQue(principalSize.width, configuraSize.width, 70)) {
+			int x = principalLocation.x + principalSize.width + espaco;
+			int y = principalLocation.y;
+			int l = configuraSize.width - principalSize.width - espaco;
+			int a = principalSize.height;
+			return new PosicaoDimensao(x, y, l, a);
+		}
+
+		return null;
 	}
 }

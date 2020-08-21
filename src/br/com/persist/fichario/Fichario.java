@@ -85,6 +85,7 @@ import br.com.persist.update.UpdateFormulario;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisContainer;
@@ -420,7 +421,14 @@ public class Fichario extends JTabbedPane {
 				}
 			}
 
-			DesktopFormulario.posicionar(formulario, form);
+			PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
+
+			if (pd != null) {
+				form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
+			} else {
+				form.setLocationRelativeTo(formulario);
+			}
+
 			form.setVisible(true);
 		}
 
