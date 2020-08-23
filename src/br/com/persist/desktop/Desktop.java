@@ -320,7 +320,6 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
 		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
@@ -332,7 +331,6 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		private DesktopPopup() {
 			add(menuLargura);
 			addMenuItem(true, distribuirAcao);
-			addMenuItem(true, centralizarAcao);
 			addMenuItem(true, dimensaoAcao4);
 			addMenuItem(dimensaoAcao3);
 			addMenuItem(dimensaoAcao2);
@@ -346,7 +344,6 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		private void eventos() {
 			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
-			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
 			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());

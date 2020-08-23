@@ -189,6 +189,7 @@ public class AbstratoDesktop extends JDesktopPane {
 	protected class MenuAlinhamento extends Menu {
 		private static final long serialVersionUID = 1L;
 		private Action somenteDireitoAcao = Action.actionMenu("label.somente_direito", Icones.ALINHA_DIREITO);
+		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
 		private Action esquerdoAcao = Action.actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = Action.actionMenu("label.direito", Icones.ALINHA_DIREITO);
@@ -200,8 +201,10 @@ public class AbstratoDesktop extends JDesktopPane {
 			addMenuItem(direitoAcao);
 			addMenuItem(somenteDireitoAcao);
 			addMenuItem(esquerdoAcao);
+			addMenuItem(centralizarAcao);
 
 			somenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.SOMENTE_DIREITO));
+			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			esquerdoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.ESQUERDO));
 			direitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.DIREITO));
 			mesmaLarguraAcao.setActionListener(e -> larguras.mesma());
@@ -210,6 +213,7 @@ public class AbstratoDesktop extends JDesktopPane {
 		public void habilitar(boolean b) {
 			somenteDireitoAcao.setEnabled(b);
 			mesmaLarguraAcao.setEnabled(b);
+			centralizarAcao.setEnabled(b);
 			esquerdoAcao.setEnabled(b);
 			direitoAcao.setEnabled(b);
 		}

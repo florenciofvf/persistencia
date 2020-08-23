@@ -43,7 +43,6 @@ import br.com.persist.conexao.Conexao;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.container.Container;
-import br.com.persist.desktop.Alinhar;
 import br.com.persist.desktop.Desktop;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;
@@ -1424,7 +1423,6 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
-		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
 		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
@@ -1447,7 +1445,6 @@ public class Superficie extends Desktop {
 			add(true, menuAlinhamento);
 			add(true, menuLargura);
 			addMenuItem(true, distribuirAcao);
-			addMenuItem(true, centralizarAcao);
 			addMenuItem(true, dimensaoAcao4);
 			addMenuItem(dimensaoAcao3);
 			addMenuItem(dimensaoAcao2);
@@ -1463,7 +1460,6 @@ public class Superficie extends Desktop {
 			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
-			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
 
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
@@ -1503,7 +1499,6 @@ public class Superficie extends Desktop {
 			colarAcao.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
 			limparFormulariosAcao.setEnabled(contemFrames);
 			atualizarFormAcao.setEnabled(contemFrames);
-			centralizarAcao.setEnabled(contemFrames);
 			distribuirAcao.setEnabled(contemFrames);
 			menuAlinhamento.habilitar(contemFrames);
 			dimensaoAcao4.setEnabled(contemFrames);
