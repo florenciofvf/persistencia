@@ -7,12 +7,16 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.componente.Menu;
+import br.com.persist.icone.Icones;
+import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 
 public class AbstratoDesktop extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
+	protected final transient MenuLargura menuLargura = new MenuLargura();
 	protected final transient Larguras larguras = new Larguras();
 	protected final transient Ajuste ajuste = new Ajuste();
 
@@ -153,6 +157,31 @@ public class AbstratoDesktop extends JDesktopPane {
 			if (Largura.TOTAL == larguraEnum) {
 				alinhamento.centralizar();
 			}
+		}
+	}
+
+	protected class MenuLargura extends Menu {
+		private static final long serialVersionUID = 1L;
+		private Action esquerdoAcao = Action.actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
+		private Action direitoAcao = Action.actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
+		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
+
+		protected MenuLargura() {
+			super("label.largura");
+
+			addMenuItem(totalAcao);
+			addMenuItem(direitoAcao);
+			addMenuItem(esquerdoAcao);
+
+			esquerdoAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_ESQUERDA));
+			direitoAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_DIREITA));
+			totalAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL));
+		}
+
+		public void habilitar(boolean b) {
+			esquerdoAcao.setEnabled(b);
+			direitoAcao.setEnabled(b);
+			totalAcao.setEnabled(b);
 		}
 	}
 

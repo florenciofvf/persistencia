@@ -45,7 +45,6 @@ import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.container.Container;
 import br.com.persist.desktop.Alinhar;
 import br.com.persist.desktop.Desktop;
-import br.com.persist.desktop.Largura;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;
 import br.com.persist.macro.MacroDialogo;
@@ -1427,8 +1426,6 @@ public class Superficie extends Desktop {
 				Icones.ALINHA_DIREITO);
 		private Action alinharEsquerdoAcao = Action.actionMenu("label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action alinharDireitoAcao = Action.actionMenu("label.alinhar_direito", Icones.ALINHA_DIREITO);
-		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
-		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
 		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
@@ -1436,7 +1433,6 @@ public class Superficie extends Desktop {
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
 		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
-		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
@@ -1457,9 +1453,7 @@ public class Superficie extends Desktop {
 			addMenuItem(alinharDireitoAcao);
 			addMenuItem(alinharSomenteDireitoAcao);
 			addMenuItem(alinharEsquerdoAcao);
-			addMenuItem(true, larTotalAcao);
-			addMenuItem(larTotalDirAcao);
-			addMenuItem(larTotalEsqAcao);
+			add(true, menuLargura);
 			addMenuItem(true, distribuirAcao);
 			addMenuItem(true, centralizarAcao);
 			addMenuItem(true, dimensaoAcao4);
@@ -1477,14 +1471,11 @@ public class Superficie extends Desktop {
 			alinharSomenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.SOMENTE_DIREITO));
 			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
-			larTotalEsqAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_ESQUERDA));
-			larTotalDirAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_DIREITA));
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
 			alinharEsquerdoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.ESQUERDO));
 			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
 			alinharDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.DIREITO));
-			larTotalAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL));
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
 			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
 			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
@@ -1526,15 +1517,13 @@ public class Superficie extends Desktop {
 			alinharDireitoAcao.setEnabled(contemFrames);
 			atualizarFormAcao.setEnabled(contemFrames);
 			mesmaLarguraAcao.setEnabled(contemFrames);
-			larTotalDirAcao.setEnabled(contemFrames);
 			centralizarAcao.setEnabled(contemFrames);
-			larTotalEsqAcao.setEnabled(contemFrames);
 			distribuirAcao.setEnabled(contemFrames);
 			dimensaoAcao4.setEnabled(contemFrames);
 			dimensaoAcao3.setEnabled(contemFrames);
 			dimensaoAcao2.setEnabled(contemFrames);
-			larTotalAcao.setEnabled(contemFrames);
 			dimensaoAcao.setEnabled(contemFrames);
+			menuLargura.habilitar(contemFrames);
 		}
 
 		private void propriedades() {

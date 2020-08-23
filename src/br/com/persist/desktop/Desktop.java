@@ -321,21 +321,16 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
-		private Action larTotalEsqAcao = Action.actionMenu("label.largura_total_esq", Icones.ALINHA_ESQUERDO);
-		private Action larTotalDirAcao = Action.actionMenu("label.largura_total_dir", Icones.ALINHA_DIREITO);
 		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
 		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
-		private Action larTotalAcao = Action.actionMenu("label.largura_total", Icones.LARGURA);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 
 		private DesktopPopup() {
-			addMenuItem(larTotalAcao);
-			addMenuItem(larTotalDirAcao);
-			addMenuItem(larTotalEsqAcao);
+			add(menuLargura);
 			addMenuItem(true, distribuirAcao);
 			addMenuItem(true, centralizarAcao);
 			addMenuItem(true, dimensaoAcao4);
@@ -351,11 +346,8 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		private void eventos() {
 			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
-			larTotalEsqAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_ESQUERDA));
-			larTotalDirAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_DIREITA));
 			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
-			larTotalAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL));
 			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
 			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());

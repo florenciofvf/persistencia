@@ -832,7 +832,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				private final boolean complemento;
 
 				private TotalizarRegistrosAcao(boolean complemento) {
-					super(true, complemento ? "label.total_filtro" : "label.total", Icones.SOMA);
+					super(true, complemento ? "label.total_com_filtro" : "label.total_sem_filtro", Icones.SOMA);
 					this.complemento = complemento;
 				}
 
