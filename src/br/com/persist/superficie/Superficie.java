@@ -1422,15 +1422,10 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action alinharSomenteDireitoAcao = Action.actionMenu("label.alinhar_somente_direito",
-				Icones.ALINHA_DIREITO);
-		private Action alinharEsquerdoAcao = Action.actionMenu("label.alinhar_esquerdo", Icones.ALINHA_ESQUERDO);
-		private Action alinharDireitoAcao = Action.actionMenu("label.alinhar_direito", Icones.ALINHA_DIREITO);
 		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
-		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
 		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
@@ -1449,10 +1444,7 @@ public class Superficie extends Desktop {
 			addMenuItem(true, colarAcao);
 			addMenuItem(true, atualizarFormAcao);
 			addMenuItem(limparFormulariosAcao);
-			addMenuItem(true, mesmaLarguraAcao);
-			addMenuItem(alinharDireitoAcao);
-			addMenuItem(alinharSomenteDireitoAcao);
-			addMenuItem(alinharEsquerdoAcao);
+			add(true, menuAlinhamento);
 			add(true, menuLargura);
 			addMenuItem(true, distribuirAcao);
 			addMenuItem(true, centralizarAcao);
@@ -1468,19 +1460,17 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
-			alinharSomenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.SOMENTE_DIREITO));
 			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
 			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
-			alinharEsquerdoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.ESQUERDO));
 			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
 			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
-			alinharDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.DIREITO));
+
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
 			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
 			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
-			mesmaLarguraAcao.setActionListener(e -> larguras.mesma());
+
 			propriedadesAcao.setActionListener(e -> propriedades());
 
 			atualizarFormAcao.setActionListener(e -> {
@@ -1511,14 +1501,11 @@ public class Superficie extends Desktop {
 
 		private void preShow(boolean contemFrames) {
 			colarAcao.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
-			alinharSomenteDireitoAcao.setEnabled(contemFrames);
 			limparFormulariosAcao.setEnabled(contemFrames);
-			alinharEsquerdoAcao.setEnabled(contemFrames);
-			alinharDireitoAcao.setEnabled(contemFrames);
 			atualizarFormAcao.setEnabled(contemFrames);
-			mesmaLarguraAcao.setEnabled(contemFrames);
 			centralizarAcao.setEnabled(contemFrames);
 			distribuirAcao.setEnabled(contemFrames);
+			menuAlinhamento.habilitar(contemFrames);
 			dimensaoAcao4.setEnabled(contemFrames);
 			dimensaoAcao3.setEnabled(contemFrames);
 			dimensaoAcao2.setEnabled(contemFrames);
