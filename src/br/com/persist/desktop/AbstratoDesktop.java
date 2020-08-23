@@ -165,6 +165,7 @@ public class AbstratoDesktop extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 		private Action esquerdoAcao = Action.actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = Action.actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
+		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
 
 		protected MenuLargura() {
@@ -173,13 +174,16 @@ public class AbstratoDesktop extends JDesktopPane {
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
 			addMenuItem(esquerdoAcao);
+			addMenuItem(distribuirAcao);
 
 			esquerdoAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_ESQUERDA));
 			direitoAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_DIREITA));
 			totalAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL));
+			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 		}
 
 		public void habilitar(boolean b) {
+			distribuirAcao.setEnabled(b);
 			esquerdoAcao.setEnabled(b);
 			direitoAcao.setEnabled(b);
 			totalAcao.setEnabled(b);
@@ -189,19 +193,19 @@ public class AbstratoDesktop extends JDesktopPane {
 	protected class MenuAlinhamento extends Menu {
 		private static final long serialVersionUID = 1L;
 		private Action somenteDireitoAcao = Action.actionMenu("label.somente_direito", Icones.ALINHA_DIREITO);
-		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.CENTRALIZAR);
 		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
 		private Action esquerdoAcao = Action.actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
+		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
 		private Action direitoAcao = Action.actionMenu("label.direito", Icones.ALINHA_DIREITO);
 
 		protected MenuAlinhamento() {
 			super("label.alinhamento");
 
-			addMenuItem(mesmaLarguraAcao);
 			addMenuItem(direitoAcao);
-			addMenuItem(somenteDireitoAcao);
 			addMenuItem(esquerdoAcao);
 			addMenuItem(centralizarAcao);
+			addMenuItem(mesmaLarguraAcao);
+			addMenuItem(somenteDireitoAcao);
 
 			somenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.SOMENTE_DIREITO));
 			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));

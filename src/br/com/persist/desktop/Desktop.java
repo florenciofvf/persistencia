@@ -323,14 +323,13 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
 		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
-		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.LARGURA);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 
 		private DesktopPopup() {
-			add(menuLargura);
-			addMenuItem(true, distribuirAcao);
+			add(menuAlinhamento);
+			add(true, menuLargura);
 			addMenuItem(true, dimensaoAcao4);
 			addMenuItem(dimensaoAcao3);
 			addMenuItem(dimensaoAcao2);
@@ -348,7 +347,6 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
 			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
 			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
-			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 		}
 	}
 
