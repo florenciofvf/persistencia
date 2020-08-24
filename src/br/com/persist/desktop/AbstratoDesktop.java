@@ -195,6 +195,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			esquerdoAcao.setEnabled(b);
 			direitoAcao.setEnabled(b);
 			totalAcao.setEnabled(b);
+			setEnabled(b);
 		}
 	}
 
@@ -220,6 +221,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			dimensaoManualAcao.setEnabled(b);
 			retirarRolagemAcao.setEnabled(b);
 			usarFormularioAcao.setEnabled(b);
+			setEnabled(b);
 		}
 	}
 
@@ -245,6 +247,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			aproximarFormAoObjetoAcao.setEnabled(b);
 			aproximarObjetoAoFormAcao.setEnabled(b);
 			empilharAcao.setEnabled(b);
+			setEnabled(b);
 		}
 	}
 
@@ -278,6 +281,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			centralizarAcao.setEnabled(b);
 			esquerdoAcao.setEnabled(b);
 			direitoAcao.setEnabled(b);
+			setEnabled(b);
 		}
 	}
 
