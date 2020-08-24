@@ -30,7 +30,6 @@ import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.Popup;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.icone.Icones;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.metadado.Metadado;
@@ -38,7 +37,6 @@ import br.com.persist.objeto.Objeto;
 import br.com.persist.objeto.ObjetoContainer;
 import br.com.persist.objeto.ObjetoContainerFormularioInterno;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Action;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
@@ -81,7 +79,7 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 	}
 
 	@Override
-	public void ajusteFormularioImpl() {
+	public void empilharFormulariosImpl() {
 		JInternalFrame[] frames = getAllFrames();
 
 		if (frames.length > 0) {
@@ -116,7 +114,7 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 	}
 
 	@Override
-	public void ajusteObjetoFormularioImpl(boolean aoObjeto, boolean updateTree) {
+	public void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree) {
 		JInternalFrame[] frames = getAllFrames();
 
 		boolean salvar = false;
@@ -144,8 +142,14 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-				interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(Constantes.TRINTA),
-						cvDeltaY.getInteiro(Constantes.TRINTA));
+
+				if (objetoAoFormulario) {
+					interno.aproximarObjetoAoFormulario(cvDeltaX.getInteiro(Constantes.TRINTA),
+							cvDeltaY.getInteiro(Constantes.TRINTA));
+				} else {
+					interno.aproximarFormularioAoObjeto(cvDeltaX.getInteiro(Constantes.TRINTA),
+							cvDeltaY.getInteiro(Constantes.TRINTA));
+				}
 			}
 		}
 
@@ -292,25 +296,12 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
-		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
-		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 
 		private DesktopPopup() {
 			add(menuAlinhamento);
 			add(true, menuLargura);
-			addMenuItem(true, dimensaoAcao4);
-			addMenuItem(dimensaoAcao3);
-			addMenuItem(dimensaoAcao2);
+			add(true, menuAjuste);
 			add(true, menuAjustar);
-
-			eventos();
-		}
-
-		private void eventos() {
-			dimensaoAcao4.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(false, false));
-			dimensaoAcao2.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(true, false));
-			dimensaoAcao3.setActionListener(e -> ajusteDetalhes.ajusteFormulario());
 		}
 	}
 

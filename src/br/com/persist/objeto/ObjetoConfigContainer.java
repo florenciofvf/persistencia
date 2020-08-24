@@ -547,13 +547,13 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void ajusteFormularioImpl() {
-				LOG.log(Level.FINEST, "ajusteFormularioImpl()");
+			public void empilharFormulariosImpl() {
+				LOG.log(Level.FINEST, "empilharFormulariosImpl()");
 			}
 
 			@Override
-			public void ajusteObjetoFormularioImpl(boolean aoObjeto, boolean updateTree) {
-				LOG.log(Level.FINEST, "ajusteObjetoFormularioImpl()");
+			public void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree) {
+				LOG.log(Level.FINEST, "aproximarObjetoFormularioImpl()");
 			}
 		}
 

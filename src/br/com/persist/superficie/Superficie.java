@@ -1423,10 +1423,7 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
-		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
-		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
-		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 
@@ -1440,9 +1437,7 @@ public class Superficie extends Desktop {
 			addMenuItem(limparFormulariosAcao);
 			add(true, menuAlinhamento);
 			add(true, menuLargura);
-			addMenuItem(true, dimensaoAcao4);
-			addMenuItem(dimensaoAcao3);
-			addMenuItem(dimensaoAcao2);
+			add(true, menuAjuste);
 			add(true, menuAjustar);
 			addMenuItem(true, propriedadesAcao);
 
@@ -1450,9 +1445,6 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
-			dimensaoAcao4.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(false, false));
-			dimensaoAcao2.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(true, false));
-			dimensaoAcao3.setActionListener(e -> ajusteDetalhes.ajusteFormulario());
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
 			propriedadesAcao.setActionListener(e -> propriedades());
 
@@ -1487,10 +1479,9 @@ public class Superficie extends Desktop {
 			limparFormulariosAcao.setEnabled(contemFrames);
 			atualizarFormAcao.setEnabled(contemFrames);
 			menuAlinhamento.habilitar(contemFrames);
-			dimensaoAcao4.setEnabled(contemFrames);
-			dimensaoAcao3.setEnabled(contemFrames);
-			dimensaoAcao2.setEnabled(contemFrames);
 			menuLargura.habilitar(contemFrames);
+			menuAjustar.habilitar(contemFrames);
+			menuAjuste.habilitar(contemFrames);
 		}
 
 		private void propriedades() {

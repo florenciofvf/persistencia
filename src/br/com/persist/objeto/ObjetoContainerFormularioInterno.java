@@ -125,9 +125,9 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 
 	public void configAjustes(boolean updateTree) {
 		if (desktop != null) {
-			desktop.getAjusteDetalhes().ajusteFormulario();
-			desktop.getAjusteDetalhes().ajusteObjetoFormulario(false, updateTree);
-			desktop.getAjustar().usarFormularios();
+			desktop.getAjuste().empilharFormularios();
+			desktop.getAjuste().aproximarObjetoFormulario(true, updateTree);
+			desktop.getAjustar().usarFormularios(false);
 		}
 	}
 
@@ -315,16 +315,20 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		container.selecionarConexao(conexao);
 	}
 
-	public void ajusteObjetoFormulario(boolean aoObjeto, int deltaX, int deltaY) {
+	public void aproximarObjetoAoFormulario(int deltaX, int deltaY) {
 		Objeto objeto = container.getObjeto();
 
 		if (objeto != null) {
-			if (aoObjeto) {
-				setLocation(objeto.getX() + deltaX, objeto.getY() + deltaY);
-			} else {
-				objeto.setX(getX() - deltaX);
-				objeto.setY(getY() - deltaY);
-			}
+			objeto.setX(getX() - deltaX);
+			objeto.setY(getY() - deltaY);
+		}
+	}
+
+	public void aproximarFormularioAoObjeto(int deltaX, int deltaY) {
+		Objeto objeto = container.getObjeto();
+
+		if (objeto != null) {
+			setLocation(objeto.getX() + deltaX, objeto.getY() + deltaY);
 		}
 	}
 
