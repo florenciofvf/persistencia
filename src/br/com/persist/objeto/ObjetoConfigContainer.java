@@ -16,8 +16,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.JColorChooser;
@@ -37,7 +35,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
-import br.com.persist.desktop.AbstratoDesktop;
+import br.com.persist.desktop.Desktop;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.Icones;
 import br.com.persist.instrucao.Instrucao;
@@ -57,7 +55,6 @@ import br.com.persist.valor.ValorDialogo;
 public class ObjetoConfigContainer extends Panel implements IIni {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
-	private static final Logger LOG = Logger.getGlobal();
 	private final transient Objeto objeto;
 	private final Superficie superficie;
 	private final Fichario fichario;
@@ -536,25 +533,11 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 	private class PanelInstrucao extends Panel implements InstrucaoContainerFormularioListener {
 		private static final long serialVersionUID = 1L;
 		private final Dimension dimension = new Dimension(Constantes.QUARENTA, Constantes.TREZENTOS_QUARENTA_UM);
-		private final Desktop desktop = new Desktop();
+		private final Desktop desktop = new Desktop(null, false);
 
 		private PanelInstrucao() {
 			add(BorderLayout.NORTH, new PanelNomeInstrucao());
 			add(BorderLayout.CENTER, new ScrollPane(desktop));
-		}
-
-		private class Desktop extends AbstratoDesktop {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void empilharFormulariosImpl() {
-				LOG.log(Level.FINEST, "empilharFormulariosImpl()");
-			}
-
-			@Override
-			public void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree) {
-				LOG.log(Level.FINEST, "aproximarObjetoFormularioImpl()");
-			}
 		}
 
 		@Override
