@@ -22,10 +22,10 @@ import br.com.persist.util.Vetor;
 
 public class CircularContainer extends Panel {
 	private static final long serialVersionUID = 1L;
+	private final TextField txtGrauTotal = new TextField("360");
+	private final TextField txtGrauOrigem = new TextField("0");
+	private final TextField txtRaio = new TextField("300");
 	private final Toolbar toolbar = new Toolbar();
-	private TextField txtGrauTotal = new TextField("360");
-	private TextField txtGrauOrigem = new TextField("0");
-	private TextField txtRaio = new TextField("300");
 	private final JComboBox<Objeto> cmbObjeto;
 	private final JComboBox<Tipo> cmbTipo;
 	private final Superficie superficie;

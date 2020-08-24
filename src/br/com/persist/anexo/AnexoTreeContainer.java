@@ -31,7 +31,7 @@ import br.com.persist.util.Util;
 
 public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private AnexoTree anexoTree = new AnexoTree(new AnexoTreeModelo(true));
+	private final AnexoTree anexoTree = new AnexoTree(new AnexoTreeModelo(true));
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopAnex = new CheckBox();
 	private AnexoTreeFormulario anexoTreeFormulario;

@@ -23,7 +23,7 @@ import br.com.persist.util.Util;
 
 public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTreeListener, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private ArquivoTree arquivoTree = new ArquivoTree(new ArquivoTreeModelo());
+	private final ArquivoTree arquivoTree = new ArquivoTree(new ArquivoTreeModelo());
 	private final CheckBox chkSempreTopForm = new CheckBox();
 	private final CheckBox chkSempreTopArvo = new CheckBox();
 	private final CheckBox chkLinkAuto = new CheckBox();

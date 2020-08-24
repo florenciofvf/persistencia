@@ -39,8 +39,8 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("runtime_exec");
 	private RuntimeExecFormulario runtimeExecFormulario;
+	private final Fichario fichario = new Fichario();
 	private final Toolbar toolbar = new Toolbar();
-	private Fichario fichario = new Fichario();
 
 	public RuntimeExecContainer(IJanela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);

@@ -45,8 +45,8 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("requisicoes");
 	private RequisicaoFormulario requisicaoFormulario;
+	private final Fichario fichario = new Fichario();
 	private final Toolbar toolbar = new Toolbar();
-	private Fichario fichario = new Fichario();
 
 	public RequisicaoContainer(IJanela janela, Formulario formulario, String conteudo, String idPagina) {
 		super(formulario);

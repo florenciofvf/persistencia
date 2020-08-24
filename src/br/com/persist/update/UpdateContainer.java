@@ -35,9 +35,9 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 	private static final File file = new File("atualizacoes/atualizacoes");
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
+	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> cmbConexao;
 	private UpdateFormulario updateFormulario;
-	private Label labelStatus = new Label();
 
 	public UpdateContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao, Map<String, String> mapaChaveValor) {

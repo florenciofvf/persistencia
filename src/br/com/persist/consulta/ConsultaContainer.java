@@ -49,8 +49,8 @@ public class ConsultaContainer extends AbstratoContainer
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
+	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> cmbConexao;
-	private Label labelStatus = new Label();
 
 	public ConsultaContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {

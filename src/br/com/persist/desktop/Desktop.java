@@ -46,8 +46,8 @@ import br.com.persist.variaveis.VariaveisModelo;
 
 public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
+	private final DesktopPopup popup = new DesktopPopup();
 	private static final Logger LOG = Logger.getGlobal();
-	private DesktopPopup popup = new DesktopPopup();
 	private boolean ajusteAutomatico = true;
 	protected final Formulario formulario;
 	private boolean ajusteAutomaticoForm;

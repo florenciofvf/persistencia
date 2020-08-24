@@ -32,7 +32,7 @@ import br.com.persist.util.Util;
 public class MetadadoTreeContainer extends AbstratoContainer
 		implements MetadadoTreeListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
-	private MetadadoTree metadadoTree = new MetadadoTree();
+	private final MetadadoTree metadadoTree = new MetadadoTree();
 	private MetadadoTreeFormulario metadadoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
