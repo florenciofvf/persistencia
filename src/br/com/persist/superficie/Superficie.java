@@ -1437,8 +1437,8 @@ public class Superficie extends Desktop {
 			addMenuItem(limparFormulariosAcao);
 			add(true, menuAlinhamento);
 			add(true, menuLargura);
-			add(true, menuAjuste);
 			add(true, menuAjustar);
+			add(true, menuAjuste);
 			addMenuItem(true, propriedadesAcao);
 
 			eventos();

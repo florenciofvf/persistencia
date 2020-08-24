@@ -300,8 +300,8 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		private DesktopPopup() {
 			add(menuAlinhamento);
 			add(true, menuLargura);
-			add(true, menuAjuste);
 			add(true, menuAjustar);
+			add(true, menuAjuste);
 		}
 	}
 
