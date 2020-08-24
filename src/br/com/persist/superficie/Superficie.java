@@ -1421,9 +1421,9 @@ public class Superficie extends Desktop {
 
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action atualizarFormulariosAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
-		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
-		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
+		private Action criarObjetoAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 
@@ -1431,9 +1431,9 @@ public class Superficie extends Desktop {
 		int yLocal;
 
 		private SuperficiePopup2() {
-			addMenuItem(criarObjAcao);
+			addMenuItem(criarObjetoAcao);
 			addMenuItem(true, colarAcao);
-			addMenuItem(true, atualizarFormAcao);
+			addMenuItem(true, atualizarFormulariosAcao);
 			addMenuItem(limparFormulariosAcao);
 			add(true, menuAlinhamento);
 			add(true, menuLargura);
@@ -1445,10 +1445,10 @@ public class Superficie extends Desktop {
 		}
 
 		private void eventos() {
-			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
+			criarObjetoAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
 			propriedadesAcao.setActionListener(e -> propriedades());
 
-			atualizarFormAcao.setActionListener(e -> {
+			atualizarFormulariosAcao.setActionListener(e -> {
 				JInternalFrame[] frames = getAllFrames();
 
 				for (JInternalFrame frame : frames) {
@@ -1476,8 +1476,8 @@ public class Superficie extends Desktop {
 
 		private void preShow(boolean contemFrames) {
 			colarAcao.setEnabled(!Formulario.CopiarColar.copiadosIsEmpty());
+			atualizarFormulariosAcao.setEnabled(contemFrames);
 			limparFormulariosAcao.setEnabled(contemFrames);
-			atualizarFormAcao.setEnabled(contemFrames);
 			menuAlinhamento.habilitar(contemFrames);
 			menuLargura.habilitar(contemFrames);
 			menuAjustar.habilitar(contemFrames);
