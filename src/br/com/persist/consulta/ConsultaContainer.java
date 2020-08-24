@@ -45,7 +45,6 @@ public class ConsultaContainer extends AbstratoContainer
 		implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("consultas/consultas");
-	private static final String PAINEL_SELECT = "PAINEL SELECT";
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
@@ -138,7 +137,7 @@ public class ConsultaContainer extends AbstratoContainer
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_SELECT, ex, ConsultaContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
 		}
 	}
@@ -221,7 +220,7 @@ public class ConsultaContainer extends AbstratoContainer
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_SELECT, ex, ConsultaContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
 		}
 
@@ -287,7 +286,7 @@ public class ConsultaContainer extends AbstratoContainer
 			textArea.requestFocus();
 		} catch (Exception ex) {
 			labelStatus.limpar();
-			Util.stackTraceAndMessage(PAINEL_SELECT, ex, this);
+			Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, this);
 		}
 	}
 }

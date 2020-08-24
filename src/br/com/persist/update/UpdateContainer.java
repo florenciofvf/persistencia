@@ -33,7 +33,6 @@ import br.com.persist.util.Util;
 public class UpdateContainer extends AbstratoContainer implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("atualizacoes/atualizacoes");
-	private static final String PAINEL_UPDATE = "PAINEL UPDATE";
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
@@ -131,7 +130,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_UPDATE, ex, UpdateContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
 		}
 	}
@@ -221,7 +220,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_UPDATE, ex, UpdateContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
 		}
 
@@ -250,7 +249,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 			textArea.requestFocus();
 		} catch (Exception ex) {
 			labelStatus.limpar();
-			Util.stackTraceAndMessage(PAINEL_UPDATE, ex, this);
+			Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, this);
 		}
 	}
 }

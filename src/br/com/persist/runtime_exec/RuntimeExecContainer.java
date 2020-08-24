@@ -37,7 +37,6 @@ import br.com.persist.util.Util;
 
 public class RuntimeExecContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private static final String PAINEL_RUNTIME_EXEC = "PAINEL RUNTIME_EXEC";
 	private static final File file = new File("runtime_exec");
 	private RuntimeExecFormulario runtimeExecFormulario;
 	private final Toolbar toolbar = new Toolbar();
@@ -197,7 +196,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 					fichario.pagina(pagina);
 				}
 			} catch (IOException ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
 
@@ -413,7 +412,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 					areaParametros.setText(sb.toString());
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+					Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 				}
 			}
 		}
@@ -425,7 +424,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 				try {
 					Files.delete(path);
 				} catch (IOException e) {
-					Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, e, RuntimeExecContainer.this);
+					Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, e, RuntimeExecContainer.this);
 				}
 			}
 		}
@@ -442,7 +441,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(areaParametros.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
 
@@ -471,7 +470,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 				areaResultados.setText(conteudo + Constantes.QL2 + "EXIT=" + exit);
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, ex, this);
 			}
 		}
 
@@ -513,7 +512,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 					area.setText(sb.toString());
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
 	}

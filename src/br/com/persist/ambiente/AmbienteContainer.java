@@ -20,7 +20,6 @@ import br.com.persist.util.Util;
 
 public class AmbienteContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private static final String PAINEL_AMBIENTE = "PAINEL AMBIENTE";
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private AmbienteFormulario ambienteFormulario;
@@ -131,7 +130,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
 			}
 		}
 	}
@@ -201,7 +200,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
 			}
 		}
 	}

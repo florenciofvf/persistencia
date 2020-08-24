@@ -40,6 +40,7 @@ public class Constantes {
 	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";
 	public static final String LABEL_FRAGMENTO_MIN = "label.fragmento_min";
 	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
+	public static final String PAINEL_RUNTIME_EXEC = "PAINEL RUNTIME_EXEC";
 	public static final String IMAGEM_TRAY_ICON = "/resources/create.png";
 	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
 	public static final String LABEL_ARQUIVOS_MIN = "label.arquivos_min";
@@ -51,6 +52,7 @@ public class Constantes {
 	public static final String LABEL_CONEXAO_MIN = "label.conexao_min";
 	public static final String CAMPOS_IMPORTADOS = "CAMPOS_IMPORTADOS";
 	public static final String CAMPOS_EXPORTADOS = "CAMPOS_EXPORTADOS";
+	public static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
 	public static final String CHAVES_PRIMARIAS = "CHAVES_PRIMARIAS";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String ABERTOS_FICHARIO = "abertos_fichario";
@@ -59,6 +61,7 @@ public class Constantes {
 	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";
 	public static final String VAR_ACCESS_TOKEN = "VAR_ACCESS_TOKEN";
 	public static final String LABEL_METADADOS = "label.meta_dados";
+	public static final String PAINEL_AMBIENTE = "PAINEL AMBIENTE";
 	public static final String CAMPO_IMPORTADO = "CAMPO_IMPORTADO";
 	public static final String CAMPO_EXPORTADO = "CAMPO_EXPORTADO";
 	public static final String LABEL_AMBIENTES = "label.ambientes";
@@ -70,6 +73,7 @@ public class Constantes {
 	public static final String LABEL_COM_ASPAS = "label.com_aspas";
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_APARENCIA = "label.aparencia";
+	public static final String PAINEL_ANOTACAO = "PAINEL ANOTACAO";
 	public static final Dimension SIZE2 = new Dimension(1000, 800);
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
@@ -82,6 +86,8 @@ public class Constantes {
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
 	public static final boolean ABRIR_AUTO_FICHARIO_SET = false;
 	public static final String ABRIR_VISIVEL = "ABRIR_VISIVEL:";
+	public static final String PAINEL_SELECT = "PAINEL SELECT";
+	public static final String PAINEL_UPDATE = "PAINEL UPDATE";
 	public static final String LABEL_TABELAS = "label.tabelas";
 	public static final String FVF_SEPARADOR = "fvf_separador";
 	public static final String LABEL_ARQUIVO = "label.arquivo";

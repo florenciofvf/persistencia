@@ -20,7 +20,6 @@ import br.com.persist.util.Util;
 public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("anotacoes/anotacoes");
-	private static final String PAINEL_ANOTACAO = "PAINEL ANOTACAO";
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private AnotacaoFormulario anotacaoFormulario;
@@ -72,7 +71,7 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
 	}
@@ -143,7 +142,7 @@ public class AnotacaoContainer extends AbstratoContainer implements Fichario.IFi
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
 	}

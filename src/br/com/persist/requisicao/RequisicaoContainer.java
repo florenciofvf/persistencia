@@ -43,7 +43,6 @@ import br.com.persist.variaveis.VariaveisModelo;
 
 public class RequisicaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
 	private static final File file = new File("requisicoes");
 	private RequisicaoFormulario requisicaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
@@ -227,7 +226,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 					fichario.pagina(pagina);
 				}
 			} catch (IOException ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}
 		}
 
@@ -439,7 +438,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 
 					areaParametros.setText(sb.toString());
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 				}
 			}
 		}
@@ -451,7 +450,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				try {
 					Files.delete(path);
 				} catch (IOException e) {
-					Util.stackTraceAndMessage(PAINEL_REQUISICAO, e, RequisicaoContainer.this);
+					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, e, RequisicaoContainer.this);
 				}
 			}
 		}
@@ -468,7 +467,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(areaParametros.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}
 		}
 
@@ -492,7 +491,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				}
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
@@ -528,7 +527,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				areaResultados.setText(Base64Util.criarBase64(string));
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
@@ -568,7 +567,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 				}
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
