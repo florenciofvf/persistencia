@@ -16,6 +16,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.JColorChooser;
@@ -55,6 +57,7 @@ import br.com.persist.valor.ValorDialogo;
 public class ObjetoConfigContainer extends Panel implements IIni {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
+	private static final Logger LOG = Logger.getGlobal();
 	private final transient Objeto objeto;
 	private final Superficie superficie;
 	private final Fichario fichario;
@@ -542,6 +545,16 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 
 		private class Desktop extends AbstratoDesktop {
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void ajusteFormularioImpl() {
+				LOG.log(Level.FINEST, "ajusteFormularioImpl()");
+			}
+
+			@Override
+			public void ajusteObjetoFormularioImpl(boolean aoObjeto, boolean updateTree) {
+				LOG.log(Level.FINEST, "ajusteObjetoFormularioImpl()");
+			}
 		}
 
 		@Override

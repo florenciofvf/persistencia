@@ -11,15 +11,18 @@ import br.com.persist.componente.Menu;
 import br.com.persist.icone.Icones;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Util;
 
-public class AbstratoDesktop extends JDesktopPane {
+public abstract class AbstratoDesktop extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
 	protected final transient MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
+	protected final transient AjusteDetalhes ajusteDetalhes = new AjusteDetalhes();
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
 	protected final transient MenuLargura menuLargura = new MenuLargura();
+	protected final transient MenuAjustar menuAjustar = new MenuAjustar();
 	protected final transient Larguras larguras = new Larguras();
-	protected final transient Ajuste ajuste = new Ajuste();
+	protected final transient Ajustar ajustar = new Ajustar();
 
 	public class Distribuicao {
 		public void distribuir(int delta) {
@@ -34,7 +37,7 @@ public class AbstratoDesktop extends JDesktopPane {
 			}
 
 			alinhamento.centralizar();
-			ajuste.ajusteDesktopUsandoForms();
+			ajustar.usarFormularios();
 		}
 	}
 
@@ -161,6 +164,10 @@ public class AbstratoDesktop extends JDesktopPane {
 		}
 	}
 
+	public abstract void ajusteFormularioImpl();
+
+	public abstract void ajusteObjetoFormularioImpl(boolean aoObjeto, boolean updateTree);
+
 	protected class MenuLargura extends Menu {
 		private static final long serialVersionUID = 1L;
 		private Action esquerdoAcao = Action.actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
@@ -187,6 +194,31 @@ public class AbstratoDesktop extends JDesktopPane {
 			esquerdoAcao.setEnabled(b);
 			direitoAcao.setEnabled(b);
 			totalAcao.setEnabled(b);
+		}
+	}
+
+	protected class MenuAjustar extends Menu {
+		private static final long serialVersionUID = 1L;
+		private Action usarFormularioAcao = Action.actionMenu("label.usar_formularios", null);
+		private Action dimensaoManualAcao = Action.actionMenu("label.dimensao_manual", null);
+		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", null);
+
+		protected MenuAjustar() {
+			super("label.ajustar", Icones.RECT);
+
+			addMenuItem(dimensaoManualAcao);
+			addMenuItem(usarFormularioAcao);
+			addMenuItem(retirarRolagemAcao);
+
+			usarFormularioAcao.setActionListener(e -> ajustar.usarFormularios());
+			retirarRolagemAcao.setActionListener(e -> ajustar.retirarRolagem());
+			dimensaoManualAcao.setActionListener(e -> ajustar.ajusteManual());
+		}
+
+		public void habilitar(boolean b) {
+			dimensaoManualAcao.setEnabled(b);
+			retirarRolagemAcao.setEnabled(b);
+			usarFormularioAcao.setEnabled(b);
 		}
 	}
 
@@ -223,13 +255,32 @@ public class AbstratoDesktop extends JDesktopPane {
 		}
 	}
 
-	public class Ajuste {
-		public void ajusteDesktopRetirarRolagem() {
+	public class Ajustar {
+		public void ajusteManual() {
+			String string = getWidth() + "," + getHeight();
+			Object resp = Util.getValorInputDialog(AbstratoDesktop.this, "label.largura_altura", string, string);
+
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return;
+			}
+
+			String[] strings = resp.toString().split(",");
+
+			if (strings != null && strings.length == 2) {
+				int largura = Integer.parseInt(strings[0].trim());
+				int altura = Integer.parseInt(strings[1].trim());
+
+				setPreferredSize(new Dimension(largura, altura));
+				SwingUtilities.updateComponentTreeUI(getParent());
+			}
+		}
+
+		public void retirarRolagem() {
 			setPreferredSize(new Dimension(1, 1));
 			SwingUtilities.updateComponentTreeUI(getParent());
 		}
 
-		public void ajusteDesktopUsandoForms() {
+		public void usarFormularios() {
 			int largura = 0;
 			int altura = 0;
 
@@ -251,7 +302,22 @@ public class AbstratoDesktop extends JDesktopPane {
 			}
 
 			setPreferredSize(new Dimension(largura, altura + Constantes.QUARENTA_UM));
+			SwingUtilities.updateComponentTreeUI(getParent());
 		}
+	}
+
+	public class AjusteDetalhes {
+		public void ajusteFormulario() {
+			ajusteFormularioImpl();
+		}
+
+		public void ajusteObjetoFormulario(boolean aoObjeto, boolean updateTree) {
+			ajusteObjetoFormularioImpl(aoObjeto, updateTree);
+		}
+	}
+
+	public AjusteDetalhes getAjusteDetalhes() {
+		return ajusteDetalhes;
 	}
 
 	public Distribuicao getDistribuicao() {
@@ -266,7 +332,7 @@ public class AbstratoDesktop extends JDesktopPane {
 		return larguras;
 	}
 
-	public Ajuste getAjuste() {
-		return ajuste;
+	public Ajustar getAjustar() {
+		return ajustar;
 	}
 }

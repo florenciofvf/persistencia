@@ -125,9 +125,9 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 
 	public void configAjustes(boolean updateTree) {
 		if (desktop != null) {
-			desktop.getAjusteDesktop().ajusteFormulario();
-			desktop.getAjusteDesktop().ajusteObjetoFormulario(false, updateTree);
-			desktop.getAjuste().ajusteDesktopUsandoForms();
+			desktop.getAjusteDetalhes().ajusteFormulario();
+			desktop.getAjusteDetalhes().ajusteObjetoFormulario(false, updateTree);
+			desktop.getAjustar().usarFormularios();
 		}
 	}
 

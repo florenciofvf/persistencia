@@ -1423,14 +1423,11 @@ public class Superficie extends Desktop {
 		private static final long serialVersionUID = 1L;
 		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action atualizarFormAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
-		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
-		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action criarObjAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
-		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 
 		int xLocal;
@@ -1446,23 +1443,17 @@ public class Superficie extends Desktop {
 			addMenuItem(true, dimensaoAcao4);
 			addMenuItem(dimensaoAcao3);
 			addMenuItem(dimensaoAcao2);
-			addMenuItem(true, dimensaoAcao);
-			addMenuItem(retirarRolagemAcao);
-			addMenuItem(ajustarAcao);
+			add(true, menuAjustar);
 			addMenuItem(true, propriedadesAcao);
 
 			eventos();
 		}
 
 		private void eventos() {
-			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
-			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
+			dimensaoAcao4.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(false, false));
+			dimensaoAcao2.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(true, false));
+			dimensaoAcao3.setActionListener(e -> ajusteDetalhes.ajusteFormulario());
 			criarObjAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
-			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
-			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
-			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
-			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
-
 			propriedadesAcao.setActionListener(e -> propriedades());
 
 			atualizarFormAcao.setActionListener(e -> {
@@ -1499,7 +1490,6 @@ public class Superficie extends Desktop {
 			dimensaoAcao4.setEnabled(contemFrames);
 			dimensaoAcao3.setEnabled(contemFrames);
 			dimensaoAcao2.setEnabled(contemFrames);
-			dimensaoAcao.setEnabled(contemFrames);
 			menuLargura.habilitar(contemFrames);
 		}
 

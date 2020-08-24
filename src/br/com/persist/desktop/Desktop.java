@@ -48,7 +48,6 @@ import br.com.persist.variaveis.VariaveisModelo;
 
 public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	protected final transient AjusteDesktop ajusteDesktop = new AjusteDesktop();
 	private static final Logger LOG = Logger.getGlobal();
 	private DesktopPopup popup = new DesktopPopup();
 	private boolean ajusteAutomatico = true;
@@ -81,84 +80,18 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		}
 	}
 
-	public AjusteDesktop getAjusteDesktop() {
-		return ajusteDesktop;
-	}
+	@Override
+	public void ajusteFormularioImpl() {
+		JInternalFrame[] frames = getAllFrames();
 
-	public class AjusteDesktop {
-		public void ajustarDesktop() {
-			String string = getWidth() + "," + getHeight();
-			Object resp = Util.getValorInputDialog(Desktop.this, "label.largura_altura", string, string);
-
-			if (resp == null || Util.estaVazio(resp.toString())) {
-				return;
-			}
-
-			String[] strings = resp.toString().split(",");
-
-			if (strings != null && strings.length == 2) {
-				try {
-					int largura = Integer.parseInt(strings[0].trim());
-					int altura = Integer.parseInt(strings[1].trim());
-
-					setPreferredSize(new Dimension(largura, altura));
-					SwingUtilities.updateComponentTreeUI(getParent());
-				} catch (Exception e) {
-					LOG.log(Level.SEVERE, Constantes.ERRO, e);
-				}
-			}
-		}
-
-		public void ajusteFormulario() {
-			JInternalFrame[] frames = getAllFrames();
-
-			if (frames.length > 0) {
-				boolean salvar = false;
-
-				ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
-
-				if (cvDeltaY == null) {
-					cvDeltaY = new ChaveValor(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
-							Constantes.VAZIO + Constantes.QUARENTA);
-					VariaveisModelo.adicionar(cvDeltaY);
-					salvar = true;
-				}
-
-				if (salvar) {
-					VariaveisModelo.salvar();
-					VariaveisModelo.inicializar();
-				}
-
-				Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
-
-				JInternalFrame frame = frames[0];
-				int deltaY = cvDeltaY.getInteiro(Constantes.QUARENTA);
-				int y = frame.getY() + frame.getHeight() + deltaY;
-
-				for (int i = 1; i < frames.length; i++) {
-					frame = frames[i];
-					frame.setLocation(frame.getX(), y);
-					y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
-				}
-			}
-		}
-
-		public void ajusteObjetoFormulario(boolean aoObjeto, boolean updateTree) {
-			JInternalFrame[] frames = getAllFrames();
-
+		if (frames.length > 0) {
 			boolean salvar = false;
 
-			ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
-			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-
-			if (cvDeltaX == null) {
-				cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
-				VariaveisModelo.adicionar(cvDeltaX);
-				salvar = true;
-			}
+			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
 
 			if (cvDeltaY == null) {
-				cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
+				cvDeltaY = new ChaveValor(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
+						Constantes.VAZIO + Constantes.QUARENTA);
 				VariaveisModelo.adicionar(cvDeltaY);
 				salvar = true;
 			}
@@ -168,19 +101,58 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 				VariaveisModelo.inicializar();
 			}
 
-			for (JInternalFrame frame : frames) {
-				if (frame instanceof ObjetoContainerFormularioInterno) {
-					ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-					interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(Constantes.TRINTA),
-							cvDeltaY.getInteiro(Constantes.TRINTA));
-				}
-			}
+			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
 
-			if (updateTree) {
-				SwingUtilities.updateComponentTreeUI(getParent());
-			} else {
-				repaint();
+			JInternalFrame frame = frames[0];
+			int deltaY = cvDeltaY.getInteiro(Constantes.QUARENTA);
+			int y = frame.getY() + frame.getHeight() + deltaY;
+
+			for (int i = 1; i < frames.length; i++) {
+				frame = frames[i];
+				frame.setLocation(frame.getX(), y);
+				y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
 			}
+		}
+	}
+
+	@Override
+	public void ajusteObjetoFormularioImpl(boolean aoObjeto, boolean updateTree) {
+		JInternalFrame[] frames = getAllFrames();
+
+		boolean salvar = false;
+
+		ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
+		ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
+
+		if (cvDeltaX == null) {
+			cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
+			VariaveisModelo.adicionar(cvDeltaX);
+			salvar = true;
+		}
+
+		if (cvDeltaY == null) {
+			cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
+			VariaveisModelo.adicionar(cvDeltaY);
+			salvar = true;
+		}
+
+		if (salvar) {
+			VariaveisModelo.salvar();
+			VariaveisModelo.inicializar();
+		}
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				interno.ajusteObjetoFormulario(aoObjeto, cvDeltaX.getInteiro(Constantes.TRINTA),
+						cvDeltaY.getInteiro(Constantes.TRINTA));
+			}
+		}
+
+		if (updateTree) {
+			SwingUtilities.updateComponentTreeUI(getParent());
+		} else {
+			repaint();
 		}
 	}
 
@@ -320,12 +292,9 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 
 	private class DesktopPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", Icones.RECT);
-		private Action dimensaoAcao = Action.actionMenu("label.ajuste_usando_forms", Icones.RECT);
 		private Action dimensaoAcao4 = Action.actionMenu("label.ajuste_formulario", Icones.RECT);
 		private Action dimensaoAcao2 = Action.actionMenu("label.ajuste_objeto", Icones.RECT);
 		private Action dimensaoAcao3 = Action.actionMenu("label.ajuste_form", Icones.RECT);
-		private Action ajustarAcao = Action.actionMenu("label.ajustar", Icones.RECT);
 
 		private DesktopPopup() {
 			add(menuAlinhamento);
@@ -333,20 +302,15 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 			addMenuItem(true, dimensaoAcao4);
 			addMenuItem(dimensaoAcao3);
 			addMenuItem(dimensaoAcao2);
-			addMenuItem(true, dimensaoAcao);
-			addMenuItem(retirarRolagemAcao);
-			addMenuItem(ajustarAcao);
+			add(true, menuAjustar);
 
 			eventos();
 		}
 
 		private void eventos() {
-			dimensaoAcao4.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(false, false));
-			dimensaoAcao2.setActionListener(e -> ajusteDesktop.ajusteObjetoFormulario(true, false));
-			retirarRolagemAcao.setActionListener(e -> ajuste.ajusteDesktopRetirarRolagem());
-			dimensaoAcao3.setActionListener(e -> ajusteDesktop.ajusteFormulario());
-			dimensaoAcao.setActionListener(e -> ajuste.ajusteDesktopUsandoForms());
-			ajustarAcao.setActionListener(e -> ajusteDesktop.ajustarDesktop());
+			dimensaoAcao4.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(false, false));
+			dimensaoAcao2.setActionListener(e -> ajusteDetalhes.ajusteObjetoFormulario(true, false));
+			dimensaoAcao3.setActionListener(e -> ajusteDetalhes.ajusteFormulario());
 		}
 	}
 
