@@ -421,6 +421,7 @@ public class Fichario extends JTabbedPane {
 				}
 			}
 
+			formulario.checarPreferenciasLarguraAltura();
 			PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
 
 			if (pd != null) {

@@ -276,6 +276,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			ContainerFormulario form = ContainerFormulario.criar(formulario, file);
 			form.abrir(file, coletor, getGraphics(), config);
 
+			formulario.checarPreferenciasLarguraAltura();
 			PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
 
 			if (pd != null) {
@@ -977,5 +978,15 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
 		double largura = Util.porcentagemEmValor(porcentagem, configuraSize.width);
 		setSize((int) largura, principalSize.height);
+	}
+
+	public void checarPreferenciasLarguraAltura() {
+		if (Preferencias.isAplicarLarguraAoAbrirArquivoObjeto()) {
+			definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
+		}
+
+		if (Preferencias.isAplicarAlturaAoAbrirArquivoObjeto()) {
+			definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
+		}
 	}
 }
