@@ -945,17 +945,17 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		Dimension principalSize = getSize();
 		Point principalLocation = getLocation();
 		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
+		double porcentagemLargura = Util.menorEmPorcentagem(principalSize.width, configuraSize.width);
+		double porcentagemAltura = Util.menorEmPorcentagem(principalSize.height, configuraSize.height);
 
-		if (principalLocation.y < 100 && !Util.menorEmPorcentagemMaiorQuePorc(principalSize.height,
-				configuraSize.height, Preferencias.getPorcVerticalLocalForm())) {
+		if (porcentagemAltura <= Preferencias.getPorcVerticalLocalForm()) {
 			int x = principalLocation.x;
 			int y = principalLocation.y + principalSize.height + espaco;
 			int l = principalSize.width;
 			int a = configuraSize.height - principalSize.height - espaco;
 			return new PosicaoDimensao(x, y, l, a);
 
-		} else if (principalLocation.x < 100 && !Util.menorEmPorcentagemMaiorQuePorc(principalSize.width,
-				configuraSize.width, Preferencias.getPorcHorizontalLocalForm())) {
+		} else if (porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()) {
 			int x = principalLocation.x + principalSize.width + espaco;
 			int y = principalLocation.y;
 			int l = configuraSize.width - principalSize.width - espaco;

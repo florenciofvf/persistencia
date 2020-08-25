@@ -896,11 +896,6 @@ public class Util {
 		return string;
 	}
 
-	public static boolean menorEmPorcentagemMaiorQuePorc(double menor, double maior, int porcentagem) {
-		double valor = menorEmPorcentagem(menor, maior);
-		return valor > porcentagem;
-	}
-
 	public static double menorEmPorcentagem(double menor, double maior) {
 		return (menor * 100) / maior;
 	}
