@@ -11,6 +11,8 @@ import java.util.prefs.Preferences;
 import br.com.persist.objeto.Objeto;
 
 public class Preferencias {
+	private static boolean aplicarLarguraAoAbrirArquivoObjeto;
+	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
 	private static boolean execAposCopiarColunaConcatenado;
 	private static boolean execAposBaixarParaComplemento;
 	private static boolean areaTransTabelaRegistros;
@@ -47,6 +49,8 @@ public class Preferencias {
 		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
 
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
+		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
+		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
 		execAposCopiarColunaConcatenado = pref.getBoolean("exec_apos_copiar_coluna_concatenado", false);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		execAposBaixarParaComplemento = pref.getBoolean("exec_apos_baixar_para_complemento", false);
@@ -87,6 +91,8 @@ public class Preferencias {
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
 
+		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
+		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
 		pref.putBoolean("exec_apos_copiar_coluna_concatenado", execAposCopiarColunaConcatenado);
 		pref.putBoolean("exec_apos_baixar_para_complemento", execAposBaixarParaComplemento);
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
@@ -346,5 +352,21 @@ public class Preferencias {
 
 	public static void setPorcVerticalLocalForm(int porcVerticalLocalForm) {
 		Preferencias.porcVerticalLocalForm = porcVerticalLocalForm;
+	}
+
+	public static boolean isAplicarLarguraAoAbrirArquivoObjeto() {
+		return aplicarLarguraAoAbrirArquivoObjeto;
+	}
+
+	public static void setAplicarLarguraAoAbrirArquivoObjeto(boolean aplicarLarguraAoAbrirArquivoObjeto) {
+		Preferencias.aplicarLarguraAoAbrirArquivoObjeto = aplicarLarguraAoAbrirArquivoObjeto;
+	}
+
+	public static boolean isAplicarAlturaAoAbrirArquivoObjeto() {
+		return aplicarAlturaAoAbrirArquivoObjeto;
+	}
+
+	public static void setAplicarAlturaAoAbrirArquivoObjeto(boolean aplicarAlturaAoAbrirArquivoObjeto) {
+		Preferencias.aplicarAlturaAoAbrirArquivoObjeto = aplicarAlturaAoAbrirArquivoObjeto;
 	}
 }

@@ -40,6 +40,10 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 			"label.executar_apos_copiar_coluna_concatenado");
 	private final CheckBox chkExecAposBaixarParaComplemento = new CheckBox(
 			"label.executar_apos_baixar_para_complemento");
+	private final CheckBox chkAplicarLarguraAoAbrirArquivoObjeto = new CheckBox(
+			"label.aplicar_largura_ao_abrir_arq_objeto");
+	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
+			"label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
 	private final CheckBox chkNomeColunaListener = new CheckBox("label.copiar_nome_coluna_listener");
@@ -126,6 +130,8 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 		PanelCenter panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
 
+		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
+		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
 		chkExecAposCopiarColunaConcatenado.setSelected(Preferencias.isExecAposCopiarColunaConcatenado());
 		chkExecAposBaixarParaComplemento.setSelected(Preferencias.isExecAposBaixarParaComplemento());
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
@@ -186,7 +192,9 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		container.add(new PanelCenter(new Label("label.form_ficha"), txtFormFicha));
 		container.add(new JSeparator());
 		container.add(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura));
+		container.add(new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto));
 		container.add(new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura));
+		container.add(new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto));
 
 		add(BorderLayout.CENTER, new ScrollPane(container));
 		add(BorderLayout.NORTH, toolbar);
@@ -234,6 +242,12 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 			formulario.getFichario().setTabLayoutPolicy(
 					Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
 		});
+
+		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
+				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
+
+		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
+				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 
 		chkExecAposCopiarColunaConcatenado.addActionListener(
 				e -> Preferencias.setExecAposCopiarColunaConcatenado(chkExecAposCopiarColunaConcatenado.isSelected()));
