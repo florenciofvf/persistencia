@@ -35,8 +35,13 @@ public class TabelaBuscaAuto {
 		int pos = campo.indexOf('[');
 
 		if (pos == -1) {
+			if (campo.endsWith("]")) {
+				campo = campo.substring(0, campo.length() - 1);
+			}
+
 			strings[0] = campo;
 			strings[1] = Constantes.VAZIO;
+
 			return strings;
 		}
 
@@ -45,7 +50,7 @@ public class TabelaBuscaAuto {
 		}
 
 		strings[0] = campo.substring(0, pos);
-		strings[1] = campo.substring(pos + 1, campo.length());
+		strings[1] = campo.substring(pos + 1, campo.length() - 1);
 
 		return strings;
 	}
@@ -56,7 +61,7 @@ public class TabelaBuscaAuto {
 
 	public String getApelidoTabelaCampo() {
 		return getApelidoTabelaCampo(apelido, nome, campo)
-				+ (Util.estaVazio(tabelasApos) ? Constantes.VAZIO : tabelasApos);
+				+ (Util.estaVazio(tabelasApos) ? Constantes.VAZIO : "[" + tabelasApos + "]");
 	}
 
 	public static String getApelidoTabelaCampo(String apelido, String nome, String campo) {
@@ -64,7 +69,7 @@ public class TabelaBuscaAuto {
 			return nome + "." + campo;
 		}
 
-		return apelido + "." + nome + "." + campo;
+		return "(" + apelido + ")" + nome + "." + campo;
 	}
 
 	public static void checarPos(int pos, String msg) {
