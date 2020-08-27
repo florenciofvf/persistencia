@@ -283,25 +283,27 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					txtComplemento.setText(string);
 				});
 
-				limpar2Acao.setActionListener(e -> {
-					boolean salvar = false;
+				limpar2Acao.setActionListener(e -> limpar2());
+			}
 
-					ChaveValor cv = VariaveisModelo.get("LIMPAR2");
+			private void limpar2() {
+				boolean salvar = false;
 
-					if (cv == null) {
-						cv = new ChaveValor("LIMPAR2", "AND 1 > 2");
-						VariaveisModelo.adicionar(cv);
-						salvar = true;
-					}
+				ChaveValor cv = VariaveisModelo.get("LIMPAR2");
 
-					if (salvar) {
-						VariaveisModelo.salvar();
-						VariaveisModelo.inicializar();
-					}
+				if (cv == null) {
+					cv = new ChaveValor("LIMPAR2", "AND 1 > 2");
+					VariaveisModelo.adicionar(cv);
+					salvar = true;
+				}
 
-					txtComplemento.setText(cv.getValor());
-					actionListenerInner.actionPerformed(null);
-				});
+				if (salvar) {
+					VariaveisModelo.salvar();
+					VariaveisModelo.inicializar();
+				}
+
+				txtComplemento.setText(cv.getValor());
+				actionListenerInner.actionPerformed(null);
 			}
 		}
 
@@ -1815,7 +1817,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 		actionListenerInner.processar();
 	}
 
-	public void limpar() {
+	public void limpar2() {
 		toolbar.baixar.limpar2Acao.actionPerformed(null);
 	}
 

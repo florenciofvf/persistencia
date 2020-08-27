@@ -78,6 +78,28 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		}
 	}
 
+	public void atualizarFormularios() {
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				interno.atualizarFormulario();
+			}
+		}
+	}
+
+	public void limpar2() {
+		JInternalFrame[] frames = getAllFrames();
+
+		for (JInternalFrame frame : frames) {
+			if (frame instanceof ObjetoContainerFormularioInterno) {
+				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+				interno.limpar2();
+			}
+		}
+	}
+
 	@Override
 	public void empilharFormulariosImpl() {
 		JInternalFrame[] frames = getAllFrames();

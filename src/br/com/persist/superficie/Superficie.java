@@ -1446,29 +1446,9 @@ public class Superficie extends Desktop {
 
 		private void eventos() {
 			criarObjetoAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
+			atualizarFormulariosAcao.setActionListener(e -> atualizarFormularios());
 			propriedadesAcao.setActionListener(e -> propriedades());
-
-			atualizarFormulariosAcao.setActionListener(e -> {
-				JInternalFrame[] frames = getAllFrames();
-
-				for (JInternalFrame frame : frames) {
-					if (frame instanceof ObjetoContainerFormularioInterno) {
-						ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-						interno.atualizarFormulario();
-					}
-				}
-			});
-
-			limparFormulariosAcao.setActionListener(e -> {
-				JInternalFrame[] frames = getAllFrames();
-
-				for (JInternalFrame frame : frames) {
-					if (frame instanceof ObjetoContainerFormularioInterno) {
-						ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
-						interno.limpar();
-					}
-				}
-			});
+			limparFormulariosAcao.setActionListener(e -> limpar2());
 
 			colarAcao.setActionListener(
 					e -> Formulario.CopiarColar.colar(Superficie.this, true, popup2.xLocal, popup2.yLocal));

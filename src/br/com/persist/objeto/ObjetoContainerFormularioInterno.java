@@ -263,8 +263,8 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		container.atualizarFormulario();
 	}
 
-	public void limpar() {
-		container.limpar();
+	public void limpar2() {
+		container.limpar2();
 	}
 
 	public boolean ehObjeto(Objeto objeto) {
