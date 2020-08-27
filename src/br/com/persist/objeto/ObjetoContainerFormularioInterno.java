@@ -35,6 +35,7 @@ import br.com.persist.variaveis.VariaveisModelo;
 public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame implements IJanela, IIni {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+	private boolean processadoBuscaAutomatica;
 	private final ObjetoContainer container;
 	private Desktop desktop;
 	private String apelido;
@@ -337,5 +338,13 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		if (config != null && ehTabela(config)) {
 			container.aplicarConfigArquivo(config);
 		}
+	}
+
+	public boolean isProcessadoBuscaAutomatica() {
+		return processadoBuscaAutomatica;
+	}
+
+	public void setProcessadoBuscaAutomatica(boolean processadoBuscaAutomatica) {
+		this.processadoBuscaAutomatica = processadoBuscaAutomatica;
 	}
 }

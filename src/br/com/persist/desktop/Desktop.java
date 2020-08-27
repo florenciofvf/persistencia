@@ -336,7 +336,10 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 				List<TabelaBuscaAuto> tabelas = grupo.getTabelas();
 
 				for (TabelaBuscaAuto tabela : tabelas) {
-					if (interno.ehTabela(tabela)) {
+					boolean processar = interno.ehTabela(tabela);
+					interno.setProcessadoBuscaAutomatica(processar);
+
+					if (processar) {
 						interno.getObjetoContainer().getObjeto().setTabelaBuscaAuto(tabela);
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 						tabela.setProcessado(true);
@@ -386,6 +389,10 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 
 	private boolean executarBuscaAutomaticaApos(ObjetoContainerFormularioInterno interno, TabelaBuscaAutoApos tabela,
 			ObjetoContainer objetoContainer, boolean limparFormulariosRestantes) {
+		if (interno.isProcessadoBuscaAutomatica()) {
+			return false;
+		}
+
 		return interno.ehTabela(tabela)
 				|| (limparFormulariosRestantes && interno.getObjetoContainer() != objetoContainer);
 	}
