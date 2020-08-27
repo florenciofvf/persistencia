@@ -133,7 +133,7 @@ public class ConsultaContainer extends AbstratoContainer
 				String linha = br.readLine();
 
 				while (linha != null) {
-					textArea.append(linha + Constantes.QL2);
+					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {

@@ -1466,14 +1466,14 @@ public class Superficie extends Desktop {
 
 		private void propriedades() {
 			StringBuilder sb = new StringBuilder();
-			sb.append("Total de objetos: " + objetos.length + Constantes.QL2);
+			sb.append("Total de objetos: " + objetos.length + Constantes.QL);
 
 			File file = container.getFileSalvarAberto();
 
 			if (file != null) {
-				sb.append("Local absoluto do arquivo: " + file.getAbsolutePath() + Constantes.QL2);
+				sb.append("Local absoluto do arquivo: " + file.getAbsolutePath() + Constantes.QL);
 				sb.append("Local relativo do arquivo: " + Fichario.getAbsRelativoArquivo(ArquivoTreeModelo.FILE, file)
-						+ Constantes.QL2);
+						+ Constantes.QL);
 			}
 
 			PropriedadesFormulario.criar(formulario, sb.toString());

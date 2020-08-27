@@ -406,7 +406,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 					String linha = br.readLine();
 
 					while (linha != null) {
-						sb.append(linha + Constantes.QL2);
+						sb.append(linha + Constantes.QL);
 						linha = br.readLine();
 					}
 
@@ -467,7 +467,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 
 				int exit = process.waitFor();
 				String conteudo = areaResultados.getText();
-				areaResultados.setText(conteudo + Constantes.QL2 + "EXIT=" + exit);
+				areaResultados.setText(conteudo + Constantes.QL + "EXIT=" + exit);
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, ex, this);
@@ -503,7 +503,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 				String linha = br.readLine();
 
 				while (linha != null) {
-					sb.append(linha + Constantes.QL2);
+					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
 

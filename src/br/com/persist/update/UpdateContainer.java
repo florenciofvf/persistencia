@@ -126,7 +126,7 @@ public class UpdateContainer extends AbstratoContainer implements Fichario.IFich
 				String linha = br.readLine();
 
 				while (linha != null) {
-					textArea.append(linha + Constantes.QL2);
+					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {

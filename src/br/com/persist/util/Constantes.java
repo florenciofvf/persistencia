@@ -129,12 +129,11 @@ public class Constantes {
 	public static final int QUARENTA_UM = 41;
 	public static final String III = "???";
 	public static final String ESC = "esc";
-	public static final String QL = "\r\n";
 	public static final String SEP = "###";
 	public static final int QUARENTA = 40;
-	public static final String QL2 = "\n";
 	public static final String TAB = "\t";
 	public static final String VAZIO = "";
+	public static final String QL = "\n";
 	public static final int SETENTA = 70;
 	public static final byte ARRASTO = 1;
 	public static final byte RELACAO = 3;

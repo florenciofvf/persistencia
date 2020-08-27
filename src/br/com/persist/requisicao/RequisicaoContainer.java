@@ -432,7 +432,7 @@ public class RequisicaoContainer extends AbstratoContainer implements Fichario.I
 					String linha = br.readLine();
 
 					while (linha != null) {
-						sb.append(linha + Constantes.QL2);
+						sb.append(linha + Constantes.QL);
 						linha = br.readLine();
 					}
 

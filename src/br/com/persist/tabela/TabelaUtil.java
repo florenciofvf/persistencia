@@ -165,26 +165,26 @@ public class TabelaUtil {
 
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
-		html.append("<html>").append(Constantes.QL2);
-		html.append("<body>").append(Constantes.QL2);
-		html.append("<table>").append(Constantes.QL2);
-		html.append("<tr>").append(Constantes.QL2);
+		html.append("<html>").append(Constantes.QL);
+		html.append("<body>").append(Constantes.QL);
+		html.append("<table>").append(Constantes.QL);
+		html.append("<tr>").append(Constantes.QL);
 
 		int colunas = model.getColumnCount();
 
 		for (int i = 0; i < colunas; i++) {
 			String coluna = model.getColumnName(i);
 
-			html.append("<th>" + coluna + "</th>").append(Constantes.QL2);
+			html.append("<th>" + coluna + "</th>").append(Constantes.QL);
 			tabular.append(coluna + Constantes.TAB);
 		}
 
-		html.append("</tr>").append(Constantes.QL2);
+		html.append("</tr>").append(Constantes.QL);
 		tabular.deleteCharAt(tabular.length() - 1);
-		tabular.append(Constantes.QL2);
+		tabular.append(Constantes.QL);
 
 		for (Integer i : indices) {
-			html.append("<tr>").append(Constantes.QL2);
+			html.append("<tr>").append(Constantes.QL);
 
 			for (int j = 0; j < colunas; j++) {
 				Object obj = model.getValueAt(i, j);
@@ -192,16 +192,16 @@ public class TabelaUtil {
 
 				tabular.append(val + Constantes.TAB);
 				html.append("<td>" + val + "</td>");
-				html.append(Constantes.QL2);
+				html.append(Constantes.QL);
 			}
 
-			html.append("</tr>").append(Constantes.QL2);
+			html.append("</tr>").append(Constantes.QL);
 			tabular.deleteCharAt(tabular.length() - 1);
-			tabular.append(Constantes.QL2);
+			tabular.append(Constantes.QL);
 		}
 
-		html.append("</table>").append(Constantes.QL2);
-		html.append("</body>").append(Constantes.QL2);
+		html.append("</table>").append(Constantes.QL);
+		html.append("</body>").append(Constantes.QL);
 		html.append("</html>");
 		tabular.deleteCharAt(tabular.length() - 1);
 

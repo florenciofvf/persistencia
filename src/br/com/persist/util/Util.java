@@ -868,7 +868,7 @@ public class Util {
 
 		String text = area.getText();
 
-		area.setText(text + Constantes.QL2 + string);
+		area.setText(text + Constantes.QL + string);
 	}
 
 	public static String replaceAll(String string, String atual, String novo) {

@@ -1425,21 +1425,21 @@ public class Fichario extends JTabbedPane {
 				IFicharioConexao aba = (IFicharioConexao) cmp;
 				InfoConexao info = aba.getInfoConexao();
 
-				sb.append("ABA: " + info.getNomeAba() + Constantes.QL2);
-				sb.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL2);
+				sb.append("ABA: " + info.getNomeAba() + Constantes.QL);
+				sb.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
 
 				if (!Util.estaVazio(info.getConexaoFile())) {
-					sb.append("FILE: " + info.getConexaoFile() + Constantes.QL2);
+					sb.append("FILE: " + info.getConexaoFile() + Constantes.QL);
 				}
 
-				sb.append(Constantes.QL2);
+				sb.append(Constantes.QL);
 
 				cont++;
 			}
 		}
 
 		if (sb.length() > 0) {
-			sb.insert(0, "TOTAL = " + cont + Constantes.QL2 + Constantes.QL2);
+			sb.insert(0, "TOTAL = " + cont + Constantes.QL + Constantes.QL);
 		}
 
 		Util.mensagem(Fichario.this, sb.toString());
@@ -1485,7 +1485,7 @@ public class Fichario extends JTabbedPane {
 					String absRelativoArquivo = getAbsRelativoArquivo(ArquivoTreeModelo.FILE, file);
 
 					if (absRelativoArquivo != null) {
-						pw.print(absRelativoArquivo + Constantes.QL2);
+						pw.print(absRelativoArquivo + Constantes.QL);
 					}
 				}
 
