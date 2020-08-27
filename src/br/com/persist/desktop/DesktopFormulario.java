@@ -31,6 +31,7 @@ public class DesktopFormulario extends AbstratoFormulario {
 			public void windowOpened(WindowEvent e) {
 				desktop.ini(getGraphics());
 				desktop.getDistribuicao().distribuir(-Constantes.VINTE);
+				desktop.atualizarFormularios();
 			}
 		});
 	}
