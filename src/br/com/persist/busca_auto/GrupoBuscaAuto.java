@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.persist.util.Constantes;
 
 public class GrupoBuscaAuto {
+	private final GrupoBuscaAutoApos grupoBuscaAutoApos;
 	private final List<TabelaBuscaAuto> tabelas;
 	private final String nomeGrupoCampo;
 	private final String campo;
@@ -13,8 +14,28 @@ public class GrupoBuscaAuto {
 	public GrupoBuscaAuto(String nomeGrupoCampo) {
 		int pos = nomeGrupoCampo.indexOf('.');
 		this.campo = nomeGrupoCampo.substring(pos + 1);
+		TabelaBuscaAuto.checarCampo(campo);
 		this.nomeGrupoCampo = nomeGrupoCampo;
 		tabelas = new ArrayList<>();
+		grupoBuscaAutoApos = new GrupoBuscaAutoApos(campo);
+	}
+
+	public static GrupoBuscaAuto criar(String nomeGrupoCampo) {
+		return new GrupoBuscaAuto(nomeGrupoCampo);
+	}
+
+	public void add(TabelaBuscaAuto tabela) {
+		for (TabelaBuscaAuto obj : tabelas) {
+			if (obj.igual(tabela)) {
+				return;
+			}
+		}
+
+		tabelas.add(tabela);
+	}
+
+	public GrupoBuscaAutoApos getGrupoBuscaAutoApos() {
+		return grupoBuscaAutoApos;
 	}
 
 	public void setNumeroColetores(List<String> numeros) {

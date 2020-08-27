@@ -774,12 +774,6 @@ public class Util {
 		return klass.getName().equals(nome);
 	}
 
-	public static void checarPos(int pos, String msg) {
-		if (pos < 0) {
-			throw new IllegalStateException(msg);
-		}
-	}
-
 	public static void selecionarTexto(JTextComponent area) {
 		if (area == null) {
 			return;

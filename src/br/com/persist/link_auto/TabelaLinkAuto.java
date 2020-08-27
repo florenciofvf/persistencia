@@ -1,34 +1,29 @@
 package br.com.persist.link_auto;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 
 public class TabelaLinkAuto {
-	private final String apelidoTabelaCampo;
 	private final String apelido;
 	private final String campo;
 	private final String nome;
 
 	public TabelaLinkAuto(String apelidoTabelaCampo, String contextoDebug) {
-		this.apelidoTabelaCampo = apelidoTabelaCampo;
 		int pos = apelidoTabelaCampo.indexOf('.');
-		Util.checarPos(pos, "SEM CAMPO DEFINIDO NO LINK AUTO -> " + contextoDebug + " > " + apelidoTabelaCampo);
-		String n = apelidoTabelaCampo.substring(0, pos);
+		TabelaBuscaAuto.checarPos(pos,
+				"SEM CAMPO DEFINIDO NO LINK AUTO -> " + contextoDebug + " > " + apelidoTabelaCampo);
+		String[] arrayApelidoTabela = TabelaBuscaAuto.separarApelidoTabela(apelidoTabelaCampo.substring(0, pos));
+		campo = apelidoTabelaCampo.substring(pos + 1).trim();
+		TabelaBuscaAuto.checarCampo(campo);
+		apelido = arrayApelidoTabela[0];
+		nome = arrayApelidoTabela[1];
+	}
 
-		if (n.startsWith("(")) {
-			int pos2 = n.indexOf(')');
-			apelido = n.substring(1, pos2);
-			nome = n.substring(pos2 + 1);
-		} else {
-			apelido = Constantes.VAZIO;
-			nome = n;
-		}
-
-		campo = apelidoTabelaCampo.substring(pos + 1);
+	public boolean igual(TabelaLinkAuto tabela) {
+		return apelido.equals(tabela.apelido) && nome.equals(tabela.nome);
 	}
 
 	public String getApelidoTabelaCampo() {
-		return apelidoTabelaCampo;
+		return TabelaBuscaAuto.getApelidoTabelaCampo(apelido, nome, campo);
 	}
 
 	public String getApelido() {

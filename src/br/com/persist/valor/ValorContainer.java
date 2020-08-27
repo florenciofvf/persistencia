@@ -4,16 +4,14 @@ import java.awt.BorderLayout;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.busca_apos.BuscaAutoApos;
-import br.com.persist.busca_apos.GrupoBuscaAutoApos;
-import br.com.persist.busca_auto.BuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAutoUtil;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.icone.Icones;
 import br.com.persist.link_auto.GrupoLinkAuto;
-import br.com.persist.link_auto.LinkAuto;
+import br.com.persist.link_auto.LinkAutoUtil;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -49,9 +47,6 @@ public class ValorContainer extends Panel {
 
 		} else if (Tipo.BUSCA.equals(tipo)) {
 			buscaAuto(objeto, builder);
-
-		} else if (Tipo.BUSCA_APOS.equals(tipo)) {
-			buscaAutoApos(builder);
 
 		} else if (Tipo.LINK.equals(tipo)) {
 			linkAuto(objeto, builder);
@@ -99,7 +94,7 @@ public class ValorContainer extends Panel {
 	}
 
 	private void buscaAuto(Objeto objeto, StringBuilder builder) {
-		List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto,
+		List<GrupoBuscaAuto> listaGrupo = GrupoBuscaAutoUtil.listaGrupoBuscaAuto(objeto,
 				!Util.estaVazio(objeto.getBuscaAutomatica()) ? objeto.getBuscaAutomatica()
 						: Mensagens.getString("hint.buscaAuto"));
 
@@ -115,26 +110,10 @@ public class ValorContainer extends Panel {
 		}
 	}
 
-	private void buscaAutoApos(StringBuilder builder) {
-		List<GrupoBuscaAutoApos> listaGrupoApos = BuscaAutoApos
-				.listaGrupoBuscaAutoApos(!Util.estaVazio(objeto.getBuscaAutomaticaApos())
-						? objeto.getBuscaAutomaticaApos() : Mensagens.getString("hint.buscaAutoApos"));
-
-		for (int i = 0; i < listaGrupoApos.size(); i++) {
-			GrupoBuscaAutoApos grupoApos = listaGrupoApos.get(i);
-			builder.append(grupoApos.getDetalhe());
-
-			if (i + 1 < listaGrupoApos.size()) {
-				builder.append(";");
-			}
-
-			builder.append(Constantes.QL);
-		}
-	}
-
 	private void linkAuto(Objeto objeto, StringBuilder builder) {
-		List<GrupoLinkAuto> listaLink = LinkAuto.listaGrupoLinkAuto(objeto, !Util.estaVazio(objeto.getLinkAutomatico())
-				? objeto.getLinkAutomatico() : Mensagens.getString("hint.linkAuto"));
+		List<GrupoLinkAuto> listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
+				!Util.estaVazio(objeto.getLinkAutomatico()) ? objeto.getLinkAutomatico()
+						: Mensagens.getString("hint.linkAuto"));
 
 		for (int i = 0; i < listaLink.size(); i++) {
 			GrupoLinkAuto link = listaLink.get(i);
@@ -149,7 +128,7 @@ public class ValorContainer extends Panel {
 	}
 
 	public enum Tipo {
-		CHAVE, BUSCA, LINK, MAPA, BUSCA_APOS
+		CHAVE, BUSCA, LINK, MAPA
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -181,17 +160,14 @@ public class ValorContainer extends Panel {
 
 			sucessoAcao.setActionListener(e -> {
 				try {
-					if (Tipo.BUSCA_APOS.equals(tipo)) {
-						objeto.setBuscaAutomaticaApos(Util.normalizar(textArea.getText(), false));
-
-					} else if (Tipo.BUSCA.equals(tipo)) {
+					if (Tipo.BUSCA.equals(tipo)) {
 						String string = Util.normalizar(textArea.getText(), false);
-						BuscaAuto.listaGrupoBuscaAuto(objeto, string);
+						GrupoBuscaAutoUtil.listaGrupoBuscaAuto(objeto, string);
 						objeto.setBuscaAutomatica(string);
 
 					} else if (Tipo.LINK.equals(tipo)) {
 						String string = Util.normalizar(textArea.getText(), false);
-						LinkAuto.listaGrupoLinkAuto(objeto, string);
+						LinkAutoUtil.listaGrupoLinkAuto(objeto, string);
 						objeto.setLinkAutomatico(string);
 
 					} else if (Tipo.CHAVE.equals(tipo)) {

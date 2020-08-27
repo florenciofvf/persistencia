@@ -3,8 +3,8 @@ package br.com.persist.objeto;
 import java.awt.Component;
 import java.awt.Dimension;
 
-import br.com.persist.busca_apos.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAutoApos;
 import br.com.persist.link_auto.GrupoLinkAuto;
 
 public interface ObjetoContainerListener {

@@ -45,7 +45,6 @@ public class Objeto implements Runnable {
 	private TabelaBuscaAuto tabelaBuscaAuto;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
-	private String buscaAutomaticaApos;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
 	private String selectAlternativo;
@@ -119,7 +118,6 @@ public class Objeto implements Runnable {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 
-		o.buscaAutomaticaApos = buscaAutomaticaApos;
 		o.selectAlternativo = selectAlternativo;
 		o.tabelaBuscaAuto = tabelaBuscaAuto;
 		o.buscaAutomatica = buscaAutomatica;
@@ -169,7 +167,6 @@ public class Objeto implements Runnable {
 		colunaInfo = Boolean.parseBoolean(attr.getValue("colunaInfo"));
 		abrirAuto = Boolean.parseBoolean(attr.getValue("abrirAuto"));
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
-		buscaAutomaticaApos = attr.getValue("buscaAutomaticaApos");
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		selectAlternativo = attr.getValue("selectAlternativo");
@@ -203,7 +200,6 @@ public class Objeto implements Runnable {
 		util.abrirTag("objeto");
 		util.atributo("id", Util.escapar(id));
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
-		util.atributo("buscaAutomaticaApos", Util.escapar(getBuscaAutomaticaApos()));
 		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
 		util.atributo("linkAutomatico", Util.escapar(getLinkAutomatico()));
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
@@ -668,14 +664,6 @@ public class Objeto implements Runnable {
 		return buscaAutomatica;
 	}
 
-	public String getBuscaAutomaticaApos() {
-		if (Util.estaVazio(buscaAutomaticaApos)) {
-			buscaAutomaticaApos = Constantes.VAZIO;
-		}
-
-		return buscaAutomaticaApos;
-	}
-
 	public String getLinkAutomatico() {
 		if (Util.estaVazio(linkAutomatico)) {
 			linkAutomatico = Constantes.VAZIO;
@@ -698,10 +686,6 @@ public class Objeto implements Runnable {
 
 	public void setBuscaAutomatica(String buscaAutomatica) {
 		this.buscaAutomatica = buscaAutomatica;
-	}
-
-	public void setBuscaAutomaticaApos(String buscaAutomaticaApos) {
-		this.buscaAutomaticaApos = buscaAutomaticaApos;
 	}
 
 	public void setLinkAutomatico(String linkAutomatico) {

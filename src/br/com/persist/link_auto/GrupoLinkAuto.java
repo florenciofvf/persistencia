@@ -3,6 +3,7 @@ package br.com.persist.link_auto;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.util.Constantes;
 
 public class GrupoLinkAuto {
@@ -12,6 +13,21 @@ public class GrupoLinkAuto {
 	public GrupoLinkAuto(String campo) {
 		tabelas = new ArrayList<>();
 		this.campo = campo;
+		TabelaBuscaAuto.checarCampo(campo);
+	}
+
+	public static GrupoLinkAuto criar(String campo) {
+		return new GrupoLinkAuto(campo);
+	}
+
+	public void add(TabelaLinkAuto tabela) {
+		for (TabelaLinkAuto obj : tabelas) {
+			if (obj.igual(tabela)) {
+				return;
+			}
+		}
+
+		tabelas.add(tabela);
 	}
 
 	public List<TabelaLinkAuto> getTabelas() {

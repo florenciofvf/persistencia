@@ -22,10 +22,10 @@ import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.busca_apos.GrupoBuscaAutoApos;
-import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.busca_auto.TabelaBuscaAutoApos;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.Popup;
 import br.com.persist.conexao.Conexao;

@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import br.com.persist.busca_apos.GrupoBuscaAutoApos;
-import br.com.persist.busca_apos.TabelaBuscaAutoApos;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
+import br.com.persist.busca_auto.TabelaBuscaAutoApos;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;

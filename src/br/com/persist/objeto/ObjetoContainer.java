@@ -38,10 +38,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import br.com.persist.busca_apos.BuscaAutoApos;
-import br.com.persist.busca_apos.GrupoBuscaAutoApos;
-import br.com.persist.busca_auto.BuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAutoUtil;
 import br.com.persist.busca_auto.GrupoBuscaAuto;
+import br.com.persist.busca_auto.GrupoBuscaAutoApos;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.complemento.ComplementoDialogo;
@@ -64,7 +63,7 @@ import br.com.persist.fragmento.FragmentoListener;
 import br.com.persist.icone.Icones;
 import br.com.persist.instrucao.Instrucao;
 import br.com.persist.link_auto.GrupoLinkAuto;
-import br.com.persist.link_auto.LinkAuto;
+import br.com.persist.link_auto.LinkAutoUtil;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.persistencia.Persistencia;
 import br.com.persist.renderer.CellRenderer;
@@ -127,8 +126,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
 			boolean buscaAuto) {
+		listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
-		listaLink = LinkAuto.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
 		txtComplemento.addMouseListener(mouseComplementoListener);
@@ -459,13 +458,11 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			}
 
 			private void complemento(Objeto objeto) {
-				List<GrupoBuscaAutoApos> listaGrupoApos = BuscaAutoApos
-						.listaGrupoBuscaAutoApos(objeto.getBuscaAutomaticaApos());
-				List<GrupoBuscaAuto> listaGrupo = BuscaAuto.listaGrupoBuscaAuto(objeto, objeto.getBuscaAutomatica());
+				List<GrupoBuscaAuto> listaGrupo = GrupoBuscaAutoUtil.listaGrupoBuscaAuto(objeto,
+						objeto.getBuscaAutomatica());
 
 				for (GrupoBuscaAuto grupo : listaGrupo) {
-					GrupoBuscaAutoApos grupoApos = TabelaUtil.proximo(listaGrupoApos, grupo);
-					addMenu(new MenuBuscaAuto(grupo, grupoApos));
+					addMenu(new MenuBuscaAuto(grupo));
 				}
 
 				habilitado = !listaGrupo.isEmpty();
@@ -481,10 +478,10 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 				private final transient GrupoBuscaAutoApos grupoApos;
 				private final transient GrupoBuscaAuto grupo;
 
-				private MenuBuscaAuto(GrupoBuscaAuto grupo, GrupoBuscaAutoApos grupoApos) {
+				private MenuBuscaAuto(GrupoBuscaAuto grupo) {
 					super(grupo.getNomeGrupoCampo(), Icones.CONFIG2, "nao_chave");
 
-					this.grupoApos = grupoApos;
+					this.grupoApos = grupo.getGrupoBuscaAutoApos();
 					this.grupo = grupo;
 
 					semAspasAcao.setActionListener(e -> processar(false));
@@ -514,7 +511,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					buscaAutomaticaListener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
 
-					if (grupo.isProcessado() && grupoApos != null && buscaAutomaticaAposListener != null) {
+					if (grupo.isProcessado() && buscaAutomaticaAposListener != null) {
 						buscaAutomaticaAposListener.buscaAutomaticaApos(grupoApos);
 					}
 

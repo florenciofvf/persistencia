@@ -17,10 +17,7 @@ public class ValorDialogo extends AbstratoDialogo implements IJanela {
 		container = new ValorContainer(this, objeto, tipo);
 		montarLayout();
 
-		if (ValorContainer.Tipo.BUSCA_APOS.equals(tipo)) {
-			setTitle(Mensagens.getString("label.buscaAutoApos") + " - " + getTitle());
-
-		} else if (ValorContainer.Tipo.CHAVE.equals(tipo)) {
+		if (ValorContainer.Tipo.CHAVE.equals(tipo)) {
 			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
 
 		} else if (ValorContainer.Tipo.MAPA.equals(tipo)) {

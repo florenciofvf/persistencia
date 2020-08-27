@@ -8,9 +8,9 @@ import java.util.Map;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Util;
 
-public class LinkAuto {
+public class LinkAutoUtil {
 
-	private LinkAuto() {
+	private LinkAutoUtil() {
 	}
 
 	public static List<GrupoLinkAuto> listaGrupoLinkAuto(Objeto objeto, String string) {
@@ -30,26 +30,18 @@ public class LinkAuto {
 	}
 
 	private static void processarGrupoLinkAuto(Objeto objeto, String stringLink, Map<String, GrupoLinkAuto> mapa) {
-		String[] campoTabelasDoLink = stringLink.split("=");
+		String[] campoTabelas = stringLink.split("=");
 
-		if (campoTabelasDoLink != null && campoTabelasDoLink.length > 1) {
-			String campo = campoTabelasDoLink[0].trim();
+		if (campoTabelas != null && campoTabelas.length > 1) {
+			String campo = campoTabelas[0].trim();
 
-			GrupoLinkAuto grupoLinkAuto = mapa.get(campo);
+			GrupoLinkAuto grupo = mapa.computeIfAbsent(campo, GrupoLinkAuto::criar);
 
-			if (grupoLinkAuto == null) {
-				grupoLinkAuto = new GrupoLinkAuto(campo);
-				mapa.put(campo, grupoLinkAuto);
-			} else {
-				grupoLinkAuto.getTabelas().clear();
-			}
+			String tabelas = campoTabelas[1];
+			String[] arrayTabelas = tabelas.split(",");
 
-			String tabelasDoLink = campoTabelasDoLink[1];
-			String[] tabelas = tabelasDoLink.split(",");
-
-			for (String apelidoTabelaCampo : tabelas) {
-				grupoLinkAuto.getTabelas()
-						.add(new TabelaLinkAuto(apelidoTabelaCampo.trim(), objeto.getId() + " > " + campo));
+			for (String apelidoTabelaCampo : arrayTabelas) {
+				grupo.add(new TabelaLinkAuto(apelidoTabelaCampo.trim(), objeto.getId() + " > " + campo));
 			}
 		}
 	}
