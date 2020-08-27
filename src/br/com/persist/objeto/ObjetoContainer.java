@@ -271,19 +271,19 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 			private void eventos() {
 				objetoAcao.setActionListener(e -> txtComplemento.setText(objeto.getComplemento()));
 				limparAcao.setActionListener(e -> txtComplemento.limpar());
-
-				conexaoAcao.setActionListener(e -> {
-					Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
-					String string = Constantes.VAZIO;
-
-					if (conexao != null) {
-						string = conexao.getFinalComplemento();
-					}
-
-					txtComplemento.setText(string);
-				});
-
+				conexaoAcao.setActionListener(e -> limparUsandoConexao());
 				limpar2Acao.setActionListener(e -> limpar2());
+			}
+
+			private void limparUsandoConexao() {
+				Conexao conexao = (Conexao) cmbConexao.getSelectedItem();
+				String string = Constantes.VAZIO;
+
+				if (conexao != null) {
+					string = conexao.getFinalComplemento();
+				}
+
+				txtComplemento.setText(string);
 			}
 
 			private void limpar2() {
