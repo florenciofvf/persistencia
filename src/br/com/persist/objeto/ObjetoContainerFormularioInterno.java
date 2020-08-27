@@ -201,11 +201,12 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		}
 	}
 
-	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos) {
+	public void buscaAutomaticaApos(ObjetoContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
+			boolean limparFormulariosRestantes) {
 		checarDesktop();
 
 		if (desktop != null) {
-			desktop.buscaAutomaticaApos(grupoApos, container);
+			desktop.buscaAutomaticaApos(objetoContainer, grupoApos, limparFormulariosRestantes);
 		}
 	}
 

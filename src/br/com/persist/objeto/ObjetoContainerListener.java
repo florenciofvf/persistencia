@@ -8,6 +8,10 @@ import br.com.persist.busca_auto.GrupoBuscaAutoApos;
 import br.com.persist.link_auto.GrupoLinkAuto;
 
 public interface ObjetoContainerListener {
+	public interface BuscaAutomaticaApos {
+		public void buscaAutomaticaApos(ObjetoContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
+				boolean limparFormulariosRestantes);
+	}
 
 	public interface BuscaAutomatica {
 		public void buscaAutomatica(GrupoBuscaAuto grupoBusca, String argumentos);
@@ -15,10 +19,6 @@ public interface ObjetoContainerListener {
 
 	public interface LinkAutomatico {
 		public void linkAutomatico(GrupoLinkAuto grupoLink, String argumento);
-	}
-
-	public interface BuscaAutomaticaApos {
-		public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos);
 	}
 
 	public interface ConfigAlturaAutomatica {

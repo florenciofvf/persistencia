@@ -27,6 +27,16 @@ public class GrupoBuscaAutoApos {
 		tabelas.add(tabela);
 	}
 
+	public boolean contemLimparFormulariosRestantes() {
+		for (TabelaBuscaAutoApos obj : tabelas) {
+			if ("LIMPAR_FORMULARIOS_RESTANTES".equalsIgnoreCase(obj.getNome())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public String getCampo() {
 		return campo;
 	}

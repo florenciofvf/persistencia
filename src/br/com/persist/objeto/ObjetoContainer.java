@@ -512,7 +512,8 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					setEnabled(grupo.isProcessado());
 
 					if (grupo.isProcessado() && buscaAutomaticaAposListener != null) {
-						buscaAutomaticaAposListener.buscaAutomaticaApos(grupoApos);
+						buscaAutomaticaAposListener.buscaAutomaticaApos(ObjetoContainer.this, grupoApos,
+								grupoApos.contemLimparFormulariosRestantes());
 					}
 
 					if (!objeto.isColunaInfo()) {

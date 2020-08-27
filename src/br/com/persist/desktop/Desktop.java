@@ -366,7 +366,8 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		return null;
 	}
 
-	public void buscaAutomaticaApos(GrupoBuscaAutoApos grupoApos, ObjetoContainer container) {
+	public void buscaAutomaticaApos(ObjetoContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
+			boolean limparFormulariosRestantes) {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
@@ -375,12 +376,18 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 				List<TabelaBuscaAutoApos> tabelas = grupoApos.getTabelas();
 
 				for (TabelaBuscaAutoApos tabela : tabelas) {
-					if (interno.ehTabela(tabela)) {
+					if (executarBuscaAutomaticaApos(interno, tabela, objetoContainer, limparFormulariosRestantes)) {
 						interno.buscaAutomaticaApos();
 					}
 				}
 			}
 		}
+	}
+
+	private boolean executarBuscaAutomaticaApos(ObjetoContainerFormularioInterno interno, TabelaBuscaAutoApos tabela,
+			ObjetoContainer objetoContainer, boolean limparFormulariosRestantes) {
+		return interno.ehTabela(tabela)
+				|| (limparFormulariosRestantes && interno.getObjetoContainer() != objetoContainer);
 	}
 
 	public void linkAutomatico(GrupoLinkAuto link, String argumento, ObjetoContainer container) {
