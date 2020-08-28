@@ -921,7 +921,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		try {
 			systemTray.add(trayIcon);
-			trayIcon.displayMessage(Mensagens.getTituloAplicacao(), Mensagens.getString("label.descricao_aplicacao"),
+			trayIcon.displayMessage(Mensagens.getTituloAplicacao(), Mensagens.getString("versao"),
 					TrayIcon.MessageType.INFO);
 			trayIcon.addActionListener(new IconeBandejaListener());
 		} catch (AWTException ex) {
