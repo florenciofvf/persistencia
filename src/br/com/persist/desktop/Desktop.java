@@ -334,14 +334,13 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
 				List<TabelaBuscaAuto> tabelas = grupo.getTabelas();
+				interno.setProcessadoBuscaAutomatica(false);
 
 				for (TabelaBuscaAuto tabela : tabelas) {
-					boolean processar = interno.ehTabela(tabela);
-					interno.setProcessadoBuscaAutomatica(processar);
-
-					if (processar) {
+					if (interno.ehTabela(tabela)) {
 						interno.getObjetoContainer().getObjeto().setTabelaBuscaAuto(tabela);
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
+						interno.setProcessadoBuscaAutomatica(true);
 						tabela.setProcessado(true);
 					}
 				}
@@ -376,6 +375,11 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 		for (JInternalFrame frame : frames) {
 			if (frame instanceof ObjetoContainerFormularioInterno) {
 				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+
+				if (interno.isProcessadoBuscaAutomatica()) {
+					continue;
+				}
+
 				List<TabelaBuscaAutoApos> tabelas = grupoApos.getTabelas();
 
 				for (TabelaBuscaAutoApos tabela : tabelas) {
@@ -389,10 +393,6 @@ public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFichario
 
 	private boolean executarBuscaAutomaticaApos(ObjetoContainerFormularioInterno interno, TabelaBuscaAutoApos tabela,
 			ObjetoContainer objetoContainer, boolean limparFormulariosRestantes) {
-		if (interno.isProcessadoBuscaAutomatica()) {
-			return false;
-		}
-
 		return interno.ehTabela(tabela)
 				|| (limparFormulariosRestantes && interno.getObjetoContainer() != objetoContainer);
 	}
