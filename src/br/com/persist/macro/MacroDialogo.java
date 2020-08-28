@@ -24,11 +24,6 @@ public class MacroDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
-	@Override
-	public void fechar() {
-		dispose();
-	}
-
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -36,6 +31,11 @@ public class MacroDialogo extends AbstratoDialogo implements IJanela {
 				container.getLista().setSelectedIndex(0);
 			}
 		});
+	}
+
+	@Override
+	public void fechar() {
+		dispose();
 	}
 
 	public static MacroDialogo criar(Frame frame) {

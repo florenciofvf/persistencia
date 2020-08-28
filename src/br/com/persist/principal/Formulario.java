@@ -112,6 +112,10 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		configurar();
 	}
 
+	private void montarLayout() {
+		add(BorderLayout.CENTER, fichario);
+	}
+
 	private void configurar() {
 		fichario.setTabLayoutPolicy(
 				Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
@@ -215,10 +219,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public Fichario getFichario() {
 		return fichario;
-	}
-
-	private void montarLayout() {
-		add(BorderLayout.CENTER, fichario);
 	}
 
 	public class Conteiner {

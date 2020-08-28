@@ -26,11 +26,6 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
-	@Override
-	public void fechar() {
-		dispose();
-	}
-
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -38,6 +33,11 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 				container.ini(getGraphics());
 			}
 		});
+	}
+
+	@Override
+	public void fechar() {
+		dispose();
 	}
 
 	public static ObjetoConfigDialogo criar(Frame frame, Superficie superficie, Objeto objeto) {

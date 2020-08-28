@@ -47,6 +47,10 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		container.exportarMetadadoRaiz(metadado);
 	}
 
+	private void montarLayout() {
+		add(BorderLayout.CENTER, container);
+	}
+
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -61,10 +65,6 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 				}
 			}
 		});
-	}
-
-	private void montarLayout() {
-		add(BorderLayout.CENTER, container);
 	}
 
 	@Override

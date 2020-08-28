@@ -27,6 +27,15 @@ public class ConfiguracaoDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Preferencias.salvar();
+			}
+		});
+	}
+
 	@Override
 	public void fechar() {
 		dispose();
@@ -36,14 +45,5 @@ public class ConfiguracaoDialogo extends AbstratoDialogo implements IJanela {
 		ConfiguracaoDialogo form = new ConfiguracaoDialogo(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				Preferencias.salvar();
-			}
-		});
 	}
 }

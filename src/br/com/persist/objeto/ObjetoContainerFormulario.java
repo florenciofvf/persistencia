@@ -29,6 +29,15 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
+	}
+
 	public Component getThis() {
 		return this;
 	}
@@ -40,14 +49,5 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 
 	public static ObjetoContainerFormulario criar(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g) {
 		return new ObjetoContainerFormulario(provedor, padrao, objeto, g);
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
 	}
 }

@@ -26,6 +26,15 @@ public class ConexaoDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
+	}
+
 	@Override
 	public void fechar() {
 		dispose();
@@ -35,14 +44,5 @@ public class ConexaoDialogo extends AbstratoDialogo implements IJanela {
 		ConexaoDialogo form = new ConexaoDialogo(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
 	}
 }

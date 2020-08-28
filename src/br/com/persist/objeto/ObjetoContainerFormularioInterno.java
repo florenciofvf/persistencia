@@ -61,6 +61,35 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameOpened(InternalFrameEvent e) {
+				container.ini(getGraphics());
+			}
+		});
+
+		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> {
+			checarDesktop();
+
+			if (desktop != null) {
+				Object valor = evt.getNewValue();
+				desktop.setAjusteAutomatico(Boolean.FALSE.equals(valor));
+			}
+		});
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				checarDesktop();
+
+				if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
+					configAjustes(false);
+				}
+			}
+		});
+	}
+
 	public Component getThis() {
 		return this;
 	}
@@ -93,35 +122,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 				parent = parent.getParent();
 			}
 		}
-	}
-
-	private void configurar() {
-		addInternalFrameListener(new InternalFrameAdapter() {
-			@Override
-			public void internalFrameOpened(InternalFrameEvent e) {
-				container.ini(getGraphics());
-			}
-		});
-
-		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> {
-			checarDesktop();
-
-			if (desktop != null) {
-				Object valor = evt.getNewValue();
-				desktop.setAjusteAutomatico(Boolean.FALSE.equals(valor));
-			}
-		});
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				checarDesktop();
-
-				if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
-					configAjustes(false);
-				}
-			}
-		});
 	}
 
 	public void configAjustes(boolean updateTree) {

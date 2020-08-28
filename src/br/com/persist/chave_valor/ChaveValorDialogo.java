@@ -31,6 +31,15 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.NORTH, toolbar);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				chaveValor.setValor(textArea.getText());
+			}
+		});
+	}
+
 	@Override
 	public void dispose() {
 		chaveValor.setValor(textArea.getText());
@@ -44,15 +53,6 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 
 	public static ChaveValorDialogo criar(ChaveValor chaveValor) {
 		return new ChaveValorDialogo(chaveValor);
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				chaveValor.setValor(textArea.getText());
-			}
-		});
 	}
 
 	private class Toolbar extends BarraButton {
