@@ -109,7 +109,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 	private transient ObjetoContainerListener.Titulo tituloListener;
 	private final AtomicBoolean processado = new AtomicBoolean();
 	private final TextField txtComplemento = new TextField(33);
-	private final transient List<GrupoLinkAuto> listaLink;
+	private final transient List<GrupoLinkAuto> listaGrupoLink;
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient ConexaoProvedor provedor;
 	private final Toolbar toolbar = new Toolbar();
@@ -126,7 +126,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
 			boolean buscaAuto) {
-		listaLink = GrupoLinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
+		listaGrupoLink = GrupoLinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));
@@ -1854,12 +1854,12 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 					toolbar.labelTotal.limpar();
 				}
 
-				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaLink.isEmpty()
+				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaGrupoLink.isEmpty()
 						&& linkAutomaticoListener != null) {
 					int indiceLinkSelecionado = -1;
 
-					for (int i = 0; i < listaLink.size(); i++) {
-						GrupoLinkAuto link = listaLink.get(i);
+					for (int i = 0; i < listaGrupoLink.size(); i++) {
+						GrupoLinkAuto link = listaGrupoLink.get(i);
 
 						if (TabelaUtil.getIndiceColuna(tabela, link.getCampo()) == colunaClick) {
 							indiceLinkSelecionado = i;
@@ -1876,7 +1876,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 						return;
 					}
 
-					linkAutomaticoListener.linkAutomatico(listaLink.get(indiceLinkSelecionado), lista.get(0));
+					linkAutomaticoListener.linkAutomatico(listaGrupoLink.get(indiceLinkSelecionado), lista.get(0));
 				}
 			} else {
 				toolbar.excluirAtualizarEnable(false);
