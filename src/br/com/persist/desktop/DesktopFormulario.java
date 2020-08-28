@@ -1,8 +1,6 @@
 package br.com.persist.desktop;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.formulario.AbstratoFormulario;
@@ -18,23 +16,18 @@ public class DesktopFormulario extends AbstratoFormulario {
 		super(Mensagens.getString(Constantes.LABEL_FORMULARIO));
 		desktop = new Desktop(formulario, false);
 		montarLayout();
-		configurar();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, new ScrollPane(desktop));
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				desktop.ini(getGraphics());
-				desktop.getDistribuicao().distribuir(-Constantes.VINTE);
-				desktop.atualizarFormularios();
-				desktop.getLarguras().configurar(Largura.TOTAL_A_DIREITA);
-			}
-		});
+	@Override
+	public void executarAoAbrirForm() {
+		desktop.ini(getGraphics());
+		desktop.getDistribuicao().distribuir(-Constantes.VINTE);
+		desktop.atualizarFormularios();
+		desktop.getLarguras().configurar(Largura.TOTAL_A_DIREITA);
 	}
 
 	public Desktop getDesktop() {

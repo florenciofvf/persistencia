@@ -3,6 +3,8 @@ package br.com.persist.formulario;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -25,6 +27,7 @@ public abstract class AbstratoFormulario extends JFrame {
 		setSize(Constantes.SIZE);
 		Util.configWindowC(this);
 		setActionESC();
+		configurar();
 	}
 
 	private void setActionESC() {
@@ -44,5 +47,17 @@ public abstract class AbstratoFormulario extends JFrame {
 
 		ActionMap actionMap = component.getActionMap();
 		actionMap.put(Constantes.ESC, action);
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				executarAoAbrirForm();
+			}
+		});
+	}
+
+	public void executarAoAbrirForm() {
 	}
 }

@@ -5,6 +5,8 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -36,6 +38,7 @@ public abstract class AbstratoDialogo extends JDialog {
 		setLayout(new BorderLayout());
 		setSize(Constantes.SIZE);
 		setActionESC();
+		configurar();
 	}
 
 	private void setActionESC() {
@@ -55,5 +58,17 @@ public abstract class AbstratoDialogo extends JDialog {
 
 		ActionMap actionMap = component.getActionMap();
 		actionMap.put(Constantes.ESC, action);
+	}
+
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				executarAoAbrirDialog();
+			}
+		});
+	}
+
+	public void executarAoAbrirDialog() {
 	}
 }
