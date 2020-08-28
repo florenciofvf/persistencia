@@ -2,8 +2,6 @@ package br.com.persist.container;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 
 import br.com.persist.formulario.AbstratoFormulario;
@@ -24,7 +22,6 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		this.container = container;
 		container.setJanela(this);
 		montarLayout();
-		configurar();
 	}
 
 	private ContainerFormulario(Formulario formulario, File file) {
@@ -32,7 +29,6 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		container = new Container(formulario, this);
 		container.setContainerFormulario(this);
 		montarLayout();
-		configurar();
 	}
 
 	public void abrir(File file, XMLColetor coletor, Graphics g, ConfigArquivo config) {
@@ -51,20 +47,16 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.estadoSelecao();
-			}
+	@Override
+	public void executarAoAbrirForm() {
+		container.estadoSelecao();
+	}
 
-			@Override
-			public void windowClosing(WindowEvent e) {
-				if (ativo) {
-					container.excluido();
-				}
-			}
-		});
+	@Override
+	public void executarAoFecharForm() {
+		if (ativo) {
+			container.excluido();
+		}
 	}
 
 	@Override

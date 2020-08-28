@@ -1,8 +1,6 @@
 package br.com.persist.variaveis;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
@@ -19,7 +17,6 @@ public class VariaveisFormulario extends AbstratoFormulario implements IJanela {
 		container = new VariaveisContainer(this, formulario);
 		container.setVariaveisFormulario(this);
 		montarLayout();
-		configurar();
 	}
 
 	private VariaveisFormulario(VariaveisContainer container) {
@@ -28,20 +25,15 @@ public class VariaveisFormulario extends AbstratoFormulario implements IJanela {
 		this.container = container;
 		container.setJanela(this);
 		montarLayout();
-		configurar();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
+	@Override
+	public void executarAoAbrirForm() {
+		container.ini(getGraphics());
 	}
 
 	@Override

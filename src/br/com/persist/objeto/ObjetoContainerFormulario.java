@@ -3,8 +3,6 @@ package br.com.persist.objeto;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
@@ -22,20 +20,15 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 		container.setDimensaoListener(ObjetoContainerFormulario.this::getSize);
 		container.setTituloListener(ObjetoContainerFormulario.this::setTitle);
 		montarLayout();
-		configurar();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
+	@Override
+	public void executarAoAbrirForm() {
+		container.ini(getGraphics());
 	}
 
 	public Component getThis() {

@@ -2,8 +2,6 @@ package br.com.persist.macro;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.IJanela;
@@ -17,20 +15,15 @@ public class MacroDialogo extends AbstratoDialogo implements IJanela {
 		container = new MacroContainer();
 		montarLayout();
 		pack();
-		configurar();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.getLista().setSelectedIndex(0);
-			}
-		});
+	@Override
+	public void executarAoAbrirDialog() {
+		container.getLista().setSelectedIndex(0);
 	}
 
 	@Override

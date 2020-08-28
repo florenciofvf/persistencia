@@ -63,7 +63,7 @@ import br.com.persist.fragmento.FragmentoListener;
 import br.com.persist.icone.Icones;
 import br.com.persist.instrucao.Instrucao;
 import br.com.persist.link_auto.GrupoLinkAuto;
-import br.com.persist.link_auto.LinkAutoUtil;
+import br.com.persist.link_auto.GrupoLinkAutoUtil;
 import br.com.persist.modelo.ListagemModelo;
 import br.com.persist.persistencia.Persistencia;
 import br.com.persist.renderer.CellRenderer;
@@ -126,7 +126,7 @@ public class ObjetoContainer extends Panel implements ActionListener, ItemListen
 
 	public ObjetoContainer(IJanela janela, ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
 			boolean buscaAuto) {
-		listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
+		listaLink = GrupoLinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
 		tabela.setMapaChaveamento(Util.criarMapaCampoNomes(objeto.getChaveamento()));
 		objeto.setMapaSequencias(Util.criarMapaSequencias(objeto.getSequencias()));
 		tabela.setMapeamento(Util.criarMapaCampoChave(objeto.getMapeamento()));

@@ -8,9 +8,9 @@ import java.util.Map;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Util;
 
-public class LinkAutoUtil {
+public class GrupoLinkAutoUtil {
 
-	private LinkAutoUtil() {
+	private GrupoLinkAutoUtil() {
 	}
 
 	public static List<GrupoLinkAuto> listaGrupoLinkAuto(Objeto objeto, String string) {

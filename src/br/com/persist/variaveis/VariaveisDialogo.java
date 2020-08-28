@@ -3,8 +3,6 @@ package br.com.persist.variaveis;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
@@ -20,27 +18,21 @@ public class VariaveisDialogo extends AbstratoDialogo implements IJanela {
 		super(dialog, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container = new VariaveisContainer(this, formulario);
 		montarLayout();
-		configurar();
 	}
 
 	VariaveisDialogo(Frame frame, Formulario formulario) {
 		super(frame, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 		container = new VariaveisContainer(this, formulario);
 		montarLayout();
-		configurar();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
+	@Override
+	public void executarAoAbrirDialog() {
+		container.ini(getGraphics());
 	}
 
 	@Override

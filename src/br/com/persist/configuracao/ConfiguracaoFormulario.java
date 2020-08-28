@@ -1,8 +1,6 @@
 package br.com.persist.configuracao;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
@@ -20,7 +18,6 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 		container = new ConfiguracaoContainer(this, formulario);
 		container.setConfiguracaoFormulario(this);
 		montarLayout();
-		configurar();
 	}
 
 	private ConfiguracaoFormulario(ConfiguracaoContainer container) {
@@ -35,13 +32,9 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 		add(BorderLayout.CENTER, container);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				Preferencias.salvar();
-			}
-		});
+	@Override
+	public void executarAoFecharForm() {
+		Preferencias.salvar();
 	}
 
 	@Override

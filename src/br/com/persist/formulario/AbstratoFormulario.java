@@ -55,9 +55,17 @@ public abstract class AbstratoFormulario extends JFrame {
 			public void windowOpened(WindowEvent e) {
 				executarAoAbrirForm();
 			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				executarAoFecharForm();
+			}
 		});
 	}
 
 	public void executarAoAbrirForm() {
+	}
+
+	public void executarAoFecharForm() {
 	}
 }

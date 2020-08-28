@@ -2,8 +2,6 @@ package br.com.persist.configuracao;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
@@ -20,20 +18,15 @@ public class ConfiguracaoDialogo extends AbstratoDialogo implements IJanela {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfiguracaoContainer(this, formulario);
 		montarLayout();
-		configurar();
 	}
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				Preferencias.salvar();
-			}
-		});
+	@Override
+	public void executarAoFecharDialog() {
+		Preferencias.salvar();
 	}
 
 	@Override

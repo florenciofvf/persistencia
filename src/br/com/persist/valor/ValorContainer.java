@@ -11,7 +11,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.icone.Icones;
 import br.com.persist.link_auto.GrupoLinkAuto;
-import br.com.persist.link_auto.LinkAutoUtil;
+import br.com.persist.link_auto.GrupoLinkAutoUtil;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
@@ -111,7 +111,7 @@ public class ValorContainer extends Panel {
 	}
 
 	private void linkAuto(Objeto objeto, StringBuilder builder) {
-		List<GrupoLinkAuto> listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
+		List<GrupoLinkAuto> listaLink = GrupoLinkAutoUtil.listaGrupoLinkAuto(objeto,
 				!Util.estaVazio(objeto.getLinkAutomatico()) ? objeto.getLinkAutomatico()
 						: Mensagens.getString("hint.linkAuto"));
 
@@ -167,7 +167,7 @@ public class ValorContainer extends Panel {
 
 					} else if (Tipo.LINK.equals(tipo)) {
 						String string = Util.normalizar(textArea.getText(), false);
-						LinkAutoUtil.listaGrupoLinkAuto(objeto, string);
+						GrupoLinkAutoUtil.listaGrupoLinkAuto(objeto, string);
 						objeto.setLinkAutomatico(string);
 
 					} else if (Tipo.CHAVE.equals(tipo)) {

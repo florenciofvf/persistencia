@@ -66,9 +66,17 @@ public abstract class AbstratoDialogo extends JDialog {
 			public void windowOpened(WindowEvent e) {
 				executarAoAbrirDialog();
 			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				executarAoFecharDialog();
+			}
 		});
 	}
 
 	public void executarAoAbrirDialog() {
+	}
+
+	public void executarAoFecharDialog() {
 	}
 }

@@ -2,8 +2,6 @@ package br.com.persist.chave_valor;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.TextArea;
@@ -23,7 +21,6 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 		this.chaveValor = chaveValor;
 		toolbar.ini(null);
 		montarLayout();
-		configurar();
 	}
 
 	private void montarLayout() {
@@ -31,13 +28,9 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.NORTH, toolbar);
 	}
 
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				chaveValor.setValor(textArea.getText());
-			}
-		});
+	@Override
+	public void executarAoFecharDialog() {
+		chaveValor.setValor(textArea.getText());
 	}
 
 	@Override
