@@ -35,6 +35,15 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Preferencias.salvar();
+			}
+		});
+	}
+
 	@Override
 	public void fechar() {
 		dispose();
@@ -59,14 +68,5 @@ public class ConfiguracaoFormulario extends AbstratoFormulario implements IJanel
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getConfiguracao().retornoAoFichario(formulario, container);
 		dispose();
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				Preferencias.salvar();
-			}
-		});
 	}
 }

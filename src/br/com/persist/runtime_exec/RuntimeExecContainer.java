@@ -490,7 +490,7 @@ public class RuntimeExecContainer extends AbstratoContainer implements Fichario.
 		private final JTextPane area;
 		private final String tipo;
 
-		public ThreadInputStream(InputStream is, JTextPane area, String tipo) {
+		private ThreadInputStream(InputStream is, JTextPane area, String tipo) {
 			this.area = area;
 			this.tipo = tipo;
 			this.is = is;

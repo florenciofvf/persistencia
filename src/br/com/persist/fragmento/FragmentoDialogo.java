@@ -34,6 +34,15 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
+	}
+
 	@Override
 	public void fechar() {
 		dispose();
@@ -51,14 +60,5 @@ public class FragmentoDialogo extends AbstratoDialogo implements IJanela {
 
 	public static FragmentoDialogo criar(Frame frame, Formulario formulario, FragmentoListener listener) {
 		return new FragmentoDialogo(frame, formulario, listener);
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
 	}
 }

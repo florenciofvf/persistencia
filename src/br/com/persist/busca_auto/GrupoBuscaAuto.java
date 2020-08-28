@@ -14,8 +14,8 @@ public class GrupoBuscaAuto {
 	public GrupoBuscaAuto(String nomeGrupoCampo) {
 		int pos = nomeGrupoCampo.indexOf('.');
 		this.campo = nomeGrupoCampo.substring(pos + 1);
-		TabelaBuscaAuto.checarCampo(campo);
 		this.nomeGrupoCampo = nomeGrupoCampo;
+		TabelaBuscaAuto.checarCampo(campo);
 		tabelas = new ArrayList<>();
 		grupoBuscaAutoApos = new GrupoBuscaAutoApos(campo);
 	}

@@ -96,8 +96,8 @@ import br.com.persist.variaveis.VariaveisModelo;
 
 public class ObjetoContainer extends Panel implements ActionListener, ItemListener, Runnable, IIni {
 	private static final long serialVersionUID = 1L;
-	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private transient ObjetoContainerListener.ConfigAlturaAutomatica configAlturaAutomaticaListener;
+	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private transient ObjetoContainerListener.BuscaAutomaticaApos buscaAutomaticaAposListener;
 	private transient ObjetoContainerListener.BuscaAutomatica buscaAutomaticaListener;
 	private transient ObjetoContainerListener.LinkAutomatico linkAutomaticoListener;

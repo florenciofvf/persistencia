@@ -34,6 +34,15 @@ public class MapeamentoDialogo extends AbstratoDialogo implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
+	}
+
 	@Override
 	public void fechar() {
 		dispose();
@@ -51,14 +60,5 @@ public class MapeamentoDialogo extends AbstratoDialogo implements IJanela {
 
 	public static MapeamentoDialogo criar(Frame frame, Formulario formulario) {
 		return new MapeamentoDialogo(frame, formulario);
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
 	}
 }

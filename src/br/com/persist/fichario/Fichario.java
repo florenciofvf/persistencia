@@ -514,8 +514,16 @@ public class Fichario extends JTabbedPane {
 		return configuracao;
 	}
 
+	public MetadadoTree getMetadadoTree() {
+		return metadadoTree;
+	}
+
 	public RuntimeExec getRuntimeExec() {
 		return runtimeExec;
+	}
+
+	public ArquivoTree getArquivoTree() {
+		return arquivoTree;
 	}
 
 	public Mapeamento getMapeamento() {
@@ -538,16 +546,16 @@ public class Fichario extends JTabbedPane {
 		return variaveis;
 	}
 
-	public MetadadoTree getMetadadoTree() {
-		return metadadoTree;
-	}
-
 	public Fragmento getFragmento() {
 		return fragmento;
 	}
 
 	public Conteiner getConteiner() {
 		return conteiner;
+	}
+
+	public AnexoTree getAnexoTree() {
+		return anexoTree;
 	}
 
 	public Destacar getDestacar() {
@@ -580,14 +588,6 @@ public class Fichario extends JTabbedPane {
 
 	public Update getUpdate() {
 		return update;
-	}
-
-	public AnexoTree getAnexoTree() {
-		return anexoTree;
-	}
-
-	public ArquivoTree getArquivoTree() {
-		return arquivoTree;
 	}
 
 	public class Consulta {

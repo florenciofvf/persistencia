@@ -333,16 +333,16 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 	}
 
 	private class NomeValor {
-		static final byte INTERVALO_COMPARA = 5;
-		static final byte INTERVALO_AUTO = 2;
-		static final byte POSICAO_ABA = 1;
-		static final byte DESTACADOS = 3;
-		static final byte LAYOUTS = 4;
-		final String nome;
-		final int valor;
-		final int tipo;
+		private static final byte INTERVALO_COMPARA = 5;
+		private static final byte INTERVALO_AUTO = 2;
+		private static final byte POSICAO_ABA = 1;
+		private static final byte DESTACADOS = 3;
+		private static final byte LAYOUTS = 4;
+		private final String nome;
+		private final int valor;
+		private final int tipo;
 
-		NomeValor(String chave, int valor, int tipo) {
+		private NomeValor(String chave, int valor, int tipo) {
 			this.nome = Mensagens.getString(chave);
 			this.valor = valor;
 			this.tipo = tipo;
@@ -351,9 +351,9 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 
 	private class RadioPosicao extends JRadioButton {
 		private static final long serialVersionUID = 1L;
-		final transient NomeValor nomeValor;
+		private final transient NomeValor nomeValor;
 
-		RadioPosicao(NomeValor nomeValor) {
+		private RadioPosicao(NomeValor nomeValor) {
 			super(nomeValor.nome);
 			this.nomeValor = nomeValor;
 
@@ -428,7 +428,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 		private Label labelComparacao = new Label("label.cor_comparacao");
 		private transient MouseInner mouseInner = new MouseInner();
 
-		PainelCorTotalRecente() {
+		private PainelCorTotalRecente() {
 			super(new GridLayout(0, 3));
 
 			add(labelAntesProcessar);
@@ -451,7 +451,7 @@ public class ConfiguracaoContainer extends AbstratoContainer implements Fichario
 			labelComparacao.addMouseListener(mouseInner);
 		}
 
-		class MouseInner extends MouseAdapter {
+		private class MouseInner extends MouseAdapter {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Label label = (Label) e.getSource();

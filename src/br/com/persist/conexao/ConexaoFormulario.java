@@ -35,6 +35,15 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 		add(BorderLayout.CENTER, container);
 	}
 
+	private void configurar() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				container.ini(getGraphics());
+			}
+		});
+	}
+
 	@Override
 	public void fechar() {
 		dispose();
@@ -59,14 +68,5 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getConexoes().retornoAoFichario(formulario, container);
 		dispose();
-	}
-
-	private void configurar() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				container.ini(getGraphics());
-			}
-		});
 	}
 }

@@ -8,6 +8,8 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
 
+import javax.swing.UIManager;
+
 import br.com.persist.objeto.Objeto;
 
 public class Preferencias {
@@ -117,6 +119,16 @@ public class Preferencias {
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
+	}
+
+	public static void inicializar() {
+		String can = Mensagens.getString("label.cancelar");
+		String sim = Mensagens.getString("label.sim");
+		String nao = Mensagens.getString("label.nao");
+
+		UIManager.put("OptionPane.cancelButtonText", can);
+		UIManager.put("OptionPane.yesButtonText", sim);
+		UIManager.put("OptionPane.noButtonText", nao);
 	}
 
 	public static void exportar() throws IOException, BackingStoreException {

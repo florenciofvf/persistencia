@@ -193,12 +193,13 @@ public class AnexoTree extends Tree {
 		}
 
 		private void preShow(Arquivo arquivo) {
-			renomearAcao.setEnabled(arquivo.getPai() != null && !AnexoTreeModelo.anexosInfo.equals(arquivo.getFile()));
-			excluirAcao.setEnabled(arquivo.getPai() != null && !AnexoTreeModelo.anexosInfo.equals(arquivo.getFile()));
+			boolean renomearExcluir = arquivo.getPai() != null && !AnexoTreeModelo.anexosInfo.equals(arquivo.getFile());
 			chkAbrirVisivel.setSelected(arquivo.isAbrirVisivel());
 			chkPadraoAbrir.setSelected(arquivo.isPadraoAbrir());
 			chkAbrirVisivel.setEnabled(arquivo.isDirectory());
 			chkPadraoAbrir.setEnabled(arquivo.isFile());
+			renomearAcao.setEnabled(renomearExcluir);
+			excluirAcao.setEnabled(renomearExcluir);
 		}
 
 		private void padraoAbrir(boolean b) {
