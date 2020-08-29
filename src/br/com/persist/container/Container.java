@@ -367,6 +367,10 @@ public class Container extends Panel implements Fichario.IFicharioSalvar, Fichar
 						containerFormulario.retornoAoFichario();
 					}
 				});
+
+				formularioAcao.rotulo("label.abrir_sel_em_formulario");
+				ficharioAcao.rotulo("label.abrir_sel_em_fichario");
+				desktopAcao.rotulo("label.abrir_sel_em_desktop");
 			}
 		}
 
