@@ -503,10 +503,6 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void addTab(String title, String titleMin, Component component) {
-		addTab(Preferencias.isTituloAbaMin() ? Mensagens.getString(titleMin) : Mensagens.getString(title), component);
-	}
-
 	public SalvarAberto getSalvarAberto() {
 		return salvarAberto;
 	}
@@ -1127,6 +1123,24 @@ public class Fichario extends JTabbedPane {
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
 		}
+	}
+
+	public void adicionarAba(FicharioAba aba) {
+		if (aba == null) {
+			throw new IllegalArgumentException("Aba nula.");
+		}
+
+		addTab(aba.getChaveTitulo(), aba.getChaveTituloMin(), aba.getComponent());
+		int ultimoIndice = getTabCount() - 1;
+
+		TituloAba tituloAba = new TituloAba(this, aba.getIcone());
+		setToolTipTextAt(ultimoIndice, aba.getHintTitulo());
+		setTabComponentAt(ultimoIndice, tituloAba);
+		setSelectedIndex(ultimoIndice);
+	}
+
+	public void addTab(String title, String titleMin, Component component) {
+		addTab(Preferencias.isTituloAbaMin() ? Mensagens.getString(titleMin) : Mensagens.getString(title), component);
 	}
 
 	public class Anotacao {
