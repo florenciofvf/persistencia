@@ -40,7 +40,6 @@ import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.Icones;
 import br.com.persist.instrucao.Instrucao;
 import br.com.persist.instrucao.InstrucaoContainerFormularioInterno;
-import br.com.persist.instrucao.InstrucaoContainerFormularioListener;
 import br.com.persist.principal.Formulario;
 import br.com.persist.superficie.Superficie;
 import br.com.persist.util.Action;
@@ -507,7 +506,7 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 		};
 	}
 
-	private class PanelInstrucao extends Panel implements InstrucaoContainerFormularioListener {
+	private class PanelInstrucao extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Dimension dimension = new Dimension(Constantes.QUARENTA, Constantes.TREZENTOS_QUARENTA_UM);
 		private final Desktop desktop = new Desktop(null, false);
@@ -517,7 +516,6 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 			add(BorderLayout.CENTER, new ScrollPane(desktop));
 		}
 
-		@Override
 		public void excluirInstrucao(Instrucao instrucao) {
 			objeto.getInstrucoes().remove(instrucao);
 			desktop.removeAll();
@@ -537,7 +535,8 @@ public class ObjetoConfigContainer extends Panel implements IIni {
 		}
 
 		private void criarFormInstrucao(Instrucao instrucao) {
-			InstrucaoContainerFormularioInterno form = InstrucaoContainerFormularioInterno.criar(instrucao, this);
+			InstrucaoContainerFormularioInterno form = InstrucaoContainerFormularioInterno.criar(instrucao,
+					PanelInstrucao.this::excluirInstrucao);
 			form.setSize(dimension);
 			form.setVisible(true);
 			desktop.add(form);

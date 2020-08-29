@@ -4,14 +4,14 @@ import java.awt.BorderLayout;
 
 import br.com.persist.formulario.AbstratoInternalFrame;
 
-public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame implements InstrucaoContainerListener {
+public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private final transient InstrucaoContainerFormularioListener listener;
 	private final InstrucaoContainer container;
 
 	private InstrucaoContainerFormularioInterno(Instrucao instrucao, InstrucaoContainerFormularioListener listener) {
 		super(instrucao.getNome());
-		container = new InstrucaoContainer(this, instrucao, this);
+		container = new InstrucaoContainer(this, instrucao, this::excluirInstrucao);
 		this.listener = listener;
 		montarLayout();
 	}
@@ -20,7 +20,6 @@ public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame i
 		add(BorderLayout.CENTER, container);
 	}
 
-	@Override
 	public void excluirInstrucao(Instrucao instrucao) {
 		listener.excluirInstrucao(instrucao);
 		fechar();
