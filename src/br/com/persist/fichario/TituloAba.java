@@ -23,42 +23,20 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
-import br.com.persist.icone.Icones;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 
 public class TituloAba extends Panel {
 	private static final long serialVersionUID = 1L;
-	private static final Icon[] ICONES = { Icones.CUBO, Icones.PANEL2, Icones.TABELA, Icones.EXPANDIR, Icones.PANEL4,
-			Icones.CONFIG, Icones.BANCO, Icones.FRAGMENTO, Icones.CRIAR, Icones.UPDATE, Icones.ANEXO, Icones.CAMPOS,
-			Icones.REFERENCIA, Icones.VAR, Icones.CENTRALIZAR, Icones.URL, Icones.BOLA_VERDE, Icones.EXECUTAR };
 	private static final Logger LOG = Logger.getGlobal();
-	public static final byte OBJETOS = 0;
-	public static final byte DESKTOP = 1;
-	public static final byte CONSULTA = 2;
-	public static final byte ARVORE = 3;
-	public static final byte ANOTACAO = 4;
-	public static final byte CONFIG = 5;
-	public static final byte CONEXAO = 6;
-	public static final byte FRAGMENTO = 7;
-	public static final byte OBJETO = 8;
-	public static final byte UPDATE = 9;
-	public static final byte ANEXO = 10;
-	public static final byte METADADO = 11;
-	public static final byte MAPEAMENTO = 12;
-	public static final byte VARIAVEIS = 13;
-	public static final byte COMPARACAO = 14;
-	public static final byte REQUISICAO = 15;
-	public static final byte AMBIENTE = 16;
-	public static final byte RUNTIME_EXEC = 17;
 	private final Fichario fichario;
 
-	public TituloAba(Fichario fichario, byte tipo) {
+	public TituloAba(Fichario fichario, Icon icone) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
 		Objects.requireNonNull(fichario);
 		this.fichario = fichario;
-		add(new Rotulo(tipo));
+		add(new Rotulo(icone));
 		setOpaque(false);
 		add(new Icone());
 	}
@@ -66,9 +44,9 @@ public class TituloAba extends Panel {
 	private class Rotulo extends Label {
 		private static final long serialVersionUID = 1L;
 
-		private Rotulo(byte tipo) {
+		private Rotulo(Icon icone) {
 			setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-			setIcon(ICONES[tipo]);
+			setIcon(icone);
 		}
 
 		@Override

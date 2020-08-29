@@ -67,6 +67,7 @@ import br.com.persist.desktop.Desktop;
 import br.com.persist.desktop.DesktopFormulario;
 import br.com.persist.fragmento.FragmentoContainer;
 import br.com.persist.fragmento.FragmentoFormulario;
+import br.com.persist.icone.Icones;
 import br.com.persist.mapeamento.MapeamentoContainer;
 import br.com.persist.mapeamento.MapeamentoFormulario;
 import br.com.persist.metadado.Metadado;
@@ -622,7 +623,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_CONSULTA, Constantes.LABEL_CONSULTA_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONSULTA);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.TABELA);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONSULTA));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -660,7 +661,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_ATUALIZAR, Constantes.LABEL_ATUALIZAR_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.UPDATE);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.UPDATE);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ATUALIZAR));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -698,7 +699,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_METADADOS, Constantes.LABEL_METADADOS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.METADADO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CAMPOS);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_METADADOS));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -736,7 +737,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_CONEXAO, Constantes.LABEL_CONEXAO_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONEXAO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.BANCO);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONEXAO));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -776,7 +777,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_REQUISICAO, Constantes.LABEL_REQUISICAO_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.REQUISICAO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.URL);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_REQUISICAO));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -814,7 +815,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_RUNTIME_EXEC, Constantes.LABEL_RUNTIME_EXEC_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.RUNTIME_EXEC);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.EXECUTAR);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_RUNTIME_EXEC));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -852,7 +853,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_CONFIGURACOES, Constantes.LABEL_CONFIGURACOES_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.CONFIG);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CONFIG);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -890,7 +891,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_COMPARACAO, Constantes.LABEL_COMPARACAO_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.COMPARACAO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CENTRALIZAR);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_COMPARACAO));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -928,7 +929,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_MAPEAMENTOS, Constantes.LABEL_MAPEAMENTOS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.MAPEAMENTO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.REFERENCIA);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_MAPEAMENTOS));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -967,7 +968,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_VARIAVEIS, Constantes.LABEL_VARIAVEIS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.VARIAVEIS);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.VAR);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -1006,7 +1007,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_FRAGMENTO, Constantes.LABEL_FRAGMENTO_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.FRAGMENTO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.FRAGMENTO);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_FRAGMENTO));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -1022,7 +1023,7 @@ public class Fichario extends JTabbedPane {
 			container.setAbortarFecharComESCSuperficie(true);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.OBJETOS);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CUBO);
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
 			container.estadoSelecao();
@@ -1061,7 +1062,7 @@ public class Fichario extends JTabbedPane {
 			container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 			container.setAbortarFecharComESCSuperficie(true);
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.OBJETOS);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CUBO);
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
 			setTitleAt(ultimoIndice, file.getName());
@@ -1121,7 +1122,7 @@ public class Fichario extends JTabbedPane {
 			addTab(container.getAmbiente().getChaveLabel(), container.getAmbiente().getChaveLabelMin(), container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.AMBIENTE);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.BOLA_VERDE);
 			setToolTipTextAt(ultimoIndice, container.getAmbiente().getDescricao());
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -1159,7 +1160,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_ANOTACOES, Constantes.LABEL_ANOTACOES_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.ANOTACAO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.PANEL4);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ANOTACOES));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -1197,7 +1198,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_ANEXOS, Constantes.LABEL_ANEXOS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.ANEXO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.ANEXO);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ANEXOS));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -1235,7 +1236,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_ARQUIVOS, Constantes.LABEL_ARQUIVOS_MIN, container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.ARVORE);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.EXPANDIR);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_ARQUIVOS));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -1249,7 +1250,7 @@ public class Fichario extends JTabbedPane {
 			addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.DESKTOP);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.PANEL2);
 			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_DESKTOP));
 			setTabComponentAt(ultimoIndice, tituloAba);
 			setSelectedIndex(ultimoIndice);
@@ -1266,7 +1267,7 @@ public class Fichario extends JTabbedPane {
 			addTab(objeto.getId(), container);
 			int ultimoIndice = getTabCount() - 1;
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, TituloAba.OBJETO);
+			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CRIAR);
 			setTabComponentAt(ultimoIndice, tituloAba);
 			container.setSuporte(Fichario.this);
 			setSelectedIndex(ultimoIndice);
