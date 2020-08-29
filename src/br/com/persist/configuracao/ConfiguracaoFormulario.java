@@ -54,6 +54,6 @@ public class ConfiguracaoFormulario extends AbstratoFormulario {
 		container.setConfiguracaoFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getConfiguracao().retornoAoFichario(formulario, container);
-		dispose();
+		fechar();
 	}
 }

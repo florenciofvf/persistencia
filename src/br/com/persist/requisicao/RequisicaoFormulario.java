@@ -48,6 +48,6 @@ public class RequisicaoFormulario extends AbstratoFormulario {
 		container.setRequisicaoFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getRequisicao().retornoAoFichario(formulario, container);
-		dispose();
+		fechar();
 	}
 }

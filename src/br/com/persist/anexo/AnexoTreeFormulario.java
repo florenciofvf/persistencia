@@ -48,6 +48,6 @@ public class AnexoTreeFormulario extends AbstratoFormulario {
 		container.setAnexoTreeFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getAnexoTree().retornoAoFichario(formulario, container);
-		dispose();
+		fechar();
 	}
 }

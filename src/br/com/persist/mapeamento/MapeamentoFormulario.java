@@ -53,6 +53,6 @@ public class MapeamentoFormulario extends AbstratoFormulario {
 		container.setMapeamentoFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getMapeamento().retornoAoFichario(formulario, container);
-		dispose();
+		fechar();
 	}
 }

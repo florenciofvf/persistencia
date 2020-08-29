@@ -55,7 +55,7 @@ public class VariaveisFormulario extends AbstratoFormulario {
 			container.setJanela(null);
 			container.setVariaveisFormulario(null);
 			formulario.getFichario().getVariaveis().retornoAoFichario(formulario, container);
-			dispose();
+			fechar();
 		}
 	}
 }

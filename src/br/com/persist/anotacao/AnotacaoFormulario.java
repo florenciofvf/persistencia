@@ -48,6 +48,6 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 		container.setAnotacaoFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getAnotacao().retornoAoFichario(formulario, container);
-		dispose();
+		fechar();
 	}
 }

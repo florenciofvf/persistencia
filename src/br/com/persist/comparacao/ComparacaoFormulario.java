@@ -48,6 +48,6 @@ public class ComparacaoFormulario extends AbstratoFormulario {
 		container.setComparacaoFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getComparacao().retornoAoFichario(formulario, container);
-		dispose();
+		fechar();
 	}
 }

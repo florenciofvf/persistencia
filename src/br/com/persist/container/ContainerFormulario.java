@@ -80,7 +80,7 @@ public class ContainerFormulario extends AbstratoFormulario {
 			container.setJanela(null);
 			container.setContainerFormulario(null);
 			formulario.getFichario().getConteiner().retornoAoFichario(formulario, container);
-			dispose();
+			fechar();
 		}
 	}
 }

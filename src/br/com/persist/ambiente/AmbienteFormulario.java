@@ -46,6 +46,6 @@ public class AmbienteFormulario extends AbstratoFormulario {
 		container.setAmbienteFormulario(null);
 		Formulario formulario = container.getFormulario();
 		formulario.getFichario().getAmbientes().retornoAoFichario(formulario, container);
-		dispose();
+		fechar();
 	}
 }
