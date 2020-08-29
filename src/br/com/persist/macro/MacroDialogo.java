@@ -29,7 +29,6 @@ public class MacroDialogo extends AbstratoDialogo {
 		MacroDialogo form = new MacroDialogo(frame);
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
-
 		return form;
 	}
 }

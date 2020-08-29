@@ -46,7 +46,6 @@ public class ConsultaDialogo extends AbstratoDialogo {
 		ConsultaDialogo form = new ConsultaDialogo(frame, formulario, provedor, padrao);
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
-
 		return form;
 	}
 

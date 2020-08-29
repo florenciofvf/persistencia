@@ -24,7 +24,6 @@ public class RelacaoConfigDialogo extends AbstratoDialogo {
 		RelacaoConfigDialogo form = new RelacaoConfigDialogo(frame, superficie, relacao);
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
-
 		return form;
 	}
 }

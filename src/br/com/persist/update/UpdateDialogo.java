@@ -53,7 +53,6 @@ public class UpdateDialogo extends AbstratoDialogo {
 		UpdateDialogo form = new UpdateDialogo(frame, formulario, provedor, conexao);
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
-
 		return form;
 	}
 

@@ -31,7 +31,6 @@ public class ObjetoConfigDialogo extends AbstratoDialogo {
 		ObjetoConfigDialogo form = new ObjetoConfigDialogo(frame, superficie, objeto);
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
-
 		return form;
 	}
 }

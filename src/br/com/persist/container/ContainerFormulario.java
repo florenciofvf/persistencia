@@ -30,18 +30,6 @@ public class ContainerFormulario extends AbstratoFormulario {
 		montarLayout();
 	}
 
-	public void abrir(File file, XMLColetor coletor, Graphics g, ConfigArquivo config) {
-		container.abrir(file, coletor, g, config);
-	}
-
-	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
-		container.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
-	}
-
-	public void exportarMetadadoRaiz(Metadado metadado) {
-		container.exportarMetadadoRaiz(metadado);
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
 	}
@@ -58,6 +46,18 @@ public class ContainerFormulario extends AbstratoFormulario {
 		}
 	}
 
+	public void abrir(File file, XMLColetor coletor, Graphics g, ConfigArquivo config) {
+		container.abrir(file, coletor, g, config);
+	}
+
+	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
+		container.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
+	}
+
+	public void exportarMetadadoRaiz(Metadado metadado) {
+		container.exportarMetadadoRaiz(metadado);
+	}
+
 	public static void criar(Formulario formulario, Container container, File file) {
 		ContainerFormulario form = new ContainerFormulario(formulario, container, file);
 		form.setLocationRelativeTo(formulario);
@@ -68,7 +68,6 @@ public class ContainerFormulario extends AbstratoFormulario {
 		ContainerFormulario form = new ContainerFormulario(formulario, file);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
-
 		return form;
 	}
 
