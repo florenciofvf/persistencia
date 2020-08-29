@@ -3,10 +3,8 @@ package br.com.persist.instrucao;
 import java.awt.BorderLayout;
 
 import br.com.persist.formulario.AbstratoInternalFrame;
-import br.com.persist.util.IJanela;
 
-public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame
-		implements IJanela, InstrucaoContainerListener {
+public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame implements InstrucaoContainerListener {
 	private static final long serialVersionUID = 1L;
 	private final transient InstrucaoContainerFormularioListener listener;
 	private final InstrucaoContainer container;
@@ -20,11 +18,6 @@ public class InstrucaoContainerFormularioInterno extends AbstratoInternalFrame
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	@Override

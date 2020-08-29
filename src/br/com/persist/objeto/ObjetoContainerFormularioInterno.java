@@ -28,11 +28,10 @@ import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;
 
-public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame implements IJanela, IIni {
+public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame implements IIni {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private boolean processadoBuscaAutomatica;
@@ -92,11 +91,6 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 
 	public Component getThis() {
 		return this;
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ObjetoContainerFormularioInterno criar(ConexaoProvedor provedor, Conexao padrao, Objeto objeto,

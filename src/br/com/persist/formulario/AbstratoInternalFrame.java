@@ -13,8 +13,9 @@ import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 
 import br.com.persist.util.Constantes;
+import br.com.persist.util.IJanela;
 
-public abstract class AbstratoInternalFrame extends JInternalFrame {
+public abstract class AbstratoInternalFrame extends JInternalFrame implements IJanela {
 	private static final long serialVersionUID = 1L;
 	private boolean abortarFecharComESC;
 
@@ -24,6 +25,11 @@ public abstract class AbstratoInternalFrame extends JInternalFrame {
 		setLayout(new BorderLayout());
 		setSize(Constantes.SIZE);
 		setActionESC();
+	}
+
+	@Override
+	public final void fechar() {
+		dispose();
 	}
 
 	private void setActionESC() {
@@ -41,7 +47,7 @@ public abstract class AbstratoInternalFrame extends JInternalFrame {
 					return;
 				}
 
-				dispose();
+				fechar();
 			}
 		};
 
