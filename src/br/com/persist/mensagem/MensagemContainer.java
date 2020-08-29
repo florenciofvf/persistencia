@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.mensagem;
 
 import java.awt.BorderLayout;
 

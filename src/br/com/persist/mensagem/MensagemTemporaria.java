@@ -1,4 +1,4 @@
-package br.com.persist.componente;
+package br.com.persist.mensagem;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +41,7 @@ public class MensagemTemporaria extends JLabel implements Runnable {
 		} catch (Exception e) {
 			LOG.log(Level.FINEST, "run()");
 		}
+
 		setText(Constantes.VAZIO);
 	}
 }
