@@ -7,9 +7,8 @@ import java.awt.Frame;
 import br.com.persist.componente.TextField;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.objeto.Objeto;
-import br.com.persist.util.IJanela;
 
-public class ComplementoDialogo extends AbstratoDialogo implements IJanela {
+public class ComplementoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final ComplementoContainer container;
 
@@ -27,11 +26,6 @@ public class ComplementoDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ComplementoDialogo criar(Dialog dialog, Objeto objeto, TextField txtComplemento,

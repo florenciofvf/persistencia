@@ -4,9 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.dialogo.AbstratoDialogo;
-import br.com.persist.util.IJanela;
 
-public class ArquivoIconeDialogo extends AbstratoDialogo implements IJanela {
+public class ArquivoIconeDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final ArquivoIconeContainer container;
 
@@ -19,11 +18,6 @@ public class ArquivoIconeDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ArquivoIconeDialogo criar(Frame frame, Arquivo arquivo) {

@@ -8,10 +8,9 @@ import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class UpdateFormulario extends AbstratoFormulario implements IJanela {
+public class UpdateFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final UpdateContainer container;
 
@@ -45,11 +44,6 @@ public class UpdateFormulario extends AbstratoFormulario implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public void setConteudo(String conteudo) {

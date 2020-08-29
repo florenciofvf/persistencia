@@ -9,10 +9,9 @@ import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
+public class ConsultaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final ConsultaContainer container;
 
@@ -37,11 +36,6 @@ public class ConsultaDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ConsultaDialogo criar(Frame frame, Formulario formulario, ConexaoProvedor provedor) {

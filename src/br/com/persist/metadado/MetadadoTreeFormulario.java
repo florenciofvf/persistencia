@@ -7,10 +7,9 @@ import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class MetadadoTreeFormulario extends AbstratoFormulario implements IJanela {
+public class MetadadoTreeFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final MetadadoTreeContainer container;
 
@@ -31,11 +30,6 @@ public class MetadadoTreeFormulario extends AbstratoFormulario implements IJanel
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Formulario formulario, MetadadoTreeContainer container) {

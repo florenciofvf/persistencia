@@ -15,19 +15,29 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import br.com.persist.util.Constantes;
+import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public abstract class AbstratoFormulario extends JFrame {
+public abstract class AbstratoFormulario extends JFrame implements IJanela {
 	private static final long serialVersionUID = 1L;
 
 	public AbstratoFormulario(String titulo) {
 		super(titulo);
+		inicializar();
+	}
+
+	private void inicializar() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setSize(Constantes.SIZE);
 		Util.configWindowC(this);
 		setActionESC();
 		configurar();
+	}
+
+	@Override
+	public final void fechar() {
+		dispose();
 	}
 
 	private void setActionESC() {
@@ -41,7 +51,7 @@ public abstract class AbstratoFormulario extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				fechar();
 			}
 		};
 

@@ -5,9 +5,8 @@ import java.awt.Frame;
 
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.dialogo.AbstratoDialogo;
-import br.com.persist.util.IJanela;
 
-public class AnexoCorDialogo extends AbstratoDialogo implements IJanela {
+public class AnexoCorDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final AnexoCorContainer container;
 
@@ -19,11 +18,6 @@ public class AnexoCorDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static AnexoCorDialogo criar(Frame frame, Arquivo arquivo) {

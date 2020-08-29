@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Frame;
 
-import br.com.persist.util.IJanela;
-
-public class MensagemDialogo extends AbstratoDialogo implements IJanela {
+public class MensagemDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final MensagemContainer container;
 
@@ -24,11 +22,6 @@ public class MensagemDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static MensagemDialogo criar(Dialog dialog, String titulo, String msg) {

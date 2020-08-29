@@ -6,10 +6,9 @@ import java.awt.Frame;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class RequisicaoDialogo extends AbstratoDialogo implements IJanela {
+public class RequisicaoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final RequisicaoContainer container;
 
@@ -21,11 +20,6 @@ public class RequisicaoDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Formulario formulario) {

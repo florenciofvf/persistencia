@@ -5,9 +5,8 @@ import java.awt.Frame;
 
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.superficie.Superficie;
-import br.com.persist.util.IJanela;
 
-public class RelacaoConfigDialogo extends AbstratoDialogo implements IJanela {
+public class RelacaoConfigDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final RelacaoConfigContainer container;
 
@@ -19,11 +18,6 @@ public class RelacaoConfigDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static RelacaoConfigDialogo criar(Frame frame, Superficie superficie, Relacao relacao) {

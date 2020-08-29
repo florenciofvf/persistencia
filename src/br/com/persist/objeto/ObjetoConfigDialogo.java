@@ -6,9 +6,8 @@ import java.awt.Frame;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.superficie.Superficie;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 
-public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
+public class ObjetoConfigDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoConfigContainer container;
 
@@ -26,11 +25,6 @@ public class ObjetoConfigDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void executarAoAbrirDialog() {
 		container.ini(getGraphics());
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ObjetoConfigDialogo criar(Frame frame, Superficie superficie, Objeto objeto) {

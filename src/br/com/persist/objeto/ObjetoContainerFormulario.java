@@ -7,9 +7,8 @@ import java.awt.Graphics;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.formulario.AbstratoFormulario;
-import br.com.persist.util.IJanela;
 
-public class ObjetoContainerFormulario extends AbstratoFormulario implements IJanela {
+public class ObjetoContainerFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
 
@@ -33,11 +32,6 @@ public class ObjetoContainerFormulario extends AbstratoFormulario implements IJa
 
 	public Component getThis() {
 		return this;
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ObjetoContainerFormulario criar(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g) {

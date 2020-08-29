@@ -6,11 +6,10 @@ import java.awt.Frame;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 
-public class ConfiguracaoDialogo extends AbstratoDialogo implements IJanela {
+public class ConfiguracaoDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final ConfiguracaoContainer container;
 
@@ -27,11 +26,6 @@ public class ConfiguracaoDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void executarAoFecharDialog() {
 		Preferencias.salvar();
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Formulario formulario) {

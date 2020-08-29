@@ -17,8 +17,9 @@ import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
 import br.com.persist.util.Constantes;
+import br.com.persist.util.IJanela;
 
-public abstract class AbstratoDialogo extends JDialog {
+public abstract class AbstratoDialogo extends JDialog implements IJanela {
 	private static final long serialVersionUID = 1L;
 
 	public AbstratoDialogo(Dialog dialog, String titulo) {
@@ -41,6 +42,11 @@ public abstract class AbstratoDialogo extends JDialog {
 		configurar();
 	}
 
+	@Override
+	public final void fechar() {
+		dispose();
+	}
+
 	private void setActionESC() {
 		JComponent component = (JComponent) getContentPane();
 
@@ -52,7 +58,7 @@ public abstract class AbstratoDialogo extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				fechar();
 			}
 		};
 

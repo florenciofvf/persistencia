@@ -7,10 +7,9 @@ import br.com.persist.circular.CircularContainer.Tipo;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.superficie.Superficie;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class CircularDialogo extends AbstratoDialogo implements IJanela {
+public class CircularDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final CircularContainer container;
 
@@ -23,11 +22,6 @@ public class CircularDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Frame frame, Superficie superficie, Tipo tipo) {

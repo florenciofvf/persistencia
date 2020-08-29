@@ -4,9 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.dialogo.AbstratoDialogo;
-import br.com.persist.util.IJanela;
 
-public class MacroDialogo extends AbstratoDialogo implements IJanela {
+public class MacroDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final MacroContainer container;
 
@@ -24,11 +23,6 @@ public class MacroDialogo extends AbstratoDialogo implements IJanela {
 	@Override
 	public void executarAoAbrirDialog() {
 		container.getLista().setSelectedIndex(0);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static MacroDialogo criar(Frame frame) {

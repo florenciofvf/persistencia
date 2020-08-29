@@ -5,10 +5,9 @@ import java.awt.BorderLayout;
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
+public class ConexaoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoContainer container;
 
@@ -34,11 +33,6 @@ public class ConexaoFormulario extends AbstratoFormulario implements IJanela {
 	@Override
 	public void executarAoAbrirForm() {
 		container.ini(getGraphics());
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Formulario formulario, ConexaoContainer container) {

@@ -8,10 +8,9 @@ import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ConfigArquivo;
-import br.com.persist.util.IJanela;
 import br.com.persist.xml.XMLColetor;
 
-public class ContainerFormulario extends AbstratoFormulario implements IJanela {
+public class ContainerFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final Container container;
 	private boolean ativo = true;
@@ -57,11 +56,6 @@ public class ContainerFormulario extends AbstratoFormulario implements IJanela {
 		if (ativo) {
 			container.excluido();
 		}
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Formulario formulario, Container container, File file) {

@@ -6,9 +6,8 @@ import java.awt.Dialog;
 import br.com.persist.componente.Label;
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.objeto.Objeto;
-import br.com.persist.util.IJanela;
 
-public class IconeDialogo extends AbstratoDialogo implements IJanela {
+public class IconeDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final IconeContainer container;
 
@@ -21,11 +20,6 @@ public class IconeDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static IconeDialogo criar(Dialog dialog, Objeto objeto, Label label) {

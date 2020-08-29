@@ -5,9 +5,8 @@ import java.awt.Frame;
 
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.IJanela;
 
-public class AmbienteDialogo extends AbstratoDialogo implements IJanela {
+public class AmbienteDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final AmbienteContainer container;
 
@@ -19,11 +18,6 @@ public class AmbienteDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Formulario formulario, AmbienteContainer.Ambiente ambiente) {

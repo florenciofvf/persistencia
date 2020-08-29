@@ -9,7 +9,7 @@ import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
+public class ChaveValorDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private TextArea textArea = new TextArea();
@@ -37,11 +37,6 @@ public class ChaveValorDialogo extends AbstratoDialogo implements IJanela {
 	public void dispose() {
 		chaveValor.setValor(textArea.getText());
 		super.dispose();
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ChaveValorDialogo criar(ChaveValor chaveValor) {

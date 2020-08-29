@@ -5,10 +5,9 @@ import java.awt.Dialog;
 
 import br.com.persist.dialogo.AbstratoDialogo;
 import br.com.persist.objeto.Objeto;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 
-public class ValorDialogo extends AbstratoDialogo implements IJanela {
+public class ValorDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final ValorContainer container;
 
@@ -33,11 +32,6 @@ public class ValorDialogo extends AbstratoDialogo implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static ValorDialogo criar(Dialog dialog, Objeto objeto, ValorContainer.Tipo tipo) {

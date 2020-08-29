@@ -4,9 +4,8 @@ import java.awt.BorderLayout;
 
 import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.IJanela;
 
-public class AmbienteFormulario extends AbstratoFormulario implements IJanela {
+public class AmbienteFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final AmbienteContainer container;
 
@@ -27,11 +26,6 @@ public class AmbienteFormulario extends AbstratoFormulario implements IJanela {
 
 	private void montarLayout() {
 		add(BorderLayout.CENTER, container);
-	}
-
-	@Override
-	public void fechar() {
-		dispose();
 	}
 
 	public static void criar(Formulario formulario, AmbienteContainer container) {
