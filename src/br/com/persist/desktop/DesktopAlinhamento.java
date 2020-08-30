@@ -1,5 +1,5 @@
 package br.com.persist.desktop;
 
-public enum Alinhar {
+public enum DesktopAlinhamento {
 	ESQUERDO, DIREITO, SOMENTE_DIREITO, CENTRALIZAR
 }

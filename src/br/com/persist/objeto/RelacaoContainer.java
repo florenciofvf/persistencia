@@ -1,4 +1,4 @@
-package br.com.persist.relacao;
+package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,7 +26,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.principal.Formulario;
-import br.com.persist.superficie.Superficie;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
@@ -35,18 +34,17 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
-import br.com.persist.objeto.Objeto;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class RelacaoConfigContainer extends Panel {
+public class RelacaoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
 	private final transient Relacao relacao;
 	private final Superficie superficie;
 
-	public RelacaoConfigContainer(IJanela janela, Superficie superficie, Relacao relacao) {
+	public RelacaoContainer(IJanela janela, Superficie superficie, Relacao relacao) {
 		toolbar.ini(janela, false, false);
 		this.superficie = superficie;
 		Formulario.macro.limpar();

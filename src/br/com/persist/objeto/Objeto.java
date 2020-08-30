@@ -28,7 +28,6 @@ import org.xml.sax.Attributes;
 import br.com.persist.busca_auto.TabelaBuscaAuto;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.instrucao.Instrucao;
-import br.com.persist.superficie.Superficie;
 import br.com.persist.tabela.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
@@ -85,8 +84,8 @@ public class Objeto implements Runnable {
 	private Icon icon;
 	private String id;
 	private long tag;
-	public int x;
-	public int y;
+	protected int x;
+	protected int y;
 
 	public Objeto() {
 		this(0, 0, null, null);

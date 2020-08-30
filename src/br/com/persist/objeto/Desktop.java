@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.objeto;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -29,13 +29,11 @@ import br.com.persist.busca_auto.TabelaBuscaAutoApos;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.Popup;
 import br.com.persist.conexao.Conexao;
+import br.com.persist.desktop.AbstratoDesktop;
 import br.com.persist.fichario.FicharioSalvar;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.metadado.Metadado;
-import br.com.persist.objeto.Objeto;
-import br.com.persist.objeto.ObjetoContainer;
-import br.com.persist.objeto.ObjetoContainerFormularioInterno;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
@@ -71,8 +69,8 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 				interno.ini(graphics);
 			}
 		}
@@ -82,8 +80,8 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 				interno.atualizarFormulario();
 			}
 		}
@@ -93,8 +91,8 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 				interno.limpar2();
 			}
 		}
@@ -162,8 +160,8 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		}
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 
 				if (objetoAoFormulario) {
 					interno.aproximarObjetoAoFormulario(cvDeltaX.getInteiro(Constantes.TRINTA),
@@ -304,8 +302,7 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 			g = getGraphics();
 		}
 
-		ObjetoContainerFormularioInterno form = new ObjetoContainerFormularioInterno(formulario, conexao, objeto, g,
-				buscaAuto);
+		OTabelaFormularioInterno form = new OTabelaFormularioInterno(formulario, conexao, objeto, g, buscaAuto);
 		form.setAbortarFecharComESC(abortarFecharComESC);
 		form.getApelidoListener().setApelido(apelido);
 		form.setLocation(point);
@@ -327,12 +324,12 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		}
 	}
 
-	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, ObjetoContainer container) {
+	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, OTabelaContainer container) {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 				List<TabelaBuscaAuto> tabelas = grupo.getTabelas();
 				interno.setProcessadoBuscaAutomatica(false);
 
@@ -348,7 +345,7 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		}
 	}
 
-	protected ObjetoContainerFormularioInterno getObjetoContainerFormularioInterno(Objeto objeto) {
+	protected OTabelaFormularioInterno getObjetoContainerFormularioInterno(Objeto objeto) {
 		if (objeto == null) {
 			return null;
 		}
@@ -356,8 +353,8 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 
 				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
 					return interno;
@@ -368,13 +365,13 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		return null;
 	}
 
-	public void buscaAutomaticaApos(ObjetoContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
+	public void buscaAutomaticaApos(OTabelaContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
 			boolean limparFormulariosRestantes) {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 
 				if (interno.isProcessadoBuscaAutomatica()) {
 					continue;
@@ -391,18 +388,18 @@ public class Desktop extends AbstratoDesktop implements IIni, FicharioSalvar {
 		}
 	}
 
-	private boolean executarBuscaAutomaticaApos(ObjetoContainerFormularioInterno interno, TabelaBuscaAutoApos tabela,
-			ObjetoContainer objetoContainer, boolean limparFormulariosRestantes) {
+	private boolean executarBuscaAutomaticaApos(OTabelaFormularioInterno interno, TabelaBuscaAutoApos tabela,
+			OTabelaContainer objetoContainer, boolean limparFormulariosRestantes) {
 		return interno.ehTabela(tabela)
 				|| (limparFormulariosRestantes && interno.getObjetoContainer() != objetoContainer);
 	}
 
-	public void linkAutomatico(GrupoLinkAuto link, String argumento, ObjetoContainer container) {
+	public void linkAutomatico(GrupoLinkAuto link, String argumento, OTabelaContainer container) {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 				List<TabelaLinkAuto> tabelas = link.getTabelas();
 
 				for (TabelaLinkAuto tabela : tabelas) {

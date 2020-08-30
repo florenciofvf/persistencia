@@ -45,16 +45,16 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import br.com.persist.arquivo.ArquivoTreeModelo;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.conexao.Conexao;
-import br.com.persist.container.Container;
-import br.com.persist.container.ContainerFormulario;
-import br.com.persist.desktop.Desktop;
-import br.com.persist.desktop.DesktopFormulario;
 import br.com.persist.icone.Icones;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.objeto.ObjetoContainer;
+import br.com.persist.objeto.ObjetoFormulario;
+import br.com.persist.objeto.Superficie;
+import br.com.persist.objeto.Desktop;
+import br.com.persist.objeto.DesktopFormulario;
+import br.com.persist.objeto.OTabelaContainer;
 import br.com.persist.principal.Formulario;
-import br.com.persist.superficie.Superficie;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
@@ -479,8 +479,8 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Conteiner {
-		public Container novo(Formulario formulario) {
-			Container container = new Container(formulario, null);
+		public ObjetoContainer novo(Formulario formulario) {
+			ObjetoContainer container = new ObjetoContainer(formulario, null);
 			container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 			addTab(Mensagens.getString(Constantes.LABEL_NOVO), container);
 			container.setAbortarFecharComESCSuperficie(true);
@@ -494,7 +494,7 @@ public class Fichario extends JTabbedPane {
 			return container;
 		}
 
-		public void destacarEmFormulario(Formulario formulario, Container container) {
+		public void destacarEmFormulario(Formulario formulario, ObjetoContainer container) {
 			int indice = arquivos.getIndice(container);
 
 			if (indice == -1) {
@@ -509,10 +509,10 @@ public class Fichario extends JTabbedPane {
 				file = new File(Constantes.DESTACADO);
 			}
 
-			ContainerFormulario.criar(formulario, container, file);
+			ObjetoFormulario.criar(formulario, container, file);
 		}
 
-		public void retornoAoFichario(Formulario formulario, Container container) {
+		public void retornoAoFichario(Formulario formulario, ObjetoContainer container) {
 			File file = container.getArquivo();
 
 			if (file == null) {
@@ -534,20 +534,20 @@ public class Fichario extends JTabbedPane {
 		}
 
 		public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-			Container container = novo(formulario);
+			ObjetoContainer container = novo(formulario);
 			container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 			setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_exportacao"));
 		}
 
 		public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-			Container container = novo(formulario);
+			ObjetoContainer container = novo(formulario);
 			container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 			setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
 		}
 
 		public void exportarMetadadoRaiz(Formulario formulario, Metadado metadado) {
 			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-				Container container = novo(formulario);
+				ObjetoContainer container = novo(formulario);
 				container.exportarMetadadoRaiz(metadado);
 				setTitleAt(getTabCount() - 1, Mensagens.getString("label.exportar"));
 			}
@@ -601,7 +601,7 @@ public class Fichario extends JTabbedPane {
 
 	public class Objetos {
 		public void novo(Formulario formulario, Conexao padrao, Objeto objeto) {
-			ObjetoContainer container = new ObjetoContainer(null, formulario, padrao, objeto, getGraphics(), false);
+			OTabelaContainer container = new OTabelaContainer(null, formulario, padrao, objeto, getGraphics(), false);
 			container.setComponenteListener(Fichario.this::getThis);
 			container.setDimensaoListener(Fichario.this::getSize);
 			addTab(objeto.getId(), container);
@@ -629,7 +629,7 @@ public class Fichario extends JTabbedPane {
 				return;
 			}
 
-			Container container = conteiner.novo(formulario);
+			ObjetoContainer container = conteiner.novo(formulario);
 			int ultimoIndice = getTabCount() - 1;
 			container.abrir(file, coletor, getGraphics(), config);
 			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
@@ -674,8 +674,8 @@ public class Fichario extends JTabbedPane {
 				try {
 					Component cmp = getComponentAt(i);
 
-					if (cmp instanceof Container) {
-						Container c = (Container) cmp;
+					if (cmp instanceof ObjetoContainer) {
+						ObjetoContainer c = (ObjetoContainer) cmp;
 
 						if (c.getArquivo() != null && file != null
 								&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {
@@ -706,13 +706,13 @@ public class Fichario extends JTabbedPane {
 			return -1;
 		}
 
-		public int getIndice(Container c) {
+		public int getIndice(ObjetoContainer c) {
 			int total = getTabCount();
 
 			for (int i = 0; i < total; i++) {
 				Component cmp = getComponentAt(i);
 
-				if ((cmp instanceof Container) && cmp == c) {
+				if ((cmp instanceof ObjetoContainer) && cmp == c) {
 					return i;
 				}
 			}
@@ -734,8 +734,8 @@ public class Fichario extends JTabbedPane {
 	public void remove(int index) {
 		Component cmp = getComponentAt(index);
 
-		if (cmp instanceof Container) {
-			((Container) cmp).excluido();
+		if (cmp instanceof ObjetoContainer) {
+			((ObjetoContainer) cmp).excluido();
 		}
 
 		super.remove(index);

@@ -13,7 +13,7 @@ public class Form {
 	private int x;
 	private int y;
 
-	public void copiar(ObjetoContainerFormularioInterno interno) {
+	public void copiar(OTabelaFormularioInterno interno) {
 		objeto = interno.getObjetoContainer().getObjeto().getId();
 		apelido = interno.getApelidoListener().getApelido();
 		largura = interno.getWidth();

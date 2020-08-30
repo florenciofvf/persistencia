@@ -43,14 +43,14 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 	}
 
 	public class Alinhamento {
-		public void alinhar(Alinhar alinhar) {
-			if (Alinhar.ESQUERDO == alinhar) {
+		public void alinhar(DesktopAlinhamento alinhar) {
+			if (DesktopAlinhamento.ESQUERDO == alinhar) {
 				esquerdo();
-			} else if (Alinhar.DIREITO == alinhar) {
+			} else if (DesktopAlinhamento.DIREITO == alinhar) {
 				direito();
-			} else if (Alinhar.SOMENTE_DIREITO == alinhar) {
+			} else if (DesktopAlinhamento.SOMENTE_DIREITO == alinhar) {
 				somenteDireito();
-			} else if (Alinhar.CENTRALIZAR == alinhar) {
+			} else if (DesktopAlinhamento.CENTRALIZAR == alinhar) {
 				centralizar();
 			}
 		}
@@ -138,28 +138,28 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			}
 		}
 
-		public void configurar(Largura larguraEnum) {
+		public void configurar(DesktopLargura larguraEnum) {
 			int largura = getSize().width - 20;
 
 			for (JInternalFrame frame : getAllFrames()) {
 				Dimension size = frame.getSize();
 				Point local = frame.getLocation();
 
-				if (Largura.TOTAL == larguraEnum) {
+				if (DesktopLargura.TOTAL == larguraEnum) {
 					frame.setLocation(0, local.y);
 					frame.setSize(largura, size.height);
 
-				} else if (Largura.TOTAL_A_DIREITA == larguraEnum) {
+				} else if (DesktopLargura.TOTAL_A_DIREITA == larguraEnum) {
 					frame.setSize(largura - local.x, size.height);
 
-				} else if (Largura.TOTAL_A_ESQUERDA == larguraEnum) {
+				} else if (DesktopLargura.TOTAL_A_ESQUERDA == larguraEnum) {
 					int total = (local.x + size.width) - 10;
 					frame.setSize(total, size.height);
 					frame.setLocation(10, local.y);
 				}
 			}
 
-			if (Largura.TOTAL == larguraEnum) {
+			if (DesktopLargura.TOTAL == larguraEnum) {
 				alinhamento.centralizar();
 			}
 		}
@@ -184,9 +184,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			addMenuItem(esquerdoAcao);
 			addMenuItem(distribuirAcao);
 
-			esquerdoAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_ESQUERDA));
-			direitoAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL_A_DIREITA));
-			totalAcao.setActionListener(e -> larguras.configurar(Largura.TOTAL));
+			esquerdoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_ESQUERDA));
+			direitoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_DIREITA));
+			totalAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL));
 			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 		}
 
@@ -268,10 +268,10 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			addMenuItem(mesmaLarguraAcao);
 			addMenuItem(somenteDireitoAcao);
 
-			somenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.SOMENTE_DIREITO));
-			centralizarAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.CENTRALIZAR));
-			esquerdoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.ESQUERDO));
-			direitoAcao.setActionListener(e -> alinhamento.alinhar(Alinhar.DIREITO));
+			somenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.SOMENTE_DIREITO));
+			centralizarAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.CENTRALIZAR));
+			esquerdoAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.ESQUERDO));
+			direitoAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.DIREITO));
 			mesmaLarguraAcao.setActionListener(e -> larguras.mesma());
 		}
 

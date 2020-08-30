@@ -30,7 +30,6 @@ import javax.swing.JTabbedPane;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoModelo;
 import br.com.persist.conexao.ConexaoProvedor;
-import br.com.persist.container.ContainerFormulario;
 import br.com.persist.fabrica.Fabrica;
 import br.com.persist.fabrica.FabricaContainer;
 import br.com.persist.fichario.Fichario;
@@ -40,7 +39,8 @@ import br.com.persist.macro.Macro;
 import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.objeto.Objeto;
-import br.com.persist.superficie.Superficie;
+import br.com.persist.objeto.ObjetoFormulario;
+import br.com.persist.objeto.Superficie;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
@@ -86,7 +86,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF, "Nimbus" + Constantes.DOIS);
+				// FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF,
+				// "Nimbus" + Constantes.DOIS);
 				MapeamentoModelo.inicializar();
 				VariaveisModelo.inicializar();
 				FragmentoModelo.inicializar();
@@ -205,7 +206,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public class Conteiner {
 		public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
-			ContainerFormulario form = ContainerFormulario.criar(Formulario.this,
+			ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
 					new File(Mensagens.getString("label.abrir_exportacao")));
 			form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 			form.setLocationRelativeTo(Formulario.this);
@@ -213,7 +214,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		public void abrirImportacaoMetadado(Metadado metadado, boolean circular) {
-			ContainerFormulario form = ContainerFormulario.criar(Formulario.this,
+			ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
 					new File(Mensagens.getString("label.abrir_importacao")));
 			form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 			form.setLocationRelativeTo(Formulario.this);
@@ -222,7 +223,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		public void exportarMetadadoRaiz(Metadado metadado) {
 			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-				ContainerFormulario form = ContainerFormulario.criar(Formulario.this,
+				ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
 						new File(Mensagens.getString("label.exportar")));
 				form.exportarMetadadoRaiz(metadado);
 				form.setLocationRelativeTo(Formulario.this);
@@ -255,7 +256,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		}
 
 		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
-			ContainerFormulario form = ContainerFormulario.criar(formulario, file);
+			ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 			form.abrir(file, coletor, getGraphics(), config);
 
 			formulario.checarPreferenciasLarguraAltura();

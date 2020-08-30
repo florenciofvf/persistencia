@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.dialogo.AbstratoDialogo;
-import br.com.persist.superficie.Superficie;
 import br.com.persist.util.Constantes;
 
 public class ObjetoConfigDialogo extends AbstratoDialogo {

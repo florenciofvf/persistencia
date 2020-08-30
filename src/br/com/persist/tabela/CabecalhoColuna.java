@@ -18,21 +18,21 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
 import br.com.persist.icone.Icones;
-import br.com.persist.objeto.ObjetoContainer;
+import br.com.persist.objeto.OTabelaContainer;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends Panel implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
-	private final ObjetoContainer container;
+	private final OTabelaContainer container;
 	private final OrdenacaoModelo modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
 	private final boolean comFiltro;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(ObjetoContainer container, OrdenacaoModelo modelo, Coluna coluna, boolean comFiltro) {
+	public CabecalhoColuna(OTabelaContainer container, OrdenacaoModelo modelo, Coluna coluna, boolean comFiltro) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
 		setBorder(BorderFactory.createEtchedBorder());
 		descricao = new Descricao(coluna.getNome());

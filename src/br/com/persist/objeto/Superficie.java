@@ -1,4 +1,4 @@
-package br.com.persist.superficie;
+package br.com.persist.objeto;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -42,24 +42,14 @@ import br.com.persist.componente.Popup;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
-import br.com.persist.container.Container;
-import br.com.persist.desktop.Desktop;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.icone.Icones;
 import br.com.persist.macro.MacroDialogo;
 import br.com.persist.macro.Macro.Instrucao;
 import br.com.persist.metadado.Metadado;
-import br.com.persist.objeto.Form;
-import br.com.persist.objeto.Objeto;
-import br.com.persist.objeto.ObjetoConfigDialogo;
-import br.com.persist.objeto.ObjetoContainer;
-import br.com.persist.objeto.ObjetoContainerFormulario;
-import br.com.persist.objeto.ObjetoContainerFormularioInterno;
 import br.com.persist.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
 import br.com.persist.propriedades.PropriedadesFormulario;
-import br.com.persist.relacao.Relacao;
-import br.com.persist.relacao.RelacaoConfigDialogo;
 import br.com.persist.update.UpdateDialogo;
 import br.com.persist.update.UpdateFormulario;
 import br.com.persist.util.Acao;
@@ -86,12 +76,12 @@ public class Superficie extends Desktop {
 	private transient Objeto selecionadoObjeto;
 	private transient Relacao[] relacoes;
 	private transient Objeto[] objetos;
-	private final Container container;
+	private final ObjetoContainer container;
 	private byte estado;
 	private int ultX;
 	private int ultY;
 
-	public Superficie(Formulario formulario, Container container) {
+	public Superficie(Formulario formulario, ObjetoContainer container) {
 		super(formulario, true);
 		configEstado(Constantes.SELECAO);
 		this.container = container;
@@ -548,7 +538,7 @@ public class Superficie extends Desktop {
 					frame = container.getContainerFormulario();
 				}
 
-				RelacaoConfigDialogo.criar(frame, Superficie.this, relacao);
+				RelacaoDialogo.criar(frame, Superficie.this, relacao);
 			}
 		}
 
@@ -741,13 +731,13 @@ public class Superficie extends Desktop {
 	}
 
 	private void abrirObjetoDados(Conexao conexao, Objeto objeto, Frame frame) {
-		ObjetoContainerFormulario form = ObjetoContainerFormulario.criar(formulario, conexao, objeto, getGraphics());
+		OTabelaFormulario form = OTabelaFormulario.criar(formulario, conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
 	}
 
 	private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarApelido) {
-		ObjetoContainerFormularioInterno interno = getObjetoContainerFormularioInterno(objeto);
+		OTabelaFormularioInterno interno = getObjetoContainerFormularioInterno(objeto);
 
 		ConfigArquivo config = new ConfigArquivo(checarApelido);
 		config.setTabela(objeto.getTabela2());
@@ -1285,7 +1275,7 @@ public class Superficie extends Desktop {
 					ObjetoConfigDialogo.criar(frame, Superficie.this, selecionadoObjeto);
 
 				} else if (selecionadoRelacao != null) {
-					RelacaoConfigDialogo.criar(frame, Superficie.this, selecionadoRelacao);
+					RelacaoDialogo.criar(frame, Superficie.this, selecionadoRelacao);
 				}
 			});
 
@@ -1490,8 +1480,8 @@ public class Superficie extends Desktop {
 		JInternalFrame[] frames = getAllFrames();
 
 		for (JInternalFrame frame : frames) {
-			if (frame instanceof ObjetoContainerFormularioInterno) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frame;
+			if (frame instanceof OTabelaFormularioInterno) {
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frame;
 				interno.selecionarConexao(conexao);
 			}
 		}
@@ -1551,7 +1541,7 @@ public class Superficie extends Desktop {
 			JInternalFrame[] frames = getAllFrames();
 
 			for (int i = frames.length - 1; i >= 0; i--) {
-				ObjetoContainerFormularioInterno interno = (ObjetoContainerFormularioInterno) frames[i];
+				OTabelaFormularioInterno interno = (OTabelaFormularioInterno) frames[i];
 				Form form = new Form();
 				form.copiar(interno);
 				form.salvar(util);
@@ -1666,7 +1656,7 @@ public class Superficie extends Desktop {
 	}
 
 	@Override
-	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, ObjetoContainer objContainer) {
+	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, OTabelaContainer objContainer) {
 		super.buscaAutomatica(grupo, argumentos, objContainer);
 
 		if (Preferencias.isAbrirAuto()) {
@@ -1710,8 +1700,7 @@ public class Superficie extends Desktop {
 		objeto.setTabelaBuscaAuto(tabela);
 
 		if (Preferencias.isAbrirAutoDestacado()) {
-			ObjetoContainerFormulario form = ObjetoContainerFormulario.criar(formulario, conexao, objeto,
-					getGraphics());
+			OTabelaFormulario form = OTabelaFormulario.criar(formulario, conexao, objeto, getGraphics());
 			form.setLocationRelativeTo(frame);
 			form.setVisible(true);
 		} else {

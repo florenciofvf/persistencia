@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menuPrincipal>
+	<menu descricao="Arquivo">
+	</menu>
+
+	<menu descricao="Ambiente">
+		<menu classeFabrica="br.com.persist.ambiente.AmbienteFabrica" />
+	</menu>
+</menuPrincipal>

@@ -7,9 +7,9 @@ import br.com.persist.busca_auto.GrupoBuscaAuto;
 import br.com.persist.busca_auto.GrupoBuscaAutoApos;
 import br.com.persist.link_auto.GrupoLinkAuto;
 
-public interface ObjetoContainerListener {
+public interface OTabelaListener {
 	public interface BuscaAutomaticaApos {
-		public void buscaAutomaticaApos(ObjetoContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
+		public void buscaAutomaticaApos(OTabelaContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
 				boolean limparFormulariosRestantes);
 	}
 

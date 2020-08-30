@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -10,12 +10,12 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.xml.XMLColetor;
 
-public class ContainerFormulario extends AbstratoFormulario {
+public class ObjetoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
-	private final Container container;
+	private final ObjetoContainer container;
 	private boolean ativo = true;
 
-	private ContainerFormulario(Formulario formulario, Container container, File file) {
+	private ObjetoFormulario(Formulario formulario, ObjetoContainer container, File file) {
 		super(file.getName());
 		container.setContainerFormulario(this);
 		this.container = container;
@@ -23,9 +23,9 @@ public class ContainerFormulario extends AbstratoFormulario {
 		montarLayout();
 	}
 
-	private ContainerFormulario(Formulario formulario, File file) {
+	private ObjetoFormulario(Formulario formulario, File file) {
 		super(file.getName());
-		container = new Container(formulario, this);
+		container = new ObjetoContainer(formulario, this);
 		container.setContainerFormulario(this);
 		montarLayout();
 	}
@@ -58,14 +58,14 @@ public class ContainerFormulario extends AbstratoFormulario {
 		container.exportarMetadadoRaiz(metadado);
 	}
 
-	public static void criar(Formulario formulario, Container container, File file) {
-		ContainerFormulario form = new ContainerFormulario(formulario, container, file);
+	public static void criar(Formulario formulario, ObjetoContainer container, File file) {
+		ObjetoFormulario form = new ObjetoFormulario(formulario, container, file);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 	}
 
-	public static ContainerFormulario criar(Formulario formulario, File file) {
-		ContainerFormulario form = new ContainerFormulario(formulario, file);
+	public static ObjetoFormulario criar(Formulario formulario, File file) {
+		ObjetoFormulario form = new ObjetoFormulario(formulario, file);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 		return form;

@@ -21,7 +21,6 @@ import br.com.persist.busca_auto.TabelaBuscaAutoApos;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
-import br.com.persist.desktop.Desktop;
 import br.com.persist.formulario.AbstratoInternalFrame;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
@@ -31,26 +30,26 @@ import br.com.persist.util.IIni;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;
 
-public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame implements IIni {
+public class OTabelaFormularioInterno extends AbstratoInternalFrame implements IIni {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private boolean processadoBuscaAutomatica;
-	private final ObjetoContainer container;
+	private final OTabelaContainer container;
 	private Desktop desktop;
 	private String apelido;
 
-	public ObjetoContainerFormularioInterno(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
+	public OTabelaFormularioInterno(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
 			boolean buscaAuto) {
 		super(objeto.getId());
-		container = new ObjetoContainer(this, provedor, padrao, objeto, g, buscaAuto);
-		container.setTituloListener(ObjetoContainerFormularioInterno.this::setTitle);
-		container.setDimensaoListener(ObjetoContainerFormularioInterno.this::getSize);
-		container.setSelecaoListener(ObjetoContainerFormularioInterno.this::selecionar);
-		container.setComponenteListener(ObjetoContainerFormularioInterno.this::getThis);
-		container.setLinkAutomaticoListener(ObjetoContainerFormularioInterno.this::linkAutomatico);
-		container.setBuscaAutomaticaListener(ObjetoContainerFormularioInterno.this::buscaAutomatica);
-		container.setBuscaAutomaticaAposListener(ObjetoContainerFormularioInterno.this::buscaAutomaticaApos);
-		container.setConfigAlturaAutomaticaListener(ObjetoContainerFormularioInterno.this::configAlturaAutomatica);
+		container = new OTabelaContainer(this, provedor, padrao, objeto, g, buscaAuto);
+		container.setTituloListener(OTabelaFormularioInterno.this::setTitle);
+		container.setDimensaoListener(OTabelaFormularioInterno.this::getSize);
+		container.setSelecaoListener(OTabelaFormularioInterno.this::selecionar);
+		container.setComponenteListener(OTabelaFormularioInterno.this::getThis);
+		container.setLinkAutomaticoListener(OTabelaFormularioInterno.this::linkAutomatico);
+		container.setBuscaAutomaticaListener(OTabelaFormularioInterno.this::buscaAutomatica);
+		container.setBuscaAutomaticaAposListener(OTabelaFormularioInterno.this::buscaAutomaticaApos);
+		container.setConfigAlturaAutomaticaListener(OTabelaFormularioInterno.this::configAlturaAutomatica);
 		container.setApelidoListener(apelidoListener);
 		montarLayout();
 		configurar();
@@ -93,9 +92,9 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		return this;
 	}
 
-	public static ObjetoContainerFormularioInterno criar(ConexaoProvedor provedor, Conexao padrao, Objeto objeto,
-			Graphics g, boolean buscaAuto) {
-		return new ObjetoContainerFormularioInterno(provedor, padrao, objeto, g, buscaAuto);
+	public static OTabelaFormularioInterno criar(ConexaoProvedor provedor, Conexao padrao, Objeto objeto, Graphics g,
+			boolean buscaAuto) {
+		return new OTabelaFormularioInterno(provedor, padrao, objeto, g, buscaAuto);
 	}
 
 	@Override
@@ -196,7 +195,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		}
 	}
 
-	public void buscaAutomaticaApos(ObjetoContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
+	public void buscaAutomaticaApos(OTabelaContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
 			boolean limparFormulariosRestantes) {
 		checarDesktop();
 
@@ -239,7 +238,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 				: container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
 	}
 
-	public ObjetoContainer getObjetoContainer() {
+	public OTabelaContainer getObjetoContainer() {
 		return container;
 	}
 
@@ -275,7 +274,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		return container.getComplementoChaves();
 	}
 
-	private transient ObjetoContainerListener.Apelido apelidoListener = new ObjetoContainerListener.Apelido() {
+	private transient OTabelaListener.Apelido apelidoListener = new OTabelaListener.Apelido() {
 		@Override
 		public void setApelido(String string) {
 			apelido = string;
@@ -283,7 +282,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 
 		@Override
 		public String selecionarApelido() {
-			Object resp = Util.getValorInputDialog(ObjetoContainerFormularioInterno.this, "label.apelido", getApelido(),
+			Object resp = Util.getValorInputDialog(OTabelaFormularioInterno.this, "label.apelido", getApelido(),
 					getApelido());
 
 			if (resp != null) {
@@ -303,7 +302,7 @@ public class ObjetoContainerFormularioInterno extends AbstratoInternalFrame impl
 		}
 	};
 
-	public ObjetoContainerListener.Apelido getApelidoListener() {
+	public OTabelaListener.Apelido getApelidoListener() {
 		return apelidoListener;
 	}
 

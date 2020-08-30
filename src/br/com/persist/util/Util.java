@@ -53,7 +53,7 @@ import br.com.persist.fmt.Tipo;
 import br.com.persist.mensagem.MensagemDialogo;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.objeto.ObjetoComboModelo;
-import br.com.persist.superficie.Superficie;
+import br.com.persist.objeto.Superficie;
 import br.com.persist.variaveis.VariaveisModelo;
 
 public class Util {
