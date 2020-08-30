@@ -2,6 +2,6 @@ package br.com.persist.fichario;
 
 import java.io.File;
 
-public interface IFicharioSalvar {
+public interface FicharioSalvar {
 	File getFileSalvarAberto();
 }

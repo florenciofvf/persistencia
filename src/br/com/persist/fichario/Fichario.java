@@ -747,8 +747,8 @@ public class Fichario extends JTabbedPane {
 		for (int i = 0; i < total; i++) {
 			Component cmp = getComponentAt(i);
 
-			if (cmp instanceof IFicharioConexao) {
-				IFicharioConexao aba = (IFicharioConexao) cmp;
+			if (cmp instanceof FicharioConexao) {
+				FicharioConexao aba = (FicharioConexao) cmp;
 				aba.selecionarConexao(conexao);
 			}
 		}
@@ -762,8 +762,8 @@ public class Fichario extends JTabbedPane {
 		for (int i = 0; i < total; i++) {
 			Component cmp = getComponentAt(i);
 
-			if (cmp instanceof IFicharioConexao) {
-				IFicharioConexao aba = (IFicharioConexao) cmp;
+			if (cmp instanceof FicharioConexao) {
+				FicharioConexao aba = (FicharioConexao) cmp;
 				InfoConexao info = aba.getInfoConexao();
 
 				sb.append("ABA: " + info.getNomeAba() + Constantes.QL);
@@ -850,10 +850,10 @@ public class Fichario extends JTabbedPane {
 
 					File file = null;
 
-					if (cmp instanceof IFicharioSalvar) {
-						file = ((IFicharioSalvar) cmp).getFileSalvarAberto();
-					} else if (aba instanceof IFicharioSalvar) {
-						file = ((IFicharioSalvar) aba).getFileSalvarAberto();
+					if (cmp instanceof FicharioSalvar) {
+						file = ((FicharioSalvar) cmp).getFileSalvarAberto();
+					} else if (aba instanceof FicharioSalvar) {
+						file = ((FicharioSalvar) aba).getFileSalvarAberto();
 					}
 
 					String absRelativoArquivo = getAbsRelativoArquivo(ArquivoTreeModelo.FILE, file);

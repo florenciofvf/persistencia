@@ -21,7 +21,6 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
@@ -30,7 +29,7 @@ import br.com.persist.util.Imagens;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeListener, IFicharioSalvar {
+public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeListener {
 	private static final long serialVersionUID = 1L;
 	private final AnexoTree anexoTree = new AnexoTree(new AnexoTreeModelo(true));
 	private final CheckBox chkSempreTopForm = new CheckBox();

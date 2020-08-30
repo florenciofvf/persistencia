@@ -2,11 +2,12 @@ package br.com.persist.container;
 
 import br.com.persist.componente.Panel;
 import br.com.persist.fichario.FicharioAba;
+import br.com.persist.fichario.FicharioSalvar;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 
-public abstract class AbstratoContainer extends Panel implements FicharioAba {
+public abstract class AbstratoContainer extends Panel implements FicharioAba, FicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	protected final Formulario formulario;
 

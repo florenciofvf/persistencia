@@ -15,7 +15,6 @@ import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
@@ -24,7 +23,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTreeListener, IFicharioSalvar {
+public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTreeListener {
 	private static final long serialVersionUID = 1L;
 	private final ArquivoTree arquivoTree = new ArquivoTree(new ArquivoTreeModelo());
 	private final CheckBox chkSempreTopForm = new CheckBox();

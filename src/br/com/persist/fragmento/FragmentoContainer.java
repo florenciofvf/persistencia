@@ -12,7 +12,6 @@ import br.com.persist.chave_valor.ChaveValorEditor;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
@@ -23,7 +22,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class FragmentoContainer extends AbstratoContainer implements IIni, IFicharioSalvar {
+public class FragmentoContainer extends AbstratoContainer implements IIni {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo fragmentoModelo = new FragmentoModelo();
 	private final JTable tabela = new JTable(fragmentoModelo);

@@ -17,7 +17,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 
-public class TituloAbaS extends Panel implements IFicharioSalvar {
+public class TituloAbaS extends Panel implements FicharioSalvar {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Fichario fichario;
