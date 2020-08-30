@@ -75,9 +75,7 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, IFic
 			super.ini(janela, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO);
 			configBaixarAcao(null);
-
 			addButton(copiarAcao);
 
 			eventos();

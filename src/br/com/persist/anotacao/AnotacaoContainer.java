@@ -89,7 +89,6 @@ public class AnotacaoContainer extends AbstratoContainer implements IFicharioSal
 			super.ini(janela, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO);
 			configBaixarAcao(e -> abrir(null));
 			configCopiar1Acao(true);
 		}

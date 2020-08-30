@@ -170,7 +170,6 @@ public class ComparacaoContainer extends AbstratoContainer implements IFicharioS
 			super.ini(janela, true, false);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO);
 		}
 
 		@Override

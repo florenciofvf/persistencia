@@ -11,8 +11,6 @@ import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class BarraButton extends JToolBar {
@@ -167,17 +165,6 @@ public class BarraButton extends JToolBar {
 
 	public Action getLimparAcao() {
 		return limparAcao;
-	}
-
-	public void configAbrirAutoFichario(String chave) {
-		CheckBox chkAbrirAutoFichario = new CheckBox();
-		chkAbrirAutoFichario.setSelected(Preferencias.getBoolean(chave));
-		chkAbrirAutoFichario.setToolTipText(Mensagens.getString("label.abrir_auto_ficha"));
-		chkAbrirAutoFichario.addActionListener(e -> Preferencias.setBoolean(chave, chkAbrirAutoFichario.isSelected()));
-
-		if (Constantes.ABRIR_AUTO_FICHARIO_SET) {
-			add(chkAbrirAutoFichario);
-		}
 	}
 
 	protected void addButton(boolean separador, Action action) {

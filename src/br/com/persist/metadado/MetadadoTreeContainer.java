@@ -100,8 +100,6 @@ public class MetadadoTreeContainer extends AbstratoContainer
 			super.ini(janela, false, false);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario(), false);
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_METADADO);
-
 			addButton(atualizarAcao);
 			add(true, cmbConexao);
 			add(true, new ButtonInfo());

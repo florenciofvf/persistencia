@@ -137,11 +137,9 @@ public class RequisicaoContainer extends AbstratoContainer implements IFicharioS
 			super.ini(janela, true, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO);
 			configBaixarAcao(e -> abrir(null, null));
 			addButton(baixarAtivoAcao);
 			addButton(excluirAtivoAcao);
-
 			add(chkRespostaJson);
 			add(chkCopiarAccessT);
 			addButton(true, atualizarAcao);

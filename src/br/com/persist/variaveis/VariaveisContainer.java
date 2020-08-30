@@ -75,7 +75,6 @@ public class VariaveisContainer extends AbstratoContainer implements IIni, IFich
 			super.ini(janela, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL);
 			configBaixarAcao(null);
 			addButton(copiarAcao);
 

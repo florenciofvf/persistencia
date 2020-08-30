@@ -150,7 +150,6 @@ public class UpdateContainer extends AbstratoContainer implements IFicharioSalva
 			super.ini(janela, true, mapaChaveValor == null || mapaChaveValor.isEmpty());
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA);
 			configBaixarAcao(e -> abrir());
 			addButton(atualizarAcao);
 			configCopiar1Acao(true);

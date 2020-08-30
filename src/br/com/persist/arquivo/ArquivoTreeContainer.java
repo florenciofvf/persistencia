@@ -74,9 +74,7 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 			super.ini(janela, false, false);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario(), false);
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ARQUIVO);
 			configBaixarAcao(e -> baixarArquivo());
-
 			add(new Button(statusAcao));
 			if (arquivoTreeFormulario != null) {
 				add(chkSempreTopArvo);

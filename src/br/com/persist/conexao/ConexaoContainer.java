@@ -82,9 +82,7 @@ public class ConexaoContainer extends AbstratoContainer implements IIni, IFichar
 			super.ini(janela, true, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO);
 			configBaixarAcao(null);
-
 			addButton(true, descerAcao);
 			addButton(subirAcao);
 			addButton(true, conectaAcao);

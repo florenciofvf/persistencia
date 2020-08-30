@@ -75,9 +75,7 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 			super.ini(janela, false, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_ANEXO);
 			configBaixarAcao(e -> baixarArquivo());
-
 			if (anexoTreeFormulario != null) {
 				add(chkSempreTopAnex);
 			}

@@ -388,7 +388,6 @@ public class ConfiguracaoContainer extends AbstratoContainer implements IFichari
 			super.ini(janela, false, true);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO);
 		}
 
 		@Override

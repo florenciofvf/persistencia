@@ -155,9 +155,7 @@ public class ConsultaContainer extends AbstratoContainer implements IFicharioSal
 			super.ini(janela, true, (mapaChaveValor == null || mapaChaveValor.isEmpty()) && abrirArquivo);
 			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
 					e -> clonarEmFormulario());
-			configAbrirAutoFichario(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA);
 			configBaixarAcao(e -> abrir());
-
 			addButton(atualizarAcao);
 			add(copiar);
 			configCopiar1Acao(true);
