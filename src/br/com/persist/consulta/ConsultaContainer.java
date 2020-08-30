@@ -2,6 +2,7 @@ package br.com.persist.consulta;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -39,6 +41,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.TransferidorDados;
 import br.com.persist.util.Util;
 
@@ -100,11 +103,6 @@ public class ConsultaContainer extends AbstratoContainer implements IFicharioSal
 		return (Conexao) cmbConexao.getSelectedItem();
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
 		split.setDividerLocation(Constantes.SIZE.height / 2);
@@ -140,32 +138,6 @@ public class ConsultaContainer extends AbstratoContainer implements IFicharioSal
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
-		}
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		if (formulario != null) {
-			formulario.getFichario().getConsulta().destacarEmFormulario(formulario, this);
-		}
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		if (formulario != null) {
-			formulario.getFichario().getConsulta().clonarEmFormulario(formulario, this);
-		}
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		ConsultaFormulario.criar(formulario, formulario, getConexaoPadrao(), null);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (consultaFormulario != null) {
-			consultaFormulario.retornoAoFichario();
 		}
 	}
 
@@ -289,5 +261,67 @@ public class ConsultaContainer extends AbstratoContainer implements IFicharioSal
 			labelStatus.limpar();
 			Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, this);
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ConsultaFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ConsultaFormulario.criar(formulario, formulario, getConexaoPadrao(), null);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ConsultaFormulario.criar(formulario, formulario, getConexaoPadrao(), null);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (consultaFormulario != null) {
+			consultaFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(ConsultaFabrica.class, ConsultaContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_CONSULTA_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_CONSULTA;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_CONSULTA);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.TABELA;
 	}
 }

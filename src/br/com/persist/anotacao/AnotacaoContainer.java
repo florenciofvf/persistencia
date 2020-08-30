@@ -1,6 +1,7 @@
 package br.com.persist.anotacao;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,13 +9,17 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
+import javax.swing.Icon;
+
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.TextArea;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.IFicharioSalvar;
+import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class AnotacaoContainer extends AbstratoContainer implements IFicharioSalvar {
@@ -38,11 +43,6 @@ public class AnotacaoContainer extends AbstratoContainer implements IFicharioSal
 
 	public void setAnotacaoFormulario(AnotacaoFormulario anotacaoFormulario) {
 		this.anotacaoFormulario = anotacaoFormulario;
-	}
-
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
 	}
 
 	private void montarLayout() {
@@ -74,28 +74,6 @@ public class AnotacaoContainer extends AbstratoContainer implements IFicharioSal
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
-		}
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getAnotacao().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getAnotacao().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		AnotacaoFormulario.criar(formulario, Constantes.VAZIO);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (anotacaoFormulario != null) {
-			anotacaoFormulario.retornoAoFichario();
 		}
 	}
 
@@ -146,5 +124,67 @@ public class AnotacaoContainer extends AbstratoContainer implements IFicharioSal
 				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			AnotacaoFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			AnotacaoFormulario.criar(formulario, getConteudo());
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		AnotacaoFormulario.criar(formulario, Constantes.VAZIO);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (anotacaoFormulario != null) {
+			anotacaoFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(AnotacaoFabrica.class, AnotacaoContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_ANOTACOES_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_ANOTACOES;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_ANOTACOES);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.PANEL4;
 	}
 }

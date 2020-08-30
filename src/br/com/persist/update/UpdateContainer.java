@@ -2,6 +2,7 @@ package br.com.persist.update;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.Map;
 
+import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 
@@ -24,11 +26,13 @@ import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.fichario.IFicharioConexao;
 import br.com.persist.fichario.IFicharioSalvar;
+import br.com.persist.icone.Icones;
 import br.com.persist.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class UpdateContainer extends AbstratoContainer implements IFicharioSalvar, IFicharioConexao {
@@ -98,11 +102,6 @@ public class UpdateContainer extends AbstratoContainer implements IFicharioSalva
 		return (Conexao) cmbConexao.getSelectedItem();
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, textArea);
@@ -135,32 +134,6 @@ public class UpdateContainer extends AbstratoContainer implements IFicharioSalva
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
-		}
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		if (formulario != null) {
-			formulario.getFichario().getUpdate().destacarEmFormulario(formulario, this);
-		}
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		if (formulario != null) {
-			formulario.getFichario().getUpdate().clonarEmFormulario(formulario, this);
-		}
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		UpdateFormulario.criar(formulario, formulario, getConexaoPadrao(), null);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (updateFormulario != null) {
-			updateFormulario.retornoAoFichario();
 		}
 	}
 
@@ -254,5 +227,67 @@ public class UpdateContainer extends AbstratoContainer implements IFicharioSalva
 			labelStatus.limpar();
 			Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, this);
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			UpdateFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			UpdateFormulario.criar(formulario, formulario, getConexaoPadrao(), getConteudo());
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		UpdateFormulario.criar(formulario, formulario, getConexaoPadrao(), null);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (updateFormulario != null) {
+			updateFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(UpdateFabrica.class, UpdateContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_ATUALIZAR_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_ATUALIZAR;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_ATUALIZAR);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.UPDATE;
 	}
 }

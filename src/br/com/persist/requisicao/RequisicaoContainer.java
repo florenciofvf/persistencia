@@ -14,6 +14,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -69,11 +70,6 @@ public class RequisicaoContainer extends AbstratoContainer implements IFicharioS
 		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
@@ -120,28 +116,6 @@ public class RequisicaoContainer extends AbstratoContainer implements IFicharioS
 		}
 
 		fichario.conteudo(conteudo, idPagina);
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getRequisicao().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getRequisicao().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		RequisicaoFormulario.criar(formulario, Constantes.VAZIO, null);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (requisicaoFormulario != null) {
-			requisicaoFormulario.retornoAoFichario();
-		}
 	}
 
 	@Override
@@ -587,5 +561,67 @@ public class RequisicaoContainer extends AbstratoContainer implements IFicharioS
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			RequisicaoFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			RequisicaoFormulario.criar(formulario, getConteudo(), getIdPagina());
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		RequisicaoFormulario.criar(formulario, Constantes.VAZIO, null);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (requisicaoFormulario != null) {
+			requisicaoFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(RequisicaoFabrica.class, RequisicaoContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_REQUISICAO_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_REQUISICAO;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_REQUISICAO);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.URL;
 	}
 }

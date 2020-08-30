@@ -15,6 +15,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -63,11 +64,6 @@ public class RuntimeExecContainer extends AbstratoContainer implements IFichario
 		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
@@ -114,28 +110,6 @@ public class RuntimeExecContainer extends AbstratoContainer implements IFichario
 		}
 
 		fichario.conteudo(conteudo, idPagina);
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getRuntimeExec().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getRuntimeExec().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		RuntimeExecFormulario.criar(formulario, Constantes.VAZIO, null);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (runtimeExecFormulario != null) {
-			runtimeExecFormulario.retornoAoFichario();
-		}
 	}
 
 	@Override
@@ -515,5 +489,67 @@ public class RuntimeExecContainer extends AbstratoContainer implements IFichario
 				Util.stackTraceAndMessage(Constantes.PAINEL_RUNTIME_EXEC, ex, RuntimeExecContainer.this);
 			}
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			RuntimeExecFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			RuntimeExecFormulario.criar(formulario, getConteudo(), getIdPagina());
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		RuntimeExecFormulario.criar(formulario, Constantes.VAZIO, null);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (runtimeExecFormulario != null) {
+			runtimeExecFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(RuntimeExecFabrica.class, RuntimeExecContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_RUNTIME_EXEC_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_RUNTIME_EXEC;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_RUNTIME_EXEC);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.EXECUTAR;
 	}
 }

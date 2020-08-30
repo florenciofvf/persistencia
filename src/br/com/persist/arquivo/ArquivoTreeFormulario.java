@@ -46,8 +46,6 @@ public class ArquivoTreeFormulario extends AbstratoFormulario {
 		remove(container);
 		container.setJanela(null);
 		container.setArquivoTreeFormulario(null);
-		Formulario formulario = container.getFormulario();
-		formulario.getFichario().getArquivoTree().retornoAoFichario(formulario, container);
 		fechar();
 	}
 }

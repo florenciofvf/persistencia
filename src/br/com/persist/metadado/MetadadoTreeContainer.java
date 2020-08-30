@@ -1,6 +1,7 @@
 package br.com.persist.metadado;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,6 +9,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 
@@ -78,37 +80,10 @@ public class MetadadoTreeContainer extends AbstratoContainer
 		return (Conexao) cmbConexao.getSelectedItem();
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.CENTER, new ScrollPane(metadadoTree));
 		add(BorderLayout.NORTH, toolbar);
 		metadadoTree.adicionarOuvinte(this);
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getMetadadoTree().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getMetadadoTree().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		MetadadoTreeFormulario.criar(formulario, formulario, getConexaoPadrao());
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (metadadoFormulario != null) {
-			metadadoFormulario.retornoAoFichario();
-		}
 	}
 
 	@Override
@@ -291,5 +266,67 @@ public class MetadadoTreeContainer extends AbstratoContainer
 		if (metadado != null) {
 			formulario.getFichario().getConteiner().abrirImportacaoMetadado(formulario, metadado, circular);
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			MetadadoTreeFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			MetadadoTreeFormulario.criar(formulario, formulario, getConexaoPadrao());
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		MetadadoTreeFormulario.criar(formulario, formulario, getConexaoPadrao());
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (metadadoFormulario != null) {
+			metadadoFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(MetadadoTreeFabrica.class, MetadadoTreeContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_METADADOS_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_METADADOS;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_METADADOS);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.CAMPOS;
 	}
 }

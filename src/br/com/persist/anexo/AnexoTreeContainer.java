@@ -2,6 +2,7 @@ package br.com.persist.anexo;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Frame;
 import java.io.File;
@@ -21,6 +22,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.IFicharioSalvar;
+import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
@@ -53,39 +55,12 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 		this.anexoTreeFormulario = anexoTreeFormulario;
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
 		chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.anexo.sempreTopAnex"));
 		add(BorderLayout.CENTER, new ScrollPane(anexoTree));
 		add(BorderLayout.NORTH, toolbar);
 		anexoTree.adicionarOuvinte(this);
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getAnexoTree().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getAnexoTree().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		AnexoTreeFormulario.criar(formulario);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (anexoTreeFormulario != null) {
-			anexoTreeFormulario.retornoAoFichario();
-		}
 	}
 
 	@Override
@@ -342,5 +317,67 @@ public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeLi
 		}
 
 		modelo.abrirVisivel(anexoTree);
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			AnexoTreeFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			AnexoTreeFormulario.criar(formulario);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		AnexoTreeFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (anexoTreeFormulario != null) {
+			anexoTreeFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(AnexoTreeFabrica.class, AnexoTreeContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_ANEXOS_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_ANEXOS;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_ANEXOS);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.ANEXO;
 	}
 }

@@ -2,6 +2,7 @@ package br.com.persist.configuracao;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
@@ -12,6 +13,7 @@ import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -27,6 +29,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.IFicharioSalvar;
+import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
@@ -116,11 +119,6 @@ public class ConfiguracaoContainer extends AbstratoContainer implements IFichari
 
 	public void setConfiguracaoFormulario(ConfiguracaoFormulario configuracaoFormulario) {
 		this.configuracaoFormulario = configuracaoFormulario;
-	}
-
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
 	}
 
 	private void montarLayout() {
@@ -379,28 +377,6 @@ public class ConfiguracaoContainer extends AbstratoContainer implements IFichari
 	}
 
 	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getConfiguracao().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getConfiguracao().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		ConfiguracaoFormulario.criar(formulario);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (configuracaoFormulario != null) {
-			configuracaoFormulario.retornoAoFichario();
-		}
-	}
-
-	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
@@ -474,5 +450,67 @@ public class ConfiguracaoContainer extends AbstratoContainer implements IFichari
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ConfiguracaoFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ConfiguracaoFormulario.criar(formulario);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ConfiguracaoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (configuracaoFormulario != null) {
+			configuracaoFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(ConfiguracaoFabrica.class, ConfiguracaoContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_CONFIGURACOES_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_CONFIGURACOES;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_CONFIGURACOES);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.CONFIG;
 	}
 }

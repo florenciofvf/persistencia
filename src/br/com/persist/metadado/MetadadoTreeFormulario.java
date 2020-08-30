@@ -48,8 +48,6 @@ public class MetadadoTreeFormulario extends AbstratoFormulario {
 		remove(container);
 		container.setJanela(null);
 		container.setMetadadoTreeFormulario(null);
-		Formulario formulario = container.getFormulario();
-		formulario.getFichario().getMetadadoTree().retornoAoFichario(formulario, container);
 		fechar();
 	}
 }

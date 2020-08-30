@@ -51,8 +51,6 @@ public class ConexaoFormulario extends AbstratoFormulario {
 		remove(container);
 		container.setJanela(null);
 		container.setConexaoFormulario(null);
-		Formulario formulario = container.getFormulario();
-		formulario.getFichario().getConexoes().retornoAoFichario(formulario, container);
 		fechar();
 	}
 }

@@ -95,16 +95,6 @@ public class AmbienteContainer extends AbstratoContainer implements IFicharioSal
 		this.ambienteFormulario = ambienteFormulario;
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(gerarStringArquivo(ambiente));
-	}
-
-	public static String gerarStringArquivo(Ambiente ambiente) {
-		return Constantes.III + AmbienteFabrica.class.getName() + Constantes.SEP + AmbienteContainer.class.getName()
-				+ Constantes.U + ambiente.chave;
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.NORTH, toolbar);
@@ -134,37 +124,6 @@ public class AmbienteContainer extends AbstratoContainer implements IFicharioSal
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
 			}
-		}
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		boolean excluido = formulario.excluirFicharioAba(this);
-
-		if (excluido) {
-			AmbienteFormulario.criar(formulario, this);
-		}
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		boolean excluido = formulario.excluirFicharioAba(this);
-
-		if (excluido) {
-			AmbienteFormulario.criar(formulario, getConteudo(), ambiente);
-		}
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		AmbienteFormulario.criar(formulario, Constantes.VAZIO, ambiente);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (ambienteFormulario != null) {
-			ambienteFormulario.retornoAoFichario();
-			formulario.adicionarFicharioAba(this);
 		}
 	}
 
@@ -217,8 +176,40 @@ public class AmbienteContainer extends AbstratoContainer implements IFicharioSal
 	}
 
 	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			AmbienteFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			AmbienteFormulario.criar(formulario, getConteudo(), ambiente);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		AmbienteFormulario.criar(formulario, Constantes.VAZIO, ambiente);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (ambienteFormulario != null) {
+			ambienteFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
 	public String getClasseFabricaEContainerDetalhe() {
-		return gerarStringArquivo(ambiente);
+		return classeFabricaEContainer(AmbienteFabrica.class, AmbienteContainer.class, Constantes.U, ambiente.chave);
 	}
 
 	@Override

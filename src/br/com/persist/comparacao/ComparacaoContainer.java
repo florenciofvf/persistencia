@@ -1,12 +1,14 @@
 package br.com.persist.comparacao;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 
@@ -18,9 +20,11 @@ import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.IFicharioSalvar;
+import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class ComparacaoContainer extends AbstratoContainer implements IFicharioSalvar {
@@ -42,11 +46,6 @@ public class ComparacaoContainer extends AbstratoContainer implements IFicharioS
 
 	public void setComparacaoFormulario(ComparacaoFormulario comparacaoFormulario) {
 		this.comparacaoFormulario = comparacaoFormulario;
-	}
-
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
 	}
 
 	private void montarLayout() {
@@ -160,28 +159,6 @@ public class ComparacaoContainer extends AbstratoContainer implements IFicharioS
 	}
 
 	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getComparacao().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getComparacao().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		ComparacaoFormulario.criar(formulario);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (comparacaoFormulario != null) {
-			comparacaoFormulario.retornoAoFichario();
-		}
-	}
-
-	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
@@ -201,5 +178,67 @@ public class ComparacaoContainer extends AbstratoContainer implements IFicharioS
 			controle.lblStatus.setText(Constantes.VAZIO);
 			textArea.limpar();
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ComparacaoFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ComparacaoFormulario.criar(formulario);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ComparacaoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (comparacaoFormulario != null) {
+			comparacaoFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(ComparacaoFabrica.class, ComparacaoContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_COMPARACAO_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_COMPARACAO;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_COMPARACAO);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.CENTRALIZAR;
 	}
 }

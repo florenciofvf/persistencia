@@ -1,11 +1,14 @@
 package br.com.persist.arquivo;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.Icon;
 
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
@@ -46,11 +49,6 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 		this.arquivoTreeFormulario = arquivoTreeFormulario;
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
 		chkSempreTopArvo.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopArqu"));
@@ -60,28 +58,6 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 		add(BorderLayout.NORTH, toolbar);
 		arquivoTree.adicionarOuvinte(this);
 		chkLinkAuto.setSelected(true);
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getArquivoTree().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getArquivoTree().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		ArquivoTreeFormulario.criar(formulario);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (arquivoTreeFormulario != null) {
-			arquivoTreeFormulario.retornoAoFichario();
-		}
 	}
 
 	@Override
@@ -271,5 +247,67 @@ public class ArquivoTreeContainer extends AbstratoContainer implements ArquivoTr
 			arquivo.setArquivoAberto(formulario.getFichario().getArquivos().isAberto(arquivo.getFile()));
 			ArquivoTreeUtil.refreshEstrutura(arvore, arquivo);
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ArquivoTreeFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			ArquivoTreeFormulario.criar(formulario);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		ArquivoTreeFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (arquivoTreeFormulario != null) {
+			arquivoTreeFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(ArquivoTreeFabrica.class, ArquivoTreeContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_ARQUIVOS_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_ARQUIVOS;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_ARQUIVOS);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.EXPANDIR;
 	}
 }

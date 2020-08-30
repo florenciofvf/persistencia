@@ -46,8 +46,6 @@ public class RuntimeExecFormulario extends AbstratoFormulario {
 		remove(container);
 		container.setJanela(null);
 		container.setRuntimeExecFormulario(null);
-		Formulario formulario = container.getFormulario();
-		formulario.getFichario().getRuntimeExec().retornoAoFichario(formulario, container);
 		fechar();
 	}
 }

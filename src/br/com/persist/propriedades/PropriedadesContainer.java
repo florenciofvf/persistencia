@@ -1,6 +1,9 @@
 package br.com.persist.propriedades;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+
+import javax.swing.Icon;
 
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.TextArea;
@@ -49,5 +52,35 @@ public class PropriedadesContainer extends AbstratoContainer {
 			copiar1Mensagem(string);
 			textArea.requestFocus();
 		}
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return null;
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return null;
+	}
+
+	@Override
+	public Component getComponent() {
+		return null;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return null;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return null;
+	}
+
+	@Override
+	public Icon getIcone() {
+		return null;
 	}
 }

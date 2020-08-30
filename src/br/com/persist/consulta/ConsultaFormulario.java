@@ -71,7 +71,6 @@ public class ConsultaFormulario extends AbstratoFormulario {
 			remove(container);
 			container.setJanela(null);
 			container.setConsultaFormulario(null);
-			formulario.getFichario().getConsulta().retornoAoFichario(formulario, container);
 			fechar();
 		}
 	}

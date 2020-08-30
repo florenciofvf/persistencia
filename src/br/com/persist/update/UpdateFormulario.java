@@ -88,7 +88,6 @@ public class UpdateFormulario extends AbstratoFormulario {
 			remove(container);
 			container.setJanela(null);
 			container.setUpdateFormulario(null);
-			formulario.getFichario().getUpdate().retornoAoFichario(formulario, container);
 			fechar();
 		}
 	}

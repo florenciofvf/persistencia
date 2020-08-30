@@ -1,9 +1,11 @@
 package br.com.persist.fragmento;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.io.File;
 
+import javax.swing.Icon;
 import javax.swing.JTable;
 
 import br.com.persist.chave_valor.ChaveValorEditor;
@@ -18,6 +20,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class FragmentoContainer extends AbstratoContainer implements IIni, IFicharioSalvar {
@@ -44,11 +47,6 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, IFich
 		this.fragmentoFormulario = fragmentoFormulario;
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		toolbar.configListener();
 		add(BorderLayout.NORTH, toolbar);
@@ -64,32 +62,6 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, IFich
 	@Override
 	public void ini(Graphics graphics) {
 		TabelaUtil.ajustar(tabela, graphics);
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		if (formulario != null) {
-			formulario.getFichario().getFragmento().destacarEmFormulario(formulario, this);
-		}
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		if (formulario != null) {
-			formulario.getFichario().getFragmento().clonarEmFormulario(formulario, this);
-		}
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		FragmentoFormulario.criar(formulario);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (fragmentoFormulario != null) {
-			fragmentoFormulario.retornoAoFichario();
-		}
 	}
 
 	@Override
@@ -176,5 +148,67 @@ public class FragmentoContainer extends AbstratoContainer implements IIni, IFich
 				addButton(configAcao);
 			}
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			FragmentoFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			FragmentoFormulario.criar(formulario);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		FragmentoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (fragmentoFormulario != null) {
+			fragmentoFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(FragmentoFabrica.class, FragmentoContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_FRAGMENTO_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_FRAGMENTO;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_FRAGMENTO);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.FRAGMENTO;
 	}
 }

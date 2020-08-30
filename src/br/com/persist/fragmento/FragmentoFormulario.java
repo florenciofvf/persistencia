@@ -54,7 +54,6 @@ public class FragmentoFormulario extends AbstratoFormulario {
 			remove(container);
 			container.setJanela(null);
 			container.setFragmentoFormulario(null);
-			formulario.getFichario().getFragmento().retornoAoFichario(formulario, container);
 			fechar();
 		}
 	}

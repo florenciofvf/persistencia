@@ -1,9 +1,11 @@
 package br.com.persist.mapeamento;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.io.File;
 
+import javax.swing.Icon;
 import javax.swing.JTable;
 
 import br.com.persist.chave_valor.ChaveValor;
@@ -19,6 +21,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
+import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class MapeamentoContainer extends AbstratoContainer implements IIni, IFicharioSalvar {
@@ -43,11 +46,6 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, IFic
 		this.mapeamentoFormulario = mapeamentoFormulario;
 	}
 
-	@Override
-	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName());
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabela));
@@ -62,28 +60,6 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, IFic
 	@Override
 	public void ini(Graphics graphics) {
 		TabelaUtil.ajustar(tabela, graphics);
-	}
-
-	@Override
-	protected void destacarEmFormulario() {
-		formulario.getFichario().getMapeamento().destacarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void clonarEmFormulario() {
-		formulario.getFichario().getMapeamento().clonarEmFormulario(formulario, this);
-	}
-
-	@Override
-	protected void abrirEmFormulario() {
-		MapeamentoFormulario.criar(formulario);
-	}
-
-	@Override
-	protected void retornoAoFichario() {
-		if (mapeamentoFormulario != null) {
-			mapeamentoFormulario.retornoAoFichario();
-		}
 	}
 
 	@Override
@@ -146,5 +122,67 @@ public class MapeamentoContainer extends AbstratoContainer implements IIni, IFic
 				}
 			});
 		}
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			MapeamentoFormulario.criar(formulario, this);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			MapeamentoFormulario.criar(formulario);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		MapeamentoFormulario.criar(formulario);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (mapeamentoFormulario != null) {
+			mapeamentoFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return new File(getClasseFabricaEContainerDetalhe());
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(MapeamentoFabrica.class, MapeamentoContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return Constantes.LABEL_MAPEAMENTOS_MIN;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return Constantes.LABEL_MAPEAMENTOS;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return Mensagens.getString(Constantes.LABEL_MAPEAMENTOS);
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.REFERENCIA;
 	}
 }
