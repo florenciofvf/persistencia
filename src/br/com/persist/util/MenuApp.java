@@ -10,6 +10,7 @@ import org.xml.sax.Attributes;
 import br.com.persist.componente.Menu;
 import br.com.persist.fabrica.Fabrica;
 import br.com.persist.fabrica.FabricaContainer;
+import br.com.persist.principal.Formulario;
 
 public class MenuApp {
 	private final List<MenuApp> filhos;
@@ -73,27 +74,27 @@ public class MenuApp {
 		return Imagens.getIcon(icone);
 	}
 
-	public Menu criarMenu() {
+	public Menu criarMenu(Formulario formulario) {
 		Menu menu = new Menu(descricao, getIcon(), Constantes.VAZIO);
 
 		for (MenuApp filho : filhos) {
-			Menu item = filho.criarItem();
+			List<Menu> itens = filho.criarItens(formulario);
 
-			if (item != null) {
-				menu.add(menu);
+			for (Menu item : itens) {
+				menu.add(item);
 			}
 		}
 
 		return menu;
 	}
 
-	public Menu criarItem() {
+	public List<Menu> criarItens(Formulario formulario) {
 		FabricaContainer fabricaContainer = Fabrica.criar(classeFabrica + Constantes.SEP);
 
 		if (fabricaContainer != null) {
-			return fabricaContainer.criarMenu();
+			return fabricaContainer.criarMenus(formulario);
 		}
 
-		return null;
+		return new ArrayList<>();
 	}
 }

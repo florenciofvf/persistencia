@@ -12,7 +12,6 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -24,71 +23,31 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
-import br.com.persist.ambiente.AmbienteContainer;
-import br.com.persist.ambiente.AmbienteDialogo;
-import br.com.persist.ambiente.AmbienteFormulario;
-import br.com.persist.anexo.AnexoTreeContainer;
-import br.com.persist.anexo.AnexoTreeFormulario;
-import br.com.persist.anotacao.AnotacaoDialogo;
-import br.com.persist.anotacao.AnotacaoFormulario;
-import br.com.persist.arquivo.ArquivoTreeContainer;
-import br.com.persist.arquivo.ArquivoTreeFormulario;
-import br.com.persist.comparacao.ComparacaoDialogo;
-import br.com.persist.comparacao.ComparacaoFormulario;
-import br.com.persist.componente.Menu;
-import br.com.persist.componente.MenuItem;
-import br.com.persist.componente.SplitPane;
 import br.com.persist.conexao.Conexao;
-import br.com.persist.conexao.ConexaoDialogo;
-import br.com.persist.conexao.ConexaoFormulario;
 import br.com.persist.conexao.ConexaoModelo;
 import br.com.persist.conexao.ConexaoProvedor;
-import br.com.persist.configuracao.ConfiguracaoDialogo;
-import br.com.persist.configuracao.ConfiguracaoFormulario;
-import br.com.persist.consulta.ConsultaDialogo;
-import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.container.ContainerFormulario;
-import br.com.persist.desktop.DesktopFormulario;
 import br.com.persist.fabrica.Fabrica;
 import br.com.persist.fabrica.FabricaContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioAba;
-import br.com.persist.fragmento.FragmentoDialogo;
-import br.com.persist.fragmento.FragmentoFormulario;
 import br.com.persist.fragmento.FragmentoModelo;
-import br.com.persist.icone.Icones;
 import br.com.persist.macro.Macro;
-import br.com.persist.mapeamento.MapeamentoDialogo;
-import br.com.persist.mapeamento.MapeamentoFormulario;
 import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.metadado.Metadado;
-import br.com.persist.metadado.MetadadoTreeFormulario;
 import br.com.persist.objeto.Objeto;
-import br.com.persist.requisicao.RequisicaoDialogo;
-import br.com.persist.requisicao.RequisicaoFormulario;
-import br.com.persist.runtime_exec.RuntimeExecDialogo;
-import br.com.persist.runtime_exec.RuntimeExecFormulario;
 import br.com.persist.superficie.Superficie;
-import br.com.persist.update.UpdateDialogo;
-import br.com.persist.update.UpdateFormulario;
-import br.com.persist.util.Action;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuApp;
-import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
-import br.com.persist.variaveis.VariaveisDialogo;
-import br.com.persist.variaveis.VariaveisFormulario;
 import br.com.persist.variaveis.VariaveisModelo;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLColetor;
@@ -341,94 +300,15 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				XML.processarMenu(file, coletor);
 
 				for (MenuApp m : coletor.getMenus()) {
-					add(m.criarMenu());
+					add(m.criarMenu(Formulario.this));
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("CARREGAR MENU: " + file.getAbsolutePath(), ex, Formulario.this);
 			}
 		}
-
-		/*
-		 * private class MenuAmbiente extends MenuPadrao1 { private static final
-		 * long serialVersionUID = 1L; private final String
-		 * classeFabricaEContainerDetalhe;
-		 * 
-		 * private MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
-		 * super(ambiente.getChaveRotulo(), null);
-		 * //classeFabricaEContainerDetalhe =
-		 * AmbienteContainer.gerarStringArquivo(ambiente);
-		 * 
-		 * formularioAcao .setActionListener(e ->
-		 * AmbienteFormulario.criar(Formulario.this, Constantes.VAZIO,
-		 * ambiente)); ficharioAcao.setActionListener(e ->
-		 * adicionarFicharioAba(classeFabricaEContainerDetalhe));
-		 * dialogoAcao.setActionListener(e ->
-		 * AmbienteDialogo.criar(Formulario.this, ambiente)); } }
-		 */
 	}
 
-	private class MenuDesktop extends MenuPadrao1 {
-		private static final long serialVersionUID = 1L;
-
-		private MenuDesktop() {
-			super(Constantes.LABEL_DESKTOP, Icones.PANEL2, false);
-
-			ficharioAcao.setActionListener(e -> fichario.getDesktops().novo(Formulario.this));
-			formularioAcao.setActionListener(e -> DesktopFormulario.criar(Formulario.this));
-		}
-	}
-
-	private class MenuAbrir extends MenuPadrao1 {
-		private static final long serialVersionUID = 1L;
-
-		private MenuAbrir() {
-			super("label.abrir", Icones.ABRIR, false);
-
-			formularioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
-			ficharioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
-
-			eventos();
-		}
-
-		private void eventos() {
-			formularioAcao.setActionListener(e -> {
-				File[] files = getSelectedFiles(arquivos.arquivoParent, true);
-
-				if (files == null || files.length == 0) {
-					return;
-				}
-
-				for (File file : files) {
-					arquivos.abrir(file, false, null);
-				}
-			});
-
-			ficharioAcao.setActionListener(e -> {
-				File[] files = getSelectedFiles(arquivos.arquivoParent, true);
-
-				if (files == null || files.length == 0) {
-					return;
-				}
-
-				for (File file : files) {
-					arquivos.abrir(file, true, null);
-				}
-			});
-		}
-
-		private File[] getSelectedFiles(File arquivo, boolean multiSelection) {
-			JFileChooser fileChooser = Util.criarFileChooser(arquivo, multiSelection);
-			int opcao = fileChooser.showOpenDialog(Formulario.this);
-
-			if (opcao != JFileChooser.APPROVE_OPTION) {
-				return new File[0];
-			}
-
-			return fileChooser.getSelectedFiles();
-		}
-	}
-
-	private void fecharFormulario(boolean fecharConexao) {
+	public void fecharFormulario(boolean fecharConexao) {
 		if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
 			Preferencias.setFecharConexao(fecharConexao);
 			FormularioUtil.fechar(Formulario.this);

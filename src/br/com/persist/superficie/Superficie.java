@@ -1200,8 +1200,9 @@ public class Superficie extends Desktop {
 					ConsultaDialogo.criar(frame, formulario, formulario, container.getConexaoPadrao());
 				});
 
-				ficharioAcao.setActionListener(
-						e -> formulario.getFichario().getConsulta().nova(formulario, container.getConexaoPadrao()));
+				// ficharioAcao.setActionListener(
+				// e -> formulario.getFichario().getConsulta().nova(formulario,
+				// container.getConexaoPadrao()));
 			}
 		}
 
@@ -1234,8 +1235,9 @@ public class Superficie extends Desktop {
 					UpdateDialogo.criar(frame, formulario, formulario, container.getConexaoPadrao());
 				});
 
-				ficharioAcao.setActionListener(
-						e -> formulario.getFichario().getUpdate().novo(formulario, container.getConexaoPadrao()));
+				// ficharioAcao.setActionListener(
+				// e -> formulario.getFichario().getUpdate().novo(formulario,
+				// container.getConexaoPadrao()));
 			}
 		}
 

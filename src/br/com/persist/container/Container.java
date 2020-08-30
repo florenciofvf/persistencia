@@ -313,8 +313,9 @@ public class Container extends Panel implements FicharioSalvar, FicharioConexao 
 					ConsultaDialogo.criar(frame, formulario, formulario, getConexaoPadrao());
 				});
 
-				ficharioAcao.setActionListener(
-						e -> formulario.getFichario().getConsulta().nova(formulario, getConexaoPadrao()));
+				// ficharioAcao.setActionListener(
+				// e -> formulario.getFichario().getConsulta().nova(formulario,
+				// getConexaoPadrao()));
 			}
 		}
 
@@ -336,8 +337,9 @@ public class Container extends Panel implements FicharioSalvar, FicharioConexao 
 					UpdateDialogo.criar(frame, formulario, formulario, getConexaoPadrao());
 				});
 
-				ficharioAcao.setActionListener(
-						e -> formulario.getFichario().getUpdate().novo(formulario, getConexaoPadrao()));
+				// ficharioAcao.setActionListener(
+				// e -> formulario.getFichario().getUpdate().novo(formulario,
+				// getConexaoPadrao()));
 			}
 		}
 
