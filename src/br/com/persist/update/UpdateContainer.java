@@ -33,16 +33,17 @@ import br.com.persist.util.Util;
 
 public class UpdateContainer extends AbstratoContainer implements IFicharioSalvar, IFicharioConexao {
 	private static final long serialVersionUID = 1L;
-	private static final File file = new File("atualizacoes/atualizacoes");
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> cmbConexao;
 	private UpdateFormulario updateFormulario;
+	private final File file;
 
 	public UpdateContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao, Map<String, String> mapaChaveValor) {
 		super(formulario);
+		file = new File(Constantes.ATUALIZACOES + Constantes.SEPARADOR + Constantes.ATUALIZACOES);
 		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela, mapaChaveValor);
@@ -57,6 +58,7 @@ public class UpdateContainer extends AbstratoContainer implements IFicharioSalva
 	public UpdateContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao) {
 		super(formulario);
+		file = new File(Constantes.ATUALIZACOES + Constantes.SEPARADOR + Constantes.ATUALIZACOES);
 		textArea.setText(instrucao);
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		toolbar.ini(janela);

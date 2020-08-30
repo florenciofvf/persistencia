@@ -19,13 +19,14 @@ import br.com.persist.util.Util;
 
 public class AnotacaoContainer extends AbstratoContainer implements IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
-	private static final File file = new File("anotacoes/anotacoes");
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private AnotacaoFormulario anotacaoFormulario;
+	private final File file;
 
 	public AnotacaoContainer(IJanela janela, Formulario formulario, String conteudo) {
 		super(formulario);
+		file = new File("anotacoes" + Constantes.SEPARADOR + "anotacoes");
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo);

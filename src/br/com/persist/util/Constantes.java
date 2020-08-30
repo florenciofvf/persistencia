@@ -97,6 +97,7 @@ public class Constantes {
 	public static final String LABEL_DESKTOP = "label.desktop";
 	public static final String LABEL_LIMPAR2 = "label.limpar2";
 	public static final String PADRAO_ABRIR = "PADRAO_ABRIR:";
+	public static final String ATUALIZACOES = "atualizacoes";
 	public static final String LABEL_OBJETO = "label.objeto";
 	public static final String LABEL_UPDATE = "label.update";
 	public static final String LABEL_DELETE = "label.delete";

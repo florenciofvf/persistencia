@@ -44,17 +44,18 @@ import br.com.persist.util.Util;
 
 public class ConsultaContainer extends AbstratoContainer implements IFicharioSalvar, IFicharioConexao {
 	private static final long serialVersionUID = 1L;
-	private static final File file = new File("consultas/consultas");
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
 	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> cmbConexao;
+	private final File file;
 
 	public ConsultaContainer(IJanela janela, Formulario formulario, ConexaoProvedor provedor, Conexao padrao,
 			String instrucao, Map<String, String> mapaChaveValor, boolean abrirArquivo) {
 		super(formulario);
+		file = new File("consultas" + Constantes.SEPARADOR + "consultas");
 		textArea.setText(Util.substituir(instrucao, mapaChaveValor));
 		cmbConexao = Util.criarComboConexao(provedor, padrao);
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
