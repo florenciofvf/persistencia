@@ -82,6 +82,7 @@ import br.com.persist.util.Action;
 import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.MenuApp;
 import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
@@ -94,7 +95,6 @@ import br.com.persist.xml.XMLColetor;
 
 public class Formulario extends JFrame implements ConexaoProvedor {
 	private static final long serialVersionUID = 1L;
-	private SplitPane splitPanePrincipal = Util.criarSplitPane(SplitPane.VERTICAL_SPLIT);
 	private final transient List<Conexao> conexoes = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private static final Map<String, Object> map = new HashMap<>();
@@ -131,9 +131,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				MapeamentoModelo.inicializar();
 				VariaveisModelo.inicializar();
 				FragmentoModelo.inicializar();
+				menuPrincipal.carregarMenu();
 				atualizarConexoes();
 
-				menuPrincipal.menuLayout.aplicarLayout();
 				fichario.abrirSalvos(Formulario.this);
 				fichario.ativarNavegacao();
 				iconeBandeja();
@@ -141,7 +141,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				menuPrincipal.fecharAcao.actionPerformed(null);
+				// menuPrincipal.fecharAcao.actionPerformed(null);
 			}
 		});
 	}
@@ -328,304 +328,43 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
-		private Action novoAcao = Action.actionMenu(Constantes.LABEL_NOVO, Icones.CUBO);
-		private final Menu menuConfig = new Menu(Constantes.LABEL_CONFIGURACOES);
-		private final Menu menuAmbiente = new Menu(Constantes.LABEL_AMBIENTES);
-		private final MenuRuntimeExec itemRuntimeExec = new MenuRuntimeExec();
-		private final Menu menuUtil = new Menu(Constantes.LABEL_UTILITARIOS);
-		private final Menu menuArquivo = new Menu(Constantes.LABEL_ARQUIVO);
-		private final MenuMapeamento itemMapeamento = new MenuMapeamento();
-		private final MenuComparacao itemComparacao = new MenuComparacao();
-		private final MenuRequisicao itemRequisicao = new MenuRequisicao();
-		private final Menu menuLAF = new Menu(Constantes.LABEL_APARENCIA);
-		private final Menu menuBanco = new Menu(Constantes.LABEL_BANCO);
-		private final Action fecharConnAcao = Action.actionMenuFechar();
-		private final MenuFragmento itemFragmento = new MenuFragmento();
-		private final MenuVariaveis itemVariavel = new MenuVariaveis();
-		private final MenuAnotacao itemAnotacao = new MenuAnotacao();
-		private final MenuMetadado itemMetadado = new MenuMetadado();
-		private final MenuConsulta itemConsulta = new MenuConsulta();
-		private final Action fecharAcao = Action.actionMenuFechar();
-		private final MenuDesktop itemDesktop = new MenuDesktop();
-		private final MenuArquivo itemArquivo = new MenuArquivo();
-		private final MenuConexao itemConexao = new MenuConexao();
-		private final MenuUpdate itemUpdate = new MenuUpdate();
-		private final MenuConfig itemConfig = new MenuConfig();
-		private final MenuLayout menuLayout = new MenuLayout();
-		private final MenuAnexo itemAnexo = new MenuAnexo();
 
-		private MenuPrincipal() {
-			FormularioUtil.menuAparencia(Formulario.this, menuLAF);
+		private void carregarMenu() {
+			File file = new File("menu.xml");
 
-			menuArquivo.add(new MenuItem(novoAcao));
-			menuArquivo.add(true, itemDesktop);
-			menuArquivo.add(true, new MenuAbrir());
-			menuArquivo.add(true, itemAnexo);
-			menuArquivo.add(true, itemArquivo);
-			menuArquivo.add(true, new MenuItem(fecharConnAcao));
-			menuArquivo.add(new MenuItem(fecharAcao));
-			add(menuArquivo);
-
-			menuBanco.add(itemConexao);
-			menuBanco.add(true, itemConsulta);
-			menuBanco.add(true, itemUpdate);
-			menuBanco.add(true, itemMetadado);
-			add(menuBanco);
-
-			menuUtil.add(itemAnotacao);
-			menuUtil.add(true, itemFragmento);
-			menuUtil.add(true, itemMapeamento);
-			menuUtil.add(true, itemVariavel);
-			menuUtil.add(true, itemComparacao);
-			menuUtil.add(true, itemRequisicao);
-			menuUtil.add(true, itemRuntimeExec);
-			add(menuUtil);
-
-			menuConfig.add(menuLayout);
-			menuConfig.add(true, itemConfig);
-			add(menuConfig);
-
-			for (MenuAmbiente item : listaMenuAmbiente()) {
-				menuAmbiente.add(item);
-			}
-			add(menuAmbiente);
-
-			add(menuLAF);
-
-			eventos();
-		}
-
-		private void eventos() {
-			fecharConnAcao.rotulo("label.fechar_com_conexao");
-			novoAcao.setActionListener(e -> fichario.getConteiner().novo(Formulario.this));
-
-			fecharConnAcao.setActionListener(e -> fecharFormulario(true));
-			fecharAcao.setActionListener(e -> fecharFormulario(false));
-		}
-
-		private List<MenuAmbiente> listaMenuAmbiente() {
-			List<MenuAmbiente> lista = new ArrayList<>();
-
-			for (AmbienteContainer.Ambiente ambiente : AmbienteContainer.Ambiente.values()) {
-				lista.add(new MenuAmbiente(ambiente));
+			if (!file.isFile()) {
+				return;
 			}
 
-			return lista;
-		}
+			try {
+				XMLColetor coletor = new XMLColetor();
+				XML.processarMenu(file, coletor);
 
-		private class MenuAmbiente extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-			private final String classeFabricaEContainerDetalhe;
-
-			private MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
-				super(ambiente.getChaveRotulo(), null);
-				//classeFabricaEContainerDetalhe = AmbienteContainer.gerarStringArquivo(ambiente);
-
-				formularioAcao
-						.setActionListener(e -> AmbienteFormulario.criar(Formulario.this, Constantes.VAZIO, ambiente));
-				ficharioAcao.setActionListener(e -> adicionarFicharioAba(classeFabricaEContainerDetalhe));
-				dialogoAcao.setActionListener(e -> AmbienteDialogo.criar(Formulario.this, ambiente));
-			}
-		}
-
-		private class MenuAnotacao extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuAnotacao() {
-				super(Constantes.LABEL_ANOTACOES, Icones.PANEL4);
-
-				formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(Formulario.this, Constantes.VAZIO));
-				ficharioAcao.setActionListener(e -> fichario.getAnotacao().nova(Formulario.this));
-				dialogoAcao.setActionListener(e -> AnotacaoDialogo.criar(Formulario.this));
-			}
-		}
-
-		private class MenuRequisicao extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuRequisicao() {
-				super(Constantes.LABEL_REQUISICAO, Icones.URL);
-
-				formularioAcao
-						.setActionListener(e -> RequisicaoFormulario.criar(Formulario.this, Constantes.VAZIO, null));
-				ficharioAcao.setActionListener(e -> fichario.getRequisicao().nova(Formulario.this));
-				dialogoAcao.setActionListener(e -> RequisicaoDialogo.criar(Formulario.this));
-			}
-		}
-
-		private class MenuRuntimeExec extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuRuntimeExec() {
-				super(Constantes.LABEL_RUNTIME_EXEC, Icones.EXECUTAR);
-
-				formularioAcao
-						.setActionListener(e -> RuntimeExecFormulario.criar(Formulario.this, Constantes.VAZIO, null));
-				ficharioAcao.setActionListener(e -> fichario.getRuntimeExec().novo(Formulario.this));
-				dialogoAcao.setActionListener(e -> RuntimeExecDialogo.criar(Formulario.this));
-			}
-		}
-
-		private class MenuConsulta extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuConsulta() {
-				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
-
-				formularioAcao
-						.setActionListener(e -> ConsultaFormulario.criar(Formulario.this, Formulario.this, null, null));
-				dialogoAcao.setActionListener(
-						e -> ConsultaDialogo.criar(Formulario.this, Formulario.this, (Conexao) null));
-				ficharioAcao.setActionListener(e -> fichario.getConsulta().nova(Formulario.this, null));
-			}
-		}
-
-		private class MenuUpdate extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuUpdate() {
-				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
-
-				formularioAcao
-						.setActionListener(e -> UpdateFormulario.criar(Formulario.this, Formulario.this, null, null));
-				dialogoAcao
-						.setActionListener(e -> UpdateDialogo.criar(Formulario.this, Formulario.this, (Conexao) null));
-				ficharioAcao.setActionListener(e -> fichario.getUpdate().novo(Formulario.this, null));
-			}
-		}
-
-		private class MenuArquivo extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuArquivo() {
-				super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
-
-				ficharioAcao.setActionListener(e -> fichario.getArquivoTree().nova(Formulario.this));
-				formularioAcao.setActionListener(e -> ArquivoTreeFormulario.criar(Formulario.this));
-			}
-		}
-
-		private class MenuMetadado extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuMetadado() {
-				super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
-
-				formularioAcao
-						.setActionListener(e -> MetadadoTreeFormulario.criar(Formulario.this, Formulario.this, null));
-				ficharioAcao.setActionListener(e -> fichario.getMetadadoTree().novo(Formulario.this, null));
-			}
-		}
-
-		private class MenuAnexo extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuAnexo() {
-				super(Constantes.LABEL_ANEXOS, Icones.ANEXO, false);
-
-				ficharioAcao.setActionListener(e -> fichario.getAnexoTree().novo(Formulario.this));
-				formularioAcao.setActionListener(e -> AnexoTreeFormulario.criar(Formulario.this));
-			}
-		}
-
-		private class MenuConfig extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-			private Action exportarAcao = Action.actionMenu("label.exportar", Icones.TOP);
-			private Action importarAcao = Action.actionMenu("label.importar", Icones.BAIXAR2);
-
-			private MenuConfig() {
-				super(Constantes.LABEL_CONFIGURACOES, Icones.CONFIG);
-
-				addSeparator();
-				addMenuItem(exportarAcao);
-				addMenuItem(importarAcao);
-
-				exportarAcao.setActionListener(e -> exportar());
-				importarAcao.setActionListener(e -> importar());
-
-				ficharioAcao.setActionListener(e -> fichario.getConfiguracao().nova(Formulario.this));
-				formularioAcao.setActionListener(e -> ConfiguracaoFormulario.criar(Formulario.this));
-				dialogoAcao.setActionListener(e -> ConfiguracaoDialogo.criar(Formulario.this));
-			}
-
-			private void exportar() {
-				try {
-					Preferencias.exportar();
-					Util.mensagem(this, "SUCESSO");
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(getClass().getName(), ex, this);
+				for (MenuApp m : coletor.getMenus()) {
+					add(m.criarMenu());
 				}
-			}
-
-			private void importar() {
-				try {
-					Preferencias.importar();
-					Util.mensagem(this, "SUCESSO");
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(getClass().getName(), ex, this);
-				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("CARREGAR MENU: " + file.getAbsolutePath(), ex, Formulario.this);
 			}
 		}
 
-		private class MenuConexao extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuConexao() {
-				super(Constantes.LABEL_CONEXAO, Icones.BANCO);
-
-				ficharioAcao.setActionListener(e -> fichario.getConexoes().nova(Formulario.this));
-				formularioAcao.setActionListener(e -> ConexaoFormulario.criar(Formulario.this));
-				dialogoAcao.setActionListener(e -> ConexaoDialogo.criar(Formulario.this));
-			}
-		}
-
-		private class MenuFragmento extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuFragmento() {
-				super(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
-
-				ficharioAcao.setActionListener(e -> fichario.getFragmento().novo(Formulario.this));
-				formularioAcao.setActionListener(e -> FragmentoFormulario.criar(Formulario.this));
-				dialogoAcao.setActionListener(e -> FragmentoDialogo.criar(Formulario.this));
-			}
-		}
-
-		private class MenuMapeamento extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuMapeamento() {
-				super(Constantes.LABEL_MAPEAMENTOS, Icones.REFERENCIA);
-
-				ficharioAcao.setActionListener(e -> fichario.getMapeamento().novo(Formulario.this));
-				formularioAcao.setActionListener(e -> MapeamentoFormulario.criar(Formulario.this));
-				dialogoAcao.setActionListener(e -> MapeamentoDialogo.criar(Formulario.this));
-			}
-		}
-
-		private class MenuVariaveis extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuVariaveis() {
-				super(Constantes.LABEL_VARIAVEIS, Icones.VAR);
-
-				ficharioAcao.setActionListener(e -> fichario.getVariaveis().novo(Formulario.this));
-				formularioAcao.setActionListener(e -> VariaveisFormulario.criar(Formulario.this));
-				dialogoAcao.setActionListener(e -> VariaveisDialogo.criar(Formulario.this));
-			}
-		}
-
-		private class MenuComparacao extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuComparacao() {
-				super(Constantes.LABEL_COMPARACAO, Icones.CENTRALIZAR);
-
-				ficharioAcao.setActionListener(e -> fichario.getComparacao().nova(Formulario.this));
-				formularioAcao.setActionListener(e -> ComparacaoFormulario.criar(Formulario.this));
-				dialogoAcao.setActionListener(e -> ComparacaoDialogo.criar(Formulario.this));
-			}
-		}
+		/*
+		 * private class MenuAmbiente extends MenuPadrao1 { private static final
+		 * long serialVersionUID = 1L; private final String
+		 * classeFabricaEContainerDetalhe;
+		 * 
+		 * private MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
+		 * super(ambiente.getChaveRotulo(), null);
+		 * //classeFabricaEContainerDetalhe =
+		 * AmbienteContainer.gerarStringArquivo(ambiente);
+		 * 
+		 * formularioAcao .setActionListener(e ->
+		 * AmbienteFormulario.criar(Formulario.this, Constantes.VAZIO,
+		 * ambiente)); ficharioAcao.setActionListener(e ->
+		 * adicionarFicharioAba(classeFabricaEContainerDetalhe));
+		 * dialogoAcao.setActionListener(e ->
+		 * AmbienteDialogo.criar(Formulario.this, ambiente)); } }
+		 */
 	}
 
 	private class MenuDesktop extends MenuPadrao1 {
@@ -686,138 +425,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 
 			return fileChooser.getSelectedFiles();
-		}
-	}
-
-	private class MenuLayout extends Menu {
-		private static final long serialVersionUID = 1L;
-		private Action arquivoAnexoEsquerdoAcao = Action.actionMenu("label.arquivo_anexo_esquerdo", null);
-		private Action anexoArquivoEsquerdoAcao = Action.actionMenu("label.anexo_arquivo_esquerdo", null);
-		private Action arquivoAnexoAbaixoAcao = Action.actionMenu("label.arquivo_anexo_abaixo", null);
-		private Action anexoArquivoAbaixoAcao = Action.actionMenu("label.anexo_arquivo_abaixo", null);
-		private Action somenteFicharioAcao = Action.actionMenu("label.somente_fichario", null);
-		private Action arquivoAbaixoAcao = Action.actionMenu("label.arquivo_abaixo", null);
-		private Action anexoAbaixoAcao = Action.actionMenu("label.anexo_abaixo", null);
-
-		private MenuLayout() {
-			super("label.layout", Icones.REGION);
-			addMenuItem(somenteFicharioAcao);
-			addMenuItem(arquivoAnexoEsquerdoAcao);
-			addMenuItem(anexoArquivoEsquerdoAcao);
-			addMenuItem(arquivoAnexoAbaixoAcao);
-			addMenuItem(anexoArquivoAbaixoAcao);
-			addMenuItem(arquivoAbaixoAcao);
-			addMenuItem(anexoAbaixoAcao);
-
-			somenteFicharioAcao.setActionListener(e -> somenteFichario());
-			arquivoAnexoEsquerdoAcao.setActionListener(e -> arquivoAnexoEsquerdo());
-			anexoArquivoEsquerdoAcao.setActionListener(e -> anexoArquivoEsquerdo());
-			arquivoAnexoAbaixoAcao.setActionListener(e -> arquivoAnexoAbaixo());
-			anexoArquivoAbaixoAcao.setActionListener(e -> anexoArquivoAbaixo());
-			arquivoAbaixoAcao.setActionListener(e -> arquivoAbaixo());
-			anexoAbaixoAcao.setActionListener(e -> anexoAbaixo());
-		}
-
-		private void somenteFichario() {
-			Formulario.this.remove(splitPanePrincipal);
-			Formulario.this.remove(fichario);
-
-			Formulario.this.add(BorderLayout.CENTER, fichario);
-			SwingUtilities.updateComponentTreeUI(Formulario.this);
-		}
-
-		private void arquivoAnexoEsquerdo() {
-			Dimension sizePrincipal = Formulario.this.getSize();
-			Formulario.this.remove(splitPanePrincipal);
-			Formulario.this.remove(fichario);
-
-			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-			SplitPane splitEsquerdo = Util.splitPaneVertical(arquivoTree, anexoTree, sizePrincipal.height / 2);
-			splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
-			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-			SwingUtilities.updateComponentTreeUI(Formulario.this);
-		}
-
-		private void anexoArquivoEsquerdo() {
-			Dimension sizePrincipal = Formulario.this.getSize();
-			Formulario.this.remove(splitPanePrincipal);
-			Formulario.this.remove(fichario);
-
-			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-			SplitPane splitEsquerdo = Util.splitPaneVertical(anexoTree, arquivoTree, sizePrincipal.height / 2);
-			splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
-			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-			SwingUtilities.updateComponentTreeUI(Formulario.this);
-		}
-
-		private void arquivoAnexoAbaixo() {
-			Dimension sizePrincipal = Formulario.this.getSize();
-			Formulario.this.remove(splitPanePrincipal);
-			Formulario.this.remove(fichario);
-
-			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-			SplitPane splitAbaixo = Util.splitPaneHorizontal(arquivoTree, anexoTree, sizePrincipal.width / 2);
-			splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
-			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-			SwingUtilities.updateComponentTreeUI(Formulario.this);
-		}
-
-		private void arquivoAbaixo() {
-			Dimension sizePrincipal = Formulario.this.getSize();
-			Formulario.this.remove(splitPanePrincipal);
-			Formulario.this.remove(fichario);
-
-			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-			splitPanePrincipal = Util.splitPaneVertical(fichario, arquivoTree, sizePrincipal.height / 2);
-			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-			SwingUtilities.updateComponentTreeUI(Formulario.this);
-		}
-
-		private void anexoArquivoAbaixo() {
-			Dimension sizePrincipal = Formulario.this.getSize();
-			Formulario.this.remove(splitPanePrincipal);
-			Formulario.this.remove(fichario);
-
-			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-			SplitPane splitAbaixo = Util.splitPaneHorizontal(anexoTree, arquivoTree, sizePrincipal.width / 2);
-			splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
-			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-			SwingUtilities.updateComponentTreeUI(Formulario.this);
-		}
-
-		private void anexoAbaixo() {
-			Dimension sizePrincipal = Formulario.this.getSize();
-			Formulario.this.remove(splitPanePrincipal);
-			Formulario.this.remove(fichario);
-
-			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-			splitPanePrincipal = Util.splitPaneVertical(fichario, anexoTree, sizePrincipal.height / 2);
-			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-			SwingUtilities.updateComponentTreeUI(Formulario.this);
-		}
-
-		private void aplicarLayout() {
-			int valor = Preferencias.getLayoutAbertura();
-
-			if (valor == 1) {
-				somenteFichario();
-			} else if (valor == 2) {
-				arquivoAnexoEsquerdo();
-			} else if (valor == 3) {
-				anexoArquivoEsquerdo();
-			} else if (valor == 4) {
-				arquivoAnexoAbaixo();
-			} else if (valor == 5) {
-				anexoArquivoAbaixo();
-			} else if (valor == 6) {
-				arquivoAbaixo();
-			} else if (valor == 7) {
-				anexoAbaixo();
-			}
 		}
 	}
 

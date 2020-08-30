@@ -2,6 +2,7 @@ package br.com.persist.propriedades;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.File;
 
 import javax.swing.Icon;
 
@@ -56,6 +57,11 @@ public class PropriedadesContainer extends AbstratoContainer {
 
 	@Override
 	public String getClasseFabricaEContainerDetalhe() {
+		return null;
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
 		return null;
 	}
 

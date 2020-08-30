@@ -15,6 +15,7 @@ import br.com.persist.conexao.Conexao;
 import br.com.persist.fragmento.Fragmento;
 import br.com.persist.mapeamento.MapeamentoModelo;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.MenuApp;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;
 
@@ -57,6 +58,17 @@ public class XML {
 		}
 	}
 
+	public static void processarMenu(File file, XMLColetor coletor) throws XMLException {
+		try {
+			SAXParserFactory factory = criarSAXParserFactory();
+			SAXParser parser = factory.newSAXParser();
+			HandlerMenu handler = new HandlerMenu(coletor);
+			parser.parse(file, handler);
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
+	}
+
 	public static void processarFragmento(File file, XMLColetor coletor) throws XMLException {
 		try {
 			SAXParserFactory factory = criarSAXParserFactory();
@@ -85,6 +97,39 @@ public class XML {
 			parser.parse(file, new HandlerVariaveis());
 		} catch (Exception e) {
 			throw new XMLException(e);
+		}
+	}
+}
+
+class HandlerMenu extends DefaultHandler {
+	private final XMLColetor coletor;
+	private MenuApp selecionado;
+
+	HandlerMenu(XMLColetor coletor) {
+		this.coletor = coletor;
+		coletor.init();
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		if ("menu".equals(qName)) {
+			MenuApp menu = selecionado;
+
+			selecionado = new MenuApp();
+			selecionado.aplicar(attributes);
+
+			if (menu == null) {
+				coletor.getMenus().add(selecionado);
+			} else {
+				menu.add(selecionado);
+			}
+		}
+	}
+
+	@Override
+	public void endElement(String uri, String localName, String qName) throws SAXException {
+		if ("menu".equals(qName) && selecionado != null) {
+			selecionado = selecionado.getPai();
 		}
 	}
 }

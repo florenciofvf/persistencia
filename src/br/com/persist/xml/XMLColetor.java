@@ -10,6 +10,7 @@ import br.com.persist.fragmento.Fragmento;
 import br.com.persist.objeto.Form;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.relacao.Relacao;
+import br.com.persist.util.MenuApp;
 
 public class XMLColetor {
 	private final AtomicBoolean ajusteAutoForm;
@@ -19,6 +20,7 @@ public class XMLColetor {
 	private final List<Conexao> conexoes;
 	private final List<Objeto> objetos;
 	private final Dimension dimension;
+	private final List<MenuApp> menus;
 	private final List<Form> forms;
 
 	public XMLColetor() {
@@ -30,6 +32,7 @@ public class XMLColetor {
 		conexoes = new ArrayList<>();
 		objetos = new ArrayList<>();
 		forms = new ArrayList<>();
+		menus = new ArrayList<>();
 	}
 
 	public void init() {
@@ -43,6 +46,7 @@ public class XMLColetor {
 		relacoes.clear();
 		objetos.clear();
 		forms.clear();
+		menus.clear();
 	}
 
 	public AtomicBoolean getAjusteAutoForm() {
@@ -71,6 +75,10 @@ public class XMLColetor {
 
 	public Dimension getDimension() {
 		return dimension;
+	}
+
+	public List<MenuApp> getMenus() {
+		return menus;
 	}
 
 	public List<Form> getForms() {
