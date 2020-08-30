@@ -133,12 +133,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				FragmentoModelo.inicializar();
 				atualizarConexoes();
 
-				if (Constantes.ABRIR_AUTO_FICHARIO_SET) {
-					menuPrincipal.abrirAutoFichario();
-				}
-
 				menuPrincipal.menuLayout.aplicarLayout();
-				fichario.getSalvarAberto().abrir(Formulario.this);
+				fichario.abrirSalvos(Formulario.this);
 				fichario.ativarNavegacao();
 				iconeBandeja();
 			}
@@ -399,23 +395,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			eventos();
 		}
 
-		private void abrirAutoFichario() {
-			itemAnexo.abrirAutoFichario();
-			itemArquivo.abrirAutoFichario();
-			itemConexao.abrirAutoFichario();
-			itemMetadado.abrirAutoFichario();
-			itemConsulta.abrirAutoFichario();
-			itemUpdate.abrirAutoFichario();
-			itemAnotacao.abrirAutoFichario();
-			itemFragmento.abrirAutoFichario();
-			itemMapeamento.abrirAutoFichario();
-			itemVariavel.abrirAutoFichario();
-			itemComparacao.abrirAutoFichario();
-			itemRequisicao.abrirAutoFichario();
-			itemRuntimeExec.abrirAutoFichario();
-			itemConfig.abrirAutoFichario();
-		}
-
 		private void eventos() {
 			fecharConnAcao.rotulo("label.fechar_com_conexao");
 			novoAcao.setActionListener(e -> fichario.getConteiner().novo(Formulario.this));
@@ -440,7 +419,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			private MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
 				super(ambiente.getChaveRotulo(), null);
-				classeFabricaEContainerDetalhe = AmbienteContainer.gerarStringArquivo(ambiente);
+				//classeFabricaEContainerDetalhe = AmbienteContainer.gerarStringArquivo(ambiente);
 
 				formularioAcao
 						.setActionListener(e -> AmbienteFormulario.criar(Formulario.this, Constantes.VAZIO, ambiente));
@@ -459,12 +438,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getAnotacao().nova(Formulario.this));
 				dialogoAcao.setActionListener(e -> AnotacaoDialogo.criar(Formulario.this));
 			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ANOTACAO)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
 		}
 
 		private class MenuRequisicao extends MenuPadrao1 {
@@ -478,12 +451,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getRequisicao().nova(Formulario.this));
 				dialogoAcao.setActionListener(e -> RequisicaoDialogo.criar(Formulario.this));
 			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_REQUISICAO)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
 		}
 
 		private class MenuRuntimeExec extends MenuPadrao1 {
@@ -496,12 +463,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 						.setActionListener(e -> RuntimeExecFormulario.criar(Formulario.this, Constantes.VAZIO, null));
 				ficharioAcao.setActionListener(e -> fichario.getRuntimeExec().novo(Formulario.this));
 				dialogoAcao.setActionListener(e -> RuntimeExecDialogo.criar(Formulario.this));
-			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_RUNTIME_EXEC)) {
-					ficharioAcao.actionPerformed(null);
-				}
 			}
 		}
 
@@ -517,12 +478,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 						e -> ConsultaDialogo.criar(Formulario.this, Formulario.this, (Conexao) null));
 				ficharioAcao.setActionListener(e -> fichario.getConsulta().nova(Formulario.this, null));
 			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONSULTA)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
 		}
 
 		private class MenuUpdate extends MenuPadrao1 {
@@ -537,23 +492,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 						.setActionListener(e -> UpdateDialogo.criar(Formulario.this, Formulario.this, (Conexao) null));
 				ficharioAcao.setActionListener(e -> fichario.getUpdate().novo(Formulario.this, null));
 			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ATUALIZA)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
-		}
-
-		private class MenuDesktop extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuDesktop() {
-				super(Constantes.LABEL_DESKTOP, Icones.PANEL2, false);
-
-				ficharioAcao.setActionListener(e -> fichario.getDesktops().novo(Formulario.this));
-				formularioAcao.setActionListener(e -> DesktopFormulario.criar(Formulario.this));
-			}
 		}
 
 		private class MenuArquivo extends MenuPadrao1 {
@@ -564,12 +502,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				ficharioAcao.setActionListener(e -> fichario.getArquivoTree().nova(Formulario.this));
 				formularioAcao.setActionListener(e -> ArquivoTreeFormulario.criar(Formulario.this));
-			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ARQUIVO)) {
-					ficharioAcao.actionPerformed(null);
-				}
 			}
 		}
 
@@ -583,12 +515,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 						.setActionListener(e -> MetadadoTreeFormulario.criar(Formulario.this, Formulario.this, null));
 				ficharioAcao.setActionListener(e -> fichario.getMetadadoTree().novo(Formulario.this, null));
 			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_METADADO)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
 		}
 
 		private class MenuAnexo extends MenuPadrao1 {
@@ -599,194 +525,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 				ficharioAcao.setActionListener(e -> fichario.getAnexoTree().novo(Formulario.this));
 				formularioAcao.setActionListener(e -> AnexoTreeFormulario.criar(Formulario.this));
-			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_ANEXO)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
-		}
-
-		private class MenuAbrir extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuAbrir() {
-				super("label.abrir", Icones.ABRIR, false);
-
-				formularioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
-				ficharioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
-
-				eventos();
-			}
-
-			private void eventos() {
-				formularioAcao.setActionListener(e -> {
-					File[] files = getSelectedFiles(arquivos.arquivoParent, true);
-
-					if (files == null || files.length == 0) {
-						return;
-					}
-
-					for (File file : files) {
-						arquivos.abrir(file, false, null);
-					}
-				});
-
-				ficharioAcao.setActionListener(e -> {
-					File[] files = getSelectedFiles(arquivos.arquivoParent, true);
-
-					if (files == null || files.length == 0) {
-						return;
-					}
-
-					for (File file : files) {
-						arquivos.abrir(file, true, null);
-					}
-				});
-			}
-
-			private File[] getSelectedFiles(File arquivo, boolean multiSelection) {
-				JFileChooser fileChooser = Util.criarFileChooser(arquivo, multiSelection);
-				int opcao = fileChooser.showOpenDialog(Formulario.this);
-
-				if (opcao != JFileChooser.APPROVE_OPTION) {
-					return new File[0];
-				}
-
-				return fileChooser.getSelectedFiles();
-			}
-		}
-
-		private class MenuLayout extends Menu {
-			private static final long serialVersionUID = 1L;
-			private Action arquivoAnexoEsquerdoAcao = Action.actionMenu("label.arquivo_anexo_esquerdo", null);
-			private Action anexoArquivoEsquerdoAcao = Action.actionMenu("label.anexo_arquivo_esquerdo", null);
-			private Action arquivoAnexoAbaixoAcao = Action.actionMenu("label.arquivo_anexo_abaixo", null);
-			private Action anexoArquivoAbaixoAcao = Action.actionMenu("label.anexo_arquivo_abaixo", null);
-			private Action somenteFicharioAcao = Action.actionMenu("label.somente_fichario", null);
-			private Action arquivoAbaixoAcao = Action.actionMenu("label.arquivo_abaixo", null);
-			private Action anexoAbaixoAcao = Action.actionMenu("label.anexo_abaixo", null);
-
-			private MenuLayout() {
-				super("label.layout", Icones.REGION);
-				addMenuItem(somenteFicharioAcao);
-				addMenuItem(arquivoAnexoEsquerdoAcao);
-				addMenuItem(anexoArquivoEsquerdoAcao);
-				addMenuItem(arquivoAnexoAbaixoAcao);
-				addMenuItem(anexoArquivoAbaixoAcao);
-				addMenuItem(arquivoAbaixoAcao);
-				addMenuItem(anexoAbaixoAcao);
-
-				somenteFicharioAcao.setActionListener(e -> somenteFichario());
-				arquivoAnexoEsquerdoAcao.setActionListener(e -> arquivoAnexoEsquerdo());
-				anexoArquivoEsquerdoAcao.setActionListener(e -> anexoArquivoEsquerdo());
-				arquivoAnexoAbaixoAcao.setActionListener(e -> arquivoAnexoAbaixo());
-				anexoArquivoAbaixoAcao.setActionListener(e -> anexoArquivoAbaixo());
-				arquivoAbaixoAcao.setActionListener(e -> arquivoAbaixo());
-				anexoAbaixoAcao.setActionListener(e -> anexoAbaixo());
-			}
-
-			private void somenteFichario() {
-				Formulario.this.remove(splitPanePrincipal);
-				Formulario.this.remove(fichario);
-
-				Formulario.this.add(BorderLayout.CENTER, fichario);
-				SwingUtilities.updateComponentTreeUI(Formulario.this);
-			}
-
-			private void arquivoAnexoEsquerdo() {
-				Dimension sizePrincipal = Formulario.this.getSize();
-				Formulario.this.remove(splitPanePrincipal);
-				Formulario.this.remove(fichario);
-
-				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane splitEsquerdo = Util.splitPaneVertical(arquivoTree, anexoTree, sizePrincipal.height / 2);
-				splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-				SwingUtilities.updateComponentTreeUI(Formulario.this);
-			}
-
-			private void anexoArquivoEsquerdo() {
-				Dimension sizePrincipal = Formulario.this.getSize();
-				Formulario.this.remove(splitPanePrincipal);
-				Formulario.this.remove(fichario);
-
-				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane splitEsquerdo = Util.splitPaneVertical(anexoTree, arquivoTree, sizePrincipal.height / 2);
-				splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-				SwingUtilities.updateComponentTreeUI(Formulario.this);
-			}
-
-			private void arquivoAnexoAbaixo() {
-				Dimension sizePrincipal = Formulario.this.getSize();
-				Formulario.this.remove(splitPanePrincipal);
-				Formulario.this.remove(fichario);
-
-				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane splitAbaixo = Util.splitPaneHorizontal(arquivoTree, anexoTree, sizePrincipal.width / 2);
-				splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-				SwingUtilities.updateComponentTreeUI(Formulario.this);
-			}
-
-			private void arquivoAbaixo() {
-				Dimension sizePrincipal = Formulario.this.getSize();
-				Formulario.this.remove(splitPanePrincipal);
-				Formulario.this.remove(fichario);
-
-				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-				splitPanePrincipal = Util.splitPaneVertical(fichario, arquivoTree, sizePrincipal.height / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-				SwingUtilities.updateComponentTreeUI(Formulario.this);
-			}
-
-			private void anexoArquivoAbaixo() {
-				Dimension sizePrincipal = Formulario.this.getSize();
-				Formulario.this.remove(splitPanePrincipal);
-				Formulario.this.remove(fichario);
-
-				ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
-				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-				SplitPane splitAbaixo = Util.splitPaneHorizontal(anexoTree, arquivoTree, sizePrincipal.width / 2);
-				splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-				SwingUtilities.updateComponentTreeUI(Formulario.this);
-			}
-
-			private void anexoAbaixo() {
-				Dimension sizePrincipal = Formulario.this.getSize();
-				Formulario.this.remove(splitPanePrincipal);
-				Formulario.this.remove(fichario);
-
-				AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
-				splitPanePrincipal = Util.splitPaneVertical(fichario, anexoTree, sizePrincipal.height / 2);
-				Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
-				SwingUtilities.updateComponentTreeUI(Formulario.this);
-			}
-
-			private void aplicarLayout() {
-				int valor = Preferencias.getLayoutAbertura();
-
-				if (valor == 1) {
-					somenteFichario();
-				} else if (valor == 2) {
-					arquivoAnexoEsquerdo();
-				} else if (valor == 3) {
-					anexoArquivoEsquerdo();
-				} else if (valor == 4) {
-					arquivoAnexoAbaixo();
-				} else if (valor == 5) {
-					anexoArquivoAbaixo();
-				} else if (valor == 6) {
-					arquivoAbaixo();
-				} else if (valor == 7) {
-					anexoAbaixo();
-				}
 			}
 		}
 
@@ -808,12 +546,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getConfiguracao().nova(Formulario.this));
 				formularioAcao.setActionListener(e -> ConfiguracaoFormulario.criar(Formulario.this));
 				dialogoAcao.setActionListener(e -> ConfiguracaoDialogo.criar(Formulario.this));
-			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONFIGURACAO)) {
-					ficharioAcao.actionPerformed(null);
-				}
 			}
 
 			private void exportar() {
@@ -845,12 +577,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				formularioAcao.setActionListener(e -> ConexaoFormulario.criar(Formulario.this));
 				dialogoAcao.setActionListener(e -> ConexaoDialogo.criar(Formulario.this));
 			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_CONEXAO)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
 		}
 
 		private class MenuFragmento extends MenuPadrao1 {
@@ -862,12 +588,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getFragmento().novo(Formulario.this));
 				formularioAcao.setActionListener(e -> FragmentoFormulario.criar(Formulario.this));
 				dialogoAcao.setActionListener(e -> FragmentoDialogo.criar(Formulario.this));
-			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_FRAGMENTO)) {
-					ficharioAcao.actionPerformed(null);
-				}
 			}
 		}
 
@@ -881,12 +601,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				formularioAcao.setActionListener(e -> MapeamentoFormulario.criar(Formulario.this));
 				dialogoAcao.setActionListener(e -> MapeamentoDialogo.criar(Formulario.this));
 			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_MAPEAMENTO)) {
-					ficharioAcao.actionPerformed(null);
-				}
-			}
 		}
 
 		private class MenuVariaveis extends MenuPadrao1 {
@@ -898,12 +612,6 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				ficharioAcao.setActionListener(e -> fichario.getVariaveis().novo(Formulario.this));
 				formularioAcao.setActionListener(e -> VariaveisFormulario.criar(Formulario.this));
 				dialogoAcao.setActionListener(e -> VariaveisDialogo.criar(Formulario.this));
-			}
-
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_VARIAVEL)) {
-					ficharioAcao.actionPerformed(null);
-				}
 			}
 		}
 
@@ -917,11 +625,198 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				formularioAcao.setActionListener(e -> ComparacaoFormulario.criar(Formulario.this));
 				dialogoAcao.setActionListener(e -> ComparacaoDialogo.criar(Formulario.this));
 			}
+		}
+	}
 
-			private void abrirAutoFichario() {
-				if (Preferencias.getBoolean(Constantes.ABRIR_AUTO_FICHARIO_COMPARACAO)) {
-					ficharioAcao.actionPerformed(null);
+	private class MenuDesktop extends MenuPadrao1 {
+		private static final long serialVersionUID = 1L;
+
+		private MenuDesktop() {
+			super(Constantes.LABEL_DESKTOP, Icones.PANEL2, false);
+
+			ficharioAcao.setActionListener(e -> fichario.getDesktops().novo(Formulario.this));
+			formularioAcao.setActionListener(e -> DesktopFormulario.criar(Formulario.this));
+		}
+	}
+
+	private class MenuAbrir extends MenuPadrao1 {
+		private static final long serialVersionUID = 1L;
+
+		private MenuAbrir() {
+			super("label.abrir", Icones.ABRIR, false);
+
+			formularioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
+			ficharioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
+
+			eventos();
+		}
+
+		private void eventos() {
+			formularioAcao.setActionListener(e -> {
+				File[] files = getSelectedFiles(arquivos.arquivoParent, true);
+
+				if (files == null || files.length == 0) {
+					return;
 				}
+
+				for (File file : files) {
+					arquivos.abrir(file, false, null);
+				}
+			});
+
+			ficharioAcao.setActionListener(e -> {
+				File[] files = getSelectedFiles(arquivos.arquivoParent, true);
+
+				if (files == null || files.length == 0) {
+					return;
+				}
+
+				for (File file : files) {
+					arquivos.abrir(file, true, null);
+				}
+			});
+		}
+
+		private File[] getSelectedFiles(File arquivo, boolean multiSelection) {
+			JFileChooser fileChooser = Util.criarFileChooser(arquivo, multiSelection);
+			int opcao = fileChooser.showOpenDialog(Formulario.this);
+
+			if (opcao != JFileChooser.APPROVE_OPTION) {
+				return new File[0];
+			}
+
+			return fileChooser.getSelectedFiles();
+		}
+	}
+
+	private class MenuLayout extends Menu {
+		private static final long serialVersionUID = 1L;
+		private Action arquivoAnexoEsquerdoAcao = Action.actionMenu("label.arquivo_anexo_esquerdo", null);
+		private Action anexoArquivoEsquerdoAcao = Action.actionMenu("label.anexo_arquivo_esquerdo", null);
+		private Action arquivoAnexoAbaixoAcao = Action.actionMenu("label.arquivo_anexo_abaixo", null);
+		private Action anexoArquivoAbaixoAcao = Action.actionMenu("label.anexo_arquivo_abaixo", null);
+		private Action somenteFicharioAcao = Action.actionMenu("label.somente_fichario", null);
+		private Action arquivoAbaixoAcao = Action.actionMenu("label.arquivo_abaixo", null);
+		private Action anexoAbaixoAcao = Action.actionMenu("label.anexo_abaixo", null);
+
+		private MenuLayout() {
+			super("label.layout", Icones.REGION);
+			addMenuItem(somenteFicharioAcao);
+			addMenuItem(arquivoAnexoEsquerdoAcao);
+			addMenuItem(anexoArquivoEsquerdoAcao);
+			addMenuItem(arquivoAnexoAbaixoAcao);
+			addMenuItem(anexoArquivoAbaixoAcao);
+			addMenuItem(arquivoAbaixoAcao);
+			addMenuItem(anexoAbaixoAcao);
+
+			somenteFicharioAcao.setActionListener(e -> somenteFichario());
+			arquivoAnexoEsquerdoAcao.setActionListener(e -> arquivoAnexoEsquerdo());
+			anexoArquivoEsquerdoAcao.setActionListener(e -> anexoArquivoEsquerdo());
+			arquivoAnexoAbaixoAcao.setActionListener(e -> arquivoAnexoAbaixo());
+			anexoArquivoAbaixoAcao.setActionListener(e -> anexoArquivoAbaixo());
+			arquivoAbaixoAcao.setActionListener(e -> arquivoAbaixo());
+			anexoAbaixoAcao.setActionListener(e -> anexoAbaixo());
+		}
+
+		private void somenteFichario() {
+			Formulario.this.remove(splitPanePrincipal);
+			Formulario.this.remove(fichario);
+
+			Formulario.this.add(BorderLayout.CENTER, fichario);
+			SwingUtilities.updateComponentTreeUI(Formulario.this);
+		}
+
+		private void arquivoAnexoEsquerdo() {
+			Dimension sizePrincipal = Formulario.this.getSize();
+			Formulario.this.remove(splitPanePrincipal);
+			Formulario.this.remove(fichario);
+
+			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+			SplitPane splitEsquerdo = Util.splitPaneVertical(arquivoTree, anexoTree, sizePrincipal.height / 2);
+			splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
+			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+			SwingUtilities.updateComponentTreeUI(Formulario.this);
+		}
+
+		private void anexoArquivoEsquerdo() {
+			Dimension sizePrincipal = Formulario.this.getSize();
+			Formulario.this.remove(splitPanePrincipal);
+			Formulario.this.remove(fichario);
+
+			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+			SplitPane splitEsquerdo = Util.splitPaneVertical(anexoTree, arquivoTree, sizePrincipal.height / 2);
+			splitPanePrincipal = Util.splitPaneHorizontal(splitEsquerdo, fichario, sizePrincipal.width / 2);
+			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+			SwingUtilities.updateComponentTreeUI(Formulario.this);
+		}
+
+		private void arquivoAnexoAbaixo() {
+			Dimension sizePrincipal = Formulario.this.getSize();
+			Formulario.this.remove(splitPanePrincipal);
+			Formulario.this.remove(fichario);
+
+			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+			SplitPane splitAbaixo = Util.splitPaneHorizontal(arquivoTree, anexoTree, sizePrincipal.width / 2);
+			splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
+			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+			SwingUtilities.updateComponentTreeUI(Formulario.this);
+		}
+
+		private void arquivoAbaixo() {
+			Dimension sizePrincipal = Formulario.this.getSize();
+			Formulario.this.remove(splitPanePrincipal);
+			Formulario.this.remove(fichario);
+
+			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+			splitPanePrincipal = Util.splitPaneVertical(fichario, arquivoTree, sizePrincipal.height / 2);
+			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+			SwingUtilities.updateComponentTreeUI(Formulario.this);
+		}
+
+		private void anexoArquivoAbaixo() {
+			Dimension sizePrincipal = Formulario.this.getSize();
+			Formulario.this.remove(splitPanePrincipal);
+			Formulario.this.remove(fichario);
+
+			ArquivoTreeContainer arquivoTree = new ArquivoTreeContainer(null, Formulario.this);
+			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+			SplitPane splitAbaixo = Util.splitPaneHorizontal(anexoTree, arquivoTree, sizePrincipal.width / 2);
+			splitPanePrincipal = Util.splitPaneVertical(fichario, splitAbaixo, sizePrincipal.height / 2);
+			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+			SwingUtilities.updateComponentTreeUI(Formulario.this);
+		}
+
+		private void anexoAbaixo() {
+			Dimension sizePrincipal = Formulario.this.getSize();
+			Formulario.this.remove(splitPanePrincipal);
+			Formulario.this.remove(fichario);
+
+			AnexoTreeContainer anexoTree = new AnexoTreeContainer(null, Formulario.this);
+			splitPanePrincipal = Util.splitPaneVertical(fichario, anexoTree, sizePrincipal.height / 2);
+			Formulario.this.add(BorderLayout.CENTER, splitPanePrincipal);
+			SwingUtilities.updateComponentTreeUI(Formulario.this);
+		}
+
+		private void aplicarLayout() {
+			int valor = Preferencias.getLayoutAbertura();
+
+			if (valor == 1) {
+				somenteFichario();
+			} else if (valor == 2) {
+				arquivoAnexoEsquerdo();
+			} else if (valor == 3) {
+				anexoArquivoEsquerdo();
+			} else if (valor == 4) {
+				arquivoAnexoAbaixo();
+			} else if (valor == 5) {
+				anexoArquivoAbaixo();
+			} else if (valor == 6) {
+				arquivoAbaixo();
+			} else if (valor == 7) {
+				anexoAbaixo();
 			}
 		}
 	}

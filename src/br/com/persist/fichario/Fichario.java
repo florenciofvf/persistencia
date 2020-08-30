@@ -69,7 +69,7 @@ public class Fichario extends JTabbedPane {
 	private final transient NavegButton navegButtonEsquerdo = new NavegButton(1);
 	private final transient NavegButton navegButtonDireito = new NavegButton(2);
 	private final transient NavegButton navegButtonLimpar = new NavegButton(0);
-	private final transient SalvarAberto salvarAberto = new SalvarAberto();
+	private final transient SalvarAbrir salvarAbrir = new SalvarAbrir();
 	private final transient Conteiner conteiner = new Conteiner();
 	private final transient NavegacaoListener navegacaoListener;
 	private final transient Arquivos arquivos = new Arquivos();
@@ -458,10 +458,6 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public SalvarAberto getSalvarAberto() {
-		return salvarAberto;
-	}
-
 	public Conteiner getConteiner() {
 		return conteiner;
 	}
@@ -796,7 +792,7 @@ public class Fichario extends JTabbedPane {
 			String absArquivoAba = file.getAbsolutePath();
 			String nomeArquivoAba = file.getName();
 
-			int pos = posLocalArquivo(diretorioArquivos, file);
+			int pos = posicaoArquivo(diretorioArquivos, file);
 
 			if (pos != -1) {
 				String restante = absArquivoAba.substring(pos + absDiretorioArquivos.length());
@@ -811,7 +807,7 @@ public class Fichario extends JTabbedPane {
 		return null;
 	}
 
-	private static int posLocalArquivo(File diretorio, File arquivo) {
+	private static int posicaoArquivo(File diretorio, File arquivo) {
 		if (!diretorio.isDirectory() || !arquivo.isFile()) {
 			return -1;
 		}
@@ -835,7 +831,15 @@ public class Fichario extends JTabbedPane {
 		return file;
 	}
 
-	public class SalvarAberto {
+	public void salvarAbertos() {
+		salvarAbrir.salvar();
+	}
+
+	public void abrirSalvos(Formulario formulario) {
+		salvarAbrir.abrir(formulario);
+	}
+
+	public class SalvarAbrir {
 		public void salvar() {
 			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
 				int total = getTabCount();

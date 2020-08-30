@@ -47,7 +47,7 @@ public class FormularioUtil {
 
 	public static void fechar(Formulario formulario) {
 		try {
-			formulario.getFichario().getSalvarAberto().salvar();
+			formulario.getFichario().salvarAbertos();
 
 			if (Preferencias.isFecharConexao()) {
 				Conexao.fecharConexoes();
