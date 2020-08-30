@@ -27,7 +27,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.fmt.Parser;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.icone.Icones;
@@ -41,7 +41,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;
 
-public class RequisicaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
+public class RequisicaoContainer extends AbstratoContainer implements IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("requisicoes");
 	private RequisicaoFormulario requisicaoFormulario;

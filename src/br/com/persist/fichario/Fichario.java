@@ -42,8 +42,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import br.com.persist.ambiente.AmbienteContainer;
-import br.com.persist.ambiente.AmbienteFormulario;
 import br.com.persist.anexo.AnexoTreeContainer;
 import br.com.persist.anexo.AnexoTreeFormulario;
 import br.com.persist.anotacao.AnotacaoContainer;
@@ -108,7 +106,6 @@ public class Fichario extends JTabbedPane {
 	private final transient Comparacao comparacao = new Comparacao();
 	private final transient Requisicao requisicao = new Requisicao();
 	private final transient Variaveis variaveis = new Variaveis();
-	private final transient Ambientes ambientes = new Ambientes();
 	private final transient Fragmento fragmento = new Fragmento();
 	private final transient Conteiner conteiner = new Conteiner();
 	private final transient AnexoTree anexoTree = new AnexoTree();
@@ -533,10 +530,6 @@ public class Fichario extends JTabbedPane {
 
 	public Requisicao getRequisicao() {
 		return requisicao;
-	}
-
-	public Ambientes getAmbientes() {
-		return ambientes;
 	}
 
 	public Variaveis getVariaveis() {
@@ -1087,42 +1080,15 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public class Ambientes {
-		public void novo(Formulario formulario, AmbienteContainer.Ambiente ambiente) {
-			AmbienteContainer container = new AmbienteContainer(null, formulario, null, ambiente);
-			retornoAoFichario(formulario, container);
+	public boolean excluirAba(FicharioAba aba) {
+		int indice = arquivos.getIndice(aba.getComponent());
+
+		if (indice == -1) {
+			return false;
 		}
 
-		public void destacarEmFormulario(Formulario formulario, AmbienteContainer container) {
-			int indice = arquivos.getIndice(container);
-
-			if (indice == -1) {
-				return;
-			}
-
-			remove(indice);
-			AmbienteFormulario.criar(formulario, container);
-		}
-
-		public void clonarEmFormulario(Formulario formulario, AmbienteContainer container) {
-			int indice = arquivos.getIndice(container);
-
-			if (indice == -1) {
-				return;
-			}
-
-			AmbienteFormulario.criar(formulario, container.getConteudo(), container.getAmbiente());
-		}
-
-		public void retornoAoFichario(Formulario formulario, AmbienteContainer container) {
-			addTab(container.getAmbiente().getChaveLabel(), container.getAmbiente().getChaveLabelMin(), container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.BOLA_VERDE);
-			setToolTipTextAt(ultimoIndice, container.getAmbiente().getDescricao());
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-		}
+		remove(indice);
+		return true;
 	}
 
 	public void adicionarAba(FicharioAba aba) {
@@ -1460,24 +1426,49 @@ public class Fichario extends JTabbedPane {
 		Util.mensagem(Fichario.this, sb.toString());
 	}
 
-	public static String getAbsRelativoArquivo(File arquivos, File file) {
-		if (arquivos != null && file != null) {
-			String name = file.getName();
-			String absolutePath = file.getAbsolutePath();
-			String caminhoArquivos = arquivos.getAbsolutePath();
-			int pos = absolutePath.indexOf(caminhoArquivos);
+	public static String getAbsRelativoArquivo(File diretorioArquivos, File file) {
+		if (diretorioArquivos != null && file != null) {
+			String absDiretorioArquivos = diretorioArquivos.getAbsolutePath();
+			String absArquivoAba = file.getAbsolutePath();
+			String nomeArquivoAba = file.getName();
+
+			int pos = posLocalArquivo(diretorioArquivos, file);
 
 			if (pos != -1) {
-				String restante = absolutePath.substring(pos + caminhoArquivos.length());
-				absolutePath = Util.replaceAll(restante, Constantes.SEPARADOR, Constantes.SEP);
-			} else if (name.startsWith(Constantes.III)) {
-				absolutePath = name;
+				String restante = absArquivoAba.substring(pos + absDiretorioArquivos.length());
+				absArquivoAba = Util.replaceAll(restante, Constantes.SEPARADOR, Constantes.SEP);
+			} else if (nomeArquivoAba.startsWith(Constantes.III)) {
+				absArquivoAba = nomeArquivoAba;
 			}
 
-			return absolutePath;
+			return absArquivoAba;
 		}
 
 		return null;
+	}
+
+	private static int posLocalArquivo(File diretorio, File arquivo) {
+		if (!diretorio.isDirectory() || !arquivo.isFile()) {
+			return -1;
+		}
+
+		String absDiretorio = diretorio.getAbsolutePath();
+		String absArquivo = arquivo.getAbsolutePath();
+
+		return absArquivo.indexOf(absDiretorio);
+	}
+
+	public static File getArquivoNormalizado(File file) {
+		if (file != null) {
+			String nome = file.getName();
+
+			if (nome.startsWith(Constantes.SEP)) {
+				nome = Util.replaceAll(nome, Constantes.SEP, Constantes.SEPARADOR);
+				file = new File(ArquivoTreeModelo.FILE.getAbsolutePath() + nome);
+			}
+		}
+
+		return file;
 	}
 
 	public class SalvarAberto {
@@ -1535,94 +1526,13 @@ public class Fichario extends JTabbedPane {
 
 		private void abrirArquivo(File f, Formulario formulario) {
 			String nome = f.getName();
-			int pos = nome.indexOf(Constantes.III);
 
-			if (pos != -1) {
-				nome = nome.substring(pos + Constantes.III.length());
-			}
-
-			if (Util.iguais(AnexoTreeContainer.class, nome)) {
-				anexoTree.novo(formulario);
-
-			} else if (Util.iguais(ArquivoTreeContainer.class, nome)) {
-				arquivoTree.nova(formulario);
-
-			} else if (Util.iguais(ConexaoContainer.class, nome)) {
-				conexoes.nova(formulario);
-
-			} else if (Util.iguais(MetadadoTreeContainer.class, nome)) {
-				metadadoTree.novo(formulario, null);
-
-			} else if (Util.iguais(ConsultaContainer.class, nome)) {
-				consulta.nova(formulario, null);
-
-			} else if (Util.iguais(UpdateContainer.class, nome)) {
-				update.novo(formulario, null);
-
-			} else if (Util.iguais(AnotacaoContainer.class, nome)) {
-				anotacao.nova(formulario);
-
-			} else if (Util.iguais(FragmentoContainer.class, nome)) {
-				fragmento.novo(formulario);
-
-			} else {
-				abrirArquivo(f, formulario, nome);
-			}
-		}
-
-		private void abrirArquivo(File f, Formulario formulario, String nome) {
-			if (Util.iguais(MapeamentoContainer.class, nome)) {
-				mapeamento.novo(formulario);
-
-			} else if (Util.iguais(VariaveisContainer.class, nome)) {
-				variaveis.novo(formulario);
-
-			} else if (Util.iguais(ComparacaoContainer.class, nome)) {
-				comparacao.nova(formulario);
-
-			} else if (Util.iguais(RequisicaoContainer.class, nome)) {
-				requisicao.nova(formulario);
-
-			} else if (Util.iguais(RuntimeExecContainer.class, nome)) {
-				runtimeExec.novo(formulario);
-
-			} else if (Util.iguais(ConfiguracaoContainer.class, nome)) {
-				configuracao.nova(formulario);
-
-			} else if (Util.iguais(Desktop.class, nome)) {
-				desktops.novo(formulario);
-
-			} else if (nome.startsWith(AmbienteContainer.class.getName())) {
-				String ambiente = nome.substring(AmbienteContainer.class.getName().length() + 1);
-				ambientes.novo(formulario, AmbienteContainer.Ambiente.get(ambiente));
-
+			if (nome.startsWith(Constantes.III)) {
+				formulario.adicionarFicharioAba(nome);
 			} else {
 				formulario.getArquivos().abrir(getArquivoNormalizado(f), true, null);
 			}
 		}
-	}
-
-	public static File getArquivoNormalizado(File f) {
-		if (f != null) {
-			String name = f.getName();
-
-			if (name.startsWith(Constantes.SEP)) {
-				name = Util.replaceAll(name, Constantes.SEP, Constantes.SEPARADOR);
-				f = new File(ArquivoTreeModelo.FILE.getAbsolutePath() + name);
-			}
-		}
-
-		return f;
-	}
-
-	public static interface IFicharioSalvar {
-		File getFileSalvarAberto();
-	}
-
-	public static interface IFicharioConexao {
-		void selecionarConexao(Conexao conexao);
-
-		public InfoConexao getInfoConexao();
 	}
 
 	public static class InfoConexao {

@@ -5,6 +5,8 @@ import java.awt.Component;
 import javax.swing.Icon;
 
 public interface FicharioAba {
+	public String getClasseFabricaEContainerDetalhe();
+
 	public String getChaveTituloMin();
 
 	public Component getComponent();

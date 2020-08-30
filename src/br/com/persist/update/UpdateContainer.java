@@ -21,8 +21,9 @@ import br.com.persist.componente.TextArea;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
+import br.com.persist.fichario.IFicharioConexao;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Action;
@@ -30,7 +31,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class UpdateContainer extends AbstratoContainer implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
+public class UpdateContainer extends AbstratoContainer implements IFicharioSalvar, IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("atualizacoes/atualizacoes");
 	private final TextArea textArea = new TextArea();

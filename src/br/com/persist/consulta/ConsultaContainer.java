@@ -25,8 +25,9 @@ import br.com.persist.componente.TextArea;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
+import br.com.persist.fichario.IFicharioConexao;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.persistencia.Persistencia;
@@ -41,8 +42,7 @@ import br.com.persist.util.IJanela;
 import br.com.persist.util.TransferidorDados;
 import br.com.persist.util.Util;
 
-public class ConsultaContainer extends AbstratoContainer
-		implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
+public class ConsultaContainer extends AbstratoContainer implements IFicharioSalvar, IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private static final File file = new File("consultas/consultas");
 	private final JTable tabela = new JTable(new VazioModelo());

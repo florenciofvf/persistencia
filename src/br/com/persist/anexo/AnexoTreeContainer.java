@@ -10,10 +10,9 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.Icon;
-
-import java.util.Set;
 
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoIconeDialogo;
@@ -21,7 +20,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
@@ -29,7 +28,7 @@ import br.com.persist.util.Imagens;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeListener, Fichario.IFicharioSalvar {
+public class AnexoTreeContainer extends AbstratoContainer implements AnexoTreeListener, IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final AnexoTree anexoTree = new AnexoTree(new AnexoTreeModelo(true));
 	private final CheckBox chkSempreTopForm = new CheckBox();

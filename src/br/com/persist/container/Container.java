@@ -28,6 +28,8 @@ import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
+import br.com.persist.fichario.IFicharioConexao;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.objeto.Form;
@@ -49,7 +51,7 @@ import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLColetor;
 
-public class Container extends Panel implements Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
+public class Container extends Panel implements IFicharioSalvar, IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());

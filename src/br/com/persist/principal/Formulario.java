@@ -56,7 +56,10 @@ import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
 import br.com.persist.container.ContainerFormulario;
 import br.com.persist.desktop.DesktopFormulario;
+import br.com.persist.fabrica.Fabrica;
+import br.com.persist.fabrica.FabricaContainer;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.FicharioAba;
 import br.com.persist.fragmento.FragmentoDialogo;
 import br.com.persist.fragmento.FragmentoFormulario;
 import br.com.persist.fragmento.FragmentoModelo;
@@ -219,6 +222,30 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 	public Fichario getFichario() {
 		return fichario;
+	}
+
+	public void adicionarFicharioAba(FicharioAba ficharioAba) {
+		fichario.adicionarAba(ficharioAba);
+	}
+
+	public boolean excluirFicharioAba(FicharioAba ficharioAba) {
+		return fichario.excluirAba(ficharioAba);
+	}
+
+	public void adicionarFicharioAba(String classeFabricaEContainerDetalhe) {
+		if (classeFabricaEContainerDetalhe.startsWith(Constantes.III)) {
+			classeFabricaEContainerDetalhe = classeFabricaEContainerDetalhe.substring(Constantes.III.length(),
+					classeFabricaEContainerDetalhe.length());
+		}
+
+		FabricaContainer fabricaContainer = Fabrica.criar(classeFabricaEContainerDetalhe);
+
+		if (fabricaContainer == null) {
+			return;
+		}
+
+		FicharioAba ficharioAba = fabricaContainer.criarFicharioAba(this, classeFabricaEContainerDetalhe);
+		adicionarFicharioAba(ficharioAba);
 	}
 
 	public class Conteiner {
@@ -409,13 +436,15 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 		private class MenuAmbiente extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
+			private final String classeFabricaEContainerDetalhe;
 
 			private MenuAmbiente(AmbienteContainer.Ambiente ambiente) {
-				super(ambiente.getChaveLabel(), null);
+				super(ambiente.getChaveRotulo(), null);
+				classeFabricaEContainerDetalhe = AmbienteContainer.gerarStringArquivo(ambiente);
 
 				formularioAcao
 						.setActionListener(e -> AmbienteFormulario.criar(Formulario.this, Constantes.VAZIO, ambiente));
-				ficharioAcao.setActionListener(e -> fichario.getAmbientes().novo(Formulario.this, ambiente));
+				ficharioAcao.setActionListener(e -> adicionarFicharioAba(classeFabricaEContainerDetalhe));
 				dialogoAcao.setActionListener(e -> AmbienteDialogo.criar(Formulario.this, ambiente));
 			}
 		}

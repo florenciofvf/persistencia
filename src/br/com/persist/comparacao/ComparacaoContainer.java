@@ -17,13 +17,13 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class ComparacaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
+public class ComparacaoContainer extends AbstratoContainer implements IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private ComparacaoFormulario comparacaoFormulario;
 	private final TextArea textArea = new TextArea();

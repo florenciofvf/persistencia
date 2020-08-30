@@ -26,7 +26,7 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
@@ -34,7 +34,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
-public class ConfiguracaoContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
+public class ConfiguracaoContainer extends AbstratoContainer implements IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkExecAposCopiarColunaConcatenado = new CheckBox(
 			"label.executar_apos_copiar_coluna_concatenado");

@@ -10,7 +10,7 @@ import br.com.persist.chave_valor.ChaveValorEditor;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.tabela.TabelaUtil;
@@ -20,7 +20,7 @@ import br.com.persist.util.IIni;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
-public class ConexaoContainer extends AbstratoContainer implements IIni, Fichario.IFicharioSalvar {
+public class ConexaoContainer extends AbstratoContainer implements IIni, IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo modelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(modelo);

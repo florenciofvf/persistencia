@@ -29,7 +29,7 @@ import br.com.persist.busca_auto.TabelaBuscaAutoApos;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.Popup;
 import br.com.persist.conexao.Conexao;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.link_auto.GrupoLinkAuto;
 import br.com.persist.link_auto.TabelaLinkAuto;
 import br.com.persist.metadado.Metadado;
@@ -44,7 +44,7 @@ import br.com.persist.util.Transferidor;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;
 
-public class Desktop extends AbstratoDesktop implements IIni, Fichario.IFicharioSalvar {
+public class Desktop extends AbstratoDesktop implements IIni, IFicharioSalvar {
 	private static final long serialVersionUID = 1L;
 	private final DesktopPopup popup = new DesktopPopup();
 	private static final Logger LOG = Logger.getGlobal();

@@ -17,8 +17,9 @@ import br.com.persist.componente.TextField;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
+import br.com.persist.fichario.IFicharioConexao;
+import br.com.persist.fichario.IFicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
@@ -30,7 +31,7 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
 public class MetadadoTreeContainer extends AbstratoContainer
-		implements MetadadoTreeListener, Fichario.IFicharioSalvar, Fichario.IFicharioConexao {
+		implements MetadadoTreeListener, IFicharioSalvar, IFicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private final MetadadoTree metadadoTree = new MetadadoTree();
 	private MetadadoTreeFormulario metadadoFormulario;

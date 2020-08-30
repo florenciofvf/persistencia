@@ -1,6 +1,7 @@
 package br.com.persist.ambiente;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,17 +9,21 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
+import javax.swing.Icon;
+
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.TextArea;
 import br.com.persist.container.AbstratoContainer;
-import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.FicharioAba;
+import br.com.persist.fichario.IFicharioSalvar;
+import br.com.persist.icone.Icones;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AmbienteContainer extends AbstratoContainer implements Fichario.IFicharioSalvar {
+public class AmbienteContainer extends AbstratoContainer implements IFicharioSalvar, FicharioAba {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
@@ -28,7 +33,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 
 	public AmbienteContainer(IJanela janela, Formulario formulario, String conteudo, Ambiente ambiente) {
 		super(formulario);
-		file = new File("ambientes/" + ambiente.chave);
+		file = new File("ambientes" + Constantes.SEPARADOR + ambiente.chave);
 		this.ambiente = ambiente;
 		toolbar.ini(janela);
 		montarLayout();
@@ -51,32 +56,24 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 																		Mensagens.getString("label.teste")), BUGS(
 																				"bugs",
 																				Mensagens.getString("label.bugs"));
-		private final String chaveLabelMin;
-		private final String chaveLabel;
+		private final String chaveRotuloMin;
+		private final String chaveRotulo;
 		private final String descricao;
 		private final String chave;
 
 		private Ambiente(String chave, String descricao) {
-			chaveLabelMin = "label." + chave + "_min";
-			chaveLabel = "label." + chave;
-			this.chave = chave;
+			chaveRotuloMin = "label." + chave + "_min";
+			chaveRotulo = "label." + chave;
 			this.descricao = descricao;
+			this.chave = chave;
 		}
 
-		public String getChave() {
-			return chave;
+		public String getChaveRotulo() {
+			return chaveRotulo;
 		}
 
 		public String getDescricao() {
 			return descricao;
-		}
-
-		public String getChaveLabelMin() {
-			return chaveLabelMin;
-		}
-
-		public String getChaveLabel() {
-			return chaveLabel;
 		}
 
 		public static Ambiente get(String nome) {
@@ -100,7 +97,12 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 
 	@Override
 	public File getFileSalvarAberto() {
-		return new File(Constantes.III + getClass().getName() + "_" + ambiente.chave);
+		return new File(gerarStringArquivo(ambiente));
+	}
+
+	public static String gerarStringArquivo(Ambiente ambiente) {
+		return Constantes.III + AmbienteFabrica.class.getName() + Constantes.SEP + AmbienteContainer.class.getName()
+				+ Constantes.U + ambiente.chave;
 	}
 
 	private void montarLayout() {
@@ -137,12 +139,20 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 
 	@Override
 	protected void destacarEmFormulario() {
-		formulario.getFichario().getAmbientes().destacarEmFormulario(formulario, this);
+		boolean excluido = formulario.excluirFicharioAba(this);
+
+		if (excluido) {
+			AmbienteFormulario.criar(formulario, this);
+		}
 	}
 
 	@Override
 	protected void clonarEmFormulario() {
-		formulario.getFichario().getAmbientes().clonarEmFormulario(formulario, this);
+		boolean excluido = formulario.excluirFicharioAba(this);
+
+		if (excluido) {
+			AmbienteFormulario.criar(formulario, getConteudo(), ambiente);
+		}
 	}
 
 	@Override
@@ -154,6 +164,7 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 	protected void retornoAoFichario() {
 		if (ambienteFormulario != null) {
 			ambienteFormulario.retornoAoFichario();
+			formulario.adicionarFicharioAba(this);
 		}
 	}
 
@@ -203,5 +214,35 @@ public class AmbienteContainer extends AbstratoContainer implements Fichario.IFi
 				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
 			}
 		}
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return gerarStringArquivo(ambiente);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return ambiente.chaveRotuloMin;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return ambiente.chaveRotulo;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return ambiente.descricao;
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.BOLA_VERDE;
 	}
 }
