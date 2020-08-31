@@ -132,7 +132,7 @@ public class VariaveisModelo extends AbstractTableModel {
 
 		try {
 			if (file.exists() && file.canRead()) {
-				XML.processarVariaveis(file);
+				XML.processar(file, new VariaveisHandler());
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);

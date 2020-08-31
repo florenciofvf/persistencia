@@ -233,7 +233,8 @@ public class MetadadoTreeContainer extends AbstratoContainer implements Metadado
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().getConteiner().abrirExportacaoMetadado(formulario, metadado, circular);
+			// formulario.getFichario().getConteiner().abrirExportacaoMetadado(formulario,
+			// metadado, circular);
 		}
 	}
 
@@ -242,7 +243,8 @@ public class MetadadoTreeContainer extends AbstratoContainer implements Metadado
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().getConteiner().exportarMetadadoRaiz(formulario, metadado);
+			// formulario.getFichario().getConteiner().exportarMetadadoRaiz(formulario,
+			// metadado);
 		}
 	}
 
@@ -260,7 +262,8 @@ public class MetadadoTreeContainer extends AbstratoContainer implements Metadado
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			formulario.getFichario().getConteiner().abrirImportacaoMetadado(formulario, metadado, circular);
+			// formulario.getFichario().getConteiner().abrirImportacaoMetadado(formulario,
+			// metadado, circular);
 		}
 	}
 

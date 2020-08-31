@@ -1,6 +1,7 @@
 package br.com.persist.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -11,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
@@ -19,17 +21,16 @@ import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.MenuItem;
-import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToggleButton;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.consulta.ConsultaDialogo;
 import br.com.persist.consulta.ConsultaFormulario;
+import br.com.persist.container.AbstratoContainer;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Fichario.InfoConexao;
 import br.com.persist.fichario.FicharioConexao;
-import br.com.persist.fichario.FicharioSalvar;
 import br.com.persist.icone.Icones;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.principal.Formulario;
@@ -46,30 +47,41 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
-import br.com.persist.xml.XMLColetor;
 
-public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioConexao {
+public class ObjetoContainer extends AbstratoContainer implements FicharioConexao {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
-	private ObjetoFormulario containerFormulario;
 	private boolean abortarFecharComESCSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> cmbConexao;
-	private final Formulario formulario;
+	private ObjetoFormulario objetoFormulario;
 	private final Superficie superficie;
 	private String conexaoFile;
 	private File arquivo;
 
 	public ObjetoContainer(Formulario formulario, IJanela janela) {
+		super(formulario);
 		cmbConexao = Util.criarComboConexao(formulario, null);
 		superficie = new Superficie(formulario, this);
-		this.formulario = formulario;
+		superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		toolbar.ini(janela);
 		montarLayout();
 		eventos();
+	}
+
+	public Frame getFrame(Formulario form) {
+		if (objetoFormulario != null) {
+			return objetoFormulario;
+		}
+
+		if (formulario != null) {
+			return formulario;
+		}
+
+		return form;
 	}
 
 	private void eventos() {
@@ -94,19 +106,6 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		String conexaoAtual = conexao == null ? "null" : conexao.getNome();
 		String nomeAba = arquivo == null ? "null" : arquivo.getAbsolutePath();
 		return new InfoConexao(conexaoAtual, conexaoFile == null ? "null" : conexaoFile, nomeAba);
-	}
-
-	@Override
-	public File getFileSalvarAberto() {
-		return getArquivo();
-	}
-
-	public Superficie getSuperficie() {
-		return superficie;
-	}
-
-	public Formulario getFormulario() {
-		return formulario;
 	}
 
 	private void montarLayout() {
@@ -145,7 +144,7 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, XMLColetor coletor, Graphics g, ConfigArquivo config) {
+	public void abrir(File file, ObjetoColetor coletor, Graphics g, ConfigArquivo config) {
 		if (abortarFecharComESCSuperficie) {
 			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
@@ -185,7 +184,7 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		}
 	}
 
-	private void adicionarForm(Conexao conexao, XMLColetor coletor, Graphics g, ConfigArquivo config) {
+	private void adicionarForm(Conexao conexao, ObjetoColetor coletor, Graphics g, ConfigArquivo config) {
 		for (Form form : coletor.getForms()) {
 			Objeto instancia = null;
 
@@ -204,6 +203,7 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		}
 	}
 
+	@Override
 	public void setJanela(IJanela janela) {
 		toolbar.setJanela(janela);
 	}
@@ -224,6 +224,8 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 
 		public void ini(IJanela janela) {
 			super.ini(janela, false, true);
+			configButtonDestacar(e -> destacarEmFormulario(), e -> abrirEmFormulario(), e -> retornoAoFichario(),
+					e -> clonarEmFormulario());
 			configBaixarAcao(null);
 
 			addButton(salvarComoAcao);
@@ -299,16 +301,13 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao.setActionListener(e -> {
-					Frame frame = containerFormulario != null ? containerFormulario : formulario;
 					ConsultaFormulario form = ConsultaFormulario.criar(formulario, formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
+					form.setLocationRelativeTo(getFrame(null));
 					form.setVisible(true);
 				});
 
-				dialogoAcao.setActionListener(e -> {
-					Frame frame = containerFormulario != null ? containerFormulario : formulario;
-					ConsultaDialogo.criar(frame, formulario, formulario, getConexaoPadrao());
-				});
+				dialogoAcao.setActionListener(
+						e -> ConsultaDialogo.criar(getFrame(null), formulario, formulario, getConexaoPadrao()));
 
 				// ficharioAcao.setActionListener(
 				// e -> formulario.getFichario().getConsulta().nova(formulario,
@@ -323,16 +322,13 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
 				formularioAcao.setActionListener(e -> {
-					Frame frame = containerFormulario != null ? containerFormulario : formulario;
 					UpdateFormulario form = UpdateFormulario.criar(formulario, formulario, getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
+					form.setLocationRelativeTo(getFrame(null));
 					form.setVisible(true);
 				});
 
-				dialogoAcao.setActionListener(e -> {
-					Frame frame = containerFormulario != null ? containerFormulario : formulario;
-					UpdateDialogo.criar(frame, formulario, formulario, getConexaoPadrao());
-				});
+				dialogoAcao.setActionListener(
+						e -> UpdateDialogo.criar(getFrame(null), formulario, formulario, getConexaoPadrao()));
 
 				// ficharioAcao.setActionListener(
 				// e -> formulario.getFichario().getUpdate().novo(formulario,
@@ -343,16 +339,10 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		private class ButtonDestacar extends ButtonPadrao1 {
 			private static final long serialVersionUID = 1L;
 			private Action desktopAcao = Action.actionMenuDesktop();
-			private Action abrirEmForm = Action.actionMenu("label.abrir_em_formulario", null);
-			private Action destacarFrm = Action.actionMenu("label.destac_formulario", null);
-			private Action destacarCnt = Action.actionMenu("label.destac_container", null);
 
 			private ButtonDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
-				addMenuItem(true, destacarFrm);
-				addMenuItem(destacarCnt);
-				addMenuItem(abrirEmForm);
 
 				formularioAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie,
 						Constantes.TIPO_CONTAINER_FORMULARIO, null));
@@ -360,14 +350,6 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 						Constantes.TIPO_CONTAINER_FICHARIO, null));
 				desktopAcao.setActionListener(e -> formulario.destacar(getConexaoPadrao(), superficie,
 						Constantes.TIPO_CONTAINER_DESKTOP, null));
-				destacarFrm.setActionListener(e -> formulario.getFichario().getConteiner()
-						.destacarEmFormulario(formulario, ObjetoContainer.this));
-				abrirEmForm.setActionListener(e -> formulario.getArquivos().abrir(getArquivo(), false, null));
-				destacarCnt.setActionListener(e -> {
-					if (containerFormulario != null) {
-						containerFormulario.retornoAoFichario();
-					}
-				});
 
 				formularioAcao.rotulo("label.abrir_sel_em_formulario");
 				ficharioAcao.rotulo("label.abrir_sel_em_fichario");
@@ -378,8 +360,8 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		private void abrirArquivo() {
 			try {
 				excluido();
-				XMLColetor coletor = new XMLColetor();
-				XML.processar(arquivo, coletor);
+				ObjetoColetor coletor = new ObjetoColetor();
+				XML.processar(arquivo, new ObjetoHandler(coletor));
 				abrir(arquivo, coletor, null, null);
 				txtPrefixoNomeTabela.limpar();
 				labelStatus.limpar();
@@ -447,7 +429,7 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		}
 
 		private void titulo() {
-			if (containerFormulario == null) {
+			if (objetoFormulario == null) {
 				Fichario fichario = formulario.getFichario();
 				int indice = fichario.getSelectedIndex();
 
@@ -456,7 +438,7 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 					fichario.setTitleAt(indice, arquivo.getName());
 				}
 			} else {
-				containerFormulario.setTitle(arquivo.getName());
+				objetoFormulario.setTitle(arquivo.getName());
 			}
 
 			labelStatus.limpar();
@@ -470,7 +452,7 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 	}
 
 	public void excluir() {
-		if (containerFormulario == null) {
+		if (objetoFormulario == null) {
 			Fichario fichario = formulario.getFichario();
 			int indice = fichario.getSelectedIndex();
 
@@ -544,12 +526,12 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 		}
 	}
 
-	public ObjetoFormulario getContainerFormulario() {
-		return containerFormulario;
+	public ObjetoFormulario getObjetoFormulario() {
+		return objetoFormulario;
 	}
 
-	public void setContainerFormulario(ObjetoFormulario containerFormulario) {
-		this.containerFormulario = containerFormulario;
+	public void setObjetoFormulario(ObjetoFormulario objetoFormulario) {
+		this.objetoFormulario = objetoFormulario;
 	}
 
 	public void excluido() {
@@ -562,5 +544,95 @@ public class ObjetoContainer extends Panel implements FicharioSalvar, FicharioCo
 
 	public void setAbortarFecharComESCSuperficie(boolean b) {
 		this.abortarFecharComESCSuperficie = b;
+	}
+
+	@Override
+	protected void destacarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			File file = getArquivo();
+			if (file == null) {
+				file = new File(Constantes.DESTACADO);
+			}
+
+			ObjetoFormulario.criar(formulario, this, file);
+		}
+	}
+
+	@Override
+	protected void clonarEmFormulario() {
+		if (formulario.excluirFicharioAba(this)) {
+			File file = getArquivo();
+			if (file == null) {
+				file = new File(Constantes.DESTACADO);
+			}
+
+			ObjetoFormulario.criar(formulario, this, file);
+		}
+	}
+
+	@Override
+	protected void abrirEmFormulario() {
+		File file = getArquivo();
+		if (file == null) {
+			file = new File(Constantes.DESTACADO);
+		}
+
+		ObjetoFormulario.criar(formulario, this, file);
+	}
+
+	@Override
+	protected void retornoAoFichario() {
+		if (objetoFormulario != null) {
+			objetoFormulario.retornoAoFichario();
+			superficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+			setAbortarFecharComESCSuperficie(true);
+			formulario.adicionarFicharioAba(this);
+			estadoSelecao();
+		}
+	}
+
+	@Override
+	public File getFileSalvarAberto() {
+		return getArquivo();
+	}
+
+	@Override
+	public String getClasseFabricaEContainerDetalhe() {
+		return classeFabricaEContainer(ObjetoFabrica.class, ObjetoContainer.class);
+	}
+
+	@Override
+	public String getChaveTituloMin() {
+		return null;
+	}
+
+	@Override
+	public String getTituloMin() {
+		return getTitulo();
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public String getChaveTitulo() {
+		return null;
+	}
+
+	@Override
+	public String getTitulo() {
+		return arquivo != null ? arquivo.getName() : Constantes.NOVO;
+	}
+
+	@Override
+	public String getHintTitulo() {
+		return arquivo != null ? arquivo.getAbsolutePath() : Constantes.NOVO;
+	}
+
+	@Override
+	public Icon getIcone() {
+		return Icones.CUBO;
 	}
 }

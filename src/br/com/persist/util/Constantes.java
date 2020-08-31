@@ -111,6 +111,7 @@ public class Constantes {
 	public static final String INFO = "INFO";
 	public static final String FORM = "FORM";
 	public static final String TEMP = "TEMP";
+	public static final String NOVO = "novo";
 	public static final String EXEC = "exec";
 	public static final int QUARENTA_UM = 41;
 	public static final String III = "???";

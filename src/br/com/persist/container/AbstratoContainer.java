@@ -45,4 +45,14 @@ public abstract class AbstratoContainer extends Panel implements FicharioAba, Fi
 
 		return sb.toString();
 	}
+
+	@Override
+	public String getTituloMin() {
+		return null;
+	}
+
+	@Override
+	public String getTitulo() {
+		return null;
+	}
 }

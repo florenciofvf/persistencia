@@ -11,7 +11,6 @@ import javax.swing.table.AbstractTableModel;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
-import br.com.persist.xml.XMLColetor;
 import br.com.persist.xml.XMLUtil;
 
 public class ConexaoModelo extends AbstractTableModel {
@@ -234,10 +233,10 @@ public class ConexaoModelo extends AbstractTableModel {
 		conexoes.clear();
 
 		try {
-			XMLColetor coletor = new XMLColetor();
+			ConexaoColetor coletor = new ConexaoColetor();
 
 			if (file.exists() && file.canRead()) {
-				XML.processarConexao(file, coletor);
+				XML.processar(file, new ConexaoHandler(coletor));
 				fireTableDataChanged();
 			}
 

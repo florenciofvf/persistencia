@@ -15,5 +15,9 @@ public interface FicharioAba {
 
 	public String getHintTitulo();
 
+	public String getTituloMin();
+
+	public String getTitulo();
+
 	public Icon getIcone();
 }

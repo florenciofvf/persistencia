@@ -128,7 +128,7 @@ public class MapeamentoModelo extends AbstractTableModel {
 
 		try {
 			if (file.exists() && file.canRead()) {
-				XML.processarMapeamento(file);
+				XML.processar(file, new MapeamentoHandler());
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);

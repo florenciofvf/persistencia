@@ -46,11 +46,10 @@ import br.com.persist.arquivo.ArquivoTreeModelo;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.conexao.Conexao;
 import br.com.persist.icone.Icones;
-import br.com.persist.metadado.Metadado;
 import br.com.persist.objeto.Objeto;
 import br.com.persist.objeto.ObjetoContainer;
-import br.com.persist.objeto.ObjetoFormulario;
 import br.com.persist.objeto.Superficie;
+import br.com.persist.objeto.ObjetoColetor;
 import br.com.persist.objeto.Desktop;
 import br.com.persist.objeto.DesktopFormulario;
 import br.com.persist.objeto.OTabelaContainer;
@@ -62,7 +61,6 @@ import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.variaveis.VariaveisModelo;
-import br.com.persist.xml.XMLColetor;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
@@ -70,7 +68,6 @@ public class Fichario extends JTabbedPane {
 	private final transient NavegButton navegButtonDireito = new NavegButton(2);
 	private final transient NavegButton navegButtonLimpar = new NavegButton(0);
 	private final transient SalvarAbrir salvarAbrir = new SalvarAbrir();
-	private final transient Conteiner conteiner = new Conteiner();
 	private final transient NavegacaoListener navegacaoListener;
 	private final transient Arquivos arquivos = new Arquivos();
 	private final transient Destacar destacar = new Destacar();
@@ -458,10 +455,6 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public Conteiner getConteiner() {
-		return conteiner;
-	}
-
 	public Destacar getDestacar() {
 		return destacar;
 	}
@@ -479,79 +472,32 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Conteiner {
-		public ObjetoContainer novo(Formulario formulario) {
-			ObjetoContainer container = new ObjetoContainer(formulario, null);
-			container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-			addTab(Mensagens.getString(Constantes.LABEL_NOVO), container);
-			container.setAbortarFecharComESCSuperficie(true);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CUBO);
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-			container.estadoSelecao();
-
-			return container;
-		}
-
-		public void destacarEmFormulario(Formulario formulario, ObjetoContainer container) {
-			int indice = arquivos.getIndice(container);
-
-			if (indice == -1) {
-				return;
-			}
-
-			remove(indice);
-
-			File file = container.getArquivo();
-
-			if (file == null) {
-				file = new File(Constantes.DESTACADO);
-			}
-
-			ObjetoFormulario.criar(formulario, container, file);
-		}
-
-		public void retornoAoFichario(Formulario formulario, ObjetoContainer container) {
-			File file = container.getArquivo();
-
-			if (file == null) {
-				file = new File(Constantes.DESTACADO);
-			}
-
-			addTab(file.getName(), container);
-			int ultimoIndice = getTabCount() - 1;
-
-			container.getSuperficie().setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-			container.setAbortarFecharComESCSuperficie(true);
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CUBO);
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
-			setTitleAt(ultimoIndice, file.getName());
-			setSelectedIndex(ultimoIndice);
-			container.estadoSelecao();
-		}
-
-		public void abrirExportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-			ObjetoContainer container = novo(formulario);
-			container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-			setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_exportacao"));
-		}
-
-		public void abrirImportacaoMetadado(Formulario formulario, Metadado metadado, boolean circular) {
-			ObjetoContainer container = novo(formulario);
-			container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-			setTitleAt(getTabCount() - 1, Mensagens.getString("label.abrir_importacao"));
-		}
-
-		public void exportarMetadadoRaiz(Formulario formulario, Metadado metadado) {
-			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-				ObjetoContainer container = novo(formulario);
-				container.exportarMetadadoRaiz(metadado);
-				setTitleAt(getTabCount() - 1, Mensagens.getString("label.exportar"));
-			}
-		}
+		// public void abrirExportacaoMetadado(Formulario formulario, Metadado
+		// metadado, boolean circular) {
+		// ObjetoContainer container = novo(formulario);
+		// container.abrirExportacaoImportacaoMetadado(metadado, true,
+		// circular);
+		// setTitleAt(getTabCount() - 1,
+		// Mensagens.getString("label.abrir_exportacao"));
+		// }
+		//
+		// public void abrirImportacaoMetadado(Formulario formulario, Metadado
+		// metadado, boolean circular) {
+		// ObjetoContainer container = novo(formulario);
+		// container.abrirExportacaoImportacaoMetadado(metadado, false,
+		// circular);
+		// setTitleAt(getTabCount() - 1,
+		// Mensagens.getString("label.abrir_importacao"));
+		// }
+		//
+		// public void exportarMetadadoRaiz(Formulario formulario, Metadado
+		// metadado) {
+		// if (metadado.getEhRaiz() && !metadado.estaVazio()) {
+		// ObjetoContainer container = novo(formulario);
+		// container.exportarMetadadoRaiz(metadado);
+		// setTitleAt(getTabCount() - 1, Mensagens.getString("label.exportar"));
+		// }
+		// }
 	}
 
 	public boolean excluirAba(FicharioAba aba) {
@@ -617,7 +563,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public class Arquivos {
-		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
+		public void abrir(Formulario formulario, File file, ObjetoColetor coletor, ConfigArquivo config) {
 
 			if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
 				addTab(null, null);
@@ -629,11 +575,11 @@ public class Fichario extends JTabbedPane {
 				return;
 			}
 
-			ObjetoContainer container = conteiner.novo(formulario);
-			int ultimoIndice = getTabCount() - 1;
-			container.abrir(file, coletor, getGraphics(), config);
-			setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
-			setTitleAt(ultimoIndice, file.getName());
+			// ObjetoContainer container = conteiner.novo(formulario);
+			// int ultimoIndice = getTabCount() - 1;
+			// container.abrir(file, coletor, getGraphics(), config);
+			// setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
+			// setTitleAt(ultimoIndice, file.getName());
 		}
 
 		public void selecionarAba(File file) {

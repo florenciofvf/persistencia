@@ -8,7 +8,6 @@ import br.com.persist.formulario.AbstratoFormulario;
 import br.com.persist.metadado.Metadado;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.ConfigArquivo;
-import br.com.persist.xml.XMLColetor;
 
 public class ObjetoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
@@ -17,7 +16,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 
 	private ObjetoFormulario(Formulario formulario, ObjetoContainer container, File file) {
 		super(file.getName());
-		container.setContainerFormulario(this);
+		container.setObjetoFormulario(this);
 		this.container = container;
 		container.setJanela(this);
 		montarLayout();
@@ -26,7 +25,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	private ObjetoFormulario(Formulario formulario, File file) {
 		super(file.getName());
 		container = new ObjetoContainer(formulario, this);
-		container.setContainerFormulario(this);
+		container.setObjetoFormulario(this);
 		montarLayout();
 	}
 
@@ -46,7 +45,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		}
 	}
 
-	public void abrir(File file, XMLColetor coletor, Graphics g, ConfigArquivo config) {
+	public void abrir(File file, ObjetoColetor coletor, Graphics g, ConfigArquivo config) {
 		container.abrir(file, coletor, g, config);
 	}
 
@@ -78,8 +77,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 			remove(container);
 			ativo = false;
 			container.setJanela(null);
-			container.setContainerFormulario(null);
-			formulario.getFichario().getConteiner().retornoAoFichario(formulario, container);
+			container.setObjetoFormulario(null);
 			fechar();
 		}
 	}

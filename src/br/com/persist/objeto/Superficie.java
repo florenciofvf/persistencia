@@ -61,7 +61,6 @@ import br.com.persist.util.MenuPadrao1;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.util.Vetor;
-import br.com.persist.xml.XMLColetor;
 import br.com.persist.xml.XMLUtil;
 
 public class Superficie extends Desktop {
@@ -74,9 +73,9 @@ public class Superficie extends Desktop {
 	private final transient Area area = new Area();
 	private transient Relacao selecionadoRelacao;
 	private transient Objeto selecionadoObjeto;
+	private final ObjetoContainer container;
 	private transient Relacao[] relacoes;
 	private transient Objeto[] objetos;
-	private final ObjetoContainer container;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -158,13 +157,7 @@ public class Superficie extends Desktop {
 				return;
 			}
 
-			Frame frame = formulario;
-
-			if (container.getContainerFormulario() != null) {
-				frame = container.getContainerFormulario();
-			}
-
-			MacroDialogo.criar(frame);
+			MacroDialogo.criar(container.getFrame(formulario));
 		}
 	};
 
@@ -532,13 +525,7 @@ public class Superficie extends Desktop {
 			repaint();
 
 			if (!shift) {
-				Frame frame = formulario;
-
-				if (container.getContainerFormulario() != null) {
-					frame = container.getContainerFormulario();
-				}
-
-				RelacaoDialogo.criar(frame, Superficie.this, relacao);
+				RelacaoDialogo.criar(container.getFrame(formulario), Superficie.this, relacao);
 			}
 		}
 
@@ -706,11 +693,7 @@ public class Superficie extends Desktop {
 	};
 
 	private void abrirObjeto(Objeto objeto, boolean checarApelido, boolean checarArquivo) {
-		Frame frame = formulario;
-
-		if (container.getContainerFormulario() != null) {
-			frame = container.getContainerFormulario();
-		}
+		Frame frame = container.getFrame(formulario);
 
 		if (!Util.estaVazio(objeto.getTabela2())) {
 			Conexao conexao = container.getConexaoPadrao();
@@ -1149,14 +1132,8 @@ public class Superficie extends Desktop {
 			}
 
 			private void abrirModal(Tipo tipo) {
-				Frame frame = formulario;
-
-				if (container.getContainerFormulario() != null) {
-					frame = container.getContainerFormulario();
-				}
-
 				if (getSelecionados().size() > Constantes.UM) {
-					CircularDialogo.criar(frame, Superficie.this, tipo);
+					CircularDialogo.criar(container.getFrame(formulario), Superficie.this, tipo);
 				}
 			}
 		}
@@ -1168,27 +1145,14 @@ public class Superficie extends Desktop {
 				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
 
 				formularioAcao.setActionListener(e -> {
-					Frame frame = formulario;
-
-					if (container.getContainerFormulario() != null) {
-						frame = container.getContainerFormulario();
-					}
-
 					ConsultaFormulario form = ConsultaFormulario.criar(formulario, formulario,
 							container.getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
+					form.setLocationRelativeTo(container.getFrame(formulario));
 					form.setVisible(true);
 				});
 
-				dialogoAcao.setActionListener(e -> {
-					Frame frame = formulario;
-
-					if (container.getContainerFormulario() != null) {
-						frame = container.getContainerFormulario();
-					}
-
-					ConsultaDialogo.criar(frame, formulario, formulario, container.getConexaoPadrao());
-				});
+				dialogoAcao.setActionListener(e -> ConsultaDialogo.criar(container.getFrame(formulario), formulario,
+						formulario, container.getConexaoPadrao()));
 
 				// ficharioAcao.setActionListener(
 				// e -> formulario.getFichario().getConsulta().nova(formulario,
@@ -1203,27 +1167,14 @@ public class Superficie extends Desktop {
 				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
 
 				formularioAcao.setActionListener(e -> {
-					Frame frame = formulario;
-
-					if (container.getContainerFormulario() != null) {
-						frame = container.getContainerFormulario();
-					}
-
 					UpdateFormulario form = UpdateFormulario.criar(formulario, formulario,
 							container.getConexaoPadrao());
-					form.setLocationRelativeTo(frame);
+					form.setLocationRelativeTo(container.getFrame(formulario));
 					form.setVisible(true);
 				});
 
-				dialogoAcao.setActionListener(e -> {
-					Frame frame = formulario;
-
-					if (container.getContainerFormulario() != null) {
-						frame = container.getContainerFormulario();
-					}
-
-					UpdateDialogo.criar(frame, formulario, formulario, container.getConexaoPadrao());
-				});
+				dialogoAcao.setActionListener(e -> UpdateDialogo.criar(container.getFrame(formulario), formulario,
+						formulario, container.getConexaoPadrao()));
 
 				// ficharioAcao.setActionListener(
 				// e -> formulario.getFichario().getUpdate().novo(formulario,
@@ -1265,11 +1216,7 @@ public class Superficie extends Desktop {
 			excluirAcao.setActionListener(e -> excluirSelecionados());
 
 			configuracaoAcao.setActionListener(e -> {
-				Frame frame = formulario;
-
-				if (container.getContainerFormulario() != null) {
-					frame = container.getContainerFormulario();
-				}
+				Frame frame = container.getFrame(formulario);
 
 				if (selecionadoObjeto != null) {
 					ObjetoConfigDialogo.criar(frame, Superficie.this, selecionadoObjeto);
@@ -1554,7 +1501,7 @@ public class Superficie extends Desktop {
 		}
 	}
 
-	public void abrir(XMLColetor coletor) {
+	public void abrir(ObjetoColetor coletor) {
 		limpar();
 
 		for (Objeto objeto : coletor.getObjetos()) {
@@ -1689,19 +1636,13 @@ public class Superficie extends Desktop {
 			return;
 		}
 
-		Frame frame = formulario;
-
-		if (container.getContainerFormulario() != null) {
-			frame = container.getContainerFormulario();
-		}
-
 		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 		Conexao conexao = container.getConexaoPadrao();
 		objeto.setTabelaBuscaAuto(tabela);
 
 		if (Preferencias.isAbrirAutoDestacado()) {
 			OTabelaFormulario form = OTabelaFormulario.criar(formulario, conexao, objeto, getGraphics());
-			form.setLocationRelativeTo(frame);
+			form.setLocationRelativeTo(container.getFrame(formulario));
 			form.setVisible(true);
 		} else {
 			objeto.setSelecionado(true);

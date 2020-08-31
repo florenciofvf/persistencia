@@ -13,7 +13,6 @@ import javax.swing.table.AbstractTableModel;
 import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
-import br.com.persist.xml.XMLColetor;
 import br.com.persist.xml.XMLUtil;
 
 public class FragmentoModelo extends AbstractTableModel {
@@ -163,10 +162,10 @@ public class FragmentoModelo extends AbstractTableModel {
 		auxiliares.clear();
 
 		try {
-			XMLColetor coletor = new XMLColetor();
+			FragmentoColetor coletor = new FragmentoColetor();
 
 			if (file.exists() && file.canRead()) {
-				XML.processarFragmento(file, coletor);
+				XML.processar(file, new FragmentoHandler(coletor));
 			}
 
 			fragmentos.addAll(coletor.getFragmentos());
