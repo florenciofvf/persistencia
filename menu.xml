@@ -6,6 +6,7 @@
 		<menu classeFabrica="br.com.persist.objeto.DesktopFabrica" />
 		<menu classeFabrica="br.com.persist.anexo.AnexoTreeFabrica" />
 		<menu classeFabrica="br.com.persist.arquivo.ArquivoTreeFabrica" />
+		<menu classeFabrica="br.com.persist.principal.PrincipalFabrica" ativo="true" />
 	</menu>
 
 	<menu descricao="Banco">

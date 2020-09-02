@@ -396,10 +396,11 @@ public class Fichario extends JTabbedPane {
 
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-				String linha = null;
+				String linha = br.readLine();
 
-				while ((linha = br.readLine()) != null) {
+				while (!Util.estaVazio(linha)) {
 					linhas.add(linha);
+					linha = br.readLine();
 				}
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);

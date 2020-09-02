@@ -39,7 +39,7 @@ public class Util {
 	}
 
 	public static boolean estaVazio(String s) {
-		return s == null || s.trim().length() == 0;
+		return s == null || s.trim().isEmpty();
 	}
 
 	public static String soNumeros(String s) {

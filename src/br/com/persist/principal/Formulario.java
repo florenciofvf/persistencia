@@ -125,7 +125,6 @@ public class Formulario extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				// menuPrincipal.fecharAcao.actionPerformed(null);
 				fichario.salvarPaginas(Formulario.this);
 
 				for (Servico servico : servicos) {
@@ -289,8 +288,8 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	public void fecharFormulario(boolean fecharConexao) {
-		if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
+	public void fechar(boolean fecharConexao) {
+		if (Util.confirmar(this, "label.confirma_fechar")) {
 			Preferencias.setFecharConexao(fecharConexao);
 			// FormularioUtil.fechar(Formulario.this);
 			System.exit(0);
@@ -301,7 +300,7 @@ public class Formulario extends JFrame {
 		PopupMenu popup = new PopupMenu();
 
 		java.awt.MenuItem itemFechar = new java.awt.MenuItem(Mensagens.getString(Constantes.LABEL_FECHAR));
-		itemFechar.addActionListener(e -> fecharFormulario(false));
+		itemFechar.addActionListener(e -> fechar(false));
 		popup.add(itemFechar);
 
 		URL url = getClass().getResource(Constantes.IMAGEM_TRAY_ICON);
