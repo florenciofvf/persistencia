@@ -7,9 +7,9 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.componente.Action;
 import br.com.persist.componente.Menu;
 import br.com.persist.util.Icones;
-import br.com.persist.util.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 

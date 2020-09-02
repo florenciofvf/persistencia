@@ -4,7 +4,6 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import br.com.persist.util.Action;
 import br.com.persist.util.Mensagens;
 
 public class Menu extends JMenu {

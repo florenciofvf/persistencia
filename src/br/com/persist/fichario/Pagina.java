@@ -1,6 +1,7 @@
 package br.com.persist.fichario;
 
 import java.awt.Component;
+import java.io.File;
 
 public interface Pagina {
 	public void adicionadoAoFichario(Fichario fichario);
@@ -14,4 +15,6 @@ public interface Pagina {
 	public Component getComponent();
 
 	public Titulo getTitulo();
+
+	public File getFile();
 }

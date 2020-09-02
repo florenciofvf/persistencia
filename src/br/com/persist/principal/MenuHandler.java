@@ -3,7 +3,6 @@ package br.com.persist.principal;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.util.MenuApp;
 import br.com.persist.xml.XMLHandler;
 
 class MenuHandler extends XMLHandler {

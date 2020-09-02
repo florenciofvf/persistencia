@@ -7,10 +7,7 @@ import javax.swing.JToolBar;
 
 import br.com.persist.util.Icones;
 import br.com.persist.mensagem.MensagemTemporaria;
-import br.com.persist.util.Action;
-import br.com.persist.util.ButtonPopup;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
 public class BarraButton extends JToolBar {
@@ -26,9 +23,9 @@ public class BarraButton extends JToolBar {
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
-	protected transient IJanela janela;
+	protected transient Janela janela;
 
-	public void ini(IJanela janela, boolean novo, boolean limpar, boolean salvar) {
+	public void ini(Janela janela, boolean novo, boolean limpar, boolean salvar) {
 		this.janela = janela;
 
 		fecharAcao.setActionListener(e -> fechar());
@@ -52,7 +49,7 @@ public class BarraButton extends JToolBar {
 		}
 	}
 
-	public void ini(IJanela janela, boolean limpar, boolean salvar) {
+	public void ini(Janela janela, boolean limpar, boolean salvar) {
 		this.ini(janela, false, limpar, salvar);
 	}
 
@@ -193,11 +190,11 @@ public class BarraButton extends JToolBar {
 		}
 	}
 
-	public IJanela getJanela() {
+	public Janela getJanela() {
 		return janela;
 	}
 
-	public void setJanela(IJanela janela) {
+	public void setJanela(Janela janela) {
 		fecharAcao.setEnabled(janela != null);
 		this.janela = janela;
 	}

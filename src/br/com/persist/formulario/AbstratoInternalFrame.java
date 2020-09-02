@@ -12,10 +12,10 @@ import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 
+import br.com.persist.componente.Janela;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 
-public abstract class AbstratoInternalFrame extends JInternalFrame implements IJanela {
+public abstract class AbstratoInternalFrame extends JInternalFrame implements Janela {
 	private static final long serialVersionUID = 1L;
 	private boolean abortarFecharComESC;
 

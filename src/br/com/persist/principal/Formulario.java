@@ -17,6 +17,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,6 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.servico.Servico;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
-import br.com.persist.util.MenuApp;
 import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
@@ -281,6 +281,8 @@ public class Formulario extends JFrame {
 				for (MenuApp m : coletor.getMenus()) {
 					add(m.criarMenu(Formulario.this));
 				}
+
+				Collections.sort(servicos, (o1, o2) -> o1.getOrdem() - o2.getOrdem());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("CARREGAR MENU: " + file.getAbsolutePath(), ex, Formulario.this);
 			}

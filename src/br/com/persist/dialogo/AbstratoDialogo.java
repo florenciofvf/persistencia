@@ -16,10 +16,10 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
+import br.com.persist.componente.Janela;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IJanela;
 
-public abstract class AbstratoDialogo extends JDialog implements IJanela {
+public abstract class AbstratoDialogo extends JDialog implements Janela {
 	private static final long serialVersionUID = 1L;
 
 	public AbstratoDialogo(Dialog dialog, String titulo) {

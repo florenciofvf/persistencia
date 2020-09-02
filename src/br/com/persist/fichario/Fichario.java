@@ -68,7 +68,7 @@ public class Fichario extends JTabbedPane {
 		add(navegButtonLimpar);
 		add(navegButtonEsquerdo);
 		add(navegButtonDireito);
-		config();
+		configurar();
 	}
 
 	public void ativarNavegacao() {
@@ -224,7 +224,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	private void config() {
+	private void configurar() {
 		inputMap().put(getKeyStroke(KeyEvent.VK_Q), "excluir_action");
 		getActionMap().put("excluir_action", excluirAction);
 	}
@@ -241,7 +241,7 @@ public class Fichario extends JTabbedPane {
 			int indice = getSelectedIndex();
 
 			if (indice != -1) {
-				remove(indice);
+				excluirPagina(indice);
 			}
 		}
 	};
@@ -294,6 +294,267 @@ public class Fichario extends JTabbedPane {
 			g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
 		}
 	}
+
+	public int getIndice(Component component) {
+		for (int i = 0; i < getTabCount(); i++) {
+			if (getComponentAt(i) == component) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	public int getIndice(File file) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Pagina pagina = getPagina(i);
+
+			if (Util.igual(pagina.getFile(), file)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	public int getIndice(Pagina pagina) {
+		for (int i = 0; i < getTabCount(); i++) {
+			Pagina p = getPagina(i);
+
+			if (p == pagina) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	public void fecharTodos() {
+		while (getTabCount() > 0) {
+			removeTabAt(0);
+		}
+	}
+
+	public boolean excluirPagina(Pagina pagina) {
+		int indice = getIndice(pagina);
+
+		if (indice == -1) {
+			return false;
+		}
+
+		pagina.excluindoDoFichario(this);
+		remove(indice);
+		return true;
+	}
+
+	public void excluirPagina(int indice) {
+		Pagina pagina = getPagina(indice);
+		pagina.excluindoDoFichario(this);
+		remove(indice);
+	}
+
+	public void adicionarPagina(Pagina pagina) {
+		if (pagina == null) {
+			throw new IllegalArgumentException("pagina nula.");
+		}
+
+		Titulo titulo = pagina.getTitulo();
+		String title = Preferencias.isTituloAbaMin() ? titulo.getTituloMin() : titulo.getTitulo();
+
+		addTab(title, pagina.getComponent());
+		int ultimoIndice = getTabCount() - 1;
+
+		Cabecalho cabecalho = new Cabecalho(this, pagina);
+		setToolTipTextAt(ultimoIndice, titulo.getHint());
+		setTabComponentAt(ultimoIndice, cabecalho);
+		setSelectedIndex(ultimoIndice);
+		pagina.adicionadoAoFichario(this);
+	}
+
+	public void salvarPaginas(Formulario formulario) {
+		try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
+			int total = getTabCount();
+
+			for (int i = 0; i < total; i++) {
+				Pagina pagina = getPagina(i);
+
+				pw.print(pagina.getClasseFabrica().getName() + Constantes.III + pagina.getStringPersistencia()
+						+ Constantes.QL);
+			}
+
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("SALVAR PAGINAS", ex, Fichario.this);
+			LOG.log(Level.SEVERE, ex.getMessage());
+		}
+	}
+
+	public void restaurarPaginas(Formulario formulario) {
+		File file = new File(Constantes.ABERTOS_FICHARIO);
+
+		if (file.exists()) {
+			List<String> linhas = new ArrayList<>();
+
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+				String linha = null;
+
+				while ((linha = br.readLine()) != null) {
+					linhas.add(linha);
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);
+			}
+
+			for (String s : linhas) {
+				restaurarPagina(formulario, s);
+			}
+		}
+	}
+
+	private void restaurarPagina(Formulario formulario, String linha) {
+		int pos = linha.indexOf(Constantes.III);
+		String classeFabrica = linha.substring(0, pos);
+		String stringPersistencia = linha.substring(pos + Constantes.III.length());
+
+		FabricaContainer fabrica = formulario.getFabrica(classeFabrica);
+
+		if (fabrica != null) {
+			PaginaServico servico = fabrica.getPaginaServico();
+			Pagina pagina = servico.criarPagina(formulario, stringPersistencia);
+			adicionarPagina(pagina);
+		}
+	}
+
+	private Pagina getPagina(int i) {
+		Component tab = getTabComponentAt(i);
+		Cabecalho cabecalho = (Cabecalho) tab;
+		return cabecalho.getPagina();
+	}
+
+	public void selecionarPagina(File file) {
+		int indice = getIndice(file);
+
+		if (indice >= 0) {
+			setSelectedIndex(indice);
+		}
+	}
+
+	public void fecharArquivo(File file) {
+		int indice = getIndice(file);
+
+		while (indice >= 0) {
+			remove(indice);
+			indice = getIndice(file);
+		}
+	}
+
+	public boolean isAberto(File file) {
+		return getIndice(file) >= 0;
+	}
+
+	public boolean isAtivo(File file) {
+		int pos = getIndice(file);
+		int sel = getSelectedIndex();
+		return pos != -1 && pos == sel;
+	}
+
+	private class Listener extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			int indice = indexAtLocation(x, y);
+			ponto = new Ponto(x, y);
+			ultX = x;
+			ultY = y;
+
+			if (indice != -1) {
+				rectangle = getBoundsAt(indice);
+			}
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			if (rectangle != null) {
+				int recX = e.getX();
+				int recY = e.getY();
+				rectangle.x += recX - ultX;
+				rectangle.y += recY - ultY;
+				ultX = recX;
+				ultY = recY;
+				repaint();
+			}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			rectangle = null;
+
+			if (ponto == null) {
+				repaint();
+				return;
+			}
+
+			int destino = indexAtLocation(e.getX(), e.getY());
+			int origem = indexAtLocation(ponto.x, ponto.y);
+
+			if (origem != -1 && destino != -1 && origem != destino) {
+				inverter(origem, destino);
+			}
+
+			repaint();
+		}
+
+		private void inverter(int origem, int destino) {
+			Component tab = getTabComponentAt(origem);
+			Component cmp = getComponentAt(origem);
+			String hint = getToolTipTextAt(origem);
+			String titulo = getTitleAt(origem);
+			Pagina pagina = getPagina(origem);
+			Icon icon = getIconAt(origem);
+			remove(origem);
+
+			insertTab(titulo, icon, cmp, hint, destino);
+			setTabComponentAt(destino, tab);
+
+			if (pagina.getComponent() == null) {
+				setEnabledAt(destino, false);
+			} else {
+				setSelectedIndex(destino);
+			}
+		}
+	}
+
+	private class Ponto {
+		final int x;
+		final int y;
+
+		Ponto(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
+
+	/*
+	 * public class Conteiner { public void abrirExportacaoMetadado(Formulario
+	 * formulario, Metadado metadado, boolean circular) { ObjetoContainer
+	 * container = novo(formulario);
+	 * container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+	 * setTitleAt(getTabCount() - 1,
+	 * Mensagens.getString("label.abrir_exportacao")); }
+	 * 
+	 * public void abrirImportacaoMetadado(Formulario formulario, Metadado
+	 * metadado, boolean circular) { ObjetoContainer container =
+	 * novo(formulario); container.abrirExportacaoImportacaoMetadado(metadado,
+	 * false, circular); setTitleAt(getTabCount() - 1,
+	 * Mensagens.getString("label.abrir_importacao")); }
+	 * 
+	 * public void exportarMetadadoRaiz(Formulario formulario, Metadado
+	 * metadado) { if (metadado.getEhRaiz() && !metadado.estaVazio()) {
+	 * ObjetoContainer container = novo(formulario);
+	 * container.exportarMetadadoRaiz(metadado); setTitleAt(getTabCount() - 1,
+	 * Mensagens.getString("label.exportar")); } } }
+	 */
 
 	/*
 	 * public class Destacar { public void destacar(Formulario formulario,
@@ -392,137 +653,6 @@ public class Fichario extends JTabbedPane {
 	 * Superficie.setComplemento(conexao, objeto); objetos.novo(formulario,
 	 * conexao, objeto); objeto.setSelecionado(false); } } } }
 	 */
-
-	// public Destacar getDestacar() {
-	// return destacar;
-	// }
-
-	// public Arquivos getArquivos() {
-	// return arquivos;
-	// }
-	//
-	// public Desktops getDesktops() {
-	// return desktops;
-	// }
-	//
-	// public Objetos getObjetos() {
-	// return objetos;
-	// }
-
-	public class Conteiner {
-		// public void abrirExportacaoMetadado(Formulario formulario, Metadado
-		// metadado, boolean circular) {
-		// ObjetoContainer container = novo(formulario);
-		// container.abrirExportacaoImportacaoMetadado(metadado, true,
-		// circular);
-		// setTitleAt(getTabCount() - 1,
-		// Mensagens.getString("label.abrir_exportacao"));
-		// }
-		//
-		// public void abrirImportacaoMetadado(Formulario formulario, Metadado
-		// metadado, boolean circular) {
-		// ObjetoContainer container = novo(formulario);
-		// container.abrirExportacaoImportacaoMetadado(metadado, false,
-		// circular);
-		// setTitleAt(getTabCount() - 1,
-		// Mensagens.getString("label.abrir_importacao"));
-		// }
-		//
-		// public void exportarMetadadoRaiz(Formulario formulario, Metadado
-		// metadado) {
-		// if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-		// ObjetoContainer container = novo(formulario);
-		// container.exportarMetadadoRaiz(metadado);
-		// setTitleAt(getTabCount() - 1, Mensagens.getString("label.exportar"));
-		// }
-		// }
-	}
-
-	public boolean excluirAba(Pagina aba) {
-		// int indice = arquivos.getIndice(aba.getComponent());
-		//
-		// if (indice == -1) {
-		// return false;
-		// }
-		//
-		// remove(indice);
-		return true;
-	}
-
-	public void adicionarPagina(Pagina pagina) {
-		if (pagina == null) {
-			throw new IllegalArgumentException("pagina nula.");
-		}
-
-		Titulo titulo = pagina.getTitulo();
-		String title = Preferencias.isTituloAbaMin() ? titulo.getTituloMin() : titulo.getTitulo();
-
-		addTab(title, pagina.getComponent());
-		int ultimoIndice = getTabCount() - 1;
-
-		Cabecalho cabecalho = new Cabecalho(this, pagina);
-		setToolTipTextAt(ultimoIndice, titulo.getHint());
-		setTabComponentAt(ultimoIndice, cabecalho);
-		setSelectedIndex(ultimoIndice);
-	}
-
-	public void salvarPaginas(Formulario formulario) {
-		try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
-			int total = getTabCount();
-
-			for (int i = 0; i < total; i++) {
-				Component tab = getTabComponentAt(i);
-
-				Cabecalho cabecalho = (Cabecalho) tab;
-				Pagina pagina = cabecalho.getPagina();
-
-				pw.print(pagina.getClasseFabrica().getName() + Constantes.III + pagina.getStringPersistencia()
-						+ Constantes.QL);
-			}
-
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("SALVAR PAGINAS", ex, Fichario.this);
-			LOG.log(Level.SEVERE, ex.getMessage());
-		}
-	}
-
-	public void restaurarPaginas(Formulario formulario) {
-		File file = new File(Constantes.ABERTOS_FICHARIO);
-
-		if (file.exists()) {
-			List<String> linhas = new ArrayList<>();
-
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-				String linha = null;
-
-				while ((linha = br.readLine()) != null) {
-					linhas.add(linha);
-				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);
-			}
-
-			for (String s : linhas) {
-				recuperarPagina(formulario, s);
-			}
-		}
-	}
-
-	private void recuperarPagina(Formulario formulario, String s) {
-		int pos = s.indexOf(Constantes.III);
-		String classeFabrica = s.substring(0, pos);
-		String stringPersistencia = s.substring(pos + Constantes.III.length());
-
-		FabricaContainer fabrica = formulario.getFabrica(classeFabrica);
-
-		if (fabrica != null) {
-			PaginaServico servico = fabrica.getPaginaServico();
-			Pagina pagina = servico.criarPagina(formulario, stringPersistencia);
-			adicionarPagina(pagina);
-		}
-	}
-
 	/*
 	 * public class Desktops { public Desktop novo(Formulario formulario) {
 	 * Desktop desktop = new Desktop(formulario, false);
@@ -567,69 +697,8 @@ public class Fichario extends JTabbedPane {
 	 * getGraphics(), config); // setToolTipTextAt(ultimoIndice,
 	 * file.getAbsolutePath()); // setTitleAt(ultimoIndice, file.getName()); }
 	 * 
-	 * public void selecionarAba(File file) { int indice = getIndice(file);
-	 * 
-	 * if (indice >= 0) { setSelectedIndex(indice); } }
-	 * 
-	 * public void fecharArquivo(File file) { if (file == null ||
-	 * !file.isFile()) { return; }
-	 * 
-	 * int indice = getIndice(file);
-	 * 
-	 * while (indice >= 0) { remove(indice); indice = getIndice(file); } }
-	 * 
-	 * public boolean isAberto(File file) { return getIndice(file) >= 0; }
-	 * 
-	 * public boolean isAtivo(File file) { int pos = getIndice(file); int sel =
-	 * getSelectedIndex(); return pos != -1 && pos == sel; }
-	 * 
-	 * public int getIndice(File file) { int total = getTabCount();
-	 * 
-	 * for (int i = 0; i < total; i++) { try { Component cmp =
-	 * getComponentAt(i);
-	 * 
-	 * if (cmp instanceof ObjetoContainer) { ObjetoContainer c =
-	 * (ObjetoContainer) cmp;
-	 * 
-	 * if (c.getArquivo() != null && file != null &&
-	 * c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) { return
-	 * i; } } } catch (Exception e) { LOG.log(Level.SEVERE, Constantes.ERRO, e);
-	 * } }
-	 * 
-	 * return -1; }
-	 * 
-	 * public int getIndice(Component cmpConteudo) { int total = getTabCount();
-	 * 
-	 * if (cmpConteudo != null) { for (int i = 0; i < total; i++) { Component
-	 * cmp = getComponentAt(i);
-	 * 
-	 * if (cmpConteudo == cmp) { return i; } } }
-	 * 
-	 * return -1; }
-	 * 
-	 * public int getIndice(ObjetoContainer c) { int total = getTabCount();
-	 * 
-	 * for (int i = 0; i < total; i++) { Component cmp = getComponentAt(i);
-	 * 
-	 * if ((cmp instanceof ObjetoContainer) && cmp == c) { return i; } }
-	 * 
-	 * return -1; }
-	 * 
-	 * public void fecharTodos() { int count = getTabCount();
-	 * 
-	 * while (count > 0) { removeTabAt(0); count = getTabCount(); } } }
+	 * }
 	 */
-
-	@Override
-	public void remove(int index) {
-		// Component cmp = getComponentAt(index);
-		//
-		// if (cmp instanceof ObjetoContainer) {
-		// ((ObjetoContainer) cmp).excluido();
-		// }
-
-		super.remove(index);
-	}
 
 	/*
 	 * public void selecionarConexao(Conexao conexao) { int total =
@@ -717,80 +786,4 @@ public class Fichario extends JTabbedPane {
 	 * 
 	 * public String getNomeAba() { return nomeAba; } }
 	 */
-
-	private class Listener extends MouseAdapter {
-		@Override
-		public void mousePressed(MouseEvent e) {
-			int x = e.getX();
-			int y = e.getY();
-			int indice = indexAtLocation(x, y);
-			ponto = new Ponto(x, y);
-			ultX = x;
-			ultY = y;
-
-			if (indice != -1) {
-				rectangle = getBoundsAt(indice);
-			}
-		}
-
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			if (rectangle != null) {
-				int recX = e.getX();
-				int recY = e.getY();
-				rectangle.x += recX - ultX;
-				rectangle.y += recY - ultY;
-				ultX = recX;
-				ultY = recY;
-				repaint();
-			}
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			rectangle = null;
-
-			if (ponto == null) {
-				repaint();
-				return;
-			}
-
-			int destino = indexAtLocation(e.getX(), e.getY());
-			int origem = indexAtLocation(ponto.x, ponto.y);
-
-			if (origem != -1 && destino != -1 && origem != destino) {
-				inverter(origem, destino);
-			}
-
-			repaint();
-		}
-
-		private void inverter(int origem, int destino) {
-			Component aba = getTabComponentAt(origem);
-			Component cmp = getComponentAt(origem);
-			String hint = getToolTipTextAt(origem);
-			String titulo = getTitleAt(origem);
-			Icon icon = getIconAt(origem);
-			remove(origem);
-
-			insertTab(titulo, icon, cmp, hint, destino);
-			setTabComponentAt(destino, aba);
-
-			// if (aba instanceof TituloAbaS) {
-			// setEnabledAt(destino, false);
-			// } else {
-			// setSelectedIndex(destino);
-			// }
-		}
-	}
-
-	private class Ponto {
-		final int x;
-		final int y;
-
-		Ponto(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
 }

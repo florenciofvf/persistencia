@@ -10,25 +10,15 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,9 +29,6 @@ import javax.swing.text.JTextComponent;
 
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextArea;
-import br.com.persist.fmt.Array;
-import br.com.persist.fmt.Texto;
-import br.com.persist.fmt.Tipo;
 import br.com.persist.mensagem.MensagemDialogo;
 
 public class Util {
@@ -69,6 +56,10 @@ public class Util {
 		}
 
 		return sb.toString();
+	}
+
+	public static boolean igual(Object o1, Object o2) {
+		return o1 != null ? o1.equals(o2) : o2 == null;
 	}
 
 	public static String soLetras(String s) {
@@ -304,100 +295,101 @@ public class Util {
 		}
 	}
 
-	public static Map<String, List<String>> criarMapaCampoNomes(String string) {
-		Map<String, List<String>> mapa = new HashMap<>();
+	// public static Map<String, List<String>> criarMapaCampoNomes(String
+	// string) {
+	// Map<String, List<String>> mapa = new HashMap<>();
+	//
+	// if (!estaVazio(string)) {
+	// String[] strings = string.split(";");
+	//
+	// if (strings != null) {
+	// for (String s : strings) {
+	// aux(s, mapa);
+	// }
+	// }
+	// }
+	//
+	// return mapa;
+	// }
 
-		if (!estaVazio(string)) {
-			String[] strings = string.split(";");
+	// public static Map<String, String> criarMapaCampoChave(String string) {
+	// Map<String, String> mapa = new HashMap<>();
+	//
+	// if (!estaVazio(string)) {
+	// String[] strings = string.split(";");
+	//
+	// if (strings != null) {
+	// for (String chaveValor : strings) {
+	// String[] stringsCV = chaveValor.split("=");
+	//
+	// if (stringsCV != null && stringsCV.length > 1) {
+	// mapa.put(stringsCV[0].trim(), stringsCV[1].trim());
+	// }
+	// }
+	// }
+	// }
+	//
+	// return mapa;
+	// }
 
-			if (strings != null) {
-				for (String s : strings) {
-					aux(s, mapa);
-				}
-			}
-		}
+	// public static Map<String, String> criarMapaSequencias(String string) {
+	// Map<String, String> mapa = new HashMap<>();
+	//
+	// if (!estaVazio(string)) {
+	// String[] strings = string.split(";");
+	//
+	// if (strings != null) {
+	// for (String chaveValor : strings) {
+	// String[] stringsCV = chaveValor.split("=");
+	//
+	// if (stringsCV != null && stringsCV.length > 1) {
+	// mapa.put(stringsCV[0].trim().toLowerCase(), stringsCV[1].trim());
+	// }
+	// }
+	// }
+	// }
+	//
+	// return mapa;
+	// }
 
-		return mapa;
-	}
+	// private static void aux(String string, Map<String, List<String>> mapa) {
+	// String[] strings = string.split("=");
+	//
+	// if (strings != null && strings.length > 1) {
+	// String campo = strings[0].trim();
+	//
+	// List<String> lista = mapa.computeIfAbsent(campo, t -> new ArrayList<>());
+	//
+	// String nomes = strings[1];
+	// String[] strNomes = nomes.split(",");
+	//
+	// for (String nome : strNomes) {
+	// lista.add(nome.trim());
+	// }
+	// }
+	// }
 
-	public static Map<String, String> criarMapaCampoChave(String string) {
-		Map<String, String> mapa = new HashMap<>();
-
-		if (!estaVazio(string)) {
-			String[] strings = string.split(";");
-
-			if (strings != null) {
-				for (String chaveValor : strings) {
-					String[] stringsCV = chaveValor.split("=");
-
-					if (stringsCV != null && stringsCV.length > 1) {
-						mapa.put(stringsCV[0].trim(), stringsCV[1].trim());
-					}
-				}
-			}
-		}
-
-		return mapa;
-	}
-
-	public static Map<String, String> criarMapaSequencias(String string) {
-		Map<String, String> mapa = new HashMap<>();
-
-		if (!estaVazio(string)) {
-			String[] strings = string.split(";");
-
-			if (strings != null) {
-				for (String chaveValor : strings) {
-					String[] stringsCV = chaveValor.split("=");
-
-					if (stringsCV != null && stringsCV.length > 1) {
-						mapa.put(stringsCV[0].trim().toLowerCase(), stringsCV[1].trim());
-					}
-				}
-			}
-		}
-
-		return mapa;
-	}
-
-	private static void aux(String string, Map<String, List<String>> mapa) {
-		String[] strings = string.split("=");
-
-		if (strings != null && strings.length > 1) {
-			String campo = strings[0].trim();
-
-			List<String> lista = mapa.computeIfAbsent(campo, t -> new ArrayList<>());
-
-			String nomes = strings[1];
-			String[] strNomes = nomes.split(",");
-
-			for (String nome : strNomes) {
-				lista.add(nome.trim());
-			}
-		}
-	}
-
-	public static String normalizar(String string, boolean substituir) {
-		StringBuilder sb = new StringBuilder();
-
-		if (string != null) {
-			string = string.trim();
-
-			for (char c : string.toCharArray()) {
-				if (c == '\r' || c == '\n' || c == '\t') {
-					if (substituir) {
-						sb.append(' ');
-					}
-
-					continue;
-				}
-
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
-	}
+	// public static String normalizar(String string, boolean substituir) {
+	// StringBuilder sb = new StringBuilder();
+	//
+	// if (string != null) {
+	// string = string.trim();
+	//
+	// for (char c : string.toCharArray()) {
+	// if (c == '\r' || c == '\n' || c == '\t') {
+	// if (substituir) {
+	// sb.append(' ');
+	// }
+	//
+	// continue;
+	// }
+	//
+	// sb.append(c);
+	// }
+	// }
+	//
+	// return sb.toString();
+	// }
 
 	// public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor
 	// provedor, Conexao padrao) {
@@ -544,216 +536,226 @@ public class Util {
 	public static final byte ARRAY_INDICE_DIM = 2;
 	public static final byte ARRAY_INDICE_APE = 3;
 
-	public static List<List<String>> comparar(File file1, File file2) {
-		List<List<String>> resposta = new ArrayList<>();
+	// public static List<List<String>> comparar(File file1, File file2) {
+	// List<List<String>> resposta = new ArrayList<>();
+	//
+	// List<String> iguais1 = new ArrayList<>();
+	// List<String> iguais2 = new ArrayList<>();
+	// List<String> arquivo1 = new ArrayList<>();
+	// List<String> arquivo2 = new ArrayList<>();
+	//
+	// resposta.add(iguais1);
+	// resposta.add(iguais2);
+	// resposta.add(arquivo1);
+	// resposta.add(arquivo2);
+	//
+	// List<String> pool1 = criarLista(file1);
+	// List<String> pool2 = criarLista(file2);
+	//
+	// while (!pool1.isEmpty()) {
+	// String string1 = pool1.remove(0);
+	//
+	// int pos = pool2.indexOf(string1);
+	//
+	// if (pos >= 0) {
+	// pool2.remove(pos);
+	// iguais1.add(string1 + "," + string1);
+	// iguais2.add(string1 + ",");
+	// } else {
+	// arquivo1.add(string1 + ",");
+	// }
+	// }
+	//
+	// while (!pool2.isEmpty()) {
+	// String string2 = pool2.remove(0);
+	//
+	// int pos = pool1.indexOf(string2);
+	//
+	// if (pos >= 0) {
+	// pool1.remove(pos);
+	// iguais1.add(string2 + "," + string2);
+	// iguais2.add(string2 + ",");
+	// } else {
+	// arquivo2.add("," + string2);
+	// }
+	// }
+	//
+	// final String PREFIXO = "<<<###################";
+	// final String SUFIXO = ") ###################>>>";
+	//
+	// iguais1.add(0, PREFIXO + " IGUAIS 1 (" + iguais1.size() + SUFIXO);
+	// iguais2.add(0, PREFIXO + " IGUAIS 2 (" + iguais2.size() + SUFIXO);
+	// arquivo1.add(0, PREFIXO + " ARQUIVO 1 (" + arquivo1.size() + SUFIXO);
+	// arquivo2.add(0, PREFIXO + " ARQUIVO 2 (" + arquivo2.size() + SUFIXO);
+	//
+	// return resposta;
+	// }
 
-		List<String> iguais1 = new ArrayList<>();
-		List<String> iguais2 = new ArrayList<>();
-		List<String> arquivo1 = new ArrayList<>();
-		List<String> arquivo2 = new ArrayList<>();
+	// private static List<String> criarLista(File file) {
+	// List<String> resposta = new ArrayList<>();
+	//
+	// try (BufferedReader br = new BufferedReader(new InputStreamReader(new
+	// FileInputStream(file)))) {
+	// String linha = br.readLine();
+	//
+	// while (linha != null) {
+	// String string = linha.trim();
+	//
+	// if (!string.isEmpty()) {
+	// resposta.add(string);
+	// }
+	//
+	// linha = br.readLine();
+	// }
+	// } catch (Exception e) {
+	// LOG.log(Level.SEVERE, Constantes.ERRO, e);
+	// }
+	//
+	// return resposta;
+	// }
 
-		resposta.add(iguais1);
-		resposta.add(iguais2);
-		resposta.add(arquivo1);
-		resposta.add(arquivo2);
+	// public static ProcessBuilder criarProcessBuilder(Tipo parametros) {
+	// if (parametros instanceof br.com.persist.fmt.Objeto) {
+	// List<String> comandos = new ArrayList<>();
+	//
+	// br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto)
+	// parametros;
+	//
+	// Tipo tipoComando = objeto.getValor("comando");
+	// String comando = tipoComando instanceof Texto ? tipoComando.toString() :
+	// null;
+	//
+	// if (estaVazio(comando)) {
+	// return null;
+	// }
+	//
+	// comandos.add(comando);
+	//
+	// Tipo tipoParametros = objeto.getValor("parametros");
+	//
+	// if (tipoParametros instanceof Array) {
+	// Array array = (Array) tipoParametros;
+	//
+	// for (Tipo arg : array.getLista()) {
+	// comandos.add(" " + arg.toString());
+	// }
+	// }
+	//
+	// Tipo tipoVariaveis = objeto.getValor("variaveis");
+	// Map<String, String> variaveis = null;
+	//
+	// if (tipoVariaveis instanceof br.com.persist.fmt.Objeto) {
+	// br.com.persist.fmt.Objeto objVariaveis = (br.com.persist.fmt.Objeto)
+	// tipoVariaveis;
+	// variaveis = objVariaveis.getAtributosString();
+	// }
+	//
+	// Tipo tipoDiretorio = objeto.getValor("diretorio");
+	// String diretorio = tipoDiretorio instanceof Texto ?
+	// tipoDiretorio.toString() : null;
+	//
+	// return criarProcessBuilder(comandos, variaveis, diretorio);
+	// }
+	//
+	// return null;
+	// }
 
-		List<String> pool1 = criarLista(file1);
-		List<String> pool2 = criarLista(file2);
+	// private static ProcessBuilder criarProcessBuilder(List<String> comandos,
+	// Map<String, String> variaveis,
+	// String diretorio) {
+	// ProcessBuilder builder = new ProcessBuilder(comandos);
+	//
+	// Map<String, String> env = builder.environment();
+	//
+	// if (variaveis != null) {
+	// for (Entry<String, String> entry : variaveis.entrySet()) {
+	// env.put(entry.getKey(), entry.getValue());
+	// }
+	// }
+	//
+	// if (!estaVazio(diretorio)) {
+	// builder.directory(new File(diretorio));
+	// }
+	//
+	// return builder;
+	// }
 
-		while (!pool1.isEmpty()) {
-			String string1 = pool1.remove(0);
+	// public static String requisicao(Tipo parametros) throws IOException {
+	// if (parametros instanceof br.com.persist.fmt.Objeto) {
+	// br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto)
+	// parametros;
+	//
+	// Tipo tipoUrl = objeto.getValor("url");
+	// String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
+	// Map<String, String> mapHeader = null;
+	//
+	// Tipo tipoHeader = objeto.getValor("header");
+	//
+	// if (tipoHeader instanceof br.com.persist.fmt.Objeto) {
+	// br.com.persist.fmt.Objeto objHeader = (br.com.persist.fmt.Objeto)
+	// tipoHeader;
+	// mapHeader = objHeader.getAtributosString();
+	// }
+	//
+	// Tipo tipoBody = objeto.getValor("body");
+	// String bodyParams = null;
+	//
+	// if (tipoBody instanceof br.com.persist.fmt.Objeto) {
+	// br.com.persist.fmt.Objeto objBody = (br.com.persist.fmt.Objeto) tipoBody;
+	// Tipo params = objBody.getValor("parameters");
+	// bodyParams = params instanceof Texto ? params.toString() : null;
+	// }
+	//
+	// return requisicao(url, mapHeader, bodyParams);
+	// }
+	//
+	// return null;
+	// }
 
-			int pos = pool2.indexOf(string1);
+	// public static String getAccessToken(Tipo tipo) {
+	// if (tipo instanceof br.com.persist.fmt.Objeto) {
+	// br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) tipo;
+	//
+	// Tipo tipoAccessToken = objeto.getValor("access_token");
+	// return tipoAccessToken instanceof Texto ? tipoAccessToken.toString() :
+	// null;
+	// }
+	//
+	// return null;
+	// }
 
-			if (pos >= 0) {
-				pool2.remove(pos);
-				iguais1.add(string1 + "," + string1);
-				iguais2.add(string1 + ",");
-			} else {
-				arquivo1.add(string1 + ",");
-			}
-		}
-
-		while (!pool2.isEmpty()) {
-			String string2 = pool2.remove(0);
-
-			int pos = pool1.indexOf(string2);
-
-			if (pos >= 0) {
-				pool1.remove(pos);
-				iguais1.add(string2 + "," + string2);
-				iguais2.add(string2 + ",");
-			} else {
-				arquivo2.add("," + string2);
-			}
-		}
-
-		final String PREFIXO = "<<<###################";
-		final String SUFIXO = ") ###################>>>";
-
-		iguais1.add(0, PREFIXO + " IGUAIS 1 (" + iguais1.size() + SUFIXO);
-		iguais2.add(0, PREFIXO + " IGUAIS 2 (" + iguais2.size() + SUFIXO);
-		arquivo1.add(0, PREFIXO + " ARQUIVO 1 (" + arquivo1.size() + SUFIXO);
-		arquivo2.add(0, PREFIXO + " ARQUIVO 2 (" + arquivo2.size() + SUFIXO);
-
-		return resposta;
-	}
-
-	private static List<String> criarLista(File file) {
-		List<String> resposta = new ArrayList<>();
-
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-			String linha = br.readLine();
-
-			while (linha != null) {
-				String string = linha.trim();
-
-				if (!string.isEmpty()) {
-					resposta.add(string);
-				}
-
-				linha = br.readLine();
-			}
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, e);
-		}
-
-		return resposta;
-	}
-
-	public static ProcessBuilder criarProcessBuilder(Tipo parametros) {
-		if (parametros instanceof br.com.persist.fmt.Objeto) {
-			List<String> comandos = new ArrayList<>();
-
-			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
-
-			Tipo tipoComando = objeto.getValor("comando");
-			String comando = tipoComando instanceof Texto ? tipoComando.toString() : null;
-
-			if (estaVazio(comando)) {
-				return null;
-			}
-
-			comandos.add(comando);
-
-			Tipo tipoParametros = objeto.getValor("parametros");
-
-			if (tipoParametros instanceof Array) {
-				Array array = (Array) tipoParametros;
-
-				for (Tipo arg : array.getLista()) {
-					comandos.add(" " + arg.toString());
-				}
-			}
-
-			Tipo tipoVariaveis = objeto.getValor("variaveis");
-			Map<String, String> variaveis = null;
-
-			if (tipoVariaveis instanceof br.com.persist.fmt.Objeto) {
-				br.com.persist.fmt.Objeto objVariaveis = (br.com.persist.fmt.Objeto) tipoVariaveis;
-				variaveis = objVariaveis.getAtributosString();
-			}
-
-			Tipo tipoDiretorio = objeto.getValor("diretorio");
-			String diretorio = tipoDiretorio instanceof Texto ? tipoDiretorio.toString() : null;
-
-			return criarProcessBuilder(comandos, variaveis, diretorio);
-		}
-
-		return null;
-	}
-
-	private static ProcessBuilder criarProcessBuilder(List<String> comandos, Map<String, String> variaveis,
-			String diretorio) {
-		ProcessBuilder builder = new ProcessBuilder(comandos);
-
-		Map<String, String> env = builder.environment();
-
-		if (variaveis != null) {
-			for (Entry<String, String> entry : variaveis.entrySet()) {
-				env.put(entry.getKey(), entry.getValue());
-			}
-		}
-
-		if (!estaVazio(diretorio)) {
-			builder.directory(new File(diretorio));
-		}
-
-		return builder;
-	}
-
-	public static String requisicao(Tipo parametros) throws IOException {
-		if (parametros instanceof br.com.persist.fmt.Objeto) {
-			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) parametros;
-
-			Tipo tipoUrl = objeto.getValor("url");
-			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
-			Map<String, String> mapHeader = null;
-
-			Tipo tipoHeader = objeto.getValor("header");
-
-			if (tipoHeader instanceof br.com.persist.fmt.Objeto) {
-				br.com.persist.fmt.Objeto objHeader = (br.com.persist.fmt.Objeto) tipoHeader;
-				mapHeader = objHeader.getAtributosString();
-			}
-
-			Tipo tipoBody = objeto.getValor("body");
-			String bodyParams = null;
-
-			if (tipoBody instanceof br.com.persist.fmt.Objeto) {
-				br.com.persist.fmt.Objeto objBody = (br.com.persist.fmt.Objeto) tipoBody;
-				Tipo params = objBody.getValor("parameters");
-				bodyParams = params instanceof Texto ? params.toString() : null;
-			}
-
-			return requisicao(url, mapHeader, bodyParams);
-		}
-
-		return null;
-	}
-
-	public static String getAccessToken(Tipo tipo) {
-		if (tipo instanceof br.com.persist.fmt.Objeto) {
-			br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) tipo;
-
-			Tipo tipoAccessToken = objeto.getValor("access_token");
-			return tipoAccessToken instanceof Texto ? tipoAccessToken.toString() : null;
-		}
-
-		return null;
-	}
-
-	public static String requisicao(String url, Map<String, String> header, String parametros) throws IOException {
-		if (estaVazio(url)) {
-			return null;
-		}
-
-		URL url2 = new URL(url);
-		URLConnection conn = url2.openConnection();
-		String verbo = null;
-
-		if (header != null) {
-			verbo = header.get("Request-Method");
-
-			for (Map.Entry<String, String> entry : header.entrySet()) {
-				conn.setRequestProperty(entry.getKey(), entry.getValue());
-			}
-		}
-
-		if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
-			conn.setDoOutput(true);
-		}
-
-		conn.connect();
-
-		if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
-			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-			osw.write(parametros);
-			osw.flush();
-		}
-
-		return getString(conn.getInputStream());
-	}
+	// public static String requisicao(String url, Map<String, String> header,
+	// String parametros) throws IOException {
+	// if (estaVazio(url)) {
+	// return null;
+	// }
+	//
+	// URL url2 = new URL(url);
+	// URLConnection conn = url2.openConnection();
+	// String verbo = null;
+	//
+	// if (header != null) {
+	// verbo = header.get("Request-Method");
+	//
+	// for (Map.Entry<String, String> entry : header.entrySet()) {
+	// conn.setRequestProperty(entry.getKey(), entry.getValue());
+	// }
+	// }
+	//
+	// if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
+	// conn.setDoOutput(true);
+	// }
+	//
+	// conn.connect();
+	//
+	// if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
+	// OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+	// osw.write(parametros);
+	// osw.flush();
+	// }
+	//
+	// return getString(conn.getInputStream());
+	// }
 
 	public static String getString(InputStream is) throws IOException {
 		if (is == null) {

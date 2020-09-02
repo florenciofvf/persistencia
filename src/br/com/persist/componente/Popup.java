@@ -2,7 +2,6 @@ package br.com.persist.componente;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import br.com.persist.util.Action;
 
 public class Popup extends JPopupMenu {
 	private static final long serialVersionUID = 1L;

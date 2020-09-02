@@ -3,9 +3,9 @@ package br.com.persist.mensagem;
 import java.awt.BorderLayout;
 
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
-import br.com.persist.util.IJanela;
 import br.com.persist.util.Util;
 
 public class MensagemContainer extends Panel {
@@ -13,7 +13,7 @@ public class MensagemContainer extends Panel {
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 
-	public MensagemContainer(IJanela janela, String string) {
+	public MensagemContainer(Janela janela, String string) {
 		textArea.setText(string);
 		toolbar.ini(janela);
 		montarLayout();
@@ -27,7 +27,7 @@ public class MensagemContainer extends Panel {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
-		public void ini(IJanela janela) {
+		public void ini(Janela janela) {
 			super.ini(janela, false, false);
 			configCopiar1Acao(false);
 		}

@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.principal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,15 @@ import org.xml.sax.Attributes;
 import br.com.persist.componente.Menu;
 import br.com.persist.fabrica.Fabrica;
 import br.com.persist.fabrica.FabricaContainer;
-import br.com.persist.principal.Formulario;
+import br.com.persist.util.Constantes;
+import br.com.persist.util.Imagens;
+import br.com.persist.util.Util;
 
 public class MenuApp {
 	private final List<MenuApp> filhos;
 	private String classeFabrica;
 	private String descricao;
+	private boolean ativo;
 	private String icone;
 	private MenuApp pai;
 
@@ -61,6 +64,7 @@ public class MenuApp {
 	}
 
 	public void aplicar(Attributes attr) {
+		ativo = Boolean.parseBoolean(attr.getValue("ativo"));
 		classeFabrica = attr.getValue("classeFabrica");
 		descricao = attr.getValue("descricao");
 		icone = attr.getValue("icone");
@@ -78,6 +82,10 @@ public class MenuApp {
 		Menu menu = new Menu(descricao, getIcon(), Constantes.VAZIO);
 
 		for (MenuApp filho : filhos) {
+			if (!filho.ativo) {
+				continue;
+			}
+
 			List<Menu> itens = filho.criarItens(formulario);
 
 			for (Menu item : itens) {

@@ -1,11 +1,11 @@
-package br.com.persist.util;
+package br.com.persist.componente;
 
 import java.awt.Component;
 
 import javax.swing.Icon;
 
-import br.com.persist.componente.Menu;
-import br.com.persist.componente.MenuItem;
+import br.com.persist.util.Constantes;
+import br.com.persist.util.Preferencias;
 
 public class MenuPadrao1 extends Menu {
 	private static final long serialVersionUID = 1L;

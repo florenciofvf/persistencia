@@ -1,8 +1,10 @@
-package br.com.persist.util;
+package br.com.persist.componente;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
+
+import br.com.persist.util.Mensagens;
 
 public abstract class Acao extends AbstractAction {
 	private static final long serialVersionUID = 1L;

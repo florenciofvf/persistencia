@@ -1,13 +1,10 @@
-package br.com.persist.util;
+package br.com.persist.componente;
 
 import java.awt.Component;
 
 import javax.swing.Icon;
 
-import br.com.persist.componente.Button;
-import br.com.persist.componente.Menu;
-import br.com.persist.componente.MenuItem;
-import br.com.persist.componente.Popup;
+import br.com.persist.util.Mensagens;
 
 public class ButtonPopup extends Button {
 	private static final long serialVersionUID = 1L;
