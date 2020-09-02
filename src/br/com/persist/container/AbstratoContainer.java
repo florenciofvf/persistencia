@@ -19,28 +19,22 @@ public abstract class AbstratoContainer extends Panel implements Pagina {
 		return formulario;
 	}
 
-	/*protected void destacarEmFormulario() {
-	}
-
-	protected void clonarEmFormulario() {
-	}
-
-	protected void abrirEmFormulario() {
-	}
-
-	protected void retornoAoFichario() {
-	}
-
-	public String classeFabricaEContainer(Class<?> fabrica, Class<?> container, Object... detalhes) {
-		StringBuilder sb = new StringBuilder(Constantes.III);
-		sb.append(fabrica.getName());
-		sb.append(Constantes.SEP);
-		sb.append(container.getName());
-
-		for (Object detalhe : detalhes) {
-			sb.append(detalhe);
-		}
-
-		return sb.toString();
-	}*/
+	/*
+	 * protected void destacarEmFormulario() { }
+	 * 
+	 * protected void clonarEmFormulario() { }
+	 * 
+	 * protected void abrirEmFormulario() { }
+	 * 
+	 * protected void retornoAoFichario() { }
+	 * 
+	 * public String classeFabricaEContainer(Class<?> fabrica, Class<?>
+	 * container, Object... detalhes) { StringBuilder sb = new
+	 * StringBuilder(Constantes.III); sb.append(fabrica.getName());
+	 * sb.append(Constantes.SEP); sb.append(container.getName());
+	 * 
+	 * for (Object detalhe : detalhes) { sb.append(detalhe); }
+	 * 
+	 * return sb.toString(); }
+	 */
 }

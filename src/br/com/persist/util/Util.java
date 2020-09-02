@@ -399,97 +399,111 @@ public class Util {
 		return sb.toString();
 	}
 
-//	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor, Conexao padrao) {
-//		Combo cmbConexao = new Combo(new ConexaoComboModelo(provedor.getConexoes()));
-//
-//		if (padrao != null) {
-//			cmbConexao.setSelectedItem(padrao);
-//		}
-//
-//		return cmbConexao;
-//	}
+	// public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor
+	// provedor, Conexao padrao) {
+	// Combo cmbConexao = new Combo(new
+	// ConexaoComboModelo(provedor.getConexoes()));
+	//
+	// if (padrao != null) {
+	// cmbConexao.setSelectedItem(padrao);
+	// }
+	//
+	// return cmbConexao;
+	// }
 
-//	public static class Combo extends JComboBox<Conexao> implements PopupMenuListener {
-//		private static final long serialVersionUID = 1L;
-//		private int total;
-//
-//		public Combo(ConexaoComboModelo modelo) {
-//			super(modelo);
-//			total = modelo.getSize();
-//			addPopupMenuListener(this);
-//		}
-//
-//		@Override
-//		public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-//			if (total != getModel().getSize()) {
-//				total = getModel().getSize();
-//				((ConexaoComboModelo) getModel()).notificarMudancas();
-//			}
-//		}
-//
-//		@Override
-//		public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-//			LOG.log(Level.FINEST, "popupMenuWillBecomeInvisible");
-//		}
-//
-//		@Override
-//		public void popupMenuCanceled(PopupMenuEvent e) {
-//			LOG.log(Level.FINEST, "popupMenuCanceled");
-//		}
-//	}
+	// public static class Combo extends JComboBox<Conexao> implements
+	// PopupMenuListener {
+	// private static final long serialVersionUID = 1L;
+	// private int total;
+	//
+	// public Combo(ConexaoComboModelo modelo) {
+	// super(modelo);
+	// total = modelo.getSize();
+	// addPopupMenuListener(this);
+	// }
+	//
+	// @Override
+	// public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+	// if (total != getModel().getSize()) {
+	// total = getModel().getSize();
+	// ((ConexaoComboModelo) getModel()).notificarMudancas();
+	// }
+	// }
+	//
+	// @Override
+	// public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+	// LOG.log(Level.FINEST, "popupMenuWillBecomeInvisible");
+	// }
+	//
+	// @Override
+	// public void popupMenuCanceled(PopupMenuEvent e) {
+	// LOG.log(Level.FINEST, "popupMenuCanceled");
+	// }
+	// }
 
-//	public static JComboBox<Objeto> criarComboObjetosSel(Superficie superficie) {
-//		return new JComboBox<>(new ObjetoComboModelo(superficie.getSelecionados()));
-//	}
+	// public static JComboBox<Objeto> criarComboObjetosSel(Superficie
+	// superficie) {
+	// return new JComboBox<>(new
+	// ObjetoComboModelo(superficie.getSelecionados()));
+	// }
 
-//	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
-//		return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
-//	}
+	// public static Object[] criarArray(Conexao conexao, Objeto objeto, String
+	// apelido) {
+	// return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
+	// }
 
-//	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension, String apelido) {
-//		Superficie.setComplemento(conexao, objeto);
-//		return new Object[] { objeto, conexao, dimension, apelido };
-//	}
+	// public static Object[] criarArray(Conexao conexao, Objeto objeto,
+	// Dimension dimension, String apelido) {
+	// Superficie.setComplemento(conexao, objeto);
+	// return new Object[] { objeto, conexao, dimension, apelido };
+	// }
 
-//	public static String substituir(String instrucao, Map<String, String> mapaChaveValor) {
-//		if (instrucao == null) {
-//			instrucao = Constantes.VAZIO;
-//		}
-//
-//		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
-//			return instrucao;
-//		}
-//
-//		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
-//
-//		while (it.hasNext()) {
-//			Entry<String, String> entry = it.next();
-//			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
-//			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
-//			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
-//		}
-//
-//		Iterator<ChaveValor> iterator = VariaveisModelo.getLista().iterator();
-//
-//		while (iterator.hasNext()) {
-//			ChaveValor cv = iterator.next();
-//			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
-//		}
-//
-//		return instrucao;
-//	}
+	// public static String substituir(String instrucao, Map<String, String>
+	// mapaChaveValor) {
+	// if (instrucao == null) {
+	// instrucao = Constantes.VAZIO;
+	// }
+	//
+	// if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+	// return instrucao;
+	// }
+	//
+	// Iterator<Map.Entry<String, String>> it =
+	// mapaChaveValor.entrySet().iterator();
+	//
+	// while (it.hasNext()) {
+	// Entry<String, String> entry = it.next();
+	// instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() +
+	// "#", entry.getValue());
+	// instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() +
+	// "#", entry.getValue());
+	// instrucao = instrucao.replaceAll("#" + entry.getKey() + "#",
+	// entry.getValue());
+	// }
+	//
+	// Iterator<ChaveValor> iterator = VariaveisModelo.getLista().iterator();
+	//
+	// while (iterator.hasNext()) {
+	// ChaveValor cv = iterator.next();
+	// instrucao = instrucao.replaceAll("#" + cv.getChave() + "#",
+	// cv.getValor());
+	// }
+	//
+	// return instrucao;
+	// }
 
-//	public static String substituir(String instrucao, ChaveValor cv) {
-//		if (instrucao == null) {
-//			instrucao = Constantes.VAZIO;
-//		}
-//
-//		if (cv != null && cv.getChave() != null) {
-//			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
-//		}
-//
-//		return instrucao;
-//	}
+	// public static String substituir(String instrucao, ChaveValor cv) {
+	// if (instrucao == null) {
+	// instrucao = Constantes.VAZIO;
+	// }
+	//
+	// if (cv != null && cv.getChave() != null) {
+	// instrucao = instrucao.replaceAll("#" + cv.getChave() + "#",
+	// cv.getValor());
+	// }
+	//
+	// return instrucao;
+	// }
 
 	public static JFileChooser criarFileChooser(File arquivo, boolean multiSelection) {
 		JFileChooser fileChooser = new JFileChooser(".");

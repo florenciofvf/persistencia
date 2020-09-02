@@ -295,160 +295,119 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	/*public class Destacar {
-		public void destacar(Formulario formulario, Conexao conexao, Superficie superficie, int tipoContainer,
-				ConfigArquivo config) {
-			List<Objeto> lista = superficie.getSelecionados();
-			boolean continua = false;
+	/*
+	 * public class Destacar { public void destacar(Formulario formulario,
+	 * Conexao conexao, Superficie superficie, int tipoContainer, ConfigArquivo
+	 * config) { List<Objeto> lista = superficie.getSelecionados(); boolean
+	 * continua = false;
+	 * 
+	 * for (Objeto objeto : lista) { if (!Util.estaVazio(objeto.getTabela2())) {
+	 * continua = true; break; } }
+	 * 
+	 * if (!continua) { return; }
+	 * 
+	 * List<Objeto> selecionados = new ArrayList<>();
+	 * 
+	 * for (Objeto objeto : lista) { if (objeto.isCopiarDestacado()) {
+	 * selecionados.add(objeto.clonar()); } else { selecionados.add(objeto); } }
+	 * 
+	 * if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
+	 * destacarForm(formulario, selecionados, conexao, config);
+	 * 
+	 * } else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
+	 * destacarDesk(formulario, selecionados, conexao, config);
+	 * 
+	 * } else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
+	 * destacarObjt(formulario, selecionados, conexao);
+	 * 
+	 * } else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
+	 * destacarProp(formulario, selecionados, conexao, superficie, config); } }
+	 * 
+	 * private void destacarForm(Formulario formulario, List<Objeto> objetos,
+	 * Conexao conexao, ConfigArquivo config) { DesktopFormulario form =
+	 * DesktopFormulario.criar(formulario);
+	 * 
+	 * int x = 10; int y = 10;
+	 * 
+	 * for (Objeto objeto : objetos) { if (!Util.estaVazio(objeto.getTabela2()))
+	 * { Object[] array = Util.criarArray(conexao, objeto, null);
+	 * form.getDesktop().addForm(array, new Point(x, y), null, (String)
+	 * array[Util.ARRAY_INDICE_APE], false, config);
+	 * objeto.setSelecionado(false); x += 25; y += 25; } }
+	 * 
+	 * formulario.checarPreferenciasLarguraAltura(); PosicaoDimensao pd =
+	 * formulario.criarPosicaoDimensaoSeValido();
+	 * 
+	 * if (pd != null) { form.setBounds(pd.getX(), pd.getY(), pd.getLargura(),
+	 * pd.getAltura()); } else { form.setLocationRelativeTo(formulario); }
+	 * 
+	 * form.setVisible(true); }
+	 * 
+	 * private void destacarDesk(Formulario formulario, List<Objeto> objetos,
+	 * Conexao conexao, ConfigArquivo config) { Desktop desktop =
+	 * desktops.novo(formulario);
+	 * 
+	 * int x = 10; int y = 10;
+	 * 
+	 * for (Objeto objeto : objetos) { if (!Util.estaVazio(objeto.getTabela2()))
+	 * { Object[] array = Util.criarArray(conexao, objeto, null);
+	 * desktop.addForm(array, new Point(x, y), null, (String)
+	 * array[Util.ARRAY_INDICE_APE], false, config);
+	 * objeto.setSelecionado(false); x += 25; y += 25; } }
+	 * 
+	 * desktop.ini(getGraphics()); SwingUtilities.invokeLater(() ->
+	 * desktop.getDistribuicao().distribuir(-Constantes.VINTE)); }
+	 * 
+	 * private void destacarProp(Formulario formulario, List<Objeto> objetos,
+	 * Conexao conexao, Superficie superficie, ConfigArquivo config) { boolean
+	 * salvar = false;
+	 * 
+	 * ChaveValor cvDeltaX =
+	 * VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO); ChaveValor
+	 * cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
+	 * 
+	 * if (cvDeltaX == null) { cvDeltaX = new
+	 * ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO +
+	 * Constantes.TRINTA); VariaveisModelo.adicionar(cvDeltaX); salvar = true; }
+	 * 
+	 * if (cvDeltaY == null) { cvDeltaY = new
+	 * ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO +
+	 * Constantes.TRINTA); VariaveisModelo.adicionar(cvDeltaY); salvar = true; }
+	 * 
+	 * if (salvar) { VariaveisModelo.salvar(); VariaveisModelo.inicializar(); }
+	 * 
+	 * for (Objeto objeto : objetos) { if (!Util.estaVazio(objeto.getTabela2()))
+	 * { Object[] array = Util.criarArray(conexao, objeto, null);
+	 * superficie.addForm(array, new Point(objeto.getX() +
+	 * cvDeltaX.getInteiro(Constantes.TRINTA), objeto.getY() +
+	 * cvDeltaY.getInteiro(Constantes.TRINTA)), null, (String)
+	 * array[Util.ARRAY_INDICE_APE], false, config);
+	 * objeto.setSelecionado(false); } }
+	 * 
+	 * superficie.repaint(); }
+	 * 
+	 * private void destacarObjt(Formulario formulario, List<Objeto>
+	 * listaObjetos, Conexao conexao) { for (Objeto objeto : listaObjetos) { if
+	 * (!Util.estaVazio(objeto.getTabela2())) {
+	 * Superficie.setComplemento(conexao, objeto); objetos.novo(formulario,
+	 * conexao, objeto); objeto.setSelecionado(false); } } } }
+	 */
 
-			for (Objeto objeto : lista) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
-					continua = true;
-					break;
-				}
-			}
+	// public Destacar getDestacar() {
+	// return destacar;
+	// }
 
-			if (!continua) {
-				return;
-			}
-
-			List<Objeto> selecionados = new ArrayList<>();
-
-			for (Objeto objeto : lista) {
-				if (objeto.isCopiarDestacado()) {
-					selecionados.add(objeto.clonar());
-				} else {
-					selecionados.add(objeto);
-				}
-			}
-
-			if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
-				destacarForm(formulario, selecionados, conexao, config);
-
-			} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
-				destacarDesk(formulario, selecionados, conexao, config);
-
-			} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
-				destacarObjt(formulario, selecionados, conexao);
-
-			} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
-				destacarProp(formulario, selecionados, conexao, superficie, config);
-			}
-		}
-
-		private void destacarForm(Formulario formulario, List<Objeto> objetos, Conexao conexao, ConfigArquivo config) {
-			DesktopFormulario form = DesktopFormulario.criar(formulario);
-
-			int x = 10;
-			int y = 10;
-
-			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
-					Object[] array = Util.criarArray(conexao, objeto, null);
-					form.getDesktop().addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE],
-							false, config);
-					objeto.setSelecionado(false);
-					x += 25;
-					y += 25;
-				}
-			}
-
-			formulario.checarPreferenciasLarguraAltura();
-			PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
-
-			if (pd != null) {
-				form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
-			} else {
-				form.setLocationRelativeTo(formulario);
-			}
-
-			form.setVisible(true);
-		}
-
-		private void destacarDesk(Formulario formulario, List<Objeto> objetos, Conexao conexao, ConfigArquivo config) {
-			Desktop desktop = desktops.novo(formulario);
-
-			int x = 10;
-			int y = 10;
-
-			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
-					Object[] array = Util.criarArray(conexao, objeto, null);
-					desktop.addForm(array, new Point(x, y), null, (String) array[Util.ARRAY_INDICE_APE], false, config);
-					objeto.setSelecionado(false);
-					x += 25;
-					y += 25;
-				}
-			}
-
-			desktop.ini(getGraphics());
-			SwingUtilities.invokeLater(() -> desktop.getDistribuicao().distribuir(-Constantes.VINTE));
-		}
-
-		private void destacarProp(Formulario formulario, List<Objeto> objetos, Conexao conexao, Superficie superficie,
-				ConfigArquivo config) {
-			boolean salvar = false;
-
-			ChaveValor cvDeltaX = VariaveisModelo.get(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
-			ChaveValor cvDeltaY = VariaveisModelo.get(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-
-			if (cvDeltaX == null) {
-				cvDeltaX = new ChaveValor(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
-				VariaveisModelo.adicionar(cvDeltaX);
-				salvar = true;
-			}
-
-			if (cvDeltaY == null) {
-				cvDeltaY = new ChaveValor(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
-				VariaveisModelo.adicionar(cvDeltaY);
-				salvar = true;
-			}
-
-			if (salvar) {
-				VariaveisModelo.salvar();
-				VariaveisModelo.inicializar();
-			}
-
-			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
-					Object[] array = Util.criarArray(conexao, objeto, null);
-					superficie.addForm(array,
-							new Point(objeto.getX() + cvDeltaX.getInteiro(Constantes.TRINTA),
-									objeto.getY() + cvDeltaY.getInteiro(Constantes.TRINTA)),
-							null, (String) array[Util.ARRAY_INDICE_APE], false, config);
-					objeto.setSelecionado(false);
-				}
-			}
-
-			superficie.repaint();
-		}
-
-		private void destacarObjt(Formulario formulario, List<Objeto> listaObjetos, Conexao conexao) {
-			for (Objeto objeto : listaObjetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
-					Superficie.setComplemento(conexao, objeto);
-					objetos.novo(formulario, conexao, objeto);
-					objeto.setSelecionado(false);
-				}
-			}
-		}
-	}*/
-
-//	public Destacar getDestacar() {
-//		return destacar;
-//	}
-
-//	public Arquivos getArquivos() {
-//		return arquivos;
-//	}
-//
-//	public Desktops getDesktops() {
-//		return desktops;
-//	}
-//
-//	public Objetos getObjetos() {
-//		return objetos;
-//	}
+	// public Arquivos getArquivos() {
+	// return arquivos;
+	// }
+	//
+	// public Desktops getDesktops() {
+	// return desktops;
+	// }
+	//
+	// public Objetos getObjetos() {
+	// return objetos;
+	// }
 
 	public class Conteiner {
 		// public void abrirExportacaoMetadado(Formulario formulario, Metadado
@@ -480,13 +439,13 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public boolean excluirAba(Pagina aba) {
-//		int indice = arquivos.getIndice(aba.getComponent());
-//
-//		if (indice == -1) {
-//			return false;
-//		}
-//
-//		remove(indice);
+		// int indice = arquivos.getIndice(aba.getComponent());
+		//
+		// if (indice == -1) {
+		// return false;
+		// }
+		//
+		// remove(indice);
 		return true;
 	}
 
@@ -516,10 +475,9 @@ public class Fichario extends JTabbedPane {
 
 				Cabecalho cabecalho = (Cabecalho) tab;
 				Pagina pagina = cabecalho.getPagina();
-				FicharioServico servico = pagina.getFicharioServico();
-				FabricaContainer fabrica = servico.getFabricaContainer();
-				String resumo = pagina.getResumoSalvarRecuperar();
-				pw.print(fabrica.getClass().getName() + Constantes.III + resumo + Constantes.QL);
+
+				pw.print(pagina.getClasseFabrica().getName() + Constantes.III + pagina.getStringPersistencia()
+						+ Constantes.QL);
 			}
 
 		} catch (Exception ex) {
@@ -534,7 +492,8 @@ public class Fichario extends JTabbedPane {
 		if (file.exists()) {
 			List<String> linhas = new ArrayList<>();
 
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = null;
 
 				while ((linha = br.readLine()) != null) {
@@ -553,288 +512,211 @@ public class Fichario extends JTabbedPane {
 	private void recuperarPagina(Formulario formulario, String s) {
 		int pos = s.indexOf(Constantes.III);
 		String classeFabrica = s.substring(0, pos);
-		String resumo = s.substring(pos + Constantes.III.length());
+		String stringPersistencia = s.substring(pos + Constantes.III.length());
 
 		FabricaContainer fabrica = formulario.getFabrica(classeFabrica);
 
-		if(fabrica != null) {
-			FicharioServico servico = fabrica.getFicharioServico();
-			Pagina pagina = servico.criarPagina(formulario, resumo);
+		if (fabrica != null) {
+			PaginaServico servico = fabrica.getPaginaServico();
+			Pagina pagina = servico.criarPagina(formulario, stringPersistencia);
 			adicionarPagina(pagina);
 		}
 	}
 
-	/*public class Desktops {
-		public Desktop novo(Formulario formulario) {
-			Desktop desktop = new Desktop(formulario, false);
-			desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-			addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
-			int ultimoIndice = getTabCount() - 1;
+	/*
+	 * public class Desktops { public Desktop novo(Formulario formulario) {
+	 * Desktop desktop = new Desktop(formulario, false);
+	 * desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
+	 * addTab(Constantes.LABEL_DESKTOP, Constantes.LABEL_DESKTOP_MIN, desktop);
+	 * int ultimoIndice = getTabCount() - 1;
+	 * 
+	 * TituloAba tituloAba = new TituloAba(Fichario.this, Icones.PANEL2);
+	 * setToolTipTextAt(ultimoIndice,
+	 * Mensagens.getString(Constantes.LABEL_DESKTOP));
+	 * setTabComponentAt(ultimoIndice, tituloAba);
+	 * setSelectedIndex(ultimoIndice);
+	 * 
+	 * return desktop; } }
+	 * 
+	 * public class Objetos { public void novo(Formulario formulario, Conexao
+	 * padrao, Objeto objeto) { OTabelaContainer container = new
+	 * OTabelaContainer(null, formulario, padrao, objeto, getGraphics(), false);
+	 * container.setComponenteListener(Fichario.this::getThis);
+	 * container.setDimensaoListener(Fichario.this::getSize);
+	 * addTab(objeto.getId(), container); int ultimoIndice = getTabCount() - 1;
+	 * 
+	 * TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CRIAR);
+	 * setTabComponentAt(ultimoIndice, tituloAba);
+	 * container.setSuporte(Fichario.this); setSelectedIndex(ultimoIndice);
+	 * 
+	 * container.ini(getGraphics()); } }
+	 */
 
-			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.PANEL2);
-			setToolTipTextAt(ultimoIndice, Mensagens.getString(Constantes.LABEL_DESKTOP));
-			setTabComponentAt(ultimoIndice, tituloAba);
-			setSelectedIndex(ultimoIndice);
-
-			return desktop;
-		}
-	}
-
-	public class Objetos {
-		public void novo(Formulario formulario, Conexao padrao, Objeto objeto) {
-			OTabelaContainer container = new OTabelaContainer(null, formulario, padrao, objeto, getGraphics(), false);
-			container.setComponenteListener(Fichario.this::getThis);
-			container.setDimensaoListener(Fichario.this::getSize);
-			addTab(objeto.getId(), container);
-			int ultimoIndice = getTabCount() - 1;
-
-			TituloAba tituloAba = new TituloAba(Fichario.this, Icones.CRIAR);
-			setTabComponentAt(ultimoIndice, tituloAba);
-			container.setSuporte(Fichario.this);
-			setSelectedIndex(ultimoIndice);
-
-			container.ini(getGraphics());
-		}
-	}*/
-
-	/*public class Arquivos {
-		public void abrir(Formulario formulario, File file, ObjetoColetor coletor, ConfigArquivo config) {
-
-			if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
-				addTab(null, null);
-				int ultimoIndice = getTabCount() - 1;
-				TituloAbaS tituloAba = new TituloAbaS(Fichario.this, file);
-				setTabComponentAt(ultimoIndice, tituloAba);
-				setBackgroundAt(ultimoIndice, Color.MAGENTA);
-				setEnabledAt(ultimoIndice, false);
-				return;
-			}
-
-			// ObjetoContainer container = conteiner.novo(formulario);
-			// int ultimoIndice = getTabCount() - 1;
-			// container.abrir(file, coletor, getGraphics(), config);
-			// setToolTipTextAt(ultimoIndice, file.getAbsolutePath());
-			// setTitleAt(ultimoIndice, file.getName());
-		}
-
-		public void selecionarAba(File file) {
-			int indice = getIndice(file);
-
-			if (indice >= 0) {
-				setSelectedIndex(indice);
-			}
-		}
-
-		public void fecharArquivo(File file) {
-			if (file == null || !file.isFile()) {
-				return;
-			}
-
-			int indice = getIndice(file);
-
-			while (indice >= 0) {
-				remove(indice);
-				indice = getIndice(file);
-			}
-		}
-
-		public boolean isAberto(File file) {
-			return getIndice(file) >= 0;
-		}
-
-		public boolean isAtivo(File file) {
-			int pos = getIndice(file);
-			int sel = getSelectedIndex();
-			return pos != -1 && pos == sel;
-		}
-
-		public int getIndice(File file) {
-			int total = getTabCount();
-
-			for (int i = 0; i < total; i++) {
-				try {
-					Component cmp = getComponentAt(i);
-
-					if (cmp instanceof ObjetoContainer) {
-						ObjetoContainer c = (ObjetoContainer) cmp;
-
-						if (c.getArquivo() != null && file != null
-								&& c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) {
-							return i;
-						}
-					}
-				} catch (Exception e) {
-					LOG.log(Level.SEVERE, Constantes.ERRO, e);
-				}
-			}
-
-			return -1;
-		}
-
-		public int getIndice(Component cmpConteudo) {
-			int total = getTabCount();
-
-			if (cmpConteudo != null) {
-				for (int i = 0; i < total; i++) {
-					Component cmp = getComponentAt(i);
-
-					if (cmpConteudo == cmp) {
-						return i;
-					}
-				}
-			}
-
-			return -1;
-		}
-
-		public int getIndice(ObjetoContainer c) {
-			int total = getTabCount();
-
-			for (int i = 0; i < total; i++) {
-				Component cmp = getComponentAt(i);
-
-				if ((cmp instanceof ObjetoContainer) && cmp == c) {
-					return i;
-				}
-			}
-
-			return -1;
-		}
-
-		public void fecharTodos() {
-			int count = getTabCount();
-
-			while (count > 0) {
-				removeTabAt(0);
-				count = getTabCount();
-			}
-		}
-	}*/
+	/*
+	 * public class Arquivos { public void abrir(Formulario formulario, File
+	 * file, ObjetoColetor coletor, ConfigArquivo config) {
+	 * 
+	 * if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
+	 * addTab(null, null); int ultimoIndice = getTabCount() - 1; TituloAbaS
+	 * tituloAba = new TituloAbaS(Fichario.this, file);
+	 * setTabComponentAt(ultimoIndice, tituloAba); setBackgroundAt(ultimoIndice,
+	 * Color.MAGENTA); setEnabledAt(ultimoIndice, false); return; }
+	 * 
+	 * // ObjetoContainer container = conteiner.novo(formulario); // int
+	 * ultimoIndice = getTabCount() - 1; // container.abrir(file, coletor,
+	 * getGraphics(), config); // setToolTipTextAt(ultimoIndice,
+	 * file.getAbsolutePath()); // setTitleAt(ultimoIndice, file.getName()); }
+	 * 
+	 * public void selecionarAba(File file) { int indice = getIndice(file);
+	 * 
+	 * if (indice >= 0) { setSelectedIndex(indice); } }
+	 * 
+	 * public void fecharArquivo(File file) { if (file == null ||
+	 * !file.isFile()) { return; }
+	 * 
+	 * int indice = getIndice(file);
+	 * 
+	 * while (indice >= 0) { remove(indice); indice = getIndice(file); } }
+	 * 
+	 * public boolean isAberto(File file) { return getIndice(file) >= 0; }
+	 * 
+	 * public boolean isAtivo(File file) { int pos = getIndice(file); int sel =
+	 * getSelectedIndex(); return pos != -1 && pos == sel; }
+	 * 
+	 * public int getIndice(File file) { int total = getTabCount();
+	 * 
+	 * for (int i = 0; i < total; i++) { try { Component cmp =
+	 * getComponentAt(i);
+	 * 
+	 * if (cmp instanceof ObjetoContainer) { ObjetoContainer c =
+	 * (ObjetoContainer) cmp;
+	 * 
+	 * if (c.getArquivo() != null && file != null &&
+	 * c.getArquivo().getAbsolutePath().equals(file.getAbsolutePath())) { return
+	 * i; } } } catch (Exception e) { LOG.log(Level.SEVERE, Constantes.ERRO, e);
+	 * } }
+	 * 
+	 * return -1; }
+	 * 
+	 * public int getIndice(Component cmpConteudo) { int total = getTabCount();
+	 * 
+	 * if (cmpConteudo != null) { for (int i = 0; i < total; i++) { Component
+	 * cmp = getComponentAt(i);
+	 * 
+	 * if (cmpConteudo == cmp) { return i; } } }
+	 * 
+	 * return -1; }
+	 * 
+	 * public int getIndice(ObjetoContainer c) { int total = getTabCount();
+	 * 
+	 * for (int i = 0; i < total; i++) { Component cmp = getComponentAt(i);
+	 * 
+	 * if ((cmp instanceof ObjetoContainer) && cmp == c) { return i; } }
+	 * 
+	 * return -1; }
+	 * 
+	 * public void fecharTodos() { int count = getTabCount();
+	 * 
+	 * while (count > 0) { removeTabAt(0); count = getTabCount(); } } }
+	 */
 
 	@Override
 	public void remove(int index) {
-//		Component cmp = getComponentAt(index);
-//
-//		if (cmp instanceof ObjetoContainer) {
-//			((ObjetoContainer) cmp).excluido();
-//		}
+		// Component cmp = getComponentAt(index);
+		//
+		// if (cmp instanceof ObjetoContainer) {
+		// ((ObjetoContainer) cmp).excluido();
+		// }
 
 		super.remove(index);
 	}
 
-	/*public void selecionarConexao(Conexao conexao) {
-		int total = getTabCount();
+	/*
+	 * public void selecionarConexao(Conexao conexao) { int total =
+	 * getTabCount();
+	 * 
+	 * for (int i = 0; i < total; i++) { Component cmp = getComponentAt(i);
+	 * 
+	 * if (cmp instanceof FicharioConexao) { FicharioConexao aba =
+	 * (FicharioConexao) cmp; aba.selecionarConexao(conexao); } } }
+	 */
 
-		for (int i = 0; i < total; i++) {
-			Component cmp = getComponentAt(i);
+	/*
+	 * public void infoConexao() { int total = getTabCount(); StringBuilder sb =
+	 * new StringBuilder(); int cont = 0;
+	 * 
+	 * for (int i = 0; i < total; i++) { Component cmp = getComponentAt(i);
+	 * 
+	 * if (cmp instanceof FicharioConexao) { FicharioConexao aba =
+	 * (FicharioConexao) cmp; InfoConexao info = aba.getInfoConexao();
+	 * 
+	 * sb.append("ABA: " + info.getNomeAba() + Constantes.QL);
+	 * sb.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
+	 * 
+	 * if (!Util.estaVazio(info.getConexaoFile())) { sb.append("FILE: " +
+	 * info.getConexaoFile() + Constantes.QL); }
+	 * 
+	 * sb.append(Constantes.QL);
+	 * 
+	 * cont++; } }
+	 * 
+	 * if (sb.length() > 0) { sb.insert(0, "TOTAL = " + cont + Constantes.QL +
+	 * Constantes.QL); }
+	 * 
+	 * Util.mensagem(Fichario.this, sb.toString()); }
+	 */
 
-			if (cmp instanceof FicharioConexao) {
-				FicharioConexao aba = (FicharioConexao) cmp;
-				aba.selecionarConexao(conexao);
-			}
-		}
-	}*/
+	/*
+	 * public static String getAbsRelativoArquivo(File diretorioArquivos, File
+	 * file) { if (diretorioArquivos != null && file != null) { String
+	 * absDiretorioArquivos = diretorioArquivos.getAbsolutePath(); String
+	 * absArquivoAba = file.getAbsolutePath(); String nomeArquivoAba =
+	 * file.getName();
+	 * 
+	 * int pos = posicaoArquivo(diretorioArquivos, file);
+	 * 
+	 * if (pos != -1) { String restante = absArquivoAba.substring(pos +
+	 * absDiretorioArquivos.length()); absArquivoAba = Util.replaceAll(restante,
+	 * Constantes.SEPARADOR, Constantes.SEP); } else if
+	 * (nomeArquivoAba.startsWith(Constantes.III)) { absArquivoAba =
+	 * nomeArquivoAba; }
+	 * 
+	 * return absArquivoAba; }
+	 * 
+	 * return null; }
+	 * 
+	 * private static int posicaoArquivo(File diretorio, File arquivo) { if
+	 * (!diretorio.isDirectory() || !arquivo.isFile()) { return -1; }
+	 * 
+	 * String absDiretorio = diretorio.getAbsolutePath(); String absArquivo =
+	 * arquivo.getAbsolutePath();
+	 * 
+	 * return absArquivo.indexOf(absDiretorio); }
+	 * 
+	 * public static File getArquivoNormalizado(File file) { if (file != null) {
+	 * String nome = file.getName();
+	 * 
+	 * if (nome.startsWith(Constantes.SEP)) { nome = Util.replaceAll(nome,
+	 * Constantes.SEP, Constantes.SEPARADOR); //file = new
+	 * File(ArquivoTreeModelo.FILE.getAbsolutePath() + nome); } }
+	 * 
+	 * return file; }
+	 */
 
-	/*public void infoConexao() {
-		int total = getTabCount();
-		StringBuilder sb = new StringBuilder();
-		int cont = 0;
-
-		for (int i = 0; i < total; i++) {
-			Component cmp = getComponentAt(i);
-
-			if (cmp instanceof FicharioConexao) {
-				FicharioConexao aba = (FicharioConexao) cmp;
-				InfoConexao info = aba.getInfoConexao();
-
-				sb.append("ABA: " + info.getNomeAba() + Constantes.QL);
-				sb.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
-
-				if (!Util.estaVazio(info.getConexaoFile())) {
-					sb.append("FILE: " + info.getConexaoFile() + Constantes.QL);
-				}
-
-				sb.append(Constantes.QL);
-
-				cont++;
-			}
-		}
-
-		if (sb.length() > 0) {
-			sb.insert(0, "TOTAL = " + cont + Constantes.QL + Constantes.QL);
-		}
-
-		Util.mensagem(Fichario.this, sb.toString());
-	}*/
-
-	/*public static String getAbsRelativoArquivo(File diretorioArquivos, File file) {
-		if (diretorioArquivos != null && file != null) {
-			String absDiretorioArquivos = diretorioArquivos.getAbsolutePath();
-			String absArquivoAba = file.getAbsolutePath();
-			String nomeArquivoAba = file.getName();
-
-			int pos = posicaoArquivo(diretorioArquivos, file);
-
-			if (pos != -1) {
-				String restante = absArquivoAba.substring(pos + absDiretorioArquivos.length());
-				absArquivoAba = Util.replaceAll(restante, Constantes.SEPARADOR, Constantes.SEP);
-			} else if (nomeArquivoAba.startsWith(Constantes.III)) {
-				absArquivoAba = nomeArquivoAba;
-			}
-
-			return absArquivoAba;
-		}
-
-		return null;
-	}
-
-	private static int posicaoArquivo(File diretorio, File arquivo) {
-		if (!diretorio.isDirectory() || !arquivo.isFile()) {
-			return -1;
-		}
-
-		String absDiretorio = diretorio.getAbsolutePath();
-		String absArquivo = arquivo.getAbsolutePath();
-
-		return absArquivo.indexOf(absDiretorio);
-	}
-
-	public static File getArquivoNormalizado(File file) {
-		if (file != null) {
-			String nome = file.getName();
-
-			if (nome.startsWith(Constantes.SEP)) {
-				nome = Util.replaceAll(nome, Constantes.SEP, Constantes.SEPARADOR);
-				//file = new File(ArquivoTreeModelo.FILE.getAbsolutePath() + nome);
-			}
-		}
-
-		return file;
-	}*/
-
-	/*public static class InfoConexao {
-		final String conexaoAtual;
-		final String conexaoFile;
-		final String nomeAba;
-
-		public InfoConexao(String conexaoAtual, String conexaoFile, String nomeAba) {
-			this.conexaoAtual = conexaoAtual;
-			this.conexaoFile = conexaoFile;
-			this.nomeAba = nomeAba;
-		}
-
-		public String getConexaoAtual() {
-			return conexaoAtual;
-		}
-
-		public String getConexaoFile() {
-			return conexaoFile;
-		}
-
-		public String getNomeAba() {
-			return nomeAba;
-		}
-	}*/
+	/*
+	 * public static class InfoConexao { final String conexaoAtual; final String
+	 * conexaoFile; final String nomeAba;
+	 * 
+	 * public InfoConexao(String conexaoAtual, String conexaoFile, String
+	 * nomeAba) { this.conexaoAtual = conexaoAtual; this.conexaoFile =
+	 * conexaoFile; this.nomeAba = nomeAba; }
+	 * 
+	 * public String getConexaoAtual() { return conexaoAtual; }
+	 * 
+	 * public String getConexaoFile() { return conexaoFile; }
+	 * 
+	 * public String getNomeAba() { return nomeAba; } }
+	 */
 
 	private class Listener extends MouseAdapter {
 		@Override
@@ -894,11 +776,11 @@ public class Fichario extends JTabbedPane {
 			insertTab(titulo, icon, cmp, hint, destino);
 			setTabComponentAt(destino, aba);
 
-//			if (aba instanceof TituloAbaS) {
-//				setEnabledAt(destino, false);
-//			} else {
-//				setSelectedIndex(destino);
-//			}
+			// if (aba instanceof TituloAbaS) {
+			// setEnabledAt(destino, false);
+			// } else {
+			// setSelectedIndex(destino);
+			// }
 		}
 	}
 

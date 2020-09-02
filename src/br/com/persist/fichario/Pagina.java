@@ -7,9 +7,9 @@ public interface Pagina {
 
 	public void excluindoDoFichario(Fichario fichario);
 
-	public FicharioServico getFicharioServico();
+	public String getStringPersistencia();
 
-	public String getResumoSalvarRecuperar();
+	public Class<?> getClasseFabrica();
 
 	public Component getComponent();
 

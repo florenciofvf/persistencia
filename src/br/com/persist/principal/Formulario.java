@@ -47,10 +47,8 @@ public class Formulario extends JFrame {
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 
-
-
-	//private final transient List<Conexao> conexoes = new ArrayList<>();
-	//public static final Macro macro = new Macro();
+	// private final transient List<Conexao> conexoes = new ArrayList<>();
+	// public static final Macro macro = new Macro();
 
 	public Formulario() {
 		super(Mensagens.getTituloAplicacao());
@@ -64,13 +62,13 @@ public class Formulario extends JFrame {
 	}
 
 	public void adicionarServico(Servico servico) {
-		if(servico != null) {
+		if (servico != null) {
 			servicos.add(servico);
 		}
 	}
 
 	public void adicionarServicos(List<Servico> servicos) {
-		if(servicos == null) {
+		if (servicos == null) {
 			return;
 		}
 
@@ -80,7 +78,7 @@ public class Formulario extends JFrame {
 	}
 
 	public void adicionarFabrica(String chave, FabricaContainer fabrica) {
-		if(chave != null && !chave.trim().isEmpty() && fabrica != null) {
+		if (chave != null && !chave.trim().isEmpty() && fabrica != null) {
 			fabricas.put(chave, fabrica);
 		}
 	}
@@ -100,7 +98,8 @@ public class Formulario extends JFrame {
 	}
 
 	private void configurar() {
-		fichario.setTabLayoutPolicy(Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+		fichario.setTabLayoutPolicy(
+				Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
 		fichario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
 
 		addWindowListener(new WindowAdapter() {
@@ -114,10 +113,10 @@ public class Formulario extends JFrame {
 
 				// FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF,
 				// "Nimbus" + Constantes.DOIS);
-				//MapeamentoModelo.inicializar();
-				//VariaveisModelo.inicializar();
-				//FragmentoModelo.inicializar();
-				//atualizarConexoes();
+				// MapeamentoModelo.inicializar();
+				// VariaveisModelo.inicializar();
+				// FragmentoModelo.inicializar();
+				// atualizarConexoes();
 
 				fichario.restaurarPaginas(Formulario.this);
 				fichario.ativarNavegacao();
@@ -136,149 +135,134 @@ public class Formulario extends JFrame {
 		});
 	}
 
-//	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer, ConfigArquivo config) {
-//		fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer, config);
-//	}
+	// public void destacar(Conexao conexao, Superficie superficie, int
+	// tipoContainer, ConfigArquivo config) {
+	// fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer,
+	// config);
+	// }
 
-//	public static class CopiarColar {
-//		private static final List<Objeto> copiados = new ArrayList<>();
-//
-//		private CopiarColar() {
-//		}
-//
-//		public static void copiar(Superficie superficie) {
-//			copiados.clear();
-//
-//			for (Objeto objeto : superficie.getSelecionados()) {
-//				copiados.add(objeto.clonar());
-//			}
-//		}
-//
-//		public static void colar(Superficie superficie, boolean b, int x, int y) {
-//			superficie.limparSelecao();
-//
-//			for (Objeto objeto : copiados) {
-//				Objeto clone = get(objeto, superficie);
-//				superficie.addObjeto(clone);
-//				clone.setSelecionado(true);
-//				clone.setControlado(true);
-//
-//				if (b) {
-//					clone.setX(x);
-//					clone.setY(y);
-//				}
-//			}
-//
-//			superficie.repaint();
-//		}
-//
-//		public static boolean copiadosIsEmpty() {
-//			return copiados.isEmpty();
-//		}
-//
-//		private static Objeto get(Objeto objeto, Superficie superficie) {
-//			Objeto o = objeto.clonar();
-//			o.deltaX(Objeto.DIAMETRO);
-//			o.deltaY(Objeto.DIAMETRO);
-//			o.setId(objeto.getId() + "-" + Objeto.getSequencia());
-//
-//			boolean contem = superficie.contem(o);
-//
-//			while (contem) {
-//				o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
-//				contem = superficie.contem(o);
-//			}
-//
-//			return o;
-//		}
-//	}
+	// public static class CopiarColar {
+	// private static final List<Objeto> copiados = new ArrayList<>();
+	//
+	// private CopiarColar() {
+	// }
+	//
+	// public static void copiar(Superficie superficie) {
+	// copiados.clear();
+	//
+	// for (Objeto objeto : superficie.getSelecionados()) {
+	// copiados.add(objeto.clonar());
+	// }
+	// }
+	//
+	// public static void colar(Superficie superficie, boolean b, int x, int y)
+	// {
+	// superficie.limparSelecao();
+	//
+	// for (Objeto objeto : copiados) {
+	// Objeto clone = get(objeto, superficie);
+	// superficie.addObjeto(clone);
+	// clone.setSelecionado(true);
+	// clone.setControlado(true);
+	//
+	// if (b) {
+	// clone.setX(x);
+	// clone.setY(y);
+	// }
+	// }
+	//
+	// superficie.repaint();
+	// }
+	//
+	// public static boolean copiadosIsEmpty() {
+	// return copiados.isEmpty();
+	// }
+	//
+	// private static Objeto get(Objeto objeto, Superficie superficie) {
+	// Objeto o = objeto.clonar();
+	// o.deltaX(Objeto.DIAMETRO);
+	// o.deltaY(Objeto.DIAMETRO);
+	// o.setId(objeto.getId() + "-" + Objeto.getSequencia());
+	//
+	// boolean contem = superficie.contem(o);
+	//
+	// while (contem) {
+	// o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
+	// contem = superficie.contem(o);
+	// }
+	//
+	// return o;
+	// }
+	// }
 
-//	@Override
-//	public List<Conexao> getConexoes() {
-//		return conexoes;
-//	}
+	// @Override
+	// public List<Conexao> getConexoes() {
+	// return conexoes;
+	// }
 
-	/*public class Conteiner {
-		public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
-			ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-					new File(Mensagens.getString("label.abrir_exportacao")));
-			form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-			form.setLocationRelativeTo(Formulario.this);
-			form.setVisible(true);
-		}
+	/*
+	 * public class Conteiner { public void abrirExportacaoMetadado(Metadado
+	 * metadado, boolean circular) { ObjetoFormulario form =
+	 * ObjetoFormulario.criar(Formulario.this, new
+	 * File(Mensagens.getString("label.abrir_exportacao")));
+	 * form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+	 * form.setLocationRelativeTo(Formulario.this); form.setVisible(true); }
+	 * 
+	 * public void abrirImportacaoMetadado(Metadado metadado, boolean circular)
+	 * { ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this, new
+	 * File(Mensagens.getString("label.abrir_importacao")));
+	 * form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+	 * form.setLocationRelativeTo(Formulario.this); form.setVisible(true); }
+	 * 
+	 * public void exportarMetadadoRaiz(Metadado metadado) { if
+	 * (metadado.getEhRaiz() && !metadado.estaVazio()) { ObjetoFormulario form =
+	 * ObjetoFormulario.criar(Formulario.this, new
+	 * File(Mensagens.getString("label.exportar")));
+	 * form.exportarMetadadoRaiz(metadado);
+	 * form.setLocationRelativeTo(Formulario.this); form.setVisible(true); } } }
+	 */
 
-		public void abrirImportacaoMetadado(Metadado metadado, boolean circular) {
-			ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-					new File(Mensagens.getString("label.abrir_importacao")));
-			form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-			form.setLocationRelativeTo(Formulario.this);
-			form.setVisible(true);
-		}
+	/*
+	 * public class Arquivos { File arquivoParent;
+	 * 
+	 * public void abrir(File file, boolean abrirNoFichario, ConfigArquivo
+	 * config) { if (file == null || !file.isFile()) { return; }
+	 * 
+	 * try { ObjetoColetor coletor = new ObjetoColetor(); arquivoParent =
+	 * file.getParentFile(); XML.processar(file, coletor);
+	 * 
+	 * if (abrirNoFichario) { fichario.getArquivos().abrir(Formulario.this,
+	 * file, coletor, config); } else { abrir(Formulario.this, file, coletor,
+	 * config); } } catch (Exception ex) { Util.stackTraceAndMessage("ABRIR: " +
+	 * file.getAbsolutePath(), ex, Formulario.this); } }
+	 * 
+	 * public void abrir(Formulario formulario, File file, ObjetoColetor
+	 * coletor, ConfigArquivo config) { ObjetoFormulario form =
+	 * ObjetoFormulario.criar(formulario, file); form.abrir(file, coletor,
+	 * getGraphics(), config);
+	 * 
+	 * formulario.checarPreferenciasLarguraAltura(); PosicaoDimensao pd =
+	 * formulario.criarPosicaoDimensaoSeValido();
+	 * 
+	 * if (pd != null) { form.setBounds(pd.getX(), pd.getY(), pd.getLargura(),
+	 * pd.getAltura()); } else { form.setLocationRelativeTo(formulario); }
+	 * 
+	 * form.setVisible(true); } }
+	 */
 
-		public void exportarMetadadoRaiz(Metadado metadado) {
-			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-				ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-						new File(Mensagens.getString("label.exportar")));
-				form.exportarMetadadoRaiz(metadado);
-				form.setLocationRelativeTo(Formulario.this);
-				form.setVisible(true);
-			}
-		}
-	}*/
-
-	/*public class Arquivos {
-		File arquivoParent;
-
-		public void abrir(File file, boolean abrirNoFichario, ConfigArquivo config) {
-			if (file == null || !file.isFile()) {
-				return;
-			}
-
-			try {
-				ObjetoColetor coletor = new ObjetoColetor();
-				arquivoParent = file.getParentFile();
-				XML.processar(file, coletor);
-
-				if (abrirNoFichario) {
-					fichario.getArquivos().abrir(Formulario.this, file, coletor, config);
-				} else {
-					abrir(Formulario.this, file, coletor, config);
-				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
-			}
-		}
-
-		public void abrir(Formulario formulario, File file, ObjetoColetor coletor, ConfigArquivo config) {
-			ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
-			form.abrir(file, coletor, getGraphics(), config);
-
-			formulario.checarPreferenciasLarguraAltura();
-			PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
-
-			if (pd != null) {
-				form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
-			} else {
-				form.setLocationRelativeTo(formulario);
-			}
-
-			form.setVisible(true);
-		}
-	}*/
-
-//	public void atualizarConexoes() {
-//		ConexaoModelo modelo = new ConexaoModelo();
-//		conexoes.clear();
-//
-//		try {
-//			modelo.abrir();
-//			for (Conexao conexao : modelo.getConexoes()) {
-//				conexoes.add(conexao);
-//			}
-//		} catch (Exception ex) {
-//			Util.stackTraceAndMessage("ATUALIZAR CONEXOES", ex, this);
-//		}
-//	}
+	// public void atualizarConexoes() {
+	// ConexaoModelo modelo = new ConexaoModelo();
+	// conexoes.clear();
+	//
+	// try {
+	// modelo.abrir();
+	// for (Conexao conexao : modelo.getConexoes()) {
+	// conexoes.add(conexao);
+	// }
+	// } catch (Exception ex) {
+	// Util.stackTraceAndMessage("ATUALIZAR CONEXOES", ex, this);
+	// }
+	// }
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
@@ -306,7 +290,7 @@ public class Formulario extends JFrame {
 	public void fecharFormulario(boolean fecharConexao) {
 		if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
 			Preferencias.setFecharConexao(fecharConexao);
-			//FormularioUtil.fechar(Formulario.this);
+			// FormularioUtil.fechar(Formulario.this);
 			System.exit(0);
 		}
 	}
