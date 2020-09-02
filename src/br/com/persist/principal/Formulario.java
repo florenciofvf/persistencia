@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.fabrica.FabricaContainer;
 import br.com.persist.fichario.Fichario;
@@ -282,6 +283,7 @@ public class Formulario extends JFrame {
 				}
 
 				Collections.sort(servicos, (o1, o2) -> o1.getOrdem() - o2.getOrdem());
+				SwingUtilities.updateComponentTreeUI(this);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("CARREGAR MENU: " + file.getAbsolutePath(), ex, Formulario.this);
 			}
