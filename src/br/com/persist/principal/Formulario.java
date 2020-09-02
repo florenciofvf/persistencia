@@ -27,41 +27,30 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
 
-import br.com.persist.conexao.Conexao;
-import br.com.persist.conexao.ConexaoModelo;
-import br.com.persist.conexao.ConexaoProvedor;
-import br.com.persist.fabrica.Fabrica;
 import br.com.persist.fabrica.FabricaContainer;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.fichario.FicharioAba;
-import br.com.persist.fragmento.FragmentoModelo;
-import br.com.persist.macro.Macro;
-import br.com.persist.mapeamento.MapeamentoModelo;
-import br.com.persist.metadado.Metadado;
-import br.com.persist.objeto.Objeto;
-import br.com.persist.objeto.ObjetoFormulario;
-import br.com.persist.objeto.Superficie;
-import br.com.persist.util.ConfigArquivo;
+import br.com.persist.servico.Servico;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.MenuApp;
 import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
-import br.com.persist.variaveis.VariaveisModelo;
 import br.com.persist.xml.XML;
-import br.com.persist.xml.XMLColetor;
 
-public class Formulario extends JFrame implements ConexaoProvedor {
+public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private final transient List<Conexao> conexoes = new ArrayList<>();
+	private final transient Map<String, FabricaContainer> fabricas = new HashMap<>();
+	private final transient List<Servico> servicos = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private static final Map<String, Object> map = new HashMap<>();
-	private final transient Conteiner conteiner = new Conteiner();
-	private final transient Arquivos arquivos = new Arquivos();
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
-	public static final Macro macro = new Macro();
+
+
+
+	//private final transient List<Conexao> conexoes = new ArrayList<>();
+	//public static final Macro macro = new Macro();
 
 	public Formulario() {
 		super(Mensagens.getTituloAplicacao());
@@ -74,27 +63,63 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 		configurar();
 	}
 
+	public void adicionarServico(Servico servico) {
+		if(servico != null) {
+			servicos.add(servico);
+		}
+	}
+
+	public void adicionarServicos(List<Servico> servicos) {
+		if(servicos == null) {
+			return;
+		}
+
+		for (Servico servico : servicos) {
+			adicionarServico(servico);
+		}
+	}
+
+	public void adicionarFabrica(String chave, FabricaContainer fabrica) {
+		if(chave != null && !chave.trim().isEmpty() && fabrica != null) {
+			fabricas.put(chave, fabrica);
+		}
+	}
+
+	public FabricaContainer getFabrica(String chave) {
+		return fabricas.get(chave);
+	}
+
+	public void processar(String comando, Object objeto) {
+		for (Servico servico : servicos) {
+			servico.processar(this, comando, objeto);
+		}
+	}
+
 	private void montarLayout() {
 		add(BorderLayout.CENTER, fichario);
 	}
 
 	private void configurar() {
-		fichario.setTabLayoutPolicy(
-				Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
+		fichario.setTabLayoutPolicy(Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
 		fichario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
 
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
+				menuPrincipal.carregarMenu();
+
+				for (Servico servico : servicos) {
+					servico.visivelFormulario(Formulario.this);
+				}
+
 				// FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF,
 				// "Nimbus" + Constantes.DOIS);
-				MapeamentoModelo.inicializar();
-				VariaveisModelo.inicializar();
-				FragmentoModelo.inicializar();
-				menuPrincipal.carregarMenu();
-				atualizarConexoes();
+				//MapeamentoModelo.inicializar();
+				//VariaveisModelo.inicializar();
+				//FragmentoModelo.inicializar();
+				//atualizarConexoes();
 
-				fichario.abrirSalvos(Formulario.this);
+				fichario.restaurarPaginas(Formulario.this);
 				fichario.ativarNavegacao();
 				iconeBandeja();
 			}
@@ -102,109 +127,78 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// menuPrincipal.fecharAcao.actionPerformed(null);
+				fichario.salvarPaginas(Formulario.this);
+
+				for (Servico servico : servicos) {
+					servico.fechandoFormulario(Formulario.this);
+				}
 			}
 		});
 	}
 
-	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer, ConfigArquivo config) {
-		fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer, config);
-	}
+//	public void destacar(Conexao conexao, Superficie superficie, int tipoContainer, ConfigArquivo config) {
+//		fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer, config);
+//	}
 
-	public static class CopiarColar {
-		private static final List<Objeto> copiados = new ArrayList<>();
+//	public static class CopiarColar {
+//		private static final List<Objeto> copiados = new ArrayList<>();
+//
+//		private CopiarColar() {
+//		}
+//
+//		public static void copiar(Superficie superficie) {
+//			copiados.clear();
+//
+//			for (Objeto objeto : superficie.getSelecionados()) {
+//				copiados.add(objeto.clonar());
+//			}
+//		}
+//
+//		public static void colar(Superficie superficie, boolean b, int x, int y) {
+//			superficie.limparSelecao();
+//
+//			for (Objeto objeto : copiados) {
+//				Objeto clone = get(objeto, superficie);
+//				superficie.addObjeto(clone);
+//				clone.setSelecionado(true);
+//				clone.setControlado(true);
+//
+//				if (b) {
+//					clone.setX(x);
+//					clone.setY(y);
+//				}
+//			}
+//
+//			superficie.repaint();
+//		}
+//
+//		public static boolean copiadosIsEmpty() {
+//			return copiados.isEmpty();
+//		}
+//
+//		private static Objeto get(Objeto objeto, Superficie superficie) {
+//			Objeto o = objeto.clonar();
+//			o.deltaX(Objeto.DIAMETRO);
+//			o.deltaY(Objeto.DIAMETRO);
+//			o.setId(objeto.getId() + "-" + Objeto.getSequencia());
+//
+//			boolean contem = superficie.contem(o);
+//
+//			while (contem) {
+//				o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
+//				contem = superficie.contem(o);
+//			}
+//
+//			return o;
+//		}
+//	}
 
-		private CopiarColar() {
-		}
+//	@Override
+//	public List<Conexao> getConexoes() {
+//		return conexoes;
+//	}
 
-		public static void copiar(Superficie superficie) {
-			copiados.clear();
-
-			for (Objeto objeto : superficie.getSelecionados()) {
-				copiados.add(objeto.clonar());
-			}
-		}
-
-		public static void colar(Superficie superficie, boolean b, int x, int y) {
-			superficie.limparSelecao();
-
-			for (Objeto objeto : copiados) {
-				Objeto clone = get(objeto, superficie);
-				superficie.addObjeto(clone);
-				clone.setSelecionado(true);
-				clone.setControlado(true);
-
-				if (b) {
-					clone.setX(x);
-					clone.setY(y);
-				}
-			}
-
-			superficie.repaint();
-		}
-
-		public static boolean copiadosIsEmpty() {
-			return copiados.isEmpty();
-		}
-
-		private static Objeto get(Objeto objeto, Superficie superficie) {
-			Objeto o = objeto.clonar();
-			o.deltaX(Objeto.DIAMETRO);
-			o.deltaY(Objeto.DIAMETRO);
-			o.setId(objeto.getId() + "-" + Objeto.getSequencia());
-
-			boolean contem = superficie.contem(o);
-
-			while (contem) {
-				o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
-				contem = superficie.contem(o);
-			}
-
-			return o;
-		}
-	}
-
-	@Override
-	public List<Conexao> getConexoes() {
-		return conexoes;
-	}
-
-	public Conteiner getConteiner() {
-		return conteiner;
-	}
-
-	public Arquivos getArquivos() {
-		return arquivos;
-	}
-
-	public Fichario getFichario() {
-		return fichario;
-	}
-
-	public void adicionarFicharioAba(FicharioAba ficharioAba) {
-		fichario.adicionarAba(ficharioAba);
-	}
-
-	public boolean excluirFicharioAba(FicharioAba ficharioAba) {
-		return fichario.excluirAba(ficharioAba);
-	}
-
-	public void adicionarFicharioAba(String classeFabricaEContainerDetalhe) {
-		if (classeFabricaEContainerDetalhe.startsWith(Constantes.III)) {
-			classeFabricaEContainerDetalhe = classeFabricaEContainerDetalhe.substring(Constantes.III.length(),
-					classeFabricaEContainerDetalhe.length());
-		}
-
-		FabricaContainer fabricaContainer = Fabrica.criar(classeFabricaEContainerDetalhe);
-
-		if (fabricaContainer == null) {
-			return;
-		}
-
-		FicharioAba ficharioAba = fabricaContainer.criarFicharioAba(this, classeFabricaEContainerDetalhe);
-		adicionarFicharioAba(ficharioAba);
-	}
-
-	public class Conteiner {
+	/*public class Conteiner {
 		public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
 			ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
 					new File(Mensagens.getString("label.abrir_exportacao")));
@@ -230,9 +224,9 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 				form.setVisible(true);
 			}
 		}
-	}
+	}*/
 
-	public class Arquivos {
+	/*public class Arquivos {
 		File arquivoParent;
 
 		public void abrir(File file, boolean abrirNoFichario, ConfigArquivo config) {
@@ -241,7 +235,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 
 			try {
-				XMLColetor coletor = new XMLColetor();
+				ObjetoColetor coletor = new ObjetoColetor();
 				arquivoParent = file.getParentFile();
 				XML.processar(file, coletor);
 
@@ -255,7 +249,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 		}
 
-		public void abrir(Formulario formulario, File file, XMLColetor coletor, ConfigArquivo config) {
+		public void abrir(Formulario formulario, File file, ObjetoColetor coletor, ConfigArquivo config) {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 			form.abrir(file, coletor, getGraphics(), config);
 
@@ -270,21 +264,21 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 
 			form.setVisible(true);
 		}
-	}
+	}*/
 
-	public void atualizarConexoes() {
-		ConexaoModelo modelo = new ConexaoModelo();
-		conexoes.clear();
-
-		try {
-			modelo.abrir();
-			for (Conexao conexao : modelo.getConexoes()) {
-				conexoes.add(conexao);
-			}
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("ATUALIZAR CONEXOES", ex, this);
-		}
-	}
+//	public void atualizarConexoes() {
+//		ConexaoModelo modelo = new ConexaoModelo();
+//		conexoes.clear();
+//
+//		try {
+//			modelo.abrir();
+//			for (Conexao conexao : modelo.getConexoes()) {
+//				conexoes.add(conexao);
+//			}
+//		} catch (Exception ex) {
+//			Util.stackTraceAndMessage("ATUALIZAR CONEXOES", ex, this);
+//		}
+//	}
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;
@@ -297,8 +291,8 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 			}
 
 			try {
-				XMLColetor coletor = new XMLColetor();
-				XML.processarMenu(file, coletor);
+				MenuColetor coletor = new MenuColetor();
+				XML.processar(file, new MenuHandler(coletor));
 
 				for (MenuApp m : coletor.getMenus()) {
 					add(m.criarMenu(Formulario.this));
@@ -312,7 +306,7 @@ public class Formulario extends JFrame implements ConexaoProvedor {
 	public void fecharFormulario(boolean fecharConexao) {
 		if (Util.confirmar(Formulario.this, "label.confirma_fechar")) {
 			Preferencias.setFecharConexao(fecharConexao);
-			FormularioUtil.fechar(Formulario.this);
+			//FormularioUtil.fechar(Formulario.this);
 			System.exit(0);
 		}
 	}

@@ -10,7 +10,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.UIManager;
 
-import br.com.persist.objeto.Objeto;
+import br.com.persist.principal.Formulario;
 
 public class Preferencias {
 	private static boolean aplicarLarguraAoAbrirArquivoObjeto;
@@ -48,7 +48,7 @@ public class Preferencias {
 	}
 
 	public static void abrir() {
-		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
@@ -91,7 +91,7 @@ public class Preferencias {
 	}
 
 	public static void salvar() {
-		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
@@ -132,7 +132,7 @@ public class Preferencias {
 	}
 
 	public static void exportar() throws IOException, BackingStoreException {
-		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.exportSubtree(new FileOutputStream(arqPref));
 	}
 
@@ -141,12 +141,12 @@ public class Preferencias {
 	}
 
 	public static boolean getBoolean(String chave) {
-		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		return pref.getBoolean(chave, false);
 	}
 
 	public static void setBoolean(String chave, boolean valor) {
-		Preferences pref = Preferences.userNodeForPackage(Objeto.class);
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean(chave, valor);
 	}
 

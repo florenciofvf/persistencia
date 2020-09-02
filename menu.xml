@@ -2,9 +2,38 @@
 
 <menuPrincipal>
 	<menu descricao="Arquivo">
+		<menu classeFabrica="br.com.persist.objeto.ObjetoFabrica" />
+		<menu classeFabrica="br.com.persist.objeto.DesktopFabrica" />
+		<menu classeFabrica="br.com.persist.anexo.AnexoTreeFabrica" />
+		<menu classeFabrica="br.com.persist.arquivo.ArquivoTreeFabrica" />
 	</menu>
 
-	<menu descricao="Ambiente">
+	<menu descricao="Banco">
+		<menu classeFabrica="br.com.persist.conexao.ConexaoFabrica" />
+		<menu classeFabrica="br.com.persist.consulta.ConsultaFabrica" />
+		<menu classeFabrica="br.com.persist.update.UpdateFabrica" />
+		<menu classeFabrica="br.com.persist.metadado.MetadadoTreeFabrica" />
+	</menu>
+
+	<menu descricao="Utilitarios">
+		<menu classeFabrica="br.com.persist.anotacao.AnotacaoFabrica" />
+		<menu classeFabrica="br.com.persist.fragmento.FragmentoFabrica" />
+		<menu classeFabrica="br.com.persist.mapeamento.MapeamentoFabrica" />
+		<menu classeFabrica="br.com.persist.variaveis.VariaveisFabrica" />
+		<menu classeFabrica="br.com.persist.comparacao.ComparacaoFabrica" />
+		<menu classeFabrica="br.com.persist.requisicao.RequisicaoFabrica" />
+		<menu classeFabrica="br.com.persist.runtime_exec.RuntimeExecFabrica" />
+	</menu>
+
+	<menu descricao="Configuracoes">
+		<menu classeFabrica="br.com.persist.configuracao.ConfiguracaoFabrica" />
+	</menu>
+
+	<menu descricao="Ambientes">
 		<menu classeFabrica="br.com.persist.ambiente.AmbienteFabrica" />
+	</menu>
+
+	<menu descricao="Aparencia">
+		<menu classeFabrica="br.com.persist.principal.PrincipalFabrica" />
 	</menu>
 </menuPrincipal>

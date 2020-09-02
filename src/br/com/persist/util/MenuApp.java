@@ -89,12 +89,15 @@ public class MenuApp {
 	}
 
 	public List<Menu> criarItens(Formulario formulario) {
-		FabricaContainer fabricaContainer = Fabrica.criar(classeFabrica + Constantes.SEP);
+		FabricaContainer fabricaContainer = Fabrica.criar(classeFabrica);
+		List<Menu> menus = new ArrayList<>();
 
 		if (fabricaContainer != null) {
-			return fabricaContainer.criarMenus(formulario);
+			formulario.adicionarServicos(fabricaContainer.getServicos(formulario));
+			formulario.adicionarFabrica(classeFabrica, fabricaContainer);
+			menus.addAll(fabricaContainer.criarMenus(formulario));
 		}
 
-		return new ArrayList<>();
+		return menus;
 	}
 }

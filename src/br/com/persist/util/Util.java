@@ -26,35 +26,23 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
-import br.com.persist.chave_valor.ChaveValor;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextArea;
-import br.com.persist.conexao.Conexao;
-import br.com.persist.conexao.ConexaoComboModelo;
-import br.com.persist.conexao.ConexaoProvedor;
 import br.com.persist.fmt.Array;
 import br.com.persist.fmt.Texto;
 import br.com.persist.fmt.Tipo;
 import br.com.persist.mensagem.MensagemDialogo;
-import br.com.persist.objeto.Objeto;
-import br.com.persist.objeto.ObjetoComboModelo;
-import br.com.persist.objeto.Superficie;
-import br.com.persist.variaveis.VariaveisModelo;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
@@ -411,97 +399,97 @@ public class Util {
 		return sb.toString();
 	}
 
-	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor, Conexao padrao) {
-		Combo cmbConexao = new Combo(new ConexaoComboModelo(provedor.getConexoes()));
+//	public static JComboBox<Conexao> criarComboConexao(ConexaoProvedor provedor, Conexao padrao) {
+//		Combo cmbConexao = new Combo(new ConexaoComboModelo(provedor.getConexoes()));
+//
+//		if (padrao != null) {
+//			cmbConexao.setSelectedItem(padrao);
+//		}
+//
+//		return cmbConexao;
+//	}
 
-		if (padrao != null) {
-			cmbConexao.setSelectedItem(padrao);
-		}
+//	public static class Combo extends JComboBox<Conexao> implements PopupMenuListener {
+//		private static final long serialVersionUID = 1L;
+//		private int total;
+//
+//		public Combo(ConexaoComboModelo modelo) {
+//			super(modelo);
+//			total = modelo.getSize();
+//			addPopupMenuListener(this);
+//		}
+//
+//		@Override
+//		public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+//			if (total != getModel().getSize()) {
+//				total = getModel().getSize();
+//				((ConexaoComboModelo) getModel()).notificarMudancas();
+//			}
+//		}
+//
+//		@Override
+//		public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+//			LOG.log(Level.FINEST, "popupMenuWillBecomeInvisible");
+//		}
+//
+//		@Override
+//		public void popupMenuCanceled(PopupMenuEvent e) {
+//			LOG.log(Level.FINEST, "popupMenuCanceled");
+//		}
+//	}
 
-		return cmbConexao;
-	}
+//	public static JComboBox<Objeto> criarComboObjetosSel(Superficie superficie) {
+//		return new JComboBox<>(new ObjetoComboModelo(superficie.getSelecionados()));
+//	}
 
-	public static class Combo extends JComboBox<Conexao> implements PopupMenuListener {
-		private static final long serialVersionUID = 1L;
-		private int total;
+//	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
+//		return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
+//	}
 
-		public Combo(ConexaoComboModelo modelo) {
-			super(modelo);
-			total = modelo.getSize();
-			addPopupMenuListener(this);
-		}
+//	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension, String apelido) {
+//		Superficie.setComplemento(conexao, objeto);
+//		return new Object[] { objeto, conexao, dimension, apelido };
+//	}
 
-		@Override
-		public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-			if (total != getModel().getSize()) {
-				total = getModel().getSize();
-				((ConexaoComboModelo) getModel()).notificarMudancas();
-			}
-		}
+//	public static String substituir(String instrucao, Map<String, String> mapaChaveValor) {
+//		if (instrucao == null) {
+//			instrucao = Constantes.VAZIO;
+//		}
+//
+//		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
+//			return instrucao;
+//		}
+//
+//		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
+//
+//		while (it.hasNext()) {
+//			Entry<String, String> entry = it.next();
+//			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
+//			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
+//			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
+//		}
+//
+//		Iterator<ChaveValor> iterator = VariaveisModelo.getLista().iterator();
+//
+//		while (iterator.hasNext()) {
+//			ChaveValor cv = iterator.next();
+//			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
+//		}
+//
+//		return instrucao;
+//	}
 
-		@Override
-		public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-			LOG.log(Level.FINEST, "popupMenuWillBecomeInvisible");
-		}
-
-		@Override
-		public void popupMenuCanceled(PopupMenuEvent e) {
-			LOG.log(Level.FINEST, "popupMenuCanceled");
-		}
-	}
-
-	public static JComboBox<Objeto> criarComboObjetosSel(Superficie superficie) {
-		return new JComboBox<>(new ObjetoComboModelo(superficie.getSelecionados()));
-	}
-
-	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
-		return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
-	}
-
-	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension, String apelido) {
-		Superficie.setComplemento(conexao, objeto);
-		return new Object[] { objeto, conexao, dimension, apelido };
-	}
-
-	public static String substituir(String instrucao, Map<String, String> mapaChaveValor) {
-		if (instrucao == null) {
-			instrucao = Constantes.VAZIO;
-		}
-
-		if (mapaChaveValor == null || mapaChaveValor.isEmpty()) {
-			return instrucao;
-		}
-
-		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Entry<String, String> entry = it.next();
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
-		}
-
-		Iterator<ChaveValor> iterator = VariaveisModelo.getLista().iterator();
-
-		while (iterator.hasNext()) {
-			ChaveValor cv = iterator.next();
-			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
-		}
-
-		return instrucao;
-	}
-
-	public static String substituir(String instrucao, ChaveValor cv) {
-		if (instrucao == null) {
-			instrucao = Constantes.VAZIO;
-		}
-
-		if (cv != null && cv.getChave() != null) {
-			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
-		}
-
-		return instrucao;
-	}
+//	public static String substituir(String instrucao, ChaveValor cv) {
+//		if (instrucao == null) {
+//			instrucao = Constantes.VAZIO;
+//		}
+//
+//		if (cv != null && cv.getChave() != null) {
+//			instrucao = instrucao.replaceAll("#" + cv.getChave() + "#", cv.getValor());
+//		}
+//
+//		return instrucao;
+//	}
 
 	public static JFileChooser criarFileChooser(File arquivo, boolean multiSelection) {
 		JFileChooser fileChooser = new JFileChooser(".");

@@ -1,13 +1,11 @@
 package br.com.persist.container;
 
 import br.com.persist.componente.Panel;
-import br.com.persist.fichario.FicharioAba;
-import br.com.persist.fichario.FicharioSalvar;
+import br.com.persist.fichario.Pagina;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.Constantes;
 import br.com.persist.util.IJanela;
 
-public abstract class AbstratoContainer extends Panel implements FicharioAba, FicharioSalvar {
+public abstract class AbstratoContainer extends Panel implements Pagina {
 	private static final long serialVersionUID = 1L;
 	protected final Formulario formulario;
 
@@ -15,11 +13,13 @@ public abstract class AbstratoContainer extends Panel implements FicharioAba, Fi
 		this.formulario = formulario;
 	}
 
+	public abstract void setJanela(IJanela janela);
+
 	public Formulario getFormulario() {
 		return formulario;
 	}
 
-	protected void destacarEmFormulario() {
+	/*protected void destacarEmFormulario() {
 	}
 
 	protected void clonarEmFormulario() {
@@ -30,8 +30,6 @@ public abstract class AbstratoContainer extends Panel implements FicharioAba, Fi
 
 	protected void retornoAoFichario() {
 	}
-
-	public abstract void setJanela(IJanela janela);
 
 	public String classeFabricaEContainer(Class<?> fabrica, Class<?> container, Object... detalhes) {
 		StringBuilder sb = new StringBuilder(Constantes.III);
@@ -44,15 +42,5 @@ public abstract class AbstratoContainer extends Panel implements FicharioAba, Fi
 		}
 
 		return sb.toString();
-	}
-
-	@Override
-	public String getTituloMin() {
-		return null;
-	}
-
-	@Override
-	public String getTitulo() {
-		return null;
-	}
+	}*/
 }

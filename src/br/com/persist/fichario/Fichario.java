@@ -1,6 +1,5 @@
 package br.com.persist.fichario;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -35,45 +34,25 @@ import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import br.com.persist.arquivo.ArquivoTreeModelo;
-import br.com.persist.chave_valor.ChaveValor;
-import br.com.persist.conexao.Conexao;
-import br.com.persist.icone.Icones;
-import br.com.persist.objeto.Objeto;
-import br.com.persist.objeto.ObjetoContainer;
-import br.com.persist.objeto.Superficie;
-import br.com.persist.objeto.ObjetoColetor;
-import br.com.persist.objeto.Desktop;
-import br.com.persist.objeto.DesktopFormulario;
-import br.com.persist.objeto.OTabelaContainer;
+import br.com.persist.fabrica.FabricaContainer;
 import br.com.persist.principal.Formulario;
-import br.com.persist.util.ConfigArquivo;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
-import br.com.persist.variaveis.VariaveisModelo;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 	private final transient NavegButton navegButtonEsquerdo = new NavegButton(1);
 	private final transient NavegButton navegButtonDireito = new NavegButton(2);
 	private final transient NavegButton navegButtonLimpar = new NavegButton(0);
-	private final transient SalvarAbrir salvarAbrir = new SalvarAbrir();
 	private final transient NavegacaoListener navegacaoListener;
-	private final transient Arquivos arquivos = new Arquivos();
-	private final transient Destacar destacar = new Destacar();
 	private final transient Listener listener = new Listener();
-	private final transient Desktops desktops = new Desktops();
-	private final transient Objetos objetos = new Objetos();
 	private static final Logger LOG = Logger.getGlobal();
 	private transient Ponto ponto;
 	private Rectangle rectangle;
@@ -316,7 +295,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public class Destacar {
+	/*public class Destacar {
 		public void destacar(Formulario formulario, Conexao conexao, Superficie superficie, int tipoContainer,
 				ConfigArquivo config) {
 			List<Objeto> lista = superficie.getSelecionados();
@@ -453,23 +432,23 @@ public class Fichario extends JTabbedPane {
 				}
 			}
 		}
-	}
+	}*/
 
-	public Destacar getDestacar() {
-		return destacar;
-	}
+//	public Destacar getDestacar() {
+//		return destacar;
+//	}
 
-	public Arquivos getArquivos() {
-		return arquivos;
-	}
-
-	public Desktops getDesktops() {
-		return desktops;
-	}
-
-	public Objetos getObjetos() {
-		return objetos;
-	}
+//	public Arquivos getArquivos() {
+//		return arquivos;
+//	}
+//
+//	public Desktops getDesktops() {
+//		return desktops;
+//	}
+//
+//	public Objetos getObjetos() {
+//		return objetos;
+//	}
 
 	public class Conteiner {
 		// public void abrirExportacaoMetadado(Formulario formulario, Metadado
@@ -500,36 +479,92 @@ public class Fichario extends JTabbedPane {
 		// }
 	}
 
-	public boolean excluirAba(FicharioAba aba) {
-		int indice = arquivos.getIndice(aba.getComponent());
-
-		if (indice == -1) {
-			return false;
-		}
-
-		remove(indice);
+	public boolean excluirAba(Pagina aba) {
+//		int indice = arquivos.getIndice(aba.getComponent());
+//
+//		if (indice == -1) {
+//			return false;
+//		}
+//
+//		remove(indice);
 		return true;
 	}
 
-	public void adicionarAba(FicharioAba aba) {
-		if (aba == null) {
-			throw new IllegalArgumentException("Aba nula.");
+	public void adicionarPagina(Pagina pagina) {
+		if (pagina == null) {
+			throw new IllegalArgumentException("pagina nula.");
 		}
 
-		addTab(aba.getChaveTitulo(), aba.getChaveTituloMin(), aba.getComponent());
+		Titulo titulo = pagina.getTitulo();
+		String title = Preferencias.isTituloAbaMin() ? titulo.getTituloMin() : titulo.getTitulo();
+
+		addTab(title, pagina.getComponent());
 		int ultimoIndice = getTabCount() - 1;
 
-		TituloAba tituloAba = new TituloAba(this, aba.getIcone());
-		setToolTipTextAt(ultimoIndice, aba.getHintTitulo());
-		setTabComponentAt(ultimoIndice, tituloAba);
+		Cabecalho cabecalho = new Cabecalho(this, pagina);
+		setToolTipTextAt(ultimoIndice, titulo.getHint());
+		setTabComponentAt(ultimoIndice, cabecalho);
 		setSelectedIndex(ultimoIndice);
 	}
 
-	public void addTab(String title, String titleMin, Component component) {
-		addTab(Preferencias.isTituloAbaMin() ? Mensagens.getString(titleMin) : Mensagens.getString(title), component);
+	public void salvarPaginas(Formulario formulario) {
+		try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
+			int total = getTabCount();
+
+			for (int i = 0; i < total; i++) {
+				Component tab = getTabComponentAt(i);
+
+				Cabecalho cabecalho = (Cabecalho) tab;
+				Pagina pagina = cabecalho.getPagina();
+				FicharioServico servico = pagina.getFicharioServico();
+				FabricaContainer fabrica = servico.getFabricaContainer();
+				String resumo = pagina.getResumoSalvarRecuperar();
+				pw.print(fabrica.getClass().getName() + Constantes.III + resumo + Constantes.QL);
+			}
+
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("SALVAR PAGINAS", ex, Fichario.this);
+			LOG.log(Level.SEVERE, ex.getMessage());
+		}
 	}
 
-	public class Desktops {
+	public void restaurarPaginas(Formulario formulario) {
+		File file = new File(Constantes.ABERTOS_FICHARIO);
+
+		if (file.exists()) {
+			List<String> linhas = new ArrayList<>();
+
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+				String linha = null;
+
+				while ((linha = br.readLine()) != null) {
+					linhas.add(linha);
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);
+			}
+
+			for (String s : linhas) {
+				recuperarPagina(formulario, s);
+			}
+		}
+	}
+
+	private void recuperarPagina(Formulario formulario, String s) {
+		int pos = s.indexOf(Constantes.III);
+		String classeFabrica = s.substring(0, pos);
+		String resumo = s.substring(pos + Constantes.III.length());
+
+		FabricaContainer fabrica = formulario.getFabrica(classeFabrica);
+
+		if(fabrica != null) {
+			FicharioServico servico = fabrica.getFicharioServico();
+			Pagina pagina = servico.criarPagina(formulario, resumo);
+			adicionarPagina(pagina);
+		}
+	}
+
+	/*public class Desktops {
 		public Desktop novo(Formulario formulario) {
 			Desktop desktop = new Desktop(formulario, false);
 			desktop.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
@@ -560,9 +595,9 @@ public class Fichario extends JTabbedPane {
 
 			container.ini(getGraphics());
 		}
-	}
+	}*/
 
-	public class Arquivos {
+	/*public class Arquivos {
 		public void abrir(Formulario formulario, File file, ObjetoColetor coletor, ConfigArquivo config) {
 
 			if (file.getName().equalsIgnoreCase(Constantes.FVF_SEPARADOR)) {
@@ -674,20 +709,20 @@ public class Fichario extends JTabbedPane {
 				count = getTabCount();
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void remove(int index) {
-		Component cmp = getComponentAt(index);
-
-		if (cmp instanceof ObjetoContainer) {
-			((ObjetoContainer) cmp).excluido();
-		}
+//		Component cmp = getComponentAt(index);
+//
+//		if (cmp instanceof ObjetoContainer) {
+//			((ObjetoContainer) cmp).excluido();
+//		}
 
 		super.remove(index);
 	}
 
-	public void selecionarConexao(Conexao conexao) {
+	/*public void selecionarConexao(Conexao conexao) {
 		int total = getTabCount();
 
 		for (int i = 0; i < total; i++) {
@@ -698,9 +733,9 @@ public class Fichario extends JTabbedPane {
 				aba.selecionarConexao(conexao);
 			}
 		}
-	}
+	}*/
 
-	public void infoConexao() {
+	/*public void infoConexao() {
 		int total = getTabCount();
 		StringBuilder sb = new StringBuilder();
 		int cont = 0;
@@ -730,9 +765,9 @@ public class Fichario extends JTabbedPane {
 		}
 
 		Util.mensagem(Fichario.this, sb.toString());
-	}
+	}*/
 
-	public static String getAbsRelativoArquivo(File diretorioArquivos, File file) {
+	/*public static String getAbsRelativoArquivo(File diretorioArquivos, File file) {
 		if (diretorioArquivos != null && file != null) {
 			String absDiretorioArquivos = diretorioArquivos.getAbsolutePath();
 			String absArquivoAba = file.getAbsolutePath();
@@ -770,86 +805,14 @@ public class Fichario extends JTabbedPane {
 
 			if (nome.startsWith(Constantes.SEP)) {
 				nome = Util.replaceAll(nome, Constantes.SEP, Constantes.SEPARADOR);
-				file = new File(ArquivoTreeModelo.FILE.getAbsolutePath() + nome);
+				//file = new File(ArquivoTreeModelo.FILE.getAbsolutePath() + nome);
 			}
 		}
 
 		return file;
-	}
+	}*/
 
-	public void salvarAbertos() {
-		salvarAbrir.salvar();
-	}
-
-	public void abrirSalvos(Formulario formulario) {
-		salvarAbrir.abrir(formulario);
-	}
-
-	public class SalvarAbrir {
-		public void salvar() {
-			try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
-				int total = getTabCount();
-
-				for (int i = 0; i < total; i++) {
-					Component aba = getTabComponentAt(i);
-					Component cmp = getComponentAt(i);
-
-					File file = null;
-
-					if (cmp instanceof FicharioSalvar) {
-						file = ((FicharioSalvar) cmp).getFileSalvarAberto();
-					} else if (aba instanceof FicharioSalvar) {
-						file = ((FicharioSalvar) aba).getFileSalvarAberto();
-					}
-
-					String absRelativoArquivo = getAbsRelativoArquivo(ArquivoTreeModelo.FILE, file);
-
-					if (absRelativoArquivo != null) {
-						pw.print(absRelativoArquivo + Constantes.QL);
-					}
-				}
-
-			} catch (Exception ex) {
-				LOG.log(Level.SEVERE, ex.getMessage());
-			}
-		}
-
-		public void abrir(Formulario formulario) {
-			File file = new File(Constantes.ABERTOS_FICHARIO);
-
-			if (file.exists()) {
-				List<File> files = new ArrayList<>();
-
-				try (BufferedReader br = new BufferedReader(
-						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-					String linha = br.readLine();
-
-					while (linha != null) {
-						files.add(new File(linha));
-						linha = br.readLine();
-					}
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("FICHARIO", ex, Fichario.this);
-				}
-
-				for (File f : files) {
-					abrirArquivo(f, formulario);
-				}
-			}
-		}
-
-		private void abrirArquivo(File f, Formulario formulario) {
-			String nome = f.getName();
-
-			if (nome.startsWith(Constantes.III)) {
-				formulario.adicionarFicharioAba(nome);
-			} else {
-				formulario.getArquivos().abrir(getArquivoNormalizado(f), true, null);
-			}
-		}
-	}
-
-	public static class InfoConexao {
+	/*public static class InfoConexao {
 		final String conexaoAtual;
 		final String conexaoFile;
 		final String nomeAba;
@@ -871,7 +834,7 @@ public class Fichario extends JTabbedPane {
 		public String getNomeAba() {
 			return nomeAba;
 		}
-	}
+	}*/
 
 	private class Listener extends MouseAdapter {
 		@Override
@@ -931,11 +894,11 @@ public class Fichario extends JTabbedPane {
 			insertTab(titulo, icon, cmp, hint, destino);
 			setTabComponentAt(destino, aba);
 
-			if (aba instanceof TituloAbaS) {
-				setEnabledAt(destino, false);
-			} else {
-				setSelectedIndex(destino);
-			}
+//			if (aba instanceof TituloAbaS) {
+//				setEnabledAt(destino, false);
+//			} else {
+//				setSelectedIndex(destino);
+//			}
 		}
 	}
 
