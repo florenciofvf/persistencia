@@ -1,7 +1,5 @@
 package br.com.persist.principal;
 
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +10,7 @@ import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Util;
 
 public class PrincipalFabrica extends AbstratoFabricaContainer {
 	@Override
@@ -31,14 +30,17 @@ public class PrincipalFabrica extends AbstratoFabricaContainer {
 	}
 
 	private void fechar(Formulario formulario) {
-		WindowEvent event = new WindowEvent(formulario, WindowEvent.WINDOW_CLOSING);
-		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(event);
+		formulario.eventoFechar();
 	}
 }
 
 class FecharServico extends AbstratoServico {
 	@Override
 	public void fechandoFormulario(Formulario formulario) {
-		formulario.fechar(true);
+		if (Util.confirmar(formulario, "label.confirma_fechar")) {
+			// Preferencias.setFecharConexao(fecharConexao);
+			// FormularioUtil.fechar(Formulario.this);
+			System.exit(0);
+		}
 	}
 }

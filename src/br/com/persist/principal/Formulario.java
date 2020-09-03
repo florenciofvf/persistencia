@@ -290,19 +290,11 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	public void fechar(boolean fecharConexao) {
-		if (Util.confirmar(this, "label.confirma_fechar")) {
-			Preferencias.setFecharConexao(fecharConexao);
-			// FormularioUtil.fechar(Formulario.this);
-			System.exit(0);
-		}
-	}
-
 	private void iconeBandeja() {
 		PopupMenu popup = new PopupMenu();
 
 		java.awt.MenuItem itemFechar = new java.awt.MenuItem(Mensagens.getString(Constantes.LABEL_FECHAR));
-		itemFechar.addActionListener(e -> fechar(false));
+		itemFechar.addActionListener(e -> eventoFechar());
 		popup.add(itemFechar);
 
 		URL url = getClass().getResource(Constantes.IMAGEM_TRAY_ICON);
@@ -320,6 +312,11 @@ public class Formulario extends JFrame {
 		} catch (AWTException ex) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
 		}
+	}
+
+	public void eventoFechar() {
+		WindowEvent event = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(event);
 	}
 
 	private class IconeBandejaListener implements ActionListener {
