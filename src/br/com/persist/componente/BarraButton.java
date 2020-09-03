@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JToolBar;
 
 import br.com.persist.util.Icones;
-import br.com.persist.mensagem.MensagemTemporaria;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
@@ -17,8 +16,8 @@ public class BarraButton extends JToolBar {
 	private Action copiar2Acao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action colar1Acao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action colar2Acao = Action.actionIcon("label.colar", Icones.COLAR);
-	private MensagemTemporaria mensagemTempCopiado = new MensagemTemporaria();
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
+	private LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
@@ -100,7 +99,7 @@ public class BarraButton extends JToolBar {
 	protected void configCopiar1Acao(boolean colar) {
 		copiar1Acao.setActionListener(e -> copiar1());
 		addButton(copiar1Acao);
-		add(mensagemTempCopiado);
+		add(labelTextTemp);
 
 		if (colar) {
 			colar1Acao.setActionListener(e -> colar1());
@@ -110,7 +109,7 @@ public class BarraButton extends JToolBar {
 
 	protected void copiar1Mensagem(String string) {
 		if (!Util.estaVazio(string)) {
-			mensagemTempCopiado.mensagemChave("msg.copiado");
+			labelTextTemp.mensagemChave("msg.copiado");
 		}
 	}
 
