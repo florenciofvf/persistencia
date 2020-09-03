@@ -7,6 +7,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.util.Util;
+import static br.com.persist.componente.BarraButtonEnum.*;
 
 public class MensagemContainer extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -28,15 +29,14 @@ public class MensagemContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, false, false);
-			configCopiar1Acao(false);
+			super.ini(janela, COPIAR);
 		}
 
 		@Override
-		protected void copiar1() {
+		protected void copiar() {
 			String string = Util.getString(textArea.getTextAreaInner());
 			Util.setContentTransfered(string);
-			copiar1Mensagem(string);
+			copiarMensagem(string);
 			textArea.requestFocus();
 		}
 	}
