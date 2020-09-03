@@ -1,4 +1,6 @@
-package br.com.persist.fabrica;
+package br.com.persist.util;
+
+import br.com.persist.abstrato.FabricaContainer;
 
 public class Fabrica {
 	private Fabrica() {

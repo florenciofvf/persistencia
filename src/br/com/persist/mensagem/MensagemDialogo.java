@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Frame;
 
-import br.com.persist.dialogo.AbstratoDialogo;
+import br.com.persist.abstrato.AbstratoDialogo;
 
 public class MensagemDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;

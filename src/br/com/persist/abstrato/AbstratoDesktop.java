@@ -1,4 +1,4 @@
-package br.com.persist.desktop;
+package br.com.persist.abstrato;
 
 import java.awt.Dimension;
 import java.awt.Point;

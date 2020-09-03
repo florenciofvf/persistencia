@@ -1,4 +1,4 @@
-package br.com.persist.formulario;
+package br.com.persist.abstrato;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

@@ -1,4 +1,4 @@
-package br.com.persist.servico;
+package br.com.persist.abstrato;
 
 import br.com.persist.principal.Formulario;
 

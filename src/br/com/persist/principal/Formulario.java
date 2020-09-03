@@ -29,9 +29,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-import br.com.persist.fabrica.FabricaContainer;
+import br.com.persist.abstrato.FabricaContainer;
+import br.com.persist.abstrato.Servico;
 import br.com.persist.fichario.Fichario;
-import br.com.persist.servico.Servico;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.PosicaoDimensao;

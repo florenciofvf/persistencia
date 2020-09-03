@@ -1,4 +1,4 @@
-package br.com.persist.container;
+package br.com.persist.abstrato;
 
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;

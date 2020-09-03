@@ -8,9 +8,9 @@ import java.util.List;
 
 import javax.swing.JMenuItem;
 
-import br.com.persist.fabrica.AbstratoFabricaContainer;
-import br.com.persist.servico.AbstratoServico;
-import br.com.persist.servico.Servico;
+import br.com.persist.abstrato.AbstratoFabricaContainer;
+import br.com.persist.abstrato.AbstratoServico;
+import br.com.persist.abstrato.Servico;
 import br.com.persist.util.Mensagens;
 
 public class PrincipalFabrica extends AbstratoFabricaContainer {

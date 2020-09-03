@@ -1,4 +1,4 @@
-package br.com.persist.dialogo;
+package br.com.persist.abstrato;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
