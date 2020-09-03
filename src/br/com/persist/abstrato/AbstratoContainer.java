@@ -19,13 +19,15 @@ public abstract class AbstratoContainer extends Panel implements Pagina {
 		return formulario;
 	}
 
-	/*
-	 * protected void destacarEmFormulario() { }
-	 * 
-	 * protected void clonarEmFormulario() { }
-	 * 
-	 * protected void abrirEmFormulario() { }
-	 * 
-	 * protected void retornoAoFichario() { }
-	 */
+	protected void destacarEmFormulario() {
+	}
+
+	protected void clonarEmFormulario() {
+	}
+
+	protected void abrirEmFormulario() {
+	}
+
+	protected void retornoAoFichario() {
+	}
 }

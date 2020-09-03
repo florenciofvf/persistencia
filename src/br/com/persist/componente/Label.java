@@ -33,15 +33,16 @@ public class Label extends JLabel {
 		setText(Constantes.VAZIO);
 	}
 
-	public void modoLink() {
+	public void modoLink(LabelLinkListener linkListener) {
+		this.linkListener = linkListener;
 		setForeground(Color.BLUE);
 		setOpaque(true);
 
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (linkListener != null) {
-					linkListener.click(Label.this);
+				if (Label.this.linkListener != null) {
+					Label.this.linkListener.click(Label.this);
 				}
 			}
 
@@ -55,13 +56,5 @@ public class Label extends JLabel {
 				setForeground(Color.BLUE);
 			}
 		});
-	}
-
-	public LabelLinkListener getLinkListener() {
-		return linkListener;
-	}
-
-	public void setLinkListener(LabelLinkListener linkListener) {
-		this.linkListener = linkListener;
 	}
 }
