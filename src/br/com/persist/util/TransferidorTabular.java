@@ -13,13 +13,13 @@ import java.util.logging.Logger;
 
 import javax.swing.plaf.UIResource;
 
-public class TransferidorDados implements Transferable, UIResource {
+public class TransferidorTabular implements Transferable, UIResource {
 	private static DataFlavor[] flavors = new DataFlavor[8];
 	private static final Logger LOG = Logger.getGlobal();
 	private final String tabular;
 	private final String html;
 
-	public TransferidorDados(String html, String tabular) {
+	public TransferidorTabular(String html, String tabular) {
 		this.tabular = tabular;
 		this.html = html;
 	}

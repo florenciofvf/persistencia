@@ -15,10 +15,6 @@ public abstract class AbstratoContainer extends Panel implements Pagina {
 
 	public abstract void setJanela(Janela janela);
 
-	public Formulario getFormulario() {
-		return formulario;
-	}
-
 	protected void destacarEmFormulario() {
 	}
 

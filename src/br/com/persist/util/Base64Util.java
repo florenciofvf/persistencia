@@ -3,7 +3,6 @@ package br.com.persist.util;
 import javax.xml.bind.DatatypeConverter;
 
 public class Base64Util {
-
 	private Base64Util() {
 	}
 
