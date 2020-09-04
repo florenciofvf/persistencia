@@ -106,7 +106,7 @@ public class BarraButton extends JToolBar {
 		}
 
 		private void ini(BarraButtonEnum... enuns) {
-			if (contem(DESTAC_EM_FORM, enuns)) {
+			if (contem(DESTACAR_EM_FORMULARIO, enuns)) {
 				addMenuItem(destacarEmFormulario);
 				destacarEmFormulario.setActionListener(e -> destacarEmFormulario());
 			}
@@ -116,12 +116,12 @@ public class BarraButton extends JToolBar {
 				retornarAoFichario.setActionListener(e -> retornarAoFichario());
 			}
 
-			if (contem(CLONAR_EM_FORM, enuns)) {
+			if (contem(CLONAR_EM_FORMULARIO, enuns)) {
 				addMenuItem(clonarEmFormulario);
 				clonarEmFormulario.setActionListener(e -> clonarEmFormulario());
 			}
 
-			if (contem(ABRIR_EM_F0RM, enuns)) {
+			if (contem(ABRIR_EM_FORMULARO, enuns)) {
 				addMenuItem(abrirEmFormulario);
 				abrirEmFormulario.setActionListener(e -> abrirEmFormulario());
 			}
@@ -143,8 +143,8 @@ public class BarraButton extends JToolBar {
 	}
 
 	private boolean comButtonDestacar(BarraButtonEnum... enuns) {
-		return contem(DESTAC_EM_FORM, enuns) || contem(RETORNAR_AO_FICHARIO, enuns) || contem(ABRIR_EM_F0RM, enuns)
-				|| contem(CLONAR_EM_FORM, enuns);
+		return contem(DESTACAR_EM_FORMULARIO, enuns) || contem(RETORNAR_AO_FICHARIO, enuns)
+				|| contem(CLONAR_EM_FORMULARIO, enuns) || contem(ABRIR_EM_FORMULARO, enuns);
 	}
 
 	protected void copiarMensagem(String string) {

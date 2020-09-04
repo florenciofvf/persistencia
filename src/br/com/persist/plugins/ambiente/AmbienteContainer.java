@@ -151,8 +151,8 @@ public class AmbienteContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTAC_EM_FORM, RETORNAR_AO_FICHARIO, ABRIR_EM_F0RM, CLONAR_EM_FORM, LIMPAR, SALVAR,
-					COPIAR, COLAR, BAIXAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, CLONAR_EM_FORMULARIO,
+					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
 		}
 
 		@Override
