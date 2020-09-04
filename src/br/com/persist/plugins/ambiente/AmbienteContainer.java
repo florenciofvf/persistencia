@@ -16,6 +16,7 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.TextArea;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
@@ -140,6 +141,7 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(AmbienteContainer.this)) {
+				buttonDestacar.habilitar(true);
 				AmbienteFormulario.criar(formulario, AmbienteContainer.this);
 			}
 		}
@@ -153,15 +155,17 @@ public class AmbienteContainer extends AbstratoContainer {
 		}
 
 		@Override
-		protected void abrirEmFormulario() {
-			AmbienteFormulario.criar(formulario, Constantes.VAZIO, ambiente);
+		protected void clonarEmFormulario() {
+			AmbienteFormulario.criar(formulario, getConteudo(), ambiente);
 		}
 
 		@Override
-		protected void clonarEmFormulario() {
-			if (formulario.excluirPagina(AmbienteContainer.this)) {
-				AmbienteFormulario.criar(formulario, getConteudo(), ambiente);
-			}
+		protected void abrirEmFormulario() {
+			AmbienteFormulario.criar(formulario, null, ambiente);
+		}
+
+		void adicionadoNoFichario() {
+			buttonDestacar.habilitar(true, false, true, true);
 		}
 
 		@Override
@@ -199,6 +203,11 @@ public class AmbienteContainer extends AbstratoContainer {
 		protected void colar() {
 			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
+	}
+
+	@Override
+	public void adicionadoAoFichario(Fichario fichario) {
+		toolbar.adicionadoNoFichario();
 	}
 
 	@Override

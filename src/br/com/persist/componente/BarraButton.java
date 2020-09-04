@@ -94,12 +94,12 @@ public class BarraButton extends JToolBar {
 		}
 	}
 
-	private class ButtonDestacar extends ButtonPopup {
+	protected class ButtonDestacar extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
+		protected Action destacarEmFormulario = Action.actionMenu("label.destacar_formulario", null);
+		protected Action retornarAoFichario = Action.actionMenu("label.retornar_ao_fichario", null);
 		protected Action clonarEmFormulario = Action.actionMenu("label.clonar_em_formulario", null);
-		protected Action destacarEmFormulario = Action.actionMenu("label.destac_formulario", null);
 		protected Action abrirEmFormulario = Action.actionMenu("label.abrir_em_formulario", null);
-		protected Action retornarAoFichario = Action.actionMenu("label.retornar_ao_fich", null);
 
 		private ButtonDestacar() {
 			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
@@ -116,15 +116,29 @@ public class BarraButton extends JToolBar {
 				retornarAoFichario.setActionListener(e -> retornarAoFichario());
 			}
 
-			if (contem(ABRIR_EM_F0RM, enuns)) {
-				addMenuItem(abrirEmFormulario);
-				abrirEmFormulario.setActionListener(e -> abrirEmFormulario());
-			}
-
 			if (contem(CLONAR_EM_FORM, enuns)) {
 				addMenuItem(clonarEmFormulario);
 				clonarEmFormulario.setActionListener(e -> clonarEmFormulario());
 			}
+
+			if (contem(ABRIR_EM_F0RM, enuns)) {
+				addMenuItem(abrirEmFormulario);
+				abrirEmFormulario.setActionListener(e -> abrirEmFormulario());
+			}
+		}
+
+		public void habilitar(boolean b) {
+			destacarEmFormulario.setEnabled(b);
+			retornarAoFichario.setEnabled(b);
+			clonarEmFormulario.setEnabled(b);
+			abrirEmFormulario.setEnabled(b);
+		}
+
+		public void habilitar(boolean destacar, boolean retornar, boolean clonar, boolean abrir) {
+			destacarEmFormulario.setEnabled(destacar);
+			retornarAoFichario.setEnabled(retornar);
+			clonarEmFormulario.setEnabled(clonar);
+			abrirEmFormulario.setEnabled(abrir);
 		}
 	}
 
