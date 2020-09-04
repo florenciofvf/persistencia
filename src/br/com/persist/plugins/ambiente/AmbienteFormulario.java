@@ -40,7 +40,7 @@ public class AmbienteFormulario extends AbstratoFormulario {
 		form.setVisible(true);
 	}
 
-	public void retornoAoFichario() {
+	public void retornarAoFichario() {
 		remove(container);
 		container.setJanela(null);
 		container.setAmbienteFormulario(null);

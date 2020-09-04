@@ -13,6 +13,7 @@ public class AmbienteDialogo extends AbstratoDialogo {
 	private AmbienteDialogo(Frame frame, Formulario formulario, AmbienteContainer.Ambiente ambiente) {
 		super(frame, ambiente.getDescricao());
 		container = new AmbienteContainer(this, formulario, null, ambiente);
+		container.setAmbienteDialogo(this);
 		montarLayout();
 	}
 
@@ -24,5 +25,12 @@ public class AmbienteDialogo extends AbstratoDialogo {
 		AmbienteDialogo form = new AmbienteDialogo(formulario, formulario, ambiente);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+	}
+
+	public void retornarAoFichario() {
+		remove(container);
+		container.setJanela(null);
+		container.setAmbienteFormulario(null);
+		fechar();
 	}
 }

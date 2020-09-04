@@ -29,6 +29,7 @@ public class AmbienteContainer extends AbstratoContainer {
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private AmbienteFormulario ambienteFormulario;
+	private AmbienteDialogo ambienteDialogo;
 	private final Ambiente ambiente;
 	private final File file;
 
@@ -83,6 +84,14 @@ public class AmbienteContainer extends AbstratoContainer {
 
 			throw new IllegalArgumentException();
 		}
+	}
+
+	public AmbienteDialogo getAmbienteDialogo() {
+		return ambienteDialogo;
+	}
+
+	public void setAmbienteDialogo(AmbienteDialogo ambienteDialogo) {
+		this.ambienteDialogo = ambienteDialogo;
 	}
 
 	public AmbienteFormulario getAmbienteFormulario() {
@@ -149,7 +158,11 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		protected void retornarAoFichario() {
 			if (ambienteFormulario != null) {
-				ambienteFormulario.retornoAoFichario();
+				ambienteFormulario.retornarAoFichario();
+				formulario.adicionarPagina(AmbienteContainer.this);
+
+			} else if (ambienteDialogo != null) {
+				ambienteDialogo.retornarAoFichario();
 				formulario.adicionarPagina(AmbienteContainer.this);
 			}
 		}
