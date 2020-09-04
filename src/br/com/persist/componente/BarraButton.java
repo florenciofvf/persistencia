@@ -106,23 +106,27 @@ public class BarraButton extends JToolBar {
 		}
 
 		private void ini(BarraButtonEnum... enuns) {
+			byte adicionados = 0;
+
 			if (contem(DESTACAR_EM_FORMULARIO, enuns)) {
+				adicionados++;
 				addMenuItem(destacarEmFormulario);
 				destacarEmFormulario.setActionListener(e -> destacarEmFormulario());
 			}
 
 			if (contem(RETORNAR_AO_FICHARIO, enuns)) {
+				adicionados++;
 				addMenuItem(retornarAoFichario);
 				retornarAoFichario.setActionListener(e -> retornarAoFichario());
 			}
 
 			if (contem(CLONAR_EM_FORMULARIO, enuns)) {
-				addMenuItem(clonarEmFormulario);
+				addMenuItem(adicionados > 0, clonarEmFormulario);
 				clonarEmFormulario.setActionListener(e -> clonarEmFormulario());
 			}
 
 			if (contem(ABRIR_EM_FORMULARO, enuns)) {
-				addMenuItem(abrirEmFormulario);
+				addMenuItem(adicionados > 0 && !contem(CLONAR_EM_FORMULARIO, enuns), abrirEmFormulario);
 				abrirEmFormulario.setActionListener(e -> abrirEmFormulario());
 			}
 		}
