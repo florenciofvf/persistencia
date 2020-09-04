@@ -78,4 +78,7 @@ public abstract class AbstratoFormulario extends JFrame implements Janela {
 
 	public void executarAoFecharForm() {
 	}
+
+	public void excluirContainer() {
+	}
 }

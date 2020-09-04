@@ -27,7 +27,8 @@ public class AmbienteDialogo extends AbstratoDialogo {
 		form.setVisible(true);
 	}
 
-	public void retornarAoFichario() {
+	@Override
+	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
 		container.setAmbienteFormulario(null);

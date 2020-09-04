@@ -85,4 +85,7 @@ public abstract class AbstratoDialogo extends JDialog implements Janela {
 
 	public void executarAoFecharDialog() {
 	}
+
+	public void excluirContainer() {
+	}
 }

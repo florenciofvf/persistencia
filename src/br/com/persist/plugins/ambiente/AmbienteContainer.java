@@ -92,6 +92,10 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	public void setAmbienteDialogo(AmbienteDialogo ambienteDialogo) {
 		this.ambienteDialogo = ambienteDialogo;
+		if (ambienteDialogo != null) {
+			ambienteFormulario = null;
+		}
+		toolbar.checarButtonDestacar();
 	}
 
 	public AmbienteFormulario getAmbienteFormulario() {
@@ -100,6 +104,10 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	public void setAmbienteFormulario(AmbienteFormulario ambienteFormulario) {
 		this.ambienteFormulario = ambienteFormulario;
+		if (ambienteFormulario != null) {
+			ambienteDialogo = null;
+		}
+		toolbar.checarButtonDestacar();
 	}
 
 	private void montarLayout() {
@@ -150,7 +158,10 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(AmbienteContainer.this)) {
-				buttonDestacar.habilitar(true);
+				AmbienteFormulario.criar(formulario, AmbienteContainer.this);
+
+			} else if (ambienteDialogo != null) {
+				ambienteDialogo.excluirContainer();
 				AmbienteFormulario.criar(formulario, AmbienteContainer.this);
 			}
 		}
@@ -158,22 +169,34 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		protected void retornarAoFichario() {
 			if (ambienteFormulario != null) {
-				ambienteFormulario.retornarAoFichario();
+				ambienteFormulario.excluirContainer();
 				formulario.adicionarPagina(AmbienteContainer.this);
 
 			} else if (ambienteDialogo != null) {
-				ambienteDialogo.retornarAoFichario();
+				ambienteDialogo.excluirContainer();
 				formulario.adicionarPagina(AmbienteContainer.this);
+			}
+		}
+
+		void checarButtonDestacar() {
+			if (ambienteFormulario != null || ambienteDialogo != null) {
+				buttonDestacar.habilitar(true);
 			}
 		}
 
 		@Override
 		protected void clonarEmFormulario() {
+			if (ambienteDialogo != null) {
+				ambienteDialogo.excluirContainer();
+			}
 			AmbienteFormulario.criar(formulario, getConteudo(), ambiente);
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
+			if (ambienteDialogo != null) {
+				ambienteDialogo.excluirContainer();
+			}
 			AmbienteFormulario.criar(formulario, null, ambiente);
 		}
 
