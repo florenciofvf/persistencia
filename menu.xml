@@ -35,6 +35,6 @@
 	</menu>
 
 	<menu descricao="Aparencia">
-		<menu classeFabrica="br.com.persist.principal.PrincipalFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.aparencia.AparenciaFabrica" ativo="true" />
 	</menu>
 </menuPrincipal>

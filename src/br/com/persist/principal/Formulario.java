@@ -112,8 +112,6 @@ public class Formulario extends JFrame {
 					servico.visivelFormulario(Formulario.this);
 				}
 
-				// FormularioUtil.aparenciaPadrao(menuPrincipal.menuLAF,
-				// "Nimbus" + Constantes.DOIS);
 				// MapeamentoModelo.inicializar();
 				// VariaveisModelo.inicializar();
 				// FragmentoModelo.inicializar();
