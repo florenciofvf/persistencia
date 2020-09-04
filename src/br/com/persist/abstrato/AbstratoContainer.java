@@ -1,7 +1,10 @@
 package br.com.persist.abstrato;
 
+import java.io.File;
+
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.principal.Formulario;
 
@@ -13,17 +16,18 @@ public abstract class AbstratoContainer extends Panel implements Pagina {
 		this.formulario = formulario;
 	}
 
+	@Override
+	public void adicionadoAoFichario(Fichario fichario) {
+	}
+
+	@Override
+	public void excluindoDoFichario(Fichario fichario) {
+	}
+
 	public abstract void setJanela(Janela janela);
 
-	protected void destacarEmFormulario() {
-	}
-
-	protected void clonarEmFormulario() {
-	}
-
-	protected void abrirEmFormulario() {
-	}
-
-	protected void retornoAoFichario() {
+	@Override
+	public File getFile() {
+		return null;
 	}
 }

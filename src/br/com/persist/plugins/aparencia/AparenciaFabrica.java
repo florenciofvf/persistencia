@@ -26,7 +26,7 @@ public class AparenciaFabrica extends AbstratoFabricaContainer {
 		return Arrays.asList(new AparenciaServico());
 	}
 
-	class AparenciaServico extends AbstratoServico {
+	private class AparenciaServico extends AbstratoServico {
 		@Override
 		public void visivelFormulario(Formulario formulario) {
 			if (padrao != null) {
@@ -68,7 +68,7 @@ class ItemLAF extends JRadioButtonMenuItem {
 		setText(info.getName());
 	}
 
-	void processar() {
+	private void processar() {
 		try {
 			UIManager.setLookAndFeel(classe);
 			SwingUtilities.updateComponentTreeUI(formulario);

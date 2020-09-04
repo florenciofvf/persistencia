@@ -32,6 +32,7 @@ import javax.swing.SwingUtilities;
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.Pagina;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.PosicaoDimensao;
@@ -60,6 +61,14 @@ public class Formulario extends JFrame {
 		Util.configWindowC(this);
 		montarLayout();
 		configurar();
+	}
+
+	public void adicionarPagina(Pagina pagina) {
+		fichario.adicionarPagina(pagina);
+	}
+
+	public boolean excluirPagina(Pagina pagina) {
+		return fichario.excluirPagina(pagina);
 	}
 
 	public void adicionarServico(Servico servico) {

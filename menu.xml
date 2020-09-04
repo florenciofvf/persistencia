@@ -31,7 +31,7 @@
 	</menu>
 
 	<menu descricao="Ambientes">
-		<menu classeFabrica="br.com.persist.ambiente.AmbienteFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.ambiente.AmbienteFabrica" ativo="true" />
 	</menu>
 
 	<menu descricao="Aparencia">

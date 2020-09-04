@@ -99,7 +99,7 @@ public class BarraButton extends JToolBar {
 		protected Action clonarEmFormulario = Action.actionMenu("label.clonar_em_formulario", null);
 		protected Action destacarEmFormulario = Action.actionMenu("label.destac_formulario", null);
 		protected Action abrirEmFormulario = Action.actionMenu("label.abrir_em_formulario", null);
-		protected Action retornoAoFichario = Action.actionMenu("label.destac_container", null);
+		protected Action retornarAoFichario = Action.actionMenu("label.retornar_ao_fich", null);
 
 		private ButtonDestacar() {
 			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
@@ -112,8 +112,8 @@ public class BarraButton extends JToolBar {
 			}
 
 			if (contem(RETORNAR_AO_FICHARIO, enuns)) {
-				addMenuItem(retornoAoFichario);
-				retornoAoFichario.setActionListener(e -> retornoAoFichario());
+				addMenuItem(retornarAoFichario);
+				retornarAoFichario.setActionListener(e -> retornarAoFichario());
 			}
 
 			if (contem(ABRIR_EM_F0RM, enuns)) {
@@ -163,7 +163,7 @@ public class BarraButton extends JToolBar {
 		throw new UnsupportedOperationException();
 	}
 
-	protected void retornoAoFichario() {
+	protected void retornarAoFichario() {
 		throw new UnsupportedOperationException();
 	}
 
