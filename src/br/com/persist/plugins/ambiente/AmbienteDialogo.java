@@ -31,7 +31,7 @@ public class AmbienteDialogo extends AbstratoDialogo {
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
-		container.setAmbienteFormulario(null);
+		container.setAmbienteDialogo(null);
 		fechar();
 	}
 

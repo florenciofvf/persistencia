@@ -1,4 +1,4 @@
-package br.com.persist.plugins.ambiente;
+package br.com.persist.plugins.anotacao;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
@@ -33,87 +33,41 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class AmbienteContainer extends AbstratoContainer {
+public class AnotacaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
-	private AmbienteFormulario ambienteFormulario;
-	private AmbienteDialogo ambienteDialogo;
-	private final Ambiente ambiente;
+	private AnotacaoFormulario anotacaoFormulario;
+	private AnotacaoDialogo anotacaoDialogo;
 	private final File file;
 
-	public AmbienteContainer(Janela janela, Formulario formulario, String conteudo, Ambiente ambiente) {
+	public AnotacaoContainer(Janela janela, Formulario formulario, String conteudo) {
 		super(formulario);
-		file = new File("ambientes" + Constantes.SEPARADOR + ambiente.chave);
-		this.ambiente = ambiente;
+		file = new File("anotacoes" + Constantes.SEPARADOR + "anotacoes");
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo);
 	}
 
-	public Ambiente getAmbiente() {
-		return ambiente;
+	public AnotacaoDialogo getAnotacaoDialogo() {
+		return anotacaoDialogo;
 	}
 
-	public enum Ambiente {
-		DESENVOLVIMENTO("desenv", "label.desenv"), TREINAMENTO1("treina1", "label.treina1"), TREINAMENTO2("treina2",
-				"label.treina2"), TREINAMENTO3("treina3", "label.treina3"), HOLOMOGACAO("homolog",
-						"label.homolog"), PRODUCAO("producao", "label.producao"), RASCUNHO("rascunho",
-								"label.rascunho"), ESTUDO("estudo",
-										"label.estudo"), TESTE("teste", "label.teste"), BUGS("bugs", "label.bugs");
-
-		private final String chaveTitulo;
-		private final String tituloMin;
-		private final String descricao;
-		private final String titulo;
-		private final String chave;
-
-		private Ambiente(String chave, String desc) {
-			chaveTitulo = "label." + chave;
-			tituloMin = Mensagens.getString(chaveTitulo + "_min");
-			this.descricao = Mensagens.getString(desc);
-			titulo = Mensagens.getString(chaveTitulo);
-			this.chave = chave;
-		}
-
-		public String getChaveTitulo() {
-			return chaveTitulo;
-		}
-
-		public String getDescricao() {
-			return descricao;
-		}
-
-		public static Ambiente get(String nome) {
-			for (Ambiente a : values()) {
-				if (a.chave.equals(nome)) {
-					return a;
-				}
-			}
-
-			throw new IllegalArgumentException();
+	public void setAnotacaoDialogo(AnotacaoDialogo anotacaoDialogo) {
+		this.anotacaoDialogo = anotacaoDialogo;
+		if (anotacaoDialogo != null) {
+			anotacaoFormulario = null;
 		}
 	}
 
-	public AmbienteDialogo getAmbienteDialogo() {
-		return ambienteDialogo;
+	public AnotacaoFormulario getAnotacaoFormulario() {
+		return anotacaoFormulario;
 	}
 
-	public void setAmbienteDialogo(AmbienteDialogo ambienteDialogo) {
-		this.ambienteDialogo = ambienteDialogo;
-		if (ambienteDialogo != null) {
-			ambienteFormulario = null;
-		}
-	}
-
-	public AmbienteFormulario getAmbienteFormulario() {
-		return ambienteFormulario;
-	}
-
-	public void setAmbienteFormulario(AmbienteFormulario ambienteFormulario) {
-		this.ambienteFormulario = ambienteFormulario;
-		if (ambienteFormulario != null) {
-			ambienteDialogo = null;
+	public void setAnotacaoFormulario(AnotacaoFormulario anotacaoFormulario) {
+		this.anotacaoFormulario = anotacaoFormulario;
+		if (anotacaoFormulario != null) {
+			anotacaoDialogo = null;
 		}
 	}
 
@@ -144,7 +98,7 @@ public class AmbienteContainer extends AbstratoContainer {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
 	}
@@ -164,41 +118,41 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		protected void destacarEmFormulario() {
-			if (formulario.excluirPagina(AmbienteContainer.this)) {
-				AmbienteFormulario.criar(formulario, AmbienteContainer.this);
+			if (formulario.excluirPagina(AnotacaoContainer.this)) {
+				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
 
-			} else if (ambienteDialogo != null) {
-				ambienteDialogo.excluirContainer();
-				AmbienteFormulario.criar(formulario, AmbienteContainer.this);
+			} else if (anotacaoDialogo != null) {
+				anotacaoDialogo.excluirContainer();
+				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
 			}
 		}
 
 		@Override
 		protected void retornarAoFichario() {
-			if (ambienteFormulario != null) {
-				ambienteFormulario.excluirContainer();
-				formulario.adicionarPagina(AmbienteContainer.this);
+			if (anotacaoFormulario != null) {
+				anotacaoFormulario.excluirContainer();
+				formulario.adicionarPagina(AnotacaoContainer.this);
 
-			} else if (ambienteDialogo != null) {
-				ambienteDialogo.excluirContainer();
-				formulario.adicionarPagina(AmbienteContainer.this);
+			} else if (anotacaoDialogo != null) {
+				anotacaoDialogo.excluirContainer();
+				formulario.adicionarPagina(AnotacaoContainer.this);
 			}
 		}
 
 		@Override
 		protected void clonarEmFormulario() {
-			if (ambienteDialogo != null) {
-				ambienteDialogo.excluirContainer();
+			if (anotacaoDialogo != null) {
+				anotacaoDialogo.excluirContainer();
 			}
-			AmbienteFormulario.criar(formulario, getConteudo(), ambiente);
+			AnotacaoFormulario.criar(formulario, getConteudo());
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
-			if (ambienteDialogo != null) {
-				ambienteDialogo.excluirContainer();
+			if (anotacaoDialogo != null) {
+				anotacaoDialogo.excluirContainer();
 			}
-			AmbienteFormulario.criar(formulario, null, ambiente);
+			AnotacaoFormulario.criar(formulario, Constantes.VAZIO);
 		}
 
 		void formularioVisivel() {
@@ -225,14 +179,14 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			if (!Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
+			if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.TRES)) {
 				return;
 			}
 
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
 
@@ -265,12 +219,12 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	@Override
 	public String getStringPersistencia() {
-		return ambiente.chave;
+		return Constantes.VAZIO;
 	}
 
 	@Override
 	public Class<?> getClasseFabrica() {
-		return AmbienteFabrica.class;
+		return AnotacaoFabrica.class;
 	}
 
 	@Override
@@ -283,22 +237,22 @@ public class AmbienteContainer extends AbstratoContainer {
 		return new Titulo() {
 			@Override
 			public String getTituloMin() {
-				return ambiente.tituloMin;
+				return Mensagens.getString(Constantes.LABEL_ANOTACOES_MIN);
 			}
 
 			@Override
 			public String getTitulo() {
-				return ambiente.titulo;
+				return Mensagens.getString(Constantes.LABEL_ANOTACOES);
 			}
 
 			@Override
 			public String getHint() {
-				return ambiente.descricao;
+				return Mensagens.getString(Constantes.LABEL_ANOTACOES);
 			}
 
 			@Override
 			public Icon getIcone() {
-				return Icones.BOLA_VERDE;
+				return Icones.PANEL4;
 			}
 		};
 	}
