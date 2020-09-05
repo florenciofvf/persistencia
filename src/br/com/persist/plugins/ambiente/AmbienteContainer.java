@@ -95,7 +95,6 @@ public class AmbienteContainer extends AbstratoContainer {
 		if (ambienteDialogo != null) {
 			ambienteFormulario = null;
 		}
-		toolbar.checarButtonDestacar();
 	}
 
 	public AmbienteFormulario getAmbienteFormulario() {
@@ -107,7 +106,6 @@ public class AmbienteContainer extends AbstratoContainer {
 		if (ambienteFormulario != null) {
 			ambienteDialogo = null;
 		}
-		toolbar.checarButtonDestacar();
 	}
 
 	private void montarLayout() {
@@ -178,12 +176,6 @@ public class AmbienteContainer extends AbstratoContainer {
 			}
 		}
 
-		void checarButtonDestacar() {
-			if (ambienteFormulario != null || ambienteDialogo != null) {
-				buttonDestacar.habilitar(true);
-			}
-		}
-
 		@Override
 		protected void clonarEmFormulario() {
 			if (ambienteDialogo != null) {
@@ -200,8 +192,16 @@ public class AmbienteContainer extends AbstratoContainer {
 			AmbienteFormulario.criar(formulario, null, ambiente);
 		}
 
-		void adicionadoNoFichario() {
-			buttonDestacar.habilitar(true, false, true, true);
+		void formularioVisivel() {
+			buttonDestacar.estadoFormulario();
+		}
+
+		void paginaVisivel() {
+			buttonDestacar.estadoFichario();
+		}
+
+		void dialogoVisivel() {
+			buttonDestacar.estadoDialogo();
 		}
 
 		@Override
@@ -243,7 +243,15 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.adicionadoNoFichario();
+		toolbar.paginaVisivel();
+	}
+
+	public void formularioVisivel() {
+		toolbar.formularioVisivel();
+	}
+
+	public void dialogoVisivel() {
+		toolbar.dialogoVisivel();
 	}
 
 	@Override

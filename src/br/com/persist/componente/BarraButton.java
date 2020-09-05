@@ -144,6 +144,18 @@ public class BarraButton extends JToolBar {
 			clonarEmFormulario.setEnabled(clonar);
 			abrirEmFormulario.setEnabled(abrir);
 		}
+
+		public void estadoFormulario() {
+			habilitar(false, true, true, true);
+		}
+
+		public void estadoFichario() {
+			habilitar(true, false, true, true);
+		}
+
+		public void estadoDialogo() {
+			habilitar(true, true, false, true);
+		}
 	}
 
 	private boolean comButtonDestacar(BarraButtonEnum... enuns) {

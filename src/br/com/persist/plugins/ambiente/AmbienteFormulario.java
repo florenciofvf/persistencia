@@ -47,4 +47,9 @@ public class AmbienteFormulario extends AbstratoFormulario {
 		container.setAmbienteFormulario(null);
 		fechar();
 	}
+
+	@Override
+	public void executarAoAbrirForm() {
+		container.formularioVisivel();
+	}
 }

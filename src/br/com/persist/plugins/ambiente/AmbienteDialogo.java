@@ -34,4 +34,9 @@ public class AmbienteDialogo extends AbstratoDialogo {
 		container.setAmbienteFormulario(null);
 		fechar();
 	}
+
+	@Override
+	public void executarAoAbrirDialog() {
+		container.dialogoVisivel();
+	}
 }
