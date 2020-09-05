@@ -70,20 +70,20 @@ public abstract class AbstratoDialogo extends JDialog implements Janela {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				executarAoAbrirDialog();
+				executarAoAbrirDialogo();
 			}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				executarAoFecharDialog();
+				executarAoFecharDialogo();
 			}
 		});
 	}
 
-	public void executarAoAbrirDialog() {
+	public void executarAoAbrirDialogo() {
 	}
 
-	public void executarAoFecharDialog() {
+	public void executarAoFecharDialogo() {
 	}
 
 	public void excluirContainer() {

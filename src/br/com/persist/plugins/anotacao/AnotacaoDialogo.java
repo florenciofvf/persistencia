@@ -38,7 +38,7 @@ public class AnotacaoDialogo extends AbstratoDialogo {
 	}
 
 	@Override
-	public void executarAoAbrirDialog() {
+	public void executarAoAbrirDialogo() {
 		container.dialogoVisivel();
 	}
 }

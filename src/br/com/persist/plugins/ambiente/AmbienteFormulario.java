@@ -49,7 +49,7 @@ public class AmbienteFormulario extends AbstratoFormulario {
 	}
 
 	@Override
-	public void executarAoAbrirForm() {
+	public void executarAoAbrirFormulario() {
 		container.formularioVisivel();
 	}
 }

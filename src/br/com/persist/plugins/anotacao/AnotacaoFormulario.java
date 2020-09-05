@@ -51,7 +51,7 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 	}
 
 	@Override
-	public void executarAoAbrirForm() {
+	public void executarAoAbrirFormulario() {
 		container.formularioVisivel();
 	}
 }

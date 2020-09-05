@@ -63,20 +63,20 @@ public abstract class AbstratoFormulario extends JFrame implements Janela {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				executarAoAbrirForm();
+				executarAoAbrirFormulario();
 			}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				executarAoFecharForm();
+				executarAoFecharFormulario();
 			}
 		});
 	}
 
-	public void executarAoAbrirForm() {
+	public void executarAoAbrirFormulario() {
 	}
 
-	public void executarAoFecharForm() {
+	public void executarAoFecharFormulario() {
 	}
 
 	public void excluirContainer() {
