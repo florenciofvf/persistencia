@@ -21,9 +21,9 @@
 		<menu classeFabrica="br.com.persist.fragmento.FragmentoFabrica" />
 		<menu classeFabrica="br.com.persist.mapeamento.MapeamentoFabrica" />
 		<menu classeFabrica="br.com.persist.variaveis.VariaveisFabrica" />
-		<menu classeFabrica="br.com.persist.comparacao.ComparacaoFabrica" />
-		<menu classeFabrica="br.com.persist.requisicao.RequisicaoFabrica" />
-		<menu classeFabrica="br.com.persist.runtime_exec.RuntimeExecFabrica" />
+		<menu classeFabrica="br.com.persist.comparacao.ComparacaoFabrica" ativo="false" />
+		<menu classeFabrica="br.com.persist.plugins.requisicao.RequisicaoFabrica" ativo="true" />
+		<menu classeFabrica="br.com.persist.runtime_exec.RuntimeExecFabrica" ativo="false" />
 	</menu>
 
 	<menu descricao="Configuracoes">
