@@ -214,8 +214,8 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura));
 		container.add(new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto));
 
-		add(BorderLayout.CENTER, new ScrollPane(container));
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, new ScrollPane(container));
 
 		Insets insets = new Insets(5, 10, 5, 5);
 

@@ -102,6 +102,8 @@ public class Constantes {
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
 	public static final String DESTACADO = "DESTACADO";
+	public static final String VARIAVEIS = "variaveis";
+	public static final String VARIAVEL = "variavel";
 	public static final String ARQUIVOS = "arquivos";
 	public static final String DIALOG = "DIALOG";
 	public static final String ICONE = "ICONE:";

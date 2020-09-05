@@ -72,8 +72,8 @@ public class AnotacaoContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
-		add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, textArea);
 	}
 
 	public String getConteudo() {
@@ -112,7 +112,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, CLONAR_EM_FORMULARIO,
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
 		}
 

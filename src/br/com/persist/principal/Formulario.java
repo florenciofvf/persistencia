@@ -130,7 +130,6 @@ public class Formulario extends JFrame {
 				}
 
 				// MapeamentoModelo.inicializar();
-				// VariaveisModelo.inicializar();
 				// FragmentoModelo.inicializar();
 				// atualizarConexoes();
 

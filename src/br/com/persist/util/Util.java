@@ -3,7 +3,9 @@ package br.com.persist.util;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
@@ -24,6 +26,10 @@ import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
@@ -76,6 +82,32 @@ public class Util {
 		}
 
 		return sb.toString();
+	}
+
+	public static void ajustar(JTable table, Graphics graphics) {
+		if (table == null || graphics == null) {
+			return;
+		}
+
+		DefaultTableColumnModel columnModel = (DefaultTableColumnModel) table.getColumnModel();
+		FontMetrics fontMetrics = graphics.getFontMetrics();
+
+		for (int col = 0; col < table.getColumnCount(); col++) {
+			String coluna = table.getColumnName(col);
+			int largura = fontMetrics.stringWidth(coluna);
+
+			for (int lin = 0; lin < table.getRowCount(); lin++) {
+				TableCellRenderer renderer = table.getCellRenderer(lin, col);
+
+				Component component = renderer.getTableCellRendererComponent(table, table.getValueAt(lin, col), false,
+						false, lin, col);
+
+				largura = Math.max(largura, component.getPreferredSize().width);
+			}
+
+			TableColumn column = columnModel.getColumn(col);
+			column.setPreferredWidth(largura + 40);
+		}
 	}
 
 	public static void mensagem(Component componente, String string) {
@@ -484,19 +516,6 @@ public class Util {
 	// return instrucao;
 	// }
 
-	// public static String substituir(String instrucao, ChaveValor cv) {
-	// if (instrucao == null) {
-	// instrucao = Constantes.VAZIO;
-	// }
-	//
-	// if (cv != null && cv.getChave() != null) {
-	// instrucao = instrucao.replaceAll("#" + cv.getChave() + "#",
-	// cv.getValor());
-	// }
-	//
-	// return instrucao;
-	// }
-
 	public static JFileChooser criarFileChooser(File arquivo, boolean multiSelection) {
 		JFileChooser fileChooser = new JFileChooser(".");
 		fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
@@ -678,83 +697,6 @@ public class Util {
 	// }
 	//
 	// return builder;
-	// }
-
-	// public static String requisicao(Tipo parametros) throws IOException {
-	// if (parametros instanceof br.com.persist.fmt.Objeto) {
-	// br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto)
-	// parametros;
-	//
-	// Tipo tipoUrl = objeto.getValor("url");
-	// String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
-	// Map<String, String> mapHeader = null;
-	//
-	// Tipo tipoHeader = objeto.getValor("header");
-	//
-	// if (tipoHeader instanceof br.com.persist.fmt.Objeto) {
-	// br.com.persist.fmt.Objeto objHeader = (br.com.persist.fmt.Objeto)
-	// tipoHeader;
-	// mapHeader = objHeader.getAtributosString();
-	// }
-	//
-	// Tipo tipoBody = objeto.getValor("body");
-	// String bodyParams = null;
-	//
-	// if (tipoBody instanceof br.com.persist.fmt.Objeto) {
-	// br.com.persist.fmt.Objeto objBody = (br.com.persist.fmt.Objeto) tipoBody;
-	// Tipo params = objBody.getValor("parameters");
-	// bodyParams = params instanceof Texto ? params.toString() : null;
-	// }
-	//
-	// return requisicao(url, mapHeader, bodyParams);
-	// }
-	//
-	// return null;
-	// }
-
-	// public static String getAccessToken(Tipo tipo) {
-	// if (tipo instanceof br.com.persist.fmt.Objeto) {
-	// br.com.persist.fmt.Objeto objeto = (br.com.persist.fmt.Objeto) tipo;
-	//
-	// Tipo tipoAccessToken = objeto.getValor("access_token");
-	// return tipoAccessToken instanceof Texto ? tipoAccessToken.toString() :
-	// null;
-	// }
-	//
-	// return null;
-	// }
-
-	// public static String requisicao(String url, Map<String, String> header,
-	// String parametros) throws IOException {
-	// if (estaVazio(url)) {
-	// return null;
-	// }
-	//
-	// URL url2 = new URL(url);
-	// URLConnection conn = url2.openConnection();
-	// String verbo = null;
-	//
-	// if (header != null) {
-	// verbo = header.get("Request-Method");
-	//
-	// for (Map.Entry<String, String> entry : header.entrySet()) {
-	// conn.setRequestProperty(entry.getKey(), entry.getValue());
-	// }
-	// }
-	//
-	// if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
-	// conn.setDoOutput(true);
-	// }
-	//
-	// conn.connect();
-	//
-	// if ("POST".equalsIgnoreCase(verbo) && !estaVazio(parametros)) {
-	// OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-	// osw.write(parametros);
-	// osw.flush();
-	// }
-	//
-	// return getString(conn.getInputStream());
 	// }
 
 	public static String getString(InputStream is) throws IOException {
