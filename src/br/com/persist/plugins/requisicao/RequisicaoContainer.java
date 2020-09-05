@@ -32,6 +32,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.StyledDocument;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.componente.Action;
@@ -43,11 +45,11 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
+import br.com.persist.plugins.requisicao.parser.Parser;
+import br.com.persist.plugins.requisicao.parser.Tipo;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Base64Util;
 import br.com.persist.util.Constantes;
-//import br.com.persist.fmt.Parser;
-//import br.com.persist.fmt.Tipo;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
@@ -600,21 +602,20 @@ public class RequisicaoContainer extends AbstratoContainer {
 			String string = Util.getString(areaParametros);
 			areaResultados.setText(Constantes.VAZIO);
 
-			// try {
-			// Parser parser = new Parser();
-			// Tipo json = parser.parse(string);
-			//
-			// StyledDocument styledDoc = areaResultados.getStyledDocument();
-			//
-			// if (styledDoc instanceof AbstractDocument) {
-			// AbstractDocument doc = (AbstractDocument) styledDoc;
-			// json.toString(doc, false, 0);
-			// }
-			// areaParametros.requestFocus();
-			// } catch (Exception ex) {
-			// Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex,
-			// this);
-			// }
+			try {
+				Parser parser = new Parser();
+				Tipo json = parser.parse(string);
+
+				StyledDocument styledDoc = areaResultados.getStyledDocument();
+
+				if (styledDoc instanceof AbstractDocument) {
+					AbstractDocument doc = (AbstractDocument) styledDoc;
+					json.toString(doc, false, 0);
+				}
+				areaParametros.requestFocus();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
+			}
 		}
 
 		private void copiar1(StringBuilder sb) {
