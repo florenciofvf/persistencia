@@ -1,1 +1,3 @@
 br.com.persist.plugins.ambiente.AmbienteFabrica???desenv
+br.com.persist.plugins.anotacao.AnotacaoFabrica???
+br.com.persist.plugins.configuracao.ConfiguracaoFabrica???

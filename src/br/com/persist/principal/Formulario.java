@@ -67,6 +67,14 @@ public class Formulario extends JFrame {
 		fichario.adicionarPagina(pagina);
 	}
 
+	public void setTabLayoutPolicy(int tabLayoutPolicy) {
+		fichario.setTabLayoutPolicy(tabLayoutPolicy);
+	}
+
+	public void setTabPlacement(int tabPlacement) {
+		fichario.setTabPlacement(tabPlacement);
+	}
+
 	public boolean excluirPagina(Pagina pagina) {
 		return fichario.excluirPagina(pagina);
 	}

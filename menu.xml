@@ -27,7 +27,7 @@
 	</menu>
 
 	<menu descricao="Configuracoes">
-		<menu classeFabrica="br.com.persist.configuracao.ConfiguracaoFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.configuracao.ConfiguracaoFabrica" ativo="true" />
 	</menu>
 
 	<menu descricao="Ambientes">
