@@ -45,7 +45,6 @@ public class Formulario extends JFrame {
 	private final transient Map<String, FabricaContainer> fabricas = new HashMap<>();
 	private final transient List<Servico> servicos = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
-	private static final Map<String, Object> map = new HashMap<>();
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 
@@ -315,10 +314,6 @@ public class Formulario extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			LOG.log(Level.FINEST, "IconeBandejaListener.actionPerformed");
 		}
-	}
-
-	public static Map<String, Object> getMap() {
-		return map;
 	}
 
 	public PosicaoDimensao criarPosicaoDimensaoSeValido() {

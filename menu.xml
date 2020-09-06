@@ -4,7 +4,7 @@
 	<menu descricao="Arquivo">
 		<menu classeFabrica="br.com.persist.objeto.ObjetoFabrica" />
 		<menu classeFabrica="br.com.persist.objeto.DesktopFabrica" />
-		<menu classeFabrica="br.com.persist.anexo.AnexoTreeFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.anexo.AnexoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.arquivo.ArquivoTreeFabrica" />
 		<menu classeFabrica="br.com.persist.principal.PrincipalFabrica" ativo="true" />
 	</menu>
