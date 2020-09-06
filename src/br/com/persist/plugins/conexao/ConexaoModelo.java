@@ -102,10 +102,6 @@ public class ConexaoModelo extends AbstractTableModel {
 		}
 	}
 
-	// public void novo() {
-	// conexoes.add(new Conexao());
-	// fireTableDataChanged();
-	// }
 	// public ChaveValor getChaveValor(int i) {
 	// Conexao conexao = getConexao(i);
 	// return new URLChaveValor(conexao);
