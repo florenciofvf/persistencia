@@ -5,3 +5,4 @@ br.com.persist.plugins.requisicao.RequisicaoFabrica???desenv
 br.com.persist.plugins.variaveis.VariavelFabrica???
 br.com.persist.plugins.conexao.ConexaoFabrica???
 br.com.persist.plugins.mapeamento.MapeamentoFabrica???
+br.com.persist.plugins.fragmento.FragmentoFabrica???

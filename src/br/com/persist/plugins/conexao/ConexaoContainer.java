@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -87,7 +88,6 @@ public class ConexaoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 		private Action desconectaAcao = Action.actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
-		private Action sucessoAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 		private Action descerAcao = Action.actionIcon("label.descer", Icones.BAIXAR2);
 		private Action subirAcao = Action.actionIcon("label.subir", Icones.TOP);
 		// private Action infoAcao = Action.actionIcon("label.info",
@@ -95,12 +95,11 @@ public class ConexaoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					COPIAR);
+					COPIAR, APLICAR);
 
 			addButton(true, descerAcao);
 			addButton(subirAcao);
 			addButton(true, conectaAcao);
-			addButton(true, sucessoAcao);
 			// addButton(true, infoAcao);
 			addButton(true, desconectaAcao);
 
@@ -110,7 +109,6 @@ public class ConexaoContainer extends AbstratoContainer {
 		private void eventos() {
 			// infoAcao.setActionListener(e ->
 			// formulario.getFichario().infoConexao());
-			sucessoAcao.setActionListener(e -> selecionarConexao());
 			conectaAcao.setActionListener(e -> conectar());
 			descerAcao.setActionListener(e -> descer());
 			subirAcao.setActionListener(e -> subir());
@@ -216,7 +214,8 @@ public class ConexaoContainer extends AbstratoContainer {
 			}
 		}
 
-		private void selecionarConexao() {
+		@Override
+		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
 
 			if (linhas != null && linhas.length == 1) {

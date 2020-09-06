@@ -99,6 +99,7 @@ public class Constantes {
 	public static final String SEPARADOR = File.separator;
 	public static final String MAPEAMENTO = "mapeamento";
 	public static final String LABEL_NOVO = "label.novo";
+	public static final String FRAGMENTOS = "fragmentos";
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
 	public static final int TREZENTOS_QUARENTA_UM = 341;
@@ -106,6 +107,7 @@ public class Constantes {
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
 	public static final String DESTACADO = "DESTACADO";
 	public static final String VARIAVEIS = "variaveis";
+	public static final String FRAGMENTO = "fragmento";
 	public static final String CONEXOES = "conexoes";
 	public static final String VARIAVEL = "variavel";
 	public static final String ARQUIVOS = "arquivos";

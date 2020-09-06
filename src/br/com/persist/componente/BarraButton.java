@@ -12,6 +12,7 @@ import static br.com.persist.componente.BarraButtonEnum.*;
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
+	protected Action aplicarAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 	private Action limpar2Acao = Action.actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = Action.actionIcon("label.copiar2", Icones.COPIA);
 	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);
@@ -91,6 +92,11 @@ public class BarraButton extends JToolBar {
 		if (contem(COLAR2, enuns)) {
 			addButton(colar2Acao);
 			colar2Acao.setActionListener(e -> colar2());
+		}
+
+		if (contem(APLICAR, enuns)) {
+			addButton(aplicarAcao);
+			aplicarAcao.setActionListener(e -> aplicar());
 		}
 	}
 
@@ -218,6 +224,10 @@ public class BarraButton extends JToolBar {
 	}
 
 	protected void colar2() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void aplicar() {
 		throw new UnsupportedOperationException();
 	}
 

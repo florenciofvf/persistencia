@@ -129,8 +129,6 @@ public class Formulario extends JFrame {
 					servico.visivelFormulario(Formulario.this);
 				}
 
-				// FragmentoModelo.inicializar();
-
 				fichario.restaurarPaginas(Formulario.this);
 				fichario.ativarNavegacao();
 				iconeBandeja();

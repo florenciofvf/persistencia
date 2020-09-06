@@ -16,17 +16,17 @@
 		<menu classeFabrica="br.com.persist.metadado.MetadadoTreeFabrica" />
 	</menu>
 
-	<menu descricao="Utilitarios">
+	<menu descricao="Utilitários">
 		<menu classeFabrica="br.com.persist.plugins.anotacao.AnotacaoFabrica" ativo="true" />
-		<menu classeFabrica="br.com.persist.fragmento.FragmentoFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.fragmento.FragmentoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.mapeamento.MapeamentoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.variaveis.VariavelFabrica" ativo="true" />
-		<menu classeFabrica="br.com.persist.comparacao.ComparacaoFabrica" ativo="false" />
 		<menu classeFabrica="br.com.persist.plugins.requisicao.RequisicaoFabrica" ativo="true" />
+		<menu classeFabrica="br.com.persist.comparacao.ComparacaoFabrica" ativo="false" />
 		<menu classeFabrica="br.com.persist.runtime_exec.RuntimeExecFabrica" ativo="false" />
 	</menu>
 
-	<menu descricao="Configuracoes">
+	<menu descricao="Configurações">
 		<menu classeFabrica="br.com.persist.plugins.configuracao.ConfiguracaoFabrica" ativo="true" />
 	</menu>
 
@@ -34,7 +34,7 @@
 		<menu classeFabrica="br.com.persist.plugins.ambiente.AmbienteFabrica" ativo="true" />
 	</menu>
 
-	<menu descricao="Aparencia">
+	<menu descricao="Aparência">
 		<menu classeFabrica="br.com.persist.plugins.aparencia.AparenciaFabrica" ativo="true" />
 	</menu>
 </menuPrincipal>

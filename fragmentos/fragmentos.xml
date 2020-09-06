@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <fragmentos>
-	<fragmento resumo="ID ELEI&#199;&#195;O" grupo="id" valor="and id = 65">
-	</fragmento>
-	<fragmento resumo="ID ELEI&#199;&#195;O" grupo="id" valor="and id in(65,70)">
+	<fragmento resumo="ID ELEI&#199;&#195;O" grupo="id">
+		<valor>
+			and id = 65
+		</valor>
 	</fragmento>
 </fragmentos>
