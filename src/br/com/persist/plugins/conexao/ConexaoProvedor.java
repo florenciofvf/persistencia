@@ -1,0 +1,255 @@
+package br.com.persist.plugins.conexao;
+
+import java.io.File;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JComboBox;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+
+import br.com.persist.util.Constantes;
+import br.com.persist.util.Preferencias;
+import br.com.persist.xml.XML;
+import br.com.persist.xml.XMLUtil;
+
+public class ConexaoProvedor {
+	private static final Map<Conexao, Connection> CONEXOES = new HashMap<>();
+	private static final List<Conexao> lista = new ArrayList<>();
+	private static final Logger LOG = Logger.getGlobal();
+	private static final File file;
+
+	private ConexaoProvedor() {
+	}
+
+	static {
+		file = new File(Constantes.CONEXOES + Constantes.SEPARADOR + "conexoes.xml");
+	}
+
+	public static int primeiro(int indice) {
+		if (indice > 0 && indice < getSize()) {
+			Conexao c = lista.remove(indice);
+			lista.add(0, c);
+
+			return 0;
+		}
+
+		return -1;
+	}
+
+	public static int anterior(int indice) {
+		if (indice > 0 && indice < getSize()) {
+			Conexao c = lista.remove(indice);
+			indice--;
+			lista.add(indice, c);
+
+			return indice;
+		}
+
+		return -1;
+	}
+
+	public static int proximo(int indice) {
+		if (indice + 1 < getSize()) {
+			Conexao c = lista.remove(indice);
+			indice++;
+			lista.add(indice, c);
+
+			return indice;
+		}
+
+		return -1;
+	}
+
+	public static Conexao getConexao(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			return lista.get(indice);
+		}
+
+		return null;
+	}
+
+	public static Conexao getConexao(String nome) {
+		for (Conexao c : lista) {
+			if (c.getNome().equals(nome)) {
+				return c;
+			}
+		}
+
+		return null;
+	}
+
+	public static int getIndice(String nome) {
+		for (int i = 0; i < lista.size(); i++) {
+			Conexao c = lista.get(i);
+			if (c.getNome().equals(nome)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	public static int getSize() {
+		return lista.size();
+	}
+
+	public static boolean contem(Conexao conexao) {
+		return contem(conexao.getNome());
+	}
+
+	public static boolean contem(String nome) {
+		return getConexao(nome) != null;
+	}
+
+	public static void adicionar(Conexao conexao) {
+		if (contem(conexao)) {
+			return;
+		}
+
+		lista.add(conexao);
+	}
+
+	public static void inicializar() {
+		lista.clear();
+
+		try {
+			ConexaoColetor coletor = new ConexaoColetor();
+
+			if (file.exists() && file.canRead()) {
+				XML.processar(file, new ConexaoHandler(coletor));
+			}
+
+			lista.addAll(coletor.getConexoes());
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	public static void salvar() {
+		try {
+			XMLUtil util = new XMLUtil(file);
+			util.prologo();
+
+			util.abrirTag2(Constantes.CONEXOES);
+
+			for (Conexao c : lista) {
+				if (c.isValido()) {
+					c.salvar(util);
+				}
+			}
+
+			util.finalizarTag(Constantes.CONEXOES);
+			util.close();
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	public static synchronized Connection getConnection(Conexao conexao) throws ConexaoException {
+		try {
+			Connection conn = CONEXOES.get(conexao);
+
+			if (conn == null || conn.isClosed()) {
+				conn = conexao.getConnection();
+				CONEXOES.put(conexao, conn);
+			}
+
+			Preferencias.setErroCriarConnection(false);
+
+			return conn;
+		} catch (Exception ex) {
+			Preferencias.setErroCriarConnection(true);
+			throw new ConexaoException(ex);
+		}
+	}
+
+	public static synchronized Connection getConnection2(Conexao conexao) throws ConexaoException {
+		Connection conn = CONEXOES.get(conexao);
+
+		if (conn != null) {
+			try {
+				fecharConexao(conn);
+				CONEXOES.put(conexao, null);
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
+
+		return getConnection(conexao);
+	}
+
+	private static void fecharConexao(Connection conn) throws ConexaoException {
+		try {
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			throw new ConexaoException(ex);
+		}
+	}
+
+	public static void fecharConexoes() throws ConexaoException {
+		for (Connection conn : CONEXOES.values()) {
+			fecharConexao(conn);
+		}
+	}
+
+	public static void fechar(Conexao conexao) {
+		Connection conn = CONEXOES.get(conexao);
+
+		if (conn != null) {
+			try {
+				fecharConexao(conn);
+				CONEXOES.put(conexao, null);
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
+	}
+
+	public static Connection get(Conexao conexao) {
+		return CONEXOES.get(conexao);
+	}
+
+	public static JComboBox<Conexao> criarComboConexao(Conexao padrao) {
+		Combo combo = new Combo(new ConexaoComboModelo(lista));
+		combo.setSelectedItem(padrao);
+
+		return combo;
+	}
+
+	private static class Combo extends JComboBox<Conexao> implements PopupMenuListener {
+		private static final long serialVersionUID = 1L;
+		private int total;
+
+		public Combo(ConexaoComboModelo modelo) {
+			super(modelo);
+			total = modelo.getSize();
+			addPopupMenuListener(this);
+		}
+
+		@Override
+		public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+			if (total != getModel().getSize()) {
+				total = getModel().getSize();
+				((ConexaoComboModelo) getModel()).notificarMudancas();
+			}
+		}
+
+		@Override
+		public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+			LOG.log(Level.FINEST, "popupMenuWillBecomeInvisible");
+		}
+
+		@Override
+		public void popupMenuCanceled(PopupMenuEvent e) {
+			LOG.log(Level.FINEST, "popupMenuCanceled");
+		}
+	}
+}

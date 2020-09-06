@@ -28,6 +28,7 @@ public class Constantes {
 	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
 	public static final String PAINEL_RUNTIME_EXEC = "PAINEL RUNTIME_EXEC";
 	public static final String IMAGEM_TRAY_ICON = "/resources/create.png";
+	public static final String SELECIONAR_CONEXAO = "SELECIONAR_CONEXAO";
 	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
 	public static final String LABEL_ARQUIVOS_MIN = "label.arquivos_min";
 	public static final String LABEL_RUNTIME_EXEC = "label.runtime_exec";
@@ -103,6 +104,7 @@ public class Constantes {
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
 	public static final String DESTACADO = "DESTACADO";
 	public static final String VARIAVEIS = "variaveis";
+	public static final String CONEXOES = "conexoes";
 	public static final String VARIAVEL = "variavel";
 	public static final String ARQUIVOS = "arquivos";
 	public static final String DIALOG = "DIALOG";

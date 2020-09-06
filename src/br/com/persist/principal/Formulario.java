@@ -131,7 +131,6 @@ public class Formulario extends JFrame {
 
 				// MapeamentoModelo.inicializar();
 				// FragmentoModelo.inicializar();
-				// atualizarConexoes();
 
 				fichario.restaurarPaginas(Formulario.this);
 				fichario.ativarNavegacao();
@@ -209,11 +208,6 @@ public class Formulario extends JFrame {
 	// }
 	// }
 
-	// @Override
-	// public List<Conexao> getConexoes() {
-	// return conexoes;
-	// }
-
 	/*
 	 * public class Conteiner { public void abrirExportacaoMetadado(Metadado
 	 * metadado, boolean circular) { ObjetoFormulario form =
@@ -263,20 +257,6 @@ public class Formulario extends JFrame {
 	 * 
 	 * form.setVisible(true); } }
 	 */
-
-	// public void atualizarConexoes() {
-	// ConexaoModelo modelo = new ConexaoModelo();
-	// conexoes.clear();
-	//
-	// try {
-	// modelo.abrir();
-	// for (Conexao conexao : modelo.getConexoes()) {
-	// conexoes.add(conexao);
-	// }
-	// } catch (Exception ex) {
-	// Util.stackTraceAndMessage("ATUALIZAR CONEXOES", ex, this);
-	// }
-	// }
 
 	private class MenuPrincipal extends JMenuBar {
 		private static final long serialVersionUID = 1L;

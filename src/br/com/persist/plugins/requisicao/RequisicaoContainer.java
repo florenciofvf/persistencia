@@ -170,7 +170,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					BAIXAR, NOVO, LIMPAR, SALVAR, COPIAR, COLAR, COPIAR2, COLAR2);
+					NOVO, BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, COPIAR2, COLAR2);
 
 			addButton(baixarAtivoAcao);
 			addButton(excluirAtivoAcao);

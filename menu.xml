@@ -10,7 +10,7 @@
 	</menu>
 
 	<menu descricao="Banco">
-		<menu classeFabrica="br.com.persist.conexao.ConexaoFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.conexao.ConexaoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.consulta.ConsultaFabrica" />
 		<menu classeFabrica="br.com.persist.update.UpdateFabrica" />
 		<menu classeFabrica="br.com.persist.metadado.MetadadoTreeFabrica" />
