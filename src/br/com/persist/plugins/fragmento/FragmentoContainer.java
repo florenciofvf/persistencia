@@ -149,8 +149,8 @@ public class FragmentoContainer extends AbstratoContainer {
 				return;
 			}
 
-			resp = Util.getValorInputDialog(FragmentoContainer.this, "label.id",
-					Mensagens.getString("label.nome_grupo"), Constantes.VAZIO);
+			resp = Util.getValorInputDialog(FragmentoContainer.this, "label.id", Mensagens.getString("label.grupo"),
+					Constantes.VAZIO);
 
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return;
