@@ -21,7 +21,6 @@ import java.nio.file.Path;
 public class Anexo {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<Anexo> filhos;
-	private boolean arquivoAberto;
 	private boolean abrirVisivel;
 	private boolean padraoAbrir;
 	private boolean processado;
@@ -163,14 +162,6 @@ public class Anexo {
 	@Override
 	public String toString() {
 		return file.getName();
-	}
-
-	public boolean isArquivoAberto() {
-		return arquivoAberto;
-	}
-
-	public void setArquivoAberto(boolean arquivoAberto) {
-		this.arquivoAberto = arquivoAberto;
 	}
 
 	public Icon getIcone() {

@@ -291,11 +291,10 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		Anexo arquivo = anexo.getObjetoSelecionado();
 
 		if (arquivo != null) {
-			// ArquivoIconeDialogo form = ArquivoIconeDialogo.criar((Frame)
-			// null, arquivo);
-			// form.setLocationRelativeTo(AnexoContainer.this);
-			// form.setVisible(true);
-			// AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
+			AnexoIconeDialogo form = AnexoIconeDialogo.criar((Frame) null, arquivo);
+			form.setLocationRelativeTo(AnexoContainer.this);
+			form.setVisible(true);
+			AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 		}
 	}
 
