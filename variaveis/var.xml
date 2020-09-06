@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <variaveis>
-	<chave_valor chave="dataSYSDATE">
+	<variavel nome="dataSYSDATE">
 		<valor>
 			SYSDATE
 		</valor>
-	</chave_valor>
-	<chave_valor chave="DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL">
+	</variavel>
+	<variavel nome="DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL">
 		<valor>
 			40
 		</valor>
-	</chave_valor>
-	<chave_valor chave="DELTA_X_AJUSTE_FORM_OBJETO">
+	</variavel>
+	<variavel nome="DELTA_X_AJUSTE_FORM_OBJETO">
 		<valor>
 			30
 		</valor>
-	</chave_valor>
-	<chave_valor chave="DELTA_Y_AJUSTE_FORM_OBJETO">
+	</variavel>
+	<variavel nome="DELTA_Y_AJUSTE_FORM_OBJETO">
 		<valor>
 			30
 		</valor>
-	</chave_valor>
-	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER">
+	</variavel>
+	<variavel nome="ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER">
 		<valor>
 			70
 		</valor>
-	</chave_valor>
-	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS">
+	</variavel>
+	<variavel nome="ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS">
 		<valor>
 			10
 		</valor>
-	</chave_valor>
-	<chave_valor chave="ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS">
+	</variavel>
+	<variavel nome="ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS">
 		<valor>
 			30
 		</valor>
-	</chave_valor>
-	<chave_valor chave="LIMPAR2">
+	</variavel>
+	<variavel nome="LIMPAR2">
 		<valor>
 			AND 1 &gt; 2
 		</valor>
-	</chave_valor>
+	</variavel>
 </variaveis>

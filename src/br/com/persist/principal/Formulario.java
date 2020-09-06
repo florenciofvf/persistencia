@@ -129,7 +129,6 @@ public class Formulario extends JFrame {
 					servico.visivelFormulario(Formulario.this);
 				}
 
-				// MapeamentoModelo.inicializar();
 				// FragmentoModelo.inicializar();
 
 				fichario.restaurarPaginas(Formulario.this);
