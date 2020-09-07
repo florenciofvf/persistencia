@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
+import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Preferencias;
 import br.com.persist.xml.XML;
@@ -250,6 +251,34 @@ public class ConexaoProvedor {
 		@Override
 		public void popupMenuCanceled(PopupMenuEvent e) {
 			LOG.log(Level.FINEST, "popupMenuCanceled");
+		}
+	}
+
+	public static Valor getValorUrl(int i) {
+		Conexao conexao = getConexao(i);
+		return new ValorURL(conexao);
+	}
+
+	private static class ValorURL implements Valor {
+		private final Conexao conexao;
+
+		public ValorURL(Conexao conexao) {
+			this.conexao = conexao;
+		}
+
+		@Override
+		public String getTitle() {
+			return "URL do Banco";
+		}
+
+		@Override
+		public String get() {
+			return conexao.getUrlBanco();
+		}
+
+		@Override
+		public void set(String s) {
+			conexao.setUrlBanco(s);
 		}
 	}
 }

@@ -15,7 +15,7 @@ public class SetValor {
 	private SetValor() {
 	}
 
-	public static void criar(Valor valor) {
+	public static void view(Valor valor) {
 		SetValorDialogo form = new SetValorDialogo(valor);
 		form.setVisible(true);
 	}
@@ -77,5 +77,11 @@ class SetValorDialogo extends AbstratoDialogo {
 	@Override
 	public void executarAoFecharDialogo() {
 		valor.set(textArea.getText());
+	}
+
+	@Override
+	public void dispose() {
+		valor.set(textArea.getText());
+		super.dispose();
 	}
 }

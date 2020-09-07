@@ -101,38 +101,4 @@ public class ConexaoModelo extends AbstractTableModel {
 		default:
 		}
 	}
-
-	// public ChaveValor getChaveValor(int i) {
-	// Conexao conexao = getConexao(i);
-	// return new URLChaveValor(conexao);
-	// }
-	//
-	// public class URLChaveValor extends ChaveValor {
-	// private final Conexao conexao;
-	//
-	// public URLChaveValor(Conexao conexao) {
-	// super(conexao.getNome(), conexao.getUrlBanco());
-	// this.conexao = conexao;
-	// }
-	//
-	// @Override
-	// public String getValor() {
-	// return conexao.getUrlBanco();
-	// }
-	//
-	// @Override
-	// public void setValor(String valor) {
-	// conexao.setUrlBanco(valor);
-	// }
-	//
-	// @Override
-	// public int hashCode() {
-	// return super.hashCode();
-	// }
-	//
-	// @Override
-	// public boolean equals(Object obj) {
-	// return super.equals(obj);
-	// }
-	// }
 }
