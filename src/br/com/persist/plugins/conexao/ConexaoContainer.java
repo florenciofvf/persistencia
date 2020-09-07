@@ -1,16 +1,18 @@
 package br.com.persist.plugins.conexao;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
-import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
@@ -90,8 +92,7 @@ public class ConexaoContainer extends AbstratoContainer {
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
 		private Action descerAcao = Action.actionIcon("label.descer", Icones.BAIXAR2);
 		private Action subirAcao = Action.actionIcon("label.subir", Icones.TOP);
-		// private Action infoAcao = Action.actionIcon("label.info",
-		// Icones.INFO);
+		private Action infoAcao = Action.actionIcon("label.info", Icones.INFO);
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
@@ -100,15 +101,14 @@ public class ConexaoContainer extends AbstratoContainer {
 			addButton(true, descerAcao);
 			addButton(subirAcao);
 			addButton(true, conectaAcao);
-			// addButton(true, infoAcao);
+			addButton(true, infoAcao);
 			addButton(true, desconectaAcao);
 
 			eventos();
 		}
 
 		private void eventos() {
-			// infoAcao.setActionListener(e ->
-			// formulario.getFichario().infoConexao());
+			infoAcao.setActionListener(e -> infoConexao());
 			conectaAcao.setActionListener(e -> conectar());
 			descerAcao.setActionListener(e -> descer());
 			subirAcao.setActionListener(e -> subir());
@@ -121,6 +121,10 @@ public class ConexaoContainer extends AbstratoContainer {
 					Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
 				}
 			});
+		}
+
+		private void infoConexao() {
+			// formulario.getFichario().infoConexao()
 		}
 
 		@Override
@@ -220,7 +224,9 @@ public class ConexaoContainer extends AbstratoContainer {
 
 			if (linhas != null && linhas.length == 1) {
 				Conexao c = ConexaoProvedor.getConexao(linhas[0]);
-				formulario.processar(Constantes.SELECIONAR_CONEXAO, c);
+				Map<String, Object> map = new HashMap<>();
+				map.put(Constantes.SELECIONAR_CONEXAO, c);
+				formulario.processar(map);
 			}
 		}
 

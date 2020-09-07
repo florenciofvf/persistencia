@@ -48,7 +48,6 @@ public class Formulario extends JFrame {
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 
-	// private final transient List<Conexao> conexoes = new ArrayList<>();
 	// public static final Macro macro = new Macro();
 
 	public Formulario() {
@@ -62,10 +61,6 @@ public class Formulario extends JFrame {
 		configurar();
 	}
 
-	public void adicionarPagina(Pagina pagina) {
-		fichario.adicionarPagina(pagina);
-	}
-
 	public void setTabLayoutPolicy(int tabLayoutPolicy) {
 		fichario.setTabLayoutPolicy(tabLayoutPolicy);
 	}
@@ -76,6 +71,30 @@ public class Formulario extends JFrame {
 
 	public boolean excluirPagina(Pagina pagina) {
 		return fichario.excluirPagina(pagina);
+	}
+
+	public void adicionarPagina(Pagina pagina) {
+		fichario.adicionarPagina(pagina);
+	}
+
+	public void selecionarPagina(File file) {
+		fichario.selecionarPagina(file);
+	}
+
+	public void fecharArquivo(File file) {
+		fichario.fecharArquivo(file);
+	}
+
+	public boolean isAberto(File file) {
+		return fichario.isAberto(file);
+	}
+
+	public boolean isAtivo(File file) {
+		return fichario.isAtivo(file);
+	}
+
+	public void fecharTodos() {
+		fichario.fecharTodos();
 	}
 
 	public void adicionarServico(Servico servico) {
@@ -104,9 +123,9 @@ public class Formulario extends JFrame {
 		return fabricas.get(chave);
 	}
 
-	public void processar(String comando, Object objeto) {
+	public void processar(Map<String, Object> args) {
 		for (Servico servico : servicos) {
-			servico.processar(this, comando, objeto);
+			servico.processar(this, args);
 		}
 	}
 

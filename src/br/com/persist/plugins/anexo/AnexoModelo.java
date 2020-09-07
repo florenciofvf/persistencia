@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -104,10 +103,6 @@ public class AnexoModelo implements TreeModel {
 		if (anexo != null) {
 			anexos.put(anexo.criarChave(new StringBuilder()).toString(), anexo);
 		}
-	}
-
-	public void listar(List<Anexo> lista) {
-		raiz.listar(lista);
 	}
 
 	@Override

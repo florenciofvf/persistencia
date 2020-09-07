@@ -87,16 +87,6 @@ public class Anexo {
 		}
 	}
 
-	public void listar(List<Anexo> lista) {
-		if (isFile()) {
-			lista.add(this);
-		}
-
-		for (Anexo a : filhos) {
-			a.listar(lista);
-		}
-	}
-
 	public List<Anexo> getFilhos() {
 		if (!processado) {
 			processar();

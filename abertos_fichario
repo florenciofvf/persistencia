@@ -7,3 +7,4 @@ br.com.persist.plugins.conexao.ConexaoFabrica???
 br.com.persist.plugins.mapeamento.MapeamentoFabrica???
 br.com.persist.plugins.fragmento.FragmentoFabrica???
 br.com.persist.plugins.anexo.AnexoFabrica???
+br.com.persist.plugins.arquivo.ArquivoFabrica???

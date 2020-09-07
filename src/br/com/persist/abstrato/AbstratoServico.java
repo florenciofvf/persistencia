@@ -1,11 +1,13 @@
 package br.com.persist.abstrato;
 
+import java.util.Map;
+
 import br.com.persist.principal.Formulario;
 
 public abstract class AbstratoServico implements Servico {
 
 	@Override
-	public void processar(Formulario formulario, String comando, Object objeto) {
+	public void processar(Formulario formulario, Map<String, Object> args) {
 	}
 
 	@Override
