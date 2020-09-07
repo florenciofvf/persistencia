@@ -46,7 +46,7 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 			MouseEvent mouseEvent = (MouseEvent) evento;
 
 			if (mouseEvent.getClickCount() >= Constantes.DOIS && tabela != null) {
-				abrirModalEdicaoRegistro(tabela, linha);
+				abrirModalEdicaoValor(tabela, linha);
 				cancelCellEditing();
 			}
 		}
@@ -54,7 +54,7 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 		return false;
 	}
 
-	public abstract void abrirModalEdicaoRegistro(JTable table, int row);
+	public abstract void abrirModalEdicaoValor(JTable table, int row);
 
 	@Override
 	public boolean stopCellEditing() {

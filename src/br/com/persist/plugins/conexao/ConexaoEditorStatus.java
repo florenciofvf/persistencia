@@ -16,7 +16,7 @@ import javax.swing.table.TableModel;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
 
-public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
+public class ConexaoEditorStatus extends JPanel implements TableCellEditor {
 	private final transient List<CellEditorListener> listeners;
 	private static final long serialVersionUID = 1L;
 	public static final int TOTAL_CLICKS = 1;
@@ -24,7 +24,7 @@ public class ConexaoStatusEditor extends JPanel implements TableCellEditor {
 	private JTable tabela;
 	private int linha;
 
-	public ConexaoStatusEditor() {
+	public ConexaoEditorStatus() {
 		listeners = new ArrayList<>();
 		changeEvent = new ChangeEvent(this);
 	}

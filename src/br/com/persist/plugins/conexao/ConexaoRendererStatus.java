@@ -10,10 +10,10 @@ import javax.swing.table.TableModel;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Util;
 
-public class ConexaoStatusRenderer extends DefaultTableCellRenderer {
+public class ConexaoRendererStatus extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
-	public ConexaoStatusRenderer() {
+	public ConexaoRendererStatus() {
 		setHorizontalAlignment(CENTER);
 	}
 

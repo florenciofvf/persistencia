@@ -75,9 +75,9 @@ public class ConexaoContainer extends AbstratoContainer {
 	}
 
 	private void configurar() {
-		tabela.getColumnModel().getColumn(0).setCellRenderer(new ConexaoStatusRenderer());
-		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoStatusEditor());
-		tabela.getColumnModel().getColumn(3).setCellEditor(new ConexaoEditor());
+		tabela.getColumnModel().getColumn(0).setCellRenderer(new ConexaoRendererStatus());
+		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoEditorStatus());
+		tabela.getColumnModel().getColumn(3).setCellEditor(new ConexaoEditorURL());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.baixar();
 	}

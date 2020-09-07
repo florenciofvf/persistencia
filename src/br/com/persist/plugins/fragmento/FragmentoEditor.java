@@ -8,6 +8,6 @@ public class FragmentoEditor extends AbstratoEditor {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void abrirModalEdicaoRegistro(JTable table, int row) {
+	public void abrirModalEdicaoValor(JTable table, int row) {
 	}
 }
