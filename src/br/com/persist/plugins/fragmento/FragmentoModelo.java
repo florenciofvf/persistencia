@@ -58,38 +58,4 @@ public class FragmentoModelo extends AbstractTableModel {
 			f.setValor(valor);
 		}
 	}
-
-	// public ChaveValor getChaveValor(int i) {
-	// Fragmento fragmento = getFragmento(i);
-	// return new FragmentoChaveValor(fragmento);
-	// }
-	//
-	// public class FragmentoChaveValor extends ChaveValor {
-	// private final Fragmento fragmento;
-	//
-	// public FragmentoChaveValor(Fragmento fragmento) {
-	// super(fragmento.getResumo(), fragmento.getValor());
-	// this.fragmento = fragmento;
-	// }
-	//
-	// @Override
-	// public String getValor() {
-	// return fragmento.getValor();
-	// }
-	//
-	// @Override
-	// public void setValor(String valor) {
-	// fragmento.setValor(valor);
-	// }
-	//
-	// @Override
-	// public int hashCode() {
-	// return super.hashCode();
-	// }
-	//
-	// @Override
-	// public boolean equals(Object obj) {
-	// return super.equals(obj);
-	// }
-	// }
 }

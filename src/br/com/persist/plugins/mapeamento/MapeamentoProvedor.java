@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLUtil;
@@ -100,6 +101,34 @@ public class MapeamentoProvedor {
 			util.close();
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	public static Valor getValor(int i) {
+		Mapeamento mapeamento = getMapeamento(i);
+		return new MapeamentoValor(mapeamento);
+	}
+
+	private static class MapeamentoValor implements Valor {
+		private final Mapeamento mapeamento;
+
+		public MapeamentoValor(Mapeamento mapeamento) {
+			this.mapeamento = mapeamento;
+		}
+
+		@Override
+		public String getTitle() {
+			return "Valor";
+		}
+
+		@Override
+		public String get() {
+			return mapeamento.getValor();
+		}
+
+		@Override
+		public void set(String s) {
+			mapeamento.setValor(s);
 		}
 	}
 }

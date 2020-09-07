@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLUtil;
@@ -154,5 +155,33 @@ public class FragmentoProvedor {
 
 		listaBackup.addAll(lista1);
 		lista.addAll(lista2);
+	}
+
+	public static Valor getValor(int i) {
+		Fragmento fragmento = getFragmento(i);
+		return new FragmentoValor(fragmento);
+	}
+
+	private static class FragmentoValor implements Valor {
+		private final Fragmento fragmento;
+
+		public FragmentoValor(Fragmento fragmento) {
+			this.fragmento = fragmento;
+		}
+
+		@Override
+		public String getTitle() {
+			return "Valor";
+		}
+
+		@Override
+		public String get() {
+			return fragmento.getValor();
+		}
+
+		@Override
+		public void set(String s) {
+			fragmento.setValor(s);
+		}
 	}
 }

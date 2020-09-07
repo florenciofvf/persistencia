@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.util.Constantes;
 import br.com.persist.xml.XML;
 import br.com.persist.xml.XMLUtil;
@@ -100,6 +101,34 @@ public class VariavelProvedor {
 			util.close();
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	public static Valor getValor(int i) {
+		Variavel variavel = getVariavel(i);
+		return new VariavelValor(variavel);
+	}
+
+	private static class VariavelValor implements Valor {
+		private final Variavel variavel;
+
+		public VariavelValor(Variavel variavel) {
+			this.variavel = variavel;
+		}
+
+		@Override
+		public String getTitle() {
+			return "Valor";
+		}
+
+		@Override
+		public String get() {
+			return variavel.getValor();
+		}
+
+		@Override
+		public void set(String s) {
+			variavel.setValor(s);
 		}
 	}
 }

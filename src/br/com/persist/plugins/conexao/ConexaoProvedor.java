@@ -262,7 +262,7 @@ public class ConexaoProvedor {
 	private static class ValorURL implements Valor {
 		private final Conexao conexao;
 
-		public ValorURL(Conexao conexao) {
+		private ValorURL(Conexao conexao) {
 			this.conexao = conexao;
 		}
 
