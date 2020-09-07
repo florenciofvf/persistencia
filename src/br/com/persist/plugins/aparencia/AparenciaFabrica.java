@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
@@ -36,7 +37,7 @@ public class AparenciaFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario) {
+	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		List<JMenuItem> lista = new ArrayList<>();
 		ButtonGroup grupo = new ButtonGroup();

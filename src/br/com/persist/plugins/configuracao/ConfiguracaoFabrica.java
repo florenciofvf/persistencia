@@ -3,6 +3,7 @@ package br.com.persist.plugins.configuracao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
@@ -31,7 +32,7 @@ public class ConfiguracaoFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario) {
+	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		List<JMenuItem> lista = new ArrayList<>();
 		lista.add(new MenuConfiguracao(formulario));
 		return lista;

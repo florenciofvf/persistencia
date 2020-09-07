@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
@@ -39,7 +40,7 @@ public class AnexoFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario) {
+	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		List<JMenuItem> lista = new ArrayList<>();
 		lista.add(new MenuAnexo(formulario));
 		return lista;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import org.xml.sax.Attributes;
@@ -87,7 +88,7 @@ public class MenuApp {
 				continue;
 			}
 
-			List<JMenuItem> itens = filho.criarItens(formulario);
+			List<JMenuItem> itens = filho.criarItens(formulario, menu);
 
 			for (JMenuItem item : itens) {
 				menu.add(item);
@@ -97,14 +98,14 @@ public class MenuApp {
 		return menu;
 	}
 
-	public List<JMenuItem> criarItens(Formulario formulario) {
+	public List<JMenuItem> criarItens(Formulario formulario, JMenu menu) {
 		FabricaContainer fabricaContainer = Fabrica.criar(classeFabrica);
 		List<JMenuItem> menus = new ArrayList<>();
 
 		if (fabricaContainer != null) {
 			formulario.adicionarServicos(fabricaContainer.getServicos(formulario));
 			formulario.adicionarFabrica(classeFabrica, fabricaContainer);
-			menus.addAll(fabricaContainer.criarMenuItens(formulario));
+			menus.addAll(fabricaContainer.criarMenuItens(formulario, menu));
 		}
 
 		return menus;

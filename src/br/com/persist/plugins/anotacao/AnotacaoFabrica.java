@@ -3,6 +3,7 @@ package br.com.persist.plugins.anotacao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
@@ -28,7 +29,7 @@ public class AnotacaoFabrica extends AbstratoFabricaContainer {
 	}
 
 	@Override
-	public List<JMenuItem> criarMenuItens(Formulario formulario) {
+	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		List<JMenuItem> lista = new ArrayList<>();
 		lista.add(new MenuAnotacao(formulario));
 		return lista;
