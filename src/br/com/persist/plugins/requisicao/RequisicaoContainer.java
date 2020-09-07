@@ -101,14 +101,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 	}
 
-	private void configurar() {
-		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
-	}
-
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
+	}
+
+	private void configurar() {
+		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
+		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
 	}
 
 	public String getConteudo() {

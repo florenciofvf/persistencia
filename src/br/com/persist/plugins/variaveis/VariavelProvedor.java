@@ -104,6 +104,16 @@ public class VariavelProvedor {
 		}
 	}
 
+	public static String substituir(String string) {
+		if (string != null) {
+			for (Variavel v : lista) {
+				string = string.replaceAll("#" + v.getNome() + "#", v.getValor());
+			}
+		}
+
+		return string;
+	}
+
 	public static Valor getValor(int i) {
 		Variavel variavel = getVariavel(i);
 		return new VariavelValor(variavel);

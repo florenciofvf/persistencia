@@ -255,9 +255,54 @@ public class Persistencia {
 	// }
 	// }
 
+	public static ListaMemoriaModelo criarListaMemoriaModelo(Connection conn, String consulta, String[] chaves,
+			boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
+		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
+			try (ResultSet rs = psmt.executeQuery()) {
+				ResultSetMetaData rsmd = rs.getMetaData();
+				List<Coluna> colunas = criarColunas(rsmd, chaves, colunaInfo, mapaSequencia);
+				return criarListaMemoriaModelo(rs, colunas, colunaInfo);
+			}
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	private static ListaMemoriaModelo criarListaMemoriaModelo(ResultSet rs, List<Coluna> colunas, boolean colunaInfo)
+			throws PersistenciaException {
+		try {
+			List<List<String>> dados = new ArrayList<>();
+			int qtdColunas = colunas.size();
+
+			while (rs.next()) {
+				List<String> registro = new ArrayList<>();
+
+				for (int i = 1; i <= qtdColunas; i++) {
+					String valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
+					registro.add(valor == null ? Constantes.VAZIO : valor);
+				}
+
+				if (colunaInfo) {
+					registro.add(Constantes.VAZIO);
+				}
+
+				dados.add(registro);
+			}
+
+			List<String> lista = new ArrayList<String>();
+			for (Coluna coluna : colunas) {
+				lista.add(coluna.getNome());
+			}
+
+			return new ListaMemoriaModelo(lista, dados);
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
 	// public static RegistroModelo criarModeloRegistro(Connection conn, String
-	// consulta, String[] chaves, Objeto objeto,
-	// Conexao conexao) throws PersistenciaException {
+	// consulta, String[] chaves, Objeto objeto, Conexao conexao) throws
+	// PersistenciaException {
 	// try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 	// try (ResultSet rs = psmt.executeQuery()) {
 	// return criarModelo(rs, chaves, objeto.getTabela2(), objeto, conexao);
@@ -267,55 +312,61 @@ public class Persistencia {
 	// }
 	// }
 
-	// private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[]
-	// chaves, Objeto objeto)
-	// throws PersistenciaException {
-	// Map<String, Boolean> mapa = criarMapaTipos();
-	// List<Coluna> colunas = new ArrayList<>();
-	//
-	// try {
-	// int qtdColunas = rsmd.getColumnCount();
-	// int i = 1;
-	//
-	// for (; i <= qtdColunas; i++) {
-	// String tipoBanco = rsmd.getColumnTypeName(i);
-	// int tamanho = rsmd.getColumnDisplaySize(i);
-	// String classe = rsmd.getColumnClassName(i);
-	// String nome = rsmd.getColumnName(i).trim();
-	// boolean nulavel = rsmd.isNullable(i) == 1;
-	// boolean autoInc = rsmd.isAutoIncrement(i);
-	// Boolean numero = mapa.get(classe);
-	// int tipo = rsmd.getColumnType(i);
-	// Boolean chave = false;
-	//
-	// if (numero == null) {
-	// numero = Boolean.FALSE;
-	// }
-	//
-	// for (String s : chaves) {
-	// if (s.trim().equalsIgnoreCase(nome)) {
-	// chave = Boolean.TRUE;
-	// }
-	// }
-	//
-	// Coluna coluna = new Coluna(nome, i - 1, numero, chave,
-	// tipo == Types.BLOB || tipo == Types.LONGVARBINARY, classe,
-	// new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc,
-	// objeto.getNomeSequencia(nome)));
-	// colunas.add(coluna);
-	// }
-	//
-	// if (objeto.isColunaInfo()) {
-	// Coluna coluna = new Coluna("INFO", i - 1, false, false, false, "INFO",
-	// new Coluna.Config(0, "INFO", true, true, false, null));
-	// colunas.add(coluna);
-	// }
-	//
-	// return colunas;
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
+	private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[] chaves, boolean colunaInfo,
+			Map<String, String> mapaSequencia) throws PersistenciaException {
+		Map<String, Boolean> mapa = criarMapaTipos();
+		List<Coluna> colunas = new ArrayList<>();
+
+		if (mapaSequencia == null) {
+			mapaSequencia = new HashMap<>();
+		}
+
+		if (chaves == null) {
+			chaves = new String[0];
+		}
+
+		try {
+			int qtdColunas = rsmd.getColumnCount();
+
+			for (int i = 1; i <= qtdColunas; i++) {
+				String tipoBanco = rsmd.getColumnTypeName(i);
+				int tamanho = rsmd.getColumnDisplaySize(i);
+				String classe = rsmd.getColumnClassName(i);
+				String nome = rsmd.getColumnName(i).trim();
+				boolean nulavel = rsmd.isNullable(i) == 1;
+				boolean autoInc = rsmd.isAutoIncrement(i);
+				Boolean numero = mapa.get(classe);
+				int tipo = rsmd.getColumnType(i);
+				boolean blob = tipo == Types.BLOB || tipo == Types.LONGVARBINARY;
+				Boolean chave = false;
+
+				if (numero == null) {
+					numero = Boolean.FALSE;
+				}
+
+				for (String s : chaves) {
+					if (s.trim().equalsIgnoreCase(nome)) {
+						chave = Boolean.TRUE;
+					}
+				}
+
+				String nomeSequencia = mapaSequencia.get(nome.toLowerCase());
+				Coluna coluna = new Coluna(nome, i - 1, numero, chave, blob, classe,
+						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc, nomeSequencia));
+				colunas.add(coluna);
+			}
+
+			if (colunaInfo) {
+				Coluna coluna = new Coluna("INFO", qtdColunas, false, false, false, "INFO",
+						new Coluna.Config(0, "INFO", true, true, false, null));
+				colunas.add(coluna);
+			}
+
+			return colunas;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
 
 	// private static RegistroModelo criarModelo(ResultSet rs, String[] chaves,
 	// String tabela, Objeto objeto,
