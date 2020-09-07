@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
+import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
@@ -323,7 +324,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	@Override
 	public Titulo getTitulo() {
-		return new Titulo() {
+		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
 				return Mensagens.getString(Constantes.LABEL_ARQUIVOS_MIN);

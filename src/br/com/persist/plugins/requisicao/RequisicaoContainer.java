@@ -40,6 +40,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.abstrato.AbstratoContainer;
+import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
@@ -421,7 +422,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	@Override
 	public Titulo getTitulo() {
-		return new Titulo() {
+		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
 				return Mensagens.getString(Constantes.LABEL_REQUISICAO_MIN);

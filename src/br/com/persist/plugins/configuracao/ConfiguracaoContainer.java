@@ -25,6 +25,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoContainer;
+import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
@@ -542,7 +543,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 	@Override
 	public Titulo getTitulo() {
-		return new Titulo() {
+		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
 				return Mensagens.getString(Constantes.LABEL_CONFIGURACOES_MIN);

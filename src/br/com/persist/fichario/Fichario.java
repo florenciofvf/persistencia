@@ -366,6 +366,7 @@ public class Fichario extends JTabbedPane {
 
 		Cabecalho cabecalho = new Cabecalho(this, pagina);
 		setToolTipTextAt(ultimoIndice, titulo.getHint());
+		setEnabledAt(ultimoIndice, titulo.isAtivo());
 		setTabComponentAt(ultimoIndice, cabecalho);
 		setSelectedIndex(ultimoIndice);
 		pagina.adicionadoAoFichario(this);

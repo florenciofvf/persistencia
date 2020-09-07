@@ -15,6 +15,7 @@ import javax.swing.Icon;
 import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
+import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
@@ -212,7 +213,7 @@ public class VariavelContainer extends AbstratoContainer {
 
 	@Override
 	public Titulo getTitulo() {
-		return new Titulo() {
+		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
 				return Mensagens.getString(Constantes.LABEL_VARIAVEIS_MIN);

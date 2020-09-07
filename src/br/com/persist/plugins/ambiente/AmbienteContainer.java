@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
+import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.TextArea;
@@ -280,7 +281,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	@Override
 	public Titulo getTitulo() {
-		return new Titulo() {
+		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
 				return ambiente.tituloMin;

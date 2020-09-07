@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -26,6 +27,9 @@ public class ArquivoFabrica extends AbstratoFabricaContainer {
 	private class ArquivoPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
+			if (SeparadorArquivo.STRING_PERSISTENCIA.equals(stringPersistencia)) {
+				return new SeparadorArquivo();
+			}
 			return new ArquivoContainer(null, formulario);
 		}
 	}
@@ -47,11 +51,13 @@ public class ArquivoFabrica extends AbstratoFabricaContainer {
 
 	private class MenuArquivo extends MenuPadrao1 {
 		private static final long serialVersionUID = 1L;
+		private Action separadorAcao = Action.actionMenu("label.separador", null);
 
 		private MenuArquivo(Formulario formulario) {
 			super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);
-
+			addMenuItem(true, separadorAcao);
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new ArquivoContainer(null, formulario)));
+			separadorAcao.setActionListener(e -> formulario.adicionarPagina(new SeparadorArquivo()));
 			formularioAcao.setActionListener(e -> ArquivoFormulario.criar(formulario));
 		}
 	}

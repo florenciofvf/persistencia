@@ -24,6 +24,14 @@ public class Menu extends JMenu {
 	}
 
 	protected void addMenuItem(Action action) {
+		addMenuItem(false, action);
+	}
+
+	protected void addMenuItem(boolean separador, Action action) {
+		if (separador) {
+			addSeparator();
+		}
+
 		add(new MenuItem(action));
 	}
 

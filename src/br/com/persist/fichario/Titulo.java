@@ -7,6 +7,8 @@ public interface Titulo {
 
 	public String getTitulo();
 
+	public boolean isAtivo();
+
 	public String getHint();
 
 	public Icon getIcone();
