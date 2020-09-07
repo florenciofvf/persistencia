@@ -27,7 +27,8 @@ public class ListaPersistenciaModelo implements TableModel {
 	private final String tabela;
 	private Conexao conexao;
 
-	public ListaPersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao, String prefixoNomeTabela) {
+	public ListaPersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao,
+			String prefixoNomeTabela) {
 		this.prefixoNomeTabela = prefixoNomeTabela;
 		this.registros = registros;
 		this.colunas = colunas;
@@ -285,7 +286,8 @@ public class ListaPersistenciaModelo implements TableModel {
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores, String prefixoNomeTabela) {
-		StringBuilder resposta = new StringBuilder("UPDATE " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " SET ");
+		StringBuilder resposta = new StringBuilder(
+				"UPDATE " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " SET ");
 
 		Coluna coluna = colunas[0];
 		resposta.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[0]));
@@ -310,7 +312,8 @@ public class ListaPersistenciaModelo implements TableModel {
 			return null;
 		}
 
-		StringBuilder resposta = new StringBuilder("INSERT INTO " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " (" + Constantes.QL);
+		StringBuilder resposta = new StringBuilder(
+				"INSERT INTO " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " (" + Constantes.QL);
 
 		StringBuilder campo = new StringBuilder();
 		StringBuilder valor = new StringBuilder("VALUES (" + Constantes.QL);
@@ -334,7 +337,8 @@ public class ListaPersistenciaModelo implements TableModel {
 		return resposta.append(campo).append(valor).toString();
 	}
 
-	private void appendCampoValor(String string, StringBuilder campo, StringBuilder valor, Coluna coluna, List<Object> registro, String prefixoNomeTabela) {
+	private void appendCampoValor(String string, StringBuilder campo, StringBuilder valor, Coluna coluna,
+			List<Object> registro, String prefixoNomeTabela) {
 		campo.append(Constantes.TAB + string + coluna.getNome() + Constantes.QL);
 
 		if (Util.estaVazio(coluna.getSequencia())) {
@@ -345,12 +349,14 @@ public class ListaPersistenciaModelo implements TableModel {
 				valor.append(Constantes.TAB + string + coluna.get(coluna.getNome()) + Constantes.QL);
 			}
 		} else {
-			valor.append(Constantes.TAB + string + prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia()) + Constantes.QL);
+			valor.append(Constantes.TAB + string + prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia())
+					+ Constantes.QL);
 		}
 	}
 
 	private String gerarDelete(List<Object> registro, String prefixoNomeTabela) {
-		StringBuilder resposta = new StringBuilder("DELETE FROM " + prefixarEsquema(conexao, prefixoNomeTabela, tabela));
+		StringBuilder resposta = new StringBuilder(
+				"DELETE FROM " + prefixarEsquema(conexao, prefixoNomeTabela, tabela));
 		resposta.append(montarWhere(registro));
 		return resposta.toString();
 	}
@@ -358,7 +364,7 @@ public class ListaPersistenciaModelo implements TableModel {
 	private String montarWhere(List<Object> registro) {
 		List<Coluna> colunasChave = getChaves();
 
-		if(colunasChave.isEmpty()) {
+		if (colunasChave.isEmpty()) {
 			throw new IllegalStateException("Sem colunas chaves.");
 		}
 
