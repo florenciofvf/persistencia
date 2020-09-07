@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +31,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
@@ -84,6 +86,24 @@ public class Util {
 		return sb.toString();
 	}
 
+	public static List<Integer> getIndicesLinha(JTable table) {
+		List<Integer> resposta = new ArrayList<>();
+		int[] linhas = table.getSelectedRows();
+		int total = table.getRowCount();
+
+		if (linhas == null || linhas.length == 0) {
+			for (int i = 0; i < total; i++) {
+				resposta.add(i);
+			}
+		} else {
+			for (int i : linhas) {
+				resposta.add(i);
+			}
+		}
+
+		return resposta;
+	}
+
 	public static void ajustar(JTable table, Graphics graphics) {
 		if (table == null || graphics == null) {
 			return;
@@ -108,6 +128,62 @@ public class Util {
 			TableColumn column = columnModel.getColumn(col);
 			column.setPreferredWidth(largura + 40);
 		}
+	}
+
+	public static TransferidorTabular criarTransferidorTabular(JTable table, List<Integer> indices) {
+		if (table == null || indices == null) {
+			return null;
+		}
+
+		TableModel model = table.getModel();
+
+		if (model == null || model.getColumnCount() < 1 || model.getRowCount() < 1) {
+			return null;
+		}
+
+		StringBuilder tabular = new StringBuilder();
+		StringBuilder html = new StringBuilder();
+		html.append("<html>").append(Constantes.QL);
+		html.append("<body>").append(Constantes.QL);
+		html.append("<table>").append(Constantes.QL);
+		html.append("<tr>").append(Constantes.QL);
+
+		int colunas = model.getColumnCount();
+
+		for (int i = 0; i < colunas; i++) {
+			String coluna = model.getColumnName(i);
+
+			html.append("<th>" + coluna + "</th>").append(Constantes.QL);
+			tabular.append(coluna + Constantes.TAB);
+		}
+
+		html.append("</tr>").append(Constantes.QL);
+		tabular.deleteCharAt(tabular.length() - 1);
+		tabular.append(Constantes.QL);
+
+		for (Integer i : indices) {
+			html.append("<tr>").append(Constantes.QL);
+
+			for (int j = 0; j < colunas; j++) {
+				Object obj = model.getValueAt(i, j);
+				String val = obj == null ? Constantes.VAZIO : obj.toString();
+
+				tabular.append(val + Constantes.TAB);
+				html.append("<td>" + val + "</td>");
+				html.append(Constantes.QL);
+			}
+
+			html.append("</tr>").append(Constantes.QL);
+			tabular.deleteCharAt(tabular.length() - 1);
+			tabular.append(Constantes.QL);
+		}
+
+		html.append("</table>").append(Constantes.QL);
+		html.append("</body>").append(Constantes.QL);
+		html.append("</html>");
+		tabular.deleteCharAt(tabular.length() - 1);
+
+		return new TransferidorTabular(html.toString(), tabular.toString());
 	}
 
 	public static void mensagem(Component componente, String string) {
