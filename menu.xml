@@ -13,7 +13,7 @@
 		<menu classeFabrica="br.com.persist.plugins.conexao.ConexaoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.consulta.ConsultaFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.update.UpdateFabrica" ativo="true" />
-		<menu classeFabrica="br.com.persist.metadado.MetadadoTreeFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.metadado.MetadadoFabrica" ativo="true" />
 	</menu>
 
 	<menu descricao="Utilitários">

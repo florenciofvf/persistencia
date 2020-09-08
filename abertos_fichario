@@ -15,3 +15,4 @@ br.com.persist.plugins.arquivo.ArquivoFabrica???
 br.com.persist.plugins.anexo.AnexoFabrica???
 br.com.persist.plugins.consulta.ConsultaFabrica???
 br.com.persist.plugins.update.UpdateFabrica???
+br.com.persist.plugins.metadado.MetadadoFabrica???
