@@ -9,6 +9,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -27,6 +29,9 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
+import br.com.persist.plugins.persistencia.Exportado;
+import br.com.persist.plugins.persistencia.Importado;
+import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -124,7 +129,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		@Override
 		protected void abrirEmFormulario() {
-			MetadadoFormulario.criar(formulario, (Conexao)null);
+			MetadadoFormulario.criar(formulario, (Conexao) null);
 		}
 
 		void formularioVisivel() {
@@ -162,10 +167,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.pksMultipla()));
 				pksAusentesAcao
 						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.pksAusente()));
-				ordemImportAcao.setActionListener(
-						e -> Util.mensagem(MetadadoContainer.this, metadadoTree.ordemExpImp(false)));
-				ordemExportAcao.setActionListener(
-						e -> Util.mensagem(MetadadoContainer.this, metadadoTree.ordemExpImp(true)));
+				ordemImportAcao
+						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.ordemExpImp(false)));
+				ordemExportAcao
+						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.ordemExpImp(true)));
 			}
 		}
 
@@ -176,22 +181,28 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				return;
 			}
 
-			/*try {
+			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
-				List<Metadado> tabelas = Persistencia.listarNomeTabelas(conn, conexao);
+				List<Metadado> tabelas = converterLista(Persistencia.listarNomeTabelas(conn, conexao));
 				Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS) + " - " + tabelas.size());
 				raiz.setEhRaiz(true);
 
 				for (Metadado tabela : tabelas) {
 					tabela.setTabela(true);
 
-					List<Metadado> camposImportados = Persistencia.listarCamposImportados(conn, conexao, tabela);
-					List<Metadado> camposExportados = Persistencia.listarCamposExportados(conn, conexao, tabela);
-					List<Metadado> chavesPrimarias = Persistencia.listarChavesPrimarias(conn, conexao, tabela);
+					List<Metadado> camposImportados = converterImportados(
+							Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
+					List<Metadado> camposExportados = converterExportados(
+							Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
+					List<Metadado> chavesPrimarias = converterLista(
+							Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
 
-					adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
-					adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
-					adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');
+					adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA,
+							' ');
+					adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO,
+							'I');
+					adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO,
+							'E');
 
 					raiz.add(tabela);
 				}
@@ -200,10 +211,43 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				metadadoTree.setModel(new MetadadoModelo(raiz));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, this);
-			}*/
+			}
 		}
 
-		private void adicionarLista(Metadado objeto, List<Metadado> filhos, String rotuloPlural, String rotuloSingular, char chave) {
+		public List<Metadado> converterImportados(List<Importado> lista) {
+			List<Metadado> resposta = new ArrayList<>();
+			for (Importado imp : lista) {
+				Metadado campo = new Metadado(imp.getCampo());
+				resposta.add(campo);
+
+				Metadado ref = new Metadado(imp.getTabelaOrigem() + "(" + imp.getCampoOrigem() + ")");
+				campo.add(ref);
+			}
+			return resposta;
+		}
+
+		public List<Metadado> converterExportados(List<Exportado> lista) {
+			List<Metadado> resposta = new ArrayList<>();
+			for (Exportado imp : lista) {
+				Metadado campo = new Metadado(imp.getCampo());
+				resposta.add(campo);
+
+				Metadado ref = new Metadado(imp.getTabelaDestino() + "(" + imp.getCampoDestino() + ")");
+				campo.add(ref);
+			}
+			return resposta;
+		}
+
+		private List<Metadado> converterLista(List<String> lista) {
+			List<Metadado> resposta = new ArrayList<>();
+			for (String string : lista) {
+				resposta.add(new Metadado(string));
+			}
+			return resposta;
+		}
+
+		private void adicionarLista(Metadado objeto, List<Metadado> filhos, String rotuloPlural, String rotuloSingular,
+				char chave) {
 			if (filhos.isEmpty()) {
 				return;
 			}
@@ -229,7 +273,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			//formulario.getConteiner().abrirExportacaoMetadado(metadado, circular);
+			// formulario.getConteiner().abrirExportacaoMetadado(metadado,
+			// circular);
 		}
 	}
 
@@ -238,7 +283,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			//formulario.getConteiner().exportarMetadadoRaiz(metadado);
+			// formulario.getConteiner().exportarMetadadoRaiz(metadado);
 		}
 	}
 
@@ -267,7 +312,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			//formulario.getConteiner().abrirImportacaoMetadado(metadado, circular);
+			// formulario.getConteiner().abrirImportacaoMetadado(metadado,
+			// circular);
 		}
 	}
 

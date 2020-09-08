@@ -13,11 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.plugins.conexao.Conexao;
-//import br.com.persist.metadado.Metadado;
-//import br.com.persist.objeto.Objeto;
-//import br.com.persist.tabela.Coluna;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public class Persistencia {
 	private static final String FKCOLUMN_NAME = "FKCOLUMN_NAME";
@@ -219,7 +215,6 @@ public class Persistencia {
 		try {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
-
 			ResultSet rs = m.getSchemas();
 
 			while (rs.next()) {
@@ -227,7 +222,6 @@ public class Persistencia {
 			}
 
 			rs.close();
-
 			return new ListaMemoriaModelo(Arrays.asList(TABLE_SCHEM, TABLE_CATALOG), dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -449,102 +443,82 @@ public class Persistencia {
 	// }
 	// }
 
-	// public static List<Metadado> listarNomeTabelas(Connection conn, Conexao
-	// conexao) throws PersistenciaException {
-	// try {
-	// List<Metadado> resposta = new ArrayList<>();
-	// DatabaseMetaData m = conn.getMetaData();
-	//
-	// ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(),
-	// "%", new String[] { "TABLE" });
-	//
-	// while (rs.next()) {
-	// resposta.add(new Metadado(rs.getString(TABLE_NAME)));
-	// }
-	//
-	// rs.close();
-	//
-	// return resposta;
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
+	public static List<String> listarNomeTabelas(Connection conn, Conexao conexao) throws PersistenciaException {
+		try {
+			List<String> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(), "%", new String[] { "TABLE" });
 
-	// public static List<Metadado> listarChavesPrimarias(Connection conn,
-	// Conexao conexao, Metadado metadado)
-	// throws PersistenciaException {
-	// try {
-	// List<Metadado> resposta = new ArrayList<>();
-	// DatabaseMetaData m = conn.getMetaData();
-	//
-	// ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(),
-	// conexao.getEsquema(), metadado.getDescricao());
-	//
-	// while (rs.next()) {
-	// resposta.add(new Metadado(rs.getString(COLUMN_NAME)));
-	// }
-	//
-	// rs.close();
-	//
-	// return resposta;
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
+			while (rs.next()) {
+				resposta.add(rs.getString(TABLE_NAME));
+			}
 
-	// public static List<Metadado> listarCamposImportados(Connection conn,
-	// Conexao conexao, Metadado metadado)
-	// throws PersistenciaException {
-	// try {
-	// List<Metadado> resposta = new ArrayList<>();
-	// DatabaseMetaData m = conn.getMetaData();
-	//
-	// ResultSet rs = m.getImportedKeys(conexao.getCatalogo(),
-	// conexao.getEsquema(), metadado.getDescricao());
-	//
-	// while (rs.next()) {
-	// Metadado campo = new Metadado(rs.getString(FKCOLUMN_NAME));
-	// resposta.add(campo);
-	//
-	// Metadado ref = new Metadado(rs.getString(PKTABLE_NAME) + "(" +
-	// rs.getString(PKCOLUMN_NAME) + ")");
-	// campo.add(ref);
-	// }
-	//
-	// rs.close();
-	//
-	// return resposta;
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
+			rs.close();
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
 
-	// public static List<Metadado> listarCamposExportados(Connection conn,
-	// Conexao conexao, Metadado metadado)
-	// throws PersistenciaException {
-	// try {
-	// List<Metadado> resposta = new ArrayList<>();
-	// DatabaseMetaData m = conn.getMetaData();
-	//
-	// ResultSet rs = m.getExportedKeys(conexao.getCatalogo(),
-	// conexao.getEsquema(), metadado.getDescricao());
-	//
-	// while (rs.next()) {
-	// Metadado campo = new Metadado(rs.getString(PKCOLUMN_NAME));
-	// resposta.add(campo);
-	//
-	// Metadado ref = new Metadado(rs.getString(FKTABLE_NAME) + "(" +
-	// rs.getString(FKCOLUMN_NAME) + ")");
-	// campo.add(ref);
-	// }
-	//
-	// rs.close();
-	//
-	// return resposta;
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
+	public static List<String> listarChavesPrimarias(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			List<String> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
+
+			while (rs.next()) {
+				resposta.add(rs.getString(COLUMN_NAME));
+			}
+
+			rs.close();
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static List<Importado> listarCamposImportados(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			List<Importado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
+
+			while (rs.next()) {
+				String tabelaOrigem = rs.getString(PKTABLE_NAME);
+				String campoOrigem = rs.getString(PKCOLUMN_NAME);
+				String campo = rs.getString(FKCOLUMN_NAME);
+				resposta.add(new Importado(tabelaOrigem, campoOrigem, campo));
+			}
+
+			rs.close();
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static List<Exportado> listarCamposExportados(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			List<Exportado> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getExportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
+
+			while (rs.next()) {
+				String tabelaDestino = rs.getString(FKTABLE_NAME);
+				String campoDestino = rs.getString(FKCOLUMN_NAME);
+				String campo = rs.getString(PKCOLUMN_NAME);
+				resposta.add(new Exportado(tabelaDestino, campoDestino, campo));
+			}
+
+			rs.close();
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
 
 	// public static ListagemModelo criarModeloChavesImportadas(Connection conn,
 	// Objeto objeto, Conexao conexao)

@@ -42,8 +42,9 @@ public class MetadadoFabrica extends AbstratoFabricaContainer {
 		private MenuMetadado(Formulario formulario) {
 			super(Constantes.LABEL_METADADOS, Icones.CAMPOS, false);
 
-			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new MetadadoContainer(null, formulario, null)));
-			formularioAcao.setActionListener(e -> MetadadoFormulario.criar(formulario, (Conexao)null));
+			ficharioAcao
+					.setActionListener(e -> formulario.adicionarPagina(new MetadadoContainer(null, formulario, null)));
+			formularioAcao.setActionListener(e -> MetadadoFormulario.criar(formulario, (Conexao) null));
 		}
 	}
 }
