@@ -3,6 +3,7 @@ package br.com.persist.plugins.conexao;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -16,6 +17,7 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
+import br.com.persist.util.Util;
 
 public class ConexaoFabrica extends AbstratoFabricaContainer {
 
@@ -40,6 +42,19 @@ public class ConexaoFabrica extends AbstratoFabricaContainer {
 		@Override
 		public void visivelFormulario(Formulario formulario) {
 			ConexaoProvedor.inicializar();
+		}
+
+		@Override
+		public void processar(Formulario formulario, Map<String, Object> args) {
+			Boolean fechar = (Boolean) args.get("fechar_conexoes");
+
+			if (Boolean.TRUE.equals(fechar)) {
+				try {
+					ConexaoProvedor.fecharConexoes();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(formulario.getClass().getName() + ".fechar()", ex, formulario);
+				}
+			}
 		}
 	}
 

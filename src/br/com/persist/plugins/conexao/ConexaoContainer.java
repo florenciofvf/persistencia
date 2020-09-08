@@ -115,12 +115,10 @@ public class ConexaoContainer extends AbstratoContainer {
 			subirAcao.setActionListener(e -> subir());
 
 			desconectaAcao.setActionListener(e -> {
-				try {
-					ConexaoProvedor.fecharConexoes();
-					tabela.repaint();
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(getClass().getName() + ".fechar()", ex, formulario);
-				}
+				Map<String, Object> args = new HashMap<>();
+				args.put("fechar_conexoes", true);
+				formulario.processar(args);
+				tabela.repaint();
 			});
 		}
 
