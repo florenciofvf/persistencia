@@ -1,4 +1,4 @@
-package br.com.persist.plugins.consulta;
+package br.com.persist.plugins.update;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
@@ -21,88 +21,75 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
-import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
-import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
-import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
-import br.com.persist.plugins.persistencia.ListaMemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
-import br.com.persist.util.TransferidorTabular;
 import br.com.persist.util.Util;
-import br.com.persist.util.VazioModelo;
 
-public class ConsultaContainer extends AbstratoContainer {
+public class UpdateContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
-	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
-	private ConsultaFormulario consultaFormulario;
 	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> comboConexao;
-	private ConsultaDialogo consultaDialogo;
+	private UpdateFormulario updateFormulario;
+	private UpdateDialogo updateDialogo;
 	private final File file;
 
-	public ConsultaContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
+	public UpdateContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
 		super(formulario);
-		file = new File(Constantes.CONSULTAS + Constantes.SEPARADOR + Constantes.CONSULTAS);
+		file = new File(Constantes.ATUALIZACOES + Constantes.SEPARADOR + Constantes.ATUALIZACOES);
 		textArea.setText(conteudo == null ? Constantes.VAZIO : conteudo);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
-		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
 		abrir(conteudo);
 	}
 
-	public ConsultaDialogo getConsultaDialogo() {
-		return consultaDialogo;
+	public UpdateDialogo getUpdateDialogo() {
+		return updateDialogo;
 	}
 
-	public void setConsultaDialogo(ConsultaDialogo consultaDialogo) {
-		this.consultaDialogo = consultaDialogo;
-		if (consultaDialogo != null) {
-			consultaFormulario = null;
+	public void setUpdateDialogo(UpdateDialogo updateDialogo) {
+		this.updateDialogo = updateDialogo;
+		if (updateDialogo != null) {
+			updateFormulario = null;
 		}
 	}
 
-	public ConsultaFormulario getConsultaFormulario() {
-		return consultaFormulario;
+	public UpdateFormulario getUpdateFormulario() {
+		return updateFormulario;
 	}
 
-	public void setConsultaFormulario(ConsultaFormulario consultaFormulario) {
-		this.consultaFormulario = consultaFormulario;
-		if (consultaFormulario != null) {
-			consultaDialogo = null;
+	public void setUpdateFormulario(UpdateFormulario updateFormulario) {
+		this.updateFormulario = updateFormulario;
+		if (updateFormulario != null) {
+			updateDialogo = null;
 		}
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
-		split.setDividerLocation(Constantes.SIZE.height / 2);
-
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, split);
+		add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
 	}
@@ -134,7 +121,7 @@ public class ConsultaContainer extends AbstratoContainer {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, ConsultaContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
 		}
 	}
@@ -146,15 +133,13 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIconAtualizar();
-		private ButtonCopiar buttonCopiar = new ButtonCopiar();
+		private Action atualizarAcao = Action.actionIconUpdate();
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
 
 			addButton(atualizarAcao);
-			add(buttonCopiar);
 			add(true, comboConexao);
 
 			eventos();
@@ -166,41 +151,41 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void destacarEmFormulario() {
-			if (formulario.excluirPagina(ConsultaContainer.this)) {
-				ConsultaFormulario.criar(formulario, ConsultaContainer.this);
+			if (formulario.excluirPagina(UpdateContainer.this)) {
+				UpdateFormulario.criar(formulario, UpdateContainer.this);
 
-			} else if (consultaDialogo != null) {
-				consultaDialogo.excluirContainer();
-				ConsultaFormulario.criar(formulario, ConsultaContainer.this);
+			} else if (updateDialogo != null) {
+				updateDialogo.excluirContainer();
+				UpdateFormulario.criar(formulario, UpdateContainer.this);
 			}
 		}
 
 		@Override
 		protected void retornarAoFichario() {
-			if (consultaFormulario != null) {
-				consultaFormulario.excluirContainer();
-				formulario.adicionarPagina(ConsultaContainer.this);
+			if (updateFormulario != null) {
+				updateFormulario.excluirContainer();
+				formulario.adicionarPagina(UpdateContainer.this);
 
-			} else if (consultaDialogo != null) {
-				consultaDialogo.excluirContainer();
-				formulario.adicionarPagina(ConsultaContainer.this);
+			} else if (updateDialogo != null) {
+				updateDialogo.excluirContainer();
+				formulario.adicionarPagina(UpdateContainer.this);
 			}
 		}
 
 		@Override
 		protected void clonarEmFormulario() {
-			if (consultaDialogo != null) {
-				consultaDialogo.excluirContainer();
+			if (updateDialogo != null) {
+				updateDialogo.excluirContainer();
 			}
-			ConsultaFormulario.criar(formulario, (Conexao) comboConexao.getSelectedItem(), getConteudo());
+			UpdateFormulario.criar(formulario, (Conexao) comboConexao.getSelectedItem(), getConteudo());
 		}
 
 		@Override
 		protected void abrirEmFormulario() {
-			if (consultaDialogo != null) {
-				consultaDialogo.excluirContainer();
+			if (updateDialogo != null) {
+				updateDialogo.excluirContainer();
 			}
-			ConsultaFormulario.criar(formulario, null, null);
+			UpdateFormulario.criar(formulario, null, null);
 		}
 
 		void formularioVisivel() {
@@ -227,14 +212,14 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			if (!Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {
+			if (!Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
 				return;
 			}
 
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, ConsultaContainer.this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
 		}
 
@@ -251,40 +236,6 @@ public class ConsultaContainer extends AbstratoContainer {
 			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
-		private class ButtonCopiar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
-			private Action transfAcao = Action.actionMenu("label.transferidor", null);
-			private Action tabularAcao = Action.actionMenu("label.tabular", null);
-			private Action htmlAcao = Action.actionMenu("label.html", null);
-
-			private ButtonCopiar() {
-				super("label.copiar_tabela", Icones.COPIA);
-
-				addMenuItem(htmlAcao);
-				addMenuItem(true, tabularAcao);
-				addMenuItem(true, transfAcao);
-
-				transfAcao.setActionListener(e -> processar(0));
-				tabularAcao.setActionListener(e -> processar(1));
-				htmlAcao.setActionListener(e -> processar(2));
-			}
-
-			private void processar(int tipo) {
-				List<Integer> indices = Util.getIndicesLinha(tabela);
-				TransferidorTabular transferidor = Util.criarTransferidorTabular(tabela, indices);
-
-				if (transferidor != null) {
-					if (tipo == 0) {
-						Util.setTransfered(transferidor);
-					} else if (tipo == 1) {
-						Util.setContentTransfered(transferidor.getTabular());
-					} else if (tipo == 2) {
-						Util.setContentTransfered(transferidor.getHtml());
-					}
-				}
-			}
-		}
-
 		public void atualizar() {
 			if (Util.estaVazio(textArea.getText())) {
 				return;
@@ -296,18 +247,16 @@ public class ConsultaContainer extends AbstratoContainer {
 				return;
 			}
 
-			String consulta = Util.getString(textArea.getTextAreaInner());
+			String instrucao = Util.getString(textArea.getTextAreaInner());
 
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
-				ListaMemoriaModelo modelo = Persistencia.criarListaMemoriaModelo(conn, consulta, null, false, null);
-				tabela.setModel(modelo);
-				Util.ajustar(tabela, getGraphics());
-				labelStatus.setText("REGISTROS [" + modelo.getRowCount() + "]");
+				int atualizados = Persistencia.executar(conn, instrucao);
+				labelStatus.setText("ATUALIZADOS [" + atualizados + "]");
 				textArea.requestFocus();
 			} catch (Exception ex) {
 				labelStatus.limpar();
-				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, this);
+				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, this);
 			}
 		}
 	}
@@ -332,7 +281,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	@Override
 	public Class<?> getClasseFabrica() {
-		return ConsultaFabrica.class;
+		return UpdateFabrica.class;
 	}
 
 	@Override
@@ -345,22 +294,22 @@ public class ConsultaContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_CONSULTA_MIN);
+				return Mensagens.getString(Constantes.LABEL_ATUALIZAR_MIN);
 			}
 
 			@Override
 			public String getTitulo() {
-				return Mensagens.getString(Constantes.LABEL_CONSULTA);
+				return Mensagens.getString(Constantes.LABEL_ATUALIZAR);
 			}
 
 			@Override
 			public String getHint() {
-				return Mensagens.getString(Constantes.LABEL_CONSULTA);
+				return Mensagens.getString(Constantes.LABEL_ATUALIZAR);
 			}
 
 			@Override
 			public Icon getIcone() {
-				return Icones.TABELA;
+				return Icones.UPDATE;
 			}
 		};
 	}

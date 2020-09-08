@@ -103,6 +103,7 @@ public class Constantes {
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
 	public static final int TREZENTOS_QUARENTA_UM = 341;
+	public static final String CONSULTAS = "consultas";
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
 	public static final String DESTACADO = "DESTACADO";

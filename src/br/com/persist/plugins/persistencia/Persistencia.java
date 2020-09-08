@@ -34,7 +34,7 @@ public class Persistencia {
 	private Persistencia() {
 	}
 
-	public static int executar(String sql, Connection conn) throws PersistenciaException {
+	public static int executar(Connection conn, String sql) throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(sql)) {
 			return psmt.executeUpdate();
 		} catch (Exception ex) {

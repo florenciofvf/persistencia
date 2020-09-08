@@ -108,7 +108,7 @@ public class ListaPersistenciaModelo implements TableModel {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
 						prefixoNomeTabela);
-				Persistencia.executar(update, ConexaoProvedor.getConnection(conexao));
+				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
 				if (Preferencias.isAreaTransTabelaRegistros()) {
 					Util.setContentTransfered(update);
@@ -207,7 +207,7 @@ public class ListaPersistenciaModelo implements TableModel {
 		if (chaves) {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela);
-				int i = Persistencia.executar(delete, ConexaoProvedor.getConnection(conexao));
+				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
 				if (Preferencias.isAreaTransTabelaRegistros()) {
 					Util.setContentTransfered(delete);
 				}
