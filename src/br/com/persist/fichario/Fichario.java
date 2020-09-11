@@ -558,6 +558,12 @@ public class Fichario extends JTabbedPane {
 	 * Mensagens.getString("label.exportar")); } } }
 	 */
 
+	// public void destacar(Conexao conexao, Superficie superficie, int
+	// tipoContainer, ConfigArquivo config) {
+	// fichario.getDestacar().destacar(this, conexao, superficie, tipoContainer,
+	// config);
+	// }
+
 	/*
 	 * public class Destacar { public void destacar(Formulario formulario,
 	 * Conexao conexao, Superficie superficie, int tipoContainer, ConfigArquivo
