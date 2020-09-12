@@ -14,6 +14,7 @@ import java.util.Map;
 
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.util.Constantes;
+import br.com.persist.util.Util;
 
 public class Persistencia {
 	private static final String FKCOLUMN_NAME = "FKCOLUMN_NAME";
@@ -248,6 +249,18 @@ public class Persistencia {
 	// throw new PersistenciaException(ex);
 	// }
 	// }
+
+	public static int getTotalRegistros(Connection conn, String aposFROM) throws PersistenciaException {
+		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + aposFROM);
+		try (PreparedStatement psmt = conn.prepareStatement(builder.toString())) {
+			try (ResultSet rs = psmt.executeQuery()) {
+				rs.next();
+				return rs.getInt(1);
+			}
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
 
 	public static ListaMemoriaModelo criarListaMemoriaModelo(Connection conn, String consulta, String[] chaves,
 			boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
