@@ -13,6 +13,7 @@ public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
 	protected Action aplicarAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
+	private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
 	private Action limpar2Acao = Action.actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = Action.actionIcon("label.copiar2", Icones.COPIA);
 	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);
@@ -60,6 +61,11 @@ public class BarraButton extends JToolBar {
 		if (contem(SALVAR, enuns)) {
 			addButton(salvarAcao);
 			salvarAcao.setActionListener(e -> salvar());
+		}
+
+		if (contem(EXCLUIR, enuns)) {
+			addButton(excluirAcao);
+			excluirAcao.setActionListener(e -> excluir());
 		}
 
 		if (contem(BAIXAR, enuns)) {
@@ -232,6 +238,10 @@ public class BarraButton extends JToolBar {
 	}
 
 	protected void salvar() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void excluir() {
 		throw new UnsupportedOperationException();
 	}
 
