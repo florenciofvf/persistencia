@@ -20,6 +20,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
 import br.com.persist.plugins.persistencia.Coluna;
+import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.PersistenciaOrdenacaoModelo;
 import br.com.persist.componente.Action;
 import br.com.persist.util.Constantes;
@@ -35,6 +36,10 @@ public class TabelaPersistencia extends JTable {
 	private Map<String, String> mapeamento;
 	private boolean arrastado;
 
+	public TabelaPersistencia() {
+		this(new PersistenciaOrdenacaoModelo(PersistenciaModelo.criarVazio()));
+	}
+
 	public TabelaPersistencia(PersistenciaOrdenacaoModelo modelo) {
 		super(modelo);
 		tableHeader.addMouseListener(headerListenerInner);
@@ -48,14 +53,18 @@ public class TabelaPersistencia extends JTable {
 	@Override
 	public void setModel(TableModel dataModel) {
 		if (!(dataModel instanceof PersistenciaOrdenacaoModelo)) {
-			throw new IllegalStateException("PersistenciaOrdenacaoModelo nulo.");
+			throw new IllegalStateException("PersistenciaOrdenacaoModelo inconsistente.");
 		}
 
 		super.setModel(dataModel);
 	}
 
 	public String getNomeColunas() {
-		return ((PersistenciaOrdenacaoModelo) getModel()).getNomeColunas();
+		return getModelo().getNomeColunas();
+	}
+
+	public PersistenciaOrdenacaoModelo getModelo() {
+		return (PersistenciaOrdenacaoModelo) getModel();
 	}
 
 	public void setTabelaPersistenciaListener(TabelaPersistenciaListener listener) {

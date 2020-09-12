@@ -14,7 +14,6 @@ import java.util.Map;
 
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public class Persistencia {
 	private static final String FKCOLUMN_NAME = "FKCOLUMN_NAME";
@@ -58,7 +57,7 @@ public class Persistencia {
 		return mapa;
 	}
 
-	public static ListaMemoriaModelo criarModeloInfoBanco(Connection conn) throws PersistenciaException {
+	public static PersistenciaMemoriaModelo criarModeloInfoBanco(Connection conn) throws PersistenciaException {
 		try {
 			DatabaseMetaData m = conn.getMetaData();
 
@@ -198,7 +197,7 @@ public class Persistencia {
 			dados.add(criar("getMaxLogicalLobSize", m.getMaxLogicalLobSize()));
 			dados.add(criar("supportsRefCursors", m.supportsRefCursors()));
 
-			return new ListaMemoriaModelo(Arrays.asList("NOME", "VALOR"), dados);
+			return new PersistenciaMemoriaModelo(Arrays.asList("NOME", "VALOR"), dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
@@ -212,7 +211,7 @@ public class Persistencia {
 		return Arrays.asList(strings);
 	}
 
-	public static ListaMemoriaModelo criarModeloEsquema(Connection conn) throws PersistenciaException {
+	public static PersistenciaMemoriaModelo criarModeloEsquema(Connection conn) throws PersistenciaException {
 		try {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
@@ -223,7 +222,7 @@ public class Persistencia {
 			}
 
 			rs.close();
-			return new ListaMemoriaModelo(Arrays.asList(TABLE_SCHEM, TABLE_CATALOG), dados);
+			return new PersistenciaMemoriaModelo(Arrays.asList(TABLE_SCHEM, TABLE_CATALOG), dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
@@ -262,20 +261,20 @@ public class Persistencia {
 		}
 	}
 
-	public static ListaMemoriaModelo criarListaMemoriaModelo(Connection conn, String consulta, String[] chaves,
+	public static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(Connection conn, String consulta, String[] chaves,
 			boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
 				List<Coluna> colunas = criarColunas(rsmd, chaves, colunaInfo, mapaSequencia);
-				return criarListaMemoriaModelo(rs, colunas, colunaInfo);
+				return criarPersistenciaMemoriaModelo(rs, colunas, colunaInfo);
 			}
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
 	}
 
-	private static ListaMemoriaModelo criarListaMemoriaModelo(ResultSet rs, List<Coluna> colunas, boolean colunaInfo)
+	private static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(ResultSet rs, List<Coluna> colunas, boolean colunaInfo)
 			throws PersistenciaException {
 		try {
 			List<List<String>> dados = new ArrayList<>();
@@ -301,7 +300,7 @@ public class Persistencia {
 				lista.add(coluna.getNome());
 			}
 
-			return new ListaMemoriaModelo(lista, dados);
+			return new PersistenciaMemoriaModelo(lista, dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}

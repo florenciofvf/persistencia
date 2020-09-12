@@ -8,13 +8,13 @@ import java.util.logging.Logger;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-public class ListaMemoriaModelo implements TableModel {
+public class PersistenciaMemoriaModelo implements TableModel {
 	private final List<Coluna> colunasInfo = new ArrayList<>();
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<String>> registros;
 	private final List<String> colunas;
 
-	public ListaMemoriaModelo(List<String> colunas, List<List<String>> dados) {
+	public PersistenciaMemoriaModelo(List<String> colunas, List<List<String>> dados) {
 		this.colunas = colunas;
 		this.registros = dados;
 

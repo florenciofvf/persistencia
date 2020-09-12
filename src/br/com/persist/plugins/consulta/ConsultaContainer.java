@@ -43,7 +43,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
-import br.com.persist.plugins.persistencia.ListaMemoriaModelo;
+import br.com.persist.plugins.persistencia.PersistenciaMemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
@@ -294,7 +294,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
-				ListaMemoriaModelo modelo = Persistencia.criarListaMemoriaModelo(conn, consulta, null, false, null);
+				PersistenciaMemoriaModelo modelo = Persistencia.criarPersistenciaMemoriaModelo(conn, consulta, null, false, null);
 				tabela.setModel(modelo);
 				Util.ajustar(tabela, getGraphics());
 				labelStatus.setText("REGISTROS [" + modelo.getRowCount() + "]");

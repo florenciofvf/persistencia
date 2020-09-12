@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import br.com.persist.util.Constantes;
 import br.com.persist.util.IndiceValor;
@@ -14,13 +13,13 @@ import br.com.persist.util.Util;
 
 public class PersistenciaOrdenacaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private final transient ListaPersistenciaModelo model;
+	private final transient PersistenciaModelo model;
 	private transient Linha[] linhas;
 	private boolean descendente;
 	private boolean numero;
 	private int coluna;
 
-	public PersistenciaOrdenacaoModelo(ListaPersistenciaModelo model) {
+	public PersistenciaOrdenacaoModelo(PersistenciaModelo model) {
 		Objects.requireNonNull(model);
 		this.model = model;
 		iniArray();
@@ -43,7 +42,7 @@ public class PersistenciaOrdenacaoModelo extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
-	public TableModel getModel() {
+	public PersistenciaModelo getModelo() {
 		return model;
 	}
 

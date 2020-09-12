@@ -18,7 +18,7 @@ import br.com.persist.util.IndiceValor;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
-public class ListaPersistenciaModelo implements TableModel {
+public class PersistenciaModelo implements TableModel {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<Object>> registros;
 	private final String prefixoNomeTabela;
@@ -27,7 +27,7 @@ public class ListaPersistenciaModelo implements TableModel {
 	private final String tabela;
 	private Conexao conexao;
 
-	public ListaPersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao,
+	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao,
 			String prefixoNomeTabela) {
 		this.prefixoNomeTabela = prefixoNomeTabela;
 		this.registros = registros;
@@ -41,6 +41,12 @@ public class ListaPersistenciaModelo implements TableModel {
 			}
 		}
 		chaves = total > 0;
+	}
+
+	public static PersistenciaModelo criarVazio() {
+		List<Coluna> colunas = new ArrayList<>();
+		List<List<Object>> registros = new ArrayList<>();
+		return new PersistenciaModelo(colunas, registros, null, null, null);
 	}
 
 	public boolean isChaves() {
