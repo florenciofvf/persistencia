@@ -24,8 +24,6 @@ public class Persistencia {
 	private static final String TABLE_SCHEM = "TABLE_SCHEM";
 	private static final String COLUMN_NAME = "COLUMN_NAME";
 	private static final String TABLE_NAME = "TABLE_NAME";
-	private static final String KEY_SEQ = "KEY_SEQ";
-	private static final String PK_NAME = "PK_NAME";
 
 	private Persistencia() {
 	}
@@ -207,10 +205,6 @@ public class Persistencia {
 		return Arrays.asList(nome, object == null ? Constantes.VAZIO : object.toString());
 	}
 
-	private static List<String> criar(String... strings) {
-		return Arrays.asList(strings);
-	}
-
 	public static PersistenciaMemoriaModelo criarModeloEsquema(Connection conn) throws PersistenciaException {
 		try {
 			List<List<String>> dados = new ArrayList<>();
@@ -228,27 +222,6 @@ public class Persistencia {
 		}
 	}
 
-	// public static int getTotalRegistros(Connection conn, Objeto objeto,
-	// String complemento, Conexao conexao)
-	// throws PersistenciaException {
-	// StringBuilder builder = new StringBuilder(
-	// "SELECT COUNT(*) FROM " + objeto.getTabelaEsquema(conexao.getEsquema()));
-	//
-	// if (!Util.estaVazio(complemento)) {
-	// builder.append(" WHERE 1=1 " + complemento);
-	// }
-	//
-	// try (PreparedStatement psmt = conn.prepareStatement(builder.toString()))
-	// {
-	// try (ResultSet rs = psmt.executeQuery()) {
-	// rs.next();
-	// return rs.getInt(1);
-	// }
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
-
 	public static int getTotalRegistros(Connection conn, String aposFROM) throws PersistenciaException {
 		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + aposFROM);
 		try (PreparedStatement psmt = conn.prepareStatement(builder.toString())) {
@@ -261,8 +234,8 @@ public class Persistencia {
 		}
 	}
 
-	public static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(Connection conn, String consulta, String[] chaves,
-			boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
+	public static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(Connection conn, String consulta,
+			String[] chaves, boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
@@ -274,8 +247,8 @@ public class Persistencia {
 		}
 	}
 
-	private static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(ResultSet rs, List<Coluna> colunas, boolean colunaInfo)
-			throws PersistenciaException {
+	private static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(ResultSet rs, List<Coluna> colunas,
+			boolean colunaInfo) throws PersistenciaException {
 		try {
 			List<List<String>> dados = new ArrayList<>();
 			int qtdColunas = colunas.size();
@@ -295,7 +268,7 @@ public class Persistencia {
 				dados.add(registro);
 			}
 
-			List<String> lista = new ArrayList<String>();
+			List<String> lista = new ArrayList<>();
 			for (Coluna coluna : colunas) {
 				lista.add(coluna.getNome());
 			}
@@ -305,18 +278,6 @@ public class Persistencia {
 			throw new PersistenciaException(ex);
 		}
 	}
-
-	// public static RegistroModelo criarModeloRegistro(Connection conn, String
-	// consulta, String[] chaves, Objeto objeto, Conexao conexao) throws
-	// PersistenciaException {
-	// try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
-	// try (ResultSet rs = psmt.executeQuery()) {
-	// return criarModelo(rs, chaves, objeto.getTabela2(), objeto, conexao);
-	// }
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
 
 	private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[] chaves, boolean colunaInfo,
 			Map<String, String> mapaSequencia) throws PersistenciaException {
@@ -373,87 +334,6 @@ public class Persistencia {
 			throw new PersistenciaException(ex);
 		}
 	}
-
-	// private static RegistroModelo criarModelo(ResultSet rs, String[] chaves,
-	// String tabela, Objeto objeto,
-	// Conexao conexao) throws PersistenciaException {
-	//
-	// try {
-	// ResultSetMetaData rsmd = rs.getMetaData();
-	// int qtdColunas = rsmd.getColumnCount();
-	//
-	// List<Coluna> colunas = criarColunas(rsmd, chaves, objeto);
-	// List<List<Object>> registros = new ArrayList<>();
-	//
-	// while (rs.next()) {
-	// List<Object> registro = new ArrayList<>();
-	//
-	// for (int i = 1; i <= qtdColunas; i++) {
-	// Object valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
-	// registro.add(valor == null ? Constantes.VAZIO : valor);
-	// }
-	//
-	// if (objeto.isColunaInfo()) {
-	// registro.add(Constantes.VAZIO);
-	// }
-	//
-	// registros.add(registro);
-	// }
-	//
-	// return new RegistroModelo(colunas, registros, tabela, conexao,
-	// objeto.getPrefixoNomeTabela());
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
-
-	// public static ListagemModelo criarModeloChavePrimaria(Connection conn,
-	// Objeto objeto, Conexao conexao)
-	// throws PersistenciaException {
-	// try {
-	// List<List<String>> dados = new ArrayList<>();
-	// DatabaseMetaData m = conn.getMetaData();
-	//
-	// ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(),
-	// conexao.getEsquema(), objeto.getTabela2());
-	//
-	// while (rs.next()) {
-	// dados.add(criar(rs.getString(COLUMN_NAME), rs.getString(KEY_SEQ),
-	// rs.getString(PK_NAME)));
-	// }
-	//
-	// rs.close();
-	//
-	// return new ListagemModelo(Arrays.asList(COLUMN_NAME, KEY_SEQ, PK_NAME),
-	// dados);
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
-
-	// public static ListagemModelo criarModeloChavesExportadas(Connection conn,
-	// Objeto objeto, Conexao conexao)
-	// throws PersistenciaException {
-	// try {
-	// List<List<String>> dados = new ArrayList<>();
-	// DatabaseMetaData m = conn.getMetaData();
-	//
-	// ResultSet rs = m.getExportedKeys(conexao.getCatalogo(),
-	// conexao.getEsquema(), objeto.getTabela2());
-	//
-	// while (rs.next()) {
-	// dados.add(criar(rs.getString(PKCOLUMN_NAME), rs.getString(FKTABLE_NAME),
-	// rs.getString(FKCOLUMN_NAME)));
-	// }
-	//
-	// rs.close();
-	//
-	// return new ListagemModelo(Arrays.asList(PKCOLUMN_NAME, FKTABLE_NAME,
-	// FKCOLUMN_NAME), dados);
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
 
 	public static List<String> listarNomeTabelas(Connection conn, Conexao conexao) throws PersistenciaException {
 		try {
@@ -531,86 +411,4 @@ public class Persistencia {
 			throw new PersistenciaException(ex);
 		}
 	}
-
-	// public static ListagemModelo criarModeloChavesImportadas(Connection conn,
-	// Objeto objeto, Conexao conexao)
-	// throws PersistenciaException {
-	// try {
-	// List<List<String>> dados = new ArrayList<>();
-	// DatabaseMetaData m = conn.getMetaData();
-	//
-	// ResultSet rs = m.getImportedKeys(conexao.getCatalogo(),
-	// conexao.getEsquema(), objeto.getTabela2());
-	//
-	// while (rs.next()) {
-	// dados.add(criar(rs.getString(PKTABLE_NAME), rs.getString(PKCOLUMN_NAME),
-	// rs.getString(FKCOLUMN_NAME)));
-	// }
-	//
-	// rs.close();
-	//
-	// return new ListagemModelo(Arrays.asList(PKTABLE_NAME, PKCOLUMN_NAME,
-	// FKCOLUMN_NAME), dados);
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
-
-	// public static ListagemModelo criarModeloMetaDados(Connection conn, Objeto
-	// objeto, Conexao conexao)
-	// throws PersistenciaException {
-	// StringBuilder builder = new StringBuilder(
-	// "SELECT * FROM " + objeto.getTabelaEsquema(conexao.getEsquema()) + "
-	// WHERE 1 > 2");
-	//
-	// try (PreparedStatement psmt = conn.prepareStatement(builder.toString()))
-	// {
-	// try (ResultSet rs = psmt.executeQuery()) {
-	// ResultSetMetaData rsmd = rs.getMetaData();
-	// int totalColunas = rsmd.getColumnCount();
-	//
-	// List<String> colunas = Arrays.asList("ColumnClassName", "ColumnLabel",
-	// "ColumnName", "AutoIncrement",
-	// "CaseSensitive", "Searchable", "Currency", "Nullable", "Signed",
-	// "ColumnDisplaySize",
-	// "SchemaName", "Precision", "Scale", "TableName", "CatalogName",
-	// "ColumnType", "ColumnTypeName",
-	// "ReadOnly", "Writable", "DefinitelyWritable");
-	// List<List<String>> dados = new ArrayList<>();
-	//
-	// final String VAZIO = Constantes.VAZIO;
-	//
-	// for (int i = 1; i <= totalColunas; i++) {
-	// List<String> linha = new ArrayList<>();
-	//
-	// linha.add(rsmd.getColumnClassName(i));
-	// linha.add(rsmd.getColumnLabel(i));
-	// linha.add(rsmd.getColumnName(i));
-	// linha.add(VAZIO + rsmd.isAutoIncrement(i));
-	// linha.add(VAZIO + rsmd.isCaseSensitive(i));
-	// linha.add(VAZIO + rsmd.isSearchable(i));
-	// linha.add(VAZIO + rsmd.isCurrency(i));
-	// linha.add(VAZIO + rsmd.isNullable(i));
-	// linha.add(VAZIO + rsmd.isSigned(i));
-	// linha.add(VAZIO + rsmd.getColumnDisplaySize(i));
-	// linha.add(rsmd.getSchemaName(i));
-	// linha.add(VAZIO + rsmd.getPrecision(i));
-	// linha.add(VAZIO + rsmd.getScale(i));
-	// linha.add(rsmd.getTableName(i));
-	// linha.add(rsmd.getCatalogName(i));
-	// linha.add(VAZIO + rsmd.getColumnType(i));
-	// linha.add(rsmd.getColumnTypeName(i));
-	// linha.add(VAZIO + rsmd.isReadOnly(i));
-	// linha.add(VAZIO + rsmd.isWritable(i));
-	// linha.add(VAZIO + rsmd.isDefinitelyWritable(i));
-	//
-	// dados.add(linha);
-	// }
-	//
-	// return new ListagemModelo(colunas, dados);
-	// }
-	// } catch (Exception ex) {
-	// throw new PersistenciaException(ex);
-	// }
-	// }
 }

@@ -68,11 +68,6 @@ public class ObjetoContainer extends Panel {
 		add(BorderLayout.NORTH, toolbar);
 	}
 
-	// @Override
-	// public void ini(Graphics graphics) {
-	// fichario.ini();
-	// }
-
 	public void dialogoVisivel() {
 		fichario.ini();
 	}
@@ -512,7 +507,7 @@ public class ObjetoContainer extends Panel {
 	private class PanelInstrucao extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Dimension dimension = new Dimension(Constantes.QUARENTA, Constantes.TREZENTOS_QUARENTA_UM);
-		private final Desktop desktop = new Desktop(null, false);
+		private final Desktop desktop = new Desktop(false);
 
 		private PanelInstrucao() {
 			add(BorderLayout.NORTH, new PanelNomeInstrucao());

@@ -294,7 +294,8 @@ public class ConsultaContainer extends AbstratoContainer {
 
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
-				PersistenciaMemoriaModelo modelo = Persistencia.criarPersistenciaMemoriaModelo(conn, consulta, null, false, null);
+				PersistenciaMemoriaModelo modelo = Persistencia.criarPersistenciaMemoriaModelo(conn, consulta, null,
+						false, null);
 				tabela.setModel(modelo);
 				Util.ajustar(tabela, getGraphics());
 				labelStatus.setText("REGISTROS [" + modelo.getRowCount() + "]");
