@@ -21,6 +21,7 @@ public class BarraButton extends JToolBar {
 	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
 	private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
+	private Action atualizarAcao = Action.actionIconAtualizar();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
 	private LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private Action baixarAcao = Action.actionIconBaixar();
@@ -61,6 +62,11 @@ public class BarraButton extends JToolBar {
 		if (contem(SALVAR, enuns)) {
 			addButton(salvarAcao);
 			salvarAcao.setActionListener(e -> salvar());
+		}
+
+		if (contem(ATUALIZAR, enuns)) {
+			addButton(atualizarAcao);
+			atualizarAcao.setActionListener(e -> atualizar());
 		}
 
 		if (contem(EXCLUIR, enuns)) {
@@ -239,6 +245,14 @@ public class BarraButton extends JToolBar {
 
 	protected void salvar() {
 		throw new UnsupportedOperationException();
+	}
+
+	protected void atualizar() {
+		throw new UnsupportedOperationException();
+	}
+
+	public Action getAtualizarAcao() {
+		return atualizarAcao;
 	}
 
 	protected void excluir() {

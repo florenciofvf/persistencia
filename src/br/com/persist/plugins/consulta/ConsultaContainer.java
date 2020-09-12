@@ -1,6 +1,7 @@
 package br.com.persist.plugins.consulta;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
@@ -109,7 +110,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	private void configurar() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
+		getActionMap().put(Constantes.EXEC, toolbar.getAtualizarAcao());
 	}
 
 	public String getConteudo() {
@@ -146,22 +147,14 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIconAtualizar();
 		private ButtonCopiar buttonCopiar = new ButtonCopiar();
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
+					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, ATUALIZAR);
 
-			addButton(atualizarAcao);
 			add(buttonCopiar);
 			add(true, comboConexao);
-
-			eventos();
-		}
-
-		private void eventos() {
-			atualizarAcao.setActionListener(e -> atualizar());
 		}
 
 		@Override
@@ -285,7 +278,8 @@ public class ConsultaContainer extends AbstratoContainer {
 			}
 		}
 
-		public void atualizar() {
+		@Override
+		protected void atualizar() {
 			if (Util.estaVazio(textArea.getText())) {
 				return;
 			}

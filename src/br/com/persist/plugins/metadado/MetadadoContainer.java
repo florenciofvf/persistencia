@@ -1,6 +1,7 @@
 package br.com.persist.plugins.metadado;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 
@@ -72,7 +73,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	private void configurar() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
+		getActionMap().put(Constantes.EXEC, toolbar.getAtualizarAcao());
 		metadadoTree.adicionarOuvinte(this);
 	}
 
@@ -83,14 +84,12 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIconAtualizar();
 		private final TextField txtMetadado = new TextField(35);
 		private ButtonInfo buttonInfo = new ButtonInfo();
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, ATUALIZAR);
 
-			addButton(atualizarAcao);
 			add(buttonInfo);
 			add(true, comboConexao);
 			add(txtMetadado);
@@ -99,7 +98,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 
 		private void eventos() {
-			atualizarAcao.setActionListener(e -> atualizar());
 			txtMetadado.addActionListener(this);
 		}
 
@@ -174,7 +172,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			}
 		}
 
-		public void atualizar() {
+		@Override
+		protected void atualizar() {
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 
 			if (conexao == null) {
