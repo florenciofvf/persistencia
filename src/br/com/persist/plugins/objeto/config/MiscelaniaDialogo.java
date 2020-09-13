@@ -16,16 +16,16 @@ public class MiscelaniaDialogo extends AbstratoDialogo {
 		container = new MiscelaniaContainer(this, objeto, tipo);
 		montarLayout();
 
-		if (MiscelaniaContainer.Tipo.CHAVE.equals(tipo)) {
+		if (MiscelaniaContainer.Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
 			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
 
-		} else if (MiscelaniaContainer.Tipo.MAPA.equals(tipo)) {
+		} else if (MiscelaniaContainer.Tipo.MAPEAMENTO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.mapeamento") + " - " + getTitle());
 
-		} else if (MiscelaniaContainer.Tipo.BUSCA.equals(tipo)) {
+		} else if (MiscelaniaContainer.Tipo.BUSCA_AUTO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.buscaAuto") + " - " + getTitle());
 
-		} else if (MiscelaniaContainer.Tipo.LINK.equals(tipo)) {
+		} else if (MiscelaniaContainer.Tipo.LINK_AUTO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.linkAuto") + " - " + getTitle());
 		}
 	}

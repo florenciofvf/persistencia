@@ -383,11 +383,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		Conexao conexao = getConexaoPadrao();
 
-		if (conexao == null) {
-			return;
-		}
-
-		if (conexaoSel != null && conexaoSel.equals(conexao)) {
+		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
 			adicionarInternalFormulario(conexao, coletor, g, config);
 		}
 	}
@@ -495,6 +491,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
 		toolbar.paginaVisivel();
+		objetoSuperficie.adicionadoAoFichario(fichario);
 	}
 
 	public void formularioVisivel() {

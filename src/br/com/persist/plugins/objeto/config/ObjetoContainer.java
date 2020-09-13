@@ -255,7 +255,7 @@ public class ObjetoContainer extends Panel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
 					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.BUSCA);
+							MiscelaniaContainer.Tipo.BUSCA_AUTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 
@@ -269,7 +269,7 @@ public class ObjetoContainer extends Panel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
 					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.LINK);
+							MiscelaniaContainer.Tipo.LINK_AUTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 
@@ -283,7 +283,7 @@ public class ObjetoContainer extends Panel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
 					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.CHAVE);
+							MiscelaniaContainer.Tipo.CHAVE_SEQUENCIA);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 
@@ -297,7 +297,7 @@ public class ObjetoContainer extends Panel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
 					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.MAPA);
+							MiscelaniaContainer.Tipo.MAPEAMENTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 

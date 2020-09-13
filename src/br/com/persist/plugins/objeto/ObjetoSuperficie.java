@@ -1495,16 +1495,12 @@ public class ObjetoSuperficie extends Desktop {
 	}
 
 	public void selecionarConexao(Conexao conexao) {
-		if (conexao == null) {
-			return;
-		}
-
-		JInternalFrame[] frames = getAllFrames();
-
-		for (JInternalFrame frame : frames) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				interno.selecionarConexao(conexao);
+		if (conexao != null) {
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame instanceof InternalFormulario) {
+					InternalFormulario interno = (InternalFormulario) frame;
+					interno.selecionarConexao(conexao);
+				}
 			}
 		}
 	}

@@ -31,28 +31,28 @@ public class MiscelaniaContainer extends Panel {
 	private final Tipo tipo;
 
 	public MiscelaniaContainer(Janela janela, Objeto objeto, Tipo tipo) {
-		montarLayout(objeto);
+		montarLayout(objeto, tipo);
 		this.objeto = objeto;
 		toolbar.ini(janela);
 		this.tipo = tipo;
 	}
 
-	private void montarLayout(Objeto objeto) {
+	private void montarLayout(Objeto objeto, Tipo tipo) {
 		add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.NORTH, toolbar);
 
 		StringBuilder builder = new StringBuilder();
 
-		if (Tipo.CHAVE.equals(tipo)) {
+		if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
 			chave(builder);
 
-		} else if (Tipo.MAPA.equals(tipo)) {
+		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 			mapa(builder);
 
-		} else if (Tipo.BUSCA.equals(tipo)) {
+		} else if (Tipo.BUSCA_AUTO.equals(tipo)) {
 			buscaAuto(objeto, builder);
 
-		} else if (Tipo.LINK.equals(tipo)) {
+		} else if (Tipo.LINK_AUTO.equals(tipo)) {
 			linkAuto(objeto, builder);
 		}
 
@@ -132,7 +132,7 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		CHAVE, BUSCA, LINK, MAPA
+		CHAVE_SEQUENCIA, BUSCA_AUTO, LINK_AUTO, MAPEAMENTO
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -162,20 +162,20 @@ public class MiscelaniaContainer extends Panel {
 		@Override
 		protected void aplicar() {
 			try {
-				if (Tipo.BUSCA.equals(tipo)) {
+				if (Tipo.BUSCA_AUTO.equals(tipo)) {
 					String string = Util.normalizar(textArea.getText(), false);
 					BuscaAutoUtil.listaGrupoBuscaAuto(objeto, string);
 					objeto.setBuscaAutomatica(string);
 
-				} else if (Tipo.LINK.equals(tipo)) {
+				} else if (Tipo.LINK_AUTO.equals(tipo)) {
 					String string = Util.normalizar(textArea.getText(), false);
 					LinkAutoUtil.listaGrupoLinkAuto(objeto, string);
 					objeto.setLinkAutomatico(string);
 
-				} else if (Tipo.CHAVE.equals(tipo)) {
+				} else if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
 					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
 
-				} else if (Tipo.MAPA.equals(tipo)) {
+				} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
 				}
 
