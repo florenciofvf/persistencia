@@ -11,7 +11,6 @@ import br.com.persist.principal.Formulario;
 public class ObjetoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final ObjetoContainer container;
-	// private boolean ativo = true;
 
 	private ObjetoFormulario(Formulario formulario, File file) {
 		super(file.getName());
@@ -53,28 +52,6 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		container.abrir(file, coletor, g, config);
 	}
 
-	// public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean
-	// exportacao, boolean circular) {
-	// container.abrirExportacaoImportacaoMetadado(metadado, exportacao,
-	// circular);
-	// }
-	//
-	// public void exportarMetadadoRaiz(Metadado metadado) {
-	// container.exportarMetadadoRaiz(metadado);
-	// }
-
-	// public void retornoAoFichario() {
-	// Formulario formulario = container.getFormulario();
-	//
-	// if (formulario != null) {
-	// remove(container);
-	// ativo = false;
-	// container.setJanela(null);
-	// container.setObjetoFormulario(null);
-	// fechar();
-	// }
-	// }
-
 	@Override
 	public void excluirContainer() {
 		remove(container);
@@ -82,18 +59,6 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		container.setObjetoFormulario(null);
 		fechar();
 	}
-
-	// @Override
-	// public void executarAoAbrirForm() {
-	// container.estadoSelecao();
-	// }
-
-	// @Override
-	// public void executarAoFecharForm() {
-	// if (ativo) {
-	// container.excluido();
-	// }
-	// }
 
 	@Override
 	public void executarAoAbrirFormulario() {

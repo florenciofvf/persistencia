@@ -160,34 +160,4 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		form.setVisible(true);
 	}
-
-	// public class Conteiner {
-	// public void abrirExportacaoMetadado(Metadado metadado, boolean circular)
-	// {
-	// ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-	// new File(Mensagens.getString("label.abrir_exportacao")));
-	// form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-	// form.setLocationRelativeTo(Formulario.this);
-	// form.setVisible(true);
-	// }
-
-	// public void abrirImportacaoMetadado(Metadado metadado, boolean circular)
-	// {
-	// ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-	// new File(Mensagens.getString("label.abrir_importacao")));
-	// form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-	// form.setLocationRelativeTo(Formulario.this);
-	// form.setVisible(true);
-	// }
-
-	// public void exportarMetadadoRaiz(Metadado metadado) {
-	// if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-	// ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-	// new File(Mensagens.getString("label.exportar")));
-	// form.exportarMetadadoRaiz(metadado);
-	// form.setLocationRelativeTo(Formulario.this);
-	// form.setVisible(true);
-	// }
-	// }
-	// }
 }

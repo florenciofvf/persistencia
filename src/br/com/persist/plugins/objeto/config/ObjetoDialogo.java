@@ -23,11 +23,6 @@ public class ObjetoDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	// @Override
-	// public void executarAoAbrirDialog() {
-	// container.ini(getGraphics());
-	// }
-
 	@Override
 	public void executarAoAbrirDialogo() {
 		container.dialogoVisivel();
