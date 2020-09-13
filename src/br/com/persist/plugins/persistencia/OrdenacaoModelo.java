@@ -11,7 +11,7 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.IndiceValor;
 import br.com.persist.util.Util;
 
-public class PersistenciaOrdenacaoModelo extends AbstractTableModel {
+public class OrdenacaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private final transient PersistenciaModelo model;
 	private transient Linha[] linhas;
@@ -19,7 +19,7 @@ public class PersistenciaOrdenacaoModelo extends AbstractTableModel {
 	private boolean numero;
 	private int coluna;
 
-	public PersistenciaOrdenacaoModelo(PersistenciaModelo model) {
+	public OrdenacaoModelo(PersistenciaModelo model) {
 		Objects.requireNonNull(model);
 		this.model = model;
 		iniArray();

@@ -28,7 +28,7 @@ import org.xml.sax.Attributes;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
-import br.com.persist.plugins.persistencia.PersistenciaOrdenacaoModelo;
+import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
@@ -789,11 +789,11 @@ public class Objeto implements Runnable {
 		this.processar = processar;
 	}
 
-	public String getTitle(PersistenciaOrdenacaoModelo modelo) {
+	public String getTitle(OrdenacaoModelo modelo) {
 		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "]";
 	}
 
-	public String getTitle(PersistenciaOrdenacaoModelo modelo, String complemento) {
+	public String getTitle(OrdenacaoModelo modelo, String complemento) {
 		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "] - " + complemento;
 	}
 

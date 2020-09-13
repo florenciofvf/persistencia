@@ -55,7 +55,7 @@ public class Persistencia {
 		return mapa;
 	}
 
-	public static PersistenciaMemoriaModelo criarModeloInfoBanco(Connection conn) throws PersistenciaException {
+	public static MemoriaModelo criarModeloInfoBanco(Connection conn) throws PersistenciaException {
 		try {
 			DatabaseMetaData m = conn.getMetaData();
 
@@ -195,7 +195,7 @@ public class Persistencia {
 			dados.add(criar("getMaxLogicalLobSize", m.getMaxLogicalLobSize()));
 			dados.add(criar("supportsRefCursors", m.supportsRefCursors()));
 
-			return new PersistenciaMemoriaModelo(Arrays.asList("NOME", "VALOR"), dados);
+			return new MemoriaModelo(Arrays.asList("NOME", "VALOR"), dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
@@ -205,7 +205,7 @@ public class Persistencia {
 		return Arrays.asList(nome, object == null ? Constantes.VAZIO : object.toString());
 	}
 
-	public static PersistenciaMemoriaModelo criarModeloEsquema(Connection conn) throws PersistenciaException {
+	public static MemoriaModelo criarModeloEsquema(Connection conn) throws PersistenciaException {
 		try {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
@@ -216,7 +216,7 @@ public class Persistencia {
 			}
 
 			rs.close();
-			return new PersistenciaMemoriaModelo(Arrays.asList(TABLE_SCHEM, TABLE_CATALOG), dados);
+			return new MemoriaModelo(Arrays.asList(TABLE_SCHEM, TABLE_CATALOG), dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
@@ -234,21 +234,25 @@ public class Persistencia {
 		}
 	}
 
-	public static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(Connection conn, String consulta,
-			String[] chaves, boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
+	public static MemoriaModelo criarMemoriaModelo(Connection conn, String consulta) throws PersistenciaException {
+		return criarMemoriaModelo(conn, consulta, new String[0], false, new HashMap<>());
+	}
+
+	public static MemoriaModelo criarMemoriaModelo(Connection conn, String consulta, String[] chaves,
+			boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
 				List<Coluna> colunas = criarColunas(rsmd, chaves, colunaInfo, mapaSequencia);
-				return criarPersistenciaMemoriaModelo(rs, colunas, colunaInfo);
+				return criarMemoriaModelo(rs, colunas, colunaInfo);
 			}
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
 	}
 
-	private static PersistenciaMemoriaModelo criarPersistenciaMemoriaModelo(ResultSet rs, List<Coluna> colunas,
-			boolean colunaInfo) throws PersistenciaException {
+	private static MemoriaModelo criarMemoriaModelo(ResultSet rs, List<Coluna> colunas, boolean colunaInfo)
+			throws PersistenciaException {
 		try {
 			List<List<String>> dados = new ArrayList<>();
 			int qtdColunas = colunas.size();
@@ -273,7 +277,49 @@ public class Persistencia {
 				lista.add(coluna.getNome());
 			}
 
-			return new PersistenciaMemoriaModelo(lista, dados);
+			return new MemoriaModelo(lista, dados);
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static PersistenciaModelo criarPersistenciaModelo(PersistenciaModelo.Parametros parametros)
+			throws PersistenciaException {
+		try (PreparedStatement psmt = parametros.getConn().prepareStatement(parametros.getConsulta())) {
+			try (ResultSet rs = psmt.executeQuery()) {
+				ResultSetMetaData rsmd = rs.getMetaData();
+				List<Coluna> colunas = criarColunas(rsmd, parametros.getColunasChave(), parametros.isComColunaInfo(),
+						parametros.getMapaSequencia());
+				return criarPersistenciaModelo(rs, colunas, parametros);
+			}
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	private static PersistenciaModelo criarPersistenciaModelo(ResultSet rs, List<Coluna> colunas,
+			PersistenciaModelo.Parametros parametros) throws PersistenciaException {
+		try {
+			List<List<Object>> registros = new ArrayList<>();
+			int qtdColunas = colunas.size();
+
+			while (rs.next()) {
+				List<Object> registro = new ArrayList<>();
+
+				for (int i = 1; i <= qtdColunas; i++) {
+					Object valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
+					registro.add(valor == null ? Constantes.VAZIO : valor);
+				}
+
+				if (parametros.isComColunaInfo()) {
+					registro.add(Constantes.VAZIO);
+				}
+
+				registros.add(registro);
+			}
+
+			return new PersistenciaModelo(colunas, registros, parametros.getTabela(), parametros.getPrefixoNomeTabela(),
+					parametros.getConexao());
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}

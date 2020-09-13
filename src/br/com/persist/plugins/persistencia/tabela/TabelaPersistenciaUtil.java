@@ -3,7 +3,7 @@ package br.com.persist.plugins.persistencia.tabela;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.plugins.persistencia.PersistenciaOrdenacaoModelo;
+import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.util.Util;
 
 public class TabelaPersistenciaUtil {
@@ -11,7 +11,7 @@ public class TabelaPersistenciaUtil {
 	}
 
 	public static int getIndiceColuna(TabelaPersistencia tabelaPersistencia, String nome) {
-		PersistenciaOrdenacaoModelo modelo = (PersistenciaOrdenacaoModelo) tabelaPersistencia.getModel();
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		int qtdColunas = modelo.getColumnCount();
 
 		for (int i = 0; i < qtdColunas; i++) {
@@ -26,7 +26,7 @@ public class TabelaPersistenciaUtil {
 	}
 
 	public static List<String> getValoresLinhaPelaColuna(TabelaPersistencia tabelaPersistencia, int coluna) {
-		PersistenciaOrdenacaoModelo modelo = (PersistenciaOrdenacaoModelo) tabelaPersistencia.getModel();
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		List<Integer> linhas = Util.getIndicesLinha(tabelaPersistencia);
 		List<String> resposta = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package br.com.persist.plugins.persistencia;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +28,7 @@ public class PersistenciaModelo implements TableModel {
 	private final String tabela;
 	private Conexao conexao;
 
-	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao,
-			String prefixoNomeTabela) {
+	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, String prefixoNomeTabela, Conexao conexao) {
 		this.prefixoNomeTabela = prefixoNomeTabela;
 		this.registros = registros;
 		this.colunas = colunas;
@@ -47,6 +47,75 @@ public class PersistenciaModelo implements TableModel {
 		List<Coluna> colunas = new ArrayList<>();
 		List<List<Object>> registros = new ArrayList<>();
 		return new PersistenciaModelo(colunas, registros, null, null, null);
+	}
+
+	public static class Parametros {
+		private Map<String, String> mapaSequencia;
+		private String prefixoNomeTabela;
+		private final Conexao conexao;
+		private final String consulta;
+		private String[] colunasChave;
+		private boolean comColunaInfo;
+		private final Connection conn;
+		private String tabela;
+
+		public Parametros(Connection conn, Conexao conexao, String consulta) {
+			this.consulta = consulta;
+			this.conexao = conexao;
+			this.conn = conn;
+		}
+
+		public Map<String, String> getMapaSequencia() {
+			return mapaSequencia;
+		}
+
+		public void setMapaSequencia(Map<String, String> mapaSequencia) {
+			this.mapaSequencia = mapaSequencia;
+		}
+
+		public String getPrefixoNomeTabela() {
+			return prefixoNomeTabela;
+		}
+
+		public void setPrefixoNomeTabela(String prefixoNomeTabela) {
+			this.prefixoNomeTabela = prefixoNomeTabela;
+		}
+
+		public String[] getColunasChave() {
+			return colunasChave;
+		}
+
+		public void setColunasChave(String[] colunasChave) {
+			this.colunasChave = colunasChave;
+		}
+
+		public boolean isComColunaInfo() {
+			return comColunaInfo;
+		}
+
+		public void setComColunaInfo(boolean comColunaInfo) {
+			this.comColunaInfo = comColunaInfo;
+		}
+
+		public Connection getConn() {
+			return conn;
+		}
+
+		public String getTabela() {
+			return tabela;
+		}
+
+		public void setTabela(String tabela) {
+			this.tabela = tabela;
+		}
+
+		public Conexao getConexao() {
+			return conexao;
+		}
+
+		public String getConsulta() {
+			return consulta;
+		}
 	}
 
 	public boolean isChaves() {

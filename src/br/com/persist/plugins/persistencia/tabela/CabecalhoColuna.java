@@ -19,7 +19,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
 import br.com.persist.util.Icones;
 import br.com.persist.plugins.persistencia.Coluna;
-import br.com.persist.plugins.persistencia.PersistenciaOrdenacaoModelo;
+import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
@@ -27,13 +27,13 @@ import br.com.persist.util.Util;
 public class CabecalhoColuna extends Panel implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 	private final transient CabecalhoColunaListener listener;
-	private final PersistenciaOrdenacaoModelo modelo;
+	private final OrdenacaoModelo modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
 	private final boolean comFiltro;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(CabecalhoColunaListener listener, PersistenciaOrdenacaoModelo modelo, Coluna coluna,
+	public CabecalhoColuna(CabecalhoColunaListener listener, OrdenacaoModelo modelo, Coluna coluna,
 			boolean comFiltro) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
 		setBorder(BorderFactory.createEtchedBorder());
@@ -145,8 +145,6 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					filtro.filtroString = textField.getText();
-					// container.processarObjeto(filtro.filtroString, null,
-					// CabecalhoColuna.this);
 					listener.filtrar(CabecalhoColuna.this, filtro.filtroString);
 					dispose();
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

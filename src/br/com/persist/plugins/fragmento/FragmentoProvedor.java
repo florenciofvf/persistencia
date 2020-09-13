@@ -120,14 +120,14 @@ public class FragmentoProvedor {
 		}
 	}
 
-	public static void filtrarPeloGrupo(String grupo) {
+	public static void filtrarPeloGrupo(List<String> grupos) {
 		if (!filtrado) {
 			Iterator<Fragmento> it = lista.iterator();
 
 			while (it.hasNext()) {
 				Fragmento f = it.next();
 
-				if (f.getGrupo().equals(grupo)) {
+				if (contem(grupos, f.getGrupo())) {
 					listaBackup.add(f);
 					it.remove();
 				}
@@ -136,6 +136,10 @@ public class FragmentoProvedor {
 			inverter();
 			filtrado = true;
 		}
+	}
+
+	private static boolean contem(List<String> strings, String string) {
+		return strings.contains(string);
 	}
 
 	public static void removerFiltroPeloGrupo() {

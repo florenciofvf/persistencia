@@ -168,7 +168,7 @@ public class FragmentoContainer extends AbstratoContainer {
 		protected void baixar() {
 			FragmentoProvedor.inicializar();
 			if (listener != null) {
-				FragmentoProvedor.filtrarPeloGrupo(listener.getGrupo());
+				FragmentoProvedor.filtrarPeloGrupo(listener.getGrupoFiltro());
 			}
 			fragmentoModelo.fireTableDataChanged();
 			ajustarTabela();

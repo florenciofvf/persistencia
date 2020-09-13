@@ -21,7 +21,7 @@ import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
-import br.com.persist.plugins.persistencia.PersistenciaOrdenacaoModelo;
+import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.componente.Action;
 import br.com.persist.util.Constantes;
 import br.com.persist.componente.MenuPadrao2;
@@ -37,10 +37,10 @@ public class TabelaPersistencia extends JTable {
 	private boolean arrastado;
 
 	public TabelaPersistencia() {
-		this(new PersistenciaOrdenacaoModelo(PersistenciaModelo.criarVazio()));
+		this(new OrdenacaoModelo(PersistenciaModelo.criarVazio()));
 	}
 
-	public TabelaPersistencia(PersistenciaOrdenacaoModelo modelo) {
+	public TabelaPersistencia(OrdenacaoModelo modelo) {
 		super(modelo);
 		tableHeader.addMouseListener(headerListenerInner);
 		addMouseMotionListener(mouseMotionListenerInner);
@@ -52,7 +52,7 @@ public class TabelaPersistencia extends JTable {
 
 	@Override
 	public void setModel(TableModel dataModel) {
-		if (!(dataModel instanceof PersistenciaOrdenacaoModelo)) {
+		if (!(dataModel instanceof OrdenacaoModelo)) {
 			throw new IllegalStateException("PersistenciaOrdenacaoModelo inconsistente.");
 		}
 
@@ -63,8 +63,8 @@ public class TabelaPersistencia extends JTable {
 		return getModelo().getNomeColunas();
 	}
 
-	public PersistenciaOrdenacaoModelo getModelo() {
-		return (PersistenciaOrdenacaoModelo) getModel();
+	public OrdenacaoModelo getModelo() {
+		return (OrdenacaoModelo) getModel();
 	}
 
 	public void setTabelaPersistenciaListener(TabelaPersistenciaListener listener) {
@@ -227,7 +227,7 @@ public class TabelaPersistencia extends JTable {
 			});
 
 			detalheColunaAcao.setActionListener(e -> {
-				Coluna coluna = ((PersistenciaOrdenacaoModelo) getModel()).getColuna(indiceColuna);
+				Coluna coluna = ((OrdenacaoModelo) getModel()).getColuna(indiceColuna);
 
 				if (coluna != null) {
 					Util.mensagem(TabelaPersistencia.this, coluna.getDetalhe());
