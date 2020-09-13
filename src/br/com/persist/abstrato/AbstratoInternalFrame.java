@@ -11,6 +11,8 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 import br.com.persist.componente.Janela;
 import br.com.persist.util.Constantes;
@@ -25,6 +27,7 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 		setLayout(new BorderLayout());
 		setSize(Constantes.SIZE);
 		setActionESC();
+		configurar();
 	}
 
 	@Override
@@ -61,5 +64,28 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 
 	public void setAbortarFecharComESC(boolean abortarFecharComESC) {
 		this.abortarFecharComESC = abortarFecharComESC;
+	}
+
+	private void configurar() {
+		addInternalFrameListener(new InternalFrameAdapter() {
+			@Override
+			public void internalFrameOpened(InternalFrameEvent e) {
+				executarAoAbrirFormulario();
+			}
+
+			@Override
+			public void internalFrameClosing(InternalFrameEvent e) {
+				executarAoFecharFormulario();
+			}
+		});
+	}
+
+	public void executarAoAbrirFormulario() {
+	}
+
+	public void executarAoFecharFormulario() {
+	}
+
+	public void excluirContainer() {
 	}
 }
