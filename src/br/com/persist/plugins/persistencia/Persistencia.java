@@ -255,20 +255,17 @@ public class Persistencia {
 			throws PersistenciaException {
 		try {
 			List<List<String>> dados = new ArrayList<>();
-			int qtdColunas = colunas.size();
+			int qtdColunas = colunaInfo ? colunas.size() - 1 : colunas.size();
 
 			while (rs.next()) {
 				List<String> registro = new ArrayList<>();
-
 				for (int i = 1; i <= qtdColunas; i++) {
 					String valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
 					registro.add(valor == null ? Constantes.VAZIO : valor);
 				}
-
 				if (colunaInfo) {
 					registro.add(Constantes.VAZIO);
 				}
-
 				dados.add(registro);
 			}
 
@@ -301,20 +298,17 @@ public class Persistencia {
 			PersistenciaModelo.Parametros parametros) throws PersistenciaException {
 		try {
 			List<List<Object>> registros = new ArrayList<>();
-			int qtdColunas = colunas.size();
+			int qtdColunas = parametros.isComColunaInfo() ? colunas.size() - 1 : colunas.size();
 
 			while (rs.next()) {
 				List<Object> registro = new ArrayList<>();
-
 				for (int i = 1; i <= qtdColunas; i++) {
 					Object valor = colunas.get(i - 1).isBlob() ? "BLOB" : rs.getString(i);
 					registro.add(valor == null ? Constantes.VAZIO : valor);
 				}
-
 				if (parametros.isComColunaInfo()) {
 					registro.add(Constantes.VAZIO);
 				}
-
 				registros.add(registro);
 			}
 
