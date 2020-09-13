@@ -59,6 +59,11 @@ public class Formulario extends JFrame {
 		configurar();
 	}
 
+	public void setHintTitlePagina(int indice, String hint, String title) {
+		fichario.setToolTipTextAt(indice, hint);
+		fichario.setTitleAt(indice, title);
+	}
+
 	public void setTabLayoutPolicy(int tabLayoutPolicy) {
 		fichario.setTabLayoutPolicy(tabLayoutPolicy);
 	}
@@ -73,6 +78,10 @@ public class Formulario extends JFrame {
 
 	public void adicionarPagina(Pagina pagina) {
 		fichario.adicionarPagina(pagina);
+	}
+
+	public int getIndicePagina(Pagina pagina) {
+		return fichario.getIndice(pagina);
 	}
 
 	public void selecionarPagina(File file) {

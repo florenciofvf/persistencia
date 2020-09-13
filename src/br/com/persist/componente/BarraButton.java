@@ -11,6 +11,7 @@ import static br.com.persist.componente.BarraButtonEnum.*;
 
 public class BarraButton extends JToolBar {
 	private static final long serialVersionUID = 1L;
+	private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
 	protected Action aplicarAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 	private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
@@ -19,7 +20,7 @@ public class BarraButton extends JToolBar {
 	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);
 	private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
-	private Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
+	protected Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
 	private Action atualizarAcao = Action.actionIconAtualizar();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
@@ -62,6 +63,11 @@ public class BarraButton extends JToolBar {
 		if (contem(SALVAR, enuns)) {
 			addButton(salvarAcao);
 			salvarAcao.setActionListener(e -> salvar());
+		}
+
+		if (contem(SALVAR_COMO, enuns)) {
+			addButton(salvarComoAcao);
+			salvarComoAcao.setActionListener(e -> salvarComo());
 		}
 
 		if (contem(ATUALIZAR, enuns)) {
@@ -199,7 +205,6 @@ public class BarraButton extends JToolBar {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -247,6 +252,10 @@ public class BarraButton extends JToolBar {
 		throw new UnsupportedOperationException();
 	}
 
+	protected void salvarComo() {
+		throw new UnsupportedOperationException();
+	}
+
 	protected void atualizar() {
 		throw new UnsupportedOperationException();
 	}
@@ -279,7 +288,6 @@ public class BarraButton extends JToolBar {
 		if (separador) {
 			addSeparator();
 		}
-
 		return add(comp);
 	}
 
@@ -287,7 +295,6 @@ public class BarraButton extends JToolBar {
 		if (separador) {
 			addSeparator();
 		}
-
 		add(new Button(action));
 	}
 
