@@ -185,7 +185,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		private final ButtonUtil util = new ButtonUtil();
 
 		protected void ini(Janela janela, Objeto objeto) {
-			//super.ini(janela, false, false);
+			super.ini(janela);
 
 			add(btnArrasto);
 			add(true, new ButtonInfo());
@@ -510,11 +510,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						return;
 					}
 
-//					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-//
-//					for (int linha : indices) {
-//						TabelaUtil.atualizarLinhaColetores(tabelaPersistencia, linha, coluna, grupo);
-//					}
+					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
+
+					for (int linha : indices) {
+						InternalUtil.atualizarLinhaColetores(tabelaPersistencia, linha, coluna, grupo);
+					}
 
 					Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
 				}
@@ -1548,7 +1548,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, tabelaBuscaAuto.getCampo());
 
 				if (coluna != -1) {
-					//TabelaPersistenciaUtil.checarColetores(tabelaPersistencia, coluna, tabelaBuscaAuto);
+					InternalUtil.checarColetores(tabelaPersistencia, coluna, tabelaBuscaAuto);
 				}
 
 				objeto.setTabelaBuscaAuto(null);
@@ -1562,12 +1562,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		configAlturaAutomatica();
 	}
 
-	private transient CabecalhoColunaListener cabecalhoColunaListener = new CabecalhoColunaListener() {
-		@Override
-		public void filtrar(CabecalhoColuna cabecalhoColuna, String string) {
-			processarObjeto(string, null, cabecalhoColuna);
-		}
-	};
+	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processarObjeto(string, null, cabecalho);
 
 	private void mensagemException(Exception ex) {
 		if (Preferencias.isErroCriarConnection()) {
@@ -1860,33 +1855,36 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					toolbar.labelTotal.limpar();
 				}
 
-				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaGrupoLink.isEmpty()
-						&& linkAutomaticoListener != null) {
-					int indiceLinkSelecionado = -1;
-
-					for (int i = 0; i < listaGrupoLink.size(); i++) {
-						GrupoLinkAuto link = listaGrupoLink.get(i);
-
-						if (TabelaPersistenciaUtil.getIndiceColuna(tabela, link.getCampo()) == colunaClick) {
-							indiceLinkSelecionado = i;
-						}
-					}
-
-					if (indiceLinkSelecionado == -1) {
-						return;
-					}
-
-					List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
-
-					if (lista.size() != 1) {
-						return;
-					}
-
-					linkAutomaticoListener.linkAutomatico(listaGrupoLink.get(indiceLinkSelecionado), lista.get(0));
+				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaGrupoLink.isEmpty() && linkAutomaticoListener != null) {
+					mouseClick(tabela, colunaClick);
 				}
 			} else {
 				toolbar.excluirAtualizarEnable(false);
 			}
+		}
+
+		private void mouseClick(TabelaPersistencia tabela, int colunaClick) {
+			int indiceLinkSelecionado = -1;
+
+			for (int i = 0; i < listaGrupoLink.size(); i++) {
+				GrupoLinkAuto link = listaGrupoLink.get(i);
+
+				if (TabelaPersistenciaUtil.getIndiceColuna(tabela, link.getCampo()) == colunaClick) {
+					indiceLinkSelecionado = i;
+				}
+			}
+
+			if (indiceLinkSelecionado == -1) {
+				return;
+			}
+
+			List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
+
+			if (lista.size() != 1) {
+				return;
+			}
+
+			linkAutomaticoListener.linkAutomatico(listaGrupoLink.get(indiceLinkSelecionado), lista.get(0));
 		}
 	}
 
@@ -2041,10 +2039,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		this.componenteListener = componenteListener;
 	}
 
-//	@Override
-//	public void ini(Graphics graphics) {
-//		TabelaUtil.ajustar(tabelaPersistencia, graphics);
-//	}
 	public void formularioVisivel() {
 		Util.ajustar(tabelaPersistencia, getGraphics());
 	}
