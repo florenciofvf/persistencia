@@ -28,7 +28,8 @@ public class PersistenciaModelo implements TableModel {
 	private final String tabela;
 	private Conexao conexao;
 
-	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, String prefixoNomeTabela, Conexao conexao) {
+	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela,
+			String prefixoNomeTabela, Conexao conexao) {
 		this.prefixoNomeTabela = prefixoNomeTabela;
 		this.registros = registros;
 		this.colunas = colunas;

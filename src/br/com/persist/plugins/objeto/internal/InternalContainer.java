@@ -734,32 +734,30 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				}
 
 				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-					/*if (abrirEmForm) {
-						ConsultaFormulario form = ConsultaFormulario.criar(null, instrucao.getNome(), provedor, conexao,
-								instrucao.getValor(), chaves, false);
-						configLocationRelativeTo(form);
-						form.setVisible(true);
-					} else {
-						ConsultaDialogo form = ConsultaDialogo.criar((Frame) null, null, conexao,
-								instrucao.getValor(), chaves, false);
-						form.setTitle(instrucao.getNome());
-						configLocationRelativeTo(form);
-						form.setVisible(true);
-					}*/
+					/*
+					 * if (abrirEmForm) { ConsultaFormulario form =
+					 * ConsultaFormulario.criar(null, instrucao.getNome(),
+					 * provedor, conexao, instrucao.getValor(), chaves, false);
+					 * configLocationRelativeTo(form); form.setVisible(true); }
+					 * else { ConsultaDialogo form =
+					 * ConsultaDialogo.criar((Frame) null, null, conexao,
+					 * instrucao.getValor(), chaves, false);
+					 * form.setTitle(instrucao.getNome());
+					 * configLocationRelativeTo(form); form.setVisible(true); }
+					 */
 				}
 
 				private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-					/*if (abrirEmForm) {
-						UpdateFormulario form = UpdateFormulario.criar(null, instrucao.getNome(), conexao,
-								instrucao.getValor(), chaves);
-						configLocationRelativeTo(form);
-						form.setVisible(true);
-					} else {
-						UpdateDialogo form = UpdateDialogo.criar((Frame) null, null, instrucao.getNome(),
-								conexao, instrucao.getValor(), chaves);
-						configLocationRelativeTo(form);
-						form.setVisible(true);
-					}*/
+					/*
+					 * if (abrirEmForm) { UpdateFormulario form =
+					 * UpdateFormulario.criar(null, instrucao.getNome(),
+					 * conexao, instrucao.getValor(), chaves);
+					 * configLocationRelativeTo(form); form.setVisible(true); }
+					 * else { UpdateDialogo form = UpdateDialogo.criar((Frame)
+					 * null, null, instrucao.getNome(), conexao,
+					 * instrucao.getValor(), chaves);
+					 * configLocationRelativeTo(form); form.setVisible(true); }
+					 */
 				}
 			}
 		}
@@ -835,7 +833,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							String esquemaTabela = objeto.getTabelaEsquema(conexao.getEsquema());
 							String complementar = complemento ? txtComplemento.getText() : Constantes.VAZIO;
-							String aposFROM = esquemaTabela + (!Util.estaVazio(complementar) ? " WHERE 1=1 " + complementar : Constantes.VAZIO);
+							String aposFROM = esquemaTabela
+									+ (!Util.estaVazio(complementar) ? " WHERE 1=1 " + complementar : Constantes.VAZIO);
 							int i = Persistencia.getTotalRegistros(conn, aposFROM);
 							toolbar.labelTotal.setText(Constantes.VAZIO + i);
 						} catch (Exception ex) {
@@ -847,15 +846,15 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 
 		private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-			/*if (abrirEmForm) {
-				UpdateFormulario form = UpdateFormulario.criar(null, Mensagens.getString(Constantes.LABEL_ATUALIZAR), conexao, instrucao);
-				configLocationRelativeTo(form);
-				form.setVisible(true);
-			} else {
-				UpdateDialogo form = UpdateDialogo.criar((Frame) null, null, conexao, instrucao);
-				configLocationRelativeTo(form);
-				form.setVisible(true);
-			}*/
+			/*
+			 * if (abrirEmForm) { UpdateFormulario form =
+			 * UpdateFormulario.criar(null,
+			 * Mensagens.getString(Constantes.LABEL_ATUALIZAR), conexao,
+			 * instrucao); configLocationRelativeTo(form);
+			 * form.setVisible(true); } else { UpdateDialogo form =
+			 * UpdateDialogo.criar((Frame) null, null, conexao, instrucao);
+			 * configLocationRelativeTo(form); form.setVisible(true); }
+			 */
 		}
 
 		private class ButtonInfo extends ButtonPopup {
@@ -1061,18 +1060,18 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					}
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-						/*if (abrirEmForm) {
-							ConsultaFormulario form = ConsultaFormulario.criar(null,
-									Mensagens.getString(Constantes.LABEL_CONSULTA), conexao, instrucao, null,
-									false);
-							configLocationRelativeTo(form);
-							form.setVisible(true);
-						} else {
-							ConsultaDialogo form = ConsultaDialogo.criar((Frame) null, null, conexao,
-									instrucao, null, false);
-							configLocationRelativeTo(form);
-							form.setVisible(true);
-						}*/
+						/*
+						 * if (abrirEmForm) { ConsultaFormulario form =
+						 * ConsultaFormulario.criar(null,
+						 * Mensagens.getString(Constantes.LABEL_CONSULTA),
+						 * conexao, instrucao, null, false);
+						 * configLocationRelativeTo(form);
+						 * form.setVisible(true); } else { ConsultaDialogo form
+						 * = ConsultaDialogo.criar((Frame) null, null, conexao,
+						 * instrucao, null, false);
+						 * configLocationRelativeTo(form);
+						 * form.setVisible(true); }
+						 */
 					}
 				}
 
@@ -1117,17 +1116,18 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					}
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-						/*if (abrirEmForm) {
-							ConsultaFormulario form = ConsultaFormulario.criar(null,
-									Mensagens.getString(Constantes.LABEL_CONSULTA), conexao, instrucao, null, false);
-							configLocationRelativeTo(form);
-							form.setVisible(true);
-						} else {
-							ConsultaDialogo form = ConsultaDialogo.criar((Frame) null, null, conexao,
-									instrucao, null, false);
-							configLocationRelativeTo(form);
-							form.setVisible(true);
-						}*/
+						/*
+						 * if (abrirEmForm) { ConsultaFormulario form =
+						 * ConsultaFormulario.criar(null,
+						 * Mensagens.getString(Constantes.LABEL_CONSULTA),
+						 * conexao, instrucao, null, false);
+						 * configLocationRelativeTo(form);
+						 * form.setVisible(true); } else { ConsultaDialogo form
+						 * = ConsultaDialogo.criar((Frame) null, null, conexao,
+						 * instrucao, null, false);
+						 * configLocationRelativeTo(form);
+						 * form.setVisible(true); }
+						 */
 					}
 				}
 			}
@@ -1141,27 +1141,30 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
-					if (conexao == null) {
-						return;
-					}
-
-					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						ListagemModelo modeloListagem = Persistencia.criarModeloChavePrimaria(conn, objeto, conexao);
-						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-
-						if (tituloListener != null) {
-							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVE-PRIMARIA"));
-						}
-
-						tabelaPersistencia.setModel(modeloOrdenacao);
-						configCabecalhoColuna(modeloListagem);
-						TabelaUtil.ajustar(tabelaPersistencia, OTabelaContainer.this.getGraphics());
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, OTabelaContainer.this);
-					}*/
+					/*
+					 * Conexao conexao = (Conexao)
+					 * comboConexao.getSelectedItem();
+					 * 
+					 * if (conexao == null) { return; }
+					 * 
+					 * try { Connection conn =
+					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
+					 * modeloListagem =
+					 * Persistencia.criarModeloChavePrimaria(conn, objeto,
+					 * conexao); OrdenacaoModelo modeloOrdenacao = new
+					 * OrdenacaoModelo(modeloListagem);
+					 * 
+					 * if (tituloListener != null) {
+					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
+					 * "CHAVE-PRIMARIA")); }
+					 * 
+					 * tabelaPersistencia.setModel(modeloOrdenacao);
+					 * configCabecalhoColuna(modeloListagem);
+					 * TabelaUtil.ajustar(tabelaPersistencia,
+					 * OTabelaContainer.this.getGraphics()); } catch (Exception
+					 * ex) { Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex,
+					 * OTabelaContainer.this); }
+					 */
 				}
 			}
 
@@ -1174,27 +1177,30 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
-					if (conexao == null) {
-						return;
-					}
-
-					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						ListagemModelo modeloListagem = Persistencia.criarModeloChavesImportadas(conn, objeto, conexao);
-						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-
-						if (tituloListener != null) {
-							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-IMPORTADAS"));
-						}
-
-						tabelaPersistencia.setModel(modeloOrdenacao);
-						configCabecalhoColuna(modeloListagem);
-						TabelaUtil.ajustar(tabelaPersistencia, OTabelaContainer.this.getGraphics());
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, OTabelaContainer.this);
-					}*/
+					/*
+					 * Conexao conexao = (Conexao)
+					 * comboConexao.getSelectedItem();
+					 * 
+					 * if (conexao == null) { return; }
+					 * 
+					 * try { Connection conn =
+					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
+					 * modeloListagem =
+					 * Persistencia.criarModeloChavesImportadas(conn, objeto,
+					 * conexao); OrdenacaoModelo modeloOrdenacao = new
+					 * OrdenacaoModelo(modeloListagem);
+					 * 
+					 * if (tituloListener != null) {
+					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
+					 * "CHAVES-IMPORTADAS")); }
+					 * 
+					 * tabelaPersistencia.setModel(modeloOrdenacao);
+					 * configCabecalhoColuna(modeloListagem);
+					 * TabelaUtil.ajustar(tabelaPersistencia,
+					 * OTabelaContainer.this.getGraphics()); } catch (Exception
+					 * ex) { Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex,
+					 * OTabelaContainer.this); }
+					 */
 				}
 			}
 
@@ -1207,27 +1213,30 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
-					if (conexao == null) {
-						return;
-					}
-
-					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						ListagemModelo modeloListagem = Persistencia.criarModeloChavesExportadas(conn, objeto, conexao);
-						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-
-						if (tituloListener != null) {
-							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "CHAVES-EXPORTADAS"));
-						}
-
-						tabelaPersistencia.setModel(modeloOrdenacao);
-						configCabecalhoColuna(modeloListagem);
-						TabelaUtil.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
-					}*/
+					/*
+					 * Conexao conexao = (Conexao)
+					 * comboConexao.getSelectedItem();
+					 * 
+					 * if (conexao == null) { return; }
+					 * 
+					 * try { Connection conn =
+					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
+					 * modeloListagem =
+					 * Persistencia.criarModeloChavesExportadas(conn, objeto,
+					 * conexao); OrdenacaoModelo modeloOrdenacao = new
+					 * OrdenacaoModelo(modeloListagem);
+					 * 
+					 * if (tituloListener != null) {
+					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
+					 * "CHAVES-EXPORTADAS")); }
+					 * 
+					 * tabelaPersistencia.setModel(modeloOrdenacao);
+					 * configCabecalhoColuna(modeloListagem);
+					 * TabelaUtil.ajustar(tabelaPersistencia,
+					 * InternalContainer.this.getGraphics()); } catch (Exception
+					 * ex) { Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex,
+					 * InternalContainer.this); }
+					 */
 				}
 			}
 
@@ -1240,27 +1249,29 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
-					if (conexao == null) {
-						return;
-					}
-
-					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						ListagemModelo modeloListagem = Persistencia.criarModeloInfoBanco(conn);
-						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-
-						if (tituloListener != null) {
-							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "INFO-BANCO"));
-						}
-
-						tabelaPersistencia.setModel(modeloOrdenacao);
-						configCabecalhoColuna(modeloListagem);
-						Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("INFO-BANCO", ex, InternalContainer.this);
-					}*/
+					/*
+					 * Conexao conexao = (Conexao)
+					 * comboConexao.getSelectedItem();
+					 * 
+					 * if (conexao == null) { return; }
+					 * 
+					 * try { Connection conn =
+					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
+					 * modeloListagem = Persistencia.criarModeloInfoBanco(conn);
+					 * OrdenacaoModelo modeloOrdenacao = new
+					 * OrdenacaoModelo(modeloListagem);
+					 * 
+					 * if (tituloListener != null) {
+					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
+					 * "INFO-BANCO")); }
+					 * 
+					 * tabelaPersistencia.setModel(modeloOrdenacao);
+					 * configCabecalhoColuna(modeloListagem);
+					 * Util.ajustar(tabelaPersistencia,
+					 * InternalContainer.this.getGraphics()); } catch (Exception
+					 * ex) { Util.stackTraceAndMessage("INFO-BANCO", ex,
+					 * InternalContainer.this); }
+					 */
 				}
 			}
 
@@ -1273,28 +1284,29 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
-					if (conexao == null) {
-						return;
-					}
-
-					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						ListagemModelo modeloListagem = Persistencia.criarModeloMetaDados(conn, objeto, conexao);
-						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-
-						if (tituloListener != null) {
-							tituloListener.setTitulo(
-									objeto.getTitle(modeloOrdenacao, Mensagens.getString(Constantes.LABEL_METADADOS)));
-						}
-
-						tabelaPersistencia.setModel(modeloOrdenacao);
-						configCabecalhoColuna(modeloListagem);
-						TabelaUtil.ajustar(tabelaPersistencia, OTabelaContainer.this.getGraphics());
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("META-DADOS", ex, OTabelaContainer.this);
-					}*/
+					/*
+					 * Conexao conexao = (Conexao)
+					 * comboConexao.getSelectedItem();
+					 * 
+					 * if (conexao == null) { return; }
+					 * 
+					 * try { Connection conn =
+					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
+					 * modeloListagem = Persistencia.criarModeloMetaDados(conn,
+					 * objeto, conexao); OrdenacaoModelo modeloOrdenacao = new
+					 * OrdenacaoModelo(modeloListagem);
+					 * 
+					 * if (tituloListener != null) { tituloListener.setTitulo(
+					 * objeto.getTitle(modeloOrdenacao,
+					 * Mensagens.getString(Constantes.LABEL_METADADOS))); }
+					 * 
+					 * tabelaPersistencia.setModel(modeloOrdenacao);
+					 * configCabecalhoColuna(modeloListagem);
+					 * TabelaUtil.ajustar(tabelaPersistencia,
+					 * OTabelaContainer.this.getGraphics()); } catch (Exception
+					 * ex) { Util.stackTraceAndMessage("META-DADOS", ex,
+					 * OTabelaContainer.this); }
+					 */
 				}
 			}
 
@@ -1307,48 +1319,52 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
-					if (conexao == null) {
-						return;
-					}
-
-					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						ListagemModelo modeloListagem = Persistencia.criarModeloEsquema(conn);
-						OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloListagem);
-
-						if (tituloListener != null) {
-							tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao, "ESQUEMA"));
-						}
-
-						tabelaPersistencia.setModel(modeloOrdenacao);
-						configCabecalhoColuna(modeloListagem);
-						TabelaUtil.ajustar(tabelaPersistencia, OTabelaContainer.this.getGraphics());
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("ESQUEMA", ex, OTabelaContainer.this);
-					}*/
+					/*
+					 * Conexao conexao = (Conexao)
+					 * comboConexao.getSelectedItem();
+					 * 
+					 * if (conexao == null) { return; }
+					 * 
+					 * try { Connection conn =
+					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
+					 * modeloListagem = Persistencia.criarModeloEsquema(conn);
+					 * OrdenacaoModelo modeloOrdenacao = new
+					 * OrdenacaoModelo(modeloListagem);
+					 * 
+					 * if (tituloListener != null) {
+					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
+					 * "ESQUEMA")); }
+					 * 
+					 * tabelaPersistencia.setModel(modeloOrdenacao);
+					 * configCabecalhoColuna(modeloListagem);
+					 * TabelaUtil.ajustar(tabelaPersistencia,
+					 * OTabelaContainer.this.getGraphics()); } catch (Exception
+					 * ex) { Util.stackTraceAndMessage("ESQUEMA", ex,
+					 * OTabelaContainer.this); }
+					 */
 				}
 			}
 
-			/*private void configCabecalhoColuna(ListagemModelo modelo) {
-				PersistenciaOrdenacaoModelo modeloOrdenacao = tabelaPersistencia.getModelo();
-				TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
-				List<Coluna> colunas = modelo.getColunasInfo();
-
-				for (int i = 0; i < colunas.size(); i++) {
-					TableColumn tableColumn = columnModel.getColumn(i);
-					Coluna coluna = colunas.get(i);
-
-					CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(InternalContainer.this, modeloOrdenacao,
-							coluna, false);
-
-					tableColumn.setHeaderRenderer(cabecalhoColuna);
-				}
-
-				toolbar.buscaAuto.habilitar(false);
-				toolbar.excluirAtualizarEnable(false);
-			}*/
+			/*
+			 * private void configCabecalhoColuna(ListagemModelo modelo) {
+			 * PersistenciaOrdenacaoModelo modeloOrdenacao =
+			 * tabelaPersistencia.getModelo(); TableColumnModel columnModel =
+			 * tabelaPersistencia.getColumnModel(); List<Coluna> colunas =
+			 * modelo.getColunasInfo();
+			 * 
+			 * for (int i = 0; i < colunas.size(); i++) { TableColumn
+			 * tableColumn = columnModel.getColumn(i); Coluna coluna =
+			 * colunas.get(i);
+			 * 
+			 * CabecalhoColuna cabecalhoColuna = new
+			 * CabecalhoColuna(InternalContainer.this, modeloOrdenacao, coluna,
+			 * false);
+			 * 
+			 * tableColumn.setHeaderRenderer(cabecalhoColuna); }
+			 * 
+			 * toolbar.buscaAuto.habilitar(false);
+			 * toolbar.excluirAtualizarEnable(false); }
+			 */
 		}
 	}
 
@@ -1530,7 +1546,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				TableColumn tableColumn = columnModel.getColumn(i);
 				Coluna coluna = colunas.get(i);
 				configTableColumn(tableColumn, coluna);
-				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna, !coluna.isColunaInfo());
+				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
+						!coluna.isColunaInfo());
 
 				if (cabecalhoColuna.equals(cabecalho)) {
 					cabecalhoColuna.copiar(cabecalho);
@@ -1562,7 +1579,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		configAlturaAutomatica();
 	}
 
-	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processarObjeto(string, null, cabecalho);
+	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processarObjeto(string,
+			null, cabecalho);
 
 	private void mensagemException(Exception ex) {
 		if (Preferencias.isErroCriarConnection()) {
@@ -1855,7 +1873,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					toolbar.labelTotal.limpar();
 				}
 
-				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaGrupoLink.isEmpty() && linkAutomaticoListener != null) {
+				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaGrupoLink.isEmpty()
+						&& linkAutomaticoListener != null) {
 					mouseClick(tabela, colunaClick);
 				}
 			} else {

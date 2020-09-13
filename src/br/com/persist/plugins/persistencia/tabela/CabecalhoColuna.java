@@ -33,8 +33,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 	private final boolean comFiltro;
 	private final Filtro filtro;
 
-	public CabecalhoColuna(CabecalhoColunaListener listener, OrdenacaoModelo modelo, Coluna coluna,
-			boolean comFiltro) {
+	public CabecalhoColuna(CabecalhoColunaListener listener, OrdenacaoModelo modelo, Coluna coluna, boolean comFiltro) {
 		ordenacao = new Ordenacao(coluna.getIndice(), coluna.isNumero());
 		setBorder(BorderFactory.createEtchedBorder());
 		descricao = new Descricao(coluna.getNome());
