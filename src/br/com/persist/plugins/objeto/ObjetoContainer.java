@@ -106,7 +106,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	public void abrirArquivo(File file) {
-		if(file != null) {
+		if (file != null) {
 			arquivo = file;
 			toolbar.baixar();
 		}

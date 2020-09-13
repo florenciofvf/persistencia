@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto;
 
+import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -16,12 +17,14 @@ import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
+import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Util;
+import br.com.persist.xml.XML;
 
 public class ObjetoFabrica extends AbstratoFabricaContainer {
 
@@ -84,39 +87,19 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void abrirEmFormulario(Formulario formulario) {
 			File[] files = getSelectedFiles(formulario, true);
 
-			if (files == null || files.length == 0) {
-				return;
+			if (files != null) {
+				for (File file : files) {
+					abrirNoFormulario(formulario, file);
+				}
 			}
-
-			for (File file : files) {
-				abrir(formulario, file);
-			}
-		}
-
-		public void abrir(Formulario formulario, File file) {
-			ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
-			form.abrirArquivo(file);
-
-			formulario.checarPreferenciasLarguraAltura();
-			PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
-
-			if (pd != null) {
-				form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
-			} else {
-				form.setLocationRelativeTo(formulario);
-			}
-
-			form.setVisible(true);
 		}
 
 		private File[] getSelectedFiles(Formulario formulario, boolean multiSelection) {
 			JFileChooser fileChooser = Util.criarFileChooser(ObjetoProvedor.getParentFile(), multiSelection);
 			int opcao = fileChooser.showOpenDialog(formulario);
-
 			if (opcao != JFileChooser.APPROVE_OPTION) {
 				return new File[0];
 			}
-
 			return fileChooser.getSelectedFiles();
 		}
 	}
@@ -126,55 +109,85 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		formulario.adicionarPagina(pagina);
 	}
 
-//	public class Conteiner {
-//		public void abrirExportacaoMetadado(Metadado metadado, boolean circular) {
-//			ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-//					new File(Mensagens.getString("label.abrir_exportacao")));
-//			form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-//			form.setLocationRelativeTo(Formulario.this);
-//			form.setVisible(true);
-//		}
-//
-//		public void abrirImportacaoMetadado(Metadado metadado, boolean circular) {
-//			ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-//					new File(Mensagens.getString("label.abrir_importacao")));
-//			form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-//			form.setLocationRelativeTo(Formulario.this);
-//			form.setVisible(true);
-//		}
-//
-//		public void exportarMetadadoRaiz(Metadado metadado) {
-//			if (metadado.getEhRaiz() && !metadado.estaVazio()) {
-//				ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
-//						new File(Mensagens.getString("label.exportar")));
-//				form.exportarMetadadoRaiz(metadado);
-//				form.setLocationRelativeTo(Formulario.this);
-//				form.setVisible(true);
-//			}
-//		}
-//	}
+	public static void abrirNoFormulario(Formulario formulario, File file) {
+		if (file == null || !file.isFile()) {
+			return;
+		}
 
-//	public class Arquivos {
-//		File arquivoParent;
-//
-//		public void abrir(File file, boolean abrirNoFichario, ConfigArquivo config) {
-//			if (file == null || !file.isFile()) {
-//				return;
-//			}
-//
-//			try {
-//				ObjetoColetor coletor = new ObjetoColetor();
-//				arquivoParent = file.getParentFile();
-//				XML.processar(file, coletor);
-//
-//				if (abrirNoFichario) {
-//					fichario.getArquivos().abrir(Formulario.this, file, coletor, config);
-//				} else {
-//					abrir(Formulario.this, file, coletor, config);
-//				}
-//			} catch (Exception ex) {
-//				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, Formulario.this);
-//			}
-//		}
-//	}
+		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
+		form.abrirArquivo(file);
+		formulario.checarPreferenciasLarguraAltura();
+		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
+
+		if (pd != null) {
+			form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
+		} else {
+			form.setLocationRelativeTo(formulario);
+		}
+
+		form.setVisible(true);
+	}
+
+	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, Graphics g,
+			InternalConfig config) {
+		File file = ArquivoProvedor.restaurarStringPersistencia(stringPersistencia);
+
+		if (file == null || !file.isFile()) {
+			return;
+		}
+
+		try {
+			ObjetoColetor objetoColetor = new ObjetoColetor();
+			XML.processar(file, new ObjetoHandler(objetoColetor));
+			abrirNoFormulario(formulario, file, objetoColetor, g, config);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, formulario);
+		}
+	}
+
+	private static void abrirNoFormulario(Formulario formulario, File file, ObjetoColetor coletor, Graphics g,
+			InternalConfig config) {
+		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
+		form.abrirArquivo(file, coletor, g, config);
+		formulario.checarPreferenciasLarguraAltura();
+		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
+
+		if (pd != null) {
+			form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
+		} else {
+			form.setLocationRelativeTo(formulario);
+		}
+
+		form.setVisible(true);
+	}
+
+	// public class Conteiner {
+	// public void abrirExportacaoMetadado(Metadado metadado, boolean circular)
+	// {
+	// ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
+	// new File(Mensagens.getString("label.abrir_exportacao")));
+	// form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+	// form.setLocationRelativeTo(Formulario.this);
+	// form.setVisible(true);
+	// }
+
+	// public void abrirImportacaoMetadado(Metadado metadado, boolean circular)
+	// {
+	// ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
+	// new File(Mensagens.getString("label.abrir_importacao")));
+	// form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+	// form.setLocationRelativeTo(Formulario.this);
+	// form.setVisible(true);
+	// }
+
+	// public void exportarMetadadoRaiz(Metadado metadado) {
+	// if (metadado.getEhRaiz() && !metadado.estaVazio()) {
+	// ObjetoFormulario form = ObjetoFormulario.criar(Formulario.this,
+	// new File(Mensagens.getString("label.exportar")));
+	// form.exportarMetadadoRaiz(metadado);
+	// form.setLocationRelativeTo(Formulario.this);
+	// form.setVisible(true);
+	// }
+	// }
+	// }
 }

@@ -1,9 +1,11 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.io.File;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.principal.Formulario;
 
 public class ObjetoFormulario extends AbstratoFormulario {
@@ -47,11 +49,10 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		container.abrirArquivo(file);
 	}
 
-	// public void abrir(File file, ObjetoColetor coletor, Graphics g,
-	// ConfigArquivo config) {
-	// container.abrir(file, coletor, g, config);
-	// }
-	//
+	public void abrirArquivo(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {
+		container.abrir(file, coletor, g, config);
+	}
+
 	// public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean
 	// exportacao, boolean circular) {
 	// container.abrirExportacaoImportacaoMetadado(metadado, exportacao,

@@ -2,7 +2,7 @@
 
 <menuPrincipal>
 	<menu descricao="Arquivo">
-		<menu classeFabrica="br.com.persist.objeto.ObjetoFabrica" />
+		<menu classeFabrica="br.com.persist.plugins.objeto.ObjetoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.objeto.DesktopFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.anexo.AnexoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.arquivo.ArquivoFabrica" ativo="true" />
