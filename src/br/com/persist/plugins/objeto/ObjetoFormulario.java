@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.io.File;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.principal.Formulario;
 
@@ -44,12 +45,20 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		return form;
 	}
 
-	public void abrirArquivo(File file) {
-		container.abrirArquivo(file);
+	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
+		container.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
 	}
 
 	public void abrirArquivo(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {
 		container.abrir(file, coletor, g, config);
+	}
+
+	public void exportarMetadadoRaiz(Metadado metadado) {
+		container.exportarMetadadoRaiz(metadado);
+	}
+
+	public void abrirArquivo(File file) {
+		container.abrirArquivo(file);
 	}
 
 	@Override
