@@ -21,7 +21,6 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
-import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
@@ -84,7 +83,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			chkLinkAuto.setToolTipText(Mensagens.getString("msg.arquivo.link_auto"));
 			chkDuplicar.setToolTipText(Mensagens.getString("msg.arquivo.duplicar"));
 
-			add(new Button(statusAcao));
+			addButton(statusAcao);
 			add(chkSempreTopArq);
 			add(chkSempreTopForm);
 			add(chkLinkAuto);
