@@ -22,6 +22,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,12 +34,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.complemento.ComplementoDialogo;
 import br.com.persist.complemento.ComplementoListener;
 import br.com.persist.componente.Acao;
@@ -55,6 +58,9 @@ import br.com.persist.componente.MenuPadrao3;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
+import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.Pagina;
+import br.com.persist.fichario.Titulo;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
@@ -95,7 +101,7 @@ import br.com.persist.util.Preferencias;
 import br.com.persist.util.TransferidorTabular;
 import br.com.persist.util.Util;
 
-public class InternalContainer extends Panel implements ActionListener, ItemListener, Runnable {
+public class InternalContainer extends Panel implements ActionListener, ItemListener, Runnable, Pagina {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private transient InternalListener.ConfigAlturaAutomatica configAlturaAutomaticaListener;
@@ -1524,9 +1530,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			PersistenciaModelo modeloRegistro = Persistencia.criarPersistenciaModelo(param);
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
 			objeto.setComplemento(txtComplemento.getText());
-			modeloRegistro.setConexao(conexao);
 			tabelaPersistencia.setModel(modeloOrdenacao);
 			threadTitulo(getTituloAtualizado());
+			modeloRegistro.setConexao(conexao);
 			cabecalhoFiltro = null;
 			atualizarTitulo();
 
@@ -2051,5 +2057,60 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void formularioVisivel() {
 		Util.ajustar(tabelaPersistencia, getGraphics());
+	}
+
+	@Override
+	public String getStringPersistencia() {
+		return Constantes.VAZIO;
+	}
+
+	@Override
+	public Class<?> getClasseFabrica() {
+		return InternalFabrica.class;
+	}
+
+	@Override
+	public Component getComponent() {
+		return this;
+	}
+
+	@Override
+	public Titulo getTitulo() {
+		return new AbstratoTitulo() {
+			@Override
+			public String getTituloMin() {
+				return objeto.getId();
+			}
+
+			@Override
+			public String getTitulo() {
+				return objeto.getId();
+			}
+
+			@Override
+			public String getHint() {
+				return objeto.getId();
+			}
+
+			@Override
+			public Icon getIcone() {
+				return Icones.CUBO;
+			}
+		};
+	}
+
+	@Override
+	public File getFile() {
+		return null;
+	}
+
+	@Override
+	public void adicionadoAoFichario(Fichario fichario) {
+		LOG.log(Level.FINEST, "adicionadoAoFichario");
+	}
+
+	@Override
+	public void excluindoDoFichario(Fichario fichario) {
+		LOG.log(Level.FINEST, "excluindoDoFichario");
 	}
 }

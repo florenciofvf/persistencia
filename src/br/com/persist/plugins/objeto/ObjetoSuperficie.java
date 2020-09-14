@@ -2083,11 +2083,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : listaObjetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				setComplemento(conexao, objeto);
-
-				// InternalContainer container = new InternalContainer(null,
-				// conexao, objeto, getGraphics(), false);
-				// objetos.novo(formulario, conexao, objeto);
-
+				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, getGraphics(), false));
 				objeto.setSelecionado(false);
 			}
 		}
