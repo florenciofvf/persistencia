@@ -4,7 +4,9 @@ import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.JFileChooser;
@@ -13,6 +15,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
+import br.com.persist.abstrato.AbstratoServico;
+import br.com.persist.abstrato.Servico;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -41,6 +45,29 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			container.setAbortarFecharComESCSuperficie(true);
 			container.abrirArquivo(file);
 			return container;
+		}
+	}
+
+	@Override
+	public List<Servico> getServicos(Formulario formulario) {
+		return Arrays.asList(new ObjetoServico());
+	}
+
+	private class ObjetoServico extends AbstratoServico {
+		@Override
+		public void processar(Formulario formulario, Map<String, Object> args) {
+			Boolean fichario = (Boolean) args.get("fichario");
+			File file = (File) args.get("abrir_arquivo");
+
+			if (file != null) {
+				if (Boolean.TRUE.equals(fichario)) {
+					Pagina pagina = getPaginaServico().criarPagina(formulario, file.getAbsolutePath());
+					ObjetoProvedor.setParentFile(file.getParentFile());
+					formulario.adicionarPagina(pagina);
+				} else {
+					abrirNoFormulario(formulario, file);
+				}
+			}
 		}
 	}
 
