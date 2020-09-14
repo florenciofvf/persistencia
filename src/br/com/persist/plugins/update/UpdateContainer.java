@@ -236,6 +236,7 @@ public class UpdateContainer extends AbstratoContainer {
 			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
 
+		@Override
 		public void atualizar() {
 			if (Util.estaVazio(textArea.getText())) {
 				return;

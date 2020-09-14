@@ -526,13 +526,13 @@ public class ObjetoContainer extends Panel {
 			objeto.ordenarInstrucoes();
 
 			for (Instrucao instrucao : objeto.getInstrucoes()) {
-				criarFormInstrucao(instrucao);
+				criarFormularioInstrucao(instrucao);
 			}
 
 			desktop.getDistribuicao().distribuir(-Constantes.VINTE);
 		}
 
-		private void criarFormInstrucao(Instrucao instrucao) {
+		private void criarFormularioInstrucao(Instrucao instrucao) {
 			InstrucaoFormulario form = InstrucaoFormulario.criar(instrucao, PanelInstrucao.this::excluirInstrucao);
 			form.setSize(dimension);
 			form.setVisible(true);
@@ -558,7 +558,7 @@ public class ObjetoContainer extends Panel {
 				if (!Util.estaVazio(textFielNome.getText())) {
 					Instrucao instrucao = new Instrucao(textFielNome.getText().trim());
 					objeto.addInstrucao(instrucao);
-					criarFormInstrucao(instrucao);
+					criarFormularioInstrucao(instrucao);
 					desktop.getDistribuicao().distribuir(-Constantes.VINTE);
 				}
 			}

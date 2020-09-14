@@ -409,7 +409,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		LOG.log(Level.FINEST, "adicionadoAoFichario");
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				((InternalFormulario) frame).executarAoAbrirFormulario();
+			}
+		}
 	}
 
 	@Override

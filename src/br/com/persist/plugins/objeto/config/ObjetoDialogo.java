@@ -23,15 +23,15 @@ public class ObjetoDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
-	}
-
 	public static ObjetoDialogo criar(Frame frame, ObjetoSuperficie objetoSuperficie, Objeto objeto) {
 		ObjetoDialogo form = new ObjetoDialogo(frame, objetoSuperficie, objeto);
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
 		return form;
+	}
+
+	@Override
+	public void executarAoAbrirDialogo() {
+		container.dialogoVisivel();
 	}
 }
