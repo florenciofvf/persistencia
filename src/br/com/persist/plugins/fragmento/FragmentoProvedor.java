@@ -138,8 +138,13 @@ public class FragmentoProvedor {
 		}
 	}
 
-	private static boolean contem(List<String> strings, String string) {
-		return strings.contains(string);
+	private static boolean contem(List<String> strings, String grupo) {
+		for (String s : strings) {
+			if (s.equalsIgnoreCase(grupo)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static void removerFiltroPeloGrupo() {

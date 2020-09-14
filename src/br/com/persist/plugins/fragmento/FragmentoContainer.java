@@ -88,11 +88,17 @@ public class FragmentoContainer extends AbstratoContainer {
 		public void ini(Janela janela, FragmentoListener listener) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
 					COPIAR, APLICAR);
+			setListener(listener);
+		}
+
+		private void setListener(FragmentoListener listener) {
 			aplicarAcao.setEnabled(listener != null);
+			this.listener = listener;
 		}
 
 		@Override
 		protected void destacarEmFormulario() {
+			setListener(null);
 			if (formulario.excluirPagina(FragmentoContainer.this)) {
 				FragmentoFormulario.criar(formulario, FragmentoContainer.this);
 
@@ -104,6 +110,7 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		@Override
 		protected void retornarAoFichario() {
+			setListener(null);
 			if (fragmentoFormulario != null) {
 				fragmentoFormulario.excluirContainer();
 				formulario.adicionarPagina(FragmentoContainer.this);
@@ -116,6 +123,7 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		@Override
 		protected void abrirEmFormulario() {
+			setListener(null);
 			if (fragmentoDialogo != null) {
 				fragmentoDialogo.excluirContainer();
 			}

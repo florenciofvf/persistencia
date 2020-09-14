@@ -1636,7 +1636,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			TableModel model = modelo.getModelo();
 
 			for (int i = 0; i < model.getColumnCount(); i++) {
-				colunas.add(model.getColumnName(i).toUpperCase());
+				colunas.add(model.getColumnName(i));
 			}
 
 			return colunas;
