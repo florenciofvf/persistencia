@@ -513,6 +513,11 @@ public class ObjetoContainer extends AbstratoContainer {
 		return this;
 	}
 
+	@Override
+	public File getFile() {
+		return getArquivo();
+	}
+
 	public String criarHint() {
 		return arquivo != null ? arquivo.getAbsolutePath() : Constantes.NOVO;
 	}

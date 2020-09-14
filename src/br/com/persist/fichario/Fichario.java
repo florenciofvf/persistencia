@@ -308,8 +308,13 @@ public class Fichario extends JTabbedPane {
 	public int getIndice(File file) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Pagina pagina = getPagina(i);
+			File paginaFile = pagina.getFile();
 
-			if (Util.igual(pagina.getFile(), file)) {
+			if (paginaFile != null && file != null && paginaFile.getAbsolutePath().equals(file.getAbsolutePath())) {
+				return i;
+			}
+
+			if (Util.igual(paginaFile, file)) {
 				return i;
 			}
 		}
