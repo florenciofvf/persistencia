@@ -23,6 +23,10 @@ public class DesktopFormulario extends AbstratoFormulario {
 		add(BorderLayout.CENTER, new ScrollPane(desktop));
 	}
 
+	public Desktop getDesktop() {
+		return desktop;
+	}
+
 	public static DesktopFormulario criar(Formulario formulario) {
 		DesktopFormulario form = new DesktopFormulario();
 		form.setLocationRelativeTo(formulario);

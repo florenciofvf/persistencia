@@ -47,6 +47,7 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
+import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
 public class Desktop extends AbstratoDesktop implements Pagina {
@@ -62,6 +63,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			addMouseListener(mouseListenerInner);
 		}
 		new DropTarget(this, dropTargetListener);
+		abortarFecharComESC = Preferencias.isAbortarFecharComESC();
 	}
 
 	public void atualizarFormularios() {

@@ -1,6 +1,5 @@
 package br.com.persist.plugins.objeto;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 import br.com.persist.util.Util;
 
@@ -87,15 +85,6 @@ public class ObjetoUtil {
 		}
 
 		return mapa;
-	}
-
-	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
-		return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
-	}
-
-	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension, String apelido) {
-		ObjetoSuperficie.setComplemento(conexao, objeto);
-		return new Object[] { objeto, conexao, dimension, apelido };
 	}
 
 	public static String substituir(String instrucao, Map<String, String> mapaChaveValor) {

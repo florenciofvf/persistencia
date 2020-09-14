@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoSuperficie;
 
 public class InternalTransferidor implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(InternalTransferidor.class, "Transferidor");
@@ -31,6 +32,15 @@ public class InternalTransferidor implements Transferable {
 		this.conexao = conexao;
 		this.apelido = apelido;
 		this.objeto = objeto.isCopiarDestacado() ? objeto.clonar() : objeto;
+	}
+
+	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension, String apelido) {
+		ObjetoSuperficie.setComplemento(conexao, objeto);
+		return new Object[] { objeto, conexao, dimension, apelido };
+	}
+
+	public static Object[] criarArray(Conexao conexao, Objeto objeto, String apelido) {
+		return criarArray(conexao, objeto, new Dimension(400, 250), apelido);
 	}
 
 	public Dimension getDimension() {

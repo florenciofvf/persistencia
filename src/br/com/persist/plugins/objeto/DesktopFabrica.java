@@ -24,9 +24,7 @@ public class DesktopFabrica extends AbstratoFabricaContainer {
 	private class DesktopPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			Desktop desktop = new Desktop(false);
-			desktop.setAbortarFecharComESC(true);
-			return desktop;
+			return new Desktop(false);
 		}
 	}
 
