@@ -24,10 +24,11 @@ public class UpdateDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static void criar(Formulario formulario, Conexao conexao, String conteudo) {
+	public static UpdateDialogo criar(Formulario formulario, Conexao conexao, String conteudo) {
 		UpdateDialogo form = new UpdateDialogo(formulario, formulario, conexao, conteudo);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		return form;
 	}
 
 	@Override

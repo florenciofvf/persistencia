@@ -57,6 +57,8 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
+import br.com.persist.plugins.consulta.ConsultaDialogo;
+import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.fragmento.Fragmento;
 import br.com.persist.plugins.fragmento.FragmentoDialogo;
 import br.com.persist.plugins.fragmento.FragmentoListener;
@@ -79,6 +81,8 @@ import br.com.persist.plugins.persistencia.tabela.CabecalhoColunaListener;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistenciaListener;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistenciaUtil;
+import br.com.persist.plugins.update.UpdateDialogo;
+import br.com.persist.plugins.update.UpdateFormulario;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
@@ -734,30 +738,31 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				}
 
 				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-					/*
-					 * if (abrirEmForm) { ConsultaFormulario form =
-					 * ConsultaFormulario.criar(null, instrucao.getNome(),
-					 * provedor, conexao, instrucao.getValor(), chaves, false);
-					 * configLocationRelativeTo(form); form.setVisible(true); }
-					 * else { ConsultaDialogo form =
-					 * ConsultaDialogo.criar((Frame) null, null, conexao,
-					 * instrucao.getValor(), chaves, false);
-					 * form.setTitle(instrucao.getNome());
-					 * configLocationRelativeTo(form); form.setVisible(true); }
-					 */
+					if (abrirEmForm) {
+						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
+						ConsultaFormulario form = ConsultaFormulario.criar(null, conexao, conteudo);
+						form.setTitle(instrucao.getNome());
+						configLocationRelativeTo(form);
+					} else {
+						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
+						ConsultaDialogo form = ConsultaDialogo.criar(null, conexao, conteudo);
+						form.setTitle(instrucao.getNome());
+						configLocationRelativeTo(form);
+					}
 				}
 
 				private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-					/*
-					 * if (abrirEmForm) { UpdateFormulario form =
-					 * UpdateFormulario.criar(null, instrucao.getNome(),
-					 * conexao, instrucao.getValor(), chaves);
-					 * configLocationRelativeTo(form); form.setVisible(true); }
-					 * else { UpdateDialogo form = UpdateDialogo.criar((Frame)
-					 * null, null, instrucao.getNome(), conexao,
-					 * instrucao.getValor(), chaves);
-					 * configLocationRelativeTo(form); form.setVisible(true); }
-					 */
+					if (abrirEmForm) {
+						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
+						UpdateFormulario form = UpdateFormulario.criar(null, conexao, conteudo);
+						form.setTitle(instrucao.getNome());
+						configLocationRelativeTo(form);
+					} else {
+						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
+						UpdateDialogo form = UpdateDialogo.criar(null, conexao, conteudo);
+						form.setTitle(instrucao.getNome());
+						configLocationRelativeTo(form);
+					}
 				}
 			}
 		}
@@ -846,15 +851,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 
 		private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-			/*
-			 * if (abrirEmForm) { UpdateFormulario form =
-			 * UpdateFormulario.criar(null,
-			 * Mensagens.getString(Constantes.LABEL_ATUALIZAR), conexao,
-			 * instrucao); configLocationRelativeTo(form);
-			 * form.setVisible(true); } else { UpdateDialogo form =
-			 * UpdateDialogo.criar((Frame) null, null, conexao, instrucao);
-			 * configLocationRelativeTo(form); form.setVisible(true); }
-			 */
+			if (abrirEmForm) {
+				UpdateFormulario.criar(null, conexao, instrucao);
+			} else {
+				UpdateDialogo.criar(null, conexao, instrucao);
+			}
 		}
 
 		private class ButtonInfo extends ButtonPopup {
@@ -1060,18 +1061,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					}
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-						/*
-						 * if (abrirEmForm) { ConsultaFormulario form =
-						 * ConsultaFormulario.criar(null,
-						 * Mensagens.getString(Constantes.LABEL_CONSULTA),
-						 * conexao, instrucao, null, false);
-						 * configLocationRelativeTo(form);
-						 * form.setVisible(true); } else { ConsultaDialogo form
-						 * = ConsultaDialogo.criar((Frame) null, null, conexao,
-						 * instrucao, null, false);
-						 * configLocationRelativeTo(form);
-						 * form.setVisible(true); }
-						 */
+						if (abrirEmForm) {
+							ConsultaFormulario form = ConsultaFormulario.criar(null, conexao, instrucao);
+							configLocationRelativeTo(form);
+						} else {
+							ConsultaDialogo form = ConsultaDialogo.criar(null, conexao, instrucao);
+							configLocationRelativeTo(form);
+						}
 					}
 				}
 
@@ -1116,18 +1112,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					}
 
 					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-						/*
-						 * if (abrirEmForm) { ConsultaFormulario form =
-						 * ConsultaFormulario.criar(null,
-						 * Mensagens.getString(Constantes.LABEL_CONSULTA),
-						 * conexao, instrucao, null, false);
-						 * configLocationRelativeTo(form);
-						 * form.setVisible(true); } else { ConsultaDialogo form
-						 * = ConsultaDialogo.criar((Frame) null, null, conexao,
-						 * instrucao, null, false);
-						 * configLocationRelativeTo(form);
-						 * form.setVisible(true); }
-						 */
+						if (abrirEmForm) {
+							ConsultaFormulario form = ConsultaFormulario.criar(null, conexao, instrucao);
+							configLocationRelativeTo(form);
+						} else {
+							ConsultaDialogo form = ConsultaDialogo.criar(null, conexao, instrucao);
+							configLocationRelativeTo(form);
+						}
 					}
 				}
 			}

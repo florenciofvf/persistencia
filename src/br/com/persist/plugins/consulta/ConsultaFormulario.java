@@ -37,10 +37,11 @@ public class ConsultaFormulario extends AbstratoFormulario {
 		form.setVisible(true);
 	}
 
-	public static void criar(Formulario formulario, Conexao conexao, String conteudo) {
+	public static ConsultaFormulario criar(Formulario formulario, Conexao conexao, String conteudo) {
 		ConsultaFormulario form = new ConsultaFormulario(formulario, conexao, conteudo);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		return form;
 	}
 
 	@Override

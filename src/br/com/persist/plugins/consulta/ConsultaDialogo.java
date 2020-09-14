@@ -24,10 +24,11 @@ public class ConsultaDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static void criar(Formulario formulario, Conexao conexao, String conteudo) {
+	public static ConsultaDialogo criar(Formulario formulario, Conexao conexao, String conteudo) {
 		ConsultaDialogo form = new ConsultaDialogo(formulario, formulario, conexao, conteudo);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		return form;
 	}
 
 	@Override
