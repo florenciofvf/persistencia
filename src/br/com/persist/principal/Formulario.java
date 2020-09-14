@@ -174,7 +174,7 @@ public class Formulario extends JFrame {
 		private static final long serialVersionUID = 1L;
 
 		private void carregarMenu() {
-			File file = new File("menu.xml");
+			File file = new File("persistencia_menu.xml");
 
 			if (!file.isFile()) {
 				return;
