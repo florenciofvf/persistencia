@@ -42,7 +42,6 @@ public class Constantes {
 	public static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
 	public static final String CHAVES_PRIMARIAS = "CHAVES_PRIMARIAS";
 	public static final String LABEL_FORMULARIO = "label.formulario";
-	public static final String ABERTOS_FICHARIO = "abertos_fichario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String LABEL_REQUISICAO = "label.requisicao";
 	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";
@@ -83,6 +82,7 @@ public class Constantes {
 	public static final String LABEL_DESKTOP = "label.desktop";
 	public static final String LABEL_LIMPAR2 = "label.limpar2";
 	public static final String PADRAO_ABRIR = "PADRAO_ABRIR:";
+	public static final String FICHARIO_FVF = "fichario.fvf";
 	public static final String ATUALIZACOES = "atualizacoes";
 	public static final String LABEL_OBJETO = "label.objeto";
 	public static final String LABEL_UPDATE = "label.update";

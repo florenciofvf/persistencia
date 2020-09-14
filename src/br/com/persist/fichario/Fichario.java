@@ -378,7 +378,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public void salvarPaginas(Formulario formulario) {
-		try (PrintWriter pw = new PrintWriter(Constantes.ABERTOS_FICHARIO, StandardCharsets.UTF_8.name())) {
+		try (PrintWriter pw = new PrintWriter(Constantes.FICHARIO_FVF, StandardCharsets.UTF_8.name())) {
 			int total = getTabCount();
 
 			for (int i = 0; i < total; i++) {
@@ -395,7 +395,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public void restaurarPaginas(Formulario formulario) {
-		File file = new File(Constantes.ABERTOS_FICHARIO);
+		File file = new File(Constantes.FICHARIO_FVF);
 
 		if (file.exists()) {
 			List<String> linhas = new ArrayList<>();
