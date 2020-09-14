@@ -1,6 +1,7 @@
 package br.com.persist.abstrato;
 
 import java.io.File;
+import java.util.Map;
 
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
@@ -14,6 +15,10 @@ public abstract class AbstratoContainer extends Panel implements Pagina {
 
 	public AbstratoContainer(Formulario formulario) {
 		this.formulario = formulario;
+	}
+
+	@Override
+	public void processar(Formulario formulario, Map<String, Object> args) {
 	}
 
 	@Override

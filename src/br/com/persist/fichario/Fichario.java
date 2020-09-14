@@ -24,6 +24,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -322,6 +323,19 @@ public class Fichario extends JTabbedPane {
 		return -1;
 	}
 
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		Boolean fechar = (Boolean) args.get("fechar_formulario");
+
+		if (Boolean.TRUE.equals(fechar)) {
+			fechandoFormulario(formulario);
+		} else {
+			for (int i = 0; i < getTabCount(); i++) {
+				Pagina p = getPagina(i);
+				p.processar(formulario, args);
+			}
+		}
+	}
+
 	public int getIndice(Pagina pagina) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Pagina p = getPagina(i);
@@ -377,7 +391,7 @@ public class Fichario extends JTabbedPane {
 		pagina.adicionadoAoFichario(this);
 	}
 
-	public void salvarPaginas(Formulario formulario) {
+	public void fechandoFormulario(Formulario formulario) {
 		try (PrintWriter pw = new PrintWriter(Constantes.PERSISTENCIA_FVF, StandardCharsets.UTF_8.name())) {
 			int total = getTabCount();
 
@@ -394,7 +408,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void restaurarPaginas(Formulario formulario) {
+	public void visivelFormulario(Formulario formulario) {
 		File file = new File(Constantes.PERSISTENCIA_FVF);
 
 		if (file.exists()) {

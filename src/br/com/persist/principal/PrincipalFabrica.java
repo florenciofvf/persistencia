@@ -53,6 +53,7 @@ public class PrincipalFabrica extends AbstratoFabricaContainer {
 		if (Util.confirmar(formulario, "label.confirma_fechar")) {
 			Map<String, Object> args = new HashMap<>();
 			args.put("fechar_conexoes", fecharConexao);
+			args.put("fechar_formulario", true);
 			formulario.processar(args);
 			System.exit(0);
 		}

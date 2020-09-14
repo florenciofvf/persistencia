@@ -131,6 +131,8 @@ public class Formulario extends JFrame {
 	}
 
 	public void processar(Map<String, Object> args) {
+		fichario.processar(this, args);
+
 		for (Servico servico : servicos) {
 			servico.processar(this, args);
 		}
@@ -154,15 +156,13 @@ public class Formulario extends JFrame {
 					servico.visivelFormulario(Formulario.this);
 				}
 
-				fichario.restaurarPaginas(Formulario.this);
+				fichario.visivelFormulario(Formulario.this);
 				fichario.ativarNavegacao();
 				iconeBandeja();
 			}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				fichario.salvarPaginas(Formulario.this);
-
 				for (Servico servico : servicos) {
 					servico.fechandoFormulario(Formulario.this);
 				}

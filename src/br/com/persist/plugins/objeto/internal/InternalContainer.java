@@ -92,6 +92,7 @@ import br.com.persist.plugins.update.UpdateFormulario;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.CellRenderer;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
@@ -2053,6 +2054,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void setComponenteListener(InternalListener.Componente componenteListener) {
 		this.componenteListener = componenteListener;
+	}
+
+	@Override
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		LOG.log(Level.FINEST, "processar");
 	}
 
 	public void formularioVisivel() {

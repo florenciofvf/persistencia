@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,6 +45,7 @@ import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
+import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
@@ -416,6 +418,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				((InternalFormulario) frame).executarAoAbrirFormulario();
 			}
 		}
+	}
+
+	@Override
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		LOG.log(Level.FINEST, "processar");
 	}
 
 	@Override
