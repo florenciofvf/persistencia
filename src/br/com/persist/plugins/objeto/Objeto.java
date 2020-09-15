@@ -72,6 +72,7 @@ public class Objeto implements Runnable {
 	private boolean processar;
 	private boolean linkAuto;
 	private String descricao;
+	boolean visivel = true;
 	private String arquivo;
 	private String tabelas;
 	private String tabela;
@@ -109,6 +110,7 @@ public class Objeto implements Runnable {
 		instrucoes = new ArrayList<>();
 		desenharId = true;
 		setIcone(icone);
+		visivel = true;
 		setCor(cor);
 		this.x = x;
 		this.y = y;
@@ -246,6 +248,10 @@ public class Objeto implements Runnable {
 	}
 
 	public void desenhar(Component c, Graphics2D g2, Stroke stroke) {
+		if (!visivel) {
+			return;
+		}
+
 		Composite composite = g2.getComposite();
 		Shape shape = g2.getClip();
 
@@ -368,6 +374,14 @@ public class Objeto implements Runnable {
 
 	public List<Instrucao> getInstrucoes() {
 		return instrucoes;
+	}
+
+	public boolean isVisivel() {
+		return visivel;
+	}
+
+	public void setVisivel(boolean visivel) {
+		this.visivel = visivel;
 	}
 
 	public void addInstrucao(Instrucao i) {

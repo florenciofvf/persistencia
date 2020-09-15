@@ -159,10 +159,17 @@ public class Relacao {
 	}
 
 	public boolean contem(Objeto objeto) {
+		if (!origem.visivel || !destino.visivel) {
+			return false;
+		}
 		return origem.equals(objeto) || destino.equals(objeto);
 	}
 
 	public boolean contem(int posX, int posY) {
+		if (!origem.visivel || !destino.visivel) {
+			return false;
+		}
+
 		int raio = Objeto.DIAMETRO / 2;
 		int x1 = origem.x + raio;
 		int y1 = origem.y + raio;
@@ -298,6 +305,10 @@ public class Relacao {
 	}
 
 	public void desenhar(Graphics2D g2, Stroke stroke) {
+		if (!origem.visivel || !destino.visivel) {
+			return;
+		}
+
 		int raio = Objeto.DIAMETRO / 2;
 		int meta = raio / 2;
 
