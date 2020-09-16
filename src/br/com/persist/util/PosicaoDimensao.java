@@ -28,4 +28,9 @@ public class PosicaoDimensao {
 	public int getAltura() {
 		return altura;
 	}
+
+	@Override
+	public String toString() {
+		return "x=" + x + ", y=" + y + ", l=" + largura + ", a=" + altura;
+	}
 }

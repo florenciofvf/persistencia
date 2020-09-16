@@ -143,6 +143,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file);
+
 		formulario.checarPreferenciasLarguraAltura();
 		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
 
@@ -176,6 +177,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			InternalConfig config) {
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file, coletor, g, config);
+
 		formulario.checarPreferenciasLarguraAltura();
 		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
 
