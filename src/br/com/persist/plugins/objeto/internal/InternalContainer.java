@@ -135,10 +135,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private int contadorAuto;
 
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
-		listaGrupoLink = LinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
-		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
 		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
+		listaGrupoLink = LinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
+		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
 		comboConexao = ConexaoProvedor.criarComboConexao(padrao);
