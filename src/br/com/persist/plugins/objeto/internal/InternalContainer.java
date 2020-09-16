@@ -78,12 +78,14 @@ import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
 import br.com.persist.plugins.objeto.auto.LinkAutoUtil;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.persistencia.Coluna;
+import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo.Parametros;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColuna;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColunaListener;
+import br.com.persist.plugins.persistencia.tabela.TabelaDialogo;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistenciaListener;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistenciaUtil;
@@ -1130,114 +1132,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				}
 			}
 
-			private class ChavesPrimariasAcao extends Action {
-				private static final long serialVersionUID = 1L;
-
-				private ChavesPrimariasAcao() {
-					super(true, "label.chave_primaria", Icones.PKEY);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					/*
-					 * Conexao conexao = (Conexao)
-					 * comboConexao.getSelectedItem();
-					 * 
-					 * if (conexao == null) { return; }
-					 * 
-					 * try { Connection conn =
-					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
-					 * modeloListagem =
-					 * Persistencia.criarModeloChavePrimaria(conn, objeto,
-					 * conexao); OrdenacaoModelo modeloOrdenacao = new
-					 * OrdenacaoModelo(modeloListagem);
-					 * 
-					 * if (tituloListener != null) {
-					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
-					 * "CHAVE-PRIMARIA")); }
-					 * 
-					 * tabelaPersistencia.setModel(modeloOrdenacao);
-					 * configCabecalhoColuna(modeloListagem);
-					 * TabelaUtil.ajustar(tabelaPersistencia,
-					 * OTabelaContainer.this.getGraphics()); } catch (Exception
-					 * ex) { Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex,
-					 * OTabelaContainer.this); }
-					 */
-				}
-			}
-
-			private class ChavesImportadasAcao extends Action {
-				private static final long serialVersionUID = 1L;
-
-				private ChavesImportadasAcao() {
-					super(true, "label.chaves_importadas", Icones.KEY);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					/*
-					 * Conexao conexao = (Conexao)
-					 * comboConexao.getSelectedItem();
-					 * 
-					 * if (conexao == null) { return; }
-					 * 
-					 * try { Connection conn =
-					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
-					 * modeloListagem =
-					 * Persistencia.criarModeloChavesImportadas(conn, objeto,
-					 * conexao); OrdenacaoModelo modeloOrdenacao = new
-					 * OrdenacaoModelo(modeloListagem);
-					 * 
-					 * if (tituloListener != null) {
-					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
-					 * "CHAVES-IMPORTADAS")); }
-					 * 
-					 * tabelaPersistencia.setModel(modeloOrdenacao);
-					 * configCabecalhoColuna(modeloListagem);
-					 * TabelaUtil.ajustar(tabelaPersistencia,
-					 * OTabelaContainer.this.getGraphics()); } catch (Exception
-					 * ex) { Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex,
-					 * OTabelaContainer.this); }
-					 */
-				}
-			}
-
-			private class ChavesExportadasAcao extends Action {
-				private static final long serialVersionUID = 1L;
-
-				private ChavesExportadasAcao() {
-					super(true, "label.chaves_exportadas", Icones.KEY);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					/*
-					 * Conexao conexao = (Conexao)
-					 * comboConexao.getSelectedItem();
-					 * 
-					 * if (conexao == null) { return; }
-					 * 
-					 * try { Connection conn =
-					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
-					 * modeloListagem =
-					 * Persistencia.criarModeloChavesExportadas(conn, objeto,
-					 * conexao); OrdenacaoModelo modeloOrdenacao = new
-					 * OrdenacaoModelo(modeloListagem);
-					 * 
-					 * if (tituloListener != null) {
-					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
-					 * "CHAVES-EXPORTADAS")); }
-					 * 
-					 * tabelaPersistencia.setModel(modeloOrdenacao);
-					 * configCabecalhoColuna(modeloListagem);
-					 * TabelaUtil.ajustar(tabelaPersistencia,
-					 * InternalContainer.this.getGraphics()); } catch (Exception
-					 * ex) { Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex,
-					 * InternalContainer.this); }
-					 */
-				}
-			}
-
 			private class InfoBancoAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
@@ -1247,64 +1141,17 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*
-					 * Conexao conexao = (Conexao)
-					 * comboConexao.getSelectedItem();
-					 * 
-					 * if (conexao == null) { return; }
-					 * 
-					 * try { Connection conn =
-					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
-					 * modeloListagem = Persistencia.criarModeloInfoBanco(conn);
-					 * OrdenacaoModelo modeloOrdenacao = new
-					 * OrdenacaoModelo(modeloListagem);
-					 * 
-					 * if (tituloListener != null) {
-					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
-					 * "INFO-BANCO")); }
-					 * 
-					 * tabelaPersistencia.setModel(modeloOrdenacao);
-					 * configCabecalhoColuna(modeloListagem);
-					 * Util.ajustar(tabelaPersistencia,
-					 * InternalContainer.this.getGraphics()); } catch (Exception
-					 * ex) { Util.stackTraceAndMessage("INFO-BANCO", ex,
-					 * InternalContainer.this); }
-					 */
-				}
-			}
+					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 
-			private class MetaDadosAcao extends Action {
-				private static final long serialVersionUID = 1L;
-
-				private MetaDadosAcao() {
-					super(true, "label.meta_dados", null);
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					/*
-					 * Conexao conexao = (Conexao)
-					 * comboConexao.getSelectedItem();
-					 * 
-					 * if (conexao == null) { return; }
-					 * 
-					 * try { Connection conn =
-					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
-					 * modeloListagem = Persistencia.criarModeloMetaDados(conn,
-					 * objeto, conexao); OrdenacaoModelo modeloOrdenacao = new
-					 * OrdenacaoModelo(modeloListagem);
-					 * 
-					 * if (tituloListener != null) { tituloListener.setTitulo(
-					 * objeto.getTitle(modeloOrdenacao,
-					 * Mensagens.getString(Constantes.LABEL_METADADOS))); }
-					 * 
-					 * tabelaPersistencia.setModel(modeloOrdenacao);
-					 * configCabecalhoColuna(modeloListagem);
-					 * TabelaUtil.ajustar(tabelaPersistencia,
-					 * OTabelaContainer.this.getGraphics()); } catch (Exception
-					 * ex) { Util.stackTraceAndMessage("META-DADOS", ex,
-					 * OTabelaContainer.this); }
-					 */
+					if (conexao != null) {
+						try {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							MemoriaModelo modelo = Persistencia.criarModeloInfoBanco(conn);
+							TabelaDialogo.criar((Frame) null, "INFO-BANCO", modelo);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("INFO-BANCO", ex, InternalContainer.this);
+						}
+					}
 				}
 			}
 
@@ -1317,52 +1164,115 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					/*
-					 * Conexao conexao = (Conexao)
-					 * comboConexao.getSelectedItem();
-					 * 
-					 * if (conexao == null) { return; }
-					 * 
-					 * try { Connection conn =
-					 * ConexaoProvedor.getConnection(conexao); ListagemModelo
-					 * modeloListagem = Persistencia.criarModeloEsquema(conn);
-					 * OrdenacaoModelo modeloOrdenacao = new
-					 * OrdenacaoModelo(modeloListagem);
-					 * 
-					 * if (tituloListener != null) {
-					 * tituloListener.setTitulo(objeto.getTitle(modeloOrdenacao,
-					 * "ESQUEMA")); }
-					 * 
-					 * tabelaPersistencia.setModel(modeloOrdenacao);
-					 * configCabecalhoColuna(modeloListagem);
-					 * TabelaUtil.ajustar(tabelaPersistencia,
-					 * OTabelaContainer.this.getGraphics()); } catch (Exception
-					 * ex) { Util.stackTraceAndMessage("ESQUEMA", ex,
-					 * OTabelaContainer.this); }
-					 */
+					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+					if (conexao != null) {
+						try {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							MemoriaModelo modelo = Persistencia.criarModeloEsquema(conn);
+							TabelaDialogo.criar((Frame) null, "ESQUEMA", modelo);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("ESQUEMA", ex, InternalContainer.this);
+						}
+					}
 				}
 			}
 
-			/*
-			 * private void configCabecalhoColuna(ListagemModelo modelo) {
-			 * PersistenciaOrdenacaoModelo modeloOrdenacao =
-			 * tabelaPersistencia.getModelo(); TableColumnModel columnModel =
-			 * tabelaPersistencia.getColumnModel(); List<Coluna> colunas =
-			 * modelo.getColunasInfo();
-			 * 
-			 * for (int i = 0; i < colunas.size(); i++) { TableColumn
-			 * tableColumn = columnModel.getColumn(i); Coluna coluna =
-			 * colunas.get(i);
-			 * 
-			 * CabecalhoColuna cabecalhoColuna = new
-			 * CabecalhoColuna(InternalContainer.this, modeloOrdenacao, coluna,
-			 * false);
-			 * 
-			 * tableColumn.setHeaderRenderer(cabecalhoColuna); }
-			 * 
-			 * toolbar.buscaAuto.habilitar(false);
-			 * toolbar.excluirAtualizarEnable(false); }
-			 */
+			private class ChavesPrimariasAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private ChavesPrimariasAcao() {
+					super(true, "label.chave_primaria", Icones.PKEY);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+					if (conexao != null) {
+						try {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							MemoriaModelo modelo = Persistencia.criarModeloChavePrimaria(conn, conexao,
+									objeto.getTabela2());
+							TabelaDialogo.criar((Frame) null, "CHAVE-PRIMARIA", modelo);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, InternalContainer.this);
+						}
+					}
+				}
+			}
+
+			private class ChavesImportadasAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private ChavesImportadasAcao() {
+					super(true, "label.chaves_importadas", Icones.KEY);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+					if (conexao != null) {
+						try {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							MemoriaModelo modelo = Persistencia.criarModeloChavesImportadas(conn, conexao,
+									objeto.getTabela2());
+							TabelaDialogo.criar((Frame) null, "CHAVES-IMPORTADAS", modelo);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
+						}
+					}
+				}
+			}
+
+			private class ChavesExportadasAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private ChavesExportadasAcao() {
+					super(true, "label.chaves_exportadas", Icones.KEY);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+					if (conexao != null) {
+						try {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							MemoriaModelo modelo = Persistencia.criarModeloChavesExportadas(conn, conexao,
+									objeto.getTabela2());
+							TabelaDialogo.criar((Frame) null, "CHAVES-EXPORTADAS", modelo);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
+						}
+					}
+				}
+			}
+
+			private class MetaDadosAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private MetaDadosAcao() {
+					super(true, "label.meta_dados", null);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+					if (conexao != null) {
+						try {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao,
+									objeto.getTabela2());
+							TabelaDialogo.criar((Frame) null, Mensagens.getString(Constantes.LABEL_METADADOS), modelo);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("META-DADOS", ex, InternalContainer.this);
+						}
+					}
+				}
+			}
 		}
 	}
 

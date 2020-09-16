@@ -24,6 +24,8 @@ public class Persistencia {
 	private static final String TABLE_SCHEM = "TABLE_SCHEM";
 	private static final String COLUMN_NAME = "COLUMN_NAME";
 	private static final String TABLE_NAME = "TABLE_NAME";
+	private static final String KEY_SEQ = "KEY_SEQ";
+	private static final String PK_NAME = "PK_NAME";
 
 	private Persistencia() {
 	}
@@ -392,6 +394,28 @@ public class Persistencia {
 		}
 	}
 
+	private static List<String> criarLista(String... strings) {
+		return Arrays.asList(strings);
+	}
+
+	public static MemoriaModelo criarModeloChavePrimaria(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			List<List<String>> dados = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
+
+			while (rs.next()) {
+				dados.add(criarLista(rs.getString(COLUMN_NAME), rs.getString(KEY_SEQ), rs.getString(PK_NAME)));
+			}
+
+			rs.close();
+			return new MemoriaModelo(Arrays.asList(COLUMN_NAME, KEY_SEQ, PK_NAME), dados);
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
 	public static List<String> listarChavesPrimarias(Connection conn, Conexao conexao, String tabela)
 			throws PersistenciaException {
 		try {
@@ -447,6 +471,95 @@ public class Persistencia {
 
 			rs.close();
 			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static MemoriaModelo criarModeloChavesImportadas(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			List<List<String>> dados = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
+
+			while (rs.next()) {
+				dados.add(criarLista(rs.getString(PKTABLE_NAME), rs.getString(PKCOLUMN_NAME),
+						rs.getString(FKCOLUMN_NAME)));
+			}
+
+			rs.close();
+			return new MemoriaModelo(Arrays.asList(PKTABLE_NAME, PKCOLUMN_NAME, FKCOLUMN_NAME), dados);
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static MemoriaModelo criarModeloChavesExportadas(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			List<List<String>> dados = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getExportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
+
+			while (rs.next()) {
+				dados.add(criarLista(rs.getString(PKCOLUMN_NAME), rs.getString(FKTABLE_NAME),
+						rs.getString(FKCOLUMN_NAME)));
+			}
+
+			rs.close();
+			return new MemoriaModelo(Arrays.asList(PKCOLUMN_NAME, FKTABLE_NAME, FKCOLUMN_NAME), dados);
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	public static MemoriaModelo criarModeloMetaDados(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		String string = "SELECT * FROM " + PersistenciaModelo.prefixarEsquema(conexao, null, tabela) + " WHERE 1 > 2";
+
+		try (PreparedStatement psmt = conn.prepareStatement(string)) {
+			try (ResultSet rs = psmt.executeQuery()) {
+				ResultSetMetaData rsmd = rs.getMetaData();
+				int totalColunas = rsmd.getColumnCount();
+
+				List<String> colunas = Arrays.asList("ColumnClassName", "ColumnLabel", "ColumnName", "AutoIncrement",
+						"CaseSensitive", "Searchable", "Currency", "Nullable", "Signed", "ColumnDisplaySize",
+						"SchemaName", "Precision", "Scale", "TableName", "CatalogName", "ColumnType", "ColumnTypeName",
+						"ReadOnly", "Writable", "DefinitelyWritable");
+				List<List<String>> dados = new ArrayList<>();
+
+				final String VAZIO = Constantes.VAZIO;
+
+				for (int i = 1; i <= totalColunas; i++) {
+					List<String> linha = new ArrayList<>();
+
+					linha.add(rsmd.getColumnClassName(i));
+					linha.add(rsmd.getColumnLabel(i));
+					linha.add(rsmd.getColumnName(i));
+					linha.add(VAZIO + rsmd.isAutoIncrement(i));
+					linha.add(VAZIO + rsmd.isCaseSensitive(i));
+					linha.add(VAZIO + rsmd.isSearchable(i));
+					linha.add(VAZIO + rsmd.isCurrency(i));
+					linha.add(VAZIO + rsmd.isNullable(i));
+					linha.add(VAZIO + rsmd.isSigned(i));
+					linha.add(VAZIO + rsmd.getColumnDisplaySize(i));
+					linha.add(rsmd.getSchemaName(i));
+					linha.add(VAZIO + rsmd.getPrecision(i));
+					linha.add(VAZIO + rsmd.getScale(i));
+					linha.add(rsmd.getTableName(i));
+					linha.add(rsmd.getCatalogName(i));
+					linha.add(VAZIO + rsmd.getColumnType(i));
+					linha.add(rsmd.getColumnTypeName(i));
+					linha.add(VAZIO + rsmd.isReadOnly(i));
+					linha.add(VAZIO + rsmd.isWritable(i));
+					linha.add(VAZIO + rsmd.isDefinitelyWritable(i));
+
+					dados.add(linha);
+				}
+
+				return new MemoriaModelo(colunas, dados);
+			}
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}
