@@ -1511,7 +1511,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	private void configTableColumn(TableColumn tableColumn, Coluna coluna) {
 		if (coluna.isChave()) {
-			tableColumn.setCellRenderer(new CellRenderer());
+			tableColumn.setCellRenderer(new CellRenderer(Color.GRAY));
 		}
 
 		if (coluna.isColunaInfo()) {

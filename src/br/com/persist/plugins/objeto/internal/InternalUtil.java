@@ -31,17 +31,18 @@ public class InternalUtil {
 		List<Object> registro = tabela.getModelo().getRegistro(linha);
 		String valor = registro.get(coluna).toString();
 		StringBuilder builder = new StringBuilder();
+		final String espaco = "   ";
 
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
 			BuscaAutoColetor coletor = t.getColetor(valor);
 
 			if (coletor.getTotal() > 0) {
-				builder.append(t.getNome() + " [" + coletor.getTotal() + "] ");
+				builder.append(t.getNome() + " [" + coletor.getTotal() + "]" + espaco);
 			}
 		}
 
 		if (builder.length() > 0) {
-			builder.delete(builder.length() - 1, builder.length());
+			builder.delete(builder.length() - espaco.length(), builder.length());
 		}
 
 		registro.set(registro.size() - 1, builder.toString());
