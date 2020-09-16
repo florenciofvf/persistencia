@@ -13,7 +13,7 @@ public class InternalUtil {
 	private InternalUtil() {
 	}
 
-	public static void checarColetores(TabelaPersistencia tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
+	public static void atualizarColetores(TabelaPersistencia tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
 		OrdenacaoModelo modelo = tabela.getModelo();
 		int total = modelo.getRowCount();
 
@@ -21,29 +21,29 @@ public class InternalUtil {
 			Object obj = modelo.getValueAt(i, coluna);
 
 			if (obj != null && !Util.estaVazio(obj.toString())) {
-				tabelaBuscaAuto.checarColetores(obj.toString());
+				tabelaBuscaAuto.atualizarColetores(obj.toString());
 			}
 		}
 	}
 
-	public static void atualizarLinhaColetores(TabelaPersistencia tabela, int linha, int coluna, GrupoBuscaAuto grupo) {
-		OrdenacaoModelo modelo = tabela.getModelo();
-		List<Object> registro = modelo.getRegistro(linha);
-		String numero = registro.get(coluna).toString();
-		StringBuilder sb = new StringBuilder();
+	public static void consolidarNoRegistroUsandoColetores(TabelaPersistencia tabela, int linha, int coluna,
+			GrupoBuscaAuto grupo) {
+		List<Object> registro = tabela.getModelo().getRegistro(linha);
+		String valor = registro.get(coluna).toString();
+		StringBuilder builder = new StringBuilder();
 
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
-			BuscaAutoColetor coletor = t.getColetor(numero);
+			BuscaAutoColetor coletor = t.getColetor(valor);
 
 			if (coletor.getTotal() > 0) {
-				sb.append(t.getNome() + " [" + coletor.getTotal() + "] ");
+				builder.append(t.getNome() + " [" + coletor.getTotal() + "] ");
 			}
 		}
 
-		if (sb.length() > 0) {
-			sb.delete(sb.length() - 3, sb.length());
+		if (builder.length() > 0) {
+			builder.delete(builder.length() - 1, builder.length());
 		}
 
-		registro.set(registro.size() - 1, sb.toString());
+		registro.set(registro.size() - 1, builder.toString());
 	}
 }

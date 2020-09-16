@@ -510,7 +510,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					}
 
 					grupo.setProcessado(false);
-					grupo.setNumeroColetores(lista);
+					grupo.inicializarColetores(lista);
 					buscaAutomaticaListener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
 
@@ -526,7 +526,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
 
 					for (int linha : indices) {
-						InternalUtil.atualizarLinhaColetores(tabelaPersistencia, linha, coluna, grupo);
+						InternalUtil.consolidarNoRegistroUsandoColetores(tabelaPersistencia, linha, coluna, grupo);
 					}
 
 					Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
@@ -1478,7 +1478,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, tabelaBuscaAuto.getCampo());
 
 				if (coluna != -1) {
-					InternalUtil.checarColetores(tabelaPersistencia, coluna, tabelaBuscaAuto);
+					InternalUtil.atualizarColetores(tabelaPersistencia, coluna, tabelaBuscaAuto);
 				}
 
 				objeto.setTabelaBuscaAuto(null);

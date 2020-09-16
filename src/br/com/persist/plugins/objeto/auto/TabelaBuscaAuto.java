@@ -117,7 +117,7 @@ public class TabelaBuscaAuto {
 		return strings;
 	}
 
-	public void setNumeroColetores(List<String> numeros) {
+	public void inicializarColetores(List<String> numeros) {
 		coletores.clear();
 
 		if (numeros != null) {
@@ -129,7 +129,7 @@ public class TabelaBuscaAuto {
 
 	public BuscaAutoColetor getColetor(String numero) {
 		for (BuscaAutoColetor c : coletores) {
-			if (c.getNumero().equals(numero)) {
+			if (c.getChave().equals(numero)) {
 				return c;
 			}
 		}
@@ -137,9 +137,9 @@ public class TabelaBuscaAuto {
 		return null;
 	}
 
-	public void checarColetores(String numero) {
+	public void atualizarColetores(String numero) {
 		for (BuscaAutoColetor c : coletores) {
-			if (c.getNumero().equals(numero)) {
+			if (c.getChave().equals(numero)) {
 				c.incrementarTotal();
 			}
 		}

@@ -1,11 +1,11 @@
 package br.com.persist.plugins.objeto.auto;
 
 public class BuscaAutoColetor {
-	private final String numero;
+	private final String chave;
 	private int total;
 
-	public BuscaAutoColetor(String numero) {
-		this.numero = numero;
+	public BuscaAutoColetor(String chave) {
+		this.chave = chave;
 	}
 
 	public int getTotal() {
@@ -16,7 +16,7 @@ public class BuscaAutoColetor {
 		total++;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getChave() {
+		return chave;
 	}
 }

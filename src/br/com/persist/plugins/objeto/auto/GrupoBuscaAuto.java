@@ -38,9 +38,9 @@ public class GrupoBuscaAuto {
 		return grupoBuscaAutoApos;
 	}
 
-	public void setNumeroColetores(List<String> numeros) {
+	public void inicializarColetores(List<String> numeros) {
 		for (TabelaBuscaAuto tabela : tabelas) {
-			tabela.setNumeroColetores(numeros);
+			tabela.inicializarColetores(numeros);
 		}
 	}
 
