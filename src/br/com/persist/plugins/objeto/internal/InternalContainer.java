@@ -752,11 +752,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						ConsultaFormulario form = ConsultaFormulario.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
+						form.setVisible(true);
 					} else {
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
 						ConsultaDialogo form = ConsultaDialogo.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
+						form.setVisible(true);
 					}
 				}
 
@@ -766,11 +768,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						UpdateFormulario form = UpdateFormulario.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
+						form.setVisible(true);
 					} else {
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
 						UpdateDialogo form = UpdateDialogo.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
+						form.setVisible(true);
 					}
 				}
 			}
