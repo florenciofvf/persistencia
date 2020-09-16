@@ -603,7 +603,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								return;
 							}
 
-							abrir(abrirEmForm, conexao, instrucao);
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 						}
 					}
 				}
@@ -645,7 +645,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								return;
 							}
 
-							abrir(abrirEmForm, conexao, instrucao);
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
 				}
@@ -681,7 +681,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								return;
 							}
 
-							abrir(abrirEmForm, conexao, instrucao);
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 						}
 					}
 				}
@@ -737,44 +737,14 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								return;
 							}
 
+							String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
+
 							if (instrucao.isSelect()) {
-								abrirSelect(abrirEmForm, conexao, chaves);
+								selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 							} else {
-								abrirUpdate(abrirEmForm, conexao, chaves);
+								updateFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 							}
 						}
-					}
-				}
-
-				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-					if (abrirEmForm) {
-						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						ConsultaFormulario form = ConsultaFormulario.criar2(null, conexao, conteudo);
-						form.setTitle(instrucao.getNome());
-						configLocationRelativeTo(form);
-						form.setVisible(true);
-					} else {
-						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						ConsultaDialogo form = ConsultaDialogo.criar2(null, conexao, conteudo);
-						form.setTitle(instrucao.getNome());
-						configLocationRelativeTo(form);
-						form.setVisible(true);
-					}
-				}
-
-				private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
-					if (abrirEmForm) {
-						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						UpdateFormulario form = UpdateFormulario.criar2(null, conexao, conteudo);
-						form.setTitle(instrucao.getNome());
-						configLocationRelativeTo(form);
-						form.setVisible(true);
-					} else {
-						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						UpdateDialogo form = UpdateDialogo.criar2(null, conexao, conteudo);
-						form.setTitle(instrucao.getNome());
-						configLocationRelativeTo(form);
-						form.setVisible(true);
 					}
 				}
 			}
@@ -860,14 +830,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						}
 					}
 				}
-			}
-		}
-
-		private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-			if (abrirEmForm) {
-				UpdateFormulario.criar(null, conexao, instrucao);
-			} else {
-				UpdateDialogo.criar(null, conexao, instrucao);
 			}
 		}
 
@@ -978,7 +940,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								return;
 							}
 
-							abrir(abrirEmForm, conexao, instrucao);
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 						}
 					}
 				}
@@ -1010,7 +972,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								return;
 							}
 
-							abrir(abrirEmForm, conexao, instrucao);
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 						}
 					}
 				}
@@ -1042,7 +1004,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								return;
 							}
 
-							abrir(abrirEmForm, conexao, instrucao);
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
 				}
@@ -1070,17 +1032,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							return;
 						}
 
-						abrir(abrirEmForm, conexao, instrucao);
-					}
-
-					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-						if (abrirEmForm) {
-							ConsultaFormulario form = ConsultaFormulario.criar(null, conexao, instrucao);
-							configLocationRelativeTo(form);
-						} else {
-							ConsultaDialogo form = ConsultaDialogo.criar(null, conexao, instrucao);
-							configLocationRelativeTo(form);
-						}
+						selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 					}
 				}
 
@@ -1277,6 +1229,34 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						}
 					}
 				}
+			}
+		}
+
+		private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
+			if (abrirEmForm) {
+				ConsultaFormulario form = ConsultaFormulario.criar2(null, conexao, instrucao);
+				configLocationRelativeTo(form);
+				form.setTitle(titulo);
+				form.setVisible(true);
+			} else {
+				ConsultaDialogo form = ConsultaDialogo.criar2(null, conexao, instrucao);
+				configLocationRelativeTo(form);
+				form.setTitle(titulo);
+				form.setVisible(true);
+			}
+		}
+
+		private void updateFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
+			if (abrirEmForm) {
+				UpdateFormulario form = UpdateFormulario.criar2(null, conexao, instrucao);
+				configLocationRelativeTo(form);
+				form.setTitle(titulo);
+				form.setVisible(true);
+			} else {
+				UpdateDialogo form = UpdateDialogo.criar2(null, conexao, instrucao);
+				configLocationRelativeTo(form);
+				form.setTitle(titulo);
+				form.setVisible(true);
 			}
 		}
 	}
