@@ -44,6 +44,10 @@ public class UpdateFormulario extends AbstratoFormulario {
 		return form;
 	}
 
+	public static UpdateFormulario criar2(Formulario formulario, Conexao conexao, String conteudo) {
+		return new UpdateFormulario(formulario, conexao, conteudo);
+	}
+
 	@Override
 	public void excluirContainer() {
 		remove(container);

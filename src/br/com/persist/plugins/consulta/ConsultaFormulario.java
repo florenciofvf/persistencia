@@ -44,6 +44,10 @@ public class ConsultaFormulario extends AbstratoFormulario {
 		return form;
 	}
 
+	public static ConsultaFormulario criar2(Formulario formulario, Conexao conexao, String conteudo) {
+		return new ConsultaFormulario(formulario, conexao, conteudo);
+	}
+
 	@Override
 	public void excluirContainer() {
 		remove(container);

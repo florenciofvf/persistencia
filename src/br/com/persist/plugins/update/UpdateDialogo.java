@@ -31,6 +31,10 @@ public class UpdateDialogo extends AbstratoDialogo {
 		return form;
 	}
 
+	public static UpdateDialogo criar2(Formulario formulario, Conexao conexao, String conteudo) {
+		return new UpdateDialogo(formulario, formulario, conexao, conteudo);
+	}
+
 	@Override
 	public void excluirContainer() {
 		remove(container);

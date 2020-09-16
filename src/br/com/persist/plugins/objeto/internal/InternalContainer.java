@@ -749,12 +749,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				private void abrirSelect(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
 					if (abrirEmForm) {
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						ConsultaFormulario form = ConsultaFormulario.criar(null, conexao, conteudo);
+						ConsultaFormulario form = ConsultaFormulario.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
 					} else {
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						ConsultaDialogo form = ConsultaDialogo.criar(null, conexao, conteudo);
+						ConsultaDialogo form = ConsultaDialogo.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
 					}
@@ -763,12 +763,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				private void abrirUpdate(boolean abrirEmForm, Conexao conexao, Map<String, String> chaves) {
 					if (abrirEmForm) {
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						UpdateFormulario form = UpdateFormulario.criar(null, conexao, conteudo);
+						UpdateFormulario form = UpdateFormulario.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
 					} else {
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-						UpdateDialogo form = UpdateDialogo.criar(null, conexao, conteudo);
+						UpdateDialogo form = UpdateDialogo.criar2(null, conexao, conteudo);
 						form.setTitle(instrucao.getNome());
 						configLocationRelativeTo(form);
 					}

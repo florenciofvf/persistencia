@@ -31,6 +31,10 @@ public class ConsultaDialogo extends AbstratoDialogo {
 		return form;
 	}
 
+	public static ConsultaDialogo criar2(Formulario formulario, Conexao conexao, String conteudo) {
+		return new ConsultaDialogo(formulario, formulario, conexao, conteudo);
+	}
+
 	@Override
 	public void excluirContainer() {
 		remove(container);
