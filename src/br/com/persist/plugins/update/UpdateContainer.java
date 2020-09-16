@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
@@ -36,6 +37,7 @@ import br.com.persist.componente.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.conexao.ConexaoEvento;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.principal.Formulario;
@@ -129,6 +131,14 @@ public class UpdateContainer extends AbstratoContainer {
 	@Override
 	public void setJanela(Janela janela) {
 		toolbar.setJanela(janela);
+	}
+
+	@Override
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
+		if (conexao != null) {
+			comboConexao.setSelectedItem(conexao);
+		}
 	}
 
 	private class Toolbar extends BarraButton {

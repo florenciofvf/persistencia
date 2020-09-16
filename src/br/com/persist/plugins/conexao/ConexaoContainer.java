@@ -224,7 +224,7 @@ public class ConexaoContainer extends AbstratoContainer {
 			if (linhas != null && linhas.length == 1) {
 				Conexao c = ConexaoProvedor.getConexao(linhas[0]);
 				Map<String, Object> map = new HashMap<>();
-				map.put(Constantes.SELECIONAR_CONEXAO, c);
+				map.put(ConexaoEvento.SELECIONAR_CONEXAO, c);
 				formulario.processar(map);
 			}
 		}

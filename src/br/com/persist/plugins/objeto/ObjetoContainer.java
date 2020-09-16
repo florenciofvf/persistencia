@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -42,6 +43,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.conexao.ConexaoEvento;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
@@ -103,6 +105,15 @@ public class ObjetoContainer extends AbstratoContainer {
 	@Override
 	public void setJanela(Janela janela) {
 		toolbar.setJanela(janela);
+	}
+
+	@Override
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
+		if (conexao != null) {
+			comboConexao.setSelectedItem(conexao);
+			objetoSuperficie.selecionarConexao(conexao);
+		}
 	}
 
 	public void abrirArquivo(File file) {
