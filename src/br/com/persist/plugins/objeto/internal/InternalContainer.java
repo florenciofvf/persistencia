@@ -1046,22 +1046,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						dialogoAcao.setActionListener(e -> abrirSelect(false));
 					}
 
-					private void abrirSelect(boolean abrirEmForm) {
-						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
-						if (conexao == null) {
-							return;
-						}
-
-						String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
-
-						if (Util.estaVazio(instrucao)) {
-							return;
-						}
-
-						abrir(abrirEmForm, conexao, instrucao);
-					}
-
 					private StringBuilder getConsultaColuna(Conexao conexao, String complemento) {
 						String selectAlter = objeto.getSelectAlternativo();
 						objeto.setSelectAlternativo("SELECT " + tabelaPersistencia.getNomeColunas());
@@ -1076,14 +1060,20 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						return builder;
 					}
 
-					private void abrir(boolean abrirEmForm, Conexao conexao, String instrucao) {
-						if (abrirEmForm) {
-							ConsultaFormulario form = ConsultaFormulario.criar(null, conexao, instrucao);
-							configLocationRelativeTo(form);
-						} else {
-							ConsultaDialogo form = ConsultaDialogo.criar(null, conexao, instrucao);
-							configLocationRelativeTo(form);
+					private void abrirSelect(boolean abrirEmForm) {
+						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+
+						if (conexao == null) {
+							return;
 						}
+
+						String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
+
+						if (Util.estaVazio(instrucao)) {
+							return;
+						}
+
+						selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 					}
 				}
 			}
