@@ -1168,8 +1168,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMenuItem(true, copiarAcao);
 			add(true, menuDestacar);
 			add(true, menuCircular);
-			add(true, new MenuConsulta());
-			add(true, new MenuUpdate());
 			addMenuItem(true, excluirAcao);
 			add(true, itemPartir);
 			add(true, itemDados);
@@ -1200,56 +1198,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				if (getSelecionados().size() > Constantes.UM) {
 					CircularDialogo.criar(container.getFrame(), ObjetoSuperficie.this, tipo);
 				}
-			}
-		}
-
-		private class MenuConsulta extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuConsulta() {
-				super(Constantes.LABEL_CONSULTA, Icones.TABELA);
-
-				// formularioAcao.setActionListener(e -> {
-				// ConsultaFormulario form =
-				// ConsultaFormulario.criar(formulario, formulario,
-				// container.getConexaoPadrao());
-				// form.setLocationRelativeTo(container.getFrame(formulario));
-				// form.setVisible(true);
-				// });
-
-				// dialogoAcao.setActionListener(e ->
-				// ConsultaDialogo.criar(container.getFrame(formulario),
-				// formulario,
-				// formulario, container.getConexaoPadrao()));
-
-				// ficharioAcao.setActionListener(
-				// e -> formulario.getFichario().getConsulta().nova(formulario,
-				// container.getConexaoPadrao()));
-			}
-		}
-
-		private class MenuUpdate extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
-
-			private MenuUpdate() {
-				super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
-
-				// formularioAcao.setActionListener(e -> {
-				// UpdateFormulario form = UpdateFormulario.criar(formulario,
-				// formulario,
-				// container.getConexaoPadrao());
-				// form.setLocationRelativeTo(container.getFrame(formulario));
-				// form.setVisible(true);
-				// });
-
-				// dialogoAcao.setActionListener(e ->
-				// UpdateDialogo.criar(container.getFrame(formulario),
-				// formulario,
-				// formulario, container.getConexaoPadrao()));
-
-				// ficharioAcao.setActionListener(
-				// e -> formulario.getFichario().getUpdate().novo(formulario,
-				// container.getConexaoPadrao()));
 			}
 		}
 
