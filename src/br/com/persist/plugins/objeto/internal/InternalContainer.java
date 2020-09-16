@@ -182,53 +182,53 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		});
 
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.atualizar.atualizarAcao);
+		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
 	}
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private final ButtonComplemento complemento = new ButtonComplemento();
-		private final Button excluir = new Button(new ExcluirRegistrosAcao());
-		private final ButtonAtualizar atualizar = new ButtonAtualizar();
-		private final ButtonBuscaAuto buscaAuto = new ButtonBuscaAuto();
-		private final ButtonFuncoes funcoes = new ButtonFuncoes();
-		private final ButtonBaixar baixar = new ButtonBaixar();
-		private final ButtonUpdate update = new ButtonUpdate();
+		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
+		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
+		private final ButtonComplemento buttonComplemento = new ButtonComplemento();
+		private final ButtonBuscaAuto buttonBuscaAuto = new ButtonBuscaAuto();
+		private final ButtonFuncoes buttonFuncoes = new ButtonFuncoes();
+		private final ButtonFragVar buttonFragVar = new ButtonFragVar();
+		private final ButtonBaixar buttonBaixar = new ButtonBaixar();
+		private final ButtonUpdate buttonUpdate = new ButtonUpdate();
 		private final Label labelTotal = new Label(Color.BLUE);
-		private final ButtonUtil util = new ButtonUtil();
 
 		protected void ini(Janela janela, Objeto objeto) {
 			super.ini(janela);
 
 			add(btnArrasto);
 			add(true, new ButtonInfo());
-			add(true, excluir);
-			add(true, util);
-			add(buscaAuto);
-			add(true, update);
-			add(atualizar);
-			add(true, complemento);
+			add(true, buttonExcluir);
+			add(true, buttonFragVar);
+			add(buttonBuscaAuto);
+			add(true, buttonUpdate);
+			add(buttonSincronizar);
+			add(true, buttonComplemento);
 			add(txtComplemento);
 			add(labelTotal);
-			add(baixar);
-			add(funcoes);
+			add(buttonBaixar);
+			add(buttonFuncoes);
 			add(true, comboConexao);
 
-			buscaAuto.complemento(objeto);
-			update.complemento(objeto);
+			buttonBuscaAuto.complemento(objeto);
+			buttonUpdate.complemento(objeto);
 		}
 
 		private void excluirAtualizarEnable(boolean b) {
-			excluir.setEnabled(b);
-			update.setEnabled(b);
+			buttonExcluir.setEnabled(b);
+			buttonUpdate.setEnabled(b);
 		}
 
-		private class ButtonUtil extends ButtonPopup {
+		private class ButtonFragVar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action fragmentoAcao = Action.actionMenu(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
 			private Action variaveisAcao = Action.actionMenu(Constantes.LABEL_VARIAVEIS, Icones.VAR);
 
-			private ButtonUtil() {
+			private ButtonFragVar() {
 				super("label.util", Icones.FRAGMENTO);
 
 				addMenuItem(fragmentoAcao);
@@ -397,13 +397,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 		}
 
-		private class ButtonAtualizar extends ButtonPopup {
+		private class ButtonSincronizar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
 			private MenuItem itemAtualizarAuto = new MenuItem(Constantes.LABEL_ATUALIZAR_AUTO, Icones.ATUALIZAR);
 			private Action atualizarAcao = Action.actionMenuAtualizar();
 
-			private ButtonAtualizar() {
+			private ButtonSincronizar() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
 
 				addMenuItem(atualizarAcao);
@@ -1483,7 +1483,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			mensagemException(ex);
 		}
 
-		toolbar.buscaAuto.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
+		toolbar.buttonBuscaAuto.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		configAlturaAutomatica();
 	}
@@ -1523,11 +1523,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	@Override
 	public void run() {
-		while (!Thread.currentThread().isInterrupted() && toolbar.atualizar.itemAtualizarAuto.isDisplayable()) {
+		while (!Thread.currentThread().isInterrupted() && toolbar.buttonSincronizar.itemAtualizarAuto.isDisplayable()) {
 			try {
 				Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
 				contadorAuto++;
-				toolbar.atualizar.itemAtualizarAuto
+				toolbar.buttonSincronizar.itemAtualizarAuto
 						.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO) + " " + contadorAuto);
 				actionListenerInner.processar();
 			} catch (InterruptedException e) {
@@ -1535,7 +1535,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 		}
 
-		toolbar.atualizar.itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
+		toolbar.buttonSincronizar.itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
 		contadorAuto = 0;
 		thread = null;
 	}
@@ -1623,7 +1623,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	}
 
 	public void buscaAutomaticaApos() {
-		toolbar.baixar.limpar2Acao.actionPerformed(null);
+		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
 	}
 
 	public void linkAutomatico(String campo, String argumento) {
@@ -1744,7 +1744,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	}
 
 	public void limpar2() {
-		toolbar.baixar.limpar2Acao.actionPerformed(null);
+		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
 	}
 
 	private class TabelaListener implements TabelaPersistenciaListener {
@@ -1774,8 +1774,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				if (linhas != null && linhas.length > 0) {
 					String[] chaves = objeto.getChavesArray();
 
-					toolbar.update.setEnabled(chaves.length > 0 && linhas.length == 1);
-					toolbar.excluir.setEnabled(chaves.length > 0);
+					toolbar.buttonUpdate.setEnabled(chaves.length > 0 && linhas.length == 1);
+					toolbar.buttonExcluir.setEnabled(chaves.length > 0);
 					toolbar.labelTotal.setText(Constantes.VAZIO + linhas.length);
 				} else {
 					toolbar.excluirAtualizarEnable(false);
