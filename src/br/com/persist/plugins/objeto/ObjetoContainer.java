@@ -207,7 +207,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		@Override
 		protected void abrirEmFormulario() {
 			if (getArquivo() != null) {
-				ObjetoFormulario.criar(formulario, getArquivo());
+				ObjetoFabrica.abrirNoFormulario(formulario, getArquivo());
 			} else {
 				Util.mensagem(ObjetoContainer.this, Mensagens.getString("msg.arquivo_inexistente"));
 			}
