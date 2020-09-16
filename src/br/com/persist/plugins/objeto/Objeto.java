@@ -803,6 +803,10 @@ public class Objeto implements Runnable {
 		this.processar = processar;
 	}
 
+	public String getTitle(String complemento) {
+		return getTabela2() + " - " + getId() + " - " + complemento + " ";
+	}
+
 	public String getTitle(OrdenacaoModelo modelo) {
 		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "]";
 	}

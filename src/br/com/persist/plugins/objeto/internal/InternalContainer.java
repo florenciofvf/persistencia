@@ -1194,7 +1194,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							MemoriaModelo modelo = Persistencia.criarModeloChavePrimaria(conn, conexao,
 									objeto.getTabela2());
-							TabelaDialogo.criar((Frame) null, "CHAVE-PRIMARIA", modelo);
+							TabelaDialogo.criar((Frame) null, objeto.getTitle("CHAVE-PRIMARIA"), modelo);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, InternalContainer.this);
 						}
@@ -1218,7 +1218,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							MemoriaModelo modelo = Persistencia.criarModeloChavesImportadas(conn, conexao,
 									objeto.getTabela2());
-							TabelaDialogo.criar((Frame) null, "CHAVES-IMPORTADAS", modelo);
+							TabelaDialogo.criar((Frame) null, objeto.getTitle("CHAVES-IMPORTADAS"), modelo);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
 						}
@@ -1242,7 +1242,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							MemoriaModelo modelo = Persistencia.criarModeloChavesExportadas(conn, conexao,
 									objeto.getTabela2());
-							TabelaDialogo.criar((Frame) null, "CHAVES-EXPORTADAS", modelo);
+							TabelaDialogo.criar((Frame) null, objeto.getTitle("CHAVES-EXPORTADAS"), modelo);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
 						}
@@ -1266,7 +1266,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao,
 									objeto.getTabela2());
-							TabelaDialogo.criar((Frame) null, Mensagens.getString(Constantes.LABEL_METADADOS), modelo);
+							TabelaDialogo.criar((Frame) null,
+									objeto.getTitle(Mensagens.getString(Constantes.LABEL_METADADOS)), modelo);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("META-DADOS", ex, InternalContainer.this);
 						}
