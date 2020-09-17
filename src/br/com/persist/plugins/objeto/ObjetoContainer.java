@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
@@ -44,6 +45,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
+import br.com.persist.plugins.conexao.ConexaoInfo;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
@@ -69,6 +71,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	private final JComboBox<Conexao> comboConexao;
 	private ObjetoFormulario objetoFormulario;
 	private String tituloTemporario;
+	private String conexaoFile;
 	private File arquivo;
 
 	public ObjetoContainer(Janela janela, Formulario formulario) {
@@ -111,6 +114,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
 		checarSelecionarConexao(formulario, args);
+		checarConexaoInfo(formulario, args);
 	}
 
 	private void checarSelecionarConexao(Formulario formulario, Map<String, Object> args) {
@@ -118,6 +122,17 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 			objetoSuperficie.selecionarConexao(conexao);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void checarConexaoInfo(Formulario formulario, Map<String, Object> args) {
+		List<ConexaoInfo> lista = (List<ConexaoInfo>) args.get(ConexaoEvento.COLETAR_INFO_CONEXAO);
+		if (lista != null) {
+			Conexao conexao = getConexaoPadrao();
+			String conexaoAtual = conexao == null ? "null" : conexao.getNome();
+			String nomeAba = arquivo == null ? "null" : arquivo.getAbsolutePath();
+			lista.add(new ConexaoInfo(conexaoAtual, conexaoFile == null ? "null" : conexaoFile, nomeAba));
 		}
 	}
 
@@ -384,7 +399,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		btnSelecao.click();
 
 		if (!Util.estaVazio(coletor.getSbConexao().toString())) {
-			String conexaoFile = coletor.getSbConexao().toString();
+			conexaoFile = coletor.getSbConexao().toString();
 
 			for (int i = 0; i < comboConexao.getItemCount(); i++) {
 				Conexao c = comboConexao.getItemAt(i);

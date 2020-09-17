@@ -11,7 +11,9 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.Icon;
@@ -123,7 +125,29 @@ public class ConexaoContainer extends AbstratoContainer {
 		}
 
 		private void infoConexao() {
-			// formulario.getFichario().infoConexao()
+			List<ConexaoInfo> lista = new ArrayList<>();
+			Map<String, Object> args = new HashMap<>();
+			args.put(ConexaoEvento.COLETAR_INFO_CONEXAO, lista);
+			formulario.processar(args);
+
+			StringBuilder builder = new StringBuilder();
+
+			for (ConexaoInfo info : lista) {
+				builder.append("ABA: " + info.getNomeAba() + Constantes.QL);
+				builder.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
+
+				if (!Util.estaVazio(info.getConexaoFile())) {
+					builder.append("FILE: " + info.getConexaoFile() + Constantes.QL);
+				}
+
+				builder.append(Constantes.QL);
+			}
+
+			if (builder.length() > 0) {
+				builder.insert(0, "TOTAL = " + lista.size() + Constantes.QL + Constantes.QL);
+			}
+
+			Util.mensagem(ConexaoContainer.this, builder.toString());
 		}
 
 		@Override
