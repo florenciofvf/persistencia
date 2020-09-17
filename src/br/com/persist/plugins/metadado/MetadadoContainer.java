@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -277,22 +278,21 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 	}
 
+	private Map<String, Object> criarArgs(Metadado metadado, String metodo) {
+		Map<String, Object> args = new HashMap<>();
+		args.put(MetadadoEvento.ABRIR_METADADO, metadado);
+		args.put(MetadadoEvento.METODO, metodo);
+		return args;
+	}
+
 	@Override
 	public void abrirExportacaoFormArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			// formulario.getConteiner().abrirExportacaoMetadado(metadado,
-			// circular);
-		}
-	}
-
-	@Override
-	public void exportarFormArquivo(MetadadoTree metadados) {
-		Metadado metadado = metadados.getObjetoSelecionado();
-
-		if (metadado != null) {
-			// formulario.getConteiner().exportarMetadadoRaiz(metadado);
+			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoForm");
+			args.put(MetadadoEvento.CIRCULAR, circular);
+			formulario.processar(args);
 		}
 	}
 
@@ -301,18 +301,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			// formulario.getFichario().getConteiner().abrirExportacaoMetadado(formulario,
-			// metadado, circular);
-		}
-	}
-
-	@Override
-	public void exportarFichArquivo(MetadadoTree metadados) {
-		Metadado metadado = metadados.getObjetoSelecionado();
-
-		if (metadado != null) {
-			// formulario.getFichario().getConteiner().exportarMetadadoRaiz(formulario,
-			// metadado);
+			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoFich");
+			args.put(MetadadoEvento.CIRCULAR, circular);
+			formulario.processar(args);
 		}
 	}
 
@@ -321,8 +312,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			// formulario.getConteiner().abrirImportacaoMetadado(metadado,
-			// circular);
+			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoForm");
+			args.put(MetadadoEvento.CIRCULAR, circular);
+			formulario.processar(args);
 		}
 	}
 
@@ -331,8 +323,27 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		Metadado metadado = metadados.getObjetoSelecionado();
 
 		if (metadado != null) {
-			// formulario.getFichario().getConteiner().abrirImportacaoMetadado(formulario,
-			// metadado, circular);
+			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoFich");
+			args.put(MetadadoEvento.CIRCULAR, circular);
+			formulario.processar(args);
+		}
+	}
+
+	@Override
+	public void exportarFormArquivo(MetadadoTree metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.processar(criarArgs(metadado, "exportarMetadadoRaizForm"));
+		}
+	}
+
+	@Override
+	public void exportarFichArquivo(MetadadoTree metadados) {
+		Metadado metadado = metadados.getObjetoSelecionado();
+
+		if (metadado != null) {
+			formulario.processar(criarArgs(metadado, "exportarMetadadoRaizFich"));
 		}
 	}
 

@@ -68,6 +68,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
 	private ObjetoFormulario objetoFormulario;
+	private String tituloTemporario;
 	private File arquivo;
 
 	public ObjetoContainer(Janela janela, Formulario formulario) {
@@ -240,6 +241,7 @@ public class ObjetoContainer extends AbstratoContainer {
 				XML.processar(arquivo, new ObjetoHandler(objetoColetor));
 				abrir(arquivo, objetoColetor, null, null);
 				txtPrefixoNomeTabela.limpar();
+				tituloTemporario = null;
 				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
@@ -254,6 +256,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			if (arquivo != null) {
 				objetoSuperficie.salvar(arquivo, getConexaoPadrao());
+				tituloTemporario = null;
 			} else {
 				salvarComo();
 			}
@@ -269,6 +272,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 				if (file != null) {
 					objetoSuperficie.salvar(file, getConexaoPadrao());
+					tituloTemporario = null;
 					arquivo = file;
 					setTitulo();
 				}
@@ -514,6 +518,14 @@ public class ObjetoContainer extends AbstratoContainer {
 		return ArquivoProvedor.criarStringPersistencia(getArquivo());
 	}
 
+	public String getTituloTemporario() {
+		return tituloTemporario;
+	}
+
+	public void setTituloTemporario(String tituloTemporario) {
+		this.tituloTemporario = tituloTemporario;
+	}
+
 	@Override
 	public Class<?> getClasseFabrica() {
 		return ObjetoFabrica.class;
@@ -534,6 +546,10 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	public String criarTitulo() {
+		if (tituloTemporario != null) {
+			return tituloTemporario;
+		}
+
 		return arquivo != null ? arquivo.getName() : Constantes.NOVO;
 	}
 

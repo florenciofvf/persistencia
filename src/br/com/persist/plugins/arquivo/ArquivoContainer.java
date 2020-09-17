@@ -182,15 +182,15 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		Arquivo arquivo = arauivoTree.getObjetoSelecionado();
 
 		if (arquivo != null) {
-			formulario.processar(abrirArquivo(arquivo.getFile(), false));
+			formulario.processar(criarArgs(arquivo.getFile(), false));
 		}
 	}
 
-	private Map<String, Object> abrirArquivo(File file, Boolean fichario) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("abrir_arquivo", file);
-		map.put("fichario", fichario);
-		return map;
+	private Map<String, Object> criarArgs(File file, Boolean fichario) {
+		Map<String, Object> args = new HashMap<>();
+		args.put(ArquivoEvento.ABRIR_ARQUIVO, file);
+		args.put(ArquivoEvento.FICHARIO, fichario);
+		return args;
 	}
 
 	@Override
@@ -221,10 +221,10 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 		if (arquivo != null) {
 			if (chkDuplicar.isSelected()) {
-				formulario.processar(abrirArquivo(arquivo.getFile(), true));
+				formulario.processar(criarArgs(arquivo.getFile(), true));
 			} else {
 				if (!formulario.isAberto(arquivo.getFile())) {
-					formulario.processar(abrirArquivo(arquivo.getFile(), true));
+					formulario.processar(criarArgs(arquivo.getFile(), true));
 				}
 			}
 

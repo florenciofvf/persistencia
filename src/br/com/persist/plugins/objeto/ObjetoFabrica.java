@@ -20,7 +20,10 @@ import br.com.persist.abstrato.Servico;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
+import br.com.persist.plugins.arquivo.ArquivoEvento;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
+import br.com.persist.plugins.metadado.Metadado;
+import br.com.persist.plugins.metadado.MetadadoEvento;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
@@ -41,11 +44,16 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
 			File file = ArquivoProvedor.restaurarStringPersistencia(stringPersistencia);
-			ObjetoContainer container = new ObjetoContainer(null, formulario);
-			container.setAbortarFecharComESCSuperficie(true);
+			ObjetoContainer container = criarObjetoContainer(formulario);
 			container.abrirArquivo(file);
 			return container;
 		}
+	}
+
+	private ObjetoContainer criarObjetoContainer(Formulario formulario) {
+		ObjetoContainer container = new ObjetoContainer(null, formulario);
+		container.setAbortarFecharComESCSuperficie(true);
+		return container;
 	}
 
 	@Override
@@ -56,16 +64,71 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	private class ObjetoServico extends AbstratoServico {
 		@Override
 		public void processar(Formulario formulario, Map<String, Object> args) {
-			Boolean fichario = (Boolean) args.get("fichario");
-			File file = (File) args.get("abrir_arquivo");
+			checarArquivo(formulario, args);
+			checarMetadado(formulario, args);
+		}
+
+		private void checarArquivo(Formulario formulario, Map<String, Object> args) {
+			File file = (File) args.get(ArquivoEvento.ABRIR_ARQUIVO);
 
 			if (file != null) {
+				Boolean fichario = (Boolean) args.get(ArquivoEvento.FICHARIO);
+
 				if (Boolean.TRUE.equals(fichario)) {
 					Pagina pagina = getPaginaServico().criarPagina(formulario, file.getAbsolutePath());
 					ObjetoProvedor.setParentFile(file.getParentFile());
 					formulario.adicionarPagina(pagina);
 				} else {
 					abrirNoFormulario(formulario, file);
+				}
+			}
+		}
+
+		private void checarMetadado(Formulario formulario, Map<String, Object> args) {
+			Metadado metadado = (Metadado) args.get(MetadadoEvento.ABRIR_METADADO);
+
+			if (metadado != null) {
+				String metodo = (String) args.get(MetadadoEvento.METODO);
+				Boolean boolCircular = (Boolean) args.get(MetadadoEvento.CIRCULAR);
+				boolean circular = Boolean.TRUE.equals(boolCircular);
+
+				if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM.equals(metodo)) {
+					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
+							new File(Mensagens.getString("label.abrir_exportacao")));
+					form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+					posicao(formulario, form);
+
+				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
+					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
+							new File(Mensagens.getString("label.abrir_importacao")));
+					form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+					posicao(formulario, form);
+
+				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
+						&& !metadado.estaVazio()) {
+					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
+							new File(Mensagens.getString("label.exportar")));
+					form.exportarMetadadoRaiz(metadado);
+					posicao(formulario, form);
+
+				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH.equals(metodo)) {
+					ObjetoContainer container = criarObjetoContainer(formulario);
+					container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+					container.setTituloTemporario(Mensagens.getString("label.abrir_exportacao"));
+					formulario.adicionarPagina(container);
+
+				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FICH.equals(metodo)) {
+					ObjetoContainer container = criarObjetoContainer(formulario);
+					container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+					container.setTituloTemporario(Mensagens.getString("label.abrir_importacao"));
+					formulario.adicionarPagina(container);
+
+				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FICH.equals(metodo) && metadado.getEhRaiz()
+						&& !metadado.estaVazio()) {
+					ObjetoContainer container = criarObjetoContainer(formulario);
+					container.exportarMetadadoRaiz(metadado);
+					container.setTituloTemporario(Mensagens.getString("label.exportar"));
+					formulario.adicionarPagina(container);
 				}
 			}
 		}
@@ -143,17 +206,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file);
-
-		formulario.checarPreferenciasLarguraAltura();
-		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
-
-		if (pd != null) {
-			form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
-		} else {
-			form.setLocationRelativeTo(formulario);
-		}
-
-		form.setVisible(true);
+		posicao(formulario, form);
 	}
 
 	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, Graphics g,
@@ -177,7 +230,10 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			InternalConfig config) {
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file, coletor, g, config);
+		posicao(formulario, form);
+	}
 
+	private static void posicao(Formulario formulario, ObjetoFormulario form) {
 		formulario.checarPreferenciasLarguraAltura();
 		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
 
