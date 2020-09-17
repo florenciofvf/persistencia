@@ -29,7 +29,6 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
-import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
 
@@ -96,20 +95,20 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 							new File(Mensagens.getString("label.abrir_exportacao")));
 					form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-					posicao(formulario, form);
+					Formulario.posicionarJanela(formulario, form);
 
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 							new File(Mensagens.getString("label.abrir_importacao")));
 					form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-					posicao(formulario, form);
+					Formulario.posicionarJanela(formulario, form);
 
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 							new File(Mensagens.getString("label.exportar")));
 					form.exportarMetadadoRaiz(metadado);
-					posicao(formulario, form);
+					Formulario.posicionarJanela(formulario, form);
 
 				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH.equals(metodo)) {
 					ObjetoContainer container = criarObjetoContainer(formulario);
@@ -206,7 +205,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file);
-		posicao(formulario, form);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, Graphics g,
@@ -230,19 +229,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			InternalConfig config) {
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file, coletor, g, config);
-		posicao(formulario, form);
-	}
-
-	private static void posicao(Formulario formulario, ObjetoFormulario form) {
-		formulario.checarPreferenciasLarguraAltura();
-		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
-
-		if (pd != null) {
-			form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
-		} else {
-			form.setLocationRelativeTo(formulario);
-		}
-
-		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 }

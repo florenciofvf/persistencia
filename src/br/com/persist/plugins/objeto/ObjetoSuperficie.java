@@ -64,7 +64,6 @@ import br.com.persist.principal.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
-import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.util.Vetor;
@@ -1998,16 +1997,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 		}
 
-		formulario.checarPreferenciasLarguraAltura();
-		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
-
-		if (pd != null) {
-			form.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
-		} else {
-			form.setLocationRelativeTo(formulario);
-		}
-
-		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	private void destacarDeskopPagina(List<Objeto> objetos, Conexao conexao, InternalConfig config) {

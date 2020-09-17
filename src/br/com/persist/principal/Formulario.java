@@ -10,6 +10,7 @@ import java.awt.Rectangle;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -232,7 +233,7 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	public PosicaoDimensao criarPosicaoDimensaoSeValido() {
+	private PosicaoDimensao criarPosicaoDimensaoSeValido() {
 		final int espaco = 3;
 		Dimension principalSize = getSize();
 		Point principalLocation = getLocation();
@@ -272,7 +273,7 @@ public class Formulario extends JFrame {
 		setSize((int) largura, principalSize.height);
 	}
 
-	public void checarPreferenciasLarguraAltura() {
+	private void checarPreferenciasLarguraAltura() {
 		if (Preferencias.isAplicarLarguraAoAbrirArquivoObjeto()) {
 			definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
 		}
@@ -280,5 +281,21 @@ public class Formulario extends JFrame {
 		if (Preferencias.isAplicarAlturaAoAbrirArquivoObjeto()) {
 			definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
 		}
+	}
+
+	public static void posicionarJanela(Formulario formulario, Window window) {
+		if (formulario == null || window == null) {
+			return;
+		}
+		formulario.checarPreferenciasLarguraAltura();
+		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
+
+		if (pd != null) {
+			window.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
+		} else {
+			window.setLocationRelativeTo(formulario);
+		}
+
+		window.setVisible(true);
 	}
 }
