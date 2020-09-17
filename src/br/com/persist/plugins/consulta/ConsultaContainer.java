@@ -149,6 +149,10 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
+		checarSelecionarConexao(formulario, args);
+	}
+
+	private void checarSelecionarConexao(Formulario formulario, Map<String, Object> args) {
 		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
