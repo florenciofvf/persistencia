@@ -36,7 +36,6 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
-import br.com.persist.util.PosicaoDimensao;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.xml.XML;
@@ -237,7 +236,7 @@ public class Formulario extends JFrame {
 		}
 	}
 
-	private PosicaoDimensao criarPosicaoDimensaoSeValido() {
+	private Rectangle criarPosicaoDimensaoSeValido() {
 		final int espaco = 3;
 		Dimension principalSize = getSize();
 		Point principalLocation = getLocation();
@@ -250,14 +249,14 @@ public class Formulario extends JFrame {
 			int y = principalLocation.y + principalSize.height + espaco;
 			int l = principalSize.width;
 			int a = configuraSize.height - principalSize.height - espaco;
-			return new PosicaoDimensao(x, y, l, a);
+			return new Rectangle(x, y, l, a);
 
 		} else if (porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()) {
 			int x = principalLocation.x + principalSize.width + espaco;
 			int y = principalLocation.y;
 			int l = configuraSize.width - principalSize.width - espaco;
 			int a = principalSize.height;
-			return new PosicaoDimensao(x, y, l, a);
+			return new Rectangle(x, y, l, a);
 		}
 
 		return null;
@@ -292,10 +291,10 @@ public class Formulario extends JFrame {
 			return;
 		}
 		formulario.checarPreferenciasLarguraAltura();
-		PosicaoDimensao pd = formulario.criarPosicaoDimensaoSeValido();
+		Rectangle pd = formulario.criarPosicaoDimensaoSeValido();
 
 		if (pd != null) {
-			window.setBounds(pd.getX(), pd.getY(), pd.getLargura(), pd.getAltura());
+			window.setBounds((int) pd.getX(), (int) pd.getY(), (int) pd.getWidth(), (int) pd.getHeight());
 		} else {
 			window.setLocationRelativeTo(formulario);
 		}
