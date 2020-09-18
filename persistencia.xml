@@ -6,7 +6,7 @@
 		<menu classeFabrica="br.com.persist.plugins.objeto.DesktopFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.anexo.AnexoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.arquivo.ArquivoFabrica" ativo="true" />
-		<menu classeFabrica="br.com.persist.principal.PrincipalFabrica" ativo="true" />
+		<menu classeFabrica="br.com.persist.formulario.PrincipalFabrica" ativo="true" />
 	</menu>
 
 	<menu descricao="Banco">
