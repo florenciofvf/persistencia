@@ -16,7 +16,7 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
 
-public class PrincipalFabrica extends AbstratoFabricaContainer {
+public class FormularioFabrica extends AbstratoFabricaContainer {
 	private JMenuItem itemFechar = new JMenuItem(Mensagens.getString("label.fechar"), Icones.SAIR);
 
 	@Override
