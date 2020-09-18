@@ -5,9 +5,9 @@ import java.awt.Graphics;
 import java.io.File;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
-import br.com.persist.principal.Formulario;
 
 public class ObjetoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;

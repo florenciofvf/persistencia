@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 

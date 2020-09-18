@@ -42,7 +42,7 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import br.com.persist.abstrato.FabricaContainer;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;

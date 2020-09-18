@@ -1,4 +1,4 @@
-package br.com.persist.principal;
+package br.com.persist.formulario;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

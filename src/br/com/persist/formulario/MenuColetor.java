@@ -1,4 +1,4 @@
-package br.com.persist.principal;
+package br.com.persist.formulario;
 
 import java.util.ArrayList;
 import java.util.List;

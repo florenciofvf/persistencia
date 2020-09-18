@@ -3,7 +3,7 @@ package br.com.persist.plugins.ambiente;
 import java.awt.BorderLayout;
 
 import br.com.persist.abstrato.AbstratoFormulario;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 
 public class AmbienteFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;

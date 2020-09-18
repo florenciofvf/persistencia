@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.parser;
+package br.com.persist.parser;
 
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;

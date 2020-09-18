@@ -1,4 +1,4 @@
-package br.com.persist.principal;
+package br.com.persist.formulario;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;

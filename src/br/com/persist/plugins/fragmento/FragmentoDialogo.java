@@ -5,7 +5,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 

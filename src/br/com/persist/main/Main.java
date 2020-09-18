@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Preferencias;

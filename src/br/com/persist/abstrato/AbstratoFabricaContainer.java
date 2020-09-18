@@ -7,7 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.fichario.PaginaServico;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 
 public class AbstratoFabricaContainer implements FabricaContainer {
 	@Override

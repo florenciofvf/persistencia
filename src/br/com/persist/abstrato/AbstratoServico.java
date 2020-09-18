@@ -2,7 +2,7 @@ package br.com.persist.abstrato;
 
 import java.util.Map;
 
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoServico implements Servico {
 

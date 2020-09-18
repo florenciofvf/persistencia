@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 
 public class AmbienteDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;

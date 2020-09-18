@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.parser;
+package br.com.persist.parser;
 
 public class Atom {
 	static final byte CHAVE_INI = 1;

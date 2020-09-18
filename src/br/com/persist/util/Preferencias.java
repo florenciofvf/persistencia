@@ -10,7 +10,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.UIManager;
 
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 
 public class Preferencias {
 	private static boolean aplicarLarguraAoAbrirArquivoObjeto;

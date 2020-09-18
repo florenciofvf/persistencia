@@ -6,7 +6,7 @@ import java.util.Map;
 
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoPagina implements Pagina {
 	@Override

@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.parser;
+package br.com.persist.parser;
 
 import java.awt.Color;
 import java.util.Objects;
@@ -9,11 +9,11 @@ import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-public class Numero extends Tipo {
+public class Logico extends Tipo {
 	private static final MutableAttributeSet att;
-	private final Number conteudo;
+	private final Boolean conteudo;
 
-	public Numero(Number conteudo) {
+	public Logico(Boolean conteudo) {
 		Objects.requireNonNull(conteudo);
 		this.conteudo = conteudo;
 	}
@@ -37,6 +37,6 @@ public class Numero extends Tipo {
 
 	static {
 		att = new SimpleAttributeSet();
-		StyleConstants.setForeground(att, new Color(0, 125, 0));
+		StyleConstants.setForeground(att, Color.red);
 	}
 }

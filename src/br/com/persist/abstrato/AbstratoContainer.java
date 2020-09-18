@@ -7,7 +7,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
-import br.com.persist.principal.Formulario;
+import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoContainer extends Panel implements Pagina {
 	private static final long serialVersionUID = 1L;
