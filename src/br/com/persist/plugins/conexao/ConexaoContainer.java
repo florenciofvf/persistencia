@@ -32,6 +32,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.formulario.FormularioEvento;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ConexaoContainer extends AbstratoContainer {
@@ -118,7 +119,7 @@ public class ConexaoContainer extends AbstratoContainer {
 
 			desconectaAcao.setActionListener(e -> {
 				Map<String, Object> args = new HashMap<>();
-				args.put("fechar_conexoes", true);
+				args.put(FormularioEvento.FECHAR_CONEXOES, true);
 				formulario.processar(args);
 				tabela.repaint();
 			});
@@ -133,13 +134,11 @@ public class ConexaoContainer extends AbstratoContainer {
 			StringBuilder builder = new StringBuilder();
 
 			for (ConexaoInfo info : lista) {
-				builder.append("ABA: " + info.getNomeAba() + Constantes.QL);
-				builder.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
-
+				builder.append("PAGINA: " + info.getNomeAba() + Constantes.QL);
 				if (!Util.estaVazio(info.getConexaoFile())) {
-					builder.append("FILE: " + info.getConexaoFile() + Constantes.QL);
+					builder.append("ARQUIVO: " + info.getConexaoFile() + Constantes.QL);
 				}
-
+				builder.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
 				builder.append(Constantes.QL);
 			}
 

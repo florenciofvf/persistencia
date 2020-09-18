@@ -18,6 +18,7 @@ import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.formulario.FormularioEvento;
 
 public class ConexaoFabrica extends AbstratoFabricaContainer {
 
@@ -46,7 +47,7 @@ public class ConexaoFabrica extends AbstratoFabricaContainer {
 
 		@Override
 		public void processar(Formulario formulario, Map<String, Object> args) {
-			Boolean fechar = (Boolean) args.get("fechar_conexoes");
+			Boolean fechar = (Boolean) args.get(FormularioEvento.FECHAR_CONEXOES);
 
 			if (Boolean.TRUE.equals(fechar)) {
 				try {

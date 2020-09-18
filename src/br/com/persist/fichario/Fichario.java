@@ -46,6 +46,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.formulario.FormularioEvento;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
@@ -324,7 +325,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	public void processar(Formulario formulario, Map<String, Object> args) {
-		Boolean fechar = (Boolean) args.get("fechar_formulario");
+		Boolean fechar = (Boolean) args.get(FormularioEvento.FECHAR_FORMULARIO);
 
 		if (Boolean.TRUE.equals(fechar)) {
 			fechandoFormulario(formulario);

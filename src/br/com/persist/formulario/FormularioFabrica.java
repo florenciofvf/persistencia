@@ -52,8 +52,8 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 	private void fechar(Formulario formulario, boolean fecharConexao) {
 		if (Util.confirmar(formulario, "label.confirma_fechar")) {
 			Map<String, Object> args = new HashMap<>();
-			args.put("fechar_conexoes", fecharConexao);
-			args.put("fechar_formulario", true);
+			args.put(FormularioEvento.FECHAR_CONEXOES, fecharConexao);
+			args.put(FormularioEvento.FECHAR_FORMULARIO, true);
 			formulario.processar(args);
 			System.exit(0);
 		}
