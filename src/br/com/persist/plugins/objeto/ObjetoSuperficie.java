@@ -726,7 +726,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void abrirObjetoDados(Conexao conexao, Objeto objeto, Frame frame) {
-		ExternalFormulario form = ExternalFormulario.criar(conexao, objeto, getGraphics());
+		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
 	}
@@ -1659,8 +1659,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		if (Preferencias.isAbrirAutoDestacado()) {
 			ExternalFormulario form = ExternalFormulario.criar(conexao, objeto, getGraphics());
-			form.setLocationRelativeTo(container.getFrame());
-			form.setVisible(true);
+			Formulario.posicionarJanela(formulario, form);
 		} else {
 			objeto.setSelecionado(true);
 		}

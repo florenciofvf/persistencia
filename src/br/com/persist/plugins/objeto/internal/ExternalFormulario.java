@@ -30,6 +30,12 @@ public class ExternalFormulario extends AbstratoFormulario {
 	}
 
 	public static ExternalFormulario criar(Conexao padrao, Objeto objeto, Graphics g) {
+		ExternalFormulario form = new ExternalFormulario(padrao, objeto, g);
+		form.setVisible(true);
+		return form;
+	}
+
+	public static ExternalFormulario criar2(Conexao padrao, Objeto objeto, Graphics g) {
 		return new ExternalFormulario(padrao, objeto, g);
 	}
 
