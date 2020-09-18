@@ -1658,7 +1658,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		objeto.setTabelaBuscaAuto(tabela);
 
 		if (Preferencias.isAbrirAutoDestacado()) {
-			ExternalFormulario form = ExternalFormulario.criar(conexao, objeto, getGraphics());
+			ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
+			form.setLocationRelativeTo(formulario);
+			form.setVisible(true);
 			Formulario.posicionarJanela(formulario, form);
 		} else {
 			objeto.setSelecionado(true);
