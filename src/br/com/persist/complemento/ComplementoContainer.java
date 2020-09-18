@@ -14,16 +14,16 @@ import javax.swing.JList;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
+import br.com.persist.assistencia.ColecaoStringModelo;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextArea;
-import br.com.persist.util.ColecaoStringModelo;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
-import br.com.persist.util.Util;
 
 public class ComplementoContainer extends Panel {
 	private static final long serialVersionUID = 1L;

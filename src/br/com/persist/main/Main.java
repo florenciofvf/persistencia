@@ -12,10 +12,10 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Imagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Imagens;
-import br.com.persist.util.Preferencias;
 
 public class Main {
 	private static final Logger LOG = Logger.getGlobal();

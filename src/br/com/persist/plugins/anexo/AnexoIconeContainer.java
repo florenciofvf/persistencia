@@ -15,12 +15,12 @@ import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
+import br.com.persist.assistencia.Imagens;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.util.Imagens;
 
 public class AnexoIconeContainer extends Panel {
 	private static final long serialVersionUID = 1L;

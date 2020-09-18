@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class XMLUtil {
 	private final PrintWriter pw;

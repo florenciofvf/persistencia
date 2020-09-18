@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.plugins.conexao.Conexao;
-import br.com.persist.util.Constantes;
 
 public class Persistencia {
 	private static final String FKCOLUMN_NAME = "FKCOLUMN_NAME";

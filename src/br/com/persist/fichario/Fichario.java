@@ -42,10 +42,10 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import br.com.persist.abstrato.FabricaContainer;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Preferencias;
-import br.com.persist.util.Util;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;

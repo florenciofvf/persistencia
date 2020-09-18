@@ -19,8 +19,8 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Imagens;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Imagens;
 
 public class AnexoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();

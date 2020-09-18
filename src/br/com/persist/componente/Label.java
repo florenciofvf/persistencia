@@ -4,8 +4,9 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

@@ -13,8 +13,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class ConexaoEditorStatus extends JPanel implements TableCellEditor {
 	private final transient List<CellEditorListener> listeners;

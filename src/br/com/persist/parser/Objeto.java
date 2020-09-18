@@ -11,8 +11,8 @@ import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class Objeto extends Tipo {
 	private static final MutableAttributeSet att2;

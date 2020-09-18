@@ -9,6 +9,9 @@ import java.awt.BorderLayout;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
@@ -19,9 +22,6 @@ import br.com.persist.plugins.objeto.auto.BuscaAutoUtil;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
 import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
 import br.com.persist.plugins.objeto.auto.LinkAutoUtil;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Util;
 
 public class MiscelaniaContainer extends Panel {
 	private static final long serialVersionUID = 1L;

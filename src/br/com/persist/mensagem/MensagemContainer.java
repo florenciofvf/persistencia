@@ -2,11 +2,12 @@ package br.com.persist.mensagem;
 
 import java.awt.BorderLayout;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
-import br.com.persist.util.Util;
+
 import static br.com.persist.componente.BarraButtonEnum.*;
 
 public class MensagemContainer extends Panel {

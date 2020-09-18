@@ -3,7 +3,7 @@ package br.com.persist.componente;
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Mensagens;
 
 public class CheckBoxItem extends JCheckBoxMenuItem {
 	private static final long serialVersionUID = 1L;

@@ -10,7 +10,7 @@ import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class Array extends Tipo {
 	private static final MutableAttributeSet att;

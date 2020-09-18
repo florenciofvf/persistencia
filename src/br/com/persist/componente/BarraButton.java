@@ -4,9 +4,10 @@ import java.awt.Component;
 
 import javax.swing.JToolBar;
 
-import br.com.persist.util.Icones;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
+
 import static br.com.persist.componente.BarraButtonEnum.*;
 
 public class BarraButton extends JToolBar {

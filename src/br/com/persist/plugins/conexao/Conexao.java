@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.util.Util;
 
 public class Conexao {
 	private String inicioComplemento;

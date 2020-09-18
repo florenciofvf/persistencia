@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 import java.awt.Color;
 import java.io.File;

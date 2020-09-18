@@ -5,9 +5,9 @@ import java.awt.Dialog;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
 
 public class VariavelDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;

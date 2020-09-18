@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.util.Constantes;
 
 public class MapeamentoProvedor {
 	private static final List<Mapeamento> lista = new ArrayList<>();

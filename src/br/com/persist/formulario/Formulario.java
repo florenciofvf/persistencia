@@ -32,13 +32,13 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.Servico;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.marca.XML;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
-import br.com.persist.util.Util;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.assistencia;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;

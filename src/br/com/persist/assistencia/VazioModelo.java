@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.assistencia;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

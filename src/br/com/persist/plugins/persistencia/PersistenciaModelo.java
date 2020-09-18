@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Preferencias;
-import br.com.persist.util.Util;
 
 public class PersistenciaModelo implements TableModel {
 	private static final Logger LOG = Logger.getGlobal();

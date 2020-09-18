@@ -16,8 +16,8 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.Janela;
-import br.com.persist.util.Constantes;
 
 public abstract class AbstratoDialogo extends JDialog implements Janela {
 	private static final long serialVersionUID = 1L;

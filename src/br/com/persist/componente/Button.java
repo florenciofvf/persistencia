@@ -3,7 +3,7 @@ package br.com.persist.componente;
 import javax.swing.Action;
 import javax.swing.JButton;
 
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Mensagens;
 
 public class Button extends JButton {
 	private static final long serialVersionUID = 1L;

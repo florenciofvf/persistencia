@@ -1,6 +1,6 @@
 package br.com.persist.plugins.persistencia;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class Coluna {
 	private final boolean colunaInfo;

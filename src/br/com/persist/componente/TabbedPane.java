@@ -6,7 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Mensagens;
 
 public class TabbedPane extends JTabbedPane {
 	private static final long serialVersionUID = 1L;

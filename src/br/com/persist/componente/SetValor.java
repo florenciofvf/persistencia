@@ -8,8 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetValor.Valor;
-import br.com.persist.util.Util;
 
 public class SetValor {
 	private SetValor() {

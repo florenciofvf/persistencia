@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import br.com.persist.util.Icones;
+import br.com.persist.assistencia.Icones;
 
 public class ArquivoRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = 1L;

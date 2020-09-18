@@ -23,6 +23,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
@@ -42,10 +46,6 @@ import br.com.persist.plugins.objeto.InstrucaoFormulario;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Util;
 
 public class ObjetoContainer extends Panel {
 	private static final long serialVersionUID = 1L;

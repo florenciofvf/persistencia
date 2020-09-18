@@ -2,12 +2,12 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.util.List;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.objeto.auto.BuscaAutoColetor;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.tabela.TabelaPersistencia;
-import br.com.persist.util.Util;
 
 public class InternalUtil {
 	private InternalUtil() {

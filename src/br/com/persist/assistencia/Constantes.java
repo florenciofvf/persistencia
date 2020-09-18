@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.assistencia;
 
 import java.awt.BasicStroke;
 import java.awt.Dimension;

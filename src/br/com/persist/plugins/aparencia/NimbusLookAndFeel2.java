@@ -3,7 +3,7 @@ package br.com.persist.plugins.aparencia;
 import javax.swing.UIDefaults;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class NimbusLookAndFeel2 extends NimbusLookAndFeel {
 	private static final long serialVersionUID = 1L;

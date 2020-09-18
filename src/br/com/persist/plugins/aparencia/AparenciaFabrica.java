@@ -15,9 +15,9 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public class AparenciaFabrica extends AbstratoFabricaContainer {
 	private ItemLAF padrao;

@@ -14,14 +14,14 @@ import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
-import br.com.persist.util.Icones;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends Panel implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;

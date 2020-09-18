@@ -14,8 +14,8 @@ import javax.swing.KeyStroke;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.Janela;
-import br.com.persist.util.Constantes;
 
 public abstract class AbstratoInternalFrame extends JInternalFrame implements Janela {
 	private static final long serialVersionUID = 1L;

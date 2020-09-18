@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.assistencia;
 
 import java.util.ArrayList;
 import java.util.List;

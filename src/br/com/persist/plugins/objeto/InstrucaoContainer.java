@@ -7,13 +7,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Util;
+
 import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;

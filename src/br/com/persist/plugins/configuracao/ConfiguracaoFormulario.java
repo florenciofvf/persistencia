@@ -3,10 +3,10 @@ package br.com.persist.plugins.configuracao;
 import java.awt.BorderLayout;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
 
 public class ConfiguracaoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;

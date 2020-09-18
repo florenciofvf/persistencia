@@ -13,11 +13,11 @@ import javax.swing.JComboBox;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Preferencias;
 
 public class ConexaoProvedor {
 	private static final Map<Conexao, Connection> CONEXOES = new HashMap<>();

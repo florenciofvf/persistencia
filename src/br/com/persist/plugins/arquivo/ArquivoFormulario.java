@@ -3,9 +3,9 @@ package br.com.persist.plugins.arquivo;
 import java.awt.BorderLayout;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
 
 public class ArquivoFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;

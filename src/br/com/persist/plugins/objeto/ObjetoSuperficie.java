@@ -31,6 +31,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
+import br.com.persist.assistencia.Vetor;
 import br.com.persist.componente.Acao;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.Label;
@@ -62,12 +68,6 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 import br.com.persist.plugins.persistencia.Persistencia;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
-import br.com.persist.util.Util;
-import br.com.persist.util.Vetor;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private static final long serialVersionUID = 1L;

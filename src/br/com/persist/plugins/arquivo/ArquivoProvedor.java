@@ -2,8 +2,8 @@ package br.com.persist.plugins.arquivo;
 
 import java.io.File;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class ArquivoProvedor {
 	private ArquivoProvedor() {

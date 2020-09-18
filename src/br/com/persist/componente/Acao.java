@@ -4,7 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
 
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Mensagens;
 
 public abstract class Acao extends AbstractAction {
 	private static final long serialVersionUID = 1L;

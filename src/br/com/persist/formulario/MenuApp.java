@@ -10,11 +10,11 @@ import javax.swing.JMenuItem;
 import org.xml.sax.Attributes;
 
 import br.com.persist.abstrato.FabricaContainer;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Fabrica;
+import br.com.persist.assistencia.Imagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Menu;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Fabrica;
-import br.com.persist.util.Imagens;
-import br.com.persist.util.Util;
 
 public class MenuApp {
 	private final List<MenuApp> filhos;

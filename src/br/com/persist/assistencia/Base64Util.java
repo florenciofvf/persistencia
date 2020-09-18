@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.assistencia;
 
 import javax.xml.bind.DatatypeConverter;
 

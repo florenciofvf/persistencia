@@ -5,8 +5,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
 
 public class LabelTextTemp extends JLabel implements Runnable {
 	private static final long serialVersionUID = 1L;

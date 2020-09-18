@@ -6,8 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class TextArea extends JScrollPane {
 	private static final long serialVersionUID = 1L;

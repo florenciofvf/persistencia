@@ -12,12 +12,12 @@ import java.util.List;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
 
 public class ArquivoTree extends Tree {
 	private static final long serialVersionUID = 1L;

@@ -1,8 +1,8 @@
 package br.com.persist.plugins.mapeamento;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public class Mapeamento {
 	private final String nome;

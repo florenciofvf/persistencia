@@ -2,7 +2,7 @@ package br.com.persist.plugins.mapeamento;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class MapeamentoModelo extends AbstractTableModel {
 	private static final String[] COLUNAS = { "NOME", "VALOR" };

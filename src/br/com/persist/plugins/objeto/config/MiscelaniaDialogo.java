@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dialog;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.plugins.objeto.Objeto;
-import br.com.persist.util.Mensagens;
 
 public class MiscelaniaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;

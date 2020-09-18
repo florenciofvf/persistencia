@@ -12,7 +12,7 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 	private final transient List<CellEditorListener> listeners;

@@ -7,8 +7,8 @@ import java.util.Objects;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class OrdenacaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;

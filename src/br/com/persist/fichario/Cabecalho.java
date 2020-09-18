@@ -20,12 +20,12 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
 
 class Cabecalho extends Panel {
 	private static final Logger LOG = Logger.getGlobal();

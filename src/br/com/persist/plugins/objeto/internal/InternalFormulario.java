@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.abstrato.AbstratoInternalFrame;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
@@ -23,8 +25,6 @@ import br.com.persist.plugins.objeto.auto.TabelaBuscaAutoApos;
 import br.com.persist.plugins.objeto.auto.TabelaLinkAuto;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public class InternalFormulario extends AbstratoInternalFrame {
 	private static final Logger LOG = Logger.getGlobal();

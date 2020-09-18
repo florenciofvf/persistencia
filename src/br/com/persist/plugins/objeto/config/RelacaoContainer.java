@@ -25,6 +25,8 @@ import javax.swing.JSeparator;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
@@ -38,8 +40,6 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public class RelacaoContainer extends Panel {
 	private static final long serialVersionUID = 1L;

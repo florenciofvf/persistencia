@@ -16,17 +16,17 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.Popup;
-import br.com.persist.util.Icones;
 import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
-import br.com.persist.util.Constantes;
 import br.com.persist.componente.MenuPadrao2;
-import br.com.persist.util.Preferencias;
-import br.com.persist.util.Util;
 
 public class TabelaPersistencia extends JTable {
 	private static final long serialVersionUID = 1L;

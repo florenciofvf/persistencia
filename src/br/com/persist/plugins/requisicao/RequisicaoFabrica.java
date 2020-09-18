@@ -7,12 +7,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
 
 public class RequisicaoFabrica extends AbstratoFabricaContainer {
 

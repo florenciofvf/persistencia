@@ -3,8 +3,8 @@ package br.com.persist.plugins.persistencia.tabela;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
-import br.com.persist.util.Util;
 
 public class TabelaPersistenciaUtil {
 	private TabelaPersistenciaUtil() {

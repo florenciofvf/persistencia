@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import br.com.persist.assistencia.Util;
+import br.com.persist.assistencia.Vetor;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
@@ -16,8 +18,7 @@ import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
-import br.com.persist.util.Util;
-import br.com.persist.util.Vetor;
+
 import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 
 public class CircularContainer extends Panel {

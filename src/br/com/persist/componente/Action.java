@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 
 public class Action extends Acao {
 	private static final long serialVersionUID = 1L;

@@ -27,6 +27,11 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Popup;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
@@ -46,11 +51,6 @@ import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
-import br.com.persist.util.Util;
 
 public class Desktop extends AbstratoDesktop implements Pagina {
 	private static final long serialVersionUID = 1L;

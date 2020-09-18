@@ -17,6 +17,10 @@ import javax.swing.KeyStroke;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
@@ -27,10 +31,6 @@ import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoEvento;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Util;
 
 public class ObjetoFabrica extends AbstratoFabricaContainer {
 

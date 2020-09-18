@@ -4,10 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.circular.CircularContainer.Tipo;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Mensagens;
 
 public class CircularDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;

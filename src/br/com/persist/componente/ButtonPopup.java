@@ -4,7 +4,7 @@ import java.awt.Component;
 
 import javax.swing.Icon;
 
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Mensagens;
 
 public class ButtonPopup extends Button {
 	private static final long serialVersionUID = 1L;

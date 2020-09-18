@@ -7,12 +7,12 @@ import java.awt.Frame;
 import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
-import br.com.persist.util.Util;
 
 public class TabelaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;

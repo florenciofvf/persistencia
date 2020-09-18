@@ -2,7 +2,7 @@ package br.com.persist.plugins.fragmento;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class FragmentoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;

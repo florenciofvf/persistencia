@@ -3,7 +3,7 @@ package br.com.persist.plugins.objeto.auto;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class GrupoLinkAuto {
 	private final List<TabelaLinkAuto> tabelas;

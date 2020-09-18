@@ -42,6 +42,13 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.CellRenderer;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.TransferidorTabular;
+import br.com.persist.assistencia.Util;
 import br.com.persist.complemento.ComplementoDialogo;
 import br.com.persist.complemento.ComplementoListener;
 import br.com.persist.componente.Acao;
@@ -96,13 +103,6 @@ import br.com.persist.plugins.update.UpdateFormulario;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
-import br.com.persist.util.CellRenderer;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Icones;
-import br.com.persist.util.Mensagens;
-import br.com.persist.util.Preferencias;
-import br.com.persist.util.TransferidorTabular;
-import br.com.persist.util.Util;
 
 public class InternalContainer extends Panel implements ActionListener, ItemListener, Runnable, Pagina {
 	private static final long serialVersionUID = 1L;

@@ -4,7 +4,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JMenuItem;
 
-import br.com.persist.util.Mensagens;
+import br.com.persist.assistencia.Mensagens;
 
 public class MenuItem extends JMenuItem {
 	private static final long serialVersionUID = 1L;

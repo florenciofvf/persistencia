@@ -7,8 +7,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import br.com.persist.util.Icones;
-import br.com.persist.util.Util;
+import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 
 public class ConexaoRendererStatus extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;

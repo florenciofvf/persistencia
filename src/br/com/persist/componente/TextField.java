@@ -2,7 +2,7 @@ package br.com.persist.componente;
 
 import javax.swing.JTextField;
 
-import br.com.persist.util.Constantes;
+import br.com.persist.assistencia.Constantes;
 
 public class TextField extends JTextField {
 	private static final long serialVersionUID = 1L;

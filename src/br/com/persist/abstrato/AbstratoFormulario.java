@@ -14,9 +14,9 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Janela;
-import br.com.persist.util.Constantes;
-import br.com.persist.util.Util;
 
 public abstract class AbstratoFormulario extends JFrame implements Janela {
 	private static final long serialVersionUID = 1L;
