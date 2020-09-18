@@ -21,7 +21,6 @@ import br.com.persist.util.Icones;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.Sistema;
 import br.com.persist.util.Util;
 
 public class CabecalhoColuna extends Panel implements TableCellRenderer {
@@ -155,7 +154,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		private transient WindowListener windowListenerInner = new WindowAdapter() {
 			@Override
 			public void windowOpened(java.awt.event.WindowEvent e) {
-				if (Sistema.getInstancia().isMac()) {
+				if (Util.isMac()) {
 					int alturaArea = textField.getHeight();
 					int alturaForm = getHeight();
 					setLocation(getX(), getY() + (alturaForm - alturaArea));

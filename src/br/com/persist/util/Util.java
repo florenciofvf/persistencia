@@ -274,7 +274,7 @@ public class Util {
 	}
 
 	public static void configWindowC(Window window) {
-		if (Sistema.getInstancia().isMac()) {
+		if (isMac()) {
 			try {
 				Class<?> classe = Class.forName("com.apple.eawt.FullScreenUtilities");
 				Method method = classe.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);
@@ -602,5 +602,10 @@ public class Util {
 
 	public static double porcentagemEmValor(double porcentagem, double maior) {
 		return (porcentagem * maior) / 100;
+	}
+
+	public static boolean isMac() {
+		String s = System.getProperty("os.name");
+		return s != null && s.startsWith("Mac OS");
 	}
 }
