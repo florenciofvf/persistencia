@@ -209,7 +209,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		@Override
 		protected void destacarEmFormulario() {
-			if (formulario.excluirPagina(ObjetoContainer.this)) {
+			if (formulario.liberarPagina(ObjetoContainer.this)) {
 				ObjetoFormulario.criar(formulario, ObjetoContainer.this);
 			}
 		}
@@ -528,8 +528,18 @@ public class ObjetoContainer extends AbstratoContainer {
 		objetoSuperficie.adicionadoAoFichario(fichario);
 	}
 
+	@Override
+	public void excluindoDoFichario(Fichario fichario) {
+		excluido();
+	}
+
 	public void formularioVisivel() {
 		toolbar.formularioVisivel();
+		objetoSuperficie.executarAoAbrirParent();
+	}
+
+	public void formularioFechado() {
+		excluido();
 	}
 
 	@Override

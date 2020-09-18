@@ -99,7 +99,7 @@ class Cabecalho extends Panel {
 			int i = fichario.indexOfTabComponent(Cabecalho.this);
 
 			if (i != -1) {
-				fichario.remove(i);
+				fichario.excluirPagina(i);
 			}
 		}
 

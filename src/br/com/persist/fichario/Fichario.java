@@ -350,8 +350,19 @@ public class Fichario extends JTabbedPane {
 
 	public void fecharTodos() {
 		while (getTabCount() > 0) {
-			removeTabAt(0);
+			excluirPagina(0);
 		}
+	}
+
+	public boolean liberarPagina(Pagina pagina) {
+		int indice = getIndice(pagina);
+
+		if (indice == -1) {
+			return false;
+		}
+
+		remove(indice);
+		return true;
 	}
 
 	public boolean excluirPagina(Pagina pagina) {

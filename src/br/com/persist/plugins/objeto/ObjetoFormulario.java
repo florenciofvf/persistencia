@@ -74,4 +74,9 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	public void executarAoAbrirFormulario() {
 		container.formularioVisivel();
 	}
+
+	@Override
+	public void executarAoFecharFormulario() {
+		container.formularioFechado();
+	}
 }
