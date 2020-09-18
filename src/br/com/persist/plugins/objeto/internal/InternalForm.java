@@ -2,8 +2,8 @@ package br.com.persist.plugins.objeto.internal;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.util.Util;
-import br.com.persist.xml.XMLUtil;
 
 public class InternalForm {
 	private String apelido;

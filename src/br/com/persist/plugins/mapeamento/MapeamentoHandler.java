@@ -3,9 +3,9 @@ package br.com.persist.plugins.mapeamento;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import br.com.persist.marca.XMLHandler;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
-import br.com.persist.xml.XMLHandler;
 
 class MapeamentoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();

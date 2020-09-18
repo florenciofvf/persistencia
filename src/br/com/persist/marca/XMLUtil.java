@@ -1,4 +1,4 @@
-package br.com.persist.xml;
+package br.com.persist.marca;
 
 import java.io.File;
 import java.io.PrintWriter;

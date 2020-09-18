@@ -21,6 +21,7 @@ import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XML;
 import br.com.persist.plugins.arquivo.ArquivoEvento;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
@@ -30,7 +31,6 @@ import br.com.persist.util.Constantes;
 import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Util;
-import br.com.persist.xml.XML;
 
 public class ObjetoFabrica extends AbstratoFabricaContainer {
 

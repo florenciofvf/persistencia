@@ -25,6 +25,7 @@ import javax.swing.Icon;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
@@ -32,7 +33,6 @@ import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Imagens;
 import br.com.persist.util.Util;
-import br.com.persist.xml.XMLUtil;
 
 public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);

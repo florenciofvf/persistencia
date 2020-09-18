@@ -9,9 +9,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.componente.SetValor.Valor;
+import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.util.Constantes;
-import br.com.persist.xml.XML;
-import br.com.persist.xml.XMLUtil;
 
 public class FragmentoProvedor {
 	private static final List<Fragmento> listaBackup = new ArrayList<>();

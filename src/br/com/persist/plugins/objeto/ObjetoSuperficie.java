@@ -39,6 +39,7 @@ import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
@@ -67,7 +68,6 @@ import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 import br.com.persist.util.Vetor;
-import br.com.persist.xml.XMLUtil;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private static final long serialVersionUID = 1L;

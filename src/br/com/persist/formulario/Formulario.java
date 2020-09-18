@@ -34,11 +34,11 @@ import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
+import br.com.persist.marca.XML;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
-import br.com.persist.xml.XML;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;

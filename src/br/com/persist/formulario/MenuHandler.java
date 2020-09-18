@@ -3,7 +3,7 @@ package br.com.persist.formulario;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.xml.XMLHandler;
+import br.com.persist.marca.XMLHandler;
 
 class MenuHandler extends XMLHandler {
 	private final MenuColetor coletor;

@@ -3,7 +3,7 @@ package br.com.persist.plugins.conexao;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.xml.XMLHandler;
+import br.com.persist.marca.XMLHandler;
 
 class ConexaoHandler extends XMLHandler {
 	private final ConexaoColetor coletor;

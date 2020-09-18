@@ -3,10 +3,10 @@ package br.com.persist.plugins.objeto;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import br.com.persist.marca.XMLHandler;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.util.Constantes;
 import br.com.persist.util.Util;
-import br.com.persist.xml.XMLHandler;
 
 public class ObjetoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();

@@ -1,4 +1,4 @@
-package br.com.persist.xml;
+package br.com.persist.marca;
 
 import org.xml.sax.helpers.DefaultHandler;
 

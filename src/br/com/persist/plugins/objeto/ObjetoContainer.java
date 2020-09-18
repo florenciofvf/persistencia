@@ -43,6 +43,7 @@ import br.com.persist.componente.ToggleButton;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XML;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
@@ -57,7 +58,6 @@ import br.com.persist.util.Icones;
 import br.com.persist.util.Mensagens;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
-import br.com.persist.xml.XML;
 
 public class ObjetoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
