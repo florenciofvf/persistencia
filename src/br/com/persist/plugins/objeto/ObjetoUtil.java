@@ -92,20 +92,17 @@ public class ObjetoUtil {
 			return null;
 		}
 
-		if (mapaChaveValor == null) {
-			mapaChaveValor = new HashMap<>();
+		if (mapaChaveValor != null) {
+			Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
+
+			while (it.hasNext()) {
+				Entry<String, String> entry = it.next();
+				instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
+				instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
+				instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
+			}
 		}
 
-		Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
-
-		while (it.hasNext()) {
-			Entry<String, String> entry = it.next();
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
-			instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
-		}
-
-		instrucao = VariavelProvedor.substituir(instrucao);
-		return instrucao;
+		return VariavelProvedor.substituir(instrucao);
 	}
 }

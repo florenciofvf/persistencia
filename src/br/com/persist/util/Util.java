@@ -21,10 +21,7 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -605,18 +602,5 @@ public class Util {
 
 	public static double porcentagemEmValor(double porcentagem, double maior) {
 		return (porcentagem * maior) / 100;
-	}
-
-	public static String substituir(String string, Map<String, String> mapa) {
-		if (string != null && mapa != null) {
-			Iterator<Map.Entry<String, String>> it = mapa.entrySet().iterator();
-
-			while (it.hasNext()) {
-				Entry<String, String> entry = it.next();
-				string = string.replaceAll("#" + entry.getKey() + "#", entry.getValue());
-			}
-		}
-
-		return string;
 	}
 }

@@ -1,4 +1,4 @@
-package br.com.persist.util;
+package br.com.persist.plugins.persistencia;
 
 import java.util.List;
 import java.util.Objects;

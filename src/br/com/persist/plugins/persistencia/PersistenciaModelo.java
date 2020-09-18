@@ -15,7 +15,6 @@ import javax.swing.table.TableModel;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.util.Constantes;
-import br.com.persist.util.IndiceValor;
 import br.com.persist.util.Preferencias;
 import br.com.persist.util.Util;
 
