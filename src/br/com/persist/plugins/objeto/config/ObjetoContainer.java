@@ -15,13 +15,18 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.StyledDocument;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -40,6 +45,10 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
+import br.com.persist.parser.Parser;
+import br.com.persist.parser.ParserDialogo;
+import br.com.persist.parser.ParserListener;
+import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.InstrucaoFormulario;
@@ -50,6 +59,7 @@ import br.com.persist.plugins.objeto.macro.MacroProvedor;
 public class ObjetoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
+	private static final Logger LOG = Logger.getGlobal();
 	private final ObjetoSuperficie objetoSuperficie;
 	private final transient Objeto objeto;
 	private final Fichario fichario;
@@ -74,7 +84,6 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelGeral extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private TextField txtBuscaAutomatica = new TextField();
 		private TextField txtLinkAutomatico = new TextField();
 		private TextField txtFinalConsulta = new TextField();
 		private CheckBox chkAjusteAutoEnter = new CheckBox();
@@ -109,11 +118,10 @@ public class ObjetoContainer extends Panel {
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
 			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
-			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
-			txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
-			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
+			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
+			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
 			txtSelectAlter.setText(objeto.getSelectAlternativo());
 			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
 			chkTransparente.setSelected(objeto.isTransparente());
@@ -139,7 +147,6 @@ public class ObjetoContainer extends Panel {
 			txtY.setText(VAZIO + objeto.getY());
 			txtId.setText(objeto.getId());
 
-			txtBuscaAutomatica.addFocusListener(focusListenerInner);
 			txtLinkAutomatico.addFocusListener(focusListenerInner);
 			txtFinalConsulta.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
@@ -160,7 +167,6 @@ public class ObjetoContainer extends Panel {
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
 
-			txtBuscaAutomatica.addActionListener(this);
 			chkAjusteAutoEnter.addActionListener(this);
 			chkAjusteAutoForm.addActionListener(this);
 			txtLinkAutomatico.addActionListener(this);
@@ -217,7 +223,6 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaComLink("label.arquivo", txtArquivo,
 					Mensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
-			container.add(criarLinha("label.buscaAuto", txtBuscaAutomatica, Mensagens.getString("hint.buscaAuto")));
 			container.add(criarLinha("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
 			container.add(criarLinha("label.linkAuto", txtLinkAutomatico, Mensagens.getString("hint.linkAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
@@ -235,12 +240,10 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter,
 					Mensagens.getString("hint.ajuste_auto_enter", Mensagens.getString("label.ajuste_auto_form"))));
 
-			txtBuscaAutomatica.addMouseListener(buscaAutomaticaListener);
 			txtLinkAutomatico.addMouseListener(linkAutomaticoListener);
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
 
-			txtBuscaAutomatica.setEnabled(false);
 			txtLinkAutomatico.setEnabled(false);
 
 			add(BorderLayout.CENTER, container);
@@ -249,20 +252,6 @@ public class ObjetoContainer extends Panel {
 		private void mensagemPropriedadeArquivo(Label label) {
 			Util.mensagem(ObjetoContainer.this, Mensagens.getString("msg.propriedade_arquivo"));
 		}
-
-		private transient MouseListener buscaAutomaticaListener = new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.BUSCA_AUTO);
-					form.setLocationRelativeTo(ObjetoContainer.this);
-					form.setVisible(true);
-
-					txtBuscaAutomatica.setText(objeto.getBuscaAutomatica());
-				}
-			}
-		};
 
 		private transient MouseListener linkAutomaticoListener = new MouseAdapter() {
 			@Override
@@ -333,9 +322,6 @@ public class ObjetoContainer extends Panel {
 
 			} else if (txtIntervalo == e.getSource()) {
 				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
-
-			} else if (txtBuscaAutomatica == e.getSource()) {
-				objeto.setBuscaAutomatica(txtBuscaAutomatica.getText());
 
 			} else if (txtLinkAutomatico == e.getSource()) {
 				objeto.setLinkAutomatico(txtLinkAutomatico.getText());
@@ -504,6 +490,102 @@ public class ObjetoContainer extends Panel {
 		};
 	}
 
+	private class PanelBuscaAuto extends Panel {
+		private static final long serialVersionUID = 1L;
+		private final Toolbar toolbar = new Toolbar();
+		private final JTextPane textArea = new JTextPane();
+
+		private PanelBuscaAuto() {
+			textArea.setText(objeto.getBuscaAutomatica());//
+			add(BorderLayout.NORTH, toolbar);
+			add(BorderLayout.CENTER, textArea);
+			textArea.addKeyListener(keyListenerInner);
+			toolbar.ini();
+		}
+
+		private transient KeyListener keyListenerInner = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				objeto.setBuscaAutomatica(textArea.getText());
+			}
+		};
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+			private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
+			private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
+
+			public void ini() {
+				addButton(formatarAcao);
+				addButton(modeloAcao);
+				addButton(colarAcao);
+				formatarAcao.setActionListener(e -> formatar());
+				modeloAcao.setActionListener(e -> modelo());
+				colarAcao.setActionListener(e -> colar());
+			}
+
+			private void modelo() {
+				ParserDialogo form = ParserDialogo.criar((Dialog) null, parserListener);
+				form.setLocationRelativeTo(objetoSuperficie);
+				form.setVisible(true);
+			}
+
+			private transient ParserListener parserListener = new ParserListener() {
+				@Override
+				public void setParserTipo(Tipo tipo) {
+					LOG.log(Level.FINEST, "setParserTipo");
+				}
+
+				@Override
+				public boolean somenteModelo() {
+					return true;
+				}
+
+				@Override
+				public String getModelo() {
+					return Mensagens.getString("busca_auto.modelo");
+				}
+
+				@Override
+				public String getTitle() {
+					return objeto.getId();
+				}
+			};
+
+			@Override
+			protected void colar() {
+				Util.getContentTransfered(textArea);
+			}
+
+			private void formatar() {
+				if (Util.estaVazio(textArea.getText())) {
+					return;
+				}
+
+				String backup = textArea.getText();
+				String string = Util.getString(textArea);
+				textArea.setText(Constantes.VAZIO);
+
+				try {
+					Parser parser = new Parser();
+					Tipo json = parser.parse(string);
+
+					StyledDocument styledDoc = textArea.getStyledDocument();
+
+					if (styledDoc instanceof AbstractDocument) {
+						AbstractDocument doc = (AbstractDocument) styledDoc;
+						json.toString(doc, false, 0);
+					}
+
+					textArea.requestFocus();
+				} catch (Exception ex) {
+					textArea.setText(backup);
+					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
+				}
+			}
+		}
+	}
+
 	private class PanelInstrucao extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Dimension dimension = new Dimension(Constantes.QUARENTA, Constantes.TREZENTOS_QUARENTA_UM);
@@ -626,6 +708,7 @@ public class ObjetoContainer extends Panel {
 		private Fichario() {
 			addTab("label.geral", new ScrollPane(new PanelGeral()));
 			addTab("label.descricao", new PanelDescricao());
+			addTab("label.buscaAuto", new PanelBuscaAuto());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
 			addTab("label.instrucoes", panelInstrucao);

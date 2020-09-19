@@ -38,8 +38,8 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	private void montarLayout(Objeto objeto, Tipo tipo) {
-		add(BorderLayout.CENTER, textArea);
 		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, textArea);
 
 		StringBuilder builder = new StringBuilder();
 

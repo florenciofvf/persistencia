@@ -73,9 +73,8 @@ public class ObjetoHandler extends XMLHandler {
 				obj.addInstrucao(i);
 			}
 
-		} else if ("desc".equals(qName) || Constantes.VALOR.equals(qName)) {
+		} else if ("desc".equals(qName) || Constantes.VALOR.equals(qName) || "buscaAutomatica".equals(qName)) {
 			limpar();
-
 		}
 	}
 
@@ -95,20 +94,10 @@ public class ObjetoHandler extends XMLHandler {
 			selecionado = null;
 
 		} else if ("desc".equals(qName) && selecionado != null) {
-			String string = builder.toString();
+			setDescricao();
 
-			if (!Util.estaVazio(string)) {
-				if (selecionado instanceof Objeto) {
-					Objeto obj = (Objeto) selecionado;
-					obj.setDescricao(string.trim());
-
-				} else if (selecionado instanceof Relacao) {
-					Relacao rel = (Relacao) selecionado;
-					rel.setDescricao(string.trim());
-				}
-			}
-
-			limpar();
+		} else if ("buscaAutomatica".equals(qName) && selecionado != null) {
+			setBuscaAutomatica();
 
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();
@@ -120,6 +109,34 @@ public class ObjetoHandler extends XMLHandler {
 
 			limpar();
 		}
+	}
+
+	private void setDescricao() {
+		String string = builder.toString();
+
+		if (!Util.estaVazio(string)) {
+			if (selecionado instanceof Objeto) {
+				Objeto obj = (Objeto) selecionado;
+				obj.setDescricao(string.trim());
+
+			} else if (selecionado instanceof Relacao) {
+				Relacao rel = (Relacao) selecionado;
+				rel.setDescricao(string.trim());
+			}
+		}
+
+		limpar();
+	}
+
+	private void setBuscaAutomatica() {
+		String string = builder.toString();
+
+		if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
+			Objeto obj = (Objeto) selecionado;
+			obj.setBuscaAutomatica(string.trim());
+		}
+
+		limpar();
 	}
 
 	@Override

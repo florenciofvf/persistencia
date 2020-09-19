@@ -403,6 +403,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 	}
 
 	private transient ParserListener parserListener = new ParserListener() {
+		@Override
 		public void setParserTipo(Tipo tipo) {
 			LOG.log(Level.FINEST, "setParserTipo");
 		}

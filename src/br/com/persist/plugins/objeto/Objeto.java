@@ -173,7 +173,6 @@ public class Objeto implements Runnable {
 		selectAlternativo = attr.getValue("selectAlternativo");
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
 		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
-		buscaAutomatica = attr.getValue("buscaAutomatica");
 		linkAutomatico = attr.getValue("linkAutomatico");
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
@@ -201,7 +200,6 @@ public class Objeto implements Runnable {
 		util.abrirTag("objeto");
 		util.atributo("id", Util.escapar(id));
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
-		util.atributo("buscaAutomatica", Util.escapar(getBuscaAutomatica()));
 		util.atributo("linkAutomatico", Util.escapar(getLinkAutomatico()));
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
@@ -238,6 +236,12 @@ public class Objeto implements Runnable {
 			util.abrirTag2("desc");
 			util.conteudo(Util.escapar(getDescricao())).ql();
 			util.finalizarTag("desc");
+		}
+
+		if (!Util.estaVazio(getBuscaAutomatica())) {
+			util.abrirTag2("buscaAutomatica");
+			util.conteudo(Util.escapar(getBuscaAutomatica())).ql();
+			util.finalizarTag("buscaAutomatica");
 		}
 
 		for (Instrucao i : instrucoes) {
