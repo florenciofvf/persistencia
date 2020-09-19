@@ -172,10 +172,11 @@ public class VariavelContainer extends AbstratoContainer {
 				for (int i : linhas) {
 					Variavel v = VariavelProvedor.getVariavel(i);
 					String nome = v.getNome() + "_" + Constantes.TEMP;
-					VariavelProvedor.adicionar(new Variavel(nome, v.getValor()));
+					VariavelProvedor.adicionar(v.clonar(nome));
 				}
 
 				variavelModelo.fireTableDataChanged();
+				ajustarTabela();
 			}
 		}
 	}

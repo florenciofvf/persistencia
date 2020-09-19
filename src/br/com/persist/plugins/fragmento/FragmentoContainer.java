@@ -195,10 +195,11 @@ public class FragmentoContainer extends AbstratoContainer {
 				for (int i : linhas) {
 					Fragmento f = FragmentoProvedor.getFragmento(i);
 					String resumo = f.getResumo() + "_" + Constantes.TEMP;
-					FragmentoProvedor.adicionar(new Fragmento(resumo, f.getGrupo()));
+					FragmentoProvedor.adicionar(f.clonar(resumo));
 				}
 
 				fragmentoModelo.fireTableDataChanged();
+				ajustarTabela();
 			}
 		}
 

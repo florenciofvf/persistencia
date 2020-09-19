@@ -20,8 +20,8 @@ public class Fragmento {
 		this.grupo = grupo;
 	}
 
-	public Fragmento clonar() {
-		Fragmento c = new Fragmento(resumo, grupo);
+	public Fragmento clonar(String novoResumo) {
+		Fragmento c = new Fragmento(novoResumo, grupo);
 		c.valor = valor;
 		return c;
 	}

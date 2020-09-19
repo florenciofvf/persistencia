@@ -75,8 +75,8 @@ public class Conexao {
 		return !Util.estaVazio(nome);
 	}
 
-	public Conexao clonar() {
-		Conexao c = new Conexao(nome);
+	public Conexao clonar(String novoNome) {
+		Conexao c = new Conexao(novoNome);
 
 		c.inicioComplemento = inicioComplemento;
 		c.finalComplemento = finalComplemento;

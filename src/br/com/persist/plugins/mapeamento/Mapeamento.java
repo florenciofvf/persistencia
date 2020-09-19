@@ -20,8 +20,8 @@ public class Mapeamento {
 		this.nome = nome;
 	}
 
-	public Mapeamento clonar() {
-		return new Mapeamento(nome, valor);
+	public Mapeamento clonar(String novoNome) {
+		return new Mapeamento(novoNome, valor);
 	}
 
 	public void salvar(XMLUtil util) {

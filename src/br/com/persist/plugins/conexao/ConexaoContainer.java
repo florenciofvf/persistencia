@@ -233,10 +233,11 @@ public class ConexaoContainer extends AbstratoContainer {
 				for (int i : linhas) {
 					Conexao c = ConexaoProvedor.getConexao(i);
 					String nome = c.getNome() + "_" + Constantes.TEMP;
-					ConexaoProvedor.adicionar(new Conexao(nome));
+					ConexaoProvedor.adicionar(c.clonar(nome));
 				}
 
 				conexaoModelo.fireTableDataChanged();
+				ajustarTabela();
 			}
 		}
 

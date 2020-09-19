@@ -20,8 +20,8 @@ public class Variavel {
 		this.nome = nome;
 	}
 
-	public Variavel clonar() {
-		return new Variavel(nome, valor);
+	public Variavel clonar(String novoNome) {
+		return new Variavel(novoNome, valor);
 	}
 
 	public void salvar(XMLUtil util) {
