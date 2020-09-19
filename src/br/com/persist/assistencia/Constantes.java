@@ -72,6 +72,7 @@ public class Constantes {
 	public static final String LABEL_CIRCULAR = "label.circular";
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
 	public static final String ABRIR_VISIVEL = "ABRIR_VISIVEL:";
+	public static final String PAINEL_PARSER = "PAINEL PARSER";
 	public static final String PAINEL_SELECT = "PAINEL SELECT";
 	public static final String PAINEL_UPDATE = "PAINEL UPDATE";
 	public static final String LABEL_TABELAS = "label.tabelas";

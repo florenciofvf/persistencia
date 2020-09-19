@@ -1,0 +1,126 @@
+package br.com.persist.parser;
+
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
+import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
+
+import java.awt.BorderLayout;
+
+import javax.swing.JTextPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.StyledDocument;
+
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Janela;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.TabbedPane;
+
+public class ParserContainer extends Panel {
+	private static final long serialVersionUID = 1L;
+	private final JTextPane areaModelo = new JTextPane();
+	private final JTextPane areaEdicao = new JTextPane();
+	private final TabbedPane fichario = new TabbedPane();
+	private final transient ParserListener listener;
+	private final Toolbar toolbar = new Toolbar();
+
+	public ParserContainer(Janela janela, ParserListener listener) {
+		this.listener = listener;
+		toolbar.ini(janela);
+		montarLayout();
+	}
+
+	private void montarLayout() {
+		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, fichario);
+		if (!listener.somenteModelo()) {
+			fichario.addTab("label.modelo", areaEdicao);
+			setString(areaEdicao, listener.getModelo());
+		}
+		fichario.addTab("label.modelo", areaModelo);
+		setString(areaModelo, listener.getModelo());
+	}
+
+	private void setString(JTextPane area, String string) {
+		if (Util.estaVazio(string)) {
+			return;
+		}
+
+		area.setText(Constantes.VAZIO);
+
+		try {
+			Parser parser = new Parser();
+			Tipo json = parser.parse(string);
+			StyledDocument styledDoc = area.getStyledDocument();
+
+			if (styledDoc instanceof AbstractDocument) {
+				AbstractDocument doc = (AbstractDocument) styledDoc;
+				json.toString(doc, false, 0);
+			}
+
+			area.requestFocus();
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(Constantes.PAINEL_PARSER, ex, this);
+		}
+	}
+
+	private class Toolbar extends BarraButton {
+		private static final long serialVersionUID = 1L;
+
+		public void ini(Janela janela) {
+			if (!listener.somenteModelo()) {
+				super.ini(janela, LIMPAR, COPIAR, COLAR, APLICAR);
+			} else {
+				super.ini(janela, COPIAR);
+			}
+		}
+
+		@Override
+		protected void limpar() {
+			areaEdicao.setText(Constantes.VAZIO);
+		}
+
+		@Override
+		protected void copiar() {
+			String string = null;
+			if (!listener.somenteModelo()) {
+				string = Util.getString(areaEdicao);
+			} else {
+				string = Util.getString(areaModelo);
+			}
+			Util.setContentTransfered(string);
+			copiarMensagem(string);
+			if (!listener.somenteModelo()) {
+				areaEdicao.requestFocus();
+			} else {
+				areaModelo.requestFocus();
+			}
+		}
+
+		@Override
+		protected void colar() {
+			Util.getContentTransfered(areaEdicao);
+		}
+
+		@Override
+		protected void aplicar() {
+			if (Util.estaVazio(areaEdicao.getText())) {
+				return;
+			}
+
+			String string = Util.getString(areaEdicao);
+
+			try {
+				Parser parser = new Parser();
+				Tipo json = parser.parse(string);
+				listener.setParserTipo(json);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(Constantes.PAINEL_PARSER, ex, this);
+			}
+
+			fechar();
+		}
+	}
+}

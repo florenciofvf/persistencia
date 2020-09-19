@@ -15,6 +15,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,6 +31,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
@@ -58,6 +61,8 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.parser.Objeto;
 import br.com.persist.parser.Parser;
+import br.com.persist.parser.ParserDialogo;
+import br.com.persist.parser.ParserListener;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.variaveis.Variavel;
@@ -67,6 +72,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final RequisicaoFichario fichario = new RequisicaoFichario();
 	private static final File file = new File("requisicoes");
+	private static final Logger LOG = Logger.getGlobal();
 	private RequisicaoFormulario requisicaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private RequisicaoDialogo requisicaoDialogo;
@@ -165,6 +171,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
+		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
 		private CheckBox chkCopiarAccessT = new CheckBox();
@@ -179,6 +186,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			add(chkCopiarAccessT);
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
+			addButton(modeloAcao);
 			addButton(true, base64Acao);
 
 			String hint = Mensagens.getString("label.copiar_access_token", Mensagens.getString("label.resposta_json"));
@@ -199,6 +207,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			atualizarAcao.setActionListener(e -> atualizar());
 			formatarAcao.setActionListener(e -> formatar());
 			base64Acao.setActionListener(e -> base64());
+			modeloAcao.setActionListener(e -> modelo());
 		}
 
 		@Override
@@ -378,6 +387,12 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
+		private void modelo() {
+			ParserDialogo form = ParserDialogo.criar((Dialog) null, parserListener);
+			form.setLocationRelativeTo(formulario);
+			form.setVisible(true);
+		}
+
 		private void base64() {
 			Pagina ativa = fichario.getPaginaAtiva();
 
@@ -386,6 +401,27 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 	}
+
+	private transient ParserListener parserListener = new ParserListener() {
+		public void setParserTipo(Tipo tipo) {
+			LOG.log(Level.FINEST, "setParserTipo");
+		}
+
+		@Override
+		public boolean somenteModelo() {
+			return true;
+		}
+
+		@Override
+		public String getModelo() {
+			return Mensagens.getString("requisicao.modelo");
+		}
+
+		@Override
+		public String getTitle() {
+			return Mensagens.getString(Constantes.LABEL_REQUISICAO);
+		}
+	};
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
