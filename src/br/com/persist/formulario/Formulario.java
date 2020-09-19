@@ -238,24 +238,24 @@ public class Formulario extends JFrame {
 
 	private Rectangle criarPosicaoDimensaoSeValido() {
 		final int espaco = 3;
-		Dimension principalSize = getSize();
-		Point principalLocation = getLocation();
-		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
-		double porcentagemLargura = Util.menorEmPorcentagem(principalSize.width, configuraSize.width);
-		double porcentagemAltura = Util.menorEmPorcentagem(principalSize.height, configuraSize.height);
+		Dimension formularioSize = getSize();
+		Point formularioLocation = getLocation();
+		Rectangle monitorBounds = getGraphicsConfiguration().getBounds();
+		double porcentagemLargura = Util.menorEmPorcentagem(formularioSize.width, monitorBounds.width);
+		double porcentagemAltura = Util.menorEmPorcentagem(formularioSize.height, monitorBounds.height);
 
 		if (porcentagemAltura <= Preferencias.getPorcVerticalLocalForm()) {
-			int x = principalLocation.x;
-			int y = principalLocation.y + principalSize.height + espaco;
-			int l = principalSize.width;
-			int a = configuraSize.height - principalSize.height - espaco;
+			int x = formularioLocation.x;
+			int y = formularioLocation.y + formularioSize.height + espaco;
+			int l = formularioSize.width;
+			int a = monitorBounds.height - formularioSize.height - espaco;
 			return new Rectangle(x, y, l, a);
 
 		} else if (porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()) {
-			int x = principalLocation.x + principalSize.width + espaco;
-			int y = principalLocation.y;
-			int l = configuraSize.width - principalSize.width - espaco;
-			int a = principalSize.height;
+			int x = formularioLocation.x + formularioSize.width + espaco;
+			int y = formularioLocation.y;
+			int l = monitorBounds.width - formularioSize.width - espaco;
+			int a = formularioSize.height;
 			return new Rectangle(x, y, l, a);
 		}
 
