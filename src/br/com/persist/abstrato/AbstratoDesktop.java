@@ -148,6 +148,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			int largura = getSize().width - 20;
 
 			for (JInternalFrame frame : getAllFrames()) {
+				if (!frame.isVisible()) {
+					continue;
+				}
 				Dimension size = frame.getSize();
 				Point local = frame.getLocation();
 
