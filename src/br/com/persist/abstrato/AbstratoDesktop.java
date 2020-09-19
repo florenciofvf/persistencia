@@ -32,6 +32,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			int y = 10;
 
 			for (JInternalFrame frame : getAllFrames()) {
+				if (!frame.isVisible()) {
+					continue;
+				}
 				frame.setSize(largura, altura);
 				frame.setLocation(0, y);
 				y += altura + 20;
@@ -116,6 +119,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			double largura = getSize().getWidth();
 
 			for (JInternalFrame frame : getAllFrames()) {
+				if (!frame.isVisible()) {
+					continue;
+				}
 				if (frame.getWidth() >= largura) {
 					frame.setLocation(0, frame.getY());
 				} else {
@@ -315,6 +321,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			int altura = 0;
 
 			for (JInternalFrame frame : getAllFrames()) {
+				if (!frame.isVisible()) {
+					continue;
+				}
 				int x = frame.getX();
 				int y = frame.getY();
 				int l = frame.getWidth();
