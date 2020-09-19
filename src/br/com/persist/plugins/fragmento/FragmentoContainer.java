@@ -144,32 +144,41 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		@Override
 		protected void novo() {
-			Object resp = Util.getValorInputDialog(FragmentoContainer.this, "label.id",
-					Mensagens.getString("label.nome_fragmento"), Constantes.VAZIO);
+			String resumo = getValor(Mensagens.getString("label.nome_fragmento"), Constantes.VAZIO);
 
-			if (resp == null || Util.estaVazio(resp.toString())) {
+			if (resumo == null) {
 				return;
 			}
 
-			String resumo = resp.toString();
+			String grupo = getValor(Mensagens.getString("label.grupo"), Constantes.VAZIO);
 
-			if (FragmentoProvedor.contem(resumo)) {
-				Util.mensagem(FragmentoContainer.this, Mensagens.getString("label.indentificador_ja_existente"));
+			if (grupo == null) {
 				return;
 			}
 
-			resp = Util.getValorInputDialog(FragmentoContainer.this, "label.id", Mensagens.getString("label.grupo"),
-					Constantes.VAZIO);
+			adicionar(new Fragmento(resumo, grupo));
+		}
 
-			if (resp == null || Util.estaVazio(resp.toString())) {
+		private void adicionar(Fragmento frag) {
+			if (FragmentoProvedor.contem(frag)) {
+				Util.mensagem(FragmentoContainer.this,
+						Mensagens.getString("label.indentificador_ja_existente") + " " + frag.getResumo());
 				return;
 			}
 
-			String grupo = resp.toString();
-
-			FragmentoProvedor.adicionar(new Fragmento(resumo, grupo));
+			FragmentoProvedor.adicionar(frag);
 			fragmentoModelo.fireTableDataChanged();
 			ajustarTabela();
+		}
+
+		private String getValor(String mensagem, String padrao) {
+			Object resp = Util.getValorInputDialog(FragmentoContainer.this, "label.id", mensagem, padrao);
+
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return null;
+			}
+
+			return resp.toString();
 		}
 
 		@Override

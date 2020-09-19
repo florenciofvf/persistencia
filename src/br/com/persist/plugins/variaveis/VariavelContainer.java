@@ -133,23 +133,33 @@ public class VariavelContainer extends AbstratoContainer {
 
 		@Override
 		protected void novo() {
-			Object resp = Util.getValorInputDialog(VariavelContainer.this, "label.id",
-					Mensagens.getString("label.nome_variavel"), Constantes.VAZIO);
+			String nome = getValor(Constantes.VAZIO);
+			if (nome != null) {
+				adicionar(new Variavel(nome));
+			}
+		}
 
-			if (resp == null || Util.estaVazio(resp.toString())) {
+		private void adicionar(Variavel var) {
+			if (VariavelProvedor.contem(var)) {
+				Util.mensagem(VariavelContainer.this,
+						Mensagens.getString("label.indentificador_ja_existente") + " " + var.getNome());
 				return;
 			}
 
-			String nome = resp.toString();
-
-			if (VariavelProvedor.contem(nome)) {
-				Util.mensagem(VariavelContainer.this, Mensagens.getString("label.indentificador_ja_existente"));
-				return;
-			}
-
-			VariavelProvedor.adicionar(new Variavel(nome));
+			VariavelProvedor.adicionar(var);
 			variavelModelo.fireTableDataChanged();
 			ajustarTabela();
+		}
+
+		private String getValor(String padrao) {
+			Object resp = Util.getValorInputDialog(VariavelContainer.this, "label.id",
+					Mensagens.getString("label.nome_variavel"), padrao);
+
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return null;
+			}
+
+			return resp.toString();
 		}
 
 		@Override

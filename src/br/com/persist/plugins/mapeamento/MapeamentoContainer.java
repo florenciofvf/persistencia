@@ -133,23 +133,33 @@ public class MapeamentoContainer extends AbstratoContainer {
 
 		@Override
 		protected void novo() {
-			Object resp = Util.getValorInputDialog(MapeamentoContainer.this, "label.id",
-					Mensagens.getString("label.nome_mapeamento"), Constantes.VAZIO);
+			String nome = getValor(Constantes.VAZIO);
+			if (nome != null) {
+				adicionar(new Mapeamento(nome));
+			}
+		}
 
-			if (resp == null || Util.estaVazio(resp.toString())) {
+		private void adicionar(Mapeamento map) {
+			if (MapeamentoProvedor.contem(map)) {
+				Util.mensagem(MapeamentoContainer.this,
+						Mensagens.getString("label.indentificador_ja_existente") + " " + map.getNome());
 				return;
 			}
 
-			String nome = resp.toString();
-
-			if (MapeamentoProvedor.contem(nome)) {
-				Util.mensagem(MapeamentoContainer.this, Mensagens.getString("label.indentificador_ja_existente"));
-				return;
-			}
-
-			MapeamentoProvedor.adicionar(new Mapeamento(nome));
+			MapeamentoProvedor.adicionar(map);
 			mapeamentoModelo.fireTableDataChanged();
 			ajustarTabela();
+		}
+
+		private String getValor(String padrao) {
+			Object resp = Util.getValorInputDialog(MapeamentoContainer.this, "label.id",
+					Mensagens.getString("label.nome_mapeamento"), padrao);
+
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return null;
+			}
+
+			return resp.toString();
 		}
 
 		@Override

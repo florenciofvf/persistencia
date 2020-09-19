@@ -33,7 +33,6 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioEvento;
-import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ConexaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
@@ -194,23 +193,33 @@ public class ConexaoContainer extends AbstratoContainer {
 
 		@Override
 		protected void novo() {
-			Object resp = Util.getValorInputDialog(ConexaoContainer.this, "label.id",
-					Mensagens.getString("label.nome_conexao"), Constantes.VAZIO);
+			String nome = getValor(Constantes.VAZIO);
+			if (nome != null) {
+				adicionar(new Conexao(nome));
+			}
+		}
 
-			if (resp == null || Util.estaVazio(resp.toString())) {
+		private void adicionar(Conexao con) {
+			if (ConexaoProvedor.contem(con)) {
+				Util.mensagem(ConexaoContainer.this,
+						Mensagens.getString("label.indentificador_ja_existente") + " " + con.getNome());
 				return;
 			}
 
-			String nome = resp.toString();
-
-			if (VariavelProvedor.contem(nome)) {
-				Util.mensagem(ConexaoContainer.this, Mensagens.getString("label.indentificador_ja_existente"));
-				return;
-			}
-
-			ConexaoProvedor.adicionar(new Conexao(nome));
+			ConexaoProvedor.adicionar(con);
 			conexaoModelo.fireTableDataChanged();
 			ajustarTabela();
+		}
+
+		private String getValor(String padrao) {
+			Object resp = Util.getValorInputDialog(ConexaoContainer.this, "label.id",
+					Mensagens.getString("label.nome_conexao"), padrao);
+
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return null;
+			}
+
+			return resp.toString();
 		}
 
 		@Override
