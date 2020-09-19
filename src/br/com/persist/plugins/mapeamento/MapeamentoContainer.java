@@ -181,12 +181,11 @@ public class MapeamentoContainer extends AbstratoContainer {
 			if (linhas != null) {
 				for (int i : linhas) {
 					Mapeamento m = MapeamentoProvedor.getMapeamento(i);
-					String nome = m.getNome() + "_" + Constantes.TEMP;
-					MapeamentoProvedor.adicionar(m.clonar(nome));
+					String nome = getValor(m.getNome());
+					if (nome != null) {
+						adicionar(m.clonar(nome));
+					}
 				}
-
-				mapeamentoModelo.fireTableDataChanged();
-				ajustarTabela();
 			}
 		}
 	}
