@@ -81,17 +81,16 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.auto.BuscaAutoUtil;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
-import br.com.persist.plugins.objeto.auto.GrupoBuscaAutoApos;
 import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
 import br.com.persist.plugins.objeto.auto.LinkAutoUtil;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.IndiceValor;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
+import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo.Parametros;
-import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColuna;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColunaListener;
 import br.com.persist.plugins.persistencia.tabela.TabelaDialogo;
@@ -151,7 +150,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		this.objeto = objeto;
 		montarLayout();
 		configurar();
-		processarObjeto(Constantes.VAZIO, g, null);
+		processarObjeto("", g, null);
 	}
 
 	private void montarLayout() {
@@ -465,6 +464,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				List<GrupoBuscaAuto> listaGrupo = BuscaAutoUtil.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
 
 				for (GrupoBuscaAuto grupo : listaGrupo) {
+					listaGrupoLink.add(grupo.getGrupoLinkAuto());
 					addMenu(new MenuBuscaAuto(grupo));
 				}
 
@@ -478,15 +478,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private class MenuBuscaAuto extends MenuPadrao2 {
 				private static final long serialVersionUID = 1L;
-				private final transient GrupoBuscaAutoApos grupoApos;
 				private final transient GrupoBuscaAuto grupo;
 
 				private MenuBuscaAuto(GrupoBuscaAuto grupo) {
 					super(grupo.getNome() + "." + grupo.getCampo(), Icones.CONFIG2, "nao_chave");
-
-					this.grupoApos = grupo.getGrupoBuscaAutoApos();
 					this.grupo = grupo;
-
 					semAspasAcao.setActionListener(e -> processar(false));
 					comAspasAcao.setActionListener(e -> processar(true));
 				}
@@ -513,7 +509,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					setEnabled(grupo.isProcessado());
 
 					if (grupo.isProcessado() && buscaAutomaticaAposListener != null) {
-						buscaAutomaticaAposListener.buscaAutomaticaApos(InternalContainer.this, grupoApos);
+						buscaAutomaticaAposListener.buscaAutomaticaApos(InternalContainer.this,
+								grupo.getGrupoBuscaAutoApos());
 					}
 
 					processarColunaInfo(coluna);
@@ -1411,9 +1408,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			Connection conn = ConexaoProvedor.getConnection(conexao);
 			Parametros param = criarParametros(conn, conexao, consulta.toString());
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
+			modeloOrdenacao.getModelo().setConexao(conexao);
 			objeto.setComplemento(txtComplemento.getText());
 			tabelaPersistencia.setModel(modeloOrdenacao);
-			modeloOrdenacao.getModelo().setConexao(conexao);
 			threadTitulo(getTituloAtualizado());
 			cabecalhoFiltro = null;
 			atualizarTitulo();
@@ -1615,13 +1612,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (model instanceof PersistenciaModelo) {
 			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
 
-			if (coluna == -1) {
-				return;
-			}
-
-			for (int i = 0; i < modelo.getRowCount(); i++) {
-				if (argumento.equals(modelo.getValueAt(i, coluna))) {
-					tabelaPersistencia.addRowSelectionInterval(i, i);
+			if (coluna != -1) {
+				for (int i = 0; i < modelo.getRowCount(); i++) {
+					if (argumento.equals(modelo.getValueAt(i, coluna))) {
+						tabelaPersistencia.addRowSelectionInterval(i, i);
+					}
 				}
 			}
 		}
@@ -1784,7 +1779,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 
 			List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
-
 			if (lista.size() != 1) {
 				return;
 			}

@@ -6,15 +6,21 @@ import java.util.List;
 public class GrupoBuscaAuto extends AbstratoGrupo {
 	private final GrupoBuscaAutoApos grupoBuscaAutoApos;
 	private final List<TabelaBuscaAuto> tabelas;
+	private final GrupoLinkAuto grupoLinkAuto;
 
 	public GrupoBuscaAuto(String nome, String campo) {
 		super(nome, campo);
 		grupoBuscaAutoApos = new GrupoBuscaAutoApos(campo);
+		grupoLinkAuto = new GrupoLinkAuto(campo);
 		tabelas = new ArrayList<>();
 	}
 
 	public void add(TabelaBuscaAuto tabela) {
 		tabelas.add(tabela);
+	}
+
+	public GrupoLinkAuto getGrupoLinkAuto() {
+		return grupoLinkAuto;
 	}
 
 	public GrupoBuscaAutoApos getGrupoBuscaAutoApos() {

@@ -48,15 +48,20 @@ public class BuscaAutoUtil {
 	}
 
 	private static void processarTabelas(GrupoBuscaAuto buscaAuto, Tipo tipo) {
+		GrupoLinkAuto linkAuto = buscaAuto.getGrupoLinkAuto();
 		if (tipo instanceof Array) {
 			for (Tipo tabela : ((Array) tipo).getLista()) {
 				if (tabela instanceof Objeto) {
 					Objeto obj = (Objeto) tabela;
 					Map<String, String> map = obj.getAtributosString();
-					TabelaBuscaAuto tabelaAuto = new TabelaBuscaAuto(map.get("apelido"), map.get("nome"),
-							map.get("campo"));
+					String apelido = map.get("apelido");
+					String campo = map.get("campo");
+					String nome = map.get("nome");
+					TabelaLinkAuto tabelaLink = new TabelaLinkAuto(apelido, nome, campo);
+					TabelaBuscaAuto tabelaAuto = new TabelaBuscaAuto(apelido, nome, campo);
 					tabelaAuto.setVazioInvisivel("invisivel".equalsIgnoreCase(map.get("vazio")));
 					buscaAuto.add(tabelaAuto);
+					linkAuto.add(tabelaLink);
 				}
 			}
 		}
