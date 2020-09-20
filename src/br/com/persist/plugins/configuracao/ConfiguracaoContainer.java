@@ -210,10 +210,10 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo));
 		container.add(new PanelCenter(new Label("label.form_ficha"), txtFormFicha));
 		container.add(new JSeparator());
-		container.add(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura));
-		container.add(new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto));
 		container.add(new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura));
 		container.add(new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto));
+		container.add(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura));
+		container.add(new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto));
 
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(container));
