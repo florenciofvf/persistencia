@@ -4,7 +4,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MutableAttributeSet;
 
-public class Tipo {
+public abstract class Tipo {
 	Tipo pai;
 
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
