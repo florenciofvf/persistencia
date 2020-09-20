@@ -43,6 +43,7 @@ public class BuscaAutoUtil {
 			GrupoBuscaAuto buscaAuto = new GrupoBuscaAuto(map.get("grupo"), map.get("campo"));
 			processarTabelas(buscaAuto, grupo.getValor("tabelas"));
 			processarLimparApos(buscaAuto.getGrupoBuscaAutoApos(), grupo.getValor("limparApos"));
+			lista.add(buscaAuto);
 		}
 	}
 
