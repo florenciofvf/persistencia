@@ -9,8 +9,7 @@ import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
 
 public interface InternalListener {
 	public interface BuscaAutomaticaApos {
-		public void buscaAutomaticaApos(InternalContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
-				boolean limparFormulariosRestantes);
+		public void buscaAutomaticaApos(InternalContainer objetoContainer, GrupoBuscaAutoApos grupoApos);
 	}
 
 	public interface BuscaAutomatica {
@@ -27,6 +26,10 @@ public interface InternalListener {
 
 	public interface Titulo {
 		public void setTitulo(String titulo);
+	}
+
+	public interface Visibilidade {
+		public void setVisible(boolean b);
 	}
 
 	public interface Selecao {

@@ -1,43 +1,20 @@
 package br.com.persist.plugins.objeto.auto;
 
-public class TabelaLinkAuto {
-	private final String apelido;
-	private final String campo;
-	private final String nome;
+import br.com.persist.assistencia.Util;
 
-	public TabelaLinkAuto(String apelidoTabelaCampo, String contextoDebug) {
-		int pos = apelidoTabelaCampo.indexOf('.');
-		TabelaBuscaAuto.checarPos(pos,
-				"SEM CAMPO DEFINIDO NO LINK AUTO -> " + contextoDebug + " > " + apelidoTabelaCampo);
-		String[] arrayApelidoTabela = TabelaBuscaAuto.separarApelidoTabela(apelidoTabelaCampo.substring(0, pos));
-		campo = apelidoTabelaCampo.substring(pos + 1).trim();
-		TabelaBuscaAuto.checarCampo(campo);
-		apelido = arrayApelidoTabela[0];
-		nome = arrayApelidoTabela[1];
-	}
-
-	public boolean igual(TabelaLinkAuto tabela) {
-		return apelido.equals(tabela.apelido) && nome.equals(tabela.nome);
+public class TabelaLinkAuto extends AbstratoTabela {
+	public TabelaLinkAuto(String apelido, String nome, String campo) {
+		super(apelido, nome, campo);
 	}
 
 	public String getApelidoTabelaCampo() {
-		return TabelaBuscaAuto.getApelidoTabelaCampo(apelido, nome, campo);
+		return getApelidoTabelaCampo(getApelido(), getNome(), getCampo());
 	}
 
-	public String getApelido() {
-		return apelido;
-	}
-
-	public String getCampo() {
-		return campo;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	@Override
-	public String toString() {
-		return nome;
+	public static String getApelidoTabelaCampo(String apelido, String nome, String campo) {
+		if (Util.estaVazio(apelido)) {
+			return nome + "." + campo;
+		}
+		return "(" + apelido + ")" + nome + "." + campo;
 	}
 }

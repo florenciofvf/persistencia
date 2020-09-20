@@ -8,7 +8,6 @@ public class GrupoBuscaAutoApos {
 	private final String campo;
 
 	public GrupoBuscaAutoApos(String campo) {
-		TabelaBuscaAuto.checarCampo(campo);
 		tabelas = new ArrayList<>();
 		this.campo = campo;
 	}
@@ -18,23 +17,7 @@ public class GrupoBuscaAutoApos {
 	}
 
 	public void add(TabelaBuscaAutoApos tabela) {
-		for (TabelaBuscaAutoApos obj : tabelas) {
-			if (obj.igual(tabela)) {
-				return;
-			}
-		}
-
 		tabelas.add(tabela);
-	}
-
-	public boolean contemLimparFormulariosRestantes() {
-		for (TabelaBuscaAutoApos obj : tabelas) {
-			if ("LIMPAR_FORMULARIOS_RESTANTES".equalsIgnoreCase(obj.getNome())) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public String getCampo() {

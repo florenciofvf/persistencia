@@ -114,6 +114,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private transient InternalListener.LinkAutomatico linkAutomaticoListener;
 	private transient TabelaListener tabelaListener = new TabelaListener();
+	private transient InternalListener.Visibilidade visibilidadeListener;
 	private transient InternalListener.Componente componenteListener;
 	private transient InternalListener.Dimensao dimensaoListener;
 	private final AtomicBoolean processado = new AtomicBoolean();
@@ -461,8 +462,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 
 			private void complemento(Objeto objeto) {
-				List<GrupoBuscaAuto> listaGrupo = BuscaAutoUtil.listaGrupoBuscaAuto(objeto,
-						objeto.getBuscaAutomatica());
+				List<GrupoBuscaAuto> listaGrupo = BuscaAutoUtil.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
 
 				for (GrupoBuscaAuto grupo : listaGrupo) {
 					addMenu(new MenuBuscaAuto(grupo));
@@ -482,7 +482,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				private final transient GrupoBuscaAuto grupo;
 
 				private MenuBuscaAuto(GrupoBuscaAuto grupo) {
-					super(grupo.getNomeGrupoCampo(), Icones.CONFIG2, "nao_chave");
+					super(grupo.getNome() + "." + grupo.getCampo(), Icones.CONFIG2, "nao_chave");
 
 					this.grupoApos = grupo.getGrupoBuscaAutoApos();
 					this.grupo = grupo;
@@ -497,13 +497,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					}
 
 					int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, grupo.getCampo());
-
 					if (coluna == -1) {
 						return;
 					}
 
 					List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabelaPersistencia, coluna);
-
 					if (lista.isEmpty()) {
 						Util.mensagem(InternalContainer.this, grupo.getCampo() + " vazio.");
 						return;
@@ -515,21 +513,20 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					setEnabled(grupo.isProcessado());
 
 					if (grupo.isProcessado() && buscaAutomaticaAposListener != null) {
-						buscaAutomaticaAposListener.buscaAutomaticaApos(InternalContainer.this, grupoApos,
-								grupoApos.contemLimparFormulariosRestantes());
+						buscaAutomaticaAposListener.buscaAutomaticaApos(InternalContainer.this, grupoApos);
 					}
 
-					if (!objeto.isColunaInfo()) {
-						return;
+					processarColunaInfo(coluna);
+				}
+
+				private void processarColunaInfo(int coluna) {
+					if (objeto.isColunaInfo()) {
+						List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
+						for (int linha : indices) {
+							InternalUtil.consolidarNoRegistroUsandoColetores(tabelaPersistencia, linha, coluna, grupo);
+						}
+						Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
 					}
-
-					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-
-					for (int linha : indices) {
-						InternalUtil.consolidarNoRegistroUsandoColetores(tabelaPersistencia, linha, coluna, grupo);
-					}
-
-					Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
 				}
 			}
 		}
@@ -1413,53 +1410,60 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		try {
 			Connection conn = ConexaoProvedor.getConnection(conexao);
 			Parametros param = criarParametros(conn, conexao, consulta.toString());
-			PersistenciaModelo modeloRegistro = Persistencia.criarPersistenciaModelo(param);
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(modeloRegistro);
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
 			objeto.setComplemento(txtComplemento.getText());
 			tabelaPersistencia.setModel(modeloOrdenacao);
+			modeloOrdenacao.getModelo().setConexao(conexao);
 			threadTitulo(getTituloAtualizado());
-			modeloRegistro.setConexao(conexao);
 			cabecalhoFiltro = null;
 			atualizarTitulo();
-
-			TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
-			List<Coluna> colunas = modeloRegistro.getColunas();
-
-			for (int i = 0; i < colunas.size(); i++) {
-				TableColumn tableColumn = columnModel.getColumn(i);
-				Coluna coluna = colunas.get(i);
-				configTableColumn(tableColumn, coluna);
-				CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
-						!coluna.isColunaInfo());
-
-				if (cabecalhoColuna.equals(cabecalho)) {
-					cabecalhoColuna.copiar(cabecalho);
-					cabecalhoFiltro = cabecalhoColuna;
-				}
-
-				tableColumn.setHeaderRenderer(cabecalhoColuna);
-			}
-
+			configurarCabecalhoTabela(modeloOrdenacao, cabecalho);
 			Util.ajustar(tabelaPersistencia, g == null ? getGraphics() : g);
-
-			TabelaBuscaAuto tabelaBuscaAuto = objeto.getTabelaBuscaAuto();
-
-			if (tabelaBuscaAuto != null) {
-				int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, tabelaBuscaAuto.getCampo());
-
-				if (coluna != -1) {
-					InternalUtil.atualizarColetores(tabelaPersistencia, coluna, tabelaBuscaAuto);
-				}
-
-				objeto.setTabelaBuscaAuto(null);
-			}
+			processarTabelaBuscaAuto();
 		} catch (Exception ex) {
 			mensagemException(ex);
 		}
 
 		toolbar.buttonBuscaAuto.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
-		configAlturaAutomatica();
+		configurarAlturaAutomatica();
+	}
+
+	private void configurarCabecalhoTabela(OrdenacaoModelo modeloOrdenacao, CabecalhoColuna cabecalho) {
+		TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
+		List<Coluna> colunas = modeloOrdenacao.getModelo().getColunas();
+
+		for (int i = 0; i < colunas.size(); i++) {
+			TableColumn tableColumn = columnModel.getColumn(i);
+			Coluna coluna = colunas.get(i);
+			configTableColumn(tableColumn, coluna);
+			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
+					!coluna.isColunaInfo());
+
+			if (cabecalhoColuna.equals(cabecalho)) {
+				cabecalhoColuna.copiar(cabecalho);
+				cabecalhoFiltro = cabecalhoColuna;
+			}
+
+			tableColumn.setHeaderRenderer(cabecalhoColuna);
+		}
+	}
+
+	private void processarTabelaBuscaAuto() {
+		TabelaBuscaAuto tabelaBuscaAuto = objeto.getTabelaBuscaAuto();
+		if (tabelaBuscaAuto != null) {
+			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, tabelaBuscaAuto.getCampo());
+			if (coluna != -1) {
+				InternalUtil.atualizarColetores(tabelaPersistencia, coluna, tabelaBuscaAuto);
+			}
+			objeto.setTabelaBuscaAuto(null);
+			if (visibilidadeListener != null) {
+				boolean invisivel = modelo.getRowCount() == 0 && tabelaBuscaAuto.isVazioInvisivel();
+				objeto.setVisivel(!invisivel);
+				visibilidadeListener.setVisible(!invisivel);
+			}
+		}
 	}
 
 	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processarObjeto(string,
@@ -1483,13 +1487,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (coluna.isChave()) {
 			tableColumn.setCellRenderer(new CellRenderer(Color.GRAY));
 		}
-
 		if (coluna.isColunaInfo()) {
 			tableColumn.setCellRenderer(new InternalRenderer());
 		}
 	}
 
-	private void configAlturaAutomatica() {
+	private void configurarAlturaAutomatica() {
 		if (objeto.isAjusteAutoForm() && tamanhoAutomatico && configAlturaAutomaticaListener != null) {
 			configAlturaAutomaticaListener.configAlturaAutomatica(tabelaPersistencia.getModel().getRowCount());
 		}
@@ -1939,6 +1942,14 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void setComponenteListener(InternalListener.Componente componenteListener) {
 		this.componenteListener = componenteListener;
+	}
+
+	public InternalListener.Visibilidade getVisibilidadeListener() {
+		return visibilidadeListener;
+	}
+
+	public void setVisibilidadeListener(InternalListener.Visibilidade visibilidadeListener) {
+		this.visibilidadeListener = visibilidadeListener;
 	}
 
 	@Override

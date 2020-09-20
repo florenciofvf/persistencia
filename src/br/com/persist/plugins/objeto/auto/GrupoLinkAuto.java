@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class GrupoLinkAuto {
 	private final List<TabelaLinkAuto> tabelas;
@@ -12,7 +13,13 @@ public class GrupoLinkAuto {
 	public GrupoLinkAuto(String campo) {
 		tabelas = new ArrayList<>();
 		this.campo = campo;
-		TabelaBuscaAuto.checarCampo(campo);
+		checarCampo(campo);
+	}
+
+	public static void checarCampo(String campo) {
+		if (Util.estaVazio(campo)) {
+			throw new IllegalStateException("Nome do campo vazio.");
+		}
 	}
 
 	public static GrupoLinkAuto criar(String campo) {
@@ -20,12 +27,6 @@ public class GrupoLinkAuto {
 	}
 
 	public void add(TabelaLinkAuto tabela) {
-		for (TabelaLinkAuto obj : tabelas) {
-			if (obj.igual(tabela)) {
-				return;
-			}
-		}
-
 		tabelas.add(tabela);
 	}
 

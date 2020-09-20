@@ -496,7 +496,7 @@ public class ObjetoContainer extends Panel {
 		private final JTextPane textArea = new JTextPane();
 
 		private PanelBuscaAuto() {
-			textArea.setText(objeto.getBuscaAutomatica());//
+			textArea.setText(objeto.getBuscaAutomatica());
 			add(BorderLayout.NORTH, toolbar);
 			add(BorderLayout.CENTER, textArea);
 			textArea.addKeyListener(keyListenerInner);

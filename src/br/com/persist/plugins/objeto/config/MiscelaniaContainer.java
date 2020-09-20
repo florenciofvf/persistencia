@@ -18,8 +18,6 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoUtil;
-import br.com.persist.plugins.objeto.auto.BuscaAutoUtil;
-import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
 import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
 import br.com.persist.plugins.objeto.auto.LinkAutoUtil;
 
@@ -48,9 +46,6 @@ public class MiscelaniaContainer extends Panel {
 
 		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 			mapa(builder);
-
-		} else if (Tipo.BUSCA_AUTO.equals(tipo)) {
-			buscaAuto(objeto, builder);
 
 		} else if (Tipo.LINK_AUTO.equals(tipo)) {
 			linkAuto(objeto, builder);
@@ -97,23 +92,6 @@ public class MiscelaniaContainer extends Panel {
 		}
 	}
 
-	private void buscaAuto(Objeto objeto, StringBuilder builder) {
-		List<GrupoBuscaAuto> listaGrupo = BuscaAutoUtil.listaGrupoBuscaAuto(objeto,
-				!Util.estaVazio(objeto.getBuscaAutomatica()) ? objeto.getBuscaAutomatica()
-						: Mensagens.getString("hint.buscaAuto"));
-
-		for (int i = 0; i < listaGrupo.size(); i++) {
-			GrupoBuscaAuto grupo = listaGrupo.get(i);
-			builder.append(grupo.getDetalhe());
-
-			if (i + 1 < listaGrupo.size()) {
-				builder.append(";");
-			}
-
-			builder.append(Constantes.QL);
-		}
-	}
-
 	private void linkAuto(Objeto objeto, StringBuilder builder) {
 		List<GrupoLinkAuto> listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
 				!Util.estaVazio(objeto.getLinkAutomatico()) ? objeto.getLinkAutomatico()
@@ -132,7 +110,7 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		CHAVE_SEQUENCIA, BUSCA_AUTO, LINK_AUTO, MAPEAMENTO
+		CHAVE_SEQUENCIA, LINK_AUTO, MAPEAMENTO
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -162,12 +140,7 @@ public class MiscelaniaContainer extends Panel {
 		@Override
 		protected void aplicar() {
 			try {
-				if (Tipo.BUSCA_AUTO.equals(tipo)) {
-					String string = Util.normalizar(textArea.getText(), false);
-					BuscaAutoUtil.listaGrupoBuscaAuto(objeto, string);
-					objeto.setBuscaAutomatica(string);
-
-				} else if (Tipo.LINK_AUTO.equals(tipo)) {
+				if (Tipo.LINK_AUTO.equals(tipo)) {
 					String string = Util.normalizar(textArea.getText(), false);
 					LinkAutoUtil.listaGrupoLinkAuto(objeto, string);
 					objeto.setLinkAutomatico(string);

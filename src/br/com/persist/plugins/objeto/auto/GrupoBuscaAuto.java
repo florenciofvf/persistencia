@@ -3,34 +3,17 @@ package br.com.persist.plugins.objeto.auto;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.assistencia.Constantes;
-
-public class GrupoBuscaAuto {
+public class GrupoBuscaAuto extends AbstratoGrupo {
 	private final GrupoBuscaAutoApos grupoBuscaAutoApos;
 	private final List<TabelaBuscaAuto> tabelas;
-	private final String nomeGrupoCampo;
-	private final String campo;
 
-	public GrupoBuscaAuto(String nomeGrupoCampo) {
-		int pos = nomeGrupoCampo.indexOf('.');
-		this.campo = nomeGrupoCampo.substring(pos + 1);
-		this.nomeGrupoCampo = nomeGrupoCampo;
-		TabelaBuscaAuto.checarCampo(campo);
-		tabelas = new ArrayList<>();
+	public GrupoBuscaAuto(String nome, String campo) {
+		super(nome, campo);
 		grupoBuscaAutoApos = new GrupoBuscaAutoApos(campo);
-	}
-
-	public static GrupoBuscaAuto criar(String nomeGrupoCampo) {
-		return new GrupoBuscaAuto(nomeGrupoCampo);
+		tabelas = new ArrayList<>();
 	}
 
 	public void add(TabelaBuscaAuto tabela) {
-		for (TabelaBuscaAuto obj : tabelas) {
-			if (obj.igual(tabela)) {
-				return;
-			}
-		}
-
 		tabelas.add(tabela);
 	}
 
@@ -56,41 +39,10 @@ public class GrupoBuscaAuto {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
 	public List<TabelaBuscaAuto> getTabelas() {
 		return tabelas;
-	}
-
-	public String getNomeGrupoCampo() {
-		return nomeGrupoCampo;
-	}
-
-	public String getCampo() {
-		return campo;
-	}
-
-	@Override
-	public String toString() {
-		return nomeGrupoCampo;
-	}
-
-	public String getDetalhe() {
-		StringBuilder sb = new StringBuilder(nomeGrupoCampo + "=" + Constantes.QL);
-
-		for (int i = 0; i < tabelas.size(); i++) {
-			TabelaBuscaAuto tabela = tabelas.get(i);
-			sb.append(Constantes.TAB + tabela.getApelidoTabelaCampo());
-
-			if (i + 1 < tabelas.size()) {
-				sb.append(",");
-			}
-
-			sb.append(Constantes.QL);
-		}
-
-		return sb.toString();
 	}
 }

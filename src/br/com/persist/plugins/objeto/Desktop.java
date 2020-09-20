@@ -346,21 +346,15 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		return null;
 	}
 
-	public void buscaAutomaticaApos(InternalContainer container, GrupoBuscaAutoApos grupoApos,
-			boolean limparFormulariosRestantes) {
+	public void buscaAutomaticaApos(InternalContainer container, GrupoBuscaAutoApos grupoApos) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
-
-				if (interno.isProcessadoBuscaAutomatica()) {
-					continue;
-				}
-
-				List<TabelaBuscaAutoApos> tabelas = grupoApos.getTabelas();
-
-				for (TabelaBuscaAutoApos tabela : tabelas) {
-					if (executarBuscaAutomaticaApos(interno, tabela, container, limparFormulariosRestantes)) {
-						interno.buscaAutomaticaApos();
+				if (!interno.isProcessadoBuscaAutomatica()) {
+					for (TabelaBuscaAutoApos tabela : grupoApos.getTabelas()) {
+						if (executarBuscaAutomaticaApos(interno, tabela, container, false)) {
+							interno.buscaAutomaticaApos();
+						}
 					}
 				}
 			}

@@ -1,65 +1,76 @@
 package br.com.persist.plugins.objeto.auto;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.parser.Array;
+import br.com.persist.parser.Objeto;
+import br.com.persist.parser.Parser;
+import br.com.persist.parser.Tipo;
 
 public class BuscaAutoUtil {
-
 	private BuscaAutoUtil() {
 	}
 
-	public static List<GrupoBuscaAuto> listaGrupoBuscaAuto(Objeto objeto, String string) {
-		Map<String, GrupoBuscaAuto> mapa = new LinkedHashMap<>();
-
+	public static List<GrupoBuscaAuto> listaGrupoBuscaAuto(String string) {
+		List<GrupoBuscaAuto> lista = new ArrayList<>();
 		if (!Util.estaVazio(string)) {
-			String[] grupos = string.split(";");
+			try {
+				Parser parser = new Parser();
+				Tipo tipo = parser.parse(string);
+				processar(lista, tipo);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("BuscaAuto", ex, null);
+			}
+		}
+		return lista;
+	}
 
-			if (grupos != null) {
-				for (String grupo : grupos) {
-					processarGrupoBuscaAuto(objeto, grupo, mapa);
+	private static void processar(List<GrupoBuscaAuto> lista, Tipo tipo) {
+		if (tipo instanceof Array) {
+			for (Tipo grupo : ((Array) tipo).getLista()) {
+				processarGrupo(lista, grupo);
+			}
+		}
+	}
+
+	private static void processarGrupo(List<GrupoBuscaAuto> lista, Tipo tipo) {
+		if (tipo instanceof Objeto) {
+			Objeto grupo = (Objeto) tipo;
+			Map<String, String> map = grupo.getAtributosString();
+			GrupoBuscaAuto buscaAuto = new GrupoBuscaAuto(map.get("grupo"), map.get("campo"));
+			processarTabelas(buscaAuto, grupo.getValor("tabelas"));
+			processarLimparApos(buscaAuto.getGrupoBuscaAutoApos(), grupo.getValor("limparApos"));
+		}
+	}
+
+	private static void processarTabelas(GrupoBuscaAuto buscaAuto, Tipo tipo) {
+		if (tipo instanceof Array) {
+			for (Tipo tabela : ((Array) tipo).getLista()) {
+				if (tabela instanceof Objeto) {
+					Objeto obj = (Objeto) tabela;
+					Map<String, String> map = obj.getAtributosString();
+					TabelaBuscaAuto tabelaAuto = new TabelaBuscaAuto(map.get("apelido"), map.get("nome"),
+							map.get("campo"));
+					tabelaAuto.setVazioInvisivel("invisivel".equalsIgnoreCase(map.get("vazio")));
+					buscaAuto.add(tabelaAuto);
 				}
 			}
 		}
-
-		return new ArrayList<>(mapa.values());
 	}
 
-	private static void processarGrupoBuscaAuto(Objeto objeto, String stringGrupo, Map<String, GrupoBuscaAuto> mapa) {
-		String[] grupoCampoTabelas = stringGrupo.split("=");
-
-		if (grupoCampoTabelas != null && grupoCampoTabelas.length > 1) {
-			String grupoCampo = grupoCampoTabelas[0].trim();
-
-			GrupoBuscaAuto grupo = mapa.computeIfAbsent(grupoCampo, GrupoBuscaAuto::criar);
-			GrupoBuscaAutoApos grupoApos = grupo.getGrupoBuscaAutoApos();
-
-			String tabelas = grupoCampoTabelas[1];
-			String[] arrayTabelas = tabelas.split(",");
-
-			for (String apelidoTabelaCampo : arrayTabelas) {
-				TabelaBuscaAuto tabela = new TabelaBuscaAuto(apelidoTabelaCampo.trim(),
-						objeto.getId() + " > " + grupoCampo);
-				extrairTabelaApos(grupoApos, tabela.getTabelasApos());
-				grupo.add(tabela);
+	private static void processarLimparApos(GrupoBuscaAutoApos buscaAutoApos, Tipo tipo) {
+		if (tipo instanceof Array) {
+			for (Tipo tabela : ((Array) tipo).getLista()) {
+				if (tabela instanceof Objeto) {
+					Objeto obj = (Objeto) tabela;
+					Map<String, String> map = obj.getAtributosString();
+					TabelaBuscaAutoApos tabelaAutoApos = new TabelaBuscaAutoApos(map.get("apelido"), map.get("nome"));
+					buscaAutoApos.add(tabelaAutoApos);
+				}
 			}
-		}
-	}
-
-	private static void extrairTabelaApos(GrupoBuscaAutoApos grupo, String tabelasApos) {
-		if (Util.estaVazio(tabelasApos)) {
-			return;
-		}
-
-		String[] arrayTabelaApos = tabelasApos.split("-");
-
-		for (String tabelaApos : arrayTabelaApos) {
-			String[] arrayApelidoTabela = TabelaBuscaAuto.separarApelidoTabela(tabelaApos);
-			grupo.add(new TabelaBuscaAutoApos(arrayApelidoTabela[0], arrayApelidoTabela[1]));
 		}
 	}
 }

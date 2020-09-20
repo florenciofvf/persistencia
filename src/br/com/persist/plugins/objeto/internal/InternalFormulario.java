@@ -41,6 +41,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setBuscaAutomaticaAposListener(InternalFormulario.this::buscaAutomaticaApos);
 		container.setBuscaAutomaticaListener(InternalFormulario.this::buscaAutomatica);
 		container.setLinkAutomaticoListener(InternalFormulario.this::linkAutomatico);
+		container.setVisibilidadeListener(InternalFormulario.this::setVisible);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
 		container.setComponenteListener(InternalFormulario.this::getThis);
 		container.setDimensaoListener(InternalFormulario.this::getSize);
@@ -178,12 +179,11 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void buscaAutomaticaApos(InternalContainer objetoContainer, GrupoBuscaAutoApos grupoApos,
-			boolean limparFormulariosRestantes) {
+	public void buscaAutomaticaApos(InternalContainer objetoContainer, GrupoBuscaAutoApos grupoApos) {
 		checarDesktop();
 
 		if (desktop != null) {
-			desktop.buscaAutomaticaApos(objetoContainer, grupoApos, limparFormulariosRestantes);
+			desktop.buscaAutomaticaApos(objetoContainer, grupoApos);
 		}
 	}
 
