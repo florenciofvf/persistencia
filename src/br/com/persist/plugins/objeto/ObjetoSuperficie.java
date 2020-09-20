@@ -1426,12 +1426,26 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void propriedades() {
+			int invisiveis = 0;
+			int visiveis = 0;
+
+			for (Objeto objeto : objetos) {
+				if (objeto.visivel) {
+					visiveis++;
+				} else {
+					invisiveis++;
+				}
+			}
+
 			StringBuilder sb = new StringBuilder();
-			sb.append("Total de objetos: " + objetos.length + Constantes.QL);
+			sb.append(Mensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
+			sb.append(Mensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
+			sb.append("Total de objetos: " + (visiveis + invisiveis) + Constantes.QL);
 
 			File file = container.getArquivo();
 
 			if (file != null) {
+				sb.append("------------------" + Constantes.QL);
 				sb.append("Local absoluto do arquivo: " + file.getAbsolutePath() + Constantes.QL);
 				sb.append(
 						"Local relativo do arquivo: " + ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
