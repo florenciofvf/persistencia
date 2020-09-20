@@ -498,7 +498,7 @@ public class ObjetoContainer extends Panel {
 		private PanelBuscaAuto() {
 			textArea.setText(objeto.getBuscaAutomatica());
 			add(BorderLayout.NORTH, toolbar);
-			add(BorderLayout.CENTER, textArea);
+			add(BorderLayout.CENTER, new ScrollPane(textArea));
 			textArea.addKeyListener(keyListenerInner);
 			toolbar.ini();
 		}
