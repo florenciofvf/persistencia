@@ -514,13 +514,17 @@ public class ObjetoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 			private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 			private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
+			private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 
 			public void ini() {
 				addButton(formatarAcao);
 				addButton(modeloAcao);
+				addButton(copiarAcao);
+				add(labelTextTemp);
 				addButton(colarAcao);
 				formatarAcao.setActionListener(e -> formatar());
 				modeloAcao.setActionListener(e -> modelo());
+				copiarAcao.setActionListener(e -> copiar());
 				colarAcao.setActionListener(e -> colar());
 			}
 
@@ -551,6 +555,13 @@ public class ObjetoContainer extends Panel {
 					return objeto.getId();
 				}
 			};
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(textArea);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+			}
 
 			@Override
 			protected void colar() {
@@ -704,11 +715,12 @@ public class ObjetoContainer extends Panel {
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 		private PanelInstrucao panelInstrucao = new PanelInstrucao();
+		private PanelBuscaAuto panelBuscaAuto = new PanelBuscaAuto();
 
 		private Fichario() {
 			addTab("label.geral", new ScrollPane(new PanelGeral()));
 			addTab("label.descricao", new PanelDescricao());
-			addTab("label.buscaAuto", new PanelBuscaAuto());
+			addTab("label.buscaAuto", panelBuscaAuto);
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
 			addTab("label.instrucoes", panelInstrucao);
@@ -716,6 +728,7 @@ public class ObjetoContainer extends Panel {
 
 		private void ini() {
 			panelInstrucao.adicionarInstrucoes(objeto);
+			panelBuscaAuto.toolbar.formatar();
 		}
 	}
 }

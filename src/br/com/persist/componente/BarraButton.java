@@ -23,9 +23,9 @@ public class BarraButton extends JToolBar {
 	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
 	protected Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
+	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private Action atualizarAcao = Action.actionIconAtualizar();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
-	private LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
