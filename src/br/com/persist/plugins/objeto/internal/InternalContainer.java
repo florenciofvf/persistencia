@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -459,7 +460,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
 							contadorAuto++;
 							itemAtualizarAuto.setText(titulo + " " + contadorAuto);
-							actionListenerInner.processar();
+							SwingUtilities.invokeLater(actionListenerInner::processar);
 						} catch (InterruptedException e) {
 							Thread.currentThread().interrupt();
 						}
