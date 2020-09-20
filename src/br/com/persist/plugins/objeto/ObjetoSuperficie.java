@@ -809,7 +809,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		boolean contem(Objeto objeto) {
-			return (objeto.x >= this.x && objeto.x + Objeto.DIAMETRO <= this.x + largura)
+			return objeto.visivel && (objeto.x >= this.x && objeto.x + Objeto.DIAMETRO <= this.x + largura)
 					&& (objeto.y >= this.y && objeto.y + Objeto.DIAMETRO <= this.y + altura);
 		}
 	}

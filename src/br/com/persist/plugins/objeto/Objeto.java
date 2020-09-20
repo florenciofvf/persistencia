@@ -704,7 +704,7 @@ public class Objeto implements Runnable {
 	}
 
 	public boolean contem(int x, int y) {
-		return (x >= this.x && x <= this.x + DIAMETRO) && (y >= this.y && y <= this.y + DIAMETRO);
+		return visivel && (x >= this.x && x <= this.x + DIAMETRO) && (y >= this.y && y <= this.y + DIAMETRO);
 	}
 
 	@Override
