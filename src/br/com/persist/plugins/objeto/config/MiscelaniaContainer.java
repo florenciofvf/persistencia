@@ -29,13 +29,13 @@ public class MiscelaniaContainer extends Panel {
 	private final Tipo tipo;
 
 	public MiscelaniaContainer(Janela janela, Objeto objeto, Tipo tipo) {
-		montarLayout(objeto, tipo);
 		this.objeto = objeto;
+		montarLayout(tipo);
 		toolbar.ini(janela);
 		this.tipo = tipo;
 	}
 
-	private void montarLayout(Objeto objeto, Tipo tipo) {
+	private void montarLayout(Tipo tipo) {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, textArea);
 
@@ -48,7 +48,7 @@ public class MiscelaniaContainer extends Panel {
 			mapa(builder);
 
 		} else if (Tipo.LINK_AUTO.equals(tipo)) {
-			linkAuto(objeto, builder);
+			linkAuto(builder);
 		}
 
 		textArea.setText(builder.toString().trim());
@@ -92,7 +92,7 @@ public class MiscelaniaContainer extends Panel {
 		}
 	}
 
-	private void linkAuto(Objeto objeto, StringBuilder builder) {
+	private void linkAuto(StringBuilder builder) {
 		List<GrupoLinkAuto> listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
 				!Util.estaVazio(objeto.getLinkAutomatico()) ? objeto.getLinkAutomatico()
 						: Mensagens.getString("hint.linkAuto"));

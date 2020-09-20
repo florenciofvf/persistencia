@@ -271,7 +271,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 
 			String nome = resp.toString();
-
 			File f = new File(file, nome);
 
 			if (f.exists()) {
@@ -297,7 +296,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		@Override
 		protected void limpar() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				ativa.limpar();
 			}
@@ -306,7 +304,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				ativa.salvar();
 			}
@@ -318,7 +315,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 			if (ativa != null) {
 				StringBuilder sb = new StringBuilder();
-				ativa.copiar1(sb);
+				ativa.copiar(sb);
 				copiarMensagem(sb.toString());
 			}
 		}
@@ -337,16 +334,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 		@Override
 		protected void colar() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
-				ativa.colar1();
+				ativa.colar();
 			}
 		}
 
 		@Override
 		protected void colar2() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				ativa.colar2();
 			}
@@ -364,7 +359,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void abrirAtivo() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				ativa.abrir();
 			}
@@ -373,7 +367,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		@Override
 		protected void atualizar() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				ativa.atualizar();
 			}
@@ -381,7 +374,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void formatar() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				ativa.formatar();
 			}
@@ -395,7 +387,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void base64() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				ativa.base64();
 			}
@@ -440,11 +431,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 	@Override
 	public String getStringPersistencia() {
 		Pagina ativa = fichario.getPaginaAtiva();
-
 		if (ativa != null) {
 			return ativa.getNome();
 		}
-
 		return Constantes.VAZIO;
 	}
 
@@ -664,14 +653,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
-		private void copiar1(StringBuilder sb) {
+		private void copiar(StringBuilder sb) {
 			String string = Util.getString(areaParametros);
 			Util.setContentTransfered(string);
 			sb.append(string);
 			areaParametros.requestFocus();
 		}
 
-		private void colar1() {
+		private void colar() {
 			Util.getContentTransfered(areaParametros);
 		}
 
@@ -837,7 +826,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			if (instrucao == null) {
 				instrucao = Constantes.VAZIO;
 			}
-
 			return instrucao.replaceAll("#" + v.getNome() + "#", v.getValor());
 		}
 	}
