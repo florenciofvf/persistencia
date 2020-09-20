@@ -103,7 +103,7 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class InternalContainer extends Panel implements ActionListener, ItemListener, Runnable, Pagina {
+public class InternalContainer extends Panel implements ActionListener, ItemListener, Pagina {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private transient InternalListener.ConfigAlturaAutomatica configAlturaAutomaticaListener;
@@ -129,7 +129,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private final transient Objeto objeto;
 	private boolean tamanhoAutomatico;
 	private final boolean buscaAuto;
-	private transient Thread thread;
 	private boolean destacarTitulo;
 	private Component suporte;
 	private int contadorAuto;
@@ -196,10 +195,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		private final ButtonBaixar buttonBaixar = new ButtonBaixar();
 		private final ButtonUpdate buttonUpdate = new ButtonUpdate();
 		private final Label labelTotal = new Label(Color.BLUE);
+		private transient Thread thread;
 
 		protected void ini(Janela janela, Objeto objeto) {
 			super.ini(janela);
-
 			add(btnArrasto);
 			add(true, new ButtonInfo());
 			add(true, buttonExcluir);
@@ -213,7 +212,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			add(buttonBaixar);
 			add(buttonFuncoes);
 			add(true, comboConexao);
-
 			buttonBuscaAuto.complemento(objeto);
 			buttonUpdate.complemento(objeto);
 		}
@@ -421,7 +419,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					public void mouseEntered(MouseEvent e) {
 						if (thread == null) {
 							itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
-							thread = new Thread(InternalContainer.this);
+							thread = new Thread(new Trabalho());
 							contadorAuto = 0;
 							thread.start();
 						}
@@ -449,6 +447,28 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						cabecalhoFiltro = temp;
 					}
 				});
+			}
+
+			private class Trabalho implements Runnable {
+				private final String titulo = Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO);
+
+				@Override
+				public void run() {
+					while (!Thread.currentThread().isInterrupted() && itemAtualizarAuto.isDisplayable()) {
+						try {
+							Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
+							contadorAuto++;
+							itemAtualizarAuto.setText(titulo + " " + contadorAuto);
+							actionListenerInner.processar();
+						} catch (InterruptedException e) {
+							Thread.currentThread().interrupt();
+						}
+					}
+
+					itemAtualizarAuto.setText(titulo);
+					contadorAuto = 0;
+					thread = null;
+				}
 			}
 		}
 
@@ -1493,25 +1513,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (objeto.isAjusteAutoForm() && tamanhoAutomatico && configAlturaAutomaticaListener != null) {
 			configAlturaAutomaticaListener.configAlturaAutomatica(tabelaPersistencia.getModel().getRowCount());
 		}
-	}
-
-	@Override
-	public void run() {
-		while (!Thread.currentThread().isInterrupted() && toolbar.buttonSincronizar.itemAtualizarAuto.isDisplayable()) {
-			try {
-				Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
-				contadorAuto++;
-				toolbar.buttonSincronizar.itemAtualizarAuto
-						.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO) + " " + contadorAuto);
-				actionListenerInner.processar();
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-		}
-
-		toolbar.buttonSincronizar.itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
-		contadorAuto = 0;
-		thread = null;
 	}
 
 	private transient FragmentoListener fragmentoListener = new FragmentoListener() {
