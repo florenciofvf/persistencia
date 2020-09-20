@@ -106,17 +106,32 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			}
 
 			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
-
-			JInternalFrame frame = frames[0];
-			int deltaY = variavelDeltaY.getInteiro(Constantes.QUARENTA);
-			int y = frame.getY() + frame.getHeight() + deltaY;
-
-			for (int i = 1; i < frames.length; i++) {
-				frame = frames[i];
-				frame.setLocation(frame.getX(), y);
-				y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
+			JInternalFrame referencia = primeiroVisivel(frames);
+			if (referencia != null) {
+				empilhar(frames, referencia, variavelDeltaY.getInteiro(Constantes.QUARENTA));
 			}
 		}
+	}
+
+	private void empilhar(JInternalFrame[] frames, JInternalFrame referencia, int deltaY) {
+		int y = referencia.getY() + referencia.getHeight() + deltaY;
+
+		for (JInternalFrame frame : frames) {
+			if (!frame.isVisible() || frame == referencia) {
+				continue;
+			}
+			frame.setLocation(frame.getX(), y);
+			y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
+		}
+	}
+
+	private JInternalFrame primeiroVisivel(JInternalFrame[] frames) {
+		for (JInternalFrame frame : frames) {
+			if (frame.isVisible()) {
+				return frame;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -144,6 +159,9 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 
 		for (JInternalFrame frame : getAllFrames()) {
+			if (!frame.isVisible()) {
+				continue;
+			}
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 

@@ -113,30 +113,31 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 		boolean salvar = false;
 
-		Variavel cvDadosToolbarTableHeader = VariavelProvedor
+		Variavel variavelDadosToolbarTableHeader = VariavelProvedor
 				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
-		Variavel cvMaximoRegistros = VariavelProvedor
+		Variavel variavelMaximoRegistros = VariavelProvedor
 				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
-		Variavel cvMinimoForm = VariavelProvedor.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
+		Variavel variavelMinimoForm = VariavelProvedor.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
 
-		if (cvDadosToolbarTableHeader == null) {
-			cvDadosToolbarTableHeader = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
+		if (variavelDadosToolbarTableHeader == null) {
+			variavelDadosToolbarTableHeader = new Variavel(
+					Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
 					Constantes.VAZIO + Constantes.SETENTA);
-			VariavelProvedor.adicionar(cvDadosToolbarTableHeader);
+			VariavelProvedor.adicionar(variavelDadosToolbarTableHeader);
 			salvar = true;
 		}
 
-		if (cvMaximoRegistros == null) {
-			cvMaximoRegistros = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
+		if (variavelMaximoRegistros == null) {
+			variavelMaximoRegistros = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
 					Constantes.VAZIO + Constantes.DEZ);
-			VariavelProvedor.adicionar(cvMaximoRegistros);
+			VariavelProvedor.adicionar(variavelMaximoRegistros);
 			salvar = true;
 		}
 
-		if (cvMinimoForm == null) {
-			cvMinimoForm = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
+		if (variavelMinimoForm == null) {
+			variavelMinimoForm = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
 					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(cvMinimoForm);
+			VariavelProvedor.adicionar(variavelMinimoForm);
 			salvar = true;
 		}
 
@@ -145,9 +146,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			VariavelProvedor.inicializar();
 		}
 
-		int dadosToolbarTableHeader = cvDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
-		int maximoRegistros = cvMaximoRegistros.getInteiro(Constantes.DEZ);
-		int minimoForm = cvMinimoForm.getInteiro(Constantes.TRINTA);
+		int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
+		int maximoRegistros = variavelMaximoRegistros.getInteiro(Constantes.DEZ);
+		int minimoForm = variavelMinimoForm.getInteiro(Constantes.TRINTA);
 
 		if (total < 1) {
 			setSize(d.width, minimoForm);
