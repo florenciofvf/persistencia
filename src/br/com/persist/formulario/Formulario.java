@@ -129,7 +129,6 @@ public class Formulario extends JFrame {
 		if (servicos == null) {
 			return;
 		}
-
 		for (Servico servico : servicos) {
 			adicionarServico(servico);
 		}
@@ -147,7 +146,6 @@ public class Formulario extends JFrame {
 
 	public void processar(Map<String, Object> args) {
 		fichario.processar(this, args);
-
 		for (Servico servico : servicos) {
 			servico.processar(this, args);
 		}
@@ -166,11 +164,9 @@ public class Formulario extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				menuPrincipal.carregarMenu();
-
 				for (Servico servico : servicos) {
 					servico.visivelFormulario(Formulario.this);
 				}
-
 				fichario.visivelFormulario(Formulario.this);
 				fichario.ativarNavegacao();
 				iconeBandeja();
@@ -190,19 +186,15 @@ public class Formulario extends JFrame {
 
 		private void carregarMenu() {
 			File file = new File("persistencia.xml");
-
 			if (!file.isFile()) {
 				return;
 			}
-
 			try {
 				MenuColetor coletor = new MenuColetor();
 				XML.processar(file, new MenuHandler(coletor));
-
 				for (MenuApp m : coletor.getMenus()) {
 					add(m.criarMenu(Formulario.this));
 				}
-
 				Collections.sort(servicos, (o1, o2) -> o1.getOrdem() - o2.getOrdem());
 				SwingUtilities.updateComponentTreeUI(this);
 			} catch (Exception ex) {
@@ -291,7 +283,6 @@ public class Formulario extends JFrame {
 		if (Preferencias.isAplicarLarguraAoAbrirArquivoObjeto()) {
 			definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
 		}
-
 		if (Preferencias.isAplicarAlturaAoAbrirArquivoObjeto()) {
 			definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
 		}
@@ -303,13 +294,11 @@ public class Formulario extends JFrame {
 		}
 		formulario.checarPreferenciasLarguraAltura();
 		Rectangle pd = formulario.criarPosicaoDimensaoSeValido();
-
 		if (pd != null) {
 			window.setBounds((int) pd.getX(), (int) pd.getY(), (int) pd.getWidth(), (int) pd.getHeight());
 		} else {
 			window.setLocationRelativeTo(formulario);
 		}
-
 		window.setVisible(true);
 	}
 

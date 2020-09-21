@@ -76,25 +76,20 @@ public class MenuApp {
 		if (Util.estaVazio(icone)) {
 			return null;
 		}
-
 		return Imagens.getIcon(icone);
 	}
 
 	public Menu criarMenu(Formulario formulario) {
 		Menu menu = new Menu(descricao, getIcon(), Constantes.VAZIO);
-
 		for (MenuApp filho : filhos) {
 			if (!filho.ativo) {
 				continue;
 			}
-
 			List<JMenuItem> itens = filho.criarItens(formulario, menu);
-
 			for (JMenuItem item : itens) {
 				menu.add(item);
 			}
 		}
-
 		return menu;
 	}
 
