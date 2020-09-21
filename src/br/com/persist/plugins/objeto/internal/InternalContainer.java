@@ -1478,8 +1478,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			objeto.setTabelaBuscaAuto(null);
 			if (visibilidadeListener != null) {
 				boolean invisivel = modelo.getRowCount() == 0 && tabelaBuscaAuto.isVazioInvisivel();
+				boolean visivel = objeto.isVisivel();
 				objeto.setVisivel(!invisivel);
 				visibilidadeListener.setVisible(!invisivel);
+				setBackground(!visivel && objeto.isVisivel() ? Color.RED : null);
 			}
 		}
 	}
