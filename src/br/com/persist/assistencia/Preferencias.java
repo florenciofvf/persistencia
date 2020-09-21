@@ -144,9 +144,19 @@ public class Preferencias {
 		return pref.getBoolean(chave, false);
 	}
 
+	public static String getString(String chave) {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		return pref.get(chave, "");
+	}
+
 	public static void setBoolean(String chave, boolean valor) {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean(chave, valor);
+	}
+
+	public static void setString(String chave, String valor) {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		pref.put(chave, valor == null ? "" : valor);
 	}
 
 	public static boolean isAreaTransTabelaRegistros() {

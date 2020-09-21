@@ -129,6 +129,7 @@ public class Constantes {
 	public static final int QUARENTA = 40;
 	public static final String TAB = "\t";
 	public static final String VAZIO = "";
+	public static final String GC = "GC";
 	public static final String QL = "\n";
 	public static final int SETENTA = 70;
 	public static final byte ARRASTO = 1;

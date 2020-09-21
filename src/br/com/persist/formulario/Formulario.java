@@ -3,6 +3,8 @@ package br.com.persist.formulario;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.PopupMenu;
@@ -48,8 +50,17 @@ public class Formulario extends JFrame {
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
 
+	public Formulario(GraphicsConfiguration gc) {
+		super(Mensagens.getTituloAplicacao(), gc);
+		ini();
+	}
+
 	public Formulario() {
 		super(Mensagens.getTituloAplicacao());
+		ini();
+	}
+
+	private void ini() {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setJMenuBar(menuPrincipal);
@@ -276,7 +287,7 @@ public class Formulario extends JFrame {
 		setSize((int) largura, principalSize.height);
 	}
 
-	private void checarPreferenciasLarguraAltura() {
+	public void checarPreferenciasLarguraAltura() {
 		if (Preferencias.isAplicarLarguraAoAbrirArquivoObjeto()) {
 			definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
 		}
@@ -300,5 +311,12 @@ public class Formulario extends JFrame {
 		}
 
 		window.setVisible(true);
+	}
+
+	public void salvarGC() {
+		GraphicsDevice device = getGraphicsConfiguration().getDevice();
+		if (device != null) {
+			Preferencias.setString(Constantes.GC, device.getIDstring());
+		}
 	}
 }

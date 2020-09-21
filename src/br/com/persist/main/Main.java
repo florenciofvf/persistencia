@@ -1,5 +1,8 @@
 package br.com.persist.main;
 
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -36,9 +39,34 @@ public class Main {
 			addURL(url);
 		}
 
-		Formulario formulario = new Formulario();
-		formulario.setLocationRelativeTo(null);
+		GraphicsConfiguration gc = getGraphicsConfiguration();
+		Formulario formulario = gc == null ? new Formulario() : new Formulario(gc);
+		formulario.checarPreferenciasLarguraAltura();
 		formulario.setVisible(true);
+	}
+
+	private static GraphicsConfiguration getGraphicsConfiguration() {
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		String id = Preferencias.getString(Constantes.GC);
+		GraphicsDevice[] gs = ge.getScreenDevices();
+		GraphicsDevice device = null;
+
+		if (gs != null && id != null) {
+			for (GraphicsDevice gd : gs) {
+				if (id.equals(gd.getIDstring())) {
+					device = gd;
+				}
+			}
+		}
+
+		if (device != null) {
+			GraphicsConfiguration[] gcs = device.getConfigurations();
+			if (gcs != null && gcs.length > 0) {
+				return gcs[0];
+			}
+		}
+
+		return null;
 	}
 
 	private static void addURL(URL url) {
