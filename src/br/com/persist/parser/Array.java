@@ -24,10 +24,8 @@ public class Array extends Tipo {
 		if (tipo == null) {
 			throw new IllegalArgumentException();
 		}
-
 		lista.add(tipo);
 		tipo.pai = this;
-
 		return this;
 	}
 
@@ -35,19 +33,15 @@ public class Array extends Tipo {
 		if (tipo == null) {
 			return adicionar();
 		}
-
 		if (tipo instanceof String) {
 			return adicionar((String) tipo);
 		}
-
 		if (tipo instanceof Boolean) {
 			return adicionar((Boolean) tipo);
 		}
-
 		if (tipo instanceof Number) {
 			return adicionar((Number) tipo);
 		}
-
 		return this;
 	}
 
@@ -79,16 +73,13 @@ public class Array extends Tipo {
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
 		super.toString(sb, comTab, tab);
 		sb.append("[" + Constantes.QL);
-
 		for (int i = 0; i < lista.size(); i++) {
 			if (i > 0) {
 				sb.append("," + Constantes.QL);
 			}
-
 			Tipo t = lista.get(i);
 			t.toString(sb, true, tab + 1);
 		}
-
 		sb.append(Constantes.QL + getTab(tab) + "]");
 	}
 
@@ -96,16 +87,13 @@ public class Array extends Tipo {
 	public void toString(AbstractDocument doc, boolean comTab, int tab) throws BadLocationException {
 		super.toString(doc, comTab, tab);
 		insert(doc, "[" + Constantes.QL, att);
-
 		for (int i = 0; i < lista.size(); i++) {
 			if (i > 0) {
 				insert(doc, "," + Constantes.QL, att);
 			}
-
 			Tipo t = lista.get(i);
 			t.toString(doc, true, tab + 1);
 		}
-
 		insert(doc, Constantes.QL + getTab(tab) + "]", att);
 	}
 

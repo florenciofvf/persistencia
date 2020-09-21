@@ -27,10 +27,8 @@ public class Objeto extends Tipo {
 		if (Util.estaVazio(nome) || tipo == null) {
 			throw new IllegalArgumentException();
 		}
-
 		atributos.put(nome, tipo);
 		tipo.pai = this;
-
 		return this;
 	}
 
@@ -38,19 +36,15 @@ public class Objeto extends Tipo {
 		if (tipo == null) {
 			return atributo(nome);
 		}
-
 		if (tipo instanceof String) {
 			return atributo(nome, (String) tipo);
 		}
-
 		if (tipo instanceof Boolean) {
 			return atributo(nome, (Boolean) tipo);
 		}
-
 		if (tipo instanceof Number) {
 			return atributo(nome, (Number) tipo);
 		}
-
 		return this;
 	}
 
@@ -60,18 +54,14 @@ public class Objeto extends Tipo {
 
 	public Map<String, String> getAtributosString() {
 		Map<String, String> map = new LinkedHashMap<>();
-
 		Iterator<Map.Entry<String, Tipo>> it = atributos.entrySet().iterator();
-
 		while (it.hasNext()) {
 			Map.Entry<String, Tipo> entry = it.next();
 			Tipo tipo = entry.getValue();
-
 			if (tipo instanceof Texto) {
 				map.put(entry.getKey(), tipo.toString());
 			}
 		}
-
 		return map;
 	}
 
@@ -99,24 +89,18 @@ public class Objeto extends Tipo {
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
 		super.toString(sb, comTab, tab);
 		sb.append("{" + Constantes.QL);
-
 		Iterator<Map.Entry<String, Tipo>> it = atributos.entrySet().iterator();
 		boolean virgula = false;
-
 		while (it.hasNext()) {
 			if (virgula) {
 				sb.append("," + Constantes.QL);
 			}
-
 			Map.Entry<String, Tipo> entry = it.next();
 			sb.append(getTab(tab + 1) + citar(entry.getKey()) + ": ");
-
 			Tipo t = entry.getValue();
 			t.toString(sb, false, tab + 1);
-
 			virgula = true;
 		}
-
 		sb.append(Constantes.QL + getTab(tab) + "}");
 	}
 
@@ -124,24 +108,18 @@ public class Objeto extends Tipo {
 	public void toString(AbstractDocument doc, boolean comTab, int tab) throws BadLocationException {
 		super.toString(doc, comTab, tab);
 		insert(doc, "{" + Constantes.QL, att);
-
 		Iterator<Map.Entry<String, Tipo>> it = atributos.entrySet().iterator();
 		boolean virgula = false;
-
 		while (it.hasNext()) {
 			if (virgula) {
 				insert(doc, "," + Constantes.QL, att);
 			}
-
 			Map.Entry<String, Tipo> entry = it.next();
 			insert(doc, getTab(tab + 1) + citar(entry.getKey()) + ": ", att2);
-
 			Tipo t = entry.getValue();
 			t.toString(doc, false, tab + 1);
-
 			virgula = true;
 		}
-
 		insert(doc, Constantes.QL + getTab(tab) + "}", att);
 	}
 

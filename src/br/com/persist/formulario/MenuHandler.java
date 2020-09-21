@@ -18,10 +18,8 @@ class MenuHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("menu".equals(qName)) {
 			MenuApp menu = selecionado;
-
 			selecionado = new MenuApp();
 			selecionado.aplicar(attributes);
-
 			if (menu == null) {
 				coletor.getMenus().add(selecionado);
 			} else {

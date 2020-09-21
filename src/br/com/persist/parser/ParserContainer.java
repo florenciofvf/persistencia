@@ -47,19 +47,15 @@ public class ParserContainer extends Panel {
 		if (Util.estaVazio(string)) {
 			return;
 		}
-
 		area.setText(Constantes.VAZIO);
-
 		try {
 			Parser parser = new Parser();
 			Tipo json = parser.parse(string);
 			StyledDocument styledDoc = area.getStyledDocument();
-
 			if (styledDoc instanceof AbstractDocument) {
 				AbstractDocument doc = (AbstractDocument) styledDoc;
 				json.toString(doc, false, 0);
 			}
-
 			area.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(Constantes.PAINEL_PARSER, ex, this);
@@ -109,9 +105,7 @@ public class ParserContainer extends Panel {
 			if (Util.estaVazio(areaEdicao.getText())) {
 				return;
 			}
-
 			String string = Util.getString(areaEdicao);
-
 			try {
 				Parser parser = new Parser();
 				Tipo json = parser.parse(string);
@@ -119,7 +113,6 @@ public class ParserContainer extends Panel {
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_PARSER, ex, this);
 			}
-
 			fechar();
 		}
 	}

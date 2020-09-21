@@ -26,14 +26,11 @@ public abstract class Tipo {
 
 	public static String getTab(int i) {
 		StringBuilder sb = new StringBuilder();
-
 		int q = 0;
-
 		while (q < i) {
 			sb.append("    ");
 			q++;
 		}
-
 		return sb.toString();
 	}
 

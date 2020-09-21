@@ -29,16 +29,13 @@ public class Main {
 		} catch (Exception e) {
 			LOG.log(Level.INFO, Constantes.INFO, e);
 		}
-
 		Preferencias.inicializar();
 		URL[] urLs = getURLs();
 		Preferencias.abrir();
 		Imagens.ini();
-
 		for (URL url : urLs) {
 			addURL(url);
 		}
-
 		GraphicsConfiguration gc = getGraphicsConfiguration();
 		Formulario formulario = gc == null ? new Formulario() : new Formulario(gc);
 		formulario.checarPreferenciasLarguraAltura();
@@ -50,7 +47,6 @@ public class Main {
 		String id = Preferencias.getString(Constantes.GC);
 		GraphicsDevice[] gs = ge.getScreenDevices();
 		GraphicsDevice device = null;
-
 		if (gs != null && id != null) {
 			for (GraphicsDevice gd : gs) {
 				if (id.equals(gd.getIDstring())) {
@@ -58,14 +54,12 @@ public class Main {
 				}
 			}
 		}
-
 		if (device != null) {
 			GraphicsConfiguration[] gcs = device.getConfigurations();
 			if (gcs != null && gcs.length > 0) {
 				return gcs[0];
 			}
 		}
-
 		return null;
 	}
 
