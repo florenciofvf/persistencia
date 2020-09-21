@@ -41,14 +41,11 @@ class Cabecalho extends Panel {
 		this.fichario = fichario;
 		this.pagina = pagina;
 		setOpaque(false);
-
 		Titulo titulo = pagina.getTitulo();
 		String title = Preferencias.isTituloAbaMin() ? titulo.getTituloMin() : titulo.getTitulo();
-
 		if (title != null) {
 			add(new IconeLabel(titulo.getIcone()));
 		}
-
 		add(new IconeFechar(title != null));
 	}
 
@@ -108,28 +105,21 @@ class Cabecalho extends Panel {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-
-			if (!desenhar) {
-				return;
+			if (desenhar) {
+				Graphics2D g2 = (Graphics2D) g.create();
+				if (getModel().isPressed()) {
+					g2.translate(1, 1);
+				}
+				g2.setStroke(Constantes.STROKE_PADRAO);
+				g2.setColor(Color.BLACK);
+				if (getModel().isRollover()) {
+					g2.setColor(Color.MAGENTA);
+				}
+				int delta = 6;
+				g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);
+				g2.drawLine(delta, getHeight() - delta - 1, getWidth() - delta - 1, delta);
+				g2.dispose();
 			}
-
-			Graphics2D g2 = (Graphics2D) g.create();
-
-			if (getModel().isPressed()) {
-				g2.translate(1, 1);
-			}
-
-			g2.setStroke(Constantes.STROKE_PADRAO);
-			g2.setColor(Color.BLACK);
-
-			if (getModel().isRollover()) {
-				g2.setColor(Color.MAGENTA);
-			}
-
-			int delta = 6;
-			g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);
-			g2.drawLine(delta, getHeight() - delta - 1, getWidth() - delta - 1, delta);
-			g2.dispose();
 		}
 	}
 

@@ -119,7 +119,6 @@ public class Fichario extends JTabbedPane {
 		@Override
 		public void setBounds(int x, int y, int width, int height) {
 			int xAux = -1;
-
 			if (tipo == 0) {
 				xAux = 0;
 			} else if (tipo == 1) {
@@ -127,7 +126,6 @@ public class Fichario extends JTabbedPane {
 			} else {
 				xAux = 30;
 			}
-
 			super.setBounds(xAux, 0, 15, 10);
 		}
 	}
@@ -149,7 +147,6 @@ public class Fichario extends JTabbedPane {
 				navegacaoListener.esquerdo.clear();
 				navegacaoListener.direito.clear();
 			}
-
 			navegButtonEsquerdo.checarEstado();
 			navegButtonDireito.checarEstado();
 			navegButtonLimpar.checarEstado();
@@ -167,12 +164,10 @@ public class Fichario extends JTabbedPane {
 			if (deque == null || i == null || i == -1) {
 				return;
 			}
-
 			if (deque.isEmpty()) {
 				deque.push(i);
 			} else {
 				Integer a = deque.peek();
-
 				if (!a.equals(i)) {
 					deque.push(i);
 				}
@@ -192,7 +187,6 @@ public class Fichario extends JTabbedPane {
 		private void voltar() {
 			if (!esquerdo.isEmpty()) {
 				Integer indice = esquerdo.pop();
-
 				if (indice < getTabCount()) {
 					habilitado = false;
 					Integer ult = getSelectedIndex();
@@ -203,14 +197,12 @@ public class Fichario extends JTabbedPane {
 					habilitado = true;
 				}
 			}
-
 			checarEstadoNavegacao();
 		}
 
 		private void avancar() {
 			if (!direito.isEmpty()) {
 				Integer indice = direito.pop();
-
 				if (indice < getTabCount()) {
 					habilitado = false;
 					Integer ult = getSelectedIndex();
@@ -221,7 +213,6 @@ public class Fichario extends JTabbedPane {
 					habilitado = true;
 				}
 			}
-
 			checarEstadoNavegacao();
 		}
 	}
@@ -241,7 +232,6 @@ public class Fichario extends JTabbedPane {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int indice = getSelectedIndex();
-
 			if (indice != -1) {
 				excluirPagina(indice);
 			}
@@ -271,7 +261,6 @@ public class Fichario extends JTabbedPane {
 		public void dragOver(DropTargetDragEvent dtde) {
 			Point point = dtde.getLocation();
 			int indice = indexAtLocation(point.x, point.y);
-
 			if (indice != -1 && indice != getSelectedIndex()) {
 				setSelectedIndex(indice);
 			}
@@ -291,7 +280,6 @@ public class Fichario extends JTabbedPane {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-
 		if (rectangle != null) {
 			g.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
 		}
@@ -303,7 +291,6 @@ public class Fichario extends JTabbedPane {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
@@ -311,22 +298,18 @@ public class Fichario extends JTabbedPane {
 		for (int i = 0; i < getTabCount(); i++) {
 			Pagina pagina = getPagina(i);
 			File paginaFile = pagina.getFile();
-
 			if (paginaFile != null && file != null && paginaFile.getAbsolutePath().equals(file.getAbsolutePath())) {
 				return i;
 			}
-
 			if (Util.igual(paginaFile, file)) {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
 	public void processar(Formulario formulario, Map<String, Object> args) {
 		Boolean fechar = (Boolean) args.get(FormularioEvento.FECHAR_FORMULARIO);
-
 		if (Boolean.TRUE.equals(fechar)) {
 			fechandoFormulario(formulario);
 		} else {
@@ -340,12 +323,10 @@ public class Fichario extends JTabbedPane {
 	public int getIndice(Pagina pagina) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Pagina p = getPagina(i);
-
 			if (p == pagina) {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
@@ -357,22 +338,18 @@ public class Fichario extends JTabbedPane {
 
 	public boolean liberarPagina(Pagina pagina) {
 		int indice = getIndice(pagina);
-
 		if (indice == -1) {
 			return false;
 		}
-
 		remove(indice);
 		return true;
 	}
 
 	public boolean excluirPagina(Pagina pagina) {
 		int indice = getIndice(pagina);
-
 		if (indice == -1) {
 			return false;
 		}
-
 		pagina.excluindoDoFichario(this);
 		remove(indice);
 		return true;
@@ -406,14 +383,11 @@ public class Fichario extends JTabbedPane {
 	public void fechandoFormulario(Formulario formulario) {
 		try (PrintWriter pw = new PrintWriter(Constantes.PERSISTENCIA_FVF, StandardCharsets.UTF_8.name())) {
 			int total = getTabCount();
-
 			for (int i = 0; i < total; i++) {
 				Pagina pagina = getPagina(i);
-
 				pw.print(pagina.getClasseFabrica().getName() + Constantes.III + pagina.getStringPersistencia()
 						+ Constantes.QL);
 			}
-
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("SALVAR PAGINAS", ex, Fichario.this);
 			LOG.log(Level.SEVERE, ex.getMessage());
@@ -466,7 +440,6 @@ public class Fichario extends JTabbedPane {
 
 	public void selecionarPagina(File file) {
 		int indice = getIndice(file);
-
 		if (indice >= 0) {
 			setSelectedIndex(indice);
 		}
@@ -474,7 +447,6 @@ public class Fichario extends JTabbedPane {
 
 	public void fecharArquivo(File file) {
 		int indice = getIndice(file);
-
 		while (indice >= 0) {
 			remove(indice);
 			indice = getIndice(file);
@@ -522,19 +494,15 @@ public class Fichario extends JTabbedPane {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			rectangle = null;
-
 			if (ponto == null) {
 				repaint();
 				return;
 			}
-
 			int destino = indexAtLocation(e.getX(), e.getY());
 			int origem = indexAtLocation(ponto.x, ponto.y);
-
 			if (origem != -1 && destino != -1 && origem != destino) {
 				inverter(origem, destino);
 			}
-
 			repaint();
 		}
 
