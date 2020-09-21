@@ -73,7 +73,6 @@ public class Main {
 		try {
 			URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
 			Class<?> classe = URLClassLoader.class;
-
 			Method method = classe.getDeclaredMethod("addURL", URL.class);
 			method.setAccessible(true);
 			method.invoke(classLoader, url);
@@ -85,7 +84,6 @@ public class Main {
 	private static URL[] getURLs() {
 		File[] files = new File("libs").listFiles();
 		List<URL> urls = new ArrayList<>();
-
 		try {
 			if (files != null) {
 				for (File f : files) {
@@ -100,7 +98,6 @@ public class Main {
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
-
 		return urls.toArray(new URL[urls.size()]);
 	}
 }

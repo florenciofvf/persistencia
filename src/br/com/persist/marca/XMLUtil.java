@@ -73,7 +73,6 @@ public class XMLUtil {
 		for (int i = 0; i < tab; i++) {
 			print("\t");
 		}
-
 		return this;
 	}
 

@@ -67,11 +67,9 @@ class Cabecalho extends Panel {
 		@Override
 		public String getText() {
 			int i = fichario.indexOfTabComponent(Cabecalho.this);
-
 			if (i != -1) {
 				return fichario.getTitleAt(i);
 			}
-
 			return null;
 		}
 	}
@@ -97,7 +95,6 @@ class Cabecalho extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int i = fichario.indexOfTabComponent(Cabecalho.this);
-
 			if (i != -1) {
 				fichario.excluirPagina(i);
 			}
@@ -140,7 +137,6 @@ class Cabecalho extends Panel {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			Component component = e.getComponent();
-
 			if (component instanceof AbstractButton) {
 				AbstractButton button = (AbstractButton) component;
 				button.setBorderPainted(true);
@@ -150,7 +146,6 @@ class Cabecalho extends Panel {
 		@Override
 		public void mouseExited(MouseEvent e) {
 			Component component = e.getComponent();
-
 			if (component instanceof AbstractButton) {
 				AbstractButton button = (AbstractButton) component;
 				button.setBorderPainted(false);
