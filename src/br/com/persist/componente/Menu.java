@@ -31,7 +31,6 @@ public class Menu extends JMenu {
 		if (separador) {
 			addSeparator();
 		}
-
 		add(new MenuItem(action));
 	}
 
@@ -39,7 +38,6 @@ public class Menu extends JMenu {
 		if (separador) {
 			addSeparator();
 		}
-
 		add(menuItem);
 	}
 }

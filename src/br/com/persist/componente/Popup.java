@@ -10,7 +10,6 @@ public class Popup extends JPopupMenu {
 		if (separador) {
 			addSeparator();
 		}
-
 		return add(menuItem);
 	}
 
@@ -22,7 +21,6 @@ public class Popup extends JPopupMenu {
 		if (separador) {
 			addSeparator();
 		}
-
 		add(item);
 	}
 

@@ -16,15 +16,15 @@ public class Imagens {
 	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
 	private static final File file = new File("imagens");
 
+	private Imagens() {
+	}
+
 	private static ImageIcon criarImagem(String nome) {
 		try {
 			return new ImageIcon(file.getAbsolutePath() + File.separator + nome + ".png");
 		} catch (Exception e) {
 			throw new IllegalStateException("Erro imagem! " + nome);
 		}
-	}
-
-	private Imagens() {
 	}
 
 	public static Icon getIcon(String nome) {

@@ -15,9 +15,7 @@ public class MenuPadrao1 extends Menu {
 
 	public MenuPadrao1(String chaveRotulo, Icon icon, boolean dialogo) {
 		super(chaveRotulo, icon);
-
 		String[] strings = Preferencias.getFormFichaDialogo().split(",");
-
 		if (dialogo) {
 			for (String s : strings) {
 				if (Constantes.FORM.equals(s)) {
@@ -46,10 +44,8 @@ public class MenuPadrao1 extends Menu {
 	public void excluirAcao(Action action) {
 		for (int i = 0; i < getComponentCount(); i++) {
 			Component c = getComponent(i);
-
 			if (c instanceof MenuItem) {
 				MenuItem item = (MenuItem) c;
-
 				if (item.getAction() == action) {
 					remove(item);
 				}

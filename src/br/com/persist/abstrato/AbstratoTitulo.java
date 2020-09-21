@@ -5,7 +5,6 @@ import javax.swing.Icon;
 import br.com.persist.fichario.Titulo;
 
 public abstract class AbstratoTitulo implements Titulo {
-
 	@Override
 	public String getTituloMin() {
 		return null;

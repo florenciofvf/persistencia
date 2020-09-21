@@ -36,7 +36,6 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 		if (evento instanceof MouseEvent) {
 			return ((MouseEvent) evento).getClickCount() >= Constantes.DOIS;
 		}
-
 		return false;
 	}
 
@@ -44,13 +43,11 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 	public boolean shouldSelectCell(EventObject evento) {
 		if (evento instanceof MouseEvent) {
 			MouseEvent mouseEvent = (MouseEvent) evento;
-
 			if (mouseEvent.getClickCount() >= Constantes.DOIS && tabela != null) {
 				abrirModalEdicaoValor(tabela, linha);
 				cancelCellEditing();
 			}
 		}
-
 		return false;
 	}
 
@@ -59,18 +56,15 @@ public abstract class AbstratoEditor extends JPanel implements TableCellEditor {
 	@Override
 	public boolean stopCellEditing() {
 		List<CellEditorListener> lista = new ArrayList<>(listeners);
-
 		for (CellEditorListener listener : lista) {
 			listener.editingStopped(changeEvent);
 		}
-
 		return true;
 	}
 
 	@Override
 	public void cancelCellEditing() {
 		List<CellEditorListener> lista = new ArrayList<>(listeners);
-
 		for (CellEditorListener listener : lista) {
 			listener.editingCanceled(changeEvent);
 		}

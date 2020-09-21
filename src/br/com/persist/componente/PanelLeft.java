@@ -21,7 +21,6 @@ public class PanelLeft extends JPanel {
 		for (Component comp : compts) {
 			add(comp);
 		}
-
 		return this;
 	}
 }

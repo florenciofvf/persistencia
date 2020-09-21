@@ -21,7 +21,6 @@ public class PanelCenter extends JPanel {
 		for (Component comp : compts) {
 			add(comp);
 		}
-
 		return this;
 	}
 }

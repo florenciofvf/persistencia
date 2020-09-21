@@ -8,10 +8,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class CellRenderer extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
-	private final Color cor;
+	private final Color backGround;
+	private final Color foreGround;
 
-	public CellRenderer(Color cor) {
-		this.cor = cor;
+	public CellRenderer(Color backGround, Color foreGround) {
+		this.backGround = backGround;
+		this.foreGround = foreGround;
 	}
 
 	@Override
@@ -20,10 +22,10 @@ public class CellRenderer extends DefaultTableCellRenderer {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
 		if (!isSelected) {
-			setBackground(cor);
+			setBackground(backGround);
 		}
 
-		setForeground(Color.WHITE);
+		setForeground(foreGround);
 
 		return this;
 	}

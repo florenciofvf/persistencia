@@ -29,21 +29,18 @@ public class Action extends Acao {
 		if (actionListener == null) {
 			throw new IllegalStateException();
 		}
-
 		actionListener.actionPerformed(e);
 	}
 
 	public static Action actionIcon(String chaveRotulo, Icon icone, ActionListener actionListener) {
 		Action action = new Action(false, chaveRotulo, icone);
 		action.actionListener = actionListener;
-
 		return action;
 	}
 
 	public static Action actionMenu(String chaveRotulo, Icon icone, ActionListener actionListener) {
 		Action action = new Action(true, chaveRotulo, icone);
 		action.actionListener = actionListener;
-
 		return action;
 	}
 

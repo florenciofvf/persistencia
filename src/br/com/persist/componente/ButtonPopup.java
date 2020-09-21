@@ -33,7 +33,6 @@ public class ButtonPopup extends Button {
 		if (separador) {
 			addSeparator();
 		}
-
 		popup.add(menu);
 	}
 
@@ -41,7 +40,6 @@ public class ButtonPopup extends Button {
 		if (separador) {
 			addSeparator();
 		}
-
 		popup.addMenuItem(action);
 	}
 
@@ -49,7 +47,6 @@ public class ButtonPopup extends Button {
 		if (separador) {
 			addSeparator();
 		}
-
 		popup.addMenuItem(item);
 	}
 
@@ -60,10 +57,8 @@ public class ButtonPopup extends Button {
 	public void excluirAcao(Action action) {
 		for (int i = 0; i < popup.getComponentCount(); i++) {
 			Component c = popup.getComponent(i);
-
 			if (c instanceof MenuItem) {
 				MenuItem item = (MenuItem) c;
-
 				if (item.getAction() == action) {
 					popup.remove(item);
 				}

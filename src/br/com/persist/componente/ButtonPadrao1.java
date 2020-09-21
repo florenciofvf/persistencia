@@ -14,10 +14,8 @@ public class ButtonPadrao1 extends ButtonPopup {
 
 	public ButtonPadrao1(String chaveRotulo, Icon icon, boolean dialogo) {
 		super(chaveRotulo, icon);
-
 		addMenuItem(formularioAcao);
 		addMenuItem(ficharioAcao);
-
 		if (dialogo) {
 			addMenuItem(dialogoAcao);
 		}

@@ -45,7 +45,6 @@ public class ComplementoContainer extends Panel {
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, textArea, new ScrollPane(listaComplementos));
 		listaComplementos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		split.setDividerLocation(Constantes.SIZE.width / 2);
-
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
 	}
@@ -54,7 +53,6 @@ public class ComplementoContainer extends Panel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			String sel = listaComplementos.getSelectedValue();
-
 			if (!Util.estaVazio(sel)) {
 				String string = textArea.getText();
 				textArea.setText(string + " " + sel);

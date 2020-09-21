@@ -30,7 +30,6 @@ public class LabelTextTemp extends JLabel implements Runnable {
 		if (atraso < 0) {
 			return;
 		}
-
 		this.atraso = atraso;
 	}
 
@@ -41,7 +40,6 @@ public class LabelTextTemp extends JLabel implements Runnable {
 		} catch (Exception e) {
 			LOG.log(Level.FINEST, "run()");
 		}
-
 		setText(Constantes.VAZIO);
 	}
 }

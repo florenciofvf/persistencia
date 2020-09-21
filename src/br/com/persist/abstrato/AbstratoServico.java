@@ -5,7 +5,6 @@ import java.util.Map;
 import br.com.persist.formulario.Formulario;
 
 public abstract class AbstratoServico implements Servico {
-
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
 	}
