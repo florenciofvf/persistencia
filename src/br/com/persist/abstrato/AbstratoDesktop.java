@@ -32,12 +32,11 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			int y = 10;
 
 			for (JInternalFrame frame : getAllFrames()) {
-				if (!frame.isVisible()) {
-					continue;
+				if (frame.isVisible()) {
+					frame.setSize(largura, altura);
+					frame.setLocation(0, y);
+					y += altura + 20;
 				}
-				frame.setSize(largura, altura);
-				frame.setLocation(0, y);
-				y += altura + 20;
 			}
 
 			alinhamento.centralizar();
@@ -46,128 +45,92 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 	}
 
 	public class Alinhamento {
-		public void alinhar(DesktopAlinhamento alinhar) {
+		public void alinhar(JInternalFrame ref, DesktopAlinhamento alinhar) {
 			if (DesktopAlinhamento.ESQUERDO == alinhar) {
-				esquerdo();
+				esquerdo(ref);
 			} else if (DesktopAlinhamento.DIREITO == alinhar) {
-				direito();
-			} else if (DesktopAlinhamento.SOMENTE_DIREITO == alinhar) {
-				somenteDireito();
-			} else if (DesktopAlinhamento.CENTRALIZAR == alinhar) {
-				centralizar();
+				direito(ref);
+			} else if (DesktopAlinhamento.COMPLETAR_DIREITO == alinhar) {
+				completarDireito(ref);
 			}
 		}
 
-		private void esquerdo() {
-			JInternalFrame[] frames = getAllFrames();
-
-			if (frames.length > 0) {
-				int x = frames[0].getX();
-
-				for (int i = 1; i < frames.length; i++) {
-					frames[i].setLocation(x, frames[i].getY());
-				}
-			}
-		}
-
-		private void direito() {
-			JInternalFrame[] frames = getAllFrames();
-
-			if (frames.length > 0) {
-				int l = frames[0].getWidth();
-				int x = frames[0].getX();
-				int xlAux = x + l;
-
-				for (int i = 1; i < frames.length; i++) {
-					JInternalFrame frame = frames[i];
-					int lAux = frame.getWidth();
-					int xAux = frame.getX();
-					int xlAux2 = xAux + lAux;
-					int diff = xlAux - xlAux2;
-
-					frame.setLocation(xAux + diff, frame.getY());
-				}
-			}
-		}
-
-		private void somenteDireito() {
-			JInternalFrame[] frames = getAllFrames();
-
-			if (frames.length > 0) {
-				int l = frames[0].getWidth();
-				int x = frames[0].getX();
-				int xlAux = x + l;
-
-				for (int i = 1; i < frames.length; i++) {
-					JInternalFrame frame = frames[i];
-					int lAux = frame.getWidth();
-					int xAux = frame.getX();
-					int xlAux2 = xAux + lAux;
-					int diff = xlAux - xlAux2;
-					int newL = lAux + diff;
-
-					if (newL <= Constantes.DEZ) {
-						continue;
-					}
-
-					frame.setSize(newL, frame.getHeight());
-				}
-			}
-		}
-
-		private void centralizar() {
-			double largura = getSize().getWidth();
-
+		private void esquerdo(JInternalFrame ref) {
+			int x = ref.getX();
 			for (JInternalFrame frame : getAllFrames()) {
-				if (!frame.isVisible()) {
-					continue;
+				if (frame.isVisible()) {
+					frame.setLocation(x, frame.getY());
 				}
-				if (frame.getWidth() >= largura) {
-					frame.setLocation(0, frame.getY());
-				} else {
-					frame.setLocation((int) ((largura - frame.getWidth()) / 2), frame.getY());
+			}
+		}
+
+		private void direito(JInternalFrame ref) {
+			int xLargura = ref.getX() + ref.getWidth();
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame.isVisible()) {
+					int xLargura2 = frame.getX() + frame.getWidth();
+					int diff = xLargura - xLargura2;
+					frame.setLocation(frame.getX() + diff, frame.getY());
+				}
+			}
+		}
+
+		private void completarDireito(JInternalFrame ref) {
+			int xlargura = ref.getX() + ref.getWidth();
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame.isVisible()) {
+					int xLargura2 = frame.getX() + frame.getWidth();
+					int diff = xlargura - xLargura2;
+					int novaLargura = frame.getWidth() + diff;
+					if (novaLargura > Constantes.DEZ) {
+						frame.setSize(novaLargura, frame.getHeight());
+					}
+				}
+			}
+		}
+
+		public void centralizar() {
+			double largura = getSize().getWidth();
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame.isVisible()) {
+					if (frame.getWidth() >= largura) {
+						frame.setLocation(0, frame.getY());
+					} else {
+						frame.setLocation((int) ((largura - frame.getWidth()) / 2), frame.getY());
+					}
 				}
 			}
 		}
 	}
 
 	public class Larguras {
-		public void mesma() {
-			JInternalFrame[] frames = getAllFrames();
-
-			if (frames.length > 0) {
-				int largura = frames[0].getWidth();
-
-				for (int i = 1; i < frames.length; i++) {
-					frames[i].setSize(largura, frames[i].getHeight());
+		public void mesma(JInternalFrame ref) {
+			int largura = ref.getWidth();
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame.isVisible()) {
+					frame.setSize(largura, frame.getHeight());
 				}
 			}
 		}
 
 		public void configurar(DesktopLargura larguraEnum) {
 			int largura = getSize().width - 20;
-
 			for (JInternalFrame frame : getAllFrames()) {
-				if (!frame.isVisible()) {
-					continue;
-				}
-				Dimension size = frame.getSize();
-				Point local = frame.getLocation();
-
-				if (DesktopLargura.TOTAL == larguraEnum) {
-					frame.setLocation(0, local.y);
-					frame.setSize(largura, size.height);
-
-				} else if (DesktopLargura.TOTAL_A_DIREITA == larguraEnum) {
-					frame.setSize(largura - local.x, size.height);
-
-				} else if (DesktopLargura.TOTAL_A_ESQUERDA == larguraEnum) {
-					int total = (local.x + size.width) - 10;
-					frame.setSize(total, size.height);
-					frame.setLocation(10, local.y);
+				if (frame.isVisible()) {
+					Dimension size = frame.getSize();
+					Point local = frame.getLocation();
+					if (DesktopLargura.TOTAL == larguraEnum) {
+						frame.setLocation(0, local.y);
+						frame.setSize(largura, size.height);
+					} else if (DesktopLargura.TOTAL_A_DIREITA == larguraEnum) {
+						frame.setSize(largura - local.x, size.height);
+					} else if (DesktopLargura.TOTAL_A_ESQUERDA == larguraEnum) {
+						int total = (local.x + size.width) - 10;
+						frame.setSize(total, size.height);
+						frame.setLocation(10, local.y);
+					}
 				}
 			}
-
 			if (DesktopLargura.TOTAL == larguraEnum) {
 				alinhamento.centralizar();
 			}
@@ -262,34 +225,16 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 
 	protected class MenuAlinhamento extends Menu {
 		private static final long serialVersionUID = 1L;
-		private Action somenteDireitoAcao = Action.actionMenu("label.somente_direito", Icones.ALINHA_DIREITO);
-		private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
-		private Action esquerdoAcao = Action.actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
-		private Action direitoAcao = Action.actionMenu("label.direito", Icones.ALINHA_DIREITO);
 
 		protected MenuAlinhamento() {
 			super("label.alinhamento", Icones.LARGURA);
-
-			addMenuItem(direitoAcao);
-			addMenuItem(esquerdoAcao);
 			addMenuItem(centralizarAcao);
-			addMenuItem(mesmaLarguraAcao);
-			addMenuItem(somenteDireitoAcao);
-
-			somenteDireitoAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.SOMENTE_DIREITO));
-			centralizarAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.CENTRALIZAR));
-			esquerdoAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.ESQUERDO));
-			direitoAcao.setActionListener(e -> alinhamento.alinhar(DesktopAlinhamento.DIREITO));
-			mesmaLarguraAcao.setActionListener(e -> larguras.mesma());
+			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 		}
 
 		public void habilitar(boolean b) {
-			somenteDireitoAcao.setEnabled(b);
-			mesmaLarguraAcao.setEnabled(b);
 			centralizarAcao.setEnabled(b);
-			esquerdoAcao.setEnabled(b);
-			direitoAcao.setEnabled(b);
 			setEnabled(b);
 		}
 	}
@@ -298,17 +243,13 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		public void ajusteManual() {
 			String string = getWidth() + "," + getHeight();
 			Object resp = Util.getValorInputDialog(AbstratoDesktop.this, "label.largura_altura", string, string);
-
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return;
 			}
-
 			String[] strings = resp.toString().split(",");
-
 			if (strings != null && strings.length == 2) {
 				int largura = Integer.parseInt(strings[0].trim());
 				int altura = Integer.parseInt(strings[1].trim());
-
 				setPreferredSize(new Dimension(largura, altura));
 				SwingUtilities.updateComponentTreeUI(getParent());
 			}
@@ -322,29 +263,22 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		public void usarFormularios(boolean updateTree) {
 			int largura = 0;
 			int altura = 0;
-
 			for (JInternalFrame frame : getAllFrames()) {
-				if (!frame.isVisible()) {
-					continue;
+				if (frame.isVisible()) {
+					int x = frame.getX();
+					int y = frame.getY();
+					int l = frame.getWidth();
+					int a = frame.getHeight();
+					if (x + l > largura) {
+						largura = x + l;
+					}
+					if (y + a > altura) {
+						altura = y + a;
+					}
+					frame.moveToFront();
 				}
-				int x = frame.getX();
-				int y = frame.getY();
-				int l = frame.getWidth();
-				int a = frame.getHeight();
-
-				if (x + l > largura) {
-					largura = x + l;
-				}
-
-				if (y + a > altura) {
-					altura = y + a;
-				}
-
-				frame.moveToFront();
 			}
-
 			setPreferredSize(new Dimension(largura, altura + Constantes.QUARENTA_UM));
-
 			if (updateTree) {
 				SwingUtilities.updateComponentTreeUI(getParent());
 			}
