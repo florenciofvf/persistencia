@@ -904,6 +904,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
 					direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
 					mesmaLarguraAcao.setActionListener(e -> mesma());
+					habilitar(false);
 				}
 
 				void habilitar(boolean b) {
