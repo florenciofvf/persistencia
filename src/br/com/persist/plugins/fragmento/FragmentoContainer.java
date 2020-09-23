@@ -185,7 +185,7 @@ public class FragmentoContainer extends AbstratoContainer {
 		protected void baixar() {
 			FragmentoProvedor.inicializar();
 			if (listener != null) {
-				FragmentoProvedor.filtrarPeloGrupo(listener.getGrupoFiltro());
+				FragmentoProvedor.filtrar(listener.getGrupoFiltro());
 			}
 			fragmentoModelo.fireTableDataChanged();
 			ajustarTabela();
@@ -214,13 +214,11 @@ public class FragmentoContainer extends AbstratoContainer {
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-
 			if (linhas != null && linhas.length == 1) {
 				Fragmento f = FragmentoProvedor.getFragmento(linhas[0]);
 				try {
 					listener.aplicarFragmento(f);
 				} finally {
-					FragmentoProvedor.removerFiltroPeloGrupo();
 					if (janela != null) {
 						janela.fechar();
 					}

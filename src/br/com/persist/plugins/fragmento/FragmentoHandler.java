@@ -29,14 +29,11 @@ class FragmentoHandler extends XMLHandler {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (Constantes.FRAGMENTO.equals(qName)) {
 			selecionado = null;
-
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();
-
 			if (!Util.estaVazio(string)) {
 				selecionado.setValor(string.trim());
 			}
-
 			limpar();
 		}
 	}

@@ -14,10 +14,9 @@ import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
 
 public class FragmentoProvedor {
-	private static final List<Fragmento> listaBackup = new ArrayList<>();
+	private static final List<Fragmento> pasta = new ArrayList<>();
 	private static final List<Fragmento> lista = new ArrayList<>();
 	private static final Logger LOG = Logger.getGlobal();
-	private static boolean filtrado;
 	private static final File file;
 
 	private FragmentoProvedor() {
@@ -31,7 +30,6 @@ public class FragmentoProvedor {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
 		}
-
 		return null;
 	}
 
@@ -41,7 +39,6 @@ public class FragmentoProvedor {
 				return f;
 			}
 		}
-
 		return null;
 	}
 
@@ -52,7 +49,6 @@ public class FragmentoProvedor {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
@@ -69,17 +65,14 @@ public class FragmentoProvedor {
 	}
 
 	public static void adicionar(Fragmento fragmento) {
-		if (contem(fragmento)) {
-			return;
+		if (!contem(fragmento)) {
+			lista.add(fragmento);
 		}
-
-		lista.add(fragmento);
 	}
 
 	public static void inicializar() {
-		listaBackup.clear();
+		pasta.clear();
 		lista.clear();
-
 		try {
 			if (file.exists() && file.canRead()) {
 				XML.processar(file, new FragmentoHandler());
@@ -98,21 +91,17 @@ public class FragmentoProvedor {
 		try {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
-
 			util.abrirTag2(Constantes.FRAGMENTOS);
-
 			for (Fragmento f : lista) {
 				if (f.isValido()) {
 					f.salvar(util);
 				}
 			}
-
-			for (Fragmento f : listaBackup) {
+			for (Fragmento f : pasta) {
 				if (f.isValido()) {
 					f.salvar(util);
 				}
 			}
-
 			util.finalizarTag(Constantes.FRAGMENTOS);
 			util.close();
 		} catch (Exception e) {
@@ -120,26 +109,20 @@ public class FragmentoProvedor {
 		}
 	}
 
-	public static void filtrarPeloGrupo(List<String> grupos) {
-		if (!filtrado) {
-			Iterator<Fragmento> it = lista.iterator();
-
-			while (it.hasNext()) {
-				Fragmento f = it.next();
-
-				if (contem(grupos, f.getGrupo())) {
-					listaBackup.add(f);
-					it.remove();
-				}
+	public static void filtrar(List<String> grupos) {
+		removerFiltro();
+		Iterator<Fragmento> it = lista.iterator();
+		while (it.hasNext()) {
+			Fragmento f = it.next();
+			if (!contem(grupos, f.getGrupo())) {
+				pasta.add(f);
+				it.remove();
 			}
-
-			inverter();
-			filtrado = true;
 		}
 	}
 
-	private static boolean contem(List<String> strings, String grupo) {
-		for (String s : strings) {
+	private static boolean contem(List<String> grupos, String grupo) {
+		for (String s : grupos) {
 			if (s.equalsIgnoreCase(grupo)) {
 				return true;
 			}
@@ -147,23 +130,13 @@ public class FragmentoProvedor {
 		return false;
 	}
 
-	public static void removerFiltroPeloGrupo() {
-		if (filtrado) {
-			inverter();
-			lista.addAll(listaBackup);
-			listaBackup.clear();
-			filtrado = false;
+	public static void removerFiltro() {
+		Iterator<Fragmento> it = pasta.iterator();
+		while (it.hasNext()) {
+			Fragmento f = it.next();
+			lista.add(f);
+			it.remove();
 		}
-	}
-
-	private static void inverter() {
-		List<Fragmento> lista1 = new ArrayList<>(lista);
-		List<Fragmento> lista2 = new ArrayList<>(listaBackup);
-		listaBackup.clear();
-		lista.clear();
-
-		listaBackup.addAll(lista1);
-		lista.addAll(lista2);
 	}
 
 	public static Valor getValor(int i) {
