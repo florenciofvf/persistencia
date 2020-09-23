@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto.internal;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAutoApos;
 import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
@@ -24,6 +25,10 @@ public interface InternalListener {
 		public void configAlturaAutomatica(int total);
 	}
 
+	public interface Alinhamento {
+		public void alinhar(DesktopAlinhamento opcao);
+	}
+
 	public interface Titulo {
 		public void setTitulo(String titulo);
 	}
@@ -42,6 +47,10 @@ public interface InternalListener {
 
 	public interface Dimensao {
 		public Dimension getDimensoes();
+	}
+
+	public interface Largura {
+		public void mesma();
 	}
 
 	public interface Apelido {

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.abstrato.AbstratoInternalFrame;
+import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
@@ -42,10 +43,12 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setBuscaAutomaticaListener(InternalFormulario.this::buscaAutomatica);
 		container.setLinkAutomaticoListener(InternalFormulario.this::linkAutomatico);
 		container.setVisibilidadeListener(InternalFormulario.this::setVisible);
+		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
 		container.setComponenteListener(InternalFormulario.this::getThis);
 		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
+		container.setLarguraListener(InternalFormulario.this::mesma);
 		container.setApelidoListener(apelidoListener);
 		montarLayout();
 		configurar2();
@@ -166,7 +169,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
 		checarDesktop();
-
 		if (desktop != null) {
 			desktop.buscaAutomatica(grupo, argumentos, container);
 		}
@@ -174,7 +176,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
 		checarDesktop();
-
 		if (desktop != null) {
 			desktop.linkAutomatico(link, argumento, container);
 		}
@@ -182,9 +183,22 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void buscaAutomaticaApos(InternalContainer objetoContainer, GrupoBuscaAutoApos grupoApos) {
 		checarDesktop();
-
 		if (desktop != null) {
 			desktop.buscaAutomaticaApos(objetoContainer, grupoApos);
+		}
+	}
+
+	public void alinhar(DesktopAlinhamento opcao) {
+		checarDesktop();
+		if (desktop != null) {
+			desktop.getAlinhamento().alinhar(this, opcao);
+		}
+	}
+
+	public void mesma() {
+		checarDesktop();
+		if (desktop != null) {
+			desktop.getLarguras().mesma(this);
 		}
 	}
 

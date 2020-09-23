@@ -43,6 +43,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -115,9 +116,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private transient InternalListener.LinkAutomatico linkAutomaticoListener;
 	private transient TabelaListener tabelaListener = new TabelaListener();
 	private transient InternalListener.Visibilidade visibilidadeListener;
+	private transient InternalListener.Alinhamento alinhamentoListener;
 	private transient InternalListener.Componente componenteListener;
 	private transient InternalListener.Dimensao dimensaoListener;
 	private final AtomicBoolean processado = new AtomicBoolean();
+	private transient InternalListener.Largura larguraListener;
 	private transient InternalListener.Selecao selecaoListener;
 	private transient InternalListener.Apelido apelidoListener;
 	private final TextField txtComplemento = new TextField(33);
@@ -196,12 +199,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		private final ButtonBaixar buttonBaixar = new ButtonBaixar();
 		private final ButtonUpdate buttonUpdate = new ButtonUpdate();
 		private final Label labelTotal = new Label(Color.BLUE);
+		private final ButtonInfo buttonInfo = new ButtonInfo();
 		private transient Thread thread;
 
 		protected void ini(Janela janela, Objeto objeto) {
 			super.ini(janela);
 			add(btnArrasto);
-			add(true, new ButtonInfo());
+			add(true, buttonInfo);
 			add(true, buttonExcluir);
 			add(true, buttonFragVar);
 			add(buttonBuscaAuto);
@@ -851,6 +855,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action apelidoAcao = Action.actionMenu("label.apelido", Icones.TAG2);
+			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 
 			private ButtonInfo() {
 				super("label.meta_dados", Icones.INFO);
@@ -864,6 +869,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				addMenuItem(new EsquemaAcao());
 				addMenu(true, new MenuDML());
 				addMenu(true, new MenuCopiar());
+				addMenu(true, menuAlinhamento);
 
 				eventos();
 			}
@@ -878,6 +884,47 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						}
 					}
 				});
+			}
+
+			private class MenuAlinhamento extends Menu {
+				private static final long serialVersionUID = 1L;
+				private Action somenteDireitoAcao = Action.actionMenu("label.somente_direito", Icones.ALINHA_DIREITO);
+				private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
+				private Action esquerdoAcao = Action.actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
+				private Action direitoAcao = Action.actionMenu("label.direito", Icones.ALINHA_DIREITO);
+
+				private MenuAlinhamento() {
+					super("label.alinhamento", Icones.LARGURA);
+					addMenuItem(direitoAcao);
+					addMenuItem(esquerdoAcao);
+					addMenuItem(mesmaLarguraAcao);
+					addMenuItem(somenteDireitoAcao);
+
+					somenteDireitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO));
+					esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
+					direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
+					mesmaLarguraAcao.setActionListener(e -> mesma());
+				}
+
+				void habilitar(boolean b) {
+					somenteDireitoAcao.setEnabled(b);
+					mesmaLarguraAcao.setEnabled(b);
+					esquerdoAcao.setEnabled(b);
+					direitoAcao.setEnabled(b);
+					setEnabled(b);
+				}
+
+				private void alinhar(DesktopAlinhamento opcao) {
+					if (alinhamentoListener != null) {
+						alinhamentoListener.alinhar(opcao);
+					}
+				}
+
+				private void mesma() {
+					if (larguraListener != null) {
+						larguraListener.mesma();
+					}
+				}
 			}
 
 			private class MenuCopiar extends Menu {
@@ -1948,6 +1995,24 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void setVisibilidadeListener(InternalListener.Visibilidade visibilidadeListener) {
 		this.visibilidadeListener = visibilidadeListener;
+	}
+
+	public InternalListener.Alinhamento getAlinhamentoListener() {
+		return alinhamentoListener;
+	}
+
+	public void setAlinhamentoListener(InternalListener.Alinhamento alinhamentoListener) {
+		this.alinhamentoListener = alinhamentoListener;
+		toolbar.buttonInfo.menuAlinhamento.habilitar(alinhamentoListener != null);
+	}
+
+	public InternalListener.Largura getLarguraListener() {
+		return larguraListener;
+	}
+
+	public void setLarguraListener(InternalListener.Largura larguraListener) {
+		this.larguraListener = larguraListener;
+		toolbar.buttonInfo.menuAlinhamento.habilitar(larguraListener != null);
 	}
 
 	@Override
