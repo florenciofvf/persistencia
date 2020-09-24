@@ -1578,11 +1578,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 			List<String> colunas = new ArrayList<>();
 			TableModel model = modelo.getModelo();
-
 			for (int i = 0; i < model.getColumnCount(); i++) {
 				colunas.add(model.getColumnName(i));
 			}
-
 			return colunas;
 		}
 	};

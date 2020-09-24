@@ -50,12 +50,15 @@ import br.com.persist.formulario.FormularioEvento;
 
 public class Fichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
-	private final transient NavegButton navegButtonEsquerdo = new NavegButton(1);
-	private final transient NavegButton navegButtonDireito = new NavegButton(2);
-	private final transient NavegButton navegButtonLimpar = new NavegButton(0);
+	private final transient Navegacao navegacaoEsquerdo = new Navegacao(ESQUERDO);
+	private final transient Navegacao navegacaoDireito = new Navegacao(DIREITO);
+	private final transient Navegacao navegacaoLimpar = new Navegacao(LIMPAR);
 	private final transient NavegacaoListener navegacaoListener;
 	private final transient Listener listener = new Listener();
 	private static final Logger LOG = Logger.getGlobal();
+	private static final int ESQUERDO = 1;
+	private static final int DIREITO = 2;
+	private static final int LIMPAR = 0;
 	private transient Ponto ponto;
 	private Rectangle rectangle;
 	private int ultX;
@@ -67,39 +70,39 @@ public class Fichario extends JTabbedPane {
 		new DropTarget(this, listenerSoltar);
 		addMouseMotionListener(listener);
 		addMouseListener(listener);
-		add(navegButtonLimpar);
-		add(navegButtonEsquerdo);
-		add(navegButtonDireito);
+		add(navegacaoLimpar);
+		add(navegacaoEsquerdo);
+		add(navegacaoDireito);
 		configurar();
 	}
 
 	public void ativarNavegacao() {
-		navegacaoListener.inicializacao();
+		navegacaoListener.inicializar();
 		removeChangeListener(navegacaoListener);
 		addChangeListener(navegacaoListener);
 	}
 
-	public class NavegButton extends BasicArrowButton implements UIResource, SwingConstants {
+	public class Navegacao extends BasicArrowButton implements UIResource, SwingConstants {
 		private static final long serialVersionUID = 1L;
 		final int tipo;
 
-		public NavegButton(int tipo) {
-			super(tipo == 0 || tipo == 1 ? WEST : EAST, UIManager.getColor("TabbedPane.selected"),
+		public Navegacao(int tipo) {
+			super(tipo == LIMPAR || tipo == ESQUERDO ? WEST : EAST, UIManager.getColor("TabbedPane.selected"),
 					UIManager.getColor("TabbedPane.shadow"), UIManager.getColor("TabbedPane.darkShadow"),
 					UIManager.getColor("TabbedPane.highlight"));
 			addActionListener(e -> click());
-			if (tipo == 0) {
+			if (tipo == LIMPAR) {
 				setDirection(0);
 			}
 			this.tipo = tipo;
 		}
 
 		private void click() {
-			if (tipo == 0) {
+			if (tipo == LIMPAR) {
 				if (Util.confirmar(Fichario.this, "msg.confirmar_limpar")) {
-					navegacaoListener.inicializacao();
+					navegacaoListener.inicializar();
 				}
-			} else if (tipo == 1) {
+			} else if (tipo == ESQUERDO) {
 				navegacaoListener.voltar();
 			} else {
 				navegacaoListener.avancar();
@@ -107,9 +110,9 @@ public class Fichario extends JTabbedPane {
 		}
 
 		private void checarEstado() {
-			if (tipo == 0) {
+			if (tipo == LIMPAR) {
 				setEnabled(!navegacaoListener.esquerdo.isEmpty() || !navegacaoListener.direito.isEmpty());
-			} else if (tipo == 1) {
+			} else if (tipo == ESQUERDO) {
 				setEnabled(!navegacaoListener.esquerdo.isEmpty());
 			} else {
 				setEnabled(!navegacaoListener.direito.isEmpty());
@@ -119,9 +122,9 @@ public class Fichario extends JTabbedPane {
 		@Override
 		public void setBounds(int x, int y, int width, int height) {
 			int xAux = -1;
-			if (tipo == 0) {
+			if (tipo == LIMPAR) {
 				xAux = 0;
-			} else if (tipo == 1) {
+			} else if (tipo == ESQUERDO) {
 				xAux = 15;
 			} else {
 				xAux = 30;
@@ -147,12 +150,12 @@ public class Fichario extends JTabbedPane {
 				navegacaoListener.esquerdo.clear();
 				navegacaoListener.direito.clear();
 			}
-			navegButtonEsquerdo.checarEstado();
-			navegButtonDireito.checarEstado();
-			navegButtonLimpar.checarEstado();
+			navegacaoEsquerdo.checarEstado();
+			navegacaoDireito.checarEstado();
+			navegacaoLimpar.checarEstado();
 		}
 
-		private void inicializacao() {
+		private void inicializar() {
 			ultimo = getSelectedIndex();
 			habilitado = true;
 			esquerdo.clear();
