@@ -96,13 +96,11 @@ public class MenuApp {
 	public List<JMenuItem> criarItens(Formulario formulario, JMenu menu) {
 		FabricaContainer fabricaContainer = Fabrica.criar(classeFabrica);
 		List<JMenuItem> menus = new ArrayList<>();
-
 		if (fabricaContainer != null) {
 			formulario.adicionarServicos(fabricaContainer.getServicos(formulario));
 			formulario.adicionarFabrica(classeFabrica, fabricaContainer);
 			menus.addAll(fabricaContainer.criarMenuItens(formulario, menu));
 		}
-
 		return menus;
 	}
 }

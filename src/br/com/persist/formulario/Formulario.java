@@ -126,16 +126,15 @@ public class Formulario extends JFrame {
 	}
 
 	public void adicionarServicos(List<Servico> servicos) {
-		if (servicos == null) {
-			return;
-		}
-		for (Servico servico : servicos) {
-			adicionarServico(servico);
+		if (servicos != null) {
+			for (Servico servico : servicos) {
+				adicionarServico(servico);
+			}
 		}
 	}
 
 	public void adicionarFabrica(String chave, FabricaContainer fabrica) {
-		if (chave != null && !chave.trim().isEmpty() && fabrica != null) {
+		if (!Util.estaVazio(chave) && fabrica != null) {
 			fabricas.put(chave, fabrica);
 		}
 	}
@@ -205,18 +204,14 @@ public class Formulario extends JFrame {
 
 	private void iconeBandeja() {
 		PopupMenu popup = new PopupMenu();
-
 		java.awt.MenuItem itemFechar = new java.awt.MenuItem(Mensagens.getString(Constantes.LABEL_FECHAR));
 		itemFechar.addActionListener(e -> eventoFechar());
 		popup.add(itemFechar);
-
 		URL url = getClass().getResource(Constantes.IMAGEM_TRAY_ICON);
 		Image image = Toolkit.getDefaultToolkit().getImage(url);
 		SystemTray systemTray = SystemTray.getSystemTray();
-
 		TrayIcon trayIcon = new TrayIcon(image, Mensagens.getTituloAplicacao(), popup);
 		trayIcon.setImageAutoSize(true);
-
 		try {
 			systemTray.add(trayIcon);
 			trayIcon.displayMessage(Mensagens.getTituloAplicacao(), Mensagens.getString("versao"),
@@ -246,14 +241,12 @@ public class Formulario extends JFrame {
 		Rectangle monitorBounds = getGraphicsConfiguration().getBounds();
 		double porcentagemLargura = Util.menorEmPorcentagem(formularioSize.width, monitorBounds.width);
 		double porcentagemAltura = Util.menorEmPorcentagem(formularioSize.height, monitorBounds.height);
-
 		if (porcentagemAltura <= Preferencias.getPorcVerticalLocalForm()) {
 			int x = formularioLocation.x;
 			int y = formularioLocation.y + formularioSize.height + espaco;
 			int l = formularioSize.width;
 			int a = monitorBounds.height - formularioSize.height - espaco;
 			return new Rectangle(x, y, l, a);
-
 		} else if (porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()) {
 			int x = formularioLocation.x + formularioSize.width + espaco;
 			int y = formularioLocation.y;
@@ -261,7 +254,6 @@ public class Formulario extends JFrame {
 			int a = formularioSize.height;
 			return new Rectangle(x, y, l, a);
 		}
-
 		return null;
 	}
 

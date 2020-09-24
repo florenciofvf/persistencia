@@ -368,13 +368,10 @@ public class Fichario extends JTabbedPane {
 		if (pagina == null) {
 			throw new IllegalArgumentException("pagina nula.");
 		}
-
 		Titulo titulo = pagina.getTitulo();
 		String title = Preferencias.isTituloAbaMin() ? titulo.getTituloMin() : titulo.getTitulo();
-
 		addTab(title, pagina.getComponent());
 		int ultimoIndice = getTabCount() - 1;
-
 		Cabecalho cabecalho = new Cabecalho(this, pagina);
 		setToolTipTextAt(ultimoIndice, titulo.getHint());
 		setEnabledAt(ultimoIndice, titulo.isAtivo());
@@ -399,14 +396,11 @@ public class Fichario extends JTabbedPane {
 
 	public void visivelFormulario(Formulario formulario) {
 		File file = new File(Constantes.PERSISTENCIA_FVF);
-
 		if (file.exists()) {
 			List<String> linhas = new ArrayList<>();
-
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
-
 				while (!Util.estaVazio(linha)) {
 					linhas.add(linha);
 					linha = br.readLine();
@@ -414,7 +408,6 @@ public class Fichario extends JTabbedPane {
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);
 			}
-
 			for (String s : linhas) {
 				restaurarPagina(formulario, s);
 			}
@@ -425,9 +418,7 @@ public class Fichario extends JTabbedPane {
 		int pos = linha.indexOf(Constantes.III);
 		String classeFabrica = linha.substring(0, pos);
 		String stringPersistencia = linha.substring(pos + Constantes.III.length());
-
 		FabricaContainer fabrica = formulario.getFabrica(classeFabrica);
-
 		if (fabrica != null) {
 			PaginaServico servico = fabrica.getPaginaServico();
 			Pagina pagina = servico.criarPagina(formulario, stringPersistencia);
@@ -475,7 +466,6 @@ public class Fichario extends JTabbedPane {
 			ponto = new Ponto(x, y);
 			ultX = x;
 			ultY = y;
-
 			if (indice != -1) {
 				rectangle = getBoundsAt(indice);
 			}
@@ -517,10 +507,8 @@ public class Fichario extends JTabbedPane {
 			Pagina pagina = getPagina(origem);
 			Icon icon = getIconAt(origem);
 			remove(origem);
-
 			insertTab(titulo, icon, cmp, hint, destino);
 			setTabComponentAt(destino, tab);
-
 			if (pagina.getComponent() == null) {
 				setEnabledAt(destino, false);
 			} else {
