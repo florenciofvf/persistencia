@@ -242,17 +242,11 @@ public class Formulario extends JFrame {
 		double porcentagemLargura = Util.menorEmPorcentagem(formularioSize.width, monitorBounds.width);
 		double porcentagemAltura = Util.menorEmPorcentagem(formularioSize.height, monitorBounds.height);
 		if (porcentagemAltura <= Preferencias.getPorcVerticalLocalForm()) {
-			int x = formularioLocation.x;
-			int y = formularioLocation.y + formularioSize.height + espaco;
-			int l = formularioSize.width;
-			int a = monitorBounds.height - formularioSize.height - espaco;
-			return new Rectangle(x, y, l, a);
+			return new Rectangle(formularioLocation.x, formularioLocation.y + formularioSize.height + espaco,
+					formularioSize.width, monitorBounds.height - formularioSize.height - espaco);
 		} else if (porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()) {
-			int x = formularioLocation.x + formularioSize.width + espaco;
-			int y = formularioLocation.y;
-			int l = monitorBounds.width - formularioSize.width - espaco;
-			int a = formularioSize.height;
-			return new Rectangle(x, y, l, a);
+			return new Rectangle(formularioLocation.x + formularioSize.width + espaco, formularioLocation.y,
+					monitorBounds.width - formularioSize.width - espaco, formularioSize.height);
 		}
 		return null;
 	}
