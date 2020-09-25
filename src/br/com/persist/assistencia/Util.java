@@ -130,78 +130,61 @@ public class Util {
 		html.append("<body>").append(Constantes.QL);
 		html.append("<table>").append(Constantes.QL);
 		html.append("<tr>").append(Constantes.QL);
-
 		int colunas = model.getColumnCount();
-
 		for (int i = 0; i < colunas; i++) {
 			String coluna = model.getColumnName(i);
-
 			html.append("<th>" + coluna + "</th>").append(Constantes.QL);
 			tabular.append(coluna + Constantes.TAB);
 		}
-
 		html.append("</tr>").append(Constantes.QL);
 		tabular.deleteCharAt(tabular.length() - 1);
 		tabular.append(Constantes.QL);
-
 		for (Integer i : indices) {
 			html.append("<tr>").append(Constantes.QL);
-
 			for (int j = 0; j < colunas; j++) {
 				Object obj = model.getValueAt(i, j);
 				String val = obj == null ? Constantes.VAZIO : obj.toString();
-
 				tabular.append(val + Constantes.TAB);
 				html.append("<td>" + val + "</td>");
 				html.append(Constantes.QL);
 			}
-
 			html.append("</tr>").append(Constantes.QL);
 			tabular.deleteCharAt(tabular.length() - 1);
 			tabular.append(Constantes.QL);
 		}
-
 		html.append("</table>").append(Constantes.QL);
 		html.append("</body>").append(Constantes.QL);
 		html.append("</html>");
 		tabular.deleteCharAt(tabular.length() - 1);
-
 		return new TransferidorTabular(html.toString(), tabular.toString());
 	}
 
 	public static void mensagem(Component componente, String string) {
 		Component view = componente;
-
 		while (view != null) {
 			if (view instanceof Frame || view instanceof Dialog) {
 				break;
 			}
-
 			view = view.getParent();
 		}
-
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
 		Dimension dimension = new Dimension(500, 300);
 		MensagemDialogo mensagem = null;
-
 		if (view instanceof Frame) {
 			Frame frame = (Frame) view;
 			mensagem = MensagemDialogo.criar(frame, titulo, string);
 			mensagem.setSize(dimension);
 			mensagem.setLocationRelativeTo(frame);
 			mensagem.setVisible(true);
-
 		} else if (view instanceof Dialog) {
 			Dialog dialog = (Dialog) view;
 			mensagem = MensagemDialogo.criar(dialog, titulo, string);
 			mensagem.setSize(dimension);
 			mensagem.setLocationRelativeTo(dialog);
 			mensagem.setVisible(true);
-
 		} else {
 			TextArea textArea = new TextArea(string);
 			textArea.setPreferredSize(dimension);
-
 			JOptionPane.showMessageDialog(componente, textArea, titulo, JOptionPane.PLAIN_MESSAGE);
 		}
 	}
@@ -221,11 +204,9 @@ public class Util {
 
 	public static boolean confirmaSalvar(Component componente, int confirmacoes) {
 		int total = 0;
-
 		while (total < confirmacoes && confirmar(componente, Constantes.LABEL_CONFIRMA_SALVAR)) {
 			total++;
 		}
-
 		return total >= confirmacoes;
 	}
 
@@ -243,7 +224,6 @@ public class Util {
 	private static String getStackTrace(String info, Exception ex) {
 		StringWriter sw = new StringWriter();
 		sw.append(info + "\r\n\r\n");
-
 		if (ex != null) {
 			if (LOG_CONSOLE) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, ex);
@@ -252,7 +232,6 @@ public class Util {
 				ex.printStackTrace(pw);
 			}
 		}
-
 		return sw.toString();
 	}
 
@@ -270,41 +249,32 @@ public class Util {
 
 	public static String getStringLista(List<String> lista, boolean apostrofes, boolean emLinhas) {
 		StringBuilder sb = new StringBuilder();
-
 		for (String string : lista) {
 			if (estaVazio(string)) {
 				continue;
 			}
-
 			if (sb.length() > 0) {
 				sb.append(", ");
-
 				if (emLinhas) {
 					sb.append(Constantes.QL);
 				}
 			}
-
 			sb.append(apostrofes ? citar(string) : string);
 		}
-
 		return sb.toString();
 	}
 
 	public static String getStringListaSemVirgula(List<String> lista, boolean apostrofes) {
 		StringBuilder sb = new StringBuilder();
-
 		for (String string : lista) {
 			if (estaVazio(string)) {
 				continue;
 			}
-
 			if (sb.length() > 0) {
 				sb.append(Constantes.QL);
 			}
-
 			sb.append(apostrofes ? citar(string) : string);
 		}
-
 		return sb.toString();
 	}
 
@@ -314,7 +284,6 @@ public class Util {
 
 	public static void setContentTransfered(String string) {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
 		if (clipboard != null) {
 			clipboard.setContents(new StringSelection(string), null);
 		}
@@ -322,7 +291,6 @@ public class Util {
 
 	public static void setTransfered(Transferable transferable) {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
 		if (clipboard != null) {
 			clipboard.setContents(transferable, null);
 		}
@@ -330,10 +298,8 @@ public class Util {
 
 	public static String getContentTransfered() {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
 		if (clipboard != null) {
 			Transferable transferable = clipboard.getContents(null);
-
 			if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 				try {
 					return (String) transferable.getTransferData(DataFlavor.stringFlavor);
@@ -342,7 +308,6 @@ public class Util {
 				}
 			}
 		}
-
 		return null;
 	}
 
@@ -350,9 +315,7 @@ public class Util {
 		if (s == null) {
 			return Constantes.VAZIO;
 		}
-
 		StringBuilder builder = new StringBuilder();
-
 		for (char c : s.toCharArray()) {
 			if (c == '\'') {
 				builder.append("&apos;");
@@ -370,7 +333,6 @@ public class Util {
 				builder.append(c);
 			}
 		}
-
 		return builder.toString();
 	}
 
@@ -378,7 +340,6 @@ public class Util {
 		if (Util.estaVazio(string)) {
 			return padrao;
 		}
-
 		try {
 			return Integer.parseInt(string.trim());
 		} catch (Exception e) {
@@ -388,23 +349,18 @@ public class Util {
 
 	public static String normalizar(String string, boolean substituir) {
 		StringBuilder sb = new StringBuilder();
-
 		if (string != null) {
 			string = string.trim();
-
 			for (char c : string.toCharArray()) {
 				if (c == '\r' || c == '\n' || c == '\t') {
 					if (substituir) {
 						sb.append(' ');
 					}
-
 					continue;
 				}
-
 				sb.append(c);
 			}
 		}
-
 		return sb.toString();
 	}
 
@@ -412,11 +368,9 @@ public class Util {
 		JFileChooser fileChooser = new JFileChooser(".");
 		fileChooser.setPreferredSize(Constantes.DIMENSION_FILE_CHOOSER);
 		fileChooser.setMultiSelectionEnabled(multiSelection);
-
 		if (arquivo != null) {
 			fileChooser.setCurrentDirectory(arquivo);
 		}
-
 		return fileChooser;
 	}
 
@@ -425,7 +379,6 @@ public class Util {
 		splitPane.setDividerLocation(local);
 		splitPane.setRightComponent(right);
 		splitPane.setLeftComponent(left);
-
 		return splitPane;
 	}
 
@@ -434,7 +387,6 @@ public class Util {
 		splitPane.setDividerLocation(local);
 		splitPane.setRightComponent(right);
 		splitPane.setLeftComponent(left);
-
 		return splitPane;
 	}
 
@@ -446,16 +398,13 @@ public class Util {
 		if (is == null) {
 			return null;
 		}
-
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		byte[] bytes = new byte[1024];
 		int lidos = is.read(bytes);
-
 		while (lidos > 0) {
 			baos.write(bytes, 0, lidos);
 			lidos = is.read(bytes);
 		}
-
 		return new String(baos.toByteArray(), StandardCharsets.UTF_8);
 	}
 
@@ -467,17 +416,13 @@ public class Util {
 		if (area == null) {
 			return;
 		}
-
 		Caret caret = area.getCaret();
-
 		if (caret == null) {
 			return;
 		}
-
 		String string = area.getText();
 		int ini = getIni(caret.getDot(), string);
 		int fim = getFim(caret.getDot(), string);
-
 		if (ini < fim) {
 			area.setSelectionStart(ini);
 			area.setSelectionEnd(fim);
@@ -486,45 +431,34 @@ public class Util {
 
 	private static int getIni(int pos, String string) {
 		int ini = pos;
-
 		if (ini == string.length() && !string.isEmpty()) {
 			ini--;
 		}
-
 		while (ini >= 0 && ini < string.length()) {
 			char c = string.charAt(ini);
-
 			if (ini - 1 >= 0) {
 				char d = string.charAt(ini - 1);
-
 				if (c == '\n' && d == '\n') {
 					break;
 				}
 			}
-
 			ini--;
 		}
-
 		return ini;
 	}
 
 	private static int getFim(int pos, String string) {
 		int fim = pos;
-
 		while (fim < string.length()) {
 			char c = string.charAt(fim);
-
 			if (fim + 1 < string.length()) {
 				char d = string.charAt(fim + 1);
-
 				if (c == '\n' && d == '\n') {
 					break;
 				}
 			}
-
 			fim++;
 		}
-
 		return fim;
 	}
 
@@ -532,31 +466,23 @@ public class Util {
 		if (area == null) {
 			return Constantes.VAZIO;
 		}
-
 		String string = area.getSelectedText();
-
 		if (estaVazio(string)) {
 			selecionarTexto(area);
 		}
-
 		string = area.getSelectedText();
-
 		if (estaVazio(string)) {
 			string = area.getText();
 		}
-
 		return string;
 	}
 
 	public static void getContentTransfered(JTextComponent area) {
 		String string = getContentTransfered();
-
 		if (area == null || estaVazio(string)) {
 			return;
 		}
-
 		String text = area.getText();
-
 		area.setText(text + Constantes.QL + string);
 	}
 
@@ -564,10 +490,8 @@ public class Util {
 		if (estaVazio(string) || atual == null || novo == null) {
 			return null;
 		}
-
 		int indice = 0;
 		int pos = string.indexOf(atual);
-
 		while (pos != -1) {
 			String antes = string.substring(0, pos);
 			String apos = string.substring(pos + atual.length());
@@ -575,7 +499,6 @@ public class Util {
 			indice = antes.length() + novo.length();
 			pos = string.indexOf(atual, indice);
 		}
-
 		return string;
 	}
 
