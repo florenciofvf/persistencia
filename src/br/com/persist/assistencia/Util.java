@@ -54,15 +54,12 @@ public class Util {
 		if (estaVazio(s)) {
 			return Constantes.VAZIO;
 		}
-
 		StringBuilder sb = new StringBuilder();
-
 		for (char c : s.toCharArray()) {
 			if (c >= '0' && c <= '9') {
 				sb.append(c);
 			}
 		}
-
 		return sb.toString();
 	}
 
@@ -74,15 +71,12 @@ public class Util {
 		if (estaVazio(s)) {
 			return Constantes.VAZIO;
 		}
-
 		StringBuilder sb = new StringBuilder();
-
 		for (char c : s.toCharArray()) {
 			if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
 				sb.append(c);
 			}
 		}
-
 		return sb.toString();
 	}
 
@@ -90,7 +84,6 @@ public class Util {
 		List<Integer> resposta = new ArrayList<>();
 		int[] linhas = table.getSelectedRows();
 		int total = table.getRowCount();
-
 		if (linhas == null || linhas.length == 0) {
 			for (int i = 0; i < total; i++) {
 				resposta.add(i);
@@ -100,7 +93,6 @@ public class Util {
 				resposta.add(i);
 			}
 		}
-
 		return resposta;
 	}
 
@@ -108,23 +100,17 @@ public class Util {
 		if (table == null || graphics == null) {
 			return;
 		}
-
 		DefaultTableColumnModel columnModel = (DefaultTableColumnModel) table.getColumnModel();
 		FontMetrics fontMetrics = graphics.getFontMetrics();
-
 		for (int col = 0; col < table.getColumnCount(); col++) {
 			String coluna = table.getColumnName(col);
 			int largura = fontMetrics.stringWidth(coluna);
-
 			for (int lin = 0; lin < table.getRowCount(); lin++) {
 				TableCellRenderer renderer = table.getCellRenderer(lin, col);
-
 				Component component = renderer.getTableCellRendererComponent(table, table.getValueAt(lin, col), false,
 						false, lin, col);
-
 				largura = Math.max(largura, component.getPreferredSize().width);
 			}
-
 			TableColumn column = columnModel.getColumn(col);
 			column.setPreferredWidth(largura + 40);
 		}
@@ -134,13 +120,10 @@ public class Util {
 		if (table == null || indices == null) {
 			return null;
 		}
-
 		TableModel model = table.getModel();
-
 		if (model == null || model.getColumnCount() < 1 || model.getRowCount() < 1) {
 			return null;
 		}
-
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
 		html.append("<html>").append(Constantes.QL);

@@ -48,7 +48,6 @@ public class Preferencias {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
@@ -75,15 +74,12 @@ public class Preferencias {
 		layoutAbertura = pref.getInt("layout_abertura", 1);
 		abrirAuto = pref.getBoolean("abrir_auto", false);
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
-
 		if (Util.estaVazio(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
 		}
-
 		if (Util.estaVazio(formDialogo)) {
 			formDialogo = "FORM,DIALOG";
 		}
-
 		if (Util.estaVazio(formFicha)) {
 			formFicha = "FORM,FICHA";
 		}
@@ -91,7 +87,6 @@ public class Preferencias {
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
 		pref.putBoolean("exec_apos_copiar_coluna_concatenado", execAposCopiarColunaConcatenado);
@@ -124,7 +119,6 @@ public class Preferencias {
 		String can = Mensagens.getString("label.cancelar");
 		String sim = Mensagens.getString("label.sim");
 		String nao = Mensagens.getString("label.nao");
-
 		UIManager.put("OptionPane.cancelButtonText", can);
 		UIManager.put("OptionPane.yesButtonText", sim);
 		UIManager.put("OptionPane.noButtonText", nao);

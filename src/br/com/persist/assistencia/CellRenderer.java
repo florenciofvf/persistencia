@@ -20,13 +20,10 @@ public class CellRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
 		if (!isSelected) {
 			setBackground(backGround);
 		}
-
 		setForeground(foreGround);
-
 		return this;
 	}
 }

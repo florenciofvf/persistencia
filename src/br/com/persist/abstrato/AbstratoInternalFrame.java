@@ -37,7 +37,6 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 
 	private void setActionESC() {
 		JComponent component = (JComponent) getContentPane();
-
 		InputMap inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), Constantes.ESC);
 

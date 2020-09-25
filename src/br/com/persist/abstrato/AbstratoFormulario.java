@@ -42,7 +42,6 @@ public abstract class AbstratoFormulario extends JFrame implements Janela {
 
 	private void setActionESC() {
 		JComponent component = (JComponent) getContentPane();
-
 		InputMap inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), Constantes.ESC);
 

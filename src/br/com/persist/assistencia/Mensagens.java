@@ -13,7 +13,6 @@ public class Mensagens {
 		if (argumentos == null || argumentos.length == 0) {
 			return bundle.getString(chave);
 		}
-
 		return MessageFormat.format(bundle.getString(chave), argumentos);
 	}
 

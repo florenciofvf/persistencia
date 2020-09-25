@@ -34,7 +34,6 @@ public class TransferidorTabular implements Transferable, UIResource {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -47,7 +46,6 @@ public class TransferidorTabular implements Transferable, UIResource {
 			} else if (InputStream.class.equals(flavor.getRepresentationClass())) {
 				return createInputStream(flavor, html);
 			}
-
 		} else if (isPlainFlavor(flavor)) {
 			if (String.class.equals(flavor.getRepresentationClass())) {
 				return tabular;
@@ -56,22 +54,18 @@ public class TransferidorTabular implements Transferable, UIResource {
 			} else if (InputStream.class.equals(flavor.getRepresentationClass())) {
 				return createInputStream(flavor, tabular);
 			}
-
 		} else if (isStringFlavor(flavor)) {
 			return tabular;
 		}
-
 		throw new UnsupportedFlavorException(flavor);
 	}
 
 	private InputStream createInputStream(DataFlavor flavor, String string)
 			throws IOException, UnsupportedFlavorException {
 		String cs = flavor.getParameter("charset");
-
 		if (cs == null) {
 			throw new UnsupportedFlavorException(flavor);
 		}
-
 		return new ByteArrayInputStream(string.getBytes(cs));
 	}
 
@@ -81,7 +75,6 @@ public class TransferidorTabular implements Transferable, UIResource {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -91,7 +84,6 @@ public class TransferidorTabular implements Transferable, UIResource {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -101,7 +93,6 @@ public class TransferidorTabular implements Transferable, UIResource {
 				return true;
 			}
 		}
-
 		return false;
 	}
 

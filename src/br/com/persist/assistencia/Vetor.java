@@ -52,7 +52,6 @@ public final class Vetor {
 
 	public void alterarTamanho(int valor) {
 		normalizar();
-
 		x = x * valor;
 		y = y * valor;
 	}
@@ -60,10 +59,8 @@ public final class Vetor {
 	public void rotacionar(int grau) {
 		double cos = Math.cos(grau * FVF);
 		double sen = Math.sin(grau * FVF);
-
 		double novoX = x * cos - y * sen;
 		double novoY = x * sen + y * cos;
-
 		x = (float) novoX;
 		y = (float) novoY;
 	}
@@ -74,7 +71,6 @@ public final class Vetor {
 
 	public void normalizar() {
 		double comprimento = getComprimento();
-
 		x = (float) (x / comprimento);
 		y = (float) (y / comprimento);
 	}
@@ -98,9 +94,7 @@ public final class Vetor {
 	public static void main(String args) {
 		Vetor a = new Vetor(100, 0);
 		Vetor b = new Vetor(100, 0);
-
 		a.rotacionar(90);
-
 		Logger.getLogger(Vetor.class.getName()).log(Level.INFO, "RADIANOS: {0}", b.diferencaEmRadianos(a));
 		Logger.getLogger(Vetor.class.getName()).log(Level.INFO, "GRAUS: {0}", b.diferencaEmGraus(a));
 	}
