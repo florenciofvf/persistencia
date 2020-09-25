@@ -82,6 +82,7 @@ public class Main {
 			if (files != null) {
 				for (File f : files) {
 					String s = f.getName().toLowerCase();
+
 					if (s.endsWith(".jar")) {
 						URI uri = f.toURI();
 						urls.add(uri.toURL());
