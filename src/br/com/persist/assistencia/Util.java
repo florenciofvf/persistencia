@@ -126,10 +126,21 @@ public class Util {
 		}
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
+		iniHtml(html);
+		headHtml(html, tabular, model);
+		bodyHtml(html, tabular, model, indices);
+		fimHtml(html, tabular);
+		return new TransferidorTabular(html.toString(), tabular.toString());
+	}
+
+	private static void iniHtml(StringBuilder html) {
 		html.append("<html>").append(Constantes.QL);
 		html.append("<body>").append(Constantes.QL);
 		html.append("<table>").append(Constantes.QL);
 		html.append("<tr>").append(Constantes.QL);
+	}
+
+	private static void headHtml(StringBuilder html, StringBuilder tabular, TableModel model) {
 		int colunas = model.getColumnCount();
 		for (int i = 0; i < colunas; i++) {
 			String coluna = model.getColumnName(i);
@@ -139,6 +150,10 @@ public class Util {
 		html.append("</tr>").append(Constantes.QL);
 		tabular.deleteCharAt(tabular.length() - 1);
 		tabular.append(Constantes.QL);
+	}
+
+	private static void bodyHtml(StringBuilder html, StringBuilder tabular, TableModel model, List<Integer> indices) {
+		int colunas = model.getColumnCount();
 		for (Integer i : indices) {
 			html.append("<tr>").append(Constantes.QL);
 			for (int j = 0; j < colunas; j++) {
@@ -152,11 +167,13 @@ public class Util {
 			tabular.deleteCharAt(tabular.length() - 1);
 			tabular.append(Constantes.QL);
 		}
+	}
+
+	private static void fimHtml(StringBuilder html, StringBuilder tabular) {
 		html.append("</table>").append(Constantes.QL);
 		html.append("</body>").append(Constantes.QL);
 		html.append("</html>");
 		tabular.deleteCharAt(tabular.length() - 1);
-		return new TransferidorTabular(html.toString(), tabular.toString());
 	}
 
 	public static void mensagem(Component componente, String string) {

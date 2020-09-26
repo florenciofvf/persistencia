@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 
 public class Icones {
 	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
-
 	public static final Icon ALINHA_ESQUERDO = criarImagem("alinha_esquerdo");
 	public static final Icon ALINHA_DIREITO = criarImagem("alinha_direito");
 	public static final Icon BANCO_DESCONECTA = criarImagem("dbdisconn");

@@ -30,7 +30,6 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			int largura = (getSize().width - 20) + delta;
 			int altura = Constantes.TREZENTOS_QUARENTA_UM;
 			int y = 10;
-
 			for (JInternalFrame frame : getAllFrames()) {
 				if (frame.isVisible()) {
 					frame.setSize(largura, altura);
@@ -38,7 +37,6 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 					y += altura + 20;
 				}
 			}
-
 			alinhamento.centralizar();
 			ajustar.usarFormularios(true);
 		}
@@ -150,12 +148,10 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 
 		protected MenuLargura() {
 			super("label.largura", Icones.CENTRALIZAR);
-
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
 			addMenuItem(esquerdoAcao);
 			addMenuItem(distribuirAcao);
-
 			esquerdoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_ESQUERDA));
 			direitoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_DIREITA));
 			totalAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL));
@@ -179,11 +175,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 
 		protected MenuAjustar() {
 			super("label.ajustar", Icones.RECT);
-
 			addMenuItem(dimensaoManualAcao);
 			addMenuItem(usarFormularioAcao);
 			addMenuItem(retirarRolagemAcao);
-
 			usarFormularioAcao.setActionListener(e -> ajustar.usarFormularios(true));
 			retirarRolagemAcao.setActionListener(e -> ajustar.retirarRolagem());
 			dimensaoManualAcao.setActionListener(e -> ajustar.ajusteManual());
@@ -205,11 +199,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 
 		protected MenuAjuste() {
 			super("label.ajuste", Icones.RECT);
-
 			addMenuItem(aproximarFormAoObjetoAcao);
 			addMenuItem(aproximarObjetoAoFormAcao);
 			addMenuItem(empilharAcao);
-
 			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
 			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false));
 			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
