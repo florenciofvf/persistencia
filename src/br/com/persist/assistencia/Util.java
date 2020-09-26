@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
@@ -499,6 +500,24 @@ public class Util {
 		if (area == null || estaVazio(string)) {
 			return;
 		}
+		Caret caret = area.getCaret();
+		if (caret == null) {
+			append(area, string);
+		} else {
+			int pos = caret.getDot();
+			if (pos >= 0) {
+				try {
+					area.getDocument().insertString(pos, string, null);
+				} catch (BadLocationException ex) {
+					LOG.log(Level.SEVERE, Constantes.ERRO, ex);
+				}
+			} else {
+				append(area, string);
+			}
+		}
+	}
+
+	private static void append(JTextComponent area, String string) {
 		String text = area.getText();
 		area.setText(text + Constantes.QL + string);
 	}
