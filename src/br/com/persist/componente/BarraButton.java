@@ -34,88 +34,132 @@ public class BarraButton extends JToolBar {
 
 	public void ini(Janela janela, BarraButtonEnum... enuns) {
 		this.janela = janela;
-
 		fecharAcao.setActionListener(e -> fechar());
 		addButton(fecharAcao);
 		setJanela(janela);
 		addSeparator();
+		configButtonDestacar(enuns);
+		configNovo(enuns);
+		configLimpar(enuns);
+		configLimpar2(enuns);
+		configSalvar(enuns);
+		configSalvarComo(enuns);
+		configAtualizar(enuns);
+		configExcluir(enuns);
+		configBaixar(enuns);
+		configBaixar2(enuns);
+		configCopiar(enuns);
+		configColar(enuns);
+		configCopiar2(enuns);
+		configColar2(enuns);
+		configAplicar(enuns);
+	}
 
-		if (comButtonDestacar(enuns)) {
-			buttonDestacar = new ButtonDestacar();
-			buttonDestacar.ini(enuns);
-			add(buttonDestacar);
+	private void configAplicar(BarraButtonEnum... enuns) {
+		if (contem(APLICAR, enuns)) {
+			addButton(aplicarAcao);
+			aplicarAcao.setActionListener(e -> aplicar());
 		}
+	}
 
-		if (contem(NOVO, enuns)) {
-			addButton(novoAcao);
-			novoAcao.setActionListener(e -> novo());
+	private void configColar2(BarraButtonEnum... enuns) {
+		if (contem(COLAR2, enuns)) {
+			addButton(colar2Acao);
+			colar2Acao.setActionListener(e -> colar2());
 		}
+	}
 
-		if (contem(LIMPAR, enuns)) {
-			addButton(limparAcao);
-			limparAcao.setActionListener(e -> limpar());
-		}
-
-		if (contem(LIMPAR2, enuns)) {
-			addButton(limpar2Acao);
-			limpar2Acao.setActionListener(e -> limpar2());
-		}
-
-		if (contem(SALVAR, enuns)) {
-			addButton(salvarAcao);
-			salvarAcao.setActionListener(e -> salvar());
-		}
-
-		if (contem(SALVAR_COMO, enuns)) {
-			addButton(salvarComoAcao);
-			salvarComoAcao.setActionListener(e -> salvarComo());
-		}
-
-		if (contem(ATUALIZAR, enuns)) {
-			addButton(atualizarAcao);
-			atualizarAcao.setActionListener(e -> atualizar());
-		}
-
-		if (contem(EXCLUIR, enuns)) {
-			addButton(excluirAcao);
-			excluirAcao.setActionListener(e -> excluir());
-		}
-
-		if (contem(BAIXAR, enuns)) {
-			addButton(baixarAcao);
-			baixarAcao.setActionListener(e -> baixar());
-		}
-
-		if (contem(BAIXAR2, enuns)) {
-			addButton(baixar2Acao);
-			baixar2Acao.setActionListener(e -> baixar2());
-		}
-
-		if (contem(COPIAR, enuns)) {
-			addButton(copiarAcao);
-			add(labelTextTemp);
-			copiarAcao.setActionListener(e -> copiar());
-		}
-
-		if (contem(COLAR, enuns)) {
-			addButton(colarAcao);
-			colarAcao.setActionListener(e -> colar());
-		}
-
+	private void configCopiar2(BarraButtonEnum... enuns) {
 		if (contem(COPIAR2, enuns)) {
 			addButton(copiar2Acao);
 			add(labelTextTemp2);
 			copiar2Acao.setActionListener(e -> copiar2());
 		}
+	}
 
-		if (contem(COLAR2, enuns)) {
-			addButton(colar2Acao);
-			colar2Acao.setActionListener(e -> colar2());
+	private void configColar(BarraButtonEnum... enuns) {
+		if (contem(COLAR, enuns)) {
+			addButton(colarAcao);
+			colarAcao.setActionListener(e -> colar());
 		}
+	}
 
-		if (contem(APLICAR, enuns)) {
-			addButton(aplicarAcao);
-			aplicarAcao.setActionListener(e -> aplicar());
+	private void configCopiar(BarraButtonEnum... enuns) {
+		if (contem(COPIAR, enuns)) {
+			addButton(copiarAcao);
+			add(labelTextTemp);
+			copiarAcao.setActionListener(e -> copiar());
+		}
+	}
+
+	private void configBaixar2(BarraButtonEnum... enuns) {
+		if (contem(BAIXAR2, enuns)) {
+			addButton(baixar2Acao);
+			baixar2Acao.setActionListener(e -> baixar2());
+		}
+	}
+
+	private void configBaixar(BarraButtonEnum... enuns) {
+		if (contem(BAIXAR, enuns)) {
+			addButton(baixarAcao);
+			baixarAcao.setActionListener(e -> baixar());
+		}
+	}
+
+	private void configExcluir(BarraButtonEnum... enuns) {
+		if (contem(EXCLUIR, enuns)) {
+			addButton(excluirAcao);
+			excluirAcao.setActionListener(e -> excluir());
+		}
+	}
+
+	private void configAtualizar(BarraButtonEnum... enuns) {
+		if (contem(ATUALIZAR, enuns)) {
+			addButton(atualizarAcao);
+			atualizarAcao.setActionListener(e -> atualizar());
+		}
+	}
+
+	private void configSalvarComo(BarraButtonEnum... enuns) {
+		if (contem(SALVAR_COMO, enuns)) {
+			addButton(salvarComoAcao);
+			salvarComoAcao.setActionListener(e -> salvarComo());
+		}
+	}
+
+	private void configSalvar(BarraButtonEnum... enuns) {
+		if (contem(SALVAR, enuns)) {
+			addButton(salvarAcao);
+			salvarAcao.setActionListener(e -> salvar());
+		}
+	}
+
+	private void configLimpar2(BarraButtonEnum... enuns) {
+		if (contem(LIMPAR2, enuns)) {
+			addButton(limpar2Acao);
+			limpar2Acao.setActionListener(e -> limpar2());
+		}
+	}
+
+	private void configLimpar(BarraButtonEnum... enuns) {
+		if (contem(LIMPAR, enuns)) {
+			addButton(limparAcao);
+			limparAcao.setActionListener(e -> limpar());
+		}
+	}
+
+	private void configNovo(BarraButtonEnum... enuns) {
+		if (contem(NOVO, enuns)) {
+			addButton(novoAcao);
+			novoAcao.setActionListener(e -> novo());
+		}
+	}
+
+	private void configButtonDestacar(BarraButtonEnum... enuns) {
+		if (comButtonDestacar(enuns)) {
+			buttonDestacar = new ButtonDestacar();
+			buttonDestacar.ini(enuns);
+			add(buttonDestacar);
 		}
 	}
 
