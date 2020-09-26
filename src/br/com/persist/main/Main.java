@@ -78,6 +78,11 @@ public class Main {
 	private static URL[] getURLs() {
 		File[] files = new File("libs").listFiles();
 		List<URL> urls = new ArrayList<>();
+		addURL(files, urls);
+		return urls.toArray(new URL[urls.size()]);
+	}
+
+	private static void addURL(File[] files, List<URL> urls) {
 		try {
 			if (files != null) {
 				for (File f : files) {
@@ -91,6 +96,5 @@ public class Main {
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
-		return urls.toArray(new URL[urls.size()]);
 	}
 }
