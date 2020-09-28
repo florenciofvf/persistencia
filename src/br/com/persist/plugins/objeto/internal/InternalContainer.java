@@ -163,27 +163,21 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	private void configurar() {
 		DragSource dragSource = DragSource.getDefaultDragSource();
-
 		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 			Dimension dimension = null;
 			String apelido = null;
-
 			if (apelidoListener != null) {
 				apelido = apelidoListener.getApelido();
 			}
-
 			if (dimensaoListener != null) {
 				dimension = dimensaoListener.getDimensoes();
 			}
-
 			if (dimension == null) {
 				dimension = Constantes.SIZE;
 			}
-
 			dge.startDrag(null, new InternalTransferidor(objeto, conexao, dimension, apelido), listenerArrasto);
 		});
-
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
 	}
@@ -233,10 +227,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private ButtonFragVar() {
 				super("label.util", Icones.FRAGMENTO);
-
 				addMenuItem(fragmentoAcao);
 				addMenuItem(true, variaveisAcao);
-
 				eventos();
 			}
 
@@ -246,7 +238,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
-
 				variaveisAcao.setActionListener(e -> {
 					VariavelDialogo form = VariavelDialogo.criar((Frame) null, null);
 					configLocationRelativeTo(form);
@@ -264,12 +255,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private ButtonBaixar() {
 				super("label.baixar", Icones.BAIXAR);
-
 				addMenuItem(conexaoAcao);
 				addMenuItem(true, objetoAcao);
 				addMenuItem(true, limparAcao);
 				addMenuItem(limpar2Acao);
-
 				eventos();
 			}
 
@@ -283,30 +272,24 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			private void limparUsandoConexao() {
 				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 				String string = Constantes.VAZIO;
-
 				if (conexao != null) {
 					string = conexao.getFinalComplemento();
 				}
-
 				txtComplemento.setText(string);
 			}
 
 			private void limpar2() {
 				boolean salvar = false;
-
 				Variavel cv = VariavelProvedor.getVariavel("LIMPAR2");
-
 				if (cv == null) {
 					cv = new Variavel("LIMPAR2", "AND 1 > 2");
 					VariavelProvedor.adicionar(cv);
 					salvar = true;
 				}
-
 				if (salvar) {
 					VariavelProvedor.salvar();
 					VariavelProvedor.inicializar();
 				}
-
 				txtComplemento.setText(cv.getValor());
 				actionListenerInner.actionPerformed(null);
 			}

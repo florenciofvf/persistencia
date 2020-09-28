@@ -38,19 +38,14 @@ public class MiscelaniaContainer extends Panel {
 	private void montarLayout(Tipo tipo) {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, textArea);
-
 		StringBuilder builder = new StringBuilder();
-
 		if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
 			chave(builder);
-
 		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 			mapa(builder);
-
 		} else if (Tipo.LINK_AUTO.equals(tipo)) {
 			linkAuto(builder);
 		}
-
 		textArea.setText(builder.toString().trim());
 	}
 
@@ -58,16 +53,13 @@ public class MiscelaniaContainer extends Panel {
 		Map<String, List<String>> campoNomes = ObjetoUtil.criarMapaCampoNomes(!Util.estaVazio(objeto.getChaveamento())
 				? objeto.getChaveamento() : Mensagens.getString("hint.chaveamento"));
 		int i = 0;
-
 		for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
 			String chave = entry.getKey();
 			List<String> nomes = entry.getValue();
 			builder.append(campoDetalhe(chave, nomes));
-
 			if (i + 1 < campoNomes.size()) {
 				builder.append(";");
 			}
-
 			builder.append(Constantes.QL);
 			i++;
 		}
@@ -77,16 +69,13 @@ public class MiscelaniaContainer extends Panel {
 		Map<String, String> campoChave = ObjetoUtil.criarMapaCampoChave(!Util.estaVazio(objeto.getMapeamento())
 				? objeto.getMapeamento() : Mensagens.getString("hint.mapeamento"));
 		int i = 0;
-
 		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
 			String chave = entry.getKey();
 			String valor = entry.getValue();
 			builder.append(chave + "=" + valor);
-
 			if (i + 1 < campoChave.size()) {
 				builder.append(";");
 			}
-
 			builder.append(Constantes.QL);
 			i++;
 		}
@@ -96,15 +85,12 @@ public class MiscelaniaContainer extends Panel {
 		List<GrupoLinkAuto> listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
 				!Util.estaVazio(objeto.getLinkAutomatico()) ? objeto.getLinkAutomatico()
 						: Mensagens.getString("hint.linkAuto"));
-
 		for (int i = 0; i < listaLink.size(); i++) {
 			GrupoLinkAuto link = listaLink.get(i);
 			builder.append(link.getDetalhe());
-
 			if (i + 1 < listaLink.size()) {
 				builder.append(";");
 			}
-
 			builder.append(Constantes.QL);
 		}
 	}
@@ -115,18 +101,14 @@ public class MiscelaniaContainer extends Panel {
 
 	private String campoDetalhe(String chave, List<String> lista) {
 		StringBuilder sb = new StringBuilder(chave + "=" + Constantes.QL);
-
 		for (int i = 0; i < lista.size(); i++) {
 			String string = lista.get(i);
 			sb.append(Constantes.TAB + string);
-
 			if (i + 1 < lista.size()) {
 				sb.append(",");
 			}
-
 			sb.append(Constantes.QL);
 		}
-
 		return sb.toString();
 	}
 
@@ -144,14 +126,11 @@ public class MiscelaniaContainer extends Panel {
 					String string = Util.normalizar(textArea.getText(), false);
 					LinkAutoUtil.listaGrupoLinkAuto(objeto, string);
 					objeto.setLinkAutomatico(string);
-
 				} else if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
 					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
-
 				} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
 				}
-
 				fechar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("CONFIG OBJETO", ex, MiscelaniaContainer.this);

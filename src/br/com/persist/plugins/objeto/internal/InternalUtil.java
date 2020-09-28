@@ -16,10 +16,8 @@ public class InternalUtil {
 	public static void atualizarColetores(TabelaPersistencia tabela, int coluna, TabelaBuscaAuto tabelaBuscaAuto) {
 		OrdenacaoModelo modelo = tabela.getModelo();
 		int total = modelo.getRowCount();
-
 		for (int i = 0; i < total; i++) {
 			Object obj = modelo.getValueAt(i, coluna);
-
 			if (obj != null && !Util.estaVazio(obj.toString())) {
 				tabelaBuscaAuto.atualizarColetores(obj.toString());
 			}
@@ -32,19 +30,15 @@ public class InternalUtil {
 		String valor = registro.get(coluna).toString();
 		StringBuilder builder = new StringBuilder();
 		final String espaco = "   ";
-
 		for (TabelaBuscaAuto t : grupo.getTabelas()) {
 			BuscaAutoColetor coletor = t.getColetor(valor);
-
 			if (coletor.getTotal() > 0) {
 				builder.append(t.getNome() + " [" + coletor.getTotal() + "]" + espaco);
 			}
 		}
-
 		if (builder.length() > 0) {
 			builder.delete(builder.length() - espaco.length(), builder.length());
 		}
-
 		registro.set(registro.size() - 1, builder.toString());
 	}
 }

@@ -307,59 +307,43 @@ public class ObjetoContainer extends Panel {
 			if (txtX == e.getSource()) {
 				objeto.setX(Util.getInt(txtX.getText(), objeto.getX()));
 				MacroProvedor.xLocal(objeto.getX());
-
 			} else if (txtY == e.getSource()) {
 				objeto.setY(Util.getInt(txtY.getText(), objeto.getY()));
 				MacroProvedor.yLocal(objeto.getY());
-
 			} else if (txtDeslocXId == e.getSource()) {
 				objeto.setDeslocamentoXId(Util.getInt(txtDeslocXId.getText(), objeto.getDeslocamentoXId()));
 				MacroProvedor.deslocarXIdDescricao(objeto.getDeslocamentoXId());
-
 			} else if (txtDeslocYId == e.getSource()) {
 				objeto.setDeslocamentoYId(Util.getInt(txtDeslocYId.getText(), objeto.getDeslocamentoYId()));
 				MacroProvedor.deslocarYIdDescricao(objeto.getDeslocamentoYId());
-
 			} else if (txtIntervalo == e.getSource()) {
 				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
-
 			} else if (txtLinkAutomatico == e.getSource()) {
 				objeto.setLinkAutomatico(txtLinkAutomatico.getText());
-
 			} else if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txtChaveamento.getText());
-
 			} else if (txtMapeamento == e.getSource()) {
 				objeto.setMapeamento(txtMapeamento.getText());
-
 			} else if (txtFinalConsulta == e.getSource()) {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
-
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txtComplemento.getText());
-
 			} else if (txtTabela == e.getSource()) {
 				objeto.setTabela(txtTabela.getText());
-
 			} else if (txtPrefixoNT == e.getSource()) {
 				objeto.setPrefixoNomeTabela(txtPrefixoNT.getText());
-
 			} else if (txtChaves == e.getSource()) {
 				objeto.setChaves(txtChaves.getText());
-
 			} else if (txtSequencias == e.getSource()) {
 				objeto.setSequencias(txtSequencias.getText());
 			}
-
 			actionPerformedCont(e);
-
 			objetoSuperficie.repaint();
 		}
 
 		private void actionPerformedCont(ActionEvent e) {
 			if (txtId == e.getSource()) {
 				String id = txtId.getText();
-
 				if (!Util.estaVazio(id)) {
 					Objeto obj = new Objeto();
 					obj.setId(id);
@@ -371,38 +355,31 @@ public class ObjetoContainer extends Panel {
 				}
 			} else if (txtArquivo == e.getSource()) {
 				objeto.setArquivo(txtArquivo.getText());
-
 			} else if (chkDesenharId == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
-
 			} else if (chkColunaInfo == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setColunaInfo(chk.isSelected());
 				MacroProvedor.colunaInfo(chk.isSelected());
-
 			} else if (chkAbrirAuto == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAbrirAuto(chk.isSelected());
 				MacroProvedor.abrirAuto(chk.isSelected());
-
 			} else if (chkLinkAuto == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setLinkAuto(chk.isSelected());
 				MacroProvedor.linkAuto(chk.isSelected());
-
 			} else if (chkCCSC == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setCcsc(chk.isSelected());
 				MacroProvedor.confirmarCsc(chk.isSelected());
-
 			} else if (chkBPNT == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setBpnt(chk.isSelected());
 				MacroProvedor.bloquearPnt(chk.isSelected());
 			}
-
 			actionPerformedCont2(e);
 		}
 
@@ -411,28 +388,22 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setTransparente(chk.isSelected());
 				MacroProvedor.transparencia(chk.isSelected());
-
 			} else if (chkCopiarDestac == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setCopiarDestacado(chk.isSelected());
 				MacroProvedor.copiarDestacado(chk.isSelected());
-
 			} else if (chkAjusteAutoForm == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAjusteAutoForm(chk.isSelected());
 				MacroProvedor.ajusteAutoForm(chk.isSelected());
-
 			} else if (chkAjusteAutoEnter == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAjusteAutoEnter(chk.isSelected());
 				MacroProvedor.ajusteAutoEnter(chk.isSelected());
-
 			} else if (txtTabelas == e.getSource()) {
 				objeto.setTabelas(txtTabelas.getText());
-
 			} else if (txtSelectAlter == e.getSource()) {
 				objeto.setSelectAlternativo(txtSelectAlter.getText());
-
 			} else if (txtJoins == e.getSource()) {
 				objeto.setJoins(txtJoins.getText());
 			}
@@ -450,24 +421,19 @@ public class ObjetoContainer extends Panel {
 				LabelLinkListener linkListener) {
 			Dimension largura = new Dimension(120, 0);
 			Panel linha = new Panel();
-
 			Label label = new Label(chaveRotulo);
 			label.setHorizontalAlignment(Label.RIGHT);
 			label.setPreferredSize(largura);
 			label.setMinimumSize(largura);
 			label.setMaximumSize(largura);
-
 			if (!Util.estaVazio(hint)) {
 				label.setToolTipText(hint);
 			}
-
 			linha.add(BorderLayout.CENTER, componente);
 			linha.add(BorderLayout.WEST, label);
-
 			if (linkListener != null) {
 				label.modoLink(linkListener);
 			}
-
 			return linha;
 		}
 	}
@@ -572,22 +538,17 @@ public class ObjetoContainer extends Panel {
 				if (Util.estaVazio(textArea.getText())) {
 					return;
 				}
-
 				String backup = textArea.getText();
 				String string = Util.getString(textArea);
 				textArea.setText(Constantes.VAZIO);
-
 				try {
 					Parser parser = new Parser();
 					Tipo json = parser.parse(string);
-
 					StyledDocument styledDoc = textArea.getStyledDocument();
-
 					if (styledDoc instanceof AbstractDocument) {
 						AbstractDocument doc = (AbstractDocument) styledDoc;
 						json.toString(doc, false, 0);
 					}
-
 					textArea.requestFocus();
 				} catch (Exception ex) {
 					textArea.setText(backup);
@@ -617,11 +578,9 @@ public class ObjetoContainer extends Panel {
 
 		private void adicionarInstrucoes(Objeto objeto) {
 			objeto.ordenarInstrucoes();
-
 			for (Instrucao instrucao : objeto.getInstrucoes()) {
 				criarFormularioInstrucao(instrucao);
 			}
-
 			desktop.getDistribuicao().distribuir(-Constantes.VINTE);
 		}
 

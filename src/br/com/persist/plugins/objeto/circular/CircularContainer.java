@@ -56,7 +56,6 @@ public class CircularContainer extends Panel {
 		panel.add(txtGrauOrigem);
 		panel.add(new Label("label.grau_total"));
 		panel.add(txtGrauTotal);
-
 		add(BorderLayout.CENTER, panel);
 		add(BorderLayout.NORTH, toolbar);
 	}
@@ -70,15 +69,12 @@ public class CircularContainer extends Panel {
 
 		private List<Objeto> getSelecionados(Objeto pivo) {
 			List<Objeto> resposta = new ArrayList<>(objetoSuperficie.getSelecionados());
-
 			Iterator<Objeto> it = resposta.iterator();
-
 			while (it.hasNext()) {
 				if (it.next().equals(pivo)) {
 					it.remove();
 				}
 			}
-
 			return resposta;
 		}
 
@@ -86,44 +82,32 @@ public class CircularContainer extends Panel {
 		protected void atualizar() {
 			Objeto pivo = (Objeto) comboObjeto.getSelectedItem();
 			Tipo tipo = (Tipo) comboTipo.getSelectedItem();
-
 			if (pivo == null || tipo == null) {
 				return;
 			}
-
 			List<Objeto> selecionados = getSelecionados(pivo);
-
 			if (selecionados.isEmpty()) {
 				return;
 			}
-
 			Vetor vetor = new Vetor(Util.getInt(txtRaio.getText(), 300), 0);
 			vetor.rotacionar(Util.getInt(txtGrauOrigem.getText(), 0));
-
 			int graus = Util.getInt(txtGrauTotal.getText(), 360) / selecionados.size();
-
 			for (Objeto objeto : selecionados) {
 				objeto.setX(pivo.getX() + (int) vetor.getX());
 				objeto.setY(pivo.getY() + (int) vetor.getY());
-
 				vetor.rotacionar(graus);
-
 				Relacao relacao = objetoSuperficie.getRelacao(pivo, objeto);
-
 				if (relacao != null && tipo == Tipo.NORMAL) {
 					relacao.setPontoOrigem(false);
 					relacao.setPontoDestino(false);
-
 				} else if (relacao != null && tipo == Tipo.EXPORTACAO) {
 					relacao.setPontoOrigem(pivo != relacao.getOrigem());
 					relacao.setPontoDestino(pivo != relacao.getDestino());
-
 				} else if (relacao != null && tipo == Tipo.IMPORTACAO) {
 					relacao.setPontoOrigem(pivo == relacao.getOrigem());
 					relacao.setPontoDestino(pivo == relacao.getDestino());
 				}
 			}
-
 			objetoSuperficie.repaint();
 		}
 	}

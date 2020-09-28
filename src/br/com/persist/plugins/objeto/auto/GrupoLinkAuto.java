@@ -45,18 +45,14 @@ public class GrupoLinkAuto {
 
 	public String getDetalhe() {
 		StringBuilder sb = new StringBuilder(campo + "=" + Constantes.QL);
-
 		for (int i = 0; i < tabelas.size(); i++) {
 			TabelaLinkAuto tabela = tabelas.get(i);
 			sb.append(Constantes.TAB + tabela.getApelidoTabelaCampo());
-
 			if (i + 1 < tabelas.size()) {
 				sb.append(",");
 			}
-
 			sb.append(Constantes.QL);
 		}
-
 		return sb.toString();
 	}
 }

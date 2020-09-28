@@ -15,31 +15,24 @@ public class LinkAutoUtil {
 
 	public static List<GrupoLinkAuto> listaGrupoLinkAuto(Objeto objeto, String string) {
 		Map<String, GrupoLinkAuto> mapa = new LinkedHashMap<>();
-
 		if (!Util.estaVazio(string)) {
 			String[] links = string.split(";");
-
 			if (links != null) {
 				for (String link : links) {
 					processarGrupoLinkAuto(objeto, link, mapa);
 				}
 			}
 		}
-
 		return new ArrayList<>(mapa.values());
 	}
 
 	private static void processarGrupoLinkAuto(Objeto objeto, String stringLink, Map<String, GrupoLinkAuto> mapa) {
 		String[] campoTabelas = stringLink.split("=");
-
 		if (campoTabelas != null && campoTabelas.length > 1) {
 			String campo = campoTabelas[0].trim();
-
 			GrupoLinkAuto grupo = mapa.computeIfAbsent(campo, GrupoLinkAuto::criar);
-
 			String tabelas = campoTabelas[1];
 			String[] arrayTabelas = tabelas.split(",");
-
 			for (String apelidoTabelaCampo : arrayTabelas) {
 				grupo.add(criar(apelidoTabelaCampo.trim(), objeto.getId() + " > " + campo));
 			}
@@ -71,31 +64,24 @@ public class LinkAutoUtil {
 
 	private static String[] separarApelidoTabela(String string) {
 		String[] strings = new String[2];
-
 		if (Util.estaVazio(string)) {
 			throw new IllegalArgumentException("separarApelidoTabela");
 		}
-
 		string = string.trim();
-
 		if (string.startsWith("(")) {
 			int pos2 = string.indexOf(')');
-
 			if (pos2 == -1) {
 				throw new IllegalArgumentException("separarApelidoTabela falta fechar com -> )");
 			}
-
 			strings[0] = string.substring(1, pos2).trim();
 			strings[1] = string.substring(pos2 + 1).trim();
 		} else {
 			strings[0] = Constantes.VAZIO;
 			strings[1] = string;
 		}
-
 		if (Util.estaVazio(strings[1])) {
 			throw new IllegalStateException("Nome da tabela vazio");
 		}
-
 		return strings;
 	}
 }

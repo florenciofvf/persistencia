@@ -118,22 +118,18 @@ public class RelacaoContainer extends Panel {
 			if (txtDeslocXDesc == e.getSource()) {
 				relacao.setDeslocamentoXDesc(Util.getInt(txtDeslocXDesc.getText(), relacao.getDeslocamentoXDesc()));
 				MacroProvedor.deslocarXIdDescricao(relacao.getDeslocamentoXDesc());
-
 			} else if (txtDeslocYDesc == e.getSource()) {
 				relacao.setDeslocamentoYDesc(Util.getInt(txtDeslocYDesc.getText(), relacao.getDeslocamentoYDesc()));
 				MacroProvedor.deslocarYIdDescricao(relacao.getDeslocamentoYDesc());
-
 			} else if (chkDesenharDesc == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setDesenharDescricao(chk.isSelected());
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
-
 			} else if (chkQuebrado == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setQuebrado(chk.isSelected());
 				MacroProvedor.linhaQuebrada(chk.isSelected());
 			}
-
 			objetoSuperficie.repaint();
 		}
 
@@ -154,22 +150,17 @@ public class RelacaoContainer extends Panel {
 
 		private Box criarLinha(String chaveRotulo, JComponent componente) {
 			Box box = Box.createHorizontalBox();
-
 			Label label = new Label(chaveRotulo);
 			label.setHorizontalAlignment(Label.RIGHT);
 			label.setPreferredSize(new Dimension(160, 0));
 			label.setMinimumSize(new Dimension(160, 0));
-
 			box.add(label);
-
 			if (componente instanceof CheckBox) {
 				box.add(componente);
 				box.add(Box.createHorizontalGlue());
-
 			} else {
 				box.add(componente);
 			}
-
 			return box;
 		}
 	}
@@ -244,7 +235,6 @@ public class RelacaoContainer extends Panel {
 				MacroProvedor.pontoDestino(chkPonto.isSelected());
 				relacao.setPontoDestino(chkPonto.isSelected());
 			}
-
 			objetoSuperficie.repaint();
 		}
 	}
@@ -273,7 +263,6 @@ public class RelacaoContainer extends Panel {
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
-
 			Graphics2D g2 = (Graphics2D) g;
 			Stroke stroke = g2.getStroke();
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

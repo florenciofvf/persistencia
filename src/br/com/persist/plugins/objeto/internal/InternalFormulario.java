@@ -61,7 +61,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private void configurar2() {
 		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> {
 			checarDesktop();
-
 			if (desktop != null) {
 				Object valor = evt.getNewValue();
 				desktop.setAjusteAutomatico(Boolean.FALSE.equals(valor));
@@ -72,7 +71,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				checarDesktop();
-
 				if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
 					configAjustes(false);
 				}
@@ -91,13 +89,11 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private void checarDesktop() {
 		if (desktop == null) {
 			Container parent = getParent();
-
 			while (parent != null) {
 				if (parent instanceof Desktop) {
 					desktop = (Desktop) parent;
 					break;
 				}
-
 				parent = parent.getParent();
 			}
 		}
@@ -113,15 +109,12 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void configAlturaAutomatica(int total) {
 		Dimension d = getSize();
-
 		boolean salvar = false;
-
 		Variavel variavelDadosToolbarTableHeader = VariavelProvedor
 				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
 		Variavel variavelMaximoRegistros = VariavelProvedor
 				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
 		Variavel variavelMinimoForm = VariavelProvedor.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
-
 		if (variavelDadosToolbarTableHeader == null) {
 			variavelDadosToolbarTableHeader = new Variavel(
 					Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
@@ -129,40 +122,32 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			VariavelProvedor.adicionar(variavelDadosToolbarTableHeader);
 			salvar = true;
 		}
-
 		if (variavelMaximoRegistros == null) {
 			variavelMaximoRegistros = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
 					Constantes.VAZIO + Constantes.DEZ);
 			VariavelProvedor.adicionar(variavelMaximoRegistros);
 			salvar = true;
 		}
-
 		if (variavelMinimoForm == null) {
 			variavelMinimoForm = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
 					Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelMinimoForm);
 			salvar = true;
 		}
-
 		if (salvar) {
 			VariavelProvedor.salvar();
 			VariavelProvedor.inicializar();
 		}
-
 		int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
 		int maximoRegistros = variavelMaximoRegistros.getInteiro(Constantes.DEZ);
 		int minimoForm = variavelMinimoForm.getInteiro(Constantes.TRINTA);
-
 		if (total < 1) {
 			setSize(d.width, minimoForm);
-
 		} else if (total <= maximoRegistros) {
 			setSize(d.width, dadosToolbarTableHeader + total * 20 + (total == 1 ? 5 : -total));
-
 		} else {
 			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 20 + (-maximoRegistros));
 		}
-
 		checarDesktop();
 		configAjustes(true);
 	}
@@ -264,7 +249,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (objeto == null) {
 			return false;
 		}
-
 		return container.getObjeto() == objeto || container.getObjeto().getId().equals(objeto.getId());
 	}
 
@@ -282,11 +266,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		public String selecionarApelido() {
 			Object resp = Util.getValorInputDialog(InternalFormulario.this, "label.apelido", getApelido(),
 					getApelido());
-
 			if (resp != null) {
 				return resp.toString().trim();
 			}
-
 			return null;
 		}
 
@@ -295,7 +277,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (apelido == null) {
 				apelido = Constantes.VAZIO;
 			}
-
 			return apelido.trim();
 		}
 	};
@@ -310,7 +291,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void aproximarObjetoAoFormulario(int deltaX, int deltaY) {
 		Objeto objeto = container.getObjeto();
-
 		if (objeto != null) {
 			objeto.setX(getX() - deltaX);
 			objeto.setY(getY() - deltaY);
@@ -319,7 +299,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void aproximarFormularioAoObjeto(int deltaX, int deltaY) {
 		Objeto objeto = container.getObjeto();
-
 		if (objeto != null) {
 			setLocation(objeto.getX() + deltaX, objeto.getY() + deltaY);
 		}

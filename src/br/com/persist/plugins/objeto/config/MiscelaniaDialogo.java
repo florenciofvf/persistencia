@@ -15,13 +15,10 @@ public class MiscelaniaDialogo extends AbstratoDialogo {
 		super(dialog, objeto.getId());
 		container = new MiscelaniaContainer(this, objeto, tipo);
 		montarLayout();
-
 		if (MiscelaniaContainer.Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
 			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
-
 		} else if (MiscelaniaContainer.Tipo.MAPEAMENTO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.mapeamento") + " - " + getTitle());
-
 		} else if (MiscelaniaContainer.Tipo.LINK_AUTO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.linkAuto") + " - " + getTitle());
 		}

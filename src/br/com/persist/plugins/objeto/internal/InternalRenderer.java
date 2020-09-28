@@ -15,15 +15,12 @@ public class InternalRenderer extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
 		if (value != null && !Util.estaVazio(value.toString())) {
 			setBackground(Color.YELLOW);
 		} else {
 			setBackground(Color.WHITE);
 		}
-
 		setForeground(Color.BLACK);
-
 		return this;
 	}
 }

@@ -70,7 +70,6 @@ public class InternalTransferidor implements Transferable {
 		if (InternalTransferidor.flavor.equals(flavor)) {
 			return new Object[] { objeto, conexao, dimension, apelido };
 		}
-
 		throw new UnsupportedFlavorException(flavor);
 	}
 }

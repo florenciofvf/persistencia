@@ -41,11 +41,9 @@ public class IconeContainer extends Panel {
 	private void montarLayout() {
 		List<Entry<String, Icon>> icones = Imagens.getIcones();
 		Panel matriz = new Panel(new GridLayout(0, 25));
-
 		for (Map.Entry<String, Icon> entry : icones) {
 			matriz.add(new LabelIcone(entry));
 		}
-
 		add(BorderLayout.CENTER, new ScrollPane(matriz));
 		add(BorderLayout.NORTH, toolbar);
 		totalIcones = icones.size();
