@@ -265,7 +265,7 @@ public class ConsultaContainer extends AbstratoContainer {
 			private Action htmlAcao = Action.actionMenu("label.html", null);
 
 			private ButtonCopiar() {
-				super("label.copiar_tabela", Icones.COPIA);
+				super("label.copiar_tabela", Icones.TABLE2);
 
 				addMenuItem(htmlAcao);
 				addMenuItem(true, tabularAcao);

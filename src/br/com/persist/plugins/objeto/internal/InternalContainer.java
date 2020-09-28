@@ -935,7 +935,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				private Action htmlAcao = Action.actionMenu("label.html", null);
 
 				private MenuCopiar() {
-					super("label.copiar", Icones.COPIA);
+					super("label.copiar", Icones.TABLE2);
 
 					addMenuItem(htmlAcao);
 					addSeparator();
