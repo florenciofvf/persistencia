@@ -88,7 +88,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.anexo.sempreTopAnex"));
 			add(chkSempreTopAnex);
 			add(chkSempreTopForm);
-
 			eventos();
 		}
 
@@ -138,24 +137,19 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		public void baixar() {
 			AnexoModelo modelo = new AnexoModelo();
 			anexoTree.setModel(modelo);
-
 			Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexos().entrySet();
 			Iterator<Entry<String, Anexo>> iterator = entrySet.iterator();
 			boolean removido = false;
-
 			while (iterator.hasNext()) {
 				Entry<String, Anexo> next = iterator.next();
-
 				if (!next.getValue().isChecado()) {
 					iterator.remove();
 					removido = true;
 				}
 			}
-
 			if (removido) {
 				salvar();
 			}
-
 			modelo.abrirVisivel(anexoTree);
 		}
 
@@ -163,21 +157,17 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		public void salvar() {
 			try (PrintWriter pw = new PrintWriter(AnexoModelo.anexosInfo, StandardCharsets.UTF_8.name())) {
 				Set<Entry<String, Anexo>> entrySet = AnexoModelo.getAnexos().entrySet();
-
 				for (Entry<String, Anexo> entry : entrySet) {
 					Anexo anexo = entry.getValue();
 					pw.println(entry.getKey());
 					pw.println(Constantes.ABRIR_VISIVEL + anexo.isAbrirVisivel());
 					pw.println(Constantes.PADRAO_ABRIR + anexo.isPadraoAbrir());
-
 					if (!Util.estaVazio(anexo.getNomeIcone())) {
 						pw.println(Constantes.ICONE + anexo.getNomeIcone());
 					}
-
 					if (anexo.getCorFonte() != null) {
 						pw.println(Constantes.COR_FONTE + anexo.getCorFonte().getRGB());
 					}
-
 					pw.println();
 				}
 			} catch (Exception ex) {
@@ -189,7 +179,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void imprimirAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
-
 		if (anexo != null) {
 			try {
 				desktop.print(anexo.getFile());
@@ -202,7 +191,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void editarAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
-
 		if (anexo != null) {
 			try {
 				desktop.edit(anexo.getFile());
@@ -215,7 +203,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void abrirAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
-
 		if (anexo != null) {
 			try {
 				desktop.open(anexo.getFile());
@@ -228,12 +215,10 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void diretorioAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
-
 		if (anexo != null) {
 			try {
 				File file = anexo.getFile();
 				File parent = file.getParentFile();
-
 				if (parent != null) {
 					desktop.open(parent);
 				}
@@ -246,7 +231,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void excluirAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
-
 		if (anexo != null && anexo.getPai() != null && !AnexoModelo.anexosInfo.equals(anexo.getFile())
 				&& Util.confirmaExclusao(AnexoContainer.this, false)) {
 			anexo.excluir();
@@ -257,18 +241,14 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void renomearAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
-
 		if (anexo == null || anexo.getPai() == null || AnexoModelo.anexosInfo.equals(anexo.getFile())) {
 			return;
 		}
-
 		Object resp = Util.getValorInputDialog(AnexoContainer.this, "label.renomear", anexo.toString(),
 				anexo.toString());
-
 		if (resp == null || Util.estaVazio(resp.toString())) {
 			return;
 		}
-
 		if (anexo.renomear(resp.toString())) {
 			AnexoTreeUtil.refreshEstrutura(anexoTree, anexo);
 			AnexoModelo.putAnexo(anexo);
@@ -278,7 +258,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void corFonteAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
-
 		if (anexo != null) {
 			AnexoCorDialogo form = AnexoCorDialogo.criar((Frame) null, anexo);
 			form.setLocationRelativeTo(AnexoContainer.this);
@@ -290,7 +269,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void iconeAnexo(AnexoTree anexo) {
 		Anexo arquivo = anexo.getObjetoSelecionado();
-
 		if (arquivo != null) {
 			AnexoIconeDialogo form = AnexoIconeDialogo.criar((Frame) null, arquivo);
 			form.setLocationRelativeTo(AnexoContainer.this);
@@ -302,7 +280,6 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void copiarAtributosAnexo(AnexoTree anexo) {
 		Anexo arquivo = anexo.getObjetoSelecionado();
-
 		if (arquivo != null) {
 			map.put(Constantes.ABRIR_VISIVEL, arquivo.isAbrirVisivel());
 			map.put(Constantes.PADRAO_ABRIR, arquivo.isPadraoAbrir());
@@ -314,26 +291,20 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	@Override
 	public void colarAtributosAnexo(AnexoTree anexo) {
 		Anexo arquivo = anexo.getObjetoSelecionado();
-
 		if (arquivo == null) {
 			return;
 		}
-
 		Boolean abrirVisivel = (Boolean) map.get(Constantes.ABRIR_VISIVEL);
 		arquivo.setAbrirVisivel(Boolean.TRUE.equals(abrirVisivel));
-
 		Boolean padraoAbrir = (Boolean) map.get(Constantes.PADRAO_ABRIR);
 		arquivo.setPadraoAbrir(Boolean.TRUE.equals(padraoAbrir));
-
 		Color corFonte = (Color) map.get(Constantes.COR_FONTE);
 		arquivo.setCorFonte(corFonte);
-
 		String nome = (String) map.get(Constantes.ICONE);
 		if (!Util.estaVazio(nome)) {
 			Icon icone = Imagens.getIcon(nome);
 			arquivo.setIcone(icone, nome);
 		}
-
 		AnexoModelo.putAnexo(arquivo);
 		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
 	}

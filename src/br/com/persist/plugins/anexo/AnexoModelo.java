@@ -47,22 +47,18 @@ public class AnexoModelo implements TreeModel {
 
 	private void inicializar() {
 		anexos.clear();
-
 		if (anexosInfo.isFile()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(anexosInfo), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
 				Anexo selecioinado = null;
-
 				while (linha != null) {
 					if (linha.startsWith(Constantes.SEP)) {
 						selecioinado = new Anexo(new File(linha));
 						anexos.put(linha, selecioinado);
-
 					} else {
 						configurar(selecioinado, linha);
 					}
-
 					linha = br.readLine();
 				}
 			} catch (Exception e) {
@@ -75,20 +71,16 @@ public class AnexoModelo implements TreeModel {
 		if (selecionado == null || linha == null) {
 			return;
 		}
-
 		if (linha.startsWith(Constantes.ICONE)) {
 			String nome = linha.substring(Constantes.ICONE.length());
 			Icon icone = Imagens.getIcon(nome);
 			selecionado.setIcone(icone, nome);
-
 		} else if (linha.startsWith(Constantes.ABRIR_VISIVEL)) {
 			String abrirVisivel = linha.substring(Constantes.ABRIR_VISIVEL.length());
 			selecionado.setAbrirVisivel(Boolean.parseBoolean(abrirVisivel));
-
 		} else if (linha.startsWith(Constantes.PADRAO_ABRIR)) {
 			String padraoAbrir = linha.substring(Constantes.PADRAO_ABRIR.length());
 			selecionado.setPadraoAbrir(Boolean.parseBoolean(padraoAbrir));
-
 		} else if (linha.startsWith(Constantes.COR_FONTE)) {
 			String cor = linha.substring(Constantes.COR_FONTE.length());
 			selecionado.setCorFonte(new Color(Integer.parseInt(cor)));
@@ -147,7 +139,6 @@ public class AnexoModelo implements TreeModel {
 
 	public void treeStructureChanged(TreeModelEvent event) {
 		Object[] listeners = listenerList.getListenerList();
-
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
 			if (listeners[i] == TreeModelListener.class) {
 				((TreeModelListener) listeners[i + 1]).treeStructureChanged(event);
@@ -157,7 +148,6 @@ public class AnexoModelo implements TreeModel {
 
 	public void treeNodesRemoved(TreeModelEvent event) {
 		Object[] listeners = listenerList.getListenerList();
-
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
 			if (listeners[i] == TreeModelListener.class) {
 				((TreeModelListener) listeners[i + 1]).treeNodesRemoved(event);
@@ -167,7 +157,6 @@ public class AnexoModelo implements TreeModel {
 
 	public void treeNodesChanged(TreeModelEvent event) {
 		Object[] listeners = listenerList.getListenerList();
-
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
 			if (listeners[i] == TreeModelListener.class) {
 				((TreeModelListener) listeners[i + 1]).treeNodesChanged(event);

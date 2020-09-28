@@ -30,7 +30,6 @@ public class AnexoCorContainer extends Panel implements ChangeListener {
 	private void montarLayout() {
 		add(BorderLayout.CENTER, colorChooser);
 		add(BorderLayout.NORTH, toolbar);
-
 		if (anexo.getCorFonte() != null) {
 			colorChooser.setColor(anexo.getCorFonte());
 		} else {

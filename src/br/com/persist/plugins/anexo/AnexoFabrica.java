@@ -54,7 +54,6 @@ public class AnexoFabrica extends AbstratoFabricaContainer {
 
 		private MenuAnexo(Formulario formulario) {
 			super(Constantes.LABEL_ANEXOS, Icones.ANEXO, false);
-
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new AnexoContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> AnexoFormulario.criar(formulario));
 		}

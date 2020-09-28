@@ -41,15 +41,12 @@ public class AnexoTree extends Tree {
 
 	public Anexo getObjetoSelecionado() {
 		TreePath path = getSelectionPath();
-
 		if (path == null) {
 			return null;
 		}
-
 		if (path.getLastPathComponent() instanceof Anexo) {
 			return (Anexo) path.getLastPathComponent();
 		}
-
 		return null;
 	}
 
@@ -61,7 +58,6 @@ public class AnexoTree extends Tree {
 
 	public void excluirSelecionado() {
 		Anexo selecionado = getObjetoSelecionado();
-
 		if (selecionado != null) {
 			AnexoTreeUtil.excluirEstrutura(this, selecionado);
 		}
@@ -89,27 +85,21 @@ public class AnexoTree extends Tree {
 
 		private void processar(MouseEvent e) {
 			popupTrigger = false;
-
 			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
 				return;
 			}
-
 			TreePath anexoClicado = getClosestPathForLocation(e.getX(), e.getY());
 			TreePath anexoSelecionado = getSelectionPath();
 			popupTrigger = true;
-
 			if (anexoClicado == null || anexoSelecionado == null) {
 				setSelectionPath(null);
 				return;
 			}
-
 			Rectangle rectangle = getPathBounds(anexoClicado);
-
 			if (rectangle == null || !rectangle.contains(e.getX(), e.getY())) {
 				setSelectionPath(null);
 				return;
 			}
-
 			if (anexoClicado.equals(anexoSelecionado)) {
 				if (anexoSelecionado.getLastPathComponent() instanceof Anexo) {
 					Anexo anexo = (Anexo) anexoSelecionado.getLastPathComponent();
@@ -128,14 +118,11 @@ public class AnexoTree extends Tree {
 			if (popupTrigger) {
 				return;
 			}
-
 			if (e.getClickCount() >= Constantes.DOIS) {
 				Anexo anexo = getObjetoSelecionado();
-
 				if (anexo == null) {
 					return;
 				}
-
 				if (anexo.isFile()) {
 					if (anexo.isPadraoAbrir()) {
 						ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this));
@@ -174,7 +161,6 @@ public class AnexoTree extends Tree {
 			addMenuItem(true, iconeAcao);
 			addMenuItem(true, copiarAcao);
 			addMenuItem(colarAcao);
-
 			copiarAcao.setActionListener(e -> ouvintes.forEach(o -> o.copiarAtributosAnexo(AnexoTree.this)));
 			colarAcao.setActionListener(e -> ouvintes.forEach(o -> o.colarAtributosAnexo(AnexoTree.this)));
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearAnexo(AnexoTree.this)));
@@ -197,7 +183,6 @@ public class AnexoTree extends Tree {
 
 		private void padraoAbrir(boolean b) {
 			Anexo anexo = getObjetoSelecionado();
-
 			if (anexo != null) {
 				anexo.setPadraoAbrir(b);
 				AnexoModelo.putAnexo(anexo);
@@ -206,7 +191,6 @@ public class AnexoTree extends Tree {
 
 		private void abrirVisivel(boolean b) {
 			Anexo anexo = getObjetoSelecionado();
-
 			if (anexo != null) {
 				anexo.setAbrirVisivel(b);
 				AnexoModelo.putAnexo(anexo);
@@ -227,7 +211,6 @@ public class AnexoTree extends Tree {
 				addMenuItem(imprimirAcao);
 				addSeparator();
 				addMenuItem(diretorioAcao);
-
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioAnexo(AnexoTree.this)));
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirAnexo(AnexoTree.this)));
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarAnexo(AnexoTree.this)));
