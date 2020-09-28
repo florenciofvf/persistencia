@@ -103,7 +103,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		inputMap().put(getKeyStroke(KeyEvent.VK_Z), "zoom_menos");
 		inputMap().put(getKeyStroke(KeyEvent.VK_X), "zoom_mais");
 		inputMap().put(getKeyStroke(KeyEvent.VK_M), "macro");
-
 		getActionMap().put("thread_processar", threadProcessar);
 		getActionMap().put("thread_desativar", threadDesativar);
 		getActionMap().put("macro_lista", macroLista);
@@ -115,11 +114,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	@Override
 	public void updateUI() {
 		super.updateUI();
-
 		if (popup != null) {
 			SwingUtilities.updateComponentTreeUI(popup);
 		}
-
 		if (popup2 != null) {
 			SwingUtilities.updateComponentTreeUI(popup2);
 		}
@@ -136,7 +133,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					objeto.ativar();
 				}
 			}
-
 			repaint();
 		}
 	};
@@ -151,7 +147,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					objeto.desativar();
 				}
 			}
-
 			repaint();
 		}
 	};
@@ -164,7 +159,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (MacroProvedor.isEmpty()) {
 				return;
 			}
-
 			MacroDialogo.criar(container.getFrame());
 		}
 	};
@@ -175,11 +169,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			List<MacroProvedor.Instrucao> instrucoes = MacroProvedor.getInstrucoes();
-
 			if (instrucoes.isEmpty()) {
 				return;
 			}
-
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
@@ -187,7 +179,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
-
 			for (Relacao relacao : relacoes) {
 				if (relacao.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
@@ -195,7 +186,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
-
 			repaint();
 		}
 	};
@@ -208,7 +198,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			for (Objeto objeto : objetos) {
 				objeto.zoomMenos();
 			}
-
 			repaint();
 		}
 	};
@@ -221,24 +210,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			for (Objeto objeto : objetos) {
 				objeto.zoomMais();
 			}
-
 			repaint();
 		}
 	};
 
 	public void alinharNomes() {
 		Font font = getFont();
-
 		if (font == null) {
 			return;
 		}
-
 		FontMetrics fm = getFontMetrics(font);
-
 		if (fm == null) {
 			return;
 		}
-
 		for (Objeto objeto : objetos) {
 			objeto.alinhar(fm);
 		}
@@ -248,23 +232,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (objeto == null) {
 			return;
 		}
-
 		Font font = getFont();
 		if (font == null) {
 			return;
 		}
-
 		FontMetrics fm = getFontMetrics(font);
 		if (fm == null) {
 			return;
 		}
-
 		objeto.alinhar(fm);
 	}
 
 	public void limparSelecao() {
 		inversao.ultimo = null;
-
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(false);
 		}
@@ -272,13 +252,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public List<Objeto> getSelecionados() {
 		List<Objeto> resp = new ArrayList<>();
-
 		for (Objeto objeto : objetos) {
 			if (objeto.isSelecionado()) {
 				resp.add(objeto);
 			}
 		}
-
 		return resp;
 	}
 
@@ -322,7 +300,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean alt = e.isAltDown();
 			int recX = e.getX();
 			int recY = e.getY();
-
 			if (selecionadoObjeto != null) {
 				if (alt && !shift) {
 					selecionadoObjeto.deslocamentoXIdDelta(recX - ultX);
@@ -342,7 +319,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					selecionadoRelacao.deslocamentoYDescDelta(recY - ultY);
 				}
 			}
-
 			ultX = recX;
 			ultY = recY;
 			repaint();
@@ -357,11 +333,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					selecionadoObjeto.setSelecionado(false);
 					selecionadoObjeto.setControlado(false);
 				}
-
 				if (selecionadoRelacao != null) {
 					selecionadoRelacao.setSelecionado(false);
 				}
-
 				selecionadoRelacao = null;
 				selecionadoObjeto = null;
 				repaint();
@@ -376,7 +350,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				int x = e.getX();
 				int y = e.getY();
 				limparSelecao();
-
 				for (Objeto objeto : objetos) {
 					if (objeto.contem(x, y)) {
 						objeto.setSelecionado(true);
@@ -384,7 +357,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						break;
 					}
 				}
-
 				if (selecionadoObjeto == null) {
 					for (Relacao relacao : relacoes) {
 						if (relacao.contem(x, y)) {
@@ -394,7 +366,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						}
 					}
 				}
-
 				repaint();
 			}
 		}
@@ -417,7 +388,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean alt = e.isAltDown();
 			int recX = e.getX();
 			int recY = e.getY();
-
 			for (Objeto objeto : objetos) {
 				if (alt && !shift) {
 					objeto.x += recX - ultX;
@@ -428,7 +398,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					objeto.y += recY - ultY;
 				}
 			}
-
 			ultX = recX;
 			ultY = recY;
 			repaint();
@@ -459,16 +428,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				mousePressedPopup(e);
 				return;
 			}
-
 			for (Relacao relacao : relacoes) {
 				relacao.setSelecionado(false);
 			}
-
 			limparSelecao();
 			ultX = e.getX();
 			ultY = e.getY();
 			origem = null;
-
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(ultX, ultY)) {
 					objeto.setSelecionado(true);
@@ -476,7 +442,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					break;
 				}
 			}
-
 			if (origem != null) {
 				linha.x1 = origem.x + Objeto.DIAMETRO / 2;
 				linha.y1 = origem.y + Objeto.DIAMETRO / 2;
@@ -485,7 +450,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			} else {
 				linha.ini();
 			}
-
 			repaint();
 		}
 
@@ -493,7 +457,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		public void mouseDragged(MouseEvent e) {
 			int recX = e.getX();
 			int recY = e.getY();
-
 			if (origem != null) {
 				linha.x2 = recX;
 				linha.y2 = recY;
@@ -507,13 +470,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				mouseReleasedPopup(e);
 				return;
 			}
-
 			boolean shift = e.isShiftDown();
 			ultX = e.getX();
 			ultY = e.getY();
 			destino = null;
 			linha.ini();
-
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(ultX, ultY)) {
 					objeto.setSelecionado(true);
@@ -521,21 +482,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					break;
 				}
 			}
-
 			if (origem == null || destino == null || origem == destino) {
 				repaint();
 				return;
 			}
-
 			Relacao relacao = getRelacao(origem, destino);
-
 			if (relacao == null) {
 				relacao = new Relacao(origem, false, destino, !shift);
 				addRelacao(relacao);
 			}
-
 			repaint();
-
 			if (!shift) {
 				RelacaoDialogo.criar(container.getFrame(), ObjetoSuperficie.this, relacao);
 			}
@@ -560,24 +516,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			area.y1 = y;
 			ultX = x;
 			ultY = y;
-
 			for (Relacao relacao : relacoes) {
 				relacao.setSelecionado(false);
 			}
-
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
 					objeto.setSelecionado(true);
 					selecionadoObjeto = objeto;
-
 					if (!objeto.isControlado()) {
 						objeto.setControlado(e.isShiftDown());
 					}
-
 					break;
 				}
 			}
-
 			if (selecionadoObjeto != null) {
 				if (selecionadoObjeto.isControlado()) {
 					for (Objeto objeto : objetos) {
@@ -595,7 +546,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			} else {
 				limparSelecao();
-
 				for (Relacao relacao : relacoes) {
 					if (relacao.contem(x, y)) {
 						relacao.setSelecionado(true);
@@ -604,9 +554,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
-
 			repaint();
-
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(ObjetoSuperficie.this, x, y);
@@ -625,7 +573,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean movimentou = false;
 			int recX = e.getX();
 			int recY = e.getY();
-
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
 					if (alt && !shift) {
@@ -639,16 +586,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					movimentou = true;
 				}
 			}
-
 			ultX = recX;
 			ultY = recY;
-
 			if (!movimentou) {
 				area.x2 = recX;
 				area.y2 = recY;
 				area.calc();
 			}
-
 			repaint();
 		}
 
@@ -656,7 +600,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		public void mouseReleased(MouseEvent e) {
 			int x = e.getX();
 			int y = e.getY();
-
 			if (area.largura > Objeto.DIAMETRO && area.altura > Objeto.DIAMETRO) {
 				for (Objeto objeto : objetos) {
 					if (area.contem(objeto)) {
@@ -665,12 +608,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
-
 			area.ini();
 			area.calc();
-
 			repaint();
-
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
 				popup.preShow(selecionadoObjeto != null && selecionadoRelacao == null);
 				popup.show(ObjetoSuperficie.this, x, y);
@@ -687,13 +627,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (e.isShiftDown()) {
 				inversao.inverterSelecao(selecionadoObjeto);
 			}
-
 			if (selecionadoObjeto != null && !selecionadoObjeto.isSelecionado()) {
 				selecionadoObjeto = null;
 			}
-
 			repaint();
-
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (selecionadoObjeto != null) {
 					abrirObjeto(selecionadoObjeto, false, true);
@@ -706,11 +643,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void abrirObjeto(Objeto objeto, boolean checarApelido, boolean checarArquivo) {
 		Frame frame = container.getFrame();
-
 		if (!Util.estaVazio(objeto.getTabela2())) {
 			Conexao conexao = container.getConexaoPadrao();
 			setComplemento(conexao, objeto);
-
 			if (Util.estaVazio(objeto.getArquivo())) {
 				abrirObjetoDados(conexao, objeto, frame);
 			} else {
@@ -733,17 +668,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarApelido) {
 		InternalFormulario interno = getInternalFormulario(objeto);
-
 		InternalConfig config = new InternalConfig(checarApelido);
 		config.setTabela(objeto.getTabela2());
 		config.setConexao(conexao.getNome());
 		config.setGraphics(getGraphics());
-
 		if (interno != null) {
 			config.setApelido(interno.getApelidoListener().getApelido());
 			config.setComplemento(interno.getComplementoChaves());
 		}
-
 		ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo(), getGraphics(), config);
 	}
 
@@ -761,9 +693,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (ultimo != null && ultimo == objeto) {
 				objeto.setSelecionado(!sel);
 			}
-
 			ultimo = objeto;
-
 			if (ultimo != null) {
 				sel = ultimo.isSelecionado();
 			}
@@ -832,30 +762,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-
 		Graphics2D g2 = (Graphics2D) g;
 		Stroke stroke = g2.getStroke();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 		if (estado == Constantes.RELACAO) {
 			linha.desenhar(g2);
 		}
-
 		for (Relacao relacao : relacoes) {
 			relacao.desenhar(g2, stroke);
 		}
-
 		for (Objeto objeto : objetos) {
 			objeto.desenhar(this, g2, stroke);
 		}
-
 		area.desenhar(g2);
 	}
 
 	public void excluirSelecionados() {
 		Objeto objeto = getPrimeiroObjetoSelecionado();
 		boolean confirmado = false;
-
 		if (objeto != null) {
 			if (Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
 				confirmado = true;
@@ -863,23 +787,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				return;
 			}
 		}
-
 		while (objeto != null) {
 			excluir(objeto);
 			objeto = getPrimeiroObjetoSelecionado();
 		}
-
 		Relacao relacao = getPrimeiroRelacaoSelecionado();
-
 		if (relacao != null && !confirmado && !Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
 			return;
 		}
-
 		while (relacao != null) {
 			excluir(relacao);
 			relacao = getPrimeiroRelacaoSelecionado();
 		}
-
 		repaint();
 	}
 
@@ -889,7 +808,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				return objeto;
 			}
 		}
-
 		return null;
 	}
 
@@ -899,7 +817,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				return relacao;
 			}
 		}
-
 		return null;
 	}
 
@@ -907,7 +824,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (obj == null || contem(obj)) {
 			return;
 		}
-
 		Objeto[] bkp = objetos;
 		objetos = new Objeto[bkp.length + 1];
 		System.arraycopy(bkp, 0, objetos, 0, bkp.length);
@@ -917,22 +833,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void excluir(Objeto obj) {
 		int indice = getIndice(obj);
-
 		if (indice >= 0) {
 			objetos[indice].setListener(null);
 			objetos[indice].desativar();
 			objetos[indice] = null;
 			Objeto[] bkp = objetos;
 			objetos = new Objeto[0];
-
 			for (int i = 0; i < bkp.length; i++) {
 				if (bkp[i] != null) {
 					addObjeto(bkp[i]);
 				}
 			}
-
 			Relacao relacao = getRelacao(obj);
-
 			while (relacao != null) {
 				excluir(relacao);
 				relacao = getRelacao(obj);
@@ -944,7 +856,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (obj == null || contem(obj)) {
 			return;
 		}
-
 		Relacao[] bkp = relacoes;
 		relacoes = new Relacao[bkp.length + 1];
 		System.arraycopy(bkp, 0, relacoes, 0, bkp.length);
@@ -953,12 +864,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void excluir(Relacao obj) {
 		int indice = getIndice(obj);
-
 		if (indice >= 0) {
 			relacoes[indice] = null;
 			Relacao[] bkp = relacoes;
 			relacoes = new Relacao[0];
-
 			for (int i = 0; i < bkp.length; i++) {
 				if (bkp[i] != null) {
 					addRelacao(bkp[i]);
@@ -971,13 +880,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (obj == null) {
 			return null;
 		}
-
 		for (Relacao relacao : relacoes) {
 			if (relacao.contem(obj)) {
 				return relacao;
 			}
 		}
-
 		return null;
 	}
 
@@ -985,15 +892,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (obj1 == null || obj2 == null) {
 			return null;
 		}
-
 		Relacao temp = new Relacao(obj1, obj2);
-
 		for (Relacao relacao : relacoes) {
 			if (relacao.equals(temp)) {
 				return relacao;
 			}
 		}
-
 		return null;
 	}
 
@@ -1013,7 +917,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			}
 		}
-
 		return -1;
 	}
 
@@ -1025,7 +928,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			}
 		}
-
 		return -1;
 	}
 
@@ -1034,37 +936,28 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (metadado == null) {
 			return false;
 		}
-
 		Objeto novo = new Objeto(point.x, point.y);
 		novo.setChaves(metadado.getChaves());
 		String id = metadado.getDescricao();
 		novo.setTabela(id);
-
 		if (labelDireito) {
 			novo.setDeslocamentoXId(Objeto.DIAMETRO);
 			novo.setDeslocamentoYId(Objeto.DIAMETRO / 2);
 		}
-
 		if (Preferencias.isNomearArrasto()) {
 			Object resp = Util.getValorInputDialog(ObjetoSuperficie.this, "label.id", id, id);
-
 			if (resp != null && !Util.estaVazio(resp.toString())) {
 				id = resp.toString();
 			}
 		}
-
 		novo.setId(id);
-
 		boolean contem = contem(novo);
-
 		while (contem) {
 			novo.setId(id + "-" + Objeto.novaSequencia());
 			contem = contem(novo);
 		}
-
 		addObjeto(novo);
 		repaint();
-
 		return true;
 	}
 
@@ -1076,7 +969,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		public static void copiar(ObjetoSuperficie objetoSuperficie) {
 			copiados.clear();
-
 			for (Objeto objeto : objetoSuperficie.getSelecionados()) {
 				copiados.add(objeto.clonar());
 			}
@@ -1084,19 +976,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {
 			superficie.limparSelecao();
-
 			for (Objeto objeto : copiados) {
 				Objeto clone = get(objeto, superficie);
 				superficie.addObjeto(clone);
 				clone.setSelecionado(true);
 				clone.setControlado(true);
-
 				if (b) {
 					clone.setX(x);
 					clone.setY(y);
 				}
 			}
-
 			superficie.repaint();
 		}
 
@@ -1109,14 +998,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			o.deltaX(Objeto.DIAMETRO);
 			o.deltaY(Objeto.DIAMETRO);
 			o.setId(objeto.getId() + "-" + Objeto.getSequencia());
-
 			boolean contem = superficie.contem(o);
-
 			while (contem) {
 				o.setId(objeto.getId() + "-" + Objeto.novaSequencia());
 				contem = superficie.contem(o);
 			}
-
 			return o;
 		}
 	}
@@ -1128,7 +1014,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -1144,7 +1029,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private Action excluirAcao = Action.actionMenu("label.excluir_sel", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 		private Action dadosAcao = Action.actionMenu("label.dados", null);
-
 		private MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
 		private MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
 		private MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
@@ -1161,7 +1045,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			menuDistribuicao.add(itemDistribuiVertical);
 			menuAlinhamento.add(itemAlinhaHorizontal);
 			menuAlinhamento.add(itemAlinhaVertical);
-
 			add(menuAlinhamento);
 			add(true, menuDistribuicao);
 			addMenuItem(true, copiarAcao);
@@ -1171,7 +1054,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			add(true, itemPartir);
 			add(true, itemDados);
 			addMenuItem(true, configuracaoAcao);
-
 			eventos();
 		}
 
@@ -1183,11 +1065,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 			private MenuCircular() {
 				super(Constantes.LABEL_CIRCULAR);
-
 				addMenuItem(exportacaoAcao);
 				addMenuItem(importacaoAcao);
 				addMenuItem(normalAcao);
-
 				exportacaoAcao.setActionListener(e -> abrirModal(Tipo.EXPORTACAO));
 				importacaoAcao.setActionListener(e -> abrirModal(Tipo.IMPORTACAO));
 				normalAcao.setActionListener(e -> abrirModal(Tipo.NORMAL));
@@ -1209,7 +1089,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
 				addMenuItem(desktopAcao);
 				addMenuItem(true, proprioAcao);
-
 				formularioAcao.setActionListener(
 						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_FORMULARIO, null));
 				ficharioAcao.setActionListener(
@@ -1218,7 +1097,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_DESKTOP, null));
 				proprioAcao.setActionListener(
 						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_PROPRIO, null));
-
 				formularioAcao.rotulo("label.abrir_sel_em_formulario");
 				ficharioAcao.rotulo("label.abrir_sel_em_fichario");
 				desktopAcao.rotulo("label.abrir_sel_em_desktop");
@@ -1228,26 +1106,20 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private void eventos() {
 			dadosAcao.setActionListener(e -> {
 				Object object = itemDados.getObject();
-
 				if (object instanceof Objeto) {
 					Objeto objeto = (Objeto) object;
 					abrirObjeto(objeto, false, false);
 				}
 			});
-
 			excluirAcao.setActionListener(e -> excluirSelecionados());
-
 			configuracaoAcao.setActionListener(e -> {
 				Frame frame = container.getFrame();
-
 				if (selecionadoObjeto != null) {
 					ObjetoDialogo.criar(frame, ObjetoSuperficie.this, selecionadoObjeto);
-
 				} else if (selecionadoRelacao != null) {
 					RelacaoDialogo.criar(frame, ObjetoSuperficie.this, selecionadoRelacao);
 				}
 			});
-
 			inputMap().put(getKeyStroke(KeyEvent.VK_C), copiarAcao.getChave());
 			ObjetoSuperficie.this.getActionMap().put(copiarAcao.getChave(), copiarAcao);
 			copiarAcao.setActionListener(e -> CopiarColar.copiar(ObjetoSuperficie.this));
@@ -1278,23 +1150,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					Objeto novo = selecionadoRelacao.criarObjetoMeio();
 					Objeto destino = selecionadoRelacao.getDestino();
 					Objeto origem = selecionadoRelacao.getOrigem();
-
 					boolean contem = contem(novo);
-
 					while (contem) {
 						novo.setId(Constantes.VAZIO + Objeto.novaSequencia());
 						contem = contem(novo);
 					}
-
 					addObjeto(novo);
-
 					selecionadoRelacao.setSelecionado(false);
 					excluir(selecionadoRelacao);
 					selecionadoRelacao = null;
-
 					addRelacao(new Relacao(origem, false, novo, false));
 					addRelacao(new Relacao(novo, false, destino, false));
-
 					ObjetoSuperficie.this.repaint();
 				}
 			}
@@ -1313,13 +1179,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			public void actionPerformed(ActionEvent e) {
 				if (selecionadoObjeto != null) {
 					MacroProvedor.limpar();
-
 					if (horizontal) {
 						MacroProvedor.yLocal(selecionadoObjeto.y);
 					} else {
 						MacroProvedor.xLocal(selecionadoObjeto.x);
 					}
-
 					macro.actionPerformed(null);
 				}
 			}
@@ -1338,18 +1202,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			public void actionPerformed(ActionEvent e) {
 				if (selecionadoObjeto != null) {
 					List<Objeto> lista = getSelecionados();
-
 					if (lista.size() < 3) {
 						return;
 					}
-
 					Collections.sort(lista, new Compara());
-
 					if (horizontal) {
 						int totalDifX = lista.get(lista.size() - 1).x - lista.get(0).x;
 						int fragmentoX = totalDifX / (lista.size() - 1);
 						int x = lista.get(0).x;
-
 						for (int i = 1; i < lista.size(); i++) {
 							Objeto objeto = lista.get(i);
 							x += fragmentoX;
@@ -1359,14 +1219,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						int totalDifY = lista.get(lista.size() - 1).y - lista.get(0).y;
 						int fragmentoY = totalDifY / (lista.size() - 1);
 						int y = lista.get(0).y;
-
 						for (int i = 1; i < lista.size(); i++) {
 							Objeto objeto = lista.get(i);
 							y += fragmentoY;
 							objeto.y = y;
 						}
 					}
-
 					ObjetoSuperficie.this.repaint();
 				}
 			}
@@ -1387,7 +1245,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private Action criarObjetoAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
-
 		int xLocal;
 		int yLocal;
 
@@ -1401,7 +1258,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			add(true, menuAjustar);
 			add(true, menuAjuste);
 			addMenuItem(true, propriedadesAcao);
-
 			eventos();
 		}
 
@@ -1410,7 +1266,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			atualizarFormulariosAcao.setActionListener(e -> atualizarFormularios());
 			propriedadesAcao.setActionListener(e -> propriedades());
 			limparFormulariosAcao.setActionListener(e -> limpar2());
-
 			colarAcao.setActionListener(
 					e -> CopiarColar.colar(ObjetoSuperficie.this, true, popup2.xLocal, popup2.yLocal));
 		}
@@ -1428,7 +1283,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private void propriedades() {
 			int invisiveis = 0;
 			int visiveis = 0;
-
 			for (Objeto objeto : objetos) {
 				if (objeto.visivel) {
 					visiveis++;
@@ -1436,21 +1290,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					invisiveis++;
 				}
 			}
-
 			StringBuilder sb = new StringBuilder();
 			sb.append(Mensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
 			sb.append(Mensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
 			sb.append("Total de objetos: " + (visiveis + invisiveis) + Constantes.QL);
-
 			File file = container.getArquivo();
-
 			if (file != null) {
 				sb.append("------------------" + Constantes.QL);
 				sb.append("Local absoluto do arquivo: " + file.getAbsolutePath() + Constantes.QL);
 				sb.append(
 						"Local relativo do arquivo: " + ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
 			}
-
 			Util.mensagem(formulario, sb.toString());
 		}
 	}
@@ -1466,14 +1316,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void criarNovoObjeto(int x, int y) {
 		Objeto novo = new Objeto(x, y);
-
 		boolean contem = contem(novo);
-
 		while (contem) {
 			novo.setId(Constantes.VAZIO + Objeto.novaSequencia());
 			contem = contem(novo);
 		}
-
 		addObjeto(novo);
 		limparSelecao();
 		repaint();
@@ -1491,39 +1338,29 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		try {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
-
 			util.abrirTag("fvf");
 			util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
 			util.atributo("largura", getWidth());
 			util.atributo("altura", getHeight());
-
 			if (conexao != null) {
 				util.atributo("conexao", Util.escapar(conexao.getNome()));
 			}
-
 			util.fecharTag();
-
 			for (Objeto objeto : objetos) {
 				objeto.salvar(util);
 			}
-
 			util.ql();
-
 			for (Relacao relacao : relacoes) {
 				relacao.salvar(util);
 			}
-
 			util.ql();
-
 			JInternalFrame[] frames = getAllFrames();
-
 			for (int i = frames.length - 1; i >= 0; i--) {
 				InternalFormulario interno = (InternalFormulario) frames[i];
 				InternalForm form = new InternalForm();
 				form.copiar(interno);
 				form.salvar(util);
 			}
-
 			util.finalizarTag("fvf");
 			util.close();
 		} catch (Exception e) {
@@ -1533,22 +1370,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void abrir(ObjetoColetor coletor) {
 		limpar();
-
 		for (Objeto objeto : coletor.getObjetos()) {
 			addObjeto(objeto);
 		}
-
 		for (Relacao relacao : coletor.getRelacoes()) {
 			addRelacao(relacao);
 		}
-
 		removeAll();
-
 		alinharNomes();
 		repaint();
 		setPreferredSize(coletor.getDimension());
 		SwingUtilities.updateComponentTreeUI(getParent());
-
 		for (Objeto objeto : coletor.getObjetos()) {
 			objeto.ativar();
 		}
@@ -1558,7 +1390,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Relacao relacao : relacoes) {
 			relacao.setDesenharDescricao(b);
 		}
-
 		repaint();
 	}
 
@@ -1566,7 +1397,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			objeto.setDesenharId(b);
 		}
-
 		repaint();
 	}
 
@@ -1574,52 +1404,41 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			objeto.setTransparente(b);
 		}
-
 		repaint();
 	}
 
 	public void configEstado(byte estado) {
 		removeMouseMotionListener(mouseAdapterRotulos);
 		removeMouseListener(mouseAdapterRotulos);
-
 		removeMouseMotionListener(mouseAdapterArrasto);
 		removeMouseListener(mouseAdapterArrasto);
-
 		removeMouseMotionListener(mouseAdapterRelacao);
 		removeMouseListener(mouseAdapterRelacao);
-
 		removeMouseMotionListener(mouseAdapterSelecao);
 		removeMouseListener(mouseAdapterSelecao);
-
 		this.estado = -1;
-
 		if (estado == Constantes.ARRASTO) {
 			addMouseMotionListener(mouseAdapterArrasto);
 			addMouseListener(mouseAdapterArrasto);
 			this.estado = estado;
-
 		} else if (estado == Constantes.ROTULOS) {
 			addMouseMotionListener(mouseAdapterRotulos);
 			addMouseListener(mouseAdapterRotulos);
 			this.estado = estado;
-
 		} else if (estado == Constantes.RELACAO) {
 			addMouseMotionListener(mouseAdapterRelacao);
 			addMouseListener(mouseAdapterRelacao);
 			this.estado = estado;
-
 		} else if (estado == Constantes.SELECAO) {
 			addMouseMotionListener(mouseAdapterSelecao);
 			addMouseListener(mouseAdapterSelecao);
 			this.estado = estado;
 		}
-
 		if (relacoes != null) {
 			for (Relacao relacao : relacoes) {
 				relacao.setSelecionado(false);
 			}
 		}
-
 		if (objetos != null) {
 			limparSelecao();
 		}
@@ -1635,16 +1454,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	@Override
 	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, InternalContainer objContainer) {
 		super.buscaAutomatica(grupo, argumentos, objContainer);
-
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
-
 			for (TabelaBuscaAuto tabela : grupo.getTabelas()) {
 				if (!tabela.isProcessado()) {
 					buscaAutomaticaFinal(tabela, argumentos);
 				}
 			}
-
 			if (getPrimeiroObjetoSelecionado() != null) {
 				destacar(container.getConexaoPadrao(), Preferencias.getTipoContainerPesquisaAuto(), null);
 			}
@@ -1653,22 +1469,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void buscaAutomaticaFinal(TabelaBuscaAuto tabela, String argumentos) {
 		Objeto objeto = null;
-
 		for (Objeto obj : objetos) {
 			if (Util.estaVazio(tabela.getApelido()) && obj.getTabela2().equalsIgnoreCase(tabela.getNome())) {
 				objeto = obj;
 				break;
 			}
 		}
-
 		if (objeto == null || !objeto.isAbrirAuto()) {
 			return;
 		}
-
 		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
 		Conexao conexao = container.getConexaoPadrao();
 		objeto.setTabelaBuscaAuto(tabela);
-
 		if (Preferencias.isAbrirAutoDestacado()) {
 			ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
 			form.setLocationRelativeTo(formulario);
@@ -1677,7 +1489,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		} else {
 			objeto.setSelecionado(true);
 		}
-
 		tabela.setProcessado(true);
 	}
 
@@ -1685,9 +1496,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (conexao == null) {
 			return;
 		}
-
 		int total = preTotalRecente(label);
-
 		if (total > 0) {
 			new ThreadTotal(conexao, menuItem, label, total).start();
 		}
@@ -1695,17 +1504,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private int preTotalRecente(Label label) {
 		int total = 0;
-
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				objeto.setCorFonte(Preferencias.getCorAntesTotalRecente());
 				total++;
 			}
 		}
-
 		label.limpar();
 		repaint();
-
 		return total;
 	}
 
@@ -1729,7 +1535,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean processado = false;
 			menuItem.setEnabled(false);
 			int atual = 0;
-
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					try {
@@ -1748,25 +1553,21 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
-
 			if (processado) {
 				label.setText(Mensagens.getString("label.threadTotalAtual"));
 			}
-
 			menuItem.setEnabled(true);
 		}
 	}
 
 	public void excluirSemTabela() {
 		boolean contem = false;
-
 		for (Objeto objeto : objetos) {
 			if (Util.estaVazio(objeto.getTabela2())) {
 				contem = true;
 				break;
 			}
 		}
-
 		if (contem && Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
 			for (Objeto objeto : objetos) {
 				if (Util.estaVazio(objeto.getTabela2())) {
@@ -1774,7 +1575,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			}
 		}
-
 		repaint();
 	}
 
@@ -1782,21 +1582,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (conexao == null) {
 			return;
 		}
-
 		Font font = getFont();
-
 		if (font == null) {
 			return;
 		}
-
 		FontMetrics fm = getFontMetrics(font);
-
 		if (fm == null) {
 			return;
 		}
-
 		int total = preTotalRecente(label);
-
 		if (total > 0) {
 			new ThreadRecente(conexao, fm, menuItem, label, total).start();
 		}
@@ -1824,7 +1618,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean processado = false;
 			menuItem.setEnabled(false);
 			int atual = 0;
-
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela2())) {
 					try {
@@ -1842,22 +1635,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
-
 			if (processado) {
 				label.setText(Mensagens.getString("label.threadRecente"));
 			}
-
 			menuItem.setEnabled(true);
 		}
 
 		private void processarRecente(Objeto objeto, int recente, FontMetrics fm) {
 			objeto.setCorFonte(Preferencias.getCorComparaRec());
 			long diff = recente - objeto.getTag();
-
 			if (diff == 0) {
 				return;
 			}
-
 			int largura = fm.stringWidth(objeto.getId());
 			Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create2" : "delete");
 			info.setId(diff + " - " + recente + " - " + Objeto.novaSequencia());
@@ -1873,13 +1662,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		boolean bkp = Preferencias.isNomearArrasto();
 		Preferencias.setNomearArrasto(false);
 		int y = 20;
-
 		for (int i = 0; i < metadado.getTotal(); i++) {
 			Metadado filho = metadado.getMetadado(i);
 			processadoMetadado(filho, new Point(10, y), true);
 			y += 30;
 		}
-
 		Preferencias.setNomearArrasto(bkp);
 		setPreferredSize(new Dimension(0, y));
 		SwingUtilities.updateComponentTreeUI(getParent());
@@ -1887,62 +1674,48 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
 		List<String> lista = metadado.getListaStringExpImp(exportacao);
-
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int comprimento = Math.min(d.width, d.height) / 2 - 50;
 		Vetor vetor = new Vetor(comprimento, 0);
 		int centroY = d.height / 2 - 25;
 		int centroX = d.width / 2;
 		final int cem = 100;
-
 		Objeto centro = new Objeto(centroX, centroY);
 		centro.setTabela(metadado.getDescricao());
 		centro.setChaves(metadado.getChaves());
 		centro.setId(metadado.getDescricao());
 		Metadado raiz = metadado.getPai();
 		addObjeto(centro);
-
 		if (!circular) {
 			centro.x = 20;
 			centro.y = 20;
 		}
-
 		if (lista.isEmpty()) {
 			return;
 		}
-
 		int graus = 360 / lista.size();
 		int y = centro.y + cem;
-
 		for (int i = 0; i < lista.size(); i++) {
 			String tabelaIds = lista.get(i);
-
 			Objeto objeto = new Objeto(centroX + (int) vetor.getX(), centroY + (int) vetor.getY());
 			objeto.setId(tabelaIds);
 			addObjeto(objeto);
-
 			Relacao relacao = new Relacao(centro, !exportacao, objeto, exportacao);
 			addRelacao(relacao);
-
 			vetor.rotacionar(graus);
-
 			int pos = tabelaIds.indexOf('(');
 			String nome = tabelaIds.substring(0, pos);
 			objeto.setTabela(nome);
-
 			Metadado tabela = raiz.getMetadado(nome);
-
 			if (tabela != null) {
 				objeto.setChaves(tabela.getChaves());
 			}
-
 			if (!circular) {
 				objeto.x = 20;
 				objeto.y = y;
 				y += cem;
 			}
 		}
-
 		if (!circular) {
 			setPreferredSize(new Dimension(0, y));
 			SwingUtilities.updateComponentTreeUI(getParent());
@@ -1958,19 +1731,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	public void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
 		List<Objeto> lista = getSelecionados();
 		boolean continua = false;
-
 		for (Objeto objeto : lista) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				continua = true;
 			}
 		}
-
 		if (!continua) {
 			return;
 		}
-
 		List<Objeto> selecionados = new ArrayList<>();
-
 		for (Objeto objeto : lista) {
 			if (objeto.isCopiarDestacado()) {
 				selecionados.add(objeto.clonar());
@@ -1978,16 +1747,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				selecionados.add(objeto);
 			}
 		}
-
 		if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
 			destacarDesktopFormulario(selecionados, conexao, config);
-
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
 			destacarDeskopPagina(selecionados, conexao, config);
-
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
 			destacarObjetoPagina(selecionados, conexao);
-
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
 			destacarPropriaSuperficie(selecionados, conexao, config);
 		}
@@ -1995,10 +1760,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void destacarDesktopFormulario(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
 		DesktopFormulario form = DesktopFormulario.criar(formulario);
-
 		int x = 10;
 		int y = 10;
-
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
@@ -2009,16 +1772,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				y += 25;
 			}
 		}
-
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	private void destacarDeskopPagina(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
 		Desktop desktop = new Desktop(false);
-
 		int x = 10;
 		int y = 10;
-
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
@@ -2029,7 +1789,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				y += 25;
 			}
 		}
-
 		SwingUtilities.invokeLater(() -> desktop.getDistribuicao().distribuir(-Constantes.VINTE));
 		formulario.adicionarPagina(desktop);
 	}
@@ -2046,30 +1805,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void destacarPropriaSuperficie(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
 		boolean salvar = false;
-
 		Variavel variavelDeltaX = VariavelProvedor.getVariavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
 		Variavel variavelDeltaY = VariavelProvedor.getVariavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-
 		if (variavelDeltaX == null) {
 			variavelDeltaX = new Variavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaX);
 			salvar = true;
 		}
-
 		if (variavelDeltaY == null) {
 			variavelDeltaY = new Variavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaY);
 			salvar = true;
 		}
-
 		if (salvar) {
 			VariavelProvedor.salvar();
 			VariavelProvedor.inicializar();
 		}
-
 		int x = variavelDeltaX.getInteiro(Constantes.TRINTA);
 		int y = variavelDeltaY.getInteiro(Constantes.TRINTA);
-
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
@@ -2078,7 +1831,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				objeto.setSelecionado(false);
 			}
 		}
-
 		repaint();
 	}
 }
