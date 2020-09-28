@@ -28,11 +28,9 @@ public class Variavel {
 		util.abrirTag(Constantes.VARIAVEL);
 		util.atributo("nome", Util.escapar(nome));
 		util.fecharTag();
-
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();
 		util.finalizarTag(Constantes.VALOR);
-
 		util.finalizarTag(Constantes.VARIAVEL);
 	}
 
@@ -52,7 +50,6 @@ public class Variavel {
 		if (Util.estaVazio(valor)) {
 			valor = Constantes.VAZIO;
 		}
-
 		return valor;
 	}
 
@@ -60,7 +57,6 @@ public class Variavel {
 		if (Util.estaVazio(valor)) {
 			return padrao;
 		}
-
 		try {
 			return Integer.parseInt(valor.trim());
 		} catch (Exception e) {

@@ -119,21 +119,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	public String getConteudo() {
 		Pagina ativa = fichario.getPaginaAtiva();
-
 		if (ativa != null) {
 			return ativa.getConteudo();
 		}
-
 		return null;
 	}
 
 	public String getIdPagina() {
 		Pagina ativa = fichario.getPaginaAtiva();
-
 		if (ativa != null) {
 			return ativa.getNome();
 		}
-
 		return null;
 	}
 
@@ -143,20 +139,16 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	private void abrir(String conteudo, String idPagina) {
 		fichario.excluirPaginas();
-
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
-
 			if (files == null) {
 				return;
 			}
-
 			for (File f : files) {
 				Pagina pagina = new Pagina(f);
 				fichario.adicionarPagina(pagina);
 			}
 		}
-
 		fichario.setConteudo(conteudo, idPagina);
 	}
 
@@ -179,7 +171,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, COPIAR2, COLAR2);
-
 			addButton(baixarAtivoAcao);
 			addButton(excluirAtivoAcao);
 			add(chkRespostaJson);
@@ -188,10 +179,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 			addButton(true, formatarAcao);
 			addButton(modeloAcao);
 			addButton(true, base64Acao);
-
 			String hint = Mensagens.getString("label.copiar_access_token", Mensagens.getString("label.resposta_json"));
 			chkCopiarAccessT.setToolTipText(hint);
-
 			eventos();
 		}
 
@@ -214,7 +203,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(RequisicaoContainer.this)) {
 				RequisicaoFormulario.criar(formulario, RequisicaoContainer.this);
-
 			} else if (requisicaoDialogo != null) {
 				requisicaoDialogo.excluirContainer();
 				RequisicaoFormulario.criar(formulario, RequisicaoContainer.this);
@@ -226,7 +214,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			if (requisicaoFormulario != null) {
 				requisicaoFormulario.excluirContainer();
 				formulario.adicionarPagina(RequisicaoContainer.this);
-
 			} else if (requisicaoDialogo != null) {
 				requisicaoDialogo.excluirContainer();
 				formulario.adicionarPagina(RequisicaoContainer.this);
@@ -265,19 +252,15 @@ public class RequisicaoContainer extends AbstratoContainer {
 		protected void novo() {
 			Object resp = Util.getValorInputDialog(RequisicaoContainer.this, "label.id",
 					Mensagens.getString("label.nome_arquivo"), Constantes.VAZIO);
-
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return;
 			}
-
 			String nome = resp.toString();
 			File f = new File(file, nome);
-
 			if (f.exists()) {
 				Util.mensagem(RequisicaoContainer.this, Mensagens.getString("label.indentificador_ja_existente"));
 				return;
 			}
-
 			try {
 				if (f.createNewFile()) {
 					Pagina pagina = new Pagina(f);
@@ -312,7 +295,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		@Override
 		protected void copiar() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				StringBuilder sb = new StringBuilder();
 				ativa.copiar(sb);
@@ -323,7 +305,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		@Override
 		protected void copiar2() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				StringBuilder sb = new StringBuilder();
 				ativa.copiar2(sb);
@@ -349,7 +330,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void excluirAtivo() {
 			Pagina ativa = fichario.getPaginaAtiva();
-
 			if (ativa != null) {
 				int indice = fichario.getSelectedIndex();
 				ativa.excluir();
@@ -493,34 +473,28 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private Pagina getPaginaAtiva() {
 			int indice = getSelectedIndex();
-
 			if (indice != -1) {
 				return (Pagina) getComponentAt(indice);
 			}
-
 			return null;
 		}
 
 		private Pagina getPagina(String idPagina) {
 			for (int i = 0; i < getTabCount(); i++) {
 				Component cmp = getComponentAt(i);
-
 				if (cmp instanceof Pagina) {
 					Pagina p = (Pagina) cmp;
-
 					if (p.getNome().equals(idPagina)) {
 						return p;
 					}
 				}
 			}
-
 			return null;
 		}
 
 		private int getIndicePagina(Pagina pagina) {
 			for (int i = 0; i < getTabCount(); i++) {
 				Component cmp = getComponentAt(i);
-
 				if (cmp instanceof Pagina) {
 					Pagina p = (Pagina) cmp;
 
@@ -529,13 +503,11 @@ public class RequisicaoContainer extends AbstratoContainer {
 					}
 				}
 			}
-
 			return -1;
 		}
 
 		private void setConteudo(String conteudo, String idPagina) {
 			Pagina pagina = getPagina(idPagina);
-
 			if (pagina != null) {
 				if (!Util.estaVazio(conteudo)) {
 					pagina.areaParametros.setText(conteudo);
@@ -560,14 +532,11 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private void montarLayout() {
 			Panel panelParametros = new Panel();
 			panelParametros.add(areaParametros);
-
 			Panel panelResultados = new Panel();
 			panelResultados.add(areaResultados);
-
 			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
 					new ScrollPane(panelResultados));
 			split.setDividerLocation(Constantes.SIZE.height / 2);
-
 			add(BorderLayout.CENTER, split);
 		}
 
@@ -581,18 +550,15 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void abrir() {
 			areaParametros.setText(Constantes.VAZIO);
-
 			if (file.exists()) {
 				try (BufferedReader br = new BufferedReader(
 						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 					StringBuilder sb = new StringBuilder();
 					String linha = br.readLine();
-
 					while (linha != null) {
 						sb.append(linha + Constantes.QL);
 						linha = br.readLine();
 					}
-
 					areaParametros.setText(sb.toString());
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
@@ -603,7 +569,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private void excluir() {
 			if (file.exists()) {
 				Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
-
 				try {
 					Files.delete(path);
 				} catch (IOException e) {
@@ -620,7 +585,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
 				return;
 			}
-
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(areaParametros.getText());
 			} catch (Exception ex) {
@@ -632,21 +596,16 @@ public class RequisicaoContainer extends AbstratoContainer {
 			if (Util.estaVazio(areaParametros.getText())) {
 				return;
 			}
-
 			String string = Util.getString(areaParametros);
 			areaResultados.setText(Constantes.VAZIO);
-
 			try {
 				Parser parser = new Parser();
 				Tipo json = parser.parse(string);
-
 				StyledDocument styledDoc = areaResultados.getStyledDocument();
-
 				if (styledDoc instanceof AbstractDocument) {
 					AbstractDocument doc = (AbstractDocument) styledDoc;
 					json.toString(doc, false, 0);
 				}
-
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
@@ -679,10 +638,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 			if (Util.estaVazio(areaParametros.getText())) {
 				return;
 			}
-
 			String string = Util.getString(areaParametros);
 			areaResultados.setText(Constantes.VAZIO);
-
 			try {
 				areaResultados.setText(Base64Util.criarBase64(string));
 				areaParametros.requestFocus();
@@ -695,37 +652,28 @@ public class RequisicaoContainer extends AbstratoContainer {
 			if (Util.estaVazio(areaParametros.getText())) {
 				return;
 			}
-
 			String string = Util.getString(areaParametros);
 			areaResultados.setText(Constantes.VAZIO);
-
 			try {
 				Parser parser = new Parser();
-
 				Variavel vAccessToken = VariavelProvedor.getVariavel(Constantes.VAR_ACCESS_TOKEN);
-
 				if (vAccessToken != null) {
 					string = substituir(string, vAccessToken);
 				}
-
 				Tipo parametros = parser.parse(string);
 				String resposta = requisicao(parametros);
-
 				if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
 					StyledDocument styledDoc = areaResultados.getStyledDocument();
 					Tipo json = parser.parse(resposta);
-
 					if (styledDoc instanceof AbstractDocument) {
 						AbstractDocument doc = (AbstractDocument) styledDoc;
 						json.toString(doc, false, 0);
 					}
-
 					String accessToken = getAccessToken(json);
 					setAccesToken(accessToken);
 				} else {
 					areaResultados.setText(resposta);
 				}
-
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
@@ -735,30 +683,23 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private String requisicao(Tipo parametros) throws IOException {
 			if (parametros instanceof Objeto) {
 				Objeto objeto = (Objeto) parametros;
-
 				Tipo tipoUrl = objeto.getValor("url");
 				String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
 				Map<String, String> mapHeader = null;
-
 				Tipo tipoHeader = objeto.getValor("header");
-
 				if (tipoHeader instanceof Objeto) {
 					Objeto objHeader = (Objeto) tipoHeader;
 					mapHeader = objHeader.getAtributosString();
 				}
-
 				Tipo tipoBody = objeto.getValor("body");
 				String bodyParams = null;
-
 				if (tipoBody instanceof Objeto) {
 					Objeto objBody = (Objeto) tipoBody;
 					Tipo params = objBody.getValor("parameters");
 					bodyParams = params instanceof Texto ? params.toString() : null;
 				}
-
 				return requisicao(url, mapHeader, bodyParams);
 			}
-
 			return null;
 		}
 
@@ -766,56 +707,45 @@ public class RequisicaoContainer extends AbstratoContainer {
 			if (Util.estaVazio(url)) {
 				return null;
 			}
-
 			URL url2 = new URL(url);
 			URLConnection conn = url2.openConnection();
 			String verbo = null;
-
 			if (header != null) {
 				verbo = header.get("Request-Method");
-
 				for (Map.Entry<String, String> entry : header.entrySet()) {
 					conn.setRequestProperty(entry.getKey(), entry.getValue());
 				}
 			}
-
 			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
 				conn.setDoOutput(true);
 			}
-
 			conn.connect();
-
 			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
 				OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 				osw.write(parametros);
 				osw.flush();
 			}
-
 			return Util.getString(conn.getInputStream());
 		}
 
 		private String getAccessToken(Tipo tipo) {
 			if (tipo instanceof Objeto) {
 				Objeto objeto = (Objeto) tipo;
-
 				Tipo tipoAccessToken = objeto.getValor("access_token");
 				return tipoAccessToken instanceof Texto ? tipoAccessToken.toString() : null;
 			}
-
 			return null;
 		}
 
 		private void setAccesToken(String accessToken) {
 			if (!Util.estaVazio(accessToken)) {
 				Variavel vAccessToken = VariavelProvedor.getVariavel(Constantes.VAR_ACCESS_TOKEN);
-
 				if (vAccessToken == null) {
 					vAccessToken = new Variavel(Constantes.VAR_ACCESS_TOKEN, accessToken);
 					VariavelProvedor.adicionar(vAccessToken);
 				} else {
 					vAccessToken.setValor(accessToken);
 				}
-
 				if (toolbar.chkCopiarAccessT.isSelected()) {
 					Util.setContentTransfered(accessToken);
 				}

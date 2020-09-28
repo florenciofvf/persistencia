@@ -40,7 +40,6 @@ public class RequisicaoFabrica extends AbstratoFabricaContainer {
 
 		private MenuRequisicao(Formulario formulario) {
 			super(Constantes.LABEL_REQUISICAO, Icones.URL);
-
 			ficharioAcao.setActionListener(
 					e -> formulario.adicionarPagina(new RequisicaoContainer(null, formulario, null, null)));
 			formularioAcao.setActionListener(e -> RequisicaoFormulario.criar(formulario, null, null));

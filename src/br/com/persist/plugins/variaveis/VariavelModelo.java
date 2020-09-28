@@ -36,7 +36,6 @@ public class VariavelModelo extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Variavel v = VariavelProvedor.getVariavel(rowIndex);
-
 		switch (columnIndex) {
 		case 0:
 			return v.getNome();
@@ -51,7 +50,6 @@ public class VariavelModelo extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
 		Variavel v = VariavelProvedor.getVariavel(rowIndex);
-
 		if (1 == columnIndex) {
 			v.setValor(valor);
 		}

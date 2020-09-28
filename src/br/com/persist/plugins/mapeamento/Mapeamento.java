@@ -31,7 +31,6 @@ public class Mapeamento {
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();
 		util.finalizarTag(Constantes.VALOR);
-
 		util.finalizarTag(Constantes.MAPEAMENTO);
 	}
 

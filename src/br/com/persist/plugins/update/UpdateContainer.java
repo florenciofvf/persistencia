@@ -110,14 +110,11 @@ public class UpdateContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-
 		textArea.limpar();
-
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
-
 				while (linha != null) {
 					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
@@ -150,10 +147,8 @@ public class UpdateContainer extends AbstratoContainer {
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
-
 			addButton(atualizarAcao);
 			add(true, comboConexao);
-
 			eventos();
 		}
 
@@ -165,7 +160,6 @@ public class UpdateContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(UpdateContainer.this)) {
 				UpdateFormulario.criar(formulario, UpdateContainer.this);
-
 			} else if (updateDialogo != null) {
 				updateDialogo.excluirContainer();
 				UpdateFormulario.criar(formulario, UpdateContainer.this);
@@ -177,7 +171,6 @@ public class UpdateContainer extends AbstratoContainer {
 			if (updateFormulario != null) {
 				updateFormulario.excluirContainer();
 				formulario.adicionarPagina(UpdateContainer.this);
-
 			} else if (updateDialogo != null) {
 				updateDialogo.excluirContainer();
 				formulario.adicionarPagina(UpdateContainer.this);
@@ -227,7 +220,6 @@ public class UpdateContainer extends AbstratoContainer {
 			if (!Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
 				return;
 			}
-
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
@@ -253,15 +245,11 @@ public class UpdateContainer extends AbstratoContainer {
 			if (Util.estaVazio(textArea.getText())) {
 				return;
 			}
-
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 			if (conexao == null) {
 				return;
 			}
-
 			String instrucao = Util.getString(textArea.getTextAreaInner());
-
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				int atualizados = Persistencia.executar(conn, instrucao);

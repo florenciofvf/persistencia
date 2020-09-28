@@ -55,7 +55,6 @@ public class VariavelFabrica extends AbstratoFabricaContainer {
 
 		private MenuVariavel(Formulario formulario) {
 			super(Constantes.LABEL_VARIAVEIS, Icones.VAR);
-
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new VariavelContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> VariavelFormulario.criar(formulario));
 			dialogoAcao.setActionListener(e -> VariavelDialogo.criar(formulario));

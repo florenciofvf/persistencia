@@ -40,7 +40,6 @@ public class UpdateFabrica extends AbstratoFabricaContainer {
 
 		private MenuUpdate(Formulario formulario) {
 			super(Constantes.LABEL_ATUALIZAR, Icones.UPDATE);
-
 			ficharioAcao.setActionListener(
 					e -> formulario.adicionarPagina(new UpdateContainer(null, formulario, null, null)));
 			formularioAcao.setActionListener(e -> UpdateFormulario.criar(formulario, null, null));

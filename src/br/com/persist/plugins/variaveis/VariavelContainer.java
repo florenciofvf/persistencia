@@ -92,7 +92,6 @@ public class VariavelContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(VariavelContainer.this)) {
 				VariavelFormulario.criar(formulario, VariavelContainer.this);
-
 			} else if (variavelDialogo != null) {
 				variavelDialogo.excluirContainer();
 				VariavelFormulario.criar(formulario, VariavelContainer.this);
@@ -104,7 +103,6 @@ public class VariavelContainer extends AbstratoContainer {
 			if (variavelFormulario != null) {
 				variavelFormulario.excluirContainer();
 				formulario.adicionarPagina(VariavelContainer.this);
-
 			} else if (variavelDialogo != null) {
 				variavelDialogo.excluirContainer();
 				formulario.adicionarPagina(VariavelContainer.this);
@@ -145,7 +143,6 @@ public class VariavelContainer extends AbstratoContainer {
 						Mensagens.getString("label.indentificador_ja_existente") + " " + var.getNome());
 				return;
 			}
-
 			VariavelProvedor.adicionar(var);
 			variavelModelo.fireTableDataChanged();
 			ajustarTabela();
@@ -154,11 +151,9 @@ public class VariavelContainer extends AbstratoContainer {
 		private String getValor(String padrao) {
 			Object resp = Util.getValorInputDialog(VariavelContainer.this, "label.id",
 					Mensagens.getString("label.nome_variavel"), padrao);
-
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return null;
 			}
-
 			return resp.toString();
 		}
 
@@ -177,7 +172,6 @@ public class VariavelContainer extends AbstratoContainer {
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-
 			if (linhas != null) {
 				for (int i : linhas) {
 					Variavel v = VariavelProvedor.getVariavel(i);

@@ -27,7 +27,6 @@ public class VariavelProvedor {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
 		}
-
 		return null;
 	}
 
@@ -37,7 +36,6 @@ public class VariavelProvedor {
 				return v;
 			}
 		}
-
 		return null;
 	}
 
@@ -48,7 +46,6 @@ public class VariavelProvedor {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
@@ -72,7 +69,6 @@ public class VariavelProvedor {
 
 	public static void inicializar() {
 		lista.clear();
-
 		try {
 			if (file.exists() && file.canRead()) {
 				XML.processar(file, new VariavelHandler());
@@ -86,15 +82,12 @@ public class VariavelProvedor {
 		try {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
-
 			util.abrirTag2(Constantes.VARIAVEIS);
-
 			for (Variavel v : lista) {
 				if (v.isValido()) {
 					v.salvar(util);
 				}
 			}
-
 			util.finalizarTag(Constantes.VARIAVEIS);
 			util.close();
 		} catch (Exception e) {
@@ -108,7 +101,6 @@ public class VariavelProvedor {
 				string = string.replaceAll("#" + v.getNome() + "#", v.getValor());
 			}
 		}
-
 		return string;
 	}
 
