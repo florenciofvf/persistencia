@@ -55,7 +55,6 @@ public class TabelaPersistencia extends JTable {
 		if (!(dataModel instanceof OrdenacaoModelo)) {
 			throw new IllegalStateException("PersistenciaOrdenacaoModelo inconsistente.");
 		}
-
 		super.setModel(dataModel);
 	}
 
@@ -136,7 +135,6 @@ public class TabelaPersistencia extends JTable {
 			if (!e.isPopupTrigger()) {
 				return;
 			}
-
 			int tableColuna = columnAtPoint(e.getPoint());
 			int modelColuna = convertColumnIndexToModel(tableColuna);
 			popupHeader.indiceColuna = modelColuna;
@@ -151,15 +149,11 @@ public class TabelaPersistencia extends JTable {
 				TableColumnModel columnModel = getColumnModel();
 				TableColumn tableColumn = columnModel.getColumn(tableColuna);
 				CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
-
 				int resto = getResto(e.getX(), tableColumn);
-
 				if (cabecalho.isOrdenacao(resto)) {
 					cabecalho.ordenar();
-
 				} else if (cabecalho.isFiltro(resto, tableColumn.getWidth())) {
 					cabecalho.filtrar(e.getXOnScreen() - resto, e.getYOnScreen() + tableHeader.getHeight() - e.getY());
-
 				} else {
 					cabecalho.ordenar();
 				}
@@ -170,17 +164,13 @@ public class TabelaPersistencia extends JTable {
 			TableColumnModel columnModel = getColumnModel();
 			int total = columnModel.getColumnCount();
 			int soma = 0;
-
 			for (int c = 0; c < total; c++) {
 				TableColumn coluna = columnModel.getColumn(c);
-
 				if (tableColumn == coluna) {
 					return x - soma;
 				}
-
 				soma += coluna.getWidth();
 			}
-
 			return -1;
 		}
 	};
@@ -204,7 +194,6 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(true, concatNomeColunaAcao);
 			add(true, new MenuCopiarLinhas());
 			add(true, menuIN);
-
 			eventos();
 		}
 
@@ -212,7 +201,6 @@ public class TabelaPersistencia extends JTable {
 			copiarNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
-
 				if (listener != null && Preferencias.isCopiarNomeColunaListener()) {
 					listener.copiarNomeColuna(TabelaPersistencia.this, coluna, null);
 				}
@@ -220,7 +208,6 @@ public class TabelaPersistencia extends JTable {
 
 			concatNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
-
 				if (listener != null) {
 					listener.concatenarNomeColuna(TabelaPersistencia.this, coluna);
 				}
@@ -228,7 +215,6 @@ public class TabelaPersistencia extends JTable {
 
 			detalheColunaAcao.setActionListener(e -> {
 				Coluna coluna = ((OrdenacaoModelo) getModel()).getColuna(indiceColuna);
-
 				if (coluna != null) {
 					Util.mensagem(TabelaPersistencia.this, coluna.getDetalhe());
 				}
@@ -237,7 +223,6 @@ public class TabelaPersistencia extends JTable {
 
 		private void preShow(String chave) {
 			menuIN.setText("AND IN - " + chave);
-
 			limparMenuChaveamento();
 			List<String> lista = getChaveamento().get(chave);
 			if (lista != null) {
@@ -245,7 +230,6 @@ public class TabelaPersistencia extends JTable {
 					add(new MenuItemChaveamento(coluna));
 				}
 			}
-
 			limparItemMapeamento();
 			String valorChave = getMapeamento().get(chave);
 			if (valorChave != null) {
@@ -265,14 +249,12 @@ public class TabelaPersistencia extends JTable {
 
 			private MenuCopiarLinhas() {
 				super("label.copiar_header");
-
 				addSeparator();
 				addMenuItem(semAspasQLAcao);
 				addMenuItem(comAspasQLAcao);
 				addSeparator();
 				addMenuItem(semAspasQLSemVirgulaAcao);
 				addMenuItem(comAspasQLSemVirgulaAcao);
-
 				semAspasQLSemVirgulaAcao.setActionListener(e -> copiarSemV(false));
 				comAspasQLSemVirgulaAcao.setActionListener(e -> copiarSemV(true));
 				semAspasQLAcao.setActionListener(e -> copiar(true, false));
@@ -309,23 +291,18 @@ public class TabelaPersistencia extends JTable {
 
 			private void copiar(boolean aspas) {
 				String string = Util.getContentTransfered();
-
 				String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
-
 				if (listener != null && Preferencias.isCopiarNomeColunaListener()) {
 					if (numeros) {
 						string = Util.soNumeros(string);
 					}
-
 					if (letras) {
 						string = Util.soLetras(string);
 					}
-
 					if (aspas && !Util.estaVazio(string)) {
 						string = Util.citar(string);
 					}
-
 					listener.copiarNomeColuna(TabelaPersistencia.this, coluna, string);
 				}
 			}
@@ -336,7 +313,6 @@ public class TabelaPersistencia extends JTable {
 
 			private MenuIN() {
 				super(Constantes.LABEL_VAZIO);
-
 				semAspasAcao.setActionListener(e -> copiarIN(false));
 				comAspasAcao.setActionListener(e -> copiarIN(true));
 			}
@@ -345,11 +321,9 @@ public class TabelaPersistencia extends JTable {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(TabelaPersistencia.this,
 						indiceColuna);
 				String complemento = Util.getStringLista(lista, aspas, false);
-
 				if (!Util.estaVazio(complemento)) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
-
 				} else {
 					Util.setContentTransfered(" ");
 				}
@@ -364,7 +338,6 @@ public class TabelaPersistencia extends JTable {
 				super(Constantes.LABEL_VAZIO);
 				setText("AND IN - " + coluna);
 				this.nomeColuna = coluna;
-
 				semAspasAcao.setActionListener(e -> copiarINDinamico(false));
 				comAspasAcao.setActionListener(e -> copiarINDinamico(true));
 			}
@@ -373,7 +346,6 @@ public class TabelaPersistencia extends JTable {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(TabelaPersistencia.this,
 						indiceColuna);
 				String complemento = Util.getStringLista(lista, aspas, false);
-
 				if (!Util.estaVazio(complemento)) {
 					Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");
 				} else {
@@ -385,18 +357,15 @@ public class TabelaPersistencia extends JTable {
 		private MenuItemChaveamento getPrimeiroMenuItemChaveamento() {
 			for (int i = 0; i < getComponentCount(); i++) {
 				Component c = getComponent(i);
-
 				if (c instanceof MenuItemChaveamento) {
 					return (MenuItemChaveamento) c;
 				}
 			}
-
 			return null;
 		}
 
 		private void limparMenuChaveamento() {
 			MenuItemChaveamento menu = getPrimeiroMenuItemChaveamento();
-
 			while (menu != null) {
 				remove(menu);
 				menu = getPrimeiroMenuItemChaveamento();
@@ -413,7 +382,6 @@ public class TabelaPersistencia extends JTable {
 
 			private ItemMapeamento() {
 				super(Constantes.LABEL_VAZIO);
-
 				addActionListener(e -> {
 					Mapeamento m = MapeamentoProvedor.getMapeamento(getText());
 					Util.mensagem(TabelaPersistencia.this, m == null ? Constantes.VAZIO : m.getValor());
