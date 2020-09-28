@@ -31,11 +31,9 @@ public class AmbienteFabrica extends AbstratoFabricaContainer {
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		List<JMenuItem> lista = new ArrayList<>();
-
 		for (AmbienteContainer.Ambiente ambiente : AmbienteContainer.Ambiente.values()) {
 			lista.add(new MenuAmbiente(formulario, ambiente));
 		}
-
 		return lista;
 	}
 
@@ -44,7 +42,6 @@ public class AmbienteFabrica extends AbstratoFabricaContainer {
 
 		private MenuAmbiente(Formulario formulario, AmbienteContainer.Ambiente ambiente) {
 			super(ambiente.getChaveTitulo(), null);
-
 			ficharioAcao.setActionListener(
 					e -> formulario.adicionarPagina(new AmbienteContainer(null, formulario, null, ambiente)));
 			formularioAcao.setActionListener(e -> AmbienteFormulario.criar(formulario, null, ambiente));

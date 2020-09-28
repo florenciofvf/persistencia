@@ -40,7 +40,6 @@ public class Anexo {
 	public void inflar(StringBuilder sb) {
 		config(sb);
 		getFilhos();
-
 		for (Anexo a : filhos) {
 			a.inflar(sb);
 		}
@@ -50,7 +49,6 @@ public class Anexo {
 		if (abrirVisivel) {
 			AnexoTreeUtil.selecionarObjeto(anexoTree, this);
 		}
-
 		for (Anexo a : filhos) {
 			a.abrirVisivel(anexoTree);
 		}
@@ -60,10 +58,8 @@ public class Anexo {
 		for (Anexo a : filhos) {
 			a.excluir();
 		}
-
 		if (isFile() || isDirectory()) {
 			Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
-
 			try {
 				Files.delete(path);
 			} catch (IOException e) {
@@ -76,11 +72,9 @@ public class Anexo {
 		try {
 			File destino = new File(file.getParent(), nome);
 			boolean resp = file.renameTo(destino);
-
 			if (resp) {
 				file = destino;
 			}
-
 			return resp;
 		} catch (Exception e) {
 			return false;
@@ -91,7 +85,6 @@ public class Anexo {
 		if (!processado) {
 			processar();
 		}
-
 		return filhos;
 	}
 
@@ -118,18 +111,15 @@ public class Anexo {
 	private void processar() {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
-
 			if (files != null) {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 			}
-
 			for (File f : files) {
 				Anexo arq = new Anexo(f);
 				filhos.add(arq);
 				arq.pai = this;
 			}
 		}
-
 		processado = true;
 	}
 
@@ -192,7 +182,6 @@ public class Anexo {
 
 	private void config(StringBuilder sb) {
 		Anexo ane = AnexoModelo.getAnexos().get(criarChave(sb).toString());
-
 		if (ane != null) {
 			setIcone(ane.getIcone(), ane.getNomeIcone());
 			setAbrirVisivel(ane.isAbrirVisivel());
@@ -206,12 +195,10 @@ public class Anexo {
 		sb.delete(0, sb.length());
 		sb.append(Constantes.SEP);
 		Anexo ane = this;
-
 		while (ane != null) {
 			sb.append(ane.file.getName() + Constantes.SEP);
 			ane = ane.getPai();
 		}
-
 		return sb;
 	}
 

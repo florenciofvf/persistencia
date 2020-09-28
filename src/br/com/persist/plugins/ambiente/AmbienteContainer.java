@@ -62,7 +62,6 @@ public class AmbienteContainer extends AbstratoContainer {
 						"label.homolog"), PRODUCAO("producao", "label.producao"), RASCUNHO("rascunho",
 								"label.rascunho"), ESTUDO("estudo", "label.estudo"), SCRIPTS("scripts",
 										"label.scripts"), TESTE("teste", "label.teste"), BUGS("bugs", "label.bugs");
-
 		private final String chaveTitulo;
 		private final String tituloMin;
 		private final String descricao;
@@ -91,7 +90,6 @@ public class AmbienteContainer extends AbstratoContainer {
 					return a;
 				}
 			}
-
 			throw new IllegalArgumentException();
 		}
 	}
@@ -132,14 +130,11 @@ public class AmbienteContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-
 		textArea.limpar();
-
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
-
 				while (linha != null) {
 					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
@@ -229,7 +224,6 @@ public class AmbienteContainer extends AbstratoContainer {
 			if (!Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
 				return;
 			}
-
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
