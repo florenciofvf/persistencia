@@ -28,11 +28,9 @@ public class MacroContainer extends Panel {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_D) {
 					int indice = lista.getSelectedIndex();
-
 					if (indice != -1) {
 						MacroProvedor.excluir(indice);
 						lista.setModel(new MacroModelo());
-
 						if (!MacroProvedor.isEmpty()) {
 							lista.setSelectedIndex(0);
 						}

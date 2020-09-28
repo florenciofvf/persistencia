@@ -31,6 +31,7 @@ import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoEvento;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
+import br.com.persist.plugins.objeto.macro.MacroProvedor;
 
 public class ObjetoFabrica extends AbstratoFabricaContainer {
 
@@ -61,6 +62,11 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private class ObjetoServico extends AbstratoServico {
+		@Override
+		public void visivelFormulario(Formulario formulario) {
+			MacroProvedor.inicializar();
+		}
+
 		@Override
 		public void processar(Formulario formulario, Map<String, Object> args) {
 			checarArquivo(formulario, args);

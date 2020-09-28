@@ -52,6 +52,9 @@ public class MacroProvedor {
 	private static final String X = "x";
 	private static final String Y = "y";
 
+	private MacroProvedor() {
+	}
+
 	public static void adicionar(Instrucao instrucao) {
 		if (instrucao != null) {
 			instrucoes.remove(instrucao);
@@ -83,9 +86,8 @@ public class MacroProvedor {
 		instrucoes.clear();
 	}
 
-	public void inicializar() {
+	public static void inicializar() {
 		mapa.clear();
-
 		mapa.put(DESCLOC_X_ID_DESC, new DeslocamentoXIdDescricao());
 		mapa.put(DESCLOC_Y_ID_DESC, new DeslocamentoYIdDescricao());
 		mapa.put(DESENHAR_ID_DESC, new DesenharIdDescricao());
