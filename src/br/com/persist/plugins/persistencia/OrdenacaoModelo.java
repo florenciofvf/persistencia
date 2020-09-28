@@ -26,7 +26,6 @@ public class OrdenacaoModelo extends AbstractTableModel {
 
 	public void iniArray() {
 		linhas = new Linha[model.getRowCount()];
-
 		for (int i = 0; i < linhas.length; i++) {
 			linhas[i] = new Linha(i);
 		}
@@ -36,7 +35,6 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		this.descendente = descendente;
 		this.coluna = coluna;
 		this.numero = numero;
-
 		Arrays.sort(linhas);
 		fireTableDataChanged();
 	}
@@ -62,15 +60,12 @@ public class OrdenacaoModelo extends AbstractTableModel {
 
 	public String getNomeColunas() {
 		StringBuilder sb = new StringBuilder();
-
 		for (int i = 0; i < getColumnCount(); i++) {
 			if (sb.length() > 0) {
 				sb.append(", ");
 			}
-
 			sb.append(getColumnName(i));
 		}
-
 		return sb.toString();
 	}
 
@@ -163,20 +158,16 @@ public class OrdenacaoModelo extends AbstractTableModel {
 			if (numero) {
 				Long valor = Util.estaVazio(string) ? 0 : Long.valueOf(string);
 				Long outro = Util.estaVazio(outra) ? 0 : Long.valueOf(outra);
-
 				if (descendente) {
 					return valor.compareTo(outro);
 				}
-
 				return outro.compareTo(valor);
 			} else {
 				string = Util.estaVazio(string) ? Constantes.VAZIO : string;
 				outra = Util.estaVazio(outra) ? Constantes.VAZIO : outra;
-
 				if (descendente) {
 					return string.compareTo(outra);
 				}
-
 				return outra.compareTo(string);
 			}
 		}
@@ -186,12 +177,10 @@ public class OrdenacaoModelo extends AbstractTableModel {
 			if (obj == this) {
 				return true;
 			}
-
 			if (obj instanceof Linha) {
 				Linha outro = (Linha) obj;
 				return indice == outro.indice;
 			}
-
 			return false;
 		}
 

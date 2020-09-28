@@ -177,7 +177,6 @@ public class PersistenciaModelo implements TableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		List<Object> registro = registros.get(rowIndex);
-
 		if (chaves) {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
@@ -199,33 +198,26 @@ public class PersistenciaModelo implements TableModel {
 	public void getDados(int rowIndex, StringBuilder sb) {
 		List<Object> registro = registros.get(rowIndex);
 		List<Object> valores = new ArrayList<>();
-
 		for (Coluna coluna : colunas) {
 			valores.add(registro.get(coluna.getIndice()));
 		}
-
 		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb);
 	}
 
 	public String getUpdate(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
-
 		if (chaves) {
 			List<Object> valores = new ArrayList<>();
 			List<Coluna> naoChaves = getNaoChaves();
-
 			if (naoChaves.isEmpty()) {
 				return null;
 			}
-
 			for (Coluna coluna : naoChaves) {
 				valores.add(registro.get(coluna.getIndice()));
 			}
-
 			return gerarUpdate(registro, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
 					prefixoNomeTabela);
 		}
-
 		return null;
 	}
 
@@ -233,29 +225,23 @@ public class PersistenciaModelo implements TableModel {
 		if (chaves) {
 			List<Object> valores = new ArrayList<>();
 			List<Coluna> naoChaves = getNaoChaves();
-
 			if (naoChaves.isEmpty()) {
 				return null;
 			}
-
 			for (Coluna coluna : naoChaves) {
 				valores.add(coluna.getNome());
 			}
-
 			return gerarUpdate(null, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
 					prefixoNomeTabela);
 		}
-
 		return null;
 	}
 
 	public String getDelete(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
-
 		if (chaves) {
 			return gerarDelete(registro, prefixoNomeTabela);
 		}
-
 		return null;
 	}
 
@@ -263,7 +249,6 @@ public class PersistenciaModelo implements TableModel {
 		if (chaves) {
 			return gerarDelete(null, prefixoNomeTabela);
 		}
-
 		return null;
 	}
 
@@ -278,7 +263,6 @@ public class PersistenciaModelo implements TableModel {
 
 	public int excluir(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
-
 		if (chaves) {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela);
@@ -292,37 +276,31 @@ public class PersistenciaModelo implements TableModel {
 				return -1;
 			}
 		}
-
 		return -1;
 	}
 
 	public List<IndiceValor> getValoresChaves(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 		List<IndiceValor> resp = new ArrayList<>();
-
 		for (Coluna coluna : getChaves()) {
 			IndiceValor obj = new IndiceValor(coluna.getIndice(), registro.get(coluna.getIndice()));
 			resp.add(obj);
 		}
-
 		return resp;
 	}
 
 	public Map<String, String> getMapaChaves(int rowIndex) {
 		List<Object> registro = registros.get(rowIndex);
 		Map<String, String> resp = new HashMap<>();
-
 		for (Coluna coluna : getChaves()) {
 			Object valor = registro.get(coluna.getIndice());
 			resp.put(coluna.getNome(), valor.toString());
 		}
-
 		return resp;
 	}
 
 	public void excluirValoresChaves(List<IndiceValor> lista) {
 		int indice = getIndice(lista);
-
 		if (indice != -1) {
 			registros.remove(indice);
 		}
@@ -331,12 +309,10 @@ public class PersistenciaModelo implements TableModel {
 	private int getIndice(List<IndiceValor> valores) {
 		for (int i = 0; i < registros.size(); i++) {
 			List<Object> registro = registros.get(i);
-
 			if (ehLinhaValida(registro, valores)) {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
@@ -346,14 +322,12 @@ public class PersistenciaModelo implements TableModel {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
 	private void getDado(Coluna[] colunas, Object[] valores, StringBuilder sb) {
 		Coluna coluna = colunas[0];
 		sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[0]));
-
 		for (int i = 1; i < colunas.length; i++) {
 			coluna = colunas[i];
 			sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i]));
@@ -363,22 +337,16 @@ public class PersistenciaModelo implements TableModel {
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores, String prefixoNomeTabela) {
 		StringBuilder resposta = new StringBuilder(
 				"UPDATE " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " SET ");
-
 		Coluna coluna = colunas[0];
 		resposta.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[0]));
-
 		for (int i = 1; i < colunas.length; i++) {
 			coluna = colunas[i];
-
 			if (coluna.isColunaInfo()) {
 				continue;
 			}
-
 			resposta.append(Constantes.QL + ", " + coluna.getNome() + " = " + coluna.get(valores[i]));
 		}
-
 		resposta.append(montarWhere(registro));
-
 		return resposta.toString();
 	}
 
@@ -386,36 +354,27 @@ public class PersistenciaModelo implements TableModel {
 		if (colunas.isEmpty()) {
 			return null;
 		}
-
 		StringBuilder resposta = new StringBuilder(
 				"INSERT INTO " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " (" + Constantes.QL);
-
 		StringBuilder campo = new StringBuilder();
 		StringBuilder valor = new StringBuilder("VALUES (" + Constantes.QL);
-
 		Coluna coluna = colunas.get(0);
 		appendCampoValor(Constantes.VAZIO, campo, valor, coluna, registro, prefixoNomeTabela);
-
 		for (int i = 1; i < colunas.size(); i++) {
 			coluna = colunas.get(i);
-
 			if (coluna.isColunaInfo()) {
 				continue;
 			}
-
 			appendCampoValor(", ", campo, valor, coluna, registro, prefixoNomeTabela);
 		}
-
 		campo.append(")" + Constantes.QL);
 		valor.append(")" + Constantes.QL);
-
 		return resposta.append(campo).append(valor).toString();
 	}
 
 	private void appendCampoValor(String string, StringBuilder campo, StringBuilder valor, Coluna coluna,
 			List<Object> registro, String prefixoNomeTabela) {
 		campo.append(Constantes.TAB + string + coluna.getNome() + Constantes.QL);
-
 		if (Util.estaVazio(coluna.getSequencia())) {
 			if (registro != null) {
 				Object valoR = registro.get(coluna.getIndice());
@@ -438,24 +397,19 @@ public class PersistenciaModelo implements TableModel {
 
 	private String montarWhere(List<Object> registro) {
 		List<Coluna> colunasChave = getChaves();
-
 		if (colunasChave.isEmpty()) {
 			throw new IllegalStateException("Sem colunas chaves.");
 		}
-
 		StringBuilder resposta = new StringBuilder(Constantes.QL + " WHERE ");
 		Coluna coluna = colunasChave.get(0);
-
 		if (registro != null) {
 			Object valor = registro.get(coluna.getIndice());
 			resposta.append(coluna.getNome() + " = " + coluna.get(valor));
 		} else {
 			resposta.append(coluna.getNome() + " = " + coluna.get(coluna.getNome()));
 		}
-
 		for (int i = 1; i < colunasChave.size(); i++) {
 			coluna = colunasChave.get(i);
-
 			if (registro != null) {
 				Object valor = registro.get(coluna.getIndice());
 				resposta.append(Constantes.QL + " AND " + coluna.getNome() + " = " + coluna.get(valor));
@@ -463,7 +417,6 @@ public class PersistenciaModelo implements TableModel {
 				resposta.append(Constantes.QL + " AND " + coluna.getNome() + " = " + coluna.get(coluna.getNome()));
 			}
 		}
-
 		return resposta.toString();
 	}
 

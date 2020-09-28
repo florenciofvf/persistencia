@@ -17,9 +17,7 @@ public class MemoriaModelo implements TableModel {
 	public MemoriaModelo(List<String> colunas, List<List<String>> dados) {
 		this.colunas = colunas;
 		this.registros = dados;
-
 		int i = 0;
-
 		for (String s : colunas) {
 			colunasInfo.add(new Coluna(s, i));
 			i++;

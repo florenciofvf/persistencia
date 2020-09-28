@@ -56,7 +56,6 @@ public class Coluna {
 
 	public String getDetalhe() {
 		StringBuilder sb = new StringBuilder();
-
 		sb.append("AUTO_INCREMENTO: " + autoInc + Constantes.QL);
 		sb.append("NUMERICO: " + numero + Constantes.QL);
 		sb.append("TAMANHO: " + tamanho + Constantes.QL);
@@ -67,7 +66,6 @@ public class Coluna {
 		sb.append("NOME: " + nome + Constantes.QL);
 		sb.append("TIPO: " + tipo + Constantes.QL);
 		sb.append("BLOB: " + blob + Constantes.QL);
-
 		return sb.toString();
 	}
 
@@ -124,21 +122,16 @@ public class Coluna {
 		if (o == null) {
 			return Constantes.VAZIO;
 		}
-
 		String s = o.toString();
-
 		if (numero) {
 			return s;
 		}
-
 		while (s.length() > 0 && s.charAt(0) == '\'') {
 			s = s.substring(1, s.length());
 		}
-
 		while (s.length() > 0 && s.charAt(s.length() - 1) == '\'') {
 			s = s.substring(0, s.length() - 1);
 		}
-
 		return "'" + s + "'";
 	}
 }

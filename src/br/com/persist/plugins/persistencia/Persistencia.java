@@ -26,21 +26,13 @@ public class Persistencia {
 	private static final String TABLE_NAME = "TABLE_NAME";
 	private static final String KEY_SEQ = "KEY_SEQ";
 	private static final String PK_NAME = "PK_NAME";
+	private static final Map<String, Boolean> mapa;
 
 	private Persistencia() {
 	}
 
-	public static int executar(Connection conn, String sql) throws PersistenciaException {
-		try (PreparedStatement psmt = conn.prepareStatement(sql)) {
-			return psmt.executeUpdate();
-		} catch (Exception ex) {
-			throw new PersistenciaException(ex);
-		}
-	}
-
-	private static Map<String, Boolean> criarMapaTipos() {
-		Map<String, Boolean> mapa = new HashMap<>();
-
+	static {
+		mapa = new HashMap<>();
 		mapa.put("java.math.BigDecimal", Boolean.TRUE);
 		mapa.put("java.math.BigInteger", Boolean.TRUE);
 		mapa.put("java.lang.Character", Boolean.FALSE);
@@ -53,14 +45,23 @@ public class Persistencia {
 		mapa.put("java.lang.Short", Boolean.TRUE);
 		mapa.put("java.lang.Long", Boolean.TRUE);
 		mapa.put("java.lang.Byte", Boolean.TRUE);
+	}
 
+	public static int executar(Connection conn, String sql) throws PersistenciaException {
+		try (PreparedStatement psmt = conn.prepareStatement(sql)) {
+			return psmt.executeUpdate();
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
+	private static Map<String, Boolean> criarMapaTipos() {
 		return mapa;
 	}
 
 	public static MemoriaModelo criarModeloInfoBanco(Connection conn) throws PersistenciaException {
 		try {
 			DatabaseMetaData m = conn.getMetaData();
-
 			List<List<String>> dados = new ArrayList<>();
 			dados.add(criar("allProceduresAreCallable", m.allProceduresAreCallable()));
 			dados.add(criar("allTablesAreSelectable", m.allTablesAreSelectable()));
@@ -196,7 +197,6 @@ public class Persistencia {
 			dados.add(criar("generatedKeyAlwaysReturned", m.generatedKeyAlwaysReturned()));
 			dados.add(criar("getMaxLogicalLobSize", m.getMaxLogicalLobSize()));
 			dados.add(criar("supportsRefCursors", m.supportsRefCursors()));
-
 			return new MemoriaModelo(Arrays.asList("NOME", "VALOR"), dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -212,11 +212,9 @@ public class Persistencia {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getSchemas();
-
 			while (rs.next()) {
 				dados.add(criar(rs.getString(TABLE_SCHEM), rs.getString(TABLE_CATALOG)));
 			}
-
 			rs.close();
 			return new MemoriaModelo(Arrays.asList(TABLE_SCHEM, TABLE_CATALOG), dados);
 		} catch (Exception ex) {
@@ -258,7 +256,6 @@ public class Persistencia {
 		try {
 			List<List<String>> dados = new ArrayList<>();
 			int qtdColunas = colunaInfo ? colunas.size() - 1 : colunas.size();
-
 			while (rs.next()) {
 				List<String> registro = new ArrayList<>();
 				for (int i = 1; i <= qtdColunas; i++) {
@@ -270,12 +267,10 @@ public class Persistencia {
 				}
 				dados.add(registro);
 			}
-
 			List<String> lista = new ArrayList<>();
 			for (Coluna coluna : colunas) {
 				lista.add(coluna.getNome());
 			}
-
 			return new MemoriaModelo(lista, dados);
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -301,7 +296,6 @@ public class Persistencia {
 		try {
 			List<List<Object>> registros = new ArrayList<>();
 			int qtdColunas = parametros.isComColunaInfo() ? colunas.size() - 1 : colunas.size();
-
 			while (rs.next()) {
 				List<Object> registro = new ArrayList<>();
 				for (int i = 1; i <= qtdColunas; i++) {
@@ -313,7 +307,6 @@ public class Persistencia {
 				}
 				registros.add(registro);
 			}
-
 			return new PersistenciaModelo(colunas, registros, parametros.getTabela(), parametros.getPrefixoNomeTabela(),
 					parametros.getConexao());
 		} catch (Exception ex) {
@@ -325,18 +318,14 @@ public class Persistencia {
 			Map<String, String> mapaSequencia) throws PersistenciaException {
 		Map<String, Boolean> mapa = criarMapaTipos();
 		List<Coluna> colunas = new ArrayList<>();
-
 		if (mapaSequencia == null) {
 			mapaSequencia = new HashMap<>();
 		}
-
 		if (chaves == null) {
 			chaves = new String[0];
 		}
-
 		try {
 			int qtdColunas = rsmd.getColumnCount();
-
 			for (int i = 1; i <= qtdColunas; i++) {
 				String tipoBanco = rsmd.getColumnTypeName(i);
 				int tamanho = rsmd.getColumnDisplaySize(i);
@@ -348,29 +337,24 @@ public class Persistencia {
 				int tipo = rsmd.getColumnType(i);
 				boolean blob = tipo == Types.BLOB || tipo == Types.LONGVARBINARY;
 				Boolean chave = false;
-
 				if (numero == null) {
 					numero = Boolean.FALSE;
 				}
-
 				for (String s : chaves) {
 					if (s.trim().equalsIgnoreCase(nome)) {
 						chave = Boolean.TRUE;
 					}
 				}
-
 				String nomeSequencia = mapaSequencia.get(nome.toLowerCase());
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave, blob, classe,
 						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc, nomeSequencia));
 				colunas.add(coluna);
 			}
-
 			if (colunaInfo) {
 				Coluna coluna = new Coluna("INFO", qtdColunas, false, false, false, "INFO",
 						new Coluna.Config(0, "INFO", true, true, false, null));
 				colunas.add(coluna);
 			}
-
 			return colunas;
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -382,11 +366,9 @@ public class Persistencia {
 			List<String> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getTables(conexao.getCatalogo(), conexao.getEsquema(), "%", new String[] { "TABLE" });
-
 			while (rs.next()) {
 				resposta.add(rs.getString(TABLE_NAME));
 			}
-
 			rs.close();
 			return resposta;
 		} catch (Exception ex) {
@@ -404,11 +386,9 @@ public class Persistencia {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
-
 			while (rs.next()) {
 				dados.add(criarLista(rs.getString(COLUMN_NAME), rs.getString(KEY_SEQ), rs.getString(PK_NAME)));
 			}
-
 			rs.close();
 			return new MemoriaModelo(Arrays.asList(COLUMN_NAME, KEY_SEQ, PK_NAME), dados);
 		} catch (Exception ex) {
@@ -422,11 +402,9 @@ public class Persistencia {
 			List<String> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getPrimaryKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
-
 			while (rs.next()) {
 				resposta.add(rs.getString(COLUMN_NAME));
 			}
-
 			rs.close();
 			return resposta;
 		} catch (Exception ex) {
@@ -440,14 +418,12 @@ public class Persistencia {
 			List<Importado> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
-
 			while (rs.next()) {
 				String tabelaOrigem = rs.getString(PKTABLE_NAME);
 				String campoOrigem = rs.getString(PKCOLUMN_NAME);
 				String campo = rs.getString(FKCOLUMN_NAME);
 				resposta.add(new Importado(tabelaOrigem, campoOrigem, campo));
 			}
-
 			rs.close();
 			return resposta;
 		} catch (Exception ex) {
@@ -461,14 +437,12 @@ public class Persistencia {
 			List<Exportado> resposta = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getExportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
-
 			while (rs.next()) {
 				String tabelaDestino = rs.getString(FKTABLE_NAME);
 				String campoDestino = rs.getString(FKCOLUMN_NAME);
 				String campo = rs.getString(PKCOLUMN_NAME);
 				resposta.add(new Exportado(tabelaDestino, campoDestino, campo));
 			}
-
 			rs.close();
 			return resposta;
 		} catch (Exception ex) {
@@ -482,12 +456,10 @@ public class Persistencia {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getImportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
-
 			while (rs.next()) {
 				dados.add(criarLista(rs.getString(PKTABLE_NAME), rs.getString(PKCOLUMN_NAME),
 						rs.getString(FKCOLUMN_NAME)));
 			}
-
 			rs.close();
 			return new MemoriaModelo(Arrays.asList(PKTABLE_NAME, PKCOLUMN_NAME, FKCOLUMN_NAME), dados);
 		} catch (Exception ex) {
@@ -501,12 +473,10 @@ public class Persistencia {
 			List<List<String>> dados = new ArrayList<>();
 			DatabaseMetaData m = conn.getMetaData();
 			ResultSet rs = m.getExportedKeys(conexao.getCatalogo(), conexao.getEsquema(), tabela);
-
 			while (rs.next()) {
 				dados.add(criarLista(rs.getString(PKCOLUMN_NAME), rs.getString(FKTABLE_NAME),
 						rs.getString(FKCOLUMN_NAME)));
 			}
-
 			rs.close();
 			return new MemoriaModelo(Arrays.asList(PKCOLUMN_NAME, FKTABLE_NAME, FKCOLUMN_NAME), dados);
 		} catch (Exception ex) {
@@ -522,18 +492,14 @@ public class Persistencia {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
 				int totalColunas = rsmd.getColumnCount();
-
 				List<String> colunas = Arrays.asList("ColumnClassName", "ColumnLabel", "ColumnName", "AutoIncrement",
 						"CaseSensitive", "Searchable", "Currency", "Nullable", "Signed", "ColumnDisplaySize",
 						"SchemaName", "Precision", "Scale", "TableName", "CatalogName", "ColumnType", "ColumnTypeName",
 						"ReadOnly", "Writable", "DefinitelyWritable");
 				List<List<String>> dados = new ArrayList<>();
-
 				final String VAZIO = Constantes.VAZIO;
-
 				for (int i = 1; i <= totalColunas; i++) {
 					List<String> linha = new ArrayList<>();
-
 					linha.add(rsmd.getColumnClassName(i));
 					linha.add(rsmd.getColumnLabel(i));
 					linha.add(rsmd.getColumnName(i));
@@ -554,10 +520,8 @@ public class Persistencia {
 					linha.add(VAZIO + rsmd.isReadOnly(i));
 					linha.add(VAZIO + rsmd.isWritable(i));
 					linha.add(VAZIO + rsmd.isDefinitelyWritable(i));
-
 					dados.add(linha);
 				}
-
 				return new MemoriaModelo(colunas, dados);
 			}
 		} catch (Exception ex) {
