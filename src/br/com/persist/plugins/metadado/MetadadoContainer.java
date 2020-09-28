@@ -102,11 +102,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, ATUALIZAR);
-
 			add(buttonInfo);
 			add(true, comboConexao);
 			add(txtMetadado);
-
 			eventos();
 		}
 
@@ -119,7 +117,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			if (Util.estaVazio(txtMetadado.getText())) {
 				return;
 			}
-
 			metadadoTree.selecionar(txtMetadado.getText().trim());
 		}
 
@@ -162,14 +159,12 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 			private ButtonInfo() {
 				super("label.funcoes", Icones.INFO);
-
 				addMenuItem(pksMultiplaAcao);
 				addMenuItem(true, naoExportamAcao);
 				addMenuItem(true, queExportamAcao);
 				addMenuItem(true, pksAusentesAcao);
 				addMenuItem(true, ordemExportAcao);
 				addMenuItem(true, ordemImportAcao);
-
 				queExportamAcao
 						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.queExportam()));
 				naoExportamAcao
@@ -188,37 +183,30 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		protected void atualizar() {
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 			if (conexao == null) {
 				return;
 			}
-
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				List<Metadado> tabelas = converterLista(Persistencia.listarNomeTabelas(conn, conexao));
 				Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS) + " - " + tabelas.size());
 				raiz.setEhRaiz(true);
-
 				for (Metadado tabela : tabelas) {
 					tabela.setTabela(true);
-
 					List<Metadado> camposImportados = converterImportados(
 							Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
 					List<Metadado> camposExportados = converterExportados(
 							Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
 					List<Metadado> chavesPrimarias = converterLista(
 							Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
-
 					adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA,
 							' ');
 					adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO,
 							'I');
 					adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO,
 							'E');
-
 					raiz.add(tabela);
 				}
-
 				raiz.montarOrdenacoes();
 				metadadoTree.setModel(new MetadadoModelo(raiz));
 			} catch (Exception ex) {
@@ -231,7 +219,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			for (Importado imp : lista) {
 				Metadado campo = new Metadado(imp.getCampo());
 				resposta.add(campo);
-
 				Metadado ref = new Metadado(imp.getTabelaOrigem() + "(" + imp.getCampoOrigem() + ")");
 				campo.add(ref);
 			}
@@ -243,7 +230,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			for (Exportado imp : lista) {
 				Metadado campo = new Metadado(imp.getCampo());
 				resposta.add(campo);
-
 				Metadado ref = new Metadado(imp.getTabelaDestino() + "(" + imp.getCampoDestino() + ")");
 				campo.add(ref);
 			}
@@ -263,19 +249,15 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			if (filhos.isEmpty()) {
 				return;
 			}
-
 			Metadado rotulo = new Metadado(filhos.size() > 1 ? rotuloPlural : rotuloSingular);
-
 			for (Metadado obj : filhos) {
 				rotulo.add(obj);
-
 				if (chave == 'E') {
 					objeto.setTotalExportados(objeto.getTotalExportados() + 1);
 				} else if (chave == 'I') {
 					objeto.setTotalImportados(objeto.getTotalImportados() + 1);
 				}
 			}
-
 			objeto.add(rotulo);
 		}
 	}
@@ -290,7 +272,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirExportacaoFormArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
-
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoForm");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -301,7 +282,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirExportacaoFichArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
-
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoFich");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -312,7 +292,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirImportacaoFormArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
-
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoForm");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -323,7 +302,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirImportacaoFichArquivo(MetadadoTree metadados, boolean circular) {
 		Metadado metadado = metadados.getObjetoSelecionado();
-
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoFich");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -334,7 +312,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void exportarFormArquivo(MetadadoTree metadados) {
 		Metadado metadado = metadados.getObjetoSelecionado();
-
 		if (metadado != null) {
 			formulario.processar(criarArgs(metadado, "exportarMetadadoRaizForm"));
 		}
@@ -343,7 +320,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void exportarFichArquivo(MetadadoTree metadados) {
 		Metadado metadado = metadados.getObjetoSelecionado();
-
 		if (metadado != null) {
 			formulario.processar(criarArgs(metadado, "exportarMetadadoRaizFich"));
 		}

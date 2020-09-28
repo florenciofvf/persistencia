@@ -55,7 +55,6 @@ public class MapeamentoFabrica extends AbstratoFabricaContainer {
 
 		private MenuMapeamento(Formulario formulario) {
 			super(Constantes.LABEL_MAPEAMENTOS, Icones.REFERENCIA);
-
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new MapeamentoContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> MapeamentoFormulario.criar(formulario));
 			dialogoAcao.setActionListener(e -> MapeamentoDialogo.criar(formulario));

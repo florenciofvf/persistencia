@@ -28,7 +28,6 @@ public class Mapeamento {
 		util.abrirTag(Constantes.MAPEAMENTO);
 		util.atributo("nome", Util.escapar(nome));
 		util.fecharTag();
-
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();
 		util.finalizarTag(Constantes.VALOR);
@@ -52,7 +51,6 @@ public class Mapeamento {
 		if (Util.estaVazio(valor)) {
 			valor = Constantes.VAZIO;
 		}
-
 		return valor;
 	}
 
@@ -60,7 +58,6 @@ public class Mapeamento {
 		if (Util.estaVazio(valor)) {
 			return padrao;
 		}
-
 		try {
 			return Integer.parseInt(valor.trim());
 		} catch (Exception e) {

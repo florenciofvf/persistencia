@@ -36,7 +36,6 @@ public class MapeamentoModelo extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Mapeamento m = MapeamentoProvedor.getMapeamento(rowIndex);
-
 		switch (columnIndex) {
 		case 0:
 			return m.getNome();
@@ -51,7 +50,6 @@ public class MapeamentoModelo extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
 		Mapeamento v = MapeamentoProvedor.getMapeamento(rowIndex);
-
 		if (1 == columnIndex) {
 			v.setValor(valor);
 		}

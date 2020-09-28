@@ -101,7 +101,6 @@ public class FragmentoContainer extends AbstratoContainer {
 			setListener(null);
 			if (formulario.excluirPagina(FragmentoContainer.this)) {
 				FragmentoFormulario.criar(formulario, FragmentoContainer.this);
-
 			} else if (fragmentoDialogo != null) {
 				fragmentoDialogo.excluirContainer();
 				FragmentoFormulario.criar(formulario, FragmentoContainer.this);
@@ -114,7 +113,6 @@ public class FragmentoContainer extends AbstratoContainer {
 			if (fragmentoFormulario != null) {
 				fragmentoFormulario.excluirContainer();
 				formulario.adicionarPagina(FragmentoContainer.this);
-
 			} else if (fragmentoDialogo != null) {
 				fragmentoDialogo.excluirContainer();
 				formulario.adicionarPagina(FragmentoContainer.this);
@@ -145,17 +143,13 @@ public class FragmentoContainer extends AbstratoContainer {
 		@Override
 		protected void novo() {
 			String resumo = getValor(Mensagens.getString("label.nome_fragmento"), Constantes.VAZIO);
-
 			if (resumo == null) {
 				return;
 			}
-
 			String grupo = getValor(Mensagens.getString("label.grupo"), Constantes.VAZIO);
-
 			if (grupo == null) {
 				return;
 			}
-
 			adicionar(new Fragmento(resumo, grupo));
 		}
 
@@ -165,7 +159,6 @@ public class FragmentoContainer extends AbstratoContainer {
 						Mensagens.getString("label.indentificador_ja_existente") + " " + frag.getResumo());
 				return;
 			}
-
 			FragmentoProvedor.adicionar(frag);
 			fragmentoModelo.fireTableDataChanged();
 			ajustarTabela();
@@ -173,11 +166,9 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		private String getValor(String mensagem, String padrao) {
 			Object resp = Util.getValorInputDialog(FragmentoContainer.this, "label.id", mensagem, padrao);
-
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return null;
 			}
-
 			return resp.toString();
 		}
 
@@ -199,7 +190,6 @@ public class FragmentoContainer extends AbstratoContainer {
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-
 			if (linhas != null) {
 				for (int i : linhas) {
 					Fragmento f = FragmentoProvedor.getFragmento(i);

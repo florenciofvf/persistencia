@@ -50,10 +50,8 @@ public class MetadadoTree extends Tree {
 
 	private void configurar() {
 		DragSource dragSource = DragSource.getDefaultDragSource();
-
 		dragSource.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_COPY, dge -> {
 			Metadado metadado = getObjetoSelecionado();
-
 			if (metadado.isTabela()) {
 				dge.startDrag(null, metadado, listenerArrasto);
 			}
@@ -89,15 +87,12 @@ public class MetadadoTree extends Tree {
 
 	public Metadado getObjetoSelecionado() {
 		TreePath path = getSelectionPath();
-
 		if (path == null) {
 			return null;
 		}
-
 		if (path.getLastPathComponent() instanceof Metadado) {
 			return (Metadado) path.getLastPathComponent();
 		}
-
 		return null;
 	}
 
@@ -114,27 +109,21 @@ public class MetadadoTree extends Tree {
 
 		private void processar(MouseEvent e) {
 			popupTrigger = false;
-
 			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
 				return;
 			}
-
 			TreePath metadadoClicado = getClosestPathForLocation(e.getX(), e.getY());
 			TreePath metadadoSelecionado = getSelectionPath();
 			popupTrigger = true;
-
 			if (metadadoClicado == null || metadadoSelecionado == null) {
 				setSelectionPath(null);
 				return;
 			}
-
 			Rectangle rectangle = getPathBounds(metadadoClicado);
-
 			if (rectangle == null || !rectangle.contains(e.getX(), e.getY())) {
 				setSelectionPath(null);
 				return;
 			}
-
 			if (metadadoClicado.equals(metadadoSelecionado)) {
 				if (metadadoSelecionado.getLastPathComponent() instanceof Metadado) {
 					Metadado metadado = (Metadado) metadadoSelecionado.getLastPathComponent();
@@ -153,7 +142,6 @@ public class MetadadoTree extends Tree {
 			if (popupTrigger) {
 				return;
 			}
-
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (padraoClickExportacao) {
 					ouvintes.forEach(o -> o.abrirExportacaoFichArquivo(MetadadoTree.this, true));
@@ -198,7 +186,6 @@ public class MetadadoTree extends Tree {
 
 			MenuExportacao() {
 				super("label.exportar", Icones.ABRIR, false);
-
 				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFormArquivo(MetadadoTree.this)));
 				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFichArquivo(MetadadoTree.this)));
 			}
@@ -209,7 +196,6 @@ public class MetadadoTree extends Tree {
 
 			MenuAbrirExportacao() {
 				super("label.abrir_exportacao", Icones.ABRIR, false);
-
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, true)));
 				ficharioAcao.setActionListener(
@@ -222,7 +208,6 @@ public class MetadadoTree extends Tree {
 
 			MenuAbrirExportacaoH() {
 				super("label.abrir_exportacao_h", Icones.ABRIR, false);
-
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(
@@ -235,7 +220,6 @@ public class MetadadoTree extends Tree {
 
 			MenuAbrirImportacao() {
 				super("label.abrir_importacao", Icones.ABRIR, false);
-
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, true)));
 				ficharioAcao.setActionListener(
@@ -248,7 +232,6 @@ public class MetadadoTree extends Tree {
 
 			MenuAbrirImportacaoH() {
 				super("label.abrir_importacao_h", Icones.ABRIR, false);
-
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(
@@ -285,7 +268,6 @@ public class MetadadoTree extends Tree {
 	public void selecionar(String nome) {
 		Metadado raiz = getRaiz();
 		Metadado metadado = raiz.getMetadado(nome);
-
 		if (metadado != null) {
 			MetadadoTreeUtil.selecionarObjeto(this, metadado);
 		} else {

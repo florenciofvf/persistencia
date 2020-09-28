@@ -29,7 +29,6 @@ public class Metadado implements Transferable {
 		if (Util.estaVazio(descricao)) {
 			throw new IllegalArgumentException();
 		}
-
 		this.descricao = descricao;
 		filhos = new ArrayList<>();
 	}
@@ -65,7 +64,6 @@ public class Metadado implements Transferable {
 				return m;
 			}
 		}
-
 		return null;
 	}
 
@@ -101,7 +99,6 @@ public class Metadado implements Transferable {
 		if (Metadado.flavor.equals(flavor)) {
 			return this;
 		}
-
 		throw new UnsupportedFlavorException(flavor);
 	}
 
@@ -112,28 +109,23 @@ public class Metadado implements Transferable {
 				return titulo.getChaves2();
 			}
 		}
-
 		return null;
 	}
 
 	private String getChaves2() {
 		StringBuilder sb = new StringBuilder();
-
 		if (!filhos.isEmpty()) {
 			sb.append(filhos.get(0).descricao);
 		}
-
 		for (int i = 1; i < filhos.size(); i++) {
 			sb.append("," + filhos.get(i).descricao);
 		}
-
 		return sb.toString();
 	}
 
 	public String pksMultiplas() {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
-
 		for (Metadado table : filhos) {
 			if (table.contem(Constantes.CHAVES_PRIMARIAS)) {
 				Metadado meta = table.getMetadado(Constantes.CHAVES_PRIMARIAS);
@@ -141,59 +133,48 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-
 		sb.insert(0, Mensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL + Constantes.QL);
-
 		return sb.toString();
 	}
 
 	public String pksAusente() {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
-
 		for (Metadado table : filhos) {
 			if (!table.contem(Constantes.CHAVE_PRIMARIA) && !table.contem(Constantes.CHAVES_PRIMARIAS)) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}
 		}
-
 		sb.insert(0, Mensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL + Constantes.QL);
-
 		return sb.toString();
 	}
 
 	public String queExportam() {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
-
 		for (Metadado table : filhos) {
 			if (table.contem(Constantes.CAMPO_EXPORTADO) || table.contem(Constantes.CAMPOS_EXPORTADOS)) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}
 		}
-
 		sb.insert(0,
 				Mensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL + Constantes.QL);
-
 		return sb.toString();
 	}
 
 	public String naoExportam() {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
-
 		for (Metadado table : filhos) {
 			if (!table.contem(Constantes.CAMPO_EXPORTADO) && !table.contem(Constantes.CAMPOS_EXPORTADOS)) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}
 		}
-
 		sb.insert(0,
 				Mensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL + Constantes.QL);
-
 		return sb.toString();
 	}
 
@@ -202,7 +183,6 @@ public class Metadado implements Transferable {
 				: Mensagens.getString("label.ordenado_importacao"));
 		sb.append(Constantes.QL);
 		sb.append(Constantes.QL);
-
 		if (exp) {
 			for (String string : ordenadoExportacao) {
 				sb.append(string + Constantes.QL);
@@ -212,7 +192,6 @@ public class Metadado implements Transferable {
 				sb.append(string + Constantes.QL);
 			}
 		}
-
 		return sb.toString();
 	}
 
@@ -222,7 +201,6 @@ public class Metadado implements Transferable {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -246,15 +224,11 @@ public class Metadado implements Transferable {
 		List<Metadado> temporario = new ArrayList<>(filhos);
 		ordenadoExportacao.clear();
 		ordenadoImportacao.clear();
-
 		Collections.sort(temporario, (o1, o2) -> o2.getTotalExportados() - o1.getTotalExportados());
-
 		for (Metadado meta : temporario) {
 			ordenadoExportacao.add(meta.getTotalExportados() + " - " + meta.getDescricao());
 		}
-
 		Collections.sort(temporario, (o1, o2) -> o2.getTotalImportados() - o1.getTotalImportados());
-
 		for (Metadado meta : temporario) {
 			ordenadoImportacao.add(meta.getTotalImportados() + " - " + meta.getDescricao());
 		}
@@ -262,7 +236,6 @@ public class Metadado implements Transferable {
 
 	public List<String> getListaStringExpImp(boolean exportacao) {
 		List<String> resposta = new ArrayList<>();
-
 		if (exportacao) {
 			for (Metadado tipo : filhos) {
 				if (tipo.descricao.equals(Constantes.CAMPO_EXPORTADO)
@@ -278,7 +251,6 @@ public class Metadado implements Transferable {
 				}
 			}
 		}
-
 		return resposta;
 	}
 

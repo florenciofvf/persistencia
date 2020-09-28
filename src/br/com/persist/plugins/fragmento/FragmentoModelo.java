@@ -36,7 +36,6 @@ public class FragmentoModelo extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Fragmento f = FragmentoProvedor.getFragmento(rowIndex);
-
 		switch (columnIndex) {
 		case 0:
 			return f.getResumo();
@@ -53,7 +52,6 @@ public class FragmentoModelo extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
 		Fragmento f = FragmentoProvedor.getFragmento(rowIndex);
-
 		if (2 == columnIndex) {
 			f.setValor(valor);
 		}

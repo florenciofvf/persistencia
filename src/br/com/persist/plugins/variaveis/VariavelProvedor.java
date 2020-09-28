@@ -65,11 +65,9 @@ public class VariavelProvedor {
 	}
 
 	public static void adicionar(Variavel variavel) {
-		if (contem(variavel)) {
-			return;
+		if (!contem(variavel)) {
+			lista.add(variavel);
 		}
-
-		lista.add(variavel);
 	}
 
 	public static void inicializar() {

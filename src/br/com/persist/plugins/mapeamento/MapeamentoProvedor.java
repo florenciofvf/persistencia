@@ -27,7 +27,6 @@ public class MapeamentoProvedor {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
 		}
-
 		return null;
 	}
 
@@ -37,7 +36,6 @@ public class MapeamentoProvedor {
 				return m;
 			}
 		}
-
 		return null;
 	}
 
@@ -48,7 +46,6 @@ public class MapeamentoProvedor {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
@@ -65,16 +62,13 @@ public class MapeamentoProvedor {
 	}
 
 	public static void adicionar(Mapeamento mapeamento) {
-		if (contem(mapeamento)) {
-			return;
+		if (!contem(mapeamento)) {
+			lista.add(mapeamento);
 		}
-
-		lista.add(mapeamento);
 	}
 
 	public static void inicializar() {
 		lista.clear();
-
 		try {
 			if (file.exists() && file.canRead()) {
 				XML.processar(file, new MapeamentoHandler());
@@ -88,15 +82,12 @@ public class MapeamentoProvedor {
 		try {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
-
 			util.abrirTag2(Constantes.MAPEAMENTOS);
-
 			for (Mapeamento m : lista) {
 				if (m.isValido()) {
 					m.salvar(util);
 				}
 			}
-
 			util.finalizarTag(Constantes.MAPEAMENTOS);
 			util.close();
 		} catch (Exception e) {

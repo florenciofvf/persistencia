@@ -92,7 +92,6 @@ public class MapeamentoContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(MapeamentoContainer.this)) {
 				MapeamentoFormulario.criar(formulario, MapeamentoContainer.this);
-
 			} else if (mapeamentoDialogo != null) {
 				mapeamentoDialogo.excluirContainer();
 				MapeamentoFormulario.criar(formulario, MapeamentoContainer.this);
@@ -104,7 +103,6 @@ public class MapeamentoContainer extends AbstratoContainer {
 			if (mapeamentoFormulario != null) {
 				mapeamentoFormulario.excluirContainer();
 				formulario.adicionarPagina(MapeamentoContainer.this);
-
 			} else if (mapeamentoDialogo != null) {
 				mapeamentoDialogo.excluirContainer();
 				formulario.adicionarPagina(MapeamentoContainer.this);
@@ -145,7 +143,6 @@ public class MapeamentoContainer extends AbstratoContainer {
 						Mensagens.getString("label.indentificador_ja_existente") + " " + map.getNome());
 				return;
 			}
-
 			MapeamentoProvedor.adicionar(map);
 			mapeamentoModelo.fireTableDataChanged();
 			ajustarTabela();
@@ -154,11 +151,9 @@ public class MapeamentoContainer extends AbstratoContainer {
 		private String getValor(String padrao) {
 			Object resp = Util.getValorInputDialog(MapeamentoContainer.this, "label.id",
 					Mensagens.getString("label.nome_mapeamento"), padrao);
-
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return null;
 			}
-
 			return resp.toString();
 		}
 
@@ -177,7 +172,6 @@ public class MapeamentoContainer extends AbstratoContainer {
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-
 			if (linhas != null) {
 				for (int i : linhas) {
 					Mapeamento m = MapeamentoProvedor.getMapeamento(i);

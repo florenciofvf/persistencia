@@ -55,7 +55,6 @@ public class FragmentoFabrica extends AbstratoFabricaContainer {
 
 		private MenuFragmento(Formulario formulario) {
 			super(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
-
 			ficharioAcao
 					.setActionListener(e -> formulario.adicionarPagina(new FragmentoContainer(null, formulario, null)));
 			formularioAcao.setActionListener(e -> FragmentoFormulario.criar(formulario));

@@ -31,7 +31,6 @@ public class Fragmento {
 		util.atributo("resumo", Util.escapar(resumo));
 		util.atributo("grupo", Util.escapar(grupo));
 		util.fecharTag();
-
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();
 		util.finalizarTag(Constantes.VALOR);
@@ -59,7 +58,6 @@ public class Fragmento {
 		if (Util.estaVazio(valor)) {
 			valor = Constantes.VAZIO;
 		}
-
 		return valor;
 	}
 }
