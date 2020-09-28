@@ -87,24 +87,19 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	@Override
 	public void empilharFormulariosImpl() {
 		JInternalFrame[] frames = getAllFrames();
-
 		if (frames.length > 0) {
 			boolean salvar = false;
-
 			Variavel variavelDeltaY = VariavelProvedor.getVariavel(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
-
 			if (variavelDeltaY == null) {
 				variavelDeltaY = new Variavel(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
 						Constantes.VAZIO + Constantes.QUARENTA);
 				VariavelProvedor.adicionar(variavelDeltaY);
 				salvar = true;
 			}
-
 			if (salvar) {
 				VariavelProvedor.salvar();
 				VariavelProvedor.inicializar();
 			}
-
 			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
 			JInternalFrame referencia = primeiroVisivel(frames);
 			if (referencia != null) {
@@ -115,7 +110,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	private void empilhar(JInternalFrame[] frames, JInternalFrame referencia, int deltaY) {
 		int y = referencia.getY() + referencia.getHeight() + deltaY;
-
 		for (JInternalFrame frame : frames) {
 			if (!frame.isVisible() || frame == referencia) {
 				continue;
@@ -137,27 +131,22 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	@Override
 	public void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree) {
 		boolean salvar = false;
-
 		Variavel variavelDeltaX = VariavelProvedor.getVariavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
 		Variavel variavelDeltaY = VariavelProvedor.getVariavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
-
 		if (variavelDeltaX == null) {
 			variavelDeltaX = new Variavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaX);
 			salvar = true;
 		}
-
 		if (variavelDeltaY == null) {
 			variavelDeltaY = new Variavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaY);
 			salvar = true;
 		}
-
 		if (salvar) {
 			VariavelProvedor.salvar();
 			VariavelProvedor.inicializar();
 		}
-
 		for (JInternalFrame frame : getAllFrames()) {
 			if (!frame.isVisible()) {
 				continue;
@@ -174,7 +163,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				}
 			}
 		}
-
 		if (updateTree) {
 			SwingUtilities.updateComponentTreeUI(getParent());
 		} else {
@@ -229,22 +217,16 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				e.rejectDrop();
 				return;
 			}
-
 			Transferable transferable = e.getTransferable();
-
 			if (transferable == null) {
 				return;
 			}
-
 			DataFlavor[] flavors = transferable.getTransferDataFlavors();
-
 			if (flavors == null || flavors.length < 1) {
 				return;
 			}
-
 			DataFlavor flavor = flavors[0];
 			boolean completado = false;
-
 			if (InternalTransferidor.flavor.equals(flavor)) {
 				try {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
@@ -269,7 +251,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
 				}
 			}
-
 			if (completado) {
 				e.acceptDrop(DnDConstants.ACTION_COPY);
 				e.dropComplete(true);
@@ -300,11 +281,9 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		Dimension dimension = (Dimension) array[InternalTransferidor.ARRAY_INDICE_DIM];
 		Conexao conexao = (Conexao) array[InternalTransferidor.ARRAY_INDICE_CON];
 		Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
-
 		if (g == null) {
 			g = getGraphics();
 		}
-
 		InternalFormulario internnalFormulario = new InternalFormulario(conexao, objeto, g, buscaAuto);
 		internnalFormulario.setAbortarFecharComESC(abortarFecharComESC);
 		internnalFormulario.getApelidoListener().setApelido(apelido);
@@ -312,7 +291,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		internnalFormulario.setSize(dimension);
 		internnalFormulario.setVisible(true);
 		internnalFormulario.aplicarConfigArquivo(config);
-
 		add(internnalFormulario);
 	}
 
@@ -333,7 +311,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				InternalFormulario interno = (InternalFormulario) frame;
 				List<TabelaBuscaAuto> tabelas = grupo.getTabelas();
 				interno.setProcessadoBuscaAutomatica(false);
-
 				for (TabelaBuscaAuto tabela : tabelas) {
 					if (interno.ehTabela(tabela)) {
 						interno.getInternalContainer().getObjeto().setTabelaBuscaAuto(tabela);
@@ -350,17 +327,14 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		if (objeto == null) {
 			return null;
 		}
-
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
-
 				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
 					return interno;
 				}
 			}
 		}
-
 		return null;
 	}
 
@@ -389,7 +363,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 				List<TabelaLinkAuto> tabelas = link.getTabelas();
-
 				for (TabelaLinkAuto tabela : tabelas) {
 					if (interno.ehTabela(tabela)) {
 						interno.linkAutomatico(tabela.getCampo(), argumento);

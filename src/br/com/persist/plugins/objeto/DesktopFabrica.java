@@ -43,7 +43,6 @@ public class DesktopFabrica extends AbstratoFabricaContainer {
 
 		private MenuDesktop(Formulario formulario) {
 			super(Constantes.LABEL_DESKTOP, Icones.PANEL2, false);
-
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new Desktop(false)));
 			formularioAcao.setActionListener(e -> DesktopFormulario.criar(formulario));
 		}

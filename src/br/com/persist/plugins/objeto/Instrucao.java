@@ -13,7 +13,6 @@ public class Instrucao implements Comparable<Instrucao> {
 		if (Util.estaVazio(nome)) {
 			throw new IllegalStateException();
 		}
-
 		this.nome = nome;
 	}
 
@@ -25,7 +24,6 @@ public class Instrucao implements Comparable<Instrucao> {
 		if (Util.estaVazio(valor)) {
 			valor = Constantes.VAZIO;
 		}
-
 		return valor;
 	}
 
@@ -33,7 +31,6 @@ public class Instrucao implements Comparable<Instrucao> {
 		if (Util.estaVazio(nome)) {
 			return;
 		}
-
 		this.nome = nome;
 	}
 
@@ -56,7 +53,6 @@ public class Instrucao implements Comparable<Instrucao> {
 	public Instrucao clonar() {
 		Instrucao i = new Instrucao(nome);
 		i.setValor(valor);
-
 		return i;
 	}
 
@@ -66,11 +62,9 @@ public class Instrucao implements Comparable<Instrucao> {
 			util.atributo("nome", Util.escapar(nome));
 			util.atributo("ordem", ordem);
 			util.fecharTag();
-
 			util.abrirTag2(Constantes.VALOR);
 			util.conteudo(Util.escapar(getValor())).ql();
 			util.finalizarTag(Constantes.VALOR);
-
 			util.finalizarTag("instrucao");
 		}
 	}

@@ -75,10 +75,8 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		private void checarArquivo(Formulario formulario, Map<String, Object> args) {
 			File file = (File) args.get(ArquivoEvento.ABRIR_ARQUIVO);
-
 			if (file != null) {
 				Boolean fichario = (Boolean) args.get(ArquivoEvento.FICHARIO);
-
 				if (Boolean.TRUE.equals(fichario)) {
 					Pagina pagina = getPaginaServico().criarPagina(formulario, file.getAbsolutePath());
 					ObjetoProvedor.setParentFile(file.getParentFile());
@@ -91,43 +89,36 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		private void checarMetadado(Formulario formulario, Map<String, Object> args) {
 			Metadado metadado = (Metadado) args.get(MetadadoEvento.ABRIR_METADADO);
-
 			if (metadado != null) {
 				String metodo = (String) args.get(MetadadoEvento.METODO);
 				Boolean boolCircular = (Boolean) args.get(MetadadoEvento.CIRCULAR);
 				boolean circular = Boolean.TRUE.equals(boolCircular);
-
 				if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM.equals(metodo)) {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 							new File(Mensagens.getString("label.abrir_exportacao")));
 					form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 					Formulario.posicionarJanela(formulario, form);
-
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 							new File(Mensagens.getString("label.abrir_importacao")));
 					form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 					Formulario.posicionarJanela(formulario, form);
-
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 							new File(Mensagens.getString("label.exportar")));
 					form.exportarMetadadoRaiz(metadado);
 					Formulario.posicionarJanela(formulario, form);
-
 				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH.equals(metodo)) {
 					ObjetoContainer container = criarObjetoContainer(formulario);
 					container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 					container.setTituloTemporario(Mensagens.getString("label.abrir_exportacao"));
 					formulario.adicionarPagina(container);
-
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FICH.equals(metodo)) {
 					ObjetoContainer container = criarObjetoContainer(formulario);
 					container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 					container.setTituloTemporario(Mensagens.getString("label.abrir_importacao"));
 					formulario.adicionarPagina(container);
-
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FICH.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
 					ObjetoContainer container = criarObjetoContainer(formulario);
@@ -144,13 +135,10 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		if (menu.getItemCount() > 0) {
 			menu.addSeparator();
 		}
-
 		List<JMenuItem> lista = new ArrayList<>();
-
 		JMenuItem itemNovo = new JMenuItem(Mensagens.getString(Constantes.LABEL_NOVO), Icones.CUBO);
 		itemNovo.addActionListener(e -> novo(formulario));
 		lista.add(itemNovo);
-
 		lista.add(new MenuAbrir(formulario));
 		return lista;
 	}
@@ -162,14 +150,12 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			super("label.abrir", Icones.ABRIR, false);
 			formularioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK));
 			ficharioAcao.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke('A', InputEvent.CTRL_MASK));
-
 			formularioAcao.setActionListener(e -> abrirEmFormulario(formulario));
 			ficharioAcao.setActionListener(e -> abrirNoFichario(formulario));
 		}
 
 		private void abrirNoFichario(Formulario formulario) {
 			File[] files = getSelectedFiles(formulario, true);
-
 			if (files != null) {
 				for (File file : files) {
 					Pagina pagina = getPaginaServico().criarPagina(formulario, file.getAbsolutePath());
@@ -181,7 +167,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 		private void abrirEmFormulario(Formulario formulario) {
 			File[] files = getSelectedFiles(formulario, true);
-
 			if (files != null) {
 				for (File file : files) {
 					abrirNoFormulario(formulario, file);
@@ -208,7 +193,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		if (file == null || !file.isFile()) {
 			return;
 		}
-
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file);
 		Formulario.posicionarJanela(formulario, form);
@@ -217,11 +201,9 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, Graphics g,
 			InternalConfig config) {
 		File file = ArquivoProvedor.restaurarStringPersistencia(stringPersistencia);
-
 		if (file == null || !file.isFile()) {
 			return;
 		}
-
 		try {
 			ObjetoColetor objetoColetor = new ObjetoColetor();
 			XML.processar(file, new ObjetoHandler(objetoColetor));

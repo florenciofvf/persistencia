@@ -173,7 +173,6 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(true, new ButtonInfo());
 			add(true, labelStatus);
 			add(true, txtPrefixoNomeTabela);
-
 			eventos();
 		}
 
@@ -190,7 +189,6 @@ public class ObjetoContainer extends AbstratoContainer {
 					objetoSuperficie.selecionarConexao(getConexaoPadrao());
 				}
 			});
-
 			desenharDescAcao
 					.setActionListener(e -> objetoSuperficie.desenharDesc(((ToggleButton) e.getSource()).isSelected()));
 			desenharIdAcao
@@ -247,7 +245,6 @@ public class ObjetoContainer extends AbstratoContainer {
 				btnSelecao.click();
 				return;
 			}
-
 			reabrirArquivo();
 		}
 
@@ -270,7 +267,6 @@ public class ObjetoContainer extends AbstratoContainer {
 			if (!Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
 				return;
 			}
-
 			if (arquivo != null) {
 				objetoSuperficie.salvar(arquivo, getConexaoPadrao());
 				tituloTemporario = null;
@@ -283,10 +279,8 @@ public class ObjetoContainer extends AbstratoContainer {
 		protected void salvarComo() {
 			JFileChooser fileChooser = Util.criarFileChooser(arquivo, false);
 			int opcao = fileChooser.showSaveDialog(formulario);
-
 			if (opcao == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-
 				if (file != null) {
 					objetoSuperficie.salvar(file, getConexaoPadrao());
 					tituloTemporario = null;
@@ -316,11 +310,9 @@ public class ObjetoContainer extends AbstratoContainer {
 
 			private ButtonInfo() {
 				super("label.comparar", Icones.INFO);
-
 				addMenuItem(itemTotalAtual);
 				addMenuItem(true, itemComparaRec);
 				addMenuItem(true, excluirSemTabelaAcao);
-
 				totalAtualAcao.setActionListener(
 						e -> objetoSuperficie.atualizarTotal(getConexaoPadrao(), itemTotalAtual, labelStatus));
 				comparaRecAcao.setActionListener(
@@ -347,7 +339,6 @@ public class ObjetoContainer extends AbstratoContainer {
 			} else {
 				objetoFormulario.setTitle(arquivo.getName());
 			}
-
 			labelStatus.limpar();
 		}
 
@@ -370,7 +361,6 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (abortarFecharComESCSuperficie) {
 			objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
-
 		objetoSuperficie.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
 		btnSelecao.click();
 	}
@@ -379,7 +369,6 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (abortarFecharComESCSuperficie) {
 			objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
-
 		objetoSuperficie.exportarMetadadoRaiz(metadado);
 		btnSelecao.click();
 	}
@@ -388,33 +377,26 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (abortarFecharComESCSuperficie) {
 			objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		}
-
 		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
 		objetoSuperficie.abrir(coletor);
 		Conexao conexaoSel = null;
 		arquivo = file;
 		btnSelecao.click();
-
 		if (!Util.estaVazio(coletor.getSbConexao().toString())) {
 			conexaoFile = coletor.getSbConexao().toString();
-
 			for (int i = 0; i < comboConexao.getItemCount(); i++) {
 				Conexao c = comboConexao.getItemAt(i);
-
 				if (conexaoFile.equalsIgnoreCase(c.getNome())) {
 					conexaoSel = c;
 					break;
 				}
 			}
-
 			if (conexaoSel != null) {
 				comboConexao.setSelectedItem(conexaoSel);
 			}
 		}
-
 		Conexao conexao = getConexaoPadrao();
-
 		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
 			adicionarInternalFormulario(conexao, coletor, g, config);
 		}
@@ -424,13 +406,11 @@ public class ObjetoContainer extends AbstratoContainer {
 			InternalConfig config) {
 		for (InternalForm form : coletor.getForms()) {
 			Objeto instancia = null;
-
 			for (Objeto objeto : coletor.getObjetos()) {
 				if (form.getObjeto().equals(objeto.getId())) {
 					instancia = objeto;
 				}
 			}
-
 			if (instancia != null) {
 				Object[] array = InternalTransferidor.criarArray(conexao, instancia,
 						new Dimension(form.getLargura(), form.getAltura()), form.getApelido());
@@ -512,7 +492,6 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (objetoFormulario != null) {
 			return objetoFormulario;
 		}
-
 		return formulario;
 	}
 
@@ -576,7 +555,6 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (tituloTemporario != null) {
 			return tituloTemporario;
 		}
-
 		return arquivo != null ? arquivo.getName() : Constantes.NOVO;
 	}
 

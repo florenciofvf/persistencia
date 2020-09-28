@@ -42,7 +42,6 @@ public class InstrucaoContainer extends Panel {
 	private void montarLayout() {
 		textArea.setToolTipText(Mensagens.getString("hint.instrucoes"));
 		add(BorderLayout.NORTH, toolbar);
-
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, textFieldNome);
 		panel.add(BorderLayout.CENTER, textArea);

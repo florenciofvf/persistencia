@@ -48,7 +48,6 @@ public class Relacao {
 		Objects.requireNonNull(origem);
 		this.destino = destino;
 		this.origem = origem;
-
 		if (origem == destino || origem.equals(destino)) {
 			throw new IllegalStateException();
 		}
@@ -76,7 +75,6 @@ public class Relacao {
 
 	public void setCorFonte(Color corFonte) {
 		this.corFonte = corFonte;
-
 		if (this.corFonte == null) {
 			this.corFonte = COR_PADRAO_FONTE;
 		}
@@ -112,7 +110,6 @@ public class Relacao {
 
 	public void setCor(Color cor) {
 		this.cor = cor;
-
 		if (this.cor == null) {
 			this.cor = COR_PADRAO;
 		}
@@ -122,7 +119,6 @@ public class Relacao {
 		if (descricao == null) {
 			descricao = Constantes.VAZIO;
 		}
-
 		return descricao;
 	}
 
@@ -143,13 +139,11 @@ public class Relacao {
 		if (obj == this) {
 			return true;
 		}
-
 		if (obj instanceof Relacao) {
 			Relacao outro = (Relacao) obj;
 			return (origem.equals(outro.origem) && destino.equals(outro.destino))
 					|| (origem.equals(outro.destino) && destino.equals(outro.origem));
 		}
-
 		return false;
 	}
 
@@ -169,13 +163,11 @@ public class Relacao {
 		if (!origem.visivel || !destino.visivel) {
 			return false;
 		}
-
 		int raio = Objeto.DIAMETRO / 2;
 		int x1 = origem.x + raio;
 		int y1 = origem.y + raio;
 		int x2 = destino.x + raio;
 		int y2 = destino.y + raio;
-
 		return quebrado ? contemQuebrada(posX, posY, x1, y1, x2, y2) : contemVetor(posX, posY, x1, y1, x2, y2);
 	}
 
@@ -183,16 +175,12 @@ public class Relacao {
 		if (x1 == x2 || y1 == y2) {
 			return contemVetor(posX, posY, x1, y1, x2, y2);
 		}
-
 		int[] x1x2Aux = x1x2(x1, x2);
 		int[] y1y2Aux = y1y2(y1, y2);
-
 		if (contemV(posX, posY, y1y2Aux[0], y1y2Aux[1], x1x2Aux[0])) {
 			return true;
 		}
-
 		int y = 0;
-
 		if (x1 < x2) {
 			if (y1 < y2) {
 				y = y1y2Aux[1];
@@ -206,7 +194,6 @@ public class Relacao {
 				y = y1y2Aux[1];
 			}
 		}
-
 		return contemH(posX, posY, x1x2Aux[0], x1x2Aux[1], y);
 	}
 
@@ -214,21 +201,16 @@ public class Relacao {
 		int x = x2 - x1;
 		int y = y2 - y1;
 		double h = Math.sqrt((double) (x * x + y * y));
-
 		int xPos = posX - x1;
 		int yPos = posY - y1;
 		double hPos = Math.sqrt((double) (xPos * xPos + yPos * yPos));
-
 		if (hPos > h) {
 			return false;
 		}
-
 		double auxX = x / h;
 		double auxY = y / h;
-
 		int auxX1 = (int) (auxX * hPos);
 		int auxY1 = (int) (auxY * hPos);
-
 		return comprimento(auxX1, auxY1, xPos, yPos) < 9;
 	}
 
@@ -264,13 +246,10 @@ public class Relacao {
 
 	public Objeto criarObjetoMeio() {
 		Objeto objeto = new Objeto();
-
 		int difX = (destino.x - origem.x) / 2;
 		int difY = (destino.y - origem.y) / 2;
-
 		objeto.x = origem.x + difX;
 		objeto.y = origem.y + difY;
-
 		return objeto;
 	}
 
@@ -308,35 +287,27 @@ public class Relacao {
 		if (!origem.visivel || !destino.visivel) {
 			return;
 		}
-
 		int raio = Objeto.DIAMETRO / 2;
 		int meta = raio / 2;
-
 		g2.setColor(cor);
-
 		if (selecionado) {
 			g2.setStroke(Constantes.STROKE_PADRAO);
 			g2.setColor(Color.CYAN);
 		}
-
 		int x1 = origem.x + raio;
 		int y1 = origem.y + raio;
 		int x2 = destino.x + raio;
 		int y2 = destino.y + raio;
-
 		if (quebrado) {
 			desenharLinhaQuebrada(g2, x1, y1, x2, y2);
 		} else {
 			g2.drawLine(x1, y1, x2, y2);
 		}
-
 		desenharPontos(g2, x1, y1, x2, y2, raio, meta);
-
 		if (desenharDescricao && descricao != null) {
 			g2.setColor(corFonte);
 			g2.drawString(descricao, x1 + deslocamentoXDesc, y1 + deslocamentoYDesc);
 		}
-
 		if (selecionado) {
 			g2.setStroke(stroke);
 		}
@@ -348,9 +319,7 @@ public class Relacao {
 		} else {
 			int[] x1x2Aux = x1x2(x1, x2);
 			int[] y1y2Aux = y1y2(y1, y2);
-
 			g2.drawLine(x1x2Aux[0], y1y2Aux[0], x1x2Aux[0], y1y2Aux[1]);
-
 			if (x1 < x2) {
 				if (y1 < y2) {
 					g2.drawLine(x1x2Aux[0], y1y2Aux[1], x1x2Aux[1], y1y2Aux[1]);
@@ -374,14 +343,12 @@ public class Relacao {
 			double h = Math.sqrt((double) (x * x + y * y));
 			double auxX = x / h;
 			double auxY = y / h;
-
 			if (pontoOrigem) {
 				int valor = origem.isTransparente() ? meta : raio;
 				int auxX1 = (int) (auxX * valor);
 				int auxY1 = (int) (auxY * valor);
 				g2.fillOval(x1 + auxX1 - m, y1 + auxY1 - m, diametro, diametro);
 			}
-
 			if (pontoDestino) {
 				int valor = destino.isTransparente() ? meta : raio;
 				int auxX2 = (int) (auxX * (h - valor));

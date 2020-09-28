@@ -118,7 +118,6 @@ public class Objeto implements Runnable {
 
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
-
 		o.selectAlternativo = selectAlternativo;
 		o.tabelaBuscaAuto = tabelaBuscaAuto;
 		o.buscaAutomatica = buscaAutomatica;
@@ -148,11 +147,9 @@ public class Objeto implements Runnable {
 		o.ccsc = ccsc;
 		o.bpnt = bpnt;
 		o.setId(id);
-
 		for (Instrucao i : instrucoes) {
 			o.addInstrucao(i.clonar());
 		}
-
 		return o;
 	}
 
@@ -188,9 +185,7 @@ public class Objeto implements Runnable {
 		chaves = attr.getValue("chaves");
 		joins = attr.getValue("joins");
 		id = attr.getValue("id");
-
 		String strIntervalo = attr.getValue("intervalo");
-
 		if (!Util.estaVazio(strIntervalo)) {
 			intervalo = Integer.parseInt(strIntervalo);
 		}
@@ -231,23 +226,19 @@ public class Objeto implements Runnable {
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag();
-
 		if (!Util.estaVazio(getDescricao())) {
 			util.abrirTag2("desc");
 			util.conteudo(Util.escapar(getDescricao())).ql();
 			util.finalizarTag("desc");
 		}
-
 		if (!Util.estaVazio(getBuscaAutomatica())) {
 			util.abrirTag2("buscaAutomatica");
 			util.conteudo(Util.escapar(getBuscaAutomatica())).ql();
 			util.finalizarTag("buscaAutomatica");
 		}
-
 		for (Instrucao i : instrucoes) {
 			i.salvar(util);
 		}
-
 		util.finalizarTag("objeto");
 	}
 
@@ -255,10 +246,8 @@ public class Objeto implements Runnable {
 		if (!visivel) {
 			return;
 		}
-
 		Composite composite = g2.getComposite();
 		Shape shape = g2.getClip();
-
 		final int raio = DIAMETRO / 2;
 		final int margem2 = 2;
 		final int margem3 = 3;
@@ -269,41 +258,32 @@ public class Objeto implements Runnable {
 		final int altura2 = altura - margem4;
 		final int altura22 = altura2 / 2;
 		final int altura3 = altura2 / 3;
-
 		if (!transparente) {
 			g2.setColor(Color.DARK_GRAY);
 			g2.fillRoundRect(x, y, largura + 1, altura + 1, DIAMETRO, DIAMETRO);
-
 			Color inicio = cor.darker();
 			Color finall = cor.brighter();
 			Paint paint = new GradientPaint(x, y, inicio, x, (float) (y + altura), finall, false);
 			g2.setPaint(paint);
 			g2.fillRoundRect(x, y, largura, altura, DIAMETRO, DIAMETRO);
-
 			inicio = Color.WHITE;
 			paint = new GradientPaint(x, (float) (y + margem3), inicio, x, (float) (y + margem3 + altura22), finall,
 					false);
-
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
 			g2.setPaint(paint);
-
 			g2.setClip(new RoundRectangle2D.Float((float) (x + margem3), (float) (y + margem3), (float) (largura2 - 2),
 					altura22, altura3, altura3));
 			g2.fillRoundRect(x + margem3, y + margem3, largura2 - 2, altura2, altura2, altura2);
-
 			g2.setComposite(composite);
 			g2.setClip(shape);
 		}
-
 		if (icon != null) {
 			icon.paintIcon(c, g2, x + raio - 8, y + raio - 8);
 		}
-
 		if (desenharId) {
 			g2.setColor(corFonte);
 			g2.drawString(id, x + deslocamentoXId, y + deslocamentoYId);
 		}
-
 		if (selecionado) {
 			g2.setStroke(Constantes.STROKE_PADRAO);
 			g2.setColor(Color.CYAN);
@@ -342,7 +322,6 @@ public class Objeto implements Runnable {
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
-
 		if (!this.selecionado) {
 			controlado = false;
 		}
@@ -354,7 +333,6 @@ public class Objeto implements Runnable {
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
-
 		if (!Util.estaVazio(complemento)) {
 			complementos.add(complemento);
 		}
@@ -398,7 +376,6 @@ public class Objeto implements Runnable {
 		if (instrucoes.isEmpty()) {
 			return null;
 		}
-
 		return instrucoes.get(instrucoes.size() - 1);
 	}
 
@@ -428,7 +405,6 @@ public class Objeto implements Runnable {
 
 	public void setIcone(String icone) {
 		this.icone = icone;
-
 		if (Util.estaVazio(this.icone)) {
 			this.icone = Constantes.VAZIO;
 		} else {
@@ -445,7 +421,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(finalConsulta)) {
 			finalConsulta = Constantes.VAZIO;
 		}
-
 		return finalConsulta;
 	}
 
@@ -457,7 +432,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(complemento)) {
 			complemento = Constantes.VAZIO;
 		}
-
 		return complemento;
 	}
 
@@ -465,7 +439,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(chaves)) {
 			chaves = Constantes.VAZIO;
 		}
-
 		return chaves;
 	}
 
@@ -473,7 +446,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(mapeamento)) {
 			mapeamento = Constantes.VAZIO;
 		}
-
 		return mapeamento;
 	}
 
@@ -485,17 +457,14 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(sequencias)) {
 			sequencias = Constantes.VAZIO;
 		}
-
 		return sequencias;
 	}
 
 	public String[] getChavesArray() {
 		String chavesTmp = getChaves();
-
 		if (Util.estaVazio(chavesTmp)) {
 			return Constantes.ARRAY_LENGTH_ZERO;
 		}
-
 		return chavesTmp.trim().split(",");
 	}
 
@@ -503,13 +472,11 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(tabela)) {
 			tabela = Constantes.VAZIO;
 		}
-
 		return (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + getPrefixoNomeTabela() + tabela;
 	}
 
 	public void select(StringBuilder sb, Conexao conexao) {
 		String sel = getSelectAlternativo();
-
 		if (Util.estaVazio(sel)) {
 			sb.append("SELECT * FROM " + getTabelaEsquema(conexao.getEsquema()));
 		} else {
@@ -520,22 +487,17 @@ public class Objeto implements Runnable {
 	public void joins(StringBuilder sb, Conexao conexao, String prefixoNomeTabela) {
 		String tabs = getTabelas();
 		String jois = getJoins();
-
 		if (Util.estaVazio(tabs) || Util.estaVazio(jois)) {
 			return;
 		}
-
 		String[] tabsArray = tabs.split(",");
 		String[] joisArray = jois.split(",");
-
 		if (tabsArray.length != joisArray.length) {
 			return;
 		}
-
 		for (int i = 0; i < tabsArray.length; i++) {
 			String tab = tabsArray[i];
 			String on = joisArray[i];
-
 			sb.append(" INNER JOIN");
 			sb.append(" " + PersistenciaModelo.prefixarEsquema(conexao, prefixoNomeTabela, tab));
 			sb.append(" " + on);
@@ -549,11 +511,9 @@ public class Objeto implements Runnable {
 
 	public String getNomeSequencia(String nomeColuna) {
 		String resp = null;
-
 		if (nomeColuna != null) {
 			resp = getMapaSequencias().get(nomeColuna.trim().toLowerCase());
 		}
-
 		return resp;
 	}
 
@@ -561,7 +521,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(tabela)) {
 			tabela = Constantes.VAZIO;
 		}
-
 		return tabela;
 	}
 
@@ -569,7 +528,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(selectAlternativo)) {
 			selectAlternativo = Constantes.VAZIO;
 		}
-
 		return selectAlternativo;
 	}
 
@@ -577,7 +535,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(tabelas)) {
 			tabelas = Constantes.VAZIO;
 		}
-
 		return tabelas;
 	}
 
@@ -585,7 +542,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(joins)) {
 			joins = Constantes.VAZIO;
 		}
-
 		return joins;
 	}
 
@@ -627,7 +583,6 @@ public class Objeto implements Runnable {
 		if (descricao == null) {
 			descricao = Constantes.VAZIO;
 		}
-
 		return descricao;
 	}
 
@@ -653,7 +608,6 @@ public class Objeto implements Runnable {
 
 	public void setCorFonte(Color corFonte) {
 		this.corFonte = corFonte;
-
 		if (this.corFonte == null) {
 			this.corFonte = COR_PADRAO_FONTE;
 		}
@@ -661,7 +615,6 @@ public class Objeto implements Runnable {
 
 	public void setCor(Color cor) {
 		this.cor = cor;
-
 		if (this.cor == null) {
 			this.cor = COR_PADRAO;
 		}
@@ -671,7 +624,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(buscaAutomatica)) {
 			buscaAutomatica = Constantes.VAZIO;
 		}
-
 		return buscaAutomatica;
 	}
 
@@ -679,7 +631,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(linkAutomatico)) {
 			linkAutomatico = Constantes.VAZIO;
 		}
-
 		return linkAutomatico;
 	}
 
@@ -687,7 +638,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(chaveamento)) {
 			chaveamento = Constantes.VAZIO;
 		}
-
 		return chaveamento;
 	}
 
@@ -712,12 +662,10 @@ public class Objeto implements Runnable {
 		if (obj == this) {
 			return true;
 		}
-
 		if (obj instanceof Objeto) {
 			Objeto outro = (Objeto) obj;
 			return id.equals(outro.id);
 		}
-
 		return false;
 	}
 
@@ -749,7 +697,6 @@ public class Objeto implements Runnable {
 		if (intervalo < 500) {
 			intervalo = 500;
 		}
-
 		return intervalo;
 	}
 
@@ -769,11 +716,9 @@ public class Objeto implements Runnable {
 	public void run() {
 		while (!Thread.currentThread().isInterrupted()) {
 			transparente = !transparente;
-
 			if (listener != null) {
 				listener.repaint(x, y, DIAMETRO, DIAMETRO);
 			}
-
 			try {
 				Thread.sleep(getIntervalo());
 			} catch (InterruptedException e) {
@@ -907,7 +852,6 @@ public class Objeto implements Runnable {
 		if (mapaSequencias == null) {
 			mapaSequencias = new HashMap<>();
 		}
-
 		return mapaSequencias;
 	}
 
@@ -919,7 +863,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(prefixoNomeTabela)) {
 			prefixoNomeTabela = Constantes.VAZIO;
 		}
-
 		return prefixoNomeTabela;
 	}
 
@@ -927,7 +870,6 @@ public class Objeto implements Runnable {
 		if (bpnt) {
 			return;
 		}
-
 		this.prefixoNomeTabela = prefixoNomeTabela;
 	}
 
@@ -947,7 +889,6 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(arquivo)) {
 			arquivo = Constantes.VAZIO;
 		}
-
 		return arquivo;
 	}
 

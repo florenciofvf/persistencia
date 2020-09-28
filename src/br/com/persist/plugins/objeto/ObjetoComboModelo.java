@@ -12,7 +12,6 @@ public class ObjetoComboModelo extends AbstractListModel<Objeto> implements Comb
 
 	public ObjetoComboModelo(List<Objeto> objetos) {
 		this.objetos = objetos;
-
 		if (getSize() > 0) {
 			selecionado = getElementAt(0);
 		}
@@ -28,7 +27,6 @@ public class ObjetoComboModelo extends AbstractListModel<Objeto> implements Comb
 		if (index >= 0 && index < objetos.size()) {
 			return objetos.get(index);
 		}
-
 		return null;
 	}
 
