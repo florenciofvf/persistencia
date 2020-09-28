@@ -36,10 +36,8 @@ public class ConexaoProvedor {
 		if (indice > 0 && indice < getSize()) {
 			Conexao c = lista.remove(indice);
 			lista.add(0, c);
-
 			return 0;
 		}
-
 		return -1;
 	}
 
@@ -48,10 +46,8 @@ public class ConexaoProvedor {
 			Conexao c = lista.remove(indice);
 			indice--;
 			lista.add(indice, c);
-
 			return indice;
 		}
-
 		return -1;
 	}
 
@@ -60,10 +56,8 @@ public class ConexaoProvedor {
 			Conexao c = lista.remove(indice);
 			indice++;
 			lista.add(indice, c);
-
 			return indice;
 		}
-
 		return -1;
 	}
 
@@ -71,7 +65,6 @@ public class ConexaoProvedor {
 		if (indice >= 0 && indice < getSize()) {
 			return lista.get(indice);
 		}
-
 		return null;
 	}
 
@@ -81,7 +74,6 @@ public class ConexaoProvedor {
 				return c;
 			}
 		}
-
 		return null;
 	}
 
@@ -92,7 +84,6 @@ public class ConexaoProvedor {
 				return i;
 			}
 		}
-
 		return -1;
 	}
 
@@ -112,20 +103,16 @@ public class ConexaoProvedor {
 		if (contem(conexao)) {
 			return;
 		}
-
 		lista.add(conexao);
 	}
 
 	public static void inicializar() {
 		lista.clear();
-
 		try {
 			ConexaoColetor coletor = new ConexaoColetor();
-
 			if (file.exists() && file.canRead()) {
 				XML.processar(file, new ConexaoHandler(coletor));
 			}
-
 			lista.addAll(coletor.getConexoes());
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
@@ -136,15 +123,12 @@ public class ConexaoProvedor {
 		try {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
-
 			util.abrirTag2(Constantes.CONEXOES);
-
 			for (Conexao c : lista) {
 				if (c.isValido()) {
 					c.salvar(util);
 				}
 			}
-
 			util.finalizarTag(Constantes.CONEXOES);
 			util.close();
 		} catch (Exception e) {
@@ -155,14 +139,11 @@ public class ConexaoProvedor {
 	public static synchronized Connection getConnection(Conexao conexao) throws ConexaoException {
 		try {
 			Connection conn = CONEXOES.get(conexao);
-
 			if (conn == null || conn.isClosed()) {
 				conn = conexao.getConnection();
 				CONEXOES.put(conexao, conn);
 			}
-
 			Preferencias.setErroCriarConnection(false);
-
 			return conn;
 		} catch (Exception ex) {
 			Preferencias.setErroCriarConnection(true);
@@ -172,7 +153,6 @@ public class ConexaoProvedor {
 
 	public static synchronized Connection getConnection2(Conexao conexao) throws ConexaoException {
 		Connection conn = CONEXOES.get(conexao);
-
 		if (conn != null) {
 			try {
 				fecharConexao(conn);
@@ -181,7 +161,6 @@ public class ConexaoProvedor {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
-
 		return getConnection(conexao);
 	}
 
@@ -203,7 +182,6 @@ public class ConexaoProvedor {
 
 	public static void fechar(Conexao conexao) {
 		Connection conn = CONEXOES.get(conexao);
-
 		if (conn != null) {
 			try {
 				fecharConexao(conn);

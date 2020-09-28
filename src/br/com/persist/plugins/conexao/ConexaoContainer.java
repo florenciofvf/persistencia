@@ -100,13 +100,11 @@ public class ConexaoContainer extends AbstratoContainer {
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
 					COPIAR, APLICAR);
-
 			addButton(true, descerAcao);
 			addButton(subirAcao);
 			addButton(true, conectaAcao);
 			addButton(true, infoAcao);
 			addButton(true, desconectaAcao);
-
 			eventos();
 		}
 
@@ -115,7 +113,6 @@ public class ConexaoContainer extends AbstratoContainer {
 			conectaAcao.setActionListener(e -> conectar());
 			descerAcao.setActionListener(e -> descer());
 			subirAcao.setActionListener(e -> subir());
-
 			desconectaAcao.setActionListener(e -> {
 				Map<String, Object> args = new HashMap<>();
 				args.put(FormularioEvento.FECHAR_CONEXOES, true);
@@ -129,9 +126,7 @@ public class ConexaoContainer extends AbstratoContainer {
 			Map<String, Object> args = new HashMap<>();
 			args.put(ConexaoEvento.COLETAR_INFO_CONEXAO, lista);
 			formulario.processar(args);
-
 			StringBuilder builder = new StringBuilder();
-
 			for (ConexaoInfo info : lista) {
 				builder.append("PAGINA: " + info.getNomeAba() + Constantes.QL);
 				if (!Util.estaVazio(info.getConexaoFile())) {
@@ -140,11 +135,9 @@ public class ConexaoContainer extends AbstratoContainer {
 				builder.append("ATUAL: " + info.getConexaoAtual() + Constantes.QL);
 				builder.append(Constantes.QL);
 			}
-
 			if (builder.length() > 0) {
 				builder.insert(0, "TOTAL = " + lista.size() + Constantes.QL + Constantes.QL);
 			}
-
 			Util.mensagem(ConexaoContainer.this, builder.toString());
 		}
 
@@ -152,7 +145,6 @@ public class ConexaoContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(ConexaoContainer.this)) {
 				ConexaoFormulario.criar(formulario, ConexaoContainer.this);
-
 			} else if (conexaoDialogo != null) {
 				conexaoDialogo.excluirContainer();
 				ConexaoFormulario.criar(formulario, ConexaoContainer.this);
@@ -164,7 +156,6 @@ public class ConexaoContainer extends AbstratoContainer {
 			if (conexaoFormulario != null) {
 				conexaoFormulario.excluirContainer();
 				formulario.adicionarPagina(ConexaoContainer.this);
-
 			} else if (conexaoDialogo != null) {
 				conexaoDialogo.excluirContainer();
 				formulario.adicionarPagina(ConexaoContainer.this);
@@ -205,7 +196,6 @@ public class ConexaoContainer extends AbstratoContainer {
 						Mensagens.getString("label.indentificador_ja_existente") + " " + con.getNome());
 				return;
 			}
-
 			ConexaoProvedor.adicionar(con);
 			conexaoModelo.fireTableDataChanged();
 			ajustarTabela();
@@ -214,11 +204,9 @@ public class ConexaoContainer extends AbstratoContainer {
 		private String getValor(String padrao) {
 			Object resp = Util.getValorInputDialog(ConexaoContainer.this, "label.id",
 					Mensagens.getString("label.nome_conexao"), padrao);
-
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return null;
 			}
-
 			return resp.toString();
 		}
 
@@ -237,7 +225,6 @@ public class ConexaoContainer extends AbstratoContainer {
 		@Override
 		protected void copiar() {
 			int[] linhas = tabela.getSelectedRows();
-
 			if (linhas != null) {
 				for (int i : linhas) {
 					Conexao c = ConexaoProvedor.getConexao(i);
@@ -252,7 +239,6 @@ public class ConexaoContainer extends AbstratoContainer {
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-
 			if (linhas != null && linhas.length == 1) {
 				Conexao c = ConexaoProvedor.getConexao(linhas[0]);
 				Map<String, Object> map = new HashMap<>();
@@ -264,11 +250,9 @@ public class ConexaoContainer extends AbstratoContainer {
 		private void subir() {
 			int[] linhas = tabela.getSelectedRows();
 			int registros = conexaoModelo.getRowCount();
-
 			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] > 0) {
 				int i = ConexaoProvedor.anterior(linhas[0]);
 				conexaoModelo.fireTableDataChanged();
-
 				if (i != -1) {
 					tabela.setRowSelectionInterval(i, i);
 				}
@@ -278,11 +262,9 @@ public class ConexaoContainer extends AbstratoContainer {
 		private void descer() {
 			int[] linhas = tabela.getSelectedRows();
 			int registros = conexaoModelo.getRowCount();
-
 			if (linhas != null && linhas.length == 1 && registros > 1 && linhas[0] + 1 < registros) {
 				int i = ConexaoProvedor.proximo(linhas[0]);
 				conexaoModelo.fireTableDataChanged();
-
 				if (i != -1) {
 					tabela.setRowSelectionInterval(i, i);
 				}
@@ -291,7 +273,6 @@ public class ConexaoContainer extends AbstratoContainer {
 
 		private void conectar() {
 			int[] linhas = tabela.getSelectedRows();
-
 			if (linhas != null && linhas.length == 1) {
 				try {
 					Conexao conexao = ConexaoProvedor.getConexao(linhas[0]);

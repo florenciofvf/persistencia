@@ -39,7 +39,6 @@ public class ConexaoEditorStatus extends JPanel implements TableCellEditor {
 		if (evento instanceof MouseEvent) {
 			return ((MouseEvent) evento).getClickCount() >= TOTAL_CLICKS;
 		}
-
 		return false;
 	}
 
@@ -47,20 +46,16 @@ public class ConexaoEditorStatus extends JPanel implements TableCellEditor {
 	public boolean shouldSelectCell(EventObject evento) {
 		if (evento instanceof MouseEvent) {
 			MouseEvent mouseEvent = (MouseEvent) evento;
-
 			if (mouseEvent.getClickCount() >= TOTAL_CLICKS && tabela != null) {
 				TableModel model = tabela.getModel();
-
 				if (model instanceof ConexaoModelo) {
 					Conexao conexao = ConexaoProvedor.getConexao(linha);
-
 					try {
 						ConexaoProvedor.getConnection2(conexao);
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage(Constantes.ERRO, ex, tabela);
 					}
 				}
-
 				stopCellEditing();
 			}
 		}
@@ -71,18 +66,15 @@ public class ConexaoEditorStatus extends JPanel implements TableCellEditor {
 	@Override
 	public boolean stopCellEditing() {
 		List<CellEditorListener> lista = new ArrayList<>(listeners);
-
 		for (CellEditorListener listener : lista) {
 			listener.editingStopped(changeEvent);
 		}
-
 		return true;
 	}
 
 	@Override
 	public void cancelCellEditing() {
 		List<CellEditorListener> lista = new ArrayList<>(listeners);
-
 		for (CellEditorListener listener : lista) {
 			listener.editingCanceled(changeEvent);
 		}

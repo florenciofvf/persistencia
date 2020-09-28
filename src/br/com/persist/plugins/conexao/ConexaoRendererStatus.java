@@ -21,15 +21,11 @@ public class ConexaoRendererStatus extends DefaultTableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
 		TableModel model = table.getModel();
-
 		if (model instanceof ConexaoModelo) {
 			Conexao conexao = ConexaoProvedor.getConexao(row);
-
 			try {
 				Connection conn = ConexaoProvedor.get(conexao);
-
 				if (conn == null || conn.isClosed()) {
 					setIcon(Icones.BANCO_DESCONECTA);
 				} else {
@@ -39,7 +35,6 @@ public class ConexaoRendererStatus extends DefaultTableCellRenderer {
 				Util.stackTraceAndMessage("ERRO STATUS CONN", ex, this);
 			}
 		}
-
 		return this;
 	}
 }

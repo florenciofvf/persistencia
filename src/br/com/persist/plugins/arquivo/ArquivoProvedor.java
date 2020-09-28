@@ -13,7 +13,6 @@ public class ArquivoProvedor {
 		if (file == null) {
 			return Constantes.VAZIO;
 		}
-
 		return montarAbsolutoRelativo(ArquivoModelo.FILE, file);
 	}
 
@@ -21,17 +20,13 @@ public class ArquivoProvedor {
 		String absolutoDiretorioArquivos = diretorioArquivos.getAbsolutePath();
 		String absolutoFile = file.getAbsolutePath();
 		String nomeArquivo = file.getName();
-
 		int pos = absolutoFile.indexOf(absolutoDiretorioArquivos);
-
 		if (pos != -1) {
 			String restante = absolutoFile.substring(pos + absolutoDiretorioArquivos.length());
 			return Util.replaceAll(restante, Constantes.SEPARADOR, Constantes.SEP);
-
 		} else if (nomeArquivo.startsWith(Constantes.III)) {
 			return nomeArquivo;
 		}
-
 		return absolutoFile;
 	}
 
@@ -39,12 +34,10 @@ public class ArquivoProvedor {
 		if (Util.estaVazio(stringPersistencia)) {
 			return null;
 		}
-
 		if (stringPersistencia.startsWith(Constantes.SEP)) {
 			stringPersistencia = Util.replaceAll(stringPersistencia, Constantes.SEP, Constantes.SEPARADOR);
 			return new File(ArquivoModelo.FILE.getAbsolutePath() + stringPersistencia);
 		}
-
 		return new File(stringPersistencia);
 	}
 }

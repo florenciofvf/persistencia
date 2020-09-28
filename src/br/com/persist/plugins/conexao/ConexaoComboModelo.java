@@ -12,7 +12,6 @@ public class ConexaoComboModelo extends AbstractListModel<Conexao> implements Co
 
 	public ConexaoComboModelo(List<Conexao> lista) {
 		this.lista = lista;
-
 		if (getSize() > 0) {
 			selecionado = getElementAt(0);
 		}
@@ -32,7 +31,6 @@ public class ConexaoComboModelo extends AbstractListModel<Conexao> implements Co
 		if (index >= 0 && index < lista.size()) {
 			return lista.get(index);
 		}
-
 		return null;
 	}
 

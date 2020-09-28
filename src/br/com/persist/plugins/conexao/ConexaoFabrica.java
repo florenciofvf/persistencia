@@ -48,7 +48,6 @@ public class ConexaoFabrica extends AbstratoFabricaContainer {
 		@Override
 		public void processar(Formulario formulario, Map<String, Object> args) {
 			Boolean fechar = (Boolean) args.get(FormularioEvento.FECHAR_CONEXOES);
-
 			if (Boolean.TRUE.equals(fechar)) {
 				try {
 					ConexaoProvedor.fecharConexoes();
@@ -71,7 +70,6 @@ public class ConexaoFabrica extends AbstratoFabricaContainer {
 
 		private MenuConexao(Formulario formulario) {
 			super(Constantes.LABEL_CONEXAO, Icones.BANCO);
-
 			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new ConexaoContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> ConexaoFormulario.criar(formulario));
 			dialogoAcao.setActionListener(e -> ConexaoDialogo.criar(formulario));

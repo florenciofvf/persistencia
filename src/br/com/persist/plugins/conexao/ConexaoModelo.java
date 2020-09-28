@@ -37,7 +37,6 @@ public class ConexaoModelo extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Conexao c = ConexaoProvedor.getConexao(rowIndex);
-
 		switch (columnIndex) {
 		case 1:
 			return c.getNome();
@@ -66,7 +65,6 @@ public class ConexaoModelo extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		String valor = aValue == null ? Constantes.VAZIO : aValue.toString();
 		Conexao c = ConexaoProvedor.getConexao(rowIndex);
-
 		switch (columnIndex) {
 		case 2:
 			c.setDriver(valor);

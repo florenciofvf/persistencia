@@ -28,7 +28,6 @@ public class Arquivo {
 
 	public void inflar() {
 		getFilhos();
-
 		for (Arquivo a : filhos) {
 			a.inflar();
 		}
@@ -38,10 +37,8 @@ public class Arquivo {
 		for (Arquivo a : filhos) {
 			a.excluir();
 		}
-
 		if (isFile() || isDirectory()) {
 			Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
-
 			try {
 				Files.delete(path);
 			} catch (IOException e) {
@@ -54,11 +51,9 @@ public class Arquivo {
 		try {
 			File destino = new File(file.getParent(), nome);
 			boolean resp = file.renameTo(destino);
-
 			if (resp) {
 				file = destino;
 			}
-
 			return resp;
 		} catch (Exception e) {
 			return false;
@@ -69,7 +64,6 @@ public class Arquivo {
 		if (isFile()) {
 			lista.add(this);
 		}
-
 		for (Arquivo a : filhos) {
 			a.listar(lista);
 		}
@@ -79,7 +73,6 @@ public class Arquivo {
 		if (!processado) {
 			processar();
 		}
-
 		return filhos;
 	}
 
@@ -106,18 +99,15 @@ public class Arquivo {
 	private void processar() {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
-
 			if (files != null) {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 			}
-
 			for (File f : files) {
 				Arquivo arq = new Arquivo(f);
 				filhos.add(arq);
 				arq.pai = this;
 			}
 		}
-
 		processado = true;
 	}
 

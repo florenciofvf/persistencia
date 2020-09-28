@@ -77,7 +77,6 @@ public class Conexao {
 
 	public Conexao clonar(String novoNome) {
 		Conexao c = new Conexao(novoNome);
-
 		c.inicioComplemento = inicioComplemento;
 		c.finalComplemento = finalComplemento;
 		c.urlBanco = urlBanco;
@@ -86,7 +85,6 @@ public class Conexao {
 		c.usuario = usuario;
 		c.driver = driver;
 		c.senha = senha;
-
 		return c;
 	}
 
@@ -121,7 +119,6 @@ public class Conexao {
 			Conexao c = (Conexao) obj;
 			return nome.equals(c.nome);
 		}
-
 		return false;
 	}
 

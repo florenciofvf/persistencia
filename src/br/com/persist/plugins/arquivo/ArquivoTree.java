@@ -40,15 +40,12 @@ public class ArquivoTree extends Tree {
 
 	public Arquivo getObjetoSelecionado() {
 		TreePath path = getSelectionPath();
-
 		if (path == null) {
 			return null;
 		}
-
 		if (path.getLastPathComponent() instanceof Arquivo) {
 			return (Arquivo) path.getLastPathComponent();
 		}
-
 		return null;
 	}
 
@@ -60,7 +57,6 @@ public class ArquivoTree extends Tree {
 
 	public void excluirSelecionado() {
 		Arquivo selecionado = getObjetoSelecionado();
-
 		if (selecionado != null) {
 			ArquivoTreeUtil.excluirEstrutura(this, selecionado);
 		}
@@ -90,27 +86,21 @@ public class ArquivoTree extends Tree {
 
 		private void processar(MouseEvent e) {
 			popupTrigger = false;
-
 			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
 				return;
 			}
-
 			TreePath arquivoClicado = getClosestPathForLocation(e.getX(), e.getY());
 			TreePath arquivoSelecionado = getSelectionPath();
 			popupTrigger = true;
-
 			if (arquivoClicado == null || arquivoSelecionado == null) {
 				setSelectionPath(null);
 				return;
 			}
-
 			Rectangle rectangle = getPathBounds(arquivoClicado);
-
 			if (rectangle == null || !rectangle.contains(e.getX(), e.getY())) {
 				setSelectionPath(null);
 				return;
 			}
-
 			if (arquivoClicado.equals(arquivoSelecionado)) {
 				if (arquivoSelecionado.getLastPathComponent() instanceof Arquivo) {
 					Arquivo arquivo = (Arquivo) arquivoSelecionado.getLastPathComponent();
@@ -129,19 +119,15 @@ public class ArquivoTree extends Tree {
 			if (popupTrigger) {
 				return;
 			}
-
 			if (e.getClickCount() >= Constantes.DOIS) {
 				ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this));
 			} else {
 				TreePath pathClicado = getClosestPathForLocation(e.getX(), e.getY());
-
 				if (pathClicado != null) {
 					Arquivo arquivo = (Arquivo) pathClicado.getLastPathComponent();
-
 					if (arquivo == null || !arquivo.isFile()) {
 						return;
 					}
-
 					ouvintes.forEach(o -> o.clickArquivo(ArquivoTree.this));
 				}
 			}
@@ -166,7 +152,6 @@ public class ArquivoTree extends Tree {
 			addMenuItem(true, fecharAcao);
 			addMenuItem(true, excluirAcao);
 			addMenuItem(true, atualizarAcao);
-
 			selecionarAcao.setActionListener(e -> ouvintes.forEach(o -> o.selecionarArquivo(ArquivoTree.this)));
 			atualizarAcao.setActionListener(e -> ouvintes.forEach(o -> o.atualizarArquivo(ArquivoTree.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTree.this)));
@@ -190,7 +175,6 @@ public class ArquivoTree extends Tree {
 				super("label.abrir", Icones.ABRIR, false);
 				addSeparator();
 				addMenuItem(diretorioAcao);
-
 				formularioAcao
 						.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFormulario(ArquivoTree.this)));
 				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this)));

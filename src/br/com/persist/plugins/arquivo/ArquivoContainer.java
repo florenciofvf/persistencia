@@ -82,7 +82,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			chkSempreTopArq.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopArqu"));
 			chkLinkAuto.setToolTipText(Mensagens.getString("msg.arquivo.link_auto"));
 			chkDuplicar.setToolTipText(Mensagens.getString("msg.arquivo.duplicar"));
-
 			addButton(statusAcao);
 			add(chkSempreTopArq);
 			add(chkSempreTopForm);
@@ -90,7 +89,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			add(chkDuplicar);
 			add(fecharAcao);
 			chkLinkAuto.setSelected(true);
-
 			eventos();
 		}
 
@@ -142,10 +140,8 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		public void baixar() {
 			ArquivoModelo modelo = new ArquivoModelo();
 			arquivoTree.setModel(modelo);
-
 			List<Arquivo> lista = new ArrayList<>();
 			modelo.listar(lista);
-
 			for (Arquivo arquivo : lista) {
 				arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
 			}
@@ -153,22 +149,17 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 		private void statusArquivo() {
 			ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
-
 			List<Arquivo> lista = new ArrayList<>();
 			modelo.listar(lista);
-
 			for (Arquivo arquivo : lista) {
 				arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
-
 				if (arquivo.isArquivoAberto()) {
 					ArquivoTreeUtil.selecionarObjeto(arquivoTree, arquivo);
 				} else {
 					ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
 				}
 			}
-
 			arquivoTree.clearSelection();
-
 			for (Arquivo arquivo : lista) {
 				if (formulario.isAtivo(arquivo.getFile())) {
 					ArquivoTreeUtil.selecionarObjeto(arquivoTree, arquivo);
@@ -180,7 +171,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void abrirArquivoFormulario(ArquivoTree arauivoTree) {
 		Arquivo arquivo = arauivoTree.getObjetoSelecionado();
-
 		if (arquivo != null) {
 			formulario.processar(criarArgs(arquivo.getFile(), false));
 		}
@@ -196,17 +186,13 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void diretorioArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-
 		if (arquivo == null) {
 			return;
 		}
-
 		Desktop desktop = Desktop.getDesktop();
-
 		try {
 			File file = arquivo.getFile();
 			File parent = file.getParentFile();
-
 			if (parent != null) {
 				desktop.open(parent);
 			}
@@ -218,7 +204,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void abrirArquivoFichario(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-
 		if (arquivo != null) {
 			if (chkDuplicar.isSelected()) {
 				formulario.processar(criarArgs(arquivo.getFile(), true));
@@ -227,7 +212,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 					formulario.processar(criarArgs(arquivo.getFile(), true));
 				}
 			}
-
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
 			formulario.selecionarPagina(arquivo.getFile());
 			ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
@@ -237,12 +221,10 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void selecionarArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-
 		if (arquivo != null) {
 			formulario.selecionarPagina(arquivo.getFile());
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
 			ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
-
 			if (arquivo.isFile()) {
 				formulario.toFront();
 			}
@@ -252,12 +234,10 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void clickArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-
 		if (arquivo != null && chkLinkAuto.isSelected()) {
 			formulario.selecionarPagina(arquivo.getFile());
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
 			ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
-
 			if (arquivo.isFile()) {
 				formulario.toFront();
 			}
@@ -268,7 +248,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	public void excluirArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		File root = ArquivoTreeUtil.getRoot(this.arquivoTree);
-
 		if (arquivo != null && arquivo.getPai() != null && root != null && !root.equals(arquivo.getFile())
 				&& Util.confirmaExclusao(ArquivoContainer.this, false)) {
 			arquivo.excluir();
@@ -279,7 +258,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void atualizarArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-
 		if (arquivo != null) {
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
 			ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
@@ -289,7 +267,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void fecharArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-
 		if (arquivo != null) {
 			formulario.fecharArquivo(arquivo.getFile());
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
