@@ -103,7 +103,6 @@ public class ConsultaContainer extends AbstratoContainer {
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
 		split.setDividerLocation(Constantes.SIZE.height / 2);
-
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
 		add(BorderLayout.SOUTH, labelStatus);
@@ -124,14 +123,11 @@ public class ConsultaContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-
 		textArea.limpar();
-
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
-
 				while (linha != null) {
 					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
@@ -164,7 +160,6 @@ public class ConsultaContainer extends AbstratoContainer {
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, ATUALIZAR);
-
 			add(buttonCopiar);
 			add(true, comboConexao);
 		}
@@ -173,7 +168,6 @@ public class ConsultaContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(ConsultaContainer.this)) {
 				ConsultaFormulario.criar(formulario, ConsultaContainer.this);
-
 			} else if (consultaDialogo != null) {
 				consultaDialogo.excluirContainer();
 				ConsultaFormulario.criar(formulario, ConsultaContainer.this);
@@ -185,7 +179,6 @@ public class ConsultaContainer extends AbstratoContainer {
 			if (consultaFormulario != null) {
 				consultaFormulario.excluirContainer();
 				formulario.adicionarPagina(ConsultaContainer.this);
-
 			} else if (consultaDialogo != null) {
 				consultaDialogo.excluirContainer();
 				formulario.adicionarPagina(ConsultaContainer.this);
@@ -235,7 +228,6 @@ public class ConsultaContainer extends AbstratoContainer {
 			if (!Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {
 				return;
 			}
-
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
@@ -264,11 +256,9 @@ public class ConsultaContainer extends AbstratoContainer {
 
 			private ButtonCopiar() {
 				super("label.copiar_tabela", Icones.TABLE2);
-
 				addMenuItem(htmlAcao);
 				addMenuItem(true, tabularAcao);
 				addMenuItem(true, transfAcao);
-
 				transfAcao.setActionListener(e -> processar(0));
 				tabularAcao.setActionListener(e -> processar(1));
 				htmlAcao.setActionListener(e -> processar(2));
@@ -277,7 +267,6 @@ public class ConsultaContainer extends AbstratoContainer {
 			private void processar(int tipo) {
 				List<Integer> indices = Util.getIndicesLinha(tabela);
 				TransferidorTabular transferidor = Util.criarTransferidorTabular(tabela, indices);
-
 				if (transferidor != null) {
 					if (tipo == 0) {
 						Util.setTransfered(transferidor);
@@ -295,15 +284,11 @@ public class ConsultaContainer extends AbstratoContainer {
 			if (Util.estaVazio(textArea.getText())) {
 				return;
 			}
-
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 			if (conexao == null) {
 				return;
 			}
-
 			String consulta = Util.getString(textArea.getTextAreaInner());
-
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				MemoriaModelo modelo = Persistencia.criarMemoriaModelo(conn, consulta);

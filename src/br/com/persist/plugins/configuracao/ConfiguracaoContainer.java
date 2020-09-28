@@ -236,7 +236,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
 		PanelCenter panel = new PanelCenter();
 		ButtonGroup grupo = new ButtonGroup();
-
 		for (int i = 0; i < nomeValores.length; i++) {
 			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
 			radio.setSelected(radio.nomeValor.valor == padrao);
@@ -244,14 +243,12 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			panel.add(radio);
 			grupo.add(radio);
 		}
-
 		return panel;
 	}
 
 	private Label criarLabelTitulo(String chaveRotulo) {
 		Label label = new Label(chaveRotulo);
 		label.setHorizontalAlignment(Label.CENTER);
-
 		return label;
 	}
 
@@ -380,16 +377,12 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 				if (nomeValor.tipo == NomeValor.POSICAO_ABA) {
 					Preferencias.setPosicaoAbaFichario(nomeValor.valor);
 					formulario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
-
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
 					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
-
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_COMPARA) {
 					Preferencias.setIntervaloComparacao(nomeValor.valor);
-
 				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
 					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
-
 				} else if (nomeValor.tipo == NomeValor.LAYOUTS) {
 					Preferencias.setLayoutAbertura(nomeValor.valor);
 				}
@@ -431,16 +424,12 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Label label = (Label) e.getSource();
-
 				Color color = JColorChooser.showDialog(ConfiguracaoContainer.this, label.getText(),
 						label.getForeground());
-
 				if (color == null) {
 					return;
 				}
-
 				label.setForeground(color);
-
 				if (label == labelAntesProcessar) {
 					Preferencias.setCorAntesTotalRecente(color);
 				} else if (label == labelBuscarTotal) {
@@ -468,7 +457,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(ConfiguracaoContainer.this)) {
 				ConfiguracaoFormulario.criar(formulario, ConfiguracaoContainer.this);
-
 			} else if (configuracaoDialogo != null) {
 				configuracaoDialogo.excluirContainer();
 				ConfiguracaoFormulario.criar(formulario, ConfiguracaoContainer.this);
@@ -480,7 +468,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			if (configuracaoFormulario != null) {
 				configuracaoFormulario.excluirContainer();
 				formulario.adicionarPagina(ConfiguracaoContainer.this);
-
 			} else if (configuracaoDialogo != null) {
 				configuracaoDialogo.excluirContainer();
 				formulario.adicionarPagina(ConfiguracaoContainer.this);

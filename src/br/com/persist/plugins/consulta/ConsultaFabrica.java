@@ -40,7 +40,6 @@ public class ConsultaFabrica extends AbstratoFabricaContainer {
 
 		private MenuConsulta(Formulario formulario) {
 			super(Constantes.LABEL_CONSULTA, Icones.TABELA);
-
 			ficharioAcao.setActionListener(
 					e -> formulario.adicionarPagina(new ConsultaContainer(null, formulario, null, null)));
 			formularioAcao.setActionListener(e -> ConsultaFormulario.criar(formulario, null, null));

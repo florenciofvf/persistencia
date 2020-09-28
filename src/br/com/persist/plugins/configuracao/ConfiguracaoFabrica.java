@@ -45,11 +45,9 @@ public class ConfiguracaoFabrica extends AbstratoFabricaContainer {
 
 		private MenuConfiguracao(Formulario formulario) {
 			super(Constantes.LABEL_CONFIGURACOES, Icones.CONFIG);
-
 			addSeparator();
 			addMenuItem(exportarAcao);
 			addMenuItem(importarAcao);
-
 			ficharioAcao
 					.setActionListener(e -> formulario.adicionarPagina(new ConfiguracaoContainer(null, formulario)));
 			formularioAcao.setActionListener(e -> ConfiguracaoFormulario.criar(formulario));
