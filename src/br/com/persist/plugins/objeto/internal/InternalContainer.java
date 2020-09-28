@@ -305,26 +305,19 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int[] linhas = tabelaPersistencia.getSelectedRows();
-
 				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(InternalContainer.this, false)) {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
-
 					for (int linha : linhas) {
 						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela());
-
 						if (excluido == 0 || excluido == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
-
 							if (chaves.isEmpty()) {
 								throw new IllegalStateException();
 							}
-
 							listaValores.add(chaves);
 						}
 					}
-
 					modelo.excluirValoresChaves(listaValores);
 					modelo.iniArray();
 					modelo.fireTableDataChanged();
@@ -341,11 +334,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private ButtonComplemento() {
 				super("label.complemento", Icones.BAIXAR2);
-
 				addMenuItem(normalAcao);
 				addMenuItem(true, concatAcao);
 				addMenuItem(true, copiarAcao);
-
 				copiarAcao.setActionListener(e -> copiarComplemento());
 				concatAcao.setActionListener(e -> processar(false));
 				normalAcao.setActionListener(e -> processar(true));
@@ -358,16 +349,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private void processar(boolean normal) {
 				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 				if (conexao == null) {
 					return;
 				}
-
 				String complement = Util.getContentTransfered();
-
 				if (Util.estaVazio(complement)) {
 					txtComplemento.setText(objeto.getComplemento());
-
 				} else {
 					if (normal) {
 						txtComplemento.setText(complement);
@@ -375,7 +362,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						String s = txtComplemento.getText().trim();
 						txtComplemento.setText(s + " " + complement);
 					}
-
 					if (Preferencias.isExecAposBaixarParaComplemento()) {
 						actionListenerInner.actionPerformed(null);
 					}
@@ -391,13 +377,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private ButtonSincronizar() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
-
 				addMenuItem(atualizarAcao);
 				addMenuItem(true, sincronizarAcao);
 				addMenuItem(true, itemAtualizarAuto);
 				itemAtualizarAuto.setText(itemAtualizarAuto.getText() + "   ");
 				itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
-
 				eventos();
 			}
 
@@ -421,16 +405,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						}
 					}
 				});
-
 				atualizarAcao.setActionListener(e -> actionListenerInner.actionPerformed(null));
-
 				sincronizarAcao.setActionListener(e -> {
 					CabecalhoColuna temp = cabecalhoFiltro;
 					processado.set(true);
-
 					cabecalhoFiltro = null;
 					actionListenerInner.actionPerformed(null);
-
 					if (!processado.get()) {
 						cabecalhoFiltro = temp;
 					}
@@ -452,7 +432,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Thread.currentThread().interrupt();
 						}
 					}
-
 					itemAtualizarAuto.setText(titulo);
 					contadorAuto = 0;
 					thread = null;
@@ -470,12 +449,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private void complemento(Objeto objeto) {
 				List<GrupoBuscaAuto> listaGrupo = BuscaAutoUtil.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
-
 				for (GrupoBuscaAuto grupo : listaGrupo) {
 					listaGrupoLink.add(grupo.getGrupoLinkAuto());
 					addMenu(new MenuBuscaAuto(grupo));
 				}
-
 				habilitado = !listaGrupo.isEmpty();
 				setEnabled(habilitado);
 			}
@@ -499,28 +476,23 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					if (buscaAutomaticaListener == null) {
 						return;
 					}
-
 					int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, grupo.getCampo());
 					if (coluna == -1) {
 						return;
 					}
-
 					List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabelaPersistencia, coluna);
 					if (lista.isEmpty()) {
 						Util.mensagem(InternalContainer.this, grupo.getCampo() + " vazio.");
 						return;
 					}
-
 					grupo.setProcessado(false);
 					grupo.inicializarColetores(lista);
 					buscaAutomaticaListener.buscaAutomatica(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
-
 					if (grupo.isProcessado() && buscaAutomaticaAposListener != null) {
 						buscaAutomaticaAposListener.buscaAutomaticaApos(InternalContainer.this,
 								grupo.getGrupoBuscaAutoApos());
 					}
-
 					processarColunaInfo(coluna);
 				}
 
@@ -542,12 +514,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private ButtonUpdate() {
 				super(Constantes.LABEL_UPDATE, Icones.UPDATE);
-
 				addMenuItem(dadosAcao);
 				addMenu(true, new MenuUpdate());
 				addMenu(true, new MenuDelete());
 				addMenu(true, new MenuInsert());
-
 				eventos();
 			}
 
@@ -555,10 +525,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				dadosAcao.setActionListener(e -> {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					TableModel model = modelo.getModelo();
-
 					if (model instanceof PersistenciaModelo) {
 						int[] linhas = tabelaPersistencia.getSelectedRows();
-
 						if (linhas != null && linhas.length == 1) {
 							StringBuilder sb = new StringBuilder(objeto.getTabela2());
 							sb.append(Constantes.QL);
@@ -574,37 +542,28 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				private MenuUpdate() {
 					super(Constantes.LABEL_UPDATE, Icones.UPDATE);
-
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
 					dialogoAcao.setActionListener(e -> abrirUpdate(false));
 				}
 
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao == null) {
 						return;
 					}
-
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					TableModel model = modelo.getModelo();
-
 					if (model instanceof PersistenciaModelo) {
 						int[] linhas = tabelaPersistencia.getSelectedRows();
-
 						if (linhas != null && linhas.length == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-
 							if (chaves.isEmpty()) {
 								return;
 							}
-
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela());
-
 							if (Util.estaVazio(instrucao)) {
 								return;
 							}
-
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 						}
 					}
@@ -616,37 +575,28 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				private MenuDelete() {
 					super(Constantes.LABEL_DELETE, Icones.EXCLUIR);
-
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
 					dialogoAcao.setActionListener(e -> abrirUpdate(false));
 				}
 
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao == null) {
 						return;
 					}
-
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					TableModel model = modelo.getModelo();
-
 					if (model instanceof PersistenciaModelo) {
 						int[] linhas = tabelaPersistencia.getSelectedRows();
-
 						if (linhas != null && linhas.length == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-
 							if (chaves.isEmpty()) {
 								return;
 							}
-
 							String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela());
-
 							if (Util.estaVazio(instrucao)) {
 								return;
 							}
-
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
@@ -658,31 +608,24 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				private MenuInsert() {
 					super(Constantes.LABEL_INSERT, Icones.CRIAR);
-
 					formularioAcao.setActionListener(e -> abrirUpdate(true));
 					dialogoAcao.setActionListener(e -> abrirUpdate(false));
 				}
 
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao == null) {
 						return;
 					}
-
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					TableModel model = modelo.getModelo();
-
 					if (model instanceof PersistenciaModelo) {
 						int[] linhas = tabelaPersistencia.getSelectedRows();
-
 						if (linhas != null && linhas.length == 1) {
 							String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela());
-
 							if (Util.estaVazio(instrucao)) {
 								return;
 							}
-
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 						}
 					}
@@ -693,9 +636,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				if (objeto == null || objeto.getInstrucoes().isEmpty()) {
 					return;
 				}
-
 				objeto.ordenarInstrucoes();
-
 				for (Instrucao i : objeto.getInstrucoes()) {
 					if (!Util.estaVazio(i.getValor())) {
 						addMenu(true, new MenuInstrucao(i));
@@ -710,37 +651,28 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				private MenuInstrucao(Instrucao instrucao) {
 					super(instrucao.getNome(), instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC, "nao_chave");
 					this.instrucao = instrucao;
-
 					formularioAcao.setActionListener(e -> abrirInstrucao(true));
 					dialogoAcao.setActionListener(e -> abrirInstrucao(false));
 				}
 
 				public void abrirInstrucao(boolean abrirEmForm) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao == null) {
 						return;
 					}
-
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					TableModel model = modelo.getModelo();
-
 					if (model instanceof PersistenciaModelo) {
 						int[] linhas = tabelaPersistencia.getSelectedRows();
-
 						if (linhas != null && linhas.length == 1) {
 							Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
-
 							if (chaves.isEmpty()) {
 								return;
 							}
-
 							if (Util.estaVazio(instrucao.getValor())) {
 								return;
 							}
-
 							String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-
 							if (instrucao.isSelect()) {
 								selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 							} else {
@@ -757,12 +689,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private ButtonFuncoes() {
 				super("label.funcoes", Icones.SOMA);
-
 				MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
 				MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
 				maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
 				minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
-
 				addMenuItem(new TotalizarRegistrosAcao(false));
 				addMenuItem(true, new TotalizarRegistrosAcao(true));
 				addMenuItem(true, minimo);
@@ -781,18 +711,14 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao == null) {
 						return;
 					}
-
 					String[] chaves = objeto.getChavesArray();
-
 					if (chaves.length != 1) {
 						txtComplemento.limpar();
 						return;
 					}
-
 					if (minimo) {
 						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
 								+ objeto.getTabelaEsquema(conexao.getEsquema()) + ")");
@@ -800,7 +726,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
 								+ objeto.getTabelaEsquema(conexao.getEsquema()) + ")");
 					}
-
 					actionListenerInner.actionPerformed(null);
 				}
 			}
@@ -817,7 +742,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -842,7 +766,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 			private ButtonInfo() {
 				super("label.meta_dados", Icones.INFO);
-
 				addMenuItem(apelidoAcao);
 				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
@@ -853,7 +776,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				addMenu(true, new MenuDML());
 				addMenu(true, new MenuCopiar());
 				addMenu(true, menuAlinhamento);
-
 				eventos();
 			}
 
@@ -861,7 +783,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				apelidoAcao.setActionListener(e -> {
 					if (apelidoListener != null) {
 						String apelido = apelidoListener.selecionarApelido();
-
 						if (apelido != null) {
 							apelidoListener.setApelido(apelido);
 						}
@@ -882,7 +803,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					addMenuItem(esquerdoAcao);
 					addMenuItem(mesmaLarguraAcao);
 					addMenuItem(somenteDireitoAcao);
-
 					somenteDireitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO));
 					esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
 					direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
@@ -919,13 +839,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				private MenuCopiar() {
 					super("label.copiar", Icones.TABLE2);
-
 					addMenuItem(htmlAcao);
 					addSeparator();
 					addMenuItem(tabularAcao);
 					addSeparator();
 					addMenuItem(transfAcao);
-
 					transfAcao.setActionListener(e -> processar(0));
 					tabularAcao.setActionListener(e -> processar(1));
 					htmlAcao.setActionListener(e -> processar(2));
@@ -934,7 +852,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				private void processar(int tipo) {
 					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
 					TransferidorTabular transferidor = Util.criarTransferidorTabular(tabelaPersistencia, indices);
-
 					if (transferidor != null) {
 						if (tipo == 0) {
 							Util.setTransfered(transferidor);
@@ -964,28 +881,22 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 					private MenuInsert() {
 						super(Constantes.LABEL_INSERT, Icones.CRIAR);
-
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
 						dialogoAcao.setActionListener(e -> abrirUpdate(false));
 					}
 
 					private void abrirUpdate(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 						if (conexao == null) {
 							return;
 						}
-
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						TableModel model = modelo.getModelo();
-
 						if (model instanceof PersistenciaModelo) {
 							String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
-
 							if (Util.estaVazio(instrucao)) {
 								return;
 							}
-
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 						}
 					}
@@ -996,28 +907,22 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 					private MenuUpdate() {
 						super(Constantes.LABEL_UPDATE, Icones.UPDATE);
-
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
 						dialogoAcao.setActionListener(e -> abrirUpdate(false));
 					}
 
 					private void abrirUpdate(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 						if (conexao == null) {
 							return;
 						}
-
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						TableModel model = modelo.getModelo();
-
 						if (model instanceof PersistenciaModelo) {
 							String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
-
 							if (Util.estaVazio(instrucao)) {
 								return;
 							}
-
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 						}
 					}
@@ -1028,28 +933,22 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 					private MenuDelete() {
 						super(Constantes.LABEL_DELETE, Icones.EXCLUIR);
-
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
 						dialogoAcao.setActionListener(e -> abrirUpdate(false));
 					}
 
 					private void abrirUpdate(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 						if (conexao == null) {
 							return;
 						}
-
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						TableModel model = modelo.getModelo();
-
 						if (model instanceof PersistenciaModelo) {
 							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
-
 							if (Util.estaVazio(instrucao)) {
 								return;
 							}
-
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
@@ -1060,24 +959,19 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 					private MenuSelect() {
 						super("label.select", Icones.TABELA);
-
 						formularioAcao.setActionListener(e -> abrirSelect(true));
 						dialogoAcao.setActionListener(e -> abrirSelect(false));
 					}
 
 					private void abrirSelect(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 						if (conexao == null) {
 							return;
 						}
-
 						String instrucao = getConsulta(conexao, Constantes.VAZIO).toString();
-
 						if (Util.estaVazio(instrucao)) {
 							return;
 						}
-
 						selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 					}
 				}
@@ -1087,7 +981,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 					private MenuSelectColuna() {
 						super("label.select_colunas", Icones.TABELA);
-
 						formularioAcao.setActionListener(e -> abrirSelect(true));
 						dialogoAcao.setActionListener(e -> abrirSelect(false));
 					}
@@ -1102,23 +995,18 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						builder.append(" " + complemento);
 						builder.append(" " + objeto.getFinalConsulta());
 						objeto.setSelectAlternativo(selectAlter);
-
 						return builder;
 					}
 
 					private void abrirSelect(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 						if (conexao == null) {
 							return;
 						}
-
 						String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
-
 						if (Util.estaVazio(instrucao)) {
 							return;
 						}
-
 						selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 					}
 				}
@@ -1134,7 +1022,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1157,7 +1044,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1180,7 +1066,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1204,7 +1089,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1228,7 +1112,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1252,7 +1135,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1299,20 +1181,16 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	private Component getComponente() {
 		Component resp = null;
-
 		if (componenteListener != null && componenteListener.getComponente() != null) {
 			resp = componenteListener.getComponente();
-
 		} else if (suporte instanceof Component) {
 			resp = suporte;
 		}
-
 		return resp;
 	}
 
 	private void configLocationRelativeTo(Window window) {
 		Component componente = getComponente();
-
 		if (componente != null) {
 			window.setLocationRelativeTo(componente);
 		}
@@ -1390,13 +1268,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (ItemEvent.SELECTED != e.getStateChange()) {
 			return;
 		}
-
 		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 		if (conexao != null) {
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 			TableModel model = modelo.getModelo();
-
 			if (model instanceof PersistenciaModelo) {
 				((PersistenciaModelo) model).setConexao(conexao);
 			}
@@ -1411,7 +1286,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		builder.append(" " + txtComplemento.getText());
 		builder.append(" " + complemento);
 		builder.append(" " + objeto.getFinalConsulta());
-
 		return builder;
 	}
 
@@ -1419,15 +1293,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (!Util.estaVazio(txtComplemento.getText())) {
 			return true;
 		}
-
 		if (!Util.estaVazio(complemento)) {
 			return true;
 		}
-
 		if (!objeto.isCcsc()) {
 			return true;
 		}
-
 		String msg = Mensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
 		return Util.confirmar(InternalContainer.this, msg, false);
 	}
@@ -1444,18 +1315,14 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 		if (conexao == null) {
 			return;
 		}
-
 		if (!continuar(complemento)) {
 			processado.set(false);
 			return;
 		}
-
 		StringBuilder consulta = getConsulta(conexao, complemento);
-
 		try {
 			Connection conn = ConexaoProvedor.getConnection(conexao);
 			Parametros param = criarParametros(conn, conexao, consulta.toString());
@@ -1472,7 +1339,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		} catch (Exception ex) {
 			mensagemException(ex);
 		}
-
 		toolbar.buttonBuscaAuto.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		configurarAlturaAutomatica();
@@ -1481,19 +1347,16 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private void configurarCabecalhoTabela(OrdenacaoModelo modeloOrdenacao, CabecalhoColuna cabecalho) {
 		TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
 		List<Coluna> colunas = modeloOrdenacao.getModelo().getColunas();
-
 		for (int i = 0; i < colunas.size(); i++) {
 			TableColumn tableColumn = columnModel.getColumn(i);
 			Coluna coluna = colunas.get(i);
 			configTableColumn(tableColumn, coluna);
 			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
 					!coluna.isColunaInfo());
-
 			if (cabecalhoColuna.equals(cabecalho)) {
 				cabecalhoColuna.copiar(cabecalho);
 				cabecalhoFiltro = cabecalhoColuna;
 			}
-
 			tableColumn.setHeaderRenderer(cabecalhoColuna);
 		}
 	}
@@ -1574,9 +1437,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			if (objeto.isAjusteAutoEnter()) {
 				tamanhoAutomatico = true;
 			}
-
 			InternalContainer.this.actionPerformed(null);
-
 			if (objeto.isAjusteAutoEnter()) {
 				tamanhoAutomatico = false;
 			}
@@ -1597,7 +1458,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void buscaAutomatica(String campo, String argumentos) {
 		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 		if (conexao != null) {
 			txtComplemento.setText("AND " + campo + " IN (" + argumentos + ")");
 			destacarTitulo = true;
@@ -1607,22 +1467,18 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void aplicarConfigArquivo(InternalConfig config) {
 		Conexao conexaoSel = null;
-
 		if (!Util.estaVazio(config.getConexao())) {
 			for (int i = 0; i < comboConexao.getItemCount(); i++) {
 				Conexao c = comboConexao.getItemAt(i);
-
 				if (config.getConexao().equalsIgnoreCase(c.getNome())) {
 					conexaoSel = c;
 					break;
 				}
 			}
-
 			if (conexaoSel != null) {
 				comboConexao.setSelectedItem(conexaoSel);
 			}
 		}
-
 		txtComplemento.setText(config.getComplemento());
 		destacarTitulo = true;
 		actionListenerInner.processar();
@@ -1637,14 +1493,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (!objeto.isLinkAuto() || argumento == null) {
 			return;
 		}
-
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		TableModel model = modelo.getModelo();
 		tabelaPersistencia.clearSelection();
-
 		if (model instanceof PersistenciaModelo) {
 			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
-
 			if (coluna != -1) {
 				for (int i = 0; i < modelo.getRowCount(); i++) {
 					if (argumento.equals(modelo.getValueAt(i, coluna))) {
@@ -1670,51 +1523,40 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private String getComplementoChavesAux(Map<String, String> map) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 		StringBuilder sb = new StringBuilder("(");
-
 		if (it.hasNext()) {
 			Entry<String, String> entry = it.next();
 			sb.append(entry.getKey() + "=" + entry.getValue());
 		}
-
 		while (it.hasNext()) {
 			Entry<String, String> entry = it.next();
 			sb.append(" AND " + entry.getKey() + "=" + entry.getValue());
 		}
-
 		sb.append(")");
-
 		return sb.toString();
 	}
 
 	private String[] getComplementoChave(Map<String, String> map) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 		String[] array = new String[2];
-
 		if (it.hasNext()) {
 			Entry<String, String> entry = it.next();
 			array[0] = entry.getKey();
 			array[1] = entry.getValue();
 		}
-
 		return array;
 	}
 
 	public String getComplementoChaves() {
 		StringBuilder sb = new StringBuilder();
-
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		TableModel model = modelo.getModelo();
-
 		if (model instanceof PersistenciaModelo) {
 			List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-
 			if (!indices.isEmpty()) {
 				Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
-
 				if (chaves.size() > 1) {
 					sb.append("AND (");
 					sb.append(getComplementoChavesAux(chaves));
-
 					for (int i = 1; i < indices.size(); i++) {
 						sb.append(" OR ");
 						chaves = modelo.getMapaChaves(indices.get(i));
@@ -1724,9 +1566,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				} else if (chaves.size() == 1) {
 					String[] array = getComplementoChave(chaves);
 					String chave = array[0];
-
 					sb.append("AND " + chave + " IN(" + array[1]);
-
 					for (int i = 1; i < indices.size(); i++) {
 						sb.append(", ");
 						chaves = modelo.getMapaChaves(indices.get(i));
@@ -1736,13 +1576,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				}
 			}
 		}
-
 		return sb.toString();
 	}
 
 	public void atualizarFormulario() {
 		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-
 		if (conexao != null) {
 			actionListenerInner.processar();
 		}
@@ -1757,7 +1595,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		public void copiarNomeColuna(TabelaPersistencia tabela, String nome, String anterior) {
 			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
 			txtComplemento.setText("AND " + nome + " = " + string);
-
 			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarColunaConcatenado()) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -1772,13 +1609,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		public void tabelaMouseClick(TabelaPersistencia tabela, int colunaClick) {
 			OrdenacaoModelo modelo = tabela.getModelo();
 			TableModel model = modelo.getModelo();
-
 			if (model instanceof PersistenciaModelo) {
 				int[] linhas = tabela.getSelectedRows();
-
 				if (linhas != null && linhas.length > 0) {
 					String[] chaves = objeto.getChavesArray();
-
 					toolbar.buttonUpdate.setEnabled(chaves.length > 0 && linhas.length == 1);
 					toolbar.buttonExcluir.setEnabled(chaves.length > 0);
 					toolbar.labelTotal.setText(Constantes.VAZIO + linhas.length);
@@ -1786,7 +1620,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					toolbar.excluirAtualizarEnable(false);
 					toolbar.labelTotal.limpar();
 				}
-
 				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaGrupoLink.isEmpty()
 						&& linkAutomaticoListener != null) {
 					mouseClick(tabela, colunaClick);
@@ -1798,24 +1631,19 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 		private void mouseClick(TabelaPersistencia tabela, int colunaClick) {
 			int indiceLinkSelecionado = -1;
-
 			for (int i = 0; i < listaGrupoLink.size(); i++) {
 				GrupoLinkAuto link = listaGrupoLink.get(i);
-
 				if (TabelaPersistenciaUtil.getIndiceColuna(tabela, link.getCampo()) == colunaClick) {
 					indiceLinkSelecionado = i;
 				}
 			}
-
 			if (indiceLinkSelecionado == -1) {
 				return;
 			}
-
 			List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
 			if (lista.size() != 1) {
 				return;
 			}
-
 			linkAutomaticoListener.linkAutomatico(listaGrupoLink.get(indiceLinkSelecionado), lista.get(0));
 		}
 	}
@@ -1836,7 +1664,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (tituloListener == null || !destacarTitulo) {
 			return;
 		}
-
 		new Thread(new DestaqueTitulo(titulo)).start();
 	}
 
@@ -1859,15 +1686,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					Thread.currentThread().interrupt();
 				}
 			}
-
 			if (tituloListener != null) {
 				tituloListener.setTitulo(original);
 			}
-
 			if (selecaoListener != null) {
 				selecaoListener.selecionar(false);
 			}
-
 			destacarTitulo = false;
 		}
 
@@ -1879,15 +1703,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			if (indice < 0) {
 				indice = esq.length() - 1;
 			}
-
 			if (tituloListener != null) {
 				tituloListener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
 			}
-
 			if (selecaoListener != null) {
 				selecaoListener.selecionar(indice % 2 == 0);
 			}
-
 			indice--;
 		}
 	}
@@ -1931,7 +1752,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void setTituloListener(InternalListener.Titulo tituloListener) {
 		this.tituloListener = tituloListener;
-
 		if (tituloListener != null) {
 			atualizarTitulo();
 		}
