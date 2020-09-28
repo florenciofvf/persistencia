@@ -1456,12 +1456,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public void selecionarConexao(Conexao conexao) {
-		if (conexao != null) {
-			for (JInternalFrame frame : getAllFrames()) {
-				if (frame instanceof InternalFormulario) {
-					InternalFormulario interno = (InternalFormulario) frame;
-					interno.selecionarConexao(conexao);
-				}
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				interno.selecionarConexao(conexao);
 			}
 		}
 	}

@@ -1846,9 +1846,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	}
 
 	public void selecionarConexao(Conexao conexao) {
-		if (conexao != null) {
-			comboConexao.setSelectedItem(conexao);
-		}
+		comboConexao.setSelectedItem(conexao);
 	}
 
 	private void threadTitulo(String titulo) {

@@ -221,7 +221,6 @@ public class ConexaoProvedor {
 	public static JComboBox<Conexao> criarComboConexao(Conexao padrao) {
 		Combo combo = new Combo(new ConexaoComboModelo(lista));
 		combo.setSelectedItem(padrao);
-
 		return combo;
 	}
 
