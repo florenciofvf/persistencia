@@ -35,7 +35,6 @@ public class NimbusLookAndFeel2 extends NimbusLookAndFeel {
 		resp.put("TabbedPane:TabbedPaneTab[Disabled+Selected].backgroundPainter", null);
 		resp.put("TabbedPane:TabbedPaneTabArea[Disabled].backgroundPainter", null);
 		resp.put("TabbedPane:TabbedPaneTab[Disabled].backgroundPainter", null);
-
 		return resp;
 	}
 }

@@ -41,18 +41,15 @@ public class AparenciaFabrica extends AbstratoFabricaContainer {
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		List<JMenuItem> lista = new ArrayList<>();
 		ButtonGroup grupo = new ButtonGroup();
-
 		for (LookAndFeelInfo info : installedLookAndFeels) {
 			ItemLAF item = new ItemLAF(formulario, info);
 			grupo.add(item);
 			lista.add(item);
 		}
-
 		LookAndFeelInfo info = new LookAndFeelInfo("Nimbus" + Constantes.DOIS, NimbusLookAndFeel2.class.getName());
 		padrao = new ItemLAF(formulario, info);
 		grupo.add(padrao);
 		lista.add(padrao);
-
 		return lista;
 	}
 }

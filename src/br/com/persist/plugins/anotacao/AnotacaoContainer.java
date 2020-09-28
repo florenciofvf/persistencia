@@ -86,14 +86,11 @@ public class AnotacaoContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-
 		textArea.limpar();
-
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
-
 				while (linha != null) {
 					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
@@ -121,7 +118,6 @@ public class AnotacaoContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(AnotacaoContainer.this)) {
 				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
-
 			} else if (anotacaoDialogo != null) {
 				anotacaoDialogo.excluirContainer();
 				AnotacaoFormulario.criar(formulario, AnotacaoContainer.this);
@@ -133,7 +129,6 @@ public class AnotacaoContainer extends AbstratoContainer {
 			if (anotacaoFormulario != null) {
 				anotacaoFormulario.excluirContainer();
 				formulario.adicionarPagina(AnotacaoContainer.this);
-
 			} else if (anotacaoDialogo != null) {
 				anotacaoDialogo.excluirContainer();
 				formulario.adicionarPagina(AnotacaoContainer.this);
@@ -183,7 +178,6 @@ public class AnotacaoContainer extends AbstratoContainer {
 			if (!Util.confirmaSalvar(AnotacaoContainer.this, Constantes.TRES)) {
 				return;
 			}
-
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
