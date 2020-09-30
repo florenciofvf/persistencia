@@ -153,7 +153,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			}
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
-
 				if (objetoAoFormulario) {
 					interno.aproximarObjetoAoFormulario(variavelDeltaX.getInteiro(Constantes.TRINTA),
 							variavelDeltaY.getInteiro(Constantes.TRINTA));
