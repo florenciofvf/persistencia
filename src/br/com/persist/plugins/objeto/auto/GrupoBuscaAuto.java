@@ -19,6 +19,10 @@ public class GrupoBuscaAuto extends AbstratoGrupo {
 		tabelas.add(tabela);
 	}
 
+	public boolean campoIgual(GrupoBuscaAuto grupo) {
+		return getCampo().equals(grupo.getCampo());
+	}
+
 	public GrupoLinkAuto getGrupoLinkAuto() {
 		return grupoLinkAuto;
 	}

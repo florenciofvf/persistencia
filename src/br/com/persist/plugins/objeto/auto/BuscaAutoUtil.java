@@ -14,7 +14,7 @@ public class BuscaAutoUtil {
 	private BuscaAutoUtil() {
 	}
 
-	public static List<GrupoBuscaAuto> listaGrupoBuscaAuto(String string) {
+	public static List<GrupoBuscaAuto> listarGrupoBuscaAuto(String string) {
 		List<GrupoBuscaAuto> lista = new ArrayList<>();
 		if (!Util.estaVazio(string)) {
 			try {
@@ -25,7 +25,34 @@ public class BuscaAutoUtil {
 				Util.stackTraceAndMessage("BuscaAuto", ex, null);
 			}
 		}
+		integrarGrupos(lista);
 		return lista;
+	}
+
+	private static void integrarGrupos(List<GrupoBuscaAuto> lista) {
+		for (int i = 0; i < lista.size(); i++) {
+			GrupoBuscaAuto grupo = lista.get(i);
+			List<GrupoBuscaAuto> outros = listarOutros(grupo, lista);
+			integrar(grupo, outros);
+		}
+	}
+
+	private static void integrar(GrupoBuscaAuto grupo, List<GrupoBuscaAuto> outros) {
+		GrupoLinkAuto grupoLink = grupo.getGrupoLinkAuto();
+		for (GrupoBuscaAuto outro : outros) {
+			GrupoLinkAuto linkOutro = outro.getGrupoLinkAuto();
+			grupoLink.add(linkOutro.getTabelas());
+		}
+	}
+
+	private static List<GrupoBuscaAuto> listarOutros(GrupoBuscaAuto grupo, List<GrupoBuscaAuto> lista) {
+		List<GrupoBuscaAuto> resposta = new ArrayList<>();
+		for (GrupoBuscaAuto g : lista) {
+			if (g != grupo && g.campoIgual(grupo)) {
+				resposta.add(g);
+			}
+		}
+		return resposta;
 	}
 
 	private static void processar(List<GrupoBuscaAuto> lista, Tipo tipo) {

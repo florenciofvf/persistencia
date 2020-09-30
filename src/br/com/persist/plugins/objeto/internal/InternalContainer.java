@@ -448,7 +448,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 
 			private void complemento(Objeto objeto) {
-				List<GrupoBuscaAuto> listaGrupo = BuscaAutoUtil.listaGrupoBuscaAuto(objeto.getBuscaAutomatica());
+				List<GrupoBuscaAuto> listaGrupo = BuscaAutoUtil.listarGrupoBuscaAuto(objeto.getBuscaAutomatica());
 				for (GrupoBuscaAuto grupo : listaGrupo) {
 					listaGrupoLink.add(grupo.getGrupoLinkAuto());
 					addMenu(new MenuBuscaAuto(grupo));

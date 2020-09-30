@@ -30,6 +30,10 @@ public class GrupoLinkAuto {
 		tabelas.add(tabela);
 	}
 
+	public void add(List<TabelaLinkAuto> lista) {
+		tabelas.addAll(lista);
+	}
+
 	public List<TabelaLinkAuto> getTabelas() {
 		return tabelas;
 	}
