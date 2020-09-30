@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
@@ -50,7 +51,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
 		container.setApelidoListener(apelidoListener);
-		setFrameIcon(null);
+		setFrameIcon(Icones.VAZIO);
 		montarLayout();
 		configurar2();
 	}
