@@ -50,6 +50,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
 		container.setApelidoListener(apelidoListener);
+		setFrameIcon(null);
 		montarLayout();
 		configurar2();
 	}
