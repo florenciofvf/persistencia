@@ -13,6 +13,11 @@ public abstract class AbstratoTabela {
 		this.nome = nome.trim();
 	}
 
+	public boolean igual(AbstratoTabela tabela) {
+		return tabela != null && apelido.equals(tabela.apelido) && nome.equals(tabela.nome)
+				&& campo.equals(tabela.campo);
+	}
+
 	public String getApelido() {
 		return apelido;
 	}

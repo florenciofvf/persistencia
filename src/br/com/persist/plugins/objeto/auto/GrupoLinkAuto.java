@@ -27,11 +27,24 @@ public class GrupoLinkAuto {
 	}
 
 	public void add(TabelaLinkAuto tabela) {
-		tabelas.add(tabela);
+		if (tabela != null && !contem(tabela)) {
+			tabelas.add(tabela);
+		}
+	}
+
+	private boolean contem(TabelaLinkAuto tabela) {
+		for (TabelaLinkAuto tab : tabelas) {
+			if (tab.igual(tabela)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void add(List<TabelaLinkAuto> lista) {
-		tabelas.addAll(lista);
+		for (TabelaLinkAuto tabela : lista) {
+			add(tabela);
+		}
 	}
 
 	public List<TabelaLinkAuto> getTabelas() {
