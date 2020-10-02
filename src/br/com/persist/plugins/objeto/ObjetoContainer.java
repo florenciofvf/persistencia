@@ -119,8 +119,10 @@ public class ObjetoContainer extends AbstratoContainer {
 
 	private void checarSelecionarConexao(Formulario formulario, Map<String, Object> args) {
 		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
-		comboConexao.setSelectedItem(conexao);
-		objetoSuperficie.selecionarConexao(conexao);
+		if (conexao != null) {
+			comboConexao.setSelectedItem(conexao);
+			objetoSuperficie.selecionarConexao(conexao);
+		}
 	}
 
 	@SuppressWarnings("unchecked")

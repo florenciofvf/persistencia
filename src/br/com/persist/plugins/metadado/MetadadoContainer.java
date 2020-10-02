@@ -92,7 +92,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	private void checarSelecionarConexao(Formulario formulario, Map<String, Object> args) {
 		Conexao conexao = (Conexao) args.get(ConexaoEvento.SELECIONAR_CONEXAO);
-		comboConexao.setSelectedItem(conexao);
+		if (conexao != null) {
+			comboConexao.setSelectedItem(conexao);
+		}
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
