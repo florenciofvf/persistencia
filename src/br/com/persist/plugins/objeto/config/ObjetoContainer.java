@@ -84,32 +84,13 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelGeral extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private TextField txtLinkAutomatico = new TextField();
-		private TextField txtFinalConsulta = new TextField();
-		private CheckBox chkAjusteAutoEnter = new CheckBox();
-		private CheckBox chkAjusteAutoForm = new CheckBox();
-		private TextField txtChaveamento = new TextField();
-		private TextField txtSelectAlter = new TextField();
-		private TextField txtComplemento = new TextField();
-		private TextField txtSequencias = new TextField();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
-		private TextField txtMapeamento = new TextField();
 		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
-		private TextField txtPrefixoNT = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
-		private CheckBox chkColunaInfo = new CheckBox();
 		private TextField txtArquivo = new TextField();
-		private CheckBox chkAbrirAuto = new CheckBox();
-		private TextField txtTabelas = new TextField();
-		private CheckBox chkLinkAuto = new CheckBox();
-		private TextField txtTabela = new TextField();
-		private TextField txtChaves = new TextField();
-		private TextField txtJoins = new TextField();
-		private CheckBox chkCCSC = new CheckBox();
-		private CheckBox chkBPNT = new CheckBox();
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
@@ -117,93 +98,38 @@ public class ObjetoContainer extends Panel {
 
 		private PanelGeral() {
 			final String VAZIO = Constantes.VAZIO;
-			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
-			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
 			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
-			txtSelectAlter.setText(objeto.getSelectAlternativo());
-			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
 			chkTransparente.setSelected(objeto.isTransparente());
-			txtFinalConsulta.setText(objeto.getFinalConsulta());
-			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
 			txtIntervalo.setText(VAZIO + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
-			chkColunaInfo.setSelected(objeto.isColunaInfo());
-			txtChaveamento.setText(objeto.getChaveamento());
-			txtComplemento.setText(objeto.getComplemento());
-			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
-			txtSequencias.setText(objeto.getSequencias());
-			txtMapeamento.setText(objeto.getMapeamento());
-			chkLinkAuto.setSelected(objeto.isLinkAuto());
 			txtArquivo.setText(objeto.getArquivo());
-			txtTabelas.setText(objeto.getTabelas());
-			txtTabela.setText(objeto.getTabela2());
-			txtChaves.setText(objeto.getChaves());
-			chkCCSC.setSelected(objeto.isCcsc());
-			chkBPNT.setSelected(objeto.isBpnt());
-			txtJoins.setText(objeto.getJoins());
 			txtX.setText(VAZIO + objeto.getX());
 			txtY.setText(VAZIO + objeto.getY());
 			txtId.setText(objeto.getId());
-
-			txtLinkAutomatico.addFocusListener(focusListenerInner);
-			txtFinalConsulta.addFocusListener(focusListenerInner);
-			txtChaveamento.addFocusListener(focusListenerInner);
-			txtComplemento.addFocusListener(focusListenerInner);
-			txtSelectAlter.addFocusListener(focusListenerInner);
-			txtMapeamento.addFocusListener(focusListenerInner);
-			txtSequencias.addFocusListener(focusListenerInner);
 			txtDeslocXId.addFocusListener(focusListenerInner);
 			txtDeslocYId.addFocusListener(focusListenerInner);
 			txtIntervalo.addFocusListener(focusListenerInner);
-			txtPrefixoNT.addFocusListener(focusListenerInner);
 			txtArquivo.addFocusListener(focusListenerInner);
-			txtTabelas.addFocusListener(focusListenerInner);
-			txtTabela.addFocusListener(focusListenerInner);
-			txtChaves.addFocusListener(focusListenerInner);
-			txtJoins.addFocusListener(focusListenerInner);
 			txtId.addFocusListener(focusListenerInner);
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
-
-			chkAjusteAutoEnter.addActionListener(this);
-			chkAjusteAutoForm.addActionListener(this);
-			txtLinkAutomatico.addActionListener(this);
-			txtFinalConsulta.addActionListener(this);
 			chkTransparente.addActionListener(this);
 			chkCopiarDestac.addActionListener(this);
-			txtChaveamento.addActionListener(this);
-			txtComplemento.addActionListener(this);
-			txtSelectAlter.addActionListener(this);
 			chkDesenharId.addActionListener(this);
-			chkColunaInfo.addActionListener(this);
-			txtMapeamento.addActionListener(this);
-			txtSequencias.addActionListener(this);
-			chkAbrirAuto.addActionListener(this);
 			txtDeslocXId.addActionListener(this);
 			txtDeslocYId.addActionListener(this);
 			txtIntervalo.addActionListener(this);
-			txtPrefixoNT.addActionListener(this);
-			chkLinkAuto.addActionListener(this);
 			txtArquivo.addActionListener(this);
-			txtTabelas.addActionListener(this);
-			txtChaves.addActionListener(this);
-			txtTabela.addActionListener(this);
-			txtJoins.addActionListener(this);
-			chkCCSC.addActionListener(this);
-			chkBPNT.addActionListener(this);
 			txtId.addActionListener(this);
 			txtX.addActionListener(this);
 			txtY.addActionListener(this);
-
 			if (objeto.getIcon() != null) {
 				labelIcone.setIcon(objeto.getIcon());
 			}
-
 			PanelLeft panelIcone = new PanelLeft(labelIcone);
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
-
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
 			container.add(criarLinha("label.id", txtId));
@@ -212,6 +138,156 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.intervalo", txtIntervalo));
+			container.add(criarLinhaComLink("label.arquivo", txtArquivo,
+					Mensagens.getString("hint.arquivo_absoluto_relativo"),
+					PanelGeral.this::mensagemPropriedadeArquivo));
+			container.add(criarLinha("label.desenhar_id", chkDesenharId));
+			container.add(criarLinha("label.transparente", chkTransparente));
+			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
+			add(BorderLayout.CENTER, container);
+		}
+
+		private void mensagemPropriedadeArquivo(Label label) {
+			Util.mensagem(ObjetoContainer.this, Mensagens.getString("msg.propriedade_arquivo"));
+		}
+
+		private transient FocusListener focusListenerInner = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				actionPerformed(new ActionEvent(e.getSource(), 0, null));
+			}
+		};
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (txtX == e.getSource()) {
+				objeto.setX(Util.getInt(txtX.getText(), objeto.getX()));
+				MacroProvedor.xLocal(objeto.getX());
+			} else if (txtY == e.getSource()) {
+				objeto.setY(Util.getInt(txtY.getText(), objeto.getY()));
+				MacroProvedor.yLocal(objeto.getY());
+			} else if (txtDeslocXId == e.getSource()) {
+				objeto.setDeslocamentoXId(Util.getInt(txtDeslocXId.getText(), objeto.getDeslocamentoXId()));
+				MacroProvedor.deslocarXIdDescricao(objeto.getDeslocamentoXId());
+			} else if (txtDeslocYId == e.getSource()) {
+				objeto.setDeslocamentoYId(Util.getInt(txtDeslocYId.getText(), objeto.getDeslocamentoYId()));
+				MacroProvedor.deslocarYIdDescricao(objeto.getDeslocamentoYId());
+			} else if (txtIntervalo == e.getSource()) {
+				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
+			}
+			actionPerformedCont(e);
+			objetoSuperficie.repaint();
+		}
+
+		private void actionPerformedCont(ActionEvent e) {
+			if (txtId == e.getSource()) {
+				String id = txtId.getText();
+				if (!Util.estaVazio(id)) {
+					Objeto obj = new Objeto();
+					obj.setId(id);
+
+					if (!objetoSuperficie.contem(obj)) {
+						objeto.setId(id);
+						objetoSuperficie.alinharNome(objeto);
+					}
+				}
+			} else if (txtArquivo == e.getSource()) {
+				objeto.setArquivo(txtArquivo.getText());
+			} else if (chkDesenharId == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setDesenharId(chk.isSelected());
+				MacroProvedor.desenharIdDescricao(chk.isSelected());
+			}
+			actionPerformedCont2(e);
+		}
+
+		private void actionPerformedCont2(ActionEvent e) {
+			if (chkTransparente == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setTransparente(chk.isSelected());
+				MacroProvedor.transparencia(chk.isSelected());
+			} else if (chkCopiarDestac == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setCopiarDestacado(chk.isSelected());
+				MacroProvedor.copiarDestacado(chk.isSelected());
+			}
+		}
+	}
+
+	private class PanelBanco extends Panel implements ActionListener {
+		private static final long serialVersionUID = 1L;
+		private TextField txtLinkAutomatico = new TextField();
+		private TextField txtFinalConsulta = new TextField();
+		private CheckBox chkAjusteAutoEnter = new CheckBox();
+		private CheckBox chkAjusteAutoForm = new CheckBox();
+		private TextField txtChaveamento = new TextField();
+		private TextField txtSelectAlter = new TextField();
+		private TextField txtComplemento = new TextField();
+		private TextField txtSequencias = new TextField();
+		private TextField txtMapeamento = new TextField();
+		private TextField txtPrefixoNT = new TextField();
+		private CheckBox chkColunaInfo = new CheckBox();
+		private CheckBox chkAbrirAuto = new CheckBox();
+		private TextField txtTabelas = new TextField();
+		private CheckBox chkLinkAuto = new CheckBox();
+		private TextField txtTabela = new TextField();
+		private TextField txtChaves = new TextField();
+		private TextField txtJoins = new TextField();
+		private CheckBox chkCCSC = new CheckBox();
+		private CheckBox chkBPNT = new CheckBox();
+
+		private PanelBanco() {
+			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
+			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
+			txtSelectAlter.setText(objeto.getSelectAlternativo());
+			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
+			txtFinalConsulta.setText(objeto.getFinalConsulta());
+			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
+			chkColunaInfo.setSelected(objeto.isColunaInfo());
+			txtChaveamento.setText(objeto.getChaveamento());
+			txtComplemento.setText(objeto.getComplemento());
+			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
+			txtSequencias.setText(objeto.getSequencias());
+			txtMapeamento.setText(objeto.getMapeamento());
+			chkLinkAuto.setSelected(objeto.isLinkAuto());
+			txtTabelas.setText(objeto.getTabelas());
+			txtTabela.setText(objeto.getTabela2());
+			txtChaves.setText(objeto.getChaves());
+			chkCCSC.setSelected(objeto.isCcsc());
+			chkBPNT.setSelected(objeto.isBpnt());
+			txtJoins.setText(objeto.getJoins());
+			txtLinkAutomatico.addFocusListener(focusListenerInner);
+			txtFinalConsulta.addFocusListener(focusListenerInner);
+			txtChaveamento.addFocusListener(focusListenerInner);
+			txtComplemento.addFocusListener(focusListenerInner);
+			txtSelectAlter.addFocusListener(focusListenerInner);
+			txtMapeamento.addFocusListener(focusListenerInner);
+			txtSequencias.addFocusListener(focusListenerInner);
+			txtPrefixoNT.addFocusListener(focusListenerInner);
+			txtTabelas.addFocusListener(focusListenerInner);
+			txtTabela.addFocusListener(focusListenerInner);
+			txtChaves.addFocusListener(focusListenerInner);
+			txtJoins.addFocusListener(focusListenerInner);
+			chkAjusteAutoEnter.addActionListener(this);
+			chkAjusteAutoForm.addActionListener(this);
+			txtLinkAutomatico.addActionListener(this);
+			txtFinalConsulta.addActionListener(this);
+			txtChaveamento.addActionListener(this);
+			txtComplemento.addActionListener(this);
+			txtSelectAlter.addActionListener(this);
+			txtMapeamento.addActionListener(this);
+			txtSequencias.addActionListener(this);
+			chkColunaInfo.addActionListener(this);
+			chkAbrirAuto.addActionListener(this);
+			txtPrefixoNT.addActionListener(this);
+			chkLinkAuto.addActionListener(this);
+			txtTabelas.addActionListener(this);
+			txtChaves.addActionListener(this);
+			txtTabela.addActionListener(this);
+			txtJoins.addActionListener(this);
+			chkCCSC.addActionListener(this);
+			chkBPNT.addActionListener(this);
+			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.tabelas", txtTabelas));
@@ -220,9 +296,6 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
-			container.add(criarLinhaComLink("label.arquivo", txtArquivo,
-					Mensagens.getString("hint.arquivo_absoluto_relativo"),
-					PanelGeral.this::mensagemPropriedadeArquivo));
 			container.add(criarLinha("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
 			container.add(criarLinha("label.linkAuto", txtLinkAutomatico, Mensagens.getString("hint.linkAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
@@ -232,26 +305,23 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
 			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.bpnt", chkBPNT, Mensagens.getString("hint.bpnt")));
-			container.add(criarLinha("label.desenhar_id", chkDesenharId));
-			container.add(criarLinha("label.transparente", chkTransparente));
-			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm,
 					Mensagens.getString("hint.ajuste_auto_form")));
 			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter,
 					Mensagens.getString("hint.ajuste_auto_enter", Mensagens.getString("label.ajuste_auto_form"))));
-
 			txtLinkAutomatico.addMouseListener(linkAutomaticoListener);
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
-
 			txtLinkAutomatico.setEnabled(false);
-
 			add(BorderLayout.CENTER, container);
 		}
 
-		private void mensagemPropriedadeArquivo(Label label) {
-			Util.mensagem(ObjetoContainer.this, Mensagens.getString("msg.propriedade_arquivo"));
-		}
+		private transient FocusListener focusListenerInner = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				actionPerformed(new ActionEvent(e.getSource(), 0, null));
+			}
+		};
 
 		private transient MouseListener linkAutomaticoListener = new MouseAdapter() {
 			@Override
@@ -295,30 +365,9 @@ public class ObjetoContainer extends Panel {
 			}
 		};
 
-		private transient FocusListener focusListenerInner = new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				actionPerformed(new ActionEvent(e.getSource(), 0, null));
-			}
-		};
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (txtX == e.getSource()) {
-				objeto.setX(Util.getInt(txtX.getText(), objeto.getX()));
-				MacroProvedor.xLocal(objeto.getX());
-			} else if (txtY == e.getSource()) {
-				objeto.setY(Util.getInt(txtY.getText(), objeto.getY()));
-				MacroProvedor.yLocal(objeto.getY());
-			} else if (txtDeslocXId == e.getSource()) {
-				objeto.setDeslocamentoXId(Util.getInt(txtDeslocXId.getText(), objeto.getDeslocamentoXId()));
-				MacroProvedor.deslocarXIdDescricao(objeto.getDeslocamentoXId());
-			} else if (txtDeslocYId == e.getSource()) {
-				objeto.setDeslocamentoYId(Util.getInt(txtDeslocYId.getText(), objeto.getDeslocamentoYId()));
-				MacroProvedor.deslocarYIdDescricao(objeto.getDeslocamentoYId());
-			} else if (txtIntervalo == e.getSource()) {
-				objeto.setIntervalo(Util.getInt(txtIntervalo.getText(), objeto.getIntervalo()));
-			} else if (txtLinkAutomatico == e.getSource()) {
+			if (txtLinkAutomatico == e.getSource()) {
 				objeto.setLinkAutomatico(txtLinkAutomatico.getText());
 			} else if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txtChaveamento.getText());
@@ -342,24 +391,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void actionPerformedCont(ActionEvent e) {
-			if (txtId == e.getSource()) {
-				String id = txtId.getText();
-				if (!Util.estaVazio(id)) {
-					Objeto obj = new Objeto();
-					obj.setId(id);
-
-					if (!objetoSuperficie.contem(obj)) {
-						objeto.setId(id);
-						objetoSuperficie.alinharNome(objeto);
-					}
-				}
-			} else if (txtArquivo == e.getSource()) {
-				objeto.setArquivo(txtArquivo.getText());
-			} else if (chkDesenharId == e.getSource()) {
-				CheckBox chk = (CheckBox) e.getSource();
-				objeto.setDesenharId(chk.isSelected());
-				MacroProvedor.desenharIdDescricao(chk.isSelected());
-			} else if (chkColunaInfo == e.getSource()) {
+			if (chkColunaInfo == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setColunaInfo(chk.isSelected());
 				MacroProvedor.colunaInfo(chk.isSelected());
@@ -384,15 +416,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void actionPerformedCont2(ActionEvent e) {
-			if (chkTransparente == e.getSource()) {
-				CheckBox chk = (CheckBox) e.getSource();
-				objeto.setTransparente(chk.isSelected());
-				MacroProvedor.transparencia(chk.isSelected());
-			} else if (chkCopiarDestac == e.getSource()) {
-				CheckBox chk = (CheckBox) e.getSource();
-				objeto.setCopiarDestacado(chk.isSelected());
-				MacroProvedor.copiarDestacado(chk.isSelected());
-			} else if (chkAjusteAutoForm == e.getSource()) {
+			if (chkAjusteAutoForm == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAjusteAutoForm(chk.isSelected());
 				MacroProvedor.ajusteAutoForm(chk.isSelected());
@@ -408,34 +432,34 @@ public class ObjetoContainer extends Panel {
 				objeto.setJoins(txtJoins.getText());
 			}
 		}
+	}
 
-		private Component criarLinha(String chaveRotulo, JComponent componente) {
-			return criarLinha(chaveRotulo, componente, null);
-		}
+	private Component criarLinha(String chaveRotulo, JComponent componente) {
+		return criarLinha(chaveRotulo, componente, null);
+	}
 
-		private Component criarLinha(String chaveRotulo, JComponent componente, String hint) {
-			return criarLinhaComLink(chaveRotulo, componente, hint, null);
-		}
+	private Component criarLinha(String chaveRotulo, JComponent componente, String hint) {
+		return criarLinhaComLink(chaveRotulo, componente, hint, null);
+	}
 
-		private Component criarLinhaComLink(String chaveRotulo, JComponent componente, String hint,
-				LabelLinkListener linkListener) {
-			Dimension largura = new Dimension(120, 0);
-			Panel linha = new Panel();
-			Label label = new Label(chaveRotulo);
-			label.setHorizontalAlignment(Label.RIGHT);
-			label.setPreferredSize(largura);
-			label.setMinimumSize(largura);
-			label.setMaximumSize(largura);
-			if (!Util.estaVazio(hint)) {
-				label.setToolTipText(hint);
-			}
-			linha.add(BorderLayout.CENTER, componente);
-			linha.add(BorderLayout.WEST, label);
-			if (linkListener != null) {
-				label.modoLink(linkListener);
-			}
-			return linha;
+	private Component criarLinhaComLink(String chaveRotulo, JComponent componente, String hint,
+			LabelLinkListener linkListener) {
+		Dimension largura = new Dimension(120, 0);
+		Panel linha = new Panel();
+		Label label = new Label(chaveRotulo);
+		label.setHorizontalAlignment(Label.RIGHT);
+		label.setPreferredSize(largura);
+		label.setMinimumSize(largura);
+		label.setMaximumSize(largura);
+		if (!Util.estaVazio(hint)) {
+			label.setToolTipText(hint);
 		}
+		linha.add(BorderLayout.CENTER, componente);
+		linha.add(BorderLayout.WEST, label);
+		if (linkListener != null) {
+			label.modoLink(linkListener);
+		}
+		return linha;
 	}
 
 	private class PanelDescricao extends Panel {
@@ -677,7 +701,8 @@ public class ObjetoContainer extends Panel {
 		private PanelBuscaAuto panelBuscaAuto = new PanelBuscaAuto();
 
 		private Fichario() {
-			addTab("label.geral", new ScrollPane(new PanelGeral()));
+			addTab("label.geral", new PanelGeral());
+			addTab("label.banco", new PanelBanco());
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.buscaAuto", panelBuscaAuto);
 			addTab("label.cor", new PanelCor());
