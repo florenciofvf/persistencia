@@ -6,7 +6,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
 public class InternalForm {
-	private String apelido;
 	private String objeto;
 	private int largura;
 	private int altura;
@@ -15,7 +14,6 @@ public class InternalForm {
 
 	public void copiar(InternalFormulario interno) {
 		objeto = interno.getInternalContainer().getObjeto().getId();
-		apelido = interno.getApelidoListener().getApelido();
 		largura = interno.getWidth();
 		altura = interno.getHeight();
 		x = interno.getX();
@@ -27,23 +25,17 @@ public class InternalForm {
 		altura = Integer.parseInt(attr.getValue("altura"));
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
-		apelido = attr.getValue("apelido");
 		objeto = attr.getValue("objeto");
 	}
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("form");
-		util.atributo("apelido", Util.escapar(apelido));
 		util.atributo("objeto", Util.escapar(objeto));
 		util.atributo("largura", largura);
 		util.atributo("altura", altura);
 		util.atributo("x", x);
 		util.atributo("y", y);
 		util.fecharTag().finalizarTag("form");
-	}
-
-	public String getApelido() {
-		return apelido;
 	}
 
 	public String getObjeto() {

@@ -15,7 +15,6 @@ import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
@@ -31,7 +30,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private final InternalContainer container;
 	private boolean processadoPesquisa;
 	private Desktop desktop;
-	private String apelido;
 
 	public InternalFormulario(Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
 		super(objeto.getId());
@@ -45,7 +43,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
 		container.setPesquisaListener(pesquisaListener);
-		container.setApelidoListener(apelidoListener);
 		setFrameIcon(Icones.VAZIO);
 		montarLayout();
 		configurar2();
@@ -215,7 +212,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public boolean ehTabela(InternalConfig config) {
 		return config.isChecarApelido()
-				? apelidoListener.getApelido().equalsIgnoreCase(config.getApelido())
+				? container.getObjeto().getApelido().equalsIgnoreCase(config.getApelido())
 						&& container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela())
 				: container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
 	}
@@ -265,35 +262,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public String getComplementoChaves() {
 		return container.getComplementoChaves();
-	}
-
-	private transient InternalListener.Apelido apelidoListener = new InternalListener.Apelido() {
-		@Override
-		public void setApelido(String string) {
-			apelido = string;
-		}
-
-		@Override
-		public String selecionarApelido() {
-			Object resp = Util.getValorInputDialog(InternalFormulario.this, "label.apelido", getApelido(),
-					getApelido());
-			if (resp != null) {
-				return resp.toString().trim();
-			}
-			return null;
-		}
-
-		@Override
-		public String getApelido() {
-			if (apelido == null) {
-				apelido = Constantes.VAZIO;
-			}
-			return apelido.trim();
-		}
-	};
-
-	public InternalListener.Apelido getApelidoListener() {
-		return apelidoListener;
 	}
 
 	public void selecionarConexao(Conexao conexao) {

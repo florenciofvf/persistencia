@@ -49,12 +49,4 @@ public interface InternalListener {
 	public interface Largura {
 		public void mesma();
 	}
-
-	public interface Apelido {
-		public void setApelido(String string);
-
-		public String selecionarApelido();
-
-		public String getApelido();
-	}
 }

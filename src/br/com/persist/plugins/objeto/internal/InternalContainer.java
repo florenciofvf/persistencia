@@ -117,7 +117,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private final AtomicBoolean processado = new AtomicBoolean();
 	private transient InternalListener.Largura larguraListener;
 	private transient InternalListener.Selecao selecaoListener;
-	private transient InternalListener.Apelido apelidoListener;
 	private final TextField txtComplemento = new TextField(33);
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
@@ -159,17 +158,14 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 			Dimension dimension = null;
-			String apelido = null;
-			if (apelidoListener != null) {
-				apelido = apelidoListener.getApelido();
-			}
 			if (dimensaoListener != null) {
 				dimension = dimensaoListener.getDimensoes();
 			}
 			if (dimension == null) {
 				dimension = Constantes.SIZE;
 			}
-			dge.startDrag(null, new InternalTransferidor(objeto, conexao, dimension, apelido), listenerArrasto);
+			dge.startDrag(null, new InternalTransferidor(objeto, conexao, dimension, objeto.getApelido()),
+					listenerArrasto);
 		});
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
@@ -757,13 +753,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action apelidoAcao = Action.actionMenu("label.apelido", Icones.TAG2);
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 
 			private ButtonInfo() {
 				super("label.meta_dados", Icones.INFO);
-				addMenuItem(apelidoAcao);
-				addMenuItem(true, new ChavesPrimariasAcao());
+				addMenuItem(new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
 				addMenuItem(true, new MetaDadosAcao());
@@ -772,18 +766,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				addMenu(true, new MenuDML());
 				addMenu(true, new MenuCopiar());
 				addMenu(true, menuAlinhamento);
-				eventos();
-			}
-
-			private void eventos() {
-				apelidoAcao.setActionListener(e -> {
-					if (apelidoListener != null) {
-						String apelido = apelidoListener.selecionarApelido();
-						if (apelido != null) {
-							apelidoListener.setApelido(apelido);
-						}
-					}
-				});
 			}
 
 			private class MenuAlinhamento extends Menu {
@@ -1769,14 +1751,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void setDimensaoListener(InternalListener.Dimensao dimensaoListener) {
 		this.dimensaoListener = dimensaoListener;
-	}
-
-	public InternalListener.Apelido getApelidoListener() {
-		return apelidoListener;
-	}
-
-	public void setApelidoListener(InternalListener.Apelido apelidoListener) {
-		this.apelidoListener = apelidoListener;
 	}
 
 	public InternalListener.Componente getComponenteListener() {

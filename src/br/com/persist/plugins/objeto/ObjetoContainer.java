@@ -415,7 +415,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			}
 			if (instancia != null) {
 				Object[] array = InternalTransferidor.criarArray(conexao, instancia,
-						new Dimension(form.getLargura(), form.getAltura()), form.getApelido());
+						new Dimension(form.getLargura(), form.getAltura()), instancia.getApelido());
 				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(form.getX(), form.getY()), g,
 						(String) array[InternalTransferidor.ARRAY_INDICE_APE], true, config);
 			}

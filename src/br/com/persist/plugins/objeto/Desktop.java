@@ -278,10 +278,10 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 		InternalFormulario internnalFormulario = new InternalFormulario(conexao, objeto, g, buscaAuto);
 		internnalFormulario.setAbortarFecharComESC(abortarFecharComESC);
-		internnalFormulario.getApelidoListener().setApelido(apelido);
 		internnalFormulario.setLocation(point);
 		internnalFormulario.setSize(dimension);
 		internnalFormulario.setVisible(true);
+		config.setApelido(apelido);
 		internnalFormulario.aplicarConfigArquivo(config);
 		add(internnalFormulario);
 	}
