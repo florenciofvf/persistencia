@@ -330,7 +330,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				interno.setProcessadoBuscaAutomatica(false);
 				for (Referencia referencia : referencias) {
 					if (interno.ehReferencia(referencia)) {
-						interno.getInternalContainer().getObjeto().setReferencia(referencia);
+						interno.getInternalContainer().getObjeto().setReferenciaPesquisa(referencia);
 						interno.pesquisar(referencia.getCampo(), argumentos);
 						interno.setProcessadoBuscaAutomatica(true);
 						referencia.setProcessado(true);

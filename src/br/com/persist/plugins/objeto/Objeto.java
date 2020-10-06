@@ -46,6 +46,7 @@ public class Objeto implements Runnable {
 	private TabelaBuscaAuto tabelaBuscaAuto;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
+	private Referencia referenciaPesquisa;
 	private final List<Grupo> grupos;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
@@ -926,5 +927,13 @@ public class Objeto implements Runnable {
 
 	public List<Grupo> getGrupos() {
 		return grupos;
+	}
+
+	public Referencia getReferenciaPesquisa() {
+		return referenciaPesquisa;
+	}
+
+	public void setReferenciaPesquisa(Referencia referenciaPesquisa) {
+		this.referenciaPesquisa = referenciaPesquisa;
 	}
 }

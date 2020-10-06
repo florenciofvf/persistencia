@@ -8,6 +8,7 @@ import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAutoApos;
 import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
 import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Referencia;
 
 public interface InternalListener {
 	public interface BuscaAutomaticaApos {
@@ -19,6 +20,10 @@ public interface InternalListener {
 	}
 
 	public interface Pesquisa {
+		public void pesquisarLink(Referencia ref, String argumentos);
+
+		public void pesquisarLink(Grupo grupo, String argumentos);
+
 		public void pesquisar(Grupo grupo, String argumentos);
 
 		public void pesquisarApos(Grupo grupo);

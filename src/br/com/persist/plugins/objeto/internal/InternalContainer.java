@@ -81,8 +81,6 @@ import br.com.persist.plugins.fragmento.FragmentoListener;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoUtil;
-import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
-import br.com.persist.plugins.objeto.auto.LinkAutoUtil;
 import br.com.persist.plugins.objeto.vinculo.Grupo;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.persistencia.Coluna;
@@ -124,7 +122,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private transient InternalListener.Selecao selecaoListener;
 	private transient InternalListener.Apelido apelidoListener;
 	private final TextField txtComplemento = new TextField(33);
-	private final transient List<GrupoLinkAuto> listaGrupoLink;
+	// private final transient List<GrupoLinkAuto> listaGrupoLink;
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
 	private final JComboBox<Conexao> comboConexao;
@@ -140,7 +138,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
 		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
 		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
-		listaGrupoLink = LinkAutoUtil.listaGrupoLinkAuto(objeto, objeto.getLinkAutomatico());
+		// listaGrupoLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
+		// objeto.getLinkAutomatico());
 		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
@@ -1437,14 +1436,14 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	 */
 
 	private void processarReferencia() {
-		Referencia referencia = objeto.getReferencia();
+		Referencia referencia = objeto.getReferenciaPesquisa();
 		if (referencia != null) {
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
 			if (coluna != -1) {
 				InternalUtil.atualizarColetores(tabelaPersistencia, coluna, referencia);
 			}
-			objeto.setReferencia(null);
+			objeto.setReferenciaPesquisa(null);
 			if (visibilidadeListener != null) {
 				boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
 				boolean visivel = objeto.isVisivel();
@@ -1703,8 +1702,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					toolbar.excluirAtualizarEnable(false);
 					toolbar.labelTotal.limpar();
 				}
-				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && !listaGrupoLink.isEmpty()
-						&& linkAutomaticoListener != null) {
+				boolean link = (!objeto.getGrupos().isEmpty() || objeto.getReferencia() != null)
+						&& pesquisaListener != null;
+				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && link) {
 					mouseClick(tabela, colunaClick);
 				}
 			} else {
@@ -1713,21 +1713,34 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 
 		private void mouseClick(TabelaPersistencia tabela, int colunaClick) {
-			int indiceLinkSelecionado = -1;
-			for (int i = 0; i < listaGrupoLink.size(); i++) {
-				GrupoLinkAuto link = listaGrupoLink.get(i);
-				if (TabelaPersistenciaUtil.getIndiceColuna(tabela, link.getCampo()) == colunaClick) {
-					indiceLinkSelecionado = i;
-				}
-			}
-			if (indiceLinkSelecionado == -1) {
+			Referencia refSel = getRefSelecionado(tabela, colunaClick);
+			Grupo grupoSel = getGrupoSelecionado(tabela, colunaClick);
+			if (grupoSel == null && refSel == null) {
 				return;
 			}
 			List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
-			if (lista.size() != 1) {
-				return;
+			if (lista.size() == 1 && grupoSel != null) {
+				pesquisaListener.pesquisarLink(grupoSel, lista.get(0));
+			} else if (lista.size() == 1 && refSel != null) {
+				pesquisaListener.pesquisarLink(refSel, lista.get(0));
 			}
-			linkAutomaticoListener.linkAutomatico(listaGrupoLink.get(indiceLinkSelecionado), lista.get(0));
+		}
+
+		private Grupo getGrupoSelecionado(TabelaPersistencia tabela, int colunaClick) {
+			for (Grupo grupo : objeto.getGrupos()) {
+				if (TabelaPersistenciaUtil.getIndiceColuna(tabela, grupo.getReferencia().getCampo()) == colunaClick) {
+					return grupo;
+				}
+			}
+			return null;
+		}
+
+		private Referencia getRefSelecionado(TabelaPersistencia tabela, int colunaClick) {
+			Referencia ref = objeto.getReferencia();
+			if (ref != null && TabelaPersistenciaUtil.getIndiceColuna(tabela, ref.getCampo()) == colunaClick) {
+				return ref;
+			}
+			return null;
 		}
 	}
 
