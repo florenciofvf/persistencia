@@ -19,12 +19,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
-import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
-import br.com.persist.plugins.objeto.auto.GrupoBuscaAutoApos;
-import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
-import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
-import br.com.persist.plugins.objeto.auto.TabelaBuscaAutoApos;
-import br.com.persist.plugins.objeto.auto.TabelaLinkAuto;
 import br.com.persist.plugins.objeto.vinculo.Grupo;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
@@ -43,9 +37,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		super(objeto.getId());
 		container = new InternalContainer(this, padrao, objeto, g, buscaAuto);
 		container.setConfigAlturaAutomaticaListener(InternalFormulario.this::configAlturaAutomatica);
-		container.setBuscaAutomaticaAposListener(InternalFormulario.this::buscaAutomaticaApos);
-		container.setBuscaAutomaticaListener(InternalFormulario.this::buscaAutomatica);
-		container.setLinkAutomaticoListener(InternalFormulario.this::linkAutomatico);
 		container.setVisibilidadeListener(InternalFormulario.this::setVisible);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
@@ -158,13 +149,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		configAjustes(true);
 	}
 
-	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos) {
-		checarDesktop();
-		if (desktop != null) {
-			desktop.buscaAutomatica(grupo, argumentos, container);
-		}
-	}
-
 	private transient InternalListener.Pesquisa pesquisaListener = new InternalListener.Pesquisa() {
 		@Override
 		public void pesquisar(Grupo grupo, String argumentos) {
@@ -199,20 +183,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	};
 
-	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
-		checarDesktop();
-		if (desktop != null) {
-			desktop.linkAutomatico(link, argumento, container);
-		}
-	}
-
-	public void buscaAutomaticaApos(InternalContainer objetoContainer, GrupoBuscaAutoApos grupoApos) {
-		checarDesktop();
-		if (desktop != null) {
-			desktop.buscaAutomaticaApos(objetoContainer, grupoApos);
-		}
-	}
-
 	public void alinhar(DesktopAlinhamento opcao) {
 		checarDesktop();
 		if (desktop != null) {
@@ -235,23 +205,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public boolean ehTabela(TabelaBuscaAuto tabela) {
-		return apelidoListener.getApelido().equalsIgnoreCase(tabela.getApelido())
-				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
-	}
-
 	public boolean ehReferencia(Referencia referencia) {
 		return referencia.refIgual(container.getObjeto());
-	}
-
-	public boolean ehTabela(TabelaBuscaAutoApos tabela) {
-		return apelidoListener.getApelido().equalsIgnoreCase(tabela.getApelido())
-				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
-	}
-
-	public boolean ehTabela(TabelaLinkAuto tabela) {
-		return apelidoListener.getApelido().equalsIgnoreCase(tabela.getApelido())
-				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
 	public boolean ehTabela(Objeto objeto) {

@@ -216,7 +216,6 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelBanco extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private TextField txtLinkAutomatico = new TextField();
 		private TextField txtFinalConsulta = new TextField();
 		private CheckBox chkAjusteAutoEnter = new CheckBox();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
@@ -240,7 +239,6 @@ public class ObjetoContainer extends Panel {
 			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
 			txtSelectAlter.setText(objeto.getSelectAlternativo());
-			txtLinkAutomatico.setText(objeto.getLinkAutomatico());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
 			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
 			chkColunaInfo.setSelected(objeto.isColunaInfo());
@@ -256,7 +254,6 @@ public class ObjetoContainer extends Panel {
 			chkCCSC.setSelected(objeto.isCcsc());
 			chkBPNT.setSelected(objeto.isBpnt());
 			txtJoins.setText(objeto.getJoins());
-			txtLinkAutomatico.addFocusListener(focusListenerInner);
 			txtFinalConsulta.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
 			txtComplemento.addFocusListener(focusListenerInner);
@@ -270,7 +267,6 @@ public class ObjetoContainer extends Panel {
 			txtJoins.addFocusListener(focusListenerInner);
 			chkAjusteAutoEnter.addActionListener(this);
 			chkAjusteAutoForm.addActionListener(this);
-			txtLinkAutomatico.addActionListener(this);
 			txtFinalConsulta.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
@@ -297,7 +293,6 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
 			container.add(criarLinha("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
-			container.add(criarLinha("label.linkAuto", txtLinkAutomatico, Mensagens.getString("hint.linkAuto")));
 			container.add(criarLinha("label.complemento", txtComplemento));
 			container.add(criarLinha("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinha("label.coluna_info", chkColunaInfo));
@@ -309,10 +304,8 @@ public class ObjetoContainer extends Panel {
 					Mensagens.getString("hint.ajuste_auto_form")));
 			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter,
 					Mensagens.getString("hint.ajuste_auto_enter", Mensagens.getString("label.ajuste_auto_form"))));
-			txtLinkAutomatico.addMouseListener(linkAutomaticoListener);
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
-			txtLinkAutomatico.setEnabled(false);
 			add(BorderLayout.CENTER, container);
 		}
 
@@ -320,20 +313,6 @@ public class ObjetoContainer extends Panel {
 			@Override
 			public void focusLost(FocusEvent e) {
 				actionPerformed(new ActionEvent(e.getSource(), 0, null));
-			}
-		};
-
-		private transient MouseListener linkAutomaticoListener = new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.LINK_AUTO);
-					form.setLocationRelativeTo(ObjetoContainer.this);
-					form.setVisible(true);
-
-					txtLinkAutomatico.setText(objeto.getLinkAutomatico());
-				}
 			}
 		};
 
@@ -367,9 +346,7 @@ public class ObjetoContainer extends Panel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (txtLinkAutomatico == e.getSource()) {
-				objeto.setLinkAutomatico(txtLinkAutomatico.getText());
-			} else if (txtChaveamento == e.getSource()) {
+			if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txtChaveamento.getText());
 			} else if (txtMapeamento == e.getSource()) {
 				objeto.setMapeamento(txtMapeamento.getText());

@@ -39,14 +39,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
-import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
-import br.com.persist.plugins.objeto.auto.GrupoBuscaAutoApos;
-import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
-import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
-import br.com.persist.plugins.objeto.auto.TabelaBuscaAutoApos;
-import br.com.persist.plugins.objeto.auto.TabelaLinkAuto;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
-import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.objeto.vinculo.Grupo;
@@ -304,24 +297,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
-	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, InternalContainer container) {
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				List<TabelaBuscaAuto> tabelas = grupo.getTabelas();
-				interno.setProcessadoBuscaAutomatica(false);
-				for (TabelaBuscaAuto tabela : tabelas) {
-					if (interno.ehTabela(tabela)) {
-						interno.getInternalContainer().getObjeto().setTabelaBuscaAuto(tabela);
-						interno.buscaAutomatica(tabela.getCampo(), argumentos);
-						interno.setProcessadoBuscaAutomatica(true);
-						tabela.setProcessado(true);
-					}
-				}
-			}
-		}
-	}
-
 	public void pesquisar(Grupo grupo, String argumentos) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
@@ -394,40 +369,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			}
 		}
 		return null;
-	}
-
-	public void buscaAutomaticaApos(InternalContainer container, GrupoBuscaAutoApos grupoApos) {
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				if (!interno.isProcessadoBuscaAutomatica()) {
-					for (TabelaBuscaAutoApos tabela : grupoApos.getTabelas()) {
-						if (executarBuscaAutomaticaApos(interno, tabela, container, false)) {
-							interno.buscaAutomaticaApos();
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private boolean executarBuscaAutomaticaApos(InternalFormulario interno, TabelaBuscaAutoApos tabela,
-			InternalContainer container, boolean limparFormulariosRestantes) {
-		return interno.ehTabela(tabela) || (limparFormulariosRestantes && interno.getInternalContainer() != container);
-	}
-
-	public void linkAutomatico(GrupoLinkAuto link, String argumento, InternalContainer container) {
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				List<TabelaLinkAuto> tabelas = link.getTabelas();
-				for (TabelaLinkAuto tabela : tabelas) {
-					if (interno.ehTabela(tabela)) {
-						interno.linkAutomatico(tabela.getCampo(), argumento);
-					}
-				}
-			}
-		}
 	}
 
 	public boolean isAbortarFecharComESC() {

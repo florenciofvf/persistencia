@@ -50,8 +50,6 @@ import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
-import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
-import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.objeto.circular.CircularContainer.Tipo;
 import br.com.persist.plugins.objeto.circular.CircularDialogo;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
@@ -67,10 +65,10 @@ import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Grupo;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
+import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
-import br.com.persist.plugins.persistencia.Persistencia;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private static final long serialVersionUID = 1L;
@@ -1460,22 +1458,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	@Override
-	public void buscaAutomatica(GrupoBuscaAuto grupo, String argumentos, InternalContainer objContainer) {
-		super.buscaAutomatica(grupo, argumentos, objContainer);
-		if (Preferencias.isAbrirAuto()) {
-			limparSelecao();
-			for (TabelaBuscaAuto tabela : grupo.getTabelas()) {
-				if (!tabela.isProcessado()) {
-					buscaAutomaticaFinal(tabela, argumentos);
-				}
-			}
-			if (getPrimeiroObjetoSelecionado() != null) {
-				destacar(container.getConexaoPadrao(), Preferencias.getTipoContainerPesquisaAuto(), null);
-			}
-		}
-	}
-
-	@Override
 	public void pesquisar(Grupo grupo, String argumentos) {
 		super.pesquisar(grupo, argumentos);
 		if (Preferencias.isAbrirAuto()) {
@@ -1489,31 +1471,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				destacar(container.getConexaoPadrao(), Preferencias.getTipoContainerPesquisaAuto(), null);
 			}
 		}
-	}
-
-	private void buscaAutomaticaFinal(TabelaBuscaAuto tabela, String argumentos) {
-		Objeto objeto = null;
-		for (Objeto obj : objetos) {
-			if (Util.estaVazio(tabela.getApelido()) && obj.getTabela2().equalsIgnoreCase(tabela.getNome())) {
-				objeto = obj;
-				break;
-			}
-		}
-		if (objeto == null || !objeto.isAbrirAuto()) {
-			return;
-		}
-		objeto.setComplemento("AND " + tabela.getCampo() + " IN (" + argumentos + ")");
-		Conexao conexao = container.getConexaoPadrao();
-		objeto.setTabelaBuscaAuto(tabela);
-		if (Preferencias.isAbrirAutoDestacado()) {
-			ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
-			form.setLocationRelativeTo(formulario);
-			form.setVisible(true);
-			Formulario.posicionarJanela(formulario, form);
-		} else {
-			objeto.setSelecionado(true);
-		}
-		tabela.setProcessado(true);
 	}
 
 	private void pesquisarFinal(Referencia referencia, String argumentos) {

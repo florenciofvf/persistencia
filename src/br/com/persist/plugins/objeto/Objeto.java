@@ -30,11 +30,10 @@ import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
-import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.objeto.vinculo.Grupo;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
-import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
+import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
@@ -43,7 +42,6 @@ public class Objeto implements Runnable {
 	private Map<String, String> mapaSequencias;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
-	private TabelaBuscaAuto tabelaBuscaAuto;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
@@ -126,7 +124,6 @@ public class Objeto implements Runnable {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.selectAlternativo = selectAlternativo;
-		o.tabelaBuscaAuto = tabelaBuscaAuto;
 		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
@@ -835,14 +832,6 @@ public class Objeto implements Runnable {
 
 	public void setControlado(boolean controlado) {
 		this.controlado = controlado;
-	}
-
-	public TabelaBuscaAuto getTabelaBuscaAuto() {
-		return tabelaBuscaAuto;
-	}
-
-	public void setTabelaBuscaAuto(TabelaBuscaAuto tabelaBuscaAuto) {
-		this.tabelaBuscaAuto = tabelaBuscaAuto;
 	}
 
 	public boolean isCcsc() {

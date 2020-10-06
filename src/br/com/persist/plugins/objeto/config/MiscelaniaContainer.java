@@ -18,8 +18,6 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoUtil;
-import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
-import br.com.persist.plugins.objeto.auto.LinkAutoUtil;
 
 public class MiscelaniaContainer extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -43,8 +41,6 @@ public class MiscelaniaContainer extends Panel {
 			chave(builder);
 		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 			mapa(builder);
-		} else if (Tipo.LINK_AUTO.equals(tipo)) {
-			linkAuto(builder);
 		}
 		textArea.setText(builder.toString().trim());
 	}
@@ -81,22 +77,8 @@ public class MiscelaniaContainer extends Panel {
 		}
 	}
 
-	private void linkAuto(StringBuilder builder) {
-		List<GrupoLinkAuto> listaLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
-				!Util.estaVazio(objeto.getLinkAutomatico()) ? objeto.getLinkAutomatico()
-						: Mensagens.getString("hint.linkAuto"));
-		for (int i = 0; i < listaLink.size(); i++) {
-			GrupoLinkAuto link = listaLink.get(i);
-			builder.append(link.getDetalhe());
-			if (i + 1 < listaLink.size()) {
-				builder.append(";");
-			}
-			builder.append(Constantes.QL);
-		}
-	}
-
 	public enum Tipo {
-		CHAVE_SEQUENCIA, LINK_AUTO, MAPEAMENTO
+		CHAVE_SEQUENCIA, MAPEAMENTO
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -122,11 +104,7 @@ public class MiscelaniaContainer extends Panel {
 		@Override
 		protected void aplicar() {
 			try {
-				if (Tipo.LINK_AUTO.equals(tipo)) {
-					String string = Util.normalizar(textArea.getText(), false);
-					LinkAutoUtil.listaGrupoLinkAuto(objeto, string);
-					objeto.setLinkAutomatico(string);
-				} else if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
+				if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
 					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
 				} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));

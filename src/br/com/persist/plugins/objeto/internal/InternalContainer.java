@@ -106,11 +106,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private transient InternalListener.ConfigAlturaAutomatica configAlturaAutomaticaListener;
-	private transient InternalListener.BuscaAutomaticaApos buscaAutomaticaAposListener;
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
-	private transient InternalListener.BuscaAutomatica buscaAutomaticaListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
-	private transient InternalListener.LinkAutomatico linkAutomaticoListener;
 	private transient TabelaListener tabelaListener = new TabelaListener();
 	private transient InternalListener.Visibilidade visibilidadeListener;
 	private transient InternalListener.Alinhamento alinhamentoListener;
@@ -122,7 +119,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private transient InternalListener.Selecao selecaoListener;
 	private transient InternalListener.Apelido apelidoListener;
 	private final TextField txtComplemento = new TextField(33);
-	// private final transient List<GrupoLinkAuto> listaGrupoLink;
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
 	private final JComboBox<Conexao> comboConexao;
@@ -138,8 +134,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
 		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
 		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
-		// listaGrupoLink = LinkAutoUtil.listaGrupoLinkAuto(objeto,
-		// objeto.getLinkAutomatico());
 		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
@@ -1811,30 +1805,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 			indice--;
 		}
-	}
-
-	public InternalListener.BuscaAutomatica getBuscaAutomaticaListener() {
-		return buscaAutomaticaListener;
-	}
-
-	public void setBuscaAutomaticaListener(InternalListener.BuscaAutomatica buscaAutomaticaListener) {
-		this.buscaAutomaticaListener = buscaAutomaticaListener;
-	}
-
-	public InternalListener.LinkAutomatico getLinkAutomaticoListener() {
-		return linkAutomaticoListener;
-	}
-
-	public void setLinkAutomaticoListener(InternalListener.LinkAutomatico linkAutomaticoListener) {
-		this.linkAutomaticoListener = linkAutomaticoListener;
-	}
-
-	public InternalListener.BuscaAutomaticaApos getBuscaAutomaticaAposListener() {
-		return buscaAutomaticaAposListener;
-	}
-
-	public void setBuscaAutomaticaAposListener(InternalListener.BuscaAutomaticaApos buscaAutomaticaAposListener) {
-		this.buscaAutomaticaAposListener = buscaAutomaticaAposListener;
 	}
 
 	public InternalListener.ConfigAlturaAutomatica getConfigAlturaAutomaticaListener() {
