@@ -180,8 +180,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
 		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
 		private final ButtonComplemento buttonComplemento = new ButtonComplemento();
-		// private final ButtonBuscaAuto buttonBuscaAuto = new
-		// ButtonBuscaAuto();
 		private final ButtonFuncoes buttonFuncoes = new ButtonFuncoes();
 		private final ButtonFragVar buttonFragVar = new ButtonFragVar();
 		private final ButtonBaixar buttonBaixar = new ButtonBaixar();
@@ -197,7 +195,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			add(true, buttonInfo);
 			add(true, buttonExcluir);
 			add(true, buttonFragVar);
-			// add(buttonBuscaAuto);
 			add(buttonGrupo);
 			add(true, buttonUpdate);
 			add(buttonSincronizar);
@@ -207,7 +204,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			add(buttonBaixar);
 			add(buttonFuncoes);
 			add(true, comboConexao);
-			// buttonBuscaAuto.complemento(objeto);
 			buttonUpdate.complemento(objeto);
 			buttonGrupo.complemento(objeto);
 		}
@@ -435,56 +431,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				}
 			}
 		}
-
-		/*
-		 * private class ButtonBuscaAuto extends ButtonPopup { private static
-		 * final long serialVersionUID = 1L; private boolean habilitado;
-		 * 
-		 * private ButtonBuscaAuto() { super("label.buscaAuto", Icones.FIELDS);
-		 * }
-		 * 
-		 * private void complemento(Objeto objeto) { List<GrupoBuscaAuto>
-		 * listaGrupo =
-		 * BuscaAutoUtil.listarGrupoBuscaAuto(objeto.getBuscaAutomatica()); for
-		 * (GrupoBuscaAuto grupo : listaGrupo) {
-		 * listaGrupoLink.add(grupo.getGrupoLinkAuto()); addMenu(new
-		 * MenuBuscaAuto(grupo)); } habilitado = !listaGrupo.isEmpty();
-		 * setEnabled(habilitado); }
-		 * 
-		 * private void habilitar(boolean b) { setEnabled(habilitado && b); }
-		 * 
-		 * private class MenuBuscaAuto extends MenuPadrao2 { private static
-		 * final long serialVersionUID = 1L; private final transient
-		 * GrupoBuscaAuto grupo;
-		 * 
-		 * private MenuBuscaAuto(GrupoBuscaAuto grupo) { super(grupo.getNome() +
-		 * "." + grupo.getCampo(), Icones.CONFIG2, "nao_chave"); this.grupo =
-		 * grupo; semAspasAcao.setActionListener(e -> processar(false));
-		 * comAspasAcao.setActionListener(e -> processar(true)); }
-		 * 
-		 * private void processar(boolean apostrofes) { if
-		 * (buscaAutomaticaListener == null) { return; } int coluna =
-		 * TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
-		 * grupo.getCampo()); if (coluna == -1) { return; } List<String> lista =
-		 * TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabelaPersistencia,
-		 * coluna); if (lista.isEmpty()) { Util.mensagem(InternalContainer.this,
-		 * grupo.getCampo() + " vazio."); return; } grupo.setProcessado(false);
-		 * grupo.inicializarColetores(lista);
-		 * buscaAutomaticaListener.buscaAutomatica(grupo,
-		 * Util.getStringLista(lista, apostrofes, false));
-		 * setEnabled(grupo.isProcessado()); if (grupo.isProcessado() &&
-		 * buscaAutomaticaAposListener != null) {
-		 * buscaAutomaticaAposListener.buscaAutomaticaApos(InternalContainer.
-		 * this, grupo.getGrupoBuscaAutoApos()); } processarColunaInfo(coluna);
-		 * }
-		 * 
-		 * private void processarColunaInfo(int coluna) { if
-		 * (objeto.isColunaInfo()) { List<Integer> indices =
-		 * Util.getIndicesLinha(tabelaPersistencia); for (int linha : indices) {
-		 * InternalUtil.consolidarNoRegistroUsandoColetores(tabelaPersistencia,
-		 * linha, coluna, grupo); } Util.ajustar(tabelaPersistencia,
-		 * InternalContainer.this.getGraphics()); } } } }
-		 */
 
 		private class ButtonGrupo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
@@ -1385,13 +1331,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			atualizarTitulo();
 			configurarCabecalhoTabela(modeloOrdenacao, cabecalho);
 			Util.ajustar(tabelaPersistencia, g == null ? getGraphics() : g);
-			// processarTabelaBuscaAuto();
 			processarReferencia();
 		} catch (Exception ex) {
 			mensagemException(ex);
 		}
-		// toolbar.buttonBuscaAuto.habilitar(tabelaPersistencia.getModel().getRowCount()
-		// > 0 && buscaAuto);
 		toolbar.buttonGrupo.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		configurarAlturaAutomatica();
@@ -1413,21 +1356,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			tableColumn.setHeaderRenderer(cabecalhoColuna);
 		}
 	}
-
-	/*
-	 * private void processarTabelaBuscaAuto() { TabelaBuscaAuto tabelaBuscaAuto
-	 * = objeto.getTabelaBuscaAuto(); if (tabelaBuscaAuto != null) {
-	 * OrdenacaoModelo modelo = tabelaPersistencia.getModelo(); int coluna =
-	 * TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
-	 * tabelaBuscaAuto.getCampo()); if (coluna != -1) {
-	 * InternalUtil.atualizarColetores(tabelaPersistencia, coluna,
-	 * tabelaBuscaAuto); } objeto.setTabelaBuscaAuto(null); if
-	 * (visibilidadeListener != null) { boolean invisivel = modelo.getRowCount()
-	 * == 0 && tabelaBuscaAuto.isVazioInvisivel(); boolean visivel =
-	 * objeto.isVisivel(); objeto.setVisivel(!invisivel);
-	 * visibilidadeListener.setVisible(!invisivel); setBackground(!visivel &&
-	 * objeto.isVisivel() ? Color.RED : null); } } }
-	 */
 
 	private void processarReferencia() {
 		Referencia referencia = objeto.getReferenciaPesquisa();
