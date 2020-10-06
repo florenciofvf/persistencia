@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto.vinculo;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.objeto.Objeto;
 
 public class Referencia {
 	private final String apelido;
@@ -20,6 +21,11 @@ public class Referencia {
 	public boolean refIgual(Referencia ref) {
 		return ref != null && apelido.equalsIgnoreCase(ref.apelido) && tabela.equalsIgnoreCase(ref.tabela)
 				&& campo.equalsIgnoreCase(ref.campo);
+	}
+
+	public boolean refIgual(Objeto objeto) {
+		return objeto != null && apelido.equalsIgnoreCase(objeto.getApelido())
+				&& tabela.equalsIgnoreCase(objeto.getTabela2());
 	}
 
 	public boolean tabIgual(Referencia ref) {

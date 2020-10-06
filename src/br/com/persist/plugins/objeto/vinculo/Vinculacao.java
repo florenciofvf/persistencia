@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
+import br.com.persist.plugins.objeto.Objeto;
 
 public class Vinculacao {
 	private final List<Grupo> grupos;
@@ -16,12 +17,14 @@ public class Vinculacao {
 	}
 
 	public void abrir(File file, Component componente) {
+		grupos.clear();
 		if (file == null || !file.isFile()) {
 			return;
 		}
 		try {
 			VinculoHandler handler = new VinculoHandler();
 			XML.processar(file, handler);
+			grupos.addAll(handler.getGrupos());
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
 		}
@@ -49,6 +52,12 @@ public class Vinculacao {
 	private void integrar(Grupo grupo, List<Grupo> outros) {
 		for (Grupo outro : outros) {
 			grupo.addLink(outro.getClonarReferencias());
+		}
+	}
+
+	public void processar(Objeto objeto) {
+		for (Grupo g : grupos) {
+			g.processar(objeto);
 		}
 	}
 }

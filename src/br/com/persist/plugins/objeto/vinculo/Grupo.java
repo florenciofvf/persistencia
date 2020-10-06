@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.objeto.Objeto;
 
 public class Grupo {
 	private final String nome;
@@ -21,6 +22,18 @@ public class Grupo {
 		referencias = new ArrayList<>();
 		this.referencia = ref;
 		this.nome = nome;
+	}
+
+	public void processar(Objeto objeto) {
+		if (referencia.refIgual(objeto)) {
+			objeto.getGrupos().add(this);
+			return;
+		}
+		for (Referencia ref : referencias) {
+			if (ref.refIgual(objeto)) {
+				objeto.setReferencia(ref);
+			}
+		}
 	}
 
 	public boolean igual(Grupo grupo) {
@@ -48,9 +61,16 @@ public class Grupo {
 	}
 
 	public void add(Referencia ref) {
-		if (ref != null && !contem(ref)) {
-			referencias.add(ref);
-			ref.grupo = this;
+		if (ref != null) {
+			if (!contem(ref)) {
+				referencias.add(ref);
+				ref.grupo = this;
+			}
+			ref = ref.clonar();
+			if (ref != null && !contemLink(ref)) {
+				referenciasLink.add(ref);
+				ref.grupo = this;
+			}
 		}
 	}
 

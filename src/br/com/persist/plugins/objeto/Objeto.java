@@ -31,6 +31,8 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
+import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 
@@ -44,6 +46,7 @@ public class Objeto implements Runnable {
 	private TabelaBuscaAuto tabelaBuscaAuto;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
+	private final List<Grupo> grupos;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
 	private String selectAlternativo;
@@ -55,6 +58,7 @@ public class Objeto implements Runnable {
 	private boolean ajusteAutoForm;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
+	private Referencia referencia;
 	private String linkAutomatico;
 	private static long sequencia;
 	private String finalConsulta;
@@ -75,6 +79,7 @@ public class Objeto implements Runnable {
 	boolean visivel = true;
 	private String arquivo;
 	private String tabelas;
+	private String apelido;
 	private String tabela;
 	private Thread thread;
 	private int intervalo;
@@ -108,6 +113,7 @@ public class Objeto implements Runnable {
 		id = Constantes.VAZIO + (++sequencia);
 		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
+		grupos = new ArrayList<>();
 		desenharId = true;
 		setIcone(icone);
 		visivel = true;
@@ -141,6 +147,7 @@ public class Objeto implements Runnable {
 		o.linkAuto = linkAuto;
 		o.tabelas = tabelas;
 		o.arquivo = arquivo;
+		o.apelido = apelido;
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.joins = joins;
@@ -180,6 +187,7 @@ public class Objeto implements Runnable {
 		sequencias = attr.getValue("sequencias");
 		arquivo = attr.getValue("arquivo");
 		tabelas = attr.getValue("tabelas");
+		apelido = attr.getValue("apelido");
 		setIcone(attr.getValue("icone"));
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
@@ -213,6 +221,7 @@ public class Objeto implements Runnable {
 		util.atributo("colunaInfo", colunaInfo);
 		util.atributo("arquivo", getArquivo());
 		util.atributo("tabelas", getTabelas());
+		util.atributo("apelido", getApelido());
 		util.atributo("abrirAuto", abrirAuto);
 		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
@@ -522,6 +531,13 @@ public class Objeto implements Runnable {
 			tabela = Constantes.VAZIO;
 		}
 		return tabela;
+	}
+
+	public String getApelido() {
+		if (Util.estaVazio(apelido)) {
+			apelido = Constantes.VAZIO;
+		}
+		return apelido;
 	}
 
 	public String getSelectAlternativo() {
@@ -898,5 +914,17 @@ public class Objeto implements Runnable {
 
 	public void ordenarInstrucoes() {
 		Collections.sort(instrucoes);
+	}
+
+	public Referencia getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(Referencia referencia) {
+		this.referencia = referencia;
+	}
+
+	public List<Grupo> getGrupos() {
+		return grupos;
 	}
 }

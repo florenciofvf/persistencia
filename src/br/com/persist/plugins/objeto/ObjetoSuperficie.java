@@ -64,6 +64,7 @@ import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.objeto.macro.MacroDialogo;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
+import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
@@ -71,6 +72,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private static final long serialVersionUID = 1L;
+	private final transient Vinculacao vinculacao = new Vinculacao();
 	private final transient Inversao inversao = new Inversao();
 	private SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private SuperficiePopup popup = new SuperficiePopup();
@@ -1383,6 +1385,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		SwingUtilities.updateComponentTreeUI(getParent());
 		for (Objeto objeto : coletor.getObjetos()) {
 			objeto.ativar();
+		}
+		vinculacao.abrir(coletor.getArquivoVinculo(), ObjetoSuperficie.this);
+		for (Objeto objeto : objetos) {
+			vinculacao.processar(objeto);
 		}
 	}
 
