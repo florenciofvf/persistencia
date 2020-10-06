@@ -85,6 +85,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private transient Relacao[] relacoes;
 	private final Formulario formulario;
 	private transient Objeto[] objetos;
+	private String arquivoVinculo;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -1344,6 +1345,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
 			util.atributo("largura", getWidth());
 			util.atributo("altura", getHeight());
+			util.atributo("arquivoVinculo", getArquivoVinculo());
 			if (conexao != null) {
 				util.atributo("conexao", Util.escapar(conexao.getNome()));
 			}
@@ -1386,7 +1388,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : coletor.getObjetos()) {
 			objeto.ativar();
 		}
-		vinculacao.abrir(coletor.getArquivoVinculo(), ObjetoSuperficie.this);
+		arquivoVinculo = coletor.getArquivoVinculo();
+		vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
 		for (Objeto objeto : objetos) {
 			vinculacao.processar(objeto);
 		}
@@ -1838,5 +1841,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 		}
 		repaint();
+	}
+
+	public String getArquivoVinculo() {
+		if (Util.estaVazio(arquivoVinculo)) {
+			arquivoVinculo = Constantes.VAZIO;
+		}
+		return arquivoVinculo;
+	}
+
+	public void setArquivoVinculo(String arquivoVinculo) {
+		this.arquivoVinculo = arquivoVinculo;
 	}
 }

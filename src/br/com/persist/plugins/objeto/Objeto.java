@@ -45,11 +45,13 @@ public class Objeto implements Runnable {
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
+	private boolean abrirAuto = true;
 	private final List<Grupo> grupos;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
 	private String selectAlternativo;
 	private String prefixoNomeTabela;
+	private boolean linkAuto = true;
 	private boolean ajusteAutoEnter;
 	private boolean copiarDestacado;
 	private boolean transparenteBkp;
@@ -70,10 +72,8 @@ public class Objeto implements Runnable {
 	private String chaveamento;
 	private boolean colunaInfo;
 	private String sequencias;
-	private boolean abrirAuto;
 	private String mapeamento;
 	private boolean processar;
-	private boolean linkAuto;
 	private String descricao;
 	boolean visivel = true;
 	private String arquivo;

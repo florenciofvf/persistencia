@@ -16,8 +16,12 @@ public class Vinculacao {
 		grupos = new ArrayList<>();
 	}
 
-	public void abrir(File file, Component componente) {
+	public void abrir(String arquivo, Component componente) {
 		grupos.clear();
+		File file = null;
+		if (!Util.estaVazio(arquivo)) {
+			file = new File(arquivo);
+		}
 		if (file == null || !file.isFile()) {
 			return;
 		}

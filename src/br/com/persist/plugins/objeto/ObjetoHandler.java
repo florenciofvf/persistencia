@@ -1,7 +1,5 @@
 package br.com.persist.plugins.objeto;
 
-import java.io.File;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -32,13 +30,10 @@ public class ObjetoHandler extends XMLHandler {
 			coletor.getAjusteAutoForm().set(Boolean.parseBoolean(attributes.getValue("ajusteAutoForm")));
 			coletor.getDimension().width = Integer.parseInt(attributes.getValue("largura"));
 			coletor.getDimension().height = Integer.parseInt(attributes.getValue("altura"));
+			coletor.setArquivoVinculo(attributes.getValue("arquivoVinculo"));
 			String conexao = attributes.getValue("conexao");
 			if (!Util.estaVazio(conexao)) {
 				coletor.getSbConexao().append(conexao);
-			}
-			String arquivoVinculo = attributes.getValue("arquivoVinculo");
-			if (!Util.estaVazio(arquivoVinculo)) {
-				coletor.setArquivoVinculo(new File(arquivoVinculo));
 			}
 		} else if ("objeto".equals(qName)) {
 			Objeto objeto = new Objeto();

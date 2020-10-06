@@ -1,7 +1,6 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.Dimension;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,7 +14,7 @@ public class ObjetoColetor {
 	private final List<Relacao> relacoes;
 	private final List<Objeto> objetos;
 	private final Dimension dimension;
-	private File arquivoVinculo;
+	private String arquivoVinculo;
 
 	public ObjetoColetor() {
 		ajusteAutoForm = new AtomicBoolean();
@@ -36,6 +35,10 @@ public class ObjetoColetor {
 		relacoes.clear();
 		objetos.clear();
 		forms.clear();
+	}
+
+	public void setArquivoVinculo(String arquivoVinculo) {
+		this.arquivoVinculo = arquivoVinculo;
 	}
 
 	public AtomicBoolean getAjusteAutoForm() {
@@ -62,11 +65,7 @@ public class ObjetoColetor {
 		return dimension;
 	}
 
-	public File getArquivoVinculo() {
+	public String getArquivoVinculo() {
 		return arquivoVinculo;
-	}
-
-	public void setArquivoVinculo(File arquivoVinculo) {
-		this.arquivoVinculo = arquivoVinculo;
 	}
 }
