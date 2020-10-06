@@ -538,6 +538,10 @@ public class Objeto implements Runnable {
 		return apelido;
 	}
 
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
+	}
+
 	public String getSelectAlternativo() {
 		if (Util.estaVazio(selectAlternativo)) {
 			selectAlternativo = Constantes.VAZIO;

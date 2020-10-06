@@ -227,6 +227,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtPrefixoNT = new TextField();
 		private CheckBox chkColunaInfo = new CheckBox();
 		private CheckBox chkAbrirAuto = new CheckBox();
+		private TextField txtApelido = new TextField();
 		private TextField txtTabelas = new TextField();
 		private CheckBox chkLinkAuto = new CheckBox();
 		private TextField txtTabela = new TextField();
@@ -249,6 +250,7 @@ public class ObjetoContainer extends Panel {
 			txtMapeamento.setText(objeto.getMapeamento());
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
 			txtTabelas.setText(objeto.getTabelas());
+			txtApelido.setText(objeto.getApelido());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
 			chkCCSC.setSelected(objeto.isCcsc());
@@ -262,6 +264,7 @@ public class ObjetoContainer extends Panel {
 			txtSequencias.addFocusListener(focusListenerInner);
 			txtPrefixoNT.addFocusListener(focusListenerInner);
 			txtTabelas.addFocusListener(focusListenerInner);
+			txtApelido.addFocusListener(focusListenerInner);
 			txtTabela.addFocusListener(focusListenerInner);
 			txtChaves.addFocusListener(focusListenerInner);
 			txtJoins.addFocusListener(focusListenerInner);
@@ -278,12 +281,14 @@ public class ObjetoContainer extends Panel {
 			txtPrefixoNT.addActionListener(this);
 			chkLinkAuto.addActionListener(this);
 			txtTabelas.addActionListener(this);
+			txtApelido.addActionListener(this);
 			txtChaves.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtJoins.addActionListener(this);
 			chkCCSC.addActionListener(this);
 			chkBPNT.addActionListener(this);
 			Box container = Box.createVerticalBox();
+			container.add(criarLinha("label.apelido", txtApelido));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.tabelas", txtTabelas));
@@ -354,6 +359,8 @@ public class ObjetoContainer extends Panel {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txtComplemento.getText());
+			} else if (txtApelido == e.getSource()) {
+				objeto.setApelido(txtApelido.getText());
 			} else if (txtTabela == e.getSource()) {
 				objeto.setTabela(txtTabela.getText());
 			} else if (txtPrefixoNT == e.getSource()) {
