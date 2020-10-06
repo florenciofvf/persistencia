@@ -35,6 +35,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private boolean processadoBuscaAutomatica;
 	private final InternalContainer container;
+	private boolean processadoPesquisa;
 	private Desktop desktop;
 	private String apelido;
 
@@ -371,6 +372,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void setProcessadoBuscaAutomatica(boolean processadoBuscaAutomatica) {
 		this.processadoBuscaAutomatica = processadoBuscaAutomatica;
+	}
+
+	public boolean isProcessadoPesquisa() {
+		return processadoPesquisa;
+	}
+
+	public void setProcessadoPesquisa(boolean processadoPesquisa) {
+		this.processadoPesquisa = processadoPesquisa;
 	}
 
 	@Override

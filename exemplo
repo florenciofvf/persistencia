@@ -3,5 +3,6 @@
 <vinculo>
 	<grupo nome="Candidatos" tabela="eleicao" campo="id">
 		<ref tabela="candidato" campo="eleicao_id" />
+		<ref tabela="candidato2" campo="eleicao_id" vazio="invisivel"/>
 	</grupo>
 </vinculo>

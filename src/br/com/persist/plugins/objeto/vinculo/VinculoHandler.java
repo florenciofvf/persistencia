@@ -31,8 +31,10 @@ class VinculoHandler extends XMLHandler {
 	}
 
 	private Referencia criar(Attributes attributes) {
-		return new Referencia(attributes.getValue("apelido"), attributes.getValue("tabela"),
+		Referencia ref = new Referencia(attributes.getValue("apelido"), attributes.getValue("tabela"),
 				attributes.getValue("campo"));
+		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
+		return ref;
 	}
 
 	@Override

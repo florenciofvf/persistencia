@@ -327,12 +327,12 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 				List<Referencia> referencias = grupo.getReferencias();
-				interno.setProcessadoBuscaAutomatica(false);
+				interno.setProcessadoPesquisa(false);
 				for (Referencia referencia : referencias) {
 					if (interno.ehReferencia(referencia)) {
 						interno.getInternalContainer().getObjeto().setReferenciaPesquisa(referencia);
 						interno.pesquisar(referencia.getCampo(), argumentos);
-						interno.setProcessadoBuscaAutomatica(true);
+						interno.setProcessadoPesquisa(true);
 						referencia.setProcessado(true);
 					}
 				}
@@ -370,7 +370,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
-				if (!interno.isProcessadoBuscaAutomatica()) {
+				if (!interno.isProcessadoPesquisa()) {
 					for (Referencia referencia : grupo.getReferenciasApos()) {
 						if (interno.ehReferencia(referencia)) {
 							interno.pesquisarApos();
