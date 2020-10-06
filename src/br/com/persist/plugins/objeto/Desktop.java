@@ -281,7 +281,9 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		internnalFormulario.setLocation(point);
 		internnalFormulario.setSize(dimension);
 		internnalFormulario.setVisible(true);
-		config.setApelido(apelido);
+		if (config != null) {
+			config.setApelido(apelido);
+		}
 		internnalFormulario.aplicarConfigArquivo(config);
 		add(internnalFormulario);
 	}
