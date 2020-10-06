@@ -64,6 +64,8 @@ import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.objeto.macro.MacroDialogo;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
+import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
@@ -1473,6 +1475,22 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
+	@Override
+	public void pesquisar(Grupo grupo, String argumentos) {
+		super.pesquisar(grupo, argumentos);
+		if (Preferencias.isAbrirAuto()) {
+			limparSelecao();
+			for (Referencia referencia : grupo.getReferencias()) {
+				if (!referencia.isProcessado()) {
+					pesquisarFinal(referencia, argumentos);
+				}
+			}
+			if (getPrimeiroObjetoSelecionado() != null) {
+				destacar(container.getConexaoPadrao(), Preferencias.getTipoContainerPesquisaAuto(), null);
+			}
+		}
+	}
+
 	private void buscaAutomaticaFinal(TabelaBuscaAuto tabela, String argumentos) {
 		Objeto objeto = null;
 		for (Objeto obj : objetos) {
@@ -1496,6 +1514,31 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			objeto.setSelecionado(true);
 		}
 		tabela.setProcessado(true);
+	}
+
+	private void pesquisarFinal(Referencia referencia, String argumentos) {
+		Objeto objeto = null;
+		for (Objeto obj : objetos) {
+			if (referencia.refIgual(obj)) {
+				objeto = obj;
+				break;
+			}
+		}
+		if (objeto == null || !objeto.isAbrirAuto()) {
+			return;
+		}
+		objeto.setComplemento("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
+		Conexao conexao = container.getConexaoPadrao();
+		objeto.setReferenciaPesquisa(referencia);
+		if (Preferencias.isAbrirAutoDestacado()) {
+			ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
+			form.setLocationRelativeTo(formulario);
+			form.setVisible(true);
+			Formulario.posicionarJanela(formulario, form);
+		} else {
+			objeto.setSelecionado(true);
+		}
+		referencia.setProcessado(true);
 	}
 
 	public void atualizarTotal(Conexao conexao, MenuItem menuItem, Label label) {

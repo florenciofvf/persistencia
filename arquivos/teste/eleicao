@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<fvf ajusteAutoForm="true" largura="993" altura="628" conexao="elei&#231;&#227;o">
+<fvf ajusteAutoForm="true" largura="993" altura="628" conexao="elei&#231;&#227;o" arquivoVinculo="exemplo">
 	<objeto id="elei&#231;&#227;o" transparente="true" linkAutomatico="id=candidato.eleicao_id,(2)candidato2.eleicao_id" finalConsulta="order by id" chaveamento="teste=escola,filho;teste=campo" complemento="" selectAlternativo="" ajusteAutoEnter="true" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="INFO=coluna_info" sequencias="" intervalo="1000" desenharId="true" colunaInfo="true" arquivo="" tabelas="" abrirAuto="false" processar="false" tabela="eleicao" chaves="id" linkAuto="true" cor="-12555904" joins="" icone="executar" ccsc="false" bpnt="false" x="18" y="3">
 		<buscaAutomatica>
 			[

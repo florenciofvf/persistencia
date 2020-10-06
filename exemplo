@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vinculo>
+	<grupo nome="Candidatos" tabela="eleicao" campo="id">
+		<ref tabela="candidato" campo="eleicao_id" />
+	</grupo>
+</vinculo>
