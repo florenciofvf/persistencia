@@ -7,6 +7,7 @@ import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAuto;
 import br.com.persist.plugins.objeto.auto.GrupoBuscaAutoApos;
 import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
+import br.com.persist.plugins.objeto.vinculo.Grupo;
 
 public interface InternalListener {
 	public interface BuscaAutomaticaApos {
@@ -15,6 +16,12 @@ public interface InternalListener {
 
 	public interface BuscaAutomatica {
 		public void buscaAutomatica(GrupoBuscaAuto grupoBusca, String argumentos);
+	}
+
+	public interface Pesquisa {
+		public void pesquisar(Grupo grupo, String argumentos);
+
+		public void pesquisarApos(Grupo grupo);
 	}
 
 	public interface LinkAutomatico {

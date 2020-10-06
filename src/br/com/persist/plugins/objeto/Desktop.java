@@ -49,6 +49,8 @@ import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
+import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -230,7 +232,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				try {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
 					Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
-
 					if (!contemReferencia(objeto)) {
 						montarEAdicionarInternalFormulario(array, e.getLocation(), null,
 								(String) array[InternalTransferidor.ARRAY_INDICE_APE], false, null);
@@ -242,7 +243,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			} else if (Metadado.flavor.equals(flavor)) {
 				try {
 					Metadado metadado = (Metadado) transferable.getTransferData(flavor);
-
 					if (processadoMetadado(metadado, e.getLocation(), false)) {
 						completado = true;
 					}
@@ -316,6 +316,39 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 						interno.buscaAutomatica(tabela.getCampo(), argumentos);
 						interno.setProcessadoBuscaAutomatica(true);
 						tabela.setProcessado(true);
+					}
+				}
+			}
+		}
+	}
+
+	public void pesquisar(Grupo grupo, String argumentos) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				List<Referencia> referencias = grupo.getReferencias();
+				interno.setProcessadoBuscaAutomatica(false);
+				for (Referencia referencia : referencias) {
+					if (interno.ehReferencia(referencia)) {
+						interno.getInternalContainer().getObjeto().setReferencia(referencia);
+						interno.pesquisar(referencia.getCampo(), argumentos);
+						interno.setProcessadoBuscaAutomatica(true);
+						referencia.setProcessado(true);
+					}
+				}
+			}
+		}
+	}
+
+	public void pesquisarApos(Grupo grupo) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				if (!interno.isProcessadoBuscaAutomatica()) {
+					for (Referencia referencia : grupo.getReferenciasApos()) {
+						if (interno.ehReferencia(referencia)) {
+							interno.pesquisarApos();
+						}
 					}
 				}
 			}

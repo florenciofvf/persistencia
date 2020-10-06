@@ -12,12 +12,14 @@ public class Grupo {
 	private final Referencia referencia;
 	private final List<Referencia> referencias;
 	private final List<Referencia> referenciasLink;
+	private final List<Referencia> referenciasApos;
 
 	public Grupo(String nome, Referencia ref) {
 		Objects.requireNonNull(ref);
 		if (Util.estaVazio(nome)) {
 			throw new IllegalStateException("Nome do grupo vazio.");
 		}
+		referenciasApos = new ArrayList<>();
 		referenciasLink = new ArrayList<>();
 		referencias = new ArrayList<>();
 		this.referencia = ref;
@@ -48,6 +50,27 @@ public class Grupo {
 		return referencia;
 	}
 
+	public void inicializarColetores(List<String> numeros) {
+		for (Referencia ref : referencias) {
+			ref.inicializarColetores(numeros);
+		}
+	}
+
+	public void setProcessado(boolean b) {
+		for (Referencia ref : referencias) {
+			ref.setProcessado(b);
+		}
+	}
+
+	public boolean isProcessado() {
+		for (Referencia ref : referencias) {
+			if (ref.isProcessado()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public List<Referencia> getClonarReferencias() {
 		List<Referencia> lista = new ArrayList<>();
 		for (Referencia ref : referencias) {
@@ -58,6 +81,10 @@ public class Grupo {
 
 	public List<Referencia> getReferencias() {
 		return referencias;
+	}
+
+	public List<Referencia> getReferenciasApos() {
+		return referenciasApos;
 	}
 
 	public void add(Referencia ref) {

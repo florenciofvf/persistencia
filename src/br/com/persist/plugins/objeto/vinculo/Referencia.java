@@ -1,17 +1,24 @@
 package br.com.persist.plugins.objeto.vinculo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class Referencia {
+	private final List<Coletor> coletores;
+	private boolean vazioInvisivel;
 	private final String apelido;
 	private final String tabela;
 	private final String campo;
+	private boolean processado;
 	Grupo grupo;
 
 	public Referencia(String apelido, String tabela, String campo) {
 		this.apelido = apelido == null ? "" : apelido.trim();
 		this.campo = campo == null ? "" : campo.trim();
+		coletores = new ArrayList<>();
 		if (Util.estaVazio(tabela)) {
 			throw new IllegalStateException("Tabela vazia.");
 		}
@@ -36,6 +43,38 @@ public class Referencia {
 		return new Referencia(apelido, tabela, campo);
 	}
 
+	public void inicializarColetores(List<String> numeros) {
+		coletores.clear();
+		for (String numero : numeros) {
+			coletores.add(new Coletor(numero));
+		}
+	}
+
+	public Coletor getColetor(String numero) {
+		for (Coletor c : coletores) {
+			if (c.getChave().equals(numero)) {
+				return c;
+			}
+		}
+		return null;
+	}
+
+	public void atualizarColetores(String numero) {
+		for (Coletor c : coletores) {
+			if (c.getChave().equals(numero)) {
+				c.incrementarTotal();
+			}
+		}
+	}
+
+	public void setProcessado(boolean processado) {
+		this.processado = processado;
+	}
+
+	public boolean isProcessado() {
+		return processado;
+	}
+
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -50,6 +89,14 @@ public class Referencia {
 
 	public String getCampo() {
 		return campo;
+	}
+
+	public boolean isVazioInvisivel() {
+		return vazioInvisivel;
+	}
+
+	public void setVazioInvisivel(boolean vazioInvisivel) {
+		this.vazioInvisivel = vazioInvisivel;
 	}
 
 	@Override

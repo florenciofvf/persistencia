@@ -25,6 +25,8 @@ import br.com.persist.plugins.objeto.auto.GrupoLinkAuto;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAuto;
 import br.com.persist.plugins.objeto.auto.TabelaBuscaAutoApos;
 import br.com.persist.plugins.objeto.auto.TabelaLinkAuto;
+import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -50,6 +52,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
+		container.setPesquisaListener(pesquisaListener);
 		container.setApelidoListener(apelidoListener);
 		setFrameIcon(Icones.VAZIO);
 		montarLayout();
@@ -161,6 +164,24 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
+	private transient InternalListener.Pesquisa pesquisaListener = new InternalListener.Pesquisa() {
+		@Override
+		public void pesquisar(Grupo grupo, String argumentos) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.pesquisar(grupo, argumentos);
+			}
+		}
+
+		@Override
+		public void pesquisarApos(Grupo grupo) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.pesquisarApos(grupo);
+			}
+		}
+	};
+
 	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
 		checarDesktop();
 		if (desktop != null) {
@@ -202,6 +223,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
 	}
 
+	public boolean ehReferencia(Referencia referencia) {
+		return referencia.refIgual(container.getObjeto());
+	}
+
 	public boolean ehTabela(TabelaBuscaAutoApos tabela) {
 		return apelidoListener.getApelido().equalsIgnoreCase(tabela.getApelido())
 				&& container.getObjeto().getTabela2().equalsIgnoreCase(tabela.getNome());
@@ -231,8 +256,16 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.buscaAutomatica(campo, argumentos);
 	}
 
+	public void pesquisar(String campo, String argumentos) {
+		container.pesquisar(campo, argumentos);
+	}
+
 	public void buscaAutomaticaApos() {
 		container.buscaAutomaticaApos();
+	}
+
+	public void pesquisarApos() {
+		container.pesquisarApos();
 	}
 
 	public void linkAutomatico(String campo, String argumento) {
