@@ -180,6 +180,22 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				desktop.pesquisarApos(grupo);
 			}
 		}
+
+		@Override
+		public void pesquisarLink(Referencia ref, String argumentos) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.pesquisarLink(ref, argumentos);
+			}
+		}
+
+		@Override
+		public void pesquisarLink(Grupo grupo, String argumentos) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.pesquisarLink(grupo, argumentos);
+			}
+		}
 	};
 
 	public void linkAutomatico(GrupoLinkAuto link, String argumento) {
@@ -258,6 +274,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void pesquisar(String campo, String argumentos) {
 		container.pesquisar(campo, argumentos);
+	}
+
+	public void pesquisarLink(String campo, String argumentos) {
+		container.pesquisarLink(campo, argumentos);
 	}
 
 	public void buscaAutomaticaApos() {

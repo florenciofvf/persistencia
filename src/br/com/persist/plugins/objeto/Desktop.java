@@ -340,6 +340,32 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
+	public void pesquisarLink(Grupo grupo, String argumentos) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				List<Referencia> referencias = grupo.getReferenciasLink();
+				for (Referencia referencia : referencias) {
+					if (interno.ehReferencia(referencia)) {
+						interno.pesquisarLink(referencia.getCampo(), argumentos);
+					}
+				}
+			}
+		}
+	}
+
+	public void pesquisarLink(Referencia ref, String argumentos) {
+		Referencia referencia = ref.getGrupo().getReferencia();
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				if (interno.ehReferencia(referencia)) {
+					interno.pesquisarLink(referencia.getCampo(), argumentos);
+				}
+			}
+		}
+	}
+
 	public void pesquisarApos(Grupo grupo) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {

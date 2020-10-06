@@ -1571,8 +1571,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
 	}
 
-	public void linkAutomatico(String campo, String argumento) {
-		if (!objeto.isLinkAuto() || argumento == null) {
+	public void linkAutomatico(String campo, String argumentos) {
+		pesquisarLink(campo, argumentos);
+	}
+
+	public void pesquisarLink(String campo, String argumentos) {
+		if (!objeto.isLinkAuto() || argumentos == null) {
 			return;
 		}
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -1582,7 +1586,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
 			if (coluna != -1) {
 				for (int i = 0; i < modelo.getRowCount(); i++) {
-					if (argumento.equals(modelo.getValueAt(i, coluna))) {
+					if (argumentos.equals(modelo.getValueAt(i, coluna))) {
 						tabelaPersistencia.addRowSelectionInterval(i, i);
 					}
 				}

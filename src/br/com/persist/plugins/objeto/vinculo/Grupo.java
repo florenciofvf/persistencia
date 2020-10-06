@@ -87,6 +87,10 @@ public class Grupo {
 		return referenciasApos;
 	}
 
+	public List<Referencia> getReferenciasLink() {
+		return referenciasLink;
+	}
+
 	public void add(Referencia ref) {
 		if (ref != null) {
 			if (!contem(ref)) {
