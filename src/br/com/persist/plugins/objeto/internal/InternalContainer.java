@@ -203,7 +203,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			buttonPesquisa.complemento(objeto);
 		}
 
-		private void excluirAtualizarEnable(boolean b) {
+		private void habilitarUpdateExcluir(boolean b) {
 			buttonExcluir.setEnabled(b);
 			buttonUpdate.setEnabled(b);
 		}
@@ -1347,13 +1347,17 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				InternalUtil.atualizarColetores(tabelaPersistencia, coluna, referencia);
 			}
 			objeto.setReferenciaPesquisa(null);
-			if (visibilidadeListener != null) {
-				boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
-				boolean visivel = objeto.isVisivel();
-				objeto.setVisivel(!invisivel);
-				visibilidadeListener.setVisible(!invisivel);
-				setBackground(!visivel && objeto.isVisivel() ? Color.RED : null);
-			}
+			processarReferenciaVisibilidade(referencia, modelo);
+		}
+	}
+
+	private void processarReferenciaVisibilidade(Referencia referencia, OrdenacaoModelo modelo) {
+		if (visibilidadeListener != null) {
+			boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
+			boolean visivel = objeto.isVisivel();
+			objeto.setVisivel(!invisivel);
+			visibilidadeListener.setVisible(!invisivel);
+			setBackground(!visivel && objeto.isVisivel() ? Color.RED : null);
 		}
 	}
 
@@ -1471,19 +1475,22 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	}
 
 	public void pesquisarLink(String campo, String argumentos) {
-		if (!objeto.isLinkAuto() || argumentos == null) {
-			return;
+		if (objeto.isLinkAuto() && argumentos != null) {
+			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+			TableModel model = modelo.getModelo();
+			tabelaPersistencia.clearSelection();
+			if (model instanceof PersistenciaModelo) {
+				selecionarRegistros(campo, argumentos, modelo);
+			}
 		}
-		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-		TableModel model = modelo.getModelo();
-		tabelaPersistencia.clearSelection();
-		if (model instanceof PersistenciaModelo) {
-			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
-			if (coluna != -1) {
-				for (int i = 0; i < modelo.getRowCount(); i++) {
-					if (argumentos.equals(modelo.getValueAt(i, coluna))) {
-						tabelaPersistencia.addRowSelectionInterval(i, i);
-					}
+	}
+
+	private void selecionarRegistros(String campo, String argumentos, OrdenacaoModelo modelo) {
+		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
+		if (coluna != -1) {
+			for (int i = 0; i < modelo.getRowCount(); i++) {
+				if (argumentos.equals(modelo.getValueAt(i, coluna))) {
+					tabelaPersistencia.addRowSelectionInterval(i, i);
 				}
 			}
 		}
@@ -1593,12 +1600,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			if (model instanceof PersistenciaModelo) {
 				int[] linhas = tabela.getSelectedRows();
 				if (linhas != null && linhas.length > 0) {
-					String[] chaves = objeto.getChavesArray();
-					toolbar.buttonUpdate.setEnabled(chaves.length > 0 && linhas.length == 1);
-					toolbar.buttonExcluir.setEnabled(chaves.length > 0);
-					toolbar.labelTotal.setText(Constantes.VAZIO + linhas.length);
+					habilitarUpdateExcluir(linhas);
 				} else {
-					toolbar.excluirAtualizarEnable(false);
+					toolbar.habilitarUpdateExcluir(false);
 					toolbar.labelTotal.limpar();
 				}
 				boolean link = (!objeto.getPesquisas().isEmpty() || objeto.getReferencia() != null)
@@ -1607,8 +1611,15 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					mouseClick(tabela, colunaClick);
 				}
 			} else {
-				toolbar.excluirAtualizarEnable(false);
+				toolbar.habilitarUpdateExcluir(false);
 			}
+		}
+
+		private void habilitarUpdateExcluir(int[] linhas) {
+			String[] chaves = objeto.getChavesArray();
+			toolbar.buttonUpdate.setEnabled(chaves.length > 0 && linhas.length == 1);
+			toolbar.buttonExcluir.setEnabled(chaves.length > 0);
+			toolbar.labelTotal.setText(Constantes.VAZIO + linhas.length);
 		}
 
 		private void mouseClick(TabelaPersistencia tabela, int colunaClick) {

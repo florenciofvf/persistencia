@@ -18,6 +18,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -220,29 +221,13 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				return;
 			}
 			DataFlavor flavor = flavors[0];
-			boolean completado = false;
+			AtomicBoolean completado = new AtomicBoolean(false);
 			if (InternalTransferidor.flavor.equals(flavor)) {
-				try {
-					Object[] array = (Object[]) transferable.getTransferData(flavor);
-					Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
-					if (!contemReferencia(objeto)) {
-						montarEAdicionarInternalFormulario(array, e.getLocation(), null, false, null);
-						completado = true;
-					}
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
-				}
+				processarInternal(e, transferable, flavor, completado);
 			} else if (Metadado.flavor.equals(flavor)) {
-				try {
-					Metadado metadado = (Metadado) transferable.getTransferData(flavor);
-					if (processadoMetadado(metadado, e.getLocation(), false)) {
-						completado = true;
-					}
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
-				}
+				processarMetadado(e, transferable, flavor, completado);
 			}
-			if (completado) {
+			if (completado.get()) {
 				e.acceptDrop(DnDConstants.ACTION_COPY);
 				e.dropComplete(true);
 			} else {
@@ -256,6 +241,32 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 		private boolean validoSoltar(DropTargetDropEvent e) {
 			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
+		}
+
+		private void processarInternal(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor,
+				AtomicBoolean processado) {
+			try {
+				Object[] array = (Object[]) transferable.getTransferData(flavor);
+				Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
+				if (!contemReferencia(objeto)) {
+					montarEAdicionarInternalFormulario(array, e.getLocation(), null, false, null);
+					processado.set(true);
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
+			}
+		}
+
+		private void processarMetadado(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor,
+				AtomicBoolean processado) {
+			try {
+				Metadado metadado = (Metadado) transferable.getTransferData(flavor);
+				if (processadoMetadado(metadado, e.getLocation(), false)) {
+					processado.set(true);
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
+			}
 		}
 	};
 
@@ -275,13 +286,13 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		if (g == null) {
 			g = getGraphics();
 		}
-		InternalFormulario internnalFormulario = new InternalFormulario(conexao, objeto, g, buscaAuto);
-		internnalFormulario.setAbortarFecharComESC(abortarFecharComESC);
-		internnalFormulario.setLocation(point);
-		internnalFormulario.setSize(dimension);
-		internnalFormulario.setVisible(true);
-		internnalFormulario.aplicarConfigArquivo(config);
-		add(internnalFormulario);
+		InternalFormulario internal = new InternalFormulario(conexao, objeto, g, buscaAuto);
+		internal.setAbortarFecharComESC(abortarFecharComESC);
+		internal.setLocation(point);
+		internal.setSize(dimension);
+		internal.setVisible(true);
+		internal.aplicarConfigArquivo(config);
+		add(internal);
 	}
 
 	private class DesktopPopup extends Popup {
