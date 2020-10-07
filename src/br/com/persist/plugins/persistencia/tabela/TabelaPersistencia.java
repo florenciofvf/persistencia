@@ -264,14 +264,12 @@ public class TabelaPersistencia extends JTable {
 			}
 
 			private void copiar(boolean emLinhas, boolean aspas) {
-				List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(TabelaPersistencia.this,
-						indiceColuna);
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				Util.setContentTransfered(Util.getStringLista(lista, aspas, emLinhas));
 			}
 
 			private void copiarSemV(boolean aspas) {
-				List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(TabelaPersistencia.this,
-						indiceColuna);
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				Util.setContentTransfered(Util.getStringListaSemVirgula(lista, aspas));
 			}
 		}
@@ -318,8 +316,7 @@ public class TabelaPersistencia extends JTable {
 			}
 
 			private void copiarIN(boolean aspas) {
-				List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(TabelaPersistencia.this,
-						indiceColuna);
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String complemento = Util.getStringLista(lista, aspas, false);
 				if (!Util.estaVazio(complemento)) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
@@ -343,8 +340,7 @@ public class TabelaPersistencia extends JTable {
 			}
 
 			private void copiarINDinamico(boolean aspas) {
-				List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(TabelaPersistencia.this,
-						indiceColuna);
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String complemento = Util.getStringLista(lista, aspas, false);
 				if (!Util.estaVazio(complemento)) {
 					Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");

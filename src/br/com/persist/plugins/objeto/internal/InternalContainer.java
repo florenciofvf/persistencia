@@ -466,8 +466,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 								pesquisa.getReferencia().getCampo());
 					}
 					if (coluna != -1) {
-						List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabelaPersistencia,
-								coluna);
+						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(tabelaPersistencia, coluna);
 						if (lista.isEmpty()) {
 							Util.mensagem(InternalContainer.this, pesquisa.getReferencia().getCampo() + " vazio.");
 						} else {
@@ -923,10 +922,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 						TableModel model = modelo.getModelo();
 						if (model instanceof PersistenciaModelo) {
 							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
-							if (Util.estaVazio(instrucao)) {
-								return;
+							if (!Util.estaVazio(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 							}
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
 				}
@@ -942,14 +940,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 					private void abrirSelect(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-						if (conexao == null) {
-							return;
+						if (conexao != null) {
+							String instrucao = getConsulta(conexao, Constantes.VAZIO).toString();
+							if (!Util.estaVazio(instrucao)) {
+								selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
+							}
 						}
-						String instrucao = getConsulta(conexao, Constantes.VAZIO).toString();
-						if (Util.estaVazio(instrucao)) {
-							return;
-						}
-						selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 					}
 				}
 
@@ -977,14 +973,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 					private void abrirSelect(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-						if (conexao == null) {
-							return;
+						if (conexao != null) {
+							String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
+							if (!Util.estaVazio(instrucao)) {
+								selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
+							}
 						}
-						String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
-						if (Util.estaVazio(instrucao)) {
-							return;
-						}
-						selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 					}
 				}
 			}
@@ -1450,7 +1444,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 	}
 
-	public void aplicarConfigArquivo(InternalConfig config) {
+	public void aplicarConfig(InternalConfig config) {
 		Conexao conexaoSel = null;
 		if (!Util.estaVazio(config.getConexao())) {
 			for (int i = 0; i < comboConexao.getItemCount(); i++) {
@@ -1628,7 +1622,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			if (pesquisaSel == null && refSel == null) {
 				return;
 			}
-			List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
+			List<String> lista = TabelaPersistenciaUtil.getValoresLinha(tabela, colunaClick);
 			if (lista.size() == 1 && pesquisaSel != null) {
 				vinculoListener.pesquisarLink(pesquisaSel, lista.get(0));
 			} else if (lista.size() == 1 && refSel != null) {
@@ -1676,6 +1670,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	private class DestaqueTitulo implements Runnable {
 		private final String original;
+		private String esq = "<<<<<<";
+		private String dir = ">>>>>>";
+		private int indice = esq.length() - 1;
 		private int contador;
 
 		public DestaqueTitulo(String original) {
@@ -1701,10 +1698,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 			destacarTitulo = false;
 		}
-
-		private String esq = "<<<<<<";
-		private String dir = ">>>>>>";
-		private int indice = esq.length() - 1;
 
 		private void destacarTitulo(String titulo) {
 			if (indice < 0) {

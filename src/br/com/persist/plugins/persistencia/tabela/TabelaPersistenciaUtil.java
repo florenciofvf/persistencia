@@ -22,7 +22,7 @@ public class TabelaPersistenciaUtil {
 		return -1;
 	}
 
-	public static List<String> getValoresLinhaPelaColuna(TabelaPersistencia tabelaPersistencia, int coluna) {
+	public static List<String> getValoresLinha(TabelaPersistencia tabelaPersistencia, int coluna) {
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		List<Integer> linhas = Util.getIndicesLinha(tabelaPersistencia);
 		List<String> resposta = new ArrayList<>();
