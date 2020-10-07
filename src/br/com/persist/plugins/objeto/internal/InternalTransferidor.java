@@ -37,7 +37,7 @@ public class InternalTransferidor implements Transferable {
 	}
 
 	public static Object[] criarArray(Conexao conexao, Objeto objeto) {
-		return criarArray(conexao, objeto, new Dimension(400, 250));
+		return criarArray(conexao, objeto, new Dimension(400, 200));
 	}
 
 	public Dimension getDimension() {

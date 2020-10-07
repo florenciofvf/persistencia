@@ -230,16 +230,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.pesquisarLink(campo, argumentos);
 	}
 
-	public void buscaAutomaticaApos() {
-		container.buscaAutomaticaApos();
-	}
-
 	public void pesquisarApos() {
 		container.pesquisarApos();
-	}
-
-	public void linkAutomatico(String campo, String argumento) {
-		container.linkAutomatico(campo, argumento);
 	}
 
 	public void atualizarFormulario() {

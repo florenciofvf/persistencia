@@ -1466,16 +1466,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
 	}
 
-	public void buscaAutomaticaApos() {
-		pesquisarApos();
-	}
-
 	public void pesquisarApos() {
 		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
-	}
-
-	public void linkAutomatico(String campo, String argumentos) {
-		pesquisarLink(campo, argumentos);
 	}
 
 	public void pesquisarLink(String campo, String argumentos) {

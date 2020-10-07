@@ -1770,7 +1770,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int y = 10;
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
+				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
 				objeto.setSelecionado(false);
 				x += 25;
@@ -1786,7 +1786,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int y = 10;
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
+				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
 				objeto.setSelecionado(false);
 				x += 25;
@@ -1829,7 +1829,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int y = variavelDeltaY.getInteiro(Constantes.TRINTA);
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
+				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), null, false,
 						config);
 				objeto.setSelecionado(false);
