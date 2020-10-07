@@ -155,6 +155,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private Action desenharIdAcao = Action.actionIcon("label.desenhar_id", Icones.LABEL);
 		private Action excluirAcao = Action.actionIcon("label.excluir_sel", Icones.EXCLUIR);
 		private TextField txtPrefixoNomeTabela = new TextField(10);
+		private TextField txtArquivoVinculo = new TextField(10);
 		private CheckBox chkAjusteAutomatico = new CheckBox();
 		private Label labelStatus = new Label();
 
@@ -175,11 +176,13 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(true, new ButtonInfo());
 			add(true, labelStatus);
 			add(true, txtPrefixoNomeTabela);
+			add(true, txtArquivoVinculo);
 			eventos();
 		}
 
 		private void configurar() {
 			chkAjusteAutomatico.setToolTipText(Mensagens.getString("label.ajuste_automatico"));
+			txtArquivoVinculo.setToolTipText(Mensagens.getString("hint.arquivo_vinculado"));
 			txtPrefixoNomeTabela.setToolTipText(Mensagens.getString("label.prefixo_nt"));
 			configAtalho(excluirAcao, KeyEvent.VK_D);
 			configAtalho(colarAcao, KeyEvent.VK_V);
@@ -199,6 +202,7 @@ public class ObjetoContainer extends AbstratoContainer {
 					.setActionListener(e -> objetoSuperficie.transparente(((ToggleButton) e.getSource()).isSelected()));
 			chkAjusteAutomatico
 					.addActionListener(e -> objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected()));
+			txtArquivoVinculo.addActionListener(e -> objetoSuperficie.setArquivoVinculo(txtArquivoVinculo.getText()));
 			txtPrefixoNomeTabela
 					.addActionListener(e -> objetoSuperficie.prefixoNomeTabela(txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> objetoSuperficie.excluirSelecionados());
@@ -381,6 +385,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		}
 		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
+		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
 		objetoSuperficie.abrir(coletor);
 		Conexao conexaoSel = null;
 		arquivo = file;
