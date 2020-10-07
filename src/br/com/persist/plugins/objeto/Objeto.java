@@ -30,7 +30,7 @@ import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
-import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
@@ -46,7 +46,7 @@ public class Objeto implements Runnable {
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
 	private boolean abrirAuto = true;
-	private final List<Grupo> grupos;
+	private final List<Pesquisa> grupos;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
 	private String selectAlternativo;
@@ -918,7 +918,7 @@ public class Objeto implements Runnable {
 		this.referencia = referencia;
 	}
 
-	public List<Grupo> getGrupos() {
+	public List<Pesquisa> getGrupos() {
 		return grupos;
 	}
 

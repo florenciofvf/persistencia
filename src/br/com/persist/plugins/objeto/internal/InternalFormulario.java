@@ -18,7 +18,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
-import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
@@ -148,18 +148,18 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {
 		@Override
-		public void pesquisar(Grupo grupo, String argumentos) {
+		public void pesquisar(Pesquisa pesquisa, String argumentos) {
 			checarDesktop();
 			if (desktop != null) {
-				desktop.pesquisar(grupo, argumentos);
+				desktop.pesquisar(pesquisa, argumentos);
 			}
 		}
 
 		@Override
-		public void pesquisarApos(Grupo grupo) {
+		public void pesquisarApos(Pesquisa pesquisa) {
 			checarDesktop();
 			if (desktop != null) {
-				desktop.pesquisarApos(grupo);
+				desktop.pesquisarApos(pesquisa);
 			}
 		}
 
@@ -172,10 +172,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		@Override
-		public void pesquisarLink(Grupo grupo, String argumentos) {
+		public void pesquisarLink(Pesquisa pesquisa, String argumentos) {
 			checarDesktop();
 			if (desktop != null) {
-				desktop.pesquisarLink(grupo, argumentos);
+				desktop.pesquisarLink(pesquisa, argumentos);
 			}
 		}
 	};

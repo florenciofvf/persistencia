@@ -4,18 +4,18 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import br.com.persist.abstrato.DesktopAlinhamento;
-import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 
 public interface InternalListener {
 	public interface Vinculo {
+		public void pesquisarLink(Pesquisa pesquisa, String argumentos);
+
 		public void pesquisarLink(Referencia ref, String argumentos);
 
-		public void pesquisarLink(Grupo grupo, String argumentos);
+		public void pesquisar(Pesquisa pesquisa, String argumentos);
 
-		public void pesquisar(Grupo grupo, String argumentos);
-
-		public void pesquisarApos(Grupo grupo);
+		public void pesquisarApos(Pesquisa pesquisa);
 	}
 
 	public interface ConfigAlturaAutomatica {

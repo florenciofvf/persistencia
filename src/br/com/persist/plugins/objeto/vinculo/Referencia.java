@@ -9,14 +9,14 @@ import br.com.persist.plugins.objeto.Objeto;
 public class Referencia {
 	private final List<Coletor> coletores;
 	private boolean vazioInvisivel;
-	private final String apelido;
 	private final String tabela;
+	private final String grupo;
 	private final String campo;
 	private boolean processado;
-	Grupo grupo;
+	Pesquisa pesquisa;
 
-	public Referencia(String apelido, String tabela, String campo) {
-		this.apelido = apelido == null ? "" : apelido.trim();
+	public Referencia(String grupo, String tabela, String campo) {
+		this.grupo = grupo == null ? "" : grupo.trim();
 		this.campo = campo == null ? "" : campo.trim();
 		coletores = new ArrayList<>();
 		if (Util.estaVazio(tabela)) {
@@ -26,21 +26,21 @@ public class Referencia {
 	}
 
 	public boolean refIgual(Referencia ref) {
-		return ref != null && apelido.equalsIgnoreCase(ref.apelido) && tabela.equalsIgnoreCase(ref.tabela)
+		return ref != null && grupo.equalsIgnoreCase(ref.grupo) && tabela.equalsIgnoreCase(ref.tabela)
 				&& campo.equalsIgnoreCase(ref.campo);
 	}
 
 	public boolean refIgual(Objeto objeto) {
-		return objeto != null && apelido.equalsIgnoreCase(objeto.getApelido())
+		return objeto != null && grupo.equalsIgnoreCase(objeto.getApelido())
 				&& tabela.equalsIgnoreCase(objeto.getTabela2());
 	}
 
 	public boolean tabIgual(Referencia ref) {
-		return ref != null && apelido.equalsIgnoreCase(ref.apelido) && tabela.equalsIgnoreCase(ref.tabela);
+		return ref != null && grupo.equalsIgnoreCase(ref.grupo) && tabela.equalsIgnoreCase(ref.tabela);
 	}
 
 	public Referencia clonar() {
-		return new Referencia(apelido, tabela, campo);
+		return new Referencia(grupo, tabela, campo);
 	}
 
 	public void inicializarColetores(List<String> numeros) {
@@ -75,12 +75,12 @@ public class Referencia {
 		return processado;
 	}
 
-	public Grupo getGrupo() {
-		return grupo;
+	public Pesquisa getPesquisa() {
+		return pesquisa;
 	}
 
-	public String getApelido() {
-		return apelido;
+	public String getGrupo() {
+		return grupo;
 	}
 
 	public String getTabela() {
@@ -101,6 +101,6 @@ public class Referencia {
 
 	@Override
 	public String toString() {
-		return "apelido=" + apelido + ", tabela=" + tabela + ", campo=" + campo;
+		return "grupo=" + grupo + ", tabela=" + tabela + ", campo=" + campo;
 	}
 }

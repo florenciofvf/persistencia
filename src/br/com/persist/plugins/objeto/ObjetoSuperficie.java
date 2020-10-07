@@ -62,7 +62,7 @@ import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.objeto.macro.MacroDialogo;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
-import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.persistencia.Persistencia;
@@ -1461,11 +1461,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	@Override
-	public void pesquisar(Grupo grupo, String argumentos) {
-		super.pesquisar(grupo, argumentos);
+	public void pesquisar(Pesquisa pesquisa, String argumentos) {
+		super.pesquisar(pesquisa, argumentos);
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
-			for (Referencia referencia : grupo.getReferencias()) {
+			for (Referencia referencia : pesquisa.getReferencias()) {
 				if (!referencia.isProcessado()) {
 					pesquisarFinal(referencia, argumentos);
 				}

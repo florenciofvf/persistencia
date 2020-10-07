@@ -7,17 +7,17 @@ import java.util.Objects;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.objeto.Objeto;
 
-public class Grupo {
+public class Pesquisa {
 	private final String nome;
 	private final Referencia referencia;
 	private final List<Referencia> referencias;
 	private final List<Referencia> referenciasLink;
 	private final List<Referencia> referenciasApos;
 
-	public Grupo(String nome, Referencia ref) {
+	public Pesquisa(String nome, Referencia ref) {
 		Objects.requireNonNull(ref);
 		if (Util.estaVazio(nome)) {
-			throw new IllegalStateException("Nome do grupo vazio.");
+			throw new IllegalStateException("Nome da pesquisa vazia.");
 		}
 		referenciasApos = new ArrayList<>();
 		referenciasLink = new ArrayList<>();
@@ -38,8 +38,8 @@ public class Grupo {
 		}
 	}
 
-	public boolean igual(Grupo grupo) {
-		return grupo != null && referencia.refIgual(grupo.referencia);
+	public boolean igual(Pesquisa pesquisa) {
+		return pesquisa != null && referencia.refIgual(pesquisa.referencia);
 	}
 
 	public String getNome() {
@@ -95,12 +95,12 @@ public class Grupo {
 		if (ref != null) {
 			if (!contem(ref)) {
 				referencias.add(ref);
-				ref.grupo = this;
+				ref.pesquisa = this;
 			}
 			ref = ref.clonar();
 			if (ref != null && !contemLink(ref)) {
 				referenciasLink.add(ref);
-				ref.grupo = this;
+				ref.pesquisa = this;
 			}
 		}
 	}
@@ -108,7 +108,7 @@ public class Grupo {
 	public void addLink(Referencia ref) {
 		if (ref != null && !contemLink(ref)) {
 			referenciasLink.add(ref);
-			ref.grupo = this;
+			ref.pesquisa = this;
 		}
 	}
 
@@ -144,6 +144,6 @@ public class Grupo {
 
 	@Override
 	public String toString() {
-		return "nome=" + nome + ", REF=" + referencia;
+		return "nome=" + nome + ", ref=" + referencia;
 	}
 }

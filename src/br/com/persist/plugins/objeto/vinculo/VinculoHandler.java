@@ -9,29 +9,29 @@ import org.xml.sax.SAXException;
 import br.com.persist.marca.XMLHandler;
 
 class VinculoHandler extends XMLHandler {
-	private final List<Grupo> grupos;
-	private Grupo selecionado;
+	private final List<Pesquisa> pesquisas;
+	private Pesquisa selecionado;
 
 	public VinculoHandler() {
-		grupos = new ArrayList<>();
+		pesquisas = new ArrayList<>();
 	}
 
-	public List<Grupo> getGrupos() {
-		return grupos;
+	public List<Pesquisa> getPesquisas() {
+		return pesquisas;
 	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if ("grupo".equals(qName)) {
-			selecionado = new Grupo(attributes.getValue("nome"), criar(attributes));
-			grupos.add(selecionado);
+		if ("pesquisa".equals(qName)) {
+			selecionado = new Pesquisa(attributes.getValue("nome"), criar(attributes));
+			pesquisas.add(selecionado);
 		} else if ("ref".equals(qName) && selecionado != null) {
 			selecionado.add(criar(attributes));
 		}
 	}
 
 	private Referencia criar(Attributes attributes) {
-		Referencia ref = new Referencia(attributes.getValue("apelido"), attributes.getValue("tabela"),
+		Referencia ref = new Referencia(attributes.getValue("grupo"), attributes.getValue("tabela"),
 				attributes.getValue("campo"));
 		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
 		return ref;
@@ -39,7 +39,7 @@ class VinculoHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if ("grupo".equals(qName)) {
+		if ("pesquisa".equals(qName)) {
 			selecionado = null;
 		}
 	}

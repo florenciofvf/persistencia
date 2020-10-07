@@ -81,7 +81,7 @@ import br.com.persist.plugins.fragmento.FragmentoListener;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoUtil;
-import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.IndiceValor;
@@ -176,11 +176,11 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
 		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
 		private final ButtonComplemento buttonComplemento = new ButtonComplemento();
+		private final ButtonPesquisa buttonPesquisa = new ButtonPesquisa();
 		private final ButtonFuncoes buttonFuncoes = new ButtonFuncoes();
 		private final ButtonFragVar buttonFragVar = new ButtonFragVar();
 		private final ButtonBaixar buttonBaixar = new ButtonBaixar();
 		private final ButtonUpdate buttonUpdate = new ButtonUpdate();
-		private final ButtonGrupo buttonGrupo = new ButtonGrupo();
 		private final Label labelTotal = new Label(Color.BLUE);
 		private final ButtonInfo buttonInfo = new ButtonInfo();
 		private transient Thread thread;
@@ -191,7 +191,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			add(true, buttonInfo);
 			add(true, buttonExcluir);
 			add(true, buttonFragVar);
-			add(buttonGrupo);
+			add(buttonPesquisa);
 			add(true, buttonUpdate);
 			add(buttonSincronizar);
 			add(true, buttonComplemento);
@@ -201,7 +201,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			add(buttonFuncoes);
 			add(true, comboConexao);
 			buttonUpdate.complemento(objeto);
-			buttonGrupo.complemento(objeto);
+			buttonPesquisa.complemento(objeto);
 		}
 
 		private void excluirAtualizarEnable(boolean b) {
@@ -428,20 +428,20 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 		}
 
-		private class ButtonGrupo extends ButtonPopup {
+		private class ButtonPesquisa extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private boolean habilitado;
 
-			private ButtonGrupo() {
+			private ButtonPesquisa() {
 				super("label.buscaAuto", Icones.FIELDS);
 			}
 
 			private void complemento(Objeto objeto) {
-				List<Grupo> listaGrupo = objeto.getGrupos();
-				for (Grupo grupo : listaGrupo) {
-					addMenu(new MenuGrupo(grupo));
+				List<Pesquisa> pesquisas = objeto.getGrupos();
+				for (Pesquisa p : pesquisas) {
+					addMenu(new MenuPesquisa(p));
 				}
-				habilitado = !listaGrupo.isEmpty();
+				habilitado = !pesquisas.isEmpty();
 				setEnabled(habilitado);
 			}
 
@@ -449,13 +449,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				setEnabled(habilitado && b);
 			}
 
-			private class MenuGrupo extends MenuPadrao2 {
+			private class MenuPesquisa extends MenuPadrao2 {
 				private static final long serialVersionUID = 1L;
-				private final transient Grupo grupo;
+				private final transient Pesquisa pesquisa;
 
-				private MenuGrupo(Grupo grupo) {
-					super(grupo.getNome() + "." + grupo.getReferencia().getCampo(), Icones.CONFIG2, "nao_chave");
-					this.grupo = grupo;
+				private MenuPesquisa(Pesquisa pesquisa) {
+					super(pesquisa.getNome() + "." + pesquisa.getReferencia().getCampo(), Icones.CONFIG2, "nao_chave");
+					this.pesquisa = pesquisa;
 					semAspasAcao.setActionListener(e -> processar(false));
 					comAspasAcao.setActionListener(e -> processar(true));
 				}
@@ -464,13 +464,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					int coluna = -1;
 					if (vinculoListener != null) {
 						coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
-								grupo.getReferencia().getCampo());
+								pesquisa.getReferencia().getCampo());
 					}
 					if (coluna != -1) {
 						List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabelaPersistencia,
 								coluna);
 						if (lista.isEmpty()) {
-							Util.mensagem(InternalContainer.this, grupo.getReferencia().getCampo() + " vazio.");
+							Util.mensagem(InternalContainer.this, pesquisa.getReferencia().getCampo() + " vazio.");
 						} else {
 							pesquisar(lista, apostrofes, coluna);
 						}
@@ -478,12 +478,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				}
 
 				private void pesquisar(List<String> lista, boolean apostrofes, int coluna) {
-					grupo.setProcessado(false);
-					grupo.inicializarColetores(lista);
-					vinculoListener.pesquisar(grupo, Util.getStringLista(lista, apostrofes, false));
-					setEnabled(grupo.isProcessado());
-					if (grupo.isProcessado()) {
-						vinculoListener.pesquisarApos(grupo);
+					pesquisa.setProcessado(false);
+					pesquisa.inicializarColetores(lista);
+					vinculoListener.pesquisar(pesquisa, Util.getStringLista(lista, apostrofes, false));
+					setEnabled(pesquisa.isProcessado());
+					if (pesquisa.isProcessado()) {
+						vinculoListener.pesquisarApos(pesquisa);
 					}
 					processarColunaInfo(coluna);
 				}
@@ -492,7 +492,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					if (objeto.isColunaInfo()) {
 						List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
 						for (int linha : indices) {
-							InternalUtil.consolidarColetores(tabelaPersistencia, linha, coluna, grupo);
+							InternalUtil.consolidarColetores(tabelaPersistencia, linha, coluna, pesquisa);
 						}
 						Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
 					}
@@ -1317,7 +1317,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		} catch (Exception ex) {
 			mensagemException(ex);
 		}
-		toolbar.buttonGrupo.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
+		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		configurarAlturaAutomatica();
 	}
@@ -1621,23 +1621,24 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 
 		private void mouseClick(TabelaPersistencia tabela, int colunaClick) {
+			Pesquisa pesquisaSel = getPesquisaSelecionado(tabela, colunaClick);
 			Referencia refSel = getRefSelecionado(tabela, colunaClick);
-			Grupo grupoSel = getGrupoSelecionado(tabela, colunaClick);
-			if (grupoSel == null && refSel == null) {
+			if (pesquisaSel == null && refSel == null) {
 				return;
 			}
 			List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
-			if (lista.size() == 1 && grupoSel != null) {
-				vinculoListener.pesquisarLink(grupoSel, lista.get(0));
+			if (lista.size() == 1 && pesquisaSel != null) {
+				vinculoListener.pesquisarLink(pesquisaSel, lista.get(0));
 			} else if (lista.size() == 1 && refSel != null) {
 				vinculoListener.pesquisarLink(refSel, lista.get(0));
 			}
 		}
 
-		private Grupo getGrupoSelecionado(TabelaPersistencia tabela, int colunaClick) {
-			for (Grupo grupo : objeto.getGrupos()) {
-				if (TabelaPersistenciaUtil.getIndiceColuna(tabela, grupo.getReferencia().getCampo()) == colunaClick) {
-					return grupo;
+		private Pesquisa getPesquisaSelecionado(TabelaPersistencia tabela, int colunaClick) {
+			for (Pesquisa pesquisa : objeto.getGrupos()) {
+				if (TabelaPersistenciaUtil.getIndiceColuna(tabela,
+						pesquisa.getReferencia().getCampo()) == colunaClick) {
+					return pesquisa;
 				}
 			}
 			return null;

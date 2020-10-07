@@ -10,14 +10,14 @@ import br.com.persist.marca.XML;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class Vinculacao {
-	private final List<Grupo> grupos;
+	private final List<Pesquisa> pesquisas;
 
 	public Vinculacao() {
-		grupos = new ArrayList<>();
+		pesquisas = new ArrayList<>();
 	}
 
 	public void abrir(String arquivo, Component componente) {
-		grupos.clear();
+		pesquisas.clear();
 		File file = null;
 		if (!Util.estaVazio(arquivo)) {
 			file = new File(arquivo);
@@ -28,7 +28,7 @@ public class Vinculacao {
 		try {
 			VinculoHandler handler = new VinculoHandler();
 			XML.processar(file, handler);
-			grupos.addAll(handler.getGrupos());
+			pesquisas.addAll(handler.getPesquisas());
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
 		}
@@ -36,32 +36,32 @@ public class Vinculacao {
 	}
 
 	private void integrarLinks() {
-		for (int i = 0; i < grupos.size(); i++) {
-			Grupo grupo = grupos.get(i);
-			List<Grupo> outros = listarOutros(grupo);
-			integrar(grupo, outros);
+		for (int i = 0; i < pesquisas.size(); i++) {
+			Pesquisa pesquisa = pesquisas.get(i);
+			List<Pesquisa> outros = listarOutros(pesquisa);
+			integrar(pesquisa, outros);
 		}
 	}
 
-	private List<Grupo> listarOutros(Grupo grupo) {
-		List<Grupo> resposta = new ArrayList<>();
-		for (Grupo g : grupos) {
-			if (g != grupo && g.igual(grupo)) {
-				resposta.add(g);
+	private List<Pesquisa> listarOutros(Pesquisa pesquisa) {
+		List<Pesquisa> resposta = new ArrayList<>();
+		for (Pesquisa p : pesquisas) {
+			if (p != pesquisa && p.igual(pesquisa)) {
+				resposta.add(p);
 			}
 		}
 		return resposta;
 	}
 
-	private void integrar(Grupo grupo, List<Grupo> outros) {
-		for (Grupo outro : outros) {
-			grupo.addLink(outro.getClonarReferencias());
+	private void integrar(Pesquisa pesquisa, List<Pesquisa> outros) {
+		for (Pesquisa outro : outros) {
+			pesquisa.addLink(outro.getClonarReferencias());
 		}
 	}
 
 	public void processar(Objeto objeto) {
-		for (Grupo g : grupos) {
-			g.processar(objeto);
+		for (Pesquisa p : pesquisas) {
+			p.processar(objeto);
 		}
 	}
 }

@@ -42,7 +42,7 @@ import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
-import br.com.persist.plugins.objeto.vinculo.Grupo;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
@@ -299,11 +299,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
-	public void pesquisar(Grupo grupo, String argumentos) {
+	public void pesquisar(Pesquisa pesquisa, String argumentos) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
-				List<Referencia> referencias = grupo.getReferencias();
+				List<Referencia> referencias = pesquisa.getReferencias();
 				interno.setProcessadoPesquisa(false);
 				for (Referencia referencia : referencias) {
 					if (interno.ehReferencia(referencia)) {
@@ -317,11 +317,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
-	public void pesquisarLink(Grupo grupo, String argumentos) {
+	public void pesquisarLink(Pesquisa pesquisa, String argumentos) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
-				List<Referencia> referencias = grupo.getReferenciasLink();
+				List<Referencia> referencias = pesquisa.getReferenciasLink();
 				for (Referencia referencia : referencias) {
 					if (interno.ehReferencia(referencia)) {
 						interno.pesquisarLink(referencia.getCampo(), argumentos);
@@ -332,7 +332,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	}
 
 	public void pesquisarLink(Referencia ref, String argumentos) {
-		Referencia referencia = ref.getGrupo().getReferencia();
+		Referencia referencia = ref.getPesquisa().getReferencia();
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
@@ -343,12 +343,12 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
-	public void pesquisarApos(Grupo grupo) {
+	public void pesquisarApos(Pesquisa pesquisa) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 				if (!interno.isProcessadoPesquisa()) {
-					for (Referencia referencia : grupo.getReferenciasApos()) {
+					for (Referencia referencia : pesquisa.getReferenciasApos()) {
 						if (interno.ehReferencia(referencia)) {
 							interno.pesquisarApos();
 						}
