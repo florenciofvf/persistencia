@@ -6,16 +6,11 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
 public class InternalConfig {
-	private final boolean checarGrupo;
 	private String complemento;
 	private Graphics graphics;
 	private String conexao;
 	private String tabela;
 	private String grupo;
-
-	public InternalConfig(boolean checarGrupo) {
-		this.checarGrupo = checarGrupo;
-	}
 
 	public String getComplemento() {
 		return complemento;
@@ -58,9 +53,5 @@ public class InternalConfig {
 
 	public void setGraphics(Graphics graphics) {
 		this.graphics = graphics;
-	}
-
-	public boolean isChecarGrupo() {
-		return checarGrupo;
 	}
 }

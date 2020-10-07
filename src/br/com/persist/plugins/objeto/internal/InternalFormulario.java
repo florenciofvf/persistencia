@@ -211,10 +211,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	public boolean ehTabela(InternalConfig config) {
-		return config.isChecarGrupo()
-				? container.getObjeto().getGrupo().equalsIgnoreCase(config.getGrupo())
-						&& container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela())
-				: container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
+		return container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
 	}
 
 	public InternalContainer getInternalContainer() {

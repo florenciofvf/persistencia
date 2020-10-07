@@ -636,7 +636,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			repaint();
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (selecionadoObjeto != null) {
-					abrirObjeto(selecionadoObjeto, false, true);
+					abrirObjeto(selecionadoObjeto, true);
 				} else if (selecionadoRelacao != null) {
 					popup.configuracaoAcao.actionPerformed(null);
 				}
@@ -644,7 +644,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	};
 
-	private void abrirObjeto(Objeto objeto, boolean checarGrupo, boolean checarArquivo) {
+	private void abrirObjeto(Objeto objeto, boolean checarArquivo) {
 		Frame frame = container.getFrame();
 		if (!Util.estaVazio(objeto.getTabela2())) {
 			Conexao conexao = container.getConexaoPadrao();
@@ -653,7 +653,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				abrirObjetoDados(conexao, objeto, frame);
 			} else {
 				if (checarArquivo) {
-					abrirArquivo(conexao, objeto, checarGrupo);
+					abrirArquivo(conexao, objeto);
 				} else {
 					abrirObjetoDados(conexao, objeto, frame);
 				}
@@ -669,9 +669,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		form.setVisible(true);
 	}
 
-	private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarGrupo) {
+	private void abrirArquivo(Conexao conexao, Objeto objeto) {
 		InternalFormulario interno = getInternalFormulario(objeto);
-		InternalConfig config = new InternalConfig(checarGrupo);
+		InternalConfig config = new InternalConfig();
 		config.setTabela(objeto.getTabela2());
 		config.setConexao(conexao.getNome());
 		config.setGrupo(objeto.getGrupo());
@@ -1111,7 +1111,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				Object object = itemDados.getObject();
 				if (object instanceof Objeto) {
 					Objeto objeto = (Objeto) object;
-					abrirObjeto(objeto, false, false);
+					abrirObjeto(objeto, false);
 				}
 			});
 			excluirAcao.setActionListener(e -> excluirSelecionados());
