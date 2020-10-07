@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <vinculo>
-	<grupo nome="Candidatos" tabela="eleicao" campo="id">
+	<pesquisa nome="Candidatos" tabela="eleicao" campo="id">
 		<ref tabela="candidato" campo="eleicao_id" />
-		<ref tabela="candidato2" campo="eleicao_id" vazio="invisivel" apelido="2"/>
-	</grupo>
+		<ref tabela="candidato2" campo="eleicao_id" vazio="invisivel" grupo="2"/>
+	</pesquisa>
 </vinculo>
