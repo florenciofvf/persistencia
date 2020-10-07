@@ -671,10 +671,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void abrirArquivo(Conexao conexao, Objeto objeto) {
 		InternalFormulario interno = getInternalFormulario(objeto);
-		InternalConfig config = new InternalConfig();
-		config.setTabela(objeto.getTabela2());
-		config.setConexao(conexao.getNome());
-		config.setGrupo(objeto.getGrupo());
+		InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela2());
 		config.setGraphics(getGraphics());
 		if (interno != null) {
 			config.setComplemento(interno.getComplementoChaves());
