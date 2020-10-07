@@ -226,8 +226,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 					Object[] array = (Object[]) transferable.getTransferData(flavor);
 					Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
 					if (!contemReferencia(objeto)) {
-						montarEAdicionarInternalFormulario(array, e.getLocation(), null,
-								(String) array[InternalTransferidor.ARRAY_INDICE_APE], false, null);
+						montarEAdicionarInternalFormulario(array, e.getLocation(), null, false, null);
 						completado = true;
 					}
 				} catch (Exception ex) {
@@ -268,8 +267,8 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		return false;
 	}
 
-	public void montarEAdicionarInternalFormulario(Object[] array, Point point, Graphics g, String apelido,
-			boolean buscaAuto, InternalConfig config) {
+	public void montarEAdicionarInternalFormulario(Object[] array, Point point, Graphics g, boolean buscaAuto,
+			InternalConfig config) {
 		Dimension dimension = (Dimension) array[InternalTransferidor.ARRAY_INDICE_DIM];
 		Conexao conexao = (Conexao) array[InternalTransferidor.ARRAY_INDICE_CON];
 		Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
@@ -282,7 +281,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		internnalFormulario.setSize(dimension);
 		internnalFormulario.setVisible(true);
 		if (config != null) {
-			config.setApelido(apelido);
+			config.setGrupo(objeto.getGrupo());
 		}
 		internnalFormulario.aplicarConfigArquivo(config);
 		add(internnalFormulario);

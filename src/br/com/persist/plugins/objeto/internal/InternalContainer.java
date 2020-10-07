@@ -164,8 +164,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			if (dimension == null) {
 				dimension = Constantes.SIZE;
 			}
-			dge.startDrag(null, new InternalTransferidor(objeto, conexao, dimension, objeto.getApelido()),
-					listenerArrasto);
+			dge.startDrag(null, new InternalTransferidor(objeto, conexao, dimension), listenerArrasto);
 		});
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
@@ -437,7 +436,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 
 			private void complemento(Objeto objeto) {
-				List<Pesquisa> pesquisas = objeto.getGrupos();
+				List<Pesquisa> pesquisas = objeto.getPesquisas();
 				for (Pesquisa p : pesquisas) {
 					addMenu(new MenuPesquisa(p));
 				}
@@ -1610,7 +1609,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					toolbar.excluirAtualizarEnable(false);
 					toolbar.labelTotal.limpar();
 				}
-				boolean link = (!objeto.getGrupos().isEmpty() || objeto.getReferencia() != null)
+				boolean link = (!objeto.getPesquisas().isEmpty() || objeto.getReferencia() != null)
 						&& vinculoListener != null;
 				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && link) {
 					mouseClick(tabela, colunaClick);
@@ -1635,7 +1634,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 
 		private Pesquisa getPesquisaSelecionado(TabelaPersistencia tabela, int colunaClick) {
-			for (Pesquisa pesquisa : objeto.getGrupos()) {
+			for (Pesquisa pesquisa : objeto.getPesquisas()) {
 				if (TabelaPersistenciaUtil.getIndiceColuna(tabela,
 						pesquisa.getReferencia().getCampo()) == colunaClick) {
 					return pesquisa;

@@ -28,7 +28,7 @@ public class Pesquisa {
 
 	public void processar(Objeto objeto) {
 		if (referencia.refIgual(objeto)) {
-			objeto.getGrupos().add(this);
+			objeto.getPesquisas().add(this);
 			return;
 		}
 		for (Referencia ref : referencias) {

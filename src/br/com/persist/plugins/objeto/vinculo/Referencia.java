@@ -31,7 +31,7 @@ public class Referencia {
 	}
 
 	public boolean refIgual(Objeto objeto) {
-		return objeto != null && grupo.equalsIgnoreCase(objeto.getApelido())
+		return objeto != null && grupo.equalsIgnoreCase(objeto.getGrupo())
 				&& tabela.equalsIgnoreCase(objeto.getTabela2());
 	}
 

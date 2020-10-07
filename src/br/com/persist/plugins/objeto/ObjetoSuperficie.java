@@ -644,7 +644,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	};
 
-	private void abrirObjeto(Objeto objeto, boolean checarApelido, boolean checarArquivo) {
+	private void abrirObjeto(Objeto objeto, boolean checarGrupo, boolean checarArquivo) {
 		Frame frame = container.getFrame();
 		if (!Util.estaVazio(objeto.getTabela2())) {
 			Conexao conexao = container.getConexaoPadrao();
@@ -653,7 +653,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				abrirObjetoDados(conexao, objeto, frame);
 			} else {
 				if (checarArquivo) {
-					abrirArquivo(conexao, objeto, checarApelido);
+					abrirArquivo(conexao, objeto, checarGrupo);
 				} else {
 					abrirObjetoDados(conexao, objeto, frame);
 				}
@@ -669,14 +669,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		form.setVisible(true);
 	}
 
-	private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarApelido) {
+	private void abrirArquivo(Conexao conexao, Objeto objeto, boolean checarGrupo) {
 		InternalFormulario interno = getInternalFormulario(objeto);
-		InternalConfig config = new InternalConfig(checarApelido);
+		InternalConfig config = new InternalConfig(checarGrupo);
 		config.setTabela(objeto.getTabela2());
 		config.setConexao(conexao.getNome());
+		config.setGrupo(objeto.getGrupo());
 		config.setGraphics(getGraphics());
 		if (interno != null) {
-			config.setApelido(objeto.getApelido());
 			config.setComplemento(interno.getComplementoChaves());
 		}
 		ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo(), getGraphics(), config);
@@ -1774,8 +1774,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
-				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), null,
-						(String) array[InternalTransferidor.ARRAY_INDICE_APE], false, config);
+				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
 				objeto.setSelecionado(false);
 				x += 25;
 				y += 25;
@@ -1791,8 +1790,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
-				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), null,
-						(String) array[InternalTransferidor.ARRAY_INDICE_APE], false, config);
+				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
 				objeto.setSelecionado(false);
 				x += 25;
 				y += 25;
@@ -1835,8 +1833,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, null);
-				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), null,
-						(String) array[InternalTransferidor.ARRAY_INDICE_APE], false, config);
+				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), null, false,
+						config);
 				objeto.setSelecionado(false);
 			}
 		}

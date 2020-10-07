@@ -2,16 +2,19 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.awt.Graphics;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
+
 public class InternalConfig {
-	private final boolean checarApelido;
+	private final boolean checarGrupo;
 	private String complemento;
 	private Graphics graphics;
 	private String conexao;
-	private String apelido;
 	private String tabela;
+	private String grupo;
 
-	public InternalConfig(boolean checarApelido) {
-		this.checarApelido = checarApelido;
+	public InternalConfig(boolean checarGrupo) {
+		this.checarGrupo = checarGrupo;
 	}
 
 	public String getComplemento() {
@@ -30,12 +33,15 @@ public class InternalConfig {
 		this.conexao = conexao;
 	}
 
-	public String getApelido() {
-		return apelido;
+	public String getGrupo() {
+		if (Util.estaVazio(grupo)) {
+			grupo = Constantes.VAZIO;
+		}
+		return grupo;
 	}
 
-	public void setApelido(String apelido) {
-		this.apelido = apelido;
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
 	}
 
 	public String getTabela() {
@@ -54,7 +60,7 @@ public class InternalConfig {
 		this.graphics = graphics;
 	}
 
-	public boolean isChecarApelido() {
-		return checarApelido;
+	public boolean isChecarGrupo() {
+		return checarGrupo;
 	}
 }

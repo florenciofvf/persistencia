@@ -42,11 +42,11 @@ public class Objeto implements Runnable {
 	private Map<String, String> mapaSequencias;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
+	private final List<Pesquisa> pesquisas;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
 	private boolean abrirAuto = true;
-	private final List<Pesquisa> grupos;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
 	private String selectAlternativo;
@@ -78,7 +78,6 @@ public class Objeto implements Runnable {
 	boolean visivel = true;
 	private String arquivo;
 	private String tabelas;
-	private String apelido;
 	private String tabela;
 	private Thread thread;
 	private int intervalo;
@@ -86,6 +85,7 @@ public class Objeto implements Runnable {
 	private String joins;
 	private String icone;
 	private boolean bpnt;
+	private String grupo;
 	private Icon icon;
 	private String id;
 	private long tag;
@@ -112,7 +112,7 @@ public class Objeto implements Runnable {
 		id = Constantes.VAZIO + (++sequencia);
 		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
-		grupos = new ArrayList<>();
+		pesquisas = new ArrayList<>();
 		desenharId = true;
 		setIcone(icone);
 		visivel = true;
@@ -145,9 +145,9 @@ public class Objeto implements Runnable {
 		o.linkAuto = linkAuto;
 		o.tabelas = tabelas;
 		o.arquivo = arquivo;
-		o.apelido = apelido;
 		o.tabela = tabela;
 		o.chaves = chaves;
+		o.grupo = grupo;
 		o.joins = joins;
 		o.ccsc = ccsc;
 		o.bpnt = bpnt;
@@ -185,10 +185,10 @@ public class Objeto implements Runnable {
 		sequencias = attr.getValue("sequencias");
 		arquivo = attr.getValue("arquivo");
 		tabelas = attr.getValue("tabelas");
-		apelido = attr.getValue("apelido");
 		setIcone(attr.getValue("icone"));
 		tabela = attr.getValue("tabela");
 		chaves = attr.getValue("chaves");
+		grupo = attr.getValue("grupo");
 		joins = attr.getValue("joins");
 		id = attr.getValue("id");
 		String strIntervalo = attr.getValue("intervalo");
@@ -219,12 +219,12 @@ public class Objeto implements Runnable {
 		util.atributo("colunaInfo", colunaInfo);
 		util.atributo("arquivo", getArquivo());
 		util.atributo("tabelas", getTabelas());
-		util.atributo("apelido", getApelido());
 		util.atributo("abrirAuto", abrirAuto);
 		util.atributo("processar", processar);
 		util.atributo("tabela", getTabela2());
 		util.atributo("chaves", getChaves());
 		util.atributo("linkAuto", linkAuto);
+		util.atributo("grupo", getGrupo());
 		util.atributo("cor", cor.getRGB());
 		util.atributo("joins", getJoins());
 		util.atributo("icone", icone);
@@ -531,15 +531,15 @@ public class Objeto implements Runnable {
 		return tabela;
 	}
 
-	public String getApelido() {
-		if (Util.estaVazio(apelido)) {
-			apelido = Constantes.VAZIO;
+	public String getGrupo() {
+		if (Util.estaVazio(grupo)) {
+			grupo = Constantes.VAZIO;
 		}
-		return apelido;
+		return grupo;
 	}
 
-	public void setApelido(String apelido) {
-		this.apelido = apelido;
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
 	}
 
 	public String getSelectAlternativo() {
@@ -918,8 +918,8 @@ public class Objeto implements Runnable {
 		this.referencia = referencia;
 	}
 
-	public List<Pesquisa> getGrupos() {
-		return grupos;
+	public List<Pesquisa> getPesquisas() {
+		return pesquisas;
 	}
 
 	public Referencia getReferenciaPesquisa() {
