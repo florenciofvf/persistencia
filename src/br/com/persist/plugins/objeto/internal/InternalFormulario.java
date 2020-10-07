@@ -42,7 +42,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
-		container.setPesquisaListener(pesquisaListener);
+		container.setVinculoListener(vinculoListener);
 		setFrameIcon(Icones.VAZIO);
 		montarLayout();
 		configurar2();
@@ -146,7 +146,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		configAjustes(true);
 	}
 
-	private transient InternalListener.Pesquisa pesquisaListener = new InternalListener.Pesquisa() {
+	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {
 		@Override
 		public void pesquisar(Grupo grupo, String argumentos) {
 			checarDesktop();

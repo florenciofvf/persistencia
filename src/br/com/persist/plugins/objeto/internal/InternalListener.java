@@ -8,7 +8,7 @@ import br.com.persist.plugins.objeto.vinculo.Grupo;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 
 public interface InternalListener {
-	public interface Pesquisa {
+	public interface Vinculo {
 		public void pesquisarLink(Referencia ref, String argumentos);
 
 		public void pesquisarLink(Grupo grupo, String argumentos);

@@ -113,8 +113,8 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private transient InternalListener.Alinhamento alinhamentoListener;
 	private transient InternalListener.Componente componenteListener;
 	private transient InternalListener.Dimensao dimensaoListener;
-	private transient InternalListener.Pesquisa pesquisaListener;
 	private final AtomicBoolean processado = new AtomicBoolean();
+	private transient InternalListener.Vinculo vinculoListener;
 	private transient InternalListener.Largura larguraListener;
 	private transient InternalListener.Selecao selecaoListener;
 	private final TextField txtComplemento = new TextField(33);
@@ -462,7 +462,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 				private void processar(boolean apostrofes) {
 					int coluna = -1;
-					if (pesquisaListener != null) {
+					if (vinculoListener != null) {
 						coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
 								grupo.getReferencia().getCampo());
 					}
@@ -480,10 +480,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				private void pesquisar(List<String> lista, boolean apostrofes, int coluna) {
 					grupo.setProcessado(false);
 					grupo.inicializarColetores(lista);
-					pesquisaListener.pesquisar(grupo, Util.getStringLista(lista, apostrofes, false));
+					vinculoListener.pesquisar(grupo, Util.getStringLista(lista, apostrofes, false));
 					setEnabled(grupo.isProcessado());
 					if (grupo.isProcessado()) {
-						pesquisaListener.pesquisarApos(grupo);
+						vinculoListener.pesquisarApos(grupo);
 					}
 					processarColunaInfo(coluna);
 				}
@@ -1611,7 +1611,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					toolbar.labelTotal.limpar();
 				}
 				boolean link = (!objeto.getGrupos().isEmpty() || objeto.getReferencia() != null)
-						&& pesquisaListener != null;
+						&& vinculoListener != null;
 				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && link) {
 					mouseClick(tabela, colunaClick);
 				}
@@ -1628,9 +1628,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			}
 			List<String> lista = TabelaPersistenciaUtil.getValoresLinhaPelaColuna(tabela, colunaClick);
 			if (lista.size() == 1 && grupoSel != null) {
-				pesquisaListener.pesquisarLink(grupoSel, lista.get(0));
+				vinculoListener.pesquisarLink(grupoSel, lista.get(0));
 			} else if (lista.size() == 1 && refSel != null) {
-				pesquisaListener.pesquisarLink(refSel, lista.get(0));
+				vinculoListener.pesquisarLink(refSel, lista.get(0));
 			}
 		}
 
@@ -1787,12 +1787,12 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		toolbar.buttonInfo.menuAlinhamento.habilitar(larguraListener != null);
 	}
 
-	public InternalListener.Pesquisa getPesquisaListener() {
-		return pesquisaListener;
+	public InternalListener.Vinculo getVinculoListener() {
+		return vinculoListener;
 	}
 
-	public void setPesquisaListener(InternalListener.Pesquisa pesquisaListener) {
-		this.pesquisaListener = pesquisaListener;
+	public void setVinculoListener(InternalListener.Vinculo vinculoListener) {
+		this.vinculoListener = vinculoListener;
 	}
 
 	@Override
