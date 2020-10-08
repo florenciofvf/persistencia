@@ -35,10 +35,6 @@ public class Referencia {
 				&& tabela.equalsIgnoreCase(objeto.getTabela2());
 	}
 
-	public boolean tabIgual(Referencia ref) {
-		return ref != null && grupo.equalsIgnoreCase(ref.grupo) && tabela.equalsIgnoreCase(ref.tabela);
-	}
-
 	public Referencia clonar() {
 		return new Referencia(grupo, tabela, campo);
 	}
