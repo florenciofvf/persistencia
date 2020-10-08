@@ -679,6 +679,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo(), getGraphics(), config);
 	}
 
+	private InternalFormulario getInternalFormulario(Objeto objeto) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
+					return interno;
+				}
+			}
+		}
+		return null;
+	}
+
 	public static void setComplemento(Conexao conexao, Objeto objeto) {
 		if (conexao != null && objeto != null && Util.estaVazio(objeto.getComplemento())) {
 			objeto.setComplemento(conexao.getFinalComplemento());

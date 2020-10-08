@@ -365,21 +365,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
-	protected InternalFormulario getInternalFormulario(Objeto objeto) {
-		if (objeto == null) {
-			return null;
-		}
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
-					return interno;
-				}
-			}
-		}
-		return null;
-	}
-
 	public boolean isAbortarFecharComESC() {
 		return abortarFecharComESC;
 	}
