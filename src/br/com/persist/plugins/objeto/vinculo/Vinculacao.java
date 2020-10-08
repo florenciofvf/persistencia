@@ -32,31 +32,6 @@ public class Vinculacao {
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
 		}
-		integrarLinks();
-	}
-
-	private void integrarLinks() {
-		for (int i = 0; i < pesquisas.size(); i++) {
-			Pesquisa pesquisa = pesquisas.get(i);
-			List<Pesquisa> outros = listarOutros(pesquisa);
-			integrar(pesquisa, outros);
-		}
-	}
-
-	private List<Pesquisa> listarOutros(Pesquisa pesquisa) {
-		List<Pesquisa> resposta = new ArrayList<>();
-		for (Pesquisa p : pesquisas) {
-			if (p != pesquisa && p.igual(pesquisa)) {
-				resposta.add(p);
-			}
-		}
-		return resposta;
-	}
-
-	private void integrar(Pesquisa pesquisa, List<Pesquisa> outros) {
-		for (Pesquisa outro : outros) {
-			pesquisa.addLink(outro.getClonarReferencias());
-		}
 	}
 
 	public void processar(Objeto objeto) {

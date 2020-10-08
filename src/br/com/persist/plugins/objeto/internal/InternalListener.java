@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.List;
 
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -9,9 +10,7 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 
 public interface InternalListener {
 	public interface Vinculo {
-		public void pesquisarLink(Pesquisa pesquisa, String argumentos);
-
-		public void pesquisarLink(Referencia ref, String argumentos);
+		public void pesquisarLink(List<Referencia> refs, String argumentos);
 
 		public void pesquisar(Pesquisa pesquisa, String argumentos);
 

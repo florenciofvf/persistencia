@@ -39,6 +39,7 @@ public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	private static final Logger LOG = Logger.getGlobal();
+	private final List<Referencia> referencias;
 	private Map<String, String> mapaSequencias;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
@@ -59,7 +60,6 @@ public class Objeto implements Runnable {
 	private boolean ajusteAutoForm;
 	private Color cor = COR_PADRAO;
 	private String buscaAutomatica;
-	private Referencia referencia;
 	private String linkAutomatico;
 	private static long sequencia;
 	private String finalConsulta;
@@ -110,6 +110,7 @@ public class Objeto implements Runnable {
 
 	public Objeto(int x, int y, Color cor, String icone) {
 		id = Constantes.VAZIO + (++sequencia);
+		referencias = new ArrayList<>();
 		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
 		pesquisas = new ArrayList<>();
@@ -910,12 +911,29 @@ public class Objeto implements Runnable {
 		Collections.sort(instrucoes);
 	}
 
-	public Referencia getReferencia() {
-		return referencia;
+	public List<Referencia> getReferencias() {
+		return referencias;
 	}
 
-	public void setReferencia(Referencia referencia) {
-		this.referencia = referencia;
+	public void addReferencia(Referencia ref) {
+		if (ref != null && !contem(ref)) {
+			referencias.add(ref);
+		}
+	}
+
+	public void addReferencias(List<Referencia> referencias) {
+		for (Referencia ref : referencias) {
+			addReferencia(ref);
+		}
+	}
+
+	private boolean contem(Referencia ref) {
+		for (Referencia r : referencias) {
+			if (r.igual(ref)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public List<Pesquisa> getPesquisas() {

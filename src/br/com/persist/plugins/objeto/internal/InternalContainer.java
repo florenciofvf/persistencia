@@ -1599,8 +1599,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 					toolbar.habilitarUpdateExcluir(false);
 					toolbar.labelTotal.limpar();
 				}
-				boolean link = (!objeto.getPesquisas().isEmpty() || objeto.getReferencia() != null)
-						&& vinculoListener != null;
+				boolean link = !objeto.getReferencias().isEmpty() && vinculoListener != null;
 				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && link) {
 					mouseClick(tabela, colunaClick);
 				}
@@ -1617,35 +1616,10 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 
 		private void mouseClick(TabelaPersistencia tabela, int colunaClick) {
-			Pesquisa pesquisaSel = getPesquisaSelecionado(tabela, colunaClick);
-			Referencia refSel = getRefSelecionado(tabela, colunaClick);
-			if (pesquisaSel == null && refSel == null) {
-				return;
-			}
 			List<String> lista = TabelaPersistenciaUtil.getValoresLinha(tabela, colunaClick);
-			if (lista.size() == 1 && pesquisaSel != null) {
-				vinculoListener.pesquisarLink(pesquisaSel, lista.get(0));
-			} else if (lista.size() == 1 && refSel != null) {
-				vinculoListener.pesquisarLink(refSel, lista.get(0));
+			if (lista.size() == 1) {
+				vinculoListener.pesquisarLink(objeto.getReferencias(), lista.get(0));
 			}
-		}
-
-		private Pesquisa getPesquisaSelecionado(TabelaPersistencia tabela, int colunaClick) {
-			for (Pesquisa pesquisa : objeto.getPesquisas()) {
-				if (TabelaPersistenciaUtil.getIndiceColuna(tabela,
-						pesquisa.getReferencia().getCampo()) == colunaClick) {
-					return pesquisa;
-				}
-			}
-			return null;
-		}
-
-		private Referencia getRefSelecionado(TabelaPersistencia tabela, int colunaClick) {
-			Referencia ref = objeto.getReferencia();
-			if (ref != null && TabelaPersistenciaUtil.getIndiceColuna(tabela, ref.getCampo()) == colunaClick) {
-				return ref;
-			}
-			return null;
 		}
 	}
 

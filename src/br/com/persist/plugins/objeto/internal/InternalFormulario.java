@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -164,18 +165,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		@Override
-		public void pesquisarLink(Referencia ref, String argumentos) {
+		public void pesquisarLink(List<Referencia> refs, String argumentos) {
 			checarDesktop();
 			if (desktop != null) {
-				desktop.pesquisarLink(ref, argumentos);
-			}
-		}
-
-		@Override
-		public void pesquisarLink(Pesquisa pesquisa, String argumentos) {
-			checarDesktop();
-			if (desktop != null) {
-				desktop.pesquisarLink(pesquisa, argumentos);
+				desktop.pesquisarLink(refs, argumentos);
 			}
 		}
 	};
@@ -203,7 +196,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	public boolean ehReferencia(Referencia referencia) {
-		return referencia.refIgual(container.getObjeto());
+		return referencia.igual(container.getObjeto());
 	}
 
 	public boolean ehTabela(Objeto objeto) {

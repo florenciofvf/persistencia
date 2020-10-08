@@ -1488,7 +1488,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void pesquisarFinal(Referencia referencia, String argumentos) {
 		Objeto objeto = null;
 		for (Objeto obj : objetos) {
-			if (referencia.refIgual(obj)) {
+			if (referencia.igual(obj)) {
 				objeto = obj;
 				break;
 			}

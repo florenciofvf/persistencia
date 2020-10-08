@@ -11,7 +11,6 @@ public class Pesquisa {
 	private final String nome;
 	private final Referencia referencia;
 	private final List<Referencia> referencias;
-	private final List<Referencia> referenciasLink;
 	private final List<Referencia> referenciasApos;
 
 	public Pesquisa(String nome, Referencia ref) {
@@ -20,26 +19,21 @@ public class Pesquisa {
 			throw new IllegalStateException("Nome da pesquisa vazia.");
 		}
 		referenciasApos = new ArrayList<>();
-		referenciasLink = new ArrayList<>();
 		referencias = new ArrayList<>();
 		this.referencia = ref;
 		this.nome = nome;
 	}
 
 	public void processar(Objeto objeto) {
-		if (referencia.refIgual(objeto)) {
+		if (referencia.igual(objeto)) {
 			objeto.getPesquisas().add(this);
-			return;
+			objeto.addReferencias(referencias);
 		}
 		for (Referencia ref : referencias) {
-			if (ref.refIgual(objeto)) {
-				objeto.setReferencia(ref);
+			if (ref.igual(objeto)) {
+				objeto.addReferencia(ref.getPesquisa().referencia);
 			}
 		}
-	}
-
-	public boolean igual(Pesquisa pesquisa) {
-		return pesquisa != null && referencia.refIgual(pesquisa.referencia);
 	}
 
 	public String getNome() {
@@ -71,14 +65,6 @@ public class Pesquisa {
 		return false;
 	}
 
-	public List<Referencia> getClonarReferencias() {
-		List<Referencia> lista = new ArrayList<>();
-		for (Referencia ref : referencias) {
-			lista.add(ref.clonar());
-		}
-		return lista;
-	}
-
 	public List<Referencia> getReferencias() {
 		return referencias;
 	}
@@ -87,27 +73,9 @@ public class Pesquisa {
 		return referenciasApos;
 	}
 
-	public List<Referencia> getReferenciasLink() {
-		return referenciasLink;
-	}
-
 	public void add(Referencia ref) {
-		if (ref != null) {
-			if (!contem(ref)) {
-				referencias.add(ref);
-				ref.pesquisa = this;
-			}
-			ref = ref.clonar();
-			if (ref != null && !contemLink(ref)) {
-				referenciasLink.add(ref);
-				ref.pesquisa = this;
-			}
-		}
-	}
-
-	public void addLink(Referencia ref) {
-		if (ref != null && !contemLink(ref)) {
-			referenciasLink.add(ref);
+		if (ref != null && !contem(ref)) {
+			referencias.add(ref);
 			ref.pesquisa = this;
 		}
 	}
@@ -118,24 +86,9 @@ public class Pesquisa {
 		}
 	}
 
-	public void addLink(List<Referencia> referencias) {
-		for (Referencia ref : referencias) {
-			addLink(ref);
-		}
-	}
-
-	public boolean contem(Referencia ref) {
+	private boolean contem(Referencia ref) {
 		for (Referencia r : referencias) {
-			if (r.refIgual(ref)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean contemLink(Referencia ref) {
-		for (Referencia r : referenciasLink) {
-			if (r.refIgual(ref)) {
+			if (r.igual(ref)) {
 				return true;
 			}
 		}

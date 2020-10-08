@@ -25,12 +25,12 @@ public class Referencia {
 		this.tabela = tabela;
 	}
 
-	public boolean refIgual(Referencia ref) {
+	public boolean igual(Referencia ref) {
 		return ref != null && grupo.equalsIgnoreCase(ref.grupo) && tabela.equalsIgnoreCase(ref.tabela)
 				&& campo.equalsIgnoreCase(ref.campo);
 	}
 
-	public boolean refIgual(Objeto objeto) {
+	public boolean igual(Objeto objeto) {
 		return objeto != null && grupo.equalsIgnoreCase(objeto.getGrupo())
 				&& tabela.equalsIgnoreCase(objeto.getTabela2());
 	}
