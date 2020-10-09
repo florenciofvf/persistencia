@@ -464,7 +464,7 @@ public class ObjetoContainer extends Panel {
 		};
 	}
 
-	private class PanelBuscaAuto extends Panel {
+	public class PanelBuscaAuto extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
 		private final JTextPane textArea = new JTextPane();
@@ -682,13 +682,11 @@ public class ObjetoContainer extends Panel {
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
 		private PanelInstrucao panelInstrucao = new PanelInstrucao();
-		private PanelBuscaAuto panelBuscaAuto = new PanelBuscaAuto();
 
 		private Fichario() {
 			addTab("label.geral", new PanelGeral());
 			addTab("label.banco", new PanelBanco());
 			addTab("label.descricao", new PanelDescricao());
-			addTab("label.buscaAuto", panelBuscaAuto);
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
 			addTab("label.instrucoes", panelInstrucao);
@@ -696,7 +694,6 @@ public class ObjetoContainer extends Panel {
 
 		private void ini() {
 			panelInstrucao.adicionarInstrucoes(objeto);
-			panelBuscaAuto.toolbar.formatar();
 		}
 	}
 }
