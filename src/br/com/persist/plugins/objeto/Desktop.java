@@ -291,7 +291,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		internal.setLocation(point);
 		internal.setSize(dimension);
 		internal.setVisible(true);
-		internal.aplicarConfigArquivo(config);
+		internal.aplicarConfig(config);
 		add(internal);
 	}
 

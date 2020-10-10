@@ -261,7 +261,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void aplicarConfigArquivo(InternalConfig config) {
+	public void aplicarConfig(InternalConfig config) {
 		if (config != null && ehTabela(config)) {
 			container.aplicarConfig(config);
 		}
