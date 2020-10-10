@@ -27,7 +27,6 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 public class InternalFormulario extends AbstratoInternalFrame {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
-	private boolean processadoBuscaAutomatica;
 	private final InternalContainer container;
 	private boolean processadoPesquisa;
 	private Desktop desktop;
@@ -265,14 +264,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (config != null && ehTabela(config)) {
 			container.aplicarConfig(config);
 		}
-	}
-
-	public boolean isProcessadoBuscaAutomatica() {
-		return processadoBuscaAutomatica;
-	}
-
-	public void setProcessadoBuscaAutomatica(boolean processadoBuscaAutomatica) {
-		this.processadoBuscaAutomatica = processadoBuscaAutomatica;
 	}
 
 	public boolean isProcessadoPesquisa() {
