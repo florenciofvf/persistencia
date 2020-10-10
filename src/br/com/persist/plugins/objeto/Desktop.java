@@ -315,7 +315,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				for (Referencia referencia : referencias) {
 					if (interno.ehReferencia(referencia)) {
 						interno.getInternalContainer().getObjeto().setReferenciaPesquisa(referencia);
-						interno.pesquisar(referencia.getCampo(), argumentos);
+						interno.pesquisar(referencia, argumentos);
 						interno.setProcessadoPesquisa(true);
 						referencia.setProcessado(true);
 					}
@@ -345,7 +345,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				InternalFormulario interno = (InternalFormulario) frame;
 				for (Referencia referencia : referencias) {
 					if (interno.ehReferencia(referencia)) {
-						interno.pesquisarLink(referencia.getCampo(), argumentos);
+						interno.pesquisarLink(referencia, argumentos);
 					}
 				}
 			}

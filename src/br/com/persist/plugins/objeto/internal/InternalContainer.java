@@ -1431,16 +1431,34 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 				cabecalhoFiltro);
 	}
 
-	public void buscaAutomatica(String campo, String argumentos) {
-		pesquisar(campo, argumentos);
-	}
-
-	public void pesquisar(String campo, String argumentos) {
+	public void pesquisar(Referencia referencia, String argumentos) {
 		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 		if (conexao != null) {
-			txtComplemento.setText("AND " + campo + " IN (" + argumentos + ")");
+			txtComplemento.setText("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
 			destacarTitulo = true;
 			actionListenerInner.processar();
+		}
+	}
+
+	public void pesquisarLink(Referencia referencia, String argumentos) {
+		if (objeto.isLinkAuto() && argumentos != null) {
+			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+			TableModel model = modelo.getModelo();
+			tabelaPersistencia.clearSelection();
+			if (model instanceof PersistenciaModelo) {
+				selecionarRegistros(referencia.getCampo(), argumentos, modelo);
+			}
+		}
+	}
+
+	private void selecionarRegistros(String campo, String argumentos, OrdenacaoModelo modelo) {
+		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
+		if (coluna != -1) {
+			for (int i = 0; i < modelo.getRowCount(); i++) {
+				if (argumentos.equals(modelo.getValueAt(i, coluna))) {
+					tabelaPersistencia.addRowSelectionInterval(i, i);
+				}
+			}
 		}
 	}
 
@@ -1466,28 +1484,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 
 	public void pesquisarApos() {
 		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
-	}
-
-	public void pesquisarLink(String campo, String argumentos) {
-		if (objeto.isLinkAuto() && argumentos != null) {
-			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-			TableModel model = modelo.getModelo();
-			tabelaPersistencia.clearSelection();
-			if (model instanceof PersistenciaModelo) {
-				selecionarRegistros(campo, argumentos, modelo);
-			}
-		}
-	}
-
-	private void selecionarRegistros(String campo, String argumentos, OrdenacaoModelo modelo) {
-		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
-		if (coluna != -1) {
-			for (int i = 0; i < modelo.getRowCount(); i++) {
-				if (argumentos.equals(modelo.getValueAt(i, coluna))) {
-					tabelaPersistencia.addRowSelectionInterval(i, i);
-				}
-			}
-		}
 	}
 
 	public String getTituloAtualizado() {
