@@ -1446,13 +1446,13 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 			TableModel model = modelo.getModelo();
 			tabelaPersistencia.clearSelection();
 			if (model instanceof PersistenciaModelo) {
-				selecionarRegistros(referencia.getCampo(), argumentos, modelo);
+				selecionarRegistros(referencia, argumentos, modelo);
 			}
 		}
 	}
 
-	private void selecionarRegistros(String campo, String argumentos, OrdenacaoModelo modelo) {
-		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, campo);
+	private void selecionarRegistros(Referencia referencia, String argumentos, OrdenacaoModelo modelo) {
+		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
 		if (coluna != -1) {
 			for (int i = 0; i < modelo.getRowCount(); i++) {
 				if (argumentos.equals(modelo.getValueAt(i, coluna))) {
