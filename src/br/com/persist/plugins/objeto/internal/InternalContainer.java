@@ -168,6 +168,144 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
 	}
 
+	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
+		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+		if (conexao == null) {
+			return;
+		}
+		if (!continuar(complemento)) {
+			processado.set(false);
+			return;
+		}
+		StringBuilder consulta = getConsulta(conexao, complemento);
+		try {
+			Connection conn = ConexaoProvedor.getConnection(conexao);
+			Parametros param = criarParametros(conn, conexao, consulta.toString());
+			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
+			modeloOrdenacao.getModelo().setConexao(conexao);
+			objeto.setComplemento(txtComplemento.getText());
+			tabelaPersistencia.setModel(modeloOrdenacao);
+			threadTitulo(getTituloAtualizado());
+			cabecalhoFiltro = null;
+			atualizarTitulo();
+			configurarCabecalhoTabela(modeloOrdenacao, cabecalho);
+			Util.ajustar(tabelaPersistencia, g == null ? getGraphics() : g);
+			processarReferencia();
+		} catch (Exception ex) {
+			mensagemException(ex);
+		}
+		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
+		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
+		configurarAlturaAutomatica();
+	}
+
+	private StringBuilder getConsulta(Conexao conexao, String complemento) {
+		StringBuilder builder = new StringBuilder();
+		objeto.select(builder, conexao);
+		objeto.joins(builder, conexao, objeto.getPrefixoNomeTabela());
+		objeto.where(builder);
+		builder.append(" " + txtComplemento.getText());
+		builder.append(" " + complemento);
+		builder.append(" " + objeto.getFinalConsulta());
+		return builder;
+	}
+
+	private boolean continuar(String complemento) {
+		if (!Util.estaVazio(txtComplemento.getText())) {
+			return true;
+		}
+		if (!Util.estaVazio(complemento)) {
+			return true;
+		}
+		if (!objeto.isCcsc()) {
+			return true;
+		}
+		String msg = Mensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
+		return Util.confirmar(InternalContainer.this, msg, false);
+	}
+
+	private PersistenciaModelo.Parametros criarParametros(Connection conn, Conexao conexao, String consulta) {
+		Parametros param = new Parametros(conn, conexao, consulta);
+		param.setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
+		param.setMapaSequencia(objeto.getMapaSequencias());
+		param.setColunasChave(objeto.getChavesArray());
+		param.setComColunaInfo(objeto.isColunaInfo());
+		param.setTabela(objeto.getTabela2());
+		return param;
+	}
+
+	private void configurarCabecalhoTabela(OrdenacaoModelo modeloOrdenacao, CabecalhoColuna cabecalho) {
+		TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
+		List<Coluna> colunas = modeloOrdenacao.getModelo().getColunas();
+		for (int i = 0; i < colunas.size(); i++) {
+			TableColumn tableColumn = columnModel.getColumn(i);
+			Coluna coluna = colunas.get(i);
+			configTableColumn(tableColumn, coluna);
+			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
+					!coluna.isColunaInfo());
+			if (cabecalhoColuna.equals(cabecalho)) {
+				cabecalhoColuna.copiar(cabecalho);
+				cabecalhoFiltro = cabecalhoColuna;
+			}
+			tableColumn.setHeaderRenderer(cabecalhoColuna);
+		}
+	}
+
+	private void processarReferencia() {
+		Referencia referencia = objeto.getReferenciaPesquisa();
+		if (referencia != null) {
+			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
+			if (coluna != -1) {
+				InternalUtil.atualizarColetores(tabelaPersistencia, coluna, referencia);
+			}
+			objeto.setReferenciaPesquisa(null);
+			processarReferenciaVisibilidade(referencia, modelo);
+		}
+	}
+
+	private void processarReferenciaVisibilidade(Referencia referencia, OrdenacaoModelo modelo) {
+		if (visibilidadeListener != null) {
+			boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
+			boolean visivel = objeto.isVisivel();
+			objeto.setVisivel(!invisivel);
+			visibilidadeListener.setVisible(!invisivel);
+			setBackground(!visivel && objeto.isVisivel() ? Color.RED : null);
+		}
+	}
+
+	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processarObjeto(string,
+			null, cabecalho);
+
+	private void mensagemException(Exception ex) {
+		if (Preferencias.isErroCriarConnection()) {
+			if (!Preferencias.isExibiuMensagemConnection()) {
+				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela()
+						+ objeto.getTabela2(), ex, this);
+				Preferencias.setExibiuMensagemConnection(true);
+			}
+		} else {
+			Util.stackTraceAndMessage(
+					"PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela() + objeto.getTabela2(),
+					ex, this);
+		}
+	}
+
+	private void configTableColumn(TableColumn tableColumn, Coluna coluna) {
+		if (coluna.isChave()) {
+			tableColumn.setCellRenderer(new CellRenderer(Color.GRAY, Color.WHITE));
+		}
+		if (coluna.isColunaInfo()) {
+			tableColumn.setCellRenderer(new InternalRenderer());
+		}
+	}
+
+	private void configurarAlturaAutomatica() {
+		if (objeto.isAjusteAutoForm() && configAlturaAutomaticaListener != null) {
+			configAlturaAutomaticaListener.configAlturaAutomatica(tabelaPersistencia.getModel().getRowCount());
+		}
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
@@ -591,15 +729,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private void abrirUpdate(boolean abrirEmForm) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-					if (conexao == null) {
-						return;
-					}
-					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length == 1) {
-						String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela());
-						if (!Util.estaVazio(instrucao)) {
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+					if (conexao != null) {
+						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+						int[] linhas = tabelaPersistencia.getSelectedRows();
+						if (linhas != null && linhas.length == 1) {
+							String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela());
+							if (!Util.estaVazio(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+							}
 						}
 					}
 				}
@@ -637,10 +774,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					int[] linhas = tabelaPersistencia.getSelectedRows();
 					if (linhas != null && linhas.length == 1) {
 						Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
-						if (chaves.isEmpty()) {
-							return;
-						}
-						if (Util.estaVazio(instrucao.getValor())) {
+						if (chaves.isEmpty() || Util.estaVazio(instrucao.getValor())) {
 							return;
 						}
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
@@ -843,13 +977,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private void abrirUpdate(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-						if (conexao == null) {
-							return;
-						}
-						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-						String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
-						if (!Util.estaVazio(instrucao)) {
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+						if (conexao != null) {
+							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+							String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
+							if (!Util.estaVazio(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+							}
 						}
 					}
 				}
@@ -865,13 +998,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private void abrirUpdate(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-						if (conexao == null) {
-							return;
-						}
-						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-						String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
-						if (!Util.estaVazio(instrucao)) {
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+						if (conexao != null) {
+							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+							String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
+							if (!Util.estaVazio(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+							}
 						}
 					}
 				}
@@ -887,13 +1019,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private void abrirUpdate(boolean abrirEmForm) {
 						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-						if (conexao == null) {
-							return;
-						}
-						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-						String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
-						if (!Util.estaVazio(instrucao)) {
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
+						if (conexao != null) {
+							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
+							if (!Util.estaVazio(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
+							}
 						}
 					}
 				}
@@ -1211,144 +1342,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 			TableModel model = modelo.getModelo();
 			((PersistenciaModelo) model).setConexao(conexao);
-		}
-	}
-
-	private StringBuilder getConsulta(Conexao conexao, String complemento) {
-		StringBuilder builder = new StringBuilder();
-		objeto.select(builder, conexao);
-		objeto.joins(builder, conexao, objeto.getPrefixoNomeTabela());
-		objeto.where(builder);
-		builder.append(" " + txtComplemento.getText());
-		builder.append(" " + complemento);
-		builder.append(" " + objeto.getFinalConsulta());
-		return builder;
-	}
-
-	private boolean continuar(String complemento) {
-		if (!Util.estaVazio(txtComplemento.getText())) {
-			return true;
-		}
-		if (!Util.estaVazio(complemento)) {
-			return true;
-		}
-		if (!objeto.isCcsc()) {
-			return true;
-		}
-		String msg = Mensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
-		return Util.confirmar(InternalContainer.this, msg, false);
-	}
-
-	private PersistenciaModelo.Parametros criarParametros(Connection conn, Conexao conexao, String consulta) {
-		Parametros param = new Parametros(conn, conexao, consulta);
-		param.setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
-		param.setMapaSequencia(objeto.getMapaSequencias());
-		param.setColunasChave(objeto.getChavesArray());
-		param.setComColunaInfo(objeto.isColunaInfo());
-		param.setTabela(objeto.getTabela2());
-		return param;
-	}
-
-	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
-		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-		if (conexao == null) {
-			return;
-		}
-		if (!continuar(complemento)) {
-			processado.set(false);
-			return;
-		}
-		StringBuilder consulta = getConsulta(conexao, complemento);
-		try {
-			Connection conn = ConexaoProvedor.getConnection(conexao);
-			Parametros param = criarParametros(conn, conexao, consulta.toString());
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
-			modeloOrdenacao.getModelo().setConexao(conexao);
-			objeto.setComplemento(txtComplemento.getText());
-			tabelaPersistencia.setModel(modeloOrdenacao);
-			threadTitulo(getTituloAtualizado());
-			cabecalhoFiltro = null;
-			atualizarTitulo();
-			configurarCabecalhoTabela(modeloOrdenacao, cabecalho);
-			Util.ajustar(tabelaPersistencia, g == null ? getGraphics() : g);
-			processarReferencia();
-		} catch (Exception ex) {
-			mensagemException(ex);
-		}
-		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
-		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
-		configurarAlturaAutomatica();
-	}
-
-	private void configurarCabecalhoTabela(OrdenacaoModelo modeloOrdenacao, CabecalhoColuna cabecalho) {
-		TableColumnModel columnModel = tabelaPersistencia.getColumnModel();
-		List<Coluna> colunas = modeloOrdenacao.getModelo().getColunas();
-		for (int i = 0; i < colunas.size(); i++) {
-			TableColumn tableColumn = columnModel.getColumn(i);
-			Coluna coluna = colunas.get(i);
-			configTableColumn(tableColumn, coluna);
-			CabecalhoColuna cabecalhoColuna = new CabecalhoColuna(cabecalhoColunaListener, modeloOrdenacao, coluna,
-					!coluna.isColunaInfo());
-			if (cabecalhoColuna.equals(cabecalho)) {
-				cabecalhoColuna.copiar(cabecalho);
-				cabecalhoFiltro = cabecalhoColuna;
-			}
-			tableColumn.setHeaderRenderer(cabecalhoColuna);
-		}
-	}
-
-	private void processarReferencia() {
-		Referencia referencia = objeto.getReferenciaPesquisa();
-		if (referencia != null) {
-			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
-			if (coluna != -1) {
-				InternalUtil.atualizarColetores(tabelaPersistencia, coluna, referencia);
-			}
-			objeto.setReferenciaPesquisa(null);
-			processarReferenciaVisibilidade(referencia, modelo);
-		}
-	}
-
-	private void processarReferenciaVisibilidade(Referencia referencia, OrdenacaoModelo modelo) {
-		if (visibilidadeListener != null) {
-			boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
-			boolean visivel = objeto.isVisivel();
-			objeto.setVisivel(!invisivel);
-			visibilidadeListener.setVisible(!invisivel);
-			setBackground(!visivel && objeto.isVisivel() ? Color.RED : null);
-		}
-	}
-
-	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processarObjeto(string,
-			null, cabecalho);
-
-	private void mensagemException(Exception ex) {
-		if (Preferencias.isErroCriarConnection()) {
-			if (!Preferencias.isExibiuMensagemConnection()) {
-				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela()
-						+ objeto.getTabela2(), ex, this);
-				Preferencias.setExibiuMensagemConnection(true);
-			}
-		} else {
-			Util.stackTraceAndMessage(
-					"PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela() + objeto.getTabela2(),
-					ex, this);
-		}
-	}
-
-	private void configTableColumn(TableColumn tableColumn, Coluna coluna) {
-		if (coluna.isChave()) {
-			tableColumn.setCellRenderer(new CellRenderer(Color.GRAY, Color.WHITE));
-		}
-		if (coluna.isColunaInfo()) {
-			tableColumn.setCellRenderer(new InternalRenderer());
-		}
-	}
-
-	private void configurarAlturaAutomatica() {
-		if (objeto.isAjusteAutoForm() && configAlturaAutomaticaListener != null) {
-			configAlturaAutomaticaListener.configAlturaAutomatica(tabelaPersistencia.getModel().getRowCount());
 		}
 	}
 
