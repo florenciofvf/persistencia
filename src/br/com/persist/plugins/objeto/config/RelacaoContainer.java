@@ -83,26 +83,21 @@ public class RelacaoContainer extends Panel {
 			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
 			chkQuebrado.setSelected(relacao.isQuebrado());
-
 			txtDeslocXDesc.addFocusListener(focusListenerInner);
 			txtDeslocYDesc.addFocusListener(focusListenerInner);
-
 			chkDesenharDesc.addActionListener(this);
 			chkQuebrado.addActionListener(this);
 			txtDeslocXDesc.addActionListener(this);
 			txtDeslocYDesc.addActionListener(this);
-
 			textArea.setText(relacao.getDescricao());
 			textArea.addFocusListener(focusListenerDesc);
 			textArea.addKeyListener(keyListenerInner);
 			add(BorderLayout.CENTER, textArea);
-
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.desloc_x_desc", txtDeslocXDesc));
 			container.add(criarLinha("label.desloc_y_desc", txtDeslocYDesc));
 			container.add(criarLinha("label.desenhar_desc", chkDesenharDesc));
 			container.add(criarLinha("label.quebrado", chkQuebrado));
-
 			add(BorderLayout.SOUTH, container);
 		}
 
@@ -211,16 +206,13 @@ public class RelacaoContainer extends Panel {
 			this.origem = origem;
 			chkPonto.setSelected(origem ? relacao.isPontoOrigem() : relacao.isPontoDestino());
 			chkPonto.addActionListener(e -> processarPonto());
-
 			Label label = new Label();
 			label.setText(origem ? relacao.getOrigem().getId() : relacao.getDestino().getId());
-
 			if (origem) {
 				add(new PanelTitulo("label.origem"));
 			} else {
 				add(new PanelTitulo("label.destino"));
 			}
-
 			add(new JSeparator());
 			add(new PanelCenter(label));
 			add(new PanelCenter(new PanelObjeto(origem ? relacao.getOrigem() : relacao.getDestino())));

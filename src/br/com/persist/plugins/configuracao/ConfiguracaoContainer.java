@@ -372,7 +372,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		private RadioPosicao(NomeValor nomeValor) {
 			super(nomeValor.nome);
 			this.nomeValor = nomeValor;
-
 			addActionListener(e -> {
 				if (nomeValor.tipo == NomeValor.POSICAO_ABA) {
 					Preferencias.setPosicaoAbaFichario(nomeValor.valor);
@@ -399,22 +398,18 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		private PainelCorTotalRecente() {
 			super(new GridLayout(0, 3));
-
 			add(labelAntesProcessar);
 			add(labelBuscarTotal);
 			add(labelComparacao);
-
 			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			labelAntesProcessar.setForeground(Preferencias.getCorAntesTotalRecente());
 			labelBuscarTotal.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			labelBuscarTotal.setForeground(Preferencias.getCorTotalAtual());
 			labelComparacao.setForeground(Preferencias.getCorComparaRec());
-
 			labelAntesProcessar.setHorizontalAlignment(Label.CENTER);
 			labelBuscarTotal.setHorizontalAlignment(Label.CENTER);
 			labelComparacao.setHorizontalAlignment(Label.CENTER);
-
 			labelAntesProcessar.addMouseListener(mouseInner);
 			labelBuscarTotal.addMouseListener(mouseInner);
 			labelComparacao.addMouseListener(mouseInner);
