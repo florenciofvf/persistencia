@@ -143,7 +143,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		this.objeto = objeto;
 		montarLayout();
 		configurar();
-		processarObjeto("", g, null);
+		processar("", g, null);
 	}
 
 	private void montarLayout() {
@@ -168,7 +168,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
 	}
 
-	public void processarObjeto(String complemento, Graphics g, CabecalhoColuna cabecalho) {
+	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 		if (conexao == null) {
 			return;
@@ -211,13 +211,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private boolean continuar(String complemento) {
-		if (!Util.estaVazio(txtComplemento.getText())) {
-			return true;
-		}
-		if (!Util.estaVazio(complemento)) {
-			return true;
-		}
-		if (!objeto.isCcsc()) {
+		if (!Util.estaVazio(txtComplemento.getText()) || !Util.estaVazio(complemento) || !objeto.isCcsc()) {
 			return true;
 		}
 		String msg = Mensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
@@ -274,8 +268,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processarObjeto(string,
-			null, cabecalho);
+	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processar(string, null,
+			cabecalho);
 
 	private void mensagemException(Exception ex) {
 		if (Preferencias.isErroCriarConnection()) {
@@ -1367,7 +1361,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private class ActionListenerInner implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			processarObjeto(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
+			processar(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro);
 		}
 	}
@@ -1436,6 +1430,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
+	public String getComplementoChaves() {
+		StringBuilder sb = new StringBuilder();
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
+		if (!indices.isEmpty()) {
+			Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
+			if (chaves.size() > 1) {
+				append1(sb, modelo, indices, chaves);
+			} else if (chaves.size() == 1) {
+				append2(sb, modelo, indices, chaves);
+			}
+		}
+		return sb.toString();
+	}
+
+	private void append1(StringBuilder sb, OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
+		sb.append("AND (");
+		sb.append(getComplementoChavesAux(chaves));
+		for (int i = 1; i < indices.size(); i++) {
+			sb.append(" OR ");
+			chaves = modelo.getMapaChaves(indices.get(i));
+			sb.append(getComplementoChavesAux(chaves));
+		}
+		sb.append(")");
+	}
+
 	private String getComplementoChavesAux(Map<String, String> map) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 		StringBuilder sb = new StringBuilder("(");
@@ -1451,6 +1471,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		return sb.toString();
 	}
 
+	private void append2(StringBuilder sb, OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
+		String[] array = getComplementoChave(chaves);
+		String chave = array[0];
+		sb.append("AND " + chave + " IN(" + array[1]);
+		for (int i = 1; i < indices.size(); i++) {
+			sb.append(", ");
+			chaves = modelo.getMapaChaves(indices.get(i));
+			sb.append(chaves.get(chave));
+		}
+		sb.append(")");
+	}
+
 	private String[] getComplementoChave(Map<String, String> map) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 		String[] array = new String[2];
@@ -1460,36 +1492,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			array[1] = entry.getValue();
 		}
 		return array;
-	}
-
-	public String getComplementoChaves() {
-		StringBuilder sb = new StringBuilder();
-		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-		if (!indices.isEmpty()) {
-			Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
-			if (chaves.size() > 1) {
-				sb.append("AND (");
-				sb.append(getComplementoChavesAux(chaves));
-				for (int i = 1; i < indices.size(); i++) {
-					sb.append(" OR ");
-					chaves = modelo.getMapaChaves(indices.get(i));
-					sb.append(getComplementoChavesAux(chaves));
-				}
-				sb.append(")");
-			} else if (chaves.size() == 1) {
-				String[] array = getComplementoChave(chaves);
-				String chave = array[0];
-				sb.append("AND " + chave + " IN(" + array[1]);
-				for (int i = 1; i < indices.size(); i++) {
-					sb.append(", ");
-					chaves = modelo.getMapaChaves(indices.get(i));
-					sb.append(chaves.get(chave));
-				}
-				sb.append(")");
-			}
-		}
-		return sb.toString();
 	}
 
 	public void atualizarFormulario() {
