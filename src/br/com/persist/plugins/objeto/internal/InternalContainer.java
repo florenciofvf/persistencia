@@ -126,7 +126,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private final transient Objeto objeto;
 	private final boolean buscaAuto;
 	private boolean destacarTitulo;
-	private Component suporte;
 	private int contadorAuto;
 
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
@@ -1124,8 +1123,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		Component resp = null;
 		if (componenteListener != null && componenteListener.getComponente() != null) {
 			resp = componenteListener.getComponente();
-		} else if (suporte instanceof Component) {
-			resp = suporte;
 		}
 		return resp;
 	}
@@ -1556,14 +1553,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				vinculoListener.pesquisarLink(objeto.getReferencias(), lista.get(0));
 			}
 		}
-	}
-
-	public Component getSuporte() {
-		return suporte;
-	}
-
-	public void setSuporte(Component suporte) {
-		this.suporte = suporte;
 	}
 
 	public void selecionarConexao(Conexao conexao) {
