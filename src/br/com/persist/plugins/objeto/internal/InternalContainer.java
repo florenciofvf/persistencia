@@ -268,8 +268,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processar(string, null,
-			cabecalho);
+	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> SwingUtilities
+			.invokeLater(() -> processar(string, null, cabecalho));
 
 	private void mensagemException(Exception ex) {
 		if (Preferencias.isErroCriarConnection()) {
