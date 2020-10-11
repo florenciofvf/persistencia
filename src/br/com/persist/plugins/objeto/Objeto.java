@@ -53,7 +53,6 @@ public class Objeto implements Runnable {
 	private String selectAlternativo;
 	private String prefixoNomeTabela;
 	private boolean linkAuto = true;
-	private boolean ajusteAutoEnter;
 	private boolean copiarDestacado;
 	private boolean transparenteBkp;
 	private ObjetoListener listener;
@@ -129,7 +128,6 @@ public class Objeto implements Runnable {
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.copiarDestacado = copiarDestacado;
-		o.ajusteAutoEnter = ajusteAutoEnter;
 		o.linkAutomatico = linkAutomatico;
 		o.ajusteAutoForm = ajusteAutoForm;
 		o.finalConsulta = finalConsulta;
@@ -160,7 +158,6 @@ public class Objeto implements Runnable {
 	}
 
 	public void aplicar(Attributes attr) {
-		ajusteAutoEnter = Boolean.parseBoolean(attr.getValue("ajusteAutoEnter"));
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
 		copiarDestacado = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
@@ -207,7 +204,6 @@ public class Objeto implements Runnable {
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("selectAlternativo", getSelectAlternativo());
-		util.atributo("ajusteAutoEnter", ajusteAutoEnter);
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", copiarDestacado);
 		util.atributo("desloc_x_id", deslocamentoXId);
@@ -314,14 +310,6 @@ public class Objeto implements Runnable {
 
 	public void setAjusteAutoForm(boolean ajusteAutoForm) {
 		this.ajusteAutoForm = ajusteAutoForm;
-	}
-
-	public boolean isAjusteAutoEnter() {
-		return ajusteAutoEnter;
-	}
-
-	public void setAjusteAutoEnter(boolean ajusteAutoEnter) {
-		this.ajusteAutoEnter = ajusteAutoEnter;
 	}
 
 	public void setTransparente(boolean transparente) {

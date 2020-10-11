@@ -154,18 +154,6 @@ public class Macro {
 		}
 	}
 
-	static class AjusteAutoEnter extends Instrucao {
-		@Override
-		public void executar(Relacao relacao) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void executar(Objeto objeto) {
-			objeto.setAjusteAutoEnter((Boolean) valor);
-		}
-	}
-
 	static class PontoDestino extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {

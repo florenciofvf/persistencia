@@ -217,7 +217,6 @@ public class ObjetoContainer extends Panel {
 	private class PanelBanco extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtFinalConsulta = new TextField();
-		private CheckBox chkAjusteAutoEnter = new CheckBox();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
 		private TextField txtChaveamento = new TextField();
 		private TextField txtSelectAlter = new TextField();
@@ -237,7 +236,6 @@ public class ObjetoContainer extends Panel {
 		private CheckBox chkBPNT = new CheckBox();
 
 		private PanelBanco() {
-			chkAjusteAutoEnter.setSelected(objeto.isAjusteAutoEnter());
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
 			txtSelectAlter.setText(objeto.getSelectAlternativo());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
@@ -268,7 +266,6 @@ public class ObjetoContainer extends Panel {
 			txtChaves.addFocusListener(focusListenerInner);
 			txtJoins.addFocusListener(focusListenerInner);
 			txtGrupo.addFocusListener(focusListenerInner);
-			chkAjusteAutoEnter.addActionListener(this);
 			chkAjusteAutoForm.addActionListener(this);
 			txtFinalConsulta.addActionListener(this);
 			txtChaveamento.addActionListener(this);
@@ -307,8 +304,6 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.bpnt", chkBPNT, Mensagens.getString("hint.bpnt")));
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm,
 					Mensagens.getString("hint.ajuste_auto_form")));
-			container.add(criarLinha("label.ajuste_auto_enter", chkAjusteAutoEnter,
-					Mensagens.getString("hint.ajuste_auto_enter", Mensagens.getString("label.ajuste_auto_form"))));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
 			add(BorderLayout.CENTER, container);
@@ -404,10 +399,6 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setAjusteAutoForm(chk.isSelected());
 				MacroProvedor.ajusteAutoForm(chk.isSelected());
-			} else if (chkAjusteAutoEnter == e.getSource()) {
-				CheckBox chk = (CheckBox) e.getSource();
-				objeto.setAjusteAutoEnter(chk.isSelected());
-				MacroProvedor.ajusteAutoEnter(chk.isSelected());
 			} else if (txtTabelas == e.getSource()) {
 				objeto.setTabelas(txtTabelas.getText());
 			} else if (txtSelectAlter == e.getSource()) {

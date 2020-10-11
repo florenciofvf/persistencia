@@ -102,7 +102,7 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class InternalContainer extends Panel implements ActionListener, ItemListener, Pagina {
+public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private transient InternalListener.ConfigAlturaAutomatica configAlturaAutomaticaListener;
@@ -124,7 +124,6 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private final Toolbar toolbar = new Toolbar();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
-	private boolean tamanhoAutomatico;
 	private final boolean buscaAuto;
 	private boolean destacarTitulo;
 	private Component suporte;
@@ -415,7 +414,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 							Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
 							contadorAuto++;
 							itemAtualizarAuto.setText(titulo + " " + contadorAuto);
-							SwingUtilities.invokeLater(actionListenerInner::processar);
+							SwingUtilities.invokeLater(() -> actionListenerInner.actionPerformed(null));
 						} catch (InterruptedException e) {
 							Thread.currentThread().interrupt();
 						}
@@ -1382,7 +1381,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	}
 
 	private void configurarAlturaAutomatica() {
-		if (objeto.isAjusteAutoForm() && tamanhoAutomatico && configAlturaAutomaticaListener != null) {
+		if (objeto.isAjusteAutoForm() && configAlturaAutomaticaListener != null) {
 			configAlturaAutomaticaListener.configAlturaAutomatica(tabelaPersistencia.getModel().getRowCount());
 		}
 	}
@@ -1409,26 +1408,9 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	private class ActionListenerInner implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (objeto.isAjusteAutoEnter()) {
-				tamanhoAutomatico = true;
-			}
-			InternalContainer.this.actionPerformed(null);
-			if (objeto.isAjusteAutoEnter()) {
-				tamanhoAutomatico = false;
-			}
+			processarObjeto(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
+					cabecalhoFiltro);
 		}
-
-		private void processar() {
-			tamanhoAutomatico = true;
-			InternalContainer.this.actionPerformed(null);
-			tamanhoAutomatico = false;
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		processarObjeto(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
-				cabecalhoFiltro);
 	}
 
 	public void pesquisar(Referencia referencia, String argumentos) {
@@ -1436,7 +1418,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		if (conexao != null) {
 			txtComplemento.setText("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
 			destacarTitulo = true;
-			actionListenerInner.processar();
+			actionListenerInner.actionPerformed(null);
 		}
 	}
 
@@ -1478,7 +1460,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 		}
 		txtComplemento.setText(config.getComplemento());
 		destacarTitulo = true;
-		actionListenerInner.processar();
+		actionListenerInner.actionPerformed(null);
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
 	}
 
@@ -1560,7 +1542,7 @@ public class InternalContainer extends Panel implements ActionListener, ItemList
 	public void atualizarFormulario() {
 		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 		if (conexao != null) {
-			actionListenerInner.processar();
+			actionListenerInner.actionPerformed(null);
 		}
 	}
 
