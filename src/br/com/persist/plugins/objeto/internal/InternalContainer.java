@@ -513,15 +513,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			private void eventos() {
 				dadosAcao.setActionListener(e -> {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-					TableModel model = modelo.getModelo();
-					if (model instanceof PersistenciaModelo) {
-						int[] linhas = tabelaPersistencia.getSelectedRows();
-						if (linhas != null && linhas.length == 1) {
-							StringBuilder sb = new StringBuilder(objeto.getTabela2());
-							sb.append(Constantes.QL);
-							modelo.getDados(linhas[0], sb);
-							Util.mensagem(InternalContainer.this, sb.toString());
-						}
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length == 1) {
+						StringBuilder sb = new StringBuilder(objeto.getTabela2());
+						sb.append(Constantes.QL);
+						modelo.getDados(linhas[0], sb);
+						Util.mensagem(InternalContainer.this, sb.toString());
 					}
 				});
 			}
@@ -541,18 +538,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-					TableModel model = modelo.getModelo();
-					if (model instanceof PersistenciaModelo) {
-						int[] linhas = tabelaPersistencia.getSelectedRows();
-						if (linhas != null && linhas.length == 1) {
-							List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-							if (chaves.isEmpty()) {
-								return;
-							}
-							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela());
-							if (Util.estaVazio(instrucao)) {
-								return;
-							}
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length == 1) {
+						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+						if (chaves.isEmpty()) {
+							return;
+						}
+						String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela());
+						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 						}
 					}
@@ -574,18 +567,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-					TableModel model = modelo.getModelo();
-					if (model instanceof PersistenciaModelo) {
-						int[] linhas = tabelaPersistencia.getSelectedRows();
-						if (linhas != null && linhas.length == 1) {
-							List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
-							if (chaves.isEmpty()) {
-								return;
-							}
-							String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela());
-							if (Util.estaVazio(instrucao)) {
-								return;
-							}
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length == 1) {
+						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+						if (chaves.isEmpty()) {
+							return;
+						}
+						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela());
+						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
@@ -607,14 +596,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-					TableModel model = modelo.getModelo();
-					if (model instanceof PersistenciaModelo) {
-						int[] linhas = tabelaPersistencia.getSelectedRows();
-						if (linhas != null && linhas.length == 1) {
-							String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela());
-							if (Util.estaVazio(instrucao)) {
-								return;
-							}
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length == 1) {
+						String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela());
+						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 						}
 					}
@@ -650,23 +635,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						return;
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-					TableModel model = modelo.getModelo();
-					if (model instanceof PersistenciaModelo) {
-						int[] linhas = tabelaPersistencia.getSelectedRows();
-						if (linhas != null && linhas.length == 1) {
-							Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
-							if (chaves.isEmpty()) {
-								return;
-							}
-							if (Util.estaVazio(instrucao.getValor())) {
-								return;
-							}
-							String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
-							if (instrucao.isSelect()) {
-								selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
-							} else {
-								updateFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
-							}
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length == 1) {
+						Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
+						if (chaves.isEmpty()) {
+							return;
+						}
+						if (Util.estaVazio(instrucao.getValor())) {
+							return;
+						}
+						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
+						if (instrucao.isSelect()) {
+							selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
+						} else {
+							updateFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 						}
 					}
 				}
@@ -866,12 +848,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							return;
 						}
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-						TableModel model = modelo.getModelo();
-						if (model instanceof PersistenciaModelo) {
-							String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
-							if (Util.estaVazio(instrucao)) {
-								return;
-							}
+						String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
+						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 						}
 					}
@@ -892,12 +870,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							return;
 						}
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-						TableModel model = modelo.getModelo();
-						if (model instanceof PersistenciaModelo) {
-							String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
-							if (Util.estaVazio(instrucao)) {
-								return;
-							}
+						String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
+						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 						}
 					}
@@ -918,12 +892,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							return;
 						}
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-						TableModel model = modelo.getModelo();
-						if (model instanceof PersistenciaModelo) {
-							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
-							if (!Util.estaVazio(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
-							}
+						String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
+						if (!Util.estaVazio(instrucao)) {
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
 					}
 				}
@@ -1242,9 +1213,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		if (conexao != null) {
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 			TableModel model = modelo.getModelo();
-			if (model instanceof PersistenciaModelo) {
-				((PersistenciaModelo) model).setConexao(conexao);
-			}
+			((PersistenciaModelo) model).setConexao(conexao);
 		}
 	}
 
@@ -1425,11 +1394,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	public void pesquisarLink(Referencia referencia, String argumentos) {
 		if (objeto.isLinkAuto() && argumentos != null) {
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-			TableModel model = modelo.getModelo();
 			tabelaPersistencia.clearSelection();
-			if (model instanceof PersistenciaModelo) {
-				selecionarRegistros(referencia, argumentos, modelo);
-			}
+			selecionarRegistros(referencia, argumentos, modelo);
 		}
 	}
 
@@ -1509,31 +1475,28 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	public String getComplementoChaves() {
 		StringBuilder sb = new StringBuilder();
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-		TableModel model = modelo.getModelo();
-		if (model instanceof PersistenciaModelo) {
-			List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-			if (!indices.isEmpty()) {
-				Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
-				if (chaves.size() > 1) {
-					sb.append("AND (");
+		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
+		if (!indices.isEmpty()) {
+			Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
+			if (chaves.size() > 1) {
+				sb.append("AND (");
+				sb.append(getComplementoChavesAux(chaves));
+				for (int i = 1; i < indices.size(); i++) {
+					sb.append(" OR ");
+					chaves = modelo.getMapaChaves(indices.get(i));
 					sb.append(getComplementoChavesAux(chaves));
-					for (int i = 1; i < indices.size(); i++) {
-						sb.append(" OR ");
-						chaves = modelo.getMapaChaves(indices.get(i));
-						sb.append(getComplementoChavesAux(chaves));
-					}
-					sb.append(")");
-				} else if (chaves.size() == 1) {
-					String[] array = getComplementoChave(chaves);
-					String chave = array[0];
-					sb.append("AND " + chave + " IN(" + array[1]);
-					for (int i = 1; i < indices.size(); i++) {
-						sb.append(", ");
-						chaves = modelo.getMapaChaves(indices.get(i));
-						sb.append(chaves.get(chave));
-					}
-					sb.append(")");
 				}
+				sb.append(")");
+			} else if (chaves.size() == 1) {
+				String[] array = getComplementoChave(chaves);
+				String chave = array[0];
+				sb.append("AND " + chave + " IN(" + array[1]);
+				for (int i = 1; i < indices.size(); i++) {
+					sb.append(", ");
+					chaves = modelo.getMapaChaves(indices.get(i));
+					sb.append(chaves.get(chave));
+				}
+				sb.append(")");
 			}
 		}
 		return sb.toString();
@@ -1567,22 +1530,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		@Override
 		public void tabelaMouseClick(TabelaPersistencia tabela, int colunaClick) {
-			OrdenacaoModelo modelo = tabela.getModelo();
-			TableModel model = modelo.getModelo();
-			if (model instanceof PersistenciaModelo) {
-				int[] linhas = tabela.getSelectedRows();
-				if (linhas != null && linhas.length > 0) {
-					habilitarUpdateExcluir(linhas);
-				} else {
-					toolbar.habilitarUpdateExcluir(false);
-					toolbar.labelTotal.limpar();
-				}
-				boolean link = !objeto.getReferencias().isEmpty() && vinculoListener != null;
-				if (colunaClick >= 0 && linhas != null && linhas.length == 1 && link) {
-					mouseClick(tabela, colunaClick);
-				}
+			int[] linhas = tabela.getSelectedRows();
+			if (linhas != null && linhas.length > 0) {
+				habilitarUpdateExcluir(linhas);
 			} else {
 				toolbar.habilitarUpdateExcluir(false);
+				toolbar.labelTotal.limpar();
+			}
+			boolean link = !objeto.getReferencias().isEmpty() && vinculoListener != null;
+			if (colunaClick >= 0 && linhas != null && linhas.length == 1 && link) {
+				mouseClick(tabela, colunaClick);
 			}
 		}
 
