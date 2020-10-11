@@ -257,15 +257,13 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			int altura = 0;
 			for (JInternalFrame frame : getAllFrames()) {
 				if (frame.isVisible()) {
-					int x = frame.getX();
-					int y = frame.getY();
-					int l = frame.getWidth();
-					int a = frame.getHeight();
-					if (x + l > largura) {
-						largura = x + l;
+					int xl = frame.getX() + frame.getWidth();
+					int ya = frame.getY() + frame.getHeight();
+					if (xl > largura) {
+						largura = xl;
 					}
-					if (y + a > altura) {
-						altura = y + a;
+					if (ya > altura) {
+						altura = ya;
 					}
 					frame.moveToFront();
 				}
