@@ -15,18 +15,13 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.StyledDocument;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -45,10 +40,6 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
-import br.com.persist.parser.Parser;
-import br.com.persist.parser.ParserDialogo;
-import br.com.persist.parser.ParserListener;
-import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.InstrucaoFormulario;
@@ -59,7 +50,6 @@ import br.com.persist.plugins.objeto.macro.MacroProvedor;
 public class ObjetoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
-	private static final Logger LOG = Logger.getGlobal();
 	private final ObjetoSuperficie objetoSuperficie;
 	private final transient Objeto objeto;
 	private final Fichario fichario;
@@ -453,108 +443,6 @@ public class ObjetoContainer extends Panel {
 				objeto.setDescricao(textArea.getText());
 			}
 		};
-	}
-
-	public class PanelBuscaAuto extends Panel {
-		private static final long serialVersionUID = 1L;
-		private final Toolbar toolbar = new Toolbar();
-		private final JTextPane textArea = new JTextPane();
-
-		private PanelBuscaAuto() {
-			textArea.setText(objeto.getBuscaAutomatica());
-			add(BorderLayout.NORTH, toolbar);
-			add(BorderLayout.CENTER, new ScrollPane(textArea));
-			textArea.addKeyListener(keyListenerInner);
-			toolbar.ini();
-		}
-
-		private transient KeyListener keyListenerInner = new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				objeto.setBuscaAutomatica(textArea.getText());
-			}
-		};
-
-		private class Toolbar extends BarraButton {
-			private static final long serialVersionUID = 1L;
-			private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
-			private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
-			private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-
-			public void ini() {
-				addButton(formatarAcao);
-				addButton(modeloAcao);
-				addButton(copiarAcao);
-				add(labelTextTemp);
-				addButton(colarAcao);
-				formatarAcao.setActionListener(e -> formatar());
-				modeloAcao.setActionListener(e -> modelo());
-				copiarAcao.setActionListener(e -> copiar());
-				colarAcao.setActionListener(e -> colar());
-			}
-
-			private void modelo() {
-				ParserDialogo form = ParserDialogo.criar((Dialog) null, parserListener);
-				form.setLocationRelativeTo(objetoSuperficie);
-				form.setVisible(true);
-			}
-
-			private transient ParserListener parserListener = new ParserListener() {
-				@Override
-				public void setParserTipo(Tipo tipo) {
-					LOG.log(Level.FINEST, "setParserTipo");
-				}
-
-				@Override
-				public boolean somenteModelo() {
-					return true;
-				}
-
-				@Override
-				public String getModelo() {
-					return Mensagens.getString("busca_auto.modelo");
-				}
-
-				@Override
-				public String getTitle() {
-					return objeto.getId();
-				}
-			};
-
-			@Override
-			protected void copiar() {
-				String string = Util.getString(textArea);
-				Util.setContentTransfered(string);
-				copiarMensagem(string);
-			}
-
-			@Override
-			protected void colar() {
-				Util.getContentTransfered(textArea);
-			}
-
-			private void formatar() {
-				if (Util.estaVazio(textArea.getText())) {
-					return;
-				}
-				String backup = textArea.getText();
-				String string = Util.getString(textArea);
-				textArea.setText(Constantes.VAZIO);
-				try {
-					Parser parser = new Parser();
-					Tipo json = parser.parse(string);
-					StyledDocument styledDoc = textArea.getStyledDocument();
-					if (styledDoc instanceof AbstractDocument) {
-						AbstractDocument doc = (AbstractDocument) styledDoc;
-						json.toString(doc, false, 0);
-					}
-					textArea.requestFocus();
-				} catch (Exception ex) {
-					textArea.setText(backup);
-					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
-				}
-			}
-		}
 	}
 
 	private class PanelInstrucao extends Panel {

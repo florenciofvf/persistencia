@@ -83,8 +83,6 @@ public class ObjetoHandler extends XMLHandler {
 			selecionado = null;
 		} else if ("desc".equals(qName) && selecionado != null) {
 			setDescricao();
-		} else if ("buscaAutomatica".equals(qName) && selecionado != null) {
-			setBuscaAutomatica();
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();
 			if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
@@ -105,15 +103,6 @@ public class ObjetoHandler extends XMLHandler {
 				Relacao rel = (Relacao) selecionado;
 				rel.setDescricao(string.trim());
 			}
-		}
-		limpar();
-	}
-
-	private void setBuscaAutomatica() {
-		String string = builder.toString();
-		if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
-			Objeto obj = (Objeto) selecionado;
-			obj.setBuscaAutomatica(string.trim());
 		}
 		limpar();
 	}

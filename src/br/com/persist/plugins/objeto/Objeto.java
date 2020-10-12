@@ -58,8 +58,6 @@ public class Objeto implements Runnable {
 	private ObjetoListener listener;
 	private boolean ajusteAutoForm;
 	private Color cor = COR_PADRAO;
-	private String buscaAutomatica;
-	private String linkAutomatico;
 	private static long sequencia;
 	private String finalConsulta;
 	private boolean transparente;
@@ -124,11 +122,9 @@ public class Objeto implements Runnable {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.selectAlternativo = selectAlternativo;
-		o.buscaAutomatica = buscaAutomatica;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.copiarDestacado = copiarDestacado;
-		o.linkAutomatico = linkAutomatico;
 		o.ajusteAutoForm = ajusteAutoForm;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
@@ -173,7 +169,6 @@ public class Objeto implements Runnable {
 		selectAlternativo = attr.getValue("selectAlternativo");
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
 		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
-		linkAutomatico = attr.getValue("linkAutomatico");
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
@@ -199,7 +194,6 @@ public class Objeto implements Runnable {
 		util.abrirTag("objeto");
 		util.atributo("id", Util.escapar(id));
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
-		util.atributo("linkAutomatico", Util.escapar(getLinkAutomatico()));
 		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
@@ -234,11 +228,6 @@ public class Objeto implements Runnable {
 			util.abrirTag2("desc");
 			util.conteudo(Util.escapar(getDescricao())).ql();
 			util.finalizarTag("desc");
-		}
-		if (!Util.estaVazio(getBuscaAutomatica())) {
-			util.abrirTag2("buscaAutomatica");
-			util.conteudo(Util.escapar(getBuscaAutomatica())).ql();
-			util.finalizarTag("buscaAutomatica");
 		}
 		for (Instrucao i : instrucoes) {
 			i.salvar(util);
@@ -627,20 +616,6 @@ public class Objeto implements Runnable {
 		}
 	}
 
-	public String getBuscaAutomatica() {
-		if (Util.estaVazio(buscaAutomatica)) {
-			buscaAutomatica = Constantes.VAZIO;
-		}
-		return buscaAutomatica;
-	}
-
-	public String getLinkAutomatico() {
-		if (Util.estaVazio(linkAutomatico)) {
-			linkAutomatico = Constantes.VAZIO;
-		}
-		return linkAutomatico;
-	}
-
 	public String getChaveamento() {
 		if (Util.estaVazio(chaveamento)) {
 			chaveamento = Constantes.VAZIO;
@@ -650,14 +625,6 @@ public class Objeto implements Runnable {
 
 	public void setChaveamento(String chaveamento) {
 		this.chaveamento = chaveamento;
-	}
-
-	public void setBuscaAutomatica(String buscaAutomatica) {
-		this.buscaAutomatica = buscaAutomatica;
-	}
-
-	public void setLinkAutomatico(String linkAutomatico) {
-		this.linkAutomatico = linkAutomatico;
 	}
 
 	public boolean contem(int x, int y) {
