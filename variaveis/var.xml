@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <variaveis>
-	<variavel nome="dataSYSDATE">
-		<valor>
-			SYSDATE
-		</valor>
-	</variavel>
 	<variavel nome="DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL">
 		<valor>
-			40
+			18
 		</valor>
 	</variavel>
 	<variavel nome="DELTA_X_AJUSTE_FORM_OBJETO">
 		<valor>
-			30
+			25
 		</valor>
 	</variavel>
 	<variavel nome="DELTA_Y_AJUSTE_FORM_OBJETO">
 		<valor>
-			30
+			11
 		</valor>
 	</variavel>
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER">
 		<valor>
-			70
+			90
 		</valor>
 	</variavel>
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS">
