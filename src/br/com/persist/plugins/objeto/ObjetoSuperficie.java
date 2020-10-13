@@ -646,24 +646,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void abrirObjeto(Objeto objeto, boolean checarArquivo) {
 		Frame frame = container.getFrame();
-		if (!Util.estaVazio(objeto.getTabela2())) {
+		if (Util.estaVazio(objeto.getTabela2())) {
+			popup.configuracaoAcao.actionPerformed(null);
+		} else {
 			Conexao conexao = container.getConexaoPadrao();
 			setComplemento(conexao, objeto);
 			if (Util.estaVazio(objeto.getArquivo())) {
-				abrirObjetoDados(conexao, objeto, frame);
+				formularioDados(conexao, objeto, frame);
 			} else {
 				if (checarArquivo) {
 					abrirArquivo(conexao, objeto);
 				} else {
-					abrirObjetoDados(conexao, objeto, frame);
+					formularioDados(conexao, objeto, frame);
 				}
 			}
-		} else {
-			popup.configuracaoAcao.actionPerformed(null);
 		}
 	}
 
-	private void abrirObjetoDados(Conexao conexao, Objeto objeto, Frame frame) {
+	private void formularioDados(Conexao conexao, Objeto objeto, Frame frame) {
 		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
@@ -1037,14 +1037,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
-		private Action excluirAcao = Action.actionMenu("label.excluir_sel", Icones.EXCLUIR);
-		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
-		private Action dadosAcao = Action.actionMenu("label.dados", null);
 		private MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
 		private MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
 		private MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		private MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
+		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
+		private Action excluirAcao = Action.actionMenu("label.excluir_sel", Icones.EXCLUIR);
+		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
+		private Action dadosAcao = Action.actionMenu("label.dados", null);
 		private Menu menuDistribuicao = new Menu("label.distribuicao");
 		private MenuItem itemPartir = new MenuItem(new PartirAcao());
 		private Menu menuAlinhamento = new Menu("label.alinhamento");
