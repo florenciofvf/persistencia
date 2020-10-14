@@ -105,8 +105,8 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
-	private transient InternalListener.ConfigAlturaAutomatica configAlturaAutomaticaListener;
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
+	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private transient TabelaListener tabelaListener = new TabelaListener();
 	private transient InternalListener.Visibilidade visibilidadeListener;
@@ -196,7 +196,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
-		configurarAlturaAutomatica();
+		configurarAltura();
 	}
 
 	private StringBuilder getConsulta(Conexao conexao, String complemento) {
@@ -294,9 +294,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	private void configurarAlturaAutomatica() {
-		if (objeto.isAjusteAutoForm() && configAlturaAutomaticaListener != null) {
-			configAlturaAutomaticaListener.configAlturaAutomatica(tabelaPersistencia.getModel().getRowCount());
+	private void configurarAltura() {
+		if (objeto.isAjusteAutoForm() && configuraAlturaListener != null) {
+			configuraAlturaListener.configurarAltura(tabelaPersistencia.getModel().getRowCount());
 		}
 	}
 
@@ -1606,13 +1606,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	public InternalListener.ConfigAlturaAutomatica getConfigAlturaAutomaticaListener() {
-		return configAlturaAutomaticaListener;
+	public InternalListener.ConfiguraAltura getConfiguraAlturaListener() {
+		return configuraAlturaListener;
 	}
 
-	public void setConfigAlturaAutomaticaListener(
-			InternalListener.ConfigAlturaAutomatica configAlturaAutomaticaListener) {
-		this.configAlturaAutomaticaListener = configAlturaAutomaticaListener;
+	public void setConfiguraAlturaListener(InternalListener.ConfiguraAltura configuraAlturaListener) {
+		this.configuraAlturaListener = configuraAlturaListener;
 	}
 
 	public InternalListener.Titulo getTituloListener() {

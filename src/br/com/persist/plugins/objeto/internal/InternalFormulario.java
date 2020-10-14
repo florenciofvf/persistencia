@@ -34,7 +34,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	public InternalFormulario(Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
 		super(objeto.getId());
 		container = new InternalContainer(this, padrao, objeto, g, buscaAuto);
-		container.setConfigAlturaAutomaticaListener(InternalFormulario.this::configAlturaAutomatica);
+		container.setConfiguraAlturaListener(InternalFormulario.this::configurarAltura);
 		container.setVisibilidadeListener(InternalFormulario.this::setVisible);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
@@ -66,7 +66,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			public void componentResized(ComponentEvent e) {
 				checarDesktop();
 				if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
-					configAjustes(false);
+					configurarAjustes(false);
 				}
 			}
 		});
@@ -93,7 +93,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void configAjustes(boolean updateTree) {
+	public void configurarAjustes(boolean updateTree) {
 		if (desktop != null) {
 			desktop.getAjuste().empilharFormularios();
 			desktop.getAjuste().aproximarObjetoFormulario(true, updateTree);
@@ -101,7 +101,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void configAlturaAutomatica(int total) {
+	public void configurarAltura(int total) {
 		Dimension d = getSize();
 		boolean salvar = false;
 		Variavel variavelDadosToolbarTableHeader = VariavelProvedor
@@ -143,7 +143,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 20 + (-maximoRegistros));
 		}
 		checarDesktop();
-		configAjustes(true);
+		configurarAjustes(true);
 	}
 
 	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {

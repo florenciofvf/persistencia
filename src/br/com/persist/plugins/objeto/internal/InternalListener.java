@@ -17,8 +17,8 @@ public interface InternalListener {
 		public void pesquisarApos(Pesquisa pesquisa);
 	}
 
-	public interface ConfigAlturaAutomatica {
-		public void configAlturaAutomatica(int total);
+	public interface ConfiguraAltura {
+		public void configurarAltura(int total);
 	}
 
 	public interface Alinhamento {
