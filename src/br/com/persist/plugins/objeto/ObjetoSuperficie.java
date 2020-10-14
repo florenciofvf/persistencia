@@ -636,59 +636,55 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			repaint();
 			if (e.getClickCount() >= Constantes.DOIS) {
 				if (selecionadoObjeto != null) {
-					abrirObjeto(selecionadoObjeto, true);
+					abrirObjeto(selecionadoObjeto);
 				} else if (selecionadoRelacao != null) {
 					popup.configuracaoAcao.actionPerformed(null);
 				}
 			}
 		}
-	};
 
-	private void abrirObjeto(Objeto objeto, boolean checarArquivo) {
-		Frame frame = container.getFrame();
-		if (Util.estaVazio(objeto.getTabela2())) {
-			popup.configuracaoAcao.actionPerformed(null);
-		} else {
-			Conexao conexao = container.getConexaoPadrao();
-			setComplemento(conexao, objeto);
-			if (Util.estaVazio(objeto.getArquivo())) {
-				formularioDados(conexao, objeto, frame);
+		private void abrirObjeto(Objeto objeto) {
+			if (Util.estaVazio(objeto.getTabela2())) {
+				popup.configuracaoAcao.actionPerformed(null);
 			} else {
-				if (checarArquivo) {
-					abrirArquivo(conexao, objeto);
-				} else {
+				Conexao conexao = container.getConexaoPadrao();
+				setComplemento(conexao, objeto);
+				if (Util.estaVazio(objeto.getArquivo())) {
+					Frame frame = container.getFrame();
 					formularioDados(conexao, objeto, frame);
+				} else {
+					abrirArquivo(conexao, objeto);
 				}
 			}
 		}
-	}
+
+		private void abrirArquivo(Conexao conexao, Objeto objeto) {
+			InternalFormulario interno = getInternalFormulario(objeto);
+			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela2());
+			config.setGraphics(getGraphics());
+			if (interno != null) {
+				config.setComplemento(interno.getComplementoChaves());
+			}
+			ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo(), getGraphics(), config);
+		}
+
+		private InternalFormulario getInternalFormulario(Objeto objeto) {
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame instanceof InternalFormulario) {
+					InternalFormulario interno = (InternalFormulario) frame;
+					if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
+						return interno;
+					}
+				}
+			}
+			return null;
+		}
+	};
 
 	private void formularioDados(Conexao conexao, Objeto objeto, Frame frame) {
 		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
-	}
-
-	private void abrirArquivo(Conexao conexao, Objeto objeto) {
-		InternalFormulario interno = getInternalFormulario(objeto);
-		InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela2());
-		config.setGraphics(getGraphics());
-		if (interno != null) {
-			config.setComplemento(interno.getComplementoChaves());
-		}
-		ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo(), getGraphics(), config);
-	}
-
-	private InternalFormulario getInternalFormulario(Objeto objeto) {
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				InternalFormulario interno = (InternalFormulario) frame;
-				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
-					return interno;
-				}
-			}
-		}
-		return null;
 	}
 
 	public static void setComplemento(Conexao conexao, Objeto objeto) {
@@ -1119,8 +1115,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			dadosAcao.setActionListener(e -> {
 				Object object = itemDados.getObject();
 				if (object instanceof Objeto) {
-					Objeto objeto = (Objeto) object;
-					abrirObjeto(objeto, false);
+					abrirObjetoItem((Objeto) object);
 				}
 			});
 			excluirAcao.setActionListener(e -> excluirSelecionados());
@@ -1135,6 +1130,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			inputMap().put(getKeyStroke(KeyEvent.VK_C), copiarAcao.getChave());
 			ObjetoSuperficie.this.getActionMap().put(copiarAcao.getChave(), copiarAcao);
 			copiarAcao.setActionListener(e -> CopiarColar.copiar(ObjetoSuperficie.this));
+		}
+
+		private void abrirObjetoItem(Objeto objeto) {
+			Conexao conexao = container.getConexaoPadrao();
+			setComplemento(conexao, objeto);
+			Frame frame = container.getFrame();
+			formularioDados(conexao, objeto, frame);
 		}
 
 		private void preShow(boolean objetoSelecionado) {
