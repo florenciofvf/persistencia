@@ -1436,13 +1436,35 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
 		if (!indices.isEmpty()) {
 			Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
-			if (chaves.size() > 1) {
+			if (chaves.size() == 1) {
+				sb.append(umaChave(modelo, indices, chaves));
+			} else if (chaves.size() > 1) {
 				append1(sb, modelo, indices, chaves);
-			} else if (chaves.size() == 1) {
-				append2(sb, modelo, indices, chaves);
 			}
 		}
 		return sb.toString();
+	}
+
+	private String umaChave(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
+		String[] array = criarArray(chaves);
+		String chave = array[0];
+		StringBuilder sb = new StringBuilder("AND " + chave + " IN(" + array[1]);
+		for (int i = 1; i < indices.size(); i++) {
+			sb.append(", ");
+			chaves = modelo.getMapaChaves(indices.get(i));
+			sb.append(chaves.get(chave));
+		}
+		sb.append(")");
+		return sb.toString();
+	}
+
+	private String[] criarArray(Map<String, String> map) {
+		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+		Entry<String, String> entry = it.next();
+		String[] array = new String[2];
+		array[0] = entry.getKey();
+		array[1] = entry.getValue();
+		return array;
 	}
 
 	private void append1(StringBuilder sb, OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
@@ -1469,29 +1491,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 		sb.append(")");
 		return sb.toString();
-	}
-
-	private void append2(StringBuilder sb, OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
-		String[] array = getComplementoChave(chaves);
-		String chave = array[0];
-		sb.append("AND " + chave + " IN(" + array[1]);
-		for (int i = 1; i < indices.size(); i++) {
-			sb.append(", ");
-			chaves = modelo.getMapaChaves(indices.get(i));
-			sb.append(chaves.get(chave));
-		}
-		sb.append(")");
-	}
-
-	private String[] getComplementoChave(Map<String, String> map) {
-		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
-		String[] array = new String[2];
-		if (it.hasNext()) {
-			Entry<String, String> entry = it.next();
-			array[0] = entry.getKey();
-			array[1] = entry.getValue();
-		}
-		return array;
 	}
 
 	public void atualizarFormulario() {
