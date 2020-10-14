@@ -1439,7 +1439,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (chaves.size() == 1) {
 				sb.append(umaChave(modelo, indices, chaves));
 			} else if (chaves.size() > 1) {
-				append1(sb, modelo, indices, chaves);
+				sb.append(multiplasChaves(modelo, indices, chaves));
 			}
 		}
 		return sb.toString();
@@ -1467,26 +1467,24 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		return array;
 	}
 
-	private void append1(StringBuilder sb, OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
-		sb.append("AND (");
-		sb.append(getComplementoChavesAux(chaves));
+	private String multiplasChaves(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
+		StringBuilder sb = new StringBuilder("AND (");
+		sb.append(andChaves(chaves));
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(" OR ");
 			chaves = modelo.getMapaChaves(indices.get(i));
-			sb.append(getComplementoChavesAux(chaves));
+			sb.append(andChaves(chaves));
 		}
 		sb.append(")");
+		return sb.toString();
 	}
 
-	private String getComplementoChavesAux(Map<String, String> map) {
+	private String andChaves(Map<String, String> map) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
-		StringBuilder sb = new StringBuilder("(");
-		if (it.hasNext()) {
-			Entry<String, String> entry = it.next();
-			sb.append(entry.getKey() + "=" + entry.getValue());
-		}
+		Entry<String, String> entry = it.next();
+		StringBuilder sb = new StringBuilder("(" + entry.getKey() + "=" + entry.getValue());
 		while (it.hasNext()) {
-			Entry<String, String> entry = it.next();
+			entry = it.next();
 			sb.append(" AND " + entry.getKey() + "=" + entry.getValue());
 		}
 		sb.append(")");
