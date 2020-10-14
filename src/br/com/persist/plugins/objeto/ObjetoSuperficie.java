@@ -1115,7 +1115,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			dadosAcao.setActionListener(e -> {
 				Object object = itemDados.getObject();
 				if (object instanceof Objeto) {
-					abrirObjetoItem((Objeto) object);
+					abrirObjeto((Objeto) object);
 				}
 			});
 			excluirAcao.setActionListener(e -> excluirSelecionados());
@@ -1132,7 +1132,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			copiarAcao.setActionListener(e -> CopiarColar.copiar(ObjetoSuperficie.this));
 		}
 
-		private void abrirObjetoItem(Objeto objeto) {
+		private void abrirObjeto(Objeto objeto) {
 			Conexao conexao = container.getConexaoPadrao();
 			setComplemento(conexao, objeto);
 			Frame frame = container.getFrame();
