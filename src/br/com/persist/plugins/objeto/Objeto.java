@@ -43,6 +43,7 @@ public class Objeto implements Runnable {
 	private Map<String, String> mapaSequencias;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
+	private boolean clonarAoDestacar = true;
 	private final List<Pesquisa> pesquisas;
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
@@ -53,7 +54,6 @@ public class Objeto implements Runnable {
 	private String selectAlternativo;
 	private String prefixoNomeTabela;
 	private boolean linkAuto = true;
-	private boolean copiarDestacado;
 	private boolean transparenteBkp;
 	private ObjetoListener listener;
 	private boolean ajusteAutoForm;
@@ -122,9 +122,9 @@ public class Objeto implements Runnable {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.selectAlternativo = selectAlternativo;
+		o.clonarAoDestacar = clonarAoDestacar;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
-		o.copiarDestacado = copiarDestacado;
 		o.ajusteAutoForm = ajusteAutoForm;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
@@ -155,7 +155,7 @@ public class Objeto implements Runnable {
 
 	public void aplicar(Attributes attr) {
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
-		copiarDestacado = Boolean.parseBoolean(attr.getValue("copiarDestac"));
+		clonarAoDestacar = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
@@ -199,7 +199,7 @@ public class Objeto implements Runnable {
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("selectAlternativo", getSelectAlternativo());
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
-		util.atributo("copiarDestac", copiarDestacado);
+		util.atributo("copiarDestac", clonarAoDestacar);
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
@@ -557,12 +557,12 @@ public class Objeto implements Runnable {
 		this.colunaInfo = colunaInfo;
 	}
 
-	public boolean isCopiarDestacado() {
-		return copiarDestacado;
+	public boolean isClonarAoDestacar() {
+		return clonarAoDestacar;
 	}
 
-	public void setCopiarDestacado(boolean copiarDestacado) {
-		this.copiarDestacado = copiarDestacado;
+	public void setClonarAoDestacar(boolean clonarAoDestacar) {
+		this.clonarAoDestacar = clonarAoDestacar;
 	}
 
 	public boolean isAbrirAuto() {

@@ -90,7 +90,7 @@ public class ObjetoContainer extends Panel {
 			final String VAZIO = Constantes.VAZIO;
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
-			chkCopiarDestac.setSelected(objeto.isCopiarDestacado());
+			chkCopiarDestac.setSelected(objeto.isClonarAoDestacar());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtIntervalo.setText(VAZIO + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
@@ -198,7 +198,7 @@ public class ObjetoContainer extends Panel {
 				MacroProvedor.transparencia(chk.isSelected());
 			} else if (chkCopiarDestac == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
-				objeto.setCopiarDestacado(chk.isSelected());
+				objeto.setClonarAoDestacar(chk.isSelected());
 				MacroProvedor.copiarDestacado(chk.isSelected());
 			}
 		}

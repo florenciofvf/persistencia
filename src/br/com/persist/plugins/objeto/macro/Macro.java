@@ -138,7 +138,7 @@ public class Macro {
 
 		@Override
 		public void executar(Objeto objeto) {
-			objeto.setCopiarDestacado((Boolean) valor);
+			objeto.setClonarAoDestacar((Boolean) valor);
 		}
 	}
 

@@ -1761,7 +1761,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 		List<Objeto> selecionados = new ArrayList<>();
 		for (Objeto objeto : lista) {
-			if (objeto.isCopiarDestacado()) {
+			if (objeto.isClonarAoDestacar()) {
 				selecionados.add(objeto.clonar());
 			} else {
 				selecionados.add(objeto);

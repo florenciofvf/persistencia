@@ -28,7 +28,7 @@ public class InternalTransferidor implements Transferable {
 		Objects.requireNonNull(objeto);
 		this.dimension = dimension;
 		this.conexao = conexao;
-		this.objeto = objeto.isCopiarDestacado() ? objeto.clonar() : objeto;
+		this.objeto = objeto.isClonarAoDestacar() ? objeto.clonar() : objeto;
 	}
 
 	public static Object[] criarArray(Conexao conexao, Objeto objeto, Dimension dimension) {
