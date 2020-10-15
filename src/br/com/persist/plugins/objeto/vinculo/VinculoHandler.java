@@ -34,6 +34,8 @@ class VinculoHandler extends XMLHandler {
 		Referencia ref = new Referencia(attributes.getValue("grupo"), attributes.getValue("tabela"),
 				attributes.getValue("campo"));
 		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
+		String limparApos = attributes.getValue("limparApos");
+		ref.setLimparApos(Boolean.parseBoolean(limparApos));
 		return ref;
 	}
 

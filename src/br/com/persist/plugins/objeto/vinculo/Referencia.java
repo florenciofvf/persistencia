@@ -13,6 +13,7 @@ public class Referencia {
 	private final String grupo;
 	private final String campo;
 	private boolean processado;
+	private boolean limparApos;
 	Pesquisa pesquisa;
 
 	public Referencia(String grupo, String tabela, String campo) {
@@ -93,6 +94,14 @@ public class Referencia {
 
 	public void setVazioInvisivel(boolean vazioInvisivel) {
 		this.vazioInvisivel = vazioInvisivel;
+	}
+
+	public boolean isLimparApos() {
+		return limparApos;
+	}
+
+	public void setLimparApos(boolean limparApos) {
+		this.limparApos = limparApos;
 	}
 
 	@Override

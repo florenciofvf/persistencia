@@ -74,9 +74,13 @@ public class Pesquisa {
 	}
 
 	public void add(Referencia ref) {
-		if (ref != null && !contem(ref)) {
-			referencias.add(ref);
-			ref.pesquisa = this;
+		if (ref != null) {
+			if (!ref.isLimparApos() && !contem(ref, referencias)) {
+				referencias.add(ref);
+				ref.pesquisa = this;
+			} else if (ref.isLimparApos() && !contem(ref, referenciasApos)) {
+				referenciasApos.add(ref);
+			}
 		}
 	}
 
@@ -86,7 +90,7 @@ public class Pesquisa {
 		}
 	}
 
-	private boolean contem(Referencia ref) {
+	private static boolean contem(Referencia ref, List<Referencia> referencias) {
 		for (Referencia r : referencias) {
 			if (r.igual(ref)) {
 				return true;
