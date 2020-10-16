@@ -14,7 +14,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -62,6 +64,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
+	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
 	private final TextField txtDefinirAltura = new TextField();
@@ -144,7 +147,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
-		PanelCenter panelDestacados = criarPainelGrupo(destacados, Preferencias.getTipoContainerPesquisaAuto());
+		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 		PanelCenter panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
@@ -233,6 +236,30 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkTituloAbaMin.setMargin(insets);
 	}
 
+	private void checkPesquisa() {
+		chkAtivarAbrirAutoDestac.setEnabled(chkAtivarAbrirAuto.isSelected());
+		if (!chkAtivarAbrirAuto.isSelected()) {
+			chkAtivarAbrirAutoDestac.setSelected(false);
+		}
+		boolean habilitado = chkAtivarAbrirAuto.isSelected() && !chkAtivarAbrirAutoDestac.isSelected();
+		Enumeration<AbstractButton> elements = grupoTiposContainer.getElements();
+		while (elements.hasMoreElements()) {
+			elements.nextElement().setEnabled(habilitado);
+		}
+	}
+
+	private PanelCenter criarPainelGrupoDestac(NomeValor[] nomeValores, int padrao) {
+		PanelCenter panel = new PanelCenter();
+		for (int i = 0; i < nomeValores.length; i++) {
+			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
+			radio.setSelected(radio.nomeValor.valor == padrao);
+			radio.setMargin(new Insets(5, 10, 5, 5));
+			panel.add(radio);
+			grupoTiposContainer.add(radio);
+		}
+		return panel;
+	}
+
 	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
 		PanelCenter panel = new PanelCenter();
 		ButtonGroup grupo = new ButtonGroup();
@@ -276,9 +303,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkExecAposBaixarParaComplemento.addActionListener(
 				e -> Preferencias.setExecAposBaixarParaComplemento(chkExecAposBaixarParaComplemento.isSelected()));
 
-		chkAtivarAbrirAutoDestac
-				.addActionListener(e -> Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected()));
-
 		chkAbortarFecharComESC
 				.addActionListener(e -> Preferencias.setAbortarFecharComESC(chkAbortarFecharComESC.isSelected()));
 
@@ -286,8 +310,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));
 
 		chkNomearArrasto.addActionListener(e -> Preferencias.setNomearArrasto(chkNomearArrasto.isSelected()));
-
-		chkAtivarAbrirAuto.addActionListener(e -> Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected()));
 
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
 
@@ -299,6 +321,16 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		txtDefinirLargura.addActionListener(e -> definirLargura());
 		txtDefinirAltura.addActionListener(e -> definirAltura());
+
+		chkAtivarAbrirAutoDestac.addActionListener(e -> {
+			Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected());
+			checkPesquisa();
+		});
+
+		chkAtivarAbrirAuto.addActionListener(e -> {
+			Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected());
+			checkPesquisa();
+		});
 
 		txtFormFichaDialogo.addFocusListener(new FocusAdapter() {
 			@Override
@@ -479,14 +511,17 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		void formularioVisivel() {
 			buttonDestacar.estadoFormulario();
+			checkPesquisa();
 		}
 
 		void paginaVisivel() {
 			buttonDestacar.estadoFichario();
+			checkPesquisa();
 		}
 
 		void dialogoVisivel() {
 			buttonDestacar.estadoDialogo();
+			checkPesquisa();
 		}
 
 		@Override
