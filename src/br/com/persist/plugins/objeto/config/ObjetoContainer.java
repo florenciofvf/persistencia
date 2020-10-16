@@ -1,5 +1,8 @@
 package br.com.persist.plugins.objeto.config;
 
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -26,6 +29,7 @@ import javax.swing.event.ChangeListener;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -506,12 +510,14 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelCorFonte extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
+		private final Toolbar toolbar = new Toolbar();
 		private final JColorChooser colorChooser;
 
 		private PanelCorFonte() {
 			colorChooser = new JColorChooser(objeto.getCorFonte());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
+			add(BorderLayout.NORTH, toolbar);
 		}
 
 		@Override
@@ -519,6 +525,27 @@ public class ObjetoContainer extends Panel {
 			objeto.setCorFonte(colorChooser.getColor());
 			MacroProvedor.corFonte(objeto.getCorFonte());
 			objetoSuperficie.repaint();
+		}
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private Toolbar() {
+				super.ini(null, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void copiar() {
+				Preferencias.setCorFonteCopiado(colorChooser.getColor());
+				copiarMensagem(".");
+			}
+
+			@Override
+			protected void colar() {
+				objeto.setCorFonte(Preferencias.getCorFonteCopiado());
+				MacroProvedor.corFonte(objeto.getCorFonte());
+				objetoSuperficie.repaint();
+			}
 		}
 	}
 

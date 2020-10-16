@@ -34,6 +34,7 @@ public class Preferencias {
 	private static int intervaloComparacao;
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
+	private static Color corFonteCopiado;
 	private static boolean nomearArrasto;
 	private static boolean tituloAbaMin;
 	private static Color corTotalAtual;
@@ -375,5 +376,13 @@ public class Preferencias {
 
 	public static void setAplicarAlturaAoAbrirArquivoObjeto(boolean aplicarAlturaAoAbrirArquivoObjeto) {
 		Preferencias.aplicarAlturaAoAbrirArquivoObjeto = aplicarAlturaAoAbrirArquivoObjeto;
+	}
+
+	public static Color getCorFonteCopiado() {
+		return corFonteCopiado;
+	}
+
+	public static void setCorFonteCopiado(Color corFonteCopiado) {
+		Preferencias.corFonteCopiado = corFonteCopiado;
 	}
 }
