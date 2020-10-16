@@ -544,6 +544,7 @@ public class ObjetoContainer extends Panel {
 			protected void colar() {
 				objeto.setCorFonte(Preferencias.getCorFonteCopiado());
 				MacroProvedor.corFonte(objeto.getCorFonte());
+				colorChooser.setColor(objeto.getCorFonte());
 				objetoSuperficie.repaint();
 			}
 		}
