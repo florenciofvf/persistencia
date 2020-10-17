@@ -35,7 +35,9 @@ public class BarraButton extends JToolBar {
 	public void ini(Janela janela, BarraButtonEnum... enuns) {
 		this.janela = janela;
 		fecharAcao.setActionListener(e -> fechar());
-		addButton(fecharAcao);
+		Button button = new Button(fecharAcao);
+		button.setFocusable(false);
+		add(button);
 		setJanela(janela);
 		addSeparator();
 		configButtonDestacar(enuns);
