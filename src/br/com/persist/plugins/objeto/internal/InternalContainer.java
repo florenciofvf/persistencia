@@ -1391,6 +1391,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					tabelaPersistencia.addRowSelectionInterval(i, i);
 				}
 			}
+			tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		}
 	}
 
