@@ -53,23 +53,42 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	private void configurar2() {
-		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> {
-			checarDesktop();
-			if (desktop != null) {
-				Object valor = evt.getNewValue();
-				desktop.setAjusteAutomatico(Boolean.FALSE.equals(valor));
-			}
-		});
-
+		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> checarMaximizado(evt.getNewValue()));
+		addMouseWheelListener(e -> checarAltura(e.getX(), e.getY()));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				checarDesktop();
-				if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
-					configurarAjustes(false);
-				}
+				checarRedimensionamento();
 			}
 		});
+	}
+
+	private void checarMaximizado(Object valor) {
+		checarDesktop();
+		if (desktop != null) {
+			desktop.setAjusteAutomatico(Boolean.FALSE.equals(valor));
+		}
+	}
+
+	private void checarRedimensionamento() {
+		checarDesktop();
+		if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
+			configurarAjustes(false);
+		}
+	}
+
+	private void checarAltura(int x, int y) {
+		if (x < 21 && y < 21) {
+			Variavel variavelDadosToolbarTableHeader = VariavelProvedor
+					.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
+			if (variavelDadosToolbarTableHeader != null) {
+				int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
+				Dimension d = getSize();
+				if (d.height < dadosToolbarTableHeader) {
+					setSize(d.width, dadosToolbarTableHeader);
+				}
+			}
+		}
 	}
 
 	public Component getThis() {
@@ -231,10 +250,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	public boolean ehObjeto(Objeto objeto) {
-		if (objeto == null) {
-			return false;
-		}
-		return container.getObjeto() == objeto || container.getObjeto().getId().equals(objeto.getId());
+		return container.getObjeto().equals(objeto);
 	}
 
 	public String getComplementoChaves() {
