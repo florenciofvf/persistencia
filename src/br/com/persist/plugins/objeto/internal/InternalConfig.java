@@ -2,6 +2,9 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.awt.Graphics;
 
+import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.objeto.Objeto;
+
 public class InternalConfig {
 	private final String conexao;
 	private final String tabela;
@@ -12,7 +15,15 @@ public class InternalConfig {
 	public InternalConfig(String conexao, String grupo, String tabela) {
 		this.grupo = grupo == null ? "" : grupo;
 		this.conexao = conexao;
+		if (Util.estaVazio(tabela)) {
+			throw new IllegalStateException("Tabela vazia.");
+		}
 		this.tabela = tabela;
+	}
+
+	public boolean igual(Objeto objeto) {
+		return objeto != null && grupo.equalsIgnoreCase(objeto.getGrupo())
+				&& tabela.equalsIgnoreCase(objeto.getTabela2());
 	}
 
 	public String getComplemento() {

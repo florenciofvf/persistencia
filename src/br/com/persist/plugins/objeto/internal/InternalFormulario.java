@@ -217,12 +217,12 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return referencia.igual(container.getObjeto());
 	}
 
-	public boolean ehTabela(Objeto objeto) {
-		return container.getObjeto().getTabela2().equalsIgnoreCase(objeto.getTabela2());
+	public boolean ehTabela(InternalConfig config) {
+		return config.igual(container.getObjeto());
 	}
 
-	public boolean ehTabela(InternalConfig config) {
-		return container.getObjeto().getTabela2().equalsIgnoreCase(config.getTabela());
+	public boolean ehTabela(Objeto objeto) {
+		return objeto.igual(container.getObjeto());
 	}
 
 	public InternalContainer getInternalContainer() {

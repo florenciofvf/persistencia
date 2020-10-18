@@ -643,6 +643,11 @@ public class Objeto implements Runnable {
 		return false;
 	}
 
+	public boolean igual(Objeto objeto) {
+		return objeto != null && getGrupo().equalsIgnoreCase(objeto.getGrupo())
+				&& getTabela2().equalsIgnoreCase(objeto.getTabela2());
+	}
+
 	@Override
 	public int hashCode() {
 		return id.hashCode();
