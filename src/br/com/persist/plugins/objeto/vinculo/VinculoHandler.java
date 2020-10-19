@@ -1,11 +1,13 @@
 package br.com.persist.plugins.objeto.vinculo;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
 
 class VinculoHandler extends XMLHandler {
@@ -36,7 +38,16 @@ class VinculoHandler extends XMLHandler {
 		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
 		String limparApos = attributes.getValue("limparApos");
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
+		ref.setCorFonte(getCorFonte(attributes));
 		return ref;
+	}
+
+	private Color getCorFonte(Attributes attributes) {
+		String corFonte = attributes.getValue("corFonte");
+		if (!Util.estaVazio(corFonte)) {
+			return Color.decode(corFonte);
+		}
+		return null;
 	}
 
 	@Override

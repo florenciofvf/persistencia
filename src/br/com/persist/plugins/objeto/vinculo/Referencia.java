@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto.vinculo;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Referencia {
 	private boolean processado;
 	private boolean limparApos;
 	Pesquisa pesquisa;
+	Color corFonte;
 
 	public Referencia(String grupo, String tabela, String campo) {
 		this.grupo = grupo == null ? "" : grupo.trim();
@@ -102,6 +104,14 @@ public class Referencia {
 
 	public void setLimparApos(boolean limparApos) {
 		this.limparApos = limparApos;
+	}
+
+	public Color getCorFonte() {
+		return corFonte;
+	}
+
+	public void setCorFonte(Color corFonte) {
+		this.corFonte = corFonte;
 	}
 
 	@Override

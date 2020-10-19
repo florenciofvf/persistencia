@@ -876,7 +876,7 @@ public class Objeto implements Runnable {
 	}
 
 	public void addReferencia(Referencia ref) {
-		if (ref != null && !contem(ref)) {
+		if (ref != null && !Pesquisa.contem(ref, referencias)) {
 			referencias.add(ref);
 		}
 	}
@@ -885,15 +885,6 @@ public class Objeto implements Runnable {
 		for (Referencia ref : referencias) {
 			addReferencia(ref);
 		}
-	}
-
-	private boolean contem(Referencia ref) {
-		for (Referencia r : referencias) {
-			if (r.igual(ref)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public List<Pesquisa> getPesquisas() {

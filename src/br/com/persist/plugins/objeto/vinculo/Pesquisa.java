@@ -8,10 +8,10 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class Pesquisa {
-	private final String nome;
-	private final Referencia referencia;
-	private final List<Referencia> referencias;
 	private final List<Referencia> referenciasApos;
+	private final List<Referencia> referencias;
+	private final Referencia referencia;
+	private final String nome;
 
 	public Pesquisa(String nome, Referencia ref) {
 		Objects.requireNonNull(ref);
@@ -28,10 +28,16 @@ public class Pesquisa {
 		if (referencia.igual(objeto)) {
 			objeto.getPesquisas().add(this);
 			objeto.addReferencias(referencias);
+			if (referencia.corFonte != null) {
+				objeto.setCorFonte(referencia.corFonte);
+			}
 		}
 		for (Referencia ref : referencias) {
 			if (ref.igual(objeto)) {
 				objeto.addReferencia(ref.getPesquisa().referencia);
+				if (ref.corFonte != null) {
+					objeto.setCorFonte(ref.corFonte);
+				}
 			}
 		}
 	}
@@ -90,7 +96,7 @@ public class Pesquisa {
 		}
 	}
 
-	private static boolean contem(Referencia ref, List<Referencia> referencias) {
+	public static boolean contem(Referencia ref, List<Referencia> referencias) {
 		for (Referencia r : referencias) {
 			if (r.igual(ref)) {
 				return true;
