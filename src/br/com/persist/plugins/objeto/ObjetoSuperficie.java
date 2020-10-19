@@ -1267,10 +1267,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMenuItem(true, colarAcao);
 			addMenuItem(true, atualizarFormulariosAcao);
 			addMenuItem(limparFormulariosAcao);
+			add(true, menuAjuste);
+			add(true, menuAjustar);
 			add(true, menuAlinhamento);
 			add(true, menuLargura);
-			add(true, menuAjustar);
-			add(true, menuAjuste);
 			addMenuItem(true, propriedadesAcao);
 			eventos();
 		}
