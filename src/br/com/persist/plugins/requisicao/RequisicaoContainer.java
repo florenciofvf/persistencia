@@ -141,12 +141,11 @@ public class RequisicaoContainer extends AbstratoContainer {
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
-			if (files == null) {
-				return;
-			}
-			for (File f : files) {
-				Pagina pagina = new Pagina(f);
-				fichario.adicionarPagina(pagina);
+			if (files != null) {
+				for (File f : files) {
+					Pagina pagina = new Pagina(f);
+					fichario.adicionarPagina(pagina);
+				}
 			}
 		}
 		fichario.setConteudo(conteudo, idPagina);
