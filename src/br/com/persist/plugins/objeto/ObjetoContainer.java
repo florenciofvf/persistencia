@@ -154,7 +154,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private Action criarObjetoAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
 		private Action desenharIdAcao = Action.actionIcon("label.desenhar_id", Icones.LABEL);
 		private Action excluirAcao = Action.actionIcon("label.excluir_sel", Icones.EXCLUIR);
-		private TextField txtPrefixoNomeTabela = new TextField(10);
+		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
 		private CheckBox chkAjusteAutomatico = new CheckBox();
 		private Label labelStatus = new Label();
@@ -174,7 +174,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(chkAjusteAutomatico);
 			add(true, comboConexao);
 			add(true, new ButtonInfo());
-			add(true, labelStatus);
+			add(labelStatus);
 			add(true, txtPrefixoNomeTabela);
 			add(true, txtArquivoVinculo);
 			eventos();
