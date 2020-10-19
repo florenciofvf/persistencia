@@ -184,10 +184,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		}
 
 		public void habilitar(boolean b) {
-			dimensaoManualAcao.setEnabled(b);
-			retirarRolagemAcao.setEnabled(b);
 			usarFormularioAcao.setEnabled(b);
-			setEnabled(b);
 		}
 	}
 
