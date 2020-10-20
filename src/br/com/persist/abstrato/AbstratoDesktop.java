@@ -142,7 +142,6 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 		private Action esquerdoAcao = Action.actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = Action.actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
-		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
 
 		protected MenuLargura() {
@@ -150,15 +149,12 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
 			addMenuItem(esquerdoAcao);
-			addMenuItem(distribuirAcao);
 			esquerdoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_ESQUERDA));
 			direitoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_DIREITA));
 			totalAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL));
-			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 		}
 
 		public void habilitar(boolean b) {
-			distribuirAcao.setEnabled(b);
 			esquerdoAcao.setEnabled(b);
 			direitoAcao.setEnabled(b);
 			totalAcao.setEnabled(b);
@@ -191,6 +187,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 		private Action aproximarFormAoObjetoAcao = Action.actionMenu("label.aproximar_form_ao_objeto", null);
 		private Action aproximarObjetoAoFormAcao = Action.actionMenu("label.aproximar_objeto_ao_form", null);
+		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
 		private Action empilharAcao = Action.actionMenu("label.empilhar_formularios", null);
 
@@ -200,16 +197,19 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			addMenuItem(aproximarObjetoAoFormAcao);
 			addMenuItem(empilharAcao);
 			addMenuItem(centralizarAcao);
+			addMenuItem(distribuirAcao);
 			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
 			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false));
 			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
 			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
+			distribuirAcao.setActionListener(e -> distribuicao.distribuir(0));
 		}
 
 		public void habilitar(boolean b) {
 			aproximarFormAoObjetoAcao.setEnabled(b);
 			aproximarObjetoAoFormAcao.setEnabled(b);
 			centralizarAcao.setEnabled(b);
+			distribuirAcao.setEnabled(b);
 			empilharAcao.setEnabled(b);
 			setEnabled(b);
 		}
