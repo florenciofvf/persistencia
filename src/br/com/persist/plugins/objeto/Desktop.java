@@ -299,9 +299,9 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		private static final long serialVersionUID = 1L;
 
 		private DesktopPopup() {
-			add(menuAjuste);
-			add(true, menuAjustar);
+			add(menuAjustar);
 			add(true, menuLargura);
+			add(true, menuAjuste);
 		}
 	}
 

@@ -1265,11 +1265,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private SuperficiePopup2() {
 			addMenuItem(criarObjetoAcao);
 			addMenuItem(true, colarAcao);
+			add(true, menuAjustar);
 			addMenuItem(true, atualizarFormulariosAcao);
 			addMenuItem(limparFormulariosAcao);
-			add(true, menuAjuste);
-			add(true, menuAjustar);
 			add(true, menuLargura);
+			add(true, menuAjuste);
 			addMenuItem(true, propriedadesAcao);
 			eventos();
 		}

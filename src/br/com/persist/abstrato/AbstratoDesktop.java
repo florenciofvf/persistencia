@@ -145,7 +145,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
 
 		protected MenuLargura() {
-			super("label.largura", Icones.CENTRALIZAR);
+			super("label.largura", Icones.RECT);
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
 			addMenuItem(esquerdoAcao);
