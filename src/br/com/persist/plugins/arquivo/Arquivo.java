@@ -101,11 +101,13 @@ public class Arquivo {
 			File[] files = file.listFiles();
 			if (files != null) {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
-			}
-			for (File f : files) {
-				Arquivo arq = new Arquivo(f);
-				filhos.add(arq);
-				arq.pai = this;
+				for (File f : files) {
+					if (!ArquivoModelo.ignorar(f.getName())) {
+						Arquivo arq = new Arquivo(f);
+						filhos.add(arq);
+						arq.pai = this;
+					}
+				}
 			}
 		}
 		processado = true;

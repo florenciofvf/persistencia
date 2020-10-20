@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -21,12 +23,15 @@ import javax.swing.tree.TreePath;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Imagens;
+import br.com.persist.assistencia.Util;
 
 public class AnexoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Map<String, Anexo> anexos = new HashMap<>();
+	private static final List<String> ignorados = new ArrayList<>();
 	private static final File anexosRaiz = new File("anexos");
 	public static final File anexosInfo = new File(anexosRaiz, "A");
+	private static final File ignore = new File(anexosRaiz, "ignore");
 	private static final Logger LOG = Logger.getGlobal();
 	private final Anexo raiz;
 
@@ -47,6 +52,7 @@ public class AnexoModelo implements TreeModel {
 
 	private void inicializar() {
 		anexos.clear();
+		iniIgnorados();
 		if (anexosInfo.isFile()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(anexosInfo), StandardCharsets.UTF_8))) {
@@ -65,6 +71,35 @@ public class AnexoModelo implements TreeModel {
 				LOG.log(Level.FINEST, "AnexoModelo.inicializar");
 			}
 		}
+	}
+
+	private void iniIgnorados() {
+		ignorados.clear();
+		if (ignore.isFile()) {
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(ignore), StandardCharsets.UTF_8))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					if (!Util.estaVazio(linha)) {
+						ignorados.add(linha);
+					}
+					linha = br.readLine();
+				}
+			} catch (Exception e) {
+				LOG.log(Level.FINEST, "AnexoModelo.iniIgnorados()");
+			}
+		}
+	}
+
+	public static boolean ignorar(String string) {
+		if (string != null) {
+			for (String s : ignorados) {
+				if (string.endsWith(s)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void configurar(Anexo selecionado, String linha) {

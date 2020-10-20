@@ -113,11 +113,13 @@ public class Anexo {
 			File[] files = file.listFiles();
 			if (files != null) {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
-			}
-			for (File f : files) {
-				Anexo arq = new Anexo(f);
-				filhos.add(arq);
-				arq.pai = this;
+				for (File f : files) {
+					if (!AnexoModelo.ignorar(f.getName())) {
+						Anexo arq = new Anexo(f);
+						filhos.add(arq);
+						arq.pai = this;
+					}
+				}
 			}
 		}
 		processado = true;
