@@ -301,7 +301,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		private DesktopPopup() {
 			add(menuAjuste);
 			add(true, menuAjustar);
-			add(true, menuAlinhamento);
 			add(true, menuLargura);
 		}
 	}

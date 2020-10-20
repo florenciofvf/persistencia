@@ -1269,7 +1269,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMenuItem(limparFormulariosAcao);
 			add(true, menuAjuste);
 			add(true, menuAjustar);
-			add(true, menuAlinhamento);
 			add(true, menuLargura);
 			addMenuItem(true, propriedadesAcao);
 			eventos();
@@ -1288,7 +1287,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
 			atualizarFormulariosAcao.setEnabled(contemFrames);
 			limparFormulariosAcao.setEnabled(contemFrames);
-			menuAlinhamento.habilitar(contemFrames);
 			menuLargura.habilitar(contemFrames);
 			menuAjustar.habilitar(contemFrames);
 			menuAjuste.habilitar(contemFrames);

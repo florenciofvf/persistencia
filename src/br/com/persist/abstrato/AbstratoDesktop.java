@@ -15,7 +15,6 @@ import br.com.persist.componente.Menu;
 
 public abstract class AbstratoDesktop extends JDesktopPane {
 	private static final long serialVersionUID = 1L;
-	protected final transient MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
 	protected final transient MenuLargura menuLargura = new MenuLargura();
@@ -192,6 +191,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		private static final long serialVersionUID = 1L;
 		private Action aproximarFormAoObjetoAcao = Action.actionMenu("label.aproximar_form_ao_objeto", null);
 		private Action aproximarObjetoAoFormAcao = Action.actionMenu("label.aproximar_objeto_ao_form", null);
+		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
 		private Action empilharAcao = Action.actionMenu("label.empilhar_formularios", null);
 
 		protected MenuAjuste() {
@@ -199,31 +199,18 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			addMenuItem(aproximarFormAoObjetoAcao);
 			addMenuItem(aproximarObjetoAoFormAcao);
 			addMenuItem(empilharAcao);
+			addMenuItem(centralizarAcao);
 			aproximarFormAoObjetoAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(false, false));
 			aproximarObjetoAoFormAcao.setActionListener(e -> ajuste.aproximarObjetoFormulario(true, false));
 			empilharAcao.setActionListener(e -> ajuste.empilharFormularios());
+			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
 		}
 
 		public void habilitar(boolean b) {
 			aproximarFormAoObjetoAcao.setEnabled(b);
 			aproximarObjetoAoFormAcao.setEnabled(b);
-			empilharAcao.setEnabled(b);
-			setEnabled(b);
-		}
-	}
-
-	protected class MenuAlinhamento extends Menu {
-		private static final long serialVersionUID = 1L;
-		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
-
-		protected MenuAlinhamento() {
-			super("label.alinhamento", Icones.LARGURA);
-			addMenuItem(centralizarAcao);
-			centralizarAcao.setActionListener(e -> alinhamento.centralizar());
-		}
-
-		public void habilitar(boolean b) {
 			centralizarAcao.setEnabled(b);
+			empilharAcao.setEnabled(b);
 			setEnabled(b);
 		}
 	}
