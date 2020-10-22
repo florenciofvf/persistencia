@@ -1523,12 +1523,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public void atualizarTotal(Conexao conexao, MenuItem menuItem, Label label) {
-		if (conexao == null) {
-			return;
-		}
-		int total = preTotalRecente(label);
-		if (total > 0) {
-			new ThreadTotal(conexao, menuItem, label, total).start();
+		if (conexao != null) {
+			int total = preTotalRecente(label);
+			if (total > 0) {
+				new ThreadTotal(conexao, menuItem, label, total).start();
+			}
 		}
 	}
 
@@ -1766,9 +1765,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				continua = true;
 			}
 		}
-		if (!continua) {
-			return;
+		if (continua) {
+			List<Objeto> selecionados = montarSelecionados(lista);
+			destacar(conexao, tipoContainer, config, selecionados);
 		}
+	}
+
+	private List<Objeto> montarSelecionados(List<Objeto> lista) {
 		List<Objeto> selecionados = new ArrayList<>();
 		for (Objeto objeto : lista) {
 			if (objeto.isClonarAoDestacar()) {
@@ -1777,7 +1780,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				selecionados.add(objeto);
 			}
 		}
-		destacar(conexao, tipoContainer, config, selecionados);
+		return selecionados;
 	}
 
 	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config, List<Objeto> selecionados) {
