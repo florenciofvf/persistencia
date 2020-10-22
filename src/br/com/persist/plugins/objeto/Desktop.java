@@ -92,10 +92,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				VariavelProvedor.adicionar(variavelDeltaY);
 				salvar = true;
 			}
-			if (salvar) {
-				VariavelProvedor.salvar();
-				VariavelProvedor.inicializar();
-			}
+			checarAtualizarVariavelProvedor(salvar);
 			Arrays.sort(frames, (o1, o2) -> o1.getY() - o2.getY());
 			JInternalFrame referencia = primeiroVisivel(frames);
 			if (referencia != null) {
@@ -139,15 +136,21 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			VariavelProvedor.adicionar(variavelDeltaY);
 			salvar = true;
 		}
+		checarAtualizarVariavelProvedor(salvar);
+		aproximar(objetoAoFormulario, variavelDeltaX, variavelDeltaY);
+		updateOuRepaint(updateTree);
+	}
+
+	private void checarAtualizarVariavelProvedor(boolean salvar) {
 		if (salvar) {
 			VariavelProvedor.salvar();
 			VariavelProvedor.inicializar();
 		}
+	}
+
+	private void aproximar(boolean objetoAoFormulario, Variavel variavelDeltaX, Variavel variavelDeltaY) {
 		for (JInternalFrame frame : getAllFrames()) {
-			if (!frame.isVisible()) {
-				continue;
-			}
-			if (frame instanceof InternalFormulario) {
+			if (frame.isVisible() && frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 				if (objetoAoFormulario) {
 					interno.aproximarObjetoAoFormulario(variavelDeltaX.getInteiro(Constantes.TRINTA),
@@ -158,6 +161,9 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				}
 			}
 		}
+	}
+
+	private void updateOuRepaint(boolean updateTree) {
 		if (updateTree) {
 			SwingUtilities.updateComponentTreeUI(getParent());
 		} else {
