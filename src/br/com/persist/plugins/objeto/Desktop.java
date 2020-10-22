@@ -101,6 +101,15 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
+	private JInternalFrame primeiroVisivel(JInternalFrame[] frames) {
+		for (JInternalFrame frame : frames) {
+			if (frame.isVisible()) {
+				return frame;
+			}
+		}
+		return null;
+	}
+
 	private void empilhar(JInternalFrame[] frames, JInternalFrame referencia, int deltaY) {
 		int y = referencia.getY() + referencia.getHeight() + deltaY;
 		for (JInternalFrame frame : frames) {
@@ -110,15 +119,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			frame.setLocation(frame.getX(), y);
 			y = frame.getY() + (frame.isIcon() ? 10 : frame.getHeight()) + deltaY;
 		}
-	}
-
-	private JInternalFrame primeiroVisivel(JInternalFrame[] frames) {
-		for (JInternalFrame frame : frames) {
-			if (frame.isVisible()) {
-				return frame;
-			}
-		}
-		return null;
 	}
 
 	@Override
@@ -317,14 +317,18 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				InternalFormulario interno = (InternalFormulario) frame;
 				List<Referencia> referencias = pesquisa.getReferencias();
 				interno.setProcessadoPesquisa(false);
-				for (Referencia referencia : referencias) {
-					if (interno.ehReferencia(referencia)) {
-						interno.getInternalContainer().getObjeto().setReferenciaPesquisa(referencia);
-						interno.pesquisar(referencia, argumentos);
-						interno.setProcessadoPesquisa(true);
-						referencia.setProcessado(true);
-					}
-				}
+				pesquisar(argumentos, interno, referencias);
+			}
+		}
+	}
+
+	private void pesquisar(String argumentos, InternalFormulario interno, List<Referencia> referencias) {
+		for (Referencia referencia : referencias) {
+			if (interno.ehReferencia(referencia)) {
+				interno.getInternalContainer().getObjeto().setReferenciaPesquisa(referencia);
+				interno.pesquisar(referencia, argumentos);
+				interno.setProcessadoPesquisa(true);
+				referencia.setProcessado(true);
 			}
 		}
 	}
@@ -334,12 +338,16 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 				if (!interno.isProcessadoPesquisa()) {
-					for (Referencia referencia : pesquisa.getReferenciasApos()) {
-						if (interno.ehReferencia(referencia)) {
-							interno.pesquisarApos();
-						}
-					}
+					pesquisarApos(pesquisa, interno);
 				}
+			}
+		}
+	}
+
+	private void pesquisarApos(Pesquisa pesquisa, InternalFormulario interno) {
+		for (Referencia referencia : pesquisa.getReferenciasApos()) {
+			if (interno.ehReferencia(referencia)) {
+				interno.pesquisarApos();
 			}
 		}
 	}
@@ -348,11 +356,15 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame.isVisible() && (frame instanceof InternalFormulario)) {
 				InternalFormulario interno = (InternalFormulario) frame;
-				for (Referencia referencia : referencias) {
-					if (interno.ehReferencia(referencia)) {
-						interno.pesquisarLink(referencia, argumentos);
-					}
-				}
+				pesquisarLink(referencias, argumentos, interno);
+			}
+		}
+	}
+
+	private void pesquisarLink(List<Referencia> referencias, String argumentos, InternalFormulario interno) {
+		for (Referencia referencia : referencias) {
+			if (interno.ehReferencia(referencia)) {
+				interno.pesquisarLink(referencia, argumentos);
 			}
 		}
 	}
