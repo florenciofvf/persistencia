@@ -1475,18 +1475,22 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		super.pesquisar(pesquisa, argumentos);
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
-			for (Referencia referencia : pesquisa.getReferencias()) {
-				if (!referencia.isProcessado()) {
-					pesquisarFinal(referencia, argumentos);
-				}
-			}
+			processarReferencias(pesquisa, argumentos);
 			if (getPrimeiroObjetoSelecionado() != null) {
 				destacar(container.getConexaoPadrao(), Preferencias.getTipoContainerPesquisaAuto(), null);
 			}
 		}
 	}
 
-	private void pesquisarFinal(Referencia referencia, String argumentos) {
+	private void processarReferencias(Pesquisa pesquisa, String argumentos) {
+		for (Referencia referencia : pesquisa.getReferencias()) {
+			if (!referencia.isProcessado()) {
+				pesquisarReferencia(referencia, argumentos);
+			}
+		}
+	}
+
+	private void pesquisarReferencia(Referencia referencia, String argumentos) {
 		Objeto objeto = null;
 		for (Objeto obj : objetos) {
 			if (referencia.igual(obj)) {
@@ -1494,21 +1498,28 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				break;
 			}
 		}
-		if (objeto == null || !objeto.isAbrirAuto()) {
-			return;
+		if (objeto != null && objeto.isAbrirAuto()) {
+			pesquisarReferencia(referencia, argumentos, objeto);
 		}
+	}
+
+	private void pesquisarReferencia(Referencia referencia, String argumentos, Objeto objeto) {
 		objeto.setComplemento("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
 		Conexao conexao = container.getConexaoPadrao();
 		objeto.setReferenciaPesquisa(referencia);
 		if (Preferencias.isAbrirAutoDestacado()) {
-			ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
-			form.setLocationRelativeTo(formulario);
-			form.setVisible(true);
-			Formulario.posicionarJanela(formulario, form);
+			criarExternalFormulario(objeto, conexao);
 		} else {
 			objeto.setSelecionado(true);
 		}
 		referencia.setProcessado(true);
+	}
+
+	private void criarExternalFormulario(Objeto objeto, Conexao conexao) {
+		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
+		form.setLocationRelativeTo(formulario);
+		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public void atualizarTotal(Conexao conexao, MenuItem menuItem, Label label) {
@@ -1766,6 +1777,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				selecionados.add(objeto);
 			}
 		}
+		destacar(conexao, tipoContainer, config, selecionados);
+	}
+
+	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config, List<Objeto> selecionados) {
 		if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
 			destacarDesktopFormulario(selecionados, conexao, config);
 		} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
@@ -1834,12 +1849,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			VariavelProvedor.adicionar(variavelDeltaY);
 			salvar = true;
 		}
-		if (salvar) {
-			VariavelProvedor.salvar();
-			VariavelProvedor.inicializar();
-		}
+		checarAtualizarVariavelProvedorSuperficie(salvar);
 		int x = variavelDeltaX.getInteiro(Constantes.TRINTA);
 		int y = variavelDeltaY.getInteiro(Constantes.TRINTA);
+		processarInternalFormulario(objetos, conexao, config, x, y);
+		repaint();
+	}
+
+	private void processarInternalFormulario(List<Objeto> objetos, Conexao conexao, InternalConfig config, int x,
+			int y) {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
@@ -1848,7 +1866,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				objeto.setSelecionado(false);
 			}
 		}
-		repaint();
+	}
+
+	private void checarAtualizarVariavelProvedorSuperficie(boolean salvar) {
+		if (salvar) {
+			VariavelProvedor.salvar();
+			VariavelProvedor.inicializar();
+		}
 	}
 
 	public String getArquivoVinculo() {
