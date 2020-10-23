@@ -201,9 +201,16 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, Graphics g,
 			InternalConfig config) {
 		File file = ArquivoProvedor.restaurarStringPersistencia(stringPersistencia);
-		if (file == null || !file.isFile()) {
-			return;
+		if (file != null) {
+			if (file.exists() && file.isFile()) {
+				abrirArquivo(formulario, g, config, file);
+			} else {
+				Util.mensagem(formulario, Mensagens.getString("msg.arquivo_invalido", file.getAbsolutePath()));
+			}
 		}
+	}
+
+	private static void abrirArquivo(Formulario formulario, Graphics g, InternalConfig config, File file) {
 		try {
 			ObjetoColetor objetoColetor = new ObjetoColetor();
 			XML.processar(file, new ObjetoHandler(objetoColetor));
