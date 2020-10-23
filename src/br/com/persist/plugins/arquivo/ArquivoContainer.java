@@ -140,6 +140,10 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		public void baixar() {
 			ArquivoModelo modelo = new ArquivoModelo();
 			arquivoTree.setModel(modelo);
+			baixar(modelo);
+		}
+
+		private void baixar(ArquivoModelo modelo) {
 			List<Arquivo> lista = new ArrayList<>();
 			modelo.listar(lista);
 			for (Arquivo arquivo : lista) {
@@ -149,6 +153,11 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 		private void statusArquivo() {
 			ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
+			List<Arquivo> lista = statusArquivo(modelo);
+			statusArquivoSelecionar(lista);
+		}
+
+		private List<Arquivo> statusArquivo(ArquivoModelo modelo) {
 			List<Arquivo> lista = new ArrayList<>();
 			modelo.listar(lista);
 			for (Arquivo arquivo : lista) {
@@ -159,6 +168,10 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 					ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
 				}
 			}
+			return lista;
+		}
+
+		private void statusArquivoSelecionar(List<Arquivo> lista) {
 			arquivoTree.clearSelection();
 			for (Arquivo arquivo : lista) {
 				if (formulario.isAtivo(arquivo.getFile())) {
@@ -186,9 +199,12 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void diretorioArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-		if (arquivo == null) {
-			return;
+		if (arquivo != null) {
+			desktopOpen(arquivo);
 		}
+	}
+
+	private void desktopOpen(Arquivo arquivo) {
 		Desktop desktop = Desktop.getDesktop();
 		try {
 			File file = arquivo.getFile();
