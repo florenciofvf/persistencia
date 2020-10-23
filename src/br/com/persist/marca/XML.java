@@ -23,6 +23,18 @@ public class XML {
 	}
 
 	public static void processar(File file, XMLHandler handler) throws XMLException {
+		if (file != null) {
+			if (file.exists() && file.isFile()) {
+				processarFile(file, handler);
+			} else {
+				throw new XMLException("Inexistente >>> " + file.getAbsolutePath());
+			}
+		} else {
+			throw new XMLException("File nulo.");
+		}
+	}
+
+	private static void processarFile(File file, XMLHandler handler) throws XMLException {
 		try {
 			SAXParserFactory factory = criarSAXParserFactory();
 			SAXParser parser = factory.newSAXParser();

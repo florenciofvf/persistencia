@@ -138,8 +138,13 @@ public class ObjetoContainer extends AbstratoContainer {
 
 	public void abrirArquivo(File file) {
 		if (file != null) {
-			arquivo = file;
-			toolbar.baixar();
+			if (file.exists() && file.isFile()) {
+				arquivo = file;
+				toolbar.baixar();
+			} else {
+				Util.mensagem(ObjetoContainer.this,
+						Mensagens.getString("msg.arquivo_invalido", file.getAbsolutePath()));
+			}
 		}
 	}
 
