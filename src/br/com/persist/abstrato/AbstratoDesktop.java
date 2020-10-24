@@ -28,6 +28,12 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		public void distribuir(int delta) {
 			int largura = (getSize().width - 20) + delta;
 			int altura = Constantes.TREZENTOS_QUARENTA_UM;
+			distribuir(largura, altura);
+			alinhamento.centralizar();
+			ajustar.usarFormularios(true);
+		}
+
+		private void distribuir(int largura, int altura) {
 			int y = 10;
 			for (JInternalFrame frame : getAllFrames()) {
 				if (frame.isVisible()) {
@@ -36,8 +42,6 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 					y += altura + 20;
 				}
 			}
-			alinhamento.centralizar();
-			ajustar.usarFormularios(true);
 		}
 	}
 
@@ -114,22 +118,26 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 			int largura = getSize().width - 20;
 			for (JInternalFrame frame : getAllFrames()) {
 				if (frame.isVisible()) {
-					Dimension size = frame.getSize();
-					Point local = frame.getLocation();
-					if (DesktopLargura.TOTAL == larguraEnum) {
-						frame.setLocation(0, local.y);
-						frame.setSize(largura, size.height);
-					} else if (DesktopLargura.TOTAL_A_DIREITA == larguraEnum) {
-						frame.setSize(largura - local.x, size.height);
-					} else if (DesktopLargura.TOTAL_A_ESQUERDA == larguraEnum) {
-						int total = (local.x + size.width) - 10;
-						frame.setSize(total, size.height);
-						frame.setLocation(10, local.y);
-					}
+					configurar(larguraEnum, largura, frame);
 				}
 			}
 			if (DesktopLargura.TOTAL == larguraEnum) {
 				alinhamento.centralizar();
+			}
+		}
+
+		private void configurar(DesktopLargura larguraEnum, int largura, JInternalFrame frame) {
+			Dimension size = frame.getSize();
+			Point local = frame.getLocation();
+			if (DesktopLargura.TOTAL == larguraEnum) {
+				frame.setLocation(0, local.y);
+				frame.setSize(largura, size.height);
+			} else if (DesktopLargura.TOTAL_A_DIREITA == larguraEnum) {
+				frame.setSize(largura - local.x, size.height);
+			} else if (DesktopLargura.TOTAL_A_ESQUERDA == larguraEnum) {
+				int total = (local.x + size.width) - 10;
+				frame.setSize(total, size.height);
+				frame.setLocation(10, local.y);
 			}
 		}
 	}
@@ -219,9 +227,12 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		public void ajusteManual() {
 			String string = getWidth() + "," + getHeight();
 			Object resp = Util.getValorInputDialog(AbstratoDesktop.this, "label.largura_altura", string, string);
-			if (resp == null || Util.estaVazio(resp.toString())) {
-				return;
+			if (resp != null && !Util.estaVazio(resp.toString())) {
+				ajustarManual(resp);
 			}
+		}
+
+		private void ajustarManual(Object resp) {
 			String[] strings = resp.toString().split(",");
 			if (strings != null && strings.length == 2) {
 				int largura = Integer.parseInt(strings[0].trim());
