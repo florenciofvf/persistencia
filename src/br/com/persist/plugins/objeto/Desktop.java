@@ -222,12 +222,24 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			if (transferable != null) {
 				DataFlavor[] flavors = transferable.getTransferDataFlavors();
 				if (flavors != null && flavors.length > 0) {
-					DataFlavor flavor = flavors[0];
-					AtomicBoolean completado = new AtomicBoolean(false);
-					processarTransferable(e, transferable, flavor, completado);
-					processarTransferableFinal(e, completado);
+					processarArrastado(e, transferable, flavors);
 				}
 			}
+		}
+
+		private boolean validoSoltar(DropTargetDropEvent e) {
+			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
+		}
+
+		private boolean validoSoltar(DropTargetDragEvent e) {
+			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
+		}
+
+		private void processarArrastado(DropTargetDropEvent e, Transferable transferable, DataFlavor[] flavors) {
+			DataFlavor flavor = flavors[0];
+			AtomicBoolean completado = new AtomicBoolean(false);
+			processarTransferable(e, transferable, flavor, completado);
+			processarTransferableFinal(e, completado);
 		}
 
 		private void processarTransferable(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor,
@@ -246,14 +258,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			} else {
 				e.rejectDrop();
 			}
-		}
-
-		private boolean validoSoltar(DropTargetDragEvent e) {
-			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
-		}
-
-		private boolean validoSoltar(DropTargetDropEvent e) {
-			return (e.getDropAction() & DnDConstants.ACTION_COPY) != 0;
 		}
 
 		private void processarInternal(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor,

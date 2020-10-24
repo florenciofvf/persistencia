@@ -42,7 +42,6 @@ import br.com.persist.mensagem.MensagemDialogo;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
-	private static final boolean LOG_CONSOLE = false;
 
 	private Util() {
 	}
@@ -243,12 +242,8 @@ public class Util {
 		StringWriter sw = new StringWriter();
 		sw.append(info + "\r\n\r\n");
 		if (ex != null) {
-			if (LOG_CONSOLE) {
-				LOG.log(Level.SEVERE, Constantes.ERRO, ex);
-			} else {
-				PrintWriter pw = new PrintWriter(sw);
-				ex.printStackTrace(pw);
-			}
+			PrintWriter pw = new PrintWriter(sw);
+			ex.printStackTrace(pw);
 		}
 		return sw.toString();
 	}
