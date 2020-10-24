@@ -51,7 +51,12 @@ public abstract class AbstratoDialogo extends JDialog implements Janela {
 		JComponent component = (JComponent) getContentPane();
 		InputMap inputMap = component.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), Constantes.ESC);
-		Action action = new AbstractAction() {
+		ActionMap actionMap = component.getActionMap();
+		actionMap.put(Constantes.ESC, actionEsc());
+	}
+
+	private Action actionEsc() {
+		return new AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -59,8 +64,6 @@ public abstract class AbstratoDialogo extends JDialog implements Janela {
 				fechar();
 			}
 		};
-		ActionMap actionMap = component.getActionMap();
-		actionMap.put(Constantes.ESC, action);
 	}
 
 	private void configurar() {
