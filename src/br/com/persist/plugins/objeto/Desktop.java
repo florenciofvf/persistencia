@@ -219,20 +219,27 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				return;
 			}
 			Transferable transferable = e.getTransferable();
-			if (transferable == null) {
-				return;
+			if (transferable != null) {
+				DataFlavor[] flavors = transferable.getTransferDataFlavors();
+				if (flavors != null && flavors.length > 0) {
+					DataFlavor flavor = flavors[0];
+					AtomicBoolean completado = new AtomicBoolean(false);
+					processarTransferable(e, transferable, flavor, completado);
+					processarTransferableFinal(e, completado);
+				}
 			}
-			DataFlavor[] flavors = transferable.getTransferDataFlavors();
-			if (flavors == null || flavors.length < 1) {
-				return;
-			}
-			DataFlavor flavor = flavors[0];
-			AtomicBoolean completado = new AtomicBoolean(false);
+		}
+
+		private void processarTransferable(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor,
+				AtomicBoolean completado) {
 			if (InternalTransferidor.flavor.equals(flavor)) {
 				processarInternal(e, transferable, flavor, completado);
 			} else if (Metadado.flavor.equals(flavor)) {
 				processarMetadado(e, transferable, flavor, completado);
 			}
+		}
+
+		private void processarTransferableFinal(DropTargetDropEvent e, AtomicBoolean completado) {
 			if (completado.get()) {
 				e.acceptDrop(DnDConstants.ACTION_COPY);
 				e.dropComplete(true);
@@ -292,6 +299,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		if (g == null) {
 			g = getGraphics();
 		}
+		criarAdicionarInternaFormulario(point, g, buscaAuto, config, dimension, conexao, objeto);
+	}
+
+	private void criarAdicionarInternaFormulario(Point point, Graphics g, boolean buscaAuto, InternalConfig config,
+			Dimension dimension, Conexao conexao, Objeto objeto) {
 		InternalFormulario internal = new InternalFormulario(conexao, objeto, g, buscaAuto);
 		internal.setAbortarFecharComESC(abortarFecharComESC);
 		internal.setLocation(point);
