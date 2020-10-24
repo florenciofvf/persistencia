@@ -54,7 +54,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private void configurar2() {
 		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> checarMaximizado(evt.getNewValue()));
-		addMouseWheelListener(e -> checarAltura(e.getX(), e.getY()));
+		addMouseWheelListener(e -> checarAltura(e.getY(), e.getPreciseWheelRotation() > 0.0));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -77,16 +77,34 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	private void checarAltura(int x, int y) {
-		if (x < 21 && y < 21) {
-			Variavel variavelDadosToolbarTableHeader = VariavelProvedor
-					.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
-			if (variavelDadosToolbarTableHeader != null) {
-				int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
-				Dimension d = getSize();
-				if (d.height < dadosToolbarTableHeader) {
-					setSize(d.width, dadosToolbarTableHeader);
-				}
+	private void checarAltura(int y, boolean norte) {
+		if (y < 21) {
+			int altura = getHeight();
+			if (norte) {
+				processarNorte(altura);
+			} else {
+				processarSul(altura);
+			}
+		}
+	}
+
+	private void processarNorte(int altura) {
+		Variavel variavelMinimoForm = VariavelProvedor.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
+		if (variavelMinimoForm != null) {
+			int minimoForm = variavelMinimoForm.getInteiro(Constantes.TRINTA);
+			if (altura > minimoForm) {
+				setSize(getWidth(), minimoForm);
+			}
+		}
+	}
+
+	private void processarSul(int altura) {
+		Variavel variavelDadosToolbarTableHeader = VariavelProvedor
+				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
+		if (variavelDadosToolbarTableHeader != null) {
+			int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
+			if (altura < dadosToolbarTableHeader) {
+				setSize(getWidth(), dadosToolbarTableHeader);
 			}
 		}
 	}
