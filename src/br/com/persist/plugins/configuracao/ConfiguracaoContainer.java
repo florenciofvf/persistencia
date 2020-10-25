@@ -56,10 +56,12 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
 			"label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
+	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
 	private final CheckBox chkNomeColunaListener = new CheckBox("label.copiar_nome_coluna_listener");
+	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
-	private final CheckBox chkAbortarFecharComESC = new CheckBox("label.abortar_fechar_com_esc");
+	private final CheckBox chkFecharComESCDialogo = new CheckBox("label.fechar_com_esc_dialogo");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
@@ -157,10 +159,12 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkExecAposCopiarColunaConcatenado.setSelected(Preferencias.isExecAposCopiarColunaConcatenado());
 		chkExecAposBaixarParaComplemento.setSelected(Preferencias.isExecAposBaixarParaComplemento());
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
+		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkNomeColunaListener.setSelected(Preferencias.isCopiarNomeColunaListener());
+		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
-		chkAbortarFecharComESC.setSelected(Preferencias.isAbortarFecharComESC());
+		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
@@ -195,7 +199,9 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(new PainelCorTotalRecente());
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
-		container.add(chkAbortarFecharComESC);
+		container.add(chkFecharComESCFormulario);
+		container.add(chkFecharComESCInternal);
+		container.add(chkFecharComESCDialogo);
 		container.add(chkExecAposBaixarParaComplemento);
 		container.add(chkExecAposCopiarColunaConcatenado);
 		container.add(chkNomeColunaListener);
@@ -226,9 +232,11 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkExecAposCopiarColunaConcatenado.setMargin(insets);
 		chkExecAposBaixarParaComplemento.setMargin(insets);
 		chkAreaTransTabelaRegistros.setMargin(insets);
+		chkFecharComESCFormulario.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
-		chkAbortarFecharComESC.setMargin(insets);
+		chkFecharComESCInternal.setMargin(insets);
+		chkFecharComESCDialogo.setMargin(insets);
 		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
@@ -292,6 +300,9 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
 				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 
+		chkFecharComESCFormulario
+				.addActionListener(e -> Preferencias.setFecharComESCFormulario(chkFecharComESCFormulario.isSelected()));
+
 		chkExecAposCopiarColunaConcatenado.addActionListener(
 				e -> Preferencias.setExecAposCopiarColunaConcatenado(chkExecAposCopiarColunaConcatenado.isSelected()));
 
@@ -300,11 +311,14 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
 
+		chkFecharComESCInternal
+				.addActionListener(e -> Preferencias.setFecharComESCInternal(chkFecharComESCInternal.isSelected()));
+
 		chkExecAposBaixarParaComplemento.addActionListener(
 				e -> Preferencias.setExecAposBaixarParaComplemento(chkExecAposBaixarParaComplemento.isSelected()));
 
-		chkAbortarFecharComESC
-				.addActionListener(e -> Preferencias.setAbortarFecharComESC(chkAbortarFecharComESC.isSelected()));
+		chkFecharComESCDialogo
+				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
 
 		chkFecharOrigemAposSoltar
 				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));

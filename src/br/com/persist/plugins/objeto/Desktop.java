@@ -31,7 +31,6 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Popup;
 import br.com.persist.fichario.Fichario;
@@ -54,14 +53,12 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	private static final Logger LOG = Logger.getGlobal();
 	private boolean ajusteAutomatico = true;
 	private boolean ajusteAutomaticoForm;
-	private boolean abortarFecharComESC;
 
 	public Desktop(boolean extensao) {
 		if (!extensao) {
 			addMouseListener(mouseListenerInner);
 		}
 		new DropTarget(this, dropTargetListener);
-		abortarFecharComESC = Preferencias.isAbortarFecharComESC();
 	}
 
 	public void atualizarFormularios() {
@@ -309,7 +306,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	private void criarAdicionarInternaFormulario(Point point, Graphics g, boolean buscaAuto, InternalConfig config,
 			Dimension dimension, Conexao conexao, Objeto objeto) {
 		InternalFormulario internal = new InternalFormulario(conexao, objeto, g, buscaAuto);
-		internal.setAbortarFecharComESC(abortarFecharComESC);
 		internal.setLocation(point);
 		internal.setSize(dimension);
 		internal.setVisible(true);
@@ -383,14 +379,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				interno.pesquisarLink(referencia, argumentos);
 			}
 		}
-	}
-
-	public boolean isAbortarFecharComESC() {
-		return abortarFecharComESC;
-	}
-
-	public void setAbortarFecharComESC(boolean abortarFecharComESC) {
-		this.abortarFecharComESC = abortarFecharComESC;
 	}
 
 	public boolean isAjusteAutomatico() {

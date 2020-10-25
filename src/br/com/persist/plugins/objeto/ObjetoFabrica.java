@@ -51,9 +51,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private ObjetoContainer criarObjetoContainer(Formulario formulario) {
-		ObjetoContainer container = new ObjetoContainer(null, formulario);
-		container.setAbortarFecharComESCSuperficie(true);
-		return container;
+		return new ObjetoContainer(null, formulario);
 	}
 
 	@Override

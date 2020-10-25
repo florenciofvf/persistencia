@@ -32,7 +32,6 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Acao;
 import br.com.persist.componente.Action;
@@ -66,7 +65,6 @@ public class ObjetoContainer extends AbstratoContainer {
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
 	private final ObjetoSuperficie objetoSuperficie;
-	private boolean abortarFecharComESCSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
 	private ObjetoFormulario objetoFormulario;
@@ -77,7 +75,6 @@ public class ObjetoContainer extends AbstratoContainer {
 	public ObjetoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		objetoSuperficie = new ObjetoSuperficie(formulario, this);
-		objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
 		comboConexao = ConexaoProvedor.criarComboConexao(null);
 		toolbar.ini(janela);
 		montarLayout();
@@ -225,8 +222,6 @@ public class ObjetoContainer extends AbstratoContainer {
 		protected void retornarAoFichario() {
 			if (objetoFormulario != null) {
 				objetoFormulario.excluirContainer();
-				objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-				setAbortarFecharComESCSuperficie(true);
 				formulario.adicionarPagina(ObjetoContainer.this);
 			}
 		}
@@ -369,32 +364,31 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
-		if (abortarFecharComESCSuperficie) {
-			objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		}
 		objetoSuperficie.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
 		btnSelecao.click();
 	}
 
 	public void exportarMetadadoRaiz(Metadado metadado) {
-		if (abortarFecharComESCSuperficie) {
-			objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		}
 		objetoSuperficie.exportarMetadadoRaiz(metadado);
 		btnSelecao.click();
 	}
 
 	public void abrir(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {
-		if (abortarFecharComESCSuperficie) {
-			objetoSuperficie.setAbortarFecharComESC(Preferencias.isAbortarFecharComESC());
-		}
 		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
 		objetoSuperficie.abrir(coletor);
-		Conexao conexaoSel = null;
 		arquivo = file;
 		btnSelecao.click();
+		Conexao conexaoSel = selecionarConexao(coletor);
+		Conexao conexao = getConexaoPadrao();
+		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
+			adicionarInternalFormulario(conexao, coletor, g, config);
+		}
+	}
+
+	private Conexao selecionarConexao(ObjetoColetor coletor) {
+		Conexao conexaoSel = null;
 		if (!Util.estaVazio(coletor.getSbConexao().toString())) {
 			conexaoFile = coletor.getSbConexao().toString();
 			for (int i = 0; i < comboConexao.getItemCount(); i++) {
@@ -408,10 +402,7 @@ public class ObjetoContainer extends AbstratoContainer {
 				comboConexao.setSelectedItem(conexaoSel);
 			}
 		}
-		Conexao conexao = getConexaoPadrao();
-		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
-			adicionarInternalFormulario(conexao, coletor, g, config);
-		}
+		return conexaoSel;
 	}
 
 	private void adicionarInternalFormulario(Conexao conexao, ObjetoColetor coletor, Graphics g,
@@ -494,10 +485,6 @@ public class ObjetoContainer extends AbstratoContainer {
 				objetoSuperficie.repaint();
 			}
 		}
-	}
-
-	public void setAbortarFecharComESCSuperficie(boolean b) {
-		this.abortarFecharComESCSuperficie = b;
 	}
 
 	public Frame getFrame() {
