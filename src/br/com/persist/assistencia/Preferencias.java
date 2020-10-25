@@ -21,8 +21,8 @@ public class Preferencias {
 	private static boolean copiarNomeColunaListener;
 	private static boolean exibiuMensagemConnection;
 	private static String arqPref = "preferencias";
-	private static int tipoContainerPesquisaAuto;
 	private static boolean fecharComESCFormulario;
+	private static int tipoContainerPesquisaAuto;
 	private static boolean fecharComESCInternal;
 	private static int porcHorizontalLocalForm;
 	private static boolean erroCriarConnection;
