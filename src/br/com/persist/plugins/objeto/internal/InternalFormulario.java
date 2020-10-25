@@ -54,7 +54,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private void configurar2() {
 		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> checarMaximizado(evt.getNewValue()));
-		addMouseWheelListener(e -> checarAltura(e.getY(), e.getPreciseWheelRotation() > 0.0));
+		addMouseWheelListener(e -> checarAltura(e.getY(), e.getWheelRotation()));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -77,12 +77,12 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	private void checarAltura(int y, boolean norte) {
+	private void checarAltura(int y, int precisao) {
 		if (y < 21) {
 			int altura = getHeight();
-			if (norte) {
+			if (precisao > 10) {
 				processarNorte(altura);
-			} else {
+			} else if (precisao < -10) {
 				processarSul(altura);
 			}
 		}
