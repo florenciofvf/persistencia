@@ -15,11 +15,11 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.Janela;
 
 public abstract class AbstratoInternalFrame extends JInternalFrame implements Janela {
 	private static final long serialVersionUID = 1L;
-	private boolean abortarFecharComESC;
 
 	public AbstratoInternalFrame(String titulo) {
 		super(titulo, true, true, true, true);
@@ -49,19 +49,11 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!abortarFecharComESC) {
+				if (Preferencias.isFecharComESCInternal()) {
 					fechar();
 				}
 			}
 		};
-	}
-
-	public boolean isAbortarFecharComESC() {
-		return abortarFecharComESC;
-	}
-
-	public void setAbortarFecharComESC(boolean abortarFecharComESC) {
-		this.abortarFecharComESC = abortarFecharComESC;
 	}
 
 	private void configurar() {

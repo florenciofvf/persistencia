@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Janela;
 
@@ -54,7 +55,9 @@ public abstract class AbstratoFormulario extends JFrame implements Janela {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fechar();
+				if (Preferencias.isFecharComESCFormulario()) {
+					fechar();
+				}
 			}
 		};
 	}

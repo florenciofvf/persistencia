@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.Janela;
 
 public abstract class AbstratoDialogo extends JDialog implements Janela {
@@ -61,7 +62,9 @@ public abstract class AbstratoDialogo extends JDialog implements Janela {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fechar();
+				if (Preferencias.isFecharComESCDialogo()) {
+					fechar();
+				}
 			}
 		};
 	}
