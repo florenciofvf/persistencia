@@ -185,9 +185,12 @@ public class Formulario extends JFrame {
 
 		private void carregarMenu() {
 			File file = new File("persistencia.xml");
-			if (!file.isFile()) {
-				return;
+			if (file.isFile()) {
+				carregarMenu(file);
 			}
+		}
+
+		private void carregarMenu(File file) {
 			try {
 				MenuColetor coletor = new MenuColetor();
 				XML.processar(file, new MenuHandler(coletor));
@@ -212,6 +215,10 @@ public class Formulario extends JFrame {
 		SystemTray systemTray = SystemTray.getSystemTray();
 		TrayIcon trayIcon = new TrayIcon(image, Mensagens.getTituloAplicacao(), popup);
 		trayIcon.setImageAutoSize(true);
+		iconeBandeja(systemTray, trayIcon);
+	}
+
+	private void iconeBandeja(SystemTray systemTray, TrayIcon trayIcon) {
 		try {
 			systemTray.add(trayIcon);
 			trayIcon.displayMessage(Mensagens.getTituloAplicacao(), Mensagens.getString("versao"),
@@ -275,13 +282,16 @@ public class Formulario extends JFrame {
 	}
 
 	public static void posicionarJanela(Formulario formulario, Window window) {
-		if (formulario == null || window == null) {
-			return;
+		if (formulario != null && window != null) {
+			formulario.checarPreferenciasLarguraAltura();
+			posicionar(formulario, window);
 		}
-		formulario.checarPreferenciasLarguraAltura();
-		Rectangle pd = formulario.criarPosicaoDimensaoSeValido();
-		if (pd != null) {
-			window.setBounds((int) pd.getX(), (int) pd.getY(), (int) pd.getWidth(), (int) pd.getHeight());
+	}
+
+	private static void posicionar(Formulario formulario, Window window) {
+		Rectangle rect = formulario.criarPosicaoDimensaoSeValido();
+		if (rect != null) {
+			window.setBounds((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
 		} else {
 			window.setLocationRelativeTo(formulario);
 		}

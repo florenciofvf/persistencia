@@ -5,6 +5,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -24,11 +25,7 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		} catch (Exception e) {
-			LOG.log(Level.INFO, Constantes.INFO, e);
-		}
+		installLookAndFeel();
 		Preferencias.inicializar();
 		URL[] urLs = getURLs();
 		Preferencias.abrir();
@@ -40,6 +37,14 @@ public class Main {
 		Formulario formulario = gc == null ? new Formulario() : new Formulario(gc);
 		formulario.checarPreferenciasLarguraAltura();
 		formulario.setVisible(true);
+	}
+
+	private static void installLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+			LOG.log(Level.INFO, Constantes.INFO, e);
+		}
 	}
 
 	private static GraphicsConfiguration getGraphicsConfiguration() {
@@ -85,16 +90,20 @@ public class Main {
 	private static void addURL(File[] files, List<URL> urls) {
 		try {
 			if (files != null) {
-				for (File f : files) {
-					String s = f.getName().toLowerCase();
-					if (s.endsWith(".jar")) {
-						URI uri = f.toURI();
-						urls.add(uri.toURL());
-					}
-				}
+				addURLs(files, urls);
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	private static void addURLs(File[] files, List<URL> urls) throws MalformedURLException {
+		for (File f : files) {
+			String s = f.getName().toLowerCase();
+			if (s.endsWith(".jar")) {
+				URI uri = f.toURI();
+				urls.add(uri.toURL());
+			}
 		}
 	}
 }
