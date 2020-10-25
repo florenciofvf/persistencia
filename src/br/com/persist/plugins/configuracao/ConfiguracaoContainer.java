@@ -199,14 +199,14 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(new PainelCorTotalRecente());
 		container.add(new JSeparator());
 		container.add(chkAreaTransTabelaRegistros);
-		container.add(chkFecharComESCFormulario);
-		container.add(chkFecharComESCInternal);
-		container.add(chkFecharComESCDialogo);
 		container.add(chkExecAposBaixarParaComplemento);
 		container.add(chkExecAposCopiarColunaConcatenado);
 		container.add(chkNomeColunaListener);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkNomearArrasto);
+		container.add(chkFecharComESCFormulario);
+		container.add(chkFecharComESCInternal);
+		container.add(chkFecharComESCDialogo);
 		container.add(chkTituloAbaMin);
 		container.add(chkFicharioScroll);
 		container.add(new JSeparator());
