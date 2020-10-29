@@ -446,6 +446,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private class ButtonComplemento extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action copiarNomeTabAcao = Action.actionMenu("label.copiar_nome_tabela", null);
 			private Action copiarAcao = Action.actionMenu("label.copiar_complemento", null);
 			private Action concatAcao = Action.actionMenu("label.baixar_concatenado", null);
 			private Action normalAcao = Action.actionMenu("label.baixar_normal", null);
@@ -455,9 +456,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				addMenuItem(normalAcao);
 				addMenuItem(true, concatAcao);
 				addMenuItem(true, copiarAcao);
+				addMenuItem(true, copiarNomeTabAcao);
+				copiarNomeTabAcao.setActionListener(e -> copiarNomeTabela());
 				copiarAcao.setActionListener(e -> copiarComplemento());
 				concatAcao.setActionListener(e -> processar(false));
 				normalAcao.setActionListener(e -> processar(true));
+			}
+
+			private void copiarNomeTabela() {
+				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+				String esquema = null;
+				if (conexao != null) {
+					esquema = conexao.getEsquema();
+				}
+				Util.setContentTransfered(objeto.getTabelaEsquema(esquema));
 			}
 
 			private void copiarComplemento() {
