@@ -80,9 +80,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private void checarAltura(int y, int precisao) {
 		if (y < 21) {
 			int altura = getHeight();
-			if (precisao > 10) {
+			if (precisao > Constantes.QUATRO) {
 				processarNorte(altura);
-			} else if (precisao < -10) {
+			} else if (precisao < -Constantes.QUATRO) {
 				processarSul(altura);
 			}
 		}

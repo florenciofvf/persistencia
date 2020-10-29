@@ -139,6 +139,7 @@ public class Constantes {
 	public static final int TRINTA = 30;
 	public static final int VINTE = 20;
 	public static final String U = "_";
+	public static final int QUATRO = 4;
 	public static final int TRES = 3;
 	public static final int DOIS = 2;
 	public static final int DEZ = 10;
