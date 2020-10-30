@@ -22,15 +22,14 @@ public class Vinculacao {
 		if (!Util.estaVazio(arquivo)) {
 			file = new File(arquivo);
 		}
-		if (file == null || !file.isFile()) {
-			return;
-		}
-		try {
-			VinculoHandler handler = new VinculoHandler();
-			XML.processar(file, handler);
-			pesquisas.addAll(handler.getPesquisas());
-		} catch (Exception ex) {
-			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
+		if (file != null && file.isFile()) {
+			try {
+				VinculoHandler handler = new VinculoHandler();
+				XML.processar(file, handler);
+				pesquisas.addAll(handler.getPesquisas());
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
+			}
 		}
 	}
 

@@ -124,6 +124,10 @@ public class ConsultaContainer extends AbstratoContainer {
 			return;
 		}
 		textArea.limpar();
+		abrirArquivo();
+	}
+
+	private void abrirArquivo() {
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {

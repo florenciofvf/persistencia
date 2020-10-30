@@ -143,6 +143,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		this.objeto = objeto;
 		montarLayout();
 		configurar();
+		processar(g);
+	}
+
+	private void processar(Graphics g) {
 		processar("", g, null);
 	}
 
