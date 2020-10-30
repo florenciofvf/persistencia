@@ -131,6 +131,10 @@ public class AmbienteContainer extends AbstratoContainer {
 			return;
 		}
 		textArea.limpar();
+		abrirArquivo();
+	}
+
+	private void abrirArquivo() {
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -162,7 +166,6 @@ public class AmbienteContainer extends AbstratoContainer {
 		protected void destacarEmFormulario() {
 			if (formulario.excluirPagina(AmbienteContainer.this)) {
 				AmbienteFormulario.criar(formulario, AmbienteContainer.this);
-
 			} else if (ambienteDialogo != null) {
 				ambienteDialogo.excluirContainer();
 				AmbienteFormulario.criar(formulario, AmbienteContainer.this);
@@ -174,7 +177,6 @@ public class AmbienteContainer extends AbstratoContainer {
 			if (ambienteFormulario != null) {
 				ambienteFormulario.excluirContainer();
 				formulario.adicionarPagina(AmbienteContainer.this);
-
 			} else if (ambienteDialogo != null) {
 				ambienteDialogo.excluirContainer();
 				formulario.adicionarPagina(AmbienteContainer.this);
