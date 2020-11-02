@@ -22,22 +22,23 @@ public class PersistenciaModelo implements TableModel {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<Object>> registros;
 	private final List<Coluna> colunas;
-	private final boolean chaves;
 	private final String tabela;
 	private Conexao conexao;
 
 	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao) {
 		this.registros = registros;
+		this.conexao = conexao;
 		this.colunas = colunas;
 		this.tabela = tabela;
-		setConexao(conexao);
-		int total = 0;
+	}
+
+	private boolean contemChaves() {
 		for (Coluna c : colunas) {
 			if (c.isChave()) {
-				total++;
+				return true;
 			}
 		}
-		chaves = total > 0;
+		return false;
 	}
 
 	public static PersistenciaModelo criarVazio() {
@@ -106,10 +107,6 @@ public class PersistenciaModelo implements TableModel {
 		}
 	}
 
-	public boolean isChaves() {
-		return chaves;
-	}
-
 	@Override
 	public int getRowCount() {
 		return registros.size();
@@ -165,7 +162,7 @@ public class PersistenciaModelo implements TableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		List<Object> registro = registros.get(rowIndex);
-		if (chaves) {
+		if (contemChaves()) {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue }, null);
@@ -193,7 +190,7 @@ public class PersistenciaModelo implements TableModel {
 
 	public String getUpdate(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
-		if (chaves) {
+		if (contemChaves()) {
 			List<Object> valores = new ArrayList<>();
 			List<Coluna> naoChaves = getNaoChaves();
 			if (naoChaves.isEmpty()) {
@@ -209,7 +206,7 @@ public class PersistenciaModelo implements TableModel {
 	}
 
 	public String getUpdate(String prefixoNomeTabela) {
-		if (chaves) {
+		if (contemChaves()) {
 			List<Object> valores = new ArrayList<>();
 			List<Coluna> naoChaves = getNaoChaves();
 			if (naoChaves.isEmpty()) {
@@ -226,14 +223,14 @@ public class PersistenciaModelo implements TableModel {
 
 	public String getDelete(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
-		if (chaves) {
+		if (contemChaves()) {
 			return gerarDelete(registro, prefixoNomeTabela);
 		}
 		return null;
 	}
 
 	public String getDelete(String prefixoNomeTabela) {
-		if (chaves) {
+		if (contemChaves()) {
 			return gerarDelete(null, prefixoNomeTabela);
 		}
 		return null;
@@ -250,7 +247,7 @@ public class PersistenciaModelo implements TableModel {
 
 	public int excluir(int rowIndex, String prefixoNomeTabela) {
 		List<Object> registro = registros.get(rowIndex);
-		if (chaves) {
+		if (contemChaves()) {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
