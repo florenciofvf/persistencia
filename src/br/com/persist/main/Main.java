@@ -51,6 +51,11 @@ public class Main {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		String id = Preferencias.getString(Constantes.GC);
 		GraphicsDevice[] gs = ge.getScreenDevices();
+		GraphicsDevice device = getDevice(id, gs);
+		return getGC(device);
+	}
+
+	private static GraphicsDevice getDevice(String id, GraphicsDevice[] gs) {
 		GraphicsDevice device = null;
 		if (gs != null && id != null) {
 			for (GraphicsDevice gd : gs) {
@@ -59,6 +64,10 @@ public class Main {
 				}
 			}
 		}
+		return device;
+	}
+
+	private static GraphicsConfiguration getGC(GraphicsDevice device) {
 		if (device != null) {
 			GraphicsConfiguration[] gcs = device.getConfigurations();
 			if (gcs != null && gcs.length > 0) {
