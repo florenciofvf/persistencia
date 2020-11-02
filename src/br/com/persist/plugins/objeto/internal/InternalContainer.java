@@ -224,7 +224,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private PersistenciaModelo.Parametros criarParametros(Connection conn, Conexao conexao, String consulta) {
 		Parametros param = new Parametros(conn, conexao, consulta);
-		param.setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
 		param.setMapaSequencia(objeto.getMapaSequencias());
 		param.setColunasChave(objeto.getChavesArray());
 		param.setComColunaInfo(objeto.isColunaInfo());

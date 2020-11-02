@@ -307,8 +307,7 @@ public class Persistencia {
 				}
 				registros.add(registro);
 			}
-			return new PersistenciaModelo(colunas, registros, parametros.getTabela(), parametros.getPrefixoNomeTabela(),
-					parametros.getConexao());
+			return new PersistenciaModelo(colunas, registros, parametros.getTabela(), parametros.getConexao());
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
 		}

@@ -21,15 +21,12 @@ import br.com.persist.plugins.conexao.ConexaoProvedor;
 public class PersistenciaModelo implements TableModel {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<Object>> registros;
-	private final String prefixoNomeTabela;
 	private final List<Coluna> colunas;
 	private final boolean chaves;
 	private final String tabela;
 	private Conexao conexao;
 
-	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela,
-			String prefixoNomeTabela, Conexao conexao) {
-		this.prefixoNomeTabela = prefixoNomeTabela;
+	public PersistenciaModelo(List<Coluna> colunas, List<List<Object>> registros, String tabela, Conexao conexao) {
 		this.registros = registros;
 		this.colunas = colunas;
 		this.tabela = tabela;
@@ -46,12 +43,11 @@ public class PersistenciaModelo implements TableModel {
 	public static PersistenciaModelo criarVazio() {
 		List<Coluna> colunas = new ArrayList<>();
 		List<List<Object>> registros = new ArrayList<>();
-		return new PersistenciaModelo(colunas, registros, null, null, null);
+		return new PersistenciaModelo(colunas, registros, null, null);
 	}
 
 	public static class Parametros {
 		private Map<String, String> mapaSequencia;
-		private String prefixoNomeTabela;
 		private final Conexao conexao;
 		private final String consulta;
 		private String[] colunasChave;
@@ -71,14 +67,6 @@ public class PersistenciaModelo implements TableModel {
 
 		public void setMapaSequencia(Map<String, String> mapaSequencia) {
 			this.mapaSequencia = mapaSequencia;
-		}
-
-		public String getPrefixoNomeTabela() {
-			return prefixoNomeTabela;
-		}
-
-		public void setPrefixoNomeTabela(String prefixoNomeTabela) {
-			this.prefixoNomeTabela = prefixoNomeTabela;
 		}
 
 		public String[] getColunasChave() {
@@ -180,8 +168,7 @@ public class PersistenciaModelo implements TableModel {
 		if (chaves) {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
-				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
-						prefixoNomeTabela);
+				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue }, null);
 				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
 				if (Preferencias.isAreaTransTabelaRegistros()) {
