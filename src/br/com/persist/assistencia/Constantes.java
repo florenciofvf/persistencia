@@ -61,7 +61,7 @@ public class Constantes {
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_APARENCIA = "label.aparencia";
 	public static final String PAINEL_ANOTACAO = "PAINEL ANOTACAO";
-	public static final Dimension SIZE2 = new Dimension(1000, 800);
+	public static final Dimension SIZE2 = new Dimension(800, 400);
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
 	public static final String CHAVE_PRIMARIA = "CHAVE_PRIMARIA";

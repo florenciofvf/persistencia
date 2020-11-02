@@ -138,7 +138,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
-			add(BorderLayout.NORTH, container);
+			add(BorderLayout.CENTER, container);
 		}
 
 		private void mensagemPropriedadeArquivo(Label label) {
@@ -300,7 +300,7 @@ public class ObjetoContainer extends Panel {
 					Mensagens.getString("hint.ajuste_auto_form")));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
-			add(BorderLayout.NORTH, container);
+			add(BorderLayout.CENTER, new ScrollPane(container));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
