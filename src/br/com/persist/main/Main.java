@@ -27,16 +27,16 @@ public class Main {
 	public static void main(String[] args) {
 		installLookAndFeel();
 		Preferencias.inicializar();
-		URL[] urLs = getURLs();
 		Preferencias.abrir();
+		addURLs(getURLs());
 		Imagens.ini();
-		for (URL url : urLs) {
-			addURL(url);
-		}
-		GraphicsConfiguration gc = getGraphicsConfiguration();
-		Formulario formulario = gc == null ? new Formulario() : new Formulario(gc);
-		formulario.checarPreferenciasLarguraAltura();
-		formulario.setVisible(true);
+		Formulario form = criarFormulario(getGC());
+		form.checarPreferenciasLarguraAltura();
+		form.setVisible(true);
+	}
+
+	private static Formulario criarFormulario(GraphicsConfiguration gc) {
+		return gc == null ? new Formulario() : new Formulario(gc);
 	}
 
 	private static void installLookAndFeel() {
@@ -47,7 +47,7 @@ public class Main {
 		}
 	}
 
-	private static GraphicsConfiguration getGraphicsConfiguration() {
+	private static GraphicsConfiguration getGC() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		String id = Preferencias.getString(Constantes.GC);
 		GraphicsDevice[] gs = ge.getScreenDevices();
@@ -94,6 +94,12 @@ public class Main {
 		List<URL> urls = new ArrayList<>();
 		addURL(files, urls);
 		return urls.toArray(new URL[urls.size()]);
+	}
+
+	private static void addURLs(URL[] urLs) {
+		for (URL url : urLs) {
+			addURL(url);
+		}
 	}
 
 	private static void addURL(File[] files, List<URL> urls) {
