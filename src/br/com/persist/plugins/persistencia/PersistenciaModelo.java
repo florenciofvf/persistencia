@@ -385,7 +385,7 @@ public class PersistenciaModelo implements TableModel {
 	private String montarWhere(List<Object> registro) {
 		List<Coluna> colunasChave = getChaves();
 		if (colunasChave.isEmpty()) {
-			throw new IllegalStateException("Sem colunas chaves.");
+			throw new IllegalStateException("Sem coluna(s) chave(s).");
 		}
 		StringBuilder resposta = new StringBuilder(Constantes.QL + " WHERE ");
 		Coluna coluna = colunasChave.get(0);
