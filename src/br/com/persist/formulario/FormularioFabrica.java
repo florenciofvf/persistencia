@@ -34,18 +34,14 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		List<JMenuItem> lista = new ArrayList<>();
-
 		if (menu.getItemCount() > 0) {
 			menu.addSeparator();
 		}
-
 		JMenuItem itemFecharEConexao = new JMenuItem(Mensagens.getString("label.fechar_com_conexao"), Icones.SAIR);
 		itemFecharEConexao.addActionListener(e -> fechar(formulario, true));
 		lista.add(itemFecharEConexao);
-
 		itemFechar.addActionListener(e -> fechar(formulario, false));
 		lista.add(itemFechar);
-
 		return lista;
 	}
 

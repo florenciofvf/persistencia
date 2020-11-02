@@ -213,9 +213,14 @@ public class Formulario extends JFrame {
 		URL url = getClass().getResource(Constantes.IMAGEM_TRAY_ICON);
 		Image image = Toolkit.getDefaultToolkit().getImage(url);
 		SystemTray systemTray = SystemTray.getSystemTray();
+		TrayIcon trayIcon = criarTryIcon(popup, image);
+		iconeBandeja(systemTray, trayIcon);
+	}
+
+	private TrayIcon criarTryIcon(PopupMenu popup, Image image) {
 		TrayIcon trayIcon = new TrayIcon(image, Mensagens.getTituloAplicacao(), popup);
 		trayIcon.setImageAutoSize(true);
-		iconeBandeja(systemTray, trayIcon);
+		return trayIcon;
 	}
 
 	private void iconeBandeja(SystemTray systemTray, TrayIcon trayIcon) {
