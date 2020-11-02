@@ -25,11 +25,15 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		installLookAndFeel();
 		Preferencias.inicializar();
+		installLookAndFeel();
 		Preferencias.abrir();
 		addURLs(getURLs());
 		Imagens.ini();
+		abrirForm();
+	}
+
+	private static void abrirForm() {
 		Formulario form = criarFormulario(getGC());
 		form.checarPreferenciasLarguraAltura();
 		form.setVisible(true);
