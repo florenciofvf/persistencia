@@ -186,6 +186,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			Connection conn = ConexaoProvedor.getConnection(conexao);
 			Parametros param = criarParametros(conn, conexao, consulta.toString());
 			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
+			modeloOrdenacao.getModelo().setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
 			modeloOrdenacao.getModelo().setConexao(conexao);
 			objeto.setComplemento(txtComplemento.getText());
 			tabelaPersistencia.setModel(modeloOrdenacao);

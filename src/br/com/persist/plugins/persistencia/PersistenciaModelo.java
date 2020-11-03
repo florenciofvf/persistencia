@@ -22,6 +22,7 @@ public class PersistenciaModelo implements TableModel {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<List<Object>> registros;
 	private final List<Coluna> colunas;
+	private String prefixoNomeTabela;
 	private final String tabela;
 	private Conexao conexao;
 
@@ -165,7 +166,8 @@ public class PersistenciaModelo implements TableModel {
 		if (contemChaves()) {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
-				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue }, null);
+				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
+						getPrefixoNomeTabela());
 				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
 				if (Preferencias.isAreaTransTabelaRegistros()) {
@@ -426,5 +428,16 @@ public class PersistenciaModelo implements TableModel {
 	@Override
 	public void removeTableModelListener(TableModelListener l) {
 		LOG.log(Level.FINEST, "removeTableModelListener");
+	}
+
+	public String getPrefixoNomeTabela() {
+		if (Util.estaVazio(prefixoNomeTabela)) {
+			prefixoNomeTabela = Constantes.VAZIO;
+		}
+		return prefixoNomeTabela;
+	}
+
+	public void setPrefixoNomeTabela(String prefixoNomeTabela) {
+		this.prefixoNomeTabela = prefixoNomeTabela;
 	}
 }
