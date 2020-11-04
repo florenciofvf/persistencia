@@ -55,6 +55,7 @@ public class ObjetoHandler extends XMLHandler {
 			coletor.getForms().add(f);
 		} else if ("instrucao".equals(qName)) {
 			Instrucao i = new Instrucao(attributes.getValue("nome"));
+			i.setSelecaoMultipla(Boolean.parseBoolean(attributes.getValue("selecaoMultipla")));
 			String ordem = attributes.getValue("ordem");
 			if (!Util.estaVazio(ordem)) {
 				i.setOrdem(Integer.parseInt(ordem));

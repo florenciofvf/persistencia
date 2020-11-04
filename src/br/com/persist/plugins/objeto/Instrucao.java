@@ -5,8 +5,9 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
 public class Instrucao implements Comparable<Instrucao> {
-	private String nome;
+	private boolean selecaoMultipla;
 	private String valor;
+	private String nome;
 	private int ordem;
 
 	public Instrucao(String nome) {
@@ -50,6 +51,14 @@ public class Instrucao implements Comparable<Instrucao> {
 		this.ordem = ordem;
 	}
 
+	public boolean isSelecaoMultipla() {
+		return selecaoMultipla;
+	}
+
+	public void setSelecaoMultipla(boolean selecaoMultipla) {
+		this.selecaoMultipla = selecaoMultipla;
+	}
+
 	public Instrucao clonar() {
 		Instrucao i = new Instrucao(nome);
 		i.setValor(valor);
@@ -61,6 +70,7 @@ public class Instrucao implements Comparable<Instrucao> {
 			util.abrirTag("instrucao");
 			util.atributo("nome", Util.escapar(nome));
 			util.atributo("ordem", ordem);
+			util.atributo("selecaoMultipla", selecaoMultipla);
 			util.fecharTag();
 			util.abrirTag2(Constantes.VALOR);
 			util.conteudo(Util.escapar(getValor())).ql();
