@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
 
@@ -13,6 +14,7 @@ public class RelacaoDialogo extends AbstratoDialogo {
 
 	private RelacaoDialogo(Frame frame, ObjetoSuperficie objetoSuperficie, Relacao relacao) {
 		super(frame, relacao.getOrigem().getId() + " / " + relacao.getDestino().getId());
+		setSize(Constantes.SIZE2);
 		container = new RelacaoContainer(this, objetoSuperficie, relacao);
 		montarLayout();
 	}

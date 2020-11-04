@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
@@ -79,14 +80,19 @@ public class InstrucaoContainer extends Panel {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private final TextField textFieldOrdem = new TextField();
+		private CheckBox chkSelMultipla = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, EXCLUIR, COPIAR, COLAR);
+			chkSelMultipla.addActionListener(e -> instrucao.setSelecaoMultipla(chkSelMultipla.isSelected()));
+			chkSelMultipla.setToolTipText(Mensagens.getString("label.selecao_multipla"));
 			textFieldOrdem.setToolTipText(Mensagens.getString("label.ordem"));
 			textFieldOrdem.setText(Integer.toString(instrucao.getOrdem()));
+			chkSelMultipla.setSelected(instrucao.isSelecaoMultipla());
 			textFieldOrdem.addActionListener(e -> configurarOrdem());
 			textFieldOrdem.addFocusListener(focusOrdemListener);
 			add(textFieldOrdem);
+			add(chkSelMultipla);
 		}
 
 		private transient FocusListener focusOrdemListener = new FocusListener() {
