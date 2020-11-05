@@ -175,6 +175,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (instrucoes.isEmpty()) {
 				return;
 			}
+			macroObjetos(instrucoes);
+			macroRelacoes(instrucoes);
+			repaint();
+		}
+
+		private void macroObjetos(List<MacroProvedor.Instrucao> instrucoes) {
 			for (Objeto objeto : objetos) {
 				if (objeto.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
@@ -182,6 +188,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
+		}
+
+		private void macroRelacoes(List<MacroProvedor.Instrucao> instrucoes) {
 			for (Relacao relacao : relacoes) {
 				if (relacao.isSelecionado()) {
 					for (MacroProvedor.Instrucao instrucao : instrucoes) {
@@ -189,7 +198,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			}
-			repaint();
 		}
 	};
 
@@ -218,32 +226,21 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	};
 
 	public void alinharNomes() {
-		Font font = getFont();
-		if (font == null) {
-			return;
-		}
-		FontMetrics fm = getFontMetrics(font);
-		if (fm == null) {
-			return;
-		}
 		for (Objeto objeto : objetos) {
-			objeto.alinhar(fm);
+			alinharNome(objeto);
 		}
 	}
 
 	public void alinharNome(Objeto objeto) {
-		if (objeto == null) {
-			return;
+		if (objeto != null) {
+			Font font = getFont();
+			if (font != null) {
+				FontMetrics fm = getFontMetrics(font);
+				if (fm != null) {
+					objeto.alinhar(fm);
+				}
+			}
 		}
-		Font font = getFont();
-		if (font == null) {
-			return;
-		}
-		FontMetrics fm = getFontMetrics(font);
-		if (fm == null) {
-			return;
-		}
-		objeto.alinhar(fm);
 	}
 
 	public void limparSelecao() {
@@ -888,25 +885,23 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public Relacao getRelacao(Objeto obj) {
-		if (obj == null) {
-			return null;
-		}
-		for (Relacao relacao : relacoes) {
-			if (relacao.contem(obj)) {
-				return relacao;
+		if (obj != null) {
+			for (Relacao relacao : relacoes) {
+				if (relacao.contem(obj)) {
+					return relacao;
+				}
 			}
 		}
 		return null;
 	}
 
 	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
-		if (obj1 == null || obj2 == null) {
-			return null;
-		}
-		Relacao temp = new Relacao(obj1, obj2);
-		for (Relacao relacao : relacoes) {
-			if (relacao.equals(temp)) {
-				return relacao;
+		if (obj1 != null && obj2 != null) {
+			Relacao temp = new Relacao(obj1, obj2);
+			for (Relacao relacao : relacoes) {
+				if (relacao.equals(temp)) {
+					return relacao;
+				}
 			}
 		}
 		return null;
@@ -1439,6 +1434,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		removeMouseMotionListener(mouseAdapterSelecao);
 		removeMouseListener(mouseAdapterSelecao);
 		this.estado = -1;
+		configEstadoImp(estado);
+		if (relacoes != null) {
+			for (Relacao relacao : relacoes) {
+				relacao.setSelecionado(false);
+			}
+		}
+		if (objetos != null) {
+			limparSelecao();
+		}
+	}
+
+	private void configEstadoImp(byte estado) {
 		if (estado == Constantes.ARRASTO) {
 			addMouseMotionListener(mouseAdapterArrasto);
 			addMouseListener(mouseAdapterArrasto);
@@ -1455,14 +1462,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMouseMotionListener(mouseAdapterSelecao);
 			addMouseListener(mouseAdapterSelecao);
 			this.estado = estado;
-		}
-		if (relacoes != null) {
-			for (Relacao relacao : relacoes) {
-				relacao.setSelecionado(false);
-			}
-		}
-		if (objetos != null) {
-			limparSelecao();
 		}
 	}
 
@@ -1615,16 +1614,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			return;
 		}
 		Font font = getFont();
-		if (font == null) {
-			return;
-		}
-		FontMetrics fm = getFontMetrics(font);
-		if (fm == null) {
-			return;
-		}
-		int total = preTotalRecente(label);
-		if (total > 0) {
-			new ThreadRecente(conexao, fm, menuItem, label, total).start();
+		if (font != null) {
+			FontMetrics fm = getFontMetrics(font);
+			if (fm != null) {
+				int total = preTotalRecente(label);
+				if (total > 0) {
+					new ThreadRecente(conexao, fm, menuItem, label, total).start();
+				}
+			}
 		}
 	}
 
