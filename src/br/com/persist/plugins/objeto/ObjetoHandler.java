@@ -27,45 +27,65 @@ public class ObjetoHandler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("fvf".equals(qName)) {
-			coletor.getAjusteAutoForm().set(Boolean.parseBoolean(attributes.getValue("ajusteAutoForm")));
-			coletor.getDimension().width = Integer.parseInt(attributes.getValue("largura"));
-			coletor.getDimension().height = Integer.parseInt(attributes.getValue("altura"));
-			coletor.setArquivoVinculo(attributes.getValue("arquivoVinculo"));
-			String conexao = attributes.getValue("conexao");
-			if (!Util.estaVazio(conexao)) {
-				coletor.getSbConexao().append(conexao);
-			}
+			processarRaiz(attributes);
 		} else if ("objeto".equals(qName)) {
-			Objeto objeto = new Objeto();
-			objeto.aplicar(attributes);
-			selecionado = objeto;
-			coletor.getObjetos().add(objeto);
+			processarObjeto(attributes);
 		} else if ("relacao".equals(qName)) {
-			boolean pontoDestino = Boolean.parseBoolean(attributes.getValue("pontoDestino"));
-			boolean pontoOrigem = Boolean.parseBoolean(attributes.getValue("pontoOrigem"));
-			Objeto destino = getObjeto(attributes.getValue("destino"));
-			Objeto origem = getObjeto(attributes.getValue("origem"));
-			Relacao relacao = new Relacao(origem, pontoOrigem, destino, pontoDestino);
-			relacao.aplicar(attributes);
-			selecionado = relacao;
-			coletor.getRelacoes().add(relacao);
+			processarRelacao(attributes);
 		} else if ("form".equals(qName)) {
-			InternalForm f = new InternalForm();
-			f.aplicar(attributes);
-			coletor.getForms().add(f);
+			processarForm(attributes);
 		} else if ("instrucao".equals(qName)) {
-			Instrucao i = new Instrucao(attributes.getValue("nome"));
-			i.setSelecaoMultipla(Boolean.parseBoolean(attributes.getValue("selecaoMultipla")));
-			String ordem = attributes.getValue("ordem");
-			if (!Util.estaVazio(ordem)) {
-				i.setOrdem(Integer.parseInt(ordem));
-			}
-			if (selecionado instanceof Objeto) {
-				Objeto obj = (Objeto) selecionado;
-				obj.addInstrucao(i);
-			}
+			processarInstrucao(attributes);
 		} else if ("desc".equals(qName) || Constantes.VALOR.equals(qName) || "buscaAutomatica".equals(qName)) {
 			limpar();
+		}
+	}
+
+	private void processarInstrucao(Attributes attributes) {
+		Instrucao i = new Instrucao(attributes.getValue("nome"));
+		i.setSelecaoMultipla(Boolean.parseBoolean(attributes.getValue("selecaoMultipla")));
+		String ordem = attributes.getValue("ordem");
+		if (!Util.estaVazio(ordem)) {
+			i.setOrdem(Integer.parseInt(ordem));
+		}
+		if (selecionado instanceof Objeto) {
+			Objeto obj = (Objeto) selecionado;
+			obj.addInstrucao(i);
+		}
+	}
+
+	private void processarForm(Attributes attributes) {
+		InternalForm f = new InternalForm();
+		f.aplicar(attributes);
+		coletor.getForms().add(f);
+	}
+
+	private void processarRelacao(Attributes attributes) {
+		boolean pontoDestino = Boolean.parseBoolean(attributes.getValue("pontoDestino"));
+		boolean pontoOrigem = Boolean.parseBoolean(attributes.getValue("pontoOrigem"));
+		Objeto destino = getObjeto(attributes.getValue("destino"));
+		Objeto origem = getObjeto(attributes.getValue("origem"));
+		Relacao relacao = new Relacao(origem, pontoOrigem, destino, pontoDestino);
+		relacao.aplicar(attributes);
+		selecionado = relacao;
+		coletor.getRelacoes().add(relacao);
+	}
+
+	private void processarObjeto(Attributes attributes) {
+		Objeto objeto = new Objeto();
+		objeto.aplicar(attributes);
+		selecionado = objeto;
+		coletor.getObjetos().add(objeto);
+	}
+
+	private void processarRaiz(Attributes attributes) {
+		coletor.getAjusteAutoForm().set(Boolean.parseBoolean(attributes.getValue("ajusteAutoForm")));
+		coletor.getDimension().width = Integer.parseInt(attributes.getValue("largura"));
+		coletor.getDimension().height = Integer.parseInt(attributes.getValue("altura"));
+		coletor.setArquivoVinculo(attributes.getValue("arquivoVinculo"));
+		String conexao = attributes.getValue("conexao");
+		if (!Util.estaVazio(conexao)) {
+			coletor.getSbConexao().append(conexao);
 		}
 	}
 
@@ -85,13 +105,17 @@ public class ObjetoHandler extends XMLHandler {
 		} else if ("desc".equals(qName) && selecionado != null) {
 			setDescricao();
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
-			String string = builder.toString();
-			if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
-				Objeto obj = (Objeto) selecionado;
-				obj.getUltInstrucao().setValor(string.trim());
-			}
-			limpar();
+			setValor();
 		}
+	}
+
+	private void setValor() {
+		String string = builder.toString();
+		if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
+			Objeto obj = (Objeto) selecionado;
+			obj.getUltInstrucao().setValor(string.trim());
+		}
+		limpar();
 	}
 
 	private void setDescricao() {
