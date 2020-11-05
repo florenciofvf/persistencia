@@ -25,6 +25,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -798,12 +799,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
-					if (linhas != null && linhas.length == 1) {
+					if (linhas != null && linhas.length > 0) {
 						Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
 						if (chaves.isEmpty() || Util.estaVazio(instrucao.getValor())) {
 							return;
 						}
-						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), chaves);
+						Map<String, List<String>> mapaChaves = criar(chaves);
+						for (int i = 1; i < linhas.length; i++) {
+							chaves = modelo.getMapaChaves(linhas[i]);
+							mergear(mapaChaves, chaves);
+						}
+						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), mapaChaves);
 						if (instrucao.isSelect()) {
 							selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 						} else {
@@ -814,6 +820,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private void setHabilitado(int[] linhas) {
 					setEnabled(instrucao.isSelecaoMultipla() ? linhas.length >= 1 : linhas.length == 1);
+				}
+
+				private void mergear(Map<String, List<String>> mapaChaves, Map<String, String> chaves) {
+					Iterator<Map.Entry<String, List<String>>> it = mapaChaves.entrySet().iterator();
+					while (it.hasNext()) {
+						Entry<String, List<String>> entry = it.next();
+						String valor = chaves.get(entry.getKey());
+						List<String> lista = entry.getValue();
+						lista.add(valor);
+					}
+				}
+
+				private Map<String, List<String>> criar(Map<String, String> chaves) {
+					Iterator<Map.Entry<String, String>> it = chaves.entrySet().iterator();
+					Map<String, List<String>> mapa = new HashMap<>();
+					while (it.hasNext()) {
+						Entry<String, String> entry = it.next();
+						mapa.put(entry.getKey(), criarArrayList(entry.getValue()));
+					}
+					return mapa;
+				}
+
+				private List<String> criarArrayList(String string) {
+					List<String> lista = new ArrayList<>();
+					lista.add(string);
+					return lista;
 				}
 			}
 		}

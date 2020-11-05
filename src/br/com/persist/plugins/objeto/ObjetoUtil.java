@@ -72,19 +72,32 @@ public class ObjetoUtil {
 		return mapa;
 	}
 
-	public static String substituir(String instrucao, Map<String, String> mapaChaveValor) {
+	public static String substituir(String instrucao, Map<String, List<String>> mapaChaveValor) {
 		if (instrucao == null) {
 			return null;
 		}
 		if (mapaChaveValor != null) {
-			Iterator<Map.Entry<String, String>> it = mapaChaveValor.entrySet().iterator();
+			Iterator<Map.Entry<String, List<String>>> it = mapaChaveValor.entrySet().iterator();
 			while (it.hasNext()) {
-				Entry<String, String> entry = it.next();
-				instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", entry.getValue());
-				instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", entry.getValue());
-				instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", entry.getValue());
+				Entry<String, List<String>> entry = it.next();
+				String valor = convert(entry.getValue());
+				instrucao = instrucao.replaceAll("#" + entry.getKey().toUpperCase() + "#", valor);
+				instrucao = instrucao.replaceAll("#" + entry.getKey().toLowerCase() + "#", valor);
+				instrucao = instrucao.replaceAll("#" + entry.getKey() + "#", valor);
 			}
 		}
 		return VariavelProvedor.substituir(instrucao);
+	}
+
+	private static String convert(List<String> lista) {
+		StringBuilder sb = new StringBuilder();
+		if (!lista.isEmpty()) {
+			sb.append(lista.get(0));
+			for (int i = 1; i < lista.size(); i++) {
+				sb.append(", ");
+				sb.append(lista.get(i));
+			}
+		}
+		return sb.toString();
 	}
 }
