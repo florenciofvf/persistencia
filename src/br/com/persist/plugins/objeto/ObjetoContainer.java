@@ -380,29 +380,39 @@ public class ObjetoContainer extends AbstratoContainer {
 		objetoSuperficie.abrir(coletor);
 		arquivo = file;
 		btnSelecao.click();
-		Conexao conexaoSel = selecionarConexao(coletor);
+		Conexao conexaoSel = selecionarConexao(coletor, config);
 		Conexao conexao = getConexaoPadrao();
 		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
 			adicionarInternalFormulario(conexao, coletor, g, config);
 		}
 	}
 
-	private Conexao selecionarConexao(ObjetoColetor coletor) {
+	private Conexao selecionarConexao(ObjetoColetor coletor, InternalConfig config) {
 		Conexao conexaoSel = null;
 		if (!Util.estaVazio(coletor.getSbConexao().toString())) {
 			conexaoFile = coletor.getSbConexao().toString();
-			for (int i = 0; i < comboConexao.getItemCount(); i++) {
-				Conexao c = comboConexao.getItemAt(i);
-				if (conexaoFile.equalsIgnoreCase(c.getNome())) {
-					conexaoSel = c;
-					break;
-				}
+			conexaoSel = getConexaoSel(conexaoFile);
+			if (conexaoSel != null) {
+				comboConexao.setSelectedItem(conexaoSel);
 			}
+		}
+		if (config != null && !Util.estaVazio(config.getConexao())) {
+			conexaoSel = getConexaoSel(config.getConexao());
 			if (conexaoSel != null) {
 				comboConexao.setSelectedItem(conexaoSel);
 			}
 		}
 		return conexaoSel;
+	}
+
+	private Conexao getConexaoSel(String nome) {
+		for (int i = 0; i < comboConexao.getItemCount(); i++) {
+			Conexao c = comboConexao.getItemAt(i);
+			if (nome.equalsIgnoreCase(c.getNome())) {
+				return c;
+			}
+		}
+		return null;
 	}
 
 	private void adicionarInternalFormulario(Conexao conexao, ObjetoColetor coletor, Graphics g,

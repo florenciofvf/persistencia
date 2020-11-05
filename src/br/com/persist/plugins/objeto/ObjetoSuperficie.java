@@ -648,18 +648,21 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				popup.configuracaoAcao.actionPerformed(null);
 			} else {
 				Conexao conexao = container.getConexaoPadrao();
+				InternalFormulario interno = getInternalFormulario(objeto);
+				if (interno != null) {
+					conexao = interno.getInternalContainer().getConexao();
+				}
 				setComplemento(conexao, objeto);
 				if (Util.estaVazio(objeto.getArquivo())) {
 					Frame frame = container.getFrame();
 					formularioDados(conexao, objeto, frame);
 				} else {
-					abrirArquivo(conexao, objeto);
+					abrirArquivo(conexao, objeto, interno);
 				}
 			}
 		}
 
-		private void abrirArquivo(Conexao conexao, Objeto objeto) {
-			InternalFormulario interno = getInternalFormulario(objeto);
+		private void abrirArquivo(Conexao conexao, Objeto objeto, InternalFormulario interno) {
 			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela2());
 			config.setGraphics(getGraphics());
 			if (interno != null) {

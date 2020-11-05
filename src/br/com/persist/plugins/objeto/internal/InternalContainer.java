@@ -1399,12 +1399,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		if (ItemEvent.SELECTED != e.getStateChange()) {
 			return;
 		}
-		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+		Conexao conexao = getConexao();
 		if (conexao != null) {
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 			TableModel model = modelo.getModelo();
 			((PersistenciaModelo) model).setConexao(conexao);
 		}
+	}
+
+	public Conexao getConexao() {
+		return (Conexao) comboConexao.getSelectedItem();
 	}
 
 	private transient FragmentoListener fragmentoListener = new FragmentoListener() {
@@ -1464,15 +1468,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	public void aplicarConfig(InternalConfig config) {
-		Conexao conexaoSel = null;
 		if (!Util.estaVazio(config.getConexao())) {
-			for (int i = 0; i < comboConexao.getItemCount(); i++) {
-				Conexao c = comboConexao.getItemAt(i);
-				if (config.getConexao().equalsIgnoreCase(c.getNome())) {
-					conexaoSel = c;
-					break;
-				}
-			}
+			Conexao conexaoSel = getConexaoSel(config.getConexao());
 			if (conexaoSel != null) {
 				comboConexao.setSelectedItem(conexaoSel);
 			}
@@ -1481,6 +1478,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		destacarTitulo = true;
 		actionListenerInner.actionPerformed(null);
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
+	}
+
+	private Conexao getConexaoSel(String nome) {
+		for (int i = 0; i < comboConexao.getItemCount(); i++) {
+			Conexao c = comboConexao.getItemAt(i);
+			if (nome.equalsIgnoreCase(c.getNome())) {
+				return c;
+			}
+		}
+		return null;
 	}
 
 	public void pesquisarApos() {
