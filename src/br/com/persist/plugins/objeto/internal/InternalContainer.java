@@ -647,13 +647,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		private class ButtonUpdate extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
+			private List<MenuInstrucao> listaMenuInstrucao = new ArrayList<>();
+			private MenuUpdate menuUpdate = new MenuUpdate();
+			private MenuDelete menuDelete = new MenuDelete();
+			private MenuInsert menuInsert = new MenuInsert();
 
 			private ButtonUpdate() {
 				super(Constantes.LABEL_UPDATE, Icones.UPDATE);
 				addMenuItem(dadosAcao);
-				addMenu(true, new MenuUpdate());
-				addMenu(true, new MenuDelete());
-				addMenu(true, new MenuInsert());
+				addMenu(true, menuUpdate);
+				addMenu(true, menuDelete);
+				addMenu(true, menuInsert);
 				eventos();
 			}
 
@@ -668,6 +672,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Util.mensagem(InternalContainer.this, sb.toString());
 					}
 				});
+			}
+
+			private void setHabilitado(int[] linhas) {
+				boolean umaLinhaSel = linhas.length == 1;
+				dadosAcao.setEnabled(umaLinhaSel);
+				menuUpdate.setEnabled(umaLinhaSel);
+				menuDelete.setEnabled(umaLinhaSel);
+				menuInsert.setEnabled(umaLinhaSel);
+				for (MenuInstrucao menu : listaMenuInstrucao) {
+					menu.setHabilitado(linhas);
+				}
 			}
 
 			private class MenuUpdate extends MenuPadrao3 {
@@ -753,13 +768,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void complemento(Objeto objeto) {
-				if (objeto == null || objeto.getInstrucoes().isEmpty()) {
-					return;
-				}
-				objeto.ordenarInstrucoes();
-				for (Instrucao i : objeto.getInstrucoes()) {
-					if (!Util.estaVazio(i.getValor())) {
-						addMenu(true, new MenuInstrucao(i));
+				if (objeto != null) {
+					objeto.ordenarInstrucoes();
+					for (Instrucao i : objeto.getInstrucoes()) {
+						if (!Util.estaVazio(i.getValor())) {
+							MenuInstrucao menu = new MenuInstrucao(i);
+							listaMenuInstrucao.add(menu);
+							addMenu(true, menu);
+						}
 					}
 				}
 			}
@@ -775,7 +791,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					dialogoAcao.setActionListener(e -> abrirInstrucao(false));
 				}
 
-				public void abrirInstrucao(boolean abrirEmForm) {
+				private void abrirInstrucao(boolean abrirEmForm) {
 					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 					if (conexao == null) {
 						return;
@@ -794,6 +810,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							updateFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 						}
 					}
+				}
+
+				private void setHabilitado(int[] linhas) {
+					setEnabled(instrucao.isSelecaoMultipla() ? linhas.length >= 1 : linhas.length == 1);
 				}
 			}
 		}
@@ -1551,7 +1571,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private void habilitarUpdateExcluir(int[] linhas) {
 			String[] chaves = objeto.getChavesArray();
-			toolbar.buttonUpdate.setEnabled(chaves.length > 0 && linhas.length == 1);
+			toolbar.buttonUpdate.setEnabled(chaves.length > 0);
+			toolbar.buttonUpdate.setHabilitado(linhas);
 			toolbar.buttonExcluir.setEnabled(chaves.length > 0);
 			toolbar.labelTotal.setText(Constantes.VAZIO + linhas.length);
 		}
