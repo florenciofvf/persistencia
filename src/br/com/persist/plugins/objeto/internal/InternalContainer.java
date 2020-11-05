@@ -159,7 +159,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private void configurar() {
 		DragSource dragSource = DragSource.getDefaultDragSource();
 		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
-			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+			Conexao conexao = getConexao();
 			Dimension dimension = null;
 			if (dimensaoListener != null) {
 				dimension = dimensaoListener.getDimensoes();
@@ -174,7 +174,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
-		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+		Conexao conexao = getConexao();
 		if (conexao == null) {
 			return;
 		}
@@ -393,7 +393,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void limparUsandoConexao() {
-				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+				Conexao conexao = getConexao();
 				String string = Constantes.VAZIO;
 				if (conexao != null) {
 					string = conexao.getFinalComplemento();
@@ -469,7 +469,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void copiarNomeTabela() {
-				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+				Conexao conexao = getConexao();
 				String esquema = null;
 				if (conexao != null) {
 					esquema = conexao.getEsquema();
@@ -483,7 +483,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void processar(boolean normal) {
-				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+				Conexao conexao = getConexao();
 				if (conexao == null) {
 					return;
 				}
@@ -696,7 +696,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 
 				private void abrirUpdate(boolean abrirEmForm) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao == null) {
 						return;
 					}
@@ -725,7 +725,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 
 				private void abrirUpdate(boolean abrirEmForm) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao == null) {
 						return;
 					}
@@ -754,7 +754,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 
 				private void abrirUpdate(boolean abrirEmForm) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						int[] linhas = tabelaPersistencia.getSelectedRows();
@@ -793,7 +793,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 
 				private void abrirInstrucao(boolean abrirEmForm) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao == null) {
 						return;
 					}
@@ -876,7 +876,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao == null) {
 						return;
 					}
@@ -907,7 +907,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1038,7 +1038,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 
 					private void abrirUpdate(boolean abrirEmForm) {
-						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 							String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
@@ -1059,7 +1059,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 
 					private void abrirUpdate(boolean abrirEmForm) {
-						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 							String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
@@ -1080,7 +1080,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 
 					private void abrirUpdate(boolean abrirEmForm) {
-						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
@@ -1101,7 +1101,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 
 					private void abrirSelect(boolean abrirEmForm) {
-						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+						Conexao conexao = getConexao();
 						if (conexao != null) {
 							String instrucao = getConsulta(conexao, Constantes.VAZIO).toString();
 							if (!Util.estaVazio(instrucao)) {
@@ -1134,7 +1134,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 
 					private void abrirSelect(boolean abrirEmForm) {
-						Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+						Conexao conexao = getConexao();
 						if (conexao != null) {
 							String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
 							if (!Util.estaVazio(instrucao)) {
@@ -1154,7 +1154,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1176,7 +1176,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1198,7 +1198,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1221,7 +1221,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1244,7 +1244,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1267,7 +1267,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+					Conexao conexao = getConexao();
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -1439,7 +1439,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	public void pesquisar(Referencia referencia, String argumentos) {
-		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+		Conexao conexao = getConexao();
 		if (conexao != null) {
 			txtComplemento.setText("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
 			destacarTitulo = true;
@@ -1568,7 +1568,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	public void atualizarFormulario() {
-		Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+		Conexao conexao = getConexao();
 		if (conexao != null) {
 			actionListenerInner.actionPerformed(null);
 		}
