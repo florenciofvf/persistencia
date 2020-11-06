@@ -158,7 +158,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
-		private Action baixarAtivoAcao = Action.actionIcon("label.baixar_ativo", Icones.BAIXAR);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
@@ -167,8 +166,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					NOVO, BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
-			addButton(baixarAtivoAcao);
+					NOVO, BAIXAR, LIMPAR, SALVAR);
 			addButton(excluirAtivoAcao);
 			add(chkRespostaJson);
 			add(chkCopiarAccessT);
@@ -189,7 +187,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
 			chkCopiarAccessT.setSelected(Preferencias.getBoolean("copiar_access_token"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
-			baixarAtivoAcao.setActionListener(e -> abrirAtivo());
 			atualizarAcao.setActionListener(e -> atualizar());
 			formatarAcao.setActionListener(e -> formatar());
 			base64Acao.setActionListener(e -> base64());
@@ -289,37 +286,12 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
-		@Override
-		protected void copiar() {
-			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				StringBuilder sb = new StringBuilder();
-				ativa.copiar(sb);
-				copiarMensagem(sb.toString());
-			}
-		}
-
-		@Override
-		protected void colar() {
-			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.colar();
-			}
-		}
-
 		private void excluirAtivo() {
 			Pagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				int indice = fichario.getSelectedIndex();
 				ativa.excluir();
 				fichario.remove(indice);
-			}
-		}
-
-		private void abrirAtivo() {
-			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.abrir();
 			}
 		}
 
@@ -498,9 +470,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	private class Pagina extends Panel {
 		private static final long serialVersionUID = 1L;
+		private final ToolbarParametro toolbarParametro = new ToolbarParametro();
+		private final ToolbarResultado toolbarResultado = new ToolbarResultado();
 		private final JTextPane areaParametros = new JTextPane();
 		private final JTextPane areaResultados = new JTextPane();
-		private final Toolbar toolbarResultados = new Toolbar();
 		private final File file;
 
 		private Pagina(File file) {
@@ -511,9 +484,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void montarLayout() {
 			Panel panelParametros = new Panel();
-			panelParametros.add(areaParametros);
+			panelParametros.add(BorderLayout.NORTH, toolbarParametro);
+			panelParametros.add(BorderLayout.CENTER, areaParametros);
 			Panel panelResultados = new Panel();
-			panelResultados.add(BorderLayout.NORTH, toolbarResultados);
+			panelResultados.add(BorderLayout.NORTH, toolbarResultado);
 			panelResultados.add(BorderLayout.CENTER, areaResultados);
 			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
 					new ScrollPane(panelResultados));
@@ -521,10 +495,36 @@ public class RequisicaoContainer extends AbstratoContainer {
 			add(BorderLayout.CENTER, split);
 		}
 
-		private class Toolbar extends BarraButton {
+		private class ToolbarParametro extends BarraButton {
 			private static final long serialVersionUID = 1L;
 
-			private Toolbar() {
+			private ToolbarParametro() {
+				super.ini(null, BAIXAR, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void baixar() {
+				abrir();
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(areaParametros);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				areaParametros.requestFocus();
+			}
+
+			@Override
+			protected void colar() {
+				Util.getContentTransfered(areaParametros);
+			}
+		}
+
+		private class ToolbarResultado extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private ToolbarResultado() {
 				super.ini(null, COPIAR, COLAR);
 			}
 
@@ -612,17 +612,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
 			}
-		}
-
-		private void copiar(StringBuilder sb) {
-			String string = Util.getString(areaParametros);
-			Util.setContentTransfered(string);
-			sb.append(string);
-			areaParametros.requestFocus();
-		}
-
-		private void colar() {
-			Util.getContentTransfered(areaParametros);
 		}
 
 		private void base64() {
