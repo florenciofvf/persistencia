@@ -483,16 +483,27 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void montarLayout() {
-			Panel panelParametros = new Panel();
-			panelParametros.add(BorderLayout.NORTH, toolbarParametro);
-			panelParametros.add(BorderLayout.CENTER, areaParametros);
-			Panel panelResultados = new Panel();
-			panelResultados.add(BorderLayout.NORTH, toolbarResultado);
-			panelResultados.add(BorderLayout.CENTER, areaResultados);
-			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
-					new ScrollPane(panelResultados));
+			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
 			split.setDividerLocation(Constantes.SIZE.height / 2);
 			add(BorderLayout.CENTER, split);
+		}
+
+		private Panel criarPanelParametro() {
+			Panel panel = new Panel();
+			panel.add(BorderLayout.NORTH, toolbarParametro);
+			Panel panelArea = new Panel();
+			panelArea.add(BorderLayout.CENTER, areaParametros);
+			panel.add(BorderLayout.CENTER, new ScrollPane(panelArea));
+			return panel;
+		}
+
+		private Panel criarPanelResultado() {
+			Panel panel = new Panel();
+			panel.add(BorderLayout.NORTH, toolbarResultado);
+			Panel panelArea = new Panel();
+			panelArea.add(BorderLayout.CENTER, areaResultados);
+			panel.add(BorderLayout.CENTER, new ScrollPane(panelArea));
+			return panel;
 		}
 
 		private class ToolbarParametro extends BarraButton {
