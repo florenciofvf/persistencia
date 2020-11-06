@@ -34,23 +34,8 @@ public class ObjetoHandler extends XMLHandler {
 			processarRelacao(attributes);
 		} else if ("form".equals(qName)) {
 			processarForm(attributes);
-		} else if ("instrucao".equals(qName)) {
-			processarInstrucao(attributes);
 		} else if ("desc".equals(qName) || Constantes.VALOR.equals(qName) || "buscaAutomatica".equals(qName)) {
 			limpar();
-		}
-	}
-
-	private void processarInstrucao(Attributes attributes) {
-		Instrucao i = new Instrucao(attributes.getValue("nome"));
-		i.setSelecaoMultipla(Boolean.parseBoolean(attributes.getValue("selecaoMultipla")));
-		String ordem = attributes.getValue("ordem");
-		if (!Util.estaVazio(ordem)) {
-			i.setOrdem(Integer.parseInt(ordem));
-		}
-		if (selecionado instanceof Objeto) {
-			Objeto obj = (Objeto) selecionado;
-			obj.addInstrucao(i);
 		}
 	}
 
@@ -104,18 +89,7 @@ public class ObjetoHandler extends XMLHandler {
 			selecionado = null;
 		} else if ("desc".equals(qName) && selecionado != null) {
 			setDescricao();
-		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
-			setValor();
 		}
-	}
-
-	private void setValor() {
-		String string = builder.toString();
-		if (!Util.estaVazio(string) && selecionado instanceof Objeto) {
-			Objeto obj = (Objeto) selecionado;
-			obj.getUltInstrucao().setValor(string.trim());
-		}
-		limpar();
 	}
 
 	private void setDescricao() {

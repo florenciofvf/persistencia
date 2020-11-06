@@ -363,13 +363,6 @@ public class Objeto implements Runnable {
 		}
 	}
 
-	public Instrucao getUltInstrucao() {
-		if (instrucoes.isEmpty()) {
-			return null;
-		}
-		return instrucoes.get(instrucoes.size() - 1);
-	}
-
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}

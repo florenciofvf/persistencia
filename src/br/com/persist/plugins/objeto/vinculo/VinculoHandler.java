@@ -14,8 +14,10 @@ import br.com.persist.marca.XMLHandler;
 import br.com.persist.plugins.objeto.Instrucao;
 
 class VinculoHandler extends XMLHandler {
+	private final StringBuilder builder = new StringBuilder();
 	private final Map<String, List<Instrucao>> instrucoes;
 	private final List<Pesquisa> pesquisas;
+	private String tabelaSelecionada;
 	private Pesquisa selecionado;
 
 	public VinculoHandler() {
@@ -31,14 +33,46 @@ class VinculoHandler extends XMLHandler {
 		return pesquisas;
 	}
 
+	private void limpar() {
+		if (builder.length() > 0) {
+			builder.delete(0, builder.length());
+		}
+	}
+
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("pesquisa".equals(qName)) {
 			selecionado = new Pesquisa(attributes.getValue("nome"), criar(attributes));
 			pesquisas.add(selecionado);
+		} else if ("para".equals(qName)) {
+			tabelaSelecionada = attributes.getValue("tabela");
+			if (!Util.estaVazio(tabelaSelecionada)) {
+				instrucoes.computeIfAbsent(tabelaSelecionada, t -> new ArrayList<>());
+			}
+		} else if ("instrucao".equals(qName)) {
+			processarInstrucao(attributes);
+			limpar();
 		} else if ("ref".equals(qName) && selecionado != null) {
 			selecionado.add(criar(attributes));
 		}
+	}
+
+	private void processarInstrucao(Attributes attributes) {
+		List<Instrucao> lista = instrucoes.get(tabelaSelecionada);
+		if (lista != null) {
+			addInstrucao(attributes, lista);
+		}
+	}
+
+	private void addInstrucao(Attributes attributes, List<Instrucao> lista) {
+		Instrucao i = new Instrucao(attributes.getValue("nome"));
+		boolean sm = Boolean.parseBoolean(attributes.getValue("selecaoMultipla"));
+		String ordem = attributes.getValue("ordem");
+		if (!Util.estaVazio(ordem)) {
+			i.setOrdem(Integer.parseInt(ordem));
+		}
+		i.setSelecaoMultipla(sm);
+		lista.add(i);
 	}
 
 	private Referencia criar(Attributes attributes) {
@@ -63,6 +97,25 @@ class VinculoHandler extends XMLHandler {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if ("pesquisa".equals(qName)) {
 			selecionado = null;
+		} else if ("instrucao".equals(qName)) {
+			List<Instrucao> lista = instrucoes.get(tabelaSelecionada);
+			if (lista != null && !lista.isEmpty()) {
+				setValorInstrucao(lista);
+			}
+			limpar();
 		}
+	}
+
+	private void setValorInstrucao(List<Instrucao> lista) {
+		Instrucao instrucao = lista.get(lista.size() - 1);
+		String string = builder.toString();
+		if (!Util.estaVazio(string)) {
+			instrucao.setValor(string.trim());
+		}
+	}
+
+	@Override
+	public void characters(char[] ch, int start, int length) throws SAXException {
+		builder.append(new String(ch, start, length));
 	}
 }
