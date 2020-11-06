@@ -4,9 +4,7 @@ import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
-import static br.com.persist.componente.BarraButtonEnum.COLAR2;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
-import static br.com.persist.componente.BarraButtonEnum.COPIAR2;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
@@ -169,7 +167,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					NOVO, BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, COPIAR2, COLAR2);
+					NOVO, BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
 			addButton(baixarAtivoAcao);
 			addButton(excluirAtivoAcao);
 			add(chkRespostaJson);
@@ -302,28 +300,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		@Override
-		protected void copiar2() {
-			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				StringBuilder sb = new StringBuilder();
-				ativa.copiar2(sb);
-				copiar2Mensagem(sb.toString());
-			}
-		}
-
-		@Override
 		protected void colar() {
 			Pagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.colar();
-			}
-		}
-
-		@Override
-		protected void colar2() {
-			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.colar2();
 			}
 		}
 
@@ -520,6 +500,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 		private final JTextPane areaParametros = new JTextPane();
 		private final JTextPane areaResultados = new JTextPane();
+		private final Toolbar toolbarResultados = new Toolbar();
 		private final File file;
 
 		private Pagina(File file) {
@@ -532,11 +513,33 @@ public class RequisicaoContainer extends AbstratoContainer {
 			Panel panelParametros = new Panel();
 			panelParametros.add(areaParametros);
 			Panel panelResultados = new Panel();
-			panelResultados.add(areaResultados);
+			panelResultados.add(BorderLayout.NORTH, toolbarResultados);
+			panelResultados.add(BorderLayout.CENTER, areaResultados);
 			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(panelParametros),
 					new ScrollPane(panelResultados));
 			split.setDividerLocation(Constantes.SIZE.height / 2);
 			add(BorderLayout.CENTER, split);
+		}
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private Toolbar() {
+				super.ini(null, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(areaResultados);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				areaResultados.requestFocus();
+			}
+
+			@Override
+			protected void colar() {
+				Util.getContentTransfered(areaResultados);
+			}
 		}
 
 		private String getConteudo() {
@@ -620,17 +623,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void colar() {
 			Util.getContentTransfered(areaParametros);
-		}
-
-		private void copiar2(StringBuilder sb) {
-			String string = Util.getString(areaResultados);
-			Util.setContentTransfered(string);
-			sb.append(string);
-			areaResultados.requestFocus();
-		}
-
-		private void colar2() {
-			Util.getContentTransfered(areaResultados);
 		}
 
 		private void base64() {
