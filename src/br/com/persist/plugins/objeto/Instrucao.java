@@ -6,8 +6,8 @@ import br.com.persist.marca.XMLUtil;
 
 public class Instrucao implements Comparable<Instrucao> {
 	private boolean selecaoMultipla;
+	private final String nome;
 	private String valor;
-	private String nome;
 	private int ordem;
 
 	public Instrucao(String nome) {
@@ -26,13 +26,6 @@ public class Instrucao implements Comparable<Instrucao> {
 			valor = Constantes.VAZIO;
 		}
 		return valor;
-	}
-
-	public void setNome(String nome) {
-		if (Util.estaVazio(nome)) {
-			return;
-		}
-		this.nome = nome;
 	}
 
 	public void setValor(String valor) {
