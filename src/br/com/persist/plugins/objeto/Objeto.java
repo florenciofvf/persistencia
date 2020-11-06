@@ -128,6 +128,7 @@ public class Objeto implements Runnable {
 		o.ajusteAutoForm = ajusteAutoForm;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
+		o.addInstrucoes(instrucoes);
 		o.complemento = complemento;
 		o.chaveamento = chaveamento;
 		o.desenharId = desenharId;
@@ -147,9 +148,6 @@ public class Objeto implements Runnable {
 		o.ccsc = ccsc;
 		o.bpnt = bpnt;
 		o.setId(id);
-		for (Instrucao i : instrucoes) {
-			o.addInstrucao(i.clonar());
-		}
 		return o;
 	}
 
@@ -354,6 +352,14 @@ public class Objeto implements Runnable {
 	public void addInstrucao(Instrucao i) {
 		if (i != null) {
 			instrucoes.add(i);
+		}
+	}
+
+	public void addInstrucoes(List<Instrucao> lista) {
+		if (lista != null) {
+			for (Instrucao i : lista) {
+				addInstrucao(i);
+			}
 		}
 	}
 

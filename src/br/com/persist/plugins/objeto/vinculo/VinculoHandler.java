@@ -2,20 +2,29 @@ package br.com.persist.plugins.objeto.vinculo;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
+import br.com.persist.plugins.objeto.Instrucao;
 
 class VinculoHandler extends XMLHandler {
+	private final Map<String, List<Instrucao>> instrucoes;
 	private final List<Pesquisa> pesquisas;
 	private Pesquisa selecionado;
 
 	public VinculoHandler() {
 		pesquisas = new ArrayList<>();
+		instrucoes = new HashMap<>();
+	}
+
+	public Map<String, List<Instrucao>> getInstrucoes() {
+		return instrucoes;
 	}
 
 	public List<Pesquisa> getPesquisas() {
