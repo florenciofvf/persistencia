@@ -29,9 +29,4 @@ public class ObjetoDialogo extends AbstratoDialogo {
 		form.setVisible(true);
 		return form;
 	}
-
-	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
-	}
 }

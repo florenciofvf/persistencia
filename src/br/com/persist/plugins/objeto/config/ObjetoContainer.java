@@ -1,7 +1,7 @@
 package br.com.persist.plugins.objeto.config;
 
-import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,18 +22,14 @@ import java.awt.event.MouseListener;
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
-import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
@@ -44,9 +40,6 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
-import br.com.persist.plugins.objeto.Desktop;
-import br.com.persist.plugins.objeto.Instrucao;
-import br.com.persist.plugins.objeto.InstrucaoFormulario;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
@@ -70,10 +63,6 @@ public class ObjetoContainer extends Panel {
 	private void montarLayout() {
 		add(BorderLayout.CENTER, fichario);
 		add(BorderLayout.NORTH, toolbar);
-	}
-
-	public void dialogoVisivel() {
-		fichario.ini();
 	}
 
 	private class PanelGeral extends Panel implements ActionListener {
@@ -449,65 +438,6 @@ public class ObjetoContainer extends Panel {
 		};
 	}
 
-	private class PanelInstrucao extends Panel {
-		private static final long serialVersionUID = 1L;
-		private final Dimension dimension = new Dimension(Constantes.QUARENTA, Constantes.TREZENTOS_QUARENTA_UM);
-		private final Desktop desktop = new Desktop(false);
-
-		private PanelInstrucao() {
-			add(BorderLayout.NORTH, new PanelNomeInstrucao());
-			add(BorderLayout.CENTER, new ScrollPane(desktop));
-		}
-
-		public void excluirInstrucao(Instrucao instrucao) {
-			objeto.getInstrucoes().remove(instrucao);
-			desktop.removeAll();
-			adicionarInstrucoes(objeto);
-			SwingUtilities.updateComponentTreeUI(getParent());
-			SwingUtilities.invokeLater(this::repaint);
-		}
-
-		private void adicionarInstrucoes(Objeto objeto) {
-			objeto.ordenarInstrucoes();
-			for (Instrucao instrucao : objeto.getInstrucoes()) {
-				criarFormularioInstrucao(instrucao);
-			}
-			desktop.getDistribuicao().distribuir(-Constantes.VINTE);
-		}
-
-		private void criarFormularioInstrucao(Instrucao instrucao) {
-			InstrucaoFormulario form = InstrucaoFormulario.criar(instrucao, PanelInstrucao.this::excluirInstrucao);
-			form.setSize(dimension);
-			form.setVisible(true);
-			desktop.add(form);
-		}
-
-		private class PanelNomeInstrucao extends Panel implements ActionListener {
-			private static final long serialVersionUID = 1L;
-			private Action criarAcao = Action.actionMenu("label.criar_instrucao", Icones.CRIAR);
-			private TextField textFielNome = new TextField();
-
-			private PanelNomeInstrucao() {
-				textFielNome.setToolTipText(Mensagens.getString("hint.nome_enter"));
-				Button button = new Button(criarAcao);
-				criarAcao.setActionListener(this);
-				add(BorderLayout.WEST, button);
-				add(BorderLayout.CENTER, textFielNome);
-				textFielNome.addActionListener(this);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!Util.estaVazio(textFielNome.getText())) {
-					Instrucao instrucao = new Instrucao(textFielNome.getText().trim());
-					objeto.addInstrucao(instrucao);
-					criarFormularioInstrucao(instrucao);
-					desktop.getDistribuicao().distribuir(-Constantes.VINTE);
-				}
-			}
-		}
-	}
-
 	private class PanelCorFonte extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
@@ -588,7 +518,6 @@ public class ObjetoContainer extends Panel {
 
 	private class Fichario extends TabbedPane {
 		private static final long serialVersionUID = 1L;
-		private PanelInstrucao panelInstrucao = new PanelInstrucao();
 
 		private Fichario() {
 			addTab("label.geral", new PanelGeral());
@@ -596,11 +525,6 @@ public class ObjetoContainer extends Panel {
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
-			addTab("label.instrucoes", panelInstrucao);
-		}
-
-		private void ini() {
-			panelInstrucao.adicionarInstrucoes(objeto);
 		}
 	}
 }
