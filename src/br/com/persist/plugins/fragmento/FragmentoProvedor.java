@@ -14,8 +14,8 @@ import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
 
 public class FragmentoProvedor {
-	private static final List<Fragmento> pasta = new ArrayList<>();
 	private static final List<Fragmento> lista = new ArrayList<>();
+	private static final List<Fragmento> pasta = new ArrayList<>();
 	private static final Logger LOG = Logger.getGlobal();
 	private static final File file;
 
@@ -71,8 +71,8 @@ public class FragmentoProvedor {
 	}
 
 	public static void inicializar() {
-		pasta.clear();
 		lista.clear();
+		pasta.clear();
 		try {
 			if (file.exists() && file.canRead()) {
 				XML.processar(file, new FragmentoHandler());
