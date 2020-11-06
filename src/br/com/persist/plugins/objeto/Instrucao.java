@@ -109,4 +109,9 @@ public class Instrucao implements Comparable<Instrucao> {
 	public int compareTo(Instrucao o) {
 		return ordem - o.ordem;
 	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
 }

@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <vinculo>
+	<para tabela="candidato c">
+		<instrucao nome="total votos">
+			UPDATE candidato 
+			SET votos = 0
+			WHERE id = #id#
+		</instrucao>
+		<instrucao nome="Todos os registros">
+			SELECT * FROM candidato
+			WHERE id = #id#
+		</instrucao>
+		<instrucao nome="Excluir registro">
+			DELETE FROM candidato
+			WHERE id = #id#
+		</instrucao>
+		<instrucao nome="Incluir candidato" ordem="0">
+			<![CDATA[
+				INSERT INTO candidato (eleicao_id, nome, votos) VALUES (65, 'CANDIDATO TESTE', 12)
+			]]>
+		</instrucao>
+	</para>
+
+	<para tabela="candidato2">
+		<instrucao nome="Alterar Total de Votos" selecaoMultipla="true">
+			update candidato2 set votos = 123 where id in (#id#)
+		</instrucao>
+	</para>
+
 	<pesquisa nome="Candidatos" tabela="eleicao" campo="id">
 		<ref tabela="candidato" campo="eleicao_id" />
 		<ref tabela="candidato2" campo="eleicao_id" vazio="invisivel" grupo="2"/>

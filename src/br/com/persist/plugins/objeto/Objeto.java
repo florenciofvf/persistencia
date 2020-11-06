@@ -227,9 +227,6 @@ public class Objeto implements Runnable {
 			util.conteudo(Util.escapar(getDescricao())).ql();
 			util.finalizarTag("desc");
 		}
-		for (Instrucao i : instrucoes) {
-			i.salvar(util);
-		}
 		util.finalizarTag("objeto");
 	}
 
