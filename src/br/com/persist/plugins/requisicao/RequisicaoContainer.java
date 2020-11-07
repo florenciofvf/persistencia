@@ -166,7 +166,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					NOVO, BAIXAR, LIMPAR, SALVAR);
+					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
 			add(chkRespostaJson);
 			add(chkCopiarAccessT);
@@ -268,14 +268,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		@Override
 		protected void baixar() {
 			abrir(null, null);
-		}
-
-		@Override
-		protected void limpar() {
-			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.limpar();
-			}
 		}
 
 		@Override
@@ -510,7 +502,12 @@ public class RequisicaoContainer extends AbstratoContainer {
 			private static final long serialVersionUID = 1L;
 
 			private ToolbarParametro() {
-				super.ini(null, BAIXAR, COPIAR, COLAR);
+				super.ini(null, LIMPAR, BAIXAR, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void limpar() {
+				areaParametros.setText(Constantes.VAZIO);
 			}
 
 			@Override
@@ -536,7 +533,12 @@ public class RequisicaoContainer extends AbstratoContainer {
 			private static final long serialVersionUID = 1L;
 
 			private ToolbarResultado() {
-				super.ini(null, COPIAR, COLAR);
+				super.ini(null, LIMPAR, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void limpar() {
+				areaResultados.setText(Constantes.VAZIO);
 			}
 
 			@Override
@@ -588,10 +590,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, e, RequisicaoContainer.this);
 				}
 			}
-		}
-
-		private void limpar() {
-			areaParametros.setText(Constantes.VAZIO);
 		}
 
 		private void salvar() {
