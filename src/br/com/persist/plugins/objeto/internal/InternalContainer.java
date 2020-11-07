@@ -89,6 +89,7 @@ import br.com.persist.plugins.persistencia.IndiceValor;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
+import br.com.persist.plugins.persistencia.PersistenciaException;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo.Parametros;
 import br.com.persist.plugins.persistencia.tabela.CabecalhoColuna;
@@ -175,22 +176,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		Conexao conexao = getConexao();
-		if (conexao == null) {
-			return;
+		if (conexao != null) {
+			if (continuar(complemento)) {
+				processar(complemento, g, cabecalho, conexao);
+			} else {
+				processado.set(false);
+			}
 		}
-		if (!continuar(complemento)) {
-			processado.set(false);
-			return;
-		}
+	}
+
+	private void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, Conexao conexao) {
 		StringBuilder consulta = getConsulta(conexao, complemento);
 		try {
 			Connection conn = ConexaoProvedor.getConnection(conexao);
 			Parametros param = criarParametros(conn, conexao, consulta.toString());
-			OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
-			modeloOrdenacao.getModelo().setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
-			modeloOrdenacao.getModelo().setConexao(conexao);
-			objeto.setComplemento(txtComplemento.getText());
-			tabelaPersistencia.setModel(modeloOrdenacao);
+			OrdenacaoModelo modeloOrdenacao = consultarEModeloOrdenacao(conexao, param);
 			threadTitulo(getTituloAtualizado());
 			cabecalhoFiltro = null;
 			atualizarTitulo();
@@ -203,6 +203,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		configurarAltura();
+	}
+
+	private OrdenacaoModelo consultarEModeloOrdenacao(Conexao conexao, Parametros param) throws PersistenciaException {
+		OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
+		modeloOrdenacao.getModelo().setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
+		modeloOrdenacao.getModelo().setConexao(conexao);
+		objeto.setComplemento(txtComplemento.getText());
+		tabelaPersistencia.setModel(modeloOrdenacao);
+		return modeloOrdenacao;
 	}
 
 	private StringBuilder getConsulta(Conexao conexao, String complemento) {
