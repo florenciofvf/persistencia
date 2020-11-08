@@ -37,7 +37,7 @@ public class MiscelaniaContainer extends Panel {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, textArea);
 		StringBuilder builder = new StringBuilder();
-		if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
+		if (Tipo.CHAVEAMENTO.equals(tipo)) {
 			chave(builder);
 		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 			mapa(builder);
@@ -78,7 +78,7 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		CHAVE_SEQUENCIA, MAPEAMENTO
+		CHAVEAMENTO, MAPEAMENTO
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -104,7 +104,7 @@ public class MiscelaniaContainer extends Panel {
 		@Override
 		protected void aplicar() {
 			try {
-				if (Tipo.CHAVE_SEQUENCIA.equals(tipo)) {
+				if (Tipo.CHAVEAMENTO.equals(tipo)) {
 					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
 				} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));

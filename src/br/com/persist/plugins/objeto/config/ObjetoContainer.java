@@ -304,7 +304,7 @@ public class ObjetoContainer extends Panel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
 					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.CHAVE_SEQUENCIA);
+							MiscelaniaContainer.Tipo.CHAVEAMENTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 
