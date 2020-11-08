@@ -44,6 +44,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
+import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.fichario.Fichario;
@@ -57,6 +58,7 @@ import br.com.persist.plugins.persistencia.Persistencia;
 
 public class ConsultaContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
+	private final ToolbarTabela toolbarTabela = new ToolbarTabela();
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
@@ -101,12 +103,60 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, new ScrollPane(tabela));
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, criarPanelTabela());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
 		add(BorderLayout.SOUTH, labelStatus);
 		labelStatus.setForeground(Color.BLUE);
+	}
+
+	private Panel criarPanelTabela() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.NORTH, toolbarTabela);
+		panel.add(BorderLayout.CENTER, new ScrollPane(tabela));
+		return panel;
+	}
+
+	private class ToolbarTabela extends BarraButton {
+		private static final long serialVersionUID = 1L;
+		private ButtonCopiar buttonCopiar = new ButtonCopiar();
+
+		private ToolbarTabela() {
+			super.ini(null);
+			add(buttonCopiar);
+		}
+
+		private class ButtonCopiar extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
+			private Action tabularAcao = Action.actionMenu("label.tabular", null);
+			private Action htmlAcao = Action.actionMenu("label.html", null);
+
+			private ButtonCopiar() {
+				super("label.copiar_tabela", Icones.TABLE2);
+				addMenuItem(htmlAcao);
+				addMenuItem(true, tabularAcao);
+				addMenuItem(true, transferidorAcao);
+				transferidorAcao.setActionListener(e -> processar(0));
+				tabularAcao.setActionListener(e -> processar(1));
+				htmlAcao.setActionListener(e -> processar(2));
+			}
+
+			private void processar(int tipo) {
+				List<Integer> indices = Util.getIndicesLinha(tabela);
+				TransferidorTabular transferidor = Util.criarTransferidorTabular(tabela, indices);
+				if (transferidor != null) {
+					if (tipo == 0) {
+						Util.setTransfered(transferidor);
+					} else if (tipo == 1) {
+						Util.setContentTransfered(transferidor.getTabular());
+					} else if (tipo == 2) {
+						Util.setContentTransfered(transferidor.getHtml());
+					}
+				}
+			}
+		}
 	}
 
 	private void configurar() {
@@ -161,12 +211,10 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private ButtonCopiar buttonCopiar = new ButtonCopiar();
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, ATUALIZAR);
-			add(buttonCopiar);
 			add(true, comboConexao);
 		}
 
@@ -252,37 +300,6 @@ public class ConsultaContainer extends AbstratoContainer {
 		@Override
 		protected void colar() {
 			Util.getContentTransfered(textArea.getTextAreaInner());
-		}
-
-		private class ButtonCopiar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
-			private Action transfAcao = Action.actionMenu("label.transferidor", null);
-			private Action tabularAcao = Action.actionMenu("label.tabular", null);
-			private Action htmlAcao = Action.actionMenu("label.html", null);
-
-			private ButtonCopiar() {
-				super("label.copiar_tabela", Icones.TABLE2);
-				addMenuItem(htmlAcao);
-				addMenuItem(true, tabularAcao);
-				addMenuItem(true, transfAcao);
-				transfAcao.setActionListener(e -> processar(0));
-				tabularAcao.setActionListener(e -> processar(1));
-				htmlAcao.setActionListener(e -> processar(2));
-			}
-
-			private void processar(int tipo) {
-				List<Integer> indices = Util.getIndicesLinha(tabela);
-				TransferidorTabular transferidor = Util.criarTransferidorTabular(tabela, indices);
-				if (transferidor != null) {
-					if (tipo == 0) {
-						Util.setTransfered(transferidor);
-					} else if (tipo == 1) {
-						Util.setContentTransfered(transferidor.getTabular());
-					} else if (tipo == 2) {
-						Util.setContentTransfered(transferidor.getHtml());
-					}
-				}
-			}
 		}
 
 		@Override
