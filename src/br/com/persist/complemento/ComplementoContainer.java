@@ -27,11 +27,11 @@ import br.com.persist.componente.TextArea;
 
 public class ComplementoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
+	private final ToolbarLista toolbarLista = new ToolbarLista();
+	private final ToolbarArea toolbarArea = new ToolbarArea();
 	private final transient ComplementoListener listener;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
-	private final ToolbarArea toolbarArea = new ToolbarArea();
-	private final ToolbarLista toolbarLista = new ToolbarLista();
 	private final JList<String> listaComplementos;
 
 	public ComplementoContainer(Janela janela, ComplementoListener listener) {
@@ -128,7 +128,7 @@ public class ComplementoContainer extends Panel {
 		}
 
 		private void limparComplementos() {
-			if (Util.confirmaExclusao(ComplementoContainer.this, false)) {
+			if (Util.confirmar(ComplementoContainer.this, "msg.confirma_exclusao_complementos", true)) {
 				listener.getColecaoComplemento().clear();
 				listaComplementos.setModel(new ColecaoStringModelo(listener.getColecaoComplemento()));
 			}
