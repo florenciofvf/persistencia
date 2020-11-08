@@ -267,7 +267,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		@Override
 		protected void baixar() {
-			abrir(null, null);
+			abrir(null, getIdPagina());
 		}
 
 		@Override
@@ -440,7 +440,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 				Component cmp = getComponentAt(i);
 				if (cmp instanceof Pagina) {
 					Pagina p = (Pagina) cmp;
-
 					if (p == pagina) {
 						return i;
 					}
