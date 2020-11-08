@@ -99,14 +99,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			new NomeValor("label.40000", 40000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.60000", 60000, NomeValor.INTERVALO_AUTO) };
 
-	private final transient NomeValor[] layouts = { new NomeValor("label.somente_fichario", 1, NomeValor.LAYOUTS),
-			new NomeValor("label.arquivo_anexo_esquerdo", 2, NomeValor.LAYOUTS),
-			new NomeValor("label.anexo_arquivo_esquerdo", 3, NomeValor.LAYOUTS),
-			new NomeValor("label.arquivo_anexo_abaixo", 4, NomeValor.LAYOUTS),
-			new NomeValor("label.anexo_arquivo_abaixo", 5, NomeValor.LAYOUTS),
-			new NomeValor("label.arquivo_abaixo", 6, NomeValor.LAYOUTS),
-			new NomeValor("label.anexo_abaixo", 5, NomeValor.LAYOUTS) };
-
 	private final transient NomeValor[] destacados = {
 			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
 			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
@@ -152,7 +144,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
-		PanelCenter panelLayouts = criarPainelGrupo(layouts, Preferencias.getLayoutAbertura());
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
@@ -178,7 +169,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
-		Label tituloLayoutAbr = criarLabelTitulo("label.layout_abertura");
 		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
 		Label email = criarLabelTitulo("contato");
 
@@ -189,9 +179,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(new JSeparator());
 		container.add(tituloIntervalo);
 		container.add(panelIntervalos);
-		container.add(new JSeparator());
-		container.add(tituloLayoutAbr);
-		container.add(panelLayouts);
 		container.add(new JSeparator());
 		container.add(tituloIntervaloCompara);
 		container.add(panelIntervalosCompara);
