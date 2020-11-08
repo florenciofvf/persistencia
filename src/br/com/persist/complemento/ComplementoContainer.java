@@ -30,6 +30,8 @@ public class ComplementoContainer extends Panel {
 	private final transient ComplementoListener listener;
 	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
+	private final ToolbarArea toolbarArea = new ToolbarArea();
+	private final ToolbarLista toolbarLista = new ToolbarLista();
 	private final JList<String> listaComplementos;
 
 	public ComplementoContainer(Janela janela, ComplementoListener listener) {
@@ -42,11 +44,25 @@ public class ComplementoContainer extends Panel {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, textArea, new ScrollPane(listaComplementos));
+		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, criarPanelTextArea(), criarPanelLista());
 		listaComplementos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		split.setDividerLocation(Constantes.SIZE.width / 2);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
+	}
+
+	private Panel criarPanelTextArea() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.NORTH, toolbarArea);
+		panel.add(BorderLayout.CENTER, new ScrollPane(textArea));
+		return panel;
+	}
+
+	private Panel criarPanelLista() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.NORTH, toolbarLista);
+		panel.add(BorderLayout.CENTER, new ScrollPane(listaComplementos));
+		return panel;
 	}
 
 	private transient MouseListener mouseListenerInner = new MouseAdapter() {
@@ -62,12 +78,24 @@ public class ComplementoContainer extends Panel {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action limparComplementosAcao = Action.actionIcon("label.limpar_complementos", Icones.NOVO);
 
 		public void ini(Janela janela) {
-			super.ini(janela, LIMPAR, COPIAR, COLAR, APLICAR);
-			addButton(limparComplementosAcao);
-			limparComplementosAcao.setActionListener(e -> limparComplementos());
+			super.ini(janela, APLICAR);
+		}
+
+		@Override
+		protected void aplicar() {
+			String string = Util.normalizar(textArea.getText(), true);
+			listener.processarComplemento(string);
+			fechar();
+		}
+	}
+
+	private class ToolbarArea extends BarraButton {
+		private static final long serialVersionUID = 1L;
+
+		private ToolbarArea() {
+			super.ini(null, LIMPAR, COPIAR, COLAR);
 		}
 
 		@Override
@@ -87,12 +115,16 @@ public class ComplementoContainer extends Panel {
 		protected void colar() {
 			Util.getContentTransfered(textArea.getTextAreaInner());
 		}
+	}
 
-		@Override
-		protected void aplicar() {
-			String string = Util.normalizar(textArea.getText(), true);
-			listener.processarComplemento(string);
-			fechar();
+	private class ToolbarLista extends BarraButton {
+		private static final long serialVersionUID = 1L;
+		private Action limparComplementosAcao = Action.actionIcon("label.limpar_complementos", Icones.EXCLUIR);
+
+		private ToolbarLista() {
+			super.ini(null);
+			addButton(limparComplementosAcao);
+			limparComplementosAcao.setActionListener(e -> limparComplementos());
 		}
 
 		private void limparComplementos() {

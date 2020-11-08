@@ -36,7 +36,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
-import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.mensagem.MensagemDialogo;
 
@@ -385,26 +384,6 @@ public class Util {
 			fileChooser.setCurrentDirectory(arquivo);
 		}
 		return fileChooser;
-	}
-
-	public static SplitPane splitPaneVertical(Component left, Component right, int local) {
-		SplitPane splitPane = criarSplitPane(SplitPane.VERTICAL_SPLIT);
-		splitPane.setDividerLocation(local);
-		splitPane.setRightComponent(right);
-		splitPane.setLeftComponent(left);
-		return splitPane;
-	}
-
-	public static SplitPane splitPaneHorizontal(Component left, Component right, int local) {
-		SplitPane splitPane = criarSplitPane(SplitPane.HORIZONTAL_SPLIT);
-		splitPane.setDividerLocation(local);
-		splitPane.setRightComponent(right);
-		splitPane.setLeftComponent(left);
-		return splitPane;
-	}
-
-	public static SplitPane criarSplitPane(int orientacao) {
-		return new SplitPane(orientacao);
 	}
 
 	public static String getString(InputStream is) throws IOException {
