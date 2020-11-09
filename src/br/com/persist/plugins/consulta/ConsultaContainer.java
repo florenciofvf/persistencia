@@ -304,14 +304,16 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void atualizar() {
-			if (Util.estaVazio(textArea.getText())) {
-				return;
+			if (!Util.estaVazio(textArea.getText())) {
+				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+				if (conexao != null) {
+					String consulta = Util.getString(textArea.getTextAreaInner());
+					atualizar(conexao, consulta);
+				}
 			}
-			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-			if (conexao == null) {
-				return;
-			}
-			String consulta = Util.getString(textArea.getTextAreaInner());
+		}
+
+		private void atualizar(Conexao conexao, String consulta) {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				MemoriaModelo modelo = Persistencia.criarMemoriaModelo(conn, consulta);

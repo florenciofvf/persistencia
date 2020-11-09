@@ -673,22 +673,32 @@ public class RequisicaoContainer extends AbstratoContainer {
 				Objeto objeto = (Objeto) parametros;
 				Tipo tipoUrl = objeto.getValor("url");
 				String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
-				Map<String, String> mapHeader = null;
-				Tipo tipoHeader = objeto.getValor("header");
-				if (tipoHeader instanceof Objeto) {
-					Objeto objHeader = (Objeto) tipoHeader;
-					mapHeader = objHeader.getAtributosString();
-				}
-				Tipo tipoBody = objeto.getValor("body");
-				String bodyParams = null;
-				if (tipoBody instanceof Objeto) {
-					Objeto objBody = (Objeto) tipoBody;
-					Tipo params = objBody.getValor("parameters");
-					bodyParams = params instanceof Texto ? params.toString() : null;
-				}
+				Map<String, String> mapHeader = getMapHeader(objeto);
+				String bodyParams = getBodyParams(objeto);
 				return requisicao(url, mapHeader, bodyParams);
 			}
 			return null;
+		}
+
+		private String getBodyParams(Objeto objeto) {
+			Tipo tipoBody = objeto.getValor("body");
+			String bodyParams = null;
+			if (tipoBody instanceof Objeto) {
+				Objeto objBody = (Objeto) tipoBody;
+				Tipo params = objBody.getValor("parameters");
+				bodyParams = params instanceof Texto ? params.toString() : null;
+			}
+			return bodyParams;
+		}
+
+		private Map<String, String> getMapHeader(Objeto objeto) {
+			Map<String, String> mapHeader = null;
+			Tipo tipoHeader = objeto.getValor("header");
+			if (tipoHeader instanceof Objeto) {
+				Objeto objHeader = (Objeto) tipoHeader;
+				mapHeader = objHeader.getAtributosString();
+			}
+			return mapHeader;
 		}
 
 		private String requisicao(String url, Map<String, String> header, String parametros) throws IOException {
@@ -697,6 +707,28 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 			URL url2 = new URL(url);
 			URLConnection conn = url2.openConnection();
+			String verbo = setRequestPropertyAndGetVerbo(header, conn);
+			checarDoOutput(parametros, conn, verbo);
+			conn.connect();
+			sePost(parametros, conn, verbo);
+			return Util.getString(conn.getInputStream());
+		}
+
+		private void sePost(String parametros, URLConnection conn, String verbo) throws IOException {
+			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
+				OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+				osw.write(parametros);
+				osw.flush();
+			}
+		}
+
+		private void checarDoOutput(String parametros, URLConnection conn, String verbo) {
+			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
+				conn.setDoOutput(true);
+			}
+		}
+
+		private String setRequestPropertyAndGetVerbo(Map<String, String> header, URLConnection conn) {
 			String verbo = null;
 			if (header != null) {
 				verbo = header.get("Request-Method");
@@ -704,16 +736,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 					conn.setRequestProperty(entry.getKey(), entry.getValue());
 				}
 			}
-			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
-				conn.setDoOutput(true);
-			}
-			conn.connect();
-			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
-				OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-				osw.write(parametros);
-				osw.flush();
-			}
-			return Util.getString(conn.getInputStream());
+			return verbo;
 		}
 
 		private String getAccessToken(Tipo tipo) {

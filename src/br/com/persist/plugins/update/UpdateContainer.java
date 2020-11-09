@@ -248,14 +248,16 @@ public class UpdateContainer extends AbstratoContainer {
 
 		@Override
 		public void atualizar() {
-			if (Util.estaVazio(textArea.getText())) {
-				return;
+			if (!Util.estaVazio(textArea.getText())) {
+				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+				if (conexao != null) {
+					String instrucao = Util.getString(textArea.getTextAreaInner());
+					atualizar(conexao, instrucao);
+				}
 			}
-			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-			if (conexao == null) {
-				return;
-			}
-			String instrucao = Util.getString(textArea.getTextAreaInner());
+		}
+
+		private void atualizar(Conexao conexao, String instrucao) {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				int atualizados = Persistencia.executar(conn, instrucao);
