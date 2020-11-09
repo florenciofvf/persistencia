@@ -223,9 +223,12 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			if (!Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
-				return;
+			if (Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
+				salvarArquivo();
 			}
+		}
+
+		private void salvarArquivo() {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 			} catch (Exception ex) {
