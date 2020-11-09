@@ -41,6 +41,7 @@ import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.persistencia.Exportado;
 import br.com.persist.plugins.persistencia.Importado;
 import br.com.persist.plugins.persistencia.Persistencia;
+import br.com.persist.plugins.persistencia.PersistenciaException;
 
 public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener {
 	private static final long serialVersionUID = 1L;
@@ -185,34 +186,39 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		protected void atualizar() {
 			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
-			if (conexao == null) {
-				return;
+			if (conexao != null) {
+				atualizar(conexao);
 			}
+		}
+
+		private void atualizar(Conexao conexao) {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				List<Metadado> tabelas = converterLista(Persistencia.listarNomeTabelas(conn, conexao));
 				Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS) + " - " + tabelas.size());
 				raiz.setEhRaiz(true);
-				for (Metadado tabela : tabelas) {
-					tabela.setTabela(true);
-					List<Metadado> camposImportados = converterImportados(
-							Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
-					List<Metadado> camposExportados = converterExportados(
-							Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
-					List<Metadado> chavesPrimarias = converterLista(
-							Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
-					adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA,
-							' ');
-					adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO,
-							'I');
-					adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO,
-							'E');
-					raiz.add(tabela);
-				}
+				atualizar(conexao, conn, tabelas, raiz);
 				raiz.montarOrdenacoes();
 				metadadoTree.setModel(new MetadadoModelo(raiz));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, this);
+			}
+		}
+
+		private void atualizar(Conexao conexao, Connection conn, List<Metadado> tabelas, Metadado raiz)
+				throws PersistenciaException {
+			for (Metadado tabela : tabelas) {
+				tabela.setTabela(true);
+				List<Metadado> camposImportados = converterImportados(
+						Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
+				List<Metadado> camposExportados = converterExportados(
+						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
+				List<Metadado> chavesPrimarias = converterLista(
+						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
+				adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
+				adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
+				adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');
+				raiz.add(tabela);
 			}
 		}
 
@@ -248,19 +254,18 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		private void adicionarLista(Metadado objeto, List<Metadado> filhos, String rotuloPlural, String rotuloSingular,
 				char chave) {
-			if (filhos.isEmpty()) {
-				return;
-			}
-			Metadado rotulo = new Metadado(filhos.size() > 1 ? rotuloPlural : rotuloSingular);
-			for (Metadado obj : filhos) {
-				rotulo.add(obj);
-				if (chave == 'E') {
-					objeto.setTotalExportados(objeto.getTotalExportados() + 1);
-				} else if (chave == 'I') {
-					objeto.setTotalImportados(objeto.getTotalImportados() + 1);
+			if (!filhos.isEmpty()) {
+				Metadado rotulo = new Metadado(filhos.size() > 1 ? rotuloPlural : rotuloSingular);
+				for (Metadado obj : filhos) {
+					rotulo.add(obj);
+					if (chave == 'E') {
+						objeto.setTotalExportados(objeto.getTotalExportados() + 1);
+					} else if (chave == 'I') {
+						objeto.setTotalImportados(objeto.getTotalImportados() + 1);
+					}
 				}
+				objeto.add(rotulo);
 			}
-			objeto.add(rotulo);
 		}
 	}
 
