@@ -38,6 +38,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -603,11 +604,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void formatar() {
-			if (Util.estaVazio(areaParametros.getText())) {
-				return;
+			if (!Util.estaVazio(areaParametros.getText())) {
+				String string = Util.getString(areaParametros);
+				areaResultados.setText(Constantes.VAZIO);
+				formatar(string);
 			}
-			String string = Util.getString(areaParametros);
-			areaResultados.setText(Constantes.VAZIO);
+		}
+
+		private void formatar(String string) {
 			try {
 				Parser parser = new Parser();
 				Tipo json = parser.parse(string);
@@ -623,11 +627,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void base64() {
-			if (Util.estaVazio(areaParametros.getText())) {
-				return;
+			if (!Util.estaVazio(areaParametros.getText())) {
+				String string = Util.getString(areaParametros);
+				areaResultados.setText(Constantes.VAZIO);
+				base64(string);
 			}
-			String string = Util.getString(areaParametros);
-			areaResultados.setText(Constantes.VAZIO);
+		}
+
+		private void base64(String string) {
 			try {
 				areaResultados.setText(Base64Util.criarBase64(string));
 				areaParametros.requestFocus();
@@ -637,11 +644,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void atualizar() {
-			if (Util.estaVazio(areaParametros.getText())) {
-				return;
+			if (!Util.estaVazio(areaParametros.getText())) {
+				String string = Util.getString(areaParametros);
+				areaResultados.setText(Constantes.VAZIO);
+				atualizar(string);
 			}
-			String string = Util.getString(areaParametros);
-			areaResultados.setText(Constantes.VAZIO);
+		}
+
+		private void atualizar(String string) {
 			try {
 				Parser parser = new Parser();
 				Variavel vAccessToken = VariavelProvedor.getVariavel(Constantes.VAR_ACCESS_TOKEN);
@@ -650,22 +660,30 @@ public class RequisicaoContainer extends AbstratoContainer {
 				}
 				Tipo parametros = parser.parse(string);
 				String resposta = requisicao(parametros);
-				if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
-					StyledDocument styledDoc = areaResultados.getStyledDocument();
-					Tipo json = parser.parse(resposta);
-					if (styledDoc instanceof AbstractDocument) {
-						AbstractDocument doc = (AbstractDocument) styledDoc;
-						json.toString(doc, false, 0);
-					}
-					String accessToken = getAccessToken(json);
-					setAccesToken(accessToken);
-				} else {
-					areaResultados.setText(resposta);
-				}
+				processarResposta(parser, resposta);
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
 			}
+		}
+
+		private void processarResposta(Parser parser, String resposta) throws BadLocationException {
+			if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
+				processarJSON(parser, resposta);
+			} else {
+				areaResultados.setText(resposta);
+			}
+		}
+
+		private void processarJSON(Parser parser, String resposta) throws BadLocationException {
+			StyledDocument styledDoc = areaResultados.getStyledDocument();
+			Tipo json = parser.parse(resposta);
+			if (styledDoc instanceof AbstractDocument) {
+				AbstractDocument doc = (AbstractDocument) styledDoc;
+				json.toString(doc, false, 0);
+			}
+			String accessToken = getAccessToken(json);
+			setAccesToken(accessToken);
 		}
 
 		private String requisicao(Tipo parametros) throws IOException {
