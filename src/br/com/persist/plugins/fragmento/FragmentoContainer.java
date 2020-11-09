@@ -206,12 +206,16 @@ public class FragmentoContainer extends AbstratoContainer {
 			int[] linhas = tabela.getSelectedRows();
 			if (linhas != null && linhas.length == 1) {
 				Fragmento f = FragmentoProvedor.getFragmento(linhas[0]);
-				try {
-					listener.aplicarFragmento(f);
-				} finally {
-					if (janela != null) {
-						janela.fechar();
-					}
+				aplicarFragmento(f);
+			}
+		}
+
+		private void aplicarFragmento(Fragmento f) {
+			try {
+				listener.aplicarFragmento(f);
+			} finally {
+				if (janela != null) {
+					janela.fechar();
 				}
 			}
 		}
