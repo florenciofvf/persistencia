@@ -1349,34 +1349,50 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		try {
 			XMLUtil util = new XMLUtil(file);
 			util.prologo();
-			util.abrirTag("fvf");
-			util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
-			util.atributo("largura", getWidth());
-			util.atributo("altura", getHeight());
-			util.atributo("arquivoVinculo", getArquivoVinculo());
-			if (conexao != null) {
-				util.atributo("conexao", Util.escapar(conexao.getNome()));
-			}
+			salvarAtributos(conexao, util);
 			util.fecharTag();
-			for (Objeto objeto : objetos) {
-				objeto.salvar(util);
-			}
+			salvarObjetos(util);
 			util.ql();
-			for (Relacao relacao : relacoes) {
-				relacao.salvar(util);
-			}
+			salvarRelacoes(util);
 			util.ql();
-			JInternalFrame[] frames = getAllFrames();
-			for (int i = frames.length - 1; i >= 0; i--) {
-				InternalFormulario interno = (InternalFormulario) frames[i];
-				InternalForm form = new InternalForm();
-				form.copiar(interno);
-				form.salvar(util);
-			}
+			salvarForms(util);
 			util.finalizarTag("fvf");
 			util.close();
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	private void salvarAtributos(Conexao conexao, XMLUtil util) {
+		util.abrirTag("fvf");
+		util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
+		util.atributo("largura", getWidth());
+		util.atributo("altura", getHeight());
+		util.atributo("arquivoVinculo", getArquivoVinculo());
+		if (conexao != null) {
+			util.atributo("conexao", Util.escapar(conexao.getNome()));
+		}
+	}
+
+	private void salvarRelacoes(XMLUtil util) {
+		for (Relacao relacao : relacoes) {
+			relacao.salvar(util);
+		}
+	}
+
+	private void salvarObjetos(XMLUtil util) {
+		for (Objeto objeto : objetos) {
+			objeto.salvar(util);
+		}
+	}
+
+	private void salvarForms(XMLUtil util) {
+		JInternalFrame[] frames = getAllFrames();
+		for (int i = frames.length - 1; i >= 0; i--) {
+			InternalFormulario interno = (InternalFormulario) frames[i];
+			InternalForm form = new InternalForm();
+			form.copiar(interno);
+			form.salvar(util);
 		}
 	}
 
