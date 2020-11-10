@@ -132,14 +132,13 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private void processar(MouseEvent e) {
-			if (!e.isPopupTrigger()) {
-				return;
+			if (e.isPopupTrigger()) {
+				int tableColuna = columnAtPoint(e.getPoint());
+				int modelColuna = convertColumnIndexToModel(tableColuna);
+				popupHeader.indiceColuna = modelColuna;
+				popupHeader.preShow(getModel().getColumnName(modelColuna));
+				popupHeader.show(tableHeader, e.getX(), e.getY());
 			}
-			int tableColuna = columnAtPoint(e.getPoint());
-			int modelColuna = convertColumnIndexToModel(tableColuna);
-			popupHeader.indiceColuna = modelColuna;
-			popupHeader.preShow(getModel().getColumnName(modelColuna));
-			popupHeader.show(tableHeader, e.getX(), e.getY());
 		}
 
 		@Override

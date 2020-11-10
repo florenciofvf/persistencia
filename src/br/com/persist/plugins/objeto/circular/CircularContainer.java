@@ -82,13 +82,16 @@ public class CircularContainer extends Panel {
 		protected void atualizar() {
 			Objeto pivo = (Objeto) comboObjeto.getSelectedItem();
 			Tipo tipo = (Tipo) comboTipo.getSelectedItem();
-			if (pivo == null || tipo == null) {
-				return;
+			if (pivo != null && tipo != null) {
+				List<Objeto> selecionados = getSelecionados(pivo);
+				if (!selecionados.isEmpty()) {
+					atualizar(pivo, tipo, selecionados);
+					objetoSuperficie.repaint();
+				}
 			}
-			List<Objeto> selecionados = getSelecionados(pivo);
-			if (selecionados.isEmpty()) {
-				return;
-			}
+		}
+
+		private void atualizar(Objeto pivo, Tipo tipo, List<Objeto> selecionados) {
 			Vetor vetor = new Vetor(Util.getInt(txtRaio.getText(), 300), 0);
 			vetor.rotacionar(Util.getInt(txtGrauOrigem.getText(), 0));
 			int graus = Util.getInt(txtGrauTotal.getText(), 360) / selecionados.size();
@@ -108,7 +111,6 @@ public class CircularContainer extends Panel {
 					relacao.setPontoDestino(pivo == relacao.getDestino());
 				}
 			}
-			objetoSuperficie.repaint();
 		}
 	}
 }
