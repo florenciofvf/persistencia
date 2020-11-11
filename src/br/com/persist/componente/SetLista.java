@@ -1,7 +1,6 @@
 package br.com.persist.componente;
 
 import static br.com.persist.componente.BarraButtonEnum.APLICAR;
-import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -95,7 +94,7 @@ class SetListaDialogo extends AbstratoDialogo {
 		super((Frame) null, "Lista");
 		lista.setCellRenderer(new ItemRenderer());
 		lista.setModel(criarModel(listaString));
-		setSize(Constantes.SIZE2);
+		setSize(Constantes.SIZE3);
 		this.coletor = coletor;
 		toolbar.ini(this);
 		montarLayout();
@@ -148,18 +147,19 @@ class SetListaDialogo extends AbstratoDialogo {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private boolean limpar;
+		private final CheckBox chkTodos = new CheckBox("label.todos");
 
 		public void ini(Janela janela) {
-			super.ini(janela, LIMPAR, APLICAR);
+			super.ini(janela, APLICAR);
+			add(chkTodos);
+			chkTodos.setSelected(true);
+			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
 		}
 
-		@Override
-		protected void limpar() {
-			limpar = !limpar;
+		private void selecionar(boolean b) {
 			ListModel<Item> model = lista.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
-				model.getElementAt(i).setSelecionado(limpar);
+				model.getElementAt(i).setSelecionado(b);
 			}
 			lista.repaint();
 		}

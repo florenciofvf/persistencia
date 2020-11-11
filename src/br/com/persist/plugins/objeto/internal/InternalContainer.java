@@ -1145,9 +1145,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					private void montarSelect(Conexao conexao, String complemento, StringBuilder builder) {
 						objeto.select(builder, conexao);
 						objeto.where(builder);
-						builder.append(" " + txtComplemento.getText());
-						builder.append(" " + complemento);
-						builder.append(" " + objeto.getFinalConsulta());
+						concatenar(builder, txtComplemento.getText());
+						concatenar(builder, complemento);
+						concatenar(builder, objeto.getFinalConsulta());
+					}
+
+					private void concatenar(StringBuilder builder, String string) {
+						if (!Util.estaVazio(string)) {
+							builder.append(" " + string);
+						}
 					}
 
 					private String getNomeColunas(Coletor coletor) {
