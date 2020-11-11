@@ -125,7 +125,9 @@ public class PersistenciaModelo implements TableModel {
 	public List<String> getListaNomeColunas() {
 		List<String> lista = new ArrayList<>();
 		for (Coluna c : colunas) {
-			lista.add(c.getNome());
+			if (!c.isColunaInfo()) {
+				lista.add(c.getNome());
+			}
 		}
 		return lista;
 	}
