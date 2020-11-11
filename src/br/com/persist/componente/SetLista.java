@@ -91,7 +91,7 @@ class SetListaDialogo extends AbstratoDialogo {
 	private final transient Coletor coletor;
 
 	SetListaDialogo(List<String> listaString, Coletor coletor) {
-		super((Frame) null, "Lista");
+		super((Frame) null, "Lista ( " + listaString.size() + ")");
 		lista.setCellRenderer(new ItemRenderer());
 		lista.setModel(criarModel(listaString));
 		setSize(Constantes.SIZE3);
