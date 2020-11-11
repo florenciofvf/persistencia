@@ -24,8 +24,8 @@ public class SetLista {
 	private SetLista() {
 	}
 
-	public static void view(List<String> lista, Coletor coletor, Component c) {
-		SetListaDialogo form = new SetListaDialogo(lista, coletor);
+	public static void view(String titulo, List<String> lista, Coletor coletor, Component c) {
+		SetListaDialogo form = new SetListaDialogo(titulo, lista, coletor);
 		form.setLocationRelativeTo(c);
 		form.setVisible(true);
 	}
@@ -90,8 +90,8 @@ class SetListaDialogo extends AbstratoDialogo {
 	private JList<Item> lista = new JList<>();
 	private final transient Coletor coletor;
 
-	SetListaDialogo(List<String> listaString, Coletor coletor) {
-		super((Frame) null, "Lista ( " + listaString.size() + ")");
+	SetListaDialogo(String titulo, List<String> listaString, Coletor coletor) {
+		super((Frame) null, titulo + " [" + listaString.size() + "]");
 		lista.setCellRenderer(new ItemRenderer());
 		lista.setModel(criarModel(listaString));
 		setSize(Constantes.SIZE3);
