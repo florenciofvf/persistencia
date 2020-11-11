@@ -67,6 +67,8 @@ import br.com.persist.componente.MenuPadrao2;
 import br.com.persist.componente.MenuPadrao3;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SetLista;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
@@ -1131,15 +1133,39 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private StringBuilder getConsultaColuna(Conexao conexao, String complemento) {
 						String selectAlter = objeto.getSelectAlternativo();
-						objeto.setSelectAlternativo("SELECT " + tabelaPersistencia.getNomeColunas());
+						Coletor coletor = new Coletor();
+						SetLista.view(tabelaPersistencia.getListaNomeColunas(), coletor, InternalContainer.this);
+						objeto.setSelectAlternativo("SELECT " + getNomeColunas(coletor));
 						StringBuilder builder = new StringBuilder();
+						montarSelect(conexao, complemento, builder);
+						objeto.setSelectAlternativo(selectAlter);
+						return builder;
+					}
+
+					private void montarSelect(Conexao conexao, String complemento, StringBuilder builder) {
 						objeto.select(builder, conexao);
 						objeto.where(builder);
 						builder.append(" " + txtComplemento.getText());
 						builder.append(" " + complemento);
 						builder.append(" " + objeto.getFinalConsulta());
-						objeto.setSelectAlternativo(selectAlter);
-						return builder;
+					}
+
+					private String getNomeColunas(Coletor coletor) {
+						if (coletor.getLista() == null || coletor.getLista().isEmpty()) {
+							return tabelaPersistencia.getNomeColunas();
+						}
+						return getNomeColunas(coletor.getLista());
+					}
+
+					private String getNomeColunas(List<String> lista) {
+						StringBuilder sb = new StringBuilder();
+						for (String string : lista) {
+							if (sb.length() > 0) {
+								sb.append(", ");
+							}
+							sb.append(string);
+						}
+						return sb.toString();
 					}
 
 					private void abrirSelect(boolean abrirEmForm) {

@@ -122,6 +122,14 @@ public class PersistenciaModelo implements TableModel {
 		return colunas;
 	}
 
+	public List<String> getListaNomeColunas() {
+		List<String> lista = new ArrayList<>();
+		for (Coluna c : colunas) {
+			lista.add(c.getNome());
+		}
+		return lista;
+	}
+
 	public Conexao getConexao() {
 		return conexao;
 	}

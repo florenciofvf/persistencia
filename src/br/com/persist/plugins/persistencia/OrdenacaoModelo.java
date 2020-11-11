@@ -69,6 +69,10 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return sb.toString();
 	}
 
+	public List<String> getListaNomeColunas() {
+		return model.getListaNomeColunas();
+	}
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		return model.getColumnClass(columnIndex);
