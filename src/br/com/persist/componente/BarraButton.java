@@ -243,7 +243,7 @@ public class BarraButton extends JToolBar {
 	}
 
 	protected void salvoMensagem() {
-		labelTextTemp.mensagemChave("msg.salvo");
+		labelTextTempSalvo.mensagemChave("msg.salvo");
 	}
 
 	protected void copiar2Mensagem(String string) {
