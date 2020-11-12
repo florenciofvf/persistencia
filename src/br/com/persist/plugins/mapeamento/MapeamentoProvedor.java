@@ -83,13 +83,17 @@ public class MapeamentoProvedor {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
 		util.abrirTag2(Constantes.MAPEAMENTOS);
+		salvarMapeamentos(util);
+		util.finalizarTag(Constantes.MAPEAMENTOS);
+		util.close();
+	}
+
+	private static void salvarMapeamentos(XMLUtil util) {
 		for (Mapeamento m : lista) {
 			if (m.isValido()) {
 				m.salvar(util);
 			}
 		}
-		util.finalizarTag(Constantes.MAPEAMENTOS);
-		util.close();
 	}
 
 	public static Valor getValor(int i) {

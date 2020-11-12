@@ -83,13 +83,17 @@ public class VariavelProvedor {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
 		util.abrirTag2(Constantes.VARIAVEIS);
+		salvarVariaveis(util);
+		util.finalizarTag(Constantes.VARIAVEIS);
+		util.close();
+	}
+
+	private static void salvarVariaveis(XMLUtil util) {
 		for (Variavel v : lista) {
 			if (v.isValido()) {
 				v.salvar(util);
 			}
 		}
-		util.finalizarTag(Constantes.VARIAVEIS);
-		util.close();
 	}
 
 	public static String substituir(String string) {

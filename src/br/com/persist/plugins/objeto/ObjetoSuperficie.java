@@ -1371,15 +1371,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	private void salvarRelacoes(XMLUtil util) {
-		for (Relacao relacao : relacoes) {
-			relacao.salvar(util);
-		}
-	}
-
 	private void salvarObjetos(XMLUtil util) {
 		for (Objeto objeto : objetos) {
 			objeto.salvar(util);
+		}
+	}
+
+	private void salvarRelacoes(XMLUtil util) {
+		for (Relacao relacao : relacoes) {
+			relacao.salvar(util);
 		}
 	}
 

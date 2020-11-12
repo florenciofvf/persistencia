@@ -92,18 +92,26 @@ public class FragmentoProvedor {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
 		util.abrirTag2(Constantes.FRAGMENTOS);
+		salvarFragmentosLista(util);
+		salvarFragmentosPasta(util);
+		util.finalizarTag(Constantes.FRAGMENTOS);
+		util.close();
+	}
+
+	private static void salvarFragmentosLista(XMLUtil util) {
 		for (Fragmento f : lista) {
 			if (f.isValido()) {
 				f.salvar(util);
 			}
 		}
+	}
+
+	private static void salvarFragmentosPasta(XMLUtil util) {
 		for (Fragmento f : pasta) {
 			if (f.isValido()) {
 				f.salvar(util);
 			}
 		}
-		util.finalizarTag(Constantes.FRAGMENTOS);
-		util.close();
 	}
 
 	public static void filtrar(List<String> grupos) {
