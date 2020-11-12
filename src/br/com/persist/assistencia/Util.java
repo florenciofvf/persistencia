@@ -38,6 +38,7 @@ import javax.swing.text.JTextComponent;
 
 import br.com.persist.componente.TextArea;
 import br.com.persist.mensagem.MensagemDialogo;
+import br.com.persist.mensagem.MensagemFormulario;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
@@ -176,13 +177,7 @@ public class Util {
 	}
 
 	public static void mensagem(Component componente, String string) {
-		Component view = componente;
-		while (view != null) {
-			if (view instanceof Frame || view instanceof Dialog) {
-				break;
-			}
-			view = view.getParent();
-		}
+		Component view = getViewParent(componente);
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
 		Dimension dimension = new Dimension(500, 300);
 		MensagemDialogo mensagem = null;
@@ -203,6 +198,26 @@ public class Util {
 			textArea.setPreferredSize(dimension);
 			JOptionPane.showMessageDialog(componente, textArea, titulo, JOptionPane.PLAIN_MESSAGE);
 		}
+	}
+
+	private static Component getViewParent(Component componente) {
+		Component view = componente;
+		while (view != null) {
+			if (view instanceof Frame || view instanceof Dialog) {
+				break;
+			}
+			view = view.getParent();
+		}
+		return view;
+	}
+
+	public static void mensagemFormulario(Component componente, String string) {
+		Component view = getViewParent(componente);
+		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
+		MensagemFormulario mensagem = MensagemFormulario.criar(titulo, string);
+		mensagem.setSize(new Dimension(500, 300));
+		mensagem.setLocationRelativeTo(view);
+		mensagem.setVisible(true);
 	}
 
 	public static boolean confirmaExclusao(Component componente, boolean objetos) {

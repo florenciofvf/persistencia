@@ -164,18 +164,18 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				addMenuItem(true, pksAusentesAcao);
 				addMenuItem(true, ordemExportAcao);
 				addMenuItem(true, ordemImportAcao);
-				queExportamAcao
-						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.queExportam()));
-				naoExportamAcao
-						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.naoExportam()));
-				pksMultiplaAcao
-						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.pksMultipla()));
-				pksAusentesAcao
-						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.pksAusente()));
-				ordemImportAcao
-						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.ordemExpImp(false)));
-				ordemExportAcao
-						.setActionListener(e -> Util.mensagem(MetadadoContainer.this, metadadoTree.ordemExpImp(true)));
+				queExportamAcao.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.queExportam()));
+				naoExportamAcao.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.naoExportam()));
+				pksMultiplaAcao.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.pksMultipla()));
+				pksAusentesAcao.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.pksAusente()));
+				ordemImportAcao.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.ordemExpImp(false)));
+				ordemExportAcao.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.ordemExpImp(true)));
 			}
 		}
 
