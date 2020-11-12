@@ -1722,27 +1722,30 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		Variaveis variaveis = criarVariaveis(exportacao, circular, d);
-		Objeto centro = processarCentro(metadado, variaveis.circular, variaveis);
-		processarFilhos(metadado, variaveis, centro);
+		Variaveis variaveis = criarVariaveis(exportacao, circular);
+		Objeto centro = processarCentro(metadado, variaveis);
+		variaveis.centro = centro;
+		processarFilhos(metadado, variaveis);
 	}
 
-	private void processarFilhos(Metadado metadado, Variaveis variaveis, Objeto centro) {
+	private void processarFilhos(Metadado metadado, Variaveis variaveis) {
 		List<String> lista = metadado.getListaStringExpImp(variaveis.exportacao);
 		if (!lista.isEmpty()) {
 			Metadado raiz = metadado.getPai();
 			variaveis.definirGraus(lista);
-			variaveis.definirY(centro);
-			for (int i = 0; i < lista.size(); i++) {
-				String tabelaIds = lista.get(i);
-				Objeto objeto = criarEAdicionar(variaveis, tabelaIds);
-				criarEAdicionar(variaveis, centro, objeto);
-				variaveis.vetor.rotacionar(variaveis.graus);
-				processarChaves(raiz, tabelaIds, objeto);
-				checarLocalizacao(variaveis, objeto);
-			}
-			atualizarSuperficie(variaveis.circular, variaveis);
+			variaveis.definirY(variaveis.centro);
+			processarLista(variaveis, lista, raiz);
+			atualizarSuperficie(variaveis);
+		}
+	}
+
+	private void processarLista(Variaveis variaveis, List<String> lista, Metadado raiz) {
+		for (int i = 0; i < lista.size(); i++) {
+			String tabelaIds = lista.get(i);
+			Objeto objeto = criarEAdicionar(variaveis, tabelaIds);
+			criarEAdicionar(variaveis, objeto);
+			processarChaves(raiz, tabelaIds, objeto);
+			checarLocalizacao(variaveis, objeto);
 		}
 	}
 
@@ -1764,9 +1767,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	private void criarEAdicionar(Variaveis variaveis, Objeto centro, Objeto objeto) {
-		Relacao relacao = new Relacao(centro, !variaveis.exportacao, objeto, variaveis.exportacao);
+	private void criarEAdicionar(Variaveis variaveis, Objeto objeto) {
+		Relacao relacao = new Relacao(variaveis.centro, !variaveis.exportacao, objeto, variaveis.exportacao);
 		addRelacao(relacao);
+		variaveis.vetor.rotacionar(variaveis.graus);
 	}
 
 	private Objeto criarEAdicionar(Variaveis variaveis, String tabelaIds) {
@@ -1777,7 +1781,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return objeto;
 	}
 
-	private Variaveis criarVariaveis(boolean exportacao, boolean circular, Dimension d) {
+	private Variaveis criarVariaveis(boolean exportacao, boolean circular) {
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		Variaveis variaveis = new Variaveis();
 		variaveis.exportacao = exportacao;
 		variaveis.circular = circular;
@@ -1786,20 +1791,20 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return variaveis;
 	}
 
-	private void atualizarSuperficie(boolean circular, Variaveis variaveis) {
-		if (!circular) {
+	private void atualizarSuperficie(Variaveis variaveis) {
+		if (!variaveis.circular) {
 			setPreferredSize(new Dimension(0, variaveis.y));
 			SwingUtilities.updateComponentTreeUI(getParent());
 		}
 	}
 
-	private Objeto processarCentro(Metadado metadado, boolean circular, Variaveis variaveis) {
+	private Objeto processarCentro(Metadado metadado, Variaveis variaveis) {
 		Objeto centro = new Objeto(variaveis.centroX, variaveis.centroY);
 		centro.setTabela(metadado.getDescricao());
 		centro.setChaves(metadado.getChaves());
 		centro.setId(metadado.getDescricao());
 		addObjeto(centro);
-		if (!circular) {
+		if (!variaveis.circular) {
 			centro.x = 20;
 			centro.y = 20;
 		}
@@ -1809,6 +1814,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private class Variaveis {
 		boolean exportacao;
 		boolean circular;
+		Objeto centro;
 		Vetor vetor;
 		int centroX;
 		int centroY;
