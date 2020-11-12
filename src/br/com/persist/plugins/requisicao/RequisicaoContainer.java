@@ -29,6 +29,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -275,7 +276,15 @@ public class RequisicaoContainer extends AbstratoContainer {
 		protected void salvar() {
 			Pagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
-				ativa.salvar();
+				salvar(ativa);
+			}
+		}
+
+		private void salvar(Pagina ativa) {
+			AtomicBoolean atomic = new AtomicBoolean(false);
+			ativa.salvar(atomic);
+			if (atomic.get()) {
+				salvoMensagem();
 			}
 		}
 
@@ -592,12 +601,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
-		private void salvar() {
+		private void salvar(AtomicBoolean atomic) {
 			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
 				return;
 			}
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(areaParametros.getText());
+				atomic.set(true);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}

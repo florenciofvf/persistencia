@@ -10,6 +10,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
@@ -31,6 +33,7 @@ public class MapeamentoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final MapeamentoModelo mapeamentoModelo = new MapeamentoModelo();
 	private final JTable tabela = new JTable(mapeamentoModelo);
+	private static final Logger LOG = Logger.getGlobal();
 	private MapeamentoFormulario mapeamentoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private MapeamentoDialogo mapeamentoDialogo;
@@ -166,7 +169,12 @@ public class MapeamentoContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			MapeamentoProvedor.salvar();
+			try {
+				MapeamentoProvedor.salvar();
+				salvoMensagem();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
 		}
 
 		@Override

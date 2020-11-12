@@ -170,6 +170,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 					}
 					pw.println();
 				}
+				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("SALVAR_MAPA_ANEXOS", ex, AnexoContainer.this);
 			}

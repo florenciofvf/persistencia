@@ -420,12 +420,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					VariavelProvedor.adicionar(cv);
 					salvar = true;
 				}
-				if (salvar) {
-					VariavelProvedor.salvar();
-					VariavelProvedor.inicializar();
-				}
+				checarSalvarVariavelProvedor(salvar);
 				txtComplemento.setText(cv.getValor());
 				actionListenerInner.actionPerformed(null);
+			}
+
+			private void checarSalvarVariavelProvedor(boolean salvar) {
+				if (salvar) {
+					try {
+						VariavelProvedor.salvar();
+						VariavelProvedor.inicializar();
+					} catch (Exception e) {
+						LOG.log(Level.SEVERE, Constantes.ERRO, e);
+					}
+				}
 			}
 		}
 

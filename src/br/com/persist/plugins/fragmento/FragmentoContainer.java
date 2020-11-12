@@ -11,6 +11,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
@@ -32,6 +34,7 @@ public class FragmentoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo fragmentoModelo = new FragmentoModelo();
 	private final JTable tabela = new JTable(fragmentoModelo);
+	private static final Logger LOG = Logger.getGlobal();
 	private FragmentoFormulario fragmentoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private FragmentoDialogo fragmentoDialogo;
@@ -184,7 +187,12 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			FragmentoProvedor.salvar();
+			try {
+				FragmentoProvedor.salvar();
+				salvoMensagem();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
 		}
 
 		@Override

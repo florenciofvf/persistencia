@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 
 public class FragmentoProvedor {
@@ -87,26 +88,22 @@ public class FragmentoProvedor {
 		Collections.sort(lista, (o1, o2) -> o1.getGrupo().compareTo(o2.getGrupo()));
 	}
 
-	public static void salvar() {
-		try {
-			XMLUtil util = new XMLUtil(file);
-			util.prologo();
-			util.abrirTag2(Constantes.FRAGMENTOS);
-			for (Fragmento f : lista) {
-				if (f.isValido()) {
-					f.salvar(util);
-				}
+	public static void salvar() throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2(Constantes.FRAGMENTOS);
+		for (Fragmento f : lista) {
+			if (f.isValido()) {
+				f.salvar(util);
 			}
-			for (Fragmento f : pasta) {
-				if (f.isValido()) {
-					f.salvar(util);
-				}
-			}
-			util.finalizarTag(Constantes.FRAGMENTOS);
-			util.close();
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
+		for (Fragmento f : pasta) {
+			if (f.isValido()) {
+				f.salvar(util);
+			}
+		}
+		util.finalizarTag(Constantes.FRAGMENTOS);
+		util.close();
 	}
 
 	public static void filtrar(List<String> grupos) {

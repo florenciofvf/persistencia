@@ -528,6 +528,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			Preferencias.salvar();
+			salvoMensagem();
 		}
 	}
 

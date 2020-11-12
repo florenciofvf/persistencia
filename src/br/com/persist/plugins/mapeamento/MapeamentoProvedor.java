@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 
 public class MapeamentoProvedor {
@@ -78,21 +79,17 @@ public class MapeamentoProvedor {
 		}
 	}
 
-	public static void salvar() {
-		try {
-			XMLUtil util = new XMLUtil(file);
-			util.prologo();
-			util.abrirTag2(Constantes.MAPEAMENTOS);
-			for (Mapeamento m : lista) {
-				if (m.isValido()) {
-					m.salvar(util);
-				}
+	public static void salvar() throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2(Constantes.MAPEAMENTOS);
+		for (Mapeamento m : lista) {
+			if (m.isValido()) {
+				m.salvar(util);
 			}
-			util.finalizarTag(Constantes.MAPEAMENTOS);
-			util.close();
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
+		util.finalizarTag(Constantes.MAPEAMENTOS);
+		util.close();
 	}
 
 	public static Valor getValor(int i) {

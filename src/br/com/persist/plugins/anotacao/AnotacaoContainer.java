@@ -187,6 +187,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 		private void salvarArquivo() {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
+				salvoMensagem();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}

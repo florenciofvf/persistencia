@@ -23,6 +23,7 @@ public class BarraButton extends JToolBar {
 	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
 	protected Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
+	protected LabelTextTemp labelTextTempSalvo = new LabelTextTemp();
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private Action atualizarAcao = Action.actionIconAtualizar();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
@@ -132,6 +133,7 @@ public class BarraButton extends JToolBar {
 	private void configSalvar(BarraButtonEnum... enuns) {
 		if (contem(SALVAR, enuns)) {
 			addButton(salvarAcao);
+			add(labelTextTempSalvo);
 			salvarAcao.setActionListener(e -> salvar());
 		}
 	}
@@ -238,6 +240,10 @@ public class BarraButton extends JToolBar {
 		if (!Util.estaVazio(string)) {
 			labelTextTemp.mensagemChave("msg.copiado");
 		}
+	}
+
+	protected void salvoMensagem() {
+		labelTextTemp.mensagemChave("msg.salvo");
 	}
 
 	protected void copiar2Mensagem(String string) {

@@ -45,6 +45,7 @@ import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
@@ -1345,22 +1346,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
 	}
 
-	public void salvar(File file, Conexao conexao) {
-		try {
-			XMLUtil util = new XMLUtil(file);
-			util.prologo();
-			salvarAtributos(conexao, util);
-			util.fecharTag();
-			salvarObjetos(util);
-			util.ql();
-			salvarRelacoes(util);
-			util.ql();
-			salvarForms(util);
-			util.finalizarTag("fvf");
-			util.close();
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, e);
-		}
+	public void salvar(File file, Conexao conexao) throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		salvarAtributos(conexao, util);
+		util.fecharTag();
+		salvarObjetos(util);
+		util.ql();
+		salvarRelacoes(util);
+		util.ql();
+		salvarForms(util);
+		util.finalizarTag("fvf");
+		util.close();
 	}
 
 	private void salvarAtributos(Conexao conexao, XMLUtil util) {
@@ -1889,8 +1886,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void checarAtualizarVariavelProvedorSuperficie(boolean salvar) {
 		if (salvar) {
-			VariavelProvedor.salvar();
-			VariavelProvedor.inicializar();
+			try {
+				VariavelProvedor.salvar();
+				VariavelProvedor.inicializar();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
 		}
 	}
 

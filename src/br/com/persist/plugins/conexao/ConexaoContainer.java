@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
@@ -38,6 +40,7 @@ public class ConexaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo conexaoModelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(conexaoModelo);
+	private static final Logger LOG = Logger.getGlobal();
 	private final Toolbar toolbar = new Toolbar();
 	private ConexaoFormulario conexaoFormulario;
 	private ConexaoDialogo conexaoDialogo;
@@ -219,7 +222,12 @@ public class ConexaoContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			ConexaoProvedor.salvar();
+			try {
+				ConexaoProvedor.salvar();
+				salvoMensagem();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
 		}
 
 		@Override

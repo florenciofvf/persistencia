@@ -140,8 +140,12 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	private void checarAtualizarVariavelProvedor(boolean salvar) {
 		if (salvar) {
-			VariavelProvedor.salvar();
-			VariavelProvedor.inicializar();
+			try {
+				VariavelProvedor.salvar();
+				VariavelProvedor.inicializar();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
 		}
 	}
 

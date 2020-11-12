@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -64,6 +66,7 @@ public class ObjetoContainer extends AbstratoContainer {
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
+	private static final Logger LOG = Logger.getGlobal();
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
@@ -270,14 +273,22 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			if (!Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
-				return;
+			if (Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
+				if (arquivo != null) {
+					salvar(arquivo);
+				} else {
+					salvarComo();
+				}
 			}
-			if (arquivo != null) {
-				objetoSuperficie.salvar(arquivo, getConexaoPadrao());
+		}
+
+		private void salvar(File file) {
+			try {
+				objetoSuperficie.salvar(file, getConexaoPadrao());
 				tituloTemporario = null;
-			} else {
-				salvarComo();
+				salvoMensagem();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
 		}
 
@@ -288,8 +299,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			if (opcao == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 				if (file != null) {
-					objetoSuperficie.salvar(file, getConexaoPadrao());
-					tituloTemporario = null;
+					salvar(file);
 					arquivo = file;
 					setTitulo();
 				}

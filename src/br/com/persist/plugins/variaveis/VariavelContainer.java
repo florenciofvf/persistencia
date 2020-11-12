@@ -10,6 +10,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
@@ -31,6 +33,7 @@ public class VariavelContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final VariavelModelo variavelModelo = new VariavelModelo();
 	private final JTable tabela = new JTable(variavelModelo);
+	private static final Logger LOG = Logger.getGlobal();
 	private VariavelFormulario variavelFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private VariavelDialogo variavelDialogo;
@@ -166,7 +169,12 @@ public class VariavelContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			VariavelProvedor.salvar();
+			try {
+				VariavelProvedor.salvar();
+				salvoMensagem();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
 		}
 
 		@Override

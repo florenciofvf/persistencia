@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.componente.SetValor.Valor;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 
 public class VariavelProvedor {
@@ -78,21 +79,17 @@ public class VariavelProvedor {
 		}
 	}
 
-	public static void salvar() {
-		try {
-			XMLUtil util = new XMLUtil(file);
-			util.prologo();
-			util.abrirTag2(Constantes.VARIAVEIS);
-			for (Variavel v : lista) {
-				if (v.isValido()) {
-					v.salvar(util);
-				}
+	public static void salvar() throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2(Constantes.VARIAVEIS);
+		for (Variavel v : lista) {
+			if (v.isValido()) {
+				v.salvar(util);
 			}
-			util.finalizarTag(Constantes.VARIAVEIS);
-			util.close();
-		} catch (Exception e) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
+		util.finalizarTag(Constantes.VARIAVEIS);
+		util.close();
 	}
 
 	public static String substituir(String string) {
