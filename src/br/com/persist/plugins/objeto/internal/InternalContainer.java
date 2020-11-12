@@ -1438,15 +1438,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		if (ItemEvent.SELECTED != e.getStateChange()) {
-			return;
+		if (ItemEvent.SELECTED == e.getStateChange()) {
+			setConexaoModelo();
 		}
+	}
+
+	private void setConexaoModelo() {
 		Conexao conexao = getConexao();
 		if (conexao != null) {
-			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-			TableModel model = modelo.getModelo();
-			((PersistenciaModelo) model).setConexao(conexao);
+			setConexaoModelo(conexao);
 		}
+	}
+
+	private void setConexaoModelo(Conexao conexao) {
+		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+		modelo.getModelo().setConexao(conexao);
 	}
 
 	public Conexao getConexao() {
