@@ -124,13 +124,17 @@ public class ConexaoProvedor {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
 		util.abrirTag2(Constantes.CONEXOES);
+		salvarConexoes(util);
+		util.finalizarTag(Constantes.CONEXOES);
+		util.close();
+	}
+
+	private static void salvarConexoes(XMLUtil util) {
 		for (Conexao c : lista) {
 			if (c.isValido()) {
 				c.salvar(util);
 			}
 		}
-		util.finalizarTag(Constantes.CONEXOES);
-		util.close();
 	}
 
 	public static synchronized Connection getConnection(Conexao conexao) throws ConexaoException {
