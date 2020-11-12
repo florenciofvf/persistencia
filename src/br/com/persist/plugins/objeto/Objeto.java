@@ -48,6 +48,8 @@ public class Objeto implements Runnable {
 	private final Set<String> complementos;
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
+	private boolean ajusteAutoForm = true;
+	private boolean desenharId = true;
 	private boolean abrirAuto = true;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
@@ -56,7 +58,6 @@ public class Objeto implements Runnable {
 	private boolean linkAuto = true;
 	private boolean transparenteBkp;
 	private ObjetoListener listener;
-	private boolean ajusteAutoForm;
 	private Color cor = COR_PADRAO;
 	private static long sequencia;
 	private String finalConsulta;
@@ -64,7 +65,6 @@ public class Objeto implements Runnable {
 	private boolean selecionado;
 	private boolean ccsc = true;
 	private boolean controlado;
-	private boolean desenharId;
 	private String complemento;
 	private String chaveamento;
 	private boolean colunaInfo;
@@ -111,9 +111,7 @@ public class Objeto implements Runnable {
 		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
 		pesquisas = new ArrayList<>();
-		desenharId = true;
 		setIcone(icone);
-		visivel = true;
 		setCor(cor);
 		this.x = x;
 		this.y = y;
