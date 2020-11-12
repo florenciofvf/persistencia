@@ -154,6 +154,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action selecaoGeralAcao = Action.actionIcon("label.selecao_todos", Icones.TAG2);
 		private Action desenharDescAcao = Action.actionIcon("label.desenhar_desc", Icones.TAG);
 		private Action transparenteAcao = Action.actionIcon("label.transparente", Icones.RECT);
 		private Action criarObjetoAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
@@ -173,10 +174,11 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(true, btnRotulos);
 			add(btnArrasto);
 			add(btnSelecao);
-			add(true, new ToggleButton(desenharIdAcao));
+			add(true, new ToggleButton(selecaoGeralAcao));
+			add(new ToggleButton(desenharIdAcao));
 			add(new ToggleButton(desenharDescAcao));
-			add(true, new ToggleButton(transparenteAcao));
-			add(chkAjusteAutomatico);
+			add(new ToggleButton(transparenteAcao));
+			add(true, chkAjusteAutomatico);
 			add(true, comboConexao);
 			add(true, new ButtonInfo());
 			add(labelStatus);
@@ -199,6 +201,8 @@ public class ObjetoContainer extends AbstratoContainer {
 					objetoSuperficie.selecionarConexao(getConexaoPadrao());
 				}
 			});
+			selecaoGeralAcao
+					.setActionListener(e -> objetoSuperficie.selecaoGeral(((ToggleButton) e.getSource()).isSelected()));
 			desenharDescAcao
 					.setActionListener(e -> objetoSuperficie.desenharDesc(((ToggleButton) e.getSource()).isSelected()));
 			desenharIdAcao

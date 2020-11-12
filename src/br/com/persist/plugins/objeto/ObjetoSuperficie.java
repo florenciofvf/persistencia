@@ -1423,6 +1423,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		repaint();
 	}
 
+	public void selecaoGeral(boolean b) {
+		for (Objeto objeto : objetos) {
+			objeto.setSelecionado(b);
+		}
+		repaint();
+	}
+
 	public void desenharIds(boolean b) {
 		for (Objeto objeto : objetos) {
 			objeto.setDesenharId(b);
