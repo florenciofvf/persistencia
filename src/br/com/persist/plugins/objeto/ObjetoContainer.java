@@ -16,6 +16,9 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -211,11 +214,23 @@ public class ObjetoContainer extends AbstratoContainer {
 					.setActionListener(e -> objetoSuperficie.transparente(((ToggleButton) e.getSource()).isSelected()));
 			chkAjusteAutomatico
 					.addActionListener(e -> objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected()));
-			txtArquivoVinculo.addActionListener(e -> objetoSuperficie.setArquivoVinculo(txtArquivoVinculo.getText()));
 			txtPrefixoNomeTabela
 					.addActionListener(e -> objetoSuperficie.prefixoNomeTabela(txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> objetoSuperficie.excluirSelecionados());
+			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
+			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
 			criarObjetoAcao.setActionListener(e -> criarObjeto());
+		}
+
+		private transient FocusListener focusListenerArquivoVinculo = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				setArquivoVinculo();
+			}
+		};
+
+		private void setArquivoVinculo() {
+			objetoSuperficie.setArquivoVinculo(txtArquivoVinculo.getText());
 		}
 
 		@Override
