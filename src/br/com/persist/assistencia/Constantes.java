@@ -10,6 +10,8 @@ public class Constantes {
 	public static final String ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS";
 	public static final String ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS";
 	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
+	public static final String DESTACAR_PROPRIO_LARGURA_INTERNAL = "DESTACAR_PROPRIO_LARGURA_INTERNAL";
+	public static final String DESTACAR_PROPRIO_ALTURA_INTERNAL = "DESTACAR_PROPRIO_ALTURA_INTERNAL";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
@@ -118,12 +120,14 @@ public class Constantes {
 	public static final String ICONE = "ICONE:";
 	public static final String FICHA = "FICHA";
 	public static final String VALOR = "valor";
+	public static final int QUATROCENTOS = 400;
 	public static final String ERRO = "ERRO";
 	public static final String INFO = "INFO";
 	public static final String FORM = "FORM";
 	public static final String NOVO = "novo";
 	public static final String EXEC = "exec";
 	public static final int QUARENTA_UM = 41;
+	public static final int DUZENTOS = 200;
 	public static final String III = "???";
 	public static final String ESC = "esc";
 	public static final String SEP = "###";

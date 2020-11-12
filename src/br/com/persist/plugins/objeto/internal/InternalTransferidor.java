@@ -7,6 +7,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.Objects;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
@@ -37,7 +38,7 @@ public class InternalTransferidor implements Transferable {
 	}
 
 	public static Object[] criarArray(Conexao conexao, Objeto objeto) {
-		return criarArray(conexao, objeto, new Dimension(400, 200));
+		return criarArray(conexao, objeto, new Dimension(Constantes.QUATROCENTOS, Constantes.DUZENTOS));
 	}
 
 	public Dimension getDimension() {

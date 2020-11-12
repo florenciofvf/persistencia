@@ -1859,9 +1859,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void destacarPropriaSuperficie(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
-		boolean salvar = false;
 		Variavel variavelDeltaX = VariavelProvedor.getVariavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
 		Variavel variavelDeltaY = VariavelProvedor.getVariavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
+		boolean salvar = false;
 		if (variavelDeltaX == null) {
 			variavelDeltaX = new Variavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaX);
@@ -1881,9 +1881,28 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void processarInternalFormulario(List<Objeto> objetos, Conexao conexao, InternalConfig config, int x,
 			int y) {
+		Variavel variavelLargura = VariavelProvedor.getVariavel(Constantes.DESTACAR_PROPRIO_LARGURA_INTERNAL);
+		Variavel variavelAltura = VariavelProvedor.getVariavel(Constantes.DESTACAR_PROPRIO_ALTURA_INTERNAL);
+		boolean salvar = false;
+		if (variavelLargura == null) {
+			variavelLargura = new Variavel(Constantes.DESTACAR_PROPRIO_LARGURA_INTERNAL,
+					Constantes.VAZIO + Constantes.QUATROCENTOS);
+			VariavelProvedor.adicionar(variavelLargura);
+			salvar = true;
+		}
+		if (variavelAltura == null) {
+			variavelAltura = new Variavel(Constantes.DESTACAR_PROPRIO_ALTURA_INTERNAL,
+					Constantes.VAZIO + Constantes.DUZENTOS);
+			VariavelProvedor.adicionar(variavelAltura);
+			salvar = true;
+		}
+		checarAtualizarVariavelProvedorSuperficie(salvar);
+		int largura = variavelLargura.getInteiro(Constantes.QUATROCENTOS);
+		int altura = variavelAltura.getInteiro(Constantes.DUZENTOS);
+		Dimension dimension = new Dimension(largura, altura);
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
+				Object[] array = InternalTransferidor.criarArray(conexao, objeto, dimension);
 				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), null, false,
 						config);
 				objeto.setSelecionado(false);
