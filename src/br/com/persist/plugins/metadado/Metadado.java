@@ -19,18 +19,24 @@ public class Metadado implements Transferable {
 	private static final DataFlavor[] flavors = { flavor };
 	private final List<Metadado> filhos;
 	private final String descricao;
+	private final String rotulo;
 	private int totalImportados;
 	private int totalExportados;
 	private boolean ehRaiz;
 	private boolean tabela;
 	private Metadado pai;
 
-	public Metadado(String descricao) {
+	public Metadado(String descricao, String rotulo) {
 		if (Util.estaVazio(descricao)) {
 			throw new IllegalArgumentException();
 		}
 		this.descricao = descricao;
 		filhos = new ArrayList<>();
+		this.rotulo = rotulo;
+	}
+
+	public Metadado(String descricao) {
+		this(descricao, descricao);
 	}
 
 	public int getIndice(Metadado metadado) {
@@ -81,7 +87,7 @@ public class Metadado implements Transferable {
 
 	@Override
 	public String toString() {
-		return descricao;
+		return rotulo;
 	}
 
 	@Override

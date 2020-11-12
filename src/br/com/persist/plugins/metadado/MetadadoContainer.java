@@ -252,7 +252,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				char chave) {
 			if (!filhos.isEmpty()) {
 				int size = filhos.size();
-				Metadado rotulo = new Metadado(size > 1 ? rotuloPlural + " - " + size : rotuloSingular);
+				String rotular = size > 1 ? rotuloPlural + " - " + size : rotuloSingular;
+				String descricao = size > 1 ? rotuloPlural : rotuloSingular;
+				Metadado rotulo = new Metadado(descricao, rotular);
 				for (Metadado obj : filhos) {
 					rotulo.add(obj);
 					if (chave == 'E') {
