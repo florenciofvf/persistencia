@@ -251,7 +251,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		private void adicionarLista(Metadado objeto, List<Metadado> filhos, String rotuloPlural, String rotuloSingular,
 				char chave) {
 			if (!filhos.isEmpty()) {
-				Metadado rotulo = new Metadado(filhos.size() > 1 ? rotuloPlural : rotuloSingular);
+				int size = filhos.size();
+				Metadado rotulo = new Metadado(size > 1 ? rotuloPlural + " - " + size : rotuloSingular);
 				for (Metadado obj : filhos) {
 					rotulo.add(obj);
 					if (chave == 'E') {
