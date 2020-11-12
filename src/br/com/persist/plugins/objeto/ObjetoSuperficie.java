@@ -1723,17 +1723,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
 		Variaveis variaveis = criarVariaveis(exportacao, circular);
-		Objeto centro = processarCentro(metadado, variaveis);
-		variaveis.centro = centro;
-		processarFilhos(metadado, variaveis);
+		variaveis.principal = processarPrincipal(metadado, variaveis);
+		variaveis.checkInicialPesquisa();
+		processarDetalhes(metadado, variaveis);
+		variaveis.checkFinalPesquisa();
+		Util.mensagemFormulario(this, variaveis.sb.toString());
 	}
 
-	private void processarFilhos(Metadado metadado, Variaveis variaveis) {
+	private void processarDetalhes(Metadado metadado, Variaveis variaveis) {
 		List<String> lista = metadado.getListaStringExpImp(variaveis.exportacao);
 		if (!lista.isEmpty()) {
 			Metadado raiz = metadado.getPai();
 			variaveis.definirGraus(lista);
-			variaveis.definirY(variaveis.centro);
+			variaveis.definirY(variaveis.principal);
 			processarLista(raiz, variaveis, lista);
 			atualizarSuperficie(variaveis);
 		}
@@ -1744,18 +1746,23 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			String tabelaIds = lista.get(i);
 			Objeto objeto = criarEAdicionar(variaveis, tabelaIds);
 			criarEAdicionar(variaveis, objeto);
-			processarChaves(raiz, tabelaIds, objeto);
+			processarChaves(raiz, variaveis, tabelaIds, objeto);
 			checarLocalizacao(variaveis, objeto);
 		}
 	}
 
-	private void processarChaves(Metadado raiz, String tabelaIds, Objeto objeto) {
+	private void processarChaves(Metadado raiz, Variaveis variaveis, String tabelaIds, Objeto objeto) {
 		int pos = tabelaIds.indexOf('(');
+		int pos2 = tabelaIds.indexOf(')');
 		String nome = tabelaIds.substring(0, pos);
+		String campo = tabelaIds.substring(pos + 1, pos2);
 		objeto.setTabela(nome);
 		Metadado tabela = raiz.getMetadado(nome);
 		if (tabela != null) {
 			objeto.setChaves(tabela.getChaves());
+			if (variaveis.exportacao) {
+				variaveis.ref(nome, campo);
+			}
 		}
 	}
 
@@ -1768,7 +1775,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void criarEAdicionar(Variaveis variaveis, Objeto objeto) {
-		Relacao relacao = new Relacao(variaveis.centro, !variaveis.exportacao, objeto, variaveis.exportacao);
+		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto, variaveis.exportacao);
 		addRelacao(relacao);
 		variaveis.vetor.rotacionar(variaveis.graus);
 	}
@@ -1798,23 +1805,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	private Objeto processarCentro(Metadado metadado, Variaveis variaveis) {
-		Objeto centro = new Objeto(variaveis.centroX, variaveis.centroY);
-		centro.setTabela(metadado.getDescricao());
-		centro.setChaves(metadado.getChaves());
-		centro.setId(metadado.getDescricao());
-		addObjeto(centro);
+	private Objeto processarPrincipal(Metadado metadado, Variaveis variaveis) {
+		Objeto principal = new Objeto(variaveis.centroX, variaveis.centroY);
+		principal.setTabela(metadado.getDescricao());
+		principal.setChaves(metadado.getChaves());
+		principal.setId(metadado.getDescricao());
+		addObjeto(principal);
 		if (!variaveis.circular) {
-			centro.x = 20;
-			centro.y = 20;
+			principal.x = 20;
+			principal.y = 20;
 		}
-		return centro;
+		return principal;
 	}
 
 	private class Variaveis {
+		private StringBuilder sb = new StringBuilder();
 		boolean exportacao;
 		boolean circular;
-		Objeto centro;
+		Objeto principal;
 		Vetor vetor;
 		int centroX;
 		int centroY;
@@ -1826,6 +1834,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			vetor = new Vetor(comprimento, 0);
 		}
 
+		void checkInicialPesquisa() {
+			if (exportacao) {
+				abrirPesquisa(principal.getTabela2(), principal.getChaves());
+			}
+		}
+
+		void checkFinalPesquisa() {
+			if (exportacao) {
+				fecharPesquisa();
+			}
+		}
+
 		void definirCentros(Dimension d) {
 			centroY = d.height / 2 - 25;
 			centroX = d.width / 2;
@@ -1835,8 +1855,31 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			graus = 360 / lista.size();
 		}
 
-		void definirY(Objeto centro) {
-			y = centro.y + Constantes.CEM;
+		void definirY(Objeto objeto) {
+			y = objeto.y + Constantes.CEM;
+		}
+
+		void abrirPesquisa(String tabela, String campo) {
+			sb.append(Constantes.QL + "\t<pesquisa");
+			sb.append(" nome=" + citar(tabela));
+			sb.append(" tabela=" + citar(tabela));
+			sb.append(" campo=" + citar(campo));
+			sb.append(">");
+		}
+
+		void ref(String tabela, String campo) {
+			sb.append(Constantes.QL + "\t\t<ref");
+			sb.append(" tabela=" + citar(tabela));
+			sb.append(" campo=" + citar(campo));
+			sb.append(" />");
+		}
+
+		void fecharPesquisa() {
+			sb.append(Constantes.QL + "\t</pesquisa>");
+		}
+
+		String citar(String s) {
+			return "\"" + s + "\"";
 		}
 	}
 
