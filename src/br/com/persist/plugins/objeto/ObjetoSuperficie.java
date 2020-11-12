@@ -1734,12 +1734,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			Metadado raiz = metadado.getPai();
 			variaveis.definirGraus(lista);
 			variaveis.definirY(variaveis.centro);
-			processarLista(variaveis, lista, raiz);
+			processarLista(raiz, variaveis, lista);
 			atualizarSuperficie(variaveis);
 		}
 	}
 
-	private void processarLista(Variaveis variaveis, List<String> lista, Metadado raiz) {
+	private void processarLista(Metadado raiz, Variaveis variaveis, List<String> lista) {
 		for (int i = 0; i < lista.size(); i++) {
 			String tabelaIds = lista.get(i);
 			Objeto objeto = criarEAdicionar(variaveis, tabelaIds);
