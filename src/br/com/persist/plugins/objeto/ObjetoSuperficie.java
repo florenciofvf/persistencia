@@ -1722,52 +1722,115 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
-		List<String> lista = metadado.getListaStringExpImp(exportacao);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int comprimento = Math.min(d.width, d.height) / 2 - 50;
-		Vetor vetor = new Vetor(comprimento, 0);
-		int centroY = d.height / 2 - 25;
-		int centroX = d.width / 2;
-		final int cem = 100;
-		Objeto centro = new Objeto(centroX, centroY);
+		Variaveis variaveis = criarVariaveis(exportacao, circular, d);
+		Objeto centro = processarCentro(metadado, variaveis.circular, variaveis);
+		processarFilhos(metadado, variaveis, centro);
+	}
+
+	private void processarFilhos(Metadado metadado, Variaveis variaveis, Objeto centro) {
+		List<String> lista = metadado.getListaStringExpImp(variaveis.exportacao);
+		if (!lista.isEmpty()) {
+			Metadado raiz = metadado.getPai();
+			variaveis.definirGraus(lista);
+			variaveis.definirY(centro);
+			for (int i = 0; i < lista.size(); i++) {
+				String tabelaIds = lista.get(i);
+				Objeto objeto = criarEAdicionar(variaveis, tabelaIds);
+				criarEAdicionar(variaveis, centro, objeto);
+				variaveis.vetor.rotacionar(variaveis.graus);
+				processarChaves(raiz, tabelaIds, objeto);
+				checarLocalizacao(variaveis, objeto);
+			}
+			atualizarSuperficie(variaveis.circular, variaveis);
+		}
+	}
+
+	private void processarChaves(Metadado raiz, String tabelaIds, Objeto objeto) {
+		int pos = tabelaIds.indexOf('(');
+		String nome = tabelaIds.substring(0, pos);
+		objeto.setTabela(nome);
+		Metadado tabela = raiz.getMetadado(nome);
+		if (tabela != null) {
+			objeto.setChaves(tabela.getChaves());
+		}
+	}
+
+	private void checarLocalizacao(Variaveis variaveis, Objeto objeto) {
+		if (!variaveis.circular) {
+			objeto.x = 20;
+			objeto.y = variaveis.y;
+			variaveis.y += Constantes.CEM;
+		}
+	}
+
+	private void criarEAdicionar(Variaveis variaveis, Objeto centro, Objeto objeto) {
+		Relacao relacao = new Relacao(centro, !variaveis.exportacao, objeto, variaveis.exportacao);
+		addRelacao(relacao);
+	}
+
+	private Objeto criarEAdicionar(Variaveis variaveis, String tabelaIds) {
+		Objeto objeto = new Objeto(variaveis.centroX + (int) variaveis.vetor.getX(),
+				variaveis.centroY + (int) variaveis.vetor.getY());
+		objeto.setId(tabelaIds);
+		addObjeto(objeto);
+		return objeto;
+	}
+
+	private Variaveis criarVariaveis(boolean exportacao, boolean circular, Dimension d) {
+		Variaveis variaveis = new Variaveis();
+		variaveis.exportacao = exportacao;
+		variaveis.circular = circular;
+		variaveis.definirCentros(d);
+		variaveis.criarVetor(d);
+		return variaveis;
+	}
+
+	private void atualizarSuperficie(boolean circular, Variaveis variaveis) {
+		if (!circular) {
+			setPreferredSize(new Dimension(0, variaveis.y));
+			SwingUtilities.updateComponentTreeUI(getParent());
+		}
+	}
+
+	private Objeto processarCentro(Metadado metadado, boolean circular, Variaveis variaveis) {
+		Objeto centro = new Objeto(variaveis.centroX, variaveis.centroY);
 		centro.setTabela(metadado.getDescricao());
 		centro.setChaves(metadado.getChaves());
 		centro.setId(metadado.getDescricao());
-		Metadado raiz = metadado.getPai();
 		addObjeto(centro);
 		if (!circular) {
 			centro.x = 20;
 			centro.y = 20;
 		}
-		if (lista.isEmpty()) {
-			return;
+		return centro;
+	}
+
+	private class Variaveis {
+		boolean exportacao;
+		boolean circular;
+		Vetor vetor;
+		int centroX;
+		int centroY;
+		int graus;
+		int y;
+
+		void criarVetor(Dimension d) {
+			int comprimento = Math.min(d.width, d.height) / 2 - 50;
+			vetor = new Vetor(comprimento, 0);
 		}
-		int graus = 360 / lista.size();
-		int y = centro.y + cem;
-		for (int i = 0; i < lista.size(); i++) {
-			String tabelaIds = lista.get(i);
-			Objeto objeto = new Objeto(centroX + (int) vetor.getX(), centroY + (int) vetor.getY());
-			objeto.setId(tabelaIds);
-			addObjeto(objeto);
-			Relacao relacao = new Relacao(centro, !exportacao, objeto, exportacao);
-			addRelacao(relacao);
-			vetor.rotacionar(graus);
-			int pos = tabelaIds.indexOf('(');
-			String nome = tabelaIds.substring(0, pos);
-			objeto.setTabela(nome);
-			Metadado tabela = raiz.getMetadado(nome);
-			if (tabela != null) {
-				objeto.setChaves(tabela.getChaves());
-			}
-			if (!circular) {
-				objeto.x = 20;
-				objeto.y = y;
-				y += cem;
-			}
+
+		void definirCentros(Dimension d) {
+			centroY = d.height / 2 - 25;
+			centroX = d.width / 2;
 		}
-		if (!circular) {
-			setPreferredSize(new Dimension(0, y));
-			SwingUtilities.updateComponentTreeUI(getParent());
+
+		void definirGraus(List<String> lista) {
+			graus = 360 / lista.size();
+		}
+
+		void definirY(Objeto centro) {
+			y = centro.y + Constantes.CEM;
 		}
 	}
 
