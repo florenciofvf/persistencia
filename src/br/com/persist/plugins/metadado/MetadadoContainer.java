@@ -112,6 +112,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 
 		private void eventos() {
+			txtMetadado.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtMetadado.addActionListener(this);
 		}
 
