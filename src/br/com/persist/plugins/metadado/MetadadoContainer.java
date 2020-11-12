@@ -108,20 +108,15 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			add(buttonInfo);
 			add(true, comboConexao);
 			add(txtMetadado);
-			eventos();
-		}
-
-		private void eventos() {
 			txtMetadado.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtMetadado.addActionListener(this);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (Util.estaVazio(txtMetadado.getText())) {
-				return;
+			if (!Util.estaVazio(txtMetadado.getText())) {
+				metadadoTree.selecionar(txtMetadado.getText().trim());
 			}
-			metadadoTree.selecionar(txtMetadado.getText().trim());
 		}
 
 		@Override
