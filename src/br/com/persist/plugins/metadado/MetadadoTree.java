@@ -160,16 +160,16 @@ public class MetadadoTree extends Tree {
 		private static final long serialVersionUID = 1L;
 		private MenuAbrirExportacaoH menuAbrirExportacaoH = new MenuAbrirExportacaoH();
 		private MenuAbrirImportacaoH menuAbrirImportacaoH = new MenuAbrirImportacaoH();
-		private MenuAbrirExportacao menuAbrirExportacao = new MenuAbrirExportacao();
-		private MenuAbrirImportacao menuAbrirImportacao = new MenuAbrirImportacao();
+		private MenuAbrirExportacaoC menuAbrirExportacaoC = new MenuAbrirExportacaoC();
+		private MenuAbrirImportacaoC menuAbrirImportacaoC = new MenuAbrirImportacaoC();
 		private MenuExportacao menuExportacao = new MenuExportacao();
 
 		private MetadadosPopup() {
 			add(menuExportacao);
 			add(true, menuAbrirExportacaoH);
 			add(menuAbrirImportacaoH);
-			add(menuAbrirExportacao);
-			add(menuAbrirImportacao);
+			add(menuAbrirExportacaoC);
+			add(menuAbrirImportacaoC);
 		}
 
 		private void preShow(Metadado metadado) {
@@ -177,8 +177,8 @@ public class MetadadoTree extends Tree {
 			menuExportacao.setEnabled(metadado.getEhRaiz() && !metadado.estaVazio());
 			menuAbrirExportacaoH.setEnabled(ehTabela);
 			menuAbrirImportacaoH.setEnabled(ehTabela);
-			menuAbrirExportacao.setEnabled(ehTabela);
-			menuAbrirImportacao.setEnabled(ehTabela);
+			menuAbrirExportacaoC.setEnabled(ehTabela);
+			menuAbrirImportacaoC.setEnabled(ehTabela);
 		}
 
 		private class MenuExportacao extends MenuPadrao1 {
@@ -191,10 +191,10 @@ public class MetadadoTree extends Tree {
 			}
 		}
 
-		private class MenuAbrirExportacao extends MenuPadrao1 {
+		private class MenuAbrirExportacaoC extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuAbrirExportacao() {
+			MenuAbrirExportacaoC() {
 				super("label.abrir_exportacao", Icones.ABRIR, false);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, true)));
@@ -215,10 +215,10 @@ public class MetadadoTree extends Tree {
 			}
 		}
 
-		private class MenuAbrirImportacao extends MenuPadrao1 {
+		private class MenuAbrirImportacaoC extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
 
-			MenuAbrirImportacao() {
+			MenuAbrirImportacaoC() {
 				super("label.abrir_importacao", Icones.ABRIR, false);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, true)));
