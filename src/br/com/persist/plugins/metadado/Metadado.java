@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
@@ -262,18 +264,24 @@ public class Metadado implements Transferable {
 		return resposta;
 	}
 
-	public Map<String, List<String>> localizarCampo(String nome) {
-		Map<String, List<String>> resp = new LinkedHashMap<>();
-		for (Metadado tipo : filhos) {
-			tipo.localizarCampo(nome, descricao, resp);
+	public Map<String, Set<String>> localizarCampo(String nome) {
+		Map<String, Set<String>> resp = new LinkedHashMap<>();
+		for (Metadado tab : filhos) {
+			tab.montarNaTabela(nome, tab.descricao, resp);
 		}
 		return resp;
 	}
 
-	private void localizarCampo(String nome, String tabela, Map<String, List<String>> map) {
+	private void montarNaTabela(String nome, String tabela, Map<String, Set<String>> map) {
+		for (Metadado tipo : filhos) {
+			tipo.montarNoTipo(nome, tabela, map);
+		}
+	}
+
+	private void montarNoTipo(String nome, String tabela, Map<String, Set<String>> map) {
 		for (Metadado campo : filhos) {
-			if (campo.descricao.indexOf(nome) != -1) {
-				List<String> lista = map.computeIfAbsent(tabela, t -> new ArrayList<>());
+			if (campo.descricao.toUpperCase().indexOf(nome) != -1) {
+				Set<String> lista = map.computeIfAbsent(tabela, t -> new LinkedHashSet<>());
 				lista.add(campo.descricao);
 			}
 		}

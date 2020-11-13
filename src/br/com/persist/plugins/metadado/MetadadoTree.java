@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -266,7 +267,7 @@ public class MetadadoTree extends Tree {
 		return getRaiz().ordemExpImp(exp);
 	}
 
-	public Map<String, List<String>> localizarCampo(String nome) {
+	public Map<String, Set<String>> localizarCampo(String nome) {
 		return getRaiz().localizarCampo(nome);
 	}
 

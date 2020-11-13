@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
@@ -167,6 +168,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				addMenuItem(true, pksAusentesAcao);
 				addMenuItem(true, ordemExportAcao);
 				addMenuItem(true, ordemImportAcao);
+				addMenuItem(true, localizarCampoAcao);
 				queExportamAcao.setActionListener(
 						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.queExportam()));
 				naoExportamAcao.setActionListener(
@@ -186,27 +188,37 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				Object resp = Util.getValorInputDialog(MetadadoContainer.this, "label.atencao",
 						Mensagens.getString("label.localizar_campo"), null);
 				if (resp != null && !Util.estaVazio(resp.toString())) {
-					Map<String, List<String>> map = metadadoTree.localizarCampo(resp.toString());
+					Map<String, Set<String>> map = metadadoTree.localizarCampo(resp.toString().toUpperCase());
 					Util.mensagemFormulario(MetadadoContainer.this, montarString(map));
 				}
 			}
 
-			private String montarString(Map<String, List<String>> map) {
+			private String montarString(Map<String, Set<String>> map) {
 				StringBuilder sb = new StringBuilder();
-				Iterator<Map.Entry<String, List<String>>> it = map.entrySet().iterator();
+				Iterator<Map.Entry<String, Set<String>>> it = map.entrySet().iterator();
 				while (it.hasNext()) {
-					append(sb, it.next());
+					Entry<String, Set<String>> entry = it.next();
+					append(sb, entry.getKey(), entry.getValue());
 				}
 				return sb.toString();
 			}
 
-			private void append(StringBuilder sb, Entry<String, List<String>> entry) {
-				sb.append(entry.getValue());
-				sb.append(Constantes.QL + "--------------");
-				for (String string : entry.getValue()) {
-					sb.append(string + Constantes.QL);
+			private void append(StringBuilder sb, String tabela, Set<String> campos) {
+				sb.append(tabela);
+				sb.append(Constantes.QL + aux(tabela.length()));
+				for (String campo : campos) {
+					sb.append(Constantes.QL + campo);
 				}
 				sb.append(Constantes.QL);
+				sb.append(Constantes.QL);
+			}
+
+			private String aux(int i) {
+				StringBuilder sb = new StringBuilder();
+				while (sb.length() < i) {
+					sb.append('-');
+				}
+				return sb.toString();
 			}
 		}
 
