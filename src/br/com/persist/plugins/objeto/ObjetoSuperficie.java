@@ -1817,7 +1817,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			variaveis.y += Constantes.CEM;
 		}
 		if (variaveis.ehExportacaoHierarquico()) {
-			objeto.x += Constantes.TRINTA;
+			objeto.x += 25;
 		}
 	}
 
