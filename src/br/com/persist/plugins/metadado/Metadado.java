@@ -260,9 +260,29 @@ public class Metadado implements Transferable {
 		return resposta;
 	}
 
+	public String getFKPara(String tabelaIds) {
+		StringBuilder sb = new StringBuilder();
+		for (Metadado tipo : filhos) {
+			if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
+					|| tipo.descricao.equals(Constantes.CAMPOS_IMPORTADOS)) {
+				tipo.fkPara(tabelaIds, sb);
+			}
+		}
+		return sb.toString();
+	}
+
 	private void listaStringExpImp(List<String> resposta) {
 		for (Metadado campo : filhos) {
 			campo.listaString(resposta);
+		}
+	}
+
+	private void fkPara(String tabelaIds, StringBuilder sb) {
+		for (Metadado campo : filhos) {
+			if (campo.fkPara(tabelaIds)) {
+				sb.append(campo.descricao);
+				break;
+			}
 		}
 	}
 
@@ -270,6 +290,15 @@ public class Metadado implements Transferable {
 		for (Metadado tabelaIds : filhos) {
 			resposta.add(tabelaIds.descricao);
 		}
+	}
+
+	private boolean fkPara(String tabelaIds) {
+		for (Metadado tab : filhos) {
+			if (tab.descricao.equalsIgnoreCase(tabelaIds)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean getEhRaiz() {
