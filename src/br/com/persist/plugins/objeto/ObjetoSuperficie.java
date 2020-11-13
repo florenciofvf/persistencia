@@ -668,19 +668,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo(), getGraphics(), config);
 		}
+	};
 
-		private InternalFormulario getInternalFormulario(Objeto objeto) {
-			for (JInternalFrame frame : getAllFrames()) {
-				if (frame instanceof InternalFormulario) {
-					InternalFormulario interno = (InternalFormulario) frame;
-					if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
-						return interno;
-					}
+	private InternalFormulario getInternalFormulario(Objeto objeto) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				InternalFormulario interno = (InternalFormulario) frame;
+				if (interno.ehObjeto(objeto) && interno.ehTabela(objeto)) {
+					return interno;
 				}
 			}
-			return null;
 		}
-	};
+		return null;
+	}
 
 	private void formularioDados(Conexao conexao, Objeto objeto, Frame frame) {
 		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
@@ -1934,21 +1934,38 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 		}
 		if (continua) {
-			List<Objeto> selecionados = montarSelecionados(lista);
+			List<Objeto> selecionados = montarSelecionados(lista, tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO);
 			destacar(conexao, tipoContainer, config, selecionados);
 		}
 	}
 
-	private List<Objeto> montarSelecionados(List<Objeto> lista) {
+	private List<Objeto> montarSelecionados(List<Objeto> lista, boolean proprioContainer) {
 		List<Objeto> selecionados = new ArrayList<>();
 		for (Objeto objeto : lista) {
-			if (objeto.isClonarAoDestacar()) {
-				selecionados.add(objeto.clonar());
-			} else {
-				selecionados.add(objeto);
-			}
+			montarSelecionado(proprioContainer, selecionados, objeto);
 		}
 		return selecionados;
+	}
+
+	private void montarSelecionado(boolean proprioContainer, List<Objeto> selecionados, Objeto objeto) {
+		if (objeto.isClonarAoDestacar()) {
+			if (proprioContainer) {
+				montarSelecionadoProprio(selecionados, objeto);
+			} else {
+				selecionados.add(objeto.clonar());
+			}
+		} else {
+			selecionados.add(objeto);
+		}
+	}
+
+	private void montarSelecionadoProprio(List<Objeto> selecionados, Objeto objeto) {
+		InternalFormulario interno = getInternalFormulario(objeto);
+		if (interno == null) {
+			selecionados.add(objeto);
+		} else {
+			selecionados.add(objeto.clonar());
+		}
 	}
 
 	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config, List<Objeto> selecionados) {
