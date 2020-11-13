@@ -1768,17 +1768,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarLista(Metadado raiz, Variaveis variaveis, List<String> lista) {
 		for (int i = 0; i < lista.size(); i++) {
 			String tabelaIds = lista.get(i);
-			Objeto objeto = criarEAdicionar(variaveis, tabelaIds);
+			Objeto objeto = criarEAdicionar(variaveis);
 			criarEAdicionarRelacao(variaveis, objeto);
 			processarChaves(raiz, variaveis, tabelaIds, objeto);
 			checarLocalizacao(variaveis, objeto);
 		}
 	}
 
-	private Objeto criarEAdicionar(Variaveis variaveis, String tabelaIds) {
+	private Objeto criarEAdicionar(Variaveis variaveis) {
 		Objeto objeto = new Objeto(variaveis.centroX + (int) variaveis.vetor.getX(),
 				variaveis.centroY + (int) variaveis.vetor.getY());
-		objeto.setId(tabelaIds);
 		addObjeto(objeto);
 		return objeto;
 	}
@@ -1795,6 +1794,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		String nome = tabelaIds.substring(0, pos);
 		String campo = tabelaIds.substring(pos + 1, pos2);
 		objeto.setTabela(nome);
+		objeto.setId(nome);
 		Metadado tabela = raiz.getMetadado(nome);
 		if (tabela != null) {
 			objeto.setChaves(tabela.getChaves());
