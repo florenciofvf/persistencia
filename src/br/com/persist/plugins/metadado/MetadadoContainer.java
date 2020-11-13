@@ -13,8 +13,10 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
@@ -153,6 +155,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			private Action naoExportamAcao = Action.actionMenu("label.tabelas_nao_exportam", null);
 			private Action ordemExportAcao = Action.actionMenu("label.ordenado_exportacao", null);
 			private Action ordemImportAcao = Action.actionMenu("label.ordenado_importacao", null);
+			private Action localizarCampoAcao = Action.actionMenu("label.localizar_campo", null);
 			private Action pksMultiplaAcao = Action.actionMenu("label.pks_multiplas", null);
 			private Action pksAusentesAcao = Action.actionMenu("label.pks_ausente", null);
 
@@ -176,6 +179,34 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.ordemExpImp(false)));
 				ordemExportAcao.setActionListener(
 						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.ordemExpImp(true)));
+				localizarCampoAcao.setActionListener(e -> localizarCampo());
+			}
+
+			private void localizarCampo() {
+				Object resp = Util.getValorInputDialog(MetadadoContainer.this, "label.atencao",
+						Mensagens.getString("label.localizar_campo"), null);
+				if (resp != null && !Util.estaVazio(resp.toString())) {
+					Map<String, List<String>> map = metadadoTree.localizarCampo(resp.toString());
+					Util.mensagemFormulario(MetadadoContainer.this, montarString(map));
+				}
+			}
+
+			private String montarString(Map<String, List<String>> map) {
+				StringBuilder sb = new StringBuilder();
+				Iterator<Map.Entry<String, List<String>>> it = map.entrySet().iterator();
+				while (it.hasNext()) {
+					append(sb, it.next());
+				}
+				return sb.toString();
+			}
+
+			private void append(StringBuilder sb, Entry<String, List<String>> entry) {
+				sb.append(entry.getValue());
+				sb.append(Constantes.QL + "--------------");
+				for (String string : entry.getValue()) {
+					sb.append(string + Constantes.QL);
+				}
+				sb.append(Constantes.QL);
 			}
 		}
 

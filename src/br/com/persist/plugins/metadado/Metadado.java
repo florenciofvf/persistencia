@@ -6,7 +6,9 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
@@ -258,6 +260,23 @@ public class Metadado implements Transferable {
 			}
 		}
 		return resposta;
+	}
+
+	public Map<String, List<String>> localizarCampo(String nome) {
+		Map<String, List<String>> resp = new LinkedHashMap<>();
+		for (Metadado tipo : filhos) {
+			tipo.localizarCampo(nome, descricao, resp);
+		}
+		return resp;
+	}
+
+	private void localizarCampo(String nome, String tabela, Map<String, List<String>> map) {
+		for (Metadado campo : filhos) {
+			if (campo.descricao.indexOf(nome) != -1) {
+				List<String> lista = map.computeIfAbsent(tabela, t -> new ArrayList<>());
+				lista.add(campo.descricao);
+			}
+		}
 	}
 
 	public String getFKPara(String tabelaIds) {
