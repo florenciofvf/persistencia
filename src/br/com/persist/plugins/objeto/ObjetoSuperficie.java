@@ -1745,9 +1745,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		principal.setTabela(metadado.getDescricao());
 		principal.setChaves(metadado.getChaves());
 		principal.setId(metadado.getDescricao());
+		configurarLocal(variaveis, principal);
 		variaveis.principal = principal;
 		variaveis.metadado = metadado;
 		addObjeto(principal);
+	}
+
+	private void configurarLocal(Variaveis variaveis, Objeto principal) {
+		if (variaveis.ehExportacaoHierarquico()) {
+			principal.setDeslocamentoXId(28);
+			principal.setDeslocamentoYId(24);
+		}
 		if (!variaveis.circular) {
 			principal.x = Constantes.VINTE;
 			principal.y = Constantes.VINTE;
@@ -1819,6 +1827,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			variaveis.y += Constantes.CEM;
 		}
 		if (variaveis.ehExportacaoHierarquico()) {
+			objeto.setDeslocamentoXId(28);
+			objeto.setDeslocamentoYId(24);
 			objeto.x += 25;
 		}
 	}
