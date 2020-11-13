@@ -117,7 +117,9 @@ public class Constantes {
 	public static final String VARIAVEL = "variavel";
 	public static final String ARQUIVOS = "arquivos";
 	public static final String DIALOG = "DIALOG";
+	public static final String CAMPOS = "CAMPOS";
 	public static final String ICONE = "ICONE:";
+	public static final String CAMPO = "CAMPO";
 	public static final String FICHA = "FICHA";
 	public static final String VALOR = "valor";
 	public static final int QUATROCENTOS = 400;

@@ -254,6 +254,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
 				List<Metadado> chavesPrimarias = converterLista(
 						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
+				List<Metadado> campos = converterLista(Persistencia.listarCampos(conn, conexao, tabela.getDescricao()));
+				adicionarLista(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO, ' ');
 				adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
 				adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
 				adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');

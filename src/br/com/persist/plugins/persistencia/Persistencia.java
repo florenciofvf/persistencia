@@ -411,6 +411,22 @@ public class Persistencia {
 		}
 	}
 
+	public static List<String> listarCampos(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			List<String> resposta = new ArrayList<>();
+			DatabaseMetaData m = conn.getMetaData();
+			ResultSet rs = m.getColumns(conexao.getCatalogo(), conexao.getEsquema(), tabela, null);
+			while (rs.next()) {
+				resposta.add(rs.getString(COLUMN_NAME));
+			}
+			rs.close();
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
 	public static List<Importado> listarCamposImportados(Connection conn, Conexao conexao, String tabela)
 			throws PersistenciaException {
 		try {
