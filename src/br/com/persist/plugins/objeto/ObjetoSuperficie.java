@@ -1783,10 +1783,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void criarEAdicionarRelacao(Variaveis variaveis, Objeto objeto) {
-		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto,
-				!variaveis.ehExportacaoHierarquico());
+		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto, variaveis.exportacao);
 		relacao.setQuebrado(variaveis.ehExportacaoHierarquico());
 		variaveis.vetor.rotacionar(variaveis.graus);
+		if (variaveis.ehExportacaoHierarquico()) {
+			relacao.setPontoDestino(false);
+		}
 		addRelacao(relacao);
 	}
 
