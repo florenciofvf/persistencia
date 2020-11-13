@@ -1749,8 +1749,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		variaveis.metadado = metadado;
 		addObjeto(principal);
 		if (!variaveis.circular) {
-			principal.x = 20;
-			principal.y = 20;
+			principal.x = Constantes.VINTE;
+			principal.y = Constantes.VINTE;
 		}
 	}
 
@@ -1783,9 +1783,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void criarEAdicionarRelacao(Variaveis variaveis, Objeto objeto) {
-		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto, variaveis.exportacao);
-		addRelacao(relacao);
+		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto,
+				!variaveis.ehExportacaoHierarquico());
+		relacao.setQuebrado(variaveis.ehExportacaoHierarquico());
 		variaveis.vetor.rotacionar(variaveis.graus);
+		addRelacao(relacao);
 	}
 
 	private void processarChaves(Metadado raiz, Variaveis variaveis, String tabelaIds, Objeto objeto) {
@@ -1810,9 +1812,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void checarLocalizacao(Variaveis variaveis, Objeto objeto) {
 		if (!variaveis.circular) {
-			objeto.x = 20;
+			objeto.x = Constantes.VINTE;
 			objeto.y = variaveis.y;
 			variaveis.y += Constantes.CEM;
+		}
+		if (variaveis.ehExportacaoHierarquico()) {
+			objeto.x += Constantes.TRINTA;
 		}
 	}
 
@@ -1895,6 +1900,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			abrirPesquisa(tabelaPrincipal, tabelaDetalhe, campoDetalhe);
 			ref(tabelaPrincipal, campoPrincipal, false);
 			fecharPesquisa();
+		}
+
+		boolean ehExportacaoHierarquico() {
+			return exportacao && !circular;
 		}
 	}
 
