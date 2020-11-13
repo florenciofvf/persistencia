@@ -1737,7 +1737,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		variaveis.checkInicialPesquisa();
 		processarDetalhes(metadado, variaveis);
 		variaveis.checkFinalPesquisa();
-		Util.mensagemFormulario(this, variaveis.sb.toString());
+		Util.mensagemFormulario(formulario, variaveis.sb.toString());
 	}
 
 	private void processarPrincipal(Metadado metadado, Variaveis variaveis) {
