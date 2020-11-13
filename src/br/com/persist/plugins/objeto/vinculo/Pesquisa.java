@@ -105,6 +105,10 @@ public class Pesquisa {
 		return false;
 	}
 
+	public String getNomeParaMenuItem() {
+		return nome + "." + referencia.getCampo();
+	}
+
 	@Override
 	public String toString() {
 		return "nome=" + nome + ", ref=" + referencia;
