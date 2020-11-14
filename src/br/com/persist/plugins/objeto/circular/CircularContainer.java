@@ -34,8 +34,8 @@ public class CircularContainer extends Panel {
 	public CircularContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Tipo tipo) {
 		comboObjeto = objetoSuperficie.criarComboObjetosSel();
 		comboTipo = new JComboBox<>(Tipo.values());
-		comboTipo.setSelectedItem(tipo);
 		this.objetoSuperficie = objetoSuperficie;
+		comboTipo.setSelectedItem(tipo);
 		toolbar.ini(janela);
 		montarLayout();
 	}
@@ -96,17 +96,31 @@ public class CircularContainer extends Panel {
 		}
 
 		private void atualizar(Objeto pivo, Tipo tipo, List<Objeto> selecionados) {
-			Vetor vetor = new Vetor(Util.getInt(txtRaio.getText(), 300), 0);
-			vetor.rotacionar(Util.getInt(txtGrauOrigem.getText(), 0));
-			int graus = Util.getInt(txtGrauTotal.getText(), 360) / selecionados.size();
+			int graus = definirGrauUnidade(selecionados);
+			Vetor vetor = criarVetor();
 			for (Objeto objeto : selecionados) {
-				localizar(pivo, vetor, objeto);
+				localizar(objeto, pivo, vetor);
 				vetor.rotacionar(graus);
-				processarRelacao(pivo, tipo, objeto);
+				processarRelacao(objeto, pivo, tipo);
 			}
 		}
 
-		private void processarRelacao(Objeto pivo, Tipo tipo, Objeto objeto) {
+		private int definirGrauUnidade(List<Objeto> selecionados) {
+			return Util.getInt(txtGrauTotal.getText(), 360) / selecionados.size();
+		}
+
+		private Vetor criarVetor() {
+			Vetor vetor = new Vetor(Util.getInt(txtRaio.getText(), 300), 0);
+			vetor.rotacionar(Util.getInt(txtGrauOrigem.getText(), 0));
+			return vetor;
+		}
+
+		private void localizar(Objeto objeto, Objeto pivo, Vetor vetor) {
+			objeto.setX(pivo.getX() + (int) vetor.getX());
+			objeto.setY(pivo.getY() + (int) vetor.getY());
+		}
+
+		private void processarRelacao(Objeto objeto, Objeto pivo, Tipo tipo) {
 			Relacao relacao = objetoSuperficie.getRelacao(pivo, objeto);
 			if (relacao != null && tipo == Tipo.NORMAL) {
 				pontoNormal(relacao);
@@ -117,9 +131,9 @@ public class CircularContainer extends Panel {
 			}
 		}
 
-		private void pontoImportacao(Objeto pivo, Relacao relacao) {
-			relacao.setPontoOrigem(pivo == relacao.getOrigem());
-			relacao.setPontoDestino(pivo == relacao.getDestino());
+		private void pontoNormal(Relacao relacao) {
+			relacao.setPontoOrigem(false);
+			relacao.setPontoDestino(false);
 		}
 
 		private void pontoExportacao(Objeto pivo, Relacao relacao) {
@@ -127,14 +141,9 @@ public class CircularContainer extends Panel {
 			relacao.setPontoDestino(pivo != relacao.getDestino());
 		}
 
-		private void pontoNormal(Relacao relacao) {
-			relacao.setPontoOrigem(false);
-			relacao.setPontoDestino(false);
-		}
-
-		private void localizar(Objeto pivo, Vetor vetor, Objeto objeto) {
-			objeto.setX(pivo.getX() + (int) vetor.getX());
-			objeto.setY(pivo.getY() + (int) vetor.getY());
+		private void pontoImportacao(Objeto pivo, Relacao relacao) {
+			relacao.setPontoOrigem(pivo == relacao.getOrigem());
+			relacao.setPontoDestino(pivo == relacao.getDestino());
 		}
 	}
 }

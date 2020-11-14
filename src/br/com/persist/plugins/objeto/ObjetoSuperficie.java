@@ -1426,6 +1426,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	public void selecaoGeral(boolean b) {
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(b);
+			if (b) {
+				objeto.setControlado(true);
+			}
 		}
 		repaint();
 	}
