@@ -83,11 +83,15 @@ public class CircularContainer extends Panel {
 			Objeto pivo = (Objeto) comboObjeto.getSelectedItem();
 			Tipo tipo = (Tipo) comboTipo.getSelectedItem();
 			if (pivo != null && tipo != null) {
-				List<Objeto> selecionados = getSelecionados(pivo);
-				if (!selecionados.isEmpty()) {
-					atualizar(pivo, tipo, selecionados);
-					objetoSuperficie.repaint();
-				}
+				atualizar(pivo, tipo);
+			}
+		}
+
+		private void atualizar(Objeto pivo, Tipo tipo) {
+			List<Objeto> selecionados = getSelecionados(pivo);
+			if (!selecionados.isEmpty()) {
+				atualizar(pivo, tipo, selecionados);
+				objetoSuperficie.repaint();
 			}
 		}
 
@@ -96,21 +100,41 @@ public class CircularContainer extends Panel {
 			vetor.rotacionar(Util.getInt(txtGrauOrigem.getText(), 0));
 			int graus = Util.getInt(txtGrauTotal.getText(), 360) / selecionados.size();
 			for (Objeto objeto : selecionados) {
-				objeto.setX(pivo.getX() + (int) vetor.getX());
-				objeto.setY(pivo.getY() + (int) vetor.getY());
+				localizar(pivo, vetor, objeto);
 				vetor.rotacionar(graus);
-				Relacao relacao = objetoSuperficie.getRelacao(pivo, objeto);
-				if (relacao != null && tipo == Tipo.NORMAL) {
-					relacao.setPontoOrigem(false);
-					relacao.setPontoDestino(false);
-				} else if (relacao != null && tipo == Tipo.EXPORTACAO) {
-					relacao.setPontoOrigem(pivo != relacao.getOrigem());
-					relacao.setPontoDestino(pivo != relacao.getDestino());
-				} else if (relacao != null && tipo == Tipo.IMPORTACAO) {
-					relacao.setPontoOrigem(pivo == relacao.getOrigem());
-					relacao.setPontoDestino(pivo == relacao.getDestino());
-				}
+				processarRelacao(pivo, tipo, objeto);
 			}
+		}
+
+		private void processarRelacao(Objeto pivo, Tipo tipo, Objeto objeto) {
+			Relacao relacao = objetoSuperficie.getRelacao(pivo, objeto);
+			if (relacao != null && tipo == Tipo.NORMAL) {
+				pontoNormal(relacao);
+			} else if (relacao != null && tipo == Tipo.EXPORTACAO) {
+				pontoExportacao(pivo, relacao);
+			} else if (relacao != null && tipo == Tipo.IMPORTACAO) {
+				pontoImportacao(pivo, relacao);
+			}
+		}
+
+		private void pontoImportacao(Objeto pivo, Relacao relacao) {
+			relacao.setPontoOrigem(pivo == relacao.getOrigem());
+			relacao.setPontoDestino(pivo == relacao.getDestino());
+		}
+
+		private void pontoExportacao(Objeto pivo, Relacao relacao) {
+			relacao.setPontoOrigem(pivo != relacao.getOrigem());
+			relacao.setPontoDestino(pivo != relacao.getDestino());
+		}
+
+		private void pontoNormal(Relacao relacao) {
+			relacao.setPontoOrigem(false);
+			relacao.setPontoDestino(false);
+		}
+
+		private void localizar(Objeto pivo, Vetor vetor, Objeto objeto) {
+			objeto.setX(pivo.getX() + (int) vetor.getX());
+			objeto.setY(pivo.getY() + (int) vetor.getY());
 		}
 	}
 }
