@@ -28,17 +28,22 @@ public class Pesquisa {
 		if (referencia.igual(objeto)) {
 			objeto.getPesquisas().add(this);
 			objeto.addReferencias(referencias);
-			if (referencia.corFonte != null) {
-				objeto.setCorFonte(referencia.corFonte);
-			}
+			config(objeto, referencia);
 		}
 		for (Referencia ref : referencias) {
 			if (ref.igual(objeto)) {
 				objeto.addReferencia(ref.getPesquisa().referencia);
-				if (ref.corFonte != null) {
-					objeto.setCorFonte(ref.corFonte);
-				}
+				config(objeto, ref);
 			}
+		}
+	}
+
+	private void config(Objeto objeto, Referencia ref) {
+		if (ref.corFonte != null) {
+			objeto.setCorFonte(ref.corFonte);
+		}
+		if (ref.icone != null) {
+			objeto.setIcone(ref.icone);
 		}
 	}
 

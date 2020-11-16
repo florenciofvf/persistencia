@@ -81,6 +81,7 @@ class VinculoHandler extends XMLHandler {
 		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
 		String limparApos = attributes.getValue("limparApos");
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
+		ref.setIcone(attributes.getValue("icone"));
 		ref.setCorFonte(getCorFonte(attributes));
 		return ref;
 	}

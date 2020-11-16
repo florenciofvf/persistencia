@@ -17,6 +17,7 @@ public class Referencia {
 	private boolean limparApos;
 	Pesquisa pesquisa;
 	Color corFonte;
+	String icone;
 
 	public Referencia(String grupo, String tabela, String campo) {
 		this.grupo = grupo == null ? "" : grupo.trim();
@@ -112,6 +113,14 @@ public class Referencia {
 
 	public void setCorFonte(Color corFonte) {
 		this.corFonte = corFonte;
+	}
+
+	public String getIcone() {
+		return icone;
+	}
+
+	public void setIcone(String icone) {
+		this.icone = icone;
 	}
 
 	@Override
