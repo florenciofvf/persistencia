@@ -234,7 +234,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				List<Metadado> tabelas = converterLista(Persistencia.listarNomeTabelas(conn, conexao));
-				Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS) + " - " + tabelas.size());
+				Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS), true);
 				raiz.setEhRaiz(true);
 				atualizar(conexao, conn, tabelas, raiz);
 				raiz.montarOrdenacoes();
@@ -266,9 +266,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		public List<Metadado> converterImportados(List<Importado> lista) {
 			List<Metadado> resposta = new ArrayList<>();
 			for (Importado imp : lista) {
-				Metadado campo = new Metadado(imp.getCampo());
+				Metadado campo = new Metadado(imp.getCampo(), false);
 				resposta.add(campo);
-				Metadado ref = new Metadado(imp.getTabelaOrigem() + "(" + imp.getCampoOrigem() + ")");
+				Metadado ref = new Metadado(imp.getTabelaOrigem() + "(" + imp.getCampoOrigem() + ")", false);
 				campo.add(ref);
 			}
 			return resposta;
@@ -277,9 +277,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		public List<Metadado> converterExportados(List<Exportado> lista) {
 			List<Metadado> resposta = new ArrayList<>();
 			for (Exportado imp : lista) {
-				Metadado campo = new Metadado(imp.getCampo());
+				Metadado campo = new Metadado(imp.getCampo(), false);
 				resposta.add(campo);
-				Metadado ref = new Metadado(imp.getTabelaDestino() + "(" + imp.getCampoDestino() + ")");
+				Metadado ref = new Metadado(imp.getTabelaDestino() + "(" + imp.getCampoDestino() + ")", false);
 				campo.add(ref);
 			}
 			return resposta;
@@ -288,7 +288,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		private List<Metadado> converterLista(List<String> lista) {
 			List<Metadado> resposta = new ArrayList<>();
 			for (String string : lista) {
-				resposta.add(new Metadado(string));
+				resposta.add(new Metadado(string, false));
 			}
 			return resposta;
 		}
@@ -297,9 +297,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				char chave) {
 			if (!filhos.isEmpty()) {
 				int size = filhos.size();
-				String rotular = size > 1 ? rotuloPlural + " - " + size : rotuloSingular;
+				// String rotular = size > 1 ? rotuloPlural + " - " + size :
+				// rotuloSingular;
 				String descricao = size > 1 ? rotuloPlural : rotuloSingular;
-				Metadado rotulo = new Metadado(descricao, rotular);
+				Metadado rotulo = new Metadado(descricao, true);
 				for (Metadado obj : filhos) {
 					rotulo.add(obj);
 					if (chave == 'E') {

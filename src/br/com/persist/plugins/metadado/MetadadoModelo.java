@@ -16,7 +16,7 @@ public class MetadadoModelo implements TreeModel {
 	private final Metadado raiz;
 
 	public MetadadoModelo() {
-		this(new Metadado("Raiz"));
+		this(new Metadado("Raiz", false));
 	}
 
 	public MetadadoModelo(Metadado raiz) {
