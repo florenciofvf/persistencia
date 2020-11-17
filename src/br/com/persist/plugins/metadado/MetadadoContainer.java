@@ -248,17 +248,21 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				throws PersistenciaException {
 			for (Metadado tabela : tabelas) {
 				tabela.setTabela(true);
-				List<Metadado> camposImportados = converterImportados(
-						Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
-				List<Metadado> camposExportados = converterExportados(
-						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
-				List<Metadado> chavesPrimarias = converterLista(
-						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
 				List<Metadado> campos = converterLista(Persistencia.listarCampos(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO, ' ');
+
+				List<Metadado> chavesPrimarias = converterLista(
+						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
+
+				List<Metadado> camposImportados = converterImportados(
+						Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
+
+				List<Metadado> camposExportados = converterExportados(
+						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');
+
 				raiz.add(tabela);
 			}
 		}
@@ -293,23 +297,21 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		private void preencher(Metadado metadado, List<Metadado> filhos, String rotuloPlural, String rotuloSingular,
+		private void preencher(Metadado metadado, List<Metadado> campos, String tipoPlural, String tipoSingular,
 				char chave) {
-			if (!filhos.isEmpty()) {
-				int size = filhos.size();
-				// String rotular = size > 1 ? rotuloPlural + " - " + size :
-				// rotuloSingular;
-				String descricao = size > 1 ? rotuloPlural : rotuloSingular;
-				Metadado rotulo = new Metadado(descricao, true);
-				for (Metadado obj : filhos) {
-					rotulo.add(obj);
+			if (!campos.isEmpty()) {
+				int size = campos.size();
+				String descricao = size > 1 ? tipoPlural : tipoSingular;
+				Metadado tipo = new Metadado(descricao, true);
+				for (Metadado campo : campos) {
+					tipo.add(campo);
 					if (chave == 'E') {
 						metadado.incrementarExportados();
 					} else if (chave == 'I') {
 						metadado.incrementarImportados();
 					}
 				}
-				metadado.add(rotulo);
+				metadado.add(tipo);
 			}
 		}
 	}
