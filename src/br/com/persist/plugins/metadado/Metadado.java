@@ -244,20 +244,20 @@ public class Metadado implements Transferable {
 		}
 	}
 
-	public List<String> getListaStringExpImp(boolean exportacao) {
+	public List<String> getListaDescricaoExportacaoImportacao(boolean exportacao) {
 		List<String> resposta = new ArrayList<>();
 		if (exportacao) {
 			for (Metadado tipo : filhos) {
 				if (tipo.descricao.equals(Constantes.CAMPO_EXPORTADO)
 						|| tipo.descricao.equals(Constantes.CAMPOS_EXPORTADOS)) {
-					tipo.listaStringExpImp(resposta);
+					tipo.listarDescricaoExportacaoImportacao(resposta);
 				}
 			}
 		} else {
 			for (Metadado tipo : filhos) {
 				if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
 						|| tipo.descricao.equals(Constantes.CAMPOS_IMPORTADOS)) {
-					tipo.listaStringExpImp(resposta);
+					tipo.listarDescricaoExportacaoImportacao(resposta);
 				}
 			}
 		}
@@ -298,9 +298,9 @@ public class Metadado implements Transferable {
 		return sb.toString();
 	}
 
-	private void listaStringExpImp(List<String> resposta) {
+	private void listarDescricaoExportacaoImportacao(List<String> resposta) {
 		for (Metadado campo : filhos) {
-			campo.listaString(resposta);
+			campo.listarDescricao(resposta);
 		}
 	}
 
@@ -313,7 +313,7 @@ public class Metadado implements Transferable {
 		}
 	}
 
-	private void listaString(List<String> resposta) {
+	private void listarDescricao(List<String> resposta) {
 		for (Metadado tabelaIds : filhos) {
 			resposta.add(tabelaIds.descricao);
 		}

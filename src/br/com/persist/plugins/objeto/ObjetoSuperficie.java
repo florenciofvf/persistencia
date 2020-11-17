@@ -1766,7 +1766,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void processarDetalhes(Metadado metadado, Variaveis variaveis) {
-		List<String> lista = metadado.getListaStringExpImp(variaveis.exportacao);
+		List<String> lista = metadado.getListaDescricaoExportacaoImportacao(variaveis.exportacao);
 		if (!lista.isEmpty()) {
 			Metadado raiz = metadado.getPai();
 			variaveis.definirGraus(lista);
