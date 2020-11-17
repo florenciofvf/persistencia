@@ -222,12 +222,20 @@ public class Metadado implements Transferable {
 		this.totalImportados = totalImportados;
 	}
 
+	public void incrementarImportados() {
+		this.totalImportados++;
+	}
+
 	public int getTotalExportados() {
 		return totalExportados;
 	}
 
 	public void setTotalExportados(int totalExportados) {
 		this.totalExportados = totalExportados;
+	}
+
+	public void incrementarExportados() {
+		this.totalExportados++;
 	}
 
 	public void montarOrdenacoes() {

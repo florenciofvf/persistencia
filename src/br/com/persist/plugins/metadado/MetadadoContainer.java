@@ -255,10 +255,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				List<Metadado> chavesPrimarias = converterLista(
 						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
 				List<Metadado> campos = converterLista(Persistencia.listarCampos(conn, conexao, tabela.getDescricao()));
-				adicionarLista(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO, ' ');
-				adicionarLista(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
-				adicionarLista(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
-				adicionarLista(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');
+				preencher(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO, ' ');
+				preencher(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
+				preencher(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
+				preencher(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');
 				raiz.add(tabela);
 			}
 		}
@@ -293,7 +293,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		private void adicionarLista(Metadado objeto, List<Metadado> filhos, String rotuloPlural, String rotuloSingular,
+		private void preencher(Metadado metadado, List<Metadado> filhos, String rotuloPlural, String rotuloSingular,
 				char chave) {
 			if (!filhos.isEmpty()) {
 				int size = filhos.size();
@@ -303,12 +303,12 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				for (Metadado obj : filhos) {
 					rotulo.add(obj);
 					if (chave == 'E') {
-						objeto.setTotalExportados(objeto.getTotalExportados() + 1);
+						metadado.incrementarExportados();
 					} else if (chave == 'I') {
-						objeto.setTotalImportados(objeto.getTotalImportados() + 1);
+						metadado.incrementarImportados();
 					}
 				}
-				objeto.add(rotulo);
+				metadado.add(rotulo);
 			}
 		}
 	}
