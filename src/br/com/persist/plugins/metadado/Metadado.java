@@ -148,7 +148,7 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-		sb.insert(0, Mensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL + Constantes.QL);
+		sb.insert(0, Mensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL2);
 		return sb.toString();
 	}
 
@@ -161,12 +161,18 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-		sb.insert(0, Mensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL + Constantes.QL);
+		sb.insert(0, Mensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL2);
 		return sb.toString();
 	}
 
 	public String queExportam() {
 		StringBuilder sb = new StringBuilder();
+		int total = queExportam(sb);
+		sb.insert(0, Mensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL2);
+		return sb.toString();
+	}
+
+	private int queExportam(StringBuilder sb) {
 		int total = 0;
 		for (Metadado table : filhos) {
 			if (table.contem(Constantes.CAMPO_EXPORTADO) || table.contem(Constantes.CAMPOS_EXPORTADOS)) {
@@ -174,13 +180,17 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-		sb.insert(0,
-				Mensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL + Constantes.QL);
-		return sb.toString();
+		return total;
 	}
 
 	public String naoExportam() {
 		StringBuilder sb = new StringBuilder();
+		int total = naoExportam(sb);
+		sb.insert(0, Mensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL2);
+		return sb.toString();
+	}
+
+	private int naoExportam(StringBuilder sb) {
 		int total = 0;
 		for (Metadado table : filhos) {
 			if (!table.contem(Constantes.CAMPO_EXPORTADO) && !table.contem(Constantes.CAMPOS_EXPORTADOS)) {
@@ -188,21 +198,19 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-		sb.insert(0,
-				Mensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL + Constantes.QL);
-		return sb.toString();
+		return total;
 	}
 
-	public String ordemExpImp(boolean exportacao) {
+	public String getOrdenadosExportacaoImportacao(boolean exportacao) {
 		StringBuilder sb = new StringBuilder(exportacao ? Mensagens.getString("label.ordenado_exportacao")
 				: Mensagens.getString("label.ordenado_importacao"));
 		sb.append(Constantes.QL2);
 		checarContabilizacao();
-		ordemExpImp(exportacao, sb);
+		ordenarExportacaoImportacao(exportacao, sb);
 		return sb.toString();
 	}
 
-	private void ordemExpImp(boolean exportacao, StringBuilder sb) {
+	private void ordenarExportacaoImportacao(boolean exportacao, StringBuilder sb) {
 		if (exportacao) {
 			for (String string : ordenadoExportacao) {
 				sb.append(string + Constantes.QL);
@@ -255,36 +263,52 @@ public class Metadado implements Transferable {
 
 	private void montarOrdenacoes() {
 		List<Metadado> temporario = new ArrayList<>(filhos);
-		ordenadoExportacao.clear();
+		montarOrdenacoesExportacoes(temporario);
+		montarOrdenacoesImportacoes(temporario);
+	}
+
+	private void montarOrdenacoesImportacoes(List<Metadado> temporario) {
 		ordenadoImportacao.clear();
-		Collections.sort(temporario, (o1, o2) -> o2.totalExportados - o1.totalExportados);
-		for (Metadado meta : temporario) {
-			ordenadoExportacao.add(meta.totalExportados + " - " + meta.descricao);
-		}
 		Collections.sort(temporario, (o1, o2) -> o2.totalImportados - o1.totalImportados);
 		for (Metadado meta : temporario) {
 			ordenadoImportacao.add(meta.totalImportados + " - " + meta.descricao);
 		}
 	}
 
+	private void montarOrdenacoesExportacoes(List<Metadado> temporario) {
+		ordenadoExportacao.clear();
+		Collections.sort(temporario, (o1, o2) -> o2.totalExportados - o1.totalExportados);
+		for (Metadado meta : temporario) {
+			ordenadoExportacao.add(meta.totalExportados + " - " + meta.descricao);
+		}
+	}
+
 	public List<String> getListaDescricaoExportacaoImportacao(boolean exportacao) {
 		List<String> resposta = new ArrayList<>();
 		if (exportacao) {
-			for (Metadado tipo : filhos) {
-				if (tipo.descricao.equals(Constantes.CAMPO_EXPORTADO)
-						|| tipo.descricao.equals(Constantes.CAMPOS_EXPORTADOS)) {
-					tipo.listarDescricaoExportacaoImportacao(resposta);
-				}
-			}
+			getListaDescricaoExportacao(resposta);
 		} else {
-			for (Metadado tipo : filhos) {
-				if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
-						|| tipo.descricao.equals(Constantes.CAMPOS_IMPORTADOS)) {
-					tipo.listarDescricaoExportacaoImportacao(resposta);
-				}
-			}
+			getListaDescricaoImportacao(resposta);
 		}
 		return resposta;
+	}
+
+	private void getListaDescricaoImportacao(List<String> resposta) {
+		for (Metadado tipo : filhos) {
+			if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
+					|| tipo.descricao.equals(Constantes.CAMPOS_IMPORTADOS)) {
+				tipo.listarDescricaoExportacaoImportacao(resposta);
+			}
+		}
+	}
+
+	private void getListaDescricaoExportacao(List<String> resposta) {
+		for (Metadado tipo : filhos) {
+			if (tipo.descricao.equals(Constantes.CAMPO_EXPORTADO)
+					|| tipo.descricao.equals(Constantes.CAMPOS_EXPORTADOS)) {
+				tipo.listarDescricaoExportacaoImportacao(resposta);
+			}
+		}
 	}
 
 	public Map<String, Set<String>> localizarCampo(String nome) {

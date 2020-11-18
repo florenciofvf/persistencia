@@ -177,10 +177,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.pksMultipla()));
 				pksAusentesAcao.setActionListener(
 						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.pksAusente()));
-				ordemImportAcao.setActionListener(
-						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.ordemExpImp(false)));
-				ordemExportAcao.setActionListener(
-						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.ordemExpImp(true)));
+				ordemImportAcao.setActionListener(e -> Util.mensagemFormulario(MetadadoContainer.this,
+						metadadoTree.getOrdenadosExportacaoImportacao(false)));
+				ordemExportAcao.setActionListener(e -> Util.mensagemFormulario(MetadadoContainer.this,
+						metadadoTree.getOrdenadosExportacaoImportacao(true)));
 				localizarCampoAcao.setActionListener(e -> localizarCampo());
 			}
 
@@ -248,19 +248,19 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			for (Metadado tabela : tabelas) {
 				tabela.setTabela(true);
 				List<Metadado> campos = converterLista(Persistencia.listarCampos(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO, ' ');
+				preencher(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO);
 
 				List<Metadado> chavesPrimarias = converterLista(
 						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA, ' ');
+				preencher(tabela, chavesPrimarias, Constantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA);
 
 				List<Metadado> camposImportados = converterImportados(
 						Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO, 'I');
+				preencher(tabela, camposImportados, Constantes.CAMPOS_IMPORTADOS, Constantes.CAMPO_IMPORTADO);
 
 				List<Metadado> camposExportados = converterExportados(
 						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO, 'E');
+				preencher(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO);
 
 				raiz.add(tabela);
 			}
@@ -296,8 +296,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		private void preencher(Metadado tabela, List<Metadado> campos, String tipoPlural, String tipoSingular,
-				char chave) {
+		private void preencher(Metadado tabela, List<Metadado> campos, String tipoPlural, String tipoSingular) {
 			if (!campos.isEmpty()) {
 				String descricao = campos.size() > 1 ? tipoPlural : tipoSingular;
 				Metadado tipo = new Metadado(descricao, true);

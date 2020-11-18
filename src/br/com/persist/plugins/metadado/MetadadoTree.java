@@ -263,8 +263,8 @@ public class MetadadoTree extends Tree {
 		return getRaiz().naoExportam();
 	}
 
-	public String ordemExpImp(boolean exp) {
-		return getRaiz().ordemExpImp(exp);
+	public String getOrdenadosExportacaoImportacao(boolean exp) {
+		return getRaiz().getOrdenadosExportacaoImportacao(exp);
 	}
 
 	public Map<String, Set<String>> localizarCampo(String nome) {
