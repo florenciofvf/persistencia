@@ -1862,7 +1862,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		void checkInicialPesquisa() {
 			if (exportacao) {
-				abrirPesquisa(principal.getTabela2(), principal.getTabela2(), principal.getChaves());
+				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela2(), principal.getChaves());
 			}
 		}
 
