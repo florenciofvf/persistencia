@@ -1748,19 +1748,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		principal.setTabela(metadado.getDescricao());
 		principal.setChaves(metadado.getChaves());
 		principal.setId(metadado.getDescricao());
-		configurarLocal(variaveis, principal);
 		variaveis.principal = principal;
 		variaveis.metadado = metadado;
+		variaveis.configurarLocal();
 		addObjeto(principal);
-	}
-
-	private void configurarLocal(Variaveis variaveis, Objeto principal) {
-		if (!variaveis.circular) {
-			principal.setDeslocamentoXId(28);
-			principal.setDeslocamentoYId(24);
-			principal.x = Constantes.VINTE;
-			principal.y = Constantes.VINTE;
-		}
 	}
 
 	private void processarDetalhes(Metadado metadado, Variaveis variaveis) {
@@ -1770,6 +1761,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			variaveis.definirGraus(lista);
 			variaveis.definirYPrincipal();
 			processarLista(raiz, variaveis, lista);
+			variaveis.definirYPrincipalFinal();
 			atualizarSuperficie(variaveis);
 		}
 	}
@@ -1793,8 +1785,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void criarEAdicionarRelacao(Variaveis variaveis, Objeto objeto) {
 		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto, variaveis.exportacao);
-		relacao.setQuebrado(variaveis.ehExportacaoHierarquico());
 		variaveis.vetor.rotacionar(variaveis.graus);
+		relacao.setQuebrado(!variaveis.circular);
 		if (!variaveis.circular) {
 			relacao.setPontoDestino(false);
 			relacao.setPontoOrigem(false);
@@ -1831,7 +1823,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			variaveis.y += Constantes.CEM;
 		}
 		if (variaveis.ehExportacaoHierarquico()) {
-			objeto.x += 25;
+			objeto.x += Constantes.VINTE_CINCO;
 		}
 	}
 
@@ -1881,7 +1873,28 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		void definirYPrincipal() {
-			y = principal.y + Constantes.CEM;
+			if (ehExportacaoHierarquico()) {
+				y = principal.y + Constantes.CEM;
+			} else if (ehImportacaoHierarquico()) {
+				y = principal.y;
+			}
+		}
+
+		void definirYPrincipalFinal() {
+			if (ehImportacaoHierarquico()) {
+				principal.y = y;
+				y += Constantes.CEM;
+				principal.x += Constantes.VINTE_CINCO;
+			}
+		}
+
+		private void configurarLocal() {
+			if (!circular) {
+				principal.setDeslocamentoXId(28);
+				principal.setDeslocamentoYId(24);
+				principal.x = Constantes.VINTE;
+				principal.y = Constantes.VINTE;
+			}
 		}
 
 		void abrirPesquisa(String nome, String tabela, String campo) {
@@ -1918,6 +1931,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		boolean ehExportacaoHierarquico() {
 			return exportacao && !circular;
+		}
+
+		boolean ehImportacaoHierarquico() {
+			return !exportacao && !circular;
 		}
 	}
 
