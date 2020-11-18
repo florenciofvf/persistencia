@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.xml.sax.Attributes;
+
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
@@ -51,6 +53,10 @@ public class Metadado implements Transferable {
 			m.salvar(util);
 		}
 		util.finalizarTag(Constantes.METADADO);
+	}
+
+	public void aplicar(Attributes attr) {
+		tabela = Boolean.parseBoolean(attr.getValue("tabela"));
 	}
 
 	public int getIndice(Metadado metadado) {

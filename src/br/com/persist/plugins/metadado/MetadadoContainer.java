@@ -2,9 +2,9 @@ package br.com.persist.plugins.metadado;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
+import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
-import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
@@ -12,11 +12,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,9 +43,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
-import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.plugins.anotacao.AnotacaoContainer;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
@@ -57,7 +51,6 @@ import br.com.persist.plugins.persistencia.Exportado;
 import br.com.persist.plugins.persistencia.Importado;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaException;
-import br.com.persist.plugins.requisicao.RequisicaoContainer;
 
 public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener {
 	private static final long serialVersionUID = 1L;
