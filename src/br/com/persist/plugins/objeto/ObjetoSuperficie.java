@@ -1724,16 +1724,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	private Variaveis criarVariaveis(boolean exportacao, boolean circular) {
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		Variaveis variaveis = new Variaveis();
-		variaveis.exportacao = exportacao;
-		variaveis.circular = circular;
-		variaveis.definirCentros(d);
-		variaveis.criarVetor(d);
-		return variaveis;
-	}
-
 	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
 		Variaveis variaveis = criarVariaveis(exportacao, circular);
 		processarPrincipal(metadado, variaveis);
@@ -1741,6 +1731,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		processarDetalhes(metadado, variaveis);
 		variaveis.checkFinalPesquisa();
 		Util.mensagemFormulario(formulario, variaveis.sb.toString());
+	}
+
+	private Variaveis criarVariaveis(boolean exportacao, boolean circular) {
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		Variaveis variaveis = new Variaveis(exportacao, circular);
+		variaveis.definirCentros(d);
+		variaveis.criarVetor(d);
+		return variaveis;
 	}
 
 	private void processarPrincipal(Metadado metadado, Variaveis variaveis) {
@@ -1836,15 +1834,25 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private class Variaveis {
 		private StringBuilder sb = new StringBuilder();
-		boolean exportacao;
+		final boolean exportacao;
+		final boolean circular;
 		Metadado metadado;
-		boolean circular;
 		Objeto principal;
 		Vetor vetor;
 		int centroX;
 		int centroY;
 		int graus;
 		int y;
+
+		Variaveis(boolean exportacao, boolean circular) {
+			this.exportacao = exportacao;
+			this.circular = circular;
+		}
+
+		void definirCentros(Dimension d) {
+			centroY = d.height / 2 - 25;
+			centroX = d.width / 2;
+		}
 
 		void criarVetor(Dimension d) {
 			int comprimento = Math.min(d.width, d.height) / 2 - 50;
@@ -1861,11 +1869,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (exportacao) {
 				fecharPesquisa();
 			}
-		}
-
-		void definirCentros(Dimension d) {
-			centroY = d.height / 2 - 25;
-			centroX = d.width / 2;
 		}
 
 		void definirGraus(List<String> lista) {
