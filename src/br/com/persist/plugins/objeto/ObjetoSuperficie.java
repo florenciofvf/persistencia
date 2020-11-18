@@ -1755,11 +1755,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void configurarLocal(Variaveis variaveis, Objeto principal) {
-		if (variaveis.ehExportacaoHierarquico()) {
+		if (!variaveis.circular) {
 			principal.setDeslocamentoXId(28);
 			principal.setDeslocamentoYId(24);
-		}
-		if (!variaveis.circular) {
 			principal.x = Constantes.VINTE;
 			principal.y = Constantes.VINTE;
 		}
@@ -1825,13 +1823,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void checarLocalizacao(Variaveis variaveis, Objeto objeto) {
 		if (!variaveis.circular) {
+			objeto.setDeslocamentoXId(28);
+			objeto.setDeslocamentoYId(24);
 			objeto.x = Constantes.VINTE;
 			objeto.y = variaveis.y;
 			variaveis.y += Constantes.CEM;
 		}
 		if (variaveis.ehExportacaoHierarquico()) {
-			objeto.setDeslocamentoXId(28);
-			objeto.setDeslocamentoYId(24);
 			objeto.x += 25;
 		}
 	}
