@@ -236,15 +236,14 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				List<Metadado> tabelas = converterLista(Persistencia.listarNomeTabelas(conn, conexao));
 				Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS), true);
 				raiz.setEhRaiz(true);
-				atualizar(conexao, conn, tabelas, raiz);
-				raiz.montarOrdenacoes();
+				atualizar(raiz, tabelas, conexao, conn);
 				metadadoTree.setModel(new MetadadoModelo(raiz));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, this);
 			}
 		}
 
-		private void atualizar(Conexao conexao, Connection conn, List<Metadado> tabelas, Metadado raiz)
+		private void atualizar(Metadado raiz, List<Metadado> tabelas, Conexao conexao, Connection conn)
 				throws PersistenciaException {
 			for (Metadado tabela : tabelas) {
 				tabela.setTabela(true);
@@ -297,21 +296,15 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		private void preencher(Metadado metadado, List<Metadado> campos, String tipoPlural, String tipoSingular,
+		private void preencher(Metadado tabela, List<Metadado> campos, String tipoPlural, String tipoSingular,
 				char chave) {
 			if (!campos.isEmpty()) {
-				int size = campos.size();
-				String descricao = size > 1 ? tipoPlural : tipoSingular;
+				String descricao = campos.size() > 1 ? tipoPlural : tipoSingular;
 				Metadado tipo = new Metadado(descricao, true);
 				for (Metadado campo : campos) {
 					tipo.add(campo);
-					if (chave == 'E') {
-						metadado.incrementarExportados();
-					} else if (chave == 'I') {
-						metadado.incrementarImportados();
-					}
 				}
-				metadado.add(tipo);
+				tabela.add(tipo);
 			}
 		}
 	}

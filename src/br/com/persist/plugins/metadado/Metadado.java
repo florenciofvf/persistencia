@@ -23,6 +23,7 @@ public class Metadado implements Transferable {
 	private static final DataFlavor[] flavors = { flavor };
 	private final boolean contabilizavel;
 	private final List<Metadado> filhos;
+	private boolean contabilizar = true;
 	private final String descricao;
 	private int totalImportados;
 	private int totalExportados;
@@ -71,6 +72,10 @@ public class Metadado implements Transferable {
 			}
 		}
 		return null;
+	}
+
+	public boolean contem(String descricao) {
+		return getMetadado(descricao) != null;
 	}
 
 	public Metadado getPai() {
@@ -188,12 +193,17 @@ public class Metadado implements Transferable {
 		return sb.toString();
 	}
 
-	public String ordemExpImp(boolean exp) {
-		StringBuilder sb = new StringBuilder(exp ? Mensagens.getString("label.ordenado_exportacao")
+	public String ordemExpImp(boolean exportacao) {
+		StringBuilder sb = new StringBuilder(exportacao ? Mensagens.getString("label.ordenado_exportacao")
 				: Mensagens.getString("label.ordenado_importacao"));
-		sb.append(Constantes.QL);
-		sb.append(Constantes.QL);
-		if (exp) {
+		sb.append(Constantes.QL2);
+		checarContabilizacao();
+		ordemExpImp(exportacao, sb);
+		return sb.toString();
+	}
+
+	private void ordemExpImp(boolean exportacao, StringBuilder sb) {
+		if (exportacao) {
 			for (String string : ordenadoExportacao) {
 				sb.append(string + Constantes.QL);
 			}
@@ -202,53 +212,58 @@ public class Metadado implements Transferable {
 				sb.append(string + Constantes.QL);
 			}
 		}
-		return sb.toString();
 	}
 
-	public boolean contem(String descricao) {
-		for (Metadado m : filhos) {
-			if (m.descricao.equals(descricao)) {
-				return true;
+	private void checarContabilizacao() {
+		if (contabilizar) {
+			for (Metadado tab : filhos) {
+				tab.contabilizarImportacaoExportacao();
 			}
+			contabilizar = false;
+			montarOrdenacoes();
 		}
-		return false;
 	}
 
-	public int getTotalImportados() {
-		return totalImportados;
+	private void contabilizarImportacaoExportacao() {
+		contabilizarImportacao();
+		contabilizarExportacao();
 	}
 
-	public void setTotalImportados(int totalImportados) {
-		this.totalImportados = totalImportados;
+	private void contabilizarImportacao() {
+		totalImportados = 0;
+		Metadado metadado = getMetadado(Constantes.CAMPO_IMPORTADO);
+		if (metadado != null) {
+			totalImportados += metadado.getTotal();
+		}
+		metadado = getMetadado(Constantes.CAMPOS_IMPORTADOS);
+		if (metadado != null) {
+			totalImportados += metadado.getTotal();
+		}
 	}
 
-	public void incrementarImportados() {
-		this.totalImportados++;
+	private void contabilizarExportacao() {
+		totalExportados = 0;
+		Metadado metadado = getMetadado(Constantes.CAMPO_EXPORTADO);
+		if (metadado != null) {
+			totalExportados += metadado.getTotal();
+		}
+		metadado = getMetadado(Constantes.CAMPOS_EXPORTADOS);
+		if (metadado != null) {
+			totalExportados += metadado.getTotal();
+		}
 	}
 
-	public int getTotalExportados() {
-		return totalExportados;
-	}
-
-	public void setTotalExportados(int totalExportados) {
-		this.totalExportados = totalExportados;
-	}
-
-	public void incrementarExportados() {
-		this.totalExportados++;
-	}
-
-	public void montarOrdenacoes() {
+	private void montarOrdenacoes() {
 		List<Metadado> temporario = new ArrayList<>(filhos);
 		ordenadoExportacao.clear();
 		ordenadoImportacao.clear();
-		Collections.sort(temporario, (o1, o2) -> o2.getTotalExportados() - o1.getTotalExportados());
+		Collections.sort(temporario, (o1, o2) -> o2.totalExportados - o1.totalExportados);
 		for (Metadado meta : temporario) {
-			ordenadoExportacao.add(meta.getTotalExportados() + " - " + meta.getDescricao());
+			ordenadoExportacao.add(meta.totalExportados + " - " + meta.descricao);
 		}
-		Collections.sort(temporario, (o1, o2) -> o2.getTotalImportados() - o1.getTotalImportados());
+		Collections.sort(temporario, (o1, o2) -> o2.totalImportados - o1.totalImportados);
 		for (Metadado meta : temporario) {
-			ordenadoImportacao.add(meta.getTotalImportados() + " - " + meta.getDescricao());
+			ordenadoImportacao.add(meta.totalImportados + " - " + meta.descricao);
 		}
 	}
 

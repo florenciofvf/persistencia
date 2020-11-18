@@ -129,6 +129,7 @@ public class Constantes {
 	public static final String NOVO = "novo";
 	public static final String EXEC = "exec";
 	public static final int QUARENTA_UM = 41;
+	public static final String QL2 = "\n\n";
 	public static final int DUZENTOS = 200;
 	public static final String III = "???";
 	public static final String ESC = "esc";
