@@ -1768,7 +1768,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (!lista.isEmpty()) {
 			Metadado raiz = metadado.getPai();
 			variaveis.definirGraus(lista);
-			variaveis.definirY(variaveis.principal);
+			variaveis.definirYPrincipal();
 			processarLista(raiz, variaveis, lista);
 			atualizarSuperficie(variaveis);
 		}
@@ -1795,8 +1795,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto, variaveis.exportacao);
 		relacao.setQuebrado(variaveis.ehExportacaoHierarquico());
 		variaveis.vetor.rotacionar(variaveis.graus);
-		if (variaveis.ehExportacaoHierarquico()) {
+		if (!variaveis.circular) {
 			relacao.setPontoDestino(false);
+			relacao.setPontoOrigem(false);
 		}
 		addRelacao(relacao);
 	}
@@ -1879,8 +1880,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			graus = 360 / lista.size();
 		}
 
-		void definirY(Objeto objeto) {
-			y = objeto.y + Constantes.CEM;
+		void definirYPrincipal() {
+			y = principal.y + Constantes.CEM;
 		}
 
 		void abrirPesquisa(String nome, String tabela, String campo) {
