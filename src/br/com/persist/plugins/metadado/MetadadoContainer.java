@@ -247,7 +247,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			if (f.isFile()) {
 				try {
 					MetadadoHandler handler = new MetadadoHandler();
-					XML.processar(file, handler);
+					XML.processar(f, handler);
 					Metadado raiz = handler.getRaiz();
 					raiz.setEhRaiz(true);
 					metadadoTree.setModel(new MetadadoModelo(raiz));

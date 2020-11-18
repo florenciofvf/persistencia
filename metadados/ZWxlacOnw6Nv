@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<metadados>
+	<metadado descricao="Tabelas" tabela="false" contabilizavel="true">
+		<metadado descricao="candidato" tabela="true" contabilizavel="false">
+			<metadado descricao="CAMPOS" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="ELEICAO_ID" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="NOME" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="DESCRICAO" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="VOTOS" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CHAVE_PRIMARIA" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CAMPO_IMPORTADO" tabela="false" contabilizavel="true">
+				<metadado descricao="ELEICAO_ID" tabela="false" contabilizavel="false">
+					<metadado descricao="eleicao(ID)" tabela="false" contabilizavel="false">
+					</metadado>
+				</metadado>
+			</metadado>
+			<metadado descricao="CAMPO_EXPORTADO" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+					<metadado descricao="endereco(CANDIDATO_ID)" tabela="false" contabilizavel="false">
+					</metadado>
+				</metadado>
+			</metadado>
+		</metadado>
+		<metadado descricao="candidato2" tabela="true" contabilizavel="false">
+			<metadado descricao="CAMPOS" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="ELEICAO_ID" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="NOME" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="VOTOS" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CHAVE_PRIMARIA" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CAMPO_IMPORTADO" tabela="false" contabilizavel="true">
+				<metadado descricao="ELEICAO_ID" tabela="false" contabilizavel="false">
+					<metadado descricao="eleicao(ID)" tabela="false" contabilizavel="false">
+					</metadado>
+				</metadado>
+			</metadado>
+		</metadado>
+		<metadado descricao="eleicao" tabela="true" contabilizavel="false">
+			<metadado descricao="CAMPOS" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="DESCRICAO" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="DATA_INICIADA" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="DATA_FINALIZADA" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CHAVE_PRIMARIA" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CAMPOS_EXPORTADOS" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+					<metadado descricao="candidato(ELEICAO_ID)" tabela="false" contabilizavel="false">
+					</metadado>
+				</metadado>
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+					<metadado descricao="candidato2(ELEICAO_ID)" tabela="false" contabilizavel="false">
+					</metadado>
+				</metadado>
+			</metadado>
+		</metadado>
+		<metadado descricao="endereco" tabela="true" contabilizavel="false">
+			<metadado descricao="CAMPOS" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="CANDIDATO_ID" tabela="false" contabilizavel="false">
+				</metadado>
+				<metadado descricao="LOGRADOURO" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CHAVE_PRIMARIA" tabela="false" contabilizavel="true">
+				<metadado descricao="ID" tabela="false" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CAMPO_IMPORTADO" tabela="false" contabilizavel="true">
+				<metadado descricao="CANDIDATO_ID" tabela="false" contabilizavel="false">
+					<metadado descricao="candidato(ID)" tabela="false" contabilizavel="false">
+					</metadado>
+				</metadado>
+			</metadado>
+		</metadado>
+	</metadado>
+</metadados>
