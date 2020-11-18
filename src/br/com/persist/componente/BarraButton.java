@@ -45,12 +45,12 @@ public class BarraButton extends JToolBar {
 		configNovo(enuns);
 		configLimpar(enuns);
 		configLimpar2(enuns);
+		configBaixar(enuns);
+		configBaixar2(enuns);
 		configSalvar(enuns);
 		configSalvarComo(enuns);
 		configAtualizar(enuns);
 		configExcluir(enuns);
-		configBaixar(enuns);
-		configBaixar2(enuns);
 		configCopiar(enuns);
 		configColar(enuns);
 		configCopiar2(enuns);
