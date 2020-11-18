@@ -15,6 +15,7 @@ import java.util.Set;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLUtil;
 
 public class Metadado implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(Metadado.class, "Metadado");
@@ -38,6 +39,18 @@ public class Metadado implements Transferable {
 		this.contabilizavel = contabilizavel;
 		this.descricao = descricao;
 		filhos = new ArrayList<>();
+	}
+
+	public void salvar(XMLUtil util) {
+		util.abrirTag(Constantes.METADADO);
+		util.atributo("descricao", descricao);
+		util.atributo("tabela", tabela);
+		util.atributo("contabilizavel", contabilizavel);
+		util.fecharTag();
+		for (Metadado m : filhos) {
+			m.salvar(util);
+		}
+		util.finalizarTag(Constantes.METADADO);
 	}
 
 	public int getIndice(Metadado metadado) {

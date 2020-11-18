@@ -4,12 +4,19 @@ import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
+import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
+import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +32,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -38,6 +46,10 @@ import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.anotacao.AnotacaoContainer;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
@@ -45,10 +57,12 @@ import br.com.persist.plugins.persistencia.Exportado;
 import br.com.persist.plugins.persistencia.Importado;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaException;
+import br.com.persist.plugins.requisicao.RequisicaoContainer;
 
 public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener {
 	private static final long serialVersionUID = 1L;
 	private final MetadadoTree metadadoTree = new MetadadoTree();
+	private static final File file = new File("metadados");
 	private MetadadoFormulario metadadoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;
@@ -107,7 +121,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		private ButtonInfo buttonInfo = new ButtonInfo();
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, ATUALIZAR);
+			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, ATUALIZAR, BAIXAR,
+					SALVAR);
 			add(buttonInfo);
 			add(true, comboConexao);
 			add(txtMetadado);
@@ -223,11 +238,65 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 
 		@Override
+		protected void baixar() {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				abrir(criarNomeArquivo(conexao));
+			}
+		}
+
+		private String criarNomeArquivo(Conexao conexao) {
+			return Base64Util.criarNomeArquivo(conexao.getNome());
+		}
+
+		private void abrir(String nome) {
+			File f = new File(file, nome);
+			if (f.isFile()) {
+				try {
+					MetadadoHandler handler = new MetadadoHandler();
+					XML.processar(file, handler);
+					Metadado raiz = handler.getRaiz();
+					raiz.setEhRaiz(true);
+					metadadoTree.setModel(new MetadadoModelo(raiz));
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ABRIR: " + f.getAbsolutePath(), ex, MetadadoContainer.this);
+				}
+			}
+		}
+
+		@Override
+		protected void salvar() {
+			Conexao conexao = getConexao();
+			if (conexao != null && Util.confirmaSalvar(MetadadoContainer.this, Constantes.UM)) {
+				salvarArquivo(criarNomeArquivo(conexao));
+			}
+		}
+
+		public void salvarArquivo(String nome) {
+			File f = new File(file, nome);
+			try {
+				XMLUtil util = new XMLUtil(f);
+				util.prologo();
+				util.abrirTag2(Constantes.METADADOS);
+				metadadoTree.getRaiz().salvar(util);
+				util.finalizarTag(Constantes.METADADOS);
+				util.close();
+				salvoMensagem();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("ABRIR: " + f.getAbsolutePath(), ex, MetadadoContainer.this);
+			}
+		}
+
+		@Override
 		protected void atualizar() {
-			Conexao conexao = (Conexao) comboConexao.getSelectedItem();
+			Conexao conexao = getConexao();
 			if (conexao != null) {
 				atualizar(conexao);
 			}
+		}
+
+		private Conexao getConexao() {
+			return (Conexao) comboConexao.getSelectedItem();
 		}
 
 		private void atualizar(Conexao conexao) {
