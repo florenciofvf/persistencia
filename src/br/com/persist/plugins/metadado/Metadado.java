@@ -163,7 +163,7 @@ public class Metadado implements Transferable {
 		for (Metadado table : filhos) {
 			Metadado meta = table.getMetadado(Constantes.CHAVES_PRIMARIAS);
 			if (meta != null) {
-				sb.append(table.descricao + " - " + meta.getTotal() + Constantes.QL);
+				sb.append(meta.getTotal() + " - " + table.descricao + Constantes.QL);
 				total++;
 			}
 		}
