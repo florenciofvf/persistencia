@@ -161,14 +161,14 @@ public class Metadado implements Transferable {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
 		for (Metadado table : filhos) {
-			if (table.contem(Constantes.CHAVES_PRIMARIAS)) {
-				Metadado meta = table.getMetadado(Constantes.CHAVES_PRIMARIAS);
+			Metadado meta = table.getMetadado(Constantes.CHAVES_PRIMARIAS);
+			if (meta != null) {
 				sb.append(table.descricao + " - " + meta.getTotal() + Constantes.QL);
 				total++;
 			}
 		}
-		sb.insert(0, Mensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL2);
-		return sb.toString();
+		return sb.insert(0, Mensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL2)
+				.toString();
 	}
 
 	public String pksAusente() {
@@ -180,22 +180,22 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-		sb.insert(0, Mensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL2);
-		return sb.toString();
+		return sb.insert(0, Mensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL2).toString();
 	}
 
 	public String queExportam() {
 		StringBuilder sb = new StringBuilder();
 		int total = queExportam(sb);
-		sb.insert(0, Mensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL2);
-		return sb.toString();
+		return sb.insert(0, Mensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL2)
+				.toString();
 	}
 
 	private int queExportam(StringBuilder sb) {
 		int total = 0;
 		for (Metadado table : filhos) {
-			if (table.contem(Constantes.CAMPO_EXPORTADO) || table.contem(Constantes.CAMPOS_EXPORTADOS)) {
-				sb.append(table.descricao + Constantes.QL);
+			table.contabilizarExportacao();
+			if (table.totalExportados > 0) {
+				sb.append(table.descricao + " - " + table.totalExportados + Constantes.QL);
 				total++;
 			}
 		}
@@ -205,14 +205,15 @@ public class Metadado implements Transferable {
 	public String naoExportam() {
 		StringBuilder sb = new StringBuilder();
 		int total = naoExportam(sb);
-		sb.insert(0, Mensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL2);
-		return sb.toString();
+		return sb.insert(0, Mensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL2)
+				.toString();
 	}
 
 	private int naoExportam(StringBuilder sb) {
 		int total = 0;
 		for (Metadado table : filhos) {
-			if (!table.contem(Constantes.CAMPO_EXPORTADO) && !table.contem(Constantes.CAMPOS_EXPORTADOS)) {
+			table.contabilizarExportacao();
+			if (table.totalExportados == 0) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}
