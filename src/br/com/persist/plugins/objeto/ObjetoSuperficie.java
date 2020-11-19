@@ -1812,7 +1812,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int graus;
 		int y;
 
-		Variaveis(boolean exportacao, boolean circular) {
+		private Variaveis(boolean exportacao, boolean circular) {
 			this.exportacao = exportacao;
 			this.circular = circular;
 		}
@@ -1883,7 +1883,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				principal.x = centroX;
 				principal.y = centroY;
 				if (!objetos.isEmpty()) {
-					graus = 360 / objetos.size();
 					localizacaoCircular();
 				}
 			} else {
@@ -1892,6 +1891,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void localizacaoCircular() {
+			graus = 360 / objetos.size();
 			for (Objeto objeto : objetos) {
 				objeto.x = centroX + (int) vetor.getX();
 				objeto.y = centroY + (int) vetor.getY();
