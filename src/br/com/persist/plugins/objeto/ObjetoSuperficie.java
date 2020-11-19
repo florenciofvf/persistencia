@@ -1730,6 +1730,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		variaveis.checkInicialPesquisa();
 		processarDetalhes(metadado, variaveis);
 		variaveis.checkFinalPesquisa();
+		variaveis.localizarObjetos();
 		Util.mensagemFormulario(formulario, variaveis.sb.toString());
 	}
 
@@ -1742,26 +1743,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void processarPrincipal(Metadado metadado, Variaveis variaveis) {
-		Objeto principal = new Objeto(variaveis.centroX, variaveis.centroY);
-		principal.setTabela(metadado.getDescricao());
-		principal.setChaves(metadado.getChaves());
-		principal.setId(metadado.getDescricao());
-		variaveis.principal = principal;
-		variaveis.metadado = metadado;
-		variaveis.configurarLocal();
-		addObjeto(principal);
+		variaveis.iniciarPrincipal(metadado);
+		addObjeto(variaveis.principal);
+		variaveis.tabela = metadado;
 	}
 
 	private void processarDetalhes(Metadado metadado, Variaveis variaveis) {
 		List<String> lista = metadado.getListaDescricaoExportacaoImportacao(variaveis.exportacao);
-		if (!lista.isEmpty()) {
-			Metadado raiz = metadado.getPai();
-			variaveis.definirGraus(lista);
-			variaveis.definirYPrincipal();
-			processarLista(raiz, variaveis, lista);
-			variaveis.definirYPrincipalFinal();
-			atualizarSuperficie(variaveis);
-		}
+		processarLista(metadado.getPai(), variaveis, lista);
 	}
 
 	private void processarLista(Metadado raiz, Variaveis variaveis, List<String> lista) {
@@ -1770,20 +1759,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			Objeto objeto = criarEAdicionar(variaveis);
 			criarEAdicionarRelacao(variaveis, objeto);
 			processarChaves(raiz, variaveis, tabelaIds, objeto);
-			checarLocalizacao(variaveis, objeto);
 		}
 	}
 
 	private Objeto criarEAdicionar(Variaveis variaveis) {
-		Objeto objeto = new Objeto(variaveis.centroX + (int) variaveis.vetor.getX(),
-				variaveis.centroY + (int) variaveis.vetor.getY());
+		Objeto objeto = new Objeto(0, 0);
+		variaveis.objetos.add(objeto);
 		addObjeto(objeto);
 		return objeto;
 	}
 
 	private void criarEAdicionarRelacao(Variaveis variaveis, Objeto objeto) {
 		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto, variaveis.exportacao);
-		variaveis.vetor.rotacionar(variaveis.graus);
 		relacao.setQuebrado(!variaveis.circular);
 		if (!variaveis.circular) {
 			relacao.setPontoDestino(false);
@@ -1806,38 +1793,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				variaveis.ref(nome, campo, true);
 			} else {
 				Objeto obj = variaveis.principal;
-				String campoDetalhe = variaveis.metadado.getFKPara(tabelaIds);
+				String campoDetalhe = variaveis.tabela.getFKPara(tabelaIds);
 				variaveis.pesquisaDetalhe(nome, campo, obj.getTabela2(), campoDetalhe);
 			}
 		}
 	}
 
-	private void checarLocalizacao(Variaveis variaveis, Objeto objeto) {
-		if (!variaveis.circular) {
-			objeto.setDeslocamentoXId(28);
-			objeto.setDeslocamentoYId(24);
-			objeto.x = Constantes.VINTE;
-			objeto.y = variaveis.y;
-			variaveis.y += Constantes.CEM;
-		}
-		if (variaveis.ehExportacaoHierarquico()) {
-			objeto.x += Constantes.VINTE_CINCO;
-		}
-	}
-
-	private void atualizarSuperficie(Variaveis variaveis) {
-		if (!variaveis.circular) {
-			setPreferredSize(new Dimension(0, variaveis.y));
-			SwingUtilities.updateComponentTreeUI(getParent());
-		}
-	}
-
 	private class Variaveis {
+		final List<Objeto> objetos = new ArrayList<>();
 		private StringBuilder sb = new StringBuilder();
+		final Objeto principal = new Objeto(0, 0);
 		final boolean exportacao;
 		final boolean circular;
-		Metadado metadado;
-		Objeto principal;
+		Metadado tabela;
 		Vetor vetor;
 		int centroX;
 		int centroY;
@@ -1849,58 +1817,29 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			this.circular = circular;
 		}
 
-		void definirCentros(Dimension d) {
+		private void definirCentros(Dimension d) {
 			centroY = d.height / 2 - 25;
 			centroX = d.width / 2;
 		}
 
-		void criarVetor(Dimension d) {
+		private void criarVetor(Dimension d) {
 			int comprimento = Math.min(d.width, d.height) / 2 - 50;
 			vetor = new Vetor(comprimento, 0);
 		}
 
-		void checkInicialPesquisa() {
+		private void iniciarPrincipal(Metadado metadado) {
+			principal.setTabela(metadado.getDescricao());
+			principal.setChaves(metadado.getChaves());
+			principal.setId(metadado.getDescricao());
+		}
+
+		private void checkInicialPesquisa() {
 			if (exportacao) {
 				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela2(), principal.getChaves());
 			}
 		}
 
-		void checkFinalPesquisa() {
-			if (exportacao) {
-				fecharPesquisa();
-			}
-		}
-
-		void definirGraus(List<String> lista) {
-			graus = 360 / lista.size();
-		}
-
-		void definirYPrincipal() {
-			if (ehExportacaoHierarquico()) {
-				y = principal.y + Constantes.CEM;
-			} else if (ehImportacaoHierarquico()) {
-				y = principal.y;
-			}
-		}
-
-		void definirYPrincipalFinal() {
-			if (ehImportacaoHierarquico()) {
-				principal.y = y;
-				y += Constantes.CEM;
-				principal.x += Constantes.VINTE_CINCO;
-			}
-		}
-
-		private void configurarLocal() {
-			if (!circular) {
-				principal.setDeslocamentoXId(28);
-				principal.setDeslocamentoYId(24);
-				principal.x = Constantes.VINTE;
-				principal.y = Constantes.VINTE;
-			}
-		}
-
-		void abrirPesquisa(String nome, String tabela, String campo) {
+		private void abrirPesquisa(String nome, String tabela, String campo) {
 			sb.append(Constantes.QL + "\t<pesquisa");
 			sb.append(" nome=" + citar(nome));
 			sb.append(" tabela=" + citar(tabela));
@@ -1908,7 +1847,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			sb.append(">");
 		}
 
-		void ref(String tabela, String campo, boolean invisivel) {
+		private void ref(String tabela, String campo, boolean invisivel) {
 			sb.append(Constantes.QL + "\t\t<ref");
 			sb.append(" tabela=" + citar(tabela));
 			sb.append(" campo=" + citar(campo));
@@ -1918,26 +1857,105 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			sb.append(" />");
 		}
 
-		void fecharPesquisa() {
-			sb.append(Constantes.QL + "\t</pesquisa>");
-		}
-
-		String citar(String s) {
-			return "\"" + s + "\"";
-		}
-
-		void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String tabelaDetalhe, String campoDetalhe) {
+		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String tabelaDetalhe,
+				String campoDetalhe) {
 			abrirPesquisa(tabelaPrincipal, tabelaDetalhe, campoDetalhe);
 			ref(tabelaPrincipal, campoPrincipal, false);
 			fecharPesquisa();
 		}
 
-		boolean ehExportacaoHierarquico() {
-			return exportacao && !circular;
+		private void fecharPesquisa() {
+			sb.append(Constantes.QL + "\t</pesquisa>");
 		}
 
-		boolean ehImportacaoHierarquico() {
-			return !exportacao && !circular;
+		private String citar(String s) {
+			return "\"" + s + "\"";
+		}
+
+		private void checkFinalPesquisa() {
+			if (exportacao) {
+				fecharPesquisa();
+			}
+		}
+
+		private void localizarObjetos() {
+			if (circular) {
+				principal.x = centroX;
+				principal.y = centroY;
+				if (!objetos.isEmpty()) {
+					graus = 360 / objetos.size();
+					localizacaoCircular();
+				}
+			} else {
+				localizacaoHierarquica();
+			}
+		}
+
+		private void localizacaoCircular() {
+			for (Objeto objeto : objetos) {
+				objeto.x = centroX + (int) vetor.getX();
+				objeto.y = centroY + (int) vetor.getY();
+				vetor.rotacionar(graus);
+			}
+		}
+
+		private void localizacaoHierarquica() {
+			configuracaoPrincipal();
+			localizarHierarquico();
+			configuracaoPrincipalFinal();
+			atualizarSuperficie();
+		}
+
+		private void configuracaoPrincipal() {
+			principal.x = Constantes.VINTE;
+			principal.y = Constantes.VINTE;
+			deslocamentos(principal);
+			y = principal.y;
+			if (exportacao) {
+				incY();
+			}
+		}
+
+		private void deslocamentos(Objeto objeto) {
+			objeto.setDeslocamentoXId(28);
+			objeto.setDeslocamentoYId(24);
+		}
+
+		private void incY() {
+			y += Constantes.CEM;
+		}
+
+		private void localizarHierarquico() {
+			for (Objeto obj : objetos) {
+				localizacaoDetalhe(obj);
+				if (exportacao) {
+					obj.x += Constantes.VINTE_CINCO;
+				}
+			}
+		}
+
+		private void localizacaoDetalhe(Objeto objeto) {
+			objeto.x = Constantes.VINTE;
+			deslocamentos(objeto);
+			objeto.y = y;
+			incY();
+		}
+
+		private void configuracaoPrincipalFinal() {
+			if (!exportacao) {
+				if (!objetos.isEmpty()) {
+					principal.x += Constantes.VINTE_CINCO;
+				}
+				principal.y = y;
+				incY();
+			}
+		}
+
+		private void atualizarSuperficie() {
+			if (!circular) {
+				setPreferredSize(new Dimension(0, y));
+				SwingUtilities.updateComponentTreeUI(getParent());
+			}
 		}
 	}
 
