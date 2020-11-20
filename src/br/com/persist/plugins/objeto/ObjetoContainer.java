@@ -446,7 +446,6 @@ public class ObjetoContainer extends AbstratoContainer {
 
 	private void adicionarInternalFormulario(Conexao conexao, ObjetoColetor coletor, Graphics g,
 			InternalConfig config) {
-		boolean processado = false;
 		for (InternalForm form : coletor.getForms()) {
 			Objeto instancia = null;
 			for (Objeto objeto : coletor.getObjetos()) {
@@ -459,11 +458,7 @@ public class ObjetoContainer extends AbstratoContainer {
 						new Dimension(form.getLargura(), form.getAltura()));
 				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(form.getX(), form.getY()), g, true,
 						config);
-				processado = true;
 			}
-		}
-		if (processado && config != null) {
-			objetoSuperficie.organizarInternal();
 		}
 	}
 

@@ -2155,9 +2155,4 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	public void setArquivoVinculo(String arquivoVinculo) {
 		this.arquivoVinculo = arquivoVinculo;
 	}
-
-	public void organizarInternal() {
-		ajuste.empilharFormularios();
-		ajuste.aproximarObjetoFormulario(true, false);
-	}
 }
