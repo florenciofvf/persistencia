@@ -1010,6 +1010,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private MenuCopiar() {
 					super("label.copiar", Icones.TABLE2);
+					setToolTipText(Mensagens.getString("label.copiar_tabela"));
 					addMenuItem(htmlAcao);
 					addSeparator();
 					addMenuItem(tabularAcao);
