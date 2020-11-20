@@ -403,8 +403,6 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	public void abrir(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {
-		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
-		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
 		objetoSuperficie.abrir(coletor);
 		arquivo = file;
@@ -414,6 +412,8 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
 			adicionarInternalFormulario(conexao, coletor, g, config);
 		}
+		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
+		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
 	}
 
 	private Conexao selecionarConexao(ObjetoColetor coletor, InternalConfig config) {
