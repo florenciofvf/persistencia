@@ -2012,6 +2012,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				montarSelecionadoProprio(selecionados, objeto);
 			} else {
 				selecionados.add(objeto.clonar());
+				objeto.setSelecionado(false);
 			}
 		} else {
 			selecionados.add(objeto);
@@ -2024,6 +2025,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			selecionados.add(objeto);
 		} else {
 			selecionados.add(objeto.clonar());
+			objeto.setSelecionado(false);
 		}
 	}
 
@@ -2047,7 +2049,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
-				objeto.setSelecionado(false);
 				x += 25;
 				y += 25;
 			}
@@ -2063,7 +2064,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
-				objeto.setSelecionado(false);
 				x += 25;
 				y += 25;
 			}
@@ -2077,7 +2077,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (!Util.estaVazio(objeto.getTabela2())) {
 				setComplemento(conexao, objeto);
 				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, getGraphics(), false));
-				objeto.setSelecionado(false);
 			}
 		}
 	}
@@ -2129,7 +2128,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, dimension);
 				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), null, false,
 						config);
-				objeto.setSelecionado(false);
 			}
 		}
 	}
