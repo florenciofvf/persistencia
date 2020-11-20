@@ -1533,7 +1533,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Conexao conexao = container.getConexaoPadrao();
 		objeto.setReferenciaPesquisa(referencia);
 		if (Preferencias.isAbrirAutoDestacado()) {
-			criarExternalFormulario(objeto, conexao);
+			criarExternalFormulario(objeto.clonar(), conexao);
 		} else {
 			objeto.setSelecionado(true);
 		}
