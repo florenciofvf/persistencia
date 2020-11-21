@@ -1,5 +1,7 @@
 package br.com.persist.plugins.anexo;
 
+import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
@@ -9,6 +11,7 @@ import javax.swing.JColorChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
@@ -41,20 +44,32 @@ public class AnexoCorContainer extends Panel implements ChangeListener {
 	public void stateChanged(ChangeEvent e) {
 		anexo.setCorFonte(colorChooser.getColor());
 		AnexoModelo.putAnexo(anexo);
-		toolbar.fechar();
 	}
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, LIMPAR);
+			super.ini(janela, LIMPAR, COPIAR, COLAR);
 		}
 
 		@Override
 		protected void limpar() {
 			anexo.setCorFonte(null);
 			fechar();
+		}
+
+		@Override
+		protected void copiar() {
+			Preferencias.setCorFonteCopiado(colorChooser.getColor());
+			copiarMensagem(".");
+		}
+
+		@Override
+		protected void colar() {
+			anexo.setCorFonte(Preferencias.getCorFonteCopiado());
+			colorChooser.setColor(anexo.getCorFonte());
+			AnexoModelo.putAnexo(anexo);
 		}
 	}
 }
