@@ -218,13 +218,20 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {
 			try {
-				File file = anexo.getFile();
-				File parent = file.getParentFile();
-				if (parent != null) {
-					desktop.open(parent);
-				}
+				processar(anexo.getFile());
 			} catch (IOException e) {
 				Util.mensagem(AnexoContainer.this, e.getMessage());
+			}
+		}
+	}
+
+	private void processar(File file) throws IOException {
+		if (Util.isMac()) {
+			Runtime.getRuntime().exec("open -R " + file.getAbsolutePath());
+		} else {
+			File parent = file.getParentFile();
+			if (parent != null) {
+				desktop.open(parent);
 			}
 		}
 	}
