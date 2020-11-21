@@ -1,5 +1,8 @@
 package br.com.persist.plugins.objeto.config;
 
+import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,6 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
@@ -162,12 +166,14 @@ public class RelacaoContainer extends Panel {
 
 	private class PanelCorFonte extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
+		private final Toolbar toolbar = new Toolbar();
 		private final JColorChooser colorChooser;
 
 		private PanelCorFonte() {
 			colorChooser = new JColorChooser(relacao.getCorFonte());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
+			add(BorderLayout.NORTH, toolbar);
 		}
 
 		@Override
@@ -176,16 +182,40 @@ public class RelacaoContainer extends Panel {
 			MacroProvedor.corFonte(relacao.getCorFonte());
 			objetoSuperficie.repaint();
 		}
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private Toolbar() {
+				super.ini(null, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void copiar() {
+				Preferencias.setCorFonteCopiado(colorChooser.getColor());
+				copiarMensagem(".");
+			}
+
+			@Override
+			protected void colar() {
+				relacao.setCorFonte(Preferencias.getCorFonteCopiado());
+				MacroProvedor.corFonte(relacao.getCorFonte());
+				colorChooser.setColor(relacao.getCorFonte());
+				objetoSuperficie.repaint();
+			}
+		}
 	}
 
 	private class PanelCor extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
+		private final Toolbar toolbar = new Toolbar();
 		private final JColorChooser colorChooser;
 
 		private PanelCor() {
 			colorChooser = new JColorChooser(relacao.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
+			add(BorderLayout.NORTH, toolbar);
 		}
 
 		@Override
@@ -193,6 +223,28 @@ public class RelacaoContainer extends Panel {
 			relacao.setCor(colorChooser.getColor());
 			MacroProvedor.corFundo(relacao.getCor());
 			objetoSuperficie.repaint();
+		}
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private Toolbar() {
+				super.ini(null, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void copiar() {
+				Preferencias.setCorCopiado(colorChooser.getColor());
+				copiarMensagem(".");
+			}
+
+			@Override
+			protected void colar() {
+				relacao.setCor(Preferencias.getCorCopiado());
+				MacroProvedor.corFundo(relacao.getCor());
+				colorChooser.setColor(relacao.getCor());
+				objetoSuperficie.repaint();
+			}
 		}
 	}
 
