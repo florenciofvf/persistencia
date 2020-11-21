@@ -205,15 +205,22 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	}
 
 	private void desktopOpen(Arquivo arquivo) {
-		Desktop desktop = Desktop.getDesktop();
 		try {
-			File file = arquivo.getFile();
-			File parent = file.getParentFile();
-			if (parent != null) {
-				desktop.open(parent);
-			}
+			processar(arquivo.getFile());
 		} catch (IOException e) {
 			Util.mensagem(ArquivoContainer.this, e.getMessage());
+		}
+	}
+
+	private void processar(File file) throws IOException {
+		if (Util.isMac()) {
+			Runtime.getRuntime().exec("open -R " + file.getAbsolutePath());
+		} else {
+			File parent = file.getParentFile();
+			if (parent != null) {
+				Desktop desktop = Desktop.getDesktop();
+				desktop.open(parent);
+			}
 		}
 	}
 
