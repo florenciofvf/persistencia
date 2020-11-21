@@ -482,12 +482,14 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelCor extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
+		private final Toolbar toolbar = new Toolbar();
 		private final JColorChooser colorChooser;
 
 		private PanelCor() {
 			colorChooser = new JColorChooser(objeto.getCor());
 			colorChooser.getSelectionModel().addChangeListener(this);
 			add(BorderLayout.CENTER, colorChooser);
+			add(BorderLayout.NORTH, toolbar);
 		}
 
 		@Override
@@ -495,6 +497,28 @@ public class ObjetoContainer extends Panel {
 			objeto.setCor(colorChooser.getColor());
 			MacroProvedor.corFundo(objeto.getCor());
 			objetoSuperficie.repaint();
+		}
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private Toolbar() {
+				super.ini(null, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void copiar() {
+				Preferencias.setCorCopiado(colorChooser.getColor());
+				copiarMensagem(".");
+			}
+
+			@Override
+			protected void colar() {
+				objeto.setCor(Preferencias.getCorCopiado());
+				MacroProvedor.corFundo(objeto.getCor());
+				colorChooser.setColor(objeto.getCor());
+				objetoSuperficie.repaint();
+			}
 		}
 	}
 

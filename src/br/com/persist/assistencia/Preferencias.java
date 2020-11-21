@@ -45,6 +45,7 @@ public class Preferencias {
 	private static int layoutAbertura;
 	private static boolean abrirAuto;
 	private static String formFicha;
+	private static Color corCopiado;
 
 	private Preferencias() {
 	}
@@ -406,5 +407,13 @@ public class Preferencias {
 
 	public static void setCorFonteCopiado(Color corFonteCopiado) {
 		Preferencias.corFonteCopiado = corFonteCopiado;
+	}
+
+	public static Color getCorCopiado() {
+		return corCopiado;
+	}
+
+	public static void setCorCopiado(Color corCopiado) {
+		Preferencias.corCopiado = corCopiado;
 	}
 }
