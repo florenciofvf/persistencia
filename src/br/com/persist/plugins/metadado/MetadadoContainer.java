@@ -292,7 +292,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		protected void atualizar() {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
-				atualizar(conexao);
+				new Thread(() -> atualizar(conexao)).start();
 			}
 		}
 
@@ -317,6 +317,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		private void atualizar(Metadado raiz, List<Metadado> tabelas, Conexao conexao, Connection conn)
 				throws PersistenciaException {
+			int contador = 0;
 			for (Metadado tabela : tabelas) {
 				tabela.setTabela(true);
 				List<Metadado> campos = converterLista(Persistencia.listarCampos(conn, conexao, tabela.getDescricao()));
@@ -330,6 +331,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				List<Metadado> camposExportados = converterExportados(
 						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO);
+				progresso.setValue(++contador);
 				raiz.add(tabela);
 			}
 		}
