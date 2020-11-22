@@ -36,6 +36,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
@@ -111,6 +112,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextField txtMetadado = new TextField(35);
+		private final CheckBox chkPorParte = new CheckBox();
 		private ButtonInfo buttonInfo = new ButtonInfo();
 
 		public void ini(Janela janela) {
@@ -119,6 +121,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			add(buttonInfo);
 			add(true, comboConexao);
 			add(txtMetadado);
+			add(chkPorParte);
+			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtMetadado.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtMetadado.addActionListener(this);
 		}
@@ -126,7 +130,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtMetadado.getText())) {
-				metadadoTree.selecionar(txtMetadado.getText().trim());
+				metadadoTree.selecionar(txtMetadado.getText().trim(), chkPorParte.isSelected());
 			}
 		}
 

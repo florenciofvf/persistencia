@@ -84,13 +84,20 @@ public class Metadado implements Transferable {
 		return filhos.get(index);
 	}
 
-	public Metadado getMetadado(String descricao) {
+	public Metadado getMetadado(String descricao, boolean porParte) {
 		for (Metadado m : filhos) {
+			if (porParte && m.descricao.toUpperCase().indexOf(descricao.toUpperCase()) != -1) {
+				return m;
+			}
 			if (m.descricao.equalsIgnoreCase(descricao)) {
 				return m;
 			}
 		}
 		return null;
+	}
+
+	public Metadado getMetadado(String descricao) {
+		return getMetadado(descricao, false);
 	}
 
 	public boolean contem(String descricao) {

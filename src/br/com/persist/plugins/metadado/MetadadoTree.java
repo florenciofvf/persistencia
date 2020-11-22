@@ -271,9 +271,9 @@ public class MetadadoTree extends Tree {
 		return getRaiz().localizarCampo(nome);
 	}
 
-	public void selecionar(String nome) {
+	public void selecionar(String nome, boolean porParte) {
 		Metadado raiz = getRaiz();
-		Metadado metadado = raiz.getMetadado(nome);
+		Metadado metadado = raiz.getMetadado(nome, porParte);
 		if (metadado != null) {
 			MetadadoTreeUtil.selecionarObjeto(this, metadado);
 		} else {
