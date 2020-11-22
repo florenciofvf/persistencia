@@ -24,6 +24,7 @@ import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
+import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
@@ -111,6 +112,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private final JProgressBar progresso = new JProgressBar();
 		private final TextField txtMetadado = new TextField(35);
 		private final CheckBox chkPorParte = new CheckBox();
 		private ButtonInfo buttonInfo = new ButtonInfo();
@@ -122,9 +124,11 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			add(true, comboConexao);
 			add(txtMetadado);
 			add(chkPorParte);
+			add(progresso);
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtMetadado.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtMetadado.addActionListener(this);
+			progresso.setStringPainted(true);
 		}
 
 		@Override
@@ -300,6 +304,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				List<Metadado> tabelas = converterLista(Persistencia.listarNomeTabelas(conn, conexao));
+				progresso.setMaximum(tabelas.size());
+				progresso.setValue(0);
 				Metadado raiz = new Metadado(Mensagens.getString(Constantes.LABEL_TABELAS), true);
 				raiz.setEhRaiz(true);
 				atualizar(raiz, tabelas, conexao, conn);
