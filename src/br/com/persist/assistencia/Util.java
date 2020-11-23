@@ -180,27 +180,43 @@ public class Util {
 	}
 
 	public static void mensagem(Component componente, String string) {
+		mensagem(componente, string, null);
+	}
+
+	public static void mensagem(Component componente, String string, File file) {
 		Component view = getViewParent(componente);
-		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
-		Dimension dimension = new Dimension(500, 300);
-		MensagemDialogo mensagem = null;
 		if (view instanceof Frame) {
-			Frame frame = (Frame) view;
-			mensagem = MensagemDialogo.criar(frame, titulo, string);
-			mensagem.setSize(dimension);
-			mensagem.setLocationRelativeTo(frame);
-			mensagem.setVisible(true);
+			mensagemFrame(string, file, view);
 		} else if (view instanceof Dialog) {
-			Dialog dialog = (Dialog) view;
-			mensagem = MensagemDialogo.criar(dialog, titulo, string);
-			mensagem.setSize(dimension);
-			mensagem.setLocationRelativeTo(dialog);
-			mensagem.setVisible(true);
+			mensagemDialogo(string, file, view);
 		} else {
-			TextArea textArea = new TextArea(string);
-			textArea.setPreferredSize(dimension);
-			JOptionPane.showMessageDialog(componente, textArea, titulo, JOptionPane.PLAIN_MESSAGE);
+			messageDialog(componente, string);
 		}
+	}
+
+	private static void messageDialog(Component componente, String string) {
+		TextArea textArea = new TextArea(string);
+		textArea.setPreferredSize(new Dimension(500, 300));
+		JOptionPane.showMessageDialog(componente, textArea, Mensagens.getString(Constantes.LABEL_ATENCAO),
+				JOptionPane.PLAIN_MESSAGE);
+	}
+
+	private static void mensagemDialogo(String string, File file, Component view) {
+		Dialog dialog = (Dialog) view;
+		MensagemDialogo mensagem = MensagemDialogo.criar(dialog, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
+				file);
+		mensagem.setSize(new Dimension(500, 300));
+		mensagem.setLocationRelativeTo(dialog);
+		mensagem.setVisible(true);
+	}
+
+	private static void mensagemFrame(String string, File file, Component view) {
+		Frame frame = (Frame) view;
+		MensagemDialogo mensagem = MensagemDialogo.criar(frame, Mensagens.getString(Constantes.LABEL_ATENCAO), string,
+				file);
+		mensagem.setSize(new Dimension(500, 300));
+		mensagem.setLocationRelativeTo(frame);
+		mensagem.setVisible(true);
 	}
 
 	private static Component getViewParent(Component componente) {
@@ -215,9 +231,13 @@ public class Util {
 	}
 
 	public static void mensagemFormulario(Component componente, String string) {
+		mensagemFormulario(componente, string);
+	}
+
+	public static void mensagemFormulario(Component componente, String string, File file) {
 		Component view = getViewParent(componente);
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
-		MensagemFormulario mensagem = MensagemFormulario.criar(titulo, string);
+		MensagemFormulario mensagem = MensagemFormulario.criar(titulo, string, file);
 		mensagem.setSize(new Dimension(500, 300));
 		mensagem.setLocationRelativeTo(view);
 		mensagem.setVisible(true);
@@ -553,7 +573,7 @@ public class Util {
 					linha = br.readLine();
 				}
 			}
-			mensagem(componente, sb.toString());
+			mensagem(componente, sb.toString(), file);
 		}
 	}
 }

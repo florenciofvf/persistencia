@@ -3,6 +3,7 @@ package br.com.persist.mensagem;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.io.File;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 
@@ -10,15 +11,15 @@ public class MensagemDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final MensagemContainer container;
 
-	private MensagemDialogo(Dialog dialog, String titulo, String msg) {
+	private MensagemDialogo(Dialog dialog, String titulo, String msg, File file) {
 		super(dialog, titulo);
-		container = new MensagemContainer(this, msg);
+		container = new MensagemContainer(this, msg, file);
 		montarLayout();
 	}
 
-	private MensagemDialogo(Frame frame, String titulo, String msg) {
+	private MensagemDialogo(Frame frame, String titulo, String msg, File file) {
 		super(frame, titulo);
-		container = new MensagemContainer(this, msg);
+		container = new MensagemContainer(this, msg, file);
 		montarLayout();
 	}
 
@@ -26,11 +27,11 @@ public class MensagemDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static MensagemDialogo criar(Dialog dialog, String titulo, String msg) {
-		return new MensagemDialogo(dialog, titulo, msg);
+	public static MensagemDialogo criar(Dialog dialog, String titulo, String msg, File file) {
+		return new MensagemDialogo(dialog, titulo, msg, file);
 	}
 
-	public static MensagemDialogo criar(Frame frame, String titulo, String msg) {
-		return new MensagemDialogo(frame, titulo, msg);
+	public static MensagemDialogo criar(Frame frame, String titulo, String msg, File file) {
+		return new MensagemDialogo(frame, titulo, msg, file);
 	}
 }
