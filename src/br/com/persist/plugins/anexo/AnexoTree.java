@@ -203,6 +203,7 @@ public class AnexoTree extends Tree {
 			private Action imprimirAcao = Action.actionMenu("label.imprimir", Icones.PRINT);
 			private Action editarAcao = Action.actionMenu("label.editar", Icones.EDIT);
 			private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
+			private Action conteudoAcao = Action.actionMenu("label.conteudo", null);
 
 			private MenuAbrir() {
 				super("label.opcoes", Icones.CONFIG);
@@ -211,7 +212,9 @@ public class AnexoTree extends Tree {
 				addMenuItem(imprimirAcao);
 				addSeparator();
 				addMenuItem(diretorioAcao);
+				addMenuItem(conteudoAcao);
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioAnexo(AnexoTree.this)));
+				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoAnexo(AnexoTree.this)));
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirAnexo(AnexoTree.this)));
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarAnexo(AnexoTree.this)));
 				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this)));

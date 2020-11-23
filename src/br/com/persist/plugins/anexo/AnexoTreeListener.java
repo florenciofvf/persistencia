@@ -7,6 +7,8 @@ public interface AnexoTreeListener {
 
 	public void diretorioAnexo(AnexoTree anexoTree);
 
+	public void conteudoAnexo(AnexoTree anexoTree);
+
 	public void renomearAnexo(AnexoTree anexoTree);
 
 	public void imprimirAnexo(AnexoTree anexoTree);

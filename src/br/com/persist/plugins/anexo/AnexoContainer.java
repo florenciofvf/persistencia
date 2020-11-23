@@ -214,6 +214,22 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	@Override
+	public void conteudoAnexo(AnexoTree anexoTree) {
+		Anexo anexo = anexoTree.getObjetoSelecionado();
+		if (anexo != null) {
+			conteudo(anexo);
+		}
+	}
+
+	private void conteudo(Anexo anexo) {
+		try {
+			Util.conteudo(AnexoContainer.this, anexo.getFile());
+		} catch (IOException e) {
+			Util.mensagem(AnexoContainer.this, e.getMessage());
+		}
+	}
+
+	@Override
 	public void diretorioAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {

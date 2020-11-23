@@ -197,6 +197,22 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	}
 
 	@Override
+	public void conteudoArquivo(ArquivoTree arquivoTree) {
+		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+		if (arquivo != null) {
+			conteudo(arquivo);
+		}
+	}
+
+	private void conteudo(Arquivo arquivo) {
+		try {
+			Util.conteudo(ArquivoContainer.this, arquivo.getFile());
+		} catch (IOException e) {
+			Util.mensagem(ArquivoContainer.this, e.getMessage());
+		}
+	}
+
+	@Override
 	public void diretorioArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		if (arquivo != null) {

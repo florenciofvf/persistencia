@@ -12,10 +12,13 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
@@ -538,5 +541,19 @@ public class Util {
 	public static boolean isMac() {
 		String s = System.getProperty("os.name");
 		return s != null && s.startsWith("Mac OS");
+	}
+
+	public static void conteudo(Component componente, File file) throws IOException {
+		if (file != null && file.exists()) {
+			StringBuilder sb = new StringBuilder();
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					sb.append(linha + Constantes.QL);
+					linha = br.readLine();
+				}
+			}
+			mensagem(componente, sb.toString());
+		}
 	}
 }

@@ -11,6 +11,8 @@ public interface ArquivoTreeListener {
 
 	public void atualizarArquivo(ArquivoTree arquivoTree);
 
+	public void conteudoArquivo(ArquivoTree arquivoTree);
+
 	public void excluirArquivo(ArquivoTree arquivoTree);
 
 	public void fecharArquivo(ArquivoTree arquivoTree);
