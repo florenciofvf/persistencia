@@ -471,16 +471,15 @@ public class Objeto implements Runnable {
 		}
 		String[] tabsArray = tabs.split(",");
 		String[] joisArray = jois.split(",");
-		if (tabsArray.length != joisArray.length) {
-			return;
-		}
-		for (int i = 0; i < tabsArray.length; i++) {
-			String tab = tabsArray[i];
-			String on = joisArray[i];
-			sb.append(" INNER JOIN");
-			sb.append(" " + PersistenciaModelo.prefixarEsquema(conexao, prefixoNomeTabela, tab));
-			sb.append(" " + on);
-			sb.append(Constantes.QL);
+		if (tabsArray.length == joisArray.length) {
+			for (int i = 0; i < tabsArray.length; i++) {
+				String tab = tabsArray[i];
+				String on = joisArray[i];
+				sb.append(" INNER JOIN");
+				sb.append(" " + PersistenciaModelo.prefixarEsquema(conexao, prefixoNomeTabela, tab));
+				sb.append(" " + on);
+				sb.append(Constantes.QL);
+			}
 		}
 	}
 
