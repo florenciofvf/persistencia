@@ -231,7 +231,7 @@ public class Util {
 	}
 
 	public static void mensagemFormulario(Component componente, String string) {
-		mensagemFormulario(componente, string);
+		mensagemFormulario(componente, string, null);
 	}
 
 	public static void mensagemFormulario(Component componente, String string, File file) {

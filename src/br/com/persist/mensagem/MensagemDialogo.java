@@ -12,13 +12,13 @@ public class MensagemDialogo extends AbstratoDialogo {
 	private final MensagemContainer container;
 
 	private MensagemDialogo(Dialog dialog, String titulo, String msg, File file) {
-		super(dialog, titulo);
+		super(dialog, file != null ? file.getAbsolutePath() : titulo);
 		container = new MensagemContainer(this, msg, file);
 		montarLayout();
 	}
 
 	private MensagemDialogo(Frame frame, String titulo, String msg, File file) {
-		super(frame, titulo);
+		super(frame, file != null ? file.getAbsolutePath() : titulo);
 		container = new MensagemContainer(this, msg, file);
 		montarLayout();
 	}

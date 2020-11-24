@@ -10,7 +10,7 @@ public class MensagemFormulario extends AbstratoFormulario {
 	private final MensagemContainer container;
 
 	private MensagemFormulario(String titulo, String msg, File file) {
-		super(titulo);
+		super(file != null ? file.getAbsolutePath() : titulo);
 		container = new MensagemContainer(this, msg, file);
 		montarLayout();
 	}
