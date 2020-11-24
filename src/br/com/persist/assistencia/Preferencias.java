@@ -18,6 +18,7 @@ public class Preferencias {
 	private static boolean execAposCopiarColunaConcatenado;
 	private static final String ARQ_PREF = "preferencias";
 	private static boolean execAposBaixarParaComplemento;
+	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
 	private static boolean exibiuMensagemConnection;
@@ -428,5 +429,13 @@ public class Preferencias {
 
 	public static String getArqPref() {
 		return ARQ_PREF;
+	}
+
+	public static boolean isHabilitadoInnerJoinsObjeto() {
+		return habilitadoInnerJoinsObjeto;
+	}
+
+	public static void setHabilitadoInnerJoinsObjeto(boolean habilitadoInnerJoinsObjeto) {
+		Preferencias.habilitadoInnerJoinsObjeto = habilitadoInnerJoinsObjeto;
 	}
 }

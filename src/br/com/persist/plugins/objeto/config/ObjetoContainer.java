@@ -271,9 +271,11 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.grupo", txtGrupo));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
-			container.add(criarLinha("label.tabelas", txtTabelas));
 			container.add(criarLinha("label.select_alter", txtSelectAlter));
-			container.add(criarLinha("label.joins", txtJoins, Mensagens.getString("hint.joins")));
+			if (Preferencias.isHabilitadoInnerJoinsObjeto()) {
+				container.add(criarLinha("label.tabelas", txtTabelas));
+				container.add(criarLinha("label.joins", txtJoins, Mensagens.getString("hint.joins")));
+			}
 			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
 			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
