@@ -576,4 +576,15 @@ public class Util {
 			mensagem(componente, sb.toString(), file);
 		}
 	}
+
+	public static boolean contemNoArray(String string, String[] strings) {
+		if (strings != null) {
+			for (String s : strings) {
+				if (s != null && s.equalsIgnoreCase(string)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

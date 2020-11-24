@@ -19,12 +19,14 @@ import javax.swing.UIManager;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 
 public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
+		Preferencias.setDesconectado(Util.contemNoArray("desconectado", args));
 		Preferencias.inicializar();
 		installLookAndFeel();
 		Preferencias.abrir();

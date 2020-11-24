@@ -177,6 +177,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
+		if (Preferencias.isDesconectado()) {
+			processado.set(false);
+			return;
+		}
 		Conexao conexao = getConexao();
 		if (conexao != null) {
 			if (continuar(complemento)) {

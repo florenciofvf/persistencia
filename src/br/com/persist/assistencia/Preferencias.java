@@ -16,11 +16,11 @@ public class Preferencias {
 	private static boolean aplicarLarguraAoAbrirArquivoObjeto;
 	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
 	private static boolean execAposCopiarColunaConcatenado;
+	private static final String ARQ_PREF = "preferencias";
 	private static boolean execAposBaixarParaComplemento;
 	private static boolean areaTransTabelaRegistros;
 	private static boolean copiarNomeColunaListener;
 	private static boolean exibiuMensagemConnection;
-	private static String arqPref = "preferencias";
 	private static boolean fecharComESCFormulario;
 	private static int tipoContainerPesquisaAuto;
 	private static boolean fecharComESCInternal;
@@ -39,6 +39,7 @@ public class Preferencias {
 	private static Color corFonteCopiado;
 	private static boolean nomearArrasto;
 	private static boolean tituloAbaMin;
+	private static boolean desconectado;
 	private static Color corTotalAtual;
 	private static Color corComparaRec;
 	private static String formDialogo;
@@ -134,11 +135,11 @@ public class Preferencias {
 
 	public static void exportar() throws IOException, BackingStoreException {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		pref.exportSubtree(new FileOutputStream(arqPref));
+		pref.exportSubtree(new FileOutputStream(ARQ_PREF));
 	}
 
 	public static void importar() throws IOException, InvalidPreferencesFormatException {
-		Preferences.importPreferences(new FileInputStream(arqPref));
+		Preferences.importPreferences(new FileInputStream(ARQ_PREF));
 	}
 
 	public static boolean getBoolean(String chave) {
@@ -415,5 +416,17 @@ public class Preferencias {
 
 	public static void setCorCopiado(Color corCopiado) {
 		Preferencias.corCopiado = corCopiado;
+	}
+
+	public static boolean isDesconectado() {
+		return desconectado;
+	}
+
+	public static void setDesconectado(boolean desconectado) {
+		Preferencias.desconectado = desconectado;
+	}
+
+	public static String getArqPref() {
+		return ARQ_PREF;
 	}
 }
