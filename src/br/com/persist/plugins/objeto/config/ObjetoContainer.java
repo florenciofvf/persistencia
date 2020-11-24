@@ -210,6 +210,7 @@ public class ObjetoContainer extends Panel {
 		private CheckBox chkColunaInfo = new CheckBox();
 		private CheckBox chkAbrirAuto = new CheckBox();
 		private TextField txtTabelas = new TextField();
+		private TextField txtApelido = new TextField();
 		private CheckBox chkLinkAuto = new CheckBox();
 		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
@@ -223,6 +224,7 @@ public class ObjetoContainer extends Panel {
 			txtSelectAlter.setText(objeto.getSelectAlternativo());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
 			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
+			txtApelido.setText(objeto.getApelidoParaJoins());
 			chkColunaInfo.setSelected(objeto.isColunaInfo());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
@@ -245,6 +247,7 @@ public class ObjetoContainer extends Panel {
 			txtSequencias.addFocusListener(focusListenerInner);
 			txtPrefixoNT.addFocusListener(focusListenerInner);
 			txtTabelas.addFocusListener(focusListenerInner);
+			txtApelido.addFocusListener(focusListenerInner);
 			txtTabela.addFocusListener(focusListenerInner);
 			txtChaves.addFocusListener(focusListenerInner);
 			txtJoins.addFocusListener(focusListenerInner);
@@ -261,6 +264,7 @@ public class ObjetoContainer extends Panel {
 			txtPrefixoNT.addActionListener(this);
 			chkLinkAuto.addActionListener(this);
 			txtTabelas.addActionListener(this);
+			txtApelido.addActionListener(this);
 			txtChaves.addActionListener(this);
 			txtTabela.addActionListener(this);
 			txtGrupo.addActionListener(this);
@@ -269,6 +273,7 @@ public class ObjetoContainer extends Panel {
 			chkBPNT.addActionListener(this);
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.grupo", txtGrupo));
+			container.add(criarLinha("label.apelido_para_joins", txtApelido));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.select_alter", txtSelectAlter));
@@ -341,6 +346,8 @@ public class ObjetoContainer extends Panel {
 				objeto.setComplemento(txtComplemento.getText());
 			} else if (txtGrupo == e.getSource()) {
 				objeto.setGrupo(txtGrupo.getText());
+			} else if (txtApelido == e.getSource()) {
+				objeto.setApelidoParaJoins(txtApelido.getText());
 			} else if (txtTabela == e.getSource()) {
 				objeto.setTabela(txtTabela.getText());
 			} else if (txtPrefixoNT == e.getSource()) {

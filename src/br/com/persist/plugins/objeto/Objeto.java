@@ -55,6 +55,7 @@ public class Objeto implements Runnable {
 	private int deslocamentoYId = -5;
 	private String selectAlternativo;
 	private String prefixoNomeTabela;
+	private String apelidoParaJoins;
 	private boolean linkAuto = true;
 	private boolean transparenteBkp;
 	private ObjetoListener listener;
@@ -121,6 +122,7 @@ public class Objeto implements Runnable {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.selectAlternativo = selectAlternativo;
 		o.clonarAoDestacar = clonarAoDestacar;
+		o.apelidoParaJoins = apelidoParaJoins;
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.ajusteAutoForm = ajusteAutoForm;
@@ -163,6 +165,7 @@ public class Objeto implements Runnable {
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		selectAlternativo = attr.getValue("selectAlternativo");
+		apelidoParaJoins = attr.getValue("apelidoParaJoins");
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
 		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
 		finalConsulta = attr.getValue("finalConsulta");
@@ -194,6 +197,7 @@ public class Objeto implements Runnable {
 		util.atributo("chaveamento", Util.escapar(getChaveamento()));
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("selectAlternativo", getSelectAlternativo());
+		util.atributo("apelidoParaJoins", getApelidoParaJoins());
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", clonarAoDestacar);
 		util.atributo("desloc_x_id", deslocamentoXId);
@@ -394,6 +398,17 @@ public class Objeto implements Runnable {
 	public void limparIcone() {
 		this.icone = null;
 		this.icon = null;
+	}
+
+	public String getApelidoParaJoins() {
+		if (Util.estaVazio(apelidoParaJoins)) {
+			apelidoParaJoins = Constantes.VAZIO;
+		}
+		return apelidoParaJoins;
+	}
+
+	public void setApelidoParaJoins(String apelidoParaJoins) {
+		this.apelidoParaJoins = apelidoParaJoins;
 	}
 
 	public String getFinalConsulta() {
