@@ -17,6 +17,6 @@ public class Mensagens {
 	}
 
 	public static String getTituloAplicacao() {
-		return getString("label.persistencia");
+		return getString("label.persistencia") + (Preferencias.isDesconectado() ? " - (DESCONECTADO)" : "");
 	}
 }
