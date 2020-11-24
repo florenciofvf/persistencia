@@ -1731,6 +1731,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		processarDetalhes(metadado, variaveis);
 		variaveis.checkFinalPesquisa();
 		variaveis.localizarObjetos();
+		if (!variaveis.circular) {
+			destacar(null, Constantes.TIPO_CONTAINER_PROPRIO, null);
+		}
 		Util.mensagemFormulario(formulario, variaveis.sb.toString());
 	}
 
@@ -1923,6 +1926,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			localizarHierarquico();
 			configuracaoPrincipalFinal();
 			atualizarSuperficie();
+			principal.setSelecionado(true);
+			for (Objeto objeto : objetos) {
+				objeto.setSelecionado(true);
+			}
 		}
 
 		private void configuracaoPrincipal() {
@@ -1984,7 +1991,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	public void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
+	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
 		List<Objeto> lista = getSelecionados();
 		boolean continua = false;
 		for (Objeto objeto : lista) {

@@ -36,4 +36,14 @@
 			AND 1 &gt; 2
 		</valor>
 	</variavel>
+	<variavel nome="DESTACAR_PROPRIO_LARGURA_INTERNAL">
+		<valor>
+			400
+		</valor>
+	</variavel>
+	<variavel nome="DESTACAR_PROPRIO_ALTURA_INTERNAL">
+		<valor>
+			75
+		</valor>
+	</variavel>
 </variaveis>
