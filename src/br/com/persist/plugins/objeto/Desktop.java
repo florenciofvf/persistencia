@@ -318,7 +318,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		internal.setVisible(true);
 		add(internal);
 		if (internal.configComConteudo(config)) {
-			internal.aplicarConfig(config);
+			SwingUtilities.invokeLater(() -> internal.aplicarConfig(config));
 		}
 	}
 
