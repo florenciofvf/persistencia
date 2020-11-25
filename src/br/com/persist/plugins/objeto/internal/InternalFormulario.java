@@ -12,11 +12,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.SwingUtilities;
+
 import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
@@ -311,18 +312,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void aplicarConfig(InternalConfig config) {
+	public void aplicar(InternalConfig config) {
 		if (config != null && ehTabela(config)) {
-			container.aplicarConfig(config);
+			SwingUtilities.invokeLater(() -> container.aplicarConfig(config));
 		}
-	}
-
-	public boolean configSemConteudo(InternalConfig config) {
-		return config != null && ehTabela(config) && Util.estaVazio(config.getComplemento());
-	}
-
-	public boolean configComConteudo(InternalConfig config) {
-		return config != null && ehTabela(config) && !Util.estaVazio(config.getComplemento());
 	}
 
 	public boolean isProcessadoPesquisa() {

@@ -147,7 +147,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		this.objeto = objeto;
 		montarLayout();
 		configurar();
-		processar(g);
+		SwingUtilities.invokeLater(() -> processar(g));
 	}
 
 	private void processar(Graphics g) {

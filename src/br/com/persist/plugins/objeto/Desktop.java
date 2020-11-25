@@ -310,16 +310,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	private void criarAdicionarInternaFormulario(Point point, Graphics g, boolean buscaAuto, InternalConfig config,
 			Dimension dimension, Conexao conexao, Objeto objeto) {
 		InternalFormulario internal = new InternalFormulario(conexao, objeto, g, buscaAuto);
-		if (internal.configSemConteudo(config)) {
-			SwingUtilities.invokeLater(() -> internal.aplicarConfig(config));
-		}
 		internal.setLocation(point);
 		internal.setSize(dimension);
 		internal.setVisible(true);
 		add(internal);
-		if (internal.configComConteudo(config)) {
-			SwingUtilities.invokeLater(() -> internal.aplicarConfig(config));
-		}
+		internal.aplicar(config);
 	}
 
 	private class DesktopPopup extends Popup {
