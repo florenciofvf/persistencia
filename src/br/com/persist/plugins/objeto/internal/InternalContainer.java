@@ -1535,10 +1535,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				comboConexao.setSelectedItem(conexaoSel);
 			}
 		}
+		aplicarInternalConfig(config);
+	}
+
+	private void aplicarInternalConfig(InternalConfig config) {
+		String complemento = txtComplemento.getText();
 		txtComplemento.setText(config.getComplemento());
+		processado.set(true);
 		destacarTitulo = true;
 		actionListenerInner.actionPerformed(null);
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
+		if (!processado.get()) {
+			txtComplemento.setText(complemento);
+		}
 	}
 
 	private Conexao getConexaoSel(String nome) {
