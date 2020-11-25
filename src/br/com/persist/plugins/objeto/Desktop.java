@@ -311,7 +311,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 			Dimension dimension, Conexao conexao, Objeto objeto) {
 		InternalFormulario internal = new InternalFormulario(conexao, objeto, g, buscaAuto);
 		if (internal.configSemConteudo(config)) {
-			internal.aplicarConfig(config);
+			SwingUtilities.invokeLater(() -> internal.aplicarConfig(config));
 		}
 		internal.setLocation(point);
 		internal.setSize(dimension);
