@@ -127,7 +127,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinha("label.copiar_destacado", chkCopiarDestac));
-			add(BorderLayout.CENTER, container);
+			add(BorderLayout.CENTER, new ScrollPane(container));
 		}
 
 		private void mensagemPropriedadeArquivo(Label label) {

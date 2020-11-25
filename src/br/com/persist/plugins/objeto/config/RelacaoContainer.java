@@ -37,6 +37,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
@@ -318,7 +319,7 @@ public class RelacaoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private Fichario() {
-			addTab("label.geral", new PanelGeral());
+			addTab("label.geral", new ScrollPane(new PanelGeral()));
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
