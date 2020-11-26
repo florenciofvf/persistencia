@@ -171,6 +171,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
 		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
 		Label email = criarLabelTitulo("contato");
+		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
 
 		Panel container = new Panel(new GridLayout(0, 1));
 		container.add(email);
