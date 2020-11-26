@@ -1,5 +1,6 @@
 package br.com.persist.plugins.persistencia;
 
+import java.awt.Component;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class PersistenciaModelo implements TableModel {
 	private final List<List<Object>> registros;
 	private final List<Coluna> colunas;
 	private String prefixoNomeTabela;
+	private Component componente;
 	private final String tabela;
 	private Conexao conexao;
 
@@ -184,7 +186,7 @@ public class PersistenciaModelo implements TableModel {
 					Util.setContentTransfered(update);
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("UPDATE", ex, null);
+				Util.stackTraceAndMessage("UPDATE", ex, componente);
 			}
 		} else {
 			registro.set(columnIndex, aValue);
@@ -268,7 +270,7 @@ public class PersistenciaModelo implements TableModel {
 				}
 				return i;
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage("DELETE", ex, null);
+				Util.stackTraceAndMessage("DELETE", ex, componente);
 				return -1;
 			}
 		}
@@ -449,5 +451,13 @@ public class PersistenciaModelo implements TableModel {
 
 	public void setPrefixoNomeTabela(String prefixoNomeTabela) {
 		this.prefixoNomeTabela = prefixoNomeTabela;
+	}
+
+	public Component getComponente() {
+		return componente;
+	}
+
+	public void setComponente(Component componente) {
+		this.componente = componente;
 	}
 }

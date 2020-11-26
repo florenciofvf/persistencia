@@ -212,11 +212,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private OrdenacaoModelo consultarEModeloOrdenacao(Conexao conexao, Parametros param) throws PersistenciaException {
-		OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(Persistencia.criarPersistenciaModelo(param));
-		modeloOrdenacao.getModelo().setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
-		modeloOrdenacao.getModelo().setConexao(conexao);
+		PersistenciaModelo persistenciaModelo = Persistencia.criarPersistenciaModelo(param);
+		OrdenacaoModelo modeloOrdenacao = new OrdenacaoModelo(persistenciaModelo);
+		persistenciaModelo.setPrefixoNomeTabela(objeto.getPrefixoNomeTabela());
 		objeto.setComplemento(txtComplemento.getText());
 		tabelaPersistencia.setModel(modeloOrdenacao);
+		persistenciaModelo.setConexao(conexao);
+		persistenciaModelo.setComponente(this);
 		return modeloOrdenacao;
 	}
 
