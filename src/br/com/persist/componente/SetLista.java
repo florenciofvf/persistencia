@@ -18,6 +18,7 @@ import javax.swing.ListModel;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
 
 public class SetLista {
@@ -34,11 +35,22 @@ public class SetLista {
 		private List<String> lista;
 
 		public List<String> getLista() {
+			if (lista == null) {
+				lista = new ArrayList<>();
+			}
 			return lista;
 		}
 
 		public void setLista(List<String> lista) {
 			this.lista = lista;
+		}
+
+		public boolean estaVazio() {
+			return getLista().isEmpty();
+		}
+
+		public boolean contem(String string) {
+			return !Util.estaVazio(string) && getLista().contains(string);
 		}
 	}
 }
@@ -106,6 +118,14 @@ class SetListaDialogo extends AbstratoDialogo {
 		return criarModelo(listaItem);
 	}
 
+	private List<Item> criarListaItem(List<String> lista) {
+		List<Item> listaItem = new ArrayList<>();
+		for (String string : lista) {
+			listaItem.add(new Item(string));
+		}
+		return listaItem;
+	}
+
 	private ListModel<Item> criarModelo(List<Item> listaItem) {
 		return new AbstractListModel<Item>() {
 			private static final long serialVersionUID = 1L;
@@ -118,14 +138,6 @@ class SetListaDialogo extends AbstratoDialogo {
 				return listaItem.get(i);
 			}
 		};
-	}
-
-	private List<Item> criarListaItem(List<String> lista) {
-		List<Item> listaItem = new ArrayList<>();
-		for (String string : lista) {
-			listaItem.add(new Item(string));
-		}
-		return listaItem;
 	}
 
 	private void eventos() {

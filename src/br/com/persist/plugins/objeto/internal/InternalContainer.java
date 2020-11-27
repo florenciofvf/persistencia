@@ -227,10 +227,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		objeto.select(builder, conexao);
 		objeto.joins(builder, conexao, objeto.getPrefixoNomeTabela());
 		objeto.where(builder);
-		builder.append(" " + txtComplemento.getText());
-		builder.append(" " + complemento);
-		builder.append(" " + objeto.getFinalConsulta());
+		concatenar(builder, txtComplemento.getText());
+		concatenar(builder, complemento);
+		concatenar(builder, objeto.getFinalConsulta());
 		return builder;
+	}
+
+	private void concatenar(StringBuilder builder, String string) {
+		if (!Util.estaVazio(string)) {
+			builder.append(" " + string);
+		}
 	}
 
 	private boolean continuar(String complemento) {
@@ -1166,14 +1172,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						concatenar(builder, objeto.getFinalConsulta());
 					}
 
-					private void concatenar(StringBuilder builder, String string) {
-						if (!Util.estaVazio(string)) {
-							builder.append(" " + string);
-						}
-					}
-
 					private String getNomeColunas(Coletor coletor) {
-						if (coletor.getLista() == null || coletor.getLista().isEmpty()) {
+						if (coletor.estaVazio()) {
 							return tabelaPersistencia.getNomeColunas();
 						}
 						return getNomeColunas(coletor.getLista());
