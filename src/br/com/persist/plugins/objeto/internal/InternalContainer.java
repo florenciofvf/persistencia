@@ -700,8 +700,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					if (linhas != null && linhas.length == 1) {
 						StringBuilder sb = new StringBuilder(objeto.getTabela2());
 						sb.append(Constantes.QL);
-						modelo.getDados(linhas[0], sb);
-						Util.mensagem(InternalContainer.this, sb.toString());
+						Coletor coletor = new Coletor();
+						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+								InternalContainer.this);
+						if (!coletor.estaVazio()) {
+							modelo.getDados(linhas[0], sb, coletor);
+							Util.mensagem(InternalContainer.this, sb.toString());
+						}
 					}
 				});
 			}
@@ -738,9 +743,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						if (chaves.isEmpty()) {
 							return;
 						}
-						String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela());
-						if (!Util.estaVazio(instrucao)) {
-							updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+						Coletor coletor = new Coletor();
+						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
+								InternalContainer.this);
+						if (!coletor.estaVazio()) {
+							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor);
+							if (!Util.estaVazio(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+							}
 						}
 					}
 				}
@@ -790,9 +800,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 						int[] linhas = tabelaPersistencia.getSelectedRows();
 						if (linhas != null && linhas.length == 1) {
-							String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela());
-							if (!Util.estaVazio(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+							Coletor coletor = new Coletor();
+							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+									InternalContainer.this);
+							if (!coletor.estaVazio()) {
+								String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor);
+								if (!Util.estaVazio(instrucao)) {
+									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+								}
 							}
 						}
 					}
@@ -1073,9 +1088,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-							String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela());
-							if (!Util.estaVazio(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+							Coletor coletor = new Coletor();
+							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+									InternalContainer.this);
+							if (!coletor.estaVazio()) {
+								String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela(), coletor);
+								if (!Util.estaVazio(instrucao)) {
+									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
+								}
 							}
 						}
 					}
@@ -1094,9 +1114,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-							String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela());
-							if (!Util.estaVazio(instrucao)) {
-								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+							Coletor coletor = new Coletor();
+							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
+									InternalContainer.this);
+							if (!coletor.estaVazio()) {
+								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor);
+								if (!Util.estaVazio(instrucao)) {
+									updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
+								}
 							}
 						}
 					}
@@ -1155,7 +1180,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					private StringBuilder getConsultaColuna(Conexao conexao, String complemento) {
 						String selectAlter = objeto.getSelectAlternativo();
 						Coletor coletor = new Coletor();
-						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(), coletor,
+						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 								InternalContainer.this);
 						objeto.setSelectAlternativo("SELECT " + getNomeColunas(coletor));
 						StringBuilder builder = new StringBuilder();

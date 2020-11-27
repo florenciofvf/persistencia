@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.SetLista.Coletor;
 
 public class OrdenacaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
@@ -69,8 +70,8 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return sb.toString();
 	}
 
-	public List<String> getListaNomeColunas() {
-		return model.getListaNomeColunas();
+	public List<String> getListaNomeColunas(boolean comChaves) {
+		return model.getListaNomeColunas(comChaves);
 	}
 
 	@Override
@@ -90,16 +91,16 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getRegistro(linhas[rowIndex].indice);
 	}
 
-	public void getDados(int rowIndex, StringBuilder sb) {
-		model.getDados(linhas[rowIndex].indice, sb);
+	public void getDados(int rowIndex, StringBuilder sb, Coletor coletor) {
+		model.getDados(linhas[rowIndex].indice, sb, coletor);
 	}
 
-	public String getUpdate(int rowIndex, String prefixoNomeTabela) {
-		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela);
+	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor) {
+		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela, coletor);
 	}
 
-	public String getUpdate(String prefixoNomeTabela) {
-		return model.getUpdate(prefixoNomeTabela);
+	public String getUpdate(String prefixoNomeTabela, Coletor coletor) {
+		return model.getUpdate(prefixoNomeTabela, coletor);
 	}
 
 	public String getDelete(int rowIndex, String prefixoNomeTabela) {
@@ -110,12 +111,12 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getDelete(prefixoNomeTabela);
 	}
 
-	public String getInsert(int rowIndex, String prefixoNomeTabela) {
-		return model.getInsert(linhas[rowIndex].indice, prefixoNomeTabela);
+	public String getInsert(int rowIndex, String prefixoNomeTabela, Coletor coletor) {
+		return model.getInsert(linhas[rowIndex].indice, prefixoNomeTabela, coletor);
 	}
 
-	public String getInsert(String prefixoNomeTabela) {
-		return model.getInsert(prefixoNomeTabela);
+	public String getInsert(String prefixoNomeTabela, Coletor coletor) {
+		return model.getInsert(prefixoNomeTabela, coletor);
 	}
 
 	public List<IndiceValor> getValoresChaves(int rowIndex) {

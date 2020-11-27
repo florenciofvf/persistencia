@@ -34,6 +34,14 @@ public class SetLista {
 	public static class Coletor {
 		private List<String> lista;
 
+		public Coletor(String... strings) {
+			for (String string : strings) {
+				if (!Util.estaVazio(string)) {
+					getLista().add(string);
+				}
+			}
+		}
+
 		public List<String> getLista() {
 			if (lista == null) {
 				lista = new ArrayList<>();
