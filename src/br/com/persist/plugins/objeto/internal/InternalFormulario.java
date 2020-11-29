@@ -244,7 +244,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	public List<Relacao> listarRelacoes(Objeto objeto) {
 		checarDesktop();
 		if (desktop instanceof ObjetoSuperficie) {
-			((ObjetoSuperficie) desktop).getRelacoes(objeto);
+			return ((ObjetoSuperficie) desktop).getRelacoes(objeto);
 		}
 		return new ArrayList<>();
 	}
