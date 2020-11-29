@@ -1812,13 +1812,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarChaves(Variaveis variaveis, Objeto objeto, String[] tabelaCampo, Metadado tabela,
 			Relacao relacao) {
 		objeto.setChaves(tabela.getChaves());
-		relacao.setChaveOrigem(variaveis.principal.getChaves());
 		relacao.setChaveDestino(tabelaCampo[1]);
 		if (variaveis.exportacao) {
 			variaveis.ref(tabelaCampo[0], tabelaCampo[1], true);
+			relacao.setChaveOrigem(variaveis.principal.getChaves());
 		} else {
 			String campoDetalhe = variaveis.tabela.getFKPara(variaveis.tabelaIds);
 			variaveis.pesquisaDetalhe(tabelaCampo[0], tabelaCampo[1], variaveis.principal.getTabela2(), campoDetalhe);
+			relacao.setChaveOrigem(campoDetalhe);
 		}
 	}
 
