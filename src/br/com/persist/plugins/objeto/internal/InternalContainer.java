@@ -1173,12 +1173,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private class MenuInnerJoin extends Menu {
 					private static final long serialVersionUID = 1L;
-					private Action totalAcao = Action.actionMenu("label.disponivel", null);
+					private Action disponivelAcao = Action.actionMenu("label.disponivel", null);
 
 					private MenuInnerJoin() {
 						super("label.inner_join", Icones.TABELA);
-						addMenuItem(totalAcao);
-						totalAcao.setActionListener(e -> exibir());
+						addMenuItem(disponivelAcao);
+						disponivelAcao.setActionListener(e -> exibir());
 					}
 
 					private void exibir() {
