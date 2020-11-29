@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,8 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
@@ -37,6 +40,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		super(objeto.getId());
 		container = new InternalContainer(this, padrao, objeto, g, buscaAuto);
 		container.setConfiguraAlturaListener(InternalFormulario.this::configurarAltura);
+		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
 		container.setVisibilidadeListener(InternalFormulario.this::setVisible);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
@@ -235,6 +239,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (desktop != null) {
 			desktop.getLarguras().mesma(this);
 		}
+	}
+
+	public List<Relacao> listarRelacoes(Objeto objeto) {
+		checarDesktop();
+		if (desktop instanceof ObjetoSuperficie) {
+			((ObjetoSuperficie) desktop).getRelacoes(objeto);
+		}
+		return new ArrayList<>();
 	}
 
 	public void selecionar(boolean b) {

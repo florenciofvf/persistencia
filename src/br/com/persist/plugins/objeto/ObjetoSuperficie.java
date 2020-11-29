@@ -896,6 +896,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return null;
 	}
 
+	public List<Relacao> getRelacoes(Objeto obj) {
+		List<Relacao> lista = new ArrayList<>();
+		if (obj != null) {
+			for (Relacao relacao : relacoes) {
+				if (relacao.contem(obj)) {
+					lista.add(relacao);
+				}
+			}
+		}
+		return lista;
+	}
+
 	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
 		if (obj1 != null && obj2 != null) {
 			Relacao temp = new Relacao(obj1, obj2);

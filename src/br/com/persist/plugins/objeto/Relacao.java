@@ -55,6 +55,14 @@ public class Relacao {
 		}
 	}
 
+	public String montarJoin() {
+		StringBuilder sb = new StringBuilder("ON");
+		sb.append(" " + origem.getApelidoParaJoinOuTabela() + "." + getChaveOrigem());
+		sb.append(" =");
+		sb.append(" " + destino.getApelidoParaJoinOuTabela() + "." + getChaveDestino());
+		return sb.toString();
+	}
+
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 	}

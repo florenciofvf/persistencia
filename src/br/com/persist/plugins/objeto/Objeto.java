@@ -517,6 +517,16 @@ public class Objeto implements Runnable {
 		return tabela;
 	}
 
+	public String getApelidoParaJoinOuTabela() {
+		if (!Util.estaVazio(apelidoParaJoins)) {
+			return apelidoParaJoins;
+		}
+		if (!Util.estaVazio(tabela)) {
+			return tabela;
+		}
+		return Constantes.VAZIO;
+	}
+
 	public String getGrupo() {
 		if (Util.estaVazio(grupo)) {
 			grupo = Constantes.VAZIO;

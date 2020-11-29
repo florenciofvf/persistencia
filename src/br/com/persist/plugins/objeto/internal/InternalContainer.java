@@ -84,6 +84,7 @@ import br.com.persist.plugins.fragmento.FragmentoListener;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoUtil;
+import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.persistencia.Coluna;
@@ -113,6 +114,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
 	private transient TabelaListener tabelaListener = new TabelaListener();
+	private transient InternalListener.RelacaoObjeto relacaoObjetoListener;
 	private transient InternalListener.Visibilidade visibilidadeListener;
 	private transient InternalListener.Alinhamento alinhamentoListener;
 	private transient InternalListener.Componente componenteListener;
@@ -1073,6 +1075,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					add(true, new MenuDelete());
 					add(true, new MenuSelect());
 					add(true, new MenuSelectColuna());
+					add(true, new MenuInnerJoin());
 				}
 
 				private class MenuInsert extends MenuPadrao3 {
@@ -1165,6 +1168,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 								selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 							}
 						}
+					}
+				}
+
+				private class MenuInnerJoin extends Menu {
+					private static final long serialVersionUID = 1L;
+					private Action totalAcao = Action.actionMenu("label.disponivel", null);
+
+					private MenuInnerJoin() {
+						super("label.inner_join", Icones.TABELA);
+						addMenuItem(totalAcao);
+						totalAcao.setActionListener(e -> exibir());
+					}
+
+					private void exibir() {
+						if (relacaoObjetoListener != null) {
+							exibir(relacaoObjetoListener.listar(objeto));
+						}
+					}
+
+					private void exibir(List<Relacao> relacoes) {
+						StringBuilder sb = new StringBuilder(
+								"INNER JOIN " + objeto.getTabela2() + " " + objeto.getApelidoParaJoinOuTabela());
+						for (Relacao relacao : relacoes) {
+							sb.append(Constantes.QL + relacao.montarJoin());
+						}
+						Util.mensagem(InternalContainer.this, sb.toString());
 					}
 				}
 
@@ -1852,6 +1881,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	public void setVinculoListener(InternalListener.Vinculo vinculoListener) {
 		this.vinculoListener = vinculoListener;
+	}
+
+	public InternalListener.RelacaoObjeto getRelacaoObjetoListener() {
+		return relacaoObjetoListener;
+	}
+
+	public void setRelacaoObjetoListener(InternalListener.RelacaoObjeto relacaoObjetoListener) {
+		this.relacaoObjetoListener = relacaoObjetoListener;
 	}
 
 	@Override
