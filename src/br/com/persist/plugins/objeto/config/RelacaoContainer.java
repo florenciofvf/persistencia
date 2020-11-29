@@ -249,16 +249,20 @@ public class RelacaoContainer extends Panel {
 		}
 	}
 
-	private class PanelLado extends Panel {
+	private class PanelLado extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final CheckBox chkPonto = new CheckBox("label.ponto");
+		private TextField txtChave = new TextField(30);
 		private final boolean origem;
 
 		private PanelLado(boolean origem) {
-			super(new GridLayout(5, 1));
+			super(new GridLayout(6, 1));
 			this.origem = origem;
 			chkPonto.setSelected(origem ? relacao.isPontoOrigem() : relacao.isPontoDestino());
+			txtChave.setText(origem ? relacao.getChaveOrigem() : relacao.getChaveDestino());
 			chkPonto.addActionListener(e -> processarPonto());
+			txtChave.addFocusListener(focusListenerInner);
+			txtChave.addActionListener(this);
 			Label label = new Label();
 			label.setText(origem ? relacao.getOrigem().getId() : relacao.getDestino().getId());
 			if (origem) {
@@ -270,6 +274,25 @@ public class RelacaoContainer extends Panel {
 			add(new PanelCenter(label));
 			add(new PanelCenter(new PanelObjeto(origem ? relacao.getOrigem() : relacao.getDestino())));
 			add(new PanelCenter(chkPonto));
+			add(new PanelCenter(new PanelChave(txtChave)));
+		}
+
+		private transient FocusListener focusListenerInner = new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				actionPerformed(new ActionEvent(e.getSource(), 0, null));
+			}
+		};
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (txtChave == e.getSource()) {
+				if (origem) {
+					relacao.setChaveOrigem(txtChave.getText());
+				} else {
+					relacao.setChaveDestino(txtChave.getText());
+				}
+			}
 		}
 
 		private void processarPonto() {
@@ -290,6 +313,15 @@ public class RelacaoContainer extends Panel {
 		private PanelTitulo(String chave) {
 			setLayout(new GridBagLayout());
 			add(new Label(chave));
+		}
+	}
+
+	private class PanelChave extends Panel {
+		private static final long serialVersionUID = 1L;
+
+		private PanelChave(TextField textField) {
+			add(BorderLayout.WEST, new Label("label.pk_fk"));
+			add(BorderLayout.CENTER, textField);
 		}
 	}
 

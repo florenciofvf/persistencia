@@ -24,8 +24,10 @@ public class Relacao {
 	private boolean pontoDestino;
 	static int m = diametro / 2;
 	private boolean pontoOrigem;
+	private String chaveDestino;
 	private final Objeto origem;
 	private boolean selecionado;
+	private String chaveOrigem;
 	private boolean quebrado;
 	private String descricao;
 
@@ -260,10 +262,14 @@ public class Relacao {
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		quebrado = Boolean.parseBoolean(attr.getValue("quebrado"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
+		chaveDestino = attr.getValue("chaveDestino");
+		chaveOrigem = attr.getValue("chaveOrigem");
 	}
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("relacao");
+		util.atributo("chaveDestino", Util.escapar(getChaveDestino()));
+		util.atributo("chaveOrigem", Util.escapar(getChaveOrigem()));
 		util.atributo("destino", Util.escapar(destino.getId()));
 		util.atributo("desenharDescricao", desenharDescricao);
 		util.atributo("origem", Util.escapar(origem.getId()));
@@ -380,5 +386,27 @@ public class Relacao {
 
 	public void deslocamentoYDescDelta(int delta) {
 		this.deslocamentoYDesc += delta;
+	}
+
+	public String getChaveDestino() {
+		if (Util.estaVazio(chaveDestino)) {
+			chaveDestino = Constantes.VAZIO;
+		}
+		return chaveDestino;
+	}
+
+	public void setChaveDestino(String chaveDestino) {
+		this.chaveDestino = chaveDestino;
+	}
+
+	public String getChaveOrigem() {
+		if (Util.estaVazio(chaveOrigem)) {
+			chaveOrigem = Constantes.VAZIO;
+		}
+		return chaveOrigem;
+	}
+
+	public void setChaveOrigem(String chaveOrigem) {
+		this.chaveOrigem = chaveOrigem;
 	}
 }
