@@ -1763,8 +1763,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		variaveis.tabela = tabela;
 	}
 
-	private void processarDetalhes(Metadado metadado, Variaveis variaveis) {
-		List<String> lista = metadado.getListaDescricaoExportacaoImportacao(variaveis.exportacao);
+	private void processarDetalhes(Metadado tabela, Variaveis variaveis) {
+		List<String> lista = tabela.getListaDescricaoExportacaoImportacao(variaveis.exportacao);
 		processarLista(variaveis, lista);
 	}
 
@@ -1772,8 +1772,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (String tabelaIds : lista) {
 			variaveis.tabelaIds = tabelaIds;
 			Objeto objeto = criarEAdicionar(variaveis);
-			criarEAdicionarRelacao(variaveis, objeto);
-			processarChaves(variaveis, objeto);
+			Relacao relacao = criarEAdicionarRelacao(variaveis, objeto);
+			processarChaves(variaveis, objeto, relacao);
 		}
 	}
 
@@ -1784,7 +1784,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return objeto;
 	}
 
-	private void criarEAdicionarRelacao(Variaveis variaveis, Objeto objeto) {
+	private Relacao criarEAdicionarRelacao(Variaveis variaveis, Objeto objeto) {
 		Relacao relacao = new Relacao(variaveis.principal, !variaveis.exportacao, objeto, variaveis.exportacao);
 		relacao.setQuebrado(!variaveis.circular);
 		if (!variaveis.circular) {
@@ -1792,28 +1792,28 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			relacao.setPontoOrigem(false);
 		}
 		addRelacao(relacao);
+		return relacao;
 	}
 
-	private void processarChaves(Variaveis variaveis, Objeto objeto) {
+	private void processarChaves(Variaveis variaveis, Objeto objeto, Relacao relacao) {
 		String[] tabelaCampo = getTabelaCampo(variaveis.tabelaIds);
-		setTabelaId(objeto, tabelaCampo);
-		processarChaves(variaveis, objeto, tabelaCampo);
-	}
-
-	private void setTabelaId(Objeto objeto, String[] tabelaCampo) {
 		objeto.setTabela(tabelaCampo[0]);
 		objeto.setId(tabelaCampo[0]);
+		processarChaves(variaveis, objeto, tabelaCampo, relacao);
 	}
 
-	private void processarChaves(Variaveis variaveis, Objeto objeto, String[] tabelaCampo) {
+	private void processarChaves(Variaveis variaveis, Objeto objeto, String[] tabelaCampo, Relacao relacao) {
 		Metadado tabela = variaveis.raiz.getMetadado(tabelaCampo[0]);
 		if (tabela != null) {
-			processarChaves(variaveis, objeto, tabelaCampo, tabela);
+			processarChaves(variaveis, objeto, tabelaCampo, tabela, relacao);
 		}
 	}
 
-	private void processarChaves(Variaveis variaveis, Objeto objeto, String[] tabelaCampo, Metadado tabela) {
+	private void processarChaves(Variaveis variaveis, Objeto objeto, String[] tabelaCampo, Metadado tabela,
+			Relacao relacao) {
 		objeto.setChaves(tabela.getChaves());
+		relacao.setChaveOrigem(variaveis.principal.getChaves());
+		relacao.setChaveDestino(tabelaCampo[1]);
 		if (variaveis.exportacao) {
 			variaveis.ref(tabelaCampo[0], tabelaCampo[1], true);
 		} else {
