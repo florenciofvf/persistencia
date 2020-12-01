@@ -1809,7 +1809,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		objeto.setTabela(tabelaCampo[0]);
 		objeto.setId(tabelaCampo[0]);
 		if (contemObjetoComTabela(tabelaCampo[0])) {
-			objeto.setId(tabelaCampo[0] + "_" + tabelaCampo[1]);
+			objeto.setId(tabelaCampo[0] + "_$$$_" + tabelaCampo[1]);
 			objeto.setGrupo(tabelaCampo[1]);
 		}
 		processarChaves(variaveis, objeto, tabelaCampo, relacao);
