@@ -1806,12 +1806,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void processarChaves(Variaveis variaveis, Objeto objeto, Relacao relacao) {
 		String[] tabelaCampo = getTabelaCampo(variaveis.tabelaIds);
-		objeto.setTabela(tabelaCampo[0]);
-		objeto.setId(tabelaCampo[0]);
 		if (contemObjetoComTabela(tabelaCampo[0])) {
 			objeto.setId(tabelaCampo[0] + "_$$$_" + tabelaCampo[1]);
 			objeto.setGrupo(tabelaCampo[1]);
+		} else {
+			objeto.setId(tabelaCampo[0]);
 		}
+		objeto.setTabela(tabelaCampo[0]);
 		processarChaves(variaveis, objeto, tabelaCampo, relacao);
 	}
 
