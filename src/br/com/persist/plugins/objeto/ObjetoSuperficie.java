@@ -950,6 +950,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return -1;
 	}
 
+	public boolean contemObjetoComTabela(String nomeTabela) {
+		for (Objeto objeto : objetos) {
+			if (objeto.getTabela2().equalsIgnoreCase(nomeTabela)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito) {
 		if (metadado == null) {
@@ -1799,6 +1808,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		String[] tabelaCampo = getTabelaCampo(variaveis.tabelaIds);
 		objeto.setTabela(tabelaCampo[0]);
 		objeto.setId(tabelaCampo[0]);
+		if (contemObjetoComTabela(tabelaCampo[0])) {
+			objeto.setId(tabelaCampo[0] + "_" + tabelaCampo[1]);
+			objeto.setGrupo(tabelaCampo[1]);
+		}
 		processarChaves(variaveis, objeto, tabelaCampo, relacao);
 	}
 
