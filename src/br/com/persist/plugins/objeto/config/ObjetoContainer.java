@@ -272,8 +272,8 @@ public class ObjetoContainer extends Panel {
 			chkCCSC.addActionListener(this);
 			chkBPNT.addActionListener(this);
 			Box container = Box.createVerticalBox();
-			container.add(criarLinha("label.grupo", txtGrupo));
 			container.add(criarLinha("label.apelido_para_joins", txtApelido));
+			container.add(criarLinha("label.grupo", txtGrupo));
 			container.add(criarLinha("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.select_alter", txtSelectAlter));
