@@ -1828,7 +1828,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		objeto.setChaves(tabela.getChaves());
 		relacao.setChaveDestino(tabelaCampo[1]);
 		if (variaveis.exportacao) {
-			variaveis.ref(tabelaCampo[0], tabelaCampo[1], true);
+			variaveis.ref(tabelaCampo[0], tabelaCampo[1], objeto.getGrupo(), true);
 			relacao.setChaveOrigem(variaveis.principal.getChaves());
 		} else {
 			String campoDetalhe = variaveis.tabela.getFKPara(variaveis.tabelaIds);
@@ -1896,10 +1896,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			sb.append(">");
 		}
 
-		private void ref(String tabela, String campo, boolean invisivel) {
+		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
 			sb.append(Constantes.QL + "\t\t<ref");
 			sb.append(" tabela=" + citar(tabela));
 			sb.append(" campo=" + citar(campo));
+			if (!Util.estaVazio(grupo)) {
+				sb.append(" grupo=" + citar(grupo));
+			}
 			if (invisivel) {
 				sb.append(" vazio=" + citar("invisivel"));
 			}
@@ -1909,7 +1912,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String tabelaDetalhe,
 				String campoDetalhe) {
 			abrirPesquisa(tabelaPrincipal, tabelaDetalhe, campoDetalhe);
-			ref(tabelaPrincipal, campoPrincipal, false);
+			ref(tabelaPrincipal, campoPrincipal, null, false);
 			fecharPesquisa();
 		}
 
