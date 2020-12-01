@@ -1220,6 +1220,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private void montarSelect(Conexao conexao, String complemento, StringBuilder builder) {
 						objeto.select(builder, conexao);
+						concatenar(builder, objeto.getApelidoParaJoins());
 						objeto.where(builder);
 						concatenar(builder, txtComplemento.getText());
 						concatenar(builder, complemento);
@@ -1238,6 +1239,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						for (String string : lista) {
 							if (sb.length() > 0) {
 								sb.append(", ");
+							}
+							if (!Util.estaVazio(objeto.getApelidoParaJoins())) {
+								sb.append(objeto.getApelidoParaJoins() + ".");
 							}
 							sb.append(string);
 						}
