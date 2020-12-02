@@ -310,31 +310,38 @@ public class Metadado implements Transferable {
 		}
 	}
 
-	public List<String> getListaDescricaoExportacaoImportacao(boolean exportacao) {
-		List<String> resposta = new ArrayList<>();
+	public List<Metadado> getListaCampoExportacaoImportacao(boolean exportacao) {
 		if (exportacao) {
-			getListaDescricaoExportacao(resposta);
-		} else {
-			getListaDescricaoImportacao(resposta);
+			return getListaCampoExportacao();
 		}
-		return resposta;
+		return getListaCampoImportacao();
 	}
 
-	private void getListaDescricaoImportacao(List<String> resposta) {
+	private List<Metadado> getListaCampoImportacao() {
+		List<Metadado> lista = new ArrayList<>();
 		for (Metadado tipo : filhos) {
 			if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
 					|| tipo.descricao.equals(Constantes.CAMPOS_IMPORTADOS)) {
-				tipo.listarDescricaoExportacaoImportacao(resposta);
+				tipo.preencher(lista);
 			}
 		}
+		return lista;
 	}
 
-	private void getListaDescricaoExportacao(List<String> resposta) {
+	private List<Metadado> getListaCampoExportacao() {
+		List<Metadado> lista = new ArrayList<>();
 		for (Metadado tipo : filhos) {
 			if (tipo.descricao.equals(Constantes.CAMPO_EXPORTADO)
 					|| tipo.descricao.equals(Constantes.CAMPOS_EXPORTADOS)) {
-				tipo.listarDescricaoExportacaoImportacao(resposta);
+				tipo.preencher(lista);
 			}
+		}
+		return lista;
+	}
+
+	private void preencher(List<Metadado> lista) {
+		for (Metadado campo : filhos) {
+			lista.add(campo);
 		}
 	}
 
@@ -361,52 +368,29 @@ public class Metadado implements Transferable {
 		}
 	}
 
-	public String getFKPara(String tabelaIds) {
-		StringBuilder sb = new StringBuilder();
-		for (Metadado tipo : filhos) {
-			if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
-					|| tipo.descricao.equals(Constantes.CAMPOS_IMPORTADOS)) {
-				tipo.fkPara(tabelaIds, sb);
-			}
-		}
-		return sb.toString();
-	}
-
-	private void listarDescricaoExportacaoImportacao(List<String> resposta) {
-		for (Metadado campo : filhos) {
-			campo.listarDescricao(resposta);
-		}
-	}
-
-	private void fkPara(String tabelaIds, StringBuilder sb) {
-		for (Metadado campo : filhos) {
-			if (campo.fkPara(tabelaIds)) {
-				sb.append(campo.descricao);
-				break;
-			}
-		}
-	}
-
-	private void listarDescricao(List<String> resposta) {
-		for (Metadado tabelaIds : filhos) {
-			resposta.add(tabelaIds.descricao);
-		}
-	}
-
-	private boolean fkPara(String tabelaIds) {
-		for (Metadado tab : filhos) {
-			if (tab.descricao.equalsIgnoreCase(tabelaIds)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public boolean getEhRaiz() {
 		return ehRaiz;
 	}
 
 	public void setEhRaiz(boolean ehRaiz) {
 		this.ehRaiz = ehRaiz;
+	}
+
+	public String getNomeTabela() {
+		int pos = descricao.indexOf('(');
+		return descricao.substring(0, pos);
+	}
+
+	public String getNomeCampo() {
+		int pos = descricao.indexOf('(');
+		int pos2 = descricao.indexOf(')');
+		return descricao.substring(pos + 1, pos2);
+	}
+
+	public Metadado getTabelaReferencia() {
+		if (filhos.size() != 1) {
+			throw new IllegalStateException();
+		}
+		return filhos.get(0);
 	}
 }
