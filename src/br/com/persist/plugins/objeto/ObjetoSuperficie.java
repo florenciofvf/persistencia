@@ -1819,7 +1819,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (variaveis.exportacao) {
 			refNaPesquisaPrincipal(variaveis, objeto, relacao);
 		} else {
-			pesquisaIndividualDetalhe(variaveis, relacao);
+			pesquisaIndividualDetalhe(variaveis, objeto, relacao);
 		}
 	}
 
@@ -1829,11 +1829,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		relacao.setChaveOrigem(variaveis.principal.getChaves());
 	}
 
-	private void pesquisaIndividualDetalhe(Variaveis variaveis, Relacao relacao) {
+	private void pesquisaIndividualDetalhe(Variaveis variaveis, Objeto objeto, Relacao relacao) {
 		Metadado campoDetalhe = variaveis.campoProcessado;
 		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
-		variaveis.pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), variaveis.principal.getTabela2(),
-				campoDetalhe.getDescricao());
+		variaveis.pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(),
+				variaveis.principal.getTabela2(), campoDetalhe.getDescricao());
 		relacao.setChaveOrigem(campoDetalhe.getDescricao());
 	}
 
@@ -1930,10 +1930,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			sb.append(" />");
 		}
 
-		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String tabelaDetalhe,
-				String campoDetalhe) {
+		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
+				String tabelaDetalhe, String campoDetalhe) {
 			abrirPesquisa(tabelaPrincipal, tabelaDetalhe, campoDetalhe);
-			ref(tabelaPrincipal, campoPrincipal, null, false);
+			ref(tabelaPrincipal, campoPrincipal, grupoPrincipal, false);
 			fecharPesquisa();
 		}
 
