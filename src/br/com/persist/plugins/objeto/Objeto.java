@@ -528,12 +528,12 @@ public class Objeto implements Runnable {
 		} else if (t.startsWith("OR")) {
 			s = s.substring(2);
 		}
-		sb.append(" " + s);
+		sb.append(" " + s.trim());
 	}
 
 	public static void concatenar(StringBuilder builder, String string) {
 		if (!Util.estaVazio(string)) {
-			builder.append(" " + string);
+			builder.append(" " + string.trim());
 		}
 	}
 
