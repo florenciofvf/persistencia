@@ -651,11 +651,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					pesquisa.setProcessado(false);
 					pesquisa.inicializarColetores(lista);
 					vinculoListener.pesquisar(pesquisa, Util.getStringLista(lista, apostrofes, false));
+					pesquisarFinal(coluna);
+				}
+
+				private void pesquisarFinal(int coluna) {
 					setEnabled(pesquisa.isProcessado());
 					if (pesquisa.isProcessado()) {
 						vinculoListener.pesquisarApos(pesquisa);
 					}
-					processarColunaInfo(coluna);
+					SwingUtilities.invokeLater(() -> processarColunaInfo(coluna));
 				}
 
 				private void processarColunaInfo(int coluna) {
