@@ -498,8 +498,43 @@ public class Objeto implements Runnable {
 		}
 	}
 
-	public void where(StringBuilder sb) {
-		sb.append(" WHERE 1=1");
+	public void where(StringBuilder sb, String... strings) {
+		if (strings != null && strings.length > 0) {
+			sb.append(" WHERE");
+			int i = append(sb, strings);
+			for (; i < strings.length; i++) {
+				concatenar(sb, strings[i]);
+			}
+		}
+	}
+
+	private int append(StringBuilder sb, String... strings) {
+		int i = 0;
+		for (; i < strings.length; i++) {
+			String s = strings[i];
+			if (!Util.estaVazio(s)) {
+				s = s.trim();
+				insert(sb, s);
+				return ++i;
+			}
+		}
+		return i;
+	}
+
+	private void insert(StringBuilder sb, String s) {
+		String t = s.toUpperCase();
+		if (t.startsWith("AND")) {
+			s = s.substring(3);
+		} else if (t.startsWith("OR")) {
+			s = s.substring(2);
+		}
+		sb.append(" " + s);
+	}
+
+	public static void concatenar(StringBuilder builder, String string) {
+		if (!Util.estaVazio(string)) {
+			builder.append(" " + string);
+		}
 	}
 
 	public String getNomeSequencia(String nomeColuna) {

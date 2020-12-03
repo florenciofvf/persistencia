@@ -228,17 +228,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		StringBuilder builder = new StringBuilder();
 		objeto.select(builder, conexao);
 		objeto.joins(builder, conexao, objeto.getPrefixoNomeTabela());
-		objeto.where(builder);
-		concatenar(builder, txtComplemento.getText());
-		concatenar(builder, complemento);
-		concatenar(builder, objeto.getFinalConsulta());
+		objeto.where(builder, txtComplemento.getText(), complemento);
+		Objeto.concatenar(builder, objeto.getFinalConsulta());
 		return builder;
-	}
-
-	private void concatenar(StringBuilder builder, String string) {
-		if (!Util.estaVazio(string)) {
-			builder.append(" " + string);
-		}
 	}
 
 	private boolean continuar(String complemento) {
@@ -1220,11 +1212,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private void montarSelect(Conexao conexao, String complemento, StringBuilder builder) {
 						objeto.select(builder, conexao);
-						concatenar(builder, objeto.getApelidoParaJoins());
-						objeto.where(builder);
-						concatenar(builder, txtComplemento.getText());
-						concatenar(builder, complemento);
-						concatenar(builder, objeto.getFinalConsulta());
+						Objeto.concatenar(builder, objeto.getApelidoParaJoins());
+						objeto.where(builder, txtComplemento.getText(), complemento);
+						Objeto.concatenar(builder, objeto.getFinalConsulta());
 					}
 
 					private String getNomeColunas(Coletor coletor) {
