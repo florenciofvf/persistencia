@@ -499,13 +499,24 @@ public class Objeto implements Runnable {
 	}
 
 	public void where(StringBuilder sb, String... strings) {
-		if (strings != null && strings.length > 0) {
+		if (arrayValido(strings)) {
 			sb.append(" WHERE");
 			int i = append(sb, strings);
 			for (; i < strings.length; i++) {
 				concatenar(sb, strings[i]);
 			}
 		}
+	}
+
+	private boolean arrayValido(String... strings) {
+		if (strings != null) {
+			for (String string : strings) {
+				if (!Util.estaVazio(string)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private int append(StringBuilder sb, String... strings) {
