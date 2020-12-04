@@ -52,6 +52,12 @@ public class ConexaoProvedor {
 		return -1;
 	}
 
+	public static void excluir(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			lista.remove(indice);
+		}
+	}
+
 	public static int proximo(int indice) {
 		if (indice + 1 < getSize()) {
 			Conexao c = lista.remove(indice);
