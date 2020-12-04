@@ -8,6 +8,7 @@ import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
+import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -90,7 +91,7 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela, FragmentoListener listener) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					COPIAR, APLICAR);
+					EXCLUIR, COPIAR, APLICAR);
 			setListener(listener);
 		}
 
@@ -215,6 +216,15 @@ public class FragmentoContainer extends AbstratoContainer {
 			if (linhas != null && linhas.length == 1) {
 				Fragmento f = FragmentoProvedor.getFragmento(linhas[0]);
 				aplicarFragmento(f);
+			}
+		}
+
+		@Override
+		protected void excluir() {
+			int[] linhas = tabela.getSelectedRows();
+			if (linhas != null && linhas.length == 1 && Util.confirmaExclusao(FragmentoContainer.this, false)) {
+				FragmentoProvedor.excluir(linhas[0]);
+				fragmentoModelo.fireTableDataChanged();
 			}
 		}
 

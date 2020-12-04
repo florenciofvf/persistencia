@@ -31,6 +31,12 @@ public class VariavelProvedor {
 		return null;
 	}
 
+	public static void excluir(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			lista.remove(indice);
+		}
+	}
+
 	public static Variavel getVariavel(String nome) {
 		for (Variavel v : lista) {
 			if (v.getNome().equals(nome)) {

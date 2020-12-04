@@ -34,6 +34,12 @@ public class FragmentoProvedor {
 		return null;
 	}
 
+	public static void excluir(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			lista.remove(indice);
+		}
+	}
+
 	public static Fragmento getFragmento(String resumo) {
 		for (Fragmento f : lista) {
 			if (f.getResumo().equals(resumo)) {

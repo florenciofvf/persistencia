@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
+import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -88,7 +89,7 @@ public class VariavelContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					COPIAR);
+					EXCLUIR, COPIAR);
 		}
 
 		@Override
@@ -188,6 +189,15 @@ public class VariavelContainer extends AbstratoContainer {
 						adicionar(v.clonar(nome));
 					}
 				}
+			}
+		}
+
+		@Override
+		protected void excluir() {
+			int[] linhas = tabela.getSelectedRows();
+			if (linhas != null && linhas.length == 1 && Util.confirmaExclusao(VariavelContainer.this, false)) {
+				VariavelProvedor.excluir(linhas[0]);
+				variavelModelo.fireTableDataChanged();
 			}
 		}
 	}
