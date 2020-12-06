@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto.internal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -81,6 +82,7 @@ import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.fragmento.Fragmento;
 import br.com.persist.plugins.fragmento.FragmentoDialogo;
 import br.com.persist.plugins.fragmento.FragmentoListener;
+import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoUtil;
@@ -154,6 +156,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private void processar(Graphics g) {
 		processar("", g, null);
+	}
+
+	private void atualizar() {
+		Container parent = this;
+		Desktop desktop = null;
+		while (parent != null) {
+			if (parent instanceof Desktop) {
+				desktop = (Desktop) parent;
+				break;
+			}
+			parent = parent.getParent();
+		}
+		if (desktop != null) {
+			SwingUtilities.updateComponentTreeUI(desktop);
+			desktop.repaint();
+		}
 	}
 
 	private void montarLayout() {
@@ -660,6 +678,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						vinculoListener.pesquisarApos(pesquisa);
 					}
 					SwingUtilities.invokeLater(() -> processarColunaInfo(coluna));
+					SwingUtilities.invokeLater(InternalContainer.this::atualizar);
 				}
 
 				private void processarColunaInfo(int coluna) {

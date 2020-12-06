@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<fvf ajusteAutoForm="true" largura="970" altura="583" arquivoVinculo="exemplo" conexao="elei&#231;&#227;o">
-	<objeto id="elei&#231;&#227;o" transparente="true" finalConsulta="order by id" chaveamento="teste=escola,filho;teste=campo" complemento="" selectAlternativo="" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="INFO=coluna_info" sequencias="" intervalo="1000" desenharId="true" colunaInfo="true" arquivo="###teste###eleicao" tabelas="" abrirAuto="false" processar="false" tabela="eleicao" chaves="id" linkAuto="true" grupo="" cor="-12555904" joins="" icone="executar" ccsc="false" bpnt="false" x="23" y="22">
+<fvf ajusteAutoForm="true" ajusteLarguraForm="true" largura="1049" altura="703" arquivoVinculo="exemplo" conexao="elei&#231;&#227;o">
+	<objeto id="elei&#231;&#227;o" transparente="true" finalConsulta="order by id" chaveamento="teste=escola,filho;teste=campo" complemento="" selectAlternativo="" apelidoParaJoins="" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="INFO=coluna_info" sequencias="" intervalo="1000" desenharId="true" colunaInfo="true" arquivo="###teste###eleicao" tabelas="" abrirAuto="false" processar="false" tabela="eleicao" chaves="id" linkAuto="true" grupo="" cor="-12555904" joins="" icone="executar" ccsc="false" bpnt="false" x="23" y="22">
 	</objeto>
-	<objeto id="candidato" transparente="true" finalConsulta="" chaveamento="" complemento="" selectAlternativo="select c.id, c.nome, e.descricao" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" arquivo="" tabelas="eleicao e" abrirAuto="true" processar="false" tabela="candidato c" chaves="id" linkAuto="true" grupo="" cor="-12555904" joins="on e.id = c.eleicao_id" icone="boss" ccsc="false" bpnt="false" x="40" y="148">
+	<objeto id="candidato" transparente="true" finalConsulta="" chaveamento="" complemento="" selectAlternativo="select c.id, c.nome, e.descricao" apelidoParaJoins="" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" arquivo="" tabelas="eleicao e" abrirAuto="true" processar="false" tabela="candidato c" chaves="id" linkAuto="true" grupo="" cor="-12555904" joins="on e.id = c.eleicao_id" icone="boss" ccsc="false" bpnt="false" x="40" y="187">
 	</objeto>
-	<objeto id="endere&#231;o" transparente="true" finalConsulta="" chaveamento="" complemento="AND 1 &gt; 2" selectAlternativo="" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="700" desenharId="true" colunaInfo="false" arquivo="" tabelas="" abrirAuto="false" processar="false" tabela="endereco" chaves="id" linkAuto="false" grupo="" cor="-12555904" joins="" icone="home" ccsc="false" bpnt="false" x="60" y="293">
+	<objeto id="endere&#231;o" transparente="true" finalConsulta="" chaveamento="" complemento="AND 1 &gt; 2" selectAlternativo="" apelidoParaJoins="" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="700" desenharId="true" colunaInfo="false" arquivo="" tabelas="" abrirAuto="false" processar="false" tabela="endereco" chaves="id" linkAuto="false" grupo="" cor="-12555904" joins="" icone="home" ccsc="false" bpnt="false" x="60" y="320">
 	</objeto>
-	<objeto id="candidato2" transparente="true" finalConsulta="" chaveamento="" complemento="AND eleicao_id IN (1)" selectAlternativo="" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" arquivo="" tabelas="" abrirAuto="true" processar="false" tabela="candidato2" chaves="id" linkAuto="true" grupo="2" cor="-12555904" joins="" icone="boss" ccsc="false" bpnt="false" x="48" y="341">
+	<objeto id="candidato2" transparente="true" finalConsulta="" chaveamento="" complemento="AND eleicao_id IN (1)" selectAlternativo="" apelidoParaJoins="" ajusteAutoForm="true" copiarDestac="false" desloc_x_id="30" desloc_y_id="20" corFonte="-1" mapeamento="" sequencias="" intervalo="500" desenharId="true" colunaInfo="false" arquivo="" tabelas="" abrirAuto="true" processar="false" tabela="candidato2" chaves="id" linkAuto="true" grupo="2" cor="-12555904" joins="" icone="boss" ccsc="false" bpnt="false" x="48" y="368">
 	</objeto>
 
-	<relacao destino="candidato" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
+	<relacao chaveDestino="" chaveOrigem="" destino="candidato" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
 	</relacao>
-	<relacao destino="candidato2" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
+	<relacao chaveDestino="" chaveOrigem="" destino="candidato2" desenharDescricao="false" origem="elei&#231;&#227;o" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
 	</relacao>
-	<relacao destino="endere&#231;o" desenharDescricao="false" origem="candidato" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
+	<relacao chaveDestino="" chaveOrigem="" destino="endere&#231;o" desenharDescricao="false" origem="candidato" desloc_x_desc="-5" desloc_y_desc="-5" corFonte="-16777216" pontoDestino="false" pontoOrigem="false" quebrado="true" cor="-16777216">
 	</relacao>
 
-	<form objeto="elei&#231;&#227;o" largura="922" altura="108" x="48" y="33">
+	<form objeto="candidato2" largura="956" altura="280" x="73" y="379">
 	</form>
-	<form objeto="endere&#231;o" largura="884" altura="30" x="85" y="304">
+	<form objeto="candidato" largura="964" altura="115" x="65" y="198">
 	</form>
-	<form objeto="candidato" largura="905" altura="127" x="65" y="159">
+	<form objeto="endere&#231;o" largura="944" altura="30" x="85" y="331">
 	</form>
-	<form objeto="candidato2" largura="897" altura="147" x="73" y="352">
+	<form objeto="elei&#231;&#227;o" largura="981" altura="147" x="48" y="33">
 	</form>
 </fvf>
