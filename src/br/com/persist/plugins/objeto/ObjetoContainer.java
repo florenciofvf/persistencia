@@ -31,6 +31,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -421,6 +422,11 @@ public class ObjetoContainer extends AbstratoContainer {
 		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
 		objetoSuperficie.setAjusteLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
+		SwingUtilities.invokeLater(() -> {
+			objetoSuperficie.getAjustar().retirarRolagem();
+			objetoSuperficie.configurarLargura();
+			objetoSuperficie.repaint();
+		});
 	}
 
 	private Conexao selecionarConexao(ObjetoColetor coletor, InternalConfig config) {

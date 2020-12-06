@@ -119,11 +119,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				if (isAjusteLarguraForm()) {
-					larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
-				}
+				configurarLargura();
 			}
 		});
+	}
+
+	public void configurarLargura() {
+		if (isAjusteLarguraForm()) {
+			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
+		}
 	}
 
 	@Override
