@@ -39,6 +39,11 @@ public class AnexoTree extends Tree {
 		}
 	}
 
+	public Anexo getRaiz() {
+		AnexoModelo modelo = (AnexoModelo) getModel();
+		return (Anexo) modelo.getRoot();
+	}
+
 	public Anexo getObjetoSelecionado() {
 		TreePath path = getSelectionPath();
 		if (path == null) {
@@ -219,6 +224,16 @@ public class AnexoTree extends Tree {
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarAnexo(AnexoTree.this)));
 				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this)));
 			}
+		}
+	}
+
+	public void selecionar(String nome, boolean porParte) {
+		Anexo raiz = getRaiz();
+		Anexo anexo = raiz.getAnexo(nome, porParte);
+		if (anexo != null) {
+			AnexoTreeUtil.selecionarObjeto(this, anexo);
+		} else {
+			setSelectionPath(null);
 		}
 	}
 }

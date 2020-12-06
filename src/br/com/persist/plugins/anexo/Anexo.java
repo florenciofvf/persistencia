@@ -1,5 +1,11 @@
 package br.com.persist.plugins.anexo;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,13 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 
 import br.com.persist.assistencia.Constantes;
-
-import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class Anexo {
 	private static final Logger LOG = Logger.getGlobal();
@@ -106,6 +105,25 @@ public class Anexo {
 
 	public Anexo getAnexo(int index) {
 		return filhos.get(index);
+	}
+
+	public Anexo getAnexo(String descricao, boolean porParte) {
+		for (Anexo m : filhos) {
+			String nome = m.file.getName();
+			if (porParte && nome.toUpperCase().indexOf(descricao.toUpperCase()) != -1) {
+				return m;
+			}
+			if (nome.equalsIgnoreCase(descricao)) {
+				return m;
+			}
+		}
+		for (Anexo m : filhos) {
+			Anexo resp = m.getAnexo(descricao, porParte);
+			if (resp != null) {
+				return resp;
+			}
+		}
+		return null;
 	}
 
 	private void processar() {

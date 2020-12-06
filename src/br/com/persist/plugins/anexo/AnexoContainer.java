@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,6 +36,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -77,23 +80,37 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopAnex = new CheckBox();
+		private final TextField txtAnexo = new TextField(35);
+		private final CheckBox chkPorParte = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
 			chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
 			chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.anexo.sempreTopAnex"));
+			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
+			txtAnexo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			add(chkSempreTopAnex);
 			add(chkSempreTopForm);
+			add(txtAnexo);
+			add(chkPorParte);
 			eventos();
 		}
 
 		private void eventos() {
 			chkSempreTopAnex.addActionListener(e -> anexoFormulario.setAlwaysOnTop(chkSempreTopAnex.isSelected()));
 			chkSempreTopForm.addActionListener(e -> topFormulario());
+			txtAnexo.addActionListener(this);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtAnexo.getText())) {
+				anexoTree.selecionar(txtAnexo.getText().trim(), chkPorParte.isSelected());
+			}
 		}
 
 		private void topFormulario() {
