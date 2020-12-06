@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 
 public class ObjetoColetor {
+	private final AtomicBoolean ajusteLarguraForm;
 	private final AtomicBoolean ajusteAutoForm;
 	private final List<InternalForm> forms;
 	private final StringBuilder sbConexao;
@@ -17,6 +18,7 @@ public class ObjetoColetor {
 	private String arquivoVinculo;
 
 	public ObjetoColetor() {
+		ajusteLarguraForm = new AtomicBoolean();
 		ajusteAutoForm = new AtomicBoolean();
 		sbConexao = new StringBuilder();
 		dimension = new Dimension();
@@ -29,6 +31,7 @@ public class ObjetoColetor {
 		if (sbConexao.length() > 0) {
 			sbConexao.delete(0, sbConexao.length());
 		}
+		ajusteLarguraForm.set(false);
 		ajusteAutoForm.set(false);
 		dimension.setSize(0, 0);
 		arquivoVinculo = null;
@@ -43,6 +46,10 @@ public class ObjetoColetor {
 
 	public AtomicBoolean getAjusteAutoForm() {
 		return ajusteAutoForm;
+	}
+
+	public AtomicBoolean getAjusteLarguraForm() {
+		return ajusteLarguraForm;
 	}
 
 	public List<InternalForm> getForms() {

@@ -11,6 +11,8 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -31,6 +33,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
+import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -113,6 +116,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		getActionMap().put("zoom_menos", zoomMenos);
 		getActionMap().put("zoom_mais", zoomMais);
 		getActionMap().put("macro", macro);
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				if (isAjusteLarguraForm()) {
+					larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -1384,6 +1395,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void salvarAtributos(Conexao conexao, XMLUtil util) {
 		util.abrirTag("fvf");
 		util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
+		util.atributo("ajusteLarguraForm", isAjusteLarguraForm());
 		util.atributo("largura", getWidth());
 		util.atributo("altura", getHeight());
 		util.atributo("arquivoVinculo", getArquivoVinculo());

@@ -64,6 +64,7 @@ public class ObjetoHandler extends XMLHandler {
 	}
 
 	private void processarRaiz(Attributes attributes) {
+		coletor.getAjusteLarguraForm().set(Boolean.parseBoolean(attributes.getValue("ajusteLarguraForm")));
 		coletor.getAjusteAutoForm().set(Boolean.parseBoolean(attributes.getValue("ajusteAutoForm")));
 		coletor.getDimension().width = Integer.parseInt(attributes.getValue("largura"));
 		coletor.getDimension().height = Integer.parseInt(attributes.getValue("altura"));

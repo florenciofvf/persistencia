@@ -53,6 +53,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	private static final Logger LOG = Logger.getGlobal();
 	private boolean ajusteAutomatico = true;
 	private boolean ajusteAutomaticoForm;
+	private boolean ajusteLarguraForm;
 
 	public Desktop(boolean extensao) {
 		if (!extensao) {
@@ -399,6 +400,14 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	public void setAjusteAutomaticoForm(boolean ajusteAutomaticoForm) {
 		this.ajusteAutomaticoForm = ajusteAutomaticoForm;
+	}
+
+	public boolean isAjusteLarguraForm() {
+		return ajusteLarguraForm;
+	}
+
+	public void setAjusteLarguraForm(boolean ajusteLarguraForm) {
+		this.ajusteLarguraForm = ajusteLarguraForm;
 	}
 
 	@Override

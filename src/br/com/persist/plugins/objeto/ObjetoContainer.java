@@ -166,6 +166,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
 		private CheckBox chkAjusteAutomatico = new CheckBox();
+		private CheckBox chkAjusteLarguraFrm = new CheckBox();
 		private Label labelStatus = new Label();
 
 		public void ini(Janela janela) {
@@ -182,6 +183,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(new ToggleButton(desenharDescAcao));
 			add(new ToggleButton(transparenteAcao));
 			add(true, chkAjusteAutomatico);
+			add(chkAjusteLarguraFrm);
 			add(true, comboConexao);
 			add(true, new ButtonInfo());
 			add(labelStatus);
@@ -191,6 +193,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		}
 
 		private void configurar() {
+			chkAjusteLarguraFrm.setToolTipText(Mensagens.getString("label.ajuste_largura_form"));
 			chkAjusteAutomatico.setToolTipText(Mensagens.getString("label.ajuste_automatico"));
 			txtArquivoVinculo.setToolTipText(Mensagens.getString("hint.arquivo_vinculado"));
 			txtPrefixoNomeTabela.setToolTipText(Mensagens.getString("label.prefixo_nt"));
@@ -214,6 +217,8 @@ public class ObjetoContainer extends AbstratoContainer {
 					.setActionListener(e -> objetoSuperficie.transparente(((ToggleButton) e.getSource()).isSelected()));
 			chkAjusteAutomatico
 					.addActionListener(e -> objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected()));
+			chkAjusteLarguraFrm
+					.addActionListener(e -> objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected()));
 			txtPrefixoNomeTabela
 					.addActionListener(e -> objetoSuperficie.prefixoNomeTabela(txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> objetoSuperficie.excluirSelecionados());
@@ -412,7 +417,9 @@ public class ObjetoContainer extends AbstratoContainer {
 		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
 			adicionarInternalFormulario(conexao, coletor, g, config);
 		}
+		toolbar.chkAjusteLarguraFrm.setSelected(coletor.getAjusteLarguraForm().get());
 		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
+		objetoSuperficie.setAjusteLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
 	}
 
