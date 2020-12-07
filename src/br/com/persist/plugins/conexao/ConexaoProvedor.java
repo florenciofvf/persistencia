@@ -146,7 +146,7 @@ public class ConexaoProvedor {
 	public static synchronized Connection getConnection(Conexao conexao) throws ConexaoException {
 		try {
 			Connection conn = CONEXOES.get(conexao);
-			if (conn == null || conn.isClosed()) {
+			if (conn == null || !conn.isValid(1000) || conn.isClosed()) {
 				conn = conexao.getConnection();
 				CONEXOES.put(conexao, conn);
 			}
@@ -173,7 +173,7 @@ public class ConexaoProvedor {
 
 	private static void fecharConexao(Connection conn) throws ConexaoException {
 		try {
-			if (conn != null && !conn.isClosed()) {
+			if (conn != null && conn.isValid(1000) && !conn.isClosed()) {
 				conn.close();
 			}
 		} catch (Exception ex) {
