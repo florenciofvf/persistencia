@@ -217,6 +217,9 @@ public class ConexaoProvedor {
 			super(modelo);
 			total = modelo.getSize();
 			addPopupMenuListener(this);
+			if (total > 0) {
+				setSelectedIndex(0);
+			}
 		}
 
 		@Override
