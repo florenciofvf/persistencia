@@ -208,6 +208,7 @@ public class Formulario extends JFrame {
 	private void iconeBandeja() {
 		PopupMenu popup = new PopupMenu();
 		java.awt.MenuItem itemFechar = new java.awt.MenuItem(Mensagens.getString(Constantes.LABEL_FECHAR));
+		popup.add(new java.awt.MenuItem(Mensagens.getString("versao")));
 		itemFechar.addActionListener(e -> eventoFechar());
 		popup.add(itemFechar);
 		URL url = getClass().getResource(Constantes.IMAGEM_TRAY_ICON);
