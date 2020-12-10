@@ -310,4 +310,18 @@ public class Formulario extends JFrame {
 			Preferencias.setString(Constantes.GC, device.getIDstring());
 		}
 	}
+
+	public void salvarMonitorComoPreferencial() {
+		GraphicsDevice device = getGraphicsConfiguration().getDevice();
+		if (device != null) {
+			Preferencias.setString(Constantes.GC_PREFERENCIAL, device.getIDstring());
+		}
+	}
+
+	public void excluirMonitorComoPreferencial() {
+		GraphicsDevice device = getGraphicsConfiguration().getDevice();
+		if (device != null) {
+			Preferencias.setString(Constantes.GC_PREFERENCIAL, Constantes.VAZIO);
+		}
+	}
 }

@@ -8,6 +8,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
@@ -34,6 +35,7 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
@@ -186,6 +188,11 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(criarLabelTitulo("label.titulo_cor_total_recente"));
 		container.add(new PainelCorTotalRecente());
 		container.add(new JSeparator());
+		if (Preferencias.isMonitorPreferencial()) {
+			container.add(criarLabelTitulo("label.monitor_preferencial"));
+			container.add(new PainelMonitorPreferencial());
+			container.add(new JSeparator());
+		}
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkExecAposBaixarParaComplemento);
 		container.add(chkExecAposCopiarColunaConcatenado);
@@ -467,6 +474,20 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 					Preferencias.setCorComparaRec(color);
 				}
 			}
+		}
+	}
+
+	private class PainelMonitorPreferencial extends Panel {
+		private static final long serialVersionUID = 1L;
+		private Button buttonNaoPreferencial = new Button("label.nao_preferencial");
+		private Button buttonPreferencial = new Button("label.preferencial");
+
+		private PainelMonitorPreferencial() {
+			super(new FlowLayout());
+			add(buttonPreferencial);
+			add(buttonNaoPreferencial);
+			buttonPreferencial.addActionListener(e -> formulario.salvarMonitorComoPreferencial());
+			buttonNaoPreferencial.addActionListener(e -> formulario.excluirMonitorComoPreferencial());
 		}
 	}
 

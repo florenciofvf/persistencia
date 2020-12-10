@@ -28,6 +28,7 @@ public class Preferencias {
 	private static int porcHorizontalLocalForm;
 	private static boolean erroCriarConnection;
 	private static boolean fecharComESCDialogo;
+	private static boolean monitorPreferencial;
 	private static boolean ficharioComRolagem;
 	private static Color corAntesTotalRecente;
 	private static boolean abrirAutoDestacado;
@@ -437,5 +438,13 @@ public class Preferencias {
 
 	public static void setHabilitadoInnerJoinsObjeto(boolean habilitadoInnerJoinsObjeto) {
 		Preferencias.habilitadoInnerJoinsObjeto = habilitadoInnerJoinsObjeto;
+	}
+
+	public static boolean isMonitorPreferencial() {
+		return monitorPreferencial;
+	}
+
+	public static void setMonitorPreferencial(boolean monitorPreferencial) {
+		Preferencias.monitorPreferencial = monitorPreferencial;
 	}
 }

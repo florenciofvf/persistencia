@@ -27,6 +27,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Preferencias.setHabilitadoInnerJoinsObjeto(Util.contemNoArray("habilitadoInnerJoinsObjeto", args));
+		Preferencias.setMonitorPreferencial(Util.contemNoArray("monitorPreferencial", args));
 		Preferencias.setDesconectado(Util.contemNoArray("desconectado", args));
 		Preferencias.inicializar();
 		installLookAndFeel();
@@ -56,10 +57,12 @@ public class Main {
 
 	private static GraphicsConfiguration getGC() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		String idPref = Preferencias.getString(Constantes.GC_PREFERENCIAL);
 		String id = Preferencias.getString(Constantes.GC);
 		GraphicsDevice[] gs = ge.getScreenDevices();
+		GraphicsDevice devicePref = getDevice(idPref, gs);
 		GraphicsDevice device = getDevice(id, gs);
-		return getGC(device);
+		return devicePref != null ? getGC(devicePref) : getGC(device);
 	}
 
 	private static GraphicsDevice getDevice(String id, GraphicsDevice[] gs) {
