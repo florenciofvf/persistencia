@@ -77,11 +77,12 @@ public class RelacaoContainer extends Panel {
 
 	private class PanelDescricao extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private final TextArea textArea = new TextArea();
 		private TextField txtDeslocXDesc = new TextField();
 		private TextField txtDeslocYDesc = new TextField();
 		private CheckBox chkDesenharDesc = new CheckBox();
+		private final TextArea textArea = new TextArea();
 		private CheckBox chkQuebrado = new CheckBox();
+		private final Toolbar toolbar = new Toolbar();
 
 		private PanelDescricao() {
 			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
@@ -104,6 +105,7 @@ public class RelacaoContainer extends Panel {
 			container.add(criarLinha("label.desenhar_desc", chkDesenharDesc));
 			container.add(criarLinha("label.quebrado", chkQuebrado));
 			add(BorderLayout.SOUTH, container);
+			add(BorderLayout.NORTH, toolbar);
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -162,6 +164,27 @@ public class RelacaoContainer extends Panel {
 				box.add(componente);
 			}
 			return box;
+		}
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private Toolbar() {
+				super.ini(null, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(textArea.getTextAreaInner());
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				textArea.requestFocus();
+			}
+
+			@Override
+			protected void colar() {
+				Util.getContentTransfered(textArea.getTextAreaInner());
+			}
 		}
 	}
 

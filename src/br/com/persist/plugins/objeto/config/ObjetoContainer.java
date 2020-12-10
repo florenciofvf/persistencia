@@ -432,11 +432,13 @@ public class ObjetoContainer extends Panel {
 	private class PanelDescricao extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
+		private final Toolbar toolbar = new Toolbar();
 
 		private PanelDescricao() {
 			textArea.setText(objeto.getDescricao());
 			textArea.addKeyListener(keyListenerInner);
 			add(BorderLayout.CENTER, textArea);
+			add(BorderLayout.NORTH, toolbar);
 		}
 
 		private transient KeyListener keyListenerInner = new KeyAdapter() {
@@ -445,6 +447,27 @@ public class ObjetoContainer extends Panel {
 				objeto.setDescricao(textArea.getText());
 			}
 		};
+
+		private class Toolbar extends BarraButton {
+			private static final long serialVersionUID = 1L;
+
+			private Toolbar() {
+				super.ini(null, COPIAR, COLAR);
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(textArea.getTextAreaInner());
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				textArea.requestFocus();
+			}
+
+			@Override
+			protected void colar() {
+				Util.getContentTransfered(textArea.getTextAreaInner());
+			}
+		}
 	}
 
 	private class PanelCorFonte extends Panel implements ChangeListener {
