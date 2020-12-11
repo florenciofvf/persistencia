@@ -351,6 +351,59 @@ public class Relacao {
 	}
 
 	private void desenharPontos(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
+		if (quebrado) {
+			desenharPontosLinhaQuebrada(g2, x1, y1, x2, y2, raio, meta);
+		} else {
+			desenharPontos2(g2, x1, y1, x2, y2, raio, meta);
+		}
+	}
+
+	private void desenharPontosLinhaQuebrada(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
+		if (pontoOrigem || pontoDestino) {
+			pontoQuebradoOrigem(g2, x1, y1, x2, y2, raio, meta);
+			pontoQuebradoDestino(g2, x1, y1, x2, y2, raio, meta);
+		}
+	}
+
+	private void pontoQuebradoOrigem(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
+		if (pontoOrigem) {
+			int valor = origem.isTransparente() ? meta : raio;
+			if (y1 < y2) {
+				if (x1 < x2) {
+					g2.fillOval(x1 - m, y1 + valor - m, diametro, diametro);
+				} else {
+					g2.fillOval(x1 - valor - m, y1 - m, diametro, diametro);
+				}
+			} else {
+				if (x1 < x2) {
+					g2.fillOval(x1 - m, y1 - valor - m, diametro, diametro);
+				} else {
+					g2.fillOval(x1 - valor - m, y1 - m, diametro, diametro);
+				}
+			}
+		}
+	}
+
+	private void pontoQuebradoDestino(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
+		if (pontoDestino) {
+			int valor = destino.isTransparente() ? meta : raio;
+			if (y2 < y1) {
+				if (x2 < x1) {
+					g2.fillOval(x2 - m, y2 + valor - m, diametro, diametro);
+				} else {
+					g2.fillOval(x2 - valor - m, y2 - m, diametro, diametro);
+				}
+			} else {
+				if (x2 < x1) {
+					g2.fillOval(x2 - m, y2 - valor - m, diametro, diametro);
+				} else {
+					g2.fillOval(x2 - valor - m, y2 - m, diametro, diametro);
+				}
+			}
+		}
+	}
+
+	private void desenharPontos2(Graphics2D g2, int x1, int y1, int x2, int y2, int raio, int meta) {
 		if (pontoOrigem || pontoDestino) {
 			int x = x2 - x1;
 			int y = y2 - y1;
