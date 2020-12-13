@@ -296,6 +296,7 @@ public class ObjetoContainer extends Panel {
 					Mensagens.getString("hint.ajuste_auto_form")));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
+			txtSequencias.addMouseListener(sequenciaListener);
 			add(BorderLayout.CENTER, new ScrollPane(container));
 		}
 
@@ -314,7 +315,6 @@ public class ObjetoContainer extends Panel {
 							MiscelaniaContainer.Tipo.CHAVEAMENTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
-
 					txtChaveamento.setText(objeto.getChaveamento());
 				}
 			}
@@ -328,8 +328,20 @@ public class ObjetoContainer extends Panel {
 							MiscelaniaContainer.Tipo.MAPEAMENTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
-
 					txtMapeamento.setText(objeto.getMapeamento());
+				}
+			}
+		};
+
+		private transient MouseListener sequenciaListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
+							MiscelaniaContainer.Tipo.SEQUENCIA);
+					form.setLocationRelativeTo(ObjetoContainer.this);
+					form.setVisible(true);
+					txtSequencias.setText(objeto.getSequencias());
 				}
 			}
 		};

@@ -41,6 +41,8 @@ public class MiscelaniaContainer extends Panel {
 			chave(builder);
 		} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 			mapa(builder);
+		} else if (Tipo.SEQUENCIA.equals(tipo)) {
+			seque(builder);
 		}
 		textArea.setText(builder.toString().trim());
 	}
@@ -70,6 +72,7 @@ public class MiscelaniaContainer extends Panel {
 			String valor = entry.getValue();
 			builder.append(chave + "=" + valor);
 			if (i + 1 < campoChave.size()) {
+				builder.append(Constantes.QL);
 				builder.append(";");
 			}
 			builder.append(Constantes.QL);
@@ -77,8 +80,21 @@ public class MiscelaniaContainer extends Panel {
 		}
 	}
 
+	private void seque(StringBuilder builder) {
+		String[] sequencias = !Util.estaVazio(objeto.getSequencias()) ? objeto.getSequencias().split(";")
+				: Mensagens.getString("hint.sequencias").split(";");
+		for (int i = 0; i < sequencias.length; i++) {
+			if (i > 0) {
+				builder.append(Constantes.QL);
+				builder.append(";");
+			}
+			builder.append(Constantes.QL);
+			builder.append(sequencias[i]);
+		}
+	}
+
 	public enum Tipo {
-		CHAVEAMENTO, MAPEAMENTO
+		CHAVEAMENTO, MAPEAMENTO, SEQUENCIA
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -108,6 +124,8 @@ public class MiscelaniaContainer extends Panel {
 					objeto.setChaveamento(Util.normalizar(textArea.getText(), false));
 				} else if (Tipo.MAPEAMENTO.equals(tipo)) {
 					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
+				} else if (Tipo.SEQUENCIA.equals(tipo)) {
+					objeto.setSequencias(Util.normalizar(textArea.getText(), false));
 				}
 				fechar();
 			} catch (Exception ex) {

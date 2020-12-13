@@ -19,6 +19,8 @@ public class MiscelaniaDialogo extends AbstratoDialogo {
 			setTitle(Mensagens.getString("label.chaveamento") + " - " + getTitle());
 		} else if (MiscelaniaContainer.Tipo.MAPEAMENTO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.mapeamento") + " - " + getTitle());
+		} else if (MiscelaniaContainer.Tipo.SEQUENCIA.equals(tipo)) {
+			setTitle(Mensagens.getString("label.sequencias") + " - " + getTitle());
 		}
 	}
 
