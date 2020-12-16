@@ -65,16 +65,6 @@ public class RelacaoContainer extends Panel {
 		add(BorderLayout.NORTH, toolbar);
 	}
 
-	private class PanelGeral extends Panel {
-		private static final long serialVersionUID = 1L;
-
-		private PanelGeral() {
-			super(new GridLayout(1, 2));
-			add(new PanelLado(true));
-			add(new PanelLado(false));
-		}
-	}
-
 	private class PanelDescricao extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtDeslocXDesc = new TextField();
@@ -269,6 +259,16 @@ public class RelacaoContainer extends Panel {
 				colorChooser.setColor(relacao.getCor());
 				objetoSuperficie.repaint();
 			}
+		}
+	}
+
+	private class PanelGeral extends Panel {
+		private static final long serialVersionUID = 1L;
+
+		private PanelGeral() {
+			super(new GridLayout(1, 2));
+			add(new PanelLado(true));
+			add(new PanelLado(false));
 		}
 	}
 
