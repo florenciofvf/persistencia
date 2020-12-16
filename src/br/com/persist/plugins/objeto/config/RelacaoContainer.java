@@ -71,18 +71,15 @@ public class RelacaoContainer extends Panel {
 		private TextField txtDeslocYDesc = new TextField();
 		private CheckBox chkDesenharDesc = new CheckBox();
 		private final TextArea textArea = new TextArea();
-		private CheckBox chkQuebrado = new CheckBox();
 		private final Toolbar toolbar = new Toolbar();
 
 		private PanelDescricao() {
 			txtDeslocXDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoXDesc());
 			txtDeslocYDesc.setText(Constantes.VAZIO + relacao.getDeslocamentoYDesc());
 			chkDesenharDesc.setSelected(relacao.isDesenharDescricao());
-			chkQuebrado.setSelected(relacao.isQuebrado());
 			txtDeslocXDesc.addFocusListener(focusListenerInner);
 			txtDeslocYDesc.addFocusListener(focusListenerInner);
 			chkDesenharDesc.addActionListener(this);
-			chkQuebrado.addActionListener(this);
 			txtDeslocXDesc.addActionListener(this);
 			txtDeslocYDesc.addActionListener(this);
 			textArea.setText(relacao.getDescricao());
@@ -93,7 +90,6 @@ public class RelacaoContainer extends Panel {
 			container.add(criarLinha("label.desloc_x_desc", txtDeslocXDesc));
 			container.add(criarLinha("label.desloc_y_desc", txtDeslocYDesc));
 			container.add(criarLinha("label.desenhar_desc", chkDesenharDesc));
-			container.add(criarLinha("label.quebrado", chkQuebrado));
 			add(BorderLayout.SOUTH, container);
 			add(BorderLayout.NORTH, toolbar);
 		}
@@ -117,10 +113,6 @@ public class RelacaoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				relacao.setDesenharDescricao(chk.isSelected());
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
-			} else if (chkQuebrado == e.getSource()) {
-				CheckBox chk = (CheckBox) e.getSource();
-				relacao.setQuebrado(chk.isSelected());
-				MacroProvedor.linhaQuebrada(chk.isSelected());
 			}
 			objetoSuperficie.repaint();
 		}
@@ -262,10 +254,34 @@ public class RelacaoContainer extends Panel {
 		}
 	}
 
-	private class PanelGeral extends Panel {
+	private class PanelGeral extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private CheckBox chkQuebrado = new CheckBox("label.quebrado");
 
 		private PanelGeral() {
+			add(new PanelLado(true));
+			add(new PanelLado(false));
+			chkQuebrado.addActionListener(this);
+			add(BorderLayout.NORTH, chkQuebrado);
+			chkQuebrado.setSelected(relacao.isQuebrado());
+			add(BorderLayout.CENTER, new ScrollPane(new PanelLados()));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (chkQuebrado == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				relacao.setQuebrado(chk.isSelected());
+				MacroProvedor.linhaQuebrada(chk.isSelected());
+			}
+			objetoSuperficie.repaint();
+		}
+	}
+
+	private class PanelLados extends Panel {
+		private static final long serialVersionUID = 1L;
+
+		private PanelLados() {
 			super(new GridLayout(1, 2));
 			add(new PanelLado(true));
 			add(new PanelLado(false));
@@ -374,7 +390,7 @@ public class RelacaoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private Fichario() {
-			addTab("label.geral", new ScrollPane(new PanelGeral()));
+			addTab("label.geral", new PanelGeral());
 			addTab("label.descricao", new PanelDescricao());
 			addTab("label.cor", new PanelCor());
 			addTab("label.cor_fonte", new PanelCorFonte());
