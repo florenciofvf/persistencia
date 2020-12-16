@@ -4,7 +4,6 @@ import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -26,15 +25,20 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.LabelLinkListener;
+import br.com.persist.componente.LabelTextTemp;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
@@ -115,7 +119,7 @@ public class ObjetoContainer extends Panel {
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
-			container.add(criarLinha("label.id", txtId));
+			container.add(criarLinhaCopiar("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinha("label.desloc_x_id", txtDeslocXId));
@@ -194,6 +198,12 @@ public class ObjetoContainer extends Panel {
 				objeto.setClonarAoDestacar(chk.isSelected());
 				MacroProvedor.copiarDestacado(chk.isSelected());
 			}
+		}
+
+		private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
+			Panel panel = criarLinha(chaveRotulo, textField);
+			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
+			return panel;
 		}
 	}
 
@@ -413,15 +423,15 @@ public class ObjetoContainer extends Panel {
 		}
 	}
 
-	private Component criarLinha(String chaveRotulo, JComponent componente) {
+	private Panel criarLinha(String chaveRotulo, JComponent componente) {
 		return criarLinha(chaveRotulo, componente, null);
 	}
 
-	private Component criarLinha(String chaveRotulo, JComponent componente, String hint) {
+	private Panel criarLinha(String chaveRotulo, JComponent componente, String hint) {
 		return criarLinhaComLink(chaveRotulo, componente, hint, null);
 	}
 
-	private Component criarLinhaComLink(String chaveRotulo, JComponent componente, String hint,
+	private Panel criarLinhaComLink(String chaveRotulo, JComponent componente, String hint,
 			LabelLinkListener linkListener) {
 		Dimension largura = new Dimension(120, 0);
 		Panel linha = new Panel();
@@ -439,6 +449,35 @@ public class ObjetoContainer extends Panel {
 			label.modoLink(linkListener);
 		}
 		return linha;
+	}
+
+	private class PanelCopiarColar extends PanelCenter {
+		private static final long serialVersionUID = 1L;
+		private final Action copiar = Action.actionIcon("label.copiar", Icones.COPIA);
+		private final Action colar = Action.actionIcon("label.colar", Icones.COLAR);
+		private LabelTextTemp lblMsg = new LabelTextTemp();
+		private final TextField textField;
+
+		private PanelCopiarColar(TextField textField) {
+			this.textField = textField;
+			add(new Button(copiar));
+			add(lblMsg);
+			add(new Button(colar));
+			copiar.setActionListener(e -> copiar());
+			colar.setActionListener(e -> colar());
+		}
+
+		private void copiar() {
+			String string = Util.getString(textField);
+			if (!Util.estaVazio(string)) {
+				Util.setContentTransfered(string);
+				lblMsg.mensagemChave("msg.copiado");
+			}
+		}
+
+		private void colar() {
+			Util.getContentTransfered(textField);
+		}
 	}
 
 	private class PanelDescricao extends Panel {
