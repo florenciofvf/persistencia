@@ -125,7 +125,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.intervalo", txtIntervalo));
-			container.add(criarLinhaComLink("label.arquivo", txtArquivo,
+			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
 					Mensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
@@ -202,6 +202,13 @@ public class ObjetoContainer extends Panel {
 
 		private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
 			Panel panel = criarLinha(chaveRotulo, textField);
+			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
+			return panel;
+		}
+
+		private Panel criarLinhaComLinkCopiar(String chaveRotulo, TextField textField, String hint,
+				LabelLinkListener linkListener) {
+			Panel panel = criarLinhaComLink(chaveRotulo, textField, hint, linkListener);
 			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
 			return panel;
 		}
