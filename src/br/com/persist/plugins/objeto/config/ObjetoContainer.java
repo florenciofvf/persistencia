@@ -200,18 +200,18 @@ public class ObjetoContainer extends Panel {
 			}
 		}
 
-		private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
-			Panel panel = criarLinha(chaveRotulo, textField);
-			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
-			return panel;
-		}
-
 		private Panel criarLinhaComLinkCopiar(String chaveRotulo, TextField textField, String hint,
 				LabelLinkListener linkListener) {
 			Panel panel = criarLinhaComLink(chaveRotulo, textField, hint, linkListener);
 			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
 			return panel;
 		}
+	}
+
+	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
+		Panel panel = criarLinha(chaveRotulo, textField);
+		panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
+		return panel;
 	}
 
 	private class PanelBanco extends Panel implements ActionListener {
@@ -291,7 +291,7 @@ public class ObjetoContainer extends Panel {
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.apelido_para_joins", txtApelido));
 			container.add(criarLinha("label.grupo", txtGrupo));
-			container.add(criarLinha("label.tabela", txtTabela));
+			container.add(criarLinhaCopiar("label.tabela", txtTabela));
 			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.select_alter", txtSelectAlter));
 			if (Preferencias.isHabilitadoInnerJoinsObjeto()) {
