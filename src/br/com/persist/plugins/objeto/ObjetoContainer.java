@@ -298,12 +298,12 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			if (Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
-				if (arquivo != null) {
+			if (arquivo != null) {
+				if (Util.confirmaSalvar(ObjetoContainer.this, Constantes.UM)) {
 					salvar(arquivo);
-				} else {
-					salvarComo();
 				}
+			} else {
+				salvarComo();
 			}
 		}
 
