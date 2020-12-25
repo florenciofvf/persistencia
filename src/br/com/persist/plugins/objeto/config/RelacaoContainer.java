@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto.config;
 
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
@@ -193,7 +194,8 @@ public class RelacaoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR);
+				super.ini(null, COPIAR, COLAR, APLICAR);
+				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
 			@Override
@@ -208,6 +210,11 @@ public class RelacaoContainer extends Panel {
 				MacroProvedor.corFonte(relacao.getCorFonte());
 				colorChooser.setColor(relacao.getCorFonte());
 				objetoSuperficie.repaint();
+			}
+
+			@Override
+			protected void aplicar() {
+				stateChanged(null);
 			}
 		}
 	}
@@ -235,7 +242,8 @@ public class RelacaoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR);
+				super.ini(null, COPIAR, COLAR, APLICAR);
+				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
 			@Override
@@ -250,6 +258,11 @@ public class RelacaoContainer extends Panel {
 				MacroProvedor.corFundo(relacao.getCor());
 				colorChooser.setColor(relacao.getCor());
 				objetoSuperficie.repaint();
+			}
+
+			@Override
+			protected void aplicar() {
+				stateChanged(null);
 			}
 		}
 	}
