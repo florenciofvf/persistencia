@@ -283,21 +283,22 @@ public class ObjetoContainer extends Panel {
 			chkCCSC.addActionListener(this);
 			chkBPNT.addActionListener(this);
 			Box container = Box.createVerticalBox();
-			container.add(criarLinha("label.apelido_para_joins", txtApelido));
-			container.add(criarLinha("label.grupo", txtGrupo));
+			container.add(criarLinhaCopiar("label.apelido_para_joins", txtApelido));
+			container.add(criarLinhaCopiar("label.grupo", txtGrupo));
 			container.add(criarLinhaCopiar("label.tabela", txtTabela));
 			container.add(criarLinhaCopiar("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
-			container.add(criarLinha("label.select_alter", txtSelectAlter));
+			container.add(criarLinhaCopiar("label.select_alter", txtSelectAlter));
 			if (Preferencias.isHabilitadoInnerJoinsObjeto()) {
-				container.add(criarLinha("label.tabelas", txtTabelas));
-				container.add(criarLinha("label.joins", txtJoins, Mensagens.getString("hint.joins")));
+				container.add(criarLinhaCopiar("label.tabelas", txtTabelas));
+				container.add(criarLinhaCopiar("label.joins", txtJoins, Mensagens.getString("hint.joins")));
 			}
-			container.add(criarLinha("label.prefixo_nt", txtPrefixoNT));
-			container.add(criarLinha("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
-			container.add(criarLinha("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
-			container.add(criarLinha("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
-			container.add(criarLinha("label.complemento", txtComplemento));
-			container.add(criarLinha("label.final_consulta", txtFinalConsulta));
+			container.add(criarLinhaCopiar("label.prefixo_nt", txtPrefixoNT));
+			container.add(criarLinhaCopiar("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
+			container.add(
+					criarLinhaCopiar("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
+			container.add(criarLinhaCopiar("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
+			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
+			container.add(criarLinhaCopiar("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinha("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
