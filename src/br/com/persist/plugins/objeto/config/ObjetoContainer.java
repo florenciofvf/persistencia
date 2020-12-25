@@ -1,8 +1,8 @@
 package br.com.persist.plugins.objeto.config;
 
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
-import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -39,7 +39,6 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.LabelLinkListener;
 import br.com.persist.componente.LabelTextTemp;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
@@ -463,7 +462,7 @@ public class ObjetoContainer extends Panel {
 		return linha;
 	}
 
-	private class PanelCopiarColar extends PanelCenter {
+	private class PanelCopiarColar extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Action copiar = Action.actionIcon("label.copiar", Icones.COPIA);
 		private final Action colar = Action.actionIcon("label.colar", Icones.COLAR);
@@ -472,10 +471,9 @@ public class ObjetoContainer extends Panel {
 
 		private PanelCopiarColar(TextField textField) {
 			this.textField = textField;
-			add(new Button(copiar));
-			add(lblMsg);
-			add(new Button(colar));
-			setPreferredSize(new Dimension(120, 30));
+			add(BorderLayout.WEST, new Button(copiar));
+			add(BorderLayout.CENTER, lblMsg);
+			add(BorderLayout.EAST, new Button(colar));
 			copiar.setActionListener(e -> copiar());
 			colar.setActionListener(e -> colar());
 		}
