@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.config;
 
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -551,7 +552,8 @@ public class ObjetoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR);
+				super.ini(null, COPIAR, COLAR, APLICAR);
+				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
 			@Override
@@ -566,6 +568,11 @@ public class ObjetoContainer extends Panel {
 				MacroProvedor.corFonte(objeto.getCorFonte());
 				colorChooser.setColor(objeto.getCorFonte());
 				objetoSuperficie.repaint();
+			}
+
+			@Override
+			protected void aplicar() {
+				stateChanged(null);
 			}
 		}
 	}
@@ -593,7 +600,8 @@ public class ObjetoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR);
+				super.ini(null, COPIAR, COLAR, APLICAR);
+				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
 			@Override
@@ -608,6 +616,11 @@ public class ObjetoContainer extends Panel {
 				MacroProvedor.corFundo(objeto.getCor());
 				colorChooser.setColor(objeto.getCor());
 				objetoSuperficie.repaint();
+			}
+
+			@Override
+			protected void aplicar() {
+				stateChanged(null);
 			}
 		}
 	}
