@@ -209,12 +209,6 @@ public class ObjetoContainer extends Panel {
 		}
 	}
 
-	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
-		Panel panel = criarLinha(chaveRotulo, textField);
-		panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
-		return panel;
-	}
-
 	private class PanelBanco extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private TextField txtFinalConsulta = new TextField();
@@ -293,7 +287,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.apelido_para_joins", txtApelido));
 			container.add(criarLinha("label.grupo", txtGrupo));
 			container.add(criarLinhaCopiar("label.tabela", txtTabela));
-			container.add(criarLinha("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
+			container.add(criarLinhaCopiar("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinha("label.select_alter", txtSelectAlter));
 			if (Preferencias.isHabilitadoInnerJoinsObjeto()) {
 				container.add(criarLinha("label.tabelas", txtTabelas));
@@ -431,6 +425,16 @@ public class ObjetoContainer extends Panel {
 		}
 	}
 
+	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField) {
+		return criarLinhaCopiar(chaveRotulo, textField, null);
+	}
+
+	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField, String hint) {
+		Panel panel = criarLinha(chaveRotulo, textField, hint);
+		panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
+		return panel;
+	}
+
 	private Panel criarLinha(String chaveRotulo, JComponent componente) {
 		return criarLinha(chaveRotulo, componente, null);
 	}
@@ -471,6 +475,7 @@ public class ObjetoContainer extends Panel {
 			add(new Button(copiar));
 			add(lblMsg);
 			add(new Button(colar));
+			setPreferredSize(new Dimension(120, 30));
 			copiar.setActionListener(e -> copiar());
 			colar.setActionListener(e -> colar());
 		}
