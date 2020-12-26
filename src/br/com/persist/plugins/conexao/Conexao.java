@@ -9,9 +9,9 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
 public class Conexao {
-	private String inicioComplemento;
 	private String finalComplemento;
 	private final String nome;
+	private String constraint;
 	private String urlBanco;
 	private String catalogo;
 	private String usuario;
@@ -77,8 +77,8 @@ public class Conexao {
 
 	public Conexao clonar(String novoNome) {
 		Conexao c = new Conexao(novoNome);
-		c.inicioComplemento = inicioComplemento;
 		c.finalComplemento = finalComplemento;
+		c.constraint = constraint;
 		c.urlBanco = urlBanco;
 		c.catalogo = catalogo;
 		c.esquema = esquema;
@@ -89,8 +89,8 @@ public class Conexao {
 	}
 
 	public void aplicar(Attributes attr) {
-		inicioComplemento = attr.getValue("inicioComplemento");
 		finalComplemento = attr.getValue("finalComplemento");
+		constraint = attr.getValue("constraint");
 		urlBanco = attr.getValue("urlBanco");
 		catalogo = attr.getValue("catalogo");
 		esquema = attr.getValue("esquema");
@@ -104,8 +104,8 @@ public class Conexao {
 		util.atributo("nome", Util.escapar(nome));
 		util.atributo("usuario", Util.escapar(usuario));
 		util.atributo("senha", Util.escapar(senha));
-		util.atributo("inicioComplemento", Util.escapar(inicioComplemento));
 		util.atributo("finalComplemento", Util.escapar(finalComplemento));
+		util.atributo("constraint", Util.escapar(constraint));
 		util.atributo("urlBanco", Util.escapar(urlBanco));
 		util.atributo("catalogo", Util.escapar(catalogo));
 		util.atributo("esquema", Util.escapar(esquema));
@@ -132,20 +132,20 @@ public class Conexao {
 		return nome;
 	}
 
-	public String getInicioComplemento() {
-		return inicioComplemento;
-	}
-
-	public void setInicioComplemento(String inicioComplemento) {
-		this.inicioComplemento = inicioComplemento;
-	}
-
 	public String getFinalComplemento() {
 		return finalComplemento;
 	}
 
 	public void setFinalComplemento(String finalComplemento) {
 		this.finalComplemento = finalComplemento;
+	}
+
+	public String getConstraint() {
+		return constraint;
+	}
+
+	public void setConstraint(String constraint) {
+		this.constraint = constraint;
 	}
 
 	public String getEsquema() {
