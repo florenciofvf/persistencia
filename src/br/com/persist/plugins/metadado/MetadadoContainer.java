@@ -331,6 +331,11 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				List<Metadado> camposExportados = converterExportados(
 						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO);
+				if (!Util.estaVazio(conexao.getConstraint())) {
+					List<Metadado> constraints = converterLista(
+							Persistencia.listarConstraints(conn, conexao, tabela.getDescricao()));
+					preencher(tabela, constraints, Constantes.CONSTRAINTS, Constantes.CONSTRAINT);
+				}
 				progresso.setValue(++contador);
 				raiz.add(tabela);
 			}

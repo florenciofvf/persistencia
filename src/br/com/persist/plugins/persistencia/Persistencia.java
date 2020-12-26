@@ -411,6 +411,24 @@ public class Persistencia {
 		}
 	}
 
+	public static List<String> listarConstraints(Connection conn, Conexao conexao, String tabela)
+			throws PersistenciaException {
+		try {
+			String consulta = String.format(conexao.getConstraint(), tabela);
+			List<String> resposta = new ArrayList<>();
+			try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
+				try (ResultSet rs = psmt.executeQuery()) {
+					while (rs.next()) {
+						resposta.add(rs.getString("CONSTRAINT_NAME"));
+					}
+				}
+			}
+			return resposta;
+		} catch (Exception ex) {
+			throw new PersistenciaException(ex);
+		}
+	}
+
 	public static List<String> listarCampos(Connection conn, Conexao conexao, String tabela)
 			throws PersistenciaException {
 		try {
