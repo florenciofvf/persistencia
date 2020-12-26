@@ -24,6 +24,7 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao1;
 
 public class MetadadoTree extends Tree {
@@ -160,6 +161,7 @@ public class MetadadoTree extends Tree {
 
 	private class MetadadosPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action constraintInfoAction = Action.actionMenu("label.constraint_info", null);
 		private MenuAbrirExportacaoH menuAbrirExportacaoH = new MenuAbrirExportacaoH();
 		private MenuAbrirImportacaoH menuAbrirImportacaoH = new MenuAbrirImportacaoH();
 		private MenuAbrirExportacaoC menuAbrirExportacaoC = new MenuAbrirExportacaoC();
@@ -172,11 +174,14 @@ public class MetadadoTree extends Tree {
 			add(menuAbrirImportacaoH);
 			add(menuAbrirExportacaoC);
 			add(menuAbrirImportacaoC);
+			addMenuItem(true, constraintInfoAction);
+			constraintInfoAction.setActionListener(e -> constraintInfo());
 		}
 
 		private void preShow(Metadado metadado) {
 			boolean ehTabela = metadado.isTabela();
 			menuExportacao.setEnabled(metadado.getEhRaiz() && !metadado.estaVazio());
+			constraintInfoAction.setEnabled(metadado.isConstraint());
 			menuAbrirExportacaoH.setEnabled(ehTabela);
 			menuAbrirImportacaoH.setEnabled(ehTabela);
 			menuAbrirExportacaoC.setEnabled(ehTabela);
@@ -245,6 +250,10 @@ public class MetadadoTree extends Tree {
 	public Metadado getRaiz() {
 		MetadadoModelo modelo = (MetadadoModelo) getModel();
 		return (Metadado) modelo.getRoot();
+	}
+
+	public void constraintInfo() {
+		ouvintes.forEach(o -> o.constraintInfo(MetadadoTree.this));
 	}
 
 	public String pksMultipla() {

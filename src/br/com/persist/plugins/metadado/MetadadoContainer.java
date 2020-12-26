@@ -332,7 +332,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 						Persistencia.listarCamposExportados(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, camposExportados, Constantes.CAMPOS_EXPORTADOS, Constantes.CAMPO_EXPORTADO);
 				if (!Util.estaVazio(conexao.getConstraint())) {
-					List<Metadado> constraints = converterLista(
+					List<Metadado> constraints = converterConstraint(
 							Persistencia.listarConstraints(conn, conexao, tabela.getDescricao()));
 					preencher(tabela, constraints, Constantes.CONSTRAINTS, Constantes.CONSTRAINT);
 				}
@@ -371,6 +371,17 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
+		private List<Metadado> converterConstraint(List<String[]> lista) {
+			List<Metadado> resposta = new ArrayList<>();
+			for (String[] string : lista) {
+				Metadado m = new Metadado(string[0], false);
+				m.setConstraint(true);
+				m.setTag(string[2]);
+				resposta.add(m);
+			}
+			return resposta;
+		}
+
 		private void preencher(Metadado tabela, List<Metadado> campos, String tipoPlural, String tipoSingular) {
 			if (!campos.isEmpty()) {
 				String descricao = campos.size() > 1 ? tipoPlural : tipoSingular;
@@ -391,8 +402,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
-	public void abrirExportacaoFormArquivo(MetadadoTree metadados, boolean circular) {
-		Metadado metadado = metadados.getObjetoSelecionado();
+	public void abrirExportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoForm");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -401,8 +412,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
-	public void abrirExportacaoFichArquivo(MetadadoTree metadados, boolean circular) {
-		Metadado metadado = metadados.getObjetoSelecionado();
+	public void abrirExportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoFich");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -411,8 +422,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
-	public void abrirImportacaoFormArquivo(MetadadoTree metadados, boolean circular) {
-		Metadado metadado = metadados.getObjetoSelecionado();
+	public void abrirImportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoForm");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -421,8 +432,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
-	public void abrirImportacaoFichArquivo(MetadadoTree metadados, boolean circular) {
-		Metadado metadado = metadados.getObjetoSelecionado();
+	public void abrirImportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {
 			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoFich");
 			args.put(MetadadoEvento.CIRCULAR, circular);
@@ -431,18 +442,26 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	@Override
-	public void exportarFormArquivo(MetadadoTree metadados) {
-		Metadado metadado = metadados.getObjetoSelecionado();
+	public void exportarFormArquivo(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {
 			formulario.processar(criarArgs(metadado, "exportarMetadadoRaizForm"));
 		}
 	}
 
 	@Override
-	public void exportarFichArquivo(MetadadoTree metadados) {
-		Metadado metadado = metadados.getObjetoSelecionado();
+	public void exportarFichArquivo(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
 		if (metadado != null) {
 			formulario.processar(criarArgs(metadado, "exportarMetadadoRaizFich"));
+		}
+	}
+
+	@Override
+	public void constraintInfo(MetadadoTree metadadoTree) {
+		Metadado metadado = metadadoTree.getObjetoSelecionado();
+		if (metadado != null && metadado.isConstraint()) {
+			Util.mensagem(MetadadoContainer.this, metadado.getTag(), file);
 		}
 	}
 

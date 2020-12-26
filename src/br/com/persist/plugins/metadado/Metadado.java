@@ -30,9 +30,11 @@ public class Metadado implements Transferable {
 	private final String descricao;
 	private int totalImportados;
 	private int totalExportados;
+	private boolean constraint;
 	private boolean ehRaiz;
 	private boolean tabela;
 	private Metadado pai;
+	private String tag;
 
 	public Metadado(String descricao, boolean contabilizavel) {
 		if (Util.estaVazio(descricao)) {
@@ -47,6 +49,8 @@ public class Metadado implements Transferable {
 		util.abrirTag(Constantes.METADADO);
 		util.atributo("descricao", descricao);
 		util.atributo("tabela", tabela);
+		util.atributo("tag", getTag());
+		util.atributo("constraint", constraint);
 		util.atributo("contabilizavel", contabilizavel);
 		util.fecharTag();
 		for (Metadado m : filhos) {
@@ -56,7 +60,9 @@ public class Metadado implements Transferable {
 	}
 
 	public void aplicar(Attributes attr) {
+		tag = attr.getValue("tag");
 		tabela = Boolean.parseBoolean(attr.getValue("tabela"));
+		constraint = Boolean.parseBoolean(attr.getValue("constraint"));
 	}
 
 	public int getIndice(Metadado metadado) {
@@ -398,5 +404,24 @@ public class Metadado implements Transferable {
 			throw new IllegalStateException();
 		}
 		return filhos.get(0);
+	}
+
+	public boolean isConstraint() {
+		return constraint;
+	}
+
+	public void setConstraint(boolean constraint) {
+		this.constraint = constraint;
+	}
+
+	public String getTag() {
+		if (Util.estaVazio(tag)) {
+			tag = Constantes.VAZIO;
+		}
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 }

@@ -308,19 +308,19 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	@Override
-	public void iconeAnexo(AnexoTree anexo) {
-		Anexo arquivo = anexo.getObjetoSelecionado();
+	public void iconeAnexo(AnexoTree anexoTree) {
+		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo != null) {
 			AnexoIconeDialogo form = AnexoIconeDialogo.criar((Frame) null, arquivo);
 			form.setLocationRelativeTo(AnexoContainer.this);
 			form.setVisible(true);
-			AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
+			AnexoTreeUtil.refreshEstrutura(anexoTree, arquivo);
 		}
 	}
 
 	@Override
-	public void copiarAtributosAnexo(AnexoTree anexo) {
-		Anexo arquivo = anexo.getObjetoSelecionado();
+	public void copiarAtributosAnexo(AnexoTree anexoTree) {
+		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo != null) {
 			map.put(Constantes.ABRIR_VISIVEL, arquivo.isAbrirVisivel());
 			map.put(Constantes.PADRAO_ABRIR, arquivo.isPadraoAbrir());
@@ -330,8 +330,8 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	@Override
-	public void colarAtributosAnexo(AnexoTree anexo) {
-		Anexo arquivo = anexo.getObjetoSelecionado();
+	public void colarAtributosAnexo(AnexoTree anexoTree) {
+		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo == null) {
 			return;
 		}
@@ -347,7 +347,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			arquivo.setIcone(icone, nome);
 		}
 		AnexoModelo.putAnexo(arquivo);
-		AnexoTreeUtil.refreshEstrutura(anexo, arquivo);
+		AnexoTreeUtil.refreshEstrutura(anexoTree, arquivo);
 	}
 
 	@Override
