@@ -49,8 +49,8 @@ public class Metadado implements Transferable {
 		util.abrirTag(Constantes.METADADO);
 		util.atributo("descricao", descricao);
 		util.atributo("tabela", tabela);
-		util.atributo("tag", getTag());
 		util.atributo("constraint", constraint);
+		util.atributo("tag", Util.escapar(getTag()));
 		util.atributo("contabilizavel", contabilizavel);
 		util.fecharTag();
 		for (Metadado m : filhos) {
