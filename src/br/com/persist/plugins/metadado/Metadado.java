@@ -93,6 +93,12 @@ public class Metadado implements Transferable {
 				return m;
 			}
 		}
+		for (Metadado m : filhos) {
+			Metadado resp = m.getMetadado(descricao, porParte);
+			if (resp != null) {
+				return resp;
+			}
+		}
 		return null;
 	}
 
