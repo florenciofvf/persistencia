@@ -181,7 +181,7 @@ public class TabelaPersistencia extends JTable {
 
 	public void tornarVisivel(int linha, int coluna) {
 		int colunaView = convertColumnIndexToView(coluna);
-		Rectangle rect = getCellRect(colunaView, colunaView, true);
+		Rectangle rect = getCellRect(linha, colunaView, true);
 		if (rect != null) {
 			scrollRectToVisible(rect);
 		}
