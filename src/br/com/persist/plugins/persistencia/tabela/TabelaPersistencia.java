@@ -187,11 +187,24 @@ public class TabelaPersistencia extends JTable {
 		}
 	}
 
+	public void larguraColuna(int coluna) {
+		int colunaView = convertColumnIndexToView(coluna);
+		TableColumnModel columnModel = getColumnModel();
+		TableColumn tableColumn = columnModel.getColumn(colunaView);
+		int atual = tableColumn.getWidth();
+		Object resp = Util.getValorInputDialog(TabelaPersistencia.this, "label.largura_coluna", "" + atual, "" + atual);
+		if (resp == null || Util.estaVazio(resp.toString())) {
+			return;
+		}
+		tableColumn.setPreferredWidth(Util.getInt(resp.toString(), atual));
+	}
+
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action concatNomeColunaAcao = Action.actionMenu("label.concatenar_nome_coluna", null);
 		private Action copiarNomeColunaAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action detalheColunaAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
+		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private Separator separator = new Separator();
 		private MenuIN menuIN = new MenuIN();
@@ -199,6 +212,7 @@ public class TabelaPersistencia extends JTable {
 
 		private PopupHeader() {
 			addMenuItem(detalheColunaAcao);
+			addMenuItem(larguraColunaAcao);
 			add(true, new MenuConcatenado("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat", false, false));
@@ -217,20 +231,19 @@ public class TabelaPersistencia extends JTable {
 					listener.copiarNomeColuna(TabelaPersistencia.this, coluna, null);
 				}
 			});
-
 			concatNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
 					listener.concatenarNomeColuna(TabelaPersistencia.this, coluna);
 				}
 			});
-
 			detalheColunaAcao.setActionListener(e -> {
 				Coluna coluna = ((OrdenacaoModelo) getModel()).getColuna(indiceColuna);
 				if (coluna != null) {
 					Util.mensagem(TabelaPersistencia.this, coluna.getDetalhe());
 				}
 			});
+			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 		}
 
 		private void preShow(String chave) {
