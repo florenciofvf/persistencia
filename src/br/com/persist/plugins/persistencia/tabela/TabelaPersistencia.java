@@ -1,6 +1,7 @@
 package br.com.persist.plugins.persistencia.tabela;
 
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -177,6 +178,14 @@ public class TabelaPersistencia extends JTable {
 			return -1;
 		}
 	};
+
+	public void tornarVisivel(int linha, int coluna) {
+		int colunaView = convertColumnIndexToView(coluna);
+		Rectangle rect = getCellRect(colunaView, colunaView, true);
+		if (rect != null) {
+			scrollRectToVisible(rect);
+		}
+	}
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
