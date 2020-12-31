@@ -1,6 +1,7 @@
 package br.com.persist.plugins.persistencia.tabela;
 
 import java.awt.Component;
+import java.awt.FontMetrics;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -199,19 +200,29 @@ public class TabelaPersistencia extends JTable {
 		tableColumn.setPreferredWidth(Util.getInt(resp.toString(), atual));
 	}
 
+	public void larguraTitulo(int coluna, int larguraTitulo) {
+		int colunaView = convertColumnIndexToView(coluna);
+		TableColumnModel columnModel = getColumnModel();
+		TableColumn tableColumn = columnModel.getColumn(colunaView);
+		tableColumn.setPreferredWidth(larguraTitulo);
+	}
+
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action concatNomeColunaAcao = Action.actionMenu("label.concatenar_nome_coluna", null);
 		private Action copiarNomeColunaAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action detalheColunaAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
+		private Action larguraTituloAcao = Action.actionMenu("label.largura_titulo", null);
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private Separator separator = new Separator();
 		private MenuIN menuIN = new MenuIN();
+		private int larguraColuna;
 		private int indiceColuna;
 
 		private PopupHeader() {
 			addMenuItem(detalheColunaAcao);
+			addMenuItem(larguraTituloAcao);
 			addMenuItem(larguraColunaAcao);
 			add(true, new MenuConcatenado("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
@@ -243,10 +254,13 @@ public class TabelaPersistencia extends JTable {
 					Util.mensagem(TabelaPersistencia.this, coluna.getDetalhe());
 				}
 			});
+			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 		}
 
 		private void preShow(String chave) {
+			FontMetrics fontMetrics = getFontMetrics(getFont());
+			larguraColuna = fontMetrics.stringWidth(chave) + 30;
 			menuIN.setText("AND IN - " + chave);
 			limparMenuChaveamento();
 			List<String> lista = getChaveamento().get(chave);
