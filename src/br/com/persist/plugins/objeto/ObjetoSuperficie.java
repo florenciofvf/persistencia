@@ -1328,19 +1328,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void propriedades() {
+			StringBuilder sbi = new StringBuilder();
 			int invisiveis = 0;
 			int visiveis = 0;
 			for (Objeto objeto : objetos) {
 				if (objeto.visivel) {
 					visiveis++;
 				} else {
+					sbi.append(objeto.getId() + Constantes.QL);
 					invisiveis++;
 				}
 			}
 			StringBuilder sb = new StringBuilder();
-			sb.append(Mensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
-			sb.append(Mensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
 			sb.append(Mensagens.getString("label.total_objetos") + " " + (visiveis + invisiveis) + Constantes.QL);
+			sb.append(Mensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
+			sb.append(Mensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
+			if (sbi.length() > 0) {
+				sb.append(sbi);
+			}
 			File file = container.getArquivo();
 			if (file != null) {
 				sb.append("------------------" + Constantes.QL);
