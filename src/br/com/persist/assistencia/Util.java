@@ -469,6 +469,7 @@ public class Util {
 			if (ini - 1 >= 0) {
 				char d = string.charAt(ini - 1);
 				if (c == '\n' && d == '\n') {
+					ini++;
 					break;
 				}
 			}
