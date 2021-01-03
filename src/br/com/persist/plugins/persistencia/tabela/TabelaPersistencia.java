@@ -189,9 +189,7 @@ public class TabelaPersistencia extends JTable {
 	}
 
 	public void larguraColuna(int coluna) {
-		int colunaView = convertColumnIndexToView(coluna);
-		TableColumnModel columnModel = getColumnModel();
-		TableColumn tableColumn = columnModel.getColumn(colunaView);
+		TableColumn tableColumn = getTableColumn(coluna);
 		int atual = tableColumn.getWidth();
 		Object resp = Util.getValorInputDialog(TabelaPersistencia.this, "label.largura_coluna", "" + atual, "" + atual);
 		if (resp == null || Util.estaVazio(resp.toString())) {
@@ -201,10 +199,19 @@ public class TabelaPersistencia extends JTable {
 	}
 
 	public void larguraTitulo(int coluna, int larguraTitulo) {
+		TableColumn tableColumn = getTableColumn(coluna);
+		tableColumn.setPreferredWidth(larguraTitulo);
+	}
+
+	public void larguraMinima(int coluna) {
+		TableColumn tableColumn = getTableColumn(coluna);
+		tableColumn.setPreferredWidth(Constantes.DEZ);
+	}
+
+	private TableColumn getTableColumn(int coluna) {
 		int colunaView = convertColumnIndexToView(coluna);
 		TableColumnModel columnModel = getColumnModel();
-		TableColumn tableColumn = columnModel.getColumn(colunaView);
-		tableColumn.setPreferredWidth(larguraTitulo);
+		return columnModel.getColumn(colunaView);
 	}
 
 	private class PopupHeader extends Popup {
@@ -214,6 +221,7 @@ public class TabelaPersistencia extends JTable {
 		private Action detalheColunaAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
 		private Action larguraTituloAcao = Action.actionMenu("label.largura_titulo", null);
+		private Action larguraMinimaAcao = Action.actionMenu("label.largura_minima", null);
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private Separator separator = new Separator();
 		private MenuIN menuIN = new MenuIN();
@@ -222,8 +230,9 @@ public class TabelaPersistencia extends JTable {
 
 		private PopupHeader() {
 			addMenuItem(detalheColunaAcao);
-			addMenuItem(larguraTituloAcao);
+			addMenuItem(true, larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
+			addMenuItem(larguraTituloAcao);
 			add(true, new MenuConcatenado("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat", false, false));
@@ -256,6 +265,7 @@ public class TabelaPersistencia extends JTable {
 			});
 			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
+			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
 		}
 
 		private void preShow(String chave) {
