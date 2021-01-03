@@ -36,8 +36,6 @@ public interface InternalListener {
 	}
 
 	public interface Visibilidade {
-		public boolean contemDestino(Objeto objeto);
-
 		public void setVisible(boolean b);
 	}
 

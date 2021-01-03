@@ -41,13 +41,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container = new InternalContainer(this, padrao, objeto, g, buscaAuto);
 		container.setConfiguraAlturaListener(InternalFormulario.this::configurarAltura);
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
+		container.setVisibilidadeListener(InternalFormulario.this::setVisible);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
 		container.setComponenteListener(InternalFormulario.this::getThis);
 		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
-		container.setVisibilidadeListener(visibilidadeListener);
 		container.setVinculoListener(vinculoListener);
 		setFrameIcon(Icones.VAZIO);
 		montarLayout();
@@ -224,22 +224,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (desktop != null) {
 				desktop.pesquisarLink(refs, argumentos);
 			}
-		}
-	};
-
-	private transient InternalListener.Visibilidade visibilidadeListener = new InternalListener.Visibilidade() {
-		@Override
-		public void setVisible(boolean b) {
-			InternalFormulario.this.setVisible(b);
-		}
-
-		@Override
-		public boolean contemDestino(Objeto objeto) {
-			checarDesktop();
-			if (desktop instanceof ObjetoSuperficie) {
-				return ((ObjetoSuperficie) desktop).contemDestino(objeto);
-			}
-			return false;
 		}
 	};
 
