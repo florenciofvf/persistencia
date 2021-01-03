@@ -923,6 +923,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return lista;
 	}
 
+	public boolean contemDestino(Objeto obj) {
+		for (Relacao relacao : relacoes) {
+			if (relacao.contem2(obj) && relacao.ehOrigem(obj)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Relacao getRelacao(Objeto obj1, Objeto obj2) {
 		if (obj1 != null && obj2 != null) {
 			Relacao temp = new Relacao(obj1, obj2);

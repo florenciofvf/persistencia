@@ -166,7 +166,15 @@ public class Relacao {
 		if (!origem.visivel || !destino.visivel) {
 			return false;
 		}
+		return contem2(objeto);
+	}
+
+	public boolean contem2(Objeto objeto) {
 		return origem.equals(objeto) || destino.equals(objeto);
+	}
+
+	public boolean ehOrigem(Objeto objeto) {
+		return origem.equals(objeto);
 	}
 
 	public boolean contem(int posX, int posY) {

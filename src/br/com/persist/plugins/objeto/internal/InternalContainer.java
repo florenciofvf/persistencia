@@ -299,7 +299,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private void processarReferenciaVisibilidade(Referencia referencia, OrdenacaoModelo modelo) {
-		if (visibilidadeListener != null) {
+		if (visibilidadeListener != null && !visibilidadeListener.contemDestino(objeto)) {
 			boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
 			boolean visivel = objeto.isVisivel();
 			objeto.setVisivel(!invisivel);
