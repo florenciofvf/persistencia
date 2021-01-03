@@ -9,6 +9,7 @@ import br.com.persist.plugins.objeto.Objeto;
 
 public class Referencia {
 	private final List<Coletor> coletores;
+	private boolean validoInvisibilidade;
 	private boolean vazioInvisivel;
 	private final String tabela;
 	private final String grupo;
@@ -121,6 +122,14 @@ public class Referencia {
 
 	public void setIcone(String icone) {
 		this.icone = icone;
+	}
+
+	public boolean isValidoInvisibilidade() {
+		return validoInvisibilidade;
+	}
+
+	public void setValidoInvisibilidade(boolean validoInvisibilidade) {
+		this.validoInvisibilidade = validoInvisibilidade;
 	}
 
 	@Override

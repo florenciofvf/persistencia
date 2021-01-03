@@ -299,7 +299,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private void processarReferenciaVisibilidade(Referencia referencia, OrdenacaoModelo modelo) {
-		if (visibilidadeListener != null) {
+		if (visibilidadeListener != null && referencia.isValidoInvisibilidade()) {
 			boolean invisivel = modelo.getRowCount() == 0 && referencia.isVazioInvisivel();
 			boolean visivel = objeto.isVisivel();
 			objeto.setVisivel(!invisivel);
@@ -668,6 +668,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private void pesquisar(List<String> lista, boolean apostrofes, int coluna) {
 					pesquisa.setProcessado(false);
 					pesquisa.inicializarColetores(lista);
+					pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
 					vinculoListener.pesquisar(pesquisa, Util.getStringLista(lista, apostrofes, false));
 					pesquisarFinal(coluna);
 				}

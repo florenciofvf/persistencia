@@ -22,7 +22,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -909,6 +911,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 		}
 		return null;
+	}
+
+	public Set<String> getIdOrigens() {
+		Set<String> set = new HashSet<>();
+		for (Relacao relacao : relacoes) {
+			set.add(relacao.getOrigem().getId());
+		}
+		return set;
 	}
 
 	public List<Relacao> getRelacoes(Objeto obj) {

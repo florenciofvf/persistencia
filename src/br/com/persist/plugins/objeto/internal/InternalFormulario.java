@@ -225,6 +225,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				desktop.pesquisarLink(refs, argumentos);
 			}
 		}
+
+		public boolean validoInvisibilidade() {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				return ((ObjetoSuperficie) desktop).getIdOrigens().size() < 2;
+			}
+			return true;
+		}
 	};
 
 	public void alinhar(DesktopAlinhamento opcao) {

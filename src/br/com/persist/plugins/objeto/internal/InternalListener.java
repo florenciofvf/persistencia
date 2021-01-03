@@ -17,6 +17,8 @@ public interface InternalListener {
 		public void pesquisar(Pesquisa pesquisa, String argumentos);
 
 		public void pesquisarApos(Pesquisa pesquisa);
+
+		public boolean validoInvisibilidade();
 	}
 
 	public interface ConfiguraAltura {

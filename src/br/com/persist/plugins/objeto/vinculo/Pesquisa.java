@@ -61,6 +61,12 @@ public class Pesquisa {
 		}
 	}
 
+	public void validoInvisibilidade(boolean b) {
+		for (Referencia ref : referencias) {
+			ref.setValidoInvisibilidade(b);
+		}
+	}
+
 	public void setProcessado(boolean b) {
 		for (Referencia ref : referencias) {
 			ref.setProcessado(b);
