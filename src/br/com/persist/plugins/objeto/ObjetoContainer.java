@@ -159,9 +159,11 @@ public class ObjetoContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action selecaoGeralAcao = Action.actionIcon("label.selecao_todos", Icones.TAG2);
+		private Action pontoDestinoAcao = Action.actionIcon("label.ponto_destino", Icones.RECT);
 		private Action desenharDescAcao = Action.actionIcon("label.desenhar_desc", Icones.TAG);
 		private Action transparenteAcao = Action.actionIcon("label.transparente", Icones.RECT);
 		private Action criarObjetoAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
+		private Action pontoOrigemAcao = Action.actionIcon("label.ponto_origem", Icones.RECT);
 		private Action desenharIdAcao = Action.actionIcon("label.desenhar_id", Icones.LABEL);
 		private Action excluirAcao = Action.actionIcon("label.excluir_sel", Icones.EXCLUIR);
 		private TextField txtPrefixoNomeTabela = new TextField(5);
@@ -183,6 +185,8 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(new ToggleButton(desenharIdAcao));
 			add(new ToggleButton(desenharDescAcao));
 			add(new ToggleButton(transparenteAcao));
+			add(new ToggleButton(pontoOrigemAcao));
+			add(new ToggleButton(pontoDestinoAcao));
 			add(true, chkAjusteAutomatico);
 			add(chkAjusteLarguraFrm);
 			add(true, comboConexao);
@@ -212,12 +216,16 @@ public class ObjetoContainer extends AbstratoContainer {
 					.setActionListener(e -> objetoSuperficie.selecaoGeral(((ToggleButton) e.getSource()).isSelected()));
 			desenharDescAcao
 					.setActionListener(e -> objetoSuperficie.desenharDesc(((ToggleButton) e.getSource()).isSelected()));
-			desenharIdAcao
-					.setActionListener(e -> objetoSuperficie.desenharIds(((ToggleButton) e.getSource()).isSelected()));
 			transparenteAcao
 					.setActionListener(e -> objetoSuperficie.transparente(((ToggleButton) e.getSource()).isSelected()));
+			pontoDestinoAcao
+					.setActionListener(e -> objetoSuperficie.pontoDestino(((ToggleButton) e.getSource()).isSelected()));
 			chkAjusteAutomatico
 					.addActionListener(e -> objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected()));
+			pontoOrigemAcao
+					.setActionListener(e -> objetoSuperficie.pontoOrigem(((ToggleButton) e.getSource()).isSelected()));
+			desenharIdAcao
+					.setActionListener(e -> objetoSuperficie.desenharIds(((ToggleButton) e.getSource()).isSelected()));
 			chkAjusteLarguraFrm
 					.addActionListener(e -> objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected()));
 			txtPrefixoNomeTabela

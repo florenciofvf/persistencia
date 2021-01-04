@@ -921,6 +921,20 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return set;
 	}
 
+	public void pontoOrigem(boolean b) {
+		for (Relacao relacao : relacoes) {
+			relacao.setPontoOrigem(b);
+		}
+		repaint();
+	}
+
+	public void pontoDestino(boolean b) {
+		for (Relacao relacao : relacoes) {
+			relacao.setPontoDestino(b);
+		}
+		repaint();
+	}
+
 	public List<Relacao> getRelacoes(Objeto obj) {
 		List<Relacao> lista = new ArrayList<>();
 		if (obj != null) {
