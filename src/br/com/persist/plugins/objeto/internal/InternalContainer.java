@@ -640,13 +640,26 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private class MenuPesquisa extends MenuPadrao2 {
 				private static final long serialVersionUID = 1L;
+				private Action elementosAcao = Action.actionMenu("label.elementos", null);
 				private final transient Pesquisa pesquisa;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), Icones.CONFIG2, "nao_chave");
+					addMenuItem(true, elementosAcao);
 					this.pesquisa = pesquisa;
 					semAspasAcao.setActionListener(e -> processar(false));
 					comAspasAcao.setActionListener(e -> processar(true));
+					elementosAcao.setActionListener(e -> elementos());
+				}
+
+				private void elementos() {
+					StringBuilder sb = new StringBuilder();
+					sb.append(Mensagens.getString("label.total") + ": " + pesquisa.getReferencias().size());
+					sb.append(Constantes.QL + "-----------------");
+					for (Referencia ref : pesquisa.getReferencias()) {
+						sb.append(Constantes.QL + ref.toString2());
+					}
+					Util.mensagem(InternalContainer.this, sb.toString());
 				}
 
 				private void processar(boolean apostrofes) {

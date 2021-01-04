@@ -136,4 +136,12 @@ public class Referencia {
 	public String toString() {
 		return "grupo=" + grupo + ", tabela=" + tabela + ", campo=" + campo;
 	}
+
+	public String toString2() {
+		StringBuilder sb = new StringBuilder(tabela + "." + campo);
+		if (!Util.estaVazio(grupo)) {
+			sb.append(" GRUPO=" + grupo);
+		}
+		return sb.toString();
+	}
 }
