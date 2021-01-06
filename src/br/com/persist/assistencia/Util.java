@@ -466,10 +466,17 @@ public class Util {
 		}
 		while (ini >= 0 && ini < string.length()) {
 			char c = string.charAt(ini);
-			if (ini - 1 >= 0) {
-				char d = string.charAt(ini - 1);
+			int posAnt = ini - 1;
+			if (posAnt >= 0) {
+				char d = string.charAt(posAnt);
+				boolean parar = false;
 				if (c == '\n' && d == '\n') {
+					parar = true;
 					ini++;
+				} else if (d == '\n' && posAnt == 0) {
+					parar = true;
+				}
+				if (parar) {
 					break;
 				}
 			}
