@@ -405,6 +405,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 	}
 
+	private boolean ehValido(Metadado metadado) {
+		return metadado != null && metadado.isTabela();
+	}
+
 	private Map<String, Object> criarArgs(Metadado metadado, String metodo) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.ABRIR_METADADO, metadado);
@@ -415,7 +419,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirExportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
-		if (metadado != null) {
+		if (ehValido(metadado)) {
 			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoForm");
 			args.put(MetadadoEvento.CIRCULAR, circular);
 			formulario.processar(args);
@@ -425,7 +429,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirExportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
-		if (metadado != null) {
+		if (ehValido(metadado)) {
 			Map<String, Object> args = criarArgs(metadado, "abrirExportacaoMetadadoFich");
 			args.put(MetadadoEvento.CIRCULAR, circular);
 			formulario.processar(args);
@@ -435,7 +439,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirImportacaoFormArquivo(MetadadoTree metadadoTree, boolean circular) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
-		if (metadado != null) {
+		if (ehValido(metadado)) {
 			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoForm");
 			args.put(MetadadoEvento.CIRCULAR, circular);
 			formulario.processar(args);
@@ -445,7 +449,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	@Override
 	public void abrirImportacaoFichArquivo(MetadadoTree metadadoTree, boolean circular) {
 		Metadado metadado = metadadoTree.getObjetoSelecionado();
-		if (metadado != null) {
+		if (ehValido(metadado)) {
 			Map<String, Object> args = criarArgs(metadado, "abrirImportacaoMetadadoFich");
 			args.put(MetadadoEvento.CIRCULAR, circular);
 			formulario.processar(args);
