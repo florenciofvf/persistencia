@@ -371,15 +371,26 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			return resposta;
 		}
 
-		private List<Metadado> converterConstraint(List<String[]> lista) {
+		private List<Metadado> converterConstraint(List<List<String>> lista) {
 			List<Metadado> resposta = new ArrayList<>();
-			for (String[] string : lista) {
-				Metadado m = new Metadado(string[0], false);
+			for (List<String> listaString : lista) {
+				Metadado m = new Metadado(listaString.get(0), false);
+				m.setTag(ccAux(listaString));
 				m.setConstraint(true);
-				m.setTag(string[2]);
 				resposta.add(m);
 			}
 			return resposta;
+		}
+
+		private String ccAux(List<String> lista) {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 1; i < lista.size(); i++) {
+				if (sb.length() > 0) {
+					sb.append("|");
+				}
+				sb.append(lista.get(i));
+			}
+			return sb.toString();
 		}
 
 		private void preencher(Metadado tabela, List<Metadado> campos, String tipoPlural, String tipoSingular) {

@@ -5,6 +5,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 
 public class Persistencia {
@@ -411,23 +413,37 @@ public class Persistencia {
 		}
 	}
 
-	public static List<String[]> listarConstraints(Connection conn, Conexao conexao, String tabela)
+	public static List<List<String>> listarConstraints(Connection conn, Conexao conexao, String tabela)
 			throws PersistenciaException {
 		try {
 			String consulta = String.format(conexao.getConstraint(), tabela);
-			List<String[]> resposta = new ArrayList<>();
+			List<List<String>> resposta = new ArrayList<>();
 			try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 				try (ResultSet rs = psmt.executeQuery()) {
+					ResultSetMetaData rsmd = rs.getMetaData();
+					int totalColunas = rsmd.getColumnCount();
 					while (rs.next()) {
-						String[] array = { rs.getString("CONSTRAINT_NAME"), rs.getString("CONSTRAINT_TYPE"),
-								rs.getString("SEARCH_CONDITION") };
-						resposta.add(array);
+						listarConstraints(resposta, rs, totalColunas);
 					}
 				}
 			}
 			return resposta;
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
+		}
+	}
+
+	private static void listarConstraints(List<List<String>> resposta, ResultSet rs, int totalColunas)
+			throws SQLException {
+		List<String> lista = new ArrayList<>();
+		for (int i = 1; i <= totalColunas; i++) {
+			String s = rs.getString(i);
+			if (!Util.estaVazio(s)) {
+				lista.add(s);
+			}
+		}
+		if (!lista.isEmpty()) {
+			resposta.add(lista);
 		}
 	}
 
