@@ -3,6 +3,7 @@ package br.com.persist.componente;
 import java.awt.Component;
 
 import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 
 import br.com.persist.assistencia.Mensagens;
 
@@ -48,6 +49,10 @@ public class ButtonPopup extends Button {
 			addSeparator();
 		}
 		popup.addMenuItem(item);
+	}
+
+	protected void addItem(JCheckBoxMenuItem item) {
+		popup.add(item);
 	}
 
 	public void addSeparator() {

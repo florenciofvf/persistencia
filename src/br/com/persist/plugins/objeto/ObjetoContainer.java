@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
@@ -158,13 +159,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action selecaoGeralAcao = Action.actionIcon("label.selecao_todos", Icones.TAG2);
-		private Action pontoDestinoAcao = Action.actionIcon("label.ponto_destino", Icones.RECT);
-		private Action desenharDescAcao = Action.actionIcon("label.desenhar_desc", Icones.TAG);
-		private Action transparenteAcao = Action.actionIcon("label.transparente", Icones.RECT);
 		private Action criarObjetoAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
-		private Action pontoOrigemAcao = Action.actionIcon("label.ponto_origem", Icones.RECT);
-		private Action desenharIdAcao = Action.actionIcon("label.desenhar_id", Icones.LABEL);
 		private Action excluirAcao = Action.actionIcon("label.excluir_sel", Icones.EXCLUIR);
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
@@ -181,12 +176,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(true, btnRotulos);
 			add(btnArrasto);
 			add(btnSelecao);
-			add(true, new ToggleButton(selecaoGeralAcao));
-			add(new ToggleButton(desenharIdAcao));
-			add(new ToggleButton(desenharDescAcao));
-			add(new ToggleButton(transparenteAcao));
-			add(new ToggleButton(pontoOrigemAcao));
-			add(new ToggleButton(pontoDestinoAcao));
+			add(true, new ButtonStatus());
 			add(true, chkAjusteAutomatico);
 			add(chkAjusteLarguraFrm);
 			add(true, comboConexao);
@@ -212,20 +202,8 @@ public class ObjetoContainer extends AbstratoContainer {
 					objetoSuperficie.selecionarConexao(getConexaoPadrao());
 				}
 			});
-			selecaoGeralAcao
-					.setActionListener(e -> objetoSuperficie.selecaoGeral(((ToggleButton) e.getSource()).isSelected()));
-			desenharDescAcao
-					.setActionListener(e -> objetoSuperficie.desenharDesc(((ToggleButton) e.getSource()).isSelected()));
-			transparenteAcao
-					.setActionListener(e -> objetoSuperficie.transparente(((ToggleButton) e.getSource()).isSelected()));
-			pontoDestinoAcao
-					.setActionListener(e -> objetoSuperficie.pontoDestino(((ToggleButton) e.getSource()).isSelected()));
 			chkAjusteAutomatico
 					.addActionListener(e -> objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected()));
-			pontoOrigemAcao
-					.setActionListener(e -> objetoSuperficie.pontoOrigem(((ToggleButton) e.getSource()).isSelected()));
-			desenharIdAcao
-					.setActionListener(e -> objetoSuperficie.desenharIds(((ToggleButton) e.getSource()).isSelected()));
 			chkAjusteLarguraFrm
 					.addActionListener(e -> objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected()));
 			txtPrefixoNomeTabela
@@ -347,6 +325,42 @@ public class ObjetoContainer extends AbstratoContainer {
 		@Override
 		protected void colar() {
 			ObjetoSuperficie.CopiarColar.colar(objetoSuperficie, false, 0, 0);
+		}
+
+		private class ButtonStatus extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action selecaoGeralAcao = Action.actionMenu("label.selecao_todos", Icones.TAG2);
+			private Action pontoDestinoAcao = Action.actionMenu("label.ponto_destino", Icones.RECT);
+			private Action desenharDescAcao = Action.actionMenu("label.desenhar_desc", Icones.TAG);
+			private Action transparenteAcao = Action.actionMenu("label.transparente", Icones.RECT);
+			private Action pontoOrigemAcao = Action.actionMenu("label.ponto_origem", Icones.RECT);
+			private Action desenharIdAcao = Action.actionMenu("label.desenhar_id", Icones.LABEL);
+
+			private ButtonStatus() {
+				super("label.status", Icones.TAG2);
+				addItem(new JCheckBoxMenuItem(selecaoGeralAcao));
+				addItem(new JCheckBoxMenuItem(desenharDescAcao));
+				addItem(new JCheckBoxMenuItem(desenharIdAcao));
+				addItem(new JCheckBoxMenuItem(transparenteAcao));
+				addItem(new JCheckBoxMenuItem(pontoOrigemAcao));
+				addItem(new JCheckBoxMenuItem(pontoDestinoAcao));
+				eventos();
+			}
+
+			private void eventos() {
+				selecaoGeralAcao.setActionListener(
+						e -> objetoSuperficie.selecaoGeral(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				desenharDescAcao.setActionListener(
+						e -> objetoSuperficie.desenharDesc(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				transparenteAcao.setActionListener(
+						e -> objetoSuperficie.transparente(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				pontoDestinoAcao.setActionListener(
+						e -> objetoSuperficie.pontoDestino(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				pontoOrigemAcao.setActionListener(
+						e -> objetoSuperficie.pontoOrigem(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				desenharIdAcao.setActionListener(
+						e -> objetoSuperficie.desenharIds(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+			}
 		}
 
 		private class ButtonInfo extends ButtonPopup {
