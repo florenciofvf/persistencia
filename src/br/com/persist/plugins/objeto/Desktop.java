@@ -40,6 +40,7 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
+import br.com.persist.plugins.objeto.internal.InternalContainer;
 import br.com.persist.plugins.objeto.internal.InternalFormulario;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -74,6 +75,14 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				((InternalFormulario) frame).limpar2();
+			}
+		}
+	}
+
+	public void limparOutros(InternalContainer invocador) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				((InternalFormulario) frame).limparOutros(invocador);
 			}
 		}
 	}

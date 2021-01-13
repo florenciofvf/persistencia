@@ -41,13 +41,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container = new InternalContainer(this, padrao, objeto, g, buscaAuto);
 		container.setConfiguraAlturaListener(InternalFormulario.this::configurarAltura);
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
-		container.setVisibilidadeListener(InternalFormulario.this::setVisible);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
 		container.setComponenteListener(InternalFormulario.this::getThis);
 		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
+		container.setVisibilidadeListener(visibilidadeListener);
 		container.setVinculoListener(vinculoListener);
 		setFrameIcon(Icones.VAZIO);
 		montarLayout();
@@ -235,6 +235,21 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	};
 
+	private transient InternalListener.Visibilidade visibilidadeListener = new InternalListener.Visibilidade() {
+		@Override
+		public void setVisible(boolean b) {
+			InternalFormulario.this.setVisible(b);
+		}
+
+		@Override
+		public void limparOutros(InternalContainer invocador) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.limparOutros(invocador);
+			}
+		}
+	};
+
 	public void alinhar(DesktopAlinhamento opcao) {
 		checarDesktop();
 		if (desktop != null) {
@@ -303,6 +318,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void limpar2() {
 		container.limpar2();
+	}
+
+	public void limparOutros(InternalContainer invocador) {
+		container.limparOutros(invocador);
 	}
 
 	public boolean ehObjeto(Objeto objeto) {

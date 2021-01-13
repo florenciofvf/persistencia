@@ -406,6 +406,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private class ButtonBaixar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action limparOutrosAcao = Action.actionMenu("label.limpar_outros", Icones.NOVO);
 			private Action limpar2Acao = Action.actionMenu(Constantes.LABEL_LIMPAR2, Icones.NOVO);
 			private Action limparAcao = Action.actionMenu(Constantes.LABEL_LIMPAR, Icones.NOVO);
 			private Action conexaoAcao = Action.actionMenu(Constantes.LABEL_CONEXAO2, null);
@@ -417,6 +418,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				addMenuItem(true, objetoAcao);
 				addMenuItem(true, limparAcao);
 				addMenuItem(limpar2Acao);
+				addMenuItem(limparOutrosAcao);
 				eventos();
 			}
 
@@ -424,6 +426,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				objetoAcao.setActionListener(e -> txtComplemento.setText(objeto.getComplemento()));
 				limparAcao.setActionListener(e -> txtComplemento.limpar());
 				conexaoAcao.setActionListener(e -> limparUsandoConexao());
+				limparOutrosAcao.setActionListener(e -> limparOutros());
 				limpar2Acao.setActionListener(e -> limpar2());
 			}
 
@@ -447,6 +450,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				checarSalvarVariavelProvedor(salvar);
 				txtComplemento.setText(cv.getValor());
 				actionListenerInner.actionPerformed(null);
+			}
+
+			private void limparOutros() {
+				if (visibilidadeListener != null) {
+					visibilidadeListener.limparOutros(InternalContainer.this);
+				}
 			}
 
 			private void checarSalvarVariavelProvedor(boolean salvar) {
@@ -1734,6 +1743,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	public void limpar2() {
 		toolbar.buttonBaixar.limpar2Acao.actionPerformed(null);
+	}
+
+	public void limparOutros(InternalContainer invocador) {
+		if (invocador != this) {
+			limpar2();
+		}
 	}
 
 	private class TabelaListener implements TabelaPersistenciaListener {
