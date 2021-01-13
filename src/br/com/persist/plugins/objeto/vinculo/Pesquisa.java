@@ -117,7 +117,7 @@ public class Pesquisa {
 	}
 
 	public String getNomeParaMenuItem() {
-		return nome + "." + referencia.getCampo();
+		return nome + " [" + referencia.getCampo() + "]";
 	}
 
 	@Override
