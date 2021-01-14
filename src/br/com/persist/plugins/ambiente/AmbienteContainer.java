@@ -57,11 +57,11 @@ public class AmbienteContainer extends AbstratoContainer {
 	}
 
 	public enum Ambiente {
-		DESENVOLVIMENTO("desenv", "label.desenv"), TREINAMENTO1("treina1", "label.treina1"), TREINAMENTO2("treina2",
-				"label.treina2"), TREINAMENTO3("treina3", "label.treina3"), HOLOMOGACAO("homolog",
-						"label.homolog"), PRODUCAO("producao", "label.producao"), RASCUNHO("rascunho",
-								"label.rascunho"), ESTUDO("estudo", "label.estudo"), SCRIPTS("scripts",
-										"label.scripts"), TESTE("teste", "label.teste"), BUGS("bugs", "label.bugs");
+		DESENVOLVIMENTO("desenv", "label.desenv"), HOLOMOGACAO("homolog", "label.homolog"), TREINAMENTO("treina",
+				"label.treina"), PRODUCAO("producao", "label.producao"), RASCUNHO("rascunho",
+						"label.rascunho"), LEMBRETE("lembrete", "label.lembrete"), SCRIPTS("scripts",
+								"label.scripts"), ESTUDO("estudo",
+										"label.estudo"), TESTE("teste", "label.teste"), BUGS("bugs", "label.bugs");
 		private final String chaveTitulo;
 		private final String tituloMin;
 		private final String descricao;
