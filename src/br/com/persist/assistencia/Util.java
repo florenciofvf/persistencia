@@ -138,6 +138,9 @@ public class Util {
 
 	private static void iniHtml(StringBuilder html) {
 		html.append("<html>").append(Constantes.QL);
+		html.append("<head>").append(Constantes.QL);
+		html.append("<meta charset='utf-8'>").append(Constantes.QL);
+		html.append("</head>").append(Constantes.QL);
 		html.append("<body>").append(Constantes.QL);
 		html.append("<table>").append(Constantes.QL);
 		html.append("<tr>").append(Constantes.QL);
