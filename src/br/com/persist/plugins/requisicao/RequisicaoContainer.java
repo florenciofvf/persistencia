@@ -38,6 +38,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -475,6 +476,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private final ToolbarResultado toolbarResultado = new ToolbarResultado();
 		private final JTextPane areaParametros = new JTextPane();
 		private final JTextPane areaResultados = new JTextPane();
+		private ScrollPane scrollPaneArea;
 		private final File file;
 
 		private Pagina(File file) {
@@ -494,8 +496,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 			panel.add(BorderLayout.NORTH, toolbarParametro);
 			Panel panelArea = new Panel();
 			panelArea.add(BorderLayout.CENTER, areaParametros);
-			panel.add(BorderLayout.CENTER, new ScrollPane(panelArea));
+			scrollPaneArea = new ScrollPane(panelArea);
+			panel.add(BorderLayout.CENTER, scrollPaneArea);
 			return panel;
+		}
+
+		private int getValueScrollPane() {
+			return scrollPaneArea.getVerticalScrollBar().getValue();
+		}
+
+		private void setValueScrollPane(int value) {
+			SwingUtilities.invokeLater(() -> scrollPaneArea.getVerticalScrollBar().setValue(value));
 		}
 
 		private Panel criarPanelResultado() {
@@ -578,12 +589,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 				try (BufferedReader br = new BufferedReader(
 						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 					StringBuilder sb = new StringBuilder();
+					int value = getValueScrollPane();
 					String linha = br.readLine();
 					while (linha != null) {
 						sb.append(linha + Constantes.QL);
 						linha = br.readLine();
 					}
 					areaParametros.setText(sb.toString());
+					setValueScrollPane(value);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 				}
