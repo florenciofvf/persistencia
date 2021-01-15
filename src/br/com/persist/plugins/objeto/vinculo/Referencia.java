@@ -16,6 +16,7 @@ public class Referencia {
 	private final String campo;
 	private boolean processado;
 	private boolean limparApos;
+	private String iconeGrupo;
 	Pesquisa pesquisa;
 	Color corFonte;
 	String icone;
@@ -122,6 +123,14 @@ public class Referencia {
 
 	public void setIcone(String icone) {
 		this.icone = icone;
+	}
+
+	public String getIconeGrupo() {
+		return iconeGrupo;
+	}
+
+	public void setIconeGrupo(String iconeGrupo) {
+		this.iconeGrupo = iconeGrupo;
 	}
 
 	public boolean isValidoInvisibilidade() {

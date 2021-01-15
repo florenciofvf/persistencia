@@ -49,6 +49,7 @@ import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.TransferidorTabular;
@@ -653,7 +654,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private final transient Pesquisa pesquisa;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
-					super(pesquisa.getNomeParaMenuItem(), Icones.CONFIG2, "nao_chave");
+					super(pesquisa.getNomeParaMenuItem(), iconePesquisa(pesquisa), "nao_chave");
 					addMenuItem(true, elementosAcao);
 					this.pesquisa = pesquisa;
 					semAspasAcao.setActionListener(e -> processar(false));
@@ -2000,5 +2001,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	@Override
 	public void excluindoDoFichario(Fichario fichario) {
 		LOG.log(Level.FINEST, "excluindoDoFichario");
+	}
+
+	static Icon iconePesquisa(Pesquisa pesquisa) {
+		Referencia referencia = pesquisa.getReferencia();
+		String iconeGrupo = referencia.getIconeGrupo();
+		return Util.estaVazio(iconeGrupo) ? Icones.CONFIG2 : Imagens.getIcon(iconeGrupo);
 	}
 }
