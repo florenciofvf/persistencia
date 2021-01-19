@@ -39,7 +39,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
+import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.mensagem.MensagemDialogo;
 import br.com.persist.mensagem.MensagemFormulario;
 
@@ -127,13 +129,29 @@ public class Util {
 		if (model == null || model.getColumnCount() < 1 || model.getRowCount() < 1) {
 			return null;
 		}
+		Coletor coletor = new Coletor();
+		SetLista.view("Colunas", nomeColunas(model), coletor, table);
+		if (coletor.estaVazio()) {
+			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
+		}
+		boolean[] selecionadas = colunasSelecionadas(coletor, model);
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
 		iniHtml(html);
-		headHtml(html, tabular, model);
-		bodyHtml(html, tabular, model, indices);
+		headHtml(html, tabular, model, selecionadas);
+		bodyHtml(html, tabular, model, indices, selecionadas);
 		fimHtml(html, tabular);
 		return new TransferidorTabular(html.toString(), tabular.toString());
+	}
+
+	private static boolean[] colunasSelecionadas(Coletor coletor, TableModel model) {
+		int colunas = model.getColumnCount();
+		boolean[] selecionadas = new boolean[colunas];
+		for (int i = 0; i < colunas; i++) {
+			String coluna = model.getColumnName(i);
+			selecionadas[i] = coletor.contem(coluna);
+		}
+		return selecionadas;
 	}
 
 	private static void iniHtml(StringBuilder html) {
@@ -146,28 +164,42 @@ public class Util {
 		html.append("<tr>").append(Constantes.QL);
 	}
 
-	private static void headHtml(StringBuilder html, StringBuilder tabular, TableModel model) {
+	private static List<String> nomeColunas(TableModel model) {
+		List<String> lista = new ArrayList<>();
 		int colunas = model.getColumnCount();
 		for (int i = 0; i < colunas; i++) {
-			String coluna = model.getColumnName(i);
-			html.append("<th>" + coluna + "</th>").append(Constantes.QL);
-			tabular.append(coluna + Constantes.TAB);
+			lista.add(model.getColumnName(i));
+		}
+		return lista;
+	}
+
+	private static void headHtml(StringBuilder html, StringBuilder tabular, TableModel model, boolean[] selecionadas) {
+		int colunas = model.getColumnCount();
+		for (int i = 0; i < colunas; i++) {
+			if (selecionadas[i]) {
+				String coluna = model.getColumnName(i);
+				html.append("<th>" + coluna + "</th>").append(Constantes.QL);
+				tabular.append(coluna + Constantes.TAB);
+			}
 		}
 		html.append("</tr>").append(Constantes.QL);
 		tabular.deleteCharAt(tabular.length() - 1);
 		tabular.append(Constantes.QL);
 	}
 
-	private static void bodyHtml(StringBuilder html, StringBuilder tabular, TableModel model, List<Integer> indices) {
+	private static void bodyHtml(StringBuilder html, StringBuilder tabular, TableModel model, List<Integer> indices,
+			boolean[] selecionadas) {
 		int colunas = model.getColumnCount();
 		for (Integer i : indices) {
 			html.append("<tr>").append(Constantes.QL);
 			for (int j = 0; j < colunas; j++) {
-				Object obj = model.getValueAt(i, j);
-				String val = obj == null ? Constantes.VAZIO : obj.toString();
-				tabular.append(val + Constantes.TAB);
-				html.append("<td>" + val + "</td>");
-				html.append(Constantes.QL);
+				if (selecionadas[j]) {
+					Object obj = model.getValueAt(i, j);
+					String val = obj == null ? Constantes.VAZIO : obj.toString();
+					tabular.append(val + Constantes.TAB);
+					html.append("<td>" + val + "</td>");
+					html.append(Constantes.QL);
+				}
 			}
 			html.append("</tr>").append(Constantes.QL);
 			tabular.deleteCharAt(tabular.length() - 1);
