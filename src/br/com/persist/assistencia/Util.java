@@ -134,6 +134,11 @@ public class Util {
 		if (coletor.estaVazio()) {
 			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
 		}
+		return criarTransferidorTabular(indices, model, coletor);
+	}
+
+	private static TransferidorTabular criarTransferidorTabular(List<Integer> indices, TableModel model,
+			Coletor coletor) {
 		boolean[] selecionadas = colunasSelecionadas(coletor, model);
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
