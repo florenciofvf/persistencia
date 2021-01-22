@@ -96,6 +96,25 @@ public class Arquivo {
 		return filhos.get(index);
 	}
 
+	public Arquivo getArquivo(String descricao, boolean porParte) {
+		for (Arquivo m : filhos) {
+			String nome = m.file.getName();
+			if (porParte && nome.toUpperCase().indexOf(descricao.toUpperCase()) != -1) {
+				return m;
+			}
+			if (nome.equalsIgnoreCase(descricao)) {
+				return m;
+			}
+		}
+		for (Arquivo m : filhos) {
+			Arquivo resp = m.getArquivo(descricao, porParte);
+			if (resp != null) {
+				return resp;
+			}
+		}
+		return null;
+	}
+
 	private void processar() {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

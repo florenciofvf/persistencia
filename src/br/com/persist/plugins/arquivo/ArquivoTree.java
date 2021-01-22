@@ -38,6 +38,11 @@ public class ArquivoTree extends Tree {
 		}
 	}
 
+	public Arquivo getRaiz() {
+		ArquivoModelo modelo = (ArquivoModelo) getModel();
+		return (Arquivo) modelo.getRoot();
+	}
+
 	public Arquivo getObjetoSelecionado() {
 		TreePath path = getSelectionPath();
 		if (path == null) {
@@ -183,6 +188,16 @@ public class ArquivoTree extends Tree {
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
 				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoArquivo(ArquivoTree.this)));
 			}
+		}
+	}
+
+	public void selecionar(String nome, boolean porParte) {
+		Arquivo raiz = getRaiz();
+		Arquivo arquivo = raiz.getArquivo(nome, porParte);
+		if (arquivo != null) {
+			ArquivoTreeUtil.selecionarObjeto(this, arquivo);
+		} else {
+			setSelectionPath(null);
 		}
 	}
 }

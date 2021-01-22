@@ -8,6 +8,8 @@ import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -69,12 +72,14 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action fecharAcao = Action.actionIcon("label.fechar_todos", Icones.FECHAR);
 		private Action statusAcao = Action.actionIcon("label.abertos", Icones.HIERARQUIA);
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopArq = new CheckBox();
+		private final TextField txtArquivo = new TextField(35);
+		private final CheckBox chkPorParte = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR);
@@ -82,13 +87,17 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			chkSempreTopArq.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopArqu"));
 			chkLinkAuto.setToolTipText(Mensagens.getString("msg.arquivo.link_auto"));
 			chkDuplicar.setToolTipText(Mensagens.getString("msg.arquivo.duplicar"));
+			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
+			txtArquivo.setToolTipText(Mensagens.getString("label.pesquisar"));
+			chkLinkAuto.setSelected(true);
 			addButton(statusAcao);
 			add(chkSempreTopArq);
 			add(chkSempreTopForm);
 			add(chkLinkAuto);
 			add(chkDuplicar);
 			add(fecharAcao);
-			chkLinkAuto.setSelected(true);
+			add(txtArquivo);
+			add(chkPorParte);
 			eventos();
 		}
 
@@ -97,6 +106,14 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			fecharAcao.setActionListener(e -> formulario.fecharTodos());
 			chkSempreTopForm.addActionListener(e -> topFormulario());
 			statusAcao.setActionListener(e -> statusArquivo());
+			txtArquivo.addActionListener(this);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtArquivo.getText())) {
+				arquivoTree.selecionar(txtArquivo.getText().trim(), chkPorParte.isSelected());
+			}
 		}
 
 		private void topFormulario() {
