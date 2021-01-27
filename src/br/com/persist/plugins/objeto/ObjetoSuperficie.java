@@ -547,6 +547,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					break;
 				}
 			}
+			if (e.isControlDown()) {
+				selecionadoObjeto = null;
+			}
 			if (selecionadoObjeto != null) {
 				if (selecionadoObjeto.isControlado()) {
 					for (Objeto objeto : objetos) {
