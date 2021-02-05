@@ -24,4 +24,8 @@ public abstract class AbstratoFabricaContainer implements FabricaContainer {
 	public PaginaServico getPaginaServico() {
 		return null;
 	}
+
+	@Override
+	public void inicializar() {
+	}
 }
