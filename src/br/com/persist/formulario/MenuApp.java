@@ -96,6 +96,7 @@ public class MenuApp {
 		FabricaContainer fabricaContainer = Fabrica.criar(classeFabrica);
 		List<JMenuItem> menus = new ArrayList<>();
 		if (fabricaContainer != null) {
+			fabricaContainer.inicializar();
 			formulario.adicionarServicos(fabricaContainer.getServicos(formulario));
 			formulario.adicionarFabrica(classeFabrica, fabricaContainer);
 			menus.addAll(fabricaContainer.criarMenuItens(formulario, menu));

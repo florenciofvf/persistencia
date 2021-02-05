@@ -14,4 +14,6 @@ public interface FabricaContainer {
 	public List<Servico> getServicos(Formulario formulario);
 
 	public PaginaServico getPaginaServico();
+
+	public void inicializar();
 }

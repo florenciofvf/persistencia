@@ -635,4 +635,15 @@ public class Util {
 		}
 		return false;
 	}
+
+	public static boolean criarDiretorio(String string) {
+		if (!estaVazio(string)) {
+			File file = new File(string);
+			if (file.isDirectory()) {
+				return true;
+			}
+			return file.mkdir();
+		}
+		return false;
+	}
 }

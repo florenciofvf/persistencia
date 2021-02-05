@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
-public class AbstratoFabricaContainer implements FabricaContainer {
+public abstract class AbstratoFabricaContainer implements FabricaContainer {
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		return new ArrayList<>();
