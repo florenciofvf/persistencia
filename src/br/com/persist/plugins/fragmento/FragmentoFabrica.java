@@ -12,12 +12,18 @@ import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class FragmentoFabrica extends AbstratoFabricaContainer {
+
+	@Override
+	public void inicializar() {
+		Util.criarDiretorio(Constantes.FRAGMENTOS);
+	}
 
 	@Override
 	public PaginaServico getPaginaServico() {

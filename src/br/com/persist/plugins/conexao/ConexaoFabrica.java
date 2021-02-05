@@ -23,6 +23,11 @@ import br.com.persist.formulario.FormularioEvento;
 public class ConexaoFabrica extends AbstratoFabricaContainer {
 
 	@Override
+	public void inicializar() {
+		Util.criarDiretorio(Constantes.CONEXOES);
+	}
+
+	@Override
 	public PaginaServico getPaginaServico() {
 		return new ConexaoPaginaServico();
 	}

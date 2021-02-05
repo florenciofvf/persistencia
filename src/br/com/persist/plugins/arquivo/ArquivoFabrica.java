@@ -12,6 +12,7 @@ import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
@@ -19,6 +20,11 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class ArquivoFabrica extends AbstratoFabricaContainer {
+
+	@Override
+	public void inicializar() {
+		Util.criarDiretorio(Constantes.ARQUIVOS);
+	}
 
 	@Override
 	public PaginaServico getPaginaServico() {
