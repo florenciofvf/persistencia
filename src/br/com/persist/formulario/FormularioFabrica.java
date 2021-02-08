@@ -20,6 +20,12 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 	private JMenuItem itemFechar = new JMenuItem(Mensagens.getString("label.fechar"), Icones.SAIR);
 
 	@Override
+	public void inicializar() {
+		Util.criarDiretorio("imagens");
+		Util.criarDiretorio("libs");
+	}
+
+	@Override
 	public List<Servico> getServicos(Formulario formulario) {
 		return Arrays.asList(new FecharServico());
 	}
