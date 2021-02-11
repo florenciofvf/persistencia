@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.check.proc.Procedimentos;
 
 public class Sentenca {
@@ -63,16 +62,12 @@ public class Sentenca {
 
 	private void finalMetodo(TokenMetodoFim token) {
 		String param = token.getString();
-		if (!Util.estaVazio(param)) {
-			selecionado.addParam(param);
-		}
+		selecionado.addParam(param);
 		selecionado = selecionado.pai;
 	}
 
 	private void parametro(TokenParam token) {
 		String param = token.getString();
-		if (!Util.estaVazio(param)) {
-			selecionado.addParam(param);
-		}
+		selecionado.addParam(param);
 	}
 }

@@ -13,7 +13,9 @@ public abstract class Procedimento {
 	}
 
 	public void addParam(Object obj) {
-		parametros.add(obj);
+		if (obj != null && obj.toString().length() > 0) {
+			parametros.add(obj);
+		}
 	}
 
 	public List<Object> getParametros() {
@@ -33,5 +35,17 @@ public abstract class Procedimento {
 	@Override
 	public String toString() {
 		return parametros.toString();
+	}
+
+	protected boolean isDouble(Object obj) {
+		return obj instanceof Double || obj instanceof Float;
+	}
+
+	protected double getDouble(Object obj) {
+		return ((Number) obj).doubleValue();
+	}
+
+	protected int getInt(Object obj) {
+		return ((Number) obj).intValue();
 	}
 }
