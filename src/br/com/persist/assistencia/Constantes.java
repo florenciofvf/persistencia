@@ -120,6 +120,7 @@ public class Constantes {
 	public static final String METADADO = "metadado";
 	public static final String CONEXOES = "conexoes";
 	public static final String VARIAVEL = "variavel";
+	public static final String SENTENCA = "sentenca";
 	public static final String ARQUIVOS = "arquivos";
 	public static final String DIALOG = "DIALOG";
 	public static final String CAMPOS = "CAMPOS";
