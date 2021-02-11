@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.check.proc.Procedimentos;
 
 public class Sentenca {
 	private final List<Procedimento> procedimentos;

@@ -16,6 +16,10 @@ public abstract class Procedimento {
 		parametros.add(obj);
 	}
 
+	public List<Object> getParametros() {
+		return parametros;
+	}
+
 	protected void empilharParametros(PilhaResultParam pilha) {
 		for (Object obj : parametros) {
 			pilha.push(obj);
