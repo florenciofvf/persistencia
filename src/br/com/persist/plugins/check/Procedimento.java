@@ -6,9 +6,14 @@ import java.util.Map;
 
 public abstract class Procedimento {
 	protected List<Object> parametros;
+	protected Procedimento pai;
 
 	public Procedimento() {
 		parametros = new ArrayList<>();
+	}
+
+	public void addParam(Object obj) {
+		parametros.add(obj);
 	}
 
 	protected void empilharParametros(PilhaResultParam pilha) {

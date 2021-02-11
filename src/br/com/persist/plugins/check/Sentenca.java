@@ -5,12 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import br.com.persist.assistencia.Util;
 
 public class Sentenca {
-	private static final Logger LOG = Logger.getGlobal();
 	private final List<Procedimento> procedimentos;
+	private Procedimento selecionado;
 	private String string;
 
 	public Sentenca() {
@@ -36,24 +36,42 @@ public class Sentenca {
 	}
 
 	public void inicializar() {
+		if (string == null || string.trim().length() == 0) {
+			throw new IllegalStateException("Sentenca vazia.");
+		}
 		List<Token> tokens = Token.criarTokens(string);
 		Iterator<Token> it = tokens.iterator();
 		while (it.hasNext()) {
-			processar(it.next());
+			Token token = it.next();
+			if (token instanceof TokenMetodoIni) {
+				novoMetodo((TokenMetodoIni) token);
+			} else if (token instanceof TokenMetodoFim) {
+				finalMetodo((TokenMetodoFim) token);
+			} else if (token instanceof TokenParam) {
+				parametro((TokenParam) token);
+			}
 		}
 	}
 
-	private void processar(TokenMetodoIni token) {
+	private void novoMetodo(TokenMetodoIni token) {
+		Procedimento p = Procedimentos.get(token.getString());
+		procedimentos.add(p);
+		p.pai = selecionado;
+		selecionado = p;
 	}
 
-	private void processar(TokenMetodoFim token) {
-
+	private void finalMetodo(TokenMetodoFim token) {
+		String param = token.getString();
+		if (!Util.estaVazio(param)) {
+			selecionado.addParam(param);
+		}
+		selecionado = selecionado.pai;
 	}
 
-	private void processar(TokenParam token) {
-	}
-
-	private void processar(Token next) {
-		LOG.log(Level.FINEST, "processar(Token)");
+	private void parametro(TokenParam token) {
+		String param = token.getString();
+		if (!Util.estaVazio(param)) {
+			selecionado.addParam(param);
+		}
 	}
 }
