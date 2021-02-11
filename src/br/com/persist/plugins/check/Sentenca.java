@@ -3,7 +3,6 @@ package br.com.persist.plugins.check;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import br.com.persist.assistencia.Util;
@@ -20,10 +19,11 @@ public class Sentenca {
 
 	public PilhaResultParam check(Map<String, Object> map) {
 		PilhaResultParam pilha = new PilhaResultParam();
-		ListIterator<Procedimento> it = procedimentos.listIterator();
-		while (it.hasPrevious()) {
-			Procedimento p = it.previous().clonar();
+		int i = procedimentos.size() - 1;
+		while (i >= 0) {
+			Procedimento p = procedimentos.get(i).clonar();
 			p.processar(map, pilha);
+			i--;
 		}
 		return pilha;
 	}

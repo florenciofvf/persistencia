@@ -10,7 +10,7 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		Check.selecionar("cad.requerimento");
+		Check.selecionar("cad.requerimento.xml");
 		List<Object> lista = Check.check(criarMap());
 		for (Object obj : lista) {
 			LOG.log(Level.INFO, "{0}", obj);

@@ -3,4 +3,4 @@
 <check>
 	<sentenca>parseInt(2)</sentenca>
 	<!--sentenca>somar(parseInt(2), parseInt(2))</sentenca-->
-</menuPrincipal>
+</check>

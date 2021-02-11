@@ -16,6 +16,11 @@ public abstract class Token {
 		return string;
 	}
 
+	@Override
+	public String toString() {
+		return string;
+	}
+
 	public static List<Token> criarTokens(String string) {
 		List<Token> lista = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();

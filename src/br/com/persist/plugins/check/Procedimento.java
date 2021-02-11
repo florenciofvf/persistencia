@@ -29,4 +29,9 @@ public abstract class Procedimento {
 	public abstract void processar(Map<String, Object> map, PilhaResultParam pilha);
 
 	public abstract Procedimento clonar();
+
+	@Override
+	public String toString() {
+		return parametros.toString();
+	}
 }

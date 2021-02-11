@@ -21,4 +21,9 @@ public class PilhaResultParam {
 	public void push(Object obj) {
 		lista.add(obj);
 	}
+
+	@Override
+	public String toString() {
+		return lista.toString();
+	}
 }
