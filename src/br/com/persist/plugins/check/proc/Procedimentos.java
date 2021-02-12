@@ -14,6 +14,8 @@ public final class Procedimentos {
 	static {
 		map.put("parseInt", new ParseInt());
 		map.put("somar", new Somar());
+		map.put("igual", new Igual());
+		map.put("field", new Field());
 	}
 
 	public static Procedimento get(String nome) {

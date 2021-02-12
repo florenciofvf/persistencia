@@ -5,18 +5,19 @@ import java.util.Map;
 import br.com.persist.plugins.check.PilhaResultParam;
 import br.com.persist.plugins.check.Procedimento;
 
-public class ParseInt extends Procedimento {
+public class Igual extends Procedimento {
 
 	@Override
 	public void processar(Map<String, Object> map, PilhaResultParam pilha) {
 		empilharParametros(pilha);
-		String string = pilha.popString();
-		pilha.push(Integer.valueOf(string));
+		Object param1 = pilha.pop();
+		Object param2 = pilha.pop();
+		pilha.push(param1.equals(param2));
 	}
 
 	@Override
 	public Procedimento clonar() {
-		ParseInt resp = new ParseInt();
+		Igual resp = new Igual();
 		Procedimentos.clonarParametros(this, resp);
 		return resp;
 	}

@@ -18,6 +18,8 @@ public class Main {
 	}
 
 	private static Map<String, Object> criarMap() {
-		return new HashMap<>();
+		Map<String, Object> resp = new HashMap<>();
+		resp.put("nome", "Maria da Silva");
+		return resp;
 	}
 }

@@ -2,5 +2,10 @@
 
 <check>
 	<sentenca>parseInt(2)</sentenca>
-	<sentenca>somar(parseInt(2) , parseInt(2))</sentenca>
+	<sentenca>somar(parseInt(2), parseInt(2))</sentenca>
+	<sentenca>igual(A,B)</sentenca>
+	<sentenca>igual(X,X)</sentenca>
+	<sentenca>field(nome)</sentenca>
+	<sentenca>igual(Maria da Silva, field(nome))</sentenca>
+	<sentenca>igual(field(nome),Maria da Silva)</sentenca>
 </check>
