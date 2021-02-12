@@ -24,7 +24,8 @@ public abstract class Token {
 	public static List<Token> criarTokens(String string) {
 		List<Token> lista = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < string.length(); i++) {
+		int i = 0;
+		while (i < string.length()) {
 			char c = string.charAt(i);
 			sb.append(c);
 			if (c == '(') {
@@ -32,13 +33,28 @@ public abstract class Token {
 				limpar(sb);
 			} else if (c == ')') {
 				lista.add(new TokenMetodoFim(i, sb.toString()));
+				i += avancar(i + 1, string);
 				limpar(sb);
 			} else if (c == ',') {
 				lista.add(new TokenParam(i, sb.toString()));
 				limpar(sb);
 			}
+			i++;
 		}
 		return lista;
+	}
+
+	private static int avancar(int indice, String string) {
+		int total = 0;
+		for (int i = indice; i < string.length(); i++) {
+			char c = string.charAt(i);
+			if (c <= ' ') {
+				total++;
+			} else {
+				break;
+			}
+		}
+		return total;
 	}
 
 	private static void limpar(StringBuilder sb) {
