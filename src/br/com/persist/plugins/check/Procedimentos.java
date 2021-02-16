@@ -1,9 +1,12 @@
-package br.com.persist.plugins.check.proc;
+package br.com.persist.plugins.check;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.persist.plugins.check.Procedimento;
+import br.com.persist.plugins.check.compar.Igual;
+import br.com.persist.plugins.check.conver.ParseInt;
+import br.com.persist.plugins.check.matema.Somar;
+import br.com.persist.plugins.check.objet.Field;
 
 public final class Procedimentos {
 	private static final Map<String, Procedimento> map = new HashMap<>();

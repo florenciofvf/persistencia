@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.plugins.check.proc.Procedimentos;
-
 public class Sentenca {
 	private final List<Procedimento> procedimentos;
 	private Procedimento selecionado;

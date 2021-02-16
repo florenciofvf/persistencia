@@ -1,9 +1,10 @@
-package br.com.persist.plugins.check.proc;
+package br.com.persist.plugins.check.matema;
 
 import java.util.Map;
 
 import br.com.persist.plugins.check.PilhaResultParam;
 import br.com.persist.plugins.check.Procedimento;
+import br.com.persist.plugins.check.Procedimentos;
 
 public class Somar extends Procedimento {
 
