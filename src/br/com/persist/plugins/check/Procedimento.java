@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Procedimento {
-	protected List<Object> parametros;
+	protected final List<Object> parametros;
 	protected Procedimento pai;
 
 	public Procedimento() {
@@ -20,6 +20,14 @@ public abstract class Procedimento {
 
 	public List<Object> getParametros() {
 		return parametros;
+	}
+
+	public int getTotalParametros() {
+		return parametros.size();
+	}
+
+	public String getParametroString(int i) {
+		return parametros.get(i).toString();
 	}
 
 	protected void empilharParametros(PilhaResultParam pilha) {

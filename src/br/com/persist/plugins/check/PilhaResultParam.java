@@ -18,6 +18,10 @@ public class PilhaResultParam {
 		return lista.remove(lista.size() - 1);
 	}
 
+	public Boolean popBoolean() {
+		return (Boolean) pop();
+	}
+
 	public String popString() {
 		return pop().toString();
 	}

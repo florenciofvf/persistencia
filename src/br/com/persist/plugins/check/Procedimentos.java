@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.persist.plugins.check.compar.Igual;
+import br.com.persist.plugins.check.conver.ParseBoolean;
 import br.com.persist.plugins.check.conver.ParseInt;
+import br.com.persist.plugins.check.logico.And;
 import br.com.persist.plugins.check.matema.Somar;
 import br.com.persist.plugins.check.objet.Field;
 
@@ -15,10 +17,12 @@ public final class Procedimentos {
 	}
 
 	static {
+		map.put("parseBoolean", new ParseBoolean());
 		map.put("parseInt", new ParseInt());
 		map.put("somar", new Somar());
 		map.put("igual", new Igual());
 		map.put("field", new Field());
+		map.put("and", new And());
 	}
 
 	public static Procedimento get(String nome) {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<check>
+	<sentenca>and(parseBoolean(false), parseBoolean(true))</sentenca>
+	<sentenca>and(parseBoolean(true), parseBoolean(true))</sentenca>
+	<sentenca>and(parseBoolean(true), parseBoolean(true), VERDADEIRO)</sentenca>
+	<sentenca>and(verdadeiro, parseBoolean(true), parseBoolean(true))</sentenca>
+	<sentenca>and(parseBoolean(true), Verdadeiro, parseBoolean(true))</sentenca>
+</check>
