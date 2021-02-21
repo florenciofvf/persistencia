@@ -17,8 +17,8 @@ public class Or extends Procedimento {
 		}
 		Boolean param1 = pilha.popBoolean();
 		Boolean param2 = pilha.popBoolean();
-		Boolean boolea = param1 && param2;
-		if (boolea || !Util.estaVazio(string)) {
+		Boolean boolea = param1 || param2;
+		if (boolea && !Util.estaVazio(string)) {
 			pilha.push(string);
 		} else {
 			pilha.push(boolea);
