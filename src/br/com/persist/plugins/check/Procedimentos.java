@@ -7,6 +7,8 @@ import br.com.persist.plugins.check.compar.Igual;
 import br.com.persist.plugins.check.conver.ParseBoolean;
 import br.com.persist.plugins.check.conver.ParseInt;
 import br.com.persist.plugins.check.logico.And;
+import br.com.persist.plugins.check.logico.Or;
+import br.com.persist.plugins.check.logico.Xor;
 import br.com.persist.plugins.check.matema.Somar;
 import br.com.persist.plugins.check.objet.Field;
 
@@ -23,6 +25,8 @@ public final class Procedimentos {
 		map.put("igual", new Igual());
 		map.put("field", new Field());
 		map.put("and", new And());
+		map.put("xor", new Xor());
+		map.put("or", new Or());
 	}
 
 	public static Procedimento get(String nome) {
