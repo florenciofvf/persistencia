@@ -23,6 +23,7 @@ public final class Procedimentos {
 		map.put("parseInt", new ParseInt());
 		map.put("somar", new Somar());
 		map.put("igual", new Igual());
+		map.put("eq", new Igual());
 		map.put("field", new Field());
 		map.put("and", new And());
 		map.put("xor", new Xor());
