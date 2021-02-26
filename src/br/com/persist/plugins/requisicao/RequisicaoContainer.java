@@ -159,6 +159,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action retornar64Acao = Action.actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
@@ -177,6 +178,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			addButton(true, formatarAcao);
 			addButton(modeloAcao);
 			addButton(true, base64Acao);
+			addButton(retornar64Acao);
 			String hint = Mensagens.getString("label.copiar_access_token", Mensagens.getString("label.resposta_json"));
 			chkCopiarAccessT.setToolTipText(hint);
 			eventos();
@@ -190,6 +192,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
 			chkCopiarAccessT.setSelected(Preferencias.getBoolean("copiar_access_token"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
+			retornar64Acao.setActionListener(e -> retornar64());
 			atualizarAcao.setActionListener(e -> atualizar());
 			formatarAcao.setActionListener(e -> formatar());
 			base64Acao.setActionListener(e -> base64());
@@ -323,6 +326,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 			Pagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.base64();
+			}
+		}
+
+		private void retornar64() {
+			Pagina ativa = fichario.getPaginaAtiva();
+			if (ativa != null) {
+				ativa.retornar64();
 			}
 		}
 	}
@@ -657,9 +667,26 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
+		private void retornar64() {
+			if (!Util.estaVazio(areaParametros.getText())) {
+				String string = Util.getString(areaParametros);
+				areaResultados.setText(Constantes.VAZIO);
+				retornar64(string);
+			}
+		}
+
 		private void base64(String string) {
 			try {
 				areaResultados.setText(Base64Util.criarBase64(string));
+				areaParametros.requestFocus();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
+			}
+		}
+
+		private void retornar64(String string) {
+			try {
+				areaResultados.setText(Base64Util.retornarBase64(string));
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
