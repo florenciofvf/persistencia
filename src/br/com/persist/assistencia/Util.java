@@ -297,8 +297,12 @@ public class Util {
 	}
 
 	public static boolean confirmaSalvar(Component componente, int confirmacoes) {
+		return confirmaSalvar(componente, confirmacoes, null);
+	}
+
+	public static boolean confirmaSalvar(Component componente, int confirmacoes, String chaveMsg) {
 		int total = 0;
-		while (total < confirmacoes && confirmar(componente, Constantes.LABEL_CONFIRMA_SALVAR)) {
+		while (total < confirmacoes && confirmar(componente, chaveMsg != null ? chaveMsg : Constantes.LABEL_CONFIRMA_SALVAR)) {
 			total++;
 		}
 		return total >= confirmacoes;

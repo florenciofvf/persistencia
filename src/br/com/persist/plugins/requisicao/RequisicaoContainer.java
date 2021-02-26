@@ -294,7 +294,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void excluirAtivo() {
 			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null && Util.confirmar(RequisicaoContainer.this, "msg.confirmar_aba_ativa")) {
+			if (ativa != null && Util.confirmar(RequisicaoContainer.this, "msg.confirmar_excluir_ativa")) {
 				int indice = fichario.getSelectedIndex();
 				ativa.excluir();
 				fichario.remove(indice);
@@ -625,7 +625,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void salvar(AtomicBoolean atomic) {
-			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES)) {
+			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES, "msg.confirmar_salvar_ativa")) {
 				return;
 			}
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
