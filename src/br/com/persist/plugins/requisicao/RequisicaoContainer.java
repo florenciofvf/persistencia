@@ -291,7 +291,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void excluirAtivo() {
 			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
+			if (ativa != null && Util.confirmar(RequisicaoContainer.this, "msg.confirmar_aba_ativa")) {
 				int indice = fichario.getSelectedIndex();
 				ativa.excluir();
 				fichario.remove(indice);
