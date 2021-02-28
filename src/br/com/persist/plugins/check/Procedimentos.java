@@ -3,11 +3,11 @@ package br.com.persist.plugins.check;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.persist.plugins.check.matema.Somar;
-import br.com.persist.plugins.check.objet.Field;
 import br.com.persist.plugins.check.proc.Compara;
 import br.com.persist.plugins.check.proc.Converte;
 import br.com.persist.plugins.check.proc.Logico;
+import br.com.persist.plugins.check.proc.Matematico;
+import br.com.persist.plugins.check.proc.Objeto;
 
 public final class Procedimentos {
 	private static final Map<String, Procedimento> map = new HashMap<>();
@@ -25,12 +25,12 @@ public final class Procedimentos {
 		map.put("parseInt", new Converte.ParseInt());
 		map.put("int", new Converte.ParseInt());
 
-		map.put("somar", new Somar());
+		map.put("somar", new Matematico.Somar());
 
 		map.put("igual", new Compara.Igual());
 		map.put("eq", new Compara.Igual());
 
-		map.put("field", new Field());
+		map.put("field", new Objeto.Field());
 
 		map.put("and", new Logico.And());
 		map.put("xor", new Logico.Xor());
