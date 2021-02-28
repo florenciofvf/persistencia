@@ -21,12 +21,21 @@ public final class Procedimentos {
 
 	static {
 		map.put("parseBoolean", new ParseBoolean());
+		map.put("bool", new ParseBoolean());
+
 		map.put("parseString", new ParseString());
+		map.put("string", new ParseString());
+
 		map.put("parseInt", new ParseInt());
+		map.put("int", new ParseInt());
+
 		map.put("somar", new Somar());
+
 		map.put("igual", new Igual());
 		map.put("eq", new Igual());
+
 		map.put("field", new Field());
+
 		map.put("and", new And());
 		map.put("xor", new Xor());
 		map.put("or", new Or());
