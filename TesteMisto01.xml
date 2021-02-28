@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<check>
+	<sentenca>parseInt(2)</sentenca>
+	<sentenca>somar(parseInt(2), parseInt(2))</sentenca>
+	<sentenca>field(nome)</sentenca>
+</check>
