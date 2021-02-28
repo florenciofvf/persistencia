@@ -22,6 +22,9 @@ public final class Procedimentos {
 		map.put("parseString", new Converte.ParseString());
 		map.put("string", new Converte.ParseString());
 
+		map.put("parseDouble", new Converte.ParseDouble());
+		map.put("double", new Converte.ParseDouble());
+
 		map.put("parseInt", new Converte.ParseInt());
 		map.put("int", new Converte.ParseInt());
 
