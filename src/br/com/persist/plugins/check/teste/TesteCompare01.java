@@ -1,10 +1,12 @@
-package br.com.persist.plugins.check;
+package br.com.persist.plugins.check.teste;
 
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import br.com.persist.plugins.check.Check;
 
 public class TesteCompare01 {
 	private static final Logger LOG = Logger.getGlobal();
