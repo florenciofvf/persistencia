@@ -1,4 +1,4 @@
-package br.com.persist.plugins.check.teste;
+package br.com.persist.plugins.check.check;
 
 import java.util.HashMap;
 import java.util.List;
