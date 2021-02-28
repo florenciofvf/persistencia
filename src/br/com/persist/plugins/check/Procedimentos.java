@@ -3,15 +3,11 @@ package br.com.persist.plugins.check;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.persist.plugins.check.compar.Igual;
-import br.com.persist.plugins.check.conver.ParseBoolean;
-import br.com.persist.plugins.check.conver.ParseInt;
-import br.com.persist.plugins.check.conver.ParseString;
-import br.com.persist.plugins.check.logico.And;
-import br.com.persist.plugins.check.logico.Or;
-import br.com.persist.plugins.check.logico.Xor;
 import br.com.persist.plugins.check.matema.Somar;
 import br.com.persist.plugins.check.objet.Field;
+import br.com.persist.plugins.check.proc.Compara;
+import br.com.persist.plugins.check.proc.Converte;
+import br.com.persist.plugins.check.proc.Logico;
 
 public final class Procedimentos {
 	private static final Map<String, Procedimento> map = new HashMap<>();
@@ -20,25 +16,25 @@ public final class Procedimentos {
 	}
 
 	static {
-		map.put("parseBoolean", new ParseBoolean());
-		map.put("bool", new ParseBoolean());
+		map.put("parseBoolean", new Converte.ParseBoolean());
+		map.put("bool", new Converte.ParseBoolean());
 
-		map.put("parseString", new ParseString());
-		map.put("string", new ParseString());
+		map.put("parseString", new Converte.ParseString());
+		map.put("string", new Converte.ParseString());
 
-		map.put("parseInt", new ParseInt());
-		map.put("int", new ParseInt());
+		map.put("parseInt", new Converte.ParseInt());
+		map.put("int", new Converte.ParseInt());
 
 		map.put("somar", new Somar());
 
-		map.put("igual", new Igual());
-		map.put("eq", new Igual());
+		map.put("igual", new Compara.Igual());
+		map.put("eq", new Compara.Igual());
 
 		map.put("field", new Field());
 
-		map.put("and", new And());
-		map.put("xor", new Xor());
-		map.put("or", new Or());
+		map.put("and", new Logico.And());
+		map.put("xor", new Logico.Xor());
+		map.put("or", new Logico.Or());
 	}
 
 	public static Procedimento get(String nome) {
