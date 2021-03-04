@@ -1729,7 +1729,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		StringBuilder sb = new StringBuilder("(" + entry.getKey() + "=" + entry.getValue());
 		while (it.hasNext()) {
 			entry = it.next();
-			sb.append(" AND " + entry.getKey() + "=" + entry.getValue());
+			sb.append(Constantes.AND + entry.getKey() + "=" + entry.getValue());
 		}
 		sb.append(")");
 		return sb.toString();
@@ -1754,6 +1754,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
+		public void copiarNomeColunaLike(TabelaPersistencia tabela, String nome, String anterior) {
+			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
+			txtComplemento.setText("AND " + nome + " LIKE '%" + string + "%'");
+			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarColunaConcatenado()) {
+				actionListenerInner.actionPerformed(null);
+			}
+		}
+
+		@Override
 		public void copiarNomeColuna(TabelaPersistencia tabela, String nome, String anterior) {
 			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
 			txtComplemento.setText("AND " + nome + " = " + string);
@@ -1762,9 +1771,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 		}
 
+		public void concatenarNomeColunaLike(TabelaPersistencia tabela, String nome) {
+			String complemento = txtComplemento.getText();
+			txtComplemento.setText(complemento + Constantes.AND + nome + " LIKE '%%'");
+		}
+
 		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
 			String complemento = txtComplemento.getText();
-			txtComplemento.setText(complemento + " AND " + nome + " = ");
+			txtComplemento.setText(complemento + Constantes.AND + nome + " = ");
 		}
 
 		@Override
