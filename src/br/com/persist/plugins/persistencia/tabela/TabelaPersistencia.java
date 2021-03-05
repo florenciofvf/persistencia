@@ -216,8 +216,6 @@ public class TabelaPersistencia extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action concatNomeColunaLikeAcao = Action.actionMenu("label.concatenar_nome_coluna_like", null);
-		private Action copiarNomeColunaLikeAcao = Action.actionMenu("label.copiar_nome_coluna_like", null);
 		private Action concatNomeColunaAcao = Action.actionMenu("label.concatenar_nome_coluna", null);
 		private Action copiarNomeColunaAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action detalheColunaAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
@@ -239,33 +237,18 @@ public class TabelaPersistencia extends JTable {
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat", false, false));
 			addMenuItem(true, copiarNomeColunaAcao);
-			addMenuItem(copiarNomeColunaLikeAcao);
 			addMenuItem(true, concatNomeColunaAcao);
-			addMenuItem(concatNomeColunaLikeAcao);
 			add(true, new MenuCopiarLinhas());
 			add(true, menuIN);
 			eventos();
 		}
 
 		private void eventos() {
-			copiarNomeColunaLikeAcao.setActionListener(e -> {
-				String coluna = getModel().getColumnName(indiceColuna);
-				Util.setContentTransfered(coluna);
-				if (listener != null && Preferencias.isCopiarNomeColunaListener()) {
-					listener.copiarNomeColunaLike(TabelaPersistencia.this, coluna, null);
-				}
-			});
 			copiarNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
 				if (listener != null && Preferencias.isCopiarNomeColunaListener()) {
 					listener.copiarNomeColuna(TabelaPersistencia.this, coluna, null);
-				}
-			});
-			concatNomeColunaLikeAcao.setActionListener(e -> {
-				String coluna = getModel().getColumnName(indiceColuna);
-				if (listener != null) {
-					listener.concatenarNomeColunaLike(TabelaPersistencia.this, coluna);
 				}
 			});
 			concatNomeColunaAcao.setActionListener(e -> {

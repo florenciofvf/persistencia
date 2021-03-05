@@ -1729,7 +1729,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		StringBuilder sb = new StringBuilder("(" + entry.getKey() + "=" + entry.getValue());
 		while (it.hasNext()) {
 			entry = it.next();
-			sb.append(Constantes.AND + entry.getKey() + "=" + entry.getValue());
+			sb.append(" AND " + entry.getKey() + "=" + entry.getValue());
 		}
 		sb.append(")");
 		return sb.toString();
@@ -1754,31 +1754,37 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
-		public void copiarNomeColunaLike(TabelaPersistencia tabela, String nome, String anterior) {
-			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
-			txtComplemento.setText("AND " + nome + " LIKE '%" + string + "%'");
-			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarColunaConcatenado()) {
-				actionListenerInner.actionPerformed(null);
-			}
-		}
-
-		@Override
 		public void copiarNomeColuna(TabelaPersistencia tabela, String nome, String anterior) {
 			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
-			txtComplemento.setText("AND " + nome + " = " + string);
+			txtComplemento.setText("AND " + nome + getValor(getOpcao(), string));
 			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarColunaConcatenado()) {
 				actionListenerInner.actionPerformed(null);
 			}
-		}
-
-		public void concatenarNomeColunaLike(TabelaPersistencia tabela, String nome) {
-			String complemento = txtComplemento.getText();
-			txtComplemento.setText(complemento + Constantes.AND + nome + " LIKE '%%'");
 		}
 
 		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
 			String complemento = txtComplemento.getText();
-			txtComplemento.setText(complemento + Constantes.AND + nome + " = ");
+			txtComplemento.setText(complemento + " AND " + nome + getValor(getOpcao(), Constantes.VAZIO));
+		}
+
+		private String getOpcao() {
+			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao", "label.operador", "=",
+					new String[] { "=", "IN", "LIKE" });
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return "=";
+			}
+			return resp.toString();
+		}
+
+		private String getValor(String opcao, String string) {
+			if ("=".equals(opcao)) {
+				return " = " + string;
+			} else if ("IN".equals(opcao)) {
+				return " IN (" + string + ")";
+			} else if ("LIKE".equals(opcao)) {
+				return " LIKE '%" + string + "%'";
+			}
+			return Constantes.VAZIO;
 		}
 
 		@Override

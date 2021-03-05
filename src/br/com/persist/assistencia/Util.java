@@ -315,6 +315,12 @@ public class Util {
 				JOptionPane.PLAIN_MESSAGE, null, null, valorPadrao);
 	}
 
+	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem, String valorPadrao,
+			String[] opcoes) {
+		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),
+				JOptionPane.PLAIN_MESSAGE, null, opcoes, valorPadrao);
+	}
+
 	public static void stackTraceAndMessage(String tipo, Exception ex, Component componente) {
 		String msg = getStackTrace(tipo, ex);
 		mensagem(componente, msg);
