@@ -1768,8 +1768,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		private String getOpcao() {
-			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao", "label.operador", "=",
-					new String[] { "=", "IN", "LIKE" });
+			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
+					Mensagens.getString("label.operador"), "=", new String[] { "=", "IN", "LIKE" });
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return "=";
 			}
