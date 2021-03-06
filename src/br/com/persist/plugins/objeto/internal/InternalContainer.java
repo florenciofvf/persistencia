@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -1015,6 +1016,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
+			private MenuTemp menuTemp = new MenuTemp();
 
 			private ButtonInfo() {
 				super("label.meta_dados", Icones.INFO);
@@ -1027,6 +1029,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				addMenu(true, new MenuDML());
 				addMenu(true, new MenuCopiar());
 				addMenu(true, menuAlinhamento);
+				addMenu(true, menuTemp);
+			}
+
+			private class MenuTemp extends Menu {
+				private static final long serialVersionUID = 1L;
+				private Action corAcao = Action.actionMenu("label.cor", Icones.COR);
+
+				private MenuTemp() {
+					super("label.temp");
+					addMenuItem(corAcao);
+					corAcao.setActionListener(e -> configCor());
+				}
+
+				private void configCor() {
+					Color cor = InternalContainer.this.getBackground();
+					cor = JColorChooser.showDialog(InternalContainer.this, "Cor", cor);
+					InternalContainer.this.setBackground(cor);
+					SwingUtilities.updateComponentTreeUI(InternalContainer.this);
+				}
 			}
 
 			private class MenuAlinhamento extends Menu {
