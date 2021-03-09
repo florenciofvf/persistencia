@@ -337,7 +337,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		}
 	}
 
-	public void pesquisar(Pesquisa pesquisa, String argumentos) {
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;

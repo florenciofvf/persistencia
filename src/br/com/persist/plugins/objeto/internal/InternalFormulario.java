@@ -203,10 +203,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private transient InternalListener.Vinculo vinculoListener = new InternalListener.Vinculo() {
 		@Override
-		public void pesquisar(Pesquisa pesquisa, String argumentos) {
+		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
 			checarDesktop();
 			if (desktop != null) {
-				desktop.pesquisar(pesquisa, argumentos);
+				desktop.pesquisar(conexao, pesquisa, argumentos);
 			}
 		}
 

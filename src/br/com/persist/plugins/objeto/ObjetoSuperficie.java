@@ -1586,26 +1586,27 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	@Override
-	public void pesquisar(Pesquisa pesquisa, String argumentos) {
-		super.pesquisar(pesquisa, argumentos);
+	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
+		super.pesquisar(conexao, pesquisa, argumentos);
 		if (Preferencias.isAbrirAuto()) {
 			limparSelecao();
-			processarReferencias(pesquisa, argumentos);
+			processarReferencias(conexao, pesquisa, argumentos);
 			if (getPrimeiroObjetoSelecionado() != null) {
-				destacar(container.getConexaoPadrao(), Preferencias.getTipoContainerPesquisaAuto(), null);
+				destacar(conexao != null ? conexao : container.getConexaoPadrao(),
+						Preferencias.getTipoContainerPesquisaAuto(), null);
 			}
 		}
 	}
 
-	private void processarReferencias(Pesquisa pesquisa, String argumentos) {
+	private void processarReferencias(Conexao conexao, Pesquisa pesquisa, String argumentos) {
 		for (Referencia referencia : pesquisa.getReferencias()) {
 			if (!referencia.isProcessado()) {
-				pesquisarReferencia(referencia, argumentos);
+				pesquisarReferencia(conexao, referencia, argumentos);
 			}
 		}
 	}
 
-	private void pesquisarReferencia(Referencia referencia, String argumentos) {
+	private void pesquisarReferencia(Conexao conexao, Referencia referencia, String argumentos) {
 		Objeto objeto = null;
 		for (Objeto obj : objetos) {
 			if (referencia.igual(obj)) {
@@ -1614,16 +1615,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 		}
 		if (objeto != null && objeto.isAbrirAuto()) {
-			pesquisarReferencia(referencia, argumentos, objeto);
+			pesquisarReferencia(conexao, referencia, argumentos, objeto);
 		}
 	}
 
-	private void pesquisarReferencia(Referencia referencia, String argumentos, Objeto objeto) {
+	private void pesquisarReferencia(Conexao conexao, Referencia referencia, String argumentos, Objeto objeto) {
 		objeto.setComplemento("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
-		Conexao conexao = container.getConexaoPadrao();
 		objeto.setReferenciaPesquisa(referencia);
 		if (Preferencias.isAbrirAutoDestacado()) {
-			criarExternalFormulario(objeto.clonar(), conexao);
+			criarExternalFormulario(objeto.clonar(), conexao != null ? conexao : container.getConexaoPadrao());
 		} else {
 			objeto.setSelecionado(true);
 		}

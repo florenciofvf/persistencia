@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.List;
 
 import br.com.persist.abstrato.DesktopAlinhamento;
+import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -12,9 +13,9 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 
 public interface InternalListener {
 	public interface Vinculo {
-		public void pesquisarLink(List<Referencia> refs, String argumentos);
+		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos);
 
-		public void pesquisar(Pesquisa pesquisa, String argumentos);
+		public void pesquisarLink(List<Referencia> refs, String argumentos);
 
 		public void pesquisarApos(Pesquisa pesquisa);
 
