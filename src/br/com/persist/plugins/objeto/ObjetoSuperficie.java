@@ -1165,11 +1165,32 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_FICHARIO, null));
 				desktopAcao.setActionListener(
 						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_DESKTOP, null));
-				proprioAcao.setActionListener(
-						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_PROPRIO, null));
+				proprioAcao.setActionListener(e -> destacarProprioContainer());
 				formularioAcao.rotulo("label.abrir_sel_em_formulario");
 				ficharioAcao.rotulo("label.abrir_sel_em_fichario");
 				desktopAcao.rotulo("label.abrir_sel_em_desktop");
+			}
+
+			private void destacarProprioContainer() {
+				List<Objeto> lista = getSelecionados();
+				if (getContinua(lista)) {
+					String ajustes = nomeObjetosAjusteAuto(lista);
+					if (!Util.estaVazio(ajustes) && !Util.confirmar(ObjetoSuperficie.this,
+							Mensagens.getString("msb.objeto_com_ajuste_auto", ajustes), false)) {
+						return;
+					}
+					destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_PROPRIO, null);
+				}
+			}
+
+			private String nomeObjetosAjusteAuto(List<Objeto> lista) {
+				StringBuilder sb = new StringBuilder();
+				for (Objeto objeto : lista) {
+					if (objeto.isAjusteAutoForm()) {
+						sb.append(objeto.getId() + Constantes.QL);
+					}
+				}
+				return sb.toString();
 			}
 		}
 
@@ -2090,15 +2111,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
-		List<Objeto> lista = getSelecionados();
-		boolean continua = false;
+	private boolean getContinua(List<Objeto> lista) {
 		for (Objeto objeto : lista) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				continua = true;
+				return true;
 			}
 		}
-		if (continua) {
+		return false;
+	}
+
+	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
+		List<Objeto> lista = getSelecionados();
+		if (getContinua(lista)) {
 			List<Objeto> selecionados = montarSelecionados(lista, tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO);
 			destacar(conexao, tipoContainer, config, selecionados);
 		}
