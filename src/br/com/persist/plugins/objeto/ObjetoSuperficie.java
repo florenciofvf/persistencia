@@ -665,10 +665,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (Util.estaVazio(objeto.getTabela2())) {
 				popup.configuracaoAcao.actionPerformed(null);
 			} else {
-				Conexao conexao = container.getConexaoPadrao();
+				Conexao conexao = null;
 				InternalFormulario interno = getInternalFormulario(objeto);
 				if (interno != null) {
 					conexao = interno.getInternalContainer().getConexao();
+				}
+				if (conexao == null) {
+					conexao = container.getConexaoPadrao();
 				}
 				setComplemento(conexao, objeto);
 				if (Util.estaVazio(objeto.getArquivo())) {
