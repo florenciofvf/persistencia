@@ -1587,6 +1587,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	public Conexao getConexao() {
+		if (Preferencias.isDesconectado()) {
+			return null;
+		}
 		return (Conexao) comboConexao.getSelectedItem();
 	}
 
