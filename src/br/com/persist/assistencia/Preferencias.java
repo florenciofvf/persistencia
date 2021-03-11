@@ -61,6 +61,7 @@ public class Preferencias {
 		execAposCopiarColunaConcatenado = pref.getBoolean("exec_apos_copiar_coluna_concatenado", false);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		execAposBaixarParaComplemento = pref.getBoolean("exec_apos_baixar_para_complemento", false);
+		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
 		copiarNomeColunaListener = pref.getBoolean("copiar_nome_coluna_listener", false);
@@ -71,6 +72,7 @@ public class Preferencias {
 		formFichaDialogo = pref.get("form_ficha_dialogo", "FORM,FICHA,DIALOG");
 		fecharComESCDialogo = pref.getBoolean("fechar_com_ESC_dialogo", false);
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
+		monitorPreferencial = pref.getBoolean("monitor_preferencial", false);
 		porcVerticalLocalForm = pref.getInt("porc_vertical_local_form", 70);
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
@@ -100,6 +102,7 @@ public class Preferencias {
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
 		pref.putBoolean("exec_apos_copiar_coluna_concatenado", execAposCopiarColunaConcatenado);
 		pref.putBoolean("exec_apos_baixar_para_complemento", execAposBaixarParaComplemento);
+		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
 		pref.putBoolean("copiar_nome_coluna_listener", copiarNomeColunaListener);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
@@ -110,6 +113,7 @@ public class Preferencias {
 		pref.putInt("porc_vertical_local_form", porcVerticalLocalForm);
 		pref.putBoolean("fechar_com_ESC_dialogo", fecharComESCDialogo);
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
+		pref.putBoolean("monitor_preferencial", monitorPreferencial);
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
 		pref.putInt("intervalo_comparacao", intervaloComparacao);

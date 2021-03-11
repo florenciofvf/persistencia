@@ -246,8 +246,6 @@ public class Formulario extends JFrame {
 		StringBuilder sb = new StringBuilder();
 		sb.append(Mensagens.getString("label.parametros") + Constantes.QL);
 		sb.append("------------------" + Constantes.QL);
-		sb.append("habilitadoInnerJoinsObjeto" + Constantes.QL);
-		sb.append("monitorPreferencial" + Constantes.QL);
 		sb.append("desconectado" + Constantes.QL);
 		Util.mensagem(this, sb.toString());
 	}
