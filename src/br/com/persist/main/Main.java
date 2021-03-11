@@ -26,7 +26,6 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		Preferencias.setHabilitadoInnerJoinsObjeto(Util.contemNoArray("habilitadoInnerJoinsObjeto", args));
 		Preferencias.setDesconectado(Util.contemNoArray("desconectado", args));
 		Preferencias.inicializar();
 		installLookAndFeel();
