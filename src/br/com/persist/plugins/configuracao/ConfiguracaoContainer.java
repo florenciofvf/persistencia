@@ -64,6 +64,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkFecharComESCDialogo = new CheckBox("label.fechar_com_esc_dialogo");
+	private final CheckBox chkMonitorPreferencial = new CheckBox("label.monitor_preferencial");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
@@ -159,6 +160,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
 		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
+		chkMonitorPreferencial.setSelected(Preferencias.isMonitorPreferencial());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
@@ -204,6 +206,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(chkFecharComESCDialogo);
 		container.add(chkTituloAbaMin);
 		container.add(chkFicharioScroll);
+		container.add(chkMonitorPreferencial);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
@@ -231,6 +234,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkFecharOrigemAposSoltar.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
 		chkFecharComESCInternal.setMargin(insets);
+		chkMonitorPreferencial.setMargin(insets);
 		chkFecharComESCDialogo.setMargin(insets);
 		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
@@ -317,6 +321,9 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkFecharOrigemAposSoltar
 				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));
+
+		chkMonitorPreferencial
+				.addActionListener(e -> Preferencias.setMonitorPreferencial(chkMonitorPreferencial.isSelected()));
 
 		chkNomearArrasto.addActionListener(e -> Preferencias.setNomearArrasto(chkNomearArrasto.isSelected()));
 

@@ -27,7 +27,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		Preferencias.setHabilitadoInnerJoinsObjeto(Util.contemNoArray("habilitadoInnerJoinsObjeto", args));
-		Preferencias.setMonitorPreferencial(Util.contemNoArray("monitorPreferencial", args));
 		Preferencias.setDesconectado(Util.contemNoArray("desconectado", args));
 		Preferencias.inicializar();
 		installLookAndFeel();
