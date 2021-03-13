@@ -1044,7 +1044,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					addMenuItem(true, larTitTodosAcao);
 					addMenuItem(true, destacarColunaAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
-					destacarColunaAcao.setActionListener(e -> selecionarColuna());
+					destacarColunaAcao.setActionListener(e -> destacarColuna());
 					corAcao.setActionListener(e -> configCor());
 				}
 
@@ -1055,7 +1055,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					SwingUtilities.updateComponentTreeUI(InternalContainer.this);
 				}
 
-				private void selecionarColuna() {
+				private void destacarColuna() {
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.coluna",
 							Mensagens.getString("label.coluna"), Constantes.VAZIO);
 					if (resp != null && !Util.estaVazio(resp.toString())) {

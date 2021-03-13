@@ -196,6 +196,7 @@ public class TabelaPersistencia extends JTable {
 		if (cabecalho != null) {
 			cabecalho.setBackground(Color.RED);
 			SwingUtilities.updateComponentTreeUI(this);
+			tornarVisivel(0, coluna);
 		}
 	}
 
