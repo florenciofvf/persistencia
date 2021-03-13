@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -278,6 +279,7 @@ public class RelacaoContainer extends Panel {
 			add(BorderLayout.NORTH, chkQuebrado);
 			chkQuebrado.setSelected(relacao.isQuebrado());
 			add(BorderLayout.CENTER, new ScrollPane(new PanelLados()));
+			chkQuebrado.setMargin(new Insets(5, 10, 5, 5));
 		}
 
 		@Override
