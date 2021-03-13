@@ -203,6 +203,16 @@ public class TabelaPersistencia extends JTable {
 		tableColumn.setPreferredWidth(larguraTitulo);
 	}
 
+	public void larguraTituloTodos() {
+		FontMetrics fontMetrics = getFontMetrics(getFont());
+		TableModel model = getModel();
+		for (int col = 0; col < model.getColumnCount(); col++) {
+			String chave = model.getColumnName(col);
+			int largura = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
+			larguraTitulo(col, largura);
+		}
+	}
+
 	public void larguraMinima(int coluna) {
 		TableColumn tableColumn = getTableColumn(coluna);
 		tableColumn.setPreferredWidth(Constantes.DEZ);
@@ -270,7 +280,7 @@ public class TabelaPersistencia extends JTable {
 
 		private void preShow(String chave) {
 			FontMetrics fontMetrics = getFontMetrics(getFont());
-			larguraColuna = fontMetrics.stringWidth(chave) + 30;
+			larguraColuna = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
 			menuIN.setText("AND IN - " + chave);
 			limparMenuChaveamento();
 			List<String> lista = getChaveamento().get(chave);

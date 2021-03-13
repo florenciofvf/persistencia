@@ -1034,11 +1034,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private class MenuTemp extends Menu {
 				private static final long serialVersionUID = 1L;
+				private Action larTitTodosAcao = Action.actionMenu("label.largura_titulo_todos", null);
 				private Action corAcao = Action.actionMenu("label.cor", Icones.COR);
 
 				private MenuTemp() {
 					super("label.temp");
 					addMenuItem(corAcao);
+					addMenuItem(true, larTitTodosAcao);
+					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
 					corAcao.setActionListener(e -> configCor());
 				}
 
