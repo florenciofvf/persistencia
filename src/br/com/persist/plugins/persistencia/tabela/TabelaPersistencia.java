@@ -1,5 +1,6 @@
 package br.com.persist.plugins.persistencia.tabela;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Rectangle;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -185,6 +187,15 @@ public class TabelaPersistencia extends JTable {
 		Rectangle rect = getCellRect(linha, colunaView, true);
 		if (rect != null) {
 			scrollRectToVisible(rect);
+		}
+	}
+
+	public void destacarColuna(int coluna) {
+		TableColumn tableColumn = getTableColumn(coluna);
+		CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
+		if (cabecalho != null) {
+			cabecalho.setBackground(Color.RED);
+			SwingUtilities.updateComponentTreeUI(this);
 		}
 	}
 

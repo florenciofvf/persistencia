@@ -1035,13 +1035,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			private class MenuTemp extends Menu {
 				private static final long serialVersionUID = 1L;
 				private Action larTitTodosAcao = Action.actionMenu("label.largura_titulo_todos", null);
+				private Action destacarColunaAcao = Action.actionMenu("label.destacar_coluna", null);
 				private Action corAcao = Action.actionMenu("label.cor", Icones.COR);
 
 				private MenuTemp() {
 					super("label.temp");
 					addMenuItem(corAcao);
 					addMenuItem(true, larTitTodosAcao);
+					addMenuItem(true, destacarColunaAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
+					destacarColunaAcao.setActionListener(e -> selecionarColuna());
 					corAcao.setActionListener(e -> configCor());
 				}
 
@@ -1050,6 +1053,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					cor = JColorChooser.showDialog(InternalContainer.this, "Cor", cor);
 					InternalContainer.this.setBackground(cor);
 					SwingUtilities.updateComponentTreeUI(InternalContainer.this);
+				}
+
+				private void selecionarColuna() {
+					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.coluna",
+							Mensagens.getString("label.coluna"), Constantes.VAZIO);
+					if (resp != null && !Util.estaVazio(resp.toString())) {
+						destacarColunaTabela(resp.toString());
+					}
+				}
+
+				private void destacarColunaTabela(String nome) {
+					if (!Util.estaVazio(nome)) {
+						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome);
+						if (coluna != -1) {
+							tabelaPersistencia.destacarColuna(coluna);
+						}
+					}
 				}
 			}
 
