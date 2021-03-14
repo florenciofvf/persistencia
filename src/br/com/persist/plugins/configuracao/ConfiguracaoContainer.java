@@ -199,8 +199,8 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		}
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkExecAposBaixarParaComplemento);
-		container.add(chkExecAposCopiarColunaConcatenado);
 		container.add(chkNomeColunaListener);
+		container.add(chkExecAposCopiarColunaConcatenado);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkHabitInnerJoinsObj);
 		container.add(chkNomearArrasto);
@@ -228,14 +228,15 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(container));
 
+		Insets insets2 = new Insets(5, 30, 5, 5);
 		Insets insets = new Insets(5, 10, 5, 5);
 
-		chkExecAposCopiarColunaConcatenado.setMargin(insets);
+		chkExecAposCopiarColunaConcatenado.setMargin(insets2);
 		chkExecAposBaixarParaComplemento.setMargin(insets);
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharComESCFormulario.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
-		chkAtivarAbrirAutoDestac.setMargin(insets);
+		chkAtivarAbrirAutoDestac.setMargin(insets2);
 		chkFecharComESCInternal.setMargin(insets);
 		chkMonitorPreferencial.setMargin(insets);
 		chkFecharComESCDialogo.setMargin(insets);

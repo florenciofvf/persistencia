@@ -258,7 +258,7 @@ public class TabelaPersistencia extends JTable {
 			add(true, new MenuConcatenado("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_t", false, false));
-			addMenuItem(true, copiarNomeColunaAcao);
+			addMenuItem(copiarNomeColunaAcao);
 			addMenuItem(true, concatNomeColunaAcao);
 			add(true, new MenuCopiarLinhas());
 			add(true, menuIN);
