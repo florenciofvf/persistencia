@@ -260,6 +260,13 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		}
 	}
 
+	private void checkCopiarColuna() {
+		chkExecAposCopiarColunaConcatenado.setEnabled(chkNomeColunaListener.isSelected());
+		if (!chkNomeColunaListener.isSelected()) {
+			chkExecAposCopiarColunaConcatenado.setSelected(false);
+		}
+	}
+
 	private PanelCenter criarPainelGrupoDestac(NomeValor[] nomeValores, int padrao) {
 		PanelCenter panel = new PanelCenter();
 		for (int i = 0; i < nomeValores.length; i++) {
@@ -313,9 +320,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkExecAposCopiarColunaConcatenado.addActionListener(
 				e -> Preferencias.setExecAposCopiarColunaConcatenado(chkExecAposCopiarColunaConcatenado.isSelected()));
 
-		chkNomeColunaListener
-				.addActionListener(e -> Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected()));
-
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
 
 		chkFecharComESCInternal
@@ -343,8 +347,10 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
 
-		txtDefinirLargura.addActionListener(e -> definirLargura());
-		txtDefinirAltura.addActionListener(e -> definirAltura());
+		chkNomeColunaListener.addActionListener(e -> {
+			Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected());
+			checkCopiarColuna();
+		});
 
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {
 			Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected());
@@ -362,6 +368,9 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 				Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText());
 			}
 		});
+
+		txtDefinirLargura.addActionListener(e -> definirLargura());
+		txtDefinirAltura.addActionListener(e -> definirAltura());
 
 		txtFormDialogo.addFocusListener(new FocusAdapter() {
 			@Override
@@ -549,16 +558,19 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		void formularioVisivel() {
 			buttonDestacar.estadoFormulario();
+			checkCopiarColuna();
 			checkPesquisa();
 		}
 
 		void paginaVisivel() {
 			buttonDestacar.estadoFichario();
+			checkCopiarColuna();
 			checkPesquisa();
 		}
 
 		void dialogoVisivel() {
 			buttonDestacar.estadoDialogo();
+			checkCopiarColuna();
 			checkPesquisa();
 		}
 
