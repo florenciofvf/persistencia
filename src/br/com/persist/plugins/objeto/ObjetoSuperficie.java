@@ -1626,7 +1626,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		objeto.setComplemento("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
 		objeto.setReferenciaPesquisa(referencia);
 		if (Preferencias.isAbrirAutoDestacado()) {
-			criarExternalFormulario(objeto.clonar(), conexao != null ? conexao : container.getConexaoPadrao());
+			Objeto clone = objeto.clonar();
+			clone.setReferenciaPesquisa(referencia);
+			criarExternalFormulario(clone, conexao != null ? conexao : container.getConexaoPadrao());
 		} else {
 			objeto.setSelecionado(true);
 		}
