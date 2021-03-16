@@ -100,6 +100,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			int minimoForm = vMinimoForm.getInteiro(Constantes.TRINTA);
 			if (altura > minimoForm) {
 				setSize(getWidth(), minimoForm);
+				SwingUtilities.updateComponentTreeUI(this);
 			}
 		}
 	}
@@ -111,6 +112,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			int dadosToolbarTableHeader = vDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
 			if (altura < dadosToolbarTableHeader) {
 				setSize(getWidth(), dadosToolbarTableHeader);
+				SwingUtilities.updateComponentTreeUI(this);
 			}
 		}
 	}
