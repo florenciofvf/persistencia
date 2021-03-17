@@ -342,6 +342,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
+	public void pesquisar(Referencia referencia, String argumentos) {
+		Conexao conexao = getConexao();
+		if (conexao != null) {
+			txtComplemento.setText("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
+			destacarTitulo = true;
+			actionListenerInner.actionPerformed(null);
+		}
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
@@ -1640,15 +1649,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		public void actionPerformed(ActionEvent e) {
 			processar(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro);
-		}
-	}
-
-	public void pesquisar(Referencia referencia, String argumentos) {
-		Conexao conexao = getConexao();
-		if (conexao != null) {
-			txtComplemento.setText("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
-			destacarTitulo = true;
-			actionListenerInner.actionPerformed(null);
 		}
 	}
 
