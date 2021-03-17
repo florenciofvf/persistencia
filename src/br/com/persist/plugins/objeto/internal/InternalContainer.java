@@ -1652,27 +1652,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	public void pesquisarLink(Referencia referencia, String argumentos) {
-		if (objeto.isLinkAuto() && argumentos != null) {
-			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-			tabelaPersistencia.clearSelection();
-			selecionarRegistros(referencia, argumentos, modelo);
-		}
-	}
-
-	private void selecionarRegistros(Referencia referencia, String argumentos, OrdenacaoModelo modelo) {
-		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
-		if (coluna != -1) {
-			for (int i = 0; i < modelo.getRowCount(); i++) {
-				if (argumentos.equals(modelo.getValueAt(i, coluna))) {
-					tabelaPersistencia.addRowSelectionInterval(i, i);
-					tabelaPersistencia.tornarVisivel(i, coluna);
-				}
-			}
-			tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
-		}
-	}
-
 	public void aplicarConfig(InternalConfig config) {
 		if (!Util.estaVazio(config.getConexao())) {
 			Conexao conexaoSel = getConexaoSel(config.getConexao());
@@ -1862,6 +1841,27 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (lista.size() == 1) {
 				vinculoListener.pesquisarLink(objeto.getReferencias(), lista.get(0));
 			}
+		}
+	}
+
+	public void pesquisarLink(Referencia referencia, String argumentos) {
+		if (objeto.isLinkAuto() && argumentos != null) {
+			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+			tabelaPersistencia.clearSelection();
+			selecionarRegistros(referencia, argumentos, modelo);
+		}
+	}
+
+	private void selecionarRegistros(Referencia referencia, String argumentos, OrdenacaoModelo modelo) {
+		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
+		if (coluna != -1) {
+			for (int i = 0; i < modelo.getRowCount(); i++) {
+				if (argumentos.equals(modelo.getValueAt(i, coluna))) {
+					tabelaPersistencia.addRowSelectionInterval(i, i);
+					tabelaPersistencia.tornarVisivel(i, coluna);
+				}
+			}
+			tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		}
 	}
 
