@@ -41,6 +41,7 @@ public class Objeto implements Runnable {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<Referencia> referencias;
 	private Map<String, String> mapaSequencias;
+	private final Set<String> tabelasRepetidas;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	private boolean clonarAoDestacar = true;
@@ -108,6 +109,7 @@ public class Objeto implements Runnable {
 
 	public Objeto(int x, int y, Color cor, String icone) {
 		id = Constantes.VAZIO + (++sequencia);
+		tabelasRepetidas = new HashSet<>();
 		referencias = new ArrayList<>();
 		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
@@ -941,6 +943,9 @@ public class Objeto implements Runnable {
 
 	public void addReferencia(Referencia ref) {
 		if (ref != null && !Pesquisa.contem(ref, referencias)) {
+			if (Pesquisa.contem2(ref, referencias)) {
+				tabelasRepetidas.add(ref.getTabela());
+			}
 			referencias.add(ref);
 		}
 	}
@@ -961,5 +966,9 @@ public class Objeto implements Runnable {
 
 	public void setReferenciaPesquisa(Referencia referenciaPesquisa) {
 		this.referenciaPesquisa = referenciaPesquisa;
+	}
+
+	public Set<String> getTabelasRepetidas() {
+		return tabelasRepetidas;
 	}
 }

@@ -116,6 +116,15 @@ public class Pesquisa {
 		return false;
 	}
 
+	public static boolean contem2(Referencia ref, List<Referencia> referencias) {
+		for (Referencia r : referencias) {
+			if (r.igual2(ref)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public String getNomeParaMenuItem() {
 		return nome + " - " + referencia.getCampo();
 	}

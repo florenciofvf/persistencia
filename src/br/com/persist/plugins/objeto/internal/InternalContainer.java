@@ -1043,6 +1043,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private class MenuTemp extends Menu {
 				private static final long serialVersionUID = 1L;
+				private Action tabelasRepetidasAcao = Action.actionMenu("label.tabelas_repetidas", null);
 				private Action larTitTodosAcao = Action.actionMenu("label.largura_titulo_todos", null);
 				private Action destacarColunaAcao = Action.actionMenu("label.destacar_coluna", null);
 				private Action corAcao = Action.actionMenu("label.cor", Icones.COR);
@@ -1052,9 +1053,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					addMenuItem(corAcao);
 					addMenuItem(true, larTitTodosAcao);
 					addMenuItem(true, destacarColunaAcao);
+					addMenuItem(true, tabelasRepetidasAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
+					tabelasRepetidasAcao.setActionListener(e -> tabelasRepetidas());
 					destacarColunaAcao.setActionListener(e -> destacarColuna());
 					corAcao.setActionListener(e -> configCor());
+				}
+
+				private void tabelasRepetidas() {
+					Util.mensagem(InternalContainer.this, objeto.getTabelasRepetidas().toString());
 				}
 
 				private void configCor() {
