@@ -471,6 +471,10 @@ public class Objeto implements Runnable {
 		return (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + getPrefixoNomeTabela() + tabela;
 	}
 
+	public String getTabelaEsquema(Conexao conexao) {
+		return getTabelaEsquema(conexao != null ? conexao.getEsquema() : Constantes.LABEL_VAZIO);
+	}
+
 	public void select(StringBuilder sb, Conexao conexao) {
 		String sel = getSelectAlternativo();
 		if (Util.estaVazio(sel)) {

@@ -1287,8 +1287,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 
 					private void exibir(List<Relacao> relacoes) {
-						StringBuilder sb = new StringBuilder(
-								"INNER JOIN " + objeto.getTabela2() + " " + objeto.getApelidoParaJoinOuTabela());
+						StringBuilder sb = new StringBuilder("INNER JOIN " + objeto.getTabelaEsquema(getConexao()) + " "
+								+ objeto.getApelidoParaJoinOuTabela());
 						for (Relacao relacao : relacoes) {
 							sb.append(relacao.montarJoin());
 						}
