@@ -56,7 +56,10 @@ public class Relacao {
 	}
 
 	public String montarJoin() {
-		StringBuilder sb = new StringBuilder("ON");
+		if (Util.estaVazio(getChaveOrigem()) || Util.estaVazio(getChaveDestino())) {
+			return Constantes.VAZIO;
+		}
+		StringBuilder sb = new StringBuilder(Constantes.QL + "ON");
 		sb.append(" " + origem.getApelidoParaJoinOuTabela() + "." + getChaveOrigem());
 		sb.append(" =");
 		sb.append(" " + destino.getApelidoParaJoinOuTabela() + "." + getChaveDestino());
