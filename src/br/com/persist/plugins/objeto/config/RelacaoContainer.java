@@ -31,9 +31,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
@@ -328,7 +331,7 @@ public class RelacaoContainer extends Panel {
 			add(new PanelCenter(label));
 			add(new PanelCenter(new PanelObjeto(origem ? relacao.getOrigem() : relacao.getDestino())));
 			add(new PanelCenter(chkPonto));
-			add(new PanelCenter(new PanelChave(txtChave)));
+			add(new PanelCenter(new PanelChave(txtChave, origem ? relacao.getOrigem() : relacao.getDestino())));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -372,10 +375,19 @@ public class RelacaoContainer extends Panel {
 
 	private class PanelChave extends Panel {
 		private static final long serialVersionUID = 1L;
+		private final Action campos = Action.actionIcon("label.campos", Icones.CAMPOS);
+		private final transient Objeto objeto;
 
-		private PanelChave(TextField textField) {
+		private PanelChave(TextField textField, Objeto objeto) {
+			this.objeto = objeto;
 			add(BorderLayout.WEST, new Label("label.pk_fk"));
 			add(BorderLayout.CENTER, textField);
+			add(BorderLayout.EAST, new Button(campos));
+			campos.setActionListener(e -> exibirCampos());
+		}
+
+		private void exibirCampos() {
+			objetoSuperficie.exibirCampos(objeto);
 		}
 	}
 

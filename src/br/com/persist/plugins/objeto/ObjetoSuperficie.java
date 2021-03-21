@@ -71,8 +71,10 @@ import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
+import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
+import br.com.persist.plugins.persistencia.tabela.TabelaDialogo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -2287,5 +2289,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void setArquivoVinculo(String arquivoVinculo) {
 		this.arquivoVinculo = arquivoVinculo;
+	}
+
+	public void exibirCampos(Objeto objeto) {
+		Conexao conexao = container.getConexaoPadrao();
+		if (conexao != null && objeto != null && !Util.estaVazio(objeto.getTabela2())) {
+			try {
+				Connection conn = ConexaoProvedor.getConnection(conexao);
+				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela2());
+				TabelaDialogo.criar((Frame) null, objeto.getTitle(Mensagens.getString(Constantes.LABEL_METADADOS)),
+						modelo);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);
+			}
+		}
 	}
 }
