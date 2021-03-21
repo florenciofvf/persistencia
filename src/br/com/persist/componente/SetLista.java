@@ -25,10 +25,14 @@ public class SetLista {
 	private SetLista() {
 	}
 
-	public static void view(String titulo, List<String> lista, Coletor coletor, Component c) {
-		SetListaDialogo form = new SetListaDialogo(titulo, lista, coletor);
+	public static void view(String titulo, List<String> lista, Coletor coletor, Component c, boolean somenteUm) {
+		SetListaDialogo form = new SetListaDialogo(titulo, lista, coletor, somenteUm);
 		form.setLocationRelativeTo(c);
 		form.setVisible(true);
+	}
+
+	public static void view(String titulo, List<String> lista, Coletor coletor, Component c) {
+		view(titulo, lista, coletor, c, false);
 	}
 
 	public static class Coletor {
@@ -75,9 +79,9 @@ class Item {
 	private final String rotulo;
 	private boolean selecionado;
 
-	public Item(String rotulo) {
+	public Item(String rotulo, boolean sel) {
 		this.rotulo = rotulo;
-		selecionado = true;
+		selecionado = sel;
 	}
 
 	public boolean isSelecionado() {
@@ -117,11 +121,13 @@ class SetListaDialogo extends AbstratoDialogo {
 	private final Toolbar toolbar = new Toolbar();
 	private JList<Item> lista = new JList<>();
 	private final transient Coletor coletor;
+	private final boolean somenteUm;
 
-	SetListaDialogo(String titulo, List<String> listaString, Coletor coletor) {
+	SetListaDialogo(String titulo, List<String> listaString, Coletor coletor, boolean somenteUm) {
 		super((Frame) null, titulo + " [" + listaString.size() + "]");
+		lista.setModel(criarModel(listaString, somenteUm));
 		lista.setCellRenderer(new ItemRenderer());
-		lista.setModel(criarModel(listaString));
+		this.somenteUm = somenteUm;
 		setSize(Constantes.SIZE3);
 		this.coletor = coletor;
 		toolbar.ini(this);
@@ -129,15 +135,15 @@ class SetListaDialogo extends AbstratoDialogo {
 		eventos();
 	}
 
-	private ListModel<Item> criarModel(List<String> lista) {
-		List<Item> listaItem = criarListaItem(lista);
+	private ListModel<Item> criarModel(List<String> lista, boolean somenteUm) {
+		List<Item> listaItem = criarListaItem(lista, somenteUm);
 		return criarModelo(listaItem);
 	}
 
-	private List<Item> criarListaItem(List<String> lista) {
+	private List<Item> criarListaItem(List<String> lista, boolean somenteUm) {
 		List<Item> listaItem = new ArrayList<>();
 		for (String string : lista) {
-			listaItem.add(new Item(string));
+			listaItem.add(new Item(string, !somenteUm));
 		}
 		return listaItem;
 	}
@@ -162,8 +168,21 @@ class SetListaDialogo extends AbstratoDialogo {
 			public void mouseClicked(MouseEvent event) {
 				int index = lista.locationToIndex(event.getPoint());
 				Item item = lista.getModel().getElementAt(index);
+				checarSomenteUm(item);
 				item.setSelecionado(!item.isSelecionado());
 				lista.repaint(lista.getCellBounds(index, index));
+			}
+
+			private void checarSomenteUm(Item item) {
+				if (somenteUm) {
+					ListModel<Item> model = lista.getModel();
+					for (int i = 0; i < model.getSize(); i++) {
+						Item a = model.getElementAt(i);
+						if (a != item) {
+							a.setSelecionado(false);
+						}
+					}
+				}
 			}
 		});
 	}
@@ -180,14 +199,19 @@ class SetListaDialogo extends AbstratoDialogo {
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
 			add(chkTodos);
-			chkTodos.setSelected(true);
+			chkTodos.setSelected(!somenteUm);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
 		}
 
 		private void selecionar(boolean b) {
 			ListModel<Item> model = lista.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
-				model.getElementAt(i).setSelecionado(b);
+				Item item = model.getElementAt(i);
+				if (somenteUm) {
+					item.setSelecionado(false);
+				} else {
+					item.setSelecionado(b);
+				}
 			}
 			lista.repaint();
 		}
@@ -197,8 +221,9 @@ class SetListaDialogo extends AbstratoDialogo {
 			List<String> listar = new ArrayList<>();
 			ListModel<Item> model = lista.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
-				if (model.getElementAt(i).isSelecionado()) {
-					listar.add(model.getElementAt(i).getRotulo());
+				Item item = model.getElementAt(i);
+				if (item.isSelecionado()) {
+					listar.add(item.getRotulo());
 				}
 			}
 			coletor.setLista(listar);
