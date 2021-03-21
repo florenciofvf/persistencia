@@ -323,16 +323,12 @@ public class RelacaoContainer extends Panel {
 			txtChave.addActionListener(this);
 			Label label = new Label();
 			label.setText(origem ? relacao.getOrigem().getId() : relacao.getDestino().getId());
-			if (origem) {
-				add(new PanelTitulo("label.origem"));
-			} else {
-				add(new PanelTitulo("label.destino"));
-			}
+			add(origem ? new PanelTitulo("label.origem") : new PanelTitulo("label.destino"));
 			add(new JSeparator());
 			add(new PanelCenter(label));
 			add(new PanelCenter(new PanelObjeto(origem ? relacao.getOrigem() : relacao.getDestino())));
 			add(new PanelCenter(chkPonto));
-			add(new PanelCenter(new PanelChave(txtChave, origem ? relacao.getOrigem() : relacao.getDestino())));
+			add(new PanelCenter(new PanelChave(txtChave, origem ? relacao.getOrigem() : relacao.getDestino(), this)));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -380,20 +376,21 @@ public class RelacaoContainer extends Panel {
 		private final transient Objeto objeto;
 		private final TextField textField;
 
-		private PanelChave(TextField textField, Objeto objeto) {
+		private PanelChave(TextField textField, Objeto objeto, ActionListener action) {
 			add(BorderLayout.WEST, new Label("label.pk_fk"));
 			add(BorderLayout.EAST, new Button(campos));
 			add(BorderLayout.CENTER, textField);
 			this.textField = textField;
 			this.objeto = objeto;
-			campos.setActionListener(e -> exibirCampos());
+			campos.setActionListener(e -> exibirCampos(action));
 		}
 
-		private void exibirCampos() {
+		private void exibirCampos(ActionListener action) {
 			Coletor coletor = new Coletor();
 			objetoSuperficie.selecionarCampo(objeto, coletor, RelacaoContainer.this);
 			if (coletor.size() == 1) {
 				textField.setText(coletor.get(0));
+				action.actionPerformed(new ActionEvent(textField, 0, null));
 			}
 		}
 	}
