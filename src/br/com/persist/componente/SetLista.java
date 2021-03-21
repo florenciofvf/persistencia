@@ -57,6 +57,14 @@ public class SetLista {
 			return getLista().isEmpty();
 		}
 
+		public int size() {
+			return getLista().size();
+		}
+
+		public String get(int i) {
+			return getLista().get(i);
+		}
+
 		public boolean contem(String string) {
 			return !Util.estaVazio(string) && getLista().contains(string);
 		}

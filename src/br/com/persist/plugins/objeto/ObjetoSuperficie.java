@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -49,6 +50,8 @@ import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
+import br.com.persist.componente.SetLista;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
@@ -74,7 +77,6 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
-import br.com.persist.plugins.persistencia.tabela.TabelaDialogo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -2291,14 +2293,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		this.arquivoVinculo = arquivoVinculo;
 	}
 
-	public void exibirCampos(Objeto objeto) {
+	public void selecionarCampo(Objeto objeto, Coletor coletor, Component c) {
 		Conexao conexao = container.getConexaoPadrao();
 		if (conexao != null && objeto != null && !Util.estaVazio(objeto.getTabela2())) {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela2());
-				TabelaDialogo.criar((Frame) null, objeto.getTitle(Mensagens.getString(Constantes.LABEL_METADADOS)),
-						modelo);
+				SetLista.view(objeto.getId(), modelo.getLista(2), coletor, c);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);
 			}

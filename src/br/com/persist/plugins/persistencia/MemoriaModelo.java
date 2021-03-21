@@ -28,6 +28,14 @@ public class MemoriaModelo implements TableModel {
 		return registros;
 	}
 
+	public List<String> getLista(int i) {
+		List<String> resp = new ArrayList<>();
+		for (List<String> lista : registros) {
+			resp.add(lista.get(i));
+		}
+		return resp;
+	}
+
 	public List<Coluna> getColunasInfo() {
 		return colunasInfo;
 	}

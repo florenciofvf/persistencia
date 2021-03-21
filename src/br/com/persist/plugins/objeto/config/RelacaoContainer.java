@@ -43,6 +43,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
@@ -377,17 +378,23 @@ public class RelacaoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Action campos = Action.actionIcon("label.campos", Icones.CAMPOS);
 		private final transient Objeto objeto;
+		private final TextField textField;
 
 		private PanelChave(TextField textField, Objeto objeto) {
-			this.objeto = objeto;
 			add(BorderLayout.WEST, new Label("label.pk_fk"));
-			add(BorderLayout.CENTER, textField);
 			add(BorderLayout.EAST, new Button(campos));
+			add(BorderLayout.CENTER, textField);
+			this.textField = textField;
+			this.objeto = objeto;
 			campos.setActionListener(e -> exibirCampos());
 		}
 
 		private void exibirCampos() {
-			objetoSuperficie.exibirCampos(objeto);
+			Coletor coletor = new Coletor();
+			objetoSuperficie.selecionarCampo(objeto, coletor, RelacaoContainer.this);
+			if (coletor.size() == 1) {
+				textField.setText(coletor.get(0));
+			}
 		}
 	}
 
