@@ -166,7 +166,6 @@ public class Util {
 		html.append("</head>").append(Constantes.QL);
 		html.append("<body>").append(Constantes.QL);
 		html.append("<table>").append(Constantes.QL);
-		html.append("<tr>").append(Constantes.QL);
 	}
 
 	private static List<String> nomeColunas(TableModel model) {
@@ -180,6 +179,7 @@ public class Util {
 
 	private static void headHtml(StringBuilder html, StringBuilder tabular, TableModel model, boolean[] selecionadas) {
 		int colunas = model.getColumnCount();
+		html.append("<tr>").append(Constantes.QL);
 		for (int i = 0; i < colunas; i++) {
 			if (selecionadas[i]) {
 				String coluna = model.getColumnName(i);
