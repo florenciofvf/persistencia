@@ -121,6 +121,53 @@ public class Util {
 		}
 	}
 
+	public static String copiarColunaUnicaString(JTable table, List<Integer> indices, boolean comAspas) {
+		if (table == null || indices == null) {
+			return Constantes.VAZIO;
+		}
+		TableModel model = table.getModel();
+		if (model == null || model.getColumnCount() < 1 || model.getRowCount() < 1) {
+			return Constantes.VAZIO;
+		}
+		Coletor coletor = new Coletor();
+		SetLista.view("Coluna", nomeColunas(model), coletor, table, true);
+		if (coletor.size() == 1) {
+			return copiarColunaUnicaString(model, indices, comAspas, coletor);
+		}
+		return Constantes.VAZIO;
+	}
+
+	private static String copiarColunaUnicaString(TableModel model, List<Integer> indices, boolean comAspas,
+			Coletor coletor) {
+		StringBuilder sb = new StringBuilder();
+		boolean[] selecionadas = colunasSelecionadas(coletor, model);
+		conteudo(sb, model, indices, selecionadas, comAspas);
+		return sb.toString();
+	}
+
+	private static void conteudo(StringBuilder sb, TableModel model, List<Integer> indices, boolean[] selecionadas,
+			boolean comAspas) {
+		int colunas = model.getColumnCount();
+		for (Integer i : indices) {
+			for (int j = 0; j < colunas; j++) {
+				if (selecionadas[j]) {
+					Object obj = model.getValueAt(i, j);
+					String val = obj == null ? Constantes.VAZIO : obj.toString();
+					conteudo(sb, comAspas, val);
+				}
+			}
+		}
+	}
+
+	private static void conteudo(StringBuilder sb, boolean comAspas, String val) {
+		if (!estaVazio(val)) {
+			if (sb.length() > 0) {
+				sb.append(", ");
+			}
+			sb.append(comAspas ? citar(val) : val);
+		}
+	}
+
 	public static TransferidorTabular criarTransferidorTabular(JTable table, List<Integer> indices) {
 		if (table == null || indices == null) {
 			return null;
