@@ -9,6 +9,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -93,6 +94,8 @@ class TabelaContainer extends Panel {
 
 		private class ButtonCopiar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action umaColunaSemAcao = Action.actionMenu("label.uma_coluna_sem_aspas", null);
+			private Action umaColunaComAcao = Action.actionMenu("label.uma_coluna_com_aspas", null);
 			private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
 			private Action tabularAcao = Action.actionMenu("label.tabular", null);
 			private Action htmlAcao = Action.actionMenu("label.html", null);
@@ -102,9 +105,21 @@ class TabelaContainer extends Panel {
 				addMenuItem(htmlAcao);
 				addMenuItem(true, tabularAcao);
 				addMenuItem(true, transferidorAcao);
+				addMenuItem(true, umaColunaSemAcao);
+				addMenuItem(umaColunaComAcao);
+				umaColunaSemAcao.setActionListener(e -> umaColuna(false));
+				umaColunaComAcao.setActionListener(e -> umaColuna(true));
 				transferidorAcao.setActionListener(e -> processar(0));
 				tabularAcao.setActionListener(e -> processar(1));
 				htmlAcao.setActionListener(e -> processar(2));
+			}
+
+			private void umaColuna(boolean comAspas) {
+				List<Integer> indices = Util.getIndicesLinha(tabela);
+				String string = Util.copiarColunaUnicaString(tabela, indices, comAspas,
+						comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
+								: Mensagens.getString("label.uma_coluna_sem_aspas"));
+				Util.setContentTransfered(string);
 			}
 
 			private void processar(int tipo) {

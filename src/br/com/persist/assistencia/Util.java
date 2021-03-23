@@ -121,7 +121,7 @@ public class Util {
 		}
 	}
 
-	public static String copiarColunaUnicaString(JTable table, List<Integer> indices, boolean comAspas) {
+	public static String copiarColunaUnicaString(JTable table, List<Integer> indices, boolean comAspas, String titulo) {
 		if (table == null || indices == null) {
 			return Constantes.VAZIO;
 		}
@@ -130,7 +130,7 @@ public class Util {
 			return Constantes.VAZIO;
 		}
 		Coletor coletor = new Coletor();
-		SetLista.view("Coluna", nomeColunas(model), coletor, table, true);
+		SetLista.view(titulo, nomeColunas(model), coletor, table, true);
 		if (coletor.size() == 1) {
 			return copiarColunaUnicaString(model, indices, comAspas, coletor);
 		}

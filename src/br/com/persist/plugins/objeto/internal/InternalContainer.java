@@ -1132,7 +1132,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private class MenuCopiar extends Menu {
 				private static final long serialVersionUID = 1L;
-				private Action transfAcao = Action.actionMenu("label.transferidor", null);
+				private Action umaColunaSemAcao = Action.actionMenu("label.uma_coluna_sem_aspas", null);
+				private Action umaColunaComAcao = Action.actionMenu("label.uma_coluna_com_aspas", null);
+				private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
 				private Action tabularAcao = Action.actionMenu("label.tabular", null);
 				private Action htmlAcao = Action.actionMenu("label.html", null);
 
@@ -1140,13 +1142,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					super("label.copiar", Icones.TABLE2);
 					setToolTipText(Mensagens.getString("label.copiar_tabela"));
 					addMenuItem(htmlAcao);
-					addSeparator();
-					addMenuItem(tabularAcao);
-					addSeparator();
-					addMenuItem(transfAcao);
-					transfAcao.setActionListener(e -> processar(0));
+					addMenuItem(true, tabularAcao);
+					addMenuItem(true, transferidorAcao);
+					addMenuItem(true, umaColunaSemAcao);
+					addMenuItem(umaColunaComAcao);
+					umaColunaSemAcao.setActionListener(e -> umaColuna(false));
+					umaColunaComAcao.setActionListener(e -> umaColuna(true));
+					transferidorAcao.setActionListener(e -> processar(0));
 					tabularAcao.setActionListener(e -> processar(1));
 					htmlAcao.setActionListener(e -> processar(2));
+				}
+
+				private void umaColuna(boolean comAspas) {
+					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
+					String string = Util.copiarColunaUnicaString(tabelaPersistencia, indices, comAspas,
+							comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
+									: Mensagens.getString("label.uma_coluna_sem_aspas"));
+					Util.setContentTransfered(string);
 				}
 
 				private void processar(int tipo) {
