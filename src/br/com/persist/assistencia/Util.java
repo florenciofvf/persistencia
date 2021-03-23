@@ -134,18 +134,20 @@ public class Util {
 		if (coletor.estaVazio()) {
 			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
 		}
-		return criarTransferidorTabular(indices, model, coletor);
+		return criarTransferidorTabular(indices, model, coletor, table);
 	}
 
 	private static TransferidorTabular criarTransferidorTabular(List<Integer> indices, TableModel model,
-			Coletor coletor) {
+			Coletor coletor, JTable table) {
 		boolean[] selecionadas = colunasSelecionadas(coletor, model);
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
-		iniHtml(html);
-		headHtml(html, tabular, model, selecionadas);
-		bodyHtml(html, tabular, model, indices, selecionadas);
-		fimHtml(html, tabular);
+		iniciar(html);
+		if (confirmar(table, "msg.com_cabecalho")) {
+			cabecalho(html, tabular, model, selecionadas);
+		}
+		conteudo(html, tabular, model, indices, selecionadas);
+		finalizar(html, tabular);
 		return new TransferidorTabular(html.toString(), tabular.toString());
 	}
 
@@ -159,7 +161,7 @@ public class Util {
 		return selecionadas;
 	}
 
-	private static void iniHtml(StringBuilder html) {
+	private static void iniciar(StringBuilder html) {
 		html.append("<html>").append(Constantes.QL);
 		html.append("<head>").append(Constantes.QL);
 		html.append("<meta charset='utf-8'>").append(Constantes.QL);
@@ -177,7 +179,7 @@ public class Util {
 		return lista;
 	}
 
-	private static void headHtml(StringBuilder html, StringBuilder tabular, TableModel model, boolean[] selecionadas) {
+	private static void cabecalho(StringBuilder html, StringBuilder tabular, TableModel model, boolean[] selecionadas) {
 		int colunas = model.getColumnCount();
 		html.append("<tr>").append(Constantes.QL);
 		for (int i = 0; i < colunas; i++) {
@@ -192,7 +194,7 @@ public class Util {
 		tabular.append(Constantes.QL);
 	}
 
-	private static void bodyHtml(StringBuilder html, StringBuilder tabular, TableModel model, List<Integer> indices,
+	private static void conteudo(StringBuilder html, StringBuilder tabular, TableModel model, List<Integer> indices,
 			boolean[] selecionadas) {
 		int colunas = model.getColumnCount();
 		for (Integer i : indices) {
@@ -212,7 +214,7 @@ public class Util {
 		}
 	}
 
-	private static void fimHtml(StringBuilder html, StringBuilder tabular) {
+	private static void finalizar(StringBuilder html, StringBuilder tabular) {
 		html.append("</table>").append(Constantes.QL);
 		html.append("</body>").append(Constantes.QL);
 		html.append("</html>");
