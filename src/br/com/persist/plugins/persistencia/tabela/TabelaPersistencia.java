@@ -238,6 +238,7 @@ public class TabelaPersistencia extends JTable {
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action concatNomeColunaAcao = Action.actionMenu("label.concatenar_nome_coluna", null);
+		private Action colocarNomeColunaAcao = Action.actionMenu("label.colocar_nome_coluna", null);
 		private Action copiarNomeColunaAcao = Action.actionMenu("label.copiar_nome_coluna", null);
 		private Action detalheColunaAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
@@ -255,10 +256,11 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(larguraColunaAcao);
 			addMenuItem(larguraTituloAcao);
 			addMenuItem(true, concatNomeColunaAcao);
+			addMenuItem(colocarNomeColunaAcao);
+			addMenuItem(copiarNomeColunaAcao);
 			add(true, new MenuConcatenado("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_t", false, false));
-			addMenuItem(true, copiarNomeColunaAcao);
 			add(true, new MenuCopiarLinhas());
 			add(true, menuIN);
 			eventos();
@@ -273,6 +275,12 @@ public class TabelaPersistencia extends JTable {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
 					listener.concatenarNomeColuna(TabelaPersistencia.this, coluna);
+				}
+			});
+			colocarNomeColunaAcao.setActionListener(e -> {
+				String coluna = getModel().getColumnName(indiceColuna);
+				if (listener != null) {
+					listener.colocarNomeColuna(TabelaPersistencia.this, coluna);
 				}
 			});
 			detalheColunaAcao.setActionListener(e -> {

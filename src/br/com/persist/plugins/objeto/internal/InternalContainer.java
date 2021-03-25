@@ -1812,6 +1812,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			txtComplemento.setText(complemento + getPrefixo() + nome + getValor(getOpcao(), Constantes.VAZIO));
 		}
 
+		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
+			txtComplemento.setText(getPrefixo() + nome + getValor(getOpcao(), Constantes.VAZIO));
+		}
+
 		private String getPrefixo() {
 			final String AND = " AND ";
 			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
