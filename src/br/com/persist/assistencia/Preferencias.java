@@ -16,7 +16,6 @@ public class Preferencias {
 	private static boolean aplicarLarguraAoAbrirArquivoObjeto;
 	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
 	private static final String ARQ_PREF = "preferencias";
-	private static boolean execAposBaixarParaComplemento;
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean areaTransTabelaRegistros;
 	private static boolean exibiuMensagemConnection;
@@ -57,7 +56,6 @@ public class Preferencias {
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
-		execAposBaixarParaComplemento = pref.getBoolean("exec_apos_baixar_para_complemento", false);
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
@@ -96,7 +94,6 @@ public class Preferencias {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
-		pref.putBoolean("exec_apos_baixar_para_complemento", execAposBaixarParaComplemento);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
@@ -344,14 +341,6 @@ public class Preferencias {
 
 	public static void setExibiuMensagemConnection(boolean exibiuMensagemConnection) {
 		Preferencias.exibiuMensagemConnection = exibiuMensagemConnection;
-	}
-
-	public static boolean isExecAposBaixarParaComplemento() {
-		return execAposBaixarParaComplemento;
-	}
-
-	public static void setExecAposBaixarParaComplemento(boolean execAposBaixarParaComplemento) {
-		Preferencias.execAposBaixarParaComplemento = execAposBaixarParaComplemento;
 	}
 
 	public static int getPorcHorizontalLocalForm() {

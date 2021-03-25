@@ -560,7 +560,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						String s = txtComplemento.getText().trim();
 						txtComplemento.setText(s + " " + complement);
 					}
-					if (Preferencias.isExecAposBaixarParaComplemento()) {
+					if (Util.confirmar(InternalContainer.this, "label.executar")) {
 						actionListenerInner.actionPerformed(null);
 					}
 				}

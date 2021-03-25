@@ -49,8 +49,6 @@ import br.com.persist.formulario.Formulario;
 
 public class ConfiguracaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
-	private final CheckBox chkExecAposBaixarParaComplemento = new CheckBox(
-			"label.executar_apos_baixar_para_complemento");
 	private final CheckBox chkAplicarLarguraAoAbrirArquivoObjeto = new CheckBox(
 			"label.aplicar_largura_ao_abrir_arq_objeto");
 	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
@@ -148,7 +146,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
-		chkExecAposBaixarParaComplemento.setSelected(Preferencias.isExecAposBaixarParaComplemento());
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkHabitInnerJoinsObj.setSelected(Preferencias.isHabilitadoInnerJoinsObjeto());
@@ -193,7 +190,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			container.add(new JSeparator());
 		}
 		container.add(chkAreaTransTabelaRegistros);
-		container.add(chkExecAposBaixarParaComplemento);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkHabitInnerJoinsObj);
 		container.add(chkNomearArrasto);
@@ -224,7 +220,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Insets insets2 = new Insets(5, 30, 5, 5);
 		Insets insets = new Insets(5, 10, 5, 5);
 
-		chkExecAposBaixarParaComplemento.setMargin(insets);
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharComESCFormulario.setMargin(insets);
 		chkFecharOrigemAposSoltar.setMargin(insets);
@@ -305,9 +300,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkFecharComESCInternal
 				.addActionListener(e -> Preferencias.setFecharComESCInternal(chkFecharComESCInternal.isSelected()));
-
-		chkExecAposBaixarParaComplemento.addActionListener(
-				e -> Preferencias.setExecAposBaixarParaComplemento(chkExecAposBaixarParaComplemento.isSelected()));
 
 		chkFecharComESCDialogo
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
