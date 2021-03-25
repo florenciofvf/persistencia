@@ -255,11 +255,11 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(true, larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
 			addMenuItem(larguraTituloAcao);
+			addMenuItem(true, concatNomeColunaAcao);
 			add(true, new MenuConcatenado("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuConcatenado("label.copiar_nome_coluna_concat_t", false, false));
-			addMenuItem(copiarNomeColunaAcao);
-			addMenuItem(true, concatNomeColunaAcao);
+			addMenuItem(true, copiarNomeColunaAcao);
 			add(true, new MenuCopiarLinhas());
 			add(true, menuIN);
 			eventos();
@@ -269,9 +269,12 @@ public class TabelaPersistencia extends JTable {
 			copiarNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
-				if (listener != null && Preferencias.isCopiarNomeColunaListener()) {
-					listener.copiarNomeColuna(TabelaPersistencia.this, coluna, null);
-				}
+				/*
+				 * if (listener != null &&
+				 * Preferencias.isCopiarNomeColunaListener()) {
+				 * listener.copiarNomeColuna(TabelaPersistencia.this, coluna,
+				 * null); }
+				 */
 			});
 			concatNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
