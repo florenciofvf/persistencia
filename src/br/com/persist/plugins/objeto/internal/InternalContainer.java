@@ -434,11 +434,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void eventos() {
-				objetoAcao.setActionListener(e -> txtComplemento.setText(objeto.getComplemento()));
-				limparAcao.setActionListener(e -> txtComplemento.limpar());
+				objetoAcao.setActionListener(e -> limparPeloObjeto());
+				limparAcao.setActionListener(e -> limpar());
 				conexaoAcao.setActionListener(e -> limparUsandoConexao());
 				limparOutrosAcao.setActionListener(e -> limparOutros());
 				limpar2Acao.setActionListener(e -> limpar2());
+			}
+
+			private void limparPeloObjeto() {
+				txtComplemento.setText(objeto.getComplemento());
+				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+					actionListenerInner.actionPerformed(null);
+				}
+			}
+
+			private void limpar() {
+				txtComplemento.limpar();
+				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+					actionListenerInner.actionPerformed(null);
+				}
 			}
 
 			private void limparUsandoConexao() {
@@ -448,6 +462,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					string = conexao.getFinalComplemento();
 				}
 				txtComplemento.setText(string);
+				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+					actionListenerInner.actionPerformed(null);
+				}
 			}
 
 			private void limpar2() {
@@ -560,7 +577,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						String s = txtComplemento.getText().trim();
 						txtComplemento.setText(s + " " + complement);
 					}
-					if (Util.confirmar(InternalContainer.this, "label.executar")) {
+					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
 					}
 				}

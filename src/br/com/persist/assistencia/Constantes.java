@@ -68,6 +68,7 @@ public class Constantes {
 	public static final Dimension SIZE3 = new Dimension(400, 400);
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
+	public static final String LABEL_EXECUTAR = "label.executar";
 	public static final String CHAVE_PRIMARIA = "CHAVE_PRIMARIA";
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
