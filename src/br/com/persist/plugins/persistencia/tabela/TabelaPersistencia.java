@@ -354,29 +354,28 @@ public class TabelaPersistencia extends JTable {
 			private final boolean numeros;
 			private final boolean letras;
 
-			private MenuExecutarColuna(String titulo, boolean num, boolean let) {
+			private MenuExecutarColuna(String titulo, boolean numero, boolean letra) {
 				super(titulo);
-				numeros = num;
-				letras = let;
+				numeros = numero;
+				letras = letra;
 				semAspasAcao.setActionListener(e -> copiar(false));
 				comAspasAcao.setActionListener(e -> copiar(true));
 			}
 
 			private void copiar(boolean aspas) {
-				String string = Util.getContentTransfered();
-				String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-				Util.setContentTransfered(coluna);
 				if (listener != null) {
+					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+					String memoria = Util.getContentTransfered();
 					if (numeros) {
-						string = Util.soNumeros(string);
+						memoria = Util.soNumeros(memoria);
 					}
 					if (letras) {
-						string = Util.soLetras(string);
+						memoria = Util.soLetras(memoria);
 					}
-					if (aspas && !Util.estaVazio(string)) {
-						string = Util.citar(string);
+					if (aspas && !Util.estaVazio(memoria)) {
+						memoria = Util.citar(memoria);
 					}
-					listener.executarColunaComMemoria(TabelaPersistencia.this, coluna, string);
+					listener.executarColunaComMemoria(TabelaPersistencia.this, coluna, memoria);
 				}
 			}
 		}
