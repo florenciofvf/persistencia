@@ -1809,7 +1809,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
 			String complemento = txtComplemento.getText();
-			txtComplemento.setText(complemento + " AND " + nome + getValor(getOpcao(), Constantes.VAZIO));
+			txtComplemento.setText(complemento + getPrefixo() + nome + getValor(getOpcao(), Constantes.VAZIO));
+		}
+
+		private String getPrefixo() {
+			final String AND = " AND ";
+			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
+					Mensagens.getString("label.prefixo"), AND, new String[] { AND, " OR " });
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return AND;
+			}
+			return resp.toString();
 		}
 
 		private String getOpcao() {
