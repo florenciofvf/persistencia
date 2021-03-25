@@ -1,7 +1,7 @@
 package br.com.persist.plugins.persistencia.tabela;
 
 public interface TabelaPersistenciaListener {
-	public void copiarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome, String anterior);
+	public void executarColunaComMemoria(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
 
 	public void tabelaMouseClick(TabelaPersistencia tabelaPersistencia, int colunaClicada);
 

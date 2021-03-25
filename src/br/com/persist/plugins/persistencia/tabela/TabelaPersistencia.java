@@ -258,9 +258,9 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(true, concatNomeColunaAcao);
 			addMenuItem(colocarNomeColunaAcao);
 			addMenuItem(copiarNomeColunaAcao);
-			add(true, new MenuConcatenado("label.copiar_nome_coluna_concat_n", true, false));
-			add(new MenuConcatenado("label.copiar_nome_coluna_concat_l", false, true));
-			add(new MenuConcatenado("label.copiar_nome_coluna_concat_t", false, false));
+			add(true, new MenuExecutarColuna("label.copiar_nome_coluna_concat_n", true, false));
+			add(new MenuExecutarColuna("label.copiar_nome_coluna_concat_l", false, true));
+			add(new MenuExecutarColuna("label.copiar_nome_coluna_concat_t", false, false));
 			add(true, new MenuCopiarLinhas());
 			add(true, menuIN);
 			eventos();
@@ -349,12 +349,12 @@ public class TabelaPersistencia extends JTable {
 			}
 		}
 
-		private class MenuConcatenado extends MenuPadrao2 {
+		private class MenuExecutarColuna extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
 			private final boolean numeros;
 			private final boolean letras;
 
-			private MenuConcatenado(String titulo, boolean num, boolean let) {
+			private MenuExecutarColuna(String titulo, boolean num, boolean let) {
 				super(titulo);
 				numeros = num;
 				letras = let;
@@ -376,7 +376,7 @@ public class TabelaPersistencia extends JTable {
 					if (aspas && !Util.estaVazio(string)) {
 						string = Util.citar(string);
 					}
-					listener.copiarNomeColuna(TabelaPersistencia.this, coluna, string);
+					listener.executarColunaComMemoria(TabelaPersistencia.this, coluna, string);
 				}
 			}
 		}

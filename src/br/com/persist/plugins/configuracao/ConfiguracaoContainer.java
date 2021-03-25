@@ -49,8 +49,6 @@ import br.com.persist.formulario.Formulario;
 
 public class ConfiguracaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
-	private final CheckBox chkExecAposCopiarColunaConcatenado = new CheckBox(
-			"label.executar_apos_copiar_coluna_concatenado");
 	private final CheckBox chkExecAposBaixarParaComplemento = new CheckBox(
 			"label.executar_apos_baixar_para_complemento");
 	private final CheckBox chkAplicarLarguraAoAbrirArquivoObjeto = new CheckBox(
@@ -150,7 +148,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
-		chkExecAposCopiarColunaConcatenado.setSelected(Preferencias.isExecAposCopiarColunaConcatenado());
 		chkExecAposBaixarParaComplemento.setSelected(Preferencias.isExecAposBaixarParaComplemento());
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
@@ -197,7 +194,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		}
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkExecAposBaixarParaComplemento);
-		container.add(chkExecAposCopiarColunaConcatenado);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkHabitInnerJoinsObj);
 		container.add(chkNomearArrasto);
@@ -228,7 +224,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Insets insets2 = new Insets(5, 30, 5, 5);
 		Insets insets = new Insets(5, 10, 5, 5);
 
-		chkExecAposCopiarColunaConcatenado.setMargin(insets2);
 		chkExecAposBaixarParaComplemento.setMargin(insets);
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharComESCFormulario.setMargin(insets);
@@ -305,9 +300,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkFecharComESCFormulario
 				.addActionListener(e -> Preferencias.setFecharComESCFormulario(chkFecharComESCFormulario.isSelected()));
-
-		chkExecAposCopiarColunaConcatenado.addActionListener(
-				e -> Preferencias.setExecAposCopiarColunaConcatenado(chkExecAposCopiarColunaConcatenado.isSelected()));
 
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
 

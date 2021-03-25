@@ -15,7 +15,6 @@ import br.com.persist.formulario.Formulario;
 public class Preferencias {
 	private static boolean aplicarLarguraAoAbrirArquivoObjeto;
 	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
-	private static boolean execAposCopiarColunaConcatenado;
 	private static final String ARQ_PREF = "preferencias";
 	private static boolean execAposBaixarParaComplemento;
 	private static boolean habilitadoInnerJoinsObjeto;
@@ -57,7 +56,6 @@ public class Preferencias {
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
-		execAposCopiarColunaConcatenado = pref.getBoolean("exec_apos_copiar_coluna_concatenado", false);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		execAposBaixarParaComplemento = pref.getBoolean("exec_apos_baixar_para_complemento", false);
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
@@ -98,7 +96,6 @@ public class Preferencias {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
-		pref.putBoolean("exec_apos_copiar_coluna_concatenado", execAposCopiarColunaConcatenado);
 		pref.putBoolean("exec_apos_baixar_para_complemento", execAposBaixarParaComplemento);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
@@ -347,14 +344,6 @@ public class Preferencias {
 
 	public static void setExibiuMensagemConnection(boolean exibiuMensagemConnection) {
 		Preferencias.exibiuMensagemConnection = exibiuMensagemConnection;
-	}
-
-	public static boolean isExecAposCopiarColunaConcatenado() {
-		return execAposCopiarColunaConcatenado;
-	}
-
-	public static void setExecAposCopiarColunaConcatenado(boolean execAposCopiarColunaConcatenado) {
-		Preferencias.execAposCopiarColunaConcatenado = execAposCopiarColunaConcatenado;
 	}
 
 	public static boolean isExecAposBaixarParaComplemento() {

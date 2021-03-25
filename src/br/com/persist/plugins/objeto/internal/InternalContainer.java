@@ -1799,12 +1799,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
-		public void copiarNomeColuna(TabelaPersistencia tabela, String nome, String anterior) {
-			String string = Util.estaVazio(anterior) ? Constantes.VAZIO : anterior;
-			txtComplemento.setText("AND " + nome + getValor(getOpcao(), string));
-			if (!Util.estaVazio(anterior) && Preferencias.isExecAposCopiarColunaConcatenado()) {
-				actionListenerInner.actionPerformed(null);
-			}
+		public void executarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
+			txtComplemento.setText(getPrefixo() + nome + getValor(getOpcao(), memoria));
+			actionListenerInner.actionPerformed(null);
 		}
 
 		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
@@ -1827,10 +1824,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		private String getOpcao() {
+			final String IGUAL = "=";
 			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
-					Mensagens.getString("label.operador"), "=", new String[] { "=", "IN", "LIKE" });
+					Mensagens.getString("label.operador"), IGUAL, new String[] { IGUAL, "IN", "LIKE" });
 			if (resp == null || Util.estaVazio(resp.toString())) {
-				return "=";
+				return IGUAL;
 			}
 			return resp.toString();
 		}
