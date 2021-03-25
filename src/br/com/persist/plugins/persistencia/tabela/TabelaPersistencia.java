@@ -27,7 +27,6 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao2;
@@ -269,12 +268,6 @@ public class TabelaPersistencia extends JTable {
 			copiarNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
-				/*
-				 * if (listener != null &&
-				 * Preferencias.isCopiarNomeColunaListener()) {
-				 * listener.copiarNomeColuna(TabelaPersistencia.this, coluna,
-				 * null); }
-				 */
 			});
 			concatNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
@@ -365,7 +358,7 @@ public class TabelaPersistencia extends JTable {
 				String string = Util.getContentTransfered();
 				String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
-				if (listener != null && Preferencias.isCopiarNomeColunaListener()) {
+				if (listener != null) {
 					if (numeros) {
 						string = Util.soNumeros(string);
 					}

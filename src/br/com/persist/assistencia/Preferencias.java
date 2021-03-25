@@ -20,7 +20,6 @@ public class Preferencias {
 	private static boolean execAposBaixarParaComplemento;
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean areaTransTabelaRegistros;
-	private static boolean copiarNomeColunaListener;
 	private static boolean exibiuMensagemConnection;
 	private static boolean fecharComESCFormulario;
 	private static int tipoContainerPesquisaAuto;
@@ -64,7 +63,6 @@ public class Preferencias {
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		areaTransTabelaRegistros = pref.getBoolean("area_trans_tabela_registros", false);
-		copiarNomeColunaListener = pref.getBoolean("copiar_nome_coluna_listener", false);
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
 		fecharComESCFormulario = pref.getBoolean("fechar_com_ESC_formulario", false);
 		fecharComESCInternal = pref.getBoolean("fechar_com_ESC_internal", false);
@@ -104,7 +102,6 @@ public class Preferencias {
 		pref.putBoolean("exec_apos_baixar_para_complemento", execAposBaixarParaComplemento);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putBoolean("area_trans_tabela_registros", areaTransTabelaRegistros);
-		pref.putBoolean("copiar_nome_coluna_listener", copiarNomeColunaListener);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
 		pref.putBoolean("fechar_com_ESC_formulario", fecharComESCFormulario);
@@ -174,14 +171,6 @@ public class Preferencias {
 
 	public static void setAreaTransTabelaRegistros(boolean areaTransTabelaRegistros) {
 		Preferencias.areaTransTabelaRegistros = areaTransTabelaRegistros;
-	}
-
-	public static boolean isCopiarNomeColunaListener() {
-		return copiarNomeColunaListener;
-	}
-
-	public static void setCopiarNomeColunaListener(boolean copiarNomeColunaListener) {
-		Preferencias.copiarNomeColunaListener = copiarNomeColunaListener;
 	}
 
 	public static boolean isFicharioComRolagem() {

@@ -60,7 +60,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
 	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
-	private final CheckBox chkNomeColunaListener = new CheckBox("label.copiar_nome_coluna_listener");
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox("label.habilitadoInnerJoinsObjeto");
 	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
@@ -156,7 +155,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkHabitInnerJoinsObj.setSelected(Preferencias.isHabilitadoInnerJoinsObjeto());
-		chkNomeColunaListener.setSelected(Preferencias.isCopiarNomeColunaListener());
 		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
@@ -199,7 +197,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		}
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkExecAposBaixarParaComplemento);
-		container.add(chkNomeColunaListener);
 		container.add(chkExecAposCopiarColunaConcatenado);
 		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkHabitInnerJoinsObj);
@@ -241,7 +238,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkMonitorPreferencial.setMargin(insets);
 		chkFecharComESCDialogo.setMargin(insets);
 		chkHabitInnerJoinsObj.setMargin(insets);
-		chkNomeColunaListener.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
 		chkNomearArrasto.setMargin(insets);
@@ -257,13 +253,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Enumeration<AbstractButton> elements = grupoTiposContainer.getElements();
 		while (elements.hasMoreElements()) {
 			elements.nextElement().setEnabled(habilitado);
-		}
-	}
-
-	private void checkCopiarColuna() {
-		chkExecAposCopiarColunaConcatenado.setEnabled(chkNomeColunaListener.isSelected());
-		if (!chkNomeColunaListener.isSelected()) {
-			chkExecAposCopiarColunaConcatenado.setSelected(false);
 		}
 	}
 
@@ -346,11 +335,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
-
-		chkNomeColunaListener.addActionListener(e -> {
-			Preferencias.setCopiarNomeColunaListener(chkNomeColunaListener.isSelected());
-			checkCopiarColuna();
-		});
 
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {
 			Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected());
@@ -558,19 +542,16 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		void formularioVisivel() {
 			buttonDestacar.estadoFormulario();
-			checkCopiarColuna();
 			checkPesquisa();
 		}
 
 		void paginaVisivel() {
 			buttonDestacar.estadoFichario();
-			checkCopiarColuna();
 			checkPesquisa();
 		}
 
 		void dialogoVisivel() {
 			buttonDestacar.estadoDialogo();
-			checkCopiarColuna();
 			checkPesquisa();
 		}
 
