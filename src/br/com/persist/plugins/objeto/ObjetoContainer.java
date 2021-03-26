@@ -16,6 +16,8 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -108,6 +110,12 @@ public class ObjetoContainer extends AbstratoContainer {
 	}
 
 	private void configurar() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				objetoSuperficie.configurarLargura(getSize());
+			}
+		});
 		toolbar.configurar();
 	}
 
@@ -446,7 +454,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
 		SwingUtilities.invokeLater(() -> {
 			objetoSuperficie.getAjustar().retirarRolagem();
-			objetoSuperficie.configurarLargura();
+			objetoSuperficie.configurarLargura(getSize());
 			objetoSuperficie.repaint();
 		});
 	}

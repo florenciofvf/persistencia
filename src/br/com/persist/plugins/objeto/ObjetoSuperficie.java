@@ -12,8 +12,6 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -122,16 +120,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		getActionMap().put("zoom_menos", zoomMenos);
 		getActionMap().put("zoom_mais", zoomMais);
 		getActionMap().put("macro", macro);
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				configurarLargura();
-			}
-		});
 	}
 
-	public void configurarLargura() {
+	public void configurarLargura(Dimension dimension) {
 		if (isAjusteLarguraForm()) {
+			setSize(dimension);
 			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
 		}
 	}
