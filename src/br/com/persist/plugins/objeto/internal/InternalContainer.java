@@ -1629,7 +1629,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
-			if (Preferencias.isFecharAposSoltar() && dsde.getDropSuccess()) {
+			if (Util.confirmar(InternalContainer.this, "msg.fechar_origem_apos_soltar") && dsde.getDropSuccess()) {
 				toolbar.fechar();
 			}
 		}

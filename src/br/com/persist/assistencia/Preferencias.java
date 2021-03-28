@@ -31,7 +31,6 @@ public class Preferencias {
 	private static boolean abrirAutoDestacado;
 	private static int intervaloPesquisaAuto;
 	private static int porcVerticalLocalForm;
-	private static boolean fecharAposSoltar;
 	private static int intervaloComparacao;
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
@@ -70,7 +69,6 @@ public class Preferencias {
 		porcVerticalLocalForm = pref.getInt("porc_vertical_local_form", 70);
 		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
-		fecharAposSoltar = pref.getBoolean("fechar_apos_soltar", true);
 		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		nomearArrasto = pref.getBoolean("nomear_arrasto", false);
@@ -108,7 +106,6 @@ public class Preferencias {
 		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
 		pref.putInt("intervalo_comparacao", intervaloComparacao);
-		pref.putBoolean("fechar_apos_soltar", fecharAposSoltar);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.putInt("cor_total_atual", corTotalAtual.getRGB());
 		pref.putInt("cor_compara_rec", corComparaRec.getRGB());
@@ -181,14 +178,6 @@ public class Preferencias {
 
 	public static void setAbrirAutoDestacado(boolean abrirAutoDestacado) {
 		Preferencias.abrirAutoDestacado = abrirAutoDestacado;
-	}
-
-	public static boolean isFecharAposSoltar() {
-		return fecharAposSoltar;
-	}
-
-	public static void setFecharAposSoltar(boolean fecharAposSoltar) {
-		Preferencias.fecharAposSoltar = fecharAposSoltar;
 	}
 
 	public static int getPosicaoAbaFichario() {

@@ -55,7 +55,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			"label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
-	private final CheckBox chkFecharOrigemAposSoltar = new CheckBox("label.fechar_origem_apos_soltar");
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox("label.habilitadoInnerJoinsObjeto");
 	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
@@ -153,7 +152,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
-		chkFecharOrigemAposSoltar.setSelected(Preferencias.isFecharAposSoltar());
 		chkMonitorPreferencial.setSelected(Preferencias.isMonitorPreferencial());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
@@ -190,7 +188,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			container.add(new JSeparator());
 		}
 		container.add(chkAreaTransTabelaRegistros);
-		container.add(chkFecharOrigemAposSoltar);
 		container.add(chkHabitInnerJoinsObj);
 		container.add(chkNomearArrasto);
 		container.add(chkFecharComESCFormulario);
@@ -222,7 +219,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharComESCFormulario.setMargin(insets);
-		chkFecharOrigemAposSoltar.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets2);
 		chkFecharComESCInternal.setMargin(insets);
 		chkMonitorPreferencial.setMargin(insets);
@@ -303,9 +299,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkFecharComESCDialogo
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
-
-		chkFecharOrigemAposSoltar
-				.addActionListener(e -> Preferencias.setFecharAposSoltar(chkFecharOrigemAposSoltar.isSelected()));
 
 		chkMonitorPreferencial
 				.addActionListener(e -> Preferencias.setMonitorPreferencial(chkMonitorPreferencial.isSelected()));
