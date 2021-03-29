@@ -14,7 +14,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.plugins.conexao.Conexao;
@@ -188,7 +187,7 @@ public class PersistenciaModelo implements TableModel {
 						getPrefixoNomeTabela(), new Coletor(coluna.getNome()));
 				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
-				if (Preferencias.isAreaTransTabelaRegistros()) {
+				if (Util.confirmar(componente, "msg.area_trans_tabela_registros")) {
 					Util.setContentTransfered(update);
 				}
 			} catch (Exception ex) {
@@ -271,7 +270,7 @@ public class PersistenciaModelo implements TableModel {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
-				if (Preferencias.isAreaTransTabelaRegistros()) {
+				if (Util.confirmar(componente, "msg.area_trans_tabela_registros")) {
 					Util.setContentTransfered(delete);
 				}
 				return i;

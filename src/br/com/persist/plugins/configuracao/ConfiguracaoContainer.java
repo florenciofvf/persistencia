@@ -53,7 +53,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			"label.aplicar_largura_ao_abrir_arq_objeto");
 	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
 			"label.aplicar_altura_ao_abrir_arq_objeto");
-	private final CheckBox chkAreaTransTabelaRegistros = new CheckBox("label.area_trans_tabela_registros");
 	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox("label.habilitadoInnerJoinsObjeto");
 	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
@@ -144,7 +143,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
-		chkAreaTransTabelaRegistros.setSelected(Preferencias.isAreaTransTabelaRegistros());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkHabitInnerJoinsObj.setSelected(Preferencias.isHabilitadoInnerJoinsObjeto());
 		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
@@ -185,7 +183,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			container.add(new PainelMonitorPreferencial());
 			container.add(new JSeparator());
 		}
-		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkHabitInnerJoinsObj);
 		container.add(chkFecharComESCFormulario);
 		container.add(chkFecharComESCInternal);
@@ -214,7 +211,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Insets insets2 = new Insets(5, 30, 5, 5);
 		Insets insets = new Insets(5, 10, 5, 5);
 
-		chkAreaTransTabelaRegistros.setMargin(insets);
 		chkFecharComESCFormulario.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets2);
 		chkFecharComESCInternal.setMargin(insets);
@@ -300,9 +296,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 				.addActionListener(e -> Preferencias.setMonitorPreferencial(chkMonitorPreferencial.isSelected()));
 
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
-
-		chkAreaTransTabelaRegistros.addActionListener(
-				e -> Preferencias.setAreaTransTabelaRegistros(chkAreaTransTabelaRegistros.isSelected()));
 
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
