@@ -62,7 +62,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private final CheckBox chkMonitorPreferencial = new CheckBox("label.monitor_preferencial");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
-	private final CheckBox chkNomearArrasto = new CheckBox("label.nomear_arrasto");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
 	private final TextField txtFormFichaDialogo = new TextField();
@@ -156,7 +155,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
-		chkNomearArrasto.setSelected(Preferencias.isNomearArrasto());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
@@ -189,7 +187,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		}
 		container.add(chkAreaTransTabelaRegistros);
 		container.add(chkHabitInnerJoinsObj);
-		container.add(chkNomearArrasto);
 		container.add(chkFecharComESCFormulario);
 		container.add(chkFecharComESCInternal);
 		container.add(chkFecharComESCDialogo);
@@ -226,7 +223,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkHabitInnerJoinsObj.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
 		chkFicharioScroll.setMargin(insets);
-		chkNomearArrasto.setMargin(insets);
 		chkTituloAbaMin.setMargin(insets);
 	}
 
@@ -302,8 +298,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 		chkMonitorPreferencial
 				.addActionListener(e -> Preferencias.setMonitorPreferencial(chkMonitorPreferencial.isSelected()));
-
-		chkNomearArrasto.addActionListener(e -> Preferencias.setNomearArrasto(chkNomearArrasto.isSelected()));
 
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
 

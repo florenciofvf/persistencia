@@ -1002,7 +1002,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	@Override
-	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito) {
+	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear) {
 		if (metadado == null) {
 			return false;
 		}
@@ -1014,7 +1014,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			novo.setDeslocamentoXId(Objeto.DIAMETRO);
 			novo.setDeslocamentoYId(Objeto.DIAMETRO / 2);
 		}
-		if (Preferencias.isNomearArrasto()) {
+		if (checarNomear && Util.confirmar(ObjetoSuperficie.this, "msg.nomear_arrasto")) {
 			Object resp = Util.getValorInputDialog(ObjetoSuperficie.this, "label.id", id, id);
 			if (resp != null && !Util.estaVazio(resp.toString())) {
 				id = resp.toString();
@@ -1803,15 +1803,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public void exportarMetadadoRaiz(Metadado metadado) {
-		boolean bkp = Preferencias.isNomearArrasto();
-		Preferencias.setNomearArrasto(false);
 		int y = 20;
 		for (int i = 0; i < metadado.getTotal(); i++) {
 			Metadado filho = metadado.getMetadado(i);
-			processadoMetadado(filho, new Point(10, y), true);
+			processadoMetadado(filho, new Point(10, y), true, false);
 			y += 30;
 		}
-		Preferencias.setNomearArrasto(bkp);
 		setPreferredSize(new Dimension(0, y));
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}

@@ -289,7 +289,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				AtomicBoolean processado) {
 			try {
 				Metadado metadado = (Metadado) transferable.getTransferData(flavor);
-				if (processadoMetadado(metadado, e.getLocation(), false)) {
+				if (processadoMetadado(metadado, e.getLocation(), false, true)) {
 					processado.set(true);
 				}
 			} catch (Exception ex) {
@@ -302,7 +302,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		return false;
 	}
 
-	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito) {
+	protected boolean processadoMetadado(Metadado metadado, Point point, boolean labelDireito, boolean checarNomear) {
 		return false;
 	}
 
