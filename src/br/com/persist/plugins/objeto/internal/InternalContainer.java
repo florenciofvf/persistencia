@@ -1816,9 +1816,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
-		public void executarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
+		public void colocarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
 			txtComplemento.setText(getPrefixo() + nome + getValor(getOpcao(), memoria));
-			actionListenerInner.actionPerformed(null);
+			if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+				actionListenerInner.actionPerformed(null);
+			}
 		}
 
 		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
