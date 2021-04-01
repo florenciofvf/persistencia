@@ -57,14 +57,9 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			"label.aplicar_largura_ao_abrir_arq_objeto");
 	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
 			"label.aplicar_altura_ao_abrir_arq_objeto");
-	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox("label.habilitadoInnerJoinsObjeto");
-	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
-	private final CheckBox chkFecharComESCDialogo = new CheckBox("label.fechar_com_esc_dialogo");
-	private final CheckBox chkMonitorPreferencial = new CheckBox("label.monitor_preferencial");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
-	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
@@ -151,24 +146,19 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(painelConfiguracao));
 
-		/*PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
+		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
 		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
-		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkHabitInnerJoinsObj.setSelected(Preferencias.isHabilitadoInnerJoinsObjeto());
-		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
-		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
-		chkMonitorPreferencial.setSelected(Preferencias.isMonitorPreferencial());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
-		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
 
@@ -192,17 +182,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(criarLabelTitulo("label.titulo_cor_total_recente"));
 		container.add(new PainelCorTotalRecente());
 		container.add(new JSeparator());
-		if (Preferencias.isMonitorPreferencial()) {
-			container.add(criarLabelTitulo("label.monitor_preferencial"));
-			container.add(new PainelMonitorPreferencial());
-			container.add(new JSeparator());
-		}
 		container.add(chkHabitInnerJoinsObj);
-		container.add(chkFecharComESCFormulario);
-		container.add(chkFecharComESCInternal);
-		container.add(chkFecharComESCDialogo);
-		container.add(chkTituloAbaMin);
-		container.add(chkMonitorPreferencial);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
 		container.add(chkAtivarAbrirAutoDestac);
@@ -221,14 +201,9 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Insets insets2 = new Insets(5, 30, 5, 5);
 		Insets insets = new Insets(5, 10, 5, 5);
 
-		chkFecharComESCFormulario.setMargin(insets);
 		chkAtivarAbrirAutoDestac.setMargin(insets2);
-		chkFecharComESCInternal.setMargin(insets);
-		chkMonitorPreferencial.setMargin(insets);
-		chkFecharComESCDialogo.setMargin(insets);
 		chkHabitInnerJoinsObj.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
-		chkTituloAbaMin.setMargin(insets);*/
 	}
 
 	private void checkPesquisa() {
@@ -284,21 +259,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkHabitInnerJoinsObj
 				.addActionListener(e -> Preferencias.setHabilitadoInnerJoinsObjeto(chkHabitInnerJoinsObj.isSelected()));
 
-		chkFecharComESCFormulario
-				.addActionListener(e -> Preferencias.setFecharComESCFormulario(chkFecharComESCFormulario.isSelected()));
-
 		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
-
-		chkFecharComESCInternal
-				.addActionListener(e -> Preferencias.setFecharComESCInternal(chkFecharComESCInternal.isSelected()));
-
-		chkFecharComESCDialogo
-				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
-
-		chkMonitorPreferencial
-				.addActionListener(e -> Preferencias.setMonitorPreferencial(chkMonitorPreferencial.isSelected()));
-
-		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
 
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
@@ -449,20 +410,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 					Preferencias.setCorComparaRec(color);
 				}
 			}
-		}
-	}
-
-	private class PainelMonitorPreferencial extends Panel {
-		private static final long serialVersionUID = 1L;
-		private Button buttonNaoPreferencial = new Button("label.nao_preferencial");
-		private Button buttonPreferencial = new Button("label.preferencial");
-
-		private PainelMonitorPreferencial() {
-			super(new FlowLayout());
-			add(buttonPreferencial);
-			add(buttonNaoPreferencial);
-			buttonPreferencial.addActionListener(e -> formulario.salvarMonitorComoPreferencial());
-			buttonNaoPreferencial.addActionListener(e -> formulario.excluirMonitorComoPreferencial());
 		}
 	}
 
