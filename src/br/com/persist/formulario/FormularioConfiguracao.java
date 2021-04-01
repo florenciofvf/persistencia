@@ -7,8 +7,11 @@ import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Mensagens;
@@ -32,6 +35,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
 
+	private final transient NomeValor[] posicoes = {
+			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
+			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
+			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
+			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
+
 	public FormularioConfiguracao(Formulario formulario) {
 		super(formulario, Mensagens.getTituloAplicacao());
 		montarLayout();
@@ -39,6 +48,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void montarLayout() {
+		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
+
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
@@ -50,6 +61,13 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtFormFicha.setText(Preferencias.getFormFicha());
 
 		Panel container = new Panel(new GridLayout(0, 1));
+		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
+		Label email = criarLabelTitulo("contato");
+		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
+		container.add(email);
+		container.add(tituloLocalAbas);
+		container.add(panelPosicoes);
+		container.add(new JSeparator());
 		if (Preferencias.isMonitorPreferencial()) {
 			container.add(criarLabelTitulo("label.monitor_preferencial"));
 			container.add(new PainelMonitorPreferencial());
@@ -132,6 +150,60 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			add(buttonNaoPreferencial);
 			buttonPreferencial.addActionListener(e -> formulario.salvarMonitorComoPreferencial());
 			buttonNaoPreferencial.addActionListener(e -> formulario.excluirMonitorComoPreferencial());
+		}
+	}
+
+	private class NomeValor {
+		private static final byte INTERVALO_COMPARA = 5;
+		private static final byte INTERVALO_AUTO = 2;
+		private static final byte POSICAO_ABA = 1;
+		private static final byte DESTACADOS = 3;
+		private static final byte LAYOUTS = 4;
+		private final String nome;
+		private final int valor;
+		private final int tipo;
+
+		private NomeValor(String chave, int valor, int tipo) {
+			this.nome = Mensagens.getString(chave);
+			this.valor = valor;
+			this.tipo = tipo;
+		}
+	}
+
+	private PanelCenter criarPainelGrupo(NomeValor[] nomeValores, int padrao) {
+		PanelCenter panel = new PanelCenter();
+		ButtonGroup grupo = new ButtonGroup();
+		for (int i = 0; i < nomeValores.length; i++) {
+			RadioPosicao radio = new RadioPosicao(nomeValores[i]);
+			radio.setSelected(radio.nomeValor.valor == padrao);
+			radio.setMargin(new Insets(5, 10, 5, 5));
+			panel.add(radio);
+			grupo.add(radio);
+		}
+		return panel;
+	}
+
+	private class RadioPosicao extends JRadioButton {
+		private static final long serialVersionUID = 1L;
+		private final transient NomeValor nomeValor;
+
+		private RadioPosicao(NomeValor nomeValor) {
+			super(nomeValor.nome);
+			this.nomeValor = nomeValor;
+			addActionListener(e -> {
+				if (nomeValor.tipo == NomeValor.POSICAO_ABA) {
+					Preferencias.setPosicaoAbaFichario(nomeValor.valor);
+					formulario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
+				} else if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
+					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
+				} else if (nomeValor.tipo == NomeValor.INTERVALO_COMPARA) {
+					Preferencias.setIntervaloComparacao(nomeValor.valor);
+				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
+					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
+				} else if (nomeValor.tipo == NomeValor.LAYOUTS) {
+					Preferencias.setLayoutAbertura(nomeValor.valor);
+				}
+			});
 		}
 	}
 }

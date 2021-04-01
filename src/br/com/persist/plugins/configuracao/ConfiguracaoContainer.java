@@ -95,12 +95,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
 			new NomeValor("label.desktop", Constantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
 
-	private final transient NomeValor[] posicoes = {
-			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
-			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
-			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
-			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
-
 	private final PainelConfiguracao painelConfiguracao = new PainelConfiguracao();
 
 	public ConfiguracaoContainer(Janela janela, Formulario formulario) {
@@ -146,7 +140,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
 		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
-		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
@@ -159,15 +152,8 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
-		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
-		Label email = criarLabelTitulo("contato");
-		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
 
 		Panel container = new Panel(new GridLayout(0, 1));
-		container.add(email);
-		container.add(tituloLocalAbas);
-		container.add(panelPosicoes);
-		container.add(new JSeparator());
 		container.add(tituloIntervalo);
 		container.add(panelIntervalos);
 		container.add(new JSeparator());
