@@ -143,6 +143,10 @@ public class Formulario extends JFrame {
 		return fabricas.get(chave);
 	}
 
+	public List<FabricaContainer> getFabricas() {
+		return new ArrayList<>(fabricas.values());
+	}
+
 	public void processar(Map<String, Object> args) {
 		fichario.processar(this, args);
 		for (Servico servico : servicos) {

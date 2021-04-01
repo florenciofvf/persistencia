@@ -15,7 +15,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -27,8 +29,10 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
+import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -60,7 +64,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private final CheckBox chkFecharComESCDialogo = new CheckBox("label.fechar_com_esc_dialogo");
 	private final CheckBox chkMonitorPreferencial = new CheckBox("label.monitor_preferencial");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
-	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
 	private final TextField txtFormFichaDialogo = new TextField();
@@ -106,6 +109,8 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			new NomeValor("label.abaixo", SwingConstants.BOTTOM, NomeValor.POSICAO_ABA),
 			new NomeValor("label.direito", SwingConstants.RIGHT, NomeValor.POSICAO_ABA) };
 
+	private final PainelConfiguracao painelConfiguracao = new PainelConfiguracao();
+
 	public ConfiguracaoContainer(Janela janela, Formulario formulario) {
 		super(formulario);
 		toolbar.ini(janela);
@@ -136,7 +141,17 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
-		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
+		List<FabricaContainer> lista = formulario.getFabricas();
+		for (FabricaContainer fabricaContainer : lista) {
+			AbstratoConfiguracao configuracao = fabricaContainer.getConfiguracao(formulario);
+			if (configuracao != null) {
+				painelConfiguracao.addConfiguracao(configuracao);
+			}
+		}
+		add(BorderLayout.NORTH, toolbar);
+		add(BorderLayout.CENTER, new ScrollPane(painelConfiguracao));
+
+		/*PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
 		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados, Preferencias.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
@@ -151,7 +166,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
 		chkMonitorPreferencial.setSelected(Preferencias.isMonitorPreferencial());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
-		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
@@ -188,7 +202,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(chkFecharComESCInternal);
 		container.add(chkFecharComESCDialogo);
 		container.add(chkTituloAbaMin);
-		container.add(chkFicharioScroll);
 		container.add(chkMonitorPreferencial);
 		container.add(new JSeparator());
 		container.add(chkAtivarAbrirAuto);
@@ -205,9 +218,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura));
 		container.add(new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto));
 
-		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(container));
-
 		Insets insets2 = new Insets(5, 30, 5, 5);
 		Insets insets = new Insets(5, 10, 5, 5);
 
@@ -218,8 +228,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkFecharComESCDialogo.setMargin(insets);
 		chkHabitInnerJoinsObj.setMargin(insets);
 		chkAtivarAbrirAuto.setMargin(insets);
-		chkFicharioScroll.setMargin(insets);
-		chkTituloAbaMin.setMargin(insets);
+		chkTituloAbaMin.setMargin(insets);*/
 	}
 
 	private void checkPesquisa() {
@@ -266,12 +275,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	}
 
 	private void configurar() {
-		chkFicharioScroll.addActionListener(e -> {
-			Preferencias.setFicharioComRolagem(chkFicharioScroll.isSelected());
-			formulario.setTabLayoutPolicy(
-					Preferencias.isFicharioComRolagem() ? JTabbedPane.SCROLL_TAB_LAYOUT : JTabbedPane.WRAP_TAB_LAYOUT);
-		});
-
 		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
 				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
 
@@ -577,5 +580,20 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 				return Icones.CONFIG;
 			}
 		};
+	}
+
+	private class PainelConfiguracao extends Panel {
+		private static final long serialVersionUID = 1L;
+		private final List<AbstratoConfiguracao> lista;
+
+		private PainelConfiguracao() {
+			super(new GridLayout(0, 1));
+			lista = new ArrayList<>();
+		}
+
+		void addConfiguracao(AbstratoConfiguracao configuracao) {
+			lista.add(configuracao);
+			add(configuracao);
+		}
 	}
 }

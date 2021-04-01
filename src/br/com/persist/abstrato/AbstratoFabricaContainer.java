@@ -16,6 +16,11 @@ public abstract class AbstratoFabricaContainer implements FabricaContainer {
 	}
 
 	@Override
+	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
+		return null;
+	}
+
+	@Override
 	public List<Servico> getServicos(Formulario formulario) {
 		return new ArrayList<>();
 	}

@@ -11,6 +11,8 @@ import br.com.persist.formulario.Formulario;
 public interface FabricaContainer {
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu);
 
+	public AbstratoConfiguracao getConfiguracao(Formulario formulario);
+
 	public List<Servico> getServicos(Formulario formulario);
 
 	public PaginaServico getPaginaServico();

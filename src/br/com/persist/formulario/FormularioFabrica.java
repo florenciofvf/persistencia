@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
@@ -23,6 +24,11 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 	public void inicializar() {
 		Util.criarDiretorio("imagens");
 		Util.criarDiretorio("libs");
+	}
+
+	@Override
+	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
+		return new FormularioConfiguracao(formulario);
 	}
 
 	@Override
