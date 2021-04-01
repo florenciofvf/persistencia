@@ -61,11 +61,8 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
-	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
 	private final TextField txtDefinirAltura = new TextField();
-	private final TextField txtFormDialogo = new TextField();
-	private final TextField txtFormFicha = new TextField();
 	private ConfiguracaoFormulario configuracaoFormulario;
 	private ConfiguracaoDialogo configuracaoDialogo;
 	private final Toolbar toolbar = new Toolbar();
@@ -157,10 +154,7 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
-		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
-		txtFormDialogo.setText(Preferencias.getFormDialogo());
-		txtFormFicha.setText(Preferencias.getFormFicha());
 
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
@@ -188,10 +182,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		container.add(chkAtivarAbrirAutoDestac);
 		container.add(tituloDestacado);
 		container.add(panelDestacados);
-		container.add(new JSeparator());
-		container.add(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo));
-		container.add(new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo));
-		container.add(new PanelCenter(new Label("label.form_ficha"), txtFormFicha));
 		container.add(new JSeparator());
 		container.add(new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura));
 		container.add(new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto));
@@ -259,11 +249,6 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		chkHabitInnerJoinsObj
 				.addActionListener(e -> Preferencias.setHabilitadoInnerJoinsObjeto(chkHabitInnerJoinsObj.isSelected()));
 
-		txtFormFichaDialogo.addActionListener(e -> Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText()));
-
-		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
-		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
-
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {
 			Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected());
 			checkPesquisa();
@@ -274,29 +259,8 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			checkPesquisa();
 		});
 
-		txtFormFichaDialogo.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				Preferencias.setFormFichaDialogo(txtFormFichaDialogo.getText());
-			}
-		});
-
 		txtDefinirLargura.addActionListener(e -> definirLargura());
 		txtDefinirAltura.addActionListener(e -> definirAltura());
-
-		txtFormDialogo.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				Preferencias.setFormDialogo(txtFormDialogo.getText());
-			}
-		});
-
-		txtFormFicha.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				Preferencias.setFormFicha(txtFormFicha.getText());
-			}
-		});
 
 		txtDefinirLargura.addFocusListener(new FocusAdapter() {
 			@Override
