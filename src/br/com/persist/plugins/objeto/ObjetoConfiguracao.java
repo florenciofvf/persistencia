@@ -197,9 +197,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private class NomeValor {
 		private static final byte INTERVALO_COMPARA = 5;
 		private static final byte INTERVALO_AUTO = 2;
-		private static final byte POSICAO_ABA = 1;
 		private static final byte DESTACADOS = 3;
-		private static final byte LAYOUTS = 4;
 		private final String nome;
 		private final int valor;
 		private final int tipo;
@@ -219,17 +217,12 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			super(nomeValor.nome);
 			this.nomeValor = nomeValor;
 			addActionListener(e -> {
-				if (nomeValor.tipo == NomeValor.POSICAO_ABA) {
-					Preferencias.setPosicaoAbaFichario(nomeValor.valor);
-					formulario.setTabPlacement(Preferencias.getPosicaoAbaFichario());
-				} else if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
+				if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
 					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_COMPARA) {
 					Preferencias.setIntervaloComparacao(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
 					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
-				} else if (nomeValor.tipo == NomeValor.LAYOUTS) {
-					Preferencias.setLayoutAbertura(nomeValor.valor);
 				}
 			});
 		}

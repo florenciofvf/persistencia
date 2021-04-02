@@ -39,7 +39,6 @@ public class Preferencias {
 	private static Color corTotalAtual;
 	private static Color corComparaRec;
 	private static String formDialogo;
-	private static int layoutAbertura;
 	private static boolean abrirAuto;
 	private static String formFicha;
 	private static Color corCopiado;
@@ -70,7 +69,6 @@ public class Preferencias {
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
-		layoutAbertura = pref.getInt("layout_abertura", 1);
 		abrirAuto = pref.getBoolean("abrir_auto", false);
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
 		if (Util.estaVazio(formFichaDialogo)) {
@@ -106,7 +104,6 @@ public class Preferencias {
 		pref.putInt("cor_compara_rec", corComparaRec.getRGB());
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
-		pref.putInt("layout_abertura", layoutAbertura);
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
@@ -244,14 +241,6 @@ public class Preferencias {
 
 	public static void setFormFicha(String formFicha) {
 		Preferencias.formFicha = formFicha;
-	}
-
-	public static int getLayoutAbertura() {
-		return layoutAbertura;
-	}
-
-	public static void setLayoutAbertura(int layoutAbertura) {
-		Preferencias.layoutAbertura = layoutAbertura;
 	}
 
 	public static int getIntervaloComparacao() {
