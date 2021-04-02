@@ -14,6 +14,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
@@ -34,6 +35,11 @@ import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 
 public class ObjetoFabrica extends AbstratoFabricaContainer {
+
+	@Override
+	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
+		return new ObjetoConfiguracao(formulario);
+	}
 
 	@Override
 	public PaginaServico getPaginaServico() {

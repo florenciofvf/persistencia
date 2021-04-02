@@ -17,4 +17,13 @@ public abstract class AbstratoConfiguracao extends Panel {
 		this.formulario = formulario;
 		setBorder(BorderFactory.createTitledBorder(titulo));
 	}
+
+	public void formularioVisivel() {
+	}
+
+	public void dialogoVisivel() {
+	}
+
+	public void paginaVisivel() {
+	}
 }
