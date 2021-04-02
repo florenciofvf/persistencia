@@ -28,6 +28,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.formulario.FormularioFabrica;
 
 public class ConfiguracaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
@@ -65,15 +66,27 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
+		FormularioFabrica formularioFabrica = (FormularioFabrica) formulario
+				.getFabrica(FormularioFabrica.class.getName());
+		if (formularioFabrica != null) {
+			addConfiguracao(formularioFabrica);
+		}
 		List<FabricaContainer> lista = formulario.getFabricas();
 		for (FabricaContainer fabricaContainer : lista) {
-			AbstratoConfiguracao configuracao = fabricaContainer.getConfiguracao(formulario);
-			if (configuracao != null) {
-				painelConfiguracao.addConfiguracao(configuracao);
+			if (fabricaContainer instanceof FormularioFabrica) {
+				continue;
 			}
+			addConfiguracao(fabricaContainer);
 		}
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(painelConfiguracao));
+	}
+
+	private void addConfiguracao(FabricaContainer fabricaContainer) {
+		AbstratoConfiguracao configuracao = fabricaContainer.getConfiguracao(formulario);
+		if (configuracao != null) {
+			painelConfiguracao.addConfiguracao(configuracao);
+		}
 	}
 
 	@Override
