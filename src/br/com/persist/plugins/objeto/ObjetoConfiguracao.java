@@ -95,10 +95,10 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
 				chkHabitInnerJoinsObj));
 		container.add(panelS(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
-		container.add(panel(0, 0, new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura),
-				new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto),
-				new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
-				new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto)));
+		container.add(panel(0, 0, new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
+				new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto),
+				new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura),
+				new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
 		add(BorderLayout.CENTER, container);
