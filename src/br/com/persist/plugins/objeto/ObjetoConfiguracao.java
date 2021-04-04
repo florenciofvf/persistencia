@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
@@ -15,7 +16,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Constantes;
@@ -90,33 +90,17 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
-		container.add(tituloIntervalo);
-		container.add(panelIntervalos);
-		container.add(new JSeparator());
-		container.add(tituloIntervaloCompara);
-		container.add(panelIntervalosCompara);
-		container.add(criarLabelTitulo("label.titulo_cor_total_recente"));
-		container.add(new PainelCorTotalRecente());
-		container.add(new JSeparator());
-		container.add(chkHabitInnerJoinsObj);
-		container.add(new JSeparator());
-		container.add(chkAtivarAbrirAuto);
-		container.add(chkAtivarAbrirAutoDestac);
-		container.add(tituloDestacado);
-		container.add(panelDestacados);
-		container.add(new JSeparator());
-		container.add(new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura));
-		container.add(new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto));
-		container.add(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura));
-		container.add(new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto));
-
-		Insets insets2 = new Insets(5, 30, 5, 5);
+		container.add(panelS(tituloIntervalo, panelIntervalos));
+		container.add(panelS(tituloIntervaloCompara, panelIntervalosCompara,
+				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente()));
+		container.add(panelS(chkHabitInnerJoinsObj));
+		container.add(panelS(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
+		container.add(panel(0, 0, new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura),
+				new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto),
+				new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
+				new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto)));
 		Insets insets = new Insets(5, 10, 5, 5);
-
-		chkAtivarAbrirAutoDestac.setMargin(insets2);
-		chkHabitInnerJoinsObj.setMargin(insets);
-		chkAtivarAbrirAuto.setMargin(insets);
-
+		chkAtivarAbrirAutoDestac.setMargin(insets);
 		add(BorderLayout.CENTER, container);
 	}
 
@@ -143,6 +127,23 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			grupo.add(radio);
 		}
 		return panel;
+	}
+
+	public static Panel panel(int top, int bottom, Component... comps) {
+		Panel container = new Panel(new GridLayout(0, 1));
+		container.setBorder(BorderFactory.createMatteBorder(top, 0, bottom, 0, Color.BLACK));
+		for (Component c : comps) {
+			container.add(c);
+		}
+		return container;
+	}
+
+	public static Panel panelN(Component... comps) {
+		return panel(1, 0, comps);
+	}
+
+	public static Panel panelS(Component... comps) {
+		return panel(0, 1, comps);
 	}
 
 	private void configurar() {
