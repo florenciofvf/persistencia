@@ -92,8 +92,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
 		container.add(panelS(tituloIntervalo, panelIntervalos));
 		container.add(panelS(tituloIntervaloCompara, panelIntervalosCompara,
-				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente()));
-		container.add(panelS(chkHabitInnerJoinsObj));
+				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
+				chkHabitInnerJoinsObj));
 		container.add(panelS(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
 		container.add(panel(0, 0, new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto),
