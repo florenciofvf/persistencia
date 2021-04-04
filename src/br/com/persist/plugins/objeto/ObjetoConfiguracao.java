@@ -300,5 +300,4 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	public void dialogoVisivel() {
 		checkPesquisa();
 	}
-
 }

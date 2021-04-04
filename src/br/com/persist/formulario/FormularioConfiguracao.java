@@ -1,15 +1,17 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
@@ -64,35 +66,33 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
 		Label email = criarLabelTitulo("contato");
 		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
-		container.add(email);
-		container.add(tituloLocalAbas);
-		container.add(panelPosicoes);
-		container.add(new JSeparator());
+		container.add(panelS(email, tituloLocalAbas, panelPosicoes));
+		container.add(panelS(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo),
+				new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo),
+				new PanelCenter(new Label("label.form_ficha"), txtFormFicha)));
+		container.add(panel(0, 0, chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo,
+				chkTituloAbaMin, chkFicharioScroll, chkMonitorPreferencial));
 		if (Preferencias.isMonitorPreferencial()) {
-			container.add(criarLabelTitulo("label.monitor_preferencial"));
-			container.add(new PainelMonitorPreferencial());
-			container.add(new JSeparator());
+			container.add(panelN(criarLabelTitulo("label.monitor_preferencial"), new PainelMonitorPreferencial()));
 		}
-		container.add(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo));
-		container.add(new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo));
-		container.add(new PanelCenter(new Label("label.form_ficha"), txtFormFicha));
-		container.add(new JSeparator());
-		container.add(chkFecharComESCFormulario);
-		container.add(chkFecharComESCInternal);
-		container.add(chkFecharComESCDialogo);
-		container.add(chkTituloAbaMin);
-		container.add(chkFicharioScroll);
-		container.add(chkMonitorPreferencial);
-
-		Insets insets = new Insets(5, 10, 5, 5);
-		chkFecharComESCFormulario.setMargin(insets);
-		chkFecharComESCInternal.setMargin(insets);
-		chkFecharComESCDialogo.setMargin(insets);
-		chkMonitorPreferencial.setMargin(insets);
-		chkFicharioScroll.setMargin(insets);
-		chkTituloAbaMin.setMargin(insets);
-
 		add(BorderLayout.CENTER, container);
+	}
+
+	public static Panel panel(int top, int bottom, Component... comps) {
+		Panel container = new Panel(new GridLayout(0, 1));
+		container.setBorder(BorderFactory.createMatteBorder(top, 0, bottom, 0, Color.BLACK));
+		for (Component c : comps) {
+			container.add(c);
+		}
+		return container;
+	}
+
+	public static Panel panelN(Component... comps) {
+		return panel(1, 0, comps);
+	}
+
+	public static Panel panelS(Component... comps) {
+		return panel(0, 1, comps);
 	}
 
 	private void configurar() {
