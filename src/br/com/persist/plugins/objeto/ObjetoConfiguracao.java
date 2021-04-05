@@ -254,10 +254,10 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			add(labelAntesProcessar);
 			add(labelBuscarTotal);
 			add(labelComparacao);
-			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			labelAntesProcessar.setForeground(Preferencias.getCorAntesTotalRecente());
-			labelBuscarTotal.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			labelBuscarTotal.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			labelBuscarTotal.setForeground(Preferencias.getCorTotalAtual());
 			labelComparacao.setForeground(Preferencias.getCorComparaRec());
 			labelAntesProcessar.setHorizontalAlignment(Label.CENTER);
