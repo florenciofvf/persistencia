@@ -132,7 +132,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 	public static Panel panel(int top, int bottom, Component... comps) {
 		Panel container = new Panel(new GridLayout(0, 1));
-		container.setBorder(BorderFactory.createMatteBorder(top, 0, bottom, 0, Color.BLACK));
+		container.setBorder(BorderFactory.createMatteBorder(top, 0, bottom, 0, Color.GRAY));
 		for (Component c : comps) {
 			container.add(c);
 		}
