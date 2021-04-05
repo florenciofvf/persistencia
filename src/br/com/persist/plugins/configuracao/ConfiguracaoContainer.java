@@ -7,7 +7,6 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import br.com.persist.abstrato.FabricaContainer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -69,24 +69,19 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 		FormularioFabrica formularioFabrica = (FormularioFabrica) formulario
 				.getFabrica(FormularioFabrica.class.getName());
 		if (formularioFabrica != null) {
-			addConfiguracao(formularioFabrica);
+			AbstratoConfiguracao configuracao = formularioFabrica.getConfiguracao(formulario);
+			painelConfiguracao.addConfiguracao(configuracao);
 		}
 		List<FabricaContainer> lista = formulario.getFabricas();
 		for (FabricaContainer fabricaContainer : lista) {
 			if (fabricaContainer instanceof FormularioFabrica) {
 				continue;
 			}
-			addConfiguracao(fabricaContainer);
+			AbstratoConfiguracao configuracao = fabricaContainer.getConfiguracao(formulario);
+			painelConfiguracao.addConfiguracao(configuracao);
 		}
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(painelConfiguracao));
-	}
-
-	private void addConfiguracao(FabricaContainer fabricaContainer) {
-		AbstratoConfiguracao configuracao = fabricaContainer.getConfiguracao(formulario);
-		if (configuracao != null) {
-			painelConfiguracao.addConfiguracao(configuracao);
-		}
 	}
 
 	@Override
@@ -208,15 +203,18 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 	private class PainelConfiguracao extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final List<AbstratoConfiguracao> lista;
+		private final Muro muro = new Muro();
 
 		private PainelConfiguracao() {
-			super(new GridLayout(0, 1));
 			lista = new ArrayList<>();
+			add(BorderLayout.CENTER, muro);
 		}
 
 		void addConfiguracao(AbstratoConfiguracao configuracao) {
-			lista.add(configuracao);
-			add(configuracao);
+			if (configuracao != null) {
+				lista.add(configuracao);
+				muro.camada(configuracao);
+			}
 		}
 
 		void formularioVisivel() {
