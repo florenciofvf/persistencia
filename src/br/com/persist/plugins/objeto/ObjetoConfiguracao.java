@@ -20,6 +20,7 @@ import javax.swing.JRadioButton;
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.CheckBox;
@@ -86,22 +87,22 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
 
-		Panel container = new Panel(new GridLayout(0, 1));
+		Muro muro = new Muro();
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
-		container.add(panelS(tituloIntervalo, panelIntervalos));
-		container.add(panelS(tituloIntervaloCompara, panelIntervalosCompara,
+		muro.camada(panelS(tituloIntervalo, panelIntervalos));
+		muro.camada(panelS(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
 				chkHabitInnerJoinsObj));
-		container.add(panelS(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
-		container.add(panel(0, 0, new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
+		muro.camada(panelS(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
+		muro.camada(panel(0, 0, new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto),
 				new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
-		add(BorderLayout.CENTER, container);
+		add(BorderLayout.CENTER, muro);
 	}
 
 	private PanelCenter criarPainelGrupoDestac(NomeValor[] nomeValores, int padrao) {
