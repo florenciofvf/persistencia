@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
@@ -62,20 +63,20 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtFormDialogo.setText(Preferencias.getFormDialogo());
 		txtFormFicha.setText(Preferencias.getFormFicha());
 
-		Panel container = new Panel(new GridLayout(0, 1));
+		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
 		Label email = criarLabelTitulo("contato");
 		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
-		container.add(panelS(email, tituloLocalAbas, panelPosicoes));
-		container.add(panelS(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo),
+		muro.camada(panelS(email, tituloLocalAbas, panelPosicoes));
+		muro.camada(panelS(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo),
 				new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo),
 				new PanelCenter(new Label("label.form_ficha"), txtFormFicha)));
-		container.add(panel(0, 0, chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo,
+		muro.camada(panel(0, 0, chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo,
 				chkTituloAbaMin, chkFicharioScroll, chkMonitorPreferencial));
 		if (Preferencias.isMonitorPreferencial()) {
-			container.add(panelN(criarLabelTitulo("label.monitor_preferencial"), new PainelMonitorPreferencial()));
+			muro.camada(panelN(criarLabelTitulo("label.monitor_preferencial"), new PainelMonitorPreferencial()));
 		}
-		add(BorderLayout.CENTER, container);
+		add(BorderLayout.CENTER, muro);
 	}
 
 	public static Panel panel(int top, int bottom, Component... comps) {
