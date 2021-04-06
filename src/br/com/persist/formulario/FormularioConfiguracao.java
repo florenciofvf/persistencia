@@ -19,6 +19,7 @@ import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
@@ -28,6 +29,10 @@ import br.com.persist.componente.TextField;
 
 public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
+	private final CheckBox chkAplicarLarguraAoAbrirArquivoObjeto = new CheckBox(
+			"label.aplicar_largura_ao_abrir_arq_objeto");
+	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
+			"label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
 	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkFecharComESCDialogo = new CheckBox("label.fechar_com_esc_dialogo");
@@ -35,6 +40,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
+	private final TextField txtDefinirLargura = new TextField();
+	private final TextField txtDefinirAltura = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
 
@@ -53,10 +60,14 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 
+		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
+		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
+		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		chkFecharComESCDialogo.setSelected(Preferencias.isFecharComESCDialogo());
 		chkMonitorPreferencial.setSelected(Preferencias.isMonitorPreferencial());
+		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkFicharioScroll.setSelected(Preferencias.isFicharioComRolagem());
 		txtFormFichaDialogo.setText(Preferencias.getFormFichaDialogo());
 		chkTituloAbaMin.setSelected(Preferencias.isTituloAbaMin());
@@ -71,6 +82,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		muro.camada(panelS(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo),
 				new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo),
 				new PanelCenter(new Label("label.form_ficha"), txtFormFicha)));
+		muro.camada(panelS(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
+				new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto),
+				new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura),
+				new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto)));
 		muro.camada(panel(0, 0, chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo,
 				chkTituloAbaMin, chkFicharioScroll, chkMonitorPreferencial));
 		if (Preferencias.isMonitorPreferencial()) {
@@ -97,6 +112,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void configurar() {
+		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
+				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
+		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
+				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 		chkFicharioScroll.addActionListener(e -> {
 			Preferencias.setFicharioComRolagem(chkFicharioScroll.isSelected());
 			formulario.setTabLayoutPolicy(
@@ -114,6 +133,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
+		txtDefinirLargura.addActionListener(e -> definirLargura());
+		txtDefinirAltura.addActionListener(e -> definirAltura());
 		txtFormFichaDialogo.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -132,6 +153,30 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				Preferencias.setFormFicha(txtFormFicha.getText());
 			}
 		});
+		txtDefinirLargura.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				definirLargura();
+			}
+		});
+		txtDefinirAltura.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				definirAltura();
+			}
+		});
+	}
+
+	private void definirLargura() {
+		int porcentagem = Util.getInt(txtDefinirLargura.getText(), Preferencias.getPorcHorizontalLocalForm());
+		formulario.definirLarguraEmPorcentagem(porcentagem);
+		Preferencias.setPorcHorizontalLocalForm(porcentagem);
+	}
+
+	private void definirAltura() {
+		int porcentagem = Util.getInt(txtDefinirAltura.getText(), Preferencias.getPorcVerticalLocalForm());
+		formulario.definirAlturaEmPorcentagem(porcentagem);
+		Preferencias.setPorcVerticalLocalForm(porcentagem);
 	}
 
 	private Label criarLabelTitulo(String chaveRotulo) {

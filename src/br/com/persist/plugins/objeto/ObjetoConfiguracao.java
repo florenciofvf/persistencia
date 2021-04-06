@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
@@ -21,27 +19,18 @@ import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
-import br.com.persist.assistencia.Preferencias;
-import br.com.persist.assistencia.Util;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelCenter;
-import br.com.persist.componente.TextField;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
-	private final CheckBox chkAplicarLarguraAoAbrirArquivoObjeto = new CheckBox(
-			"label.aplicar_largura_ao_abrir_arq_objeto");
-	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
-			"label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox("label.habilitadoInnerJoinsObjeto");
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
-	private final TextField txtDefinirLargura = new TextField();
-	private final TextField txtDefinirAltura = new TextField();
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.5", 5, NomeValor.INTERVALO_COMPARA),
@@ -81,12 +70,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				ObjetoPreferencia.getTipoContainerPesquisaAuto());
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
 
-		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
-		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
 		chkHabitInnerJoinsObj.setSelected(ObjetoPreferencia.isHabilitadoInnerJoinsObjeto());
 		chkAtivarAbrirAutoDestac.setSelected(ObjetoPreferencia.isAbrirAutoDestacado());
-		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
-		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
 		chkAtivarAbrirAuto.setSelected(ObjetoPreferencia.isAbrirAuto());
 
 		Muro muro = new Muro();
@@ -98,10 +83,6 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
 				chkHabitInnerJoinsObj));
 		muro.camada(panelS(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
-		muro.camada(panel(0, 0, new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
-				new PanelCenter(chkAplicarLarguraAoAbrirArquivoObjeto),
-				new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura),
-				new PanelCenter(chkAplicarAlturaAoAbrirArquivoObjeto)));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
 		add(BorderLayout.CENTER, muro);
@@ -150,12 +131,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void configurar() {
-		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
-				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
 		chkHabitInnerJoinsObj.addActionListener(
 				e -> ObjetoPreferencia.setHabilitadoInnerJoinsObjeto(chkHabitInnerJoinsObj.isSelected()));
-		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
-				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {
 			ObjetoPreferencia.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected());
 			checkPesquisa();
@@ -164,32 +141,6 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			ObjetoPreferencia.setAbrirAuto(chkAtivarAbrirAuto.isSelected());
 			checkPesquisa();
 		});
-		txtDefinirLargura.addActionListener(e -> definirLargura());
-		txtDefinirAltura.addActionListener(e -> definirAltura());
-		txtDefinirLargura.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				definirLargura();
-			}
-		});
-		txtDefinirAltura.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				definirAltura();
-			}
-		});
-	}
-
-	private void definirLargura() {
-		int porcentagem = Util.getInt(txtDefinirLargura.getText(), Preferencias.getPorcHorizontalLocalForm());
-		formulario.definirLarguraEmPorcentagem(porcentagem);
-		Preferencias.setPorcHorizontalLocalForm(porcentagem);
-	}
-
-	private void definirAltura() {
-		int porcentagem = Util.getInt(txtDefinirAltura.getText(), Preferencias.getPorcVerticalLocalForm());
-		formulario.definirAlturaEmPorcentagem(porcentagem);
-		Preferencias.setPorcVerticalLocalForm(porcentagem);
 	}
 
 	private Label criarLabelTitulo(String chaveRotulo) {
