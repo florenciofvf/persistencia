@@ -75,17 +75,19 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void montarLayout() {
-		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara, Preferencias.getIntervaloComparacao());
-		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados, Preferencias.getTipoContainerPesquisaAuto());
-		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, Preferencias.getIntervaloPesquisaAuto());
+		PanelCenter panelIntervalosCompara = criarPainelGrupo(intervalosCompara,
+				ObjetoPreferencia.getIntervaloComparacao());
+		PanelCenter panelDestacados = criarPainelGrupoDestac(destacados,
+				ObjetoPreferencia.getTipoContainerPesquisaAuto());
+		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
 		chkHabitInnerJoinsObj.setSelected(ObjetoPreferencia.isHabilitadoInnerJoinsObjeto());
-		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
+		chkAtivarAbrirAutoDestac.setSelected(ObjetoPreferencia.isAbrirAutoDestacado());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
-		chkAtivarAbrirAuto.setSelected(Preferencias.isAbrirAuto());
+		chkAtivarAbrirAuto.setSelected(ObjetoPreferencia.isAbrirAuto());
 
 		Muro muro = new Muro();
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
@@ -155,11 +157,11 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
 				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {
-			Preferencias.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected());
+			ObjetoPreferencia.setAbrirAutoDestacado(chkAtivarAbrirAutoDestac.isSelected());
 			checkPesquisa();
 		});
 		chkAtivarAbrirAuto.addActionListener(e -> {
-			Preferencias.setAbrirAuto(chkAtivarAbrirAuto.isSelected());
+			ObjetoPreferencia.setAbrirAuto(chkAtivarAbrirAuto.isSelected());
 			checkPesquisa();
 		});
 		txtDefinirLargura.addActionListener(e -> definirLargura());
@@ -220,11 +222,11 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			this.nomeValor = nomeValor;
 			addActionListener(e -> {
 				if (nomeValor.tipo == NomeValor.INTERVALO_AUTO) {
-					Preferencias.setIntervaloPesquisaAuto(nomeValor.valor);
+					ObjetoPreferencia.setIntervaloPesquisaAuto(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.INTERVALO_COMPARA) {
-					Preferencias.setIntervaloComparacao(nomeValor.valor);
+					ObjetoPreferencia.setIntervaloComparacao(nomeValor.valor);
 				} else if (nomeValor.tipo == NomeValor.DESTACADOS) {
-					Preferencias.setTipoContainerPesquisaAuto(nomeValor.valor);
+					ObjetoPreferencia.setTipoContainerPesquisaAuto(nomeValor.valor);
 				}
 			});
 		}

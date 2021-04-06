@@ -87,6 +87,7 @@ import br.com.persist.plugins.fragmento.FragmentoListener;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -639,7 +640,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				public void run() {
 					while (!Thread.currentThread().isInterrupted() && itemAtualizarAuto.isDisplayable()) {
 						try {
-							Thread.sleep(Preferencias.getIntervaloPesquisaAuto());
+							Thread.sleep(ObjetoPreferencia.getIntervaloPesquisaAuto());
 							contadorAuto++;
 							itemAtualizarAuto.setText(titulo + " " + contadorAuto);
 							SwingUtilities.invokeLater(() -> actionListenerInner.actionPerformed(null));

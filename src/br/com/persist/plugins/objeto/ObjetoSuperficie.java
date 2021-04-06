@@ -38,7 +38,6 @@ import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Vetor;
 import br.com.persist.componente.Acao;
@@ -1588,12 +1587,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	@Override
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
 		super.pesquisar(conexao, pesquisa, argumentos);
-		if (Preferencias.isAbrirAuto()) {
+		if (ObjetoPreferencia.isAbrirAuto()) {
 			limparSelecao();
 			processarReferencias(conexao, pesquisa, argumentos);
 			if (getPrimeiroObjetoSelecionado() != null) {
 				destacar(conexao != null ? conexao : container.getConexaoPadrao(),
-						Preferencias.getTipoContainerPesquisaAuto(), null);
+						ObjetoPreferencia.getTipoContainerPesquisaAuto(), null);
 			}
 		}
 	}
@@ -1622,7 +1621,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void pesquisarReferencia(Conexao conexao, Referencia referencia, String argumentos, Objeto objeto) {
 		objeto.setComplemento("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
 		objeto.setReferenciaPesquisa(referencia);
-		if (Preferencias.isAbrirAutoDestacado()) {
+		if (ObjetoPreferencia.isAbrirAutoDestacado()) {
 			Objeto clone = objeto.clonar();
 			clone.setReferenciaPesquisa(referencia);
 			criarExternalFormulario(clone, conexao != null ? conexao : container.getConexaoPadrao());
@@ -1693,7 +1692,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						processado = true;
 						objeto.setTag(i);
 						repaint();
-						sleep(Preferencias.getIntervaloComparacao());
+						sleep(ObjetoPreferencia.getIntervaloComparacao());
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("TOTAL", ex, ObjetoSuperficie.this);
 					}
@@ -1773,7 +1772,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						processarRecente(objeto, i, fm);
 						processado = true;
 						repaint();
-						sleep(Preferencias.getIntervaloComparacao());
+						sleep(ObjetoPreferencia.getIntervaloComparacao());
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("RECENTE", ex, ObjetoSuperficie.this);
 					}

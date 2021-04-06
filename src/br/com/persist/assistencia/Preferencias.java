@@ -25,24 +25,19 @@ public class Preferencias {
 	private static final Logger LOG = Logger.getGlobal();
 	private static boolean exibiuMensagemConnection;
 	private static boolean fecharComESCFormulario;
-	private static int tipoContainerPesquisaAuto;
 	private static boolean fecharComESCInternal;
 	private static int porcHorizontalLocalForm;
 	private static boolean erroCriarConnection;
 	private static boolean fecharComESCDialogo;
 	private static boolean monitorPreferencial;
 	private static boolean ficharioComRolagem;
-	private static boolean abrirAutoDestacado;
-	private static int intervaloPesquisaAuto;
 	private static int porcVerticalLocalForm;
-	private static int intervaloComparacao;
 	private static String formFichaDialogo;
 	private static int posicaoAbaFichario;
 	private static Color corFonteCopiado;
 	private static boolean tituloAbaMin;
 	private static boolean desconectado;
 	private static String formDialogo;
-	private static boolean abrirAuto;
 	private static String formFicha;
 	private static Color corCopiado;
 
@@ -68,7 +63,6 @@ public class Preferencias {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
 		fecharComESCFormulario = pref.getBoolean("fechar_com_ESC_formulario", false);
@@ -76,16 +70,12 @@ public class Preferencias {
 		porcHorizontalLocalForm = pref.getInt("porc_horizontal_local_form", 70);
 		formFichaDialogo = pref.get("form_ficha_dialogo", "FORM,FICHA,DIALOG");
 		fecharComESCDialogo = pref.getBoolean("fechar_com_ESC_dialogo", false);
-		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
 		monitorPreferencial = pref.getBoolean("monitor_preferencial", false);
 		porcVerticalLocalForm = pref.getInt("porc_vertical_local_form", 70);
-		abrirAutoDestacado = pref.getBoolean("abrir_auto_destacado", false);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
-		intervaloComparacao = pref.getInt("intervalo_comparacao", 5);
 		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
-		abrirAuto = pref.getBoolean("abrir_auto", false);
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
 		if (Util.estaVazio(formFichaDialogo)) {
 			formFichaDialogo = "FORM,FICHA,DIALOG";
@@ -114,21 +104,16 @@ public class Preferencias {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
-		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putBoolean("fechar_com_ESC_formulario", fecharComESCFormulario);
 		pref.putInt("porc_horizontal_local_form", porcHorizontalLocalForm);
 		pref.putBoolean("fechar_com_ESC_internal", fecharComESCInternal);
 		pref.putInt("porc_vertical_local_form", porcVerticalLocalForm);
 		pref.putBoolean("fechar_com_ESC_dialogo", fecharComESCDialogo);
-		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
 		pref.putBoolean("monitor_preferencial", monitorPreferencial);
-		pref.putBoolean("abrir_auto_destacado", abrirAutoDestacado);
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
-		pref.putInt("intervalo_comparacao", intervaloComparacao);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
-		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
 		salvarOutras();
@@ -180,44 +165,12 @@ public class Preferencias {
 		Preferencias.ficharioComRolagem = ficharioComRolagem;
 	}
 
-	public static boolean isAbrirAutoDestacado() {
-		return abrirAutoDestacado;
-	}
-
-	public static void setAbrirAutoDestacado(boolean abrirAutoDestacado) {
-		Preferencias.abrirAutoDestacado = abrirAutoDestacado;
-	}
-
 	public static int getPosicaoAbaFichario() {
 		return posicaoAbaFichario;
 	}
 
 	public static void setPosicaoAbaFichario(int posicaoAbaFichario) {
 		Preferencias.posicaoAbaFichario = posicaoAbaFichario;
-	}
-
-	public static boolean isAbrirAuto() {
-		return abrirAuto;
-	}
-
-	public static void setAbrirAuto(boolean abrirAuto) {
-		Preferencias.abrirAuto = abrirAuto;
-	}
-
-	public static int getIntervaloPesquisaAuto() {
-		return intervaloPesquisaAuto;
-	}
-
-	public static void setIntervaloPesquisaAuto(int intervaloPesquisaAuto) {
-		Preferencias.intervaloPesquisaAuto = intervaloPesquisaAuto;
-	}
-
-	public static int getTipoContainerPesquisaAuto() {
-		return tipoContainerPesquisaAuto;
-	}
-
-	public static void setTipoContainerPesquisaAuto(int tipoContainerPesquisaAuto) {
-		Preferencias.tipoContainerPesquisaAuto = tipoContainerPesquisaAuto;
 	}
 
 	public static boolean isFecharComESCFormulario() {
@@ -266,14 +219,6 @@ public class Preferencias {
 
 	public static void setFormFicha(String formFicha) {
 		Preferencias.formFicha = formFicha;
-	}
-
-	public static int getIntervaloComparacao() {
-		return intervaloComparacao;
-	}
-
-	public static void setIntervaloComparacao(int intervaloComparacao) {
-		Preferencias.intervaloComparacao = intervaloComparacao;
 	}
 
 	public static boolean isTituloAbaMin() {
