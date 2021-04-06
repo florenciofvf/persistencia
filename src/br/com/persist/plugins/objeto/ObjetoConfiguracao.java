@@ -254,12 +254,12 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			add(labelAntesProcessar);
 			add(labelBuscarTotal);
 			add(labelComparacao);
+			labelAntesProcessar.setForeground(ObjetoPreferencia.getCorAntesTotalRecente());
 			labelAntesProcessar.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			labelAntesProcessar.setForeground(Preferencias.getCorAntesTotalRecente());
 			labelBuscarTotal.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			labelComparacao.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-			labelBuscarTotal.setForeground(Preferencias.getCorTotalAtual());
-			labelComparacao.setForeground(Preferencias.getCorComparaRec());
+			labelBuscarTotal.setForeground(ObjetoPreferencia.getCorTotalAtual());
+			labelComparacao.setForeground(ObjetoPreferencia.getCorComparaRec());
 			labelAntesProcessar.setHorizontalAlignment(Label.CENTER);
 			labelBuscarTotal.setHorizontalAlignment(Label.CENTER);
 			labelComparacao.setHorizontalAlignment(Label.CENTER);
@@ -278,11 +278,11 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 				}
 				label.setForeground(color);
 				if (label == labelAntesProcessar) {
-					Preferencias.setCorAntesTotalRecente(color);
+					ObjetoPreferencia.setCorAntesTotalRecente(color);
 				} else if (label == labelBuscarTotal) {
-					Preferencias.setCorTotalAtual(color);
+					ObjetoPreferencia.setCorTotalAtual(color);
 				} else if (label == labelComparacao) {
-					Preferencias.setCorComparaRec(color);
+					ObjetoPreferencia.setCorComparaRec(color);
 				}
 			}
 		}

@@ -32,7 +32,6 @@ public class Preferencias {
 	private static boolean fecharComESCDialogo;
 	private static boolean monitorPreferencial;
 	private static boolean ficharioComRolagem;
-	private static Color corAntesTotalRecente;
 	private static boolean abrirAutoDestacado;
 	private static int intervaloPesquisaAuto;
 	private static int porcVerticalLocalForm;
@@ -42,8 +41,6 @@ public class Preferencias {
 	private static Color corFonteCopiado;
 	private static boolean tituloAbaMin;
 	private static boolean desconectado;
-	private static Color corTotalAtual;
-	private static Color corComparaRec;
 	private static String formDialogo;
 	private static boolean abrirAuto;
 	private static String formFicha;
@@ -74,9 +71,6 @@ public class Preferencias {
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
-		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
-		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
-		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
 		fecharComESCFormulario = pref.getBoolean("fechar_com_ESC_formulario", false);
 		fecharComESCInternal = pref.getBoolean("fechar_com_ESC_internal", false);
 		porcHorizontalLocalForm = pref.getInt("porc_horizontal_local_form", 70);
@@ -121,7 +115,6 @@ public class Preferencias {
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
-		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
 		pref.putBoolean("fechar_com_ESC_formulario", fecharComESCFormulario);
 		pref.putInt("porc_horizontal_local_form", porcHorizontalLocalForm);
 		pref.putBoolean("fechar_com_ESC_internal", fecharComESCInternal);
@@ -133,8 +126,6 @@ public class Preferencias {
 		pref.putBoolean("fichario_com_rolagem", ficharioComRolagem);
 		pref.putInt("intervalo_comparacao", intervaloComparacao);
 		pref.putInt("posicao_aba_fichario", posicaoAbaFichario);
-		pref.putInt("cor_total_atual", corTotalAtual.getRGB());
-		pref.putInt("cor_compara_rec", corComparaRec.getRGB());
 		pref.put("form_ficha_dialogo", formFichaDialogo);
 		pref.putBoolean("titulo_aba_min", tituloAbaMin);
 		pref.putBoolean("abrir_auto", abrirAuto);
@@ -283,30 +274,6 @@ public class Preferencias {
 
 	public static void setIntervaloComparacao(int intervaloComparacao) {
 		Preferencias.intervaloComparacao = intervaloComparacao;
-	}
-
-	public static Color getCorAntesTotalRecente() {
-		return corAntesTotalRecente;
-	}
-
-	public static void setCorAntesTotalRecente(Color corAntesTotalRecente) {
-		Preferencias.corAntesTotalRecente = corAntesTotalRecente;
-	}
-
-	public static Color getCorTotalAtual() {
-		return corTotalAtual;
-	}
-
-	public static void setCorTotalAtual(Color corTotalAtual) {
-		Preferencias.corTotalAtual = corTotalAtual;
-	}
-
-	public static Color getCorComparaRec() {
-		return corComparaRec;
-	}
-
-	public static void setCorComparaRec(Color corComparaRec) {
-		Preferencias.corComparaRec = corComparaRec;
 	}
 
 	public static boolean isTituloAbaMin() {

@@ -1652,7 +1652,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int total = 0;
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela2())) {
-				objeto.setCorFonte(Preferencias.getCorAntesTotalRecente());
+				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
 				total++;
 			}
 		}
@@ -1676,7 +1676,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		@Override
 		public void run() {
-			label.setForeground(Preferencias.getCorTotalAtual());
+			label.setForeground(ObjetoPreferencia.getCorTotalAtual());
 			label.setText("0 / " + total);
 			boolean processado = false;
 			menuItem.setEnabled(false);
@@ -1688,7 +1688,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
 								objeto.getTabela2());
 						int i = Persistencia.getTotalRegistros(conn, aposFROM);
-						objeto.setCorFonte(Preferencias.getCorTotalAtual());
+						objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 						label.setText(++atual + " / " + total);
 						processado = true;
 						objeto.setTag(i);
@@ -1757,7 +1757,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		@Override
 		public void run() {
-			label.setForeground(Preferencias.getCorComparaRec());
+			label.setForeground(ObjetoPreferencia.getCorComparaRec());
 			label.setText("0 / " + total);
 			boolean processado = false;
 			menuItem.setEnabled(false);
@@ -1786,7 +1786,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void processarRecente(Objeto objeto, int recente, FontMetrics fm) {
-			objeto.setCorFonte(Preferencias.getCorComparaRec());
+			objeto.setCorFonte(ObjetoPreferencia.getCorComparaRec());
 			long diff = recente - objeto.getTag();
 			if (diff == 0) {
 				return;
