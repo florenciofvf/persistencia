@@ -112,10 +112,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void configurar() {
-		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
-				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
-		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
-				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 		chkFicharioScroll.addActionListener(e -> {
 			Preferencias.setFicharioComRolagem(chkFicharioScroll.isSelected());
 			formulario.setTabLayoutPolicy(
@@ -130,7 +126,11 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
 		chkMonitorPreferencial
 				.addActionListener(e -> Preferencias.setMonitorPreferencial(chkMonitorPreferencial.isSelected()));
+		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
+				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
+		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
+				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
 		txtDefinirLargura.addActionListener(e -> definirLargura());
