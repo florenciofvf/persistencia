@@ -306,8 +306,8 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
-			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.sane", chkSANE, Mensagens.getString("hint.sane")));
+			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.bpnt", chkBPNT, Mensagens.getString("hint.bpnt")));
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm,
 					Mensagens.getString("hint.ajuste_auto_form")));
