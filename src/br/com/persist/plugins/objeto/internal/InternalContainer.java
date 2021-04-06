@@ -255,6 +255,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private boolean continuar(String complemento) {
+		if (objeto.isSane() && Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(complemento)) {
+			String msg = Mensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela2());
+			Util.mensagem(InternalContainer.this, msg);
+			return false;
+		}
 		if (!Util.estaVazio(txtComplemento.getText()) || !Util.estaVazio(complemento) || !objeto.isCcsc()) {
 			return true;
 		}

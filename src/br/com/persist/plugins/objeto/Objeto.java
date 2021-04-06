@@ -66,6 +66,7 @@ public class Objeto implements Runnable {
 	private boolean transparente;
 	private boolean selecionado;
 	private boolean ccsc = true;
+	private boolean sane = true;
 	private boolean controlado;
 	private String complemento;
 	private String chaveamento;
@@ -148,6 +149,7 @@ public class Objeto implements Runnable {
 		o.grupo = grupo;
 		o.joins = joins;
 		o.ccsc = ccsc;
+		o.sane = sane;
 		o.bpnt = bpnt;
 		o.setId(id);
 		return o;
@@ -169,6 +171,7 @@ public class Objeto implements Runnable {
 		selectAlternativo = attr.getValue("selectAlternativo");
 		apelidoParaJoins = attr.getValue("apelidoParaJoins");
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
+		sane = Boolean.parseBoolean(attr.getValue("sane"));
 		bpnt = Boolean.parseBoolean(attr.getValue("bpnt"));
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
@@ -222,6 +225,7 @@ public class Objeto implements Runnable {
 		util.atributo("joins", getJoins());
 		util.atributo("icone", icone);
 		util.atributo("ccsc", ccsc);
+		util.atributo("sane", sane);
 		util.atributo("bpnt", bpnt);
 		util.atributo("x", x);
 		util.atributo("y", y);
@@ -875,6 +879,14 @@ public class Objeto implements Runnable {
 
 	public void setCcsc(boolean ccsc) {
 		this.ccsc = ccsc;
+	}
+
+	public boolean isSane() {
+		return sane;
+	}
+
+	public void setSane(boolean sane) {
+		this.sane = sane;
 	}
 
 	public long getTag() {

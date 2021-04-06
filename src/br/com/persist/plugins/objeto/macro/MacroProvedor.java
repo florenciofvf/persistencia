@@ -11,6 +11,7 @@ import br.com.persist.plugins.objeto.macro.Macro.AbrirAuto;
 import br.com.persist.plugins.objeto.macro.Macro.AjusteAutoForm;
 import br.com.persist.plugins.objeto.macro.Macro.Bpnt;
 import br.com.persist.plugins.objeto.macro.Macro.Ccsc;
+import br.com.persist.plugins.objeto.macro.Macro.Sane;
 import br.com.persist.plugins.objeto.macro.Macro.ColunaInfo;
 import br.com.persist.plugins.objeto.macro.Macro.CopiarDestacado;
 import br.com.persist.plugins.objeto.macro.Macro.Cor;
@@ -45,6 +46,7 @@ public class MacroProvedor {
 	private static final String QUEBRADO = "quebrado";
 	private static final String ICONE = "icone";
 	private static final String CCSC = "ccsc";
+	private static final String SANE = "sane";
 	private static final String BPNT = "bpnt";
 	private static final String COR = "cor";
 	private static final String X = "x";
@@ -101,6 +103,7 @@ public class MacroProvedor {
 		mapa.put(QUEBRADO, new Quebrado());
 		mapa.put(ICONE, new Icone());
 		mapa.put(CCSC, new Ccsc());
+		mapa.put(SANE, new Sane());
 		mapa.put(BPNT, new Bpnt());
 		mapa.put(COR, new Cor());
 		mapa.put(X, new XPos());
@@ -156,6 +159,12 @@ public class MacroProvedor {
 
 	public static void confirmarCsc(Object valor) {
 		Instrucao instrucao = get(CCSC);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public static void semArgNaoExec(Object valor) {
+		Instrucao instrucao = get(SANE);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

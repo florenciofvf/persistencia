@@ -229,6 +229,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtGrupo = new TextField();
 		private TextField txtJoins = new TextField();
 		private CheckBox chkCCSC = new CheckBox();
+		private CheckBox chkSANE = new CheckBox();
 		private CheckBox chkBPNT = new CheckBox();
 
 		private PanelBanco() {
@@ -248,6 +249,7 @@ public class ObjetoContainer extends Panel {
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
 			chkCCSC.setSelected(objeto.isCcsc());
+			chkSANE.setSelected(objeto.isSane());
 			chkBPNT.setSelected(objeto.isBpnt());
 			txtGrupo.setText(objeto.getGrupo());
 			txtJoins.setText(objeto.getJoins());
@@ -282,6 +284,7 @@ public class ObjetoContainer extends Panel {
 			txtGrupo.addActionListener(this);
 			txtJoins.addActionListener(this);
 			chkCCSC.addActionListener(this);
+			chkSANE.addActionListener(this);
 			chkBPNT.addActionListener(this);
 			Box container = Box.createVerticalBox();
 			container.add(criarLinhaCopiar("label.apelido_para_joins", txtApelido));
@@ -304,6 +307,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
 			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
+			container.add(criarLinha("label.sane", chkSANE, Mensagens.getString("hint.sane")));
 			container.add(criarLinha("label.bpnt", chkBPNT, Mensagens.getString("hint.bpnt")));
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm,
 					Mensagens.getString("hint.ajuste_auto_form")));
@@ -403,6 +407,10 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setCcsc(chk.isSelected());
 				MacroProvedor.confirmarCsc(chk.isSelected());
+			} else if (chkSANE == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setSane(chk.isSelected());
+				MacroProvedor.semArgNaoExec(chk.isSelected());
 			} else if (chkBPNT == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setBpnt(chk.isSelected());

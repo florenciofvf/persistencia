@@ -106,6 +106,18 @@ public class Macro {
 		}
 	}
 
+	static class Sane extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setSane((Boolean) valor);
+		}
+	}
+
 	static class Bpnt extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
