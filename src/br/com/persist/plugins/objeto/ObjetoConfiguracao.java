@@ -82,7 +82,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(panelS(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
 				chkHabitInnerJoinsObj));
-		muro.camada(panelS(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
+		muro.camada(panel(0, 0, chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
 		add(BorderLayout.CENTER, muro);

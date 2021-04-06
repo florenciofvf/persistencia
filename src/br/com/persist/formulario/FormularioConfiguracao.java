@@ -44,7 +44,6 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final TextField txtDefinirAltura = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
-
 	private final transient NomeValor[] posicoes = {
 			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
 			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
