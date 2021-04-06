@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
@@ -13,9 +18,11 @@ import javax.swing.UIManager;
 import br.com.persist.formulario.Formulario;
 
 public class Preferencias {
+	private static final List<Class<?>> outrasPreferencias = new ArrayList<>();
 	private static boolean aplicarLarguraAoAbrirArquivoObjeto;
 	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
 	private static final String ARQ_PREF = "preferencias";
+	private static final Logger LOG = Logger.getGlobal();
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean exibiuMensagemConnection;
 	private static boolean fecharComESCFormulario;
@@ -44,6 +51,23 @@ public class Preferencias {
 	private static Color corCopiado;
 
 	private Preferencias() {
+	}
+
+	public static void addOutraPreferencia(Class<?> classe) {
+		if (classe != null) {
+			outrasPreferencias.add(classe);
+		}
+	}
+
+	private static void abrirOutras() {
+		try {
+			for (Class<?> klass : outrasPreferencias) {
+				Method method = klass.getDeclaredMethod("abrir");
+				method.invoke(null);
+			}
+		} catch (Exception ex) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
+		}
 	}
 
 	public static void abrir() {
@@ -80,6 +104,18 @@ public class Preferencias {
 		if (Util.estaVazio(formFicha)) {
 			formFicha = "FORM,FICHA";
 		}
+		abrirOutras();
+	}
+
+	private static void salvarOutras() {
+		try {
+			for (Class<?> klass : outrasPreferencias) {
+				Method method = klass.getDeclaredMethod("salvar");
+				method.invoke(null);
+			}
+		} catch (Exception ex) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
+		}
 	}
 
 	public static void salvar() {
@@ -107,6 +143,7 @@ public class Preferencias {
 		pref.putBoolean("abrir_auto", abrirAuto);
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
+		salvarOutras();
 	}
 
 	public static void inicializar() {
