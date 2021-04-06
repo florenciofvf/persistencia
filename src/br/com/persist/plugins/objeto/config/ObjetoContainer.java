@@ -45,6 +45,7 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 
@@ -288,7 +289,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaCopiar("label.tabela", txtTabela));
 			container.add(criarLinhaCopiar("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
 			container.add(criarLinhaCopiar("label.select_alter", txtSelectAlter));
-			if (Preferencias.isHabilitadoInnerJoinsObjeto()) {
+			if (ObjetoPreferencia.isHabilitadoInnerJoinsObjeto()) {
 				container.add(criarLinhaCopiar("label.tabelas", txtTabelas));
 				container.add(criarLinhaCopiar("label.joins", txtJoins, Mensagens.getString("hint.joins")));
 			}

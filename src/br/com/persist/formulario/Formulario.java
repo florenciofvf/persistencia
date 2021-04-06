@@ -167,6 +167,7 @@ public class Formulario extends JFrame {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				menuPrincipal.carregarMenu();
+				Preferencias.abrir();
 				for (Servico servico : servicos) {
 					servico.visivelFormulario(Formulario.this);
 				}

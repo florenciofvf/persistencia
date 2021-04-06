@@ -23,7 +23,6 @@ public class Preferencias {
 	private static boolean aplicarAlturaAoAbrirArquivoObjeto;
 	private static final String ARQ_PREF = "preferencias";
 	private static final Logger LOG = Logger.getGlobal();
-	private static boolean habilitadoInnerJoinsObjeto;
 	private static boolean exibiuMensagemConnection;
 	private static boolean fecharComESCFormulario;
 	private static int tipoContainerPesquisaAuto;
@@ -76,7 +75,6 @@ public class Preferencias {
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
-		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
 		fecharComESCFormulario = pref.getBoolean("fechar_com_ESC_formulario", false);
@@ -122,7 +120,6 @@ public class Preferencias {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
-		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
 		pref.putBoolean("fechar_com_ESC_formulario", fecharComESCFormulario);
@@ -394,14 +391,6 @@ public class Preferencias {
 
 	public static String getArqPref() {
 		return ARQ_PREF;
-	}
-
-	public static boolean isHabilitadoInnerJoinsObjeto() {
-		return habilitadoInnerJoinsObjeto;
-	}
-
-	public static void setHabilitadoInnerJoinsObjeto(boolean habilitadoInnerJoinsObjeto) {
-		Preferencias.habilitadoInnerJoinsObjeto = habilitadoInnerJoinsObjeto;
 	}
 
 	public static boolean isMonitorPreferencial() {

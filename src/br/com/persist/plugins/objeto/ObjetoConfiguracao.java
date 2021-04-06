@@ -81,7 +81,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
-		chkHabitInnerJoinsObj.setSelected(Preferencias.isHabilitadoInnerJoinsObjeto());
+		chkHabitInnerJoinsObj.setSelected(ObjetoPreferencia.isHabilitadoInnerJoinsObjeto());
 		chkAtivarAbrirAutoDestac.setSelected(Preferencias.isAbrirAutoDestacado());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
 		txtDefinirAltura.setText("" + Preferencias.getPorcVerticalLocalForm());
@@ -148,10 +148,10 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void configurar() {
-		chkHabitInnerJoinsObj
-				.addActionListener(e -> Preferencias.setHabilitadoInnerJoinsObjeto(chkHabitInnerJoinsObj.isSelected()));
 		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
 				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
+		chkHabitInnerJoinsObj.addActionListener(
+				e -> ObjetoPreferencia.setHabilitadoInnerJoinsObjeto(chkHabitInnerJoinsObj.isSelected()));
 		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
 				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {

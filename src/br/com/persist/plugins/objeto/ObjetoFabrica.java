@@ -21,6 +21,7 @@ import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
@@ -35,6 +36,10 @@ import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 
 public class ObjetoFabrica extends AbstratoFabricaContainer {
+	@Override
+	public void inicializar() {
+		Preferencias.addOutraPreferencia(ObjetoPreferencia.class);
+	}
 
 	@Override
 	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
