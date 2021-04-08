@@ -615,11 +615,12 @@ public class Util {
 		return string;
 	}
 
-	public static void getContentTransfered(JTextComponent area) {
+	public static void getContentTransfered(JTextComponent area, boolean numeros, boolean letras) {
 		String string = getContentTransfered();
 		if (area == null || estaVazio(string)) {
 			return;
 		}
+		string = getString(string, numeros, letras);
 		Caret caret = area.getCaret();
 		if (caret == null) {
 			append(area, string);
@@ -635,6 +636,16 @@ public class Util {
 				append(area, string);
 			}
 		}
+	}
+
+	public static String getString(String string, boolean numeros, boolean letras) {
+		if (numeros) {
+			string = soNumeros(string);
+		}
+		if (letras) {
+			string = soLetras(string);
+		}
+		return string;
 	}
 
 	private static void append(JTextComponent area, String string) {

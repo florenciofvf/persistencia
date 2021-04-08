@@ -366,12 +366,7 @@ public class TabelaPersistencia extends JTable {
 				if (listener != null) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					String memoria = Util.getContentTransfered();
-					if (numeros) {
-						memoria = Util.soNumeros(memoria);
-					}
-					if (letras) {
-						memoria = Util.soLetras(memoria);
-					}
+					memoria = Util.getString(memoria, numeros, letras);
 					if (aspas && !Util.estaVazio(memoria)) {
 						memoria = Util.citar(memoria);
 					}
