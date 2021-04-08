@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.config;
 
 import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
@@ -33,6 +34,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Button;
+import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
@@ -475,7 +477,6 @@ public class ObjetoContainer extends Panel {
 	private class PanelCopiarColar extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Action copiar = Action.actionIcon("label.copiar", Icones.COPIA);
-		private final Action colar = Action.actionIcon("label.colar", Icones.COLAR);
 		private LabelTextTemp lblMsg = new LabelTextTemp();
 		private final TextField textField;
 
@@ -483,9 +484,8 @@ public class ObjetoContainer extends Panel {
 			this.textField = textField;
 			add(BorderLayout.WEST, new Button(copiar));
 			add(BorderLayout.CENTER, lblMsg);
-			add(BorderLayout.EAST, new Button(colar));
+			add(BorderLayout.EAST, new ButtonColar());
 			copiar.setActionListener(e -> copiar());
-			colar.setActionListener(e -> colar());
 		}
 
 		private void copiar() {
@@ -496,8 +496,25 @@ public class ObjetoContainer extends Panel {
 			}
 		}
 
-		private void colar() {
-			Util.getContentTransfered(textField);
+		private class ButtonColar extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action numeroAcao = Action.actionMenu("label.numeros", null);
+			private Action letraAcao = Action.actionMenu("label.letras", null);
+			private Action todosAcao = Action.actionMenu("label.todos", null);
+
+			private ButtonColar() {
+				super("label.colar", Icones.COLAR);
+				addMenuItem(numeroAcao);
+				addMenuItem(letraAcao);
+				addMenuItem(todosAcao);
+				numeroAcao.setActionListener(e -> colar(true, false));
+				letraAcao.setActionListener(e -> colar(false, true));
+				todosAcao.setActionListener(e -> colar(false, false));
+			}
+
+			private void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(textField, numeros, letras);
+			}
 		}
 	}
 
@@ -536,8 +553,8 @@ public class ObjetoContainer extends Panel {
 			}
 
 			@Override
-			protected void colar() {
-				Util.getContentTransfered(textArea.getTextAreaInner());
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
 			}
 		}
 	}
@@ -565,7 +582,7 @@ public class ObjetoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR, APLICAR);
+				super.ini(null, COPIAR, COLAR0, APLICAR);
 				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
@@ -576,7 +593,7 @@ public class ObjetoContainer extends Panel {
 			}
 
 			@Override
-			protected void colar() {
+			protected void colar0() {
 				objeto.setCorFonte(Preferencias.getCorFonteCopiado());
 				MacroProvedor.corFonte(objeto.getCorFonte());
 				colorChooser.setColor(objeto.getCorFonte());
@@ -613,7 +630,7 @@ public class ObjetoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR, APLICAR);
+				super.ini(null, COPIAR, COLAR0, APLICAR);
 				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
@@ -624,7 +641,7 @@ public class ObjetoContainer extends Panel {
 			}
 
 			@Override
-			protected void colar() {
+			protected void colar0() {
 				objeto.setCor(Preferencias.getCorCopiado());
 				MacroProvedor.corFundo(objeto.getCor());
 				colorChooser.setColor(objeto.getCor());

@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.config;
 
 import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
@@ -170,8 +171,8 @@ public class RelacaoContainer extends Panel {
 			}
 
 			@Override
-			protected void colar() {
-				Util.getContentTransfered(textArea.getTextAreaInner());
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
 			}
 		}
 	}
@@ -199,7 +200,7 @@ public class RelacaoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR, APLICAR);
+				super.ini(null, COPIAR, COLAR0, APLICAR);
 				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
@@ -210,7 +211,7 @@ public class RelacaoContainer extends Panel {
 			}
 
 			@Override
-			protected void colar() {
+			protected void colar0() {
 				relacao.setCorFonte(Preferencias.getCorFonteCopiado());
 				MacroProvedor.corFonte(relacao.getCorFonte());
 				colorChooser.setColor(relacao.getCorFonte());
@@ -247,7 +248,7 @@ public class RelacaoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR, APLICAR);
+				super.ini(null, COPIAR, COLAR0, APLICAR);
 				aplicarAcao.rotulo("label.reaplicar_macro");
 			}
 
@@ -258,7 +259,7 @@ public class RelacaoContainer extends Panel {
 			}
 
 			@Override
-			protected void colar() {
+			protected void colar0() {
 				relacao.setCor(Preferencias.getCorCopiado());
 				MacroProvedor.corFundo(relacao.getCor());
 				colorChooser.setColor(relacao.getCor());

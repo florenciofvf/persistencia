@@ -19,6 +19,7 @@ public class BarraButton extends JToolBar {
 	private Action limpar2Acao = Action.actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = Action.actionIcon("label.copiar2", Icones.COPIA);
 	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);
+	protected Action colar0Acao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
@@ -51,6 +52,7 @@ public class BarraButton extends JToolBar {
 		configAtualizar(enuns);
 		configExcluir(enuns);
 		configCopiar(enuns);
+		configColar0(enuns);
 		configColar(enuns);
 		configCopiar2(enuns);
 		configColar2(enuns);
@@ -76,6 +78,13 @@ public class BarraButton extends JToolBar {
 			addButton(copiar2Acao);
 			add(labelTextTemp2);
 			copiar2Acao.setActionListener(e -> copiar2());
+		}
+	}
+
+	private void configColar0(BarraButtonEnum... enuns) {
+		if (contem(COLAR0, enuns)) {
+			addButton(colar0Acao);
+			colar0Acao.setActionListener(e -> colar0());
 		}
 	}
 
@@ -345,6 +354,10 @@ public class BarraButton extends JToolBar {
 	}
 
 	protected void colar(boolean numeros, boolean letras) {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void colar0() {
 		throw new UnsupportedOperationException();
 	}
 

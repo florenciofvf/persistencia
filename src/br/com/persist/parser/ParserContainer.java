@@ -96,8 +96,8 @@ public class ParserContainer extends Panel {
 		}
 
 		@Override
-		protected void colar() {
-			Util.getContentTransfered(areaEdicao);
+		protected void colar(boolean numeros, boolean letras) {
+			Util.getContentTransfered(areaEdicao, numeros, letras);
 		}
 
 		@Override

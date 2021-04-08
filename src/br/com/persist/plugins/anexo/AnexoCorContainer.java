@@ -1,6 +1,6 @@
 package br.com.persist.plugins.anexo;
 
-import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
@@ -50,7 +50,7 @@ public class AnexoCorContainer extends Panel implements ChangeListener {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, LIMPAR, COPIAR, COLAR);
+			super.ini(janela, LIMPAR, COPIAR, COLAR0);
 		}
 
 		@Override
@@ -66,7 +66,7 @@ public class AnexoCorContainer extends Panel implements ChangeListener {
 		}
 
 		@Override
-		protected void colar() {
+		protected void colar0() {
 			anexo.setCorFonte(Preferencias.getCorFonteCopiado());
 			colorChooser.setColor(anexo.getCorFonte());
 			AnexoModelo.putAnexo(anexo);

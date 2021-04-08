@@ -112,8 +112,8 @@ public class ComplementoContainer extends Panel {
 		}
 
 		@Override
-		protected void colar() {
-			Util.getContentTransfered(textArea.getTextAreaInner());
+		protected void colar(boolean numeros, boolean letras) {
+			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
 		}
 	}
 

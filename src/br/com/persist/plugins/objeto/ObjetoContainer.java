@@ -2,7 +2,7 @@ package br.com.persist.plugins.objeto;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
-import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
@@ -177,7 +177,7 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR,
-					SALVAR_COMO, COPIAR, COLAR);
+					SALVAR_COMO, COPIAR, COLAR0);
 			addButton(true, excluirAcao);
 			addButton(criarObjetoAcao);
 			add(btnRelacao);
@@ -201,7 +201,7 @@ public class ObjetoContainer extends AbstratoContainer {
 			txtArquivoVinculo.setToolTipText(Mensagens.getString("hint.arquivo_vinculado"));
 			txtPrefixoNomeTabela.setToolTipText(Mensagens.getString("label.prefixo_nt"));
 			configAtalho(excluirAcao, KeyEvent.VK_D);
-			configAtalho(colarAcao, KeyEvent.VK_V);
+			configAtalho(colar0Acao, KeyEvent.VK_V);
 		}
 
 		private void eventos() {
@@ -331,7 +331,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		}
 
 		@Override
-		protected void colar() {
+		protected void colar0() {
 			ObjetoSuperficie.CopiarColar.colar(objetoSuperficie, false, 0, 0);
 		}
 

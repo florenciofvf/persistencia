@@ -1,7 +1,7 @@
 package br.com.persist.mensagem;
 
-import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
+import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
@@ -52,8 +52,8 @@ public class MensagemContainer extends Panel {
 		}
 
 		@Override
-		protected void colar() {
-			Util.getContentTransfered(textArea.getTextAreaInner());
+		protected void colar(boolean numeros, boolean letras) {
+			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
 		}
 
 		@Override

@@ -554,8 +554,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 
 			@Override
-			protected void colar() {
-				Util.getContentTransfered(areaParametros);
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(areaParametros, numeros, letras);
 			}
 		}
 
@@ -580,8 +580,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 
 			@Override
-			protected void colar() {
-				Util.getContentTransfered(areaResultados);
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(areaResultados, numeros, letras);
 			}
 		}
 
