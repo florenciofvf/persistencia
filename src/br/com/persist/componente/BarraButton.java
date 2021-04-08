@@ -21,7 +21,6 @@ public class BarraButton extends JToolBar {
 	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);
 	private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
-	protected Action colarAcao = Action.actionIcon("label.colar", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
 	protected LabelTextTemp labelTextTempSalvo = new LabelTextTemp();
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
@@ -82,8 +81,24 @@ public class BarraButton extends JToolBar {
 
 	private void configColar(BarraButtonEnum... enuns) {
 		if (contem(COLAR, enuns)) {
-			addButton(colarAcao);
-			colarAcao.setActionListener(e -> colar());
+			add(new ButtonColar());
+		}
+	}
+
+	private class ButtonColar extends ButtonPopup {
+		private static final long serialVersionUID = 1L;
+		private Action numeroAcao = Action.actionMenu("label.numeros", null);
+		private Action letraAcao = Action.actionMenu("label.letras", null);
+		private Action todosAcao = Action.actionMenu("label.todos", null);
+
+		private ButtonColar() {
+			super("label.colar", Icones.COLAR);
+			addMenuItem(numeroAcao);
+			addMenuItem(letraAcao);
+			addMenuItem(todosAcao);
+			numeroAcao.setActionListener(e -> colar(true, false));
+			letraAcao.setActionListener(e -> colar(false, true));
+			todosAcao.setActionListener(e -> colar(false, false));
 		}
 	}
 
@@ -174,7 +189,7 @@ public class BarraButton extends JToolBar {
 		protected Action clonarEmFormulario = Action.actionMenu("label.clonar_em_formulario", null);
 		protected Action abrirEmFormulario = Action.actionMenu("label.abrir_em_formulario", null);
 
-		private ButtonDestacar() {
+		protected ButtonDestacar() {
 			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);
 		}
 
@@ -329,7 +344,7 @@ public class BarraButton extends JToolBar {
 		throw new UnsupportedOperationException();
 	}
 
-	protected void colar() {
+	protected void colar(boolean numeros, boolean letras) {
 		throw new UnsupportedOperationException();
 	}
 
