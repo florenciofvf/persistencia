@@ -453,7 +453,6 @@ public class ObjetoContainer extends AbstratoContainer {
 		objetoSuperficie.setAjusteLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
 		SwingUtilities.invokeLater(() -> {
-			objetoSuperficie.getAjustar().retirarRolagem();
 			objetoSuperficie.configurarLargura(getSize());
 			objetoSuperficie.repaint();
 		});
