@@ -115,10 +115,22 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		}
 
 		public void configurar(DesktopLargura larguraEnum) {
+			configurar(larguraEnum, null);
+		}
+
+		public void configurar(DesktopLargura larguraEnum, JInternalFrame internal) {
 			int largura = getSize().width - 20;
-			for (JInternalFrame frame : getAllFrames()) {
-				if (frame.isVisible()) {
-					configurar(larguraEnum, largura, frame);
+			if (internal != null) {
+				for (JInternalFrame frame : getAllFrames()) {
+					if (frame.isVisible() && frame == internal) {
+						configurar(larguraEnum, largura, frame);
+					}
+				}
+			} else {
+				for (JInternalFrame frame : getAllFrames()) {
+					if (frame.isVisible()) {
+						configurar(larguraEnum, largura, frame);
+					}
 				}
 			}
 			if (DesktopLargura.TOTAL == larguraEnum) {

@@ -128,6 +128,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
+	public void checarLargura(InternalContainer invocador) {
+		if (isAjusteLarguraForm()) {
+			for (JInternalFrame frame : getAllFrames()) {
+				if (frame instanceof InternalFormulario) {
+					InternalFormulario interno = (InternalFormulario) frame;
+					if (interno.getInternalContainer() == invocador) {
+						larguras.configurar(DesktopLargura.TOTAL_A_DIREITA, frame);
+					}
+				}
+			}
+		}
+	}
+
 	@Override
 	public void updateUI() {
 		super.updateUI();

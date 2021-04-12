@@ -244,6 +244,14 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		@Override
+		public void checarLargura(InternalContainer invocador) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).checarLargura(invocador);
+			}
+		}
+
+		@Override
 		public void limparOutros(InternalContainer invocador) {
 			checarDesktop();
 			if (desktop != null) {

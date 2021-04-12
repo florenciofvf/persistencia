@@ -39,6 +39,8 @@ public interface InternalListener {
 	}
 
 	public interface Visibilidade {
+		public void checarLargura(InternalContainer invocador);
+
 		public void limparOutros(InternalContainer invocador);
 
 		public void setVisible(boolean b);
