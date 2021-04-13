@@ -212,14 +212,20 @@ public class ObjetoContainer extends AbstratoContainer {
 			});
 			chkAjusteAutomatico
 					.addActionListener(e -> objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected()));
-			chkAjusteLarguraFrm
-					.addActionListener(e -> objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected()));
 			txtPrefixoNomeTabela
 					.addActionListener(e -> objetoSuperficie.prefixoNomeTabela(txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> objetoSuperficie.excluirSelecionados());
+			chkAjusteLarguraFrm.addActionListener(e -> setAjusteLarguraForm());
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
 			criarObjetoAcao.setActionListener(e -> criarObjeto());
+		}
+
+		private void setAjusteLarguraForm() {
+			objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected());
+			if (chkAjusteLarguraFrm.isSelected()) {
+				objetoSuperficie.configurarLargura(getSize());
+			}
 		}
 
 		private transient FocusListener focusListenerArquivoVinculo = new FocusAdapter() {
