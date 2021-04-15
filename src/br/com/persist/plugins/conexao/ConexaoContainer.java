@@ -113,6 +113,7 @@ public class ConexaoContainer extends AbstratoContainer {
 		}
 
 		private void eventos() {
+			aplicarAcao.rotulo("label.aplicar_todas_abas");
 			infoAcao.setActionListener(e -> infoConexao());
 			conectaAcao.setActionListener(e -> conectar());
 			descerAcao.setActionListener(e -> descer());
