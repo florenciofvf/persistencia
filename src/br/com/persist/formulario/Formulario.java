@@ -279,11 +279,13 @@ public class Formulario extends JFrame {
 		return null;
 	}
 
-	public void definirAlturaEmPorcentagem(int porcentagem) {
-		Dimension principalSize = getSize();
-		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
-		double altura = Util.porcentagemEmValor(porcentagem, configuraSize.height);
-		setSize(principalSize.width, (int) altura);
+	public void checarPreferenciasLarguraAltura() {
+		if (Preferencias.isAplicarLarguraAoAbrirArquivoObjeto()) {
+			definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
+		}
+		if (Preferencias.isAplicarAlturaAoAbrirArquivoObjeto()) {
+			definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
+		}
 	}
 
 	public void definirLarguraEmPorcentagem(int porcentagem) {
@@ -293,13 +295,11 @@ public class Formulario extends JFrame {
 		setSize((int) largura, principalSize.height);
 	}
 
-	public void checarPreferenciasLarguraAltura() {
-		if (Preferencias.isAplicarLarguraAoAbrirArquivoObjeto()) {
-			definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
-		}
-		if (Preferencias.isAplicarAlturaAoAbrirArquivoObjeto()) {
-			definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
-		}
+	public void definirAlturaEmPorcentagem(int porcentagem) {
+		Dimension principalSize = getSize();
+		Rectangle configuraSize = getGraphicsConfiguration().getBounds();
+		double altura = Util.porcentagemEmValor(porcentagem, configuraSize.height);
+		setSize(principalSize.width, (int) altura);
 	}
 
 	public static void posicionarJanela(Formulario formulario, Window window) {

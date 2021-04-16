@@ -15,6 +15,7 @@ import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 
 public class FormularioFabrica extends AbstratoFabricaContainer {
@@ -33,13 +34,21 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public List<Servico> getServicos(Formulario formulario) {
-		return Arrays.asList(new FecharServico());
+		return Arrays.asList(new FecharServico(), new FormularioServico());
 	}
 
 	private class FecharServico extends AbstratoServico {
 		@Override
 		public void fechandoFormulario(Formulario formulario) {
 			itemFechar.doClick();
+		}
+	}
+
+	private class FormularioServico extends AbstratoServico {
+		@Override
+		public void visivelFormulario(Formulario formulario) {
+			formulario.definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
+			formulario.definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
 		}
 	}
 

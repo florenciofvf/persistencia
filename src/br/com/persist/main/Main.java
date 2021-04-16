@@ -37,7 +37,6 @@ public class Main {
 
 	private static void abrirForm() {
 		Formulario form = criarFormulario(getGC());
-		form.checarPreferenciasLarguraAltura();
 		form.setVisible(true);
 	}
 
