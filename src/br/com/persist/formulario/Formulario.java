@@ -269,14 +269,24 @@ public class Formulario extends JFrame {
 		Rectangle monitorBounds = getGraphicsConfiguration().getBounds();
 		double porcentagemLargura = Util.menorEmPorcentagem(formularioSize.width, monitorBounds.width);
 		double porcentagemAltura = Util.menorEmPorcentagem(formularioSize.height, monitorBounds.height);
-		if (porcentagemAltura <= Preferencias.getPorcVerticalLocalForm()) {
-			return new Rectangle(formularioLocation.x, formularioLocation.y + formularioSize.height + espaco,
-					formularioSize.width, monitorBounds.height - formularioSize.height - espaco);
-		} else if (porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()) {
+		if (criarRetanguloLargura(porcentagemLargura)) {
 			return new Rectangle(formularioLocation.x + formularioSize.width + espaco, formularioLocation.y,
 					monitorBounds.width - formularioSize.width - espaco, formularioSize.height);
+		} else if (criarRetanguloAltura(porcentagemAltura)) {
+			return new Rectangle(formularioLocation.x, formularioLocation.y + formularioSize.height + espaco,
+					formularioSize.width, monitorBounds.height - formularioSize.height - espaco);
 		}
 		return null;
+	}
+
+	private boolean criarRetanguloLargura(double porcentagemLargura) {
+		return porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()
+				&& Preferencias.isAplicarLarguraAoAbrirArquivoObjeto();
+	}
+
+	private boolean criarRetanguloAltura(double porcentagemAltura) {
+		return porcentagemAltura <= Preferencias.getPorcVerticalLocalForm()
+				&& Preferencias.isAplicarAlturaAoAbrirArquivoObjeto();
 	}
 
 	public void checarPreferenciasLarguraAltura() {
