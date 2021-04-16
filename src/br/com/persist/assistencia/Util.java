@@ -621,6 +621,13 @@ public class Util {
 			return;
 		}
 		string = getString(string, numeros, letras);
+		insertStringArea(area, string);
+	}
+
+	public static void insertStringArea(JTextComponent area, String string) {
+		if (string == null) {
+			return;
+		}
 		Caret caret = area.getCaret();
 		if (caret == null) {
 			append(area, string);

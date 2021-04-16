@@ -27,6 +27,7 @@ public class BarraButton extends JToolBar {
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private Action atualizarAcao = Action.actionIconAtualizar();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
+	protected ButtonColar buttonColar = new ButtonColar();
 	private Action baixarAcao = Action.actionIconBaixar();
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
@@ -90,17 +91,17 @@ public class BarraButton extends JToolBar {
 
 	private void configColar(BarraButtonEnum... enuns) {
 		if (contem(COLAR, enuns)) {
-			add(new ButtonColar());
+			add(buttonColar);
 		}
 	}
 
-	private class ButtonColar extends ButtonPopup {
+	protected class ButtonColar extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
 		private Action numeroAcao = Action.actionMenu("label.numeros", null);
 		private Action letraAcao = Action.actionMenu("label.letras", null);
 		private Action todosAcao = Action.actionMenu("label.todos", null);
 
-		private ButtonColar() {
+		protected ButtonColar() {
 			super("label.colar", Icones.COLAR);
 			addMenuItem(numeroAcao);
 			addMenuItem(letraAcao);
@@ -108,6 +109,10 @@ public class BarraButton extends JToolBar {
 			numeroAcao.setActionListener(e -> colar(true, false));
 			letraAcao.setActionListener(e -> colar(false, true));
 			todosAcao.setActionListener(e -> colar(false, false));
+		}
+
+		public void addItem(Action action) {
+			addMenuItem(action);
 		}
 	}
 

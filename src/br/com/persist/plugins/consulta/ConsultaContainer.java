@@ -225,11 +225,15 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action colarSemAspasAcao = Action.actionMenu("label.colar_sem_aspas", null);
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, ATUALIZAR);
 			add(true, comboConexao);
+			buttonColar.addSeparator();
+			buttonColar.addItem(colarSemAspasAcao);
+			colarSemAspasAcao.setActionListener(e -> colarSemAspas());
 		}
 
 		@Override
@@ -318,6 +322,37 @@ public class ConsultaContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+		}
+
+		private void colarSemAspas() {
+			String string = Util.getContentTransfered();
+			if (Util.estaVazio(string)) {
+				return;
+			}
+			string = getString(string);
+			Util.insertStringArea(textArea.getTextAreaInner(), string);
+		}
+
+		private String getString(String string) {
+			String[] strings = string.split(Constantes.QL);
+			StringBuilder sb = new StringBuilder();
+			for (String s : strings) {
+				s = get(s);
+				sb.append(s + Constantes.QL);
+			}
+			return sb.toString();
+		}
+
+		private String get(String string) {
+			int pos = string.indexOf('"');
+			if (pos != -1) {
+				string = string.substring(pos + 1);
+			}
+			pos = string.lastIndexOf('"');
+			if (pos != -1) {
+				string = string.substring(0, pos);
+			}
+			return string;
 		}
 
 		@Override
