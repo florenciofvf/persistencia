@@ -41,11 +41,13 @@ public class AnotacaoContainer extends AbstratoContainer {
 	private final Toolbar toolbar = new Toolbar();
 	private AnotacaoFormulario anotacaoFormulario;
 	private AnotacaoDialogo anotacaoDialogo;
+	private final File fileBackup;
 	private final File file;
 
 	public AnotacaoContainer(Janela janela, Formulario formulario, String conteudo) {
 		super(formulario);
-		file = new File("anotacoes" + Constantes.SEPARADOR + "anotacoes");
+		file = new File(Constantes.ANOTACOES + Constantes.SEPARADOR + Constantes.ANOTACOES);
+		fileBackup = new File(Constantes.ANOTACOES);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo);
@@ -181,11 +183,11 @@ public class AnotacaoContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(AnotacaoContainer.this, Constantes.TRES)) {
-				salvarArquivo();
+				salvarArquivo(file);
 			}
 		}
 
-		private void salvarArquivo() {
+		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 				salvoMensagem();
@@ -205,6 +207,14 @@ public class AnotacaoContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+		}
+
+		@Override
+		protected void criarBackup() {
+			if (Util.confirmar(AnotacaoContainer.this, "label.confirma_criar_backup")) {
+				String nome = Util.gerarNomeBackup(fileBackup, Constantes.ANOTACOES);
+				salvarArquivo(new File(fileBackup, nome));
+			}
 		}
 	}
 

@@ -724,4 +724,13 @@ public class Util {
 		}
 		return false;
 	}
+
+	public static String gerarNomeBackup(File parent, String nome) {
+		int contador = 0;
+		String string = nome + "-" + contador;
+		while (new File(parent, string).exists()) {
+			string = nome + "-" + (++contador);
+		}
+		return string;
+	}
 }
