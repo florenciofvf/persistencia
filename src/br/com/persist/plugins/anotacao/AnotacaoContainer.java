@@ -230,6 +230,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 			Coletor coletor = new Coletor();
 			SetLista.view(Constantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
 			if (coletor.size() == 1) {
+				textArea.limpar();
 				abrirArquivo(new File(fileBackup, coletor.get(0)));
 			}
 		}
