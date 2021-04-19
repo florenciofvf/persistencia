@@ -44,13 +44,13 @@ public class AnotacaoContainer extends AbstratoContainer {
 	private final Toolbar toolbar = new Toolbar();
 	private AnotacaoFormulario anotacaoFormulario;
 	private AnotacaoDialogo anotacaoDialogo;
-	private final File fileBackup;
+	private final File fileParent;
 	private final File file;
 
 	public AnotacaoContainer(Janela janela, Formulario formulario, String conteudo) {
 		super(formulario);
 		file = new File(Constantes.ANOTACOES + Constantes.SEPARADOR + Constantes.ANOTACOES);
-		fileBackup = new File(Constantes.ANOTACOES);
+		fileParent = new File(Constantes.ANOTACOES);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo);
@@ -92,11 +92,11 @@ public class AnotacaoContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-		textArea.limpar();
 		abrirArquivo(file);
 	}
 
 	private void abrirArquivo(File file) {
+		textArea.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -215,14 +215,14 @@ public class AnotacaoContainer extends AbstratoContainer {
 		@Override
 		protected void criarBackup() {
 			if (Util.confirmar(AnotacaoContainer.this, "label.confirma_criar_backup")) {
-				String nome = Util.gerarNomeBackup(fileBackup, Constantes.ANOTACOES);
-				salvarArquivo(new File(fileBackup, nome));
+				String nome = Util.gerarNomeBackup(fileParent, Constantes.ANOTACOES);
+				salvarArquivo(new File(fileParent, nome));
 			}
 		}
 
 		@Override
 		protected void abrirBackup() {
-			List<String> arquivos = Util.listarNomeBackup(fileBackup, Constantes.ANOTACOES);
+			List<String> arquivos = Util.listarNomeBackup(fileParent, Constantes.ANOTACOES);
 			if (arquivos.isEmpty()) {
 				Util.mensagem(AnotacaoContainer.this, Mensagens.getString("msg.sem_arq_backup"));
 				return;
@@ -230,8 +230,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 			Coletor coletor = new Coletor();
 			SetLista.view(Constantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
 			if (coletor.size() == 1) {
-				textArea.limpar();
-				abrirArquivo(new File(fileBackup, coletor.get(0)));
+				abrirArquivo(new File(fileParent, coletor.get(0)));
 			}
 		}
 	}

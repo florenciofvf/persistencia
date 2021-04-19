@@ -1,6 +1,7 @@
 package br.com.persist.plugins.ambiente;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.BACKUP;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
@@ -18,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import javax.swing.Icon;
 
@@ -29,7 +31,9 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -41,11 +45,13 @@ public class AmbienteContainer extends AbstratoContainer {
 	private AmbienteFormulario ambienteFormulario;
 	private AmbienteDialogo ambienteDialogo;
 	private final Ambiente ambiente;
+	private final File fileParent;
 	private final File file;
 
 	public AmbienteContainer(Janela janela, Formulario formulario, String conteudo, Ambiente ambiente) {
 		super(formulario);
-		file = new File("ambientes" + Constantes.SEPARADOR + ambiente.chave);
+		file = new File(Constantes.AMBIENTES + Constantes.SEPARADOR + ambiente.chave);
+		fileParent = new File(Constantes.AMBIENTES);
 		this.ambiente = ambiente;
 		toolbar.ini(janela);
 		montarLayout();
@@ -130,11 +136,11 @@ public class AmbienteContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-		textArea.limpar();
-		abrirArquivo();
+		abrirArquivo(file);
 	}
 
-	private void abrirArquivo() {
+	private void abrirArquivo(File file) {
+		textArea.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -159,7 +165,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
+					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP);
 		}
 
 		@Override
@@ -224,11 +230,11 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
-				salvarArquivo();
+				salvarArquivo(file);
 			}
 		}
 
-		private void salvarArquivo() {
+		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 				salvoMensagem();
@@ -248,6 +254,28 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+		}
+
+		@Override
+		protected void criarBackup() {
+			if (Util.confirmar(AmbienteContainer.this, "label.confirma_criar_backup")) {
+				String nome = Util.gerarNomeBackup(fileParent, ambiente.chave);
+				salvarArquivo(new File(fileParent, nome));
+			}
+		}
+
+		@Override
+		protected void abrirBackup() {
+			List<String> arquivos = Util.listarNomeBackup(fileParent, ambiente.chave);
+			if (arquivos.isEmpty()) {
+				Util.mensagem(AmbienteContainer.this, Mensagens.getString("msg.sem_arq_backup"));
+				return;
+			}
+			Coletor coletor = new Coletor();
+			SetLista.view(Constantes.AMBIENTES, arquivos, coletor, AmbienteContainer.this, true);
+			if (coletor.size() == 1) {
+				abrirArquivo(new File(fileParent, coletor.get(0)));
+			}
 		}
 	}
 
