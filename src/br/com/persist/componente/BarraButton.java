@@ -126,7 +126,7 @@ public class BarraButton extends JToolBar {
 	}
 
 	public void setNomeBackup(String string) {
-		labelNomeBackup.setText(string);
+		labelNomeBackup.setText(" Backup: " + string);
 	}
 
 	public void limparNomeBackup() {
