@@ -1,6 +1,7 @@
 package br.com.persist.plugins.update;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.BACKUP;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
@@ -39,8 +40,8 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.SetLista;
-import br.com.persist.componente.TextArea;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -157,7 +158,7 @@ public class UpdateContainer extends AbstratoContainer {
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
+					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP);
 			addButton(atualizarAcao);
 			add(true, comboConexao);
 			eventos();

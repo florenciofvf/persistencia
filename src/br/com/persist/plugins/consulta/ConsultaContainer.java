@@ -2,6 +2,7 @@ package br.com.persist.plugins.consulta;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
+import static br.com.persist.componente.BarraButtonEnum.BACKUP;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
@@ -47,8 +48,8 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
-import br.com.persist.componente.TextArea;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.TextArea;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -233,7 +234,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, ATUALIZAR);
+					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP, ATUALIZAR);
 			add(true, comboConexao);
 			buttonColar.addSeparator();
 			buttonColar.addItem(colarSemAspasAcao);
