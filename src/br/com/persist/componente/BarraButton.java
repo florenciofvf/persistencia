@@ -32,6 +32,7 @@ public class BarraButton extends JToolBar {
 	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
+	private Label labelNomeBackup = new Label();
 	protected transient Janela janela;
 
 	public void ini(Janela janela, BarraButtonEnum... enuns) {
@@ -120,7 +121,16 @@ public class BarraButton extends JToolBar {
 	private void configBackup(BarraButtonEnum... enuns) {
 		if (contem(BACKUP, enuns)) {
 			add(new ButtonBackup());
+			add(labelNomeBackup);
 		}
+	}
+
+	public void setNomeBackup(String string) {
+		labelNomeBackup.setText(string);
+	}
+
+	public void limparNomeBackup() {
+		labelNomeBackup.limpar();
 	}
 
 	protected class ButtonBackup extends ButtonPopup {

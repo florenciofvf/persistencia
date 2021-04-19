@@ -96,6 +96,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 	}
 
 	private void abrirArquivo(File file) {
+		toolbar.limparNomeBackup();
 		textArea.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
@@ -231,6 +232,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 			SetLista.view(Constantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
 			if (coletor.size() == 1) {
 				abrirArquivo(new File(fileParent, coletor.get(0)));
+				setNomeBackup(coletor.get(0));
 			}
 		}
 	}
