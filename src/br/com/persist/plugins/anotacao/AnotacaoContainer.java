@@ -1,6 +1,7 @@
 package br.com.persist.plugins.anotacao;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.BACKUP;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
@@ -115,7 +116,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
-					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
+					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP);
 		}
 
 		@Override

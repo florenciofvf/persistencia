@@ -58,6 +58,7 @@ public class BarraButton extends JToolBar {
 		configCopiar2(enuns);
 		configColar2(enuns);
 		configAplicar(enuns);
+		configBackup(enuns);
 	}
 
 	private void configAplicar(BarraButtonEnum... enuns) {
@@ -113,6 +114,26 @@ public class BarraButton extends JToolBar {
 
 		public void addItem(Action action) {
 			addMenuItem(action);
+		}
+	}
+
+	private void configBackup(BarraButtonEnum... enuns) {
+		if (contem(BACKUP, enuns)) {
+			add(new ButtonBackup());
+		}
+	}
+
+	protected class ButtonBackup extends ButtonPopup {
+		private static final long serialVersionUID = 1L;
+		private Action criarAcao = Action.actionMenu("label.criar", null);
+		private Action abrirAcao = Action.actionMenu("label.abrir", null);
+
+		protected ButtonBackup() {
+			super("label.backup", Icones.BACKUP);
+			addMenuItem(criarAcao);
+			addMenuItem(true, abrirAcao);
+			criarAcao.setActionListener(e -> criarBackup());
+			abrirAcao.setActionListener(e -> abrirBackup());
 		}
 	}
 
@@ -367,6 +388,14 @@ public class BarraButton extends JToolBar {
 	}
 
 	protected void novo() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void criarBackup() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void abrirBackup() {
 		throw new UnsupportedOperationException();
 	}
 
