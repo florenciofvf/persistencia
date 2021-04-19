@@ -46,7 +46,9 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -66,6 +68,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> comboConexao;
 	private ConsultaDialogo consultaDialogo;
+	private final File fileParent;
 	private final File file;
 
 	public ConsultaContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
@@ -74,6 +77,7 @@ public class ConsultaContainer extends AbstratoContainer {
 		textArea.setText(conteudo == null ? Constantes.VAZIO : conteudo);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		fileParent = new File(Constantes.CONSULTAS);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -187,11 +191,11 @@ public class ConsultaContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-		textArea.limpar();
-		abrirArquivo();
+		abrirArquivo(file);
 	}
 
-	private void abrirArquivo() {
+	private void abrirArquivo(File file) {
+		textArea.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -298,11 +302,11 @@ public class ConsultaContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {
-				salvarArquivo();
+				salvarArquivo(file);
 			}
 		}
 
-		private void salvarArquivo() {
+		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 				salvoMensagem();
@@ -322,6 +326,28 @@ public class ConsultaContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+		}
+
+		@Override
+		protected void criarBackup() {
+			if (Util.confirmar(ConsultaContainer.this, "label.confirma_criar_backup")) {
+				String nome = Util.gerarNomeBackup(fileParent, Constantes.CONSULTAS);
+				salvarArquivo(new File(fileParent, nome));
+			}
+		}
+
+		@Override
+		protected void abrirBackup() {
+			List<String> arquivos = Util.listarNomeBackup(fileParent, Constantes.CONSULTAS);
+			if (arquivos.isEmpty()) {
+				Util.mensagem(ConsultaContainer.this, Mensagens.getString("msg.sem_arq_backup"));
+				return;
+			}
+			Coletor coletor = new Coletor();
+			SetLista.view(Constantes.CONSULTAS, arquivos, coletor, ConsultaContainer.this, true);
+			if (coletor.size() == 1) {
+				abrirArquivo(new File(fileParent, coletor.get(0)));
+			}
 		}
 
 		private void colarSemAspas() {

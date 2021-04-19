@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.Icon;
@@ -37,7 +38,9 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
+import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -54,6 +57,7 @@ public class UpdateContainer extends AbstratoContainer {
 	private final JComboBox<Conexao> comboConexao;
 	private UpdateFormulario updateFormulario;
 	private UpdateDialogo updateDialogo;
+	private final File fileParent;
 	private final File file;
 
 	public UpdateContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
@@ -61,6 +65,7 @@ public class UpdateContainer extends AbstratoContainer {
 		file = new File(Constantes.ATUALIZACOES + Constantes.SEPARADOR + Constantes.ATUALIZACOES);
 		textArea.setText(conteudo == null ? Constantes.VAZIO : conteudo);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
+		fileParent = new File(Constantes.ATUALIZACOES);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -110,11 +115,11 @@ public class UpdateContainer extends AbstratoContainer {
 			textArea.setText(conteudo);
 			return;
 		}
-		textArea.limpar();
-		abrirArquivo();
+		abrirArquivo(file);
 	}
 
-	private void abrirArquivo() {
+	private void abrirArquivo(File file) {
+		textArea.limpar();
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -224,11 +229,11 @@ public class UpdateContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
-				salvarArquivo();
+				salvarArquivo(file);
 			}
 		}
 
-		private void salvarArquivo() {
+		private void salvarArquivo(File file) {
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 				pw.print(textArea.getText());
 				salvoMensagem();
@@ -248,6 +253,28 @@ public class UpdateContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+		}
+
+		@Override
+		protected void criarBackup() {
+			if (Util.confirmar(UpdateContainer.this, "label.confirma_criar_backup")) {
+				String nome = Util.gerarNomeBackup(fileParent, Constantes.ATUALIZACOES);
+				salvarArquivo(new File(fileParent, nome));
+			}
+		}
+
+		@Override
+		protected void abrirBackup() {
+			List<String> arquivos = Util.listarNomeBackup(fileParent, Constantes.ATUALIZACOES);
+			if (arquivos.isEmpty()) {
+				Util.mensagem(UpdateContainer.this, Mensagens.getString("msg.sem_arq_backup"));
+				return;
+			}
+			Coletor coletor = new Coletor();
+			SetLista.view(Constantes.ATUALIZACOES, arquivos, coletor, UpdateContainer.this, true);
+			if (coletor.size() == 1) {
+				abrirArquivo(new File(fileParent, coletor.get(0)));
+			}
 		}
 
 		@Override
