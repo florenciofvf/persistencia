@@ -733,4 +733,15 @@ public class Util {
 		}
 		return string;
 	}
+
+	public static List<String> listarNomeBackup(File parent, String nome) {
+		List<String> resposta = new ArrayList<>();
+		int contador = 0;
+		String string = nome + "-" + contador;
+		while (new File(parent, string).exists()) {
+			resposta.add(string);
+			string = nome + "-" + (++contador);
+		}
+		return resposta;
+	}
 }

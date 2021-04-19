@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import javax.swing.Icon;
 
@@ -30,7 +31,9 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -90,10 +93,10 @@ public class AnotacaoContainer extends AbstratoContainer {
 			return;
 		}
 		textArea.limpar();
-		abrirArquivo();
+		abrirArquivo(file);
 	}
 
-	private void abrirArquivo() {
+	private void abrirArquivo(File file) {
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -214,6 +217,20 @@ public class AnotacaoContainer extends AbstratoContainer {
 			if (Util.confirmar(AnotacaoContainer.this, "label.confirma_criar_backup")) {
 				String nome = Util.gerarNomeBackup(fileBackup, Constantes.ANOTACOES);
 				salvarArquivo(new File(fileBackup, nome));
+			}
+		}
+
+		@Override
+		protected void abrirBackup() {
+			List<String> arquivos = Util.listarNomeBackup(fileBackup, Constantes.ANOTACOES);
+			if (arquivos.isEmpty()) {
+				Util.mensagem(AnotacaoContainer.this, Mensagens.getString("msg.sem_arq_backup"));
+				return;
+			}
+			Coletor coletor = new Coletor();
+			SetLista.view(Constantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
+			if (coletor.size() == 1) {
+				abrirArquivo(new File(fileBackup, coletor.get(0)));
 			}
 		}
 	}
