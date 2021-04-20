@@ -47,6 +47,7 @@ public class AmbienteContainer extends AbstratoContainer {
 	private final Ambiente ambiente;
 	private final File fileParent;
 	private final File file;
+	private File backup;
 
 	public AmbienteContainer(Janela janela, Formulario formulario, String conteudo, Ambiente ambiente) {
 		super(formulario);
@@ -137,6 +138,7 @@ public class AmbienteContainer extends AbstratoContainer {
 			return;
 		}
 		abrirArquivo(file);
+		backup = null;
 	}
 
 	private void abrirArquivo(File file) {
@@ -231,7 +233,7 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(AmbienteContainer.this, Constantes.TRES)) {
-				salvarArquivo(file);
+				salvarArquivo(backup != null ? backup : file);
 			}
 		}
 
@@ -275,7 +277,9 @@ public class AmbienteContainer extends AbstratoContainer {
 			Coletor coletor = new Coletor();
 			SetLista.view(Constantes.AMBIENTES, arquivos, coletor, AmbienteContainer.this, true);
 			if (coletor.size() == 1) {
-				abrirArquivo(new File(fileParent, coletor.get(0)));
+				File arq = new File(fileParent, coletor.get(0));
+				abrirArquivo(arq);
+				backup = arq;
 				setNomeBackup(coletor.get(0));
 			}
 		}

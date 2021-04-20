@@ -60,6 +60,7 @@ public class UpdateContainer extends AbstratoContainer {
 	private UpdateDialogo updateDialogo;
 	private final File fileParent;
 	private final File file;
+	private File backup;
 
 	public UpdateContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
 		super(formulario);
@@ -117,6 +118,7 @@ public class UpdateContainer extends AbstratoContainer {
 			return;
 		}
 		abrirArquivo(file);
+		backup = null;
 	}
 
 	private void abrirArquivo(File file) {
@@ -231,7 +233,7 @@ public class UpdateContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(UpdateContainer.this, Constantes.TRES)) {
-				salvarArquivo(file);
+				salvarArquivo(backup != null ? backup : file);
 			}
 		}
 
@@ -275,7 +277,9 @@ public class UpdateContainer extends AbstratoContainer {
 			Coletor coletor = new Coletor();
 			SetLista.view(Constantes.ATUALIZACOES, arquivos, coletor, UpdateContainer.this, true);
 			if (coletor.size() == 1) {
-				abrirArquivo(new File(fileParent, coletor.get(0)));
+				File arq = new File(fileParent, coletor.get(0));
+				abrirArquivo(arq);
+				backup = arq;
 				setNomeBackup(coletor.get(0));
 			}
 		}

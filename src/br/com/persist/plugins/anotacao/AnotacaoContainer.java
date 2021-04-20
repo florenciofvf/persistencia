@@ -46,6 +46,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 	private AnotacaoDialogo anotacaoDialogo;
 	private final File fileParent;
 	private final File file;
+	private File backup;
 
 	public AnotacaoContainer(Janela janela, Formulario formulario, String conteudo) {
 		super(formulario);
@@ -93,6 +94,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 			return;
 		}
 		abrirArquivo(file);
+		backup = null;
 	}
 
 	private void abrirArquivo(File file) {
@@ -187,7 +189,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(AnotacaoContainer.this, Constantes.TRES)) {
-				salvarArquivo(file);
+				salvarArquivo(backup != null ? backup : file);
 			}
 		}
 
@@ -231,7 +233,9 @@ public class AnotacaoContainer extends AbstratoContainer {
 			Coletor coletor = new Coletor();
 			SetLista.view(Constantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
 			if (coletor.size() == 1) {
-				abrirArquivo(new File(fileParent, coletor.get(0)));
+				File arq = new File(fileParent, coletor.get(0));
+				abrirArquivo(arq);
+				backup = arq;
 				setNomeBackup(coletor.get(0));
 			}
 		}

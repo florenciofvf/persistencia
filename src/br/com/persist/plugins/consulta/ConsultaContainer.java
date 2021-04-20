@@ -71,6 +71,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	private ConsultaDialogo consultaDialogo;
 	private final File fileParent;
 	private final File file;
+	private File backup;
 
 	public ConsultaContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
 		super(formulario);
@@ -193,6 +194,7 @@ public class ConsultaContainer extends AbstratoContainer {
 			return;
 		}
 		abrirArquivo(file);
+		backup = null;
 	}
 
 	private void abrirArquivo(File file) {
@@ -304,7 +306,7 @@ public class ConsultaContainer extends AbstratoContainer {
 		@Override
 		protected void salvar() {
 			if (Util.confirmaSalvar(ConsultaContainer.this, Constantes.TRES)) {
-				salvarArquivo(file);
+				salvarArquivo(backup != null ? backup : file);
 			}
 		}
 
@@ -348,7 +350,9 @@ public class ConsultaContainer extends AbstratoContainer {
 			Coletor coletor = new Coletor();
 			SetLista.view(Constantes.CONSULTAS, arquivos, coletor, ConsultaContainer.this, true);
 			if (coletor.size() == 1) {
-				abrirArquivo(new File(fileParent, coletor.get(0)));
+				File arq = new File(fileParent, coletor.get(0));
+				abrirArquivo(arq);
+				backup = arq;
 				setNomeBackup(coletor.get(0));
 			}
 		}
