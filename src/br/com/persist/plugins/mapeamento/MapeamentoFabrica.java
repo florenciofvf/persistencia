@@ -22,7 +22,7 @@ public class MapeamentoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio(Constantes.MAPEAMENTOS);
+		Util.criarDiretorio(MapeamentoConstantes.MAPEAMENTOS);
 	}
 
 	@Override

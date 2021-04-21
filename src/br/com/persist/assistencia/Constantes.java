@@ -100,7 +100,6 @@ public class Constantes {
 	public static final String LABEL_BANCO = "label.banco";
 	public static final String LABEL_VAZIO = "label.vazio";
 	public static final String CHAVE_VALOR = "chave_valor";
-	public static final String MAPEAMENTOS = "mapeamentos";
 	public static final String CONSTRAINTS = "CONSTRAINTS";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final String SEPARADOR = File.separator;

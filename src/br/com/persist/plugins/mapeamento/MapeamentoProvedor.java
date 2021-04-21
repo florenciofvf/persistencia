@@ -21,7 +21,7 @@ public class MapeamentoProvedor {
 	}
 
 	static {
-		file = new File(Constantes.MAPEAMENTOS + Constantes.SEPARADOR + "mapa.xml");
+		file = new File(MapeamentoConstantes.MAPEAMENTOS + Constantes.SEPARADOR + "mapa.xml");
 	}
 
 	public static Mapeamento getMapeamento(int indice) {
@@ -82,9 +82,9 @@ public class MapeamentoProvedor {
 	public static void salvar() throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2(Constantes.MAPEAMENTOS);
+		util.abrirTag2(MapeamentoConstantes.MAPEAMENTOS);
 		salvarMapeamentos(util);
-		util.finalizarTag(Constantes.MAPEAMENTOS);
+		util.finalizarTag(MapeamentoConstantes.MAPEAMENTOS);
 		util.close();
 	}
 
