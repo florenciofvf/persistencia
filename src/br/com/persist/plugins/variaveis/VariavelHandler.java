@@ -19,7 +19,7 @@ class VariavelHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if (Constantes.VARIAVEL.equals(qName)) {
+		if (VariavelConstantes.VARIAVEL.equals(qName)) {
 			selecionado = new Variavel(attributes.getValue("nome"));
 			VariavelProvedor.adicionar(selecionado);
 		}
@@ -27,7 +27,7 @@ class VariavelHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (Constantes.VARIAVEL.equals(qName)) {
+		if (VariavelConstantes.VARIAVEL.equals(qName)) {
 			selecionado = null;
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();

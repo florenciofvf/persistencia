@@ -25,13 +25,13 @@ public class Variavel {
 	}
 
 	public void salvar(XMLUtil util) {
-		util.abrirTag(Constantes.VARIAVEL);
+		util.abrirTag(VariavelConstantes.VARIAVEL);
 		util.atributo("nome", Util.escapar(nome));
 		util.fecharTag();
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();
 		util.finalizarTag(Constantes.VALOR);
-		util.finalizarTag(Constantes.VARIAVEL);
+		util.finalizarTag(VariavelConstantes.VARIAVEL);
 	}
 
 	public String getNome() {
