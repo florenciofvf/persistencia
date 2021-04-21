@@ -45,7 +45,8 @@ public class AnotacaoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuAnotacao(Formulario formulario) {
-			super(AnotacaoConstantes.LABEL_ANOTACOES, Icones.PANEL4);
+			super(Constantes.LABEL_VAZIO, Icones.PANEL4);
+			setText(AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
 			ficharioAcao
 					.setActionListener(e -> formulario.adicionarPagina(new AnotacaoContainer(null, formulario, null)));
 			formularioAcao.setActionListener(e -> AnotacaoFormulario.criar(formulario, Constantes.VAZIO));
