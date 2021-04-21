@@ -209,7 +209,7 @@ public class ConsultaContainer extends AbstratoContainer {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, ConsultaContainer.this);
+				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
 		}
 	}
@@ -315,7 +315,7 @@ public class ConsultaContainer extends AbstratoContainer {
 				pw.print(textArea.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, ConsultaContainer.this);
+				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
 		}
 
@@ -409,7 +409,7 @@ public class ConsultaContainer extends AbstratoContainer {
 				textArea.requestFocus();
 			} catch (Exception ex) {
 				labelStatus.limpar();
-				Util.stackTraceAndMessage(Constantes.PAINEL_SELECT, ex, this);
+				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, this);
 			}
 		}
 	}

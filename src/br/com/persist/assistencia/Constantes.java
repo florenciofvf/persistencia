@@ -62,7 +62,6 @@ public class Constantes {
 	public static final String LABEL_COM_ASPAS = "label.com_aspas";
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_APARENCIA = "label.aparencia";
-	public static final String PAINEL_ANOTACAO = "PAINEL ANOTACAO";
 	public static final String GC_PREFERENCIAL = "GC_PREFERENCIAL";
 	public static final Dimension SIZE2 = new Dimension(900, 550);
 	public static final Dimension SIZE3 = new Dimension(400, 400);
@@ -78,8 +77,6 @@ public class Constantes {
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
 	public static final String ABRIR_VISIVEL = "ABRIR_VISIVEL:";
 	public static final String PAINEL_PARSER = "PAINEL PARSER";
-	public static final String PAINEL_SELECT = "PAINEL SELECT";
-	public static final String PAINEL_UPDATE = "PAINEL UPDATE";
 	public static final String LABEL_TABELAS = "label.tabelas";
 	public static final String FVF_SEPARADOR = "fvf_separador";
 	public static final String LABEL_ARQUIVO = "label.arquivo";

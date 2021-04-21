@@ -109,7 +109,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
+				Util.stackTraceAndMessage(AnotacaoConstantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
 	}
@@ -198,7 +198,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 				pw.print(textArea.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
+				Util.stackTraceAndMessage(AnotacaoConstantes.PAINEL_ANOTACAO, ex, AnotacaoContainer.this);
 			}
 		}
 

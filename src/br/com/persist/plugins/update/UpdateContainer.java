@@ -133,7 +133,7 @@ public class UpdateContainer extends AbstratoContainer {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, UpdateContainer.this);
+				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
 		}
 	}
@@ -242,7 +242,7 @@ public class UpdateContainer extends AbstratoContainer {
 				pw.print(textArea.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, UpdateContainer.this);
+				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
 		}
 
@@ -303,7 +303,7 @@ public class UpdateContainer extends AbstratoContainer {
 				textArea.requestFocus();
 			} catch (Exception ex) {
 				labelStatus.limpar();
-				Util.stackTraceAndMessage(Constantes.PAINEL_UPDATE, ex, this);
+				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, this);
 			}
 		}
 	}
