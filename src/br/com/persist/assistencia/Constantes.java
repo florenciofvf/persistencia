@@ -30,9 +30,6 @@ public class Constantes {
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
 	public static final String LABEL_CONEXAO_MIN = "label.conexao_min";
-	public static final String CAMPOS_IMPORTADOS = "CAMPOS_IMPORTADOS";
-	public static final String CAMPOS_EXPORTADOS = "CAMPOS_EXPORTADOS";
-	public static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
 	public static final String CHAVES_PRIMARIAS = "CHAVES_PRIMARIAS";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
@@ -41,7 +38,6 @@ public class Constantes {
 	public static final String VAR_ACCESS_TOKEN = "VAR_ACCESS_TOKEN";
 	public static final String PERSISTENCIA_FVF = "persistencia.fvf";
 	public static final String LABEL_METADADOS = "label.meta_dados";
-	public static final String PAINEL_AMBIENTE = "PAINEL AMBIENTE";
 	public static final String CAMPO_IMPORTADO = "CAMPO_IMPORTADO";
 	public static final String CAMPO_EXPORTADO = "CAMPO_EXPORTADO";
 	public static final String LABEL_AMBIENTES = "label.ambientes";

@@ -267,7 +267,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}
 		}
 
@@ -608,7 +608,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 					areaParametros.setText(sb.toString());
 					setValueScrollPane(value);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 				}
 			}
 		}
@@ -619,7 +619,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				try {
 					Files.delete(path);
 				} catch (IOException e) {
-					Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, e, RequisicaoContainer.this);
+					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, e, RequisicaoContainer.this);
 				}
 			}
 		}
@@ -632,7 +632,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				pw.print(areaParametros.getText());
 				atomic.set(true);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
+				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
 			}
 		}
 
@@ -655,7 +655,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				}
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
@@ -680,7 +680,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				areaResultados.setText(Base64Util.criarBase64(string));
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
@@ -689,7 +689,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				areaResultados.setText(Base64Util.retornarBase64(string));
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
 
@@ -713,7 +713,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				processarResposta(parser, resposta);
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_REQUISICAO, ex, this);
+				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
 

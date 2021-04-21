@@ -153,7 +153,7 @@ public class AmbienteContainer extends AbstratoContainer {
 					linha = br.readLine();
 				}
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+				Util.stackTraceAndMessage(AmbienteConstantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
 			}
 		}
 	}
@@ -242,7 +242,7 @@ public class AmbienteContainer extends AbstratoContainer {
 				pw.print(textArea.getText());
 				salvoMensagem();
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
+				Util.stackTraceAndMessage(AmbienteConstantes.PAINEL_AMBIENTE, ex, AmbienteContainer.this);
 			}
 		}
 
