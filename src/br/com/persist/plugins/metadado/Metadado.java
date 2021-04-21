@@ -278,7 +278,7 @@ public class Metadado implements Transferable {
 
 	private void contabilizarImportacao() {
 		totalImportados = 0;
-		Metadado metadado = getMetadado(Constantes.CAMPO_IMPORTADO);
+		Metadado metadado = getMetadado(MetadadoConstantes.CAMPO_IMPORTADO);
 		if (metadado != null) {
 			totalImportados += metadado.getTotal();
 		}
@@ -290,7 +290,7 @@ public class Metadado implements Transferable {
 
 	private void contabilizarExportacao() {
 		totalExportados = 0;
-		Metadado metadado = getMetadado(Constantes.CAMPO_EXPORTADO);
+		Metadado metadado = getMetadado(MetadadoConstantes.CAMPO_EXPORTADO);
 		if (metadado != null) {
 			totalExportados += metadado.getTotal();
 		}
@@ -332,7 +332,7 @@ public class Metadado implements Transferable {
 	private List<Metadado> getListaCampoImportacao() {
 		List<Metadado> lista = new ArrayList<>();
 		for (Metadado tipo : filhos) {
-			if (tipo.descricao.equals(Constantes.CAMPO_IMPORTADO)
+			if (tipo.descricao.equals(MetadadoConstantes.CAMPO_IMPORTADO)
 					|| tipo.descricao.equals(MetadadoConstantes.CAMPOS_IMPORTADOS)) {
 				tipo.preencher(lista);
 			}
@@ -343,7 +343,7 @@ public class Metadado implements Transferable {
 	private List<Metadado> getListaCampoExportacao() {
 		List<Metadado> lista = new ArrayList<>();
 		for (Metadado tipo : filhos) {
-			if (tipo.descricao.equals(Constantes.CAMPO_EXPORTADO)
+			if (tipo.descricao.equals(MetadadoConstantes.CAMPO_EXPORTADO)
 					|| tipo.descricao.equals(MetadadoConstantes.CAMPOS_EXPORTADOS)) {
 				tipo.preencher(lista);
 			}

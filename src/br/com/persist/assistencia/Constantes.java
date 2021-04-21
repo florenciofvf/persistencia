@@ -38,8 +38,6 @@ public class Constantes {
 	public static final String VAR_ACCESS_TOKEN = "VAR_ACCESS_TOKEN";
 	public static final String PERSISTENCIA_FVF = "persistencia.fvf";
 	public static final String LABEL_METADADOS = "label.meta_dados";
-	public static final String CAMPO_IMPORTADO = "CAMPO_IMPORTADO";
-	public static final String CAMPO_EXPORTADO = "CAMPO_EXPORTADO";
 	public static final String LABEL_AMBIENTES = "label.ambientes";
 	public static final String LABEL_VARIAVEIS = "label.variaveis";
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
