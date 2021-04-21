@@ -22,7 +22,7 @@ public class VariavelFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio(Constantes.VARIAVEIS);
+		Util.criarDiretorio(VariavelConstantes.VARIAVEIS);
 	}
 
 	@Override

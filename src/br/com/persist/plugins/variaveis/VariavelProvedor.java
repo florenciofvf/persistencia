@@ -21,7 +21,7 @@ public class VariavelProvedor {
 	}
 
 	static {
-		file = new File(Constantes.VARIAVEIS + Constantes.SEPARADOR + "var.xml");
+		file = new File(VariavelConstantes.VARIAVEIS + Constantes.SEPARADOR + "var.xml");
 	}
 
 	public static Variavel getVariavel(int indice) {
@@ -88,9 +88,9 @@ public class VariavelProvedor {
 	public static void salvar() throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2(Constantes.VARIAVEIS);
+		util.abrirTag2(VariavelConstantes.VARIAVEIS);
 		salvarVariaveis(util);
-		util.finalizarTag(Constantes.VARIAVEIS);
+		util.finalizarTag(VariavelConstantes.VARIAVEIS);
 		util.close();
 	}
 
