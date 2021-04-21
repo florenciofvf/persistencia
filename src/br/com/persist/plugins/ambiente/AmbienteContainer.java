@@ -77,9 +77,9 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		private Ambiente(String chave, String desc) {
 			chaveTitulo = "label." + chave;
-			tituloMin = Mensagens.getString(chaveTitulo + "_min");
-			this.descricao = Mensagens.getString(desc);
-			titulo = Mensagens.getString(chaveTitulo);
+			tituloMin = AmbienteMensagens.getString(chaveTitulo + "_min");
+			this.descricao = AmbienteMensagens.getString(desc);
+			titulo = AmbienteMensagens.getString(chaveTitulo);
 			this.chave = chave;
 		}
 

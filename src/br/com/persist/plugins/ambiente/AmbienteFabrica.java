@@ -7,6 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import br.com.persist.abstrato.AbstratoFabricaContainer;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
@@ -47,7 +48,8 @@ public class AmbienteFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuAmbiente(Formulario formulario, AmbienteContainer.Ambiente ambiente) {
-			super(ambiente.getChaveTitulo(), null);
+			super(Constantes.LABEL_VAZIO, null);
+			setText(AmbienteMensagens.getString(ambiente.getChaveTitulo()));
 			ficharioAcao.setActionListener(
 					e -> formulario.adicionarPagina(new AmbienteContainer(null, formulario, null, ambiente)));
 			formularioAcao.setActionListener(e -> AmbienteFormulario.criar(formulario, null, ambiente));
