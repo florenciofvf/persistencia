@@ -13,6 +13,10 @@ public class ObjetoConstantes {
 	public static final int TIPO_CONTAINER_FICHARIO = 1;
 	public static final int TIPO_CONTAINER_DESKTOP = 2;
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
+	public static final byte ARRASTO = 1;
+	public static final byte RELACAO = 3;
+	public static final byte SELECAO = 5;
+	public static final byte ROTULOS = 7;
 
 	private ObjetoConstantes() {
 	}

@@ -520,7 +520,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (btnArrasto.isSelected()) {
-				objetoSuperficie.configEstado(Constantes.ARRASTO);
+				objetoSuperficie.configEstado(ObjetoConstantes.ARRASTO);
 				objetoSuperficie.repaint();
 			}
 		}
@@ -536,7 +536,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (btnRotulos.isSelected()) {
-				objetoSuperficie.configEstado(Constantes.ROTULOS);
+				objetoSuperficie.configEstado(ObjetoConstantes.ROTULOS);
 				objetoSuperficie.repaint();
 			}
 		}
@@ -552,7 +552,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (btnRelacao.isSelected()) {
-				objetoSuperficie.configEstado(Constantes.RELACAO);
+				objetoSuperficie.configEstado(ObjetoConstantes.RELACAO);
 				objetoSuperficie.repaint();
 			}
 		}
@@ -568,7 +568,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (btnSelecao.isSelected()) {
-				objetoSuperficie.configEstado(Constantes.SELECAO);
+				objetoSuperficie.configEstado(ObjetoConstantes.SELECAO);
 				objetoSuperficie.repaint();
 			}
 		}

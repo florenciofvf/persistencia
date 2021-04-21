@@ -57,7 +57,6 @@ public class Constantes {
 	public static final String LABEL_CIRCULAR = "label.circular";
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
 	public static final String LABEL_TABELAS = "label.tabelas";
-	// public static final String FVF_SEPARADOR = "fvf_separador";
 	public static final String LABEL_ARQUIVO = "label.arquivo";
 	public static final String LABEL_ATENCAO = "label.atencao";
 	public static final String LABEL_CONEXAO = "label.conexao";
@@ -78,7 +77,6 @@ public class Constantes {
 	public static final String LABEL_NOVO = "label.novo";
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TREZENTOS_QUARENTA_UM = 341;
-	// public static final String DESTACADO = "DESTACADO";
 	public static final String DIALOG = "DIALOG";
 	public static final String CAMPOS = "CAMPOS";
 	public static final String ICONE = "ICONE:";
@@ -104,10 +102,6 @@ public class Constantes {
 	public static final String GC = "GC";
 	public static final String QL = "\n";
 	public static final int SETENTA = 70;
-	public static final byte ARRASTO = 1;
-	public static final byte RELACAO = 3;
-	public static final byte SELECAO = 5;
-	public static final byte ROTULOS = 7;
 	public static final int TRINTA = 30;
 	public static final int VINTE = 20;
 	public static final String U = "_";

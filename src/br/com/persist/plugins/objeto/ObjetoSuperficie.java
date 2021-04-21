@@ -99,7 +99,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public ObjetoSuperficie(Formulario formulario, ObjetoContainer container) {
 		super(true);
-		configEstado(Constantes.SELECAO);
+		configEstado(ObjetoConstantes.SELECAO);
 		this.formulario = formulario;
 		this.container = container;
 		configurar();
@@ -806,7 +806,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Graphics2D g2 = (Graphics2D) g;
 		Stroke stroke = g2.getStroke();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		if (estado == Constantes.RELACAO) {
+		if (estado == ObjetoConstantes.RELACAO) {
 			linha.desenhar(g2);
 		}
 		for (Relacao relacao : relacoes) {
@@ -1571,19 +1571,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void configEstadoImp(byte estado) {
-		if (estado == Constantes.ARRASTO) {
+		if (estado == ObjetoConstantes.ARRASTO) {
 			addMouseMotionListener(mouseAdapterArrasto);
 			addMouseListener(mouseAdapterArrasto);
 			this.estado = estado;
-		} else if (estado == Constantes.ROTULOS) {
+		} else if (estado == ObjetoConstantes.ROTULOS) {
 			addMouseMotionListener(mouseAdapterRotulos);
 			addMouseListener(mouseAdapterRotulos);
 			this.estado = estado;
-		} else if (estado == Constantes.RELACAO) {
+		} else if (estado == ObjetoConstantes.RELACAO) {
 			addMouseMotionListener(mouseAdapterRelacao);
 			addMouseListener(mouseAdapterRelacao);
 			this.estado = estado;
-		} else if (estado == Constantes.SELECAO) {
+		} else if (estado == ObjetoConstantes.SELECAO) {
 			addMouseMotionListener(mouseAdapterSelecao);
 			addMouseListener(mouseAdapterSelecao);
 			this.estado = estado;
