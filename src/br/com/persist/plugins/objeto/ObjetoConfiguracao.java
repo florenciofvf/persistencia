@@ -16,7 +16,6 @@ import javax.swing.JColorChooser;
 import javax.swing.JRadioButton;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.CheckBox;
@@ -53,9 +52,9 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			new NomeValor("label.40000", 40000, NomeValor.INTERVALO_AUTO),
 			new NomeValor("label.60000", 60000, NomeValor.INTERVALO_AUTO) };
 	private final transient NomeValor[] destacados = {
-			new NomeValor("label.formulario", Constantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
-			new NomeValor("label.fichario", Constantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
-			new NomeValor("label.desktop", Constantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
+			new NomeValor("label.formulario", ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
+			new NomeValor("label.fichario", ObjetoConstantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
+			new NomeValor("label.desktop", ObjetoConstantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
 
 	public ObjetoConfiguracao(Formulario formulario) {
 		super(formulario, Mensagens.getString("label.plugin_objeto"));

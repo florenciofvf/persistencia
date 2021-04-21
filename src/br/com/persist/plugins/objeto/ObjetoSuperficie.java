@@ -1172,11 +1172,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				addMenuItem(desktopAcao);
 				addMenuItem(true, proprioAcao);
 				formularioAcao.setActionListener(
-						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_FORMULARIO, null));
+						e -> destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, null));
 				ficharioAcao.setActionListener(
-						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_FICHARIO, null));
+						e -> destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_FICHARIO, null));
 				desktopAcao.setActionListener(
-						e -> destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_DESKTOP, null));
+						e -> destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_DESKTOP, null));
 				proprioAcao.setActionListener(e -> destacarProprioContainer());
 				formularioAcao.rotulo("label.abrir_sel_em_formulario");
 				ficharioAcao.rotulo("label.abrir_sel_em_fichario");
@@ -1191,7 +1191,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 							Mensagens.getString("msb.objeto_com_ajuste_auto", ajustes), false)) {
 						return;
 					}
-					destacar(container.getConexaoPadrao(), Constantes.TIPO_CONTAINER_PROPRIO, null);
+					destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 				}
 			}
 
@@ -1833,7 +1833,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		variaveis.checkFinalPesquisa();
 		variaveis.localizarObjetos();
 		if (!variaveis.circular) {
-			destacar(null, Constantes.TIPO_CONTAINER_PROPRIO, null);
+			destacar(null, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
 		Util.mensagemFormulario(formulario, variaveis.sb.toString());
 	}
@@ -2134,7 +2134,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config) {
 		List<Objeto> lista = getSelecionados();
 		if (getContinua(lista)) {
-			List<Objeto> selecionados = montarSelecionados(lista, tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO);
+			List<Objeto> selecionados = montarSelecionados(lista,
+					tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO);
 			destacar(conexao, tipoContainer, config, selecionados);
 		}
 	}
@@ -2171,13 +2172,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void destacar(Conexao conexao, int tipoContainer, InternalConfig config, List<Objeto> selecionados) {
-		if (tipoContainer == Constantes.TIPO_CONTAINER_FORMULARIO) {
+		if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_FORMULARIO) {
 			destacarDesktopFormulario(selecionados, conexao, config);
-		} else if (tipoContainer == Constantes.TIPO_CONTAINER_DESKTOP) {
+		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_DESKTOP) {
 			destacarDeskopPagina(selecionados, conexao, config);
-		} else if (tipoContainer == Constantes.TIPO_CONTAINER_FICHARIO) {
+		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_FICHARIO) {
 			destacarObjetoPagina(selecionados, conexao);
-		} else if (tipoContainer == Constantes.TIPO_CONTAINER_PROPRIO) {
+		} else if (tipoContainer == ObjetoConstantes.TIPO_CONTAINER_PROPRIO) {
 			destacarPropriaSuperficie(selecionados, conexao, config);
 		}
 	}

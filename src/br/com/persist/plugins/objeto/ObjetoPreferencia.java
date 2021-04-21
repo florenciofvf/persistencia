@@ -3,7 +3,6 @@ package br.com.persist.plugins.objeto;
 import java.awt.Color;
 import java.util.prefs.Preferences;
 
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoPreferencia {
@@ -22,7 +21,8 @@ public class ObjetoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto", Constantes.TIPO_CONTAINER_FORMULARIO);
+		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto",
+				ObjetoConstantes.TIPO_CONTAINER_FORMULARIO);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));

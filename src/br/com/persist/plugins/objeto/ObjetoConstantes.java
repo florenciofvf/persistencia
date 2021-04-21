@@ -9,6 +9,10 @@ public class ObjetoConstantes {
 	public static final String DESTACAR_PROPRIO_ALTURA_INTERNAL = "DESTACAR_PROPRIO_ALTURA_INTERNAL";
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
+	public static final int TIPO_CONTAINER_FORMULARIO = 0;
+	public static final int TIPO_CONTAINER_FICHARIO = 1;
+	public static final int TIPO_CONTAINER_DESKTOP = 2;
+	public static final int TIPO_CONTAINER_PROPRIO = 3;
 
 	private ObjetoConstantes() {
 	}
