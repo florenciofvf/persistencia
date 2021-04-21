@@ -19,7 +19,7 @@ public class AnotacaoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio("anotacoes");
+		Util.criarDiretorio(AnotacaoConstantes.ANOTACOES);
 	}
 
 	@Override

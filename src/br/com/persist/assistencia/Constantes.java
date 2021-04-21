@@ -117,7 +117,6 @@ public class Constantes {
 	public static final String CONSULTAS = "consultas";
 	public static final String AMBIENTES = "ambientes";
 	public static final String VARIAVEIS = "variaveis";
-	public static final String ANOTACOES = "anotacoes";
 	public static final String METADADOS = "metadados";
 	public static final String FRAGMENTO = "fragmento";
 	public static final String METADADO = "metadado";

@@ -50,8 +50,8 @@ public class AnotacaoContainer extends AbstratoContainer {
 
 	public AnotacaoContainer(Janela janela, Formulario formulario, String conteudo) {
 		super(formulario);
-		file = new File(Constantes.ANOTACOES + Constantes.SEPARADOR + Constantes.ANOTACOES);
-		fileParent = new File(Constantes.ANOTACOES);
+		file = new File(AnotacaoConstantes.ANOTACOES + Constantes.SEPARADOR + AnotacaoConstantes.ANOTACOES);
+		fileParent = new File(AnotacaoConstantes.ANOTACOES);
 		toolbar.ini(janela);
 		montarLayout();
 		abrir(conteudo);
@@ -218,20 +218,20 @@ public class AnotacaoContainer extends AbstratoContainer {
 		@Override
 		protected void criarBackup() {
 			if (Util.confirmar(AnotacaoContainer.this, "label.confirma_criar_backup")) {
-				String nome = Util.gerarNomeBackup(fileParent, Constantes.ANOTACOES);
+				String nome = Util.gerarNomeBackup(fileParent, AnotacaoConstantes.ANOTACOES);
 				salvarArquivo(new File(fileParent, nome));
 			}
 		}
 
 		@Override
 		protected void abrirBackup() {
-			List<String> arquivos = Util.listarNomeBackup(fileParent, Constantes.ANOTACOES);
+			List<String> arquivos = Util.listarNomeBackup(fileParent, AnotacaoConstantes.ANOTACOES);
 			if (arquivos.isEmpty()) {
 				Util.mensagem(AnotacaoContainer.this, Mensagens.getString("msg.sem_arq_backup"));
 				return;
 			}
 			Coletor coletor = new Coletor();
-			SetLista.view(Constantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
+			SetLista.view(AnotacaoConstantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);
