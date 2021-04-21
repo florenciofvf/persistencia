@@ -158,7 +158,7 @@ public class Metadado implements Transferable {
 	public String getChaves() {
 		for (Metadado titulo : filhos) {
 			if (Constantes.CHAVE_PRIMARIA.equals(titulo.descricao)
-					|| Constantes.CHAVES_PRIMARIAS.equals(titulo.descricao)) {
+					|| MetadadoConstantes.CHAVES_PRIMARIAS.equals(titulo.descricao)) {
 				return titulo.getChaves2();
 			}
 		}
@@ -180,7 +180,7 @@ public class Metadado implements Transferable {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
 		for (Metadado table : filhos) {
-			Metadado meta = table.getMetadado(Constantes.CHAVES_PRIMARIAS);
+			Metadado meta = table.getMetadado(MetadadoConstantes.CHAVES_PRIMARIAS);
 			if (meta != null) {
 				sb.append(meta.getTotal() + " - " + table.descricao + Constantes.QL);
 				total++;
@@ -194,7 +194,7 @@ public class Metadado implements Transferable {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;
 		for (Metadado table : filhos) {
-			if (!table.contem(Constantes.CHAVE_PRIMARIA) && !table.contem(Constantes.CHAVES_PRIMARIAS)) {
+			if (!table.contem(Constantes.CHAVE_PRIMARIA) && !table.contem(MetadadoConstantes.CHAVES_PRIMARIAS)) {
 				sb.append(table.descricao + Constantes.QL);
 				total++;
 			}

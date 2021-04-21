@@ -21,7 +21,6 @@ public class Constantes {
 	public static final String LABEL_FRAGMENTO_MIN = "label.fragmento_min";
 	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
 	public static final String IMAGEM_TRAY_ICON = "/resources/create.png";
-	public static final String SELECIONAR_CONEXAO = "SELECIONAR_CONEXAO";
 	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
 	public static final String LABEL_ARQUIVOS_MIN = "label.arquivos_min";
 	public static final String LABEL_RUNTIME_EXEC = "label.runtime_exec";
@@ -30,7 +29,6 @@ public class Constantes {
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
 	public static final String LABEL_CONEXAO_MIN = "label.conexao_min";
-	public static final String CHAVES_PRIMARIAS = "CHAVES_PRIMARIAS";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String LABEL_REQUISICAO = "label.requisicao";
