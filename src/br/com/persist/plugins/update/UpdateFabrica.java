@@ -19,7 +19,7 @@ public class UpdateFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio(Constantes.ATUALIZACOES);
+		Util.criarDiretorio(UpdateConstantes.ATUALIZACOES);
 	}
 
 	@Override

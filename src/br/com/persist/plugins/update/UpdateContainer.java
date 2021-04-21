@@ -64,10 +64,10 @@ public class UpdateContainer extends AbstratoContainer {
 
 	public UpdateContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
 		super(formulario);
-		file = new File(Constantes.ATUALIZACOES + Constantes.SEPARADOR + Constantes.ATUALIZACOES);
+		file = new File(UpdateConstantes.ATUALIZACOES + Constantes.SEPARADOR + UpdateConstantes.ATUALIZACOES);
 		textArea.setText(conteudo == null ? Constantes.VAZIO : conteudo);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
-		fileParent = new File(Constantes.ATUALIZACOES);
+		fileParent = new File(UpdateConstantes.ATUALIZACOES);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -262,20 +262,20 @@ public class UpdateContainer extends AbstratoContainer {
 		@Override
 		protected void criarBackup() {
 			if (Util.confirmar(UpdateContainer.this, "label.confirma_criar_backup")) {
-				String nome = Util.gerarNomeBackup(fileParent, Constantes.ATUALIZACOES);
+				String nome = Util.gerarNomeBackup(fileParent, UpdateConstantes.ATUALIZACOES);
 				salvarArquivo(new File(fileParent, nome));
 			}
 		}
 
 		@Override
 		protected void abrirBackup() {
-			List<String> arquivos = Util.listarNomeBackup(fileParent, Constantes.ATUALIZACOES);
+			List<String> arquivos = Util.listarNomeBackup(fileParent, UpdateConstantes.ATUALIZACOES);
 			if (arquivos.isEmpty()) {
 				Util.mensagem(UpdateContainer.this, Mensagens.getString("msg.sem_arq_backup"));
 				return;
 			}
 			Coletor coletor = new Coletor();
-			SetLista.view(Constantes.ATUALIZACOES, arquivos, coletor, UpdateContainer.this, true);
+			SetLista.view(UpdateConstantes.ATUALIZACOES, arquivos, coletor, UpdateContainer.this, true);
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);
