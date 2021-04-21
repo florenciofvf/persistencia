@@ -18,7 +18,7 @@ public class AmbienteFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio("ambientes");
+		Util.criarDiretorio(AmbienteConstantes.AMBIENTES);
 	}
 
 	@Override

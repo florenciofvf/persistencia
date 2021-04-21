@@ -23,7 +23,7 @@ public class ArquivoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio(Constantes.ARQUIVOS);
+		Util.criarDiretorio(ArquivoConstantes.ARQUIVOS);
 	}
 
 	@Override

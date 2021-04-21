@@ -17,13 +17,12 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 
 public class ArquivoModelo implements TreeModel {
 	private final EventListenerList listenerList = new EventListenerList();
+	public static final File FILE = new File(ArquivoConstantes.ARQUIVOS);
 	private static final List<String> ignorados = new ArrayList<>();
-	public static final File FILE = new File(Constantes.ARQUIVOS);
 	private static final File ignore = new File(FILE, "ignore");
 	private static final Logger LOG = Logger.getGlobal();
 	private final Arquivo raiz;

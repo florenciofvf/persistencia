@@ -22,7 +22,7 @@ public class AnexoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio("anexos");
+		Util.criarDiretorio(AnexoConstantes.ANEXOS);
 	}
 
 	@Override
