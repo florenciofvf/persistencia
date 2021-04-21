@@ -3,7 +3,6 @@ package br.com.persist.plugins.check;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
 
@@ -25,7 +24,7 @@ class SentencaHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if (Constantes.SENTENCA.equals(qName)) {
+		if (CheckConstantes.SENTENCA.equals(qName)) {
 			selecionado = new Sentenca();
 			coletor.getSentencas().add(selecionado);
 		}
@@ -33,7 +32,7 @@ class SentencaHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (Constantes.SENTENCA.equals(qName)) {
+		if (CheckConstantes.SENTENCA.equals(qName)) {
 			String string = builder.toString();
 			if (!Util.estaVazio(string)) {
 				selecionado.setString(string.trim());
