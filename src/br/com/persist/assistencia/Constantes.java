@@ -115,7 +115,6 @@ public class Constantes {
 	public static final int TIPO_CONTAINER_PROPRIO = 3;
 	public static final String DESTACADO = "DESTACADO";
 	public static final String CONSULTAS = "consultas";
-	public static final String AMBIENTES = "ambientes";
 	public static final String VARIAVEIS = "variaveis";
 	public static final String METADADOS = "metadados";
 	public static final String FRAGMENTO = "fragmento";

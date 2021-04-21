@@ -51,8 +51,8 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	public AmbienteContainer(Janela janela, Formulario formulario, String conteudo, Ambiente ambiente) {
 		super(formulario);
-		file = new File(Constantes.AMBIENTES + Constantes.SEPARADOR + ambiente.chave);
-		fileParent = new File(Constantes.AMBIENTES);
+		file = new File(AmbienteConstantes.AMBIENTES + Constantes.SEPARADOR + ambiente.chave);
+		fileParent = new File(AmbienteConstantes.AMBIENTES);
 		this.ambiente = ambiente;
 		toolbar.ini(janela);
 		montarLayout();
@@ -275,7 +275,7 @@ public class AmbienteContainer extends AbstratoContainer {
 				return;
 			}
 			Coletor coletor = new Coletor();
-			SetLista.view(Constantes.AMBIENTES, arquivos, coletor, AmbienteContainer.this, true);
+			SetLista.view(AmbienteConstantes.AMBIENTES, arquivos, coletor, AmbienteContainer.this, true);
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);
