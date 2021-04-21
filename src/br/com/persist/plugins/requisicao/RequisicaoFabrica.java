@@ -19,7 +19,7 @@ public class RequisicaoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio("requisicoes");
+		Util.criarDiretorio(RequisicaoConstantes.REQUISICOES);
 	}
 
 	@Override
