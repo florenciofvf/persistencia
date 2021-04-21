@@ -22,7 +22,7 @@ public class FragmentoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio(Constantes.FRAGMENTOS);
+		Util.criarDiretorio(FragmentoConstantes.FRAGMENTOS);
 	}
 
 	@Override

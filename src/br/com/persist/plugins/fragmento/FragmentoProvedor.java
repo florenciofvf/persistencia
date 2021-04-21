@@ -24,7 +24,7 @@ public class FragmentoProvedor {
 	}
 
 	static {
-		file = new File(Constantes.FRAGMENTOS + Constantes.SEPARADOR + "fragmentos.xml");
+		file = new File(FragmentoConstantes.FRAGMENTOS + Constantes.SEPARADOR + "fragmentos.xml");
 	}
 
 	public static Fragmento getFragmento(int indice) {
@@ -97,10 +97,10 @@ public class FragmentoProvedor {
 	public static void salvar() throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2(Constantes.FRAGMENTOS);
+		util.abrirTag2(FragmentoConstantes.FRAGMENTOS);
 		salvarFragmentosLista(util);
 		salvarFragmentosPasta(util);
-		util.finalizarTag(Constantes.FRAGMENTOS);
+		util.finalizarTag(FragmentoConstantes.FRAGMENTOS);
 		util.close();
 	}
 
