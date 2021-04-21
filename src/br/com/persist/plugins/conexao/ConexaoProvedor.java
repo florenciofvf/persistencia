@@ -30,7 +30,7 @@ public class ConexaoProvedor {
 	}
 
 	static {
-		file = new File(Constantes.CONEXOES + Constantes.SEPARADOR + "conexoes.xml");
+		file = new File(ConexaoConstantes.CONEXOES + Constantes.SEPARADOR + "conexoes.xml");
 	}
 
 	public static int primeiro(int indice) {
@@ -129,9 +129,9 @@ public class ConexaoProvedor {
 	public static void salvar() throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2(Constantes.CONEXOES);
+		util.abrirTag2(ConexaoConstantes.CONEXOES);
 		salvarConexoes(util);
-		util.finalizarTag(Constantes.CONEXOES);
+		util.finalizarTag(ConexaoConstantes.CONEXOES);
 		util.close();
 	}
 

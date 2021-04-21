@@ -24,7 +24,7 @@ public class ConexaoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio(Constantes.CONEXOES);
+		Util.criarDiretorio(ConexaoConstantes.CONEXOES);
 	}
 
 	@Override
