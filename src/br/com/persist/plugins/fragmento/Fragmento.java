@@ -27,14 +27,14 @@ public class Fragmento {
 	}
 
 	public void salvar(XMLUtil util) {
-		util.abrirTag(Constantes.FRAGMENTO);
+		util.abrirTag(FragmentoConstantes.FRAGMENTO);
 		util.atributo("resumo", Util.escapar(resumo));
 		util.atributo("grupo", Util.escapar(grupo));
 		util.fecharTag();
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();
 		util.finalizarTag(Constantes.VALOR);
-		util.finalizarTag(Constantes.FRAGMENTO);
+		util.finalizarTag(FragmentoConstantes.FRAGMENTO);
 	}
 
 	public String getResumo() {

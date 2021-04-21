@@ -19,7 +19,7 @@ class FragmentoHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if (Constantes.FRAGMENTO.equals(qName)) {
+		if (FragmentoConstantes.FRAGMENTO.equals(qName)) {
 			selecionado = new Fragmento(attributes.getValue("resumo"), attributes.getValue("grupo"));
 			FragmentoProvedor.adicionar(selecionado);
 		}
@@ -27,7 +27,7 @@ class FragmentoHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (Constantes.FRAGMENTO.equals(qName)) {
+		if (FragmentoConstantes.FRAGMENTO.equals(qName)) {
 			selecionado = null;
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();
