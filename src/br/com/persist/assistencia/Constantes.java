@@ -102,7 +102,6 @@ public class Constantes {
 	public static final String CONSTRAINTS = "CONSTRAINTS";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final String SEPARADOR = File.separator;
-	public static final String MAPEAMENTO = "mapeamento";
 	public static final String LABEL_NOVO = "label.novo";
 	public static final String CONSTRAINT = "CONSTRAINT";
 	public static final String COR_FONTE = "COR_FONTE:";

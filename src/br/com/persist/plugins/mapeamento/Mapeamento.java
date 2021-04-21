@@ -25,13 +25,13 @@ public class Mapeamento {
 	}
 
 	public void salvar(XMLUtil util) {
-		util.abrirTag(Constantes.MAPEAMENTO);
+		util.abrirTag(MapeamentoConstantes.MAPEAMENTO);
 		util.atributo("nome", Util.escapar(nome));
 		util.fecharTag();
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();
 		util.finalizarTag(Constantes.VALOR);
-		util.finalizarTag(Constantes.MAPEAMENTO);
+		util.finalizarTag(MapeamentoConstantes.MAPEAMENTO);
 	}
 
 	public String getNome() {

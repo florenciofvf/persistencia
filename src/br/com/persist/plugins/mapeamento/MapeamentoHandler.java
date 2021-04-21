@@ -19,7 +19,7 @@ class MapeamentoHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if (Constantes.MAPEAMENTO.equals(qName)) {
+		if (MapeamentoConstantes.MAPEAMENTO.equals(qName)) {
 			selecionado = new Mapeamento(attributes.getValue("nome"));
 			MapeamentoProvedor.adicionar(selecionado);
 		}
@@ -27,7 +27,7 @@ class MapeamentoHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (Constantes.MAPEAMENTO.equals(qName)) {
+		if (MapeamentoConstantes.MAPEAMENTO.equals(qName)) {
 			selecionado = null;
 		} else if (Constantes.VALOR.equals(qName) && selecionado != null) {
 			String string = builder.toString();
