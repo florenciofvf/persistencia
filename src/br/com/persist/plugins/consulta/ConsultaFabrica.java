@@ -19,7 +19,7 @@ public class ConsultaFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio(Constantes.CONSULTAS);
+		Util.criarDiretorio(ConsultaConstantes.CONSULTAS);
 	}
 
 	@Override

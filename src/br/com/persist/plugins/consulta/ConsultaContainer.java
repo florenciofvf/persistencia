@@ -75,11 +75,11 @@ public class ConsultaContainer extends AbstratoContainer {
 
 	public ConsultaContainer(Janela janela, Formulario formulario, Conexao conexao, String conteudo) {
 		super(formulario);
-		file = new File(Constantes.CONSULTAS + Constantes.SEPARADOR + Constantes.CONSULTAS);
+		file = new File(ConsultaConstantes.CONSULTAS + Constantes.SEPARADOR + ConsultaConstantes.CONSULTAS);
 		textArea.setText(conteudo == null ? Constantes.VAZIO : conteudo);
 		comboConexao = ConexaoProvedor.criarComboConexao(conexao);
+		fileParent = new File(ConsultaConstantes.CONSULTAS);
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		fileParent = new File(Constantes.CONSULTAS);
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
@@ -335,20 +335,20 @@ public class ConsultaContainer extends AbstratoContainer {
 		@Override
 		protected void criarBackup() {
 			if (Util.confirmar(ConsultaContainer.this, "label.confirma_criar_backup")) {
-				String nome = Util.gerarNomeBackup(fileParent, Constantes.CONSULTAS);
+				String nome = Util.gerarNomeBackup(fileParent, ConsultaConstantes.CONSULTAS);
 				salvarArquivo(new File(fileParent, nome));
 			}
 		}
 
 		@Override
 		protected void abrirBackup() {
-			List<String> arquivos = Util.listarNomeBackup(fileParent, Constantes.CONSULTAS);
+			List<String> arquivos = Util.listarNomeBackup(fileParent, ConsultaConstantes.CONSULTAS);
 			if (arquivos.isEmpty()) {
 				Util.mensagem(ConsultaContainer.this, Mensagens.getString("msg.sem_arq_backup"));
 				return;
 			}
 			Coletor coletor = new Coletor();
-			SetLista.view(Constantes.CONSULTAS, arquivos, coletor, ConsultaContainer.this, true);
+			SetLista.view(ConsultaConstantes.CONSULTAS, arquivos, coletor, ConsultaContainer.this, true);
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);
