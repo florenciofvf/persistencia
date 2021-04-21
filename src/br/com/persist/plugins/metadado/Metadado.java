@@ -46,7 +46,7 @@ public class Metadado implements Transferable {
 	}
 
 	public void salvar(XMLUtil util) {
-		util.abrirTag(Constantes.METADADO);
+		util.abrirTag(MetadadoConstantes.METADADO);
 		util.atributo("descricao", descricao);
 		util.atributo("tabela", tabela);
 		util.atributo("constraint", constraint);
@@ -56,7 +56,7 @@ public class Metadado implements Transferable {
 		for (Metadado m : filhos) {
 			m.salvar(util);
 		}
-		util.finalizarTag(Constantes.METADADO);
+		util.finalizarTag(MetadadoConstantes.METADADO);
 	}
 
 	public void aplicar(Attributes attr) {

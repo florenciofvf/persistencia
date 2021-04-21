@@ -3,7 +3,6 @@ package br.com.persist.plugins.metadado;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.marca.XMLHandler;
 
 class MetadadoHandler extends XMLHandler {
@@ -12,7 +11,7 @@ class MetadadoHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if (Constantes.METADADO.equals(qName)) {
+		if (MetadadoConstantes.METADADO.equals(qName)) {
 			Metadado metadado = new Metadado(attributes.getValue("descricao"),
 					Boolean.parseBoolean(attributes.getValue("contabilizavel")));
 			metadado.aplicar(attributes);
@@ -27,7 +26,7 @@ class MetadadoHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (Constantes.METADADO.equals(qName) && selecionado != null) {
+		if (MetadadoConstantes.METADADO.equals(qName) && selecionado != null) {
 			selecionado = selecionado.getPai();
 		}
 	}
