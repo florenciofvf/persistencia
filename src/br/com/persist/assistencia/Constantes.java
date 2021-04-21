@@ -28,7 +28,6 @@ public class Constantes {
 	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";
 	public static final String LABEL_FRAGMENTO_MIN = "label.fragmento_min";
 	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
-	public static final String PAINEL_RUNTIME_EXEC = "PAINEL RUNTIME_EXEC";
 	public static final String IMAGEM_TRAY_ICON = "/resources/create.png";
 	public static final String SELECIONAR_CONEXAO = "SELECIONAR_CONEXAO";
 	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
@@ -76,7 +75,6 @@ public class Constantes {
 	public static final String LABEL_CIRCULAR = "label.circular";
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
 	public static final String ABRIR_VISIVEL = "ABRIR_VISIVEL:";
-	public static final String PAINEL_PARSER = "PAINEL PARSER";
 	public static final String LABEL_TABELAS = "label.tabelas";
 	public static final String FVF_SEPARADOR = "fvf_separador";
 	public static final String LABEL_ARQUIVO = "label.arquivo";

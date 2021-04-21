@@ -58,7 +58,7 @@ public class ParserContainer extends Panel {
 			}
 			area.requestFocus();
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage(Constantes.PAINEL_PARSER, ex, this);
+			Util.stackTraceAndMessage(ParserConstantes.PAINEL_PARSER, ex, this);
 		}
 	}
 
@@ -111,7 +111,7 @@ public class ParserContainer extends Panel {
 				Tipo json = parser.parse(string);
 				listener.setParserTipo(json);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(Constantes.PAINEL_PARSER, ex, this);
+				Util.stackTraceAndMessage(ParserConstantes.PAINEL_PARSER, ex, this);
 			}
 			fechar();
 		}
