@@ -704,7 +704,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private void atualizar(String string) {
 			try {
 				Parser parser = new Parser();
-				Variavel vAccessToken = VariavelProvedor.getVariavel(Constantes.VAR_ACCESS_TOKEN);
+				Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
 				if (vAccessToken != null) {
 					string = substituir(string, vAccessToken);
 				}
@@ -818,9 +818,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void setAccesToken(String accessToken) {
 			if (!Util.estaVazio(accessToken)) {
-				Variavel vAccessToken = VariavelProvedor.getVariavel(Constantes.VAR_ACCESS_TOKEN);
+				Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
 				if (vAccessToken == null) {
-					vAccessToken = new Variavel(Constantes.VAR_ACCESS_TOKEN, accessToken);
+					vAccessToken = new Variavel(RequisicaoConstantes.VAR_ACCESS_TOKEN, accessToken);
 					VariavelProvedor.adicionar(vAccessToken);
 				} else {
 					vAccessToken.setValor(accessToken);

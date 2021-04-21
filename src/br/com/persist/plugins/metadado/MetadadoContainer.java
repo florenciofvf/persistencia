@@ -324,7 +324,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				preencher(tabela, campos, Constantes.CAMPOS, Constantes.CAMPO);
 				List<Metadado> chavesPrimarias = converterLista(
 						Persistencia.listarChavesPrimarias(conn, conexao, tabela.getDescricao()));
-				preencher(tabela, chavesPrimarias, MetadadoConstantes.CHAVES_PRIMARIAS, Constantes.CHAVE_PRIMARIA);
+				preencher(tabela, chavesPrimarias, MetadadoConstantes.CHAVES_PRIMARIAS,
+						MetadadoConstantes.CHAVE_PRIMARIA);
 				List<Metadado> camposImportados = converterImportados(
 						Persistencia.listarCamposImportados(conn, conexao, tabela.getDescricao()));
 				preencher(tabela, camposImportados, MetadadoConstantes.CAMPOS_IMPORTADOS,
@@ -336,7 +337,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				if (!Util.estaVazio(conexao.getConstraint())) {
 					List<Metadado> constraints = converterConstraint(
 							Persistencia.listarConstraints(conn, conexao, tabela.getDescricao()));
-					preencher(tabela, constraints, Constantes.CONSTRAINTS, Constantes.CONSTRAINT);
+					preencher(tabela, constraints, MetadadoConstantes.CONSTRAINTS, MetadadoConstantes.CONSTRAINT);
 				}
 				progresso.setValue(++contador);
 				raiz.add(tabela);

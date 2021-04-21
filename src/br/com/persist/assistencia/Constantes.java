@@ -33,7 +33,6 @@ public class Constantes {
 	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String LABEL_REQUISICAO = "label.requisicao";
 	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";
-	public static final String VAR_ACCESS_TOKEN = "VAR_ACCESS_TOKEN";
 	public static final String PERSISTENCIA_FVF = "persistencia.fvf";
 	public static final String LABEL_METADADOS = "label.meta_dados";
 	public static final String LABEL_AMBIENTES = "label.ambientes";
@@ -51,7 +50,6 @@ public class Constantes {
 	public static final Dimension SIZE = new Dimension(1000, 700);
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
 	public static final String LABEL_EXECUTAR = "label.executar";
-	public static final String CHAVE_PRIMARIA = "CHAVE_PRIMARIA";
 	public static final String LABEL_DESTACAR = "label.destacar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
@@ -59,7 +57,7 @@ public class Constantes {
 	public static final String LABEL_CIRCULAR = "label.circular";
 	public static final String LABEL_CONEXAO2 = "label.conexao2";
 	public static final String LABEL_TABELAS = "label.tabelas";
-	public static final String FVF_SEPARADOR = "fvf_separador";
+	// public static final String FVF_SEPARADOR = "fvf_separador";
 	public static final String LABEL_ARQUIVO = "label.arquivo";
 	public static final String LABEL_ATENCAO = "label.atencao";
 	public static final String LABEL_CONEXAO = "label.conexao";
@@ -76,13 +74,11 @@ public class Constantes {
 	public static final String LABEL_BANCO = "label.banco";
 	public static final String LABEL_VAZIO = "label.vazio";
 	public static final String CHAVE_VALOR = "chave_valor";
-	public static final String CONSTRAINTS = "CONSTRAINTS";
 	public static final String SEPARADOR = File.separator;
 	public static final String LABEL_NOVO = "label.novo";
-	public static final String CONSTRAINT = "CONSTRAINT";
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TREZENTOS_QUARENTA_UM = 341;
-	public static final String DESTACADO = "DESTACADO";
+	// public static final String DESTACADO = "DESTACADO";
 	public static final String DIALOG = "DIALOG";
 	public static final String CAMPOS = "CAMPOS";
 	public static final String ICONE = "ICONE:";
