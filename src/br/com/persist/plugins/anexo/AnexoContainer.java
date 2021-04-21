@@ -178,7 +178,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 					Anexo anexo = entry.getValue();
 					pw.println(entry.getKey());
 					pw.println(AnexoConstantes.ABRIR_VISIVEL + anexo.isAbrirVisivel());
-					pw.println(Constantes.PADRAO_ABRIR + anexo.isPadraoAbrir());
+					pw.println(AnexoConstantes.PADRAO_ABRIR + anexo.isPadraoAbrir());
 					if (!Util.estaVazio(anexo.getNomeIcone())) {
 						pw.println(Constantes.ICONE + anexo.getNomeIcone());
 					}
@@ -323,7 +323,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo != null) {
 			map.put(AnexoConstantes.ABRIR_VISIVEL, arquivo.isAbrirVisivel());
-			map.put(Constantes.PADRAO_ABRIR, arquivo.isPadraoAbrir());
+			map.put(AnexoConstantes.PADRAO_ABRIR, arquivo.isPadraoAbrir());
 			map.put(Constantes.COR_FONTE, arquivo.getCorFonte());
 			map.put(Constantes.ICONE, arquivo.getNomeIcone());
 		}
@@ -336,8 +336,8 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			return;
 		}
 		Boolean abrirVisivel = (Boolean) map.get(AnexoConstantes.ABRIR_VISIVEL);
+		Boolean padraoAbrir = (Boolean) map.get(AnexoConstantes.PADRAO_ABRIR);
 		arquivo.setAbrirVisivel(Boolean.TRUE.equals(abrirVisivel));
-		Boolean padraoAbrir = (Boolean) map.get(Constantes.PADRAO_ABRIR);
 		arquivo.setPadraoAbrir(Boolean.TRUE.equals(padraoAbrir));
 		Color corFonte = (Color) map.get(Constantes.COR_FONTE);
 		arquivo.setCorFonte(corFonte);

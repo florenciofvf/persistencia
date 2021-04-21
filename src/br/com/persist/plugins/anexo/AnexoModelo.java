@@ -113,8 +113,8 @@ public class AnexoModelo implements TreeModel {
 		} else if (linha.startsWith(AnexoConstantes.ABRIR_VISIVEL)) {
 			String abrirVisivel = linha.substring(AnexoConstantes.ABRIR_VISIVEL.length());
 			selecionado.setAbrirVisivel(Boolean.parseBoolean(abrirVisivel));
-		} else if (linha.startsWith(Constantes.PADRAO_ABRIR)) {
-			String padraoAbrir = linha.substring(Constantes.PADRAO_ABRIR.length());
+		} else if (linha.startsWith(AnexoConstantes.PADRAO_ABRIR)) {
+			String padraoAbrir = linha.substring(AnexoConstantes.PADRAO_ABRIR.length());
 			selecionado.setPadraoAbrir(Boolean.parseBoolean(padraoAbrir));
 		} else if (linha.startsWith(Constantes.COR_FONTE)) {
 			String cor = linha.substring(Constantes.COR_FONTE.length());
