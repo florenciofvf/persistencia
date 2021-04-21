@@ -6,14 +6,6 @@ import java.awt.Stroke;
 import java.io.File;
 
 public class Constantes {
-	public static final String ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER = "ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER";
-	public static final String ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS";
-	public static final String ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS = "ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS";
-	public static final String DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL = "DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL";
-	public static final String DESTACAR_PROPRIO_LARGURA_INTERNAL = "DESTACAR_PROPRIO_LARGURA_INTERNAL";
-	public static final String DESTACAR_PROPRIO_ALTURA_INTERNAL = "DESTACAR_PROPRIO_ALTURA_INTERNAL";
-	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
-	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_RUNTIME_EXEC_MIN = "label.runtime_exec_min";

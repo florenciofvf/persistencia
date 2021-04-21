@@ -22,6 +22,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -95,7 +96,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	private void processarNorte(int altura) {
-		Variavel vMinimoForm = VariavelProvedor.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
+		Variavel vMinimoForm = VariavelProvedor.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
 		if (vMinimoForm != null) {
 			int minimoForm = vMinimoForm.getInteiro(Constantes.TRINTA);
 			if (altura > minimoForm) {
@@ -107,7 +108,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private void processarSul(int altura) {
 		Variavel vDadosToolbarTableHeader = VariavelProvedor
-				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
+				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
 		if (vDadosToolbarTableHeader != null) {
 			int dadosToolbarTableHeader = vDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
 			if (altura < dadosToolbarTableHeader) {
@@ -150,24 +151,25 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		Dimension d = getSize();
 		boolean salvar = false;
 		Variavel vDadosToolbarTableHeader = VariavelProvedor
-				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
+				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
 		Variavel vMaximoRegistros = VariavelProvedor
-				.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
-		Variavel vMinimoForm = VariavelProvedor.getVariavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
+				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
+		Variavel vMinimoForm = VariavelProvedor.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
 		if (vDadosToolbarTableHeader == null) {
-			vDadosToolbarTableHeader = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
+			vDadosToolbarTableHeader = new Variavel(
+					ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
 					Constantes.VAZIO + Constantes.SETENTA);
 			VariavelProvedor.adicionar(vDadosToolbarTableHeader);
 			salvar = true;
 		}
 		if (vMaximoRegistros == null) {
-			vMaximoRegistros = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
+			vMaximoRegistros = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
 					Constantes.VAZIO + Constantes.DEZ);
 			VariavelProvedor.adicionar(vMaximoRegistros);
 			salvar = true;
 		}
 		if (vMinimoForm == null) {
-			vMinimoForm = new Variavel(Constantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
+			vMinimoForm = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
 					Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(vMinimoForm);
 			salvar = true;

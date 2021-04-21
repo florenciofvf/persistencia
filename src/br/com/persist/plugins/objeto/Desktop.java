@@ -92,9 +92,10 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		JInternalFrame[] frames = getAllFrames();
 		if (frames.length > 0) {
 			boolean salvar = false;
-			Variavel variavelDeltaY = VariavelProvedor.getVariavel(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
+			Variavel variavelDeltaY = VariavelProvedor
+					.getVariavel(ObjetoConstantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL);
 			if (variavelDeltaY == null) {
-				variavelDeltaY = new Variavel(Constantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
+				variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL,
 						Constantes.VAZIO + Constantes.QUARENTA);
 				VariavelProvedor.adicionar(variavelDeltaY);
 				salvar = true;
@@ -131,15 +132,17 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	@Override
 	public void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree) {
 		boolean salvar = false;
-		Variavel variavelDeltaX = VariavelProvedor.getVariavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
-		Variavel variavelDeltaY = VariavelProvedor.getVariavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
+		Variavel variavelDeltaX = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO);
+		Variavel variavelDeltaY = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO);
 		if (variavelDeltaX == null) {
-			variavelDeltaX = new Variavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
+			variavelDeltaX = new Variavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO,
+					Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaX);
 			salvar = true;
 		}
 		if (variavelDeltaY == null) {
-			variavelDeltaY = new Variavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
+			variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO,
+					Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaY);
 			salvar = true;
 		}

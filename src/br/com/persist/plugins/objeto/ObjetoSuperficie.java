@@ -2223,16 +2223,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void destacarPropriaSuperficie(List<Objeto> objetos, Conexao conexao, InternalConfig config) {
-		Variavel variavelDeltaX = VariavelProvedor.getVariavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO);
-		Variavel variavelDeltaY = VariavelProvedor.getVariavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO);
+		Variavel variavelDeltaX = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO);
+		Variavel variavelDeltaY = VariavelProvedor.getVariavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO);
 		boolean salvar = false;
 		if (variavelDeltaX == null) {
-			variavelDeltaX = new Variavel(Constantes.DELTA_X_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
+			variavelDeltaX = new Variavel(ObjetoConstantes.DELTA_X_AJUSTE_FORM_OBJETO,
+					Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaX);
 			salvar = true;
 		}
 		if (variavelDeltaY == null) {
-			variavelDeltaY = new Variavel(Constantes.DELTA_Y_AJUSTE_FORM_OBJETO, Constantes.VAZIO + Constantes.TRINTA);
+			variavelDeltaY = new Variavel(ObjetoConstantes.DELTA_Y_AJUSTE_FORM_OBJETO,
+					Constantes.VAZIO + Constantes.TRINTA);
 			VariavelProvedor.adicionar(variavelDeltaY);
 			salvar = true;
 		}
@@ -2245,17 +2247,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void processarInternalFormulario(List<Objeto> objetos, Conexao conexao, InternalConfig config, int x,
 			int y) {
-		Variavel variavelLargura = VariavelProvedor.getVariavel(Constantes.DESTACAR_PROPRIO_LARGURA_INTERNAL);
-		Variavel variavelAltura = VariavelProvedor.getVariavel(Constantes.DESTACAR_PROPRIO_ALTURA_INTERNAL);
+		Variavel variavelLargura = VariavelProvedor.getVariavel(ObjetoConstantes.DESTACAR_PROPRIO_LARGURA_INTERNAL);
+		Variavel variavelAltura = VariavelProvedor.getVariavel(ObjetoConstantes.DESTACAR_PROPRIO_ALTURA_INTERNAL);
 		boolean salvar = false;
 		if (variavelLargura == null) {
-			variavelLargura = new Variavel(Constantes.DESTACAR_PROPRIO_LARGURA_INTERNAL,
+			variavelLargura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_LARGURA_INTERNAL,
 					Constantes.VAZIO + Constantes.QUATROCENTOS);
 			VariavelProvedor.adicionar(variavelLargura);
 			salvar = true;
 		}
 		if (variavelAltura == null) {
-			variavelAltura = new Variavel(Constantes.DESTACAR_PROPRIO_ALTURA_INTERNAL,
+			variavelAltura = new Variavel(ObjetoConstantes.DESTACAR_PROPRIO_ALTURA_INTERNAL,
 					Constantes.VAZIO + Constantes.DUZENTOS);
 			VariavelProvedor.adicionar(variavelAltura);
 			salvar = true;
