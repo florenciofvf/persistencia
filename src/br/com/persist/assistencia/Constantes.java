@@ -15,7 +15,6 @@ public class Constantes {
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_COMPARACAO_MIN = "label.comparacao_min";
 	public static final String LABEL_METADADOS_MIN = "label.meta_dados_min";
-	public static final String LABEL_ANOTACOES_MIN = "label.anotacoes_min";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
 	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";
 	public static final String LABEL_FRAGMENTO_MIN = "label.fragmento_min";
@@ -40,7 +39,6 @@ public class Constantes {
 	public static final String[] ARRAY_LENGTH_ZERO = new String[0];
 	public static final String LABEL_ATUALIZAR = "label.atualizar";
 	public static final String LABEL_FRAGMENTO = "label.fragmento";
-	public static final String LABEL_ANOTACOES = "label.anotacoes";
 	public static final String LABEL_COM_ASPAS = "label.com_aspas";
 	public static final String LABEL_SEM_ASPAS = "label.sem_aspas";
 	public static final String LABEL_APARENCIA = "label.aparencia";

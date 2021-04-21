@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
 
 public class AnotacaoDialogo extends AbstratoDialogo {
@@ -13,7 +11,7 @@ public class AnotacaoDialogo extends AbstratoDialogo {
 	private final AnotacaoContainer container;
 
 	private AnotacaoDialogo(Frame frame, Formulario formulario) {
-		super(frame, Mensagens.getString(Constantes.LABEL_ANOTACOES));
+		super(frame, AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
 		container = new AnotacaoContainer(this, formulario, null);
 		container.setAnotacaoDialogo(this);
 		montarLayout();

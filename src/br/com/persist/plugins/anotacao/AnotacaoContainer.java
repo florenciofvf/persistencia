@@ -274,17 +274,17 @@ public class AnotacaoContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_ANOTACOES_MIN);
+				return AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES_MIN);
 			}
 
 			@Override
 			public String getTitulo() {
-				return Mensagens.getString(Constantes.LABEL_ANOTACOES);
+				return AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES);
 			}
 
 			@Override
 			public String getHint() {
-				return Mensagens.getString(Constantes.LABEL_ANOTACOES);
+				return AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES);
 			}
 
 			@Override

@@ -3,8 +3,6 @@ package br.com.persist.plugins.anotacao;
 import java.awt.BorderLayout;
 
 import br.com.persist.abstrato.AbstratoFormulario;
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
 
 public class AnotacaoFormulario extends AbstratoFormulario {
@@ -12,14 +10,14 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 	private final AnotacaoContainer container;
 
 	private AnotacaoFormulario(Formulario formulario, String conteudo) {
-		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
+		super(AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
 		container = new AnotacaoContainer(this, formulario, conteudo);
 		container.setAnotacaoFormulario(this);
 		montarLayout();
 	}
 
 	private AnotacaoFormulario(AnotacaoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_ANOTACOES));
+		super(AnotacaoMensagens.getString(AnotacaoConstantes.LABEL_ANOTACOES));
 		container.setAnotacaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);
