@@ -278,9 +278,9 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			try {
 				XMLUtil util = new XMLUtil(f);
 				util.prologo();
-				util.abrirTag2(Constantes.METADADOS);
+				util.abrirTag2(MetadadoConstantes.METADADOS);
 				metadadoTree.getRaiz().salvar(util);
-				util.finalizarTag(Constantes.METADADOS);
+				util.finalizarTag(MetadadoConstantes.METADADOS);
 				util.close();
 				salvoMensagem();
 			} catch (Exception ex) {

@@ -20,7 +20,7 @@ public class MetadadoFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
-		Util.criarDiretorio("metadados");
+		Util.criarDiretorio(MetadadoConstantes.METADADOS);
 	}
 
 	@Override
