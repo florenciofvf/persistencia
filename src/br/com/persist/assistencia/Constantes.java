@@ -8,18 +8,10 @@ import java.io.File;
 public class Constantes {
 	public static final String LABEL_CONFIGURACOES_MIN = "label.configuracoes_min";
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
-	public static final String LABEL_RUNTIME_EXEC_MIN = "label.runtime_exec_min";
-	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
 	public static final String LABEL_CONFIRMA_SALVAR = "label.confirma_salvar";
-	public static final String LABEL_COMPARACAO_MIN = "label.comparacao_min";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
-	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";
-	public static final String LABEL_FRAGMENTO_MIN = "label.fragmento_min";
 	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
 	public static final String IMAGEM_TRAY_ICON = "/resources/create.png";
-	public static final String LABEL_CONSULTA_MIN = "label.consulta_min";
-	public static final String LABEL_ARQUIVOS_MIN = "label.arquivos_min";
-	public static final String LABEL_RUNTIME_EXEC = "label.runtime_exec";
 	public static final String LABEL_UTILITARIOS = "label.utilitarios";
 	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
@@ -27,7 +19,6 @@ public class Constantes {
 	public static final String LABEL_CONEXAO_MIN = "label.conexao_min";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
-	public static final String LABEL_ANEXOS_MIN = "label.anexos_min";
 	public static final String PERSISTENCIA_FVF = "persistencia.fvf";
 	public static final String LABEL_METADADOS = "label.meta_dados";
 	public static final String LABEL_AMBIENTES = "label.ambientes";

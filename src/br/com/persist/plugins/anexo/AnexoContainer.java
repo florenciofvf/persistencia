@@ -379,7 +379,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_ANEXOS_MIN);
+				return AnexoMensagens.getString(AnexoConstantes.LABEL_ANEXOS_MIN);
 			}
 
 			@Override

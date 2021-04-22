@@ -228,7 +228,7 @@ public class MapeamentoContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_MAPEAMENTOS_MIN);
+				return MapeamentoMensagens.getString(MapeamentoConstantes.LABEL_MAPEAMENTOS_MIN);
 			}
 
 			@Override

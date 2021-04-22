@@ -359,7 +359,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_ARQUIVOS_MIN);
+				return ArquivoMensagens.getString(ArquivoConstantes.LABEL_ARQUIVOS_MIN);
 			}
 
 			@Override

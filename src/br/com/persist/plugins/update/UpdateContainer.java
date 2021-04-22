@@ -341,7 +341,7 @@ public class UpdateContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_ATUALIZAR_MIN);
+				return UpdateMensagens.getString(UpdateConstantes.LABEL_ATUALIZAR_MIN);
 			}
 
 			@Override

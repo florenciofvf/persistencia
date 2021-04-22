@@ -275,7 +275,7 @@ public class FragmentoContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_FRAGMENTO_MIN);
+				return FragmentoMensagens.getString(FragmentoConstantes.LABEL_FRAGMENTO_MIN);
 			}
 
 			@Override

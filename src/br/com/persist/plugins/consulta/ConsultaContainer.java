@@ -447,7 +447,7 @@ public class ConsultaContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_CONSULTA_MIN);
+				return ConsultaMensagens.getString(ConsultaConstantes.LABEL_CONSULTA_MIN);
 			}
 
 			@Override
