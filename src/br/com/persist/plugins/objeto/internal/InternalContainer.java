@@ -513,7 +513,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			private static final long serialVersionUID = 1L;
 
 			private ExcluirRegistrosAcao() {
-				super(false, "label.excluir_registro", Icones.EXCLUIR);
+				super(false, "label.excluir_registro", true, Icones.EXCLUIR);
 			}
 
 			@Override

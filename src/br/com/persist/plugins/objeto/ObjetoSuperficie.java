@@ -1250,7 +1250,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			private static final long serialVersionUID = 1L;
 
 			private PartirAcao() {
-				super(true, "label.partir", Icones.PARTIR);
+				super(true, ObjetoMensagens.getString("label.partir"), false, Icones.PARTIR);
 			}
 
 			@Override
@@ -1280,7 +1280,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			private final boolean horizontal;
 
 			private AlinhamentoAcao(boolean horizontal, String chave) {
-				super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
+				super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
 				this.horizontal = horizontal;
 			}
 
@@ -1303,7 +1303,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			private final boolean horizontal;
 
 			private DistribuicaoAcao(boolean horizontal, String chave) {
-				super(true, chave, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
+				super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
 				this.horizontal = horizontal;
 			}
 

@@ -15,7 +15,6 @@ import java.util.Set;
 import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
@@ -186,7 +185,7 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-		return sb.insert(0, Mensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL2)
+		return sb.insert(0, MetadadoMensagens.getString("label.pks_multiplas") + " [" + total + "]" + Constantes.QL2)
 				.toString();
 	}
 
@@ -200,13 +199,16 @@ public class Metadado implements Transferable {
 				total++;
 			}
 		}
-		return sb.insert(0, Mensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL2).toString();
+		return sb.insert(0, MetadadoMensagens.getString("label.pks_ausente") + " [" + total + "]" + Constantes.QL2)
+				.toString();
 	}
 
 	public String queExportam() {
 		StringBuilder sb = new StringBuilder();
 		int total = queExportam(sb);
-		return sb.insert(0, Mensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL2)
+		return sb
+				.insert(0,
+						MetadadoMensagens.getString("label.tabelas_que_exportam") + " [" + total + "]" + Constantes.QL2)
 				.toString();
 	}
 
@@ -225,7 +227,9 @@ public class Metadado implements Transferable {
 	public String naoExportam() {
 		StringBuilder sb = new StringBuilder();
 		int total = naoExportam(sb);
-		return sb.insert(0, Mensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL2)
+		return sb
+				.insert(0,
+						MetadadoMensagens.getString("label.tabelas_nao_exportam") + " [" + total + "]" + Constantes.QL2)
 				.toString();
 	}
 
@@ -242,8 +246,8 @@ public class Metadado implements Transferable {
 	}
 
 	public String getOrdenadosExportacaoImportacao(boolean exportacao) {
-		StringBuilder sb = new StringBuilder(exportacao ? Mensagens.getString("label.ordenado_exportacao")
-				: Mensagens.getString("label.ordenado_importacao"));
+		StringBuilder sb = new StringBuilder(exportacao ? MetadadoMensagens.getString("label.ordenado_exportacao")
+				: MetadadoMensagens.getString("label.ordenado_importacao"));
 		sb.append(Constantes.QL2);
 		checarContabilizacao();
 		ordenarExportacaoImportacao(exportacao, sb);

@@ -11,10 +11,10 @@ public abstract class Acao extends AbstractAction {
 	protected final String chave;
 	protected final boolean menu;
 
-	public Acao(boolean menu, String chaveRotulo, Icon icone) {
+	public Acao(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
+		setRotulo(menu, rotulo, chaveRotulo);
 		putValue(Action.SMALL_ICON, icone);
-		setRotulo(menu, chaveRotulo);
-		this.chave = chaveRotulo;
+		this.chave = rotulo;
 		this.menu = menu;
 	}
 
@@ -22,8 +22,12 @@ public abstract class Acao extends AbstractAction {
 		return chave;
 	}
 
+	public void setRotulo(boolean menu, String rotulo, boolean chaveRotulo) {
+		putValue(menu ? Action.NAME : Action.SHORT_DESCRIPTION, chaveRotulo ? Mensagens.getString(rotulo) : rotulo);
+	}
+
 	public void setRotulo(boolean menu, String chaveRotulo) {
-		putValue(menu ? Action.NAME : Action.SHORT_DESCRIPTION, Mensagens.getString(chaveRotulo));
+		setRotulo(menu, chaveRotulo, true);
 	}
 
 	public void rotulo(String chaveRotulo) {

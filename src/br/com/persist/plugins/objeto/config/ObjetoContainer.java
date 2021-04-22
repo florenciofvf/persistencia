@@ -301,9 +301,10 @@ public class ObjetoContainer extends Panel {
 			}
 			container.add(criarLinhaCopiar("label.prefixo_nt", txtPrefixoNT));
 			container.add(criarLinhaCopiar("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
+			container.add(criarLinhaCopiar("label.chaveamento", txtChaveamento,
+					ObjetoMensagens.getString("hint.chaveamento")));
 			container.add(
-					criarLinhaCopiar("label.chaveamento", txtChaveamento, Mensagens.getString("hint.chaveamento")));
-			container.add(criarLinhaCopiar("label.mapeamento", txtMapeamento, Mensagens.getString("hint.mapeamento")));
+					criarLinhaCopiar("label.mapeamento", txtMapeamento, ObjetoMensagens.getString("hint.mapeamento")));
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
 			container.add(criarLinhaCopiar("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinha("label.coluna_info", chkColunaInfo));

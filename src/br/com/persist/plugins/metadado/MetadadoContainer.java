@@ -110,6 +110,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 	}
 
+	static Action actionMenu(String chave) {
+		return Action.acaoMenu(MetadadoMensagens.getString(chave), null);
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final JProgressBar progresso = new JProgressBar();
@@ -168,13 +172,13 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action queExportamAcao = Action.actionMenu("label.tabelas_que_exportam", null);
-			private Action naoExportamAcao = Action.actionMenu("label.tabelas_nao_exportam", null);
-			private Action ordemExportAcao = Action.actionMenu("label.ordenado_exportacao", null);
-			private Action ordemImportAcao = Action.actionMenu("label.ordenado_importacao", null);
-			private Action localizarCampoAcao = Action.actionMenu("label.localizar_campo", null);
-			private Action pksMultiplaAcao = Action.actionMenu("label.pks_multiplas", null);
-			private Action pksAusentesAcao = Action.actionMenu("label.pks_ausente", null);
+			private Action queExportamAcao = actionMenu("label.tabelas_que_exportam");
+			private Action naoExportamAcao = actionMenu("label.tabelas_nao_exportam");
+			private Action ordemExportAcao = actionMenu("label.ordenado_exportacao");
+			private Action ordemImportAcao = actionMenu("label.ordenado_importacao");
+			private Action localizarCampoAcao = actionMenu("label.localizar_campo");
+			private Action pksMultiplaAcao = actionMenu("label.pks_multiplas");
+			private Action pksAusentesAcao = actionMenu("label.pks_ausente");
 
 			private ButtonInfo() {
 				super("label.funcoes", Icones.INFO);
@@ -202,7 +206,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 			private void localizarCampo() {
 				Object resp = Util.getValorInputDialog(MetadadoContainer.this, "label.atencao",
-						Mensagens.getString("label.localizar_campo"), null);
+						MetadadoMensagens.getString("label.localizar_campo"), null);
 				if (resp != null && !Util.estaVazio(resp.toString())) {
 					Map<String, Set<String>> map = metadadoTree.localizarCampo(resp.toString().toUpperCase());
 					Util.mensagemFormulario(MetadadoContainer.this, montarString(map));

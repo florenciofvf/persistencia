@@ -17,6 +17,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextArea;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 
 public class MiscelaniaContainer extends Panel {
@@ -49,7 +50,7 @@ public class MiscelaniaContainer extends Panel {
 
 	private void chave(StringBuilder builder) {
 		Map<String, List<String>> campoNomes = ObjetoUtil.criarMapaCampoNomes(!Util.estaVazio(objeto.getChaveamento())
-				? objeto.getChaveamento() : Mensagens.getString("hint.chaveamento"));
+				? objeto.getChaveamento() : ObjetoMensagens.getString("hint.chaveamento"));
 		int i = 0;
 		for (Map.Entry<String, List<String>> entry : campoNomes.entrySet()) {
 			String chave = entry.getKey();
@@ -65,7 +66,7 @@ public class MiscelaniaContainer extends Panel {
 
 	private void mapa(StringBuilder builder) {
 		Map<String, String> campoChave = ObjetoUtil.criarMapaCampoChave(!Util.estaVazio(objeto.getMapeamento())
-				? objeto.getMapeamento() : Mensagens.getString("hint.mapeamento"));
+				? objeto.getMapeamento() : ObjetoMensagens.getString("hint.mapeamento"));
 		int i = 0;
 		for (Map.Entry<String, String> entry : campoChave.entrySet()) {
 			String chave = entry.getKey();

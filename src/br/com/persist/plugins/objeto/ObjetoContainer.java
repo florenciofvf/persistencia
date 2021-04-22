@@ -514,7 +514,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		private ArrastoAcao() {
-			super(false, "label.arrastar", Icones.MAO);
+			super(false, ObjetoMensagens.getString("label.arrastar"), false, Icones.MAO);
 		}
 
 		@Override
@@ -530,7 +530,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		private RotulosAcao() {
-			super(false, "label.rotulos", Icones.TEXTO);
+			super(false, ObjetoMensagens.getString("label.rotulos"), false, Icones.TEXTO);
 		}
 
 		@Override
@@ -546,7 +546,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		private RelacaoAcao() {
-			super(false, "label.criar_relacao", Icones.SETA);
+			super(false, ObjetoMensagens.getString("label.criar_relacao"), false, Icones.SETA);
 		}
 
 		@Override
@@ -562,7 +562,7 @@ public class ObjetoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		private SelecaoAcao() {
-			super(false, "label.selecao", Icones.CURSOR);
+			super(false, ObjetoMensagens.getString("label.selecao"), false, Icones.CURSOR);
 		}
 
 		@Override

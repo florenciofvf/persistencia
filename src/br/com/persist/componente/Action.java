@@ -12,8 +12,12 @@ public class Action extends Acao {
 	private static final long serialVersionUID = 1L;
 	protected transient ActionListener actionListener;
 
+	public Action(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
+		super(menu, rotulo, chaveRotulo, icone);
+	}
+
 	public Action(boolean menu, String chaveRotulo, Icon icone) {
-		super(menu, chaveRotulo, icone);
+		this(menu, chaveRotulo, true, icone);
 	}
 
 	public void setActionListener(ActionListener actionListener) {
@@ -48,8 +52,16 @@ public class Action extends Acao {
 		return new Action(false, chaveRotulo, icone);
 	}
 
+	public static Action acaoIcon(String rotulo, Icon icone) {
+		return new Action(false, rotulo, false, icone);
+	}
+
 	public static Action actionMenu(String chaveRotulo, Icon icone) {
 		return new Action(true, chaveRotulo, icone);
+	}
+
+	public static Action acaoMenu(String rotulo, Icon icone) {
+		return new Action(true, rotulo, false, icone);
 	}
 
 	public static Action actionIconAtualizar() {
