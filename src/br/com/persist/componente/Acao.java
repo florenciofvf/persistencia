@@ -33,4 +33,8 @@ public abstract class Acao extends AbstractAction {
 	public void rotulo(String chaveRotulo) {
 		setRotulo(menu, chaveRotulo);
 	}
+
+	public void text(String rotulo) {
+		setRotulo(menu, rotulo, false);
+	}
 }

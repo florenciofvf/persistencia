@@ -121,6 +121,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		getActionMap().put("macro", macro);
 	}
 
+	static Action actionMenu(String chave) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), null);
+	}
+
 	public void configurarLargura(Dimension dimension) {
 		if (isAjusteLarguraForm()) {
 			setSize(dimension);
@@ -1164,7 +1168,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private class MenuDestacar extends MenuPadrao1 {
 			private static final long serialVersionUID = 1L;
-			Action proprioAcao = Action.actionMenu("label.proprio_container", null);
+			Action proprioAcao = actionMenu("label.proprio_container");
 			Action desktopAcao = Action.actionMenuDesktop();
 
 			private MenuDestacar() {
@@ -1178,9 +1182,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				desktopAcao.setActionListener(
 						e -> destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_DESKTOP, null));
 				proprioAcao.setActionListener(e -> destacarProprioContainer());
-				formularioAcao.rotulo("label.abrir_sel_em_formulario");
-				ficharioAcao.rotulo("label.abrir_sel_em_fichario");
-				desktopAcao.rotulo("label.abrir_sel_em_desktop");
+				formularioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_formulario"));
+				ficharioAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_fichario"));
+				desktopAcao.text(ObjetoMensagens.getString("label.abrir_sel_em_desktop"));
 			}
 
 			private void destacarProprioContainer() {
@@ -1188,7 +1192,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				if (getContinua(lista)) {
 					String ajustes = nomeObjetosAjusteAuto(lista);
 					if (!Util.estaVazio(ajustes) && !Util.confirmar(ObjetoSuperficie.this,
-							Mensagens.getString("msb.objeto_com_ajuste_auto", ajustes), false)) {
+							ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", ajustes), false)) {
 						return;
 					}
 					destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
