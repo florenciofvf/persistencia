@@ -47,6 +47,7 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
@@ -129,7 +130,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.intervalo", txtIntervalo));
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
-					Mensagens.getString("hint.arquivo_absoluto_relativo"),
+					ObjetoMensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
@@ -138,7 +139,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void mensagemPropriedadeArquivo(Label label) {
-			Util.mensagem(ObjetoContainer.this, Mensagens.getString("msg.propriedade_arquivo"));
+			Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.propriedade_arquivo"));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {

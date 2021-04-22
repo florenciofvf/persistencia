@@ -75,7 +75,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 		Muro muro = new Muro();
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
-		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
+		Label tituloDestacado = criarLabelTitulo(ObjetoMensagens.getString("label.tipo_container_pesquisa_auto"),
+				false);
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
 		muro.camada(panelS(tituloIntervalo, panelIntervalos));
 		muro.camada(panelS(tituloIntervaloCompara, panelIntervalosCompara,
@@ -142,10 +143,14 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		});
 	}
 
-	private Label criarLabelTitulo(String chaveRotulo) {
-		Label label = new Label(chaveRotulo);
+	private Label criarLabelTitulo(String chaveRotulo, boolean chave) {
+		Label label = new Label(chaveRotulo, chave);
 		label.setHorizontalAlignment(Label.CENTER);
 		return label;
+	}
+
+	private Label criarLabelTitulo(String chaveRotulo) {
+		return criarLabelTitulo(chaveRotulo, true);
 	}
 
 	private class NomeValor {

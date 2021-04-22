@@ -14,13 +14,17 @@ public class Label extends JLabel {
 	private static final long serialVersionUID = 1L;
 	private transient LabelLinkListener linkListener;
 
+	public Label(String rotulo, boolean chaveRotulo) {
+		super(chaveRotulo ? Mensagens.getString(rotulo) : rotulo);
+	}
+
 	public Label(String chaveRotulo, Color corFonte) {
 		super(Mensagens.getString(chaveRotulo));
 		setForeground(corFonte);
 	}
 
 	public Label(String chaveRotulo) {
-		super(Mensagens.getString(chaveRotulo));
+		this(chaveRotulo, true);
 	}
 
 	public Label(Color corFonte) {
