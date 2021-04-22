@@ -13,8 +13,20 @@ public class MenuPadrao1 extends Menu {
 	protected Action ficharioAcao = Action.actionMenuFichario();
 	protected Action dialogoAcao = Action.actionMenuDialogo();
 
+	public MenuPadrao1(String rotulo, boolean chaveRotulo, Icon icon, boolean dialogo) {
+		super(rotulo, chaveRotulo, icon);
+		init(dialogo);
+	}
+
 	public MenuPadrao1(String chaveRotulo, Icon icon, boolean dialogo) {
-		super(chaveRotulo, icon);
+		this(chaveRotulo, true, icon, dialogo);
+	}
+
+	public MenuPadrao1(String chaveRotulo, Icon icon) {
+		this(chaveRotulo, icon, true);
+	}
+
+	private void init(boolean dialogo) {
 		String[] strings = Preferencias.getFormFichaDialogo().split(",");
 		if (dialogo) {
 			for (String s : strings) {
@@ -35,10 +47,6 @@ public class MenuPadrao1 extends Menu {
 				}
 			}
 		}
-	}
-
-	public MenuPadrao1(String chaveRotulo, Icon icon) {
-		this(chaveRotulo, icon, true);
 	}
 
 	public void excluirAcao(Action action) {

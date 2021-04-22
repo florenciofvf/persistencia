@@ -9,14 +9,13 @@ import br.com.persist.assistencia.Mensagens;
 public class Menu extends JMenu {
 	private static final long serialVersionUID = 1L;
 
-	public Menu(String rotulo, Icon icon, String naoChave) {
-		super(rotulo);
+	public Menu(String rotulo, boolean chaveRotulo, Icon icon) {
+		super(chaveRotulo ? Mensagens.getString(rotulo) : rotulo);
 		setIcon(icon);
 	}
 
 	public Menu(String chaveRotulo, Icon icon) {
-		super(Mensagens.getString(chaveRotulo));
-		setIcon(icon);
+		this(chaveRotulo, true, icon);
 	}
 
 	public Menu(String chaveRotulo) {

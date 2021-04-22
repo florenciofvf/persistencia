@@ -12,20 +12,16 @@ public class MenuPadrao3 extends Menu {
 	protected Action formularioAcao = Action.actionMenuFormulario();
 	protected Action dialogoAcao = Action.actionMenuDialogo();
 
-	public MenuPadrao3(String rotulo, Icon icon, String naoChave) {
-		super(rotulo, icon, naoChave);
-		String[] strings = Preferencias.getFormDialogo().split(",");
-		for (String s : strings) {
-			if (Constantes.FORM.equals(s)) {
-				addMenuItem(formularioAcao);
-			} else if (Constantes.DIALOG.equals(s)) {
-				addMenuItem(dialogoAcao);
-			}
-		}
+	public MenuPadrao3(String rotulo, boolean chaveRotulo, Icon icon) {
+		super(rotulo, chaveRotulo, icon);
+		init();
 	}
 
 	public MenuPadrao3(String chaveRotulo, Icon icon) {
-		super(chaveRotulo, icon);
+		this(chaveRotulo, true, icon);
+	}
+
+	private void init() {
 		String[] strings = Preferencias.getFormDialogo().split(",");
 		for (String s : strings) {
 			if (Constantes.FORM.equals(s)) {

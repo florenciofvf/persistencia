@@ -7,15 +7,13 @@ public class MenuPadrao2 extends Menu {
 	protected Action comAspasAcao = Action.actionMenuComAspas();
 	protected Action semAspasAcao = Action.actionMenuSemAspas();
 
-	public MenuPadrao2(String rotulo, Icon icon, String naoChave) {
-		super(rotulo, icon, naoChave);
+	public MenuPadrao2(String rotulo, boolean chaveRotulo, Icon icon) {
+		super(rotulo, chaveRotulo, icon);
 		addMenuItem(semAspasAcao);
 		addMenuItem(comAspasAcao);
 	}
 
 	public MenuPadrao2(String chaveRotulo) {
-		super(chaveRotulo, null);
-		addMenuItem(semAspasAcao);
-		addMenuItem(comAspasAcao);
+		this(chaveRotulo, true, null);
 	}
 }

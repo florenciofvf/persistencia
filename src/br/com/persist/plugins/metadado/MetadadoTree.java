@@ -214,7 +214,7 @@ public class MetadadoTree extends Tree {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirExportacaoH() {
-				super("label.abrir_exportacao_h", Icones.ABRIR, false);
+				super(MetadadoMensagens.getString("label.abrir_exportacao_h"), false, Icones.ABRIR, false);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirExportacaoFormArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(
@@ -238,7 +238,7 @@ public class MetadadoTree extends Tree {
 			private static final long serialVersionUID = 1L;
 
 			MenuAbrirImportacaoH() {
-				super("label.abrir_importacao_h", Icones.ABRIR, false);
+				super(MetadadoMensagens.getString("label.abrir_importacao_h"), false, Icones.ABRIR, false);
 				formularioAcao.setActionListener(
 						e -> ouvintes.forEach(o -> o.abrirImportacaoFormArquivo(MetadadoTree.this, false)));
 				ficharioAcao.setActionListener(

@@ -693,7 +693,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private final transient Pesquisa pesquisa;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
-					super(pesquisa.getNomeParaMenuItem(), iconePesquisa(pesquisa), "nao_chave");
+					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addMenuItem(true, elementosAcao);
 					this.pesquisa = pesquisa;
 					semAspasAcao.setActionListener(e -> processar(false));
@@ -912,7 +912,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private final transient Instrucao instrucao;
 
 				private MenuInstrucao(Instrucao instrucao) {
-					super(instrucao.getNome(), instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC, "nao_chave");
+					super(instrucao.getNome(), false, instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC);
 					this.instrucao = instrucao;
 					formularioAcao.setActionListener(e -> abrirInstrucao(true));
 					dialogoAcao.setActionListener(e -> abrirInstrucao(false));
