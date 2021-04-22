@@ -87,6 +87,8 @@ import br.com.persist.plugins.fragmento.FragmentoListener;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoConstantes;
+import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.Relacao;
@@ -596,7 +598,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		private class ButtonSincronizar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
-			private MenuItem itemAtualizarAuto = new MenuItem(Constantes.LABEL_ATUALIZAR_AUTO, Icones.ATUALIZAR);
+			private MenuItem itemAtualizarAuto = new MenuItem(
+					ObjetoMensagens.getString(ObjetoConstantes.LABEL_ATUALIZAR_AUTO), false, Icones.ATUALIZAR);
 			private Action atualizarAcao = Action.actionMenuAtualizar();
 
 			private ButtonSincronizar() {
@@ -614,7 +617,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					@Override
 					public void mouseEntered(MouseEvent e) {
 						if (thread == null) {
-							itemAtualizarAuto.setText(Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO));
+							itemAtualizarAuto.setText(ObjetoMensagens.getString(ObjetoConstantes.LABEL_ATUALIZAR_AUTO));
 							thread = new Thread(new Trabalho());
 							contadorAuto = 0;
 							thread.start();
@@ -642,7 +645,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private class Trabalho implements Runnable {
-				private final String titulo = Mensagens.getString(Constantes.LABEL_ATUALIZAR_AUTO);
+				private final String titulo = ObjetoMensagens.getString(ObjetoConstantes.LABEL_ATUALIZAR_AUTO);
 
 				@Override
 				public void run() {

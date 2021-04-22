@@ -11,7 +11,6 @@ public class Constantes {
 	public static final String LABEL_RUNTIME_EXEC_MIN = "label.runtime_exec_min";
 	public static final String LABEL_MAPEAMENTOS_MIN = "label.mapeamentos_min";
 	public static final String LABEL_CONFIRMA_SALVAR = "label.confirma_salvar";
-	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_COMPARACAO_MIN = "label.comparacao_min";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
 	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";

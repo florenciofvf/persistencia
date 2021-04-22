@@ -10,8 +10,12 @@ public class MenuItem extends JMenuItem {
 	private static final long serialVersionUID = 1L;
 	private transient Object object;
 
+	public MenuItem(String rotulo, boolean rotuloChave, Icon icon) {
+		super(rotuloChave ? Mensagens.getString(rotulo) : rotulo, icon);
+	}
+
 	public MenuItem(String chaveRotulo, Icon icon) {
-		super(Mensagens.getString(chaveRotulo), icon);
+		this(chaveRotulo, true, icon);
 	}
 
 	public MenuItem(String chaveRotulo) {
