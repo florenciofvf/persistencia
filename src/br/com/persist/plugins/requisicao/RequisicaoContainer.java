@@ -350,12 +350,12 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		@Override
 		public String getModelo() {
-			return Mensagens.getString("requisicao.modelo");
+			return RequisicaoMensagens.getString("requisicao.modelo");
 		}
 
 		@Override
 		public String getTitle() {
-			return Mensagens.getString(Constantes.LABEL_REQUISICAO);
+			return RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO);
 		}
 	};
 
@@ -396,17 +396,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_REQUISICAO_MIN);
+				return RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO_MIN);
 			}
 
 			@Override
 			public String getTitulo() {
-				return Mensagens.getString(Constantes.LABEL_REQUISICAO);
+				return RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO);
 			}
 
 			@Override
 			public String getHint() {
-				return Mensagens.getString(Constantes.LABEL_REQUISICAO);
+				return RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO);
 			}
 
 			@Override

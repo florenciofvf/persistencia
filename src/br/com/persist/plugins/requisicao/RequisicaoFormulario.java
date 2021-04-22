@@ -3,8 +3,6 @@ package br.com.persist.plugins.requisicao;
 import java.awt.BorderLayout;
 
 import br.com.persist.abstrato.AbstratoFormulario;
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoFormulario extends AbstratoFormulario {
@@ -12,14 +10,14 @@ public class RequisicaoFormulario extends AbstratoFormulario {
 	private final RequisicaoContainer container;
 
 	private RequisicaoFormulario(Formulario formulario, String conteudo, String idPagina) {
-		super(Mensagens.getString(Constantes.LABEL_REQUISICAO));
+		super(RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO));
 		container = new RequisicaoContainer(this, formulario, conteudo, idPagina);
 		container.setRequisicaoFormulario(this);
 		montarLayout();
 	}
 
 	private RequisicaoFormulario(RequisicaoContainer container) {
-		super(Mensagens.getString(Constantes.LABEL_REQUISICAO));
+		super(RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO));
 		container.setRequisicaoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

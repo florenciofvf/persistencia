@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoDialogo extends AbstratoDialogo {
@@ -13,7 +11,7 @@ public class RequisicaoDialogo extends AbstratoDialogo {
 	private final RequisicaoContainer container;
 
 	private RequisicaoDialogo(Frame frame, Formulario formulario) {
-		super(frame, Mensagens.getString(Constantes.LABEL_REQUISICAO));
+		super(frame, RequisicaoMensagens.getString(RequisicaoConstantes.LABEL_REQUISICAO));
 		container = new RequisicaoContainer(this, formulario, null, null);
 		container.setRequisicaoDialogo(this);
 		montarLayout();
