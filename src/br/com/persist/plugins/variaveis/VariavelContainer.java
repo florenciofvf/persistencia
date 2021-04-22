@@ -238,7 +238,7 @@ public class VariavelContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_VARIAVEIS_MIN);
+				return VariavelMensagens.getString(VariavelConstantes.LABEL_VARIAVEIS_MIN);
 			}
 
 			@Override

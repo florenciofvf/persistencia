@@ -465,7 +465,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_DESKTOP_MIN);
+				return ObjetoMensagens.getString(ObjetoConstantes.LABEL_DESKTOP_MIN);
 			}
 
 			@Override

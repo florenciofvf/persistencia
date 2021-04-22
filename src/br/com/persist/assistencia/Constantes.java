@@ -10,13 +10,10 @@ public class Constantes {
 	public static final Dimension DIMENSION_FILE_CHOOSER = new Dimension(600, 600);
 	public static final String LABEL_CONFIRMA_SALVAR = "label.confirma_salvar";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
-	public static final String LABEL_VARIAVEIS_MIN = "label.variaveis_min";
 	public static final String IMAGEM_TRAY_ICON = "/resources/create.png";
 	public static final String LABEL_UTILITARIOS = "label.utilitarios";
 	public static final String LABEL_MAPEAMENTOS = "label.mapeamentos";
 	public static final String LABEL_SINCRONIZAR = "label.sincronizar";
-	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
-	public static final String LABEL_CONEXAO_MIN = "label.conexao_min";
 	public static final String LABEL_FORMULARIO = "label.formulario";
 	public static final String LABEL_COMPARACAO = "label.comparacao";
 	public static final String PERSISTENCIA_FVF = "persistencia.fvf";

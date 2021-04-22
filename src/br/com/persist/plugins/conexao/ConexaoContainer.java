@@ -341,7 +341,7 @@ public class ConexaoContainer extends AbstratoContainer {
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_CONEXAO_MIN);
+				return ConexaoMensagens.getString(ConexaoConstantes.LABEL_CONEXAO_MIN);
 			}
 
 			@Override
