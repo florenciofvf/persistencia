@@ -165,6 +165,10 @@ public class ObjetoContainer extends AbstratoContainer {
 		return arquivo;
 	}
 
+	static Action actionMenu(String chave) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), null);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action criarObjetoAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
@@ -379,9 +383,9 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action excluirSemTabelaAcao = Action.actionMenu("label.excluir_sem_tabela", null);
-			private Action totalAtualAcao = Action.actionMenu("label.total_atual", null);
-			private Action comparaRecAcao = Action.actionMenu("label.compararRec", null);
+			private Action excluirSemTabelaAcao = actionMenu("label.excluir_sem_tabela");
+			private Action totalAtualAcao = actionMenu("label.total_atual");
+			private Action comparaRecAcao = actionMenu("label.compararRec");
 			private MenuItem itemTotalAtual = new MenuItem(totalAtualAcao);
 			private MenuItem itemComparaRec = new MenuItem(comparaRecAcao);
 
