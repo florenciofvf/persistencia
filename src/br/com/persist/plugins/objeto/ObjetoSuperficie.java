@@ -1400,18 +1400,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			}
 			StringBuilder sb = new StringBuilder();
-			sb.append(Mensagens.getString("label.total_objetos") + " " + (visiveis + invisiveis) + Constantes.QL);
-			sb.append(Mensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
-			sb.append(Mensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
+			sb.append(ObjetoMensagens.getString("label.total_objetos") + " " + (visiveis + invisiveis) + Constantes.QL);
+			sb.append(ObjetoMensagens.getString("label.objetos_visiveis", visiveis) + Constantes.QL);
+			sb.append(ObjetoMensagens.getString("label.objetos_invisiveis", invisiveis) + Constantes.QL);
 			if (sbi.length() > 0) {
 				sb.append(sbi);
 			}
 			File file = container.getArquivo();
 			if (file != null) {
 				sb.append("------------------" + Constantes.QL);
-				sb.append(Mensagens.getString("label.local_absoluto_arquivo") + " " + file.getAbsolutePath()
+				sb.append(ObjetoMensagens.getString("label.local_absoluto_arquivo") + " " + file.getAbsolutePath()
 						+ Constantes.QL);
-				sb.append(Mensagens.getString("label.local_relativo_arquivo") + " "
+				sb.append(ObjetoMensagens.getString("label.local_relativo_arquivo") + " "
 						+ ArquivoProvedor.criarStringPersistencia(file) + Constantes.QL);
 			}
 			Util.mensagem(formulario, sb.toString());
