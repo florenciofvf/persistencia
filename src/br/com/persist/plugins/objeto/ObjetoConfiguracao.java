@@ -26,9 +26,12 @@ import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
-	private final CheckBox chkHabitInnerJoinsObj = new CheckBox("label.habilitadoInnerJoinsObjeto");
-	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox("label.abrir_auto_destacado");
-	private final CheckBox chkAtivarAbrirAuto = new CheckBox("label.ativar_abrir_auto");
+	private final CheckBox chkHabitInnerJoinsObj = new CheckBox(
+			ObjetoMensagens.getString("label.habilitadoInnerJoinsObjeto"), false);
+	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox(
+			ObjetoMensagens.getString("label.abrir_auto_destacado"), false);
+	private final CheckBox chkAtivarAbrirAuto = new CheckBox(ObjetoMensagens.getString("label.ativar_abrir_auto"),
+			false);
 	private final ButtonGroup grupoTiposContainer = new ButtonGroup();
 	private final transient NomeValor[] intervalosCompara = { new NomeValor("label.1", 1, NomeValor.INTERVALO_COMPARA),
 			new NomeValor("label.3", 3, NomeValor.INTERVALO_COMPARA),
