@@ -14,7 +14,6 @@ public class Constantes {
 	public static final String LABEL_REQUISICAO_MIN = "label.requisicao_min";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
 	public static final String LABEL_COMPARACAO_MIN = "label.comparacao_min";
-	public static final String LABEL_METADADOS_MIN = "label.meta_dados_min";
 	public static final String LABEL_CONFIGURACOES = "label.configuracoes";
 	public static final String LABEL_ATUALIZAR_MIN = "label.atualizar_min";
 	public static final String LABEL_FRAGMENTO_MIN = "label.fragmento_min";

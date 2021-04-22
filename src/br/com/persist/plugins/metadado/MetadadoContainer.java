@@ -512,17 +512,17 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		return new AbstratoTitulo() {
 			@Override
 			public String getTituloMin() {
-				return Mensagens.getString(Constantes.LABEL_METADADOS_MIN);
+				return MetadadoMensagens.getString(MetadadoConstantes.LABEL_METADADOS_MIN);
 			}
 
 			@Override
 			public String getTitulo() {
-				return Mensagens.getString(Constantes.LABEL_METADADOS);
+				return MetadadoMensagens.getString(MetadadoConstantes.LABEL_METADADOS);
 			}
 
 			@Override
 			public String getHint() {
-				return Mensagens.getString(Constantes.LABEL_METADADOS);
+				return MetadadoMensagens.getString(MetadadoConstantes.LABEL_METADADOS);
 			}
 
 			@Override
