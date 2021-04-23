@@ -612,7 +612,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				addMenuItem(true, sincronizarAcao);
 				addMenuItem(true, itemAtualizarAuto);
 				itemAtualizarAuto.setText(itemAtualizarAuto.getText() + "   ");
-				itemAtualizarAuto.setToolTipText(Mensagens.getString("hint.atualizar_auto"));
+				itemAtualizarAuto.setToolTipText(ObjetoMensagens.getString("hint.atualizar_auto"));
 				eventos();
 			}
 

@@ -297,7 +297,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaCopiar("label.select_alter", txtSelectAlter));
 			if (ObjetoPreferencia.isHabilitadoInnerJoinsObjeto()) {
 				container.add(criarLinhaCopiar("label.tabelas", txtTabelas));
-				container.add(criarLinhaCopiar("label.joins", txtJoins, Mensagens.getString("hint.joins")));
+				container.add(criarLinhaCopiar("label.joins", txtJoins, ObjetoMensagens.getString("hint.joins")));
 			}
 			container.add(criarLinhaCopiar("label.prefixo_nt", txtPrefixoNT));
 			container.add(
