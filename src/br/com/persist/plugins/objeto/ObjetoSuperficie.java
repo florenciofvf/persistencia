@@ -1030,7 +1030,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			novo.setDeslocamentoXId(Objeto.DIAMETRO);
 			novo.setDeslocamentoYId(Objeto.DIAMETRO / 2);
 		}
-		if (checarNomear && Util.confirmar(ObjetoSuperficie.this, "msg.nomear_arrasto")) {
+		if (checarNomear
+				&& Util.confirmar(ObjetoSuperficie.this, ObjetoMensagens.getString("msg.nomear_arrasto"), false)) {
 			Object resp = Util.getValorInputDialog(ObjetoSuperficie.this, "label.id", id, id);
 			if (resp != null && !Util.estaVazio(resp.toString())) {
 				id = resp.toString();

@@ -161,7 +161,8 @@ public class MetadadoTree extends Tree {
 
 	private class MetadadosPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action constraintInfoAction = Action.actionMenu("label.constraint_info", null);
+		private Action constraintInfoAction = Action.acaoMenu(MetadadoMensagens.getString("label.constraint_info"),
+				null);
 		private MenuAbrirExportacaoH menuAbrirExportacaoH = new MenuAbrirExportacaoH();
 		private MenuAbrirImportacaoH menuAbrirImportacaoH = new MenuAbrirImportacaoH();
 		private MenuAbrirExportacaoC menuAbrirExportacaoC = new MenuAbrirExportacaoC();

@@ -199,9 +199,9 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 
 	private class PainelCorTotalRecente extends Panel {
 		private static final long serialVersionUID = 1L;
-		private Label labelAntesProcessar = new Label("label.cor_antes_processar");
-		private Label labelBuscarTotal = new Label("label.cor_total_atual");
-		private Label labelComparacao = new Label("label.cor_comparacao");
+		private Label labelAntesProcessar = new Label(ObjetoMensagens.getString("label.cor_antes_processar"), false);
+		private Label labelBuscarTotal = new Label(ObjetoMensagens.getString("label.cor_total_atual"), false);
+		private Label labelComparacao = new Label(ObjetoMensagens.getString("label.cor_comparacao"), false);
 		private transient MouseInner mouseInner = new MouseInner();
 
 		private PainelCorTotalRecente() {
