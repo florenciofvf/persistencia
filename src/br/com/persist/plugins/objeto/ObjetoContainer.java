@@ -165,8 +165,12 @@ public class ObjetoContainer extends AbstratoContainer {
 		return arquivo;
 	}
 
+	static Action actionMenu(String chave, Icon icon) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+	}
+
 	static Action actionMenu(String chave) {
-		return Action.acaoMenu(ObjetoMensagens.getString(chave), null);
+		return actionMenu(chave, null);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -348,11 +352,11 @@ public class ObjetoContainer extends AbstratoContainer {
 		private class ButtonStatus extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action selecaoGeralAcao = Action.actionMenu("label.selecao_todos", Icones.TAG2);
-			private Action pontoDestinoAcao = Action.actionMenu("label.ponto_destino", Icones.RECT);
 			private Action desenharDescAcao = Action.actionMenu("label.desenhar_desc", Icones.TAG);
 			private Action transparenteAcao = Action.actionMenu("label.transparente", Icones.RECT);
-			private Action pontoOrigemAcao = Action.actionMenu("label.ponto_origem", Icones.RECT);
 			private Action desenharIdAcao = Action.actionMenu("label.desenhar_id", Icones.LABEL);
+			private Action pontoDestinoAcao = actionMenu("label.ponto_destino", Icones.RECT);
+			private Action pontoOrigemAcao = actionMenu("label.ponto_origem", Icones.RECT);
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);

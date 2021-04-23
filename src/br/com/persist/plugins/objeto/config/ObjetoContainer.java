@@ -289,7 +289,7 @@ public class ObjetoContainer extends Panel {
 			chkSANE.addActionListener(this);
 			chkBPNT.addActionListener(this);
 			Box container = Box.createVerticalBox();
-			container.add(criarLinhaCopiar("label.apelido_para_joins", txtApelido));
+			container.add(criarLinhaCopiarRotulo("label.apelido_para_joins", txtApelido));
 			container.add(criarLinhaCopiar("label.grupo", txtGrupo));
 			container.add(criarLinhaCopiar("label.tabela", txtTabela));
 			container.add(criarLinhaCopiar("label.chaves", txtChaves, ObjetoMensagens.getString("hint.chaves")));

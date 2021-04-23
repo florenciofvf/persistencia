@@ -66,6 +66,7 @@ import br.com.persist.parser.ParserDialogo;
 import br.com.persist.parser.ParserListener;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
+import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -157,13 +158,21 @@ public class RequisicaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
+	static Action actionIcon(String chave, Icon icon) {
+		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+	}
+
+	static Action actionIcon(String chave) {
+		return actionIcon(chave, null);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private CheckBox chkRespostaJson = new CheckBox(RequisicaoMensagens.getString("label.resposta_json"), false);
-		private Action retornar64Acao = Action.actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
-		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
+		private Action retornar64Acao = actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
+		private Action base64Acao = actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkCopiarAccessT = new CheckBox();

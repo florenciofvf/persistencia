@@ -60,7 +60,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			new NomeValor("label.desktop", ObjetoConstantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
 
 	public ObjetoConfiguracao(Formulario formulario) {
-		super(formulario, Mensagens.getString("label.plugin_objeto"));
+		super(formulario, ObjetoMensagens.getString("label.plugin_objeto"));
 		montarLayout();
 		configurar();
 	}
