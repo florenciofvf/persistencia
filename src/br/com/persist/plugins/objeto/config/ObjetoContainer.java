@@ -126,8 +126,8 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaCopiar("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
-			container.add(criarLinha("label.desloc_x_id", txtDeslocXId));
-			container.add(criarLinha("label.desloc_y_id", txtDeslocYId));
+			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
+			container.add(criarLinhaRotulo("label.desloc_y_id", txtDeslocYId));
 			container.add(criarLinha("label.intervalo", txtIntervalo));
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
 					ObjetoMensagens.getString("hint.arquivo_absoluto_relativo"),
@@ -206,7 +206,7 @@ public class ObjetoContainer extends Panel {
 
 		private Panel criarLinhaComLinkCopiar(String chaveRotulo, TextField textField, String hint,
 				LabelLinkListener linkListener) {
-			Panel panel = criarLinhaComLink(chaveRotulo, textField, hint, linkListener);
+			Panel panel = criarLinhaComLink(chaveRotulo, true, textField, hint, linkListener);
 			panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
 			return panel;
 		}
@@ -308,7 +308,7 @@ public class ObjetoContainer extends Panel {
 					criarLinhaCopiar("label.mapeamento", txtMapeamento, ObjetoMensagens.getString("hint.mapeamento")));
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
 			container.add(criarLinhaCopiar("label.final_consulta", txtFinalConsulta));
-			container.add(criarLinha("label.coluna_info", chkColunaInfo));
+			container.add(criarLinhaRotulo("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
 			container.add(criarLinha("label.sane", chkSANE, ObjetoMensagens.getString("hint.sane")));
@@ -453,15 +453,19 @@ public class ObjetoContainer extends Panel {
 		return criarLinha(chaveRotulo, componente, null);
 	}
 
-	private Panel criarLinha(String chaveRotulo, JComponent componente, String hint) {
-		return criarLinhaComLink(chaveRotulo, componente, hint, null);
+	private Panel criarLinhaRotulo(String chaveRotulo, JComponent componente) {
+		return criarLinhaComLink(ObjetoMensagens.getString(chaveRotulo), false, componente, null, null);
 	}
 
-	private Panel criarLinhaComLink(String chaveRotulo, JComponent componente, String hint,
+	private Panel criarLinha(String chaveRotulo, JComponent componente, String hint) {
+		return criarLinhaComLink(chaveRotulo, true, componente, hint, null);
+	}
+
+	private Panel criarLinhaComLink(String rotulo, boolean chaveRotulo, JComponent componente, String hint,
 			LabelLinkListener linkListener) {
 		Dimension largura = new Dimension(120, 0);
 		Panel linha = new Panel();
-		Label label = new Label(chaveRotulo);
+		Label label = new Label(rotulo, chaveRotulo);
 		label.setHorizontalAlignment(Label.RIGHT);
 		label.setPreferredSize(largura);
 		label.setMinimumSize(largura);
