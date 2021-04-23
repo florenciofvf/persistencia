@@ -179,6 +179,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
+	static Action actionMenu(String chave) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), null);
+	}
+
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabelaPersistencia));
@@ -1072,9 +1076,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private class MenuTemp extends Menu {
 				private static final long serialVersionUID = 1L;
-				private Action tabelasRepetidasAcao = Action.actionMenu("label.tabelas_repetidas", null);
-				private Action larTitTodosAcao = Action.actionMenu("label.largura_titulo_todos", null);
-				private Action destacarColunaAcao = Action.actionMenu("label.destacar_coluna", null);
+				private Action tabelasRepetidasAcao = actionMenu("label.tabelas_repetidas");
+				private Action larTitTodosAcao = actionMenu("label.largura_titulo_todos");
+				private Action destacarColunaAcao = actionMenu("label.destacar_coluna");
 				private Action corAcao = Action.actionMenu("label.cor", Icones.COR);
 
 				private MenuTemp() {
