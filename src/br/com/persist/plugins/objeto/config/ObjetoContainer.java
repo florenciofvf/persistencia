@@ -585,7 +585,7 @@ public class ObjetoContainer extends Panel {
 
 			private Toolbar() {
 				super.ini(null, COPIAR, COLAR0, APLICAR);
-				aplicarAcao.rotulo("label.reaplicar_macro");
+				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 			}
 
 			@Override
@@ -633,7 +633,7 @@ public class ObjetoContainer extends Panel {
 
 			private Toolbar() {
 				super.ini(null, COPIAR, COLAR0, APLICAR);
-				aplicarAcao.rotulo("label.reaplicar_macro");
+				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 			}
 
 			@Override

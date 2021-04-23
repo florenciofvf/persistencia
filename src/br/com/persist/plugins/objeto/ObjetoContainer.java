@@ -200,10 +200,10 @@ public class ObjetoContainer extends AbstratoContainer {
 		}
 
 		private void configurar() {
-			chkAjusteLarguraFrm.setToolTipText(Mensagens.getString("label.ajuste_largura_form"));
-			chkAjusteAutomatico.setToolTipText(Mensagens.getString("label.ajuste_automatico"));
-			txtArquivoVinculo.setToolTipText(Mensagens.getString("hint.arquivo_vinculado"));
-			txtPrefixoNomeTabela.setToolTipText(Mensagens.getString("label.prefixo_nt"));
+			chkAjusteLarguraFrm.setToolTipText(ObjetoMensagens.getString("label.ajuste_largura_form"));
+			chkAjusteAutomatico.setToolTipText(ObjetoMensagens.getString("label.ajuste_automatico"));
+			txtArquivoVinculo.setToolTipText(ObjetoMensagens.getString("hint.arquivo_vinculado"));
+			txtPrefixoNomeTabela.setToolTipText(ObjetoMensagens.getString("label.prefixo_nt"));
 			configAtalho(excluirAcao, KeyEvent.VK_D);
 			configAtalho(colar0Acao, KeyEvent.VK_V);
 		}

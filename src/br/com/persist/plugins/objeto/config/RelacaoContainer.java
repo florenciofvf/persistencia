@@ -49,6 +49,7 @@ import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.objeto.Objeto;
+import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
@@ -201,7 +202,7 @@ public class RelacaoContainer extends Panel {
 
 			private Toolbar() {
 				super.ini(null, COPIAR, COLAR0, APLICAR);
-				aplicarAcao.rotulo("label.reaplicar_macro");
+				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 			}
 
 			@Override
@@ -249,7 +250,7 @@ public class RelacaoContainer extends Panel {
 
 			private Toolbar() {
 				super.ini(null, COPIAR, COLAR0, APLICAR);
-				aplicarAcao.rotulo("label.reaplicar_macro");
+				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 			}
 
 			@Override

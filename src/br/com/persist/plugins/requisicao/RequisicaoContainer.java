@@ -159,13 +159,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private CheckBox chkRespostaJson = new CheckBox(RequisicaoMensagens.getString("label.resposta_json"), false);
 		private Action retornar64Acao = Action.actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
 		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action base64Acao = Action.actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
-		private CheckBox chkRespostaJson = new CheckBox("label.resposta_json");
 		private CheckBox chkCopiarAccessT = new CheckBox();
 
 		public void ini(Janela janela) {
@@ -179,7 +179,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 			addButton(modeloAcao);
 			addButton(true, base64Acao);
 			addButton(retornar64Acao);
-			String hint = Mensagens.getString("label.copiar_access_token", Mensagens.getString("label.resposta_json"));
+			String hint = RequisicaoMensagens.getString("label.copiar_access_token",
+					RequisicaoMensagens.getString("label.resposta_json"));
 			chkCopiarAccessT.setToolTipText(hint);
 			eventos();
 		}
