@@ -123,12 +123,12 @@ public class ObjetoContainer extends Panel {
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
-			container.add(criarLinhaCopiar("label.id", txtId));
+			container.add(criarLinhaCopiarRotulo("label.id", txtId));
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
 			container.add(criarLinhaRotulo("label.desloc_y_id", txtDeslocYId));
-			container.add(criarLinha("label.intervalo", txtIntervalo));
+			container.add(criarLinhaCopiar("label.intervalo", txtIntervalo));
 			container.add(criarLinhaComLinkCopiar("label.arquivo", txtArquivo,
 					ObjetoMensagens.getString("hint.arquivo_absoluto_relativo"),
 					PanelGeral.this::mensagemPropriedadeArquivo));
@@ -299,7 +299,7 @@ public class ObjetoContainer extends Panel {
 				container.add(criarLinhaCopiar("label.tabelas", txtTabelas));
 				container.add(criarLinhaCopiar("label.joins", txtJoins, ObjetoMensagens.getString("hint.joins")));
 			}
-			container.add(criarLinhaCopiar("label.prefixo_nt", txtPrefixoNT));
+			container.add(criarLinhaCopiarRotulo("label.prefixo_nt", txtPrefixoNT));
 			container.add(
 					criarLinhaCopiar("label.sequencias", txtSequencias, ObjetoMensagens.getString("hint.sequencias")));
 			container.add(criarLinhaCopiar("label.chaveamento", txtChaveamento,
@@ -443,8 +443,18 @@ public class ObjetoContainer extends Panel {
 		return criarLinhaCopiar(chaveRotulo, textField, null);
 	}
 
+	private Panel criarLinhaCopiarRotulo(String chaveRotulo, TextField textField) {
+		return criarLinhaCopiarRotulo(chaveRotulo, textField, null);
+	}
+
 	private Panel criarLinhaCopiar(String chaveRotulo, TextField textField, String hint) {
 		Panel panel = criarLinha(chaveRotulo, textField, hint);
+		panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
+		return panel;
+	}
+
+	private Panel criarLinhaCopiarRotulo(String chaveRotulo, TextField textField, String hint) {
+		Panel panel = criarLinhaComLink(ObjetoMensagens.getString(chaveRotulo), false, textField, hint, null);
 		panel.add(BorderLayout.EAST, new PanelCopiarColar(textField));
 		return panel;
 	}
