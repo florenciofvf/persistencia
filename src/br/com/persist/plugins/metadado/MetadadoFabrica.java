@@ -46,8 +46,7 @@ public class MetadadoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuMetadado(Formulario formulario) {
-			super(Constantes.LABEL_VAZIO, Icones.CAMPOS, false);
-			setText(MetadadoMensagens.getString(MetadadoConstantes.LABEL_METADADOS));
+			super(Constantes.LABEL_METADADOS, Icones.CAMPOS);
 			ficharioAcao
 					.setActionListener(e -> formulario.adicionarPagina(new MetadadoContainer(null, formulario, null)));
 			formularioAcao.setActionListener(e -> MetadadoFormulario.criar(formulario, (Conexao) null));

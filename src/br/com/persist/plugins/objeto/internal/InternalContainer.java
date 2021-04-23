@@ -1061,7 +1061,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			private MenuTemp menuTemp = new MenuTemp();
 
 			private ButtonInfo() {
-				super("label.meta_dados", Icones.INFO);
+				super(Constantes.LABEL_METADADOS, Icones.INFO);
 				addMenuItem(new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
@@ -1519,7 +1519,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private static final long serialVersionUID = 1L;
 
 				private MetaDadosAcao() {
-					super(true, "label.meta_dados", null);
+					super(true, Constantes.LABEL_METADADOS, null);
 				}
 
 				@Override

@@ -3,6 +3,8 @@ package br.com.persist.plugins.metadado;
 import java.awt.BorderLayout;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 
@@ -11,14 +13,14 @@ public class MetadadoFormulario extends AbstratoFormulario {
 	private final MetadadoContainer container;
 
 	private MetadadoFormulario(Formulario formulario, Conexao conexao) {
-		super(MetadadoMensagens.getString(MetadadoConstantes.LABEL_METADADOS));
+		super(Mensagens.getString(Constantes.LABEL_METADADOS));
 		container = new MetadadoContainer(this, formulario, conexao);
 		container.setMetadadoFormulario(this);
 		montarLayout();
 	}
 
 	private MetadadoFormulario(MetadadoContainer container) {
-		super(MetadadoMensagens.getString(MetadadoConstantes.LABEL_METADADOS));
+		super(Mensagens.getString(Constantes.LABEL_METADADOS));
 		container.setMetadadoFormulario(this);
 		this.container = container;
 		container.setJanela(this);

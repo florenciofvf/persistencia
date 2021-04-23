@@ -241,11 +241,11 @@ public class TabelaPersistencia extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action detalheColunaAcao = Action.actionMenu(Constantes.LABEL_METADADOS, Icones.INFO);
+		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
 		private Action concatNomeColunaAcao = actionMenu("label.concatenar_nome_coluna");
 		private Action colocarNomeColunaAcao = actionMenu("label.colocar_nome_coluna");
 		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
-		private Action detalheColunaAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
-		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
