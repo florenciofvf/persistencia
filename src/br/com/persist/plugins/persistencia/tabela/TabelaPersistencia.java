@@ -12,24 +12,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import br.com.persist.componente.MenuItem;
-import br.com.persist.componente.Popup;
-import br.com.persist.plugins.mapeamento.Mapeamento;
-import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
-import br.com.persist.plugins.persistencia.Coluna;
-import br.com.persist.plugins.persistencia.PersistenciaModelo;
-import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
+import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao2;
+import br.com.persist.componente.Popup;
+import br.com.persist.plugins.mapeamento.Mapeamento;
+import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
+import br.com.persist.plugins.persistencia.Coluna;
+import br.com.persist.plugins.persistencia.OrdenacaoModelo;
+import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class TabelaPersistencia extends JTable {
 	private static final long serialVersionUID = 1L;
@@ -235,8 +236,12 @@ public class TabelaPersistencia extends JTable {
 		return columnModel.getColumn(colunaView);
 	}
 
+	static Action actionMenu(String chave, Icon icon) {
+		return Action.acaoMenu(TabelaMensagens.getString(chave), icon);
+	}
+
 	static Action actionMenu(String chave) {
-		return Action.acaoMenu(TabelaMensagens.getString(chave), null);
+		return actionMenu(chave, null);
 	}
 
 	private class PopupHeader extends Popup {
@@ -320,11 +325,10 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuCopiarLinhas extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasQLSemVirgulaAcao = Action.actionMenu("label.com_aspas_em_linhas_sem_v",
-					Icones.ASPAS);
-			private Action semAspasQLSemVirgulaAcao = Action.actionMenu("label.sem_aspas_em_linhas_sem_v", null);
-			private Action comAspasQLAcao = Action.actionMenu("label.com_aspas_em_linhas", Icones.ASPAS);
-			private Action semAspasQLAcao = Action.actionMenu("label.sem_aspas_em_linhas", null);
+			private Action comAspasQLSemVirgulaAcao = actionMenu("label.com_aspas_em_linhas_sem_v", Icones.ASPAS);
+			private Action semAspasQLSemVirgulaAcao = actionMenu("label.sem_aspas_em_linhas_sem_v");
+			private Action comAspasQLAcao = actionMenu("label.com_aspas_em_linhas", Icones.ASPAS);
+			private Action semAspasQLAcao = actionMenu("label.sem_aspas_em_linhas");
 
 			private MenuCopiarLinhas() {
 				super("label.copiar_header");
