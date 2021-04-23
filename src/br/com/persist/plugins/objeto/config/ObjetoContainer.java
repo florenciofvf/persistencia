@@ -300,7 +300,8 @@ public class ObjetoContainer extends Panel {
 				container.add(criarLinhaCopiar("label.joins", txtJoins, Mensagens.getString("hint.joins")));
 			}
 			container.add(criarLinhaCopiar("label.prefixo_nt", txtPrefixoNT));
-			container.add(criarLinhaCopiar("label.sequencias", txtSequencias, Mensagens.getString("hint.sequencias")));
+			container.add(
+					criarLinhaCopiar("label.sequencias", txtSequencias, ObjetoMensagens.getString("hint.sequencias")));
 			container.add(criarLinhaCopiar("label.chaveamento", txtChaveamento,
 					ObjetoMensagens.getString("hint.chaveamento")));
 			container.add(
@@ -310,11 +311,11 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
-			container.add(criarLinha("label.sane", chkSANE, Mensagens.getString("hint.sane")));
-			container.add(criarLinha("label.ccsc", chkCCSC, Mensagens.getString("hint.ccsc")));
-			container.add(criarLinha("label.bpnt", chkBPNT, Mensagens.getString("hint.bpnt")));
+			container.add(criarLinha("label.sane", chkSANE, ObjetoMensagens.getString("hint.sane")));
+			container.add(criarLinha("label.ccsc", chkCCSC, ObjetoMensagens.getString("hint.ccsc")));
+			container.add(criarLinha("label.bpnt", chkBPNT, ObjetoMensagens.getString("hint.bpnt")));
 			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm,
-					Mensagens.getString("hint.ajuste_auto_form")));
+					ObjetoMensagens.getString("hint.ajuste_auto_form")));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
 			txtSequencias.addMouseListener(sequenciaListener);

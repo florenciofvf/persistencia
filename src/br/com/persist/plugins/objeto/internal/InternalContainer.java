@@ -258,14 +258,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private boolean continuar(String complemento) {
 		if (objeto.isSane() && Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(complemento)) {
-			String msg = Mensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela2());
+			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela2());
 			Util.mensagem(InternalContainer.this, msg);
 			return false;
 		}
 		if (!Util.estaVazio(txtComplemento.getText()) || !Util.estaVazio(complemento) || !objeto.isCcsc()) {
 			return true;
 		}
-		String msg = Mensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
+		String msg = ObjetoMensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
 		return Util.confirmar(InternalContainer.this, msg, false);
 	}
 
@@ -983,8 +983,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				super("label.funcoes", Icones.SOMA);
 				MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
 				MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
-				maximo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
-				minimo.setToolTipText(Mensagens.getString("msg.maximo_minimo"));
+				maximo.setToolTipText(ObjetoMensagens.getString("msg.maximo_minimo"));
+				minimo.setToolTipText(ObjetoMensagens.getString("msg.maximo_minimo"));
 				addMenuItem(new TotalizarRegistrosAcao(false));
 				addMenuItem(true, new TotalizarRegistrosAcao(true));
 				addMenuItem(true, minimo);

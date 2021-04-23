@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -83,7 +82,7 @@ public class MiscelaniaContainer extends Panel {
 
 	private void seque(StringBuilder builder) {
 		String[] sequencias = !Util.estaVazio(objeto.getSequencias()) ? objeto.getSequencias().split(";")
-				: Mensagens.getString("hint.sequencias").split(";");
+				: ObjetoMensagens.getString("hint.sequencias").split(";");
 		for (int i = 0; i < sequencias.length; i++) {
 			if (i > 0) {
 				builder.append(Constantes.QL);
