@@ -1320,7 +1320,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					private Action disponivelAcao = Action.actionMenu("label.disponivel", null);
 
 					private MenuInnerJoin() {
-						super("label.inner_join", Icones.TABELA);
+						super(ObjetoMensagens.getString("label.inner_join"), false, Icones.TABELA);
 						addMenuItem(disponivelAcao);
 						disponivelAcao.setActionListener(e -> exibir());
 					}
@@ -1345,7 +1345,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					private static final long serialVersionUID = 1L;
 
 					private MenuSelectColuna() {
-						super("label.select_colunas", Icones.TABELA);
+						super(ObjetoMensagens.getString("label.select_colunas"), false, Icones.TABELA);
 						formularioAcao.setActionListener(e -> abrirSelect(true));
 						dialogoAcao.setActionListener(e -> abrirSelect(false));
 					}
