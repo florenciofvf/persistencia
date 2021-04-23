@@ -231,9 +231,13 @@ public class ConsultaContainer extends AbstratoContainer {
 		}
 	}
 
+	static Action actionMenu(String chave) {
+		return Action.acaoMenu(ConsultaMensagens.getString(chave), null);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action colarSemAspasAcao = Action.actionMenu("label.colar_sem_aspas", null);
+		private Action colarSemAspasAcao = actionMenu("label.colar_sem_aspas");
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
