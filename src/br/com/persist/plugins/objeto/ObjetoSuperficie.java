@@ -1716,7 +1716,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			}
 			if (processado) {
-				label.setText(Mensagens.getString("label.threadTotalAtual"));
+				label.setText(ObjetoMensagens.getString("label.threadTotalAtual"));
 			}
 			menuItem.setEnabled(true);
 		}
@@ -1796,7 +1796,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			}
 			if (processado) {
-				label.setText(Mensagens.getString("label.threadRecente"));
+				label.setText(ObjetoMensagens.getString("label.threadRecente"));
 			}
 			menuItem.setEnabled(true);
 		}

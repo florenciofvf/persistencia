@@ -28,7 +28,6 @@ import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -293,7 +292,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaCopiar("label.apelido_para_joins", txtApelido));
 			container.add(criarLinhaCopiar("label.grupo", txtGrupo));
 			container.add(criarLinhaCopiar("label.tabela", txtTabela));
-			container.add(criarLinhaCopiar("label.chaves", txtChaves, Mensagens.getString("hint.chaves")));
+			container.add(criarLinhaCopiar("label.chaves", txtChaves, ObjetoMensagens.getString("hint.chaves")));
 			container.add(criarLinhaCopiar("label.select_alter", txtSelectAlter));
 			if (ObjetoPreferencia.isHabilitadoInnerJoinsObjeto()) {
 				container.add(criarLinhaCopiar("label.tabelas", txtTabelas));

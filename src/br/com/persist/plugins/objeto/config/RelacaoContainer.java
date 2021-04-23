@@ -95,9 +95,9 @@ public class RelacaoContainer extends Panel {
 			textArea.addKeyListener(keyListenerInner);
 			add(BorderLayout.CENTER, textArea);
 			Box container = Box.createVerticalBox();
-			container.add(criarLinha("label.desloc_x_desc", txtDeslocXDesc));
-			container.add(criarLinha("label.desloc_y_desc", txtDeslocYDesc));
-			container.add(criarLinha("label.desenhar_desc", chkDesenharDesc));
+			container.add(criarLinhaRotulo("label.desloc_x_desc", txtDeslocXDesc));
+			container.add(criarLinhaRotulo("label.desloc_y_desc", txtDeslocYDesc));
+			container.add(criarLinha("label.desenhar_desc", true, chkDesenharDesc));
 			add(BorderLayout.SOUTH, container);
 			add(BorderLayout.NORTH, toolbar);
 		}
@@ -140,9 +140,13 @@ public class RelacaoContainer extends Panel {
 			}
 		};
 
-		private Box criarLinha(String chaveRotulo, JComponent componente) {
+		private Box criarLinhaRotulo(String rotulo, JComponent componente) {
+			return criarLinha(ObjetoMensagens.getString(rotulo), false, componente);
+		}
+
+		private Box criarLinha(String rotulo, boolean chaveRotulo, JComponent componente) {
 			Box box = Box.createHorizontalBox();
-			Label label = new Label(chaveRotulo);
+			Label label = new Label(rotulo, chaveRotulo);
 			label.setHorizontalAlignment(Label.RIGHT);
 			label.setPreferredSize(new Dimension(160, 0));
 			label.setMinimumSize(new Dimension(160, 0));
