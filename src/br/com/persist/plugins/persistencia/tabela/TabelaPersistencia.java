@@ -235,15 +235,19 @@ public class TabelaPersistencia extends JTable {
 		return columnModel.getColumn(colunaView);
 	}
 
+	static Action actionMenu(String chave) {
+		return Action.acaoMenu(TabelaMensagens.getString(chave), null);
+	}
+
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action concatNomeColunaAcao = Action.actionMenu("label.concatenar_nome_coluna", null);
-		private Action colocarNomeColunaAcao = Action.actionMenu("label.colocar_nome_coluna", null);
-		private Action copiarNomeColunaAcao = Action.actionMenu("label.copiar_nome_coluna", null);
+		private Action concatNomeColunaAcao = actionMenu("label.concatenar_nome_coluna");
+		private Action colocarNomeColunaAcao = actionMenu("label.colocar_nome_coluna");
+		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
 		private Action detalheColunaAcao = Action.actionMenu("label.meta_dados", Icones.INFO);
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
-		private Action larguraTituloAcao = Action.actionMenu("label.largura_titulo", null);
-		private Action larguraMinimaAcao = Action.actionMenu("label.largura_minima", null);
+		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
+		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private Separator separator = new Separator();
 		private MenuIN menuIN = new MenuIN();
@@ -355,7 +359,7 @@ public class TabelaPersistencia extends JTable {
 			private final boolean letras;
 
 			private MenuColocarColuna(String titulo, boolean numero, boolean letra) {
-				super(titulo);
+				super(TabelaMensagens.getString(titulo), false, null);
 				numeros = numero;
 				letras = letra;
 				semAspasAcao.setActionListener(e -> copiar(false));
