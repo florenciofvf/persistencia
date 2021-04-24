@@ -161,8 +161,8 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 
 	protected class MenuLargura extends Menu {
 		private static final long serialVersionUID = 1L;
-		private Action esquerdoAcao = Action.actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
-		private Action direitoAcao = Action.actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
+		private Action esquerdoAcao = actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
+		private Action direitoAcao = actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
 
 		protected MenuLargura() {

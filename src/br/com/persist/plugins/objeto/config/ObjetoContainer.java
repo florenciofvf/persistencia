@@ -306,15 +306,15 @@ public class ObjetoContainer extends Panel {
 			container.add(
 					criarLinhaCopiar("label.mapeamento", txtMapeamento, ObjetoMensagens.getString("hint.mapeamento")));
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
-			container.add(criarLinhaCopiar("label.final_consulta", txtFinalConsulta));
+			container.add(criarLinhaCopiarRotulo("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinhaRotulo("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinha("label.link_auto", chkLinkAuto));
 			container.add(criarLinha("label.sane", chkSANE, ObjetoMensagens.getString("hint.sane")));
 			container.add(criarLinha("label.ccsc", chkCCSC, ObjetoMensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.bpnt", chkBPNT, ObjetoMensagens.getString("hint.bpnt")));
-			container.add(criarLinha("label.ajuste_auto_form", chkAjusteAutoForm,
-					ObjetoMensagens.getString("hint.ajuste_auto_form")));
+			container.add(criarLinhaComLink(ObjetoMensagens.getString("label.ajuste_auto_form"), false,
+					chkAjusteAutoForm, ObjetoMensagens.getString("hint.ajuste_auto_form"), null));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
 			txtSequencias.addMouseListener(sequenciaListener);
