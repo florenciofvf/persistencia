@@ -221,7 +221,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		private Action empilharAcao = actionMenu("label.empilhar_formularios");
 
 		protected MenuAjuste() {
-			super("label.ajuste", Icones.RECT);
+			super(AbstratoMensagens.getString("label.ajuste"), false, Icones.RECT);
 			addMenuItem(aproximarFormAoObjetoAcao);
 			addMenuItem(aproximarObjetoAoFormAcao);
 			addMenuItem(empilharAcao);
