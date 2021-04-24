@@ -31,9 +31,9 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAplicarLarguraAoAbrirArquivo = criarCheckBox("label.aplicar_largura_ao_abrir_arq_objeto");
 	private final CheckBox chkAplicarAlturaAoAbrirArquivo = criarCheckBox("label.aplicar_altura_ao_abrir_arq_objeto");
-	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
-	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
-	private final CheckBox chkFecharComESCDialogo = new CheckBox("label.fechar_com_esc_dialogo");
+	private final CheckBox chkFecharComESCFormulario = criarCheckBox("label.fechar_com_esc_formulario");
+	private final CheckBox chkFecharComESCInternal = criarCheckBox("label.fechar_com_esc_internal");
+	private final CheckBox chkFecharComESCDialogo = criarCheckBox("label.fechar_com_esc_dialogo");
 	private final CheckBox chkMonitorPreferencial = new CheckBox("label.monitor_preferencial");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
