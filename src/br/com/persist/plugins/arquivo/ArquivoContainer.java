@@ -83,8 +83,8 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR);
+			chkSempreTopArq.setToolTipText(ArquivoMensagens.getString("msg.arquivo.sempreTopArqu"));
 			chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
-			chkSempreTopArq.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopArqu"));
 			chkLinkAuto.setToolTipText(Mensagens.getString("msg.arquivo.link_auto"));
 			chkDuplicar.setToolTipText(Mensagens.getString("msg.arquivo.duplicar"));
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));

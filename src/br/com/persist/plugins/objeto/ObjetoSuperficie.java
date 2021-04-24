@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
+import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -119,10 +120,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		getActionMap().put("zoom_menos", zoomMenos);
 		getActionMap().put("zoom_mais", zoomMais);
 		getActionMap().put("macro", macro);
-	}
-
-	static Action actionMenu(String chave) {
-		return Action.acaoMenu(ObjetoMensagens.getString(chave), null);
 	}
 
 	public void configurarLargura(Dimension dimension) {
@@ -1352,10 +1349,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
+	static Action actionMenu(String chave, Icon icon) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+	}
+
+	static Action actionMenu(String chave) {
+		return actionMenu(chave, null);
+	}
+
 	private class SuperficiePopup2 extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarFormulariosAcao = Action.actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
-		private Action limparFormulariosAcao = Action.actionMenu("label.limpar_formularios", Icones.NOVO);
+		private Action atualizarFormulariosAcao = actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
+		private Action limparFormulariosAcao = actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action criarObjetoAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);

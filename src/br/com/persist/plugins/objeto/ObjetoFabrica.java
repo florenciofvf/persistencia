@@ -104,12 +104,12 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 				boolean circular = Boolean.TRUE.equals(boolCircular);
 				if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM.equals(metodo)) {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
-							new File(Mensagens.getString("label.abrir_exportacao")));
+							new File(ObjetoMensagens.getString("label.abrir_exportacao")));
 					form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
 					Formulario.posicionarJanela(formulario, form);
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
 					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
-							new File(Mensagens.getString("label.abrir_importacao")));
+							new File(ObjetoMensagens.getString("label.abrir_importacao")));
 					form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
 					Formulario.posicionarJanela(formulario, form);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
@@ -121,12 +121,12 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH.equals(metodo)) {
 					ObjetoContainer container = criarObjetoContainer(formulario);
 					container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-					container.setTituloTemporario(Mensagens.getString("label.abrir_exportacao"));
+					container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
 					formulario.adicionarPagina(container);
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FICH.equals(metodo)) {
 					ObjetoContainer container = criarObjetoContainer(formulario);
 					container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-					container.setTituloTemporario(Mensagens.getString("label.abrir_importacao"));
+					container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
 					formulario.adicionarPagina(container);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FICH.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {

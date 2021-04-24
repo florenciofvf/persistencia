@@ -1835,8 +1835,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		@Override
 		public void colocarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
 			String string = "";
-			if (!Util.estaVazio(txtComplemento.getText())
-					&& Util.confirmar(InternalContainer.this, "msg.concatenar_complemento")) {
+			if (!Util.estaVazio(txtComplemento.getText()) && Util.confirmar(InternalContainer.this,
+					ObjetoMensagens.getString("msg.concatenar_complemento"), false)) {
 				string = txtComplemento.getText();
 			}
 			txtComplemento.setText(string + getPrefixo() + nome + getValor(getOpcao(), memoria));

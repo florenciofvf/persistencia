@@ -89,8 +89,8 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
+			chkSempreTopAnex.setToolTipText(AnexoMensagens.getString("msg.anexo.sempreTopAnex"));
 			chkSempreTopForm.setToolTipText(Mensagens.getString("msg.arquivo.sempreTopForm"));
-			chkSempreTopAnex.setToolTipText(Mensagens.getString("msg.anexo.sempreTopAnex"));
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtAnexo.setToolTipText(Mensagens.getString("label.pesquisar"));
 			add(chkSempreTopAnex);
