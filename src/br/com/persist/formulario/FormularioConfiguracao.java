@@ -35,8 +35,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkFecharComESCInternal = criarCheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkFecharComESCDialogo = criarCheckBox("label.fechar_com_esc_dialogo");
 	private final CheckBox chkMonitorPreferencial = criarCheckBox("label.monitor_preferencial");
-	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
-	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
+	private final CheckBox chkFicharioScroll = criarCheckBox("label.fichario_scroll");
+	private final CheckBox chkTituloAbaMin = criarCheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
 	private final TextField txtDefinirAltura = new TextField();
@@ -76,7 +76,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		txtFormFicha.setText(Preferencias.getFormFicha());
 
 		Muro muro = new Muro();
-		Label tituloLocalAbas = criarLabelTitulo("label.local_abas");
+		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		Label email = criarLabelTitulo("contato");
 		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
 		muro.camada(panelS(email, tituloLocalAbas, panelPosicoes));
