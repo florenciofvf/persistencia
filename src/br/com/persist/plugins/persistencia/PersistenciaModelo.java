@@ -187,7 +187,8 @@ public class PersistenciaModelo implements TableModel {
 						getPrefixoNomeTabela(), new Coletor(coluna.getNome()));
 				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
-				if (Util.confirmar(componente, "msg.area_trans_tabela_registros")) {
+				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
+						false)) {
 					Util.setContentTransfered(update);
 				}
 			} catch (Exception ex) {
@@ -270,7 +271,8 @@ public class PersistenciaModelo implements TableModel {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
-				if (Util.confirmar(componente, "msg.area_trans_tabela_registros")) {
+				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
+						false)) {
 					Util.setContentTransfered(delete);
 				}
 				return i;

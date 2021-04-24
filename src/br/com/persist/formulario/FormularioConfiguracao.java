@@ -83,8 +83,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		muro.camada(panelS(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
 				new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
 				new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha)));
-		muro.camada(panelS(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
-				new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura)));
+		muro.camada(panelS(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
+				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura)));
 		muro.camada(panel(0, 0, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
 				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
 				chkFicharioScroll, chkMonitorPreferencial));
