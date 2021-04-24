@@ -3,6 +3,7 @@ package br.com.persist.abstrato;
 import java.awt.Dimension;
 import java.awt.Point;
 
+import javax.swing.Icon;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
@@ -184,9 +185,9 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 
 	protected class MenuAjustar extends Menu {
 		private static final long serialVersionUID = 1L;
-		private Action usarFormularioAcao = Action.actionMenu("label.usar_formularios", null);
-		private Action dimensaoManualAcao = Action.actionMenu("label.dimensao_manual", null);
-		private Action retirarRolagemAcao = Action.actionMenu("label.retirar_rolagem", null);
+		private Action usarFormularioAcao = actionMenu("label.usar_formularios");
+		private Action dimensaoManualAcao = actionMenu("label.dimensao_manual");
+		private Action retirarRolagemAcao = actionMenu("label.retirar_rolagem");
 
 		protected MenuAjustar() {
 			super("label.ajustar", Icones.RECT);
@@ -203,13 +204,21 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		}
 	}
 
+	static Action actionMenu(String chave, Icon icon) {
+		return Action.acaoMenu(AbstratoMensagens.getString(chave), icon);
+	}
+
+	static Action actionMenu(String chave) {
+		return actionMenu(chave, null);
+	}
+
 	protected class MenuAjuste extends Menu {
 		private static final long serialVersionUID = 1L;
-		private Action aproximarFormAoObjetoAcao = Action.actionMenu("label.aproximar_form_ao_objeto", null);
-		private Action aproximarObjetoAoFormAcao = Action.actionMenu("label.aproximar_objeto_ao_form", null);
+		private Action aproximarFormAoObjetoAcao = actionMenu("label.aproximar_form_ao_objeto");
+		private Action aproximarObjetoAoFormAcao = actionMenu("label.aproximar_objeto_ao_form");
 		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
-		private Action empilharAcao = Action.actionMenu("label.empilhar_formularios", null);
+		private Action empilharAcao = actionMenu("label.empilhar_formularios");
 
 		protected MenuAjuste() {
 			super("label.ajuste", Icones.RECT);
