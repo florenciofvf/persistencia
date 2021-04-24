@@ -29,10 +29,8 @@ import br.com.persist.componente.TextField;
 
 public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
-	private final CheckBox chkAplicarLarguraAoAbrirArquivoObjeto = new CheckBox(
-			"label.aplicar_largura_ao_abrir_arq_objeto");
-	private final CheckBox chkAplicarAlturaAoAbrirArquivoObjeto = new CheckBox(
-			"label.aplicar_altura_ao_abrir_arq_objeto");
+	private final CheckBox chkAplicarLarguraAoAbrirArquivo = criarCheckBox("label.aplicar_largura_ao_abrir_arq_objeto");
+	private final CheckBox chkAplicarAlturaAoAbrirArquivo = criarCheckBox("label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkFecharComESCFormulario = new CheckBox("label.fechar_com_esc_formulario");
 	private final CheckBox chkFecharComESCInternal = new CheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkFecharComESCDialogo = new CheckBox("label.fechar_com_esc_dialogo");
@@ -56,11 +54,15 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		configurar();
 	}
 
+	static CheckBox criarCheckBox(String chaveRotulo) {
+		return new CheckBox(FormularioMensagens.getString(chaveRotulo), false);
+	}
+
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 
-		chkAplicarLarguraAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
-		chkAplicarAlturaAoAbrirArquivoObjeto.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
+		chkAplicarLarguraAoAbrirArquivo.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
+		chkAplicarAlturaAoAbrirArquivo.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
@@ -83,7 +85,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				new PanelCenter(new Label("label.form_ficha"), txtFormFicha)));
 		muro.camada(panelS(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura)));
-		muro.camada(panel(0, 0, chkAplicarLarguraAoAbrirArquivoObjeto, chkAplicarAlturaAoAbrirArquivoObjeto,
+		muro.camada(panel(0, 0, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
 				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
 				chkFicharioScroll, chkMonitorPreferencial));
 		if (Preferencias.isMonitorPreferencial()) {
@@ -124,11 +126,11 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				.addActionListener(e -> Preferencias.setFecharComESCDialogo(chkFecharComESCDialogo.isSelected()));
 		chkMonitorPreferencial
 				.addActionListener(e -> Preferencias.setMonitorPreferencial(chkMonitorPreferencial.isSelected()));
-		chkAplicarLarguraAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
-				.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivoObjeto.isSelected()));
+		chkAplicarLarguraAoAbrirArquivo.addActionListener(
+				e -> Preferencias.setAplicarLarguraAoAbrirArquivoObjeto(chkAplicarLarguraAoAbrirArquivo.isSelected()));
 		chkTituloAbaMin.addActionListener(e -> Preferencias.setTituloAbaMin(chkTituloAbaMin.isSelected()));
-		chkAplicarAlturaAoAbrirArquivoObjeto.addActionListener(e -> Preferencias
-				.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivoObjeto.isSelected()));
+		chkAplicarAlturaAoAbrirArquivo.addActionListener(
+				e -> Preferencias.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivo.isSelected()));
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
 		txtDefinirLargura.addActionListener(e -> definirLargura());
