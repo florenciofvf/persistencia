@@ -1035,7 +1035,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private final boolean complemento;
 
 				private TotalizarRegistrosAcao(boolean complemento) {
-					super(true, complemento ? "label.total_com_filtro" : "label.total_sem_filtro", Icones.SOMA);
+					super(true, complemento ? ObjetoMensagens.getString("label.total_com_filtro")
+							: ObjetoMensagens.getString("label.total_sem_filtro"), false, Icones.SOMA);
 					this.complemento = complemento;
 				}
 

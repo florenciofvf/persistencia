@@ -173,10 +173,18 @@ public class ObjetoContainer extends AbstratoContainer {
 		return actionMenu(chave, null);
 	}
 
+	static Action actionIcon(String chave, Icon icon) {
+		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+	}
+
+	static Action actionIcon(String chave) {
+		return actionIcon(chave, null);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action criarObjetoAcao = Action.actionIcon("label.criar_objeto", Icones.CRIAR);
-		private Action excluirAcao = Action.actionIcon("label.excluir_sel", Icones.EXCLUIR);
+		private Action excluirAcao = actionIcon("label.excluir_selecionado", Icones.EXCLUIR);
+		private Action criarObjetoAcao = actionIcon("label.criar_objeto", Icones.CRIAR);
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
 		private CheckBox chkAjusteAutomatico = new CheckBox();

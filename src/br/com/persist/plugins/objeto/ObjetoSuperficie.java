@@ -1114,7 +1114,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		private MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
-		private Action excluirAcao = Action.actionMenu("label.excluir_sel", Icones.EXCLUIR);
+		private Action excluirAcao = actionMenu("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 		private Action dadosAcao = Action.actionMenu("label.dados", null);
 		private Menu menuDistribuicao = new Menu("label.distribuicao");
@@ -1361,7 +1361,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarFormulariosAcao = actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action limparFormulariosAcao = actionMenu("label.limpar_formularios", Icones.NOVO);
-		private Action criarObjetoAcao = Action.actionMenu("label.criar_objeto", Icones.CRIAR);
+		private Action criarObjetoAcao = actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
 		int xLocal;
