@@ -635,7 +635,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void salvar(AtomicBoolean atomic) {
-			if (!Util.confirmaSalvar(RequisicaoContainer.this, Constantes.TRES, "msg.confirmar_salvar_ativa")) {
+			if (!Util.confirmaSalvarMsg(RequisicaoContainer.this, Constantes.TRES,
+					RequisicaoMensagens.getString("msg.confirmar_salvar_ativa"))) {
 				return;
 			}
 			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {

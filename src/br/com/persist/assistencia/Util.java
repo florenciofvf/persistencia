@@ -358,6 +358,14 @@ public class Util {
 		return total >= confirmacoes;
 	}
 
+	public static boolean confirmaSalvarMsg(Component componente, int confirmacoes, String msg) {
+		int total = 0;
+		while (total < confirmacoes && confirmar(componente, msg, false)) {
+			total++;
+		}
+		return total >= confirmacoes;
+	}
+
 	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem,
 			String valorPadrao) {
 		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),
