@@ -119,7 +119,8 @@ public class ComplementoContainer extends Panel {
 
 	private class ToolbarLista extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action limparComplementosAcao = Action.actionIcon("label.limpar_complementos", Icones.EXCLUIR);
+		private Action limparComplementosAcao = Action
+				.acaoIcon(ComplementoMensagens.getString("label.limpar_complementos"), Icones.EXCLUIR);
 
 		private ToolbarLista() {
 			super.ini(null);
@@ -128,7 +129,8 @@ public class ComplementoContainer extends Panel {
 		}
 
 		private void limparComplementos() {
-			if (Util.confirmar(ComplementoContainer.this, "msg.confirma_exclusao_complementos", true)) {
+			if (Util.confirmar(ComplementoContainer.this,
+					ComplementoMensagens.getString("msg.confirma_exclusao_complementos"), false)) {
 				listener.getColecaoComplemento().clear();
 				listaComplementos.setModel(new ColecaoStringModelo(listener.getColecaoComplemento()));
 			}
