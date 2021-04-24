@@ -66,7 +66,6 @@ import br.com.persist.parser.ParserDialogo;
 import br.com.persist.parser.ParserListener;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
-import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -159,7 +158,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 	}
 
 	static Action actionIcon(String chave, Icon icon) {
-		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
 	}
 
 	static Action actionIcon(String chave) {
@@ -304,7 +303,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void excluirAtivo() {
 			Pagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null && Util.confirmar(RequisicaoContainer.this, "msg.confirmar_excluir_ativa")) {
+			if (ativa != null && Util.confirmar(RequisicaoContainer.this,
+					RequisicaoMensagens.getString("msg.confirmar_excluir_ativa"), false)) {
 				int indice = fichario.getSelectedIndex();
 				ativa.excluir();
 				fichario.remove(indice);
