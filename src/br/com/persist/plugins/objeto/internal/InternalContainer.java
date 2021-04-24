@@ -179,8 +179,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
+	static Action actionMenu(String chave, Icon icon) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+	}
+
 	static Action actionMenu(String chave) {
-		return Action.acaoMenu(ObjetoMensagens.getString(chave), null);
+		return actionMenu(chave, null);
 	}
 
 	private void montarLayout() {
@@ -432,9 +436,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private class ButtonBaixar extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action limparOutrosAcao = Action.actionMenu("label.limpar_outros", Icones.NOVO);
 			private Action limpar2Acao = Action.actionMenu(Constantes.LABEL_LIMPAR2, Icones.NOVO);
 			private Action limparAcao = Action.actionMenu(Constantes.LABEL_LIMPAR, Icones.NOVO);
+			private Action limparOutrosAcao = actionMenu("label.limpar_outros", Icones.NOVO);
 			private Action conexaoAcao = Action.actionMenu(Constantes.LABEL_CONEXAO2, null);
 			private Action objetoAcao = Action.actionMenu(Constantes.LABEL_OBJETO, null);
 
@@ -1124,10 +1128,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private class MenuAlinhamento extends Menu {
 				private static final long serialVersionUID = 1L;
-				private Action somenteDireitoAcao = Action.actionMenu("label.somente_direito", Icones.ALINHA_DIREITO);
-				private Action mesmaLarguraAcao = Action.actionMenu("label.mesma_largura", Icones.LARGURA);
+				private Action somenteDireitoAcao = actionMenu("label.somente_direito", Icones.ALINHA_DIREITO);
 				private Action esquerdoAcao = Action.actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
 				private Action direitoAcao = Action.actionMenu("label.direito", Icones.ALINHA_DIREITO);
+				private Action mesmaLarguraAcao = actionMenu("label.mesma_largura", Icones.LARGURA);
 
 				private MenuAlinhamento() {
 					super("label.alinhamento", Icones.LARGURA);
