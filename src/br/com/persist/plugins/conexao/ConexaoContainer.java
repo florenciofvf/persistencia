@@ -93,9 +93,17 @@ public class ConexaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
+	static Action actionIcon(String chave, Icon icon) {
+		return Action.acaoIcon(ConexaoMensagens.getString(chave), icon);
+	}
+
+	static Action actionIcon(String chave) {
+		return actionIcon(chave, null);
+	}
+
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action desconectaAcao = Action.actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
+		private Action desconectaAcao = actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
 		private Action descerAcao = Action.actionIcon("label.descer", Icones.BAIXAR2);
 		private Action subirAcao = Action.actionIcon("label.subir", Icones.TOP);
@@ -113,7 +121,7 @@ public class ConexaoContainer extends AbstratoContainer {
 		}
 
 		private void eventos() {
-			aplicarAcao.rotulo("label.aplicar_todas_abas");
+			aplicarAcao.text(ConexaoMensagens.getString("label.aplicar_todas_abas"));
 			infoAcao.setActionListener(e -> infoConexao());
 			conectaAcao.setActionListener(e -> conectar());
 			descerAcao.setActionListener(e -> descer());
@@ -208,7 +216,7 @@ public class ConexaoContainer extends AbstratoContainer {
 
 		private String getValor(String padrao) {
 			Object resp = Util.getValorInputDialog(ConexaoContainer.this, "label.id",
-					Mensagens.getString("label.nome_conexao"), padrao);
+					ConexaoMensagens.getString("label.nome_conexao"), padrao);
 			if (resp == null || Util.estaVazio(resp.toString())) {
 				return null;
 			}

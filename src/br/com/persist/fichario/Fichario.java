@@ -99,7 +99,7 @@ public class Fichario extends JTabbedPane {
 
 		private void click() {
 			if (tipo == LIMPAR) {
-				if (Util.confirmar(Fichario.this, "msg.confirmar_limpar")) {
+				if (Util.confirmar(Fichario.this, "msg.confirmar_limpar_cache")) {
 					navegacaoListener.inicializar();
 				}
 			} else if (tipo == ESQUERDO) {

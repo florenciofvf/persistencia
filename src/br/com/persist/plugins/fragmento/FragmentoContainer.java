@@ -146,7 +146,7 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		@Override
 		protected void novo() {
-			String resumo = getValor(Mensagens.getString("label.nome_fragmento"), Constantes.VAZIO);
+			String resumo = getValor(FragmentoMensagens.getString("label.nome_fragmento"), Constantes.VAZIO);
 			if (resumo == null) {
 				return;
 			}
@@ -202,7 +202,7 @@ public class FragmentoContainer extends AbstratoContainer {
 			if (linhas != null) {
 				for (int i : linhas) {
 					Fragmento f = FragmentoProvedor.getFragmento(i);
-					String resumo = getValor(Mensagens.getString("label.nome_fragmento"), f.getResumo());
+					String resumo = getValor(FragmentoMensagens.getString("label.nome_fragmento"), f.getResumo());
 					if (resumo != null) {
 						adicionar(f.clonar(resumo));
 					}
