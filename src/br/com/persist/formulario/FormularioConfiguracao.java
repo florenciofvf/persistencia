@@ -80,9 +80,9 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		Label email = criarLabelTitulo("contato");
 		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
 		muro.camada(panelS(email, tituloLocalAbas, panelPosicoes));
-		muro.camada(panelS(new PanelCenter(new Label("label.form_ficha_dialogo"), txtFormFichaDialogo),
-				new PanelCenter(new Label("label.form_dialogo"), txtFormDialogo),
-				new PanelCenter(new Label("label.form_ficha"), txtFormFicha)));
+		muro.camada(panelS(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
+				new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
+				new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha)));
 		muro.camada(panelS(new PanelCenter(new Label("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(new Label("label.definir_altura"), txtDefinirAltura)));
 		muro.camada(panel(0, 0, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
@@ -191,6 +191,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 
 	private Label criarLabelTitulo(String rotulo) {
 		return criarLabelTitulo(rotulo, true);
+	}
+
+	private Label criarLabel(String chaveRotulo) {
+		return new Label(FormularioMensagens.getString(chaveRotulo), false);
 	}
 
 	private class PainelMonitorPreferencial extends Panel {
