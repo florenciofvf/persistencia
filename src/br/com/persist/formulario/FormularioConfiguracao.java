@@ -34,7 +34,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkFecharComESCFormulario = criarCheckBox("label.fechar_com_esc_formulario");
 	private final CheckBox chkFecharComESCInternal = criarCheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkFecharComESCDialogo = criarCheckBox("label.fechar_com_esc_dialogo");
-	private final CheckBox chkMonitorPreferencial = new CheckBox("label.monitor_preferencial");
+	private final CheckBox chkMonitorPreferencial = criarCheckBox("label.monitor_preferencial");
 	private final CheckBox chkFicharioScroll = new CheckBox("label.fichario_scroll");
 	private final CheckBox chkTituloAbaMin = new CheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
@@ -89,7 +89,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
 				chkFicharioScroll, chkMonitorPreferencial));
 		if (Preferencias.isMonitorPreferencial()) {
-			muro.camada(panelN(criarLabelTitulo("label.monitor_preferencial"), new PainelMonitorPreferencial()));
+			muro.camada(panelN(criarLabelTituloRotulo("label.monitor_preferencial"), new PainelMonitorPreferencial()));
 		}
 		add(BorderLayout.CENTER, muro);
 	}
@@ -179,10 +179,18 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		Preferencias.setPorcVerticalLocalForm(porcentagem);
 	}
 
-	private Label criarLabelTitulo(String chaveRotulo) {
-		Label label = new Label(chaveRotulo);
+	private Label criarLabelTituloRotulo(String rotulo) {
+		return criarLabelTitulo(FormularioMensagens.getString(rotulo), false);
+	}
+
+	private Label criarLabelTitulo(String rotulo, boolean chaveRotulo) {
+		Label label = new Label(rotulo, chaveRotulo);
 		label.setHorizontalAlignment(Label.CENTER);
 		return label;
+	}
+
+	private Label criarLabelTitulo(String rotulo) {
+		return criarLabelTitulo(rotulo, true);
 	}
 
 	private class PainelMonitorPreferencial extends Panel {
