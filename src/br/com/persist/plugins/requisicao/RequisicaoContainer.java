@@ -168,8 +168,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private CheckBox chkRespostaJson = new CheckBox(RequisicaoMensagens.getString("label.resposta_json"), false);
-		private Action formatarAcao = Action.actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action retornar64Acao = actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
+		private Action formatarAcao = actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
 		private Action base64Acao = actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);

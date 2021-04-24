@@ -351,10 +351,10 @@ public class ObjetoContainer extends AbstratoContainer {
 
 		private class ButtonStatus extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action selecaoGeralAcao = Action.actionMenu("label.selecao_todos", Icones.TAG2);
 			private Action desenharDescAcao = Action.actionMenu("label.desenhar_desc", Icones.TAG);
 			private Action transparenteAcao = Action.actionMenu("label.transparente", Icones.RECT);
 			private Action desenharIdAcao = Action.actionMenu("label.desenhar_id", Icones.LABEL);
+			private Action selecaoGeralAcao = actionMenu("label.selecao_todos", Icones.TAG2);
 			private Action pontoDestinoAcao = actionMenu("label.ponto_destino", Icones.RECT);
 			private Action pontoOrigemAcao = actionMenu("label.ponto_origem", Icones.RECT);
 

@@ -546,10 +546,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private class ButtonComplemento extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private Action copiarNomeTabAcao = Action.actionMenu("label.copiar_nome_tabela", null);
-			private Action copiarAcao = Action.actionMenu("label.copiar_complemento", null);
-			private Action concatAcao = Action.actionMenu("label.baixar_concatenado", null);
-			private Action normalAcao = Action.actionMenu("label.baixar_normal", null);
+			private Action copiarNomeTabAcao = actionMenu("label.copiar_nome_tabela");
+			private Action copiarAcao = actionMenu("label.copiar_complemento");
+			private Action concatAcao = actionMenu("label.baixar_concatenado");
+			private Action normalAcao = actionMenu("label.baixar_normal");
 
 			private ButtonComplemento() {
 				super("label.complemento", Icones.BAIXAR2);
