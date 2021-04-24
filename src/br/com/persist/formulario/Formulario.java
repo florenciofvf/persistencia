@@ -249,7 +249,7 @@ public class Formulario extends JFrame {
 
 	private void eventoVersao() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(Mensagens.getString("label.parametros") + Constantes.QL);
+		sb.append(FormularioMensagens.getString("label.parametros") + Constantes.QL);
 		sb.append("------------------" + Constantes.QL);
 		sb.append("desconectado" + Constantes.QL);
 		Util.mensagem(this, sb.toString());

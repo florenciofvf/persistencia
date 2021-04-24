@@ -166,7 +166,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
 
 		protected MenuLargura() {
-			super("label.largura", Icones.RECT);
+			super(AbstratoMensagens.getString("label.largura"), false, Icones.RECT);
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
 			addMenuItem(esquerdoAcao);
@@ -190,7 +190,7 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 		private Action retirarRolagemAcao = actionMenu("label.retirar_rolagem");
 
 		protected MenuAjustar() {
-			super("label.ajustar", Icones.RECT);
+			super(AbstratoMensagens.getString("label.ajustar"), false, Icones.RECT);
 			addMenuItem(dimensaoManualAcao);
 			addMenuItem(usarFormularioAcao);
 			addMenuItem(retirarRolagemAcao);

@@ -331,7 +331,7 @@ public class TabelaPersistencia extends JTable {
 			private Action semAspasQLAcao = actionMenu("label.sem_aspas_em_linhas");
 
 			private MenuCopiarLinhas() {
-				super("label.copiar_header");
+				super(TabelaMensagens.getString("label.copiar_header"), false, null);
 				addSeparator();
 				addMenuItem(semAspasQLAcao);
 				addMenuItem(comAspasQLAcao);
