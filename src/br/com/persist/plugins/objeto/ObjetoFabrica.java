@@ -124,18 +124,25 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 					formulario.adicionarPagina(container);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
-					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
-							new File(Mensagens.getString("label.exportar")));
-					form.exportarMetadadoRaiz(metadado);
-					Formulario.posicionarJanela(formulario, form);
+					exportarMetadadoRaizFormulario(formulario, metadado);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FICH.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
-					ObjetoContainer container = criarObjetoContainer(formulario);
-					container.exportarMetadadoRaiz(metadado);
-					container.setTituloTemporario(Mensagens.getString("label.exportar"));
-					formulario.adicionarPagina(container);
+					exportarMetadadoRaizFichario(formulario, metadado);
 				}
 			}
+		}
+
+		private void exportarMetadadoRaizFormulario(Formulario formulario, Metadado metadado) {
+			ObjetoFormulario form = ObjetoFormulario.criar(formulario, new File(Mensagens.getString("label.exportar")));
+			form.exportarMetadadoRaiz(metadado);
+			Formulario.posicionarJanela(formulario, form);
+		}
+
+		private void exportarMetadadoRaizFichario(Formulario formulario, Metadado metadado) {
+			ObjetoContainer container = criarObjetoContainer(formulario);
+			container.exportarMetadadoRaiz(metadado);
+			container.setTituloTemporario(Mensagens.getString("label.exportar"));
+			formulario.adicionarPagina(container);
 		}
 	}
 
