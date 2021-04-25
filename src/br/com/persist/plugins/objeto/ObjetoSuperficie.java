@@ -1957,6 +1957,135 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
+	private void processarCampo(Controle controle, Metadado campo) {
+		controle.campoProcessado = campo;
+		criarEAdicionar(controle);
+		criarEAdicionarRelacao(controle);
+		processarIdTabelaGrupoExportImport(controle);
+		processarChaves(controle);
+	}
+
+	private void criarEAdicionar(Controle controle) {
+		Objeto objeto = new Objeto(0, 0);
+		controle.objeto = objeto;
+		addObjeto(objeto);
+	}
+
+	private void criarEAdicionarRelacao(Controle controle) {
+		Relacao relacao = new Relacao(controle.principal, !controle.exportacao, controle.objeto, controle.exportacao);
+		relacao.setQuebrado(!controle.circular);
+		if (!controle.circular) {
+			relacao.setPontoDestino(false);
+			relacao.setPontoOrigem(false);
+		}
+		controle.relacao = relacao;
+		addRelacao(relacao);
+	}
+
+	private void processarIdTabelaGrupoExportImport(Controle controle) {
+		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
+		if (controle.exportacao) {
+			processarIdTabelaGrupoExportacao(controle.objeto, tabelaRef);
+		} else {
+			processarIdTabelaGrupoImportacao(controle, tabelaRef);
+		}
+		controle.objeto.setTabela(tabelaRef.getNomeTabela());
+	}
+
+	private void processarIdTabelaGrupoImportacao(Controle controle, Metadado tabelaRef) {
+		String nomeTabela = tabelaRef.getNomeTabela();
+		if (contemObjetoComTabela(nomeTabela)) {
+			controle.objeto.setId(nomeTabela + "_$$$_" + controle.campoProcessado.getDescricao());
+			controle.objeto.setGrupo(controle.campoProcessado.getDescricao());
+		} else {
+			controle.objeto.setId(nomeTabela);
+		}
+	}
+
+	private void processarChaves(Controle controle) {
+		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
+		Metadado tabela = controle.raiz.getMetadado(tabelaRef.getNomeTabela());
+		if (tabela != null) {
+			processarChaves(controle, tabela);
+		}
+	}
+
+	private void processarChaves(Controle controle, Metadado tabela) {
+		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
+		controle.relacao.setChaveDestino(tabelaRef.getNomeCampo());
+		controle.objeto.setChaves(tabela.getChaves());
+		if (controle.exportacao) {
+			refNaPesquisaPrincipal(controle);
+		} else {
+			pesquisaIndividualDetalhe(controle);
+		}
+	}
+
+	private void refNaPesquisaPrincipal(Controle controle) {
+		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
+		controle.ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), controle.objeto.getGrupo(), true);
+		controle.relacao.setChaveOrigem(controle.principal.getChaves());
+	}
+
+	private void pesquisaIndividualDetalhe(Controle controle) {
+		Metadado campoDetalhe = controle.campoProcessado;
+		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
+		controle.pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), controle.objeto.getGrupo(),
+				controle.principal.getTabela2(), campoDetalhe.getDescricao());
+		controle.relacao.setChaveOrigem(campoDetalhe.getDescricao());
+	}
+
+	private class Controle {
+		private StringBuilder sb = new StringBuilder();
+		final boolean exportacao = true;
+		final boolean circular = false;
+		Metadado campoProcessado;
+		final Objeto principal;
+		Relacao relacao;
+		Objeto objeto;
+		Metadado raiz;
+
+		private Controle(Objeto principal) {
+			this.principal = principal;
+		}
+
+		private void abrirPesquisa(String nome, String tabela, String campo) {
+			sb.append(Constantes.QL + "\t<pesquisa");
+			sb.append(" nome=" + citar(nome));
+			sb.append(" tabela=" + citar(tabela));
+			sb.append(" campo=" + citar(campo));
+			sb.append(">");
+		}
+
+		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
+			sb.append(Constantes.QL + "\t\t<ref");
+			sb.append(" tabela=" + citar(tabela));
+			sb.append(" campo=" + citar(campo));
+			if (!Util.estaVazio(grupo)) {
+				sb.append(" grupo=" + citar(grupo));
+			}
+			if (invisivel) {
+				sb.append(" vazio=" + citar("invisivel"));
+			}
+			sb.append(" />");
+		}
+
+		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
+				String tabelaDetalhe, String campoDetalhe) {
+			abrirPesquisa(tabelaPrincipal, tabelaDetalhe, campoDetalhe);
+			ref(tabelaPrincipal, campoPrincipal, grupoPrincipal, false);
+			fecharPesquisa();
+		}
+
+		private void fecharPesquisa() {
+			sb.append(Constantes.QL + "\t</pesquisa>");
+		}
+	}
+
+	private String citar(String s) {
+		return "\"" + s + "\"";
+	}
+
 	private class Variaveis {
 		final List<Objeto> objetos = new ArrayList<>();
 		private StringBuilder sb = new StringBuilder();
@@ -2029,10 +2158,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void fecharPesquisa() {
 			sb.append(Constantes.QL + "\t</pesquisa>");
-		}
-
-		private String citar(String s) {
-			return "\"" + s + "\"";
 		}
 
 		private void checkFinalPesquisa() {
