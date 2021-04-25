@@ -1835,11 +1835,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
+	private void criarObjetoHierarquico(Objeto principal, Metadado tabela) {
+		Controle controle = new Controle(principal);
+		controle.raiz = tabela.getPai();
+		controle.checkInicialPesquisa();
+		processarDetalhes(tabela, controle);
+		controle.checkFinalPesquisa();
+		controle.localizarObjeto();
+		if (!controle.circular) {
+			destacar(null, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
+		}
+		Util.mensagemFormulario(formulario, controle.sb.toString());
+	}
+
+	public void abrirExportacaoImportacaoMetadado(Metadado tabela, boolean exportacao, boolean circular) {
 		Variaveis variaveis = criarVariaveis(exportacao, circular);
-		processarPrincipal(metadado, variaveis);
+		processarPrincipal(tabela, variaveis);
 		variaveis.checkInicialPesquisa();
-		processarDetalhes(metadado, variaveis);
+		processarDetalhes(tabela, variaveis);
 		variaveis.checkFinalPesquisa();
 		variaveis.localizarObjetos();
 		if (!variaveis.circular) {
@@ -1940,7 +1953,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarIdTabelaGrupoExportacao(Objeto objeto, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
 		if (contemObjetoComTabela(nomeTabela)) {
-			objeto.setId(nomeTabela + "_$$$_" + tabelaRef.getNomeCampo());
+			objeto.setId(nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo());
 			objeto.setGrupo(tabelaRef.getNomeCampo());
 		} else {
 			objeto.setId(nomeTabela);
@@ -1950,7 +1963,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarIdTabelaGrupoImportacao(Variaveis variaveis, Objeto objeto, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
 		if (contemObjetoComTabela(nomeTabela)) {
-			objeto.setId(nomeTabela + "_$$$_" + variaveis.campoProcessado.getDescricao());
+			objeto.setId(nomeTabela + Constantes.SEP2 + variaveis.campoProcessado.getDescricao());
 			objeto.setGrupo(variaveis.campoProcessado.getDescricao());
 		} else {
 			objeto.setId(nomeTabela);
@@ -1995,7 +2008,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarIdTabelaGrupoImportacao(Controle controle, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
 		if (contemObjetoComTabela(nomeTabela)) {
-			controle.objeto.setId(nomeTabela + "_$$$_" + controle.campoProcessado.getDescricao());
+			controle.objeto.setId(nomeTabela + Constantes.SEP2 + controle.campoProcessado.getDescricao());
 			controle.objeto.setGrupo(controle.campoProcessado.getDescricao());
 		} else {
 			controle.objeto.setId(nomeTabela);
@@ -2035,32 +2048,53 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		controle.relacao.setChaveOrigem(campoDetalhe.getDescricao());
 	}
 
+	private void processarDetalhes(Metadado tabela, Controle controle) {
+		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(controle.exportacao);
+		Metadado campo = null;
+		processarCampo(controle, campo);
+	}
+
+	private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {
+		sb.append(Constantes.QL + "\t<pesquisa");
+		sb.append(" nome=" + citar(nome));
+		append(sb, tabela, campo);
+		sb.append(">");
+	}
+
+	private void append(StringBuilder sb, String tabela, String campo) {
+		sb.append(" tabela=" + citar(tabela));
+		sb.append(" campo=" + citar(campo));
+	}
+
 	private class Controle {
 		private StringBuilder sb = new StringBuilder();
-		final boolean exportacao = true;
-		final boolean circular = false;
 		Metadado campoProcessado;
 		final Objeto principal;
+		boolean exportacao;
+		boolean circular;
 		Relacao relacao;
 		Objeto objeto;
 		Metadado raiz;
 
 		private Controle(Objeto principal) {
 			this.principal = principal;
+			exportacao = true;
+			circular = false;
+		}
+
+		private void checkInicialPesquisa() {
+			if (exportacao) {
+				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela2(), principal.getChaves());
+			}
 		}
 
 		private void abrirPesquisa(String nome, String tabela, String campo) {
-			sb.append(Constantes.QL + "\t<pesquisa");
-			sb.append(" nome=" + citar(nome));
-			sb.append(" tabela=" + citar(tabela));
-			sb.append(" campo=" + citar(campo));
-			sb.append(">");
+			abrirPesquisaBuilder(sb, nome, tabela, campo);
 		}
 
 		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
 			sb.append(Constantes.QL + "\t\t<ref");
-			sb.append(" tabela=" + citar(tabela));
-			sb.append(" campo=" + citar(campo));
+			append(sb, tabela, campo);
 			if (!Util.estaVazio(grupo)) {
 				sb.append(" grupo=" + citar(grupo));
 			}
@@ -2079,6 +2113,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void fecharPesquisa() {
 			sb.append(Constantes.QL + "\t</pesquisa>");
+		}
+
+		private void checkFinalPesquisa() {
+			if (exportacao) {
+				fecharPesquisa();
+			}
+		}
+
+		private void localizarObjeto() {
+			InternalFormulario interno = getInternalFormulario(principal);
+			if (interno != null) {
+				objeto.x = principal.x + Constantes.VINTE_CINCO;
+				objeto.y = interno.getY() + Constantes.TRINTA;
+				principal.setSelecionado(false);
+				objeto.setDeslocamentoXId(28);
+				objeto.setDeslocamentoYId(24);
+				objeto.setSelecionado(true);
+			}
 		}
 	}
 
@@ -2129,17 +2181,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void abrirPesquisa(String nome, String tabela, String campo) {
-			sb.append(Constantes.QL + "\t<pesquisa");
-			sb.append(" nome=" + citar(nome));
-			sb.append(" tabela=" + citar(tabela));
-			sb.append(" campo=" + citar(campo));
-			sb.append(">");
+			abrirPesquisaBuilder(sb, nome, tabela, campo);
 		}
 
 		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
 			sb.append(Constantes.QL + "\t\t<ref");
-			sb.append(" tabela=" + citar(tabela));
-			sb.append(" campo=" + citar(campo));
+			append(sb, tabela, campo);
 			if (!Util.estaVazio(grupo)) {
 				sb.append(" grupo=" + citar(grupo));
 			}

@@ -65,6 +65,7 @@ public class Constantes {
 	public static final String FICHA = "FICHA";
 	public static final String VALOR = "valor";
 	public static final int QUATROCENTOS = 400;
+	public static final String SEP2 = "_$$$_";
 	public static final String ERRO = "ERRO";
 	public static final String INFO = "INFO";
 	public static final String FORM = "FORM";
