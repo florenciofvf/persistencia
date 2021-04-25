@@ -103,25 +103,13 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 				Boolean boolCircular = (Boolean) args.get(MetadadoEvento.CIRCULAR);
 				boolean circular = Boolean.TRUE.equals(boolCircular);
 				if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM.equals(metodo)) {
-					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
-							new File(ObjetoMensagens.getString("label.abrir_exportacao")));
-					form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-					Formulario.posicionarJanela(formulario, form);
-				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
-					ObjetoFormulario form = ObjetoFormulario.criar(formulario,
-							new File(ObjetoMensagens.getString("label.abrir_importacao")));
-					form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-					Formulario.posicionarJanela(formulario, form);
+					abrirExportacaoMetadadoFormulario(formulario, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH.equals(metodo)) {
-					ObjetoContainer container = criarObjetoContainer(formulario);
-					container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
-					container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
-					formulario.adicionarPagina(container);
+					abrirExportacaoMetadadoFichario(formulario, metadado, circular);
+				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
+					abrirImportacaoMetadadoFormulario(formulario, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FICH.equals(metodo)) {
-					ObjetoContainer container = criarObjetoContainer(formulario);
-					container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
-					container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
-					formulario.adicionarPagina(container);
+					abrirImportacaoMetadadoFichario(formulario, metadado, circular);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
 					exportarMetadadoRaizFormulario(formulario, metadado);
@@ -130,6 +118,34 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 					exportarMetadadoRaizFichario(formulario, metadado);
 				}
 			}
+		}
+
+		private void abrirExportacaoMetadadoFormulario(Formulario formulario, Metadado metadado, boolean circular) {
+			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
+					new File(ObjetoMensagens.getString("label.abrir_exportacao")));
+			form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+			Formulario.posicionarJanela(formulario, form);
+		}
+
+		private void abrirExportacaoMetadadoFichario(Formulario formulario, Metadado metadado, boolean circular) {
+			ObjetoContainer container = criarObjetoContainer(formulario);
+			container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+			container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
+			formulario.adicionarPagina(container);
+		}
+
+		private void abrirImportacaoMetadadoFormulario(Formulario formulario, Metadado metadado, boolean circular) {
+			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
+					new File(ObjetoMensagens.getString("label.abrir_importacao")));
+			form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+			Formulario.posicionarJanela(formulario, form);
+		}
+
+		private void abrirImportacaoMetadadoFichario(Formulario formulario, Metadado metadado, boolean circular) {
+			ObjetoContainer container = criarObjetoContainer(formulario);
+			container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+			container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
+			formulario.adicionarPagina(container);
 		}
 
 		private void exportarMetadadoRaizFormulario(Formulario formulario, Metadado metadado) {
