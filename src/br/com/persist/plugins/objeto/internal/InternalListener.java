@@ -17,6 +17,8 @@ public interface InternalListener {
 
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
 
+		public void adicionarHierarquico(Objeto objeto);
+
 		public void pesquisarApos(Pesquisa pesquisa);
 
 		public boolean validoInvisibilidade();

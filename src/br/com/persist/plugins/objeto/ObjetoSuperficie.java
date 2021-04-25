@@ -21,8 +21,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +59,8 @@ import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.metadado.Metadado;
+import br.com.persist.plugins.metadado.MetadadoConstantes;
+import br.com.persist.plugins.metadado.MetadadoEvento;
 import br.com.persist.plugins.objeto.circular.CircularContainer.Tipo;
 import br.com.persist.plugins.objeto.circular.CircularDialogo;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
@@ -1835,6 +1839,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
+	public void adicionarHierarquico(Objeto objeto) {
+		Map<String, Object> args = new HashMap<>();
+		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela2());
+		formulario.processar(args);
+		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
+		if (metadado == null) {
+			Util.mensagem(ObjetoSuperficie.this,
+					ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
+		} else {
+			criarObjetoHierarquico(objeto, metadado);
+		}
+	}
+
 	private void criarObjetoHierarquico(Objeto principal, Metadado tabela) {
 		Controle controle = new Controle(principal);
 		controle.raiz = tabela.getPai();
@@ -2050,8 +2067,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void processarDetalhes(Metadado tabela, Controle controle) {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(controle.exportacao);
-		Metadado campo = null;
-		processarCampo(controle, campo);
+		if (!campos.isEmpty()) {
+			processarCampo(controle, campos.get(0));
+		}
 	}
 
 	private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {

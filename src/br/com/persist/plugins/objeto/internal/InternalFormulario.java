@@ -237,6 +237,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 			return true;
 		}
+
+		public void adicionarHierarquico(Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).adicionarHierarquico(objeto);
+			}
+		}
 	};
 
 	private transient InternalListener.Visibilidade visibilidadeListener = new InternalListener.Visibilidade() {

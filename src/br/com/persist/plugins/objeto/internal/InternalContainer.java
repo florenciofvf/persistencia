@@ -1067,7 +1067,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private ButtonInfo() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
-				addMenuItem(new ChavesPrimariasAcao());
+				addMenuItem(new AdicionarHierarquicoAcao());
+				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
 				addMenuItem(true, new MetaDadosAcao());
@@ -1455,7 +1456,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private static final long serialVersionUID = 1L;
 
 				private ChavesPrimariasAcao() {
-					super(true, "label.chave_primaria", Icones.PKEY);
+					super(true, ObjetoMensagens.getString("label.chaves_primarias"), false, Icones.PKEY);
 				}
 
 				@Override
@@ -1493,6 +1494,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
 						}
+					}
+				}
+			}
+
+			private class AdicionarHierarquicoAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private AdicionarHierarquicoAcao() {
+					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico"), false, Icones.HIERARQUIA);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (vinculoListener != null) {
+						vinculoListener.adicionarHierarquico(objeto);
 					}
 				}
 			}
