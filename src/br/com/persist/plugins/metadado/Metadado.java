@@ -411,6 +411,10 @@ public class Metadado implements Transferable {
 		return filhos.get(0);
 	}
 
+	public String getChaveTabelaReferencia() {
+		return descricao + " > " + getTabelaReferencia().descricao;
+	}
+
 	public boolean isConstraint() {
 		return constraint;
 	}

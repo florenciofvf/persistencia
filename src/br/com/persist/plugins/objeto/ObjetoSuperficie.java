@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
@@ -1857,6 +1858,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		controle.raiz = tabela.getPai();
 		controle.checkInicialPesquisa();
 		processarDetalhes(tabela, controle);
+		if (controle.erro) {
+			return;
+		}
 		controle.checkFinalPesquisa();
 		controle.localizarObjeto();
 		if (!controle.circular) {
@@ -2067,9 +2071,28 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void processarDetalhes(Metadado tabela, Controle controle) {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(controle.exportacao);
-		if (!campos.isEmpty()) {
-			processarCampo(controle, campos.get(0));
+		Coletor coletor = new Coletor();
+		SetLista.view(ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos), coletor,
+				ObjetoSuperficie.this, true);
+		if (coletor.size() == 1) {
+			String nomeCampo = coletor.get(0);
+			processarCampo(controle, getCampo(campos, nomeCampo));
+		} else {
+			controle.erro = true;
 		}
+	}
+
+	private Metadado getCampo(List<Metadado> campos, String nomeCampo) {
+		for (Metadado metadado : campos) {
+			if (metadado.getChaveTabelaReferencia().equals(nomeCampo)) {
+				return metadado;
+			}
+		}
+		return null;
+	}
+
+	private List<String> nomeCampos(List<Metadado> campos) {
+		return campos.stream().map(Metadado::getChaveTabelaReferencia).collect(Collectors.toList());
 	}
 
 	private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {
@@ -2093,6 +2116,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Relacao relacao;
 		Objeto objeto;
 		Metadado raiz;
+		boolean erro;
 
 		private Controle(Objeto principal) {
 			this.principal = principal;
