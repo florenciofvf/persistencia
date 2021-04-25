@@ -2171,6 +2171,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				principal.setSelecionado(false);
 				objeto.setDeslocamentoXId(28);
 				objeto.setDeslocamentoYId(24);
+				objeto.setChecarLargura(true);
 				objeto.setSelecionado(true);
 			}
 		}

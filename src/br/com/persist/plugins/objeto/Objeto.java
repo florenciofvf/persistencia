@@ -61,6 +61,7 @@ public class Objeto implements Runnable {
 	private boolean transparenteBkp;
 	private ObjetoListener listener;
 	private Color cor = COR_PADRAO;
+	private boolean checarLargura;
 	private static long sequencia;
 	private String finalConsulta;
 	private boolean transparente;
@@ -986,5 +987,13 @@ public class Objeto implements Runnable {
 
 	public Set<String> getTabelasRepetidas() {
 		return tabelasRepetidas;
+	}
+
+	public boolean isChecarLargura() {
+		return checarLargura;
+	}
+
+	public void setChecarLargura(boolean checarLargura) {
+		this.checarLargura = checarLargura;
 	}
 }

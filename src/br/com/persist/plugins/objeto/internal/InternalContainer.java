@@ -210,6 +210,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
+		checarLargura();
 		if (Preferencias.isDesconectado()) {
 			processado.set(false);
 			return;
@@ -326,6 +327,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (!visivel && objeto.isVisivel()) {
 				visibilidadeListener.checarLargura(InternalContainer.this);
 			}
+		}
+	}
+
+	private void checarLargura() {
+		if (visibilidadeListener != null && objeto.isChecarLargura()) {
+			objeto.setChecarLargura(false);
+			visibilidadeListener.checarLargura(InternalContainer.this);
 		}
 	}
 
