@@ -981,6 +981,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return null;
 	}
 
+	public boolean contemId(Objeto obj) {
+		for (int i = 0; i < objetos.length; i++) {
+			Objeto objeto = objetos[i];
+			if (objeto != obj && objeto.equalsId(obj)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean contem(Objeto obj) {
 		return getIndice(obj) >= 0;
 	}
@@ -1445,17 +1455,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void criarNovoObjeto(int x, int y) {
 		Objeto novo = new Objeto(x, y);
-		checagemID(novo, Constantes.VAZIO, Constantes.VAZIO);
+		checagemId(novo, Constantes.VAZIO, Constantes.VAZIO);
 		addObjeto(novo);
 		limparSelecao();
 		repaint();
 	}
 
-	private void checagemID(Objeto objeto, String id, String sep) {
-		boolean contem = contem(objeto);
+	private void checagemId(Objeto objeto, String id, String sep) {
+		boolean contem = contemId(objeto);
 		while (contem) {
 			objeto.setId(id + sep + Objeto.novaSequencia());
-			contem = contem(objeto);
+			contem = contemId(objeto);
 		}
 	}
 
@@ -1981,7 +1991,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (contemObjetoComTabela(nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo();
 			objeto.setId(id);
-			checagemID(objeto, id, Constantes.SEP2);
+			checagemId(objeto, id, Constantes.SEP2);
 			objeto.setGrupo(tabelaRef.getNomeCampo());
 		} else {
 			objeto.setId(nomeTabela);
@@ -1993,7 +2003,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (contemObjetoComTabela(nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + variaveis.campoProcessado.getDescricao();
 			objeto.setId(id);
-			checagemID(objeto, id, Constantes.SEP2);
+			checagemId(objeto, id, Constantes.SEP2);
 			objeto.setGrupo(variaveis.campoProcessado.getDescricao());
 		} else {
 			objeto.setId(nomeTabela);
@@ -2040,7 +2050,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (contemObjetoComTabela(nomeTabela)) {
 			String id = nomeTabela + Constantes.SEP2 + controle.campoProcessado.getDescricao();
 			controle.objeto.setId(id);
-			checagemID(controle.objeto, id, Constantes.SEP2);
+			checagemId(controle.objeto, id, Constantes.SEP2);
 			controle.objeto.setGrupo(controle.campoProcessado.getDescricao());
 		} else {
 			controle.objeto.setId(nomeTabela);

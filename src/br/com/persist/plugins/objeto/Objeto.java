@@ -718,6 +718,10 @@ public class Objeto implements Runnable {
 		return false;
 	}
 
+	public boolean equalsId(Objeto outro) {
+		return id.equals(outro.id);
+	}
+
 	public boolean igual(Objeto objeto) {
 		return objeto != null && getGrupo().equalsIgnoreCase(objeto.getGrupo())
 				&& getTabela2().equalsIgnoreCase(objeto.getTabela2());
