@@ -1051,11 +1051,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 		}
 		novo.setId(id);
-		boolean contem = contem(novo);
-		while (contem) {
-			novo.setId(id + "-" + Objeto.novaSequencia());
-			contem = contem(novo);
-		}
+		checagemId(novo, id, "-");
 		addObjeto(novo);
 		repaint();
 		return true;
