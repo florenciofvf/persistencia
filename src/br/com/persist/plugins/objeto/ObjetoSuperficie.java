@@ -1273,11 +1273,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					Objeto novo = selecionadoRelacao.criarObjetoMeio();
 					Objeto destino = selecionadoRelacao.getDestino();
 					Objeto origem = selecionadoRelacao.getOrigem();
-					boolean contem = contem(novo);
-					while (contem) {
-						novo.setId(Constantes.VAZIO + Objeto.novaSequencia());
-						contem = contem(novo);
-					}
+					checagemId(novo, Constantes.VAZIO, Constantes.VAZIO);
 					addObjeto(novo);
 					selecionadoRelacao.setSelecionado(false);
 					excluir(selecionadoRelacao);
