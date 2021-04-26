@@ -29,6 +29,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -168,6 +170,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private CheckBox chkRespostaJson = new CheckBox(RequisicaoMensagens.getString("label.resposta_json"), false);
+		private Action variaveisAcao = actionIcon("label.variaveis_sistema", Icones.BOLA_AMARELA);
 		private Action retornar64Acao = actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
 		private Action formatarAcao = actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
@@ -187,6 +190,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			addButton(modeloAcao);
 			addButton(true, base64Acao);
 			addButton(retornar64Acao);
+			addButton(true, variaveisAcao);
 			String hint = RequisicaoMensagens.getString("label.copiar_access_token",
 					RequisicaoMensagens.getString("label.resposta_json"));
 			chkCopiarAccessT.setToolTipText(hint);
@@ -202,6 +206,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			chkCopiarAccessT.setSelected(Preferencias.getBoolean("copiar_access_token"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			retornar64Acao.setActionListener(e -> retornar64());
+			variaveisAcao.setActionListener(e -> variaveis());
 			atualizarAcao.setActionListener(e -> atualizar());
 			formatarAcao.setActionListener(e -> formatar());
 			base64Acao.setActionListener(e -> base64());
@@ -343,6 +348,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 			Pagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.retornar64();
+			}
+		}
+
+		private void variaveis() {
+			Pagina ativa = fichario.getPaginaAtiva();
+			if (ativa != null) {
+				ativa.variaveis();
 			}
 		}
 	}
@@ -684,6 +696,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 				areaResultados.setText(Constantes.VAZIO);
 				retornar64(string);
 			}
+		}
+
+		private void variaveis() {
+			StringBuilder sb = new StringBuilder();
+			Properties properties = System.getProperties();
+			Set<String> chaves = properties.stringPropertyNames();
+			for (String chave : chaves) {
+				Object valor = properties.get(chave);
+				sb.append(chave + "=" + (valor != null ? valor.toString() : "") + Constantes.QL);
+			}
+			areaResultados.setText(sb.toString());
 		}
 
 		private void base64(String string) {
