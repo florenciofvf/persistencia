@@ -1445,14 +1445,18 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void criarNovoObjeto(int x, int y) {
 		Objeto novo = new Objeto(x, y);
-		boolean contem = contem(novo);
-		while (contem) {
-			novo.setId(Constantes.VAZIO + Objeto.novaSequencia());
-			contem = contem(novo);
-		}
+		checagemID(novo, Constantes.VAZIO, Constantes.VAZIO);
 		addObjeto(novo);
 		limparSelecao();
 		repaint();
+	}
+
+	private void checagemID(Objeto objeto, String id, String sep) {
+		boolean contem = contem(objeto);
+		while (contem) {
+			objeto.setId(id + sep + Objeto.novaSequencia());
+			contem = contem(objeto);
+		}
 	}
 
 	private InputMap inputMap() {
@@ -1975,7 +1979,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarIdTabelaGrupoExportacao(Objeto objeto, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
 		if (contemObjetoComTabela(nomeTabela)) {
-			objeto.setId(nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo());
+			String id = nomeTabela + Constantes.SEP2 + tabelaRef.getNomeCampo();
+			objeto.setId(id);
+			checagemID(objeto, id, Constantes.SEP2);
 			objeto.setGrupo(tabelaRef.getNomeCampo());
 		} else {
 			objeto.setId(nomeTabela);
@@ -1985,7 +1991,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarIdTabelaGrupoImportacao(Variaveis variaveis, Objeto objeto, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
 		if (contemObjetoComTabela(nomeTabela)) {
-			objeto.setId(nomeTabela + Constantes.SEP2 + variaveis.campoProcessado.getDescricao());
+			String id = nomeTabela + Constantes.SEP2 + variaveis.campoProcessado.getDescricao();
+			objeto.setId(id);
+			checagemID(objeto, id, Constantes.SEP2);
 			objeto.setGrupo(variaveis.campoProcessado.getDescricao());
 		} else {
 			objeto.setId(nomeTabela);
@@ -2030,7 +2038,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private void processarIdTabelaGrupoImportacao(Controle controle, Metadado tabelaRef) {
 		String nomeTabela = tabelaRef.getNomeTabela();
 		if (contemObjetoComTabela(nomeTabela)) {
-			controle.objeto.setId(nomeTabela + Constantes.SEP2 + controle.campoProcessado.getDescricao());
+			String id = nomeTabela + Constantes.SEP2 + controle.campoProcessado.getDescricao();
+			controle.objeto.setId(id);
+			checagemID(controle.objeto, id, Constantes.SEP2);
 			controle.objeto.setGrupo(controle.campoProcessado.getDescricao());
 		} else {
 			controle.objeto.setId(nomeTabela);
