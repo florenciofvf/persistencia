@@ -13,6 +13,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +35,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextField;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -163,12 +166,16 @@ public class AmbienteContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private final TextField txtPesquisa = new TextField(35);
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP);
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
+			add(txtPesquisa);
 		}
 
 		@Override
@@ -281,6 +288,25 @@ public class AmbienteContainer extends AbstratoContainer {
 				abrirArquivo(arq);
 				backup = arq;
 				setNomeBackup(coletor.get(0));
+			}
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtPesquisa.getText())) {
+				List<String> arquivos = Util.listarNomeBackup(fileParent, ambiente.chave);
+				StringBuilder sb = new StringBuilder();
+				for (String arquivo : arquivos) {
+					String resultado = Util.pesquisar(new File(fileParent, arquivo), txtPesquisa.getText());
+					if (!Util.estaVazio(resultado)) {
+						if (sb.length() > 0) {
+							sb.append(Constantes.QL);
+						}
+						sb.append(arquivo + Constantes.QL);
+						sb.append(resultado);
+					}
+				}
+				textArea.setText(sb.toString());
 			}
 		}
 	}
