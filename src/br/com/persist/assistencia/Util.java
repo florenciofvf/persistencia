@@ -711,6 +711,27 @@ public class Util {
 		}
 	}
 
+	public static String pesquisar(File file, String pesquisar) {
+		if (file != null && file.exists()) {
+			StringBuilder sb = new StringBuilder();
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String linha = br.readLine();
+				int contador = 0;
+				while (linha != null) {
+					contador++;
+					if (linha.indexOf(pesquisar) != -1) {
+						sb.append(contador + ": " + linha + Constantes.QL);
+					}
+					linha = br.readLine();
+				}
+			} catch (IOException ex) {
+				return null;
+			}
+			return sb.toString();
+		}
+		return null;
+	}
+
 	public static boolean contemNoArray(String string, String[] strings) {
 		if (strings != null) {
 			for (String s : strings) {
