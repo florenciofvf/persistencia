@@ -30,6 +30,7 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
 import br.com.persist.plugins.arquivo.ArquivoEvento;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
+import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.metadado.MetadadoEvento;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
@@ -101,15 +102,16 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			if (metadado != null) {
 				String metodo = (String) args.get(MetadadoEvento.METODO);
 				Boolean boolCircular = (Boolean) args.get(MetadadoEvento.CIRCULAR);
+				Conexao conexao = (Conexao) args.get(MetadadoEvento.CONEXAO);
 				boolean circular = Boolean.TRUE.equals(boolCircular);
 				if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FORM.equals(metodo)) {
-					abrirExportacaoMetadadoFormulario(formulario, metadado, circular);
+					abrirExportacaoMetadadoFormulario(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_EXPORTACAO_METADADO_FICH.equals(metodo)) {
-					abrirExportacaoMetadadoFichario(formulario, metadado, circular);
+					abrirExportacaoMetadadoFichario(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FORM.equals(metodo)) {
-					abrirImportacaoMetadadoFormulario(formulario, metadado, circular);
+					abrirImportacaoMetadadoFormulario(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.ABRIR_IMPORTACAO_METADADO_FICH.equals(metodo)) {
-					abrirImportacaoMetadadoFichario(formulario, metadado, circular);
+					abrirImportacaoMetadadoFichario(formulario, conexao, metadado, circular);
 				} else if (MetadadoEvento.EXPORTAR_METADADO_RAIZ_FORM.equals(metodo) && metadado.getEhRaiz()
 						&& !metadado.estaVazio()) {
 					exportarMetadadoRaizFormulario(formulario, metadado);
@@ -120,30 +122,34 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			}
 		}
 
-		private void abrirExportacaoMetadadoFormulario(Formulario formulario, Metadado metadado, boolean circular) {
+		private void abrirExportacaoMetadadoFormulario(Formulario formulario, Conexao conexao, Metadado metadado,
+				boolean circular) {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 					new File(ObjetoMensagens.getString("label.abrir_exportacao")));
-			form.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+			form.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
 			Formulario.posicionarJanela(formulario, form);
 		}
 
-		private void abrirExportacaoMetadadoFichario(Formulario formulario, Metadado metadado, boolean circular) {
+		private void abrirExportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
+				boolean circular) {
 			ObjetoContainer container = criarObjetoContainer(formulario);
-			container.abrirExportacaoImportacaoMetadado(metadado, true, circular);
+			container.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
 			container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
 			formulario.adicionarPagina(container);
 		}
 
-		private void abrirImportacaoMetadadoFormulario(Formulario formulario, Metadado metadado, boolean circular) {
+		private void abrirImportacaoMetadadoFormulario(Formulario formulario, Conexao conexao, Metadado metadado,
+				boolean circular) {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 					new File(ObjetoMensagens.getString("label.abrir_importacao")));
-			form.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+			form.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
 			Formulario.posicionarJanela(formulario, form);
 		}
 
-		private void abrirImportacaoMetadadoFichario(Formulario formulario, Metadado metadado, boolean circular) {
+		private void abrirImportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
+				boolean circular) {
 			ObjetoContainer container = criarObjetoContainer(formulario);
-			container.abrirExportacaoImportacaoMetadado(metadado, false, circular);
+			container.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
 			container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
 			formulario.adicionarPagina(container);
 		}

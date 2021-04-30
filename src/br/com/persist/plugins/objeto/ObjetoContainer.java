@@ -450,8 +450,12 @@ public class ObjetoContainer extends AbstratoContainer {
 		btnSelecao.click();
 	}
 
-	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
-		objetoSuperficie.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
+	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
+			boolean circular) {
+		if (conexao != null) {
+			comboConexao.setSelectedItem(conexao);
+		}
+		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular);
 		btnSelecao.click();
 	}
 

@@ -1516,7 +1516,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (vinculoListener != null) {
-						vinculoListener.adicionarHierarquico(objeto);
+						vinculoListener.adicionarHierarquico(getConexao(), objeto);
 					}
 				}
 			}

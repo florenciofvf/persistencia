@@ -6,6 +6,7 @@ import java.io.File;
 
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
 
@@ -46,8 +47,9 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		return form;
 	}
 
-	public void abrirExportacaoImportacaoMetadado(Metadado metadado, boolean exportacao, boolean circular) {
-		container.abrirExportacaoImportacaoMetadado(metadado, exportacao, circular);
+	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
+			boolean circular) {
+		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular);
 	}
 
 	public void abrirArquivo(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {

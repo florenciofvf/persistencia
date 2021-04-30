@@ -238,10 +238,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			return true;
 		}
 
-		public void adicionarHierarquico(Objeto objeto) {
+		public void adicionarHierarquico(Conexao conexao, Objeto objeto) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).adicionarHierarquico(objeto);
+				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto);
 			}
 		}
 	};

@@ -10,6 +10,7 @@ public class MetadadoEvento {
 	public static final String GET_METADADO_OBJETO = "GET_METADADO_OBJETO";
 	public static final String ABRIR_METADADO = "ABRIR_METADADO";
 	public static final String CIRCULAR = "CIRCULAR";
+	public static final String CONEXAO = "CONEXAO";
 	public static final String METODO = "METODO";
 
 	private MetadadoEvento() {

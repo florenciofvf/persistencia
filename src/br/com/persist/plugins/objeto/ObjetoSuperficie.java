@@ -689,7 +689,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				if (conexao == null) {
 					conexao = container.getConexaoPadrao();
 				}
-				setComplemento(conexao, objeto);
 				if (Util.estaVazio(objeto.getArquivo())) {
 					Frame frame = container.getFrame();
 					formularioDados(conexao, objeto, frame);
@@ -700,6 +699,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void abrirArquivo(Conexao conexao, Objeto objeto, InternalFormulario interno) {
+			setComplemento(conexao, objeto);
 			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela2());
 			config.setGraphics(getGraphics());
 			if (interno != null) {
@@ -722,15 +722,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void formularioDados(Conexao conexao, Objeto objeto, Frame frame) {
+		setComplemento(conexao, objeto);
 		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
-	}
-
-	public static void setComplemento(Conexao conexao, Objeto objeto) {
-		if (conexao != null && objeto != null && Util.estaVazio(objeto.getComplemento())) {
-			objeto.setComplemento(conexao.getFinalComplemento());
-		}
 	}
 
 	private class Inversao {
@@ -1243,7 +1238,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void abrirObjeto(Objeto objeto) {
 			Conexao conexao = container.getConexaoPadrao();
-			setComplemento(conexao, objeto);
 			Frame frame = container.getFrame();
 			formularioDados(conexao, objeto, frame);
 		}
@@ -1847,7 +1841,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	public void adicionarHierarquico(Objeto objeto) {
+	public void adicionarHierarquico(Conexao conexao, Objeto objeto) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela2());
 		formulario.processar(args);
@@ -1856,11 +1850,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			Util.mensagem(ObjetoSuperficie.this,
 					ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
 		} else {
-			criarObjetoHierarquico(objeto, metadado);
+			if (conexao == null) {
+				conexao = container.getConexaoPadrao();
+			}
+			criarObjetoHierarquico(conexao, objeto, metadado);
 		}
 	}
 
-	private void criarObjetoHierarquico(Objeto principal, Metadado tabela) {
+	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Metadado tabela) {
 		Controle controle = new Controle(principal);
 		controle.raiz = tabela.getPai();
 		controle.checkInicialPesquisa();
@@ -1871,12 +1868,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		controle.checkFinalPesquisa();
 		controle.localizarObjeto();
 		if (!controle.circular) {
-			destacar(null, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
+			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
 		Util.mensagemFormulario(formulario, controle.sb.toString());
 	}
 
-	public void abrirExportacaoImportacaoMetadado(Metadado tabela, boolean exportacao, boolean circular) {
+	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
+			boolean circular) {
 		Variaveis variaveis = criarVariaveis(exportacao, circular);
 		processarPrincipal(tabela, variaveis);
 		variaveis.checkInicialPesquisa();
@@ -1884,7 +1882,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		variaveis.checkFinalPesquisa();
 		variaveis.localizarObjetos();
 		if (!variaveis.circular) {
-			destacar(null, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
+			if (conexao == null) {
+				conexao = container.getConexaoPadrao();
+			}
+			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
 		Util.mensagemFormulario(formulario, variaveis.sb.toString());
 	}

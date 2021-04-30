@@ -123,6 +123,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		return Action.acaoMenu(MetadadoMensagens.getString(chave), null);
 	}
 
+	private Conexao getConexao() {
+		return (Conexao) comboConexao.getSelectedItem();
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final JProgressBar progresso = new JProgressBar();
@@ -309,10 +313,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			}
 		}
 
-		private Conexao getConexao() {
-			return (Conexao) comboConexao.getSelectedItem();
-		}
-
 		private void atualizar(Conexao conexao) {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
@@ -428,6 +428,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	private Map<String, Object> criarArgs(Metadado metadado, String metodo) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.ABRIR_METADADO, metadado);
+		args.put(MetadadoEvento.CONEXAO, getConexao());
 		args.put(MetadadoEvento.METODO, metodo);
 		return args;
 	}
