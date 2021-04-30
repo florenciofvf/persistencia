@@ -353,16 +353,17 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				InternalFormulario interno = (InternalFormulario) frame;
 				List<Referencia> referencias = pesquisa.getReferencias();
 				interno.setProcessadoPesquisa(false);
-				pesquisar(argumentos, interno, referencias);
+				pesquisar(conexao, argumentos, interno, referencias);
 			}
 		}
 	}
 
-	private void pesquisar(String argumentos, InternalFormulario interno, List<Referencia> referencias) {
+	private void pesquisar(Conexao conexao, String argumentos, InternalFormulario interno,
+			List<Referencia> referencias) {
 		for (Referencia referencia : referencias) {
 			if (interno.ehReferencia(referencia)) {
 				interno.setReferenciaPesquisa(referencia);
-				interno.pesquisar(referencia, argumentos);
+				interno.pesquisar(conexao, referencia, argumentos);
 				interno.setProcessadoPesquisa(true);
 				referencia.setProcessado(true);
 			}

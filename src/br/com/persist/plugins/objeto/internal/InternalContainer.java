@@ -369,9 +369,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	public void pesquisar(Referencia referencia, String argumentos) {
-		Conexao conexao = getConexao();
+	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos) {
 		if (conexao != null) {
+			selecionarConexao(conexao);
 			txtComplemento.setText("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
 			destacarTitulo = true;
 			actionListenerInner.actionPerformed(null);

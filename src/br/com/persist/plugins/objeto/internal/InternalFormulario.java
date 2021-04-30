@@ -319,8 +319,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.getObjeto().setReferenciaPesquisa(referencia);
 	}
 
-	public void pesquisar(Referencia referencia, String argumentos) {
-		container.pesquisar(referencia, argumentos);
+	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos) {
+		container.pesquisar(conexao, referencia, argumentos);
 	}
 
 	public void pesquisarLink(Referencia referencia, String argumentos) {

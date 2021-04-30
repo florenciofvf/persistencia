@@ -1615,13 +1615,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	@Override
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
+		if (conexao == null) {
+			conexao = container.getConexaoPadrao();
+		}
 		super.pesquisar(conexao, pesquisa, argumentos);
 		if (ObjetoPreferencia.isAbrirAuto()) {
 			limparSelecao();
 			processarReferencias(conexao, pesquisa, argumentos);
 			if (getPrimeiroObjetoSelecionado() != null) {
-				destacar(conexao != null ? conexao : container.getConexaoPadrao(),
-						ObjetoPreferencia.getTipoContainerPesquisaAuto(), null);
+				destacar(conexao, ObjetoPreferencia.getTipoContainerPesquisaAuto(), null);
 			}
 		}
 	}
@@ -1653,14 +1655,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (ObjetoPreferencia.isAbrirAutoDestacado()) {
 			Objeto clone = objeto.clonar();
 			clone.setReferenciaPesquisa(referencia);
-			criarExternalFormulario(clone, conexao != null ? conexao : container.getConexaoPadrao());
+			criarExternalFormulario(conexao != null ? conexao : container.getConexaoPadrao(), clone);
 		} else {
 			objeto.setSelecionado(true);
 		}
 		referencia.setProcessado(true);
 	}
 
-	private void criarExternalFormulario(Objeto objeto, Conexao conexao) {
+	private void criarExternalFormulario(Conexao conexao, Objeto objeto) {
+		setComplemento(conexao, objeto);
 		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
