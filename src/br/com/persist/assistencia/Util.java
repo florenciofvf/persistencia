@@ -23,8 +23,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,12 +50,24 @@ import br.com.persist.mensagem.MensagemFormulario;
 
 public class Util {
 	private static final Logger LOG = Logger.getGlobal();
+	private static Random random;
 
 	private Util() {
 	}
 
 	public static boolean estaVazio(String s) {
 		return s == null || s.trim().isEmpty();
+	}
+
+	public static synchronized int getRandomInt(int bound) {
+		try {
+			if (random == null) {
+				random = SecureRandom.getInstanceStrong();
+			}
+			return random.nextInt(bound);
+		} catch (NoSuchAlgorithmException e) {
+			throw new IllegalStateException();
+		}
 	}
 
 	public static String soNumeros(String s) {

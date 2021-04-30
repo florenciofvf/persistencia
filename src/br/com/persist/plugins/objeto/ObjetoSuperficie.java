@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -2185,12 +2186,20 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (interno != null) {
 				objeto.x = principal.x + Constantes.VINTE_CINCO;
 				objeto.y = interno.getY() + Constantes.TRINTA;
-				principal.setSelecionado(false);
 				objeto.setDeslocamentoXId(28);
 				objeto.setDeslocamentoYId(24);
 				objeto.setChecarLargura(true);
+				objeto.setCorTmp(criarCor());
+				limparSelecao();
 				objeto.setSelecionado(true);
 			}
+		}
+
+		private Color criarCor() {
+			int r = Util.getRandomInt(255);
+			int g = Util.getRandomInt(255);
+			int b = Util.getRandomInt(255);
+			return new Color(r, g, b);
 		}
 	}
 

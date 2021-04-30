@@ -87,6 +87,7 @@ public class Objeto implements Runnable {
 	private String icone;
 	private boolean bpnt;
 	private String grupo;
+	private Color corTmp;
 	private Icon icon;
 	private String id;
 	private long tag;
@@ -999,5 +1000,13 @@ public class Objeto implements Runnable {
 
 	public void setChecarLargura(boolean checarLargura) {
 		this.checarLargura = checarLargura;
+	}
+
+	public Color getCorTmp() {
+		return corTmp;
+	}
+
+	public void setCorTmp(Color corTmp) {
+		this.corTmp = corTmp;
 	}
 }
