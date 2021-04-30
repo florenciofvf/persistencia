@@ -2189,17 +2189,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				objeto.setDeslocamentoXId(28);
 				objeto.setDeslocamentoYId(24);
 				objeto.setChecarLargura(true);
-				objeto.setCorTmp(criarCor());
+				objeto.setCorTmp(Color.GREEN);
 				limparSelecao();
 				objeto.setSelecionado(true);
 			}
-		}
-
-		private Color criarCor() {
-			int r = Util.getRandomInt(255);
-			int g = Util.getRandomInt(255);
-			int b = Util.getRandomInt(255);
-			return new Color(r, g, b);
 		}
 	}
 
