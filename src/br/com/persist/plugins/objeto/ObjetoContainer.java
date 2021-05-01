@@ -226,11 +226,10 @@ public class ObjetoContainer extends AbstratoContainer {
 					objetoSuperficie.selecionarConexao(getConexaoPadrao());
 				}
 			});
-			chkAjusteAutomatico
-					.addActionListener(e -> objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected()));
 			txtPrefixoNomeTabela
 					.addActionListener(e -> objetoSuperficie.prefixoNomeTabela(txtPrefixoNomeTabela.getText()));
 			excluirAcao.setActionListener(e -> objetoSuperficie.excluirSelecionados());
+			chkAjusteAutomatico.addActionListener(e -> setAjusteAutomaticoForm());
 			chkAjusteLarguraFrm.addActionListener(e -> setAjusteLarguraForm());
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
@@ -241,6 +240,15 @@ public class ObjetoContainer extends AbstratoContainer {
 			objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected());
 			if (chkAjusteLarguraFrm.isSelected()) {
 				objetoSuperficie.configurarLargura(getSize());
+			}
+		}
+
+		private void setAjusteAutomaticoForm() {
+			objetoSuperficie.setAjusteAutomaticoForm(chkAjusteAutomatico.isSelected());
+			if (chkAjusteAutomatico.isSelected()) {
+				objetoSuperficie.getAjuste().empilharFormularios();
+				objetoSuperficie.getAjuste().aproximarObjetoFormulario(true, true);
+				objetoSuperficie.getAjustar().usarFormularios(false);
 			}
 		}
 
