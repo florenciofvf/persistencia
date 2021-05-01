@@ -222,6 +222,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtMapeamento = new TextField();
 		private TextField txtPrefixoNT = new TextField();
 		private CheckBox chkColunaInfo = new CheckBox();
+		private TextField txtOrderBy = new TextField();
 		private CheckBox chkAbrirAuto = new CheckBox();
 		private TextField txtTabelas = new TextField();
 		private TextField txtApelido = new TextField();
@@ -247,6 +248,7 @@ public class ObjetoContainer extends Panel {
 			txtSequencias.setText(objeto.getSequencias());
 			txtMapeamento.setText(objeto.getMapeamento());
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
+			txtOrderBy.setText(objeto.getOrderBy());
 			txtTabelas.setText(objeto.getTabelas());
 			txtTabela.setText(objeto.getTabela2());
 			txtChaves.setText(objeto.getChaves());
@@ -264,6 +266,7 @@ public class ObjetoContainer extends Panel {
 			txtPrefixoNT.addFocusListener(focusListenerInner);
 			txtTabelas.addFocusListener(focusListenerInner);
 			txtApelido.addFocusListener(focusListenerInner);
+			txtOrderBy.addFocusListener(focusListenerInner);
 			txtTabela.addFocusListener(focusListenerInner);
 			txtChaves.addFocusListener(focusListenerInner);
 			txtJoins.addFocusListener(focusListenerInner);
@@ -279,6 +282,7 @@ public class ObjetoContainer extends Panel {
 			chkAbrirAuto.addActionListener(this);
 			txtPrefixoNT.addActionListener(this);
 			chkLinkAuto.addActionListener(this);
+			txtOrderBy.addActionListener(this);
 			txtTabelas.addActionListener(this);
 			txtApelido.addActionListener(this);
 			txtChaves.addActionListener(this);
@@ -306,6 +310,7 @@ public class ObjetoContainer extends Panel {
 			container.add(
 					criarLinhaCopiar("label.mapeamento", txtMapeamento, ObjetoMensagens.getString("hint.mapeamento")));
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
+			container.add(criarLinhaCopiar("label.order_by", txtOrderBy));
 			container.add(criarLinhaCopiarRotulo("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinhaRotulo("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
@@ -377,6 +382,8 @@ public class ObjetoContainer extends Panel {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txtComplemento.getText());
+			} else if (txtOrderBy == e.getSource()) {
+				objeto.setOrderBy(txtOrderBy.getText());
 			} else if (txtGrupo == e.getSource()) {
 				objeto.setGrupo(txtGrupo.getText());
 			} else if (txtApelido == e.getSource()) {
