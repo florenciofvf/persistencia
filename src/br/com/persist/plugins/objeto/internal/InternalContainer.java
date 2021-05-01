@@ -491,8 +491,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			private void limparUsandoConexao() {
 				Conexao conexao = getConexao();
 				String string = Constantes.VAZIO;
-				if (conexao != null) {
-					string = conexao.getFinalComplemento();
+				if (conexao != null && !Util.estaVazio(conexao.getFiltro())) {
+					string = conexao.getFiltro();
+				} else if (conexao != null && !Util.estaVazio(conexao.getFinalConsulta())) {
+					string = conexao.getFinalConsulta();
 				}
 				txtComplemento.setText(string);
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
