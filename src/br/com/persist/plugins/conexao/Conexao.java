@@ -9,7 +9,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
 public class Conexao {
-	private String finalComplemento;
+	private String finalConsulta;
 	private final String nome;
 	private String constraint;
 	private String urlBanco;
@@ -17,6 +17,7 @@ public class Conexao {
 	private String usuario;
 	private String esquema;
 	private String driver;
+	private String filtro;
 	private String senha;
 
 	public Conexao(String nome) {
@@ -77,25 +78,27 @@ public class Conexao {
 
 	public Conexao clonar(String novoNome) {
 		Conexao c = new Conexao(novoNome);
-		c.finalComplemento = finalComplemento;
+		c.finalConsulta = finalConsulta;
 		c.constraint = constraint;
 		c.urlBanco = urlBanco;
 		c.catalogo = catalogo;
 		c.esquema = esquema;
 		c.usuario = usuario;
 		c.driver = driver;
+		c.filtro = filtro;
 		c.senha = senha;
 		return c;
 	}
 
 	public void aplicar(Attributes attr) {
-		finalComplemento = attr.getValue("finalComplemento");
+		finalConsulta = attr.getValue("finalConsulta");
 		constraint = attr.getValue("constraint");
 		urlBanco = attr.getValue("urlBanco");
 		catalogo = attr.getValue("catalogo");
 		esquema = attr.getValue("esquema");
 		usuario = attr.getValue("usuario");
 		driver = attr.getValue("driver");
+		filtro = attr.getValue("filtro");
 		senha = attr.getValue("senha");
 	}
 
@@ -104,7 +107,8 @@ public class Conexao {
 		util.atributo("nome", Util.escapar(nome));
 		util.atributo("usuario", Util.escapar(usuario));
 		util.atributo("senha", Util.escapar(senha));
-		util.atributo("finalComplemento", Util.escapar(finalComplemento));
+		util.atributo("filtro", Util.escapar(filtro));
+		util.atributo("finalConsulta", Util.escapar(finalConsulta));
 		util.atributo("constraint", Util.escapar(constraint));
 		util.atributo("urlBanco", Util.escapar(urlBanco));
 		util.atributo("catalogo", Util.escapar(catalogo));
@@ -132,14 +136,6 @@ public class Conexao {
 		return nome;
 	}
 
-	public String getFinalComplemento() {
-		return finalComplemento;
-	}
-
-	public void setFinalComplemento(String finalComplemento) {
-		this.finalComplemento = finalComplemento;
-	}
-
 	public String getConstraint() {
 		return constraint;
 	}
@@ -162,5 +158,21 @@ public class Conexao {
 
 	public void setCatalogo(String catalogo) {
 		this.catalogo = catalogo;
+	}
+
+	public String getFinalConsulta() {
+		return finalConsulta;
+	}
+
+	public void setFinalConsulta(String finalConsulta) {
+		this.finalConsulta = finalConsulta;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
 	}
 }
