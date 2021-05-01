@@ -1,9 +1,9 @@
 package br.com.persist.complemento;
 
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
-import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JList;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
 import br.com.persist.assistencia.ColecaoStringModelo;
@@ -23,14 +24,13 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextArea;
 
 public class ComplementoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final ToolbarLista toolbarLista = new ToolbarLista();
 	private final ToolbarArea toolbarArea = new ToolbarArea();
 	private final transient ComplementoListener listener;
-	private final TextArea textArea = new TextArea();
+	private final JTextArea textArea = new JTextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final JList<String> listaComplementos;
 
@@ -55,6 +55,7 @@ public class ComplementoContainer extends Panel {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, toolbarArea);
 		panel.add(BorderLayout.CENTER, new ScrollPane(textArea));
+		textArea.setLineWrap(true);
 		return panel;
 	}
 
@@ -100,12 +101,12 @@ public class ComplementoContainer extends Panel {
 
 		@Override
 		protected void limpar() {
-			textArea.limpar();
+			textArea.setText(Constantes.VAZIO);
 		}
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea.getTextAreaInner());
+			String string = Util.getString(textArea);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
 			textArea.requestFocus();
@@ -113,7 +114,7 @@ public class ComplementoContainer extends Panel {
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+			Util.getContentTransfered(textArea, numeros, letras);
 		}
 	}
 
