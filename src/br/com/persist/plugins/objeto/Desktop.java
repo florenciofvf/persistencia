@@ -321,9 +321,21 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	}
 
 	public static void setComplemento(Conexao conexao, Objeto objeto) {
-		if (conexao != null && objeto != null && Util.estaVazio(objeto.getComplemento())) {
-			objeto.setComplemento(conexao.getFinalComplemento());
+		if (conexao != null && objeto != null) {
+			if (configComplemento(conexao, objeto)) {
+				objeto.setComplemento(conexao.getFiltro());
+			} else if (configFinalConsulta(conexao, objeto)) {
+				objeto.setFinalConsulta(conexao.getFinalConsulta());
+			}
 		}
+	}
+
+	private static boolean configComplemento(Conexao conexao, Objeto objeto) {
+		return !Util.estaVazio(conexao.getFiltro()) && Util.estaVazio(objeto.getComplemento());
+	}
+
+	private static boolean configFinalConsulta(Conexao conexao, Objeto objeto) {
+		return !Util.estaVazio(conexao.getFinalConsulta()) && Util.estaVazio(objeto.getFinalConsulta());
 	}
 
 	private void criarAdicionarInternaFormulario(Point point, Graphics g, boolean buscaAuto, InternalConfig config,
