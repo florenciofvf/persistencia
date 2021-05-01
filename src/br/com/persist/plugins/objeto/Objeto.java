@@ -77,6 +77,7 @@ public class Objeto implements Runnable {
 	private String mapeamento;
 	private boolean processar;
 	private String descricao;
+	private String orderBy;
 	boolean visivel = true;
 	private String arquivo;
 	private String tabelas;
@@ -147,6 +148,7 @@ public class Objeto implements Runnable {
 		o.linkAuto = linkAuto;
 		o.tabelas = tabelas;
 		o.arquivo = arquivo;
+		o.orderBy = orderBy;
 		o.tabela = tabela;
 		o.chaves = chaves;
 		o.grupo = grupo;
@@ -183,6 +185,7 @@ public class Objeto implements Runnable {
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
 		sequencias = attr.getValue("sequencias");
+		orderBy = attr.getValue("orderBy");
 		arquivo = attr.getValue("arquivo");
 		tabelas = attr.getValue("tabelas");
 		setIcone(attr.getValue("icone"));
@@ -206,6 +209,7 @@ public class Objeto implements Runnable {
 		util.atributo("complemento", Util.escapar(getComplemento()));
 		util.atributo("selectAlternativo", getSelectAlternativo());
 		util.atributo("apelidoParaJoins", getApelidoParaJoins());
+		util.atributo("orderBy", Util.escapar(getOrderBy()));
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", clonarAoDestacar);
 		util.atributo("desloc_x_id", deslocamentoXId);
@@ -425,6 +429,13 @@ public class Objeto implements Runnable {
 			finalConsulta = Constantes.VAZIO;
 		}
 		return finalConsulta;
+	}
+
+	public String getOrderBy() {
+		if (Util.estaVazio(orderBy)) {
+			orderBy = Constantes.VAZIO;
+		}
+		return orderBy;
 	}
 
 	public boolean isTransparente() {
@@ -1017,5 +1028,9 @@ public class Objeto implements Runnable {
 
 	public void setScriptAdicaoHierarquico(String scriptAdicaoHierarquico) {
 		this.scriptAdicaoHierarquico = scriptAdicaoHierarquico;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
 	}
 }
