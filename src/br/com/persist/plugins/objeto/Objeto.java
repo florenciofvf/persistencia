@@ -47,6 +47,7 @@ public class Objeto implements Runnable {
 	private boolean clonarAoDestacar = true;
 	private final List<Pesquisa> pesquisas;
 	private final Set<String> complementos;
+	private String scriptAdicaoHierarquico;
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
 	private boolean ajusteAutoForm = true;
@@ -1008,5 +1009,13 @@ public class Objeto implements Runnable {
 
 	public void setCorTmp(Color corTmp) {
 		this.corTmp = corTmp;
+	}
+
+	public String getScriptAdicaoHierarquico() {
+		return scriptAdicaoHierarquico;
+	}
+
+	public void setScriptAdicaoHierarquico(String scriptAdicaoHierarquico) {
+		this.scriptAdicaoHierarquico = scriptAdicaoHierarquico;
 	}
 }

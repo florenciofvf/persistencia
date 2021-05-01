@@ -412,6 +412,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			add(buttonBaixar);
 			add(buttonFuncoes);
 			add(true, comboConexao);
+			buttonInfo.ini(objeto);
 			buttonUpdate.complemento(objeto);
 			buttonPesquisa.complemento(objeto);
 		}
@@ -1075,11 +1076,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action scriptAdicaoHierAcao = actionMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 			private MenuTemp menuTemp = new MenuTemp();
 
 			private ButtonInfo() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
+			}
+
+			private void ini(Objeto objeto) {
+				if (!Util.estaVazio(objeto.getScriptAdicaoHierarquico())) {
+					addMenuItem(scriptAdicaoHierAcao);
+				}
 				addMenuItem(new AdicionarHierarquicoAcao());
 				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
@@ -1091,6 +1099,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				addMenu(true, new MenuCopiar());
 				addMenu(true, menuAlinhamento);
 				addMenu(true, menuTemp);
+				scriptAdicaoHierAcao.setActionListener(
+						e -> Util.mensagem(InternalContainer.this, objeto.getScriptAdicaoHierarquico()));
 			}
 
 			private class MenuTemp extends Menu {
@@ -1534,8 +1544,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 					Coletor coletor = new Coletor();
-					SetLista.view(objeto.getId() + " " + ObjetoMensagens.getString("label.adicionar_hierarquico"),
-							nomes, coletor, InternalContainer.this);
+					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
+							coletor, InternalContainer.this);
 					for (Pesquisa pesquisa : pesquisas) {
 						if (selecionado(pesquisa, coletor.getLista())) {
 							pesquisa.addRef(mapaRef);

@@ -1875,7 +1875,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (!controle.circular) {
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
-		Util.mensagemFormulario(formulario, controle.sb.toString());
+		controle.objeto.setScriptAdicaoHierarquico(controle.sb.toString());
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
