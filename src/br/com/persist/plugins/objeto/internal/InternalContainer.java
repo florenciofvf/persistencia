@@ -35,6 +35,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
@@ -1520,8 +1521,35 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (vinculoListener != null) {
-						vinculoListener.adicionarHierarquico(getConexao(), objeto);
+						Map<String, String> mapaRef = new HashMap<>();
+						vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
+						processarMapaReferencia(mapaRef);
 					}
+				}
+
+				private void processarMapaReferencia(Map<String, String> mapaRef) {
+					List<Pesquisa> pesquisas = objeto.getPesquisas();
+					if (pesquisas.isEmpty()) {
+						return;
+					}
+					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
+					Coletor coletor = new Coletor();
+					SetLista.view(objeto.getId() + " " + ObjetoMensagens.getString("label.adicionar_hierarquico"),
+							nomes, coletor, InternalContainer.this);
+					for (Pesquisa pesquisa : pesquisas) {
+						if (selecionado(pesquisa, coletor.getLista())) {
+							pesquisa.addRef(mapaRef);
+						}
+					}
+				}
+
+				private boolean selecionado(Pesquisa pesquisa, List<String> lista) {
+					for (String string : lista) {
+						if (string.equals(pesquisa.getNome())) {
+							return true;
+						}
+					}
+					return false;
 				}
 			}
 

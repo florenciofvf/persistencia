@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto.internal;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.List;
+import java.util.Map;
 
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.plugins.conexao.Conexao;
@@ -13,11 +14,11 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 
 public interface InternalListener {
 	public interface Vinculo {
+		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, String> mapaRef);
+
 		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos);
 
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
-
-		public void adicionarHierarquico(Conexao conexao, Objeto objeto);
 
 		public void pesquisarApos(Pesquisa pesquisa);
 

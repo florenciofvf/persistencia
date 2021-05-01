@@ -1845,7 +1845,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	public void adicionarHierarquico(Conexao conexao, Objeto objeto) {
+	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, String> mapaRef) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela2());
 		formulario.processar(args);
@@ -1857,12 +1857,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (conexao == null) {
 				conexao = container.getConexaoPadrao();
 			}
-			criarObjetoHierarquico(conexao, objeto, metadado);
+			criarObjetoHierarquico(conexao, objeto, mapaRef, metadado);
 		}
 	}
 
-	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Metadado tabela) {
-		Controle controle = new Controle(principal);
+	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, String> mapaRef,
+			Metadado tabela) {
+		Controle controle = new Controle(principal, mapaRef);
 		controle.raiz = tabela.getPai();
 		controle.checkInicialPesquisa();
 		processarDetalhes(tabela, controle);
@@ -2137,9 +2138,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Metadado raiz;
 		boolean erro;
 
-		private Controle(Objeto principal) {
+		private Controle(Objeto principal, Map<String, String> mapaRef) {
 			this.principal = principal;
-			mapaRef = new HashMap<>();
+			this.mapaRef = mapaRef;
 			exportacao = true;
 			circular = false;
 		}

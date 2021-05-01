@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -238,10 +239,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			return true;
 		}
 
-		public void adicionarHierarquico(Conexao conexao, Objeto objeto) {
+		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, String> mapaRef) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
-				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto);
+				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto, mapaRef);
 			}
 		}
 	};
