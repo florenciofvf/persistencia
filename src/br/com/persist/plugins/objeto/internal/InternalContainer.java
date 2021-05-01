@@ -262,21 +262,28 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		objeto.select(builder, conexao);
 		objeto.joins(builder, conexao, objeto.getPrefixoNomeTabela());
 		objeto.where(builder, txtComplemento.getText(), complemento);
+		objeto.orderBy(builder);
 		Objeto.concatenar(builder, objeto.getFinalConsulta());
 		return builder;
 	}
 
 	private boolean continuar(String complemento) {
-		if (objeto.isSane() && Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(complemento)) {
+		if (objeto.isSane() && todosVazio(complemento)) {
 			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela2());
 			Util.mensagem(InternalContainer.this, msg);
 			return false;
 		}
-		if (!Util.estaVazio(txtComplemento.getText()) || !Util.estaVazio(complemento) || !objeto.isCcsc()) {
+		if (!Util.estaVazio(txtComplemento.getText()) || !Util.estaVazio(complemento)
+				|| !Util.estaVazio(objeto.getFinalConsulta()) || !objeto.isCcsc()) {
 			return true;
 		}
 		String msg = ObjetoMensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
 		return Util.confirmar(InternalContainer.this, msg, false);
+	}
+
+	private boolean todosVazio(String filtro) {
+		return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro)
+				&& Util.estaVazio(objeto.getFinalConsulta());
 	}
 
 	private PersistenciaModelo.Parametros criarParametros(Connection conn, Conexao conexao, String consulta) {
@@ -1397,6 +1404,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						objeto.select(builder, conexao);
 						Objeto.concatenar(builder, objeto.getApelidoParaJoins());
 						objeto.where(builder, txtComplemento.getText(), complemento);
+						objeto.orderBy(builder);
 						Objeto.concatenar(builder, objeto.getFinalConsulta());
 					}
 

@@ -522,6 +522,12 @@ public class Objeto implements Runnable {
 		}
 	}
 
+	public void orderBy(StringBuilder sb) {
+		if (!Util.estaVazio(orderBy)) {
+			sb.append(" ORDER BY " + orderBy);
+		}
+	}
+
 	public void where(StringBuilder sb, String... strings) {
 		if (arrayValido(strings)) {
 			sb.append(" WHERE");
