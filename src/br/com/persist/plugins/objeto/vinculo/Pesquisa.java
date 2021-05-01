@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.vinculo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import br.com.persist.assistencia.Util;
@@ -99,6 +100,10 @@ public class Pesquisa {
 				referenciasApos.add(ref);
 			}
 		}
+	}
+
+	public void addRef(Map<String, String> map) {
+		add(VinculoHandler.criar(map));
 	}
 
 	public void add(List<Referencia> referencias) {

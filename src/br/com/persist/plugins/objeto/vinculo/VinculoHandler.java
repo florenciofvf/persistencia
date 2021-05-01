@@ -16,6 +16,7 @@ import br.com.persist.plugins.objeto.Instrucao;
 class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
 	private final Map<String, List<Instrucao>> instrucoes;
+	private static final String TABELA = "tabela";
 	private final List<Pesquisa> pesquisas;
 	private String tabelaSelecionada;
 	private Pesquisa selecionado;
@@ -45,7 +46,7 @@ class VinculoHandler extends XMLHandler {
 			selecionado = new Pesquisa(attributes.getValue("nome"), criar(attributes));
 			pesquisas.add(selecionado);
 		} else if ("para".equals(qName)) {
-			tabelaSelecionada = attributes.getValue("tabela");
+			tabelaSelecionada = attributes.getValue(TABELA);
 			if (!Util.estaVazio(tabelaSelecionada)) {
 				instrucoes.computeIfAbsent(tabelaSelecionada, t -> new ArrayList<>());
 			}
@@ -75,8 +76,8 @@ class VinculoHandler extends XMLHandler {
 		lista.add(i);
 	}
 
-	private Referencia criar(Attributes attributes) {
-		Referencia ref = new Referencia(attributes.getValue("grupo"), attributes.getValue("tabela"),
+	public static Referencia criar(Attributes attributes) {
+		Referencia ref = new Referencia(attributes.getValue("grupo"), attributes.getValue(TABELA),
 				attributes.getValue("campo"));
 		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
 		String limparApos = attributes.getValue("limparApos");
@@ -87,8 +88,27 @@ class VinculoHandler extends XMLHandler {
 		return ref;
 	}
 
-	private Color getCorFonte(Attributes attributes) {
+	public static Referencia criar(Map<String, String> attributes) {
+		Referencia ref = new Referencia(attributes.get("grupo"), attributes.get(TABELA), attributes.get("campo"));
+		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.get("vazio")));
+		String limparApos = attributes.get("limparApos");
+		ref.setIconeGrupo(attributes.get("iconeGrupo"));
+		ref.setLimparApos(Boolean.parseBoolean(limparApos));
+		ref.setIcone(attributes.get("icone"));
+		ref.setCorFonte(getCorFonte(attributes));
+		return ref;
+	}
+
+	private static Color getCorFonte(Attributes attributes) {
 		String corFonte = attributes.getValue("corFonte");
+		if (!Util.estaVazio(corFonte)) {
+			return Color.decode(corFonte);
+		}
+		return null;
+	}
+
+	private static Color getCorFonte(Map<String, String> attributes) {
+		String corFonte = attributes.get("corFonte");
 		if (!Util.estaVazio(corFonte)) {
 			return Color.decode(corFonte);
 		}
