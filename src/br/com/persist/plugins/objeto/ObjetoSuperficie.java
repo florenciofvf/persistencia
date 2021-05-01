@@ -2127,6 +2127,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private class Controle {
 		private StringBuilder sb = new StringBuilder();
+		private final Map<String, String> mapaRef;
 		Metadado campoProcessado;
 		final Objeto principal;
 		boolean exportacao;
@@ -2138,6 +2139,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private Controle(Objeto principal) {
 			this.principal = principal;
+			mapaRef = new HashMap<>();
 			exportacao = true;
 			circular = false;
 		}
@@ -2153,15 +2155,20 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
+			mapaRef.clear();
 			sb.append(Constantes.QL + "\t\t<ref");
 			append(sb, tabela, campo);
 			if (!Util.estaVazio(grupo)) {
 				sb.append(" grupo=" + citar(grupo));
 			}
 			if (invisivel) {
-				sb.append(" vazio=" + citar("invisivel"));
+				sb.append(" vazio=" + citar(ObjetoConstantes.INVISIVEL));
+				mapaRef.put("vazio", ObjetoConstantes.INVISIVEL);
 			}
 			sb.append(" />");
+			mapaRef.put("tabela", tabela);
+			mapaRef.put("campo", campo);
+			mapaRef.put("grupo", grupo);
 		}
 
 		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
@@ -2253,7 +2260,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				sb.append(" grupo=" + citar(grupo));
 			}
 			if (invisivel) {
-				sb.append(" vazio=" + citar("invisivel"));
+				sb.append(" vazio=" + citar(ObjetoConstantes.INVISIVEL));
 			}
 			sb.append(" />");
 		}
