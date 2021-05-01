@@ -1851,6 +1851,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		formulario.processar(args);
 		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
 		if (metadado == null) {
+			mapaRef.put("error", "true");
 			Util.mensagem(ObjetoSuperficie.this,
 					ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
 		} else {
@@ -1868,14 +1869,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		controle.checkInicialPesquisa();
 		processarDetalhes(tabela, controle);
 		if (controle.erro) {
+			mapaRef.put("error", "true");
 			return;
 		}
 		controle.checkFinalPesquisa();
 		controle.localizarObjeto();
+		controle.objeto.setScriptAdicaoHierarquico(controle.sb.toString());
 		if (!controle.circular) {
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
-		controle.objeto.setScriptAdicaoHierarquico(controle.sb.toString());
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,

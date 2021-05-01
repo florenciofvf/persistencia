@@ -1538,8 +1538,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 
 				private void processarMapaReferencia(Map<String, String> mapaRef) {
+					Boolean erro = Boolean.valueOf(mapaRef.get("error"));
 					List<Pesquisa> pesquisas = objeto.getPesquisas();
-					if (pesquisas.isEmpty()) {
+					if (pesquisas.isEmpty() || erro) {
 						return;
 					}
 					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
