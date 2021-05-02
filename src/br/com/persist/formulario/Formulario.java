@@ -216,7 +216,6 @@ public class Formulario extends JFrame {
 		java.awt.MenuItem itemVersao = new java.awt.MenuItem(Mensagens.getString("versao"));
 		popup.add(itemVersao);
 		itemFechar.addActionListener(e -> eventoFechar());
-		itemVersao.addActionListener(e -> eventoVersao());
 		popup.add(itemFechar);
 		URL url = getClass().getResource(Constantes.IMAGEM_TRAY_ICON);
 		Image image = Toolkit.getDefaultToolkit().getImage(url);
@@ -245,14 +244,6 @@ public class Formulario extends JFrame {
 	public void eventoFechar() {
 		WindowEvent event = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
 		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(event);
-	}
-
-	private void eventoVersao() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(FormularioMensagens.getString("label.parametros") + Constantes.QL);
-		sb.append("------------------" + Constantes.QL);
-		sb.append("desconectado" + Constantes.QL);
-		Util.mensagem(this, sb.toString());
 	}
 
 	private class IconeBandejaListener implements ActionListener {
