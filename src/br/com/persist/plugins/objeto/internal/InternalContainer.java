@@ -138,8 +138,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private final Toolbar toolbar = new Toolbar();
 	private CabecalhoColuna cabecalhoFiltro;
 	private final transient Objeto objeto;
-	private final boolean buscaAuto;
 	private boolean destacarTitulo;
+	private boolean buscaAuto;
 	private int contadorAuto;
 
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
@@ -1564,6 +1564,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							Referencia ref = (Referencia) mapaRef.get("ref");
 							objeto.addReferencia(ref);
 							pesquisa.add(ref);
+							buscaAuto = true;
 						}
 					}
 				}
@@ -1574,6 +1575,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						objeto.getPesquisas().add(pesquisa);
 						objeto.addReferencias(pesquisa.getReferencias());
 						buttonPesquisa.complemento(objeto);
+						buscaAuto = true;
 					}
 				}
 
