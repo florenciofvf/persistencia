@@ -1550,7 +1550,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private void processarMapaReferencia(Map<String, Object> mapaRef) {
 					Boolean erro = (Boolean) mapaRef.get(ObjetoConstantes.ERROR);
-					if (erro) {
+					if (erro || mapaRef.get("pesquisa") == null || mapaRef.get("ref") == null) {
 						return;
 					}
 					checarListaPesquisa(mapaRef);
