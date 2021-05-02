@@ -1549,10 +1549,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private void processarMapaReferencia(Map<String, String> mapaRef) {
 					Boolean erro = Boolean.valueOf(mapaRef.get("error"));
-					List<Pesquisa> pesquisas = objeto.getPesquisas();
-					if (pesquisas.isEmpty() || erro) {
+					if (erro) {
 						return;
 					}
+					List<Pesquisa> pesquisas = objeto.getPesquisas();
+					checarListaPesquisa(pesquisas, mapaRef);
 					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 					Coletor coletor = new Coletor();
 					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
@@ -1562,6 +1563,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							pesquisa.addRef(mapaRef);
 						}
 					}
+				}
+
+				private void checarListaPesquisa(List<Pesquisa> pesquisas, Map<String, String> mapaRef) {
+					if (pesquisas.isEmpty()) {
+						Pesquisa pesquisa = criarPesquisa(mapaRef);
+						pesquisas.add(pesquisa);
+						// ATUALIZAR MENU
+					}
+				}
+
+				private Pesquisa criarPesquisa(Map<String, String> mapaRef) {
+					Referencia ref = new Referencia(null, mapaRef.get("pesquisa_tabela"),
+							mapaRef.get("pesquisa_campo"));
+					return new Pesquisa(mapaRef.get("pesquisa_nome"), ref);
 				}
 
 				private boolean selecionado(Pesquisa pesquisa, List<String> lista) {

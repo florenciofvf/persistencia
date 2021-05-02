@@ -1867,7 +1867,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Controle controle = new Controle(principal, mapaRef);
 		controle.raiz = tabela.getPai();
 		controle.checkInicialPesquisa();
-		processarDetalhes(tabela, controle);
+		processarDetalhes(controle, tabela);
 		if (controle.erro) {
 			mapaRef.put("error", "true");
 			return;
@@ -2090,7 +2090,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		controle.relacao.setChaveOrigem(campoDetalhe.getDescricao());
 	}
 
-	private void processarDetalhes(Metadado tabela, Controle controle) {
+	private void processarDetalhes(Controle controle, Metadado tabela) {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(controle.exportacao);
 		Coletor coletor = new Coletor();
 		SetLista.view(ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos), coletor,
@@ -2117,6 +2117,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {
+		if (campo != null && campo.indexOf(',') != -1) {
+			sb.append(Constantes.QL + "\t<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->");
+		}
 		sb.append(Constantes.QL + "\t<pesquisa");
 		sb.append(" nome=" + citar(nome));
 		append(sb, tabela, campo);
@@ -2145,6 +2148,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			this.mapaRef = mapaRef;
 			exportacao = true;
 			circular = false;
+			mapaRef.clear();
 		}
 
 		private void checkInicialPesquisa() {
@@ -2155,10 +2159,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void abrirPesquisa(String nome, String tabela, String campo) {
 			abrirPesquisaBuilder(sb, nome, tabela, campo);
+			mapaRef.put("pesquisa_tabela", tabela);
+			mapaRef.put("pesquisa_campo", campo);
+			mapaRef.put("pesquisa_nome", nome);
 		}
 
 		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
-			mapaRef.clear();
 			sb.append(Constantes.QL + "\t\t<ref");
 			append(sb, tabela, campo);
 			if (!Util.estaVazio(grupo)) {
