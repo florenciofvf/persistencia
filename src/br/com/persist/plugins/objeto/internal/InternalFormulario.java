@@ -239,7 +239,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			return true;
 		}
 
-		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, String> mapaRef) {
+		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto, mapaRef);

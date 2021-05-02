@@ -1541,42 +1541,40 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if (vinculoListener != null) {
-						Map<String, String> mapaRef = new HashMap<>();
+						Map<String, Object> mapaRef = new HashMap<>();
+						mapaRef.put(ObjetoConstantes.ERROR, Boolean.FALSE);
 						vinculoListener.adicionarHierarquico(getConexao(), objeto, mapaRef);
 						processarMapaReferencia(mapaRef);
 					}
 				}
 
-				private void processarMapaReferencia(Map<String, String> mapaRef) {
-					Boolean erro = Boolean.valueOf(mapaRef.get("error"));
+				private void processarMapaReferencia(Map<String, Object> mapaRef) {
+					Boolean erro = (Boolean) mapaRef.get(ObjetoConstantes.ERROR);
 					if (erro) {
 						return;
 					}
+					checarListaPesquisa(mapaRef);
 					List<Pesquisa> pesquisas = objeto.getPesquisas();
-					checarListaPesquisa(pesquisas, mapaRef);
 					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 					Coletor coletor = new Coletor();
 					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
 							coletor, InternalContainer.this);
 					for (Pesquisa pesquisa : pesquisas) {
 						if (selecionado(pesquisa, coletor.getLista())) {
-							pesquisa.addRef(mapaRef);
+							Referencia ref = (Referencia) mapaRef.get("ref");
+							objeto.addReferencia(ref);
+							pesquisa.add(ref);
 						}
 					}
 				}
 
-				private void checarListaPesquisa(List<Pesquisa> pesquisas, Map<String, String> mapaRef) {
-					if (pesquisas.isEmpty()) {
-						Pesquisa pesquisa = criarPesquisa(mapaRef);
-						pesquisas.add(pesquisa);
-						// ATUALIZAR MENU
+				private void checarListaPesquisa(Map<String, Object> mapaRef) {
+					if (objeto.getPesquisas().isEmpty()) {
+						Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
+						objeto.getPesquisas().add(pesquisa);
+						objeto.addReferencias(pesquisa.getReferencias());
+						buttonPesquisa.complemento(objeto);
 					}
-				}
-
-				private Pesquisa criarPesquisa(Map<String, String> mapaRef) {
-					Referencia ref = new Referencia(null, mapaRef.get("pesquisa_tabela"),
-							mapaRef.get("pesquisa_campo"));
-					return new Pesquisa(mapaRef.get("pesquisa_nome"), ref);
 				}
 
 				private boolean selecionado(Pesquisa pesquisa, List<String> lista) {

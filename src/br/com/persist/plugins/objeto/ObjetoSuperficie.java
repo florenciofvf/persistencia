@@ -1845,13 +1845,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, String> mapaRef) {
+	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela2());
 		formulario.processar(args);
 		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
 		if (metadado == null) {
-			mapaRef.put("error", "true");
+			mapaRef.put(ObjetoConstantes.ERROR, Boolean.TRUE);
 			Util.mensagem(ObjetoSuperficie.this,
 					ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
 		} else {
@@ -1862,14 +1862,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, String> mapaRef,
+	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef,
 			Metadado tabela) {
 		Controle controle = new Controle(principal, mapaRef);
 		controle.raiz = tabela.getPai();
 		controle.checkInicialPesquisa();
 		processarDetalhes(controle, tabela);
 		if (controle.erro) {
-			mapaRef.put("error", "true");
+			mapaRef.put(ObjetoConstantes.ERROR, Boolean.TRUE);
 			return;
 		}
 		controle.checkFinalPesquisa();
@@ -2133,7 +2133,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private class Controle {
 		private StringBuilder sb = new StringBuilder();
-		private final Map<String, String> mapaRef;
+		private final Map<String, Object> mapaRef;
 		Metadado campoProcessado;
 		final Objeto principal;
 		boolean exportacao;
@@ -2143,12 +2143,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Metadado raiz;
 		boolean erro;
 
-		private Controle(Objeto principal, Map<String, String> mapaRef) {
+		private Controle(Objeto principal, Map<String, Object> mapaRef) {
 			this.principal = principal;
 			this.mapaRef = mapaRef;
 			exportacao = true;
 			circular = false;
-			mapaRef.clear();
 		}
 
 		private void checkInicialPesquisa() {
@@ -2159,9 +2158,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void abrirPesquisa(String nome, String tabela, String campo) {
 			abrirPesquisaBuilder(sb, nome, tabela, campo);
-			mapaRef.put("pesquisa_tabela", tabela);
-			mapaRef.put("pesquisa_campo", campo);
-			mapaRef.put("pesquisa_nome", nome);
+			mapaRef.put("pesquisa", new Pesquisa(nome, new Referencia(null, tabela, campo)));
 		}
 
 		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
@@ -2172,12 +2169,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			if (invisivel) {
 				sb.append(" vazio=" + citar(ObjetoConstantes.INVISIVEL));
-				mapaRef.put("vazio", ObjetoConstantes.INVISIVEL);
 			}
 			sb.append(" />");
-			mapaRef.put("tabela", tabela);
-			mapaRef.put("campo", campo);
-			mapaRef.put("grupo", grupo);
+			Referencia ref = new Referencia(grupo, tabela, campo);
+			ref.setVazioInvisivel(invisivel);
+			mapaRef.put("ref", ref);
+			Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
+			objeto.addReferencia(pesquisa.getReferencia());
+			pesquisa.add(ref);
 		}
 
 		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,

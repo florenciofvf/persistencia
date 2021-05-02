@@ -14,7 +14,7 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 
 public interface InternalListener {
 	public interface Vinculo {
-		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, String> mapaRef);
+		public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef);
 
 		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos);
 
