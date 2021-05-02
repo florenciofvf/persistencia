@@ -26,7 +26,12 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		Preferencias.setDesconectado(Util.contemNoArray("desconectado", args));
+		String[] opcoes = new String[] { "CONECTADO", "DESCONECTADO" };
+		String opcao = Util.getValorInputDialog(opcoes);
+		if (opcao == null) {
+			return;
+		}
+		Preferencias.setDesconectado(opcoes[opcoes.length - 1].equals(opcao));
 		Preferencias.inicializar();
 		installLookAndFeel();
 		Preferencias.abrir();

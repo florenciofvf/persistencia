@@ -393,6 +393,16 @@ public class Util {
 				JOptionPane.PLAIN_MESSAGE, null, opcoes, valorPadrao);
 	}
 
+	public static String getValorInputDialog(String[] botoes) {
+		int i = JOptionPane.showOptionDialog(null, Mensagens.getString("label.selecione_opcao"),
+				Mensagens.getString("label.atencao"), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+				botoes, botoes[0]);
+		if (i < 0) {
+			return null;
+		}
+		return botoes[i];
+	}
+
 	public static void stackTraceAndMessage(String tipo, Exception ex, Component componente) {
 		String msg = getStackTrace(tipo, ex);
 		mensagem(componente, msg);
