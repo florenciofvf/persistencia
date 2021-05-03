@@ -189,6 +189,26 @@ public class Metadado implements Transferable {
 				.toString();
 	}
 
+	public String pksMultiplasExport() {
+		StringBuilder sb = new StringBuilder();
+		int total = 0;
+		for (Metadado table : filhos) {
+			Metadado meta = table.getMetadado(MetadadoConstantes.CHAVES_PRIMARIAS);
+			if (meta != null) {
+				table.contabilizarExportacao();
+				if (table.totalExportados > 0) {
+					sb.append(meta.getTotal() + " - " + table.descricao + " exportados=" + table.totalExportados
+							+ Constantes.QL);
+					total++;
+				}
+			}
+		}
+		return sb
+				.insert(0,
+						MetadadoMensagens.getString("label.pks_multiplas_export") + " [" + total + "]" + Constantes.QL2)
+				.toString();
+	}
+
 	public String pksAusente() {
 		StringBuilder sb = new StringBuilder();
 		int total = 0;

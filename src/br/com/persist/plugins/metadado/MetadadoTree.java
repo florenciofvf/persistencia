@@ -257,6 +257,10 @@ public class MetadadoTree extends Tree {
 		ouvintes.forEach(o -> o.constraintInfo(MetadadoTree.this));
 	}
 
+	public String pksMultiplaExport() {
+		return getRaiz().pksMultiplasExport();
+	}
+
 	public String pksMultipla() {
 		return getRaiz().pksMultiplas();
 	}

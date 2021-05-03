@@ -185,6 +185,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
+			private Action pksMultiplaAcaoExport = actionMenu("label.pks_multiplas_export");
 			private Action queExportamAcao = actionMenu("label.tabelas_que_exportam");
 			private Action naoExportamAcao = actionMenu("label.tabelas_nao_exportam");
 			private Action ordemExportAcao = actionMenu("label.ordenado_exportacao");
@@ -195,6 +196,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 			private ButtonInfo() {
 				super("label.funcoes", Icones.INFO);
+				addMenuItem(pksMultiplaAcaoExport);
 				addMenuItem(pksMultiplaAcao);
 				addMenuItem(true, naoExportamAcao);
 				addMenuItem(true, queExportamAcao);
@@ -202,6 +204,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				addMenuItem(true, ordemExportAcao);
 				addMenuItem(true, ordemImportAcao);
 				addMenuItem(true, localizarCampoAcao);
+				pksMultiplaAcaoExport.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.pksMultiplaExport()));
 				queExportamAcao.setActionListener(
 						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.queExportam()));
 				naoExportamAcao.setActionListener(
