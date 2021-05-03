@@ -2162,6 +2162,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
+			if (campo != null && campo.indexOf(',') != -1) {
+				sb.append(Constantes.QL + "\t\t<!-- MAIS DE UMA CHAVE NESTE ITEM-->");
+			}
 			sb.append(Constantes.QL + "\t\t<ref");
 			append(sb, tabela, campo);
 			if (!Util.estaVazio(grupo)) {
@@ -2262,6 +2265,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
+			if (campo != null && campo.indexOf(',') != -1) {
+				sb.append(Constantes.QL + "\t\t<!-- MAIS DE UMA CHAVE NESTE ITEM-->");
+			}
 			sb.append(Constantes.QL + "\t\t<ref");
 			append(sb, tabela, campo);
 			if (!Util.estaVazio(grupo)) {
