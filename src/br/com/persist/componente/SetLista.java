@@ -143,7 +143,7 @@ class SetListaDialogo extends AbstratoDialogo {
 	private List<Item> criarListaItem(List<String> lista, boolean somenteUm) {
 		List<Item> listaItem = new ArrayList<>();
 		for (String string : lista) {
-			listaItem.add(new Item(string, !somenteUm));
+			listaItem.add(new Item(string, lista.size() == 1 || !somenteUm));
 		}
 		return listaItem;
 	}
