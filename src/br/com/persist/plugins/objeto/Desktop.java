@@ -341,6 +341,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	private void criarAdicionarInternaFormulario(Point point, Graphics g, boolean buscaAuto, InternalConfig config,
 			Dimension dimension, Conexao conexao, Objeto objeto) {
 		setComplemento(conexao, objeto);
+		objeto.setChecarLargura(true);
 		InternalFormulario internal = new InternalFormulario(conexao, objeto, g, buscaAuto);
 		internal.setLocation(point);
 		internal.setSize(dimension);
