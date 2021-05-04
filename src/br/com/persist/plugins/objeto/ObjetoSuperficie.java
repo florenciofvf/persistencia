@@ -1131,9 +1131,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		private MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
-		private Action relacionamentosAcao = Action.actionMenu("label.relacionamentos", null);
 		private Action excluirAcao = actionMenu("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
+		private Action relacoesAcao = Action.actionMenu("label.relacoes", null);
 		private Action dadosAcao = Action.actionMenu("label.dados", null);
 		private Menu menuDistribuicao = new Menu("label.distribuicao");
 		private MenuItem itemPartir = new MenuItem(new PartirAcao());
@@ -1155,7 +1155,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMenuItem(true, excluirAcao);
 			add(true, itemPartir);
 			add(true, itemDados);
-			addMenuItem(true, relacionamentosAcao);
+			addMenuItem(true, relacoesAcao);
 			addMenuItem(true, configuracaoAcao);
 			eventos();
 		}
@@ -1235,9 +1235,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			});
 			excluirAcao.setActionListener(e -> excluirSelecionados());
-			relacionamentosAcao.setActionListener(e -> {
+			relacoesAcao.setActionListener(e -> {
 				if (selecionadoObjeto != null) {
-					selecionarRelacionamentos(selecionadoObjeto);
+					selecionarRelacao(selecionadoObjeto);
 				}
 			});
 			configuracaoAcao.setActionListener(e -> {
@@ -1259,7 +1259,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			formularioDados(conexao, objeto, frame);
 		}
 
-		private void selecionarRelacionamentos(Objeto objeto) {
+		private void selecionarRelacao(Objeto objeto) {
 			List<Relacao> lista = getRelacoes(objeto);
 			List<String> ids = montarIds(lista, objeto);
 			if (!ids.isEmpty()) {
@@ -1291,9 +1291,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			itemDados.setEnabled(
 					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2()));
 			itemDados.setObject(itemDados.isEnabled() ? selecionadoObjeto : null);
-			relacionamentosAcao.setEnabled(objetoSelecionado);
 			menuDistribuicao.setEnabled(objetoSelecionado);
 			menuAlinhamento.setEnabled(objetoSelecionado);
+			relacoesAcao.setEnabled(objetoSelecionado);
 			menuDestacar.setEnabled(objetoSelecionado);
 			menuCircular.setEnabled(objetoSelecionado);
 			itemPartir.setEnabled(!objetoSelecionado);
