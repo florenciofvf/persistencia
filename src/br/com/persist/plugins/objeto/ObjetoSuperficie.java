@@ -995,6 +995,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return getIndice(obj) >= 0;
 	}
 
+	public Objeto getObjeto(String id) {
+		for (int i = 0; i < objetos.length; i++) {
+			if (objetos[i].getId().equals(id)) {
+				return objetos[i];
+			}
+		}
+		return null;
+	}
+
 	public int getIndice(Objeto obj) {
 		if (obj != null) {
 			for (int i = 0; i < objetos.length; i++) {
@@ -1122,6 +1131,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		private MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
+		private Action relacionamentosAcao = Action.actionMenu("label.relacionamentos", null);
 		private Action excluirAcao = actionMenu("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 		private Action dadosAcao = Action.actionMenu("label.dados", null);
@@ -1145,6 +1155,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMenuItem(true, excluirAcao);
 			add(true, itemPartir);
 			add(true, itemDados);
+			addMenuItem(true, relacionamentosAcao);
 			addMenuItem(true, configuracaoAcao);
 			eventos();
 		}
@@ -1224,6 +1235,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				}
 			});
 			excluirAcao.setActionListener(e -> excluirSelecionados());
+			relacionamentosAcao.setActionListener(e -> {
+				if (selecionadoObjeto != null) {
+					selecionarRelacionamentos(selecionadoObjeto);
+				}
+			});
 			configuracaoAcao.setActionListener(e -> {
 				Frame frame = container.getFrame();
 				if (selecionadoObjeto != null) {
@@ -1243,10 +1259,39 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			formularioDados(conexao, objeto, frame);
 		}
 
+		private void selecionarRelacionamentos(Objeto objeto) {
+			List<Relacao> lista = getRelacoes(objeto);
+			List<String> ids = montarIds(lista, objeto);
+			if (!ids.isEmpty()) {
+				Coletor coletor = new Coletor();
+				SetLista.view(objeto.getId(), ids, coletor, ObjetoSuperficie.this, true);
+				if (coletor.size() == 1) {
+					selecionadoObjeto = null;
+					String id = coletor.get(0);
+					Objeto outro = getObjeto(id);
+					selecionadoRelacao = getRelacao(objeto, outro);
+					popup.configuracaoAcao.actionPerformed(null);
+				}
+			}
+		}
+
+		private List<String> montarIds(List<Relacao> lista, Objeto objeto) {
+			List<String> resp = new ArrayList<>();
+			for (Relacao rel : lista) {
+				if (rel.getOrigem().equals(objeto)) {
+					resp.add(rel.getDestino().getId());
+				} else if (rel.getDestino().equals(objeto)) {
+					resp.add(rel.getOrigem().getId());
+				}
+			}
+			return resp;
+		}
+
 		private void preShow(boolean objetoSelecionado) {
 			itemDados.setEnabled(
 					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2()));
 			itemDados.setObject(itemDados.isEnabled() ? selecionadoObjeto : null);
+			relacionamentosAcao.setEnabled(objetoSelecionado);
 			menuDistribuicao.setEnabled(objetoSelecionado);
 			menuAlinhamento.setEnabled(objetoSelecionado);
 			menuDestacar.setEnabled(objetoSelecionado);
