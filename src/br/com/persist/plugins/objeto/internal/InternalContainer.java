@@ -1932,9 +1932,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		@Override
 		public void colocarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
 			String string = "";
-			if (!Util.estaVazio(txtComplemento.getText()) && Util.confirmar(InternalContainer.this,
-					ObjetoMensagens.getString("msg.concatenar_complemento"), false)) {
-				string = txtComplemento.getText();
+			if (!Util.estaVazio(txtComplemento.getText())) {
+				String sim = Mensagens.getString("label.sim");
+				String nao = Mensagens.getString("label.nao");
+				String opcao = Util.getValorInputDialog(InternalContainer.this,
+						ObjetoMensagens.getString("msg.concatenar_complemento"), new String[] { sim, nao });
+				if (Util.estaVazio(opcao)) {
+					return;
+				}
+				if (sim.equals(opcao)) {
+					string = txtComplemento.getText();
+				}
 			}
 			String prefixo = getPrefixo();
 			if (Util.estaVazio(prefixo)) {
