@@ -393,8 +393,13 @@ public class Util {
 				JOptionPane.PLAIN_MESSAGE, null, opcoes, valorPadrao);
 	}
 
-	public static String getValorInputDialog(String[] botoes) {
-		int i = JOptionPane.showOptionDialog(null, Mensagens.getString("label.selecione_opcao"),
+	public static String getValorInputDialog(Component parent, String[] botoes) {
+		return getValorInputDialog(parent, null, botoes);
+	}
+
+	public static String getValorInputDialog(Component parent, String mensagem, String[] botoes) {
+		int i = JOptionPane.showOptionDialog(parent,
+				estaVazio(mensagem) ? Mensagens.getString("label.selecione_opcao") : mensagem,
 				Mensagens.getString("label.atencao"), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
 				botoes, botoes[0]);
 		if (i < 0) {

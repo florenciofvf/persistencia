@@ -1936,7 +1936,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					ObjetoMensagens.getString("msg.concatenar_complemento"), false)) {
 				string = txtComplemento.getText();
 			}
-			txtComplemento.setText(string + getPrefixo() + nome + getValor(getOpcao(), memoria));
+			String prefixo = getPrefixo();
+			if (Util.estaVazio(prefixo)) {
+				return;
+			}
+			txtComplemento.setText(string + prefixo + nome + getValor(getOpcao(), memoria));
 			if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -1944,21 +1948,24 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
 			String complemento = txtComplemento.getText();
-			txtComplemento.setText(complemento + getPrefixo() + nome + getValor(getOpcao(), Constantes.VAZIO));
+			String prefixo = getPrefixo();
+			if (Util.estaVazio(prefixo)) {
+				return;
+			}
+			txtComplemento.setText(complemento + prefixo + nome + getValor(getOpcao(), Constantes.VAZIO));
 		}
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
-			txtComplemento.setText(getPrefixo() + nome + getValor(getOpcao(), Constantes.VAZIO));
+			String prefixo = getPrefixo();
+			if (Util.estaVazio(prefixo)) {
+				return;
+			}
+			txtComplemento.setText(prefixo + nome + getValor(getOpcao(), Constantes.VAZIO));
 		}
 
 		private String getPrefixo() {
-			final String AND = " AND ";
-			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
-					Mensagens.getString("label.prefixo"), AND, new String[] { AND, " OR " });
-			if (resp == null || Util.estaVazio(resp.toString())) {
-				return AND;
-			}
-			return resp.toString();
+			return Util.getValorInputDialog(InternalContainer.this, Mensagens.getString("label.prefixo"),
+					new String[] { " AND ", " OR " });
 		}
 
 		private String getOpcao() {

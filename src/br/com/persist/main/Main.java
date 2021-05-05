@@ -27,7 +27,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		String[] opcoes = new String[] { "CONECTADO", "DESCONECTADO" };
-		String opcao = Util.getValorInputDialog(opcoes);
+		String opcao = Util.getValorInputDialog(null, opcoes);
 		if (opcao == null) {
 			return;
 		}
