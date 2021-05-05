@@ -1940,7 +1940,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (Util.estaVazio(prefixo)) {
 				return;
 			}
-			txtComplemento.setText(string + prefixo + nome + getValor(getOpcao(), memoria));
+			String opcao = getOpcao();
+			if (Util.estaVazio(opcao)) {
+				return;
+			}
+			txtComplemento.setText(string + prefixo + nome + getValor(opcao, memoria));
 			if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -1952,7 +1956,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (Util.estaVazio(prefixo)) {
 				return;
 			}
-			txtComplemento.setText(complemento + prefixo + nome + getValor(getOpcao(), Constantes.VAZIO));
+			String opcao = getOpcao();
+			if (Util.estaVazio(opcao)) {
+				return;
+			}
+			txtComplemento.setText(complemento + prefixo + nome + getValor(opcao, Constantes.VAZIO));
 		}
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
@@ -1960,7 +1968,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (Util.estaVazio(prefixo)) {
 				return;
 			}
-			txtComplemento.setText(prefixo + nome + getValor(getOpcao(), Constantes.VAZIO));
+			String opcao = getOpcao();
+			if (Util.estaVazio(opcao)) {
+				return;
+			}
+			txtComplemento.setText(prefixo + nome + getValor(opcao, Constantes.VAZIO));
 		}
 
 		private String getPrefixo() {
@@ -1969,13 +1981,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		private String getOpcao() {
-			final String IGUAL = "=";
-			Object resp = Util.getValorInputDialog(InternalContainer.this, "label.atencao",
-					Mensagens.getString("label.operador"), IGUAL, new String[] { IGUAL, "IN", "LIKE" });
-			if (resp == null || Util.estaVazio(resp.toString())) {
-				return IGUAL;
-			}
-			return resp.toString();
+			return Util.getValorInputDialog(InternalContainer.this, Mensagens.getString("label.operador"),
+					new String[] { "=", "IN", "LIKE" });
 		}
 
 		private String getValor(String opcao, String string) {
