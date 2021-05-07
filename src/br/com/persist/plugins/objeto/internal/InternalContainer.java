@@ -1987,7 +1987,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		StringBuilder sb = new StringBuilder("(" + entry.getKey() + "=" + entry.getValue());
 		while (it.hasNext()) {
 			entry = it.next();
-			sb.append(" AND " + entry.getKey() + "=" + entry.getValue());
+			sb.append(" AND " + entry.getKey() + " = " + entry.getValue());
 		}
 		sb.append(")");
 		return sb.toString();
