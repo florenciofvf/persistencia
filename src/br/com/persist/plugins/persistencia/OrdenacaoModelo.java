@@ -83,8 +83,8 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getColuna(indice);
 	}
 
-	public int excluirRegistro(int rowIndex, String prefixoNomeTabela) {
-		return model.excluir(linhas[rowIndex].indice, prefixoNomeTabela);
+	public int excluirRegistro(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
+		return model.excluir(linhas[rowIndex].indice, prefixoNomeTabela, comWhere);
 	}
 
 	public List<Object> getRegistro(int rowIndex) {
@@ -95,20 +95,20 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		model.getDados(linhas[rowIndex].indice, sb, coletor);
 	}
 
-	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor) {
-		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela, coletor);
+	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
+		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela, coletor, comWhere);
 	}
 
-	public String getUpdate(String prefixoNomeTabela, Coletor coletor) {
-		return model.getUpdate(prefixoNomeTabela, coletor);
+	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
+		return model.getUpdate(prefixoNomeTabela, coletor, comWhere);
 	}
 
-	public String getDelete(int rowIndex, String prefixoNomeTabela) {
-		return model.getDelete(linhas[rowIndex].indice, prefixoNomeTabela);
+	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
+		return model.getDelete(linhas[rowIndex].indice, prefixoNomeTabela, comWhere);
 	}
 
-	public String getDelete(String prefixoNomeTabela) {
-		return model.getDelete(prefixoNomeTabela);
+	public String getDelete(String prefixoNomeTabela, boolean comWhere) {
+		return model.getDelete(prefixoNomeTabela, comWhere);
 	}
 
 	public String getInsert(int rowIndex, String prefixoNomeTabela, Coletor coletor) {

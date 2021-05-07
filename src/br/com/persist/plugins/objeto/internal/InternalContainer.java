@@ -554,7 +554,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
 					for (int linha : linhas) {
-						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela());
+						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true);
 						if (excluido == 0 || excluido == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
 							if (chaves.isEmpty()) {
@@ -791,6 +791,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			private static final long serialVersionUID = 1L;
 			private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
 			private List<MenuInstrucao> listaMenuInstrucao = new ArrayList<>();
+			private MenuUpdateMul menuUpdateMul = new MenuUpdateMul();
+			private MenuDeleteMul menuDeleteMul = new MenuDeleteMul();
 			private MenuUpdate menuUpdate = new MenuUpdate();
 			private MenuDelete menuDelete = new MenuDelete();
 			private MenuInsert menuInsert = new MenuInsert();
@@ -799,7 +801,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				super(Constantes.LABEL_UPDATE, Icones.UPDATE);
 				addMenuItem(dadosAcao);
 				addMenu(true, menuUpdate);
+				addMenu(menuUpdateMul);
 				addMenu(true, menuDelete);
+				addMenu(menuDeleteMul);
 				addMenu(true, menuInsert);
 				eventos();
 			}
@@ -827,9 +831,51 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				dadosAcao.setEnabled(umaLinhaSel);
 				menuUpdate.setEnabled(umaLinhaSel);
 				menuDelete.setEnabled(umaLinhaSel);
+				menuUpdateMul.setHabilitado(linhas);
+				menuDeleteMul.setHabilitado(linhas);
 				menuInsert.setEnabled(umaLinhaSel);
 				for (MenuInstrucao menu : listaMenuInstrucao) {
 					menu.setHabilitado(linhas);
+				}
+			}
+
+			private class MenuUpdateMul extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuUpdateMul() {
+					super(Constantes.LABEL_UPDATE, Icones.UPDATE);
+					formularioAcao.setActionListener(e -> abrirUpdate(true));
+					dialogoAcao.setActionListener(e -> abrirUpdate(false));
+				}
+
+				private void abrirUpdate(boolean abrirEmForm) {
+					Conexao conexao = getConexao();
+					if (conexao == null) {
+						return;
+					}
+					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length > 0) {
+						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+						if (chaves.isEmpty()) {
+							return;
+						}
+						Coletor coletor = new Coletor();
+						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
+								InternalContainer.this);
+						if (!coletor.estaVazio()) {
+							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
+									false);
+							instrucao += Constantes.QL + "WHERE " + getComplementoChaves(false);
+							if (!Util.estaVazio(instrucao)) {
+								updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
+							}
+						}
+					}
+				}
+
+				private void setHabilitado(int[] linhas) {
+					setEnabled(linhas.length >= 1);
 				}
 			}
 
@@ -858,12 +904,47 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
 								InternalContainer.this);
 						if (!coletor.estaVazio()) {
-							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor);
+							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
+									true);
 							if (!Util.estaVazio(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 							}
 						}
 					}
+				}
+			}
+
+			private class MenuDeleteMul extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuDeleteMul() {
+					super(Constantes.LABEL_DELETE, Icones.EXCLUIR);
+					formularioAcao.setActionListener(e -> abrirUpdate(true));
+					dialogoAcao.setActionListener(e -> abrirUpdate(false));
+				}
+
+				private void abrirUpdate(boolean abrirEmForm) {
+					Conexao conexao = getConexao();
+					if (conexao == null) {
+						return;
+					}
+					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+					int[] linhas = tabelaPersistencia.getSelectedRows();
+					if (linhas != null && linhas.length > 0) {
+						List<IndiceValor> chaves = modelo.getValoresChaves(linhas[0]);
+						if (chaves.isEmpty()) {
+							return;
+						}
+						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false);
+						instrucao += Constantes.QL + "WHERE " + getComplementoChaves(false);
+						if (!Util.estaVazio(instrucao)) {
+							updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
+						}
+					}
+				}
+
+				private void setHabilitado(int[] linhas) {
+					setEnabled(linhas.length >= 1);
 				}
 			}
 
@@ -888,7 +969,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						if (chaves.isEmpty()) {
 							return;
 						}
-						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela());
+						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true);
 						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
@@ -1303,7 +1384,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
 									InternalContainer.this);
 							if (!coletor.estaVazio()) {
-								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor);
+								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor, true);
 								if (!Util.estaVazio(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 								}
@@ -1325,7 +1406,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela());
+							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela(), true);
 							if (!Util.estaVazio(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 							}
@@ -1850,25 +1931,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	public String getComplementoChaves() {
+	public String getComplementoChaves(boolean and) {
 		StringBuilder sb = new StringBuilder();
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
 		if (!indices.isEmpty()) {
 			Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
 			if (chaves.size() == 1) {
-				sb.append(umaChave(modelo, indices, chaves));
+				sb.append(umaChave(modelo, indices, chaves, and));
 			} else if (chaves.size() > 1) {
-				sb.append(multiplasChaves(modelo, indices, chaves));
+				sb.append(multiplasChaves(modelo, indices, chaves, and));
 			}
 		}
 		return sb.toString();
 	}
 
-	private String umaChave(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
+	private String umaChave(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves, boolean and) {
 		String[] array = criarArray(chaves);
 		String chave = array[0];
-		StringBuilder sb = new StringBuilder("AND " + chave + " IN(" + array[1]);
+		StringBuilder sb = new StringBuilder((and ? "AND " : "") + chave + " IN(" + array[1]);
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(", ");
 			chaves = modelo.getMapaChaves(indices.get(i));
@@ -1887,8 +1968,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		return array;
 	}
 
-	private String multiplasChaves(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves) {
-		StringBuilder sb = new StringBuilder("AND (");
+	private String multiplasChaves(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves,
+			boolean and) {
+		StringBuilder sb = new StringBuilder(and ? "AND (" : "(");
 		sb.append(andChaves(chaves));
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(" OR ");

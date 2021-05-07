@@ -184,7 +184,7 @@ public class PersistenciaModelo implements TableModel {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
-						getPrefixoNomeTabela(), new Coletor(coluna.getNome()));
+						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true);
 				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
 				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
@@ -208,7 +208,7 @@ public class PersistenciaModelo implements TableModel {
 		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb, coletor);
 	}
 
-	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor) {
+	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
 			List<Object> valores = new ArrayList<>();
@@ -220,12 +220,12 @@ public class PersistenciaModelo implements TableModel {
 				valores.add(registro.get(coluna.getIndice()));
 			}
 			return gerarUpdate(registro, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
-					prefixoNomeTabela, coletor);
+					prefixoNomeTabela, coletor, comWhere);
 		}
 		return null;
 	}
 
-	public String getUpdate(String prefixoNomeTabela, Coletor coletor) {
+	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
 		if (contemChaves()) {
 			List<Object> valores = new ArrayList<>();
 			List<Coluna> naoChaves = getNaoChaves();
@@ -236,22 +236,22 @@ public class PersistenciaModelo implements TableModel {
 				valores.add(coluna.getNome());
 			}
 			return gerarUpdate(null, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
-					prefixoNomeTabela, coletor);
+					prefixoNomeTabela, coletor, comWhere);
 		}
 		return null;
 	}
 
-	public String getDelete(int rowIndex, String prefixoNomeTabela) {
+	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
-			return gerarDelete(registro, prefixoNomeTabela);
+			return gerarDelete(registro, prefixoNomeTabela, comWhere);
 		}
 		return null;
 	}
 
-	public String getDelete(String prefixoNomeTabela) {
+	public String getDelete(String prefixoNomeTabela, boolean comWhere) {
 		if (contemChaves()) {
-			return gerarDelete(null, prefixoNomeTabela);
+			return gerarDelete(null, prefixoNomeTabela, comWhere);
 		}
 		return null;
 	}
@@ -265,11 +265,11 @@ public class PersistenciaModelo implements TableModel {
 		return gerarInsert(null, prefixoNomeTabela, coletor);
 	}
 
-	public int excluir(int rowIndex, String prefixoNomeTabela) {
+	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
 			try {
-				String delete = gerarDelete(registro, prefixoNomeTabela);
+				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
 				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
 						false)) {
@@ -350,7 +350,7 @@ public class PersistenciaModelo implements TableModel {
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores, String prefixoNomeTabela,
-			Coletor coletor) {
+			Coletor coletor, boolean comWhere) {
 		StringBuilder resposta = new StringBuilder(
 				"UPDATE " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " SET ");
 		int i = 0;
@@ -372,7 +372,9 @@ public class PersistenciaModelo implements TableModel {
 				resposta.append(Constantes.QL + ", " + coluna.getNome() + " = " + coluna.get(valores[i]));
 			}
 		}
-		resposta.append(montarWhere(registro));
+		if (comWhere) {
+			resposta.append(montarWhere(registro));
+		}
 		return resposta.toString();
 	}
 
@@ -424,10 +426,12 @@ public class PersistenciaModelo implements TableModel {
 		}
 	}
 
-	private String gerarDelete(List<Object> registro, String prefixoNomeTabela) {
+	private String gerarDelete(List<Object> registro, String prefixoNomeTabela, boolean comWhere) {
 		StringBuilder resposta = new StringBuilder(
 				"DELETE FROM " + prefixarEsquema(conexao, prefixoNomeTabela, tabela));
-		resposta.append(montarWhere(registro));
+		if (comWhere) {
+			resposta.append(montarWhere(registro));
+		}
 		return resposta.toString();
 	}
 
