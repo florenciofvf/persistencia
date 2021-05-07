@@ -1970,21 +1970,28 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private String multiplasChaves(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves,
 			boolean and) {
-		StringBuilder sb = new StringBuilder(and ? "AND (" : "(");
+		StringBuilder sb = new StringBuilder();
+		if (indices.size() > 1) {
+			sb.append(and ? "AND (" : "(");
+		} else {
+			sb.append(and ? "AND " : "");
+		}
 		sb.append(andChaves(chaves));
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(" OR ");
 			chaves = modelo.getMapaChaves(indices.get(i));
 			sb.append(andChaves(chaves));
 		}
-		sb.append(")");
+		if (indices.size() > 1) {
+			sb.append(")");
+		}
 		return sb.toString();
 	}
 
 	private String andChaves(Map<String, String> map) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 		Entry<String, String> entry = it.next();
-		StringBuilder sb = new StringBuilder("(" + entry.getKey() + "=" + entry.getValue());
+		StringBuilder sb = new StringBuilder("(" + entry.getKey() + " = " + entry.getValue());
 		while (it.hasNext()) {
 			entry = it.next();
 			sb.append(" AND " + entry.getKey() + " = " + entry.getValue());
