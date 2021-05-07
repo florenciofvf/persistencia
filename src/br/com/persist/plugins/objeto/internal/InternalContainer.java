@@ -866,7 +866,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						if (!coletor.estaVazio()) {
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
 									false);
-							instrucao += Constantes.QL + "WHERE " + getComplementoChaves(false);
+							instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false);
 							if (!Util.estaVazio(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
 							}
@@ -936,7 +936,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							return;
 						}
 						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false);
-						instrucao += Constantes.QL + "WHERE " + getComplementoChaves(false);
+						instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false);
 						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
 						}

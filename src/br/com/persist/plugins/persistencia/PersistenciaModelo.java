@@ -452,9 +452,9 @@ public class PersistenciaModelo implements TableModel {
 			coluna = colunasChave.get(i);
 			if (registro != null) {
 				Object valor = registro.get(coluna.getIndice());
-				resposta.append(Constantes.QL + " AND " + coluna.getNome() + " = " + coluna.get(valor));
+				resposta.append(" AND " + coluna.getNome() + " = " + coluna.get(valor));
 			} else {
-				resposta.append(Constantes.QL + " AND " + coluna.getNome() + " = " + coluna.get(coluna.getNome()));
+				resposta.append(" AND " + coluna.getNome() + " = " + coluna.get(coluna.getNome()));
 			}
 		}
 		return resposta.toString();
