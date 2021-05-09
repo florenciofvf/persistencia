@@ -1166,6 +1166,54 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 		}
 
+		private class DistribuicaoAcao extends Acao {
+			private static final long serialVersionUID = 1L;
+			private final boolean horizontal;
+
+			private DistribuicaoAcao(boolean horizontal, String chave) {
+				super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
+				this.horizontal = horizontal;
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (selecionadoObjeto != null) {
+					List<Objeto> lista = getSelecionados();
+					if (lista.size() < 3) {
+						return;
+					}
+					Collections.sort(lista, new Compara());
+					if (horizontal) {
+						int totalDifX = lista.get(lista.size() - 1).x - lista.get(0).x;
+						int fragmentoX = totalDifX / (lista.size() - 1);
+						int x = lista.get(0).x;
+						for (int i = 1; i < lista.size(); i++) {
+							Objeto objeto = lista.get(i);
+							x += fragmentoX;
+							objeto.x = x;
+						}
+					} else {
+						int totalDifY = lista.get(lista.size() - 1).y - lista.get(0).y;
+						int fragmentoY = totalDifY / (lista.size() - 1);
+						int y = lista.get(0).y;
+						for (int i = 1; i < lista.size(); i++) {
+							Objeto objeto = lista.get(i);
+							y += fragmentoY;
+							objeto.y = y;
+						}
+					}
+					ObjetoSuperficie.this.repaint();
+				}
+			}
+
+			private class Compara implements Comparator<Objeto> {
+				@Override
+				public int compare(Objeto o1, Objeto o2) {
+					return horizontal ? o1.x - o2.x : o1.y - o2.y;
+				}
+			}
+		}
+
 		private class MenuCircular extends Menu {
 			private static final long serialVersionUID = 1L;
 			private Action exportacaoAcao = Action.actionMenu("label.exportacao", null);
@@ -1350,54 +1398,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						MacroProvedor.xLocal(selecionadoObjeto.x);
 					}
 					macro.actionPerformed(null);
-				}
-			}
-		}
-
-		private class DistribuicaoAcao extends Acao {
-			private static final long serialVersionUID = 1L;
-			private final boolean horizontal;
-
-			private DistribuicaoAcao(boolean horizontal, String chave) {
-				super(true, chave, true, horizontal ? Icones.HORIZONTAL : Icones.VERTICAL);
-				this.horizontal = horizontal;
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (selecionadoObjeto != null) {
-					List<Objeto> lista = getSelecionados();
-					if (lista.size() < 3) {
-						return;
-					}
-					Collections.sort(lista, new Compara());
-					if (horizontal) {
-						int totalDifX = lista.get(lista.size() - 1).x - lista.get(0).x;
-						int fragmentoX = totalDifX / (lista.size() - 1);
-						int x = lista.get(0).x;
-						for (int i = 1; i < lista.size(); i++) {
-							Objeto objeto = lista.get(i);
-							x += fragmentoX;
-							objeto.x = x;
-						}
-					} else {
-						int totalDifY = lista.get(lista.size() - 1).y - lista.get(0).y;
-						int fragmentoY = totalDifY / (lista.size() - 1);
-						int y = lista.get(0).y;
-						for (int i = 1; i < lista.size(); i++) {
-							Objeto objeto = lista.get(i);
-							y += fragmentoY;
-							objeto.y = y;
-						}
-					}
-					ObjetoSuperficie.this.repaint();
-				}
-			}
-
-			private class Compara implements Comparator<Objeto> {
-				@Override
-				public int compare(Objeto o1, Objeto o2) {
-					return horizontal ? o1.x - o2.x : o1.y - o2.y;
 				}
 			}
 		}
