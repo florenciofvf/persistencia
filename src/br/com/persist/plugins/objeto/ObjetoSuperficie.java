@@ -1126,16 +1126,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private class SuperficiePopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private MenuItem itemDistribuiHorizontal = new MenuItem(new DistribuicaoAcao(true, "label.horizontal"));
-		private MenuItem itemDistribuiVertical = new MenuItem(new DistribuicaoAcao(false, "label.vertical"));
 		private MenuItem itemAlinhaHorizontal = new MenuItem(new AlinhamentoAcao(true, "label.horizontal"));
 		private MenuItem itemAlinhaVertical = new MenuItem(new AlinhamentoAcao(false, "label.vertical"));
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action excluirAcao = actionMenu("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
 		private Action relacoesAcao = Action.actionMenu("label.relacoes", null);
+		private MenuDistribuicao menuDistribuicao = new MenuDistribuicao();
 		private Action dadosAcao = Action.actionMenu("label.dados", null);
-		private Menu menuDistribuicao = new Menu("label.distribuicao");
 		private MenuItem itemPartir = new MenuItem(new PartirAcao());
 		private Menu menuAlinhamento = new Menu("label.alinhamento");
 		private MenuDestacar menuDestacar = new MenuDestacar();
@@ -1143,8 +1141,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private MenuItem itemDados = new MenuItem(dadosAcao);
 
 		private SuperficiePopup() {
-			menuDistribuicao.add(itemDistribuiHorizontal);
-			menuDistribuicao.add(itemDistribuiVertical);
 			menuAlinhamento.add(itemAlinhaHorizontal);
 			menuAlinhamento.add(itemAlinhaVertical);
 			add(menuAlinhamento);
@@ -1158,6 +1154,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMenuItem(true, relacoesAcao);
 			addMenuItem(true, configuracaoAcao);
 			eventos();
+		}
+
+		private class MenuDistribuicao extends Menu {
+			private static final long serialVersionUID = 1L;
+
+			private MenuDistribuicao() {
+				super("label.distribuicao");
+				add(new MenuItem(new DistribuicaoAcao(true, "label.horizontal")));
+				add(new MenuItem(new DistribuicaoAcao(false, "label.vertical")));
+			}
 		}
 
 		private class MenuCircular extends Menu {
