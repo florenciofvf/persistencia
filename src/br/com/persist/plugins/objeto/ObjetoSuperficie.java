@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.sql.Connection;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -291,6 +292,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (objeto.isSelecionado()) {
 				resp.add(objeto);
 			}
+		}
+		return resp;
+	}
+
+	public List<String> getListaStringIds() {
+		List<String> resp = new ArrayList<>();
+		for (Objeto objeto : objetos) {
+			resp.add(objeto.getId());
 		}
 		return resp;
 	}
@@ -1187,11 +1196,32 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private class MenuDistribuicao extends Menu {
 			private static final long serialVersionUID = 1L;
+			Action inverterAcao = actionMenu("label.inverter_posicao");
 
 			private MenuDistribuicao() {
 				super("label.distribuicao");
 				add(new MenuItem(new DistribuicaoAcao(true, "label.horizontal")));
 				add(new MenuItem(new DistribuicaoAcao(false, "label.vertical")));
+				addMenuItem(true, inverterAcao);
+				inverterAcao.setActionListener(e -> inverterPosicao());
+			}
+
+			private void inverterPosicao() {
+				if (selecionadoObjeto != null) {
+					List<String> list = getListaStringIds();
+					list.remove(selecionadoObjeto.getId());
+					if (list.isEmpty()) {
+						return;
+					}
+					list.sort(Collator.getInstance());
+					Coletor coletor = new Coletor();
+					SetLista.view(selecionadoObjeto.getId(), list, coletor, ObjetoSuperficie.this, true);
+					if (coletor.size() == 1) {
+						Objeto outro = getObjeto(coletor.get(0));
+						selecionadoObjeto.inverterPosicao(outro);
+						ObjetoSuperficie.this.repaint();
+					}
+				}
 			}
 		}
 

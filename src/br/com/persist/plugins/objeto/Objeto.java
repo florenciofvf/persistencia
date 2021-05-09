@@ -1039,4 +1039,13 @@ public class Objeto implements Runnable {
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
+
+	public void inverterPosicao(Objeto outro) {
+		int xBkp = x;
+		int yBkp = y;
+		x = outro.x;
+		y = outro.y;
+		outro.x = xBkp;
+		outro.y = yBkp;
+	}
 }
