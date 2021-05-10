@@ -1197,6 +1197,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private static final long serialVersionUID = 1L;
 				private Action tabelasRepetidasAcao = actionMenu("label.tabelas_repetidas");
 				private Action larTitTodosAcao = actionMenu("label.largura_titulo_todos");
+				private Action colunasComplAcao = actionMenu("label.colunas_complemento");
 				private Action destacarColunaAcao = actionMenu("label.destacar_coluna");
 				private Action corAcao = Action.actionMenu("label.cor", Icones.COR);
 
@@ -1206,10 +1207,27 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					addMenuItem(true, larTitTodosAcao);
 					addMenuItem(true, destacarColunaAcao);
 					addMenuItem(true, tabelasRepetidasAcao);
+					addMenuItem(true, colunasComplAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
 					tabelasRepetidasAcao.setActionListener(e -> tabelasRepetidas());
+					colunasComplAcao.setActionListener(e -> totalColunasCompl());
 					destacarColunaAcao.setActionListener(e -> destacarColuna());
 					corAcao.setActionListener(e -> configCor());
+				}
+
+				private void totalColunasCompl() {
+					int atual = txtComplemento.getColumns();
+					Object resp = Util.showInputDialog(InternalContainer.this, objeto.getId(),
+							ObjetoMensagens.getString("label.colunas_complemento"), String.valueOf(atual));
+					if (resp != null && !Util.estaVazio(resp.toString())) {
+						try {
+							int colunas = Util.getInt(resp.toString(), atual);
+							txtComplemento.setColumns(colunas);
+							SwingUtilities.updateComponentTreeUI(InternalContainer.this);
+						} catch (Exception e) {
+							LOG.log(Level.SEVERE, Constantes.ERRO, e);
+						}
+					}
 				}
 
 				private void tabelasRepetidas() {

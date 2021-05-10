@@ -381,6 +381,11 @@ public class Util {
 		return total >= confirmacoes;
 	}
 
+	public static Object showInputDialog(Component parent, String titulo, String mensagem, String valorPadrao) {
+		return JOptionPane.showInputDialog(parent, mensagem, titulo, JOptionPane.PLAIN_MESSAGE, null, null,
+				valorPadrao);
+	}
+
 	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem,
 			String valorPadrao) {
 		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),
