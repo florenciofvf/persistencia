@@ -808,6 +808,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				eventos();
 			}
 
+			private void complemento(Objeto objeto) {
+				if (objeto != null) {
+					objeto.ordenarInstrucoes();
+					for (Instrucao i : objeto.getInstrucoes()) {
+						if (!Util.estaVazio(i.getValor())) {
+							MenuInstrucao menu = new MenuInstrucao(i);
+							listaMenuInstrucao.add(menu);
+							addMenu(true, menu);
+						}
+					}
+				}
+			}
+
 			private void eventos() {
 				dadosAcao.setActionListener(e -> {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
@@ -1001,19 +1014,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 								}
 							}
-						}
-					}
-				}
-			}
-
-			private void complemento(Objeto objeto) {
-				if (objeto != null) {
-					objeto.ordenarInstrucoes();
-					for (Instrucao i : objeto.getInstrucoes()) {
-						if (!Util.estaVazio(i.getValor())) {
-							MenuInstrucao menu = new MenuInstrucao(i);
-							listaMenuInstrucao.add(menu);
-							addMenu(true, menu);
 						}
 					}
 				}
