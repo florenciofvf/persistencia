@@ -2059,7 +2059,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(string + prefixo + nome + getValor(opcao, memoria));
+			txtComplemento.setText(ltrim(string + prefixo + nome + getValor(opcao, memoria)));
 			if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -2075,7 +2075,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(complemento + prefixo + nome + getValor(opcao, Constantes.VAZIO));
+			txtComplemento.setText(ltrim(complemento + prefixo + nome + getValor(opcao, Constantes.VAZIO)));
 		}
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
@@ -2087,12 +2087,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(prefixo + nome + getValor(opcao, Constantes.VAZIO));
+			txtComplemento.setText(ltrim(prefixo + nome + getValor(opcao, Constantes.VAZIO)));
 		}
 
 		private String getPrefixo() {
 			return Util.getValorInputDialog(InternalContainer.this, Mensagens.getString("label.prefixo"),
 					new String[] { " AND ", " OR " });
+		}
+
+		private String ltrim(String s) {
+			if (Util.estaVazio(s)) {
+				return s;
+			}
+			int i = 0;
+			while (s.charAt(i) <= ' ') {
+				i++;
+			}
+			return s.substring(i);
 		}
 
 		private String getOpcao() {
