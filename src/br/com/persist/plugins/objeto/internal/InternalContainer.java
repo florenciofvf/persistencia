@@ -1471,9 +1471,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					private void exibir(List<Relacao> relacoes) {
 						StringBuilder sb = new StringBuilder("INNER JOIN " + objeto.getTabelaEsquema(getConexao()) + " "
 								+ objeto.getApelidoParaJoinOuTabela());
+						StringBuilder bd = new StringBuilder();
+						boolean quebrar = false;
 						for (Relacao relacao : relacoes) {
-							sb.append(relacao.montarJoin());
+							String frag = relacao.montarJoin();
+							if (!Util.estaVazio(frag)) {
+								if (bd.length() > 0) {
+									bd.append(Constantes.QL);
+									quebrar = true;
+								}
+								bd.append(frag);
+							}
 						}
+						sb.append((quebrar ? Constantes.QL : "") + bd.toString());
 						Util.mensagem(InternalContainer.this, sb.toString());
 					}
 				}

@@ -59,7 +59,7 @@ public class Relacao {
 		if (Util.estaVazio(getChaveOrigem()) || Util.estaVazio(getChaveDestino())) {
 			return Constantes.VAZIO;
 		}
-		StringBuilder sb = new StringBuilder(Constantes.QL + "ON");
+		StringBuilder sb = new StringBuilder(" ON");
 		sb.append(" " + origem.getApelidoParaJoinOuTabela() + "." + getChaveOrigem());
 		sb.append(" =");
 		sb.append(" " + destino.getApelidoParaJoinOuTabela() + "." + getChaveDestino());
