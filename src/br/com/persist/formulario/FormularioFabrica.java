@@ -1,5 +1,7 @@
 package br.com.persist.formulario;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.abstrato.AbstratoServico;
 import br.com.persist.abstrato.Servico;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
@@ -58,11 +61,14 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 		if (menu.getItemCount() > 0) {
 			menu.addSeparator();
 		}
+		JMenuItem itemOutraInstancia = new JMenuItem(FormularioMensagens.getString("label.abrir_outra_instancia"));
 		JMenuItem itemFecharEConexao = new JMenuItem(FormularioMensagens.getString("label.fechar_com_conexao"),
 				Icones.SAIR);
+		itemOutraInstancia.addActionListener(e -> abrirOutraInstancia(formulario));
 		itemFecharEConexao.addActionListener(e -> fechar(formulario, true));
-		lista.add(itemFecharEConexao);
 		itemFechar.addActionListener(e -> fechar(formulario, false));
+		lista.add(itemOutraInstancia);
+		lista.add(itemFecharEConexao);
 		lista.add(itemFechar);
 		return lista;
 	}
@@ -75,6 +81,20 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 			formulario.salvarGC();
 			formulario.processar(args);
 			System.exit(0);
+		}
+	}
+
+	private void abrirOutraInstancia(Formulario formulario) {
+		String string = new File("persistencia.jar").getAbsolutePath();
+		if (!new File(string).exists()) {
+			String msg = Mensagens.getString("msg.arquivo_inexistente") + Constantes.QL2 + string;
+			Util.mensagem(formulario, msg);
+		} else {
+			try {
+				Runtime.getRuntime().exec("java -jar " + string);
+			} catch (IOException e) {
+				Util.mensagem(formulario, e.getMessage());
+			}
 		}
 	}
 }
