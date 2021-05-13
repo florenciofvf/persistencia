@@ -197,6 +197,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		DragSource dragSource = DragSource.getDefaultDragSource();
 		dragSource.createDefaultDragGestureRecognizer(btnArrasto, DnDConstants.ACTION_COPY, dge -> {
 			Conexao conexao = getConexao();
+			if (conexao == null) {
+				return;
+			}
 			Dimension dimension = null;
 			if (dimensaoListener != null) {
 				dimension = dimensaoListener.getDimensoes();
