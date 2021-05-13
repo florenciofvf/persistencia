@@ -1854,8 +1854,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
-			if (Util.confirmar(InternalContainer.this, ObjetoMensagens.getString("msg.fechar_origem_apos_soltar"),
-					false) && dsde.getDropSuccess()) {
+			if (dsde.getDropSuccess() && Util.confirmar(InternalContainer.this,
+					ObjetoMensagens.getString("msg.fechar_origem_apos_soltar"), false)) {
 				toolbar.fechar();
 			}
 		}
