@@ -60,7 +60,8 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 		if (menu.getItemCount() > 0) {
 			menu.addSeparator();
 		}
-		JMenuItem itemOutraInstancia = new JMenuItem(FormularioMensagens.getString("label.abrir_outra_instancia"));
+		JMenuItem itemOutraInstancia = new JMenuItem(FormularioMensagens.getString("label.abrir_outra_instancia"),
+				Icones.CRIAR2);
 		JMenuItem itemFecharEConexao = new JMenuItem(FormularioMensagens.getString("label.fechar_com_conexao"),
 				Icones.SAIR);
 		itemOutraInstancia.addActionListener(e -> abrirOutraInstancia(formulario));
