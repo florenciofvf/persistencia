@@ -8,6 +8,7 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.Window;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
@@ -126,6 +127,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private transient InternalListener.Visibilidade visibilidadeListener;
 	private transient InternalListener.Alinhamento alinhamentoListener;
 	private transient InternalListener.Componente componenteListener;
+	private Panel panelAguardando = new Panel(new GridBagLayout());
 	private transient InternalListener.Dimensao dimensaoListener;
 	private final AtomicBoolean processado = new AtomicBoolean();
 	private transient InternalListener.Vinculo vinculoListener;
@@ -134,6 +136,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private final TextField txtComplemento = new TextField(33);
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
+	private ScrollPane scrollPane = new ScrollPane();
 	private final JComboBox<Conexao> comboConexao;
 	private final Toolbar toolbar = new Toolbar();
 	private CabecalhoColuna cabecalhoFiltro;
@@ -191,6 +194,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabelaPersistencia));
+		panelAguardando.add(new Label("label.aguardando"));
+		add(BorderLayout.CENTER, panelAguardando);
 	}
 
 	private void configurar() {
@@ -257,7 +262,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		tabelaPersistencia.setModel(modeloOrdenacao);
 		persistenciaModelo.setConexao(conexao);
 		persistenciaModelo.setComponente(this);
+		checarScrollPane();
 		return modeloOrdenacao;
+	}
+
+	private void checarScrollPane() {
+		if (scrollPane.getViewport().getView() == null) {
+			remove(panelAguardando);
+			scrollPane.getViewport().setView(tabelaPersistencia);
+			add(BorderLayout.CENTER, scrollPane);
+			SwingUtilities.updateComponentTreeUI(InternalContainer.this);
+		}
 	}
 
 	private StringBuilder getConsulta(Conexao conexao, String complemento) {
