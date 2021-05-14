@@ -194,7 +194,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new ScrollPane(tabelaPersistencia));
-		panelAguardando.add(new Label("label.aguardando"));
+		panelAguardando.add(Preferencias.isDesconectado() ? new Label(Mensagens.getTituloAplicacao(), false)
+				: new Label("label.aguardando"));
 		add(BorderLayout.CENTER, panelAguardando);
 	}
 
