@@ -537,6 +537,7 @@ public class ObjetoContainer extends Panel {
 
 			private void colar(boolean numeros, boolean letras) {
 				Util.getContentTransfered(textField, numeros, letras);
+				textField.postActionEvent();
 			}
 		}
 	}
