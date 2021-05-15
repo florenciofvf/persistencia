@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto.vinculo;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +10,16 @@ import br.com.persist.plugins.objeto.Objeto;
 
 public class ParaTabela {
 	private final List<Instrucao> instrucoes;
+	final Color corFonte;
 	final String tabela;
 	final String icone;
 
-	public ParaTabela(String tabela, String icone) {
+	public ParaTabela(String tabela, String icone, Color corFonte) {
 		if (Util.estaVazio(tabela)) {
 			throw new IllegalStateException("Tabela vazia.");
 		}
 		instrucoes = new ArrayList<>();
+		this.corFonte = corFonte;
 		this.tabela = tabela;
 		this.icone = icone;
 	}
@@ -32,6 +35,9 @@ public class ParaTabela {
 	}
 
 	public void config(Objeto objeto) {
+		if (corFonte != null) {
+			objeto.setCorFonte(corFonte);
+		}
 		if (icone != null) {
 			objeto.setIcone(icone);
 		}

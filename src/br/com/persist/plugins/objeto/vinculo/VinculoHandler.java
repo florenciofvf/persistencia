@@ -50,7 +50,7 @@ class VinculoHandler extends XMLHandler {
 			tabelaSelecionada = attributes.getValue(TABELA);
 			if (!Util.estaVazio(tabelaSelecionada)) {
 				mapaParaTabela.computeIfAbsent(tabelaSelecionada,
-						t -> new ParaTabela(tabelaSelecionada, attributes.getValue(ICONE)));
+						t -> new ParaTabela(tabelaSelecionada, attributes.getValue(ICONE), getCorFonte(attributes)));
 			}
 		} else if ("instrucao".equals(qName)) {
 			processarInstrucao(attributes);
