@@ -22,6 +22,9 @@
 		</instrucao>
 	</para>
 
+	<para tabela="endereco" icone="perfil">
+	</para>
+
 	<para tabela="candidato2">
 		<instrucao nome="Alterar Total de Votos" selecaoMultipla="true">
 			update candidato2 set votos = 123 where id in (#id#)
