@@ -29,22 +29,13 @@ public class Pesquisa {
 		if (referencia.igual(objeto)) {
 			objeto.getPesquisas().add(this);
 			objeto.addReferencias(referencias);
-			config(objeto, referencia);
+			referencia.config(objeto);
 		}
 		for (Referencia ref : referencias) {
 			if (ref.igual(objeto)) {
 				objeto.addReferencia(ref.getPesquisa().referencia);
-				config(objeto, ref);
+				ref.config(objeto);
 			}
-		}
-	}
-
-	private void config(Objeto objeto, Referencia ref) {
-		if (ref.corFonte != null) {
-			objeto.setCorFonte(ref.corFonte);
-		}
-		if (ref.icone != null) {
-			objeto.setIcone(ref.icone);
 		}
 	}
 

@@ -31,6 +31,15 @@ public class Referencia {
 		this.tabela = tabela;
 	}
 
+	public void config(Objeto objeto) {
+		if (corFonte != null) {
+			objeto.setCorFonte(corFonte);
+		}
+		if (icone != null) {
+			objeto.setIcone(icone);
+		}
+	}
+
 	public boolean igual(Referencia ref) {
 		return ref != null && grupo.equalsIgnoreCase(ref.grupo) && tabela.equalsIgnoreCase(ref.tabela)
 				&& campo.equalsIgnoreCase(ref.campo);

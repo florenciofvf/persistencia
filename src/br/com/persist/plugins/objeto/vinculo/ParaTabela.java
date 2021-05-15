@@ -1,8 +1,14 @@
 package br.com.persist.plugins.objeto.vinculo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.objeto.Instrucao;
+import br.com.persist.plugins.objeto.Objeto;
 
 public class ParaTabela {
+	private final List<Instrucao> instrucoes;
 	final String tabela;
 	final String icone;
 
@@ -10,8 +16,25 @@ public class ParaTabela {
 		if (Util.estaVazio(tabela)) {
 			throw new IllegalStateException("Tabela vazia.");
 		}
+		instrucoes = new ArrayList<>();
 		this.tabela = tabela;
 		this.icone = icone;
+	}
+
+	public List<Instrucao> getInstrucoes() {
+		return instrucoes;
+	}
+
+	public void add(Instrucao i) {
+		if (i != null) {
+			instrucoes.add(i);
+		}
+	}
+
+	public void config(Objeto objeto) {
+		if (icone != null) {
+			objeto.setIcone(icone);
+		}
 	}
 
 	public String getTabela() {

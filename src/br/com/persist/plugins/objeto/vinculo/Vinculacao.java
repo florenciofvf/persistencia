@@ -9,20 +9,19 @@ import java.util.Map;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
-import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class Vinculacao {
-	private final Map<String, List<Instrucao>> instrucoes;
+	private final Map<String, ParaTabela> mapaParaTabela;
 	private final List<Pesquisa> pesquisas;
 
 	public Vinculacao() {
+		mapaParaTabela = new HashMap<>();
 		pesquisas = new ArrayList<>();
-		instrucoes = new HashMap<>();
 	}
 
 	public void abrir(String arquivo, Component componente) {
-		instrucoes.clear();
+		mapaParaTabela.clear();
 		pesquisas.clear();
 		File file = null;
 		if (!Util.estaVazio(arquivo)) {
@@ -33,7 +32,7 @@ public class Vinculacao {
 				VinculoHandler handler = new VinculoHandler();
 				XML.processar(file, handler);
 				pesquisas.addAll(handler.getPesquisas());
-				instrucoes.putAll(handler.getInstrucoes());
+				mapaParaTabela.putAll(handler.getMapaParaTabela());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
 			}
@@ -41,8 +40,11 @@ public class Vinculacao {
 	}
 
 	public void processar(Objeto objeto) {
-		List<Instrucao> lista = instrucoes.get(objeto.getTabela2());
-		objeto.addInstrucoes(lista);
+		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela2());
+		if (paraTabela != null) {
+			objeto.addInstrucoes(paraTabela.getInstrucoes());
+			paraTabela.config(objeto);
+		}
 		for (Pesquisa p : pesquisas) {
 			p.processar(objeto);
 		}

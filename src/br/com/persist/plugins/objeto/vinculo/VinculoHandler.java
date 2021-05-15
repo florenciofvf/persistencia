@@ -15,19 +15,20 @@ import br.com.persist.plugins.objeto.Instrucao;
 
 class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
-	private final Map<String, List<Instrucao>> instrucoes;
+	private final Map<String, ParaTabela> mapaParaTabela;
 	private static final String TABELA = "tabela";
+	private static final String ICONE = "icone";
 	private final List<Pesquisa> pesquisas;
 	private String tabelaSelecionada;
 	private Pesquisa selecionado;
 
 	public VinculoHandler() {
+		mapaParaTabela = new HashMap<>();
 		pesquisas = new ArrayList<>();
-		instrucoes = new HashMap<>();
 	}
 
-	public Map<String, List<Instrucao>> getInstrucoes() {
-		return instrucoes;
+	public Map<String, ParaTabela> getMapaParaTabela() {
+		return mapaParaTabela;
 	}
 
 	public List<Pesquisa> getPesquisas() {
@@ -48,7 +49,8 @@ class VinculoHandler extends XMLHandler {
 		} else if ("para".equals(qName)) {
 			tabelaSelecionada = attributes.getValue(TABELA);
 			if (!Util.estaVazio(tabelaSelecionada)) {
-				instrucoes.computeIfAbsent(tabelaSelecionada, t -> new ArrayList<>());
+				mapaParaTabela.computeIfAbsent(tabelaSelecionada,
+						t -> new ParaTabela(tabelaSelecionada, attributes.getValue(ICONE)));
 			}
 		} else if ("instrucao".equals(qName)) {
 			processarInstrucao(attributes);
@@ -59,9 +61,9 @@ class VinculoHandler extends XMLHandler {
 	}
 
 	private void processarInstrucao(Attributes attributes) {
-		List<Instrucao> lista = instrucoes.get(tabelaSelecionada);
-		if (lista != null) {
-			addInstrucao(attributes, lista);
+		ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
+		if (paraTabela != null) {
+			addInstrucao(attributes, paraTabela.getInstrucoes());
 		}
 	}
 
@@ -83,7 +85,7 @@ class VinculoHandler extends XMLHandler {
 		String limparApos = attributes.getValue("limparApos");
 		ref.setIconeGrupo(attributes.getValue("iconeGrupo"));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
-		ref.setIcone(attributes.getValue("icone"));
+		ref.setIcone(attributes.getValue(ICONE));
 		ref.setCorFonte(getCorFonte(attributes));
 		return ref;
 	}
@@ -94,8 +96,8 @@ class VinculoHandler extends XMLHandler {
 		String limparApos = attributes.get("limparApos");
 		ref.setIconeGrupo(attributes.get("iconeGrupo"));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
-		ref.setIcone(attributes.get("icone"));
 		ref.setCorFonte(getCorFonte(attributes));
+		ref.setIcone(attributes.get(ICONE));
 		return ref;
 	}
 
@@ -120,9 +122,9 @@ class VinculoHandler extends XMLHandler {
 		if ("pesquisa".equals(qName)) {
 			selecionado = null;
 		} else if ("instrucao".equals(qName)) {
-			List<Instrucao> lista = instrucoes.get(tabelaSelecionada);
-			if (lista != null && !lista.isEmpty()) {
-				setValorInstrucao(lista);
+			ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
+			if (paraTabela != null && !paraTabela.getInstrucoes().isEmpty()) {
+				setValorInstrucao(paraTabela.getInstrucoes());
 			}
 			limpar();
 		}
