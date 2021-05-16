@@ -18,6 +18,7 @@ class VinculoHandler extends XMLHandler {
 	private final Map<String, ParaTabela> mapaParaTabela;
 	private static final String TABELA = "tabela";
 	private static final String ICONE = "icone";
+	private static final String GRUPO = "grupo";
 	private final List<Pesquisa> pesquisas;
 	private String tabelaSelecionada;
 	private Pesquisa selecionado;
@@ -49,8 +50,7 @@ class VinculoHandler extends XMLHandler {
 		} else if ("para".equals(qName)) {
 			tabelaSelecionada = attributes.getValue(TABELA);
 			if (!Util.estaVazio(tabelaSelecionada)) {
-				mapaParaTabela.computeIfAbsent(tabelaSelecionada,
-						t -> new ParaTabela(tabelaSelecionada, attributes.getValue(ICONE), getCorFonte(attributes)));
+				mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> criarParaTabela(tabelaSelecionada, attributes));
 			}
 		} else if ("instrucao".equals(qName)) {
 			processarInstrucao(attributes);
@@ -78,8 +78,31 @@ class VinculoHandler extends XMLHandler {
 		lista.add(i);
 	}
 
+	private static ParaTabela criarParaTabela(String tabela, Attributes attributes) {
+		ParaTabela paraTabela = new ParaTabela(tabela, attributes.getValue(ICONE), getCorFonte(attributes));
+		paraTabela.setPrefixoNomeTabela(attributes.getValue("prefixoNomeTabela"));
+		paraTabela.setSelectAlternativo(attributes.getValue("selectAlternativo"));
+		paraTabela.setFinalConsulta(attributes.getValue("finalConsulta"));
+		paraTabela.setAjustarAltura(attributes.getValue("ajustarAltura"));
+		paraTabela.setComplemento(attributes.getValue("complemento"));
+		paraTabela.setMapeamento(attributes.getValue("mapeamento"));
+		paraTabela.setSequencias(attributes.getValue("sequencias"));
+		paraTabela.setCampoNomes(attributes.getValue("campoNomes"));
+		paraTabela.setColunaInfo(attributes.getValue("colunaInfo"));
+		paraTabela.setDestacavel(attributes.getValue("destacavel"));
+		paraTabela.setLinkAuto(attributes.getValue("linkAuto"));
+		paraTabela.setApelido(attributes.getValue("apelido"));
+		paraTabela.setOrderBy(attributes.getValue("orderBy"));
+		paraTabela.setChaves(attributes.getValue("chaves"));
+		paraTabela.setGrupo(attributes.getValue(GRUPO));
+		paraTabela.setSane(attributes.getValue("sane"));
+		paraTabela.setCcsc(attributes.getValue("ccsc"));
+		paraTabela.setBpnt(attributes.getValue("bpnt"));
+		return paraTabela;
+	}
+
 	public static Referencia criar(Attributes attributes) {
-		Referencia ref = new Referencia(attributes.getValue("grupo"), attributes.getValue(TABELA),
+		Referencia ref = new Referencia(attributes.getValue(GRUPO), attributes.getValue(TABELA),
 				attributes.getValue("campo"));
 		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
 		String limparApos = attributes.getValue("limparApos");
@@ -91,7 +114,7 @@ class VinculoHandler extends XMLHandler {
 	}
 
 	public static Referencia criar(Map<String, String> attributes) {
-		Referencia ref = new Referencia(attributes.get("grupo"), attributes.get(TABELA), attributes.get("campo"));
+		Referencia ref = new Referencia(attributes.get(GRUPO), attributes.get(TABELA), attributes.get("campo"));
 		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.get("vazio")));
 		String limparApos = attributes.get("limparApos");
 		ref.setIconeGrupo(attributes.get("iconeGrupo"));
