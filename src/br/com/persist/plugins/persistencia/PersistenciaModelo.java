@@ -352,7 +352,7 @@ public class PersistenciaModelo implements TableModel {
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores, String prefixoNomeTabela,
 			Coletor coletor, boolean comWhere) {
 		StringBuilder resposta = new StringBuilder(
-				"UPDATE " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " SET ");
+				"UPDATE " + prefixarEsquema(conexao, prefixoNomeTabela, tabela, Constantes.VAZIO) + " SET ");
 		int i = 0;
 		Coluna coluna = null;
 		for (; i < colunas.length; i++) {
@@ -382,8 +382,8 @@ public class PersistenciaModelo implements TableModel {
 		if (colunas.isEmpty()) {
 			return null;
 		}
-		StringBuilder resposta = new StringBuilder(
-				"INSERT INTO " + prefixarEsquema(conexao, prefixoNomeTabela, tabela) + " (" + Constantes.QL);
+		StringBuilder resposta = new StringBuilder("INSERT INTO "
+				+ prefixarEsquema(conexao, prefixoNomeTabela, tabela, Constantes.VAZIO) + " (" + Constantes.QL);
 		StringBuilder campo = new StringBuilder();
 		StringBuilder valor = new StringBuilder("VALUES (" + Constantes.QL);
 		int i = 0;
@@ -421,14 +421,15 @@ public class PersistenciaModelo implements TableModel {
 				valor.append(Constantes.TAB + string + coluna.get(coluna.getNome()) + Constantes.QL);
 			}
 		} else {
-			valor.append(Constantes.TAB + string + prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia())
+			valor.append(Constantes.TAB + string
+					+ prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia(), Constantes.VAZIO)
 					+ Constantes.QL);
 		}
 	}
 
 	private String gerarDelete(List<Object> registro, String prefixoNomeTabela, boolean comWhere) {
 		StringBuilder resposta = new StringBuilder(
-				"DELETE FROM " + prefixarEsquema(conexao, prefixoNomeTabela, tabela));
+				"DELETE FROM " + prefixarEsquema(conexao, prefixoNomeTabela, tabela, Constantes.VAZIO));
 		if (comWhere) {
 			resposta.append(montarWhere(registro));
 		}
@@ -460,10 +461,14 @@ public class PersistenciaModelo implements TableModel {
 		return resposta.toString();
 	}
 
-	public static String prefixarEsquema(Conexao conexao, String prefixoNomeTabela, String tabela) {
+	public static String prefixarEsquema(Conexao conexao, String prefixoNomeTabela, String tabela, String apelido) {
 		String esquema = conexao == null ? Constantes.VAZIO : conexao.getEsquema();
 		String prefixoTabela = prefixoNomeTabela == null ? Constantes.VAZIO : prefixoNomeTabela;
-		return (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + prefixoTabela + tabela;
+		String resp = (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + prefixoTabela + tabela;
+		if (!Util.estaVazio(apelido)) {
+			resp += " " + apelido;
+		}
+		return resp;
 	}
 
 	private List<Coluna> getChaves() {

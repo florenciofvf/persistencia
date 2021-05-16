@@ -537,7 +537,8 @@ public class Persistencia {
 
 	public static MemoriaModelo criarModeloMetaDados(Connection conn, Conexao conexao, String tabela)
 			throws PersistenciaException {
-		String string = "SELECT * FROM " + PersistenciaModelo.prefixarEsquema(conexao, null, tabela) + " WHERE 1 > 2";
+		String string = "SELECT * FROM " + PersistenciaModelo.prefixarEsquema(conexao, null, tabela, null)
+				+ " WHERE 1 > 2";
 
 		try (PreparedStatement psmt = conn.prepareStatement(string)) {
 			try (ResultSet rs = psmt.executeQuery()) {

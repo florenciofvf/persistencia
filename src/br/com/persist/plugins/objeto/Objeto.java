@@ -494,7 +494,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTabelaEsquema(Conexao conexao) {
-		return getTabelaEsquema(conexao != null ? conexao.getEsquema() : Constantes.LABEL_VAZIO);
+		return getTabelaEsquema(conexao == null ? Constantes.VAZIO : conexao.getEsquema());
 	}
 
 	public void select(StringBuilder sb, Conexao conexao) {
@@ -523,7 +523,7 @@ public class Objeto implements Runnable {
 				String tab = tabsArray[i];
 				String on = joisArray[i];
 				sb.append(" INNER JOIN");
-				sb.append(" " + PersistenciaModelo.prefixarEsquema(conexao, prefixoNomeTabela, tab));
+				sb.append(" " + PersistenciaModelo.prefixarEsquema(conexao, prefixoNomeTabela, tab, null));
 				sb.append(" " + on);
 				sb.append(Constantes.QL);
 			}

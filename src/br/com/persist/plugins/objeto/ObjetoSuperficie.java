@@ -1805,7 +1805,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					try {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
-								objeto.getTabela2());
+								objeto.getTabela2(), null);
 						int i = Persistencia.getTotalRegistros(conn, aposFROM);
 						objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 						label.setText(++atual + " / " + total);
@@ -1886,7 +1886,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					try {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
-								objeto.getTabela2());
+								objeto.getTabela2(), null);
 						int i = Persistencia.getTotalRegistros(conn, aposFROM);
 						label.setText(++atual + " / " + total);
 						processarRecente(objeto, i, fm);
