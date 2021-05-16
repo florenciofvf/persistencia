@@ -1530,7 +1530,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private void montarSelect(Conexao conexao, String complemento, StringBuilder builder) {
 						objeto.select(builder, conexao);
-						Objeto.concatenar(builder, objeto.getApelidoParaJoins());
 						objeto.where(builder, txtComplemento.getText(), complemento);
 						objeto.orderBy(builder);
 						Objeto.concatenar(builder, objeto.getFinalConsulta());
@@ -1538,7 +1537,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 					private String getNomeColunas(Coletor coletor) {
 						if (coletor.estaVazio()) {
-							return tabelaPersistencia.getNomeColunas();
+							return tabelaPersistencia.getNomeColunas(objeto.getApelidoParaJoins());
 						}
 						return getNomeColunas(coletor.getLista());
 					}
