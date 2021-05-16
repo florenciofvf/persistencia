@@ -486,7 +486,11 @@ public class Objeto implements Runnable {
 		if (Util.estaVazio(tabela)) {
 			tabela = Constantes.VAZIO;
 		}
-		return (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + getPrefixoNomeTabela() + tabela;
+		String resp = (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + getPrefixoNomeTabela() + tabela;
+		if (!Util.estaVazio(apelidoParaJoins)) {
+			resp += " " + apelidoParaJoins;
+		}
+		return resp;
 	}
 
 	public String getTabelaEsquema(Conexao conexao) {
@@ -496,7 +500,11 @@ public class Objeto implements Runnable {
 	public void select(StringBuilder sb, Conexao conexao) {
 		String sel = getSelectAlternativo();
 		if (Util.estaVazio(sel)) {
-			sb.append("SELECT * FROM " + getTabelaEsquema(conexao.getEsquema()));
+			if (!Util.estaVazio(apelidoParaJoins)) {
+				sb.append("SELECT " + apelidoParaJoins + ".* FROM " + getTabelaEsquema(conexao.getEsquema()));
+			} else {
+				sb.append("SELECT * FROM " + getTabelaEsquema(conexao.getEsquema()));
+			}
 		} else {
 			sb.append(sel + " FROM " + getTabelaEsquema(conexao.getEsquema()));
 		}
