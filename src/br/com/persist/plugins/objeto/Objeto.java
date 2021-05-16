@@ -482,31 +482,20 @@ public class Objeto implements Runnable {
 		return chavesTmp.trim().split(",");
 	}
 
-	public String getTabelaEsquema(String esquema) {
-		if (Util.estaVazio(tabela)) {
-			tabela = Constantes.VAZIO;
-		}
-		String resp = (Util.estaVazio(esquema) ? Constantes.VAZIO : esquema + ".") + getPrefixoNomeTabela() + tabela;
-		if (!Util.estaVazio(apelidoParaJoins)) {
-			resp += " " + apelidoParaJoins;
-		}
-		return resp;
-	}
-
 	public String getTabelaEsquema(Conexao conexao) {
-		return getTabelaEsquema(conexao == null ? Constantes.VAZIO : conexao.getEsquema());
+		return PersistenciaModelo.prefixarEsquema(conexao, getPrefixoNomeTabela(), getTabela2(), getApelidoParaJoins());
 	}
 
 	public void select(StringBuilder sb, Conexao conexao) {
 		String sel = getSelectAlternativo();
 		if (Util.estaVazio(sel)) {
 			if (!Util.estaVazio(apelidoParaJoins)) {
-				sb.append("SELECT " + apelidoParaJoins + ".* FROM " + getTabelaEsquema(conexao.getEsquema()));
+				sb.append("SELECT " + apelidoParaJoins + ".* FROM " + getTabelaEsquema(conexao));
 			} else {
-				sb.append("SELECT * FROM " + getTabelaEsquema(conexao.getEsquema()));
+				sb.append("SELECT * FROM " + getTabelaEsquema(conexao));
 			}
 		} else {
-			sb.append(sel + " FROM " + getTabelaEsquema(conexao.getEsquema()));
+			sb.append(sel + " FROM " + getTabelaEsquema(conexao));
 		}
 	}
 

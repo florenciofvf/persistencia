@@ -610,12 +610,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void copiarNomeTabela() {
-				Conexao conexao = getConexao();
-				String esquema = null;
-				if (conexao != null) {
-					esquema = conexao.getEsquema();
-				}
-				Util.setContentTransfered(objeto.getTabelaEsquema(esquema));
+				Util.setContentTransfered(objeto.getTabelaEsquema(getConexao()));
 			}
 
 			private void copiarComplemento() {
@@ -1144,10 +1139,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 					if (minimo) {
 						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
-								+ objeto.getTabelaEsquema(conexao.getEsquema()) + ")");
+								+ objeto.getTabelaEsquema(conexao) + ")");
 					} else {
 						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
-								+ objeto.getTabelaEsquema(conexao.getEsquema()) + ")");
+								+ objeto.getTabelaEsquema(conexao) + ")");
 					}
 					actionListenerInner.actionPerformed(null);
 				}
@@ -1169,11 +1164,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
-							String esquemaTabela = objeto.getTabelaEsquema(conexao.getEsquema());
 							String complementar = complemento ? txtComplemento.getText() : Constantes.VAZIO;
-							String aposFROM = esquemaTabela
-									+ (!Util.estaVazio(complementar) ? " WHERE 1=1 " + complementar : Constantes.VAZIO);
-							int i = Persistencia.getTotalRegistros(conn, aposFROM);
+							String filtro = Util.estaVazio(complementar) ? Constantes.VAZIO
+									: " WHERE 1=1 " + complementar;
+							int i = Persistencia.getTotalRegistros(conn, objeto.getTabelaEsquema(conexao) + filtro);
 							toolbar.labelTotal.setText(Constantes.VAZIO + i);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("TOTAL", ex, InternalContainer.this);
