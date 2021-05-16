@@ -688,7 +688,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void abrirObjeto(Objeto objeto) {
-			if (Util.estaVazio(objeto.getTabela2())) {
+			if (Util.estaVazio(objeto.getTabela())) {
 				popup.configuracaoAcao.actionPerformed(null);
 			} else {
 				Conexao conexao = null;
@@ -710,7 +710,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void abrirArquivo(Conexao conexao, Objeto objeto, InternalFormulario interno) {
 			setComplemento(conexao, objeto);
-			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela2());
+			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela());
 			config.setGraphics(getGraphics());
 			if (interno != null) {
 				config.setComplemento(interno.getComplementoChaves(true));
@@ -1037,7 +1037,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public boolean contemObjetoComTabela(String nomeTabela) {
 		for (Objeto objeto : objetos) {
-			if (objeto.getTabela2().equalsIgnoreCase(nomeTabela)) {
+			if (objeto.getTabela().equalsIgnoreCase(nomeTabela)) {
 				return true;
 			}
 		}
@@ -1402,7 +1402,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void preShow(boolean objetoSelecionado) {
 			itemDados.setEnabled(
-					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela2()));
+					objetoSelecionado && selecionadoObjeto != null && !Util.estaVazio(selecionadoObjeto.getTabela()));
 			itemDados.setObject(itemDados.isEnabled() ? selecionadoObjeto : null);
 			menuDistribuicao.setEnabled(objetoSelecionado);
 			menuAlinhamento.setEnabled(objetoSelecionado);
@@ -1770,7 +1770,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private int preTotalRecente(Label label) {
 		int total = 0;
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
+			if (!Util.estaVazio(objeto.getTabela())) {
 				objeto.setCorFonte(ObjetoPreferencia.getCorAntesTotalRecente());
 				total++;
 			}
@@ -1801,11 +1801,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			menuItem.setEnabled(false);
 			int atual = 0;
 			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
+				if (!Util.estaVazio(objeto.getTabela())) {
 					try {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
-								objeto.getTabela2(), null);
+								objeto.getTabela(), null);
 						int i = Persistencia.getTotalRegistros(conn, aposFROM);
 						objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 						label.setText(++atual + " / " + total);
@@ -1828,14 +1828,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	public void excluirSemTabela() {
 		boolean contem = false;
 		for (Objeto objeto : objetos) {
-			if (Util.estaVazio(objeto.getTabela2())) {
+			if (Util.estaVazio(objeto.getTabela())) {
 				contem = true;
 				break;
 			}
 		}
 		if (contem && Util.confirmaExclusao(ObjetoSuperficie.this, true)) {
 			for (Objeto objeto : objetos) {
-				if (Util.estaVazio(objeto.getTabela2())) {
+				if (Util.estaVazio(objeto.getTabela())) {
 					excluir(objeto);
 				}
 			}
@@ -1882,11 +1882,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			menuItem.setEnabled(false);
 			int atual = 0;
 			for (Objeto objeto : objetos) {
-				if (!Util.estaVazio(objeto.getTabela2())) {
+				if (!Util.estaVazio(objeto.getTabela())) {
 					try {
 						Connection conn = ConexaoProvedor.getConnection(conexao);
 						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
-								objeto.getTabela2(), null);
+								objeto.getTabela(), null);
 						int i = Persistencia.getTotalRegistros(conn, aposFROM);
 						label.setText(++atual + " / " + total);
 						processarRecente(objeto, i, fm);
@@ -1934,7 +1934,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void adicionarHierarquico(Conexao conexao, Objeto objeto, Map<String, Object> mapaRef) {
 		Map<String, Object> args = new HashMap<>();
-		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela2());
+		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
 		formulario.processar(args);
 		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
 		if (metadado == null) {
@@ -2059,7 +2059,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Metadado campoDetalhe = variaveis.campoProcessado;
 		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
 		variaveis.pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(),
-				variaveis.principal.getTabela2(), campoDetalhe.getDescricao());
+				variaveis.principal.getTabela(), campoDetalhe.getDescricao());
 		relacao.setChaveOrigem(campoDetalhe.getDescricao());
 	}
 
@@ -2173,7 +2173,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		Metadado campoDetalhe = controle.campoProcessado;
 		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
 		controle.pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), controle.objeto.getGrupo(),
-				controle.principal.getTabela2(), campoDetalhe.getDescricao());
+				controle.principal.getTabela(), campoDetalhe.getDescricao());
 		controle.relacao.setChaveOrigem(campoDetalhe.getDescricao());
 	}
 
@@ -2239,7 +2239,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void checkInicialPesquisa() {
 			if (exportacao) {
-				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela2(), principal.getChaves());
+				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
 			}
 		}
 
@@ -2343,7 +2343,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void checkInicialPesquisa() {
 			if (exportacao) {
-				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela2(), principal.getChaves());
+				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
 			}
 		}
 
@@ -2476,7 +2476,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private boolean getContinua(List<Objeto> lista) {
 		for (Objeto objeto : lista) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
+			if (!Util.estaVazio(objeto.getTabela())) {
 				return true;
 			}
 		}
@@ -2540,7 +2540,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int x = 10;
 		int y = 10;
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
+			if (!Util.estaVazio(objeto.getTabela())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
 				x += 25;
@@ -2555,7 +2555,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int x = 10;
 		int y = 10;
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
+			if (!Util.estaVazio(objeto.getTabela())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
 				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
 				x += 25;
@@ -2568,7 +2568,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void destacarObjetoPagina(List<Objeto> listaObjetos, Conexao conexao) {
 		for (Objeto objeto : listaObjetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
+			if (!Util.estaVazio(objeto.getTabela())) {
 				setComplemento(conexao, objeto);
 				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, getGraphics(), false));
 			}
@@ -2620,7 +2620,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int altura = variavelAltura.getInteiro(Constantes.DUZENTOS);
 		Dimension dimension = new Dimension(largura, altura);
 		for (Objeto objeto : objetos) {
-			if (!Util.estaVazio(objeto.getTabela2())) {
+			if (!Util.estaVazio(objeto.getTabela())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, dimension);
 				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), null, false,
 						config);
@@ -2652,10 +2652,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void selecionarCampo(Objeto objeto, Coletor coletor, Component c) {
 		Conexao conexao = container.getConexaoPadrao();
-		if (conexao != null && objeto != null && !Util.estaVazio(objeto.getTabela2())) {
+		if (conexao != null && objeto != null && !Util.estaVazio(objeto.getTabela())) {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
-				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela2());
+				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela());
 				SetLista.view(objeto.getId(), modelo.getLista(2), coletor, c, true);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);

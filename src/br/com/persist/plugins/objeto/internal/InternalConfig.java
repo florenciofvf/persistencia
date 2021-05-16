@@ -23,7 +23,7 @@ public class InternalConfig {
 
 	public boolean igual(Objeto objeto) {
 		return objeto != null && grupo.equalsIgnoreCase(objeto.getGrupo())
-				&& tabela.equalsIgnoreCase(objeto.getTabela2());
+				&& tabela.equalsIgnoreCase(objeto.getTabela());
 	}
 
 	public String getComplemento() {

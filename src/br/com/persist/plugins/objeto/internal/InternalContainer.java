@@ -288,7 +288,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private boolean continuar(String complemento) {
 		if (objeto.isSane() && todosVazio(complemento)) {
-			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela2());
+			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela());
 			Util.mensagem(InternalContainer.this, msg);
 			return false;
 		}
@@ -296,7 +296,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				|| !Util.estaVazio(objeto.getFinalConsulta()) || !objeto.isCcsc()) {
 			return true;
 		}
-		String msg = ObjetoMensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela2());
+		String msg = ObjetoMensagens.getString("msg.ccsc", objeto.getId() + " - " + objeto.getTabela());
 		return Util.confirmar(InternalContainer.this, msg, false);
 	}
 
@@ -310,7 +310,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		param.setMapaSequencia(objeto.getMapaSequencias());
 		param.setColunasChave(objeto.getChavesArray());
 		param.setComColunaInfo(objeto.isColunaInfo());
-		param.setTabela(objeto.getTabela2());
+		param.setTabela(objeto.getTabela());
 		return param;
 	}
 
@@ -375,12 +375,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		if (Preferencias.isErroCriarConnection()) {
 			if (!Preferencias.isExibiuMensagemConnection()) {
 				Util.stackTraceAndMessage("PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela()
-						+ objeto.getTabela2(), ex, this);
+						+ objeto.getTabela(), ex, this);
 				Preferencias.setExibiuMensagemConnection(true);
 			}
 		} else {
 			Util.stackTraceAndMessage(
-					"PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela() + objeto.getTabela2(),
+					"PAINEL OBJETO: " + objeto.getId() + " -> " + objeto.getPrefixoNomeTabela() + objeto.getTabela(),
 					ex, this);
 		}
 	}
@@ -840,7 +840,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
 					if (linhas != null && linhas.length == 1) {
-						StringBuilder sb = new StringBuilder(objeto.getTabela2());
+						StringBuilder sb = new StringBuilder(objeto.getTabela());
 						sb.append(Constantes.QL);
 						Coletor coletor = new Coletor();
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
@@ -1619,7 +1619,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							MemoriaModelo modelo = Persistencia.criarModeloChavePrimaria(conn, conexao,
-									objeto.getTabela2());
+									objeto.getTabela());
 							TabelaDialogo.criar((Frame) null, objeto.getTitle("CHAVE-PRIMARIA"), modelo);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVE-PRIMARIA", ex, InternalContainer.this);
@@ -1642,7 +1642,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							MemoriaModelo modelo = Persistencia.criarModeloChavesImportadas(conn, conexao,
-									objeto.getTabela2());
+									objeto.getTabela());
 							TabelaDialogo.criar((Frame) null, objeto.getTitle("CHAVES-IMPORTADAS"), modelo);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-IMPORTADAS", ex, InternalContainer.this);
@@ -1723,7 +1723,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
 							MemoriaModelo modelo = Persistencia.criarModeloChavesExportadas(conn, conexao,
-									objeto.getTabela2());
+									objeto.getTabela());
 							TabelaDialogo.criar((Frame) null, objeto.getTitle("CHAVES-EXPORTADAS"), modelo);
 						} catch (Exception ex) {
 							Util.stackTraceAndMessage("CHAVES-EXPORTADAS", ex, InternalContainer.this);
@@ -1745,8 +1745,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					if (conexao != null) {
 						try {
 							Connection conn = ConexaoProvedor.getConnection(conexao);
-							MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao,
-									objeto.getTabela2());
+							MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela());
 							TabelaDialogo.criar((Frame) null,
 									objeto.getTitle(Mensagens.getString(Constantes.LABEL_METADADOS)), modelo);
 						} catch (Exception ex) {

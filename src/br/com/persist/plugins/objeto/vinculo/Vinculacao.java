@@ -40,7 +40,7 @@ public class Vinculacao {
 	}
 
 	public void processar(Objeto objeto) {
-		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela2());
+		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela());
 		if (paraTabela != null) {
 			objeto.addInstrucoes(paraTabela.getInstrucoes());
 			paraTabela.config(objeto);

@@ -250,7 +250,7 @@ public class ObjetoContainer extends Panel {
 			chkLinkAuto.setSelected(objeto.isLinkAuto());
 			txtOrderBy.setText(objeto.getOrderBy());
 			txtTabelas.setText(objeto.getTabelas());
-			txtTabela.setText(objeto.getTabela2());
+			txtTabela.setText(objeto.getTabela());
 			txtChaves.setText(objeto.getChaves());
 			chkCCSC.setSelected(objeto.isCcsc());
 			chkSANE.setSelected(objeto.isSane());

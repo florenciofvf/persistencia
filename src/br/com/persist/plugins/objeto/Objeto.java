@@ -224,7 +224,7 @@ public class Objeto implements Runnable {
 		util.atributo("tabelas", getTabelas());
 		util.atributo("abrirAuto", abrirAuto);
 		util.atributo("processar", processar);
-		util.atributo("tabela", getTabela2());
+		util.atributo("tabela", getTabela());
 		util.atributo("chaves", getChaves());
 		util.atributo("linkAuto", linkAuto);
 		util.atributo("grupo", getGrupo());
@@ -483,7 +483,7 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTabelaEsquema(Conexao conexao) {
-		return PersistenciaModelo.prefixarEsquema(conexao, getPrefixoNomeTabela(), getTabela2(), getApelidoParaJoins());
+		return PersistenciaModelo.prefixarEsquema(conexao, getPrefixoNomeTabela(), getTabela(), getApelidoParaJoins());
 	}
 
 	public void select(StringBuilder sb, Conexao conexao) {
@@ -583,7 +583,7 @@ public class Objeto implements Runnable {
 		return resp;
 	}
 
-	public String getTabela2() {
+	public String getTabela() {
 		if (Util.estaVazio(tabela)) {
 			tabela = Constantes.VAZIO;
 		}
@@ -740,7 +740,7 @@ public class Objeto implements Runnable {
 
 	public boolean igual(Objeto objeto) {
 		return objeto != null && getGrupo().equalsIgnoreCase(objeto.getGrupo())
-				&& getTabela2().equalsIgnoreCase(objeto.getTabela2());
+				&& getTabela().equalsIgnoreCase(objeto.getTabela());
 	}
 
 	@Override
@@ -827,15 +827,15 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTitle(String complemento) {
-		return getTabela2() + " - " + getId() + " - " + complemento + " ";
+		return getTabela() + " - " + getId() + " - " + complemento + " ";
 	}
 
 	public String getTitle(OrdenacaoModelo modelo) {
-		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "]";
+		return getTabela() + " - " + getId() + " [" + modelo.getRowCount() + "]";
 	}
 
 	public String getTitle(OrdenacaoModelo modelo, String complemento) {
-		return getTabela2() + " - " + getId() + " [" + modelo.getRowCount() + "] - " + complemento;
+		return getTabela() + " - " + getId() + " [" + modelo.getRowCount() + "] - " + complemento;
 	}
 
 	public int getDeslocamentoXId() {
