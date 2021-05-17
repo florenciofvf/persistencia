@@ -246,7 +246,14 @@ public class ObjetoContainer extends AbstratoContainer {
 		}
 
 		private void abrirArquivoVinculado() {
-
+			if (!Util.estaVazio(txtArquivoVinculo.getText())) {
+				File file = new File(txtArquivoVinculo.getText().trim());
+				try {
+					ObjetoUtil.abrirArquivoVinculado(ObjetoContainer.this, file);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("ARQUIVO VINCULADO: " + file.getAbsolutePath(), ex, formulario);
+				}
+			}
 		}
 
 		private transient MouseListener mouseListenerPopupVinculado = new MouseAdapter() {

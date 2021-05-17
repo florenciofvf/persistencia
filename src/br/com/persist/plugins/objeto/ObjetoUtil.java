@@ -1,5 +1,8 @@
 package br.com.persist.plugins.objeto;
 
+import java.awt.Component;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoUtil {
@@ -99,5 +104,28 @@ public class ObjetoUtil {
 			}
 		}
 		return sb.toString();
+	}
+
+	public static void abrirArquivoVinculado(Component componente, File file) throws XMLException {
+		if (file == null) {
+			return;
+		}
+		if (!file.exists()) {
+			criarArquivoVinculado(file);
+		}
+		try {
+			Util.conteudo(componente, file);
+		} catch (IOException e) {
+			Util.mensagem(componente, e.getMessage());
+		}
+	}
+
+	private static void criarArquivoVinculado(File file) throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2("vinculo");
+		util.ql();
+		util.finalizarTag("vinculo");
+		util.close();
 	}
 }
