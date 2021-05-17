@@ -23,6 +23,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.MenuItem;
+import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.ToggleButton;
@@ -184,11 +188,13 @@ public class ObjetoContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action excluirAcao = actionIcon("label.excluir_selecionado", Icones.EXCLUIR);
+		private Action arquivoVinculadoAcao = actionMenu("label.abrir_criar_arq_vinculado");
 		private Action criarObjetoAcao = actionIcon("label.criar_objeto", Icones.CRIAR);
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
 		private CheckBox chkAjusteAutomatico = new CheckBox();
 		private CheckBox chkAjusteLarguraFrm = new CheckBox();
+		private Popup popupArquivoVinculado = new Popup();
 		private Label labelStatus = new Label();
 
 		public void ini(Janela janela) {
@@ -209,6 +215,9 @@ public class ObjetoContainer extends AbstratoContainer {
 			add(true, txtPrefixoNomeTabela);
 			add(true, txtArquivoVinculo);
 			eventos();
+			arquivoVinculadoAcao.setActionListener(e -> abrirArquivoVinculado());
+			txtArquivoVinculo.addMouseListener(mouseListenerPopupVinculado);
+			popupArquivoVinculado.add(arquivoVinculadoAcao);
 		}
 
 		private void configurar() {
@@ -235,6 +244,28 @@ public class ObjetoContainer extends AbstratoContainer {
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
 			criarObjetoAcao.setActionListener(e -> criarObjeto());
 		}
+
+		private void abrirArquivoVinculado() {
+
+		}
+
+		private transient MouseListener mouseListenerPopupVinculado = new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				processar(e);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				processar(e);
+			}
+
+			private void processar(MouseEvent e) {
+				if (e.isPopupTrigger() && !Util.estaVazio(txtArquivoVinculo.getText())) {
+					popupArquivoVinculado.show(txtArquivoVinculo, e.getX(), e.getY());
+				}
+			}
+		};
 
 		private void setAjusteLarguraForm() {
 			objetoSuperficie.setAjusteLarguraForm(chkAjusteLarguraFrm.isSelected());
