@@ -334,7 +334,7 @@ public class RelacaoContainer extends Panel {
 			add(new PanelCenter(label));
 			add(new PanelCenter(new PanelObjeto(origem ? relacao.getOrigem() : relacao.getDestino())));
 			add(new PanelCenter(chkPonto));
-			add(new PanelCenter(new PanelChave(txtChave, origem ? relacao.getOrigem() : relacao.getDestino(), this)));
+			add(new PanelCenter(new PanelChave(txtChave, origem ? relacao.getOrigem() : relacao.getDestino())));
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {
@@ -382,21 +382,21 @@ public class RelacaoContainer extends Panel {
 		private final transient Objeto objeto;
 		private final TextField textField;
 
-		private PanelChave(TextField textField, Objeto objeto, ActionListener action) {
+		private PanelChave(TextField textField, Objeto objeto) {
 			add(BorderLayout.WEST, new Label("label.pk_fk"));
 			add(BorderLayout.EAST, new Button(campos));
 			add(BorderLayout.CENTER, textField);
 			this.textField = textField;
 			this.objeto = objeto;
-			campos.setActionListener(e -> exibirCampos(action));
+			campos.setActionListener(e -> exibirCampos());
 		}
 
-		private void exibirCampos(ActionListener action) {
+		private void exibirCampos() {
 			Coletor coletor = new Coletor();
 			objetoSuperficie.selecionarCampo(objeto, coletor, RelacaoContainer.this);
 			if (coletor.size() == 1) {
 				textField.setText(coletor.get(0));
-				action.actionPerformed(new ActionEvent(textField, 0, null));
+				textField.postActionEvent();
 			}
 		}
 	}
