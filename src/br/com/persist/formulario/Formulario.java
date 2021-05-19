@@ -2,6 +2,8 @@ package br.com.persist.formulario;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -24,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +45,7 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.marca.XML;
 
-public class Formulario extends JFrame {
+public class Formulario extends JFrame implements SetFormulario {
 	private static final long serialVersionUID = 1L;
 	private final transient Map<String, FabricaContainer> fabricas = new HashMap<>();
 	private final transient List<Servico> servicos = new ArrayList<>();
@@ -338,6 +341,30 @@ public class Formulario extends JFrame {
 		GraphicsDevice device = getGraphicsConfiguration().getDevice();
 		if (device != null) {
 			Preferencias.setString(Constantes.GC_PREFERENCIAL, Constantes.VAZIO);
+		}
+	}
+
+	@Override
+	public void set(AtomicReference<Formulario> ref) {
+		ref.set(this);
+	}
+
+	public static void setFormulario(AtomicReference<Formulario> ref, Component cmp) {
+		if (cmp instanceof SetFormulario) {
+			((SetFormulario) cmp).set(ref);
+			if (ref.get() != null) {
+				return;
+			}
+		}
+		Container c = cmp.getParent();
+		while (c != null) {
+			if (c instanceof SetFormulario) {
+				((SetFormulario) c).set(ref);
+				if (ref.get() != null) {
+					break;
+				}
+			}
+			c = c.getParent();
 		}
 	}
 }

@@ -29,6 +29,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,6 +61,7 @@ import br.com.persist.componente.ToggleButton;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.formulario.SetFormulario;
 import br.com.persist.marca.XML;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
@@ -71,7 +73,7 @@ import br.com.persist.plugins.objeto.internal.InternalConfig;
 import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 
-public class ObjetoContainer extends AbstratoContainer {
+public class ObjetoContainer extends AbstratoContainer implements SetFormulario {
 	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
@@ -737,5 +739,10 @@ public class ObjetoContainer extends AbstratoContainer {
 				return Icones.CUBO;
 			}
 		};
+	}
+
+	@Override
+	public void set(AtomicReference<Formulario> ref) {
+		ref.set(formulario);
 	}
 }

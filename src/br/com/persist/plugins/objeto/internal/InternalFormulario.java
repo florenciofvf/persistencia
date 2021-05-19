@@ -11,6 +11,7 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +21,7 @@ import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
@@ -45,11 +47,11 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
 		container.setSelecaoListener(InternalFormulario.this::selecionar);
-		container.setComponenteListener(InternalFormulario.this::getThis);
 		container.setDimensaoListener(InternalFormulario.this::getSize);
 		container.setTituloListener(InternalFormulario.this::setTitle);
 		container.setLarguraListener(InternalFormulario.this::mesma);
 		container.setVisibilidadeListener(visibilidadeListener);
+		container.setComponenteListener(componenteListener);
 		container.setVinculoListener(vinculoListener);
 		setFrameIcon(Icones.VAZIO);
 		montarLayout();
@@ -117,10 +119,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				SwingUtilities.updateComponentTreeUI(this);
 			}
 		}
-	}
-
-	public Component getThis() {
-		return this;
 	}
 
 	public static InternalFormulario criar(Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
@@ -267,6 +265,21 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (desktop != null) {
 				desktop.limparOutros(invocador);
 			}
+		}
+	};
+
+	private transient InternalListener.Componente componenteListener = new InternalListener.Componente() {
+		@Override
+		public void getFormulario(AtomicReference<Formulario> ref) {
+			checarDesktop();
+			if (desktop != null) {
+				desktop.setFormulario(ref);
+			}
+		}
+
+		@Override
+		public Component getComponente() {
+			return InternalFormulario.this;
 		}
 	};
 

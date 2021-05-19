@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -1758,12 +1759,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
 			if (abrirEmForm) {
-				ConsultaFormulario form = ConsultaFormulario.criar2(null, conexao, instrucao);
+				ConsultaFormulario form = ConsultaFormulario.criar2(getFormulario(), conexao, instrucao);
 				configLocationRelativeTo(form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			} else {
-				ConsultaDialogo form = ConsultaDialogo.criar2(null, conexao, instrucao);
+				ConsultaDialogo form = ConsultaDialogo.criar2(getFormulario(), conexao, instrucao);
 				configLocationRelativeTo(form);
 				form.setTitle(titulo);
 				form.setVisible(true);
@@ -1772,16 +1773,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private void updateFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
 			if (abrirEmForm) {
-				UpdateFormulario form = UpdateFormulario.criar2(null, conexao, instrucao);
+				UpdateFormulario form = UpdateFormulario.criar2(getFormulario(), conexao, instrucao);
 				configLocationRelativeTo(form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			} else {
-				UpdateDialogo form = UpdateDialogo.criar2(null, conexao, instrucao);
+				UpdateDialogo form = UpdateDialogo.criar2(getFormulario(), conexao, instrucao);
 				configLocationRelativeTo(form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			}
+		}
+
+		private Formulario getFormulario() {
+			if (componenteListener != null) {
+				AtomicReference<Formulario> ref = new AtomicReference<>();
+				componenteListener.getFormulario(ref);
+				return ref.get();
+			}
+			return null;
 		}
 	}
 

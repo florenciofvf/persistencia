@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -733,7 +734,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void formularioDados(Conexao conexao, Objeto objeto, Frame frame) {
 		setComplemento(conexao, objeto);
-		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
+		AtomicReference<Formulario> ref = new AtomicReference<>();
+		setFormulario(ref);
+		ExternalFormulario form = ExternalFormulario.criar2(ref.get(), conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(frame);
 		form.setVisible(true);
 	}
@@ -1752,7 +1755,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void criarExternalFormulario(Conexao conexao, Objeto objeto) {
 		setComplemento(conexao, objeto);
-		ExternalFormulario form = ExternalFormulario.criar2(conexao, objeto, getGraphics());
+		AtomicReference<Formulario> ref = new AtomicReference<>();
+		setFormulario(ref);
+		ExternalFormulario form = ExternalFormulario.criar2(ref.get(), conexao, objeto, getGraphics());
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
@@ -2660,6 +2665,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);
 			}
+		}
+	}
+
+	@Override
+	public void setFormulario(AtomicReference<Formulario> ref) {
+		container.set(ref);
+		if (ref.get() == null) {
+			super.setFormulario(ref);
 		}
 	}
 }

@@ -4,8 +4,10 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.abstrato.DesktopAlinhamento;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
@@ -54,6 +56,8 @@ public interface InternalListener {
 	}
 
 	public interface Componente {
+		public void getFormulario(AtomicReference<Formulario> ref);
+
 		public Component getComponente();
 	}
 

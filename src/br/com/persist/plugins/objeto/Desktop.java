@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -509,5 +510,9 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	@Override
 	public File getFile() {
 		return null;
+	}
+
+	public void setFormulario(AtomicReference<Formulario> ref) {
+		Formulario.setFormulario(ref, this);
 	}
 }
