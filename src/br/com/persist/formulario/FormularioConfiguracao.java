@@ -35,6 +35,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkFecharComESCInternal = criarCheckBox("label.fechar_com_esc_internal");
 	private final CheckBox chkFecharComESCDialogo = criarCheckBox("label.fechar_com_esc_dialogo");
 	private final CheckBox chkMonitorPreferencial = criarCheckBox("label.monitor_preferencial");
+	private final Button buttonAplicarLA = criarButton("label.aplicar_largura_altura");
 	private final CheckBox chkFicharioScroll = criarCheckBox("label.fichario_scroll");
 	private final CheckBox chkTituloAbaMin = criarCheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
@@ -58,9 +59,12 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		return new CheckBox(FormularioMensagens.getString(chaveRotulo), false);
 	}
 
+	static Button criarButton(String chaveRotulo) {
+		return new Button(FormularioMensagens.getString(chaveRotulo), false);
+	}
+
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
-
 		chkAplicarLarguraAoAbrirArquivo.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivo.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
@@ -84,7 +88,8 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
 				new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha)));
 		muro.camada(panelS(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
-				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura)));
+				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
+				new PanelCenter(buttonAplicarLA)));
 		muro.camada(panel(0, 0, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
 				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
 				chkFicharioScroll, chkMonitorPreferencial));
@@ -152,6 +157,10 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 			public void focusLost(FocusEvent e) {
 				Preferencias.setFormFicha(txtFormFicha.getText());
 			}
+		});
+		buttonAplicarLA.addActionListener(e -> {
+			definirLargura();
+			definirAltura();
 		});
 		txtDefinirLargura.addFocusListener(new FocusAdapter() {
 			@Override
