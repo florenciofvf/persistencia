@@ -120,6 +120,7 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
+	private static final String CHAVE_MSG_CONCAT_COMPLEMENTO = "msg.concatenar_complemento";
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
@@ -502,7 +503,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void limparPeloObjeto() {
-				txtComplemento.setText(objeto.getComplemento());
+				String string = "";
+				if (!Util.estaVazio(txtComplemento.getText())) {
+					String[] simNao = getArraySimNao();
+					String opcao = Util.getValorInputDialog(InternalContainer.this,
+							ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
+					if (Util.estaVazio(opcao)) {
+						return;
+					}
+					if (simNao[0].equals(opcao)) {
+						string = txtComplemento.getText() + " ";
+					}
+				}
+				txtComplemento.setText(ltrim(string + objeto.getComplemento()));
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -517,13 +530,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private void limparUsandoConexao() {
 				Conexao conexao = getConexao();
-				String string = Constantes.VAZIO;
+				String filtro = Constantes.VAZIO;
 				if (conexao != null && !Util.estaVazio(conexao.getFiltro())) {
-					string = conexao.getFiltro();
+					filtro = conexao.getFiltro();
 				} else if (conexao != null && !Util.estaVazio(conexao.getFinalConsulta())) {
-					string = conexao.getFinalConsulta();
+					filtro = conexao.getFinalConsulta();
 				}
-				txtComplemento.setText(string);
+				String string = "";
+				if (!Util.estaVazio(txtComplemento.getText())) {
+					String[] simNao = getArraySimNao();
+					String opcao = Util.getValorInputDialog(InternalContainer.this,
+							ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
+					if (Util.estaVazio(opcao)) {
+						return;
+					}
+					if (simNao[0].equals(opcao)) {
+						string = txtComplemento.getText() + " ";
+					}
+				}
+				txtComplemento.setText(ltrim(string + filtro));
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -2065,19 +2090,24 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
+	private String[] getArraySimNao() {
+		String sim = Mensagens.getString("label.sim");
+		String nao = Mensagens.getString("label.nao");
+		return new String[] { sim, nao };
+	}
+
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
 		public void colocarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
 			String string = "";
 			if (!Util.estaVazio(txtComplemento.getText())) {
-				String sim = Mensagens.getString("label.sim");
-				String nao = Mensagens.getString("label.nao");
+				String[] simNao = getArraySimNao();
 				String opcao = Util.getValorInputDialog(InternalContainer.this,
-						ObjetoMensagens.getString("msg.concatenar_complemento"), new String[] { sim, nao });
+						ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
 				if (Util.estaVazio(opcao)) {
 					return;
 				}
-				if (sim.equals(opcao)) {
+				if (simNao[0].equals(opcao)) {
 					string = txtComplemento.getText();
 				}
 			}
@@ -2123,17 +2153,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		private String getPrefixo() {
 			return Util.getValorInputDialog(InternalContainer.this, Mensagens.getString("label.prefixo"),
 					new String[] { " AND ", " OR " });
-		}
-
-		private String ltrim(String s) {
-			if (Util.estaVazio(s)) {
-				return s;
-			}
-			int i = 0;
-			while (s.charAt(i) <= ' ') {
-				i++;
-			}
-			return s.substring(i);
 		}
 
 		private String getOpcao() {
@@ -2413,5 +2432,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		Referencia referencia = pesquisa.getReferencia();
 		String iconeGrupo = referencia.getIconeGrupo();
 		return Util.estaVazio(iconeGrupo) ? Icones.CONFIG2 : Imagens.getIcon(iconeGrupo);
+	}
+
+	private String ltrim(String s) {
+		if (Util.estaVazio(s)) {
+			return s;
+		}
+		int i = 0;
+		while (s.charAt(i) <= ' ') {
+			i++;
+		}
+		return s.substring(i);
 	}
 }
