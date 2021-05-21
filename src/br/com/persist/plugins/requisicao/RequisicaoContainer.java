@@ -169,7 +169,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private CheckBox chkRespostaJson = new CheckBox(RequisicaoMensagens.getString("label.resposta_json"), false);
 		private Action variaveisAcao = actionIcon("label.variaveis_sistema", Icones.BOLA_AMARELA);
 		private Action retornar64Acao = actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
 		private Action formatarAcao = actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
@@ -177,33 +176,35 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private Action base64Acao = actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
-		private CheckBox chkCopiarAccessT = new CheckBox();
+		private CheckBox chkCopiarAccessToken = new CheckBox();
+		private CheckBox chkRespostaJson = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
 			add(chkRespostaJson);
-			add(chkCopiarAccessT);
+			add(chkCopiarAccessToken);
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
 			addButton(modeloAcao);
 			addButton(true, base64Acao);
 			addButton(retornar64Acao);
 			addButton(true, variaveisAcao);
+			chkRespostaJson.setToolTipText(RequisicaoMensagens.getString("label.resposta_json"));
 			String hint = RequisicaoMensagens.getString("label.copiar_access_token",
 					RequisicaoMensagens.getString("label.resposta_json"));
-			chkCopiarAccessT.setToolTipText(hint);
+			chkCopiarAccessToken.setToolTipText(hint);
 			eventos();
 		}
 
 		private void eventos() {
 			chkRespostaJson.addActionListener(
 					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
-			chkCopiarAccessT.addActionListener(
-					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessT.isSelected()));
+			chkCopiarAccessToken.addActionListener(
+					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessToken.isSelected()));
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
-			chkCopiarAccessT.setSelected(Preferencias.getBoolean("copiar_access_token"));
+			chkCopiarAccessToken.setSelected(Preferencias.getBoolean("copiar_access_token"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			retornar64Acao.setActionListener(e -> retornar64());
 			variaveisAcao.setActionListener(e -> variaveis());
@@ -859,7 +860,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				} else {
 					vAccessToken.setValor(accessToken);
 				}
-				if (toolbar.chkCopiarAccessT.isSelected()) {
+				if (toolbar.chkCopiarAccessToken.isSelected()) {
 					Util.setContentTransfered(accessToken);
 				}
 			}
