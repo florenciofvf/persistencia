@@ -49,13 +49,13 @@ public class Referencia {
 			rotuloValor(builder, "limparApos", "" + limparApos);
 		}
 		rotuloValor(builder, "icone", icone);
-		rotuloValor(builder, "iconeGrupo", iconeGrupo);
-		if (corFonte != null) {
-			rotuloValor(builder, "corFonte", "#" + Integer.toHexString(corFonte.getRGB()));
-		}
 		if (vazioInvisivel) {
 			rotuloValor(builder, "vazio", "invisivel");
 		}
+		if (corFonte != null) {
+			rotuloValor(builder, "corFonte", "#" + Integer.toHexString(corFonte.getRGB()));
+		}
+		rotuloValor(builder, "iconeGrupo", iconeGrupo);
 		builder.append(autonomo ? "/>" : "");
 	}
 
