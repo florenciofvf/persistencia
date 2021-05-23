@@ -229,7 +229,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 		Conexao conexao = getConexao();
 		if (conexao != null) {
-			if (continuar(complemento)) {
+			if (continuar(complemento, conexao)) {
 				processar(complemento, g, cabecalho, conexao);
 			} else {
 				processado.set(false);
@@ -288,8 +288,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		return builder;
 	}
 
-	private boolean continuar(String complemento) {
-		if (objeto.isSane() && todosVazio(complemento)) {
+	private boolean continuar(String complemento, Conexao conexao) {
+		if (objeto.isSane() && todosVazio(complemento, conexao)) {
 			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela());
 			Util.mensagem(InternalContainer.this, msg);
 			return false;
@@ -302,7 +302,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		return Util.confirmar(InternalContainer.this, msg, false);
 	}
 
-	private boolean todosVazio(String filtro) {
+	private boolean todosVazio(String filtro, Conexao conexao) {
+		if (!Util.estaVazio(conexao.getFiltro())) {
+			return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro);
+		} else if (!Util.estaVazio(conexao.getFinalConsulta())) {
+			return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro)
+					&& Util.estaVazio(objeto.getFinalConsulta());
+		}
 		return Util.estaVazio(txtComplemento.getText()) && Util.estaVazio(filtro)
 				&& Util.estaVazio(objeto.getFinalConsulta());
 	}
