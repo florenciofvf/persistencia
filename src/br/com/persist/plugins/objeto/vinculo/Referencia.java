@@ -40,6 +40,36 @@ public class Referencia {
 		}
 	}
 
+	public void descrever(boolean autonomo, StringBuilder builder) {
+		builder.append(autonomo ? "<ref" : "");
+		rotuloValor(builder, "tabela", tabela);
+		rotuloValor(builder, "campo", campo);
+		rotuloValor(builder, "grupo", grupo);
+		if (limparApos) {
+			rotuloValor(builder, "limparApos", "" + limparApos);
+		}
+		rotuloValor(builder, "icone", icone);
+		rotuloValor(builder, "iconeGrupo", iconeGrupo);
+		if (corFonte != null) {
+			rotuloValor(builder, "corFonte", "#" + Integer.toHexString(corFonte.getRGB()));
+		}
+		if (vazioInvisivel) {
+			rotuloValor(builder, "vazio", "invisivel");
+		}
+		builder.append(autonomo ? "/>" : "");
+	}
+
+	static void rotuloValor(StringBuilder builder, String rotulo, String valor) {
+		if (!Util.estaVazio(valor)) {
+			builder.append(" ");
+			builder.append(rotulo);
+			builder.append("=");
+			builder.append("\"");
+			builder.append(valor);
+			builder.append("\"");
+		}
+	}
+
 	public boolean igual(Referencia ref) {
 		return ref != null && grupo.equalsIgnoreCase(ref.grupo) && tabela.equalsIgnoreCase(ref.tabela)
 				&& campo.equalsIgnoreCase(ref.campo);

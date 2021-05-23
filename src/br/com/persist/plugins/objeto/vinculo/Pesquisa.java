@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.objeto.Objeto;
 
@@ -37,6 +38,27 @@ public class Pesquisa {
 				ref.config(objeto);
 			}
 		}
+	}
+
+	public void descrever(StringBuilder builder) {
+		builder.append("\t<pesquisa");
+		Referencia.rotuloValor(builder, "nome", nome);
+		referencia.descrever(false, builder);
+		builder.append(">" + Constantes.QL);
+		for (Referencia ref : referencias) {
+			builder.append("\t\t");
+			ref.descrever(true, builder);
+			builder.append(Constantes.QL);
+		}
+		for (Referencia ref : referenciasApos) {
+			builder.append("\t\t");
+			ref.descrever(true, builder);
+			builder.append(Constantes.QL);
+		}
+		if (referencias.isEmpty() && referenciasApos.isEmpty()) {
+			builder.append(Constantes.QL);
+		}
+		builder.append("\t</pesquisa>");
 	}
 
 	public String getNome() {

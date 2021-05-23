@@ -32,8 +32,8 @@
 	</para>
 
 	<pesquisa nome="Candidatos" tabela="eleicao" campo="id" iconeGrupo="boss">
-		<ref tabela="candidato" campo="eleicao_id" />
-		<ref tabela="candidato2" campo="eleicao_id" vazio="invisivel" grupo="2"/>
+		<ref tabela="candidato" campo="eleicao_id"/>
+		<ref tabela="candidato2" campo="eleicao_id" grupo="2" vazio="invisivel"/>
 		<ref tabela="endereco" limparApos="true"/>
 	</pesquisa>
 </vinculo>
