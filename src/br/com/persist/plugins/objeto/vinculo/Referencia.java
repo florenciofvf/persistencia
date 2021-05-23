@@ -53,7 +53,7 @@ public class Referencia {
 			rotuloValor(builder, "vazio", "invisivel");
 		}
 		if (corFonte != null) {
-			rotuloValor(builder, "corFonte", "#" + Integer.toHexString(corFonte.getRGB()));
+			rotuloValor(builder, "corFonte", toHex(corFonte));
 		}
 		rotuloValor(builder, "iconeGrupo", iconeGrupo);
 		builder.append(autonomo ? "/>" : "");
@@ -68,6 +68,14 @@ public class Referencia {
 			builder.append(valor);
 			builder.append("\"");
 		}
+	}
+
+	private String toHex(Color color) {
+		StringBuilder sb = new StringBuilder("#");
+		sb.append(Integer.toHexString(color.getRed()).toUpperCase());
+		sb.append(Integer.toHexString(color.getGreen()).toUpperCase());
+		sb.append(Integer.toHexString(color.getBlue()).toUpperCase());
+		return sb.toString();
 	}
 
 	public boolean igual(Referencia ref) {
