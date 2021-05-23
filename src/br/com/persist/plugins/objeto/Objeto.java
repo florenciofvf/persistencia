@@ -69,6 +69,7 @@ public class Objeto implements Runnable {
 	private boolean selecionado;
 	private boolean ccsc = true;
 	private boolean sane = true;
+	private long totalRegistros;
 	private boolean controlado;
 	private String complemento;
 	private String chaveamento;
@@ -92,7 +93,6 @@ public class Objeto implements Runnable {
 	private Color corTmp;
 	private Icon icon;
 	private String id;
-	private long tag;
 	protected int x;
 	protected int y;
 
@@ -910,14 +910,6 @@ public class Objeto implements Runnable {
 		this.sane = sane;
 	}
 
-	public long getTag() {
-		return tag;
-	}
-
-	public void setTag(long tag) {
-		this.tag = tag;
-	}
-
 	public void setMapeamento(String mapeamento) {
 		this.mapeamento = mapeamento;
 	}
@@ -1044,5 +1036,13 @@ public class Objeto implements Runnable {
 		y = outro.y;
 		outro.x = xBkp;
 		outro.y = yBkp;
+	}
+
+	public long getTotalRegistros() {
+		return totalRegistros;
+	}
+
+	public void setTotalRegistros(long totalRegistros) {
+		this.totalRegistros = totalRegistros;
 	}
 }

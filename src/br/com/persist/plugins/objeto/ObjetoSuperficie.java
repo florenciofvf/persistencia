@@ -1814,8 +1814,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 						int i = Persistencia.getTotalRegistros(conn, aposFROM);
 						objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 						label.setText(++atual + " / " + total);
+						objeto.setTotalRegistros(i);
 						processado = true;
-						objeto.setTag(i);
 						repaint();
 						sleep(ObjetoPreferencia.getIntervaloComparacao());
 					} catch (Exception ex) {
@@ -1909,15 +1909,22 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			menuItem.setEnabled(true);
 		}
 
-		private void processarRecente(Objeto objeto, int recente, FontMetrics fm) {
+		private void processarRecente(Objeto objeto, int totalRegistros, FontMetrics fm) {
 			objeto.setCorFonte(ObjetoPreferencia.getCorComparaRec());
-			long diff = recente - objeto.getTag();
+			long diff = totalRegistros - objeto.getTotalRegistros();
 			if (diff == 0) {
 				return;
 			}
 			int largura = fm.stringWidth(objeto.getId());
 			Objeto info = new Objeto(objeto.x + largura + Objeto.DIAMETRO, objeto.y, diff > 0 ? "create2" : "delete");
-			info.setId(diff + " - " + recente + " - " + Objeto.novaSequencia());
+			String id = null;
+			if (diff > 0) {
+				id = objeto.getTotalRegistros() + "+" + diff + "=" + totalRegistros;
+			} else {
+				id = objeto.getTotalRegistros() + "" + diff + "=" + totalRegistros;
+			}
+			info.setId(id);
+			checagemId(info, id, Constantes.SEP2);
 			info.setDeslocamentoXId(objeto.getDeslocamentoXId());
 			info.setDeslocamentoYId(objeto.getDeslocamentoYId());
 			info.setCorFonte(objeto.getCorFonte());
