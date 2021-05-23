@@ -45,6 +45,7 @@ import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.Vetor;
 import br.com.persist.componente.Acao;
@@ -1808,10 +1809,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela())) {
 					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
-								objeto.getTabela(), null);
-						int i = Persistencia.getTotalRegistros(conn, aposFROM);
+						int i = 0;
+						if (!Preferencias.isDesconectado()) {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
+									objeto.getTabela(), null);
+							i = Persistencia.getTotalRegistros(conn, aposFROM);
+						}
 						objeto.setCorFonte(ObjetoPreferencia.getCorTotalAtual());
 						label.setText(++atual + " / " + total);
 						objeto.setTotalRegistros(i);
@@ -1889,10 +1893,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			for (Objeto objeto : objetos) {
 				if (!Util.estaVazio(objeto.getTabela())) {
 					try {
-						Connection conn = ConexaoProvedor.getConnection(conexao);
-						String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
-								objeto.getTabela(), null);
-						int i = Persistencia.getTotalRegistros(conn, aposFROM);
+						int i = 0;
+						if (!Preferencias.isDesconectado()) {
+							Connection conn = ConexaoProvedor.getConnection(conexao);
+							String aposFROM = PersistenciaModelo.prefixarEsquema(conexao, objeto.getPrefixoNomeTabela(),
+									objeto.getTabela(), null);
+							i = Persistencia.getTotalRegistros(conn, aposFROM);
+						}
 						label.setText(++atual + " / " + total);
 						processarRecente(objeto, i, fm);
 						processado = true;
