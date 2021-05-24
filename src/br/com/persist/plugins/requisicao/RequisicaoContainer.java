@@ -159,6 +159,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
+	static Action actionMenu(String chave) {
+		return Action.acaoMenu(RequisicaoMensagens.getString(chave), null);
+	}
+
 	static Action actionIcon(String chave, Icon icon) {
 		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
 	}
@@ -553,9 +557,20 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private class ToolbarParametro extends BarraButton {
 			private static final long serialVersionUID = 1L;
+			private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
 
 			private ToolbarParametro() {
 				super.ini(null, LIMPAR, BAIXAR, COPIAR, COLAR);
+				buttonColar.addSeparator();
+				buttonColar.addItem(vAccessTokenAcao);
+				vAccessTokenAcao.setActionListener(e -> atualizarVar());
+			}
+
+			private void atualizarVar() {
+				String string = Util.getContentTransfered();
+				if (!Util.estaVazio(string)) {
+					setAccesToken(string);
+				}
 			}
 
 			@Override
