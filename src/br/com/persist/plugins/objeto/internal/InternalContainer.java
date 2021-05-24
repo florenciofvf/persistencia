@@ -470,12 +470,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private void eventos() {
 				fragmentoAcao.setActionListener(e -> {
-					FragmentoDialogo form = FragmentoDialogo.criar((Frame) null, null, fragmentoListener);
+					FragmentoDialogo form = FragmentoDialogo.criar((Frame) null, getFormulario(), fragmentoListener);
 					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
 				variaveisAcao.setActionListener(e -> {
-					VariavelDialogo form = VariavelDialogo.criar((Frame) null, null);
+					VariavelDialogo form = VariavelDialogo.criar((Frame) null, getFormulario());
 					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
