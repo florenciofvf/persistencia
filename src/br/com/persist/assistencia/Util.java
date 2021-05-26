@@ -35,8 +35,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
@@ -145,7 +147,7 @@ public class Util {
 			return Constantes.VAZIO;
 		}
 		Coletor coletor = new Coletor();
-		SetLista.view(titulo, nomeColunas(model), coletor, table, true);
+		SetLista.view(titulo, nomeColunas(table), coletor, table, true);
 		if (coletor.size() == 1) {
 			return copiarColunaUnicaString(model, indices, comAspas, coletor);
 		}
@@ -192,7 +194,7 @@ public class Util {
 			return null;
 		}
 		Coletor coletor = new Coletor();
-		SetLista.view("Colunas", nomeColunas(model), coletor, table);
+		SetLista.view("Colunas", nomeColunas(table), coletor, table);
 		if (coletor.estaVazio()) {
 			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
 		}
@@ -232,11 +234,17 @@ public class Util {
 		html.append("<table>").append(Constantes.QL);
 	}
 
-	private static List<String> nomeColunas(TableModel model) {
+	private static List<String> nomeColunas(JTable table) {
 		List<String> lista = new ArrayList<>();
-		int colunas = model.getColumnCount();
+		JTableHeader tableHeader = table.getTableHeader();
+		TableColumnModel columnModel = tableHeader.getColumnModel();
+		int colunas = columnModel.getColumnCount();
 		for (int i = 0; i < colunas; i++) {
-			lista.add(model.getColumnName(i));
+			TableColumn column = columnModel.getColumn(i);
+			Object object = column.getHeaderValue();
+			if (object != null) {
+				lista.add(object.toString());
+			}
 		}
 		return lista;
 	}
