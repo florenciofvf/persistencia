@@ -766,13 +766,14 @@ public class Util {
 
 	public static String pesquisar(File file, String pesquisar) {
 		if (file != null && file.exists()) {
+			pesquisar = pesquisar.toUpperCase();
 			StringBuilder sb = new StringBuilder();
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 				String linha = br.readLine();
 				int contador = 0;
 				while (linha != null) {
 					contador++;
-					if (linha.indexOf(pesquisar) != -1) {
+					if (linha.toUpperCase().indexOf(pesquisar) != -1) {
 						sb.append(contador + ": " + linha + Constantes.QL);
 					}
 					linha = br.readLine();
