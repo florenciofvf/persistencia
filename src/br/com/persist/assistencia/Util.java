@@ -147,42 +147,21 @@ public class Util {
 			return Constantes.VAZIO;
 		}
 		Coletor coletor = new Coletor();
-		SetLista.view(titulo, nomeColunas(table), coletor, table, true);
+		JTableHeader tableHeader = table.getTableHeader();
+		TableColumnModel columnModel = tableHeader.getColumnModel();
+		SetLista.view(titulo, nomeColunas(columnModel), coletor, table, true);
 		if (coletor.size() == 1) {
-			return copiarColunaUnicaString(model, indices, comAspas, coletor);
+			return copiarColunaUnicaString(columnModel, model, indices, comAspas, coletor);
 		}
 		return Constantes.VAZIO;
 	}
 
-	private static String copiarColunaUnicaString(TableModel model, List<Integer> indices, boolean comAspas,
-			Coletor coletor) {
+	private static String copiarColunaUnicaString(TableColumnModel columnModel, TableModel model, List<Integer> indices,
+			boolean comAspas, Coletor coletor) {
 		StringBuilder sb = new StringBuilder();
-		boolean[] selecionadas = colunasSelecionadas(coletor, model);
+		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
 		conteudo(sb, model, indices, selecionadas, comAspas);
 		return sb.toString();
-	}
-
-	private static void conteudo(StringBuilder sb, TableModel model, List<Integer> indices, boolean[] selecionadas,
-			boolean comAspas) {
-		int colunas = model.getColumnCount();
-		for (Integer i : indices) {
-			for (int j = 0; j < colunas; j++) {
-				if (selecionadas[j]) {
-					Object obj = model.getValueAt(i, j);
-					String val = obj == null ? Constantes.VAZIO : obj.toString();
-					conteudo(sb, comAspas, val);
-				}
-			}
-		}
-	}
-
-	private static void conteudo(StringBuilder sb, boolean comAspas, String val) {
-		if (!estaVazio(val)) {
-			if (sb.length() > 0) {
-				sb.append(", ");
-			}
-			sb.append(comAspas ? citar(val) : val);
-		}
 	}
 
 	public static TransferidorTabular criarTransferidorTabular(JTable table, List<Integer> indices) {
@@ -194,35 +173,27 @@ public class Util {
 			return null;
 		}
 		Coletor coletor = new Coletor();
-		SetLista.view("Colunas", nomeColunas(table), coletor, table);
+		JTableHeader tableHeader = table.getTableHeader();
+		TableColumnModel columnModel = tableHeader.getColumnModel();
+		SetLista.view("Colunas", nomeColunas(columnModel), coletor, table);
 		if (coletor.estaVazio()) {
 			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
 		}
-		return criarTransferidorTabular(indices, model, coletor, table);
+		return criarTransferidorTabular(columnModel, model, indices, coletor, table);
 	}
 
-	private static TransferidorTabular criarTransferidorTabular(List<Integer> indices, TableModel model,
-			Coletor coletor, JTable table) {
-		boolean[] selecionadas = colunasSelecionadas(coletor, model);
+	private static TransferidorTabular criarTransferidorTabular(TableColumnModel columnModel, TableModel model,
+			List<Integer> indices, Coletor coletor, JTable table) {
+		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
 		iniciar(html);
 		if (confirmar(table, "msg.com_cabecalho")) {
-			cabecalho(html, tabular, model, selecionadas);
+			cabecalho(html, tabular, columnModel, selecionadas);
 		}
 		conteudo(html, tabular, model, indices, selecionadas);
 		finalizar(html, tabular);
 		return new TransferidorTabular(html.toString(), tabular.toString());
-	}
-
-	private static boolean[] colunasSelecionadas(Coletor coletor, TableModel model) {
-		int colunas = model.getColumnCount();
-		boolean[] selecionadas = new boolean[colunas];
-		for (int i = 0; i < colunas; i++) {
-			String coluna = model.getColumnName(i);
-			selecionadas[i] = coletor.contem(coluna);
-		}
-		return selecionadas;
 	}
 
 	private static void iniciar(StringBuilder html) {
@@ -234,30 +205,52 @@ public class Util {
 		html.append("<table>").append(Constantes.QL);
 	}
 
-	private static List<String> nomeColunas(JTable table) {
+	private static List<String> nomeColunas(TableColumnModel columnModel) {
 		List<String> lista = new ArrayList<>();
-		JTableHeader tableHeader = table.getTableHeader();
-		TableColumnModel columnModel = tableHeader.getColumnModel();
 		int colunas = columnModel.getColumnCount();
 		for (int i = 0; i < colunas; i++) {
 			TableColumn column = columnModel.getColumn(i);
-			Object object = column.getHeaderValue();
-			if (object != null) {
-				lista.add(object.toString());
-			}
+			lista.add(nomeColuna(column));
 		}
 		return lista;
 	}
 
-	private static void cabecalho(StringBuilder html, StringBuilder tabular, TableModel model, boolean[] selecionadas) {
-		int colunas = model.getColumnCount();
-		html.append("<tr>").append(Constantes.QL);
+	private static List<ColunaSel> colunasSelecionadas(Coletor coletor, TableColumnModel columnModel) {
+		int colunas = columnModel.getColumnCount();
+		List<ColunaSel> selecionadas = new ArrayList<>();
 		for (int i = 0; i < colunas; i++) {
-			if (selecionadas[i]) {
-				String coluna = model.getColumnName(i);
-				html.append("<th>" + coluna + "</th>").append(Constantes.QL);
-				tabular.append(coluna + Constantes.TAB);
+			TableColumn column = columnModel.getColumn(i);
+			String coluna = nomeColuna(column);
+			if (coletor.contem(coluna)) {
+				selecionadas.add(new ColunaSel(i, column.getModelIndex()));
 			}
+		}
+		return selecionadas;
+	}
+
+	private static class ColunaSel {
+		final int indiceHeader;
+		final int indiceModel;
+
+		private ColunaSel(int indiceHeader, int indice) {
+			this.indiceHeader = indiceHeader;
+			this.indiceModel = indice;
+		}
+	}
+
+	private static String nomeColuna(TableColumn column) {
+		Object object = column.getHeaderValue();
+		return object == null ? Constantes.VAZIO : object.toString();
+	}
+
+	private static void cabecalho(StringBuilder html, StringBuilder tabular, TableColumnModel columnModel,
+			List<ColunaSel> selecionadas) {
+		html.append("<tr>").append(Constantes.QL);
+		for (ColunaSel sel : selecionadas) {
+			TableColumn column = columnModel.getColumn(sel.indiceHeader);
+			String coluna = nomeColuna(column);
+			html.append("<th>" + coluna + "</th>").append(Constantes.QL);
+			tabular.append(coluna + Constantes.TAB);
 		}
 		html.append("</tr>").append(Constantes.QL);
 		tabular.deleteCharAt(tabular.length() - 1);
@@ -265,22 +258,39 @@ public class Util {
 	}
 
 	private static void conteudo(StringBuilder html, StringBuilder tabular, TableModel model, List<Integer> indices,
-			boolean[] selecionadas) {
-		int colunas = model.getColumnCount();
+			List<ColunaSel> selecionadas) {
 		for (Integer i : indices) {
 			html.append("<tr>").append(Constantes.QL);
-			for (int j = 0; j < colunas; j++) {
-				if (selecionadas[j]) {
-					Object obj = model.getValueAt(i, j);
-					String val = obj == null ? Constantes.VAZIO : obj.toString();
-					tabular.append(val + Constantes.TAB);
-					html.append("<td>" + val + "</td>");
-					html.append(Constantes.QL);
-				}
+			for (ColunaSel sel : selecionadas) {
+				Object obj = model.getValueAt(i, sel.indiceModel);
+				String val = obj == null ? Constantes.VAZIO : obj.toString();
+				tabular.append(val + Constantes.TAB);
+				html.append("<td>" + val + "</td>");
+				html.append(Constantes.QL);
 			}
 			html.append("</tr>").append(Constantes.QL);
 			tabular.deleteCharAt(tabular.length() - 1);
 			tabular.append(Constantes.QL);
+		}
+	}
+
+	private static void conteudo(StringBuilder sb, TableModel model, List<Integer> indices,
+			List<ColunaSel> selecionadas, boolean comAspas) {
+		for (Integer i : indices) {
+			for (ColunaSel sel : selecionadas) {
+				Object obj = model.getValueAt(i, sel.indiceModel);
+				String val = obj == null ? Constantes.VAZIO : obj.toString();
+				conteudo(sb, comAspas, val);
+			}
+		}
+	}
+
+	private static void conteudo(StringBuilder sb, boolean comAspas, String val) {
+		if (!estaVazio(val)) {
+			if (sb.length() > 0) {
+				sb.append(", ");
+			}
+			sb.append(comAspas ? citar(val) : val);
 		}
 	}
 
