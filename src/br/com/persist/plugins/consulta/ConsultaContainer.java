@@ -409,7 +409,8 @@ public class ConsultaContainer extends AbstratoContainer {
 				MemoriaModelo modelo = Persistencia.criarMemoriaModelo(conn, consulta);
 				tabela.setModel(modelo);
 				Util.ajustar(tabela, getGraphics());
-				labelStatus.setText("REGISTROS [" + modelo.getRowCount() + "]");
+				labelStatus.setText(
+						"[" + Util.getDataHora() + "] TOTAL DE REGISTROS SELECIONADOS [" + modelo.getRowCount() + "]");
 				textArea.requestFocus();
 			} catch (Exception ex) {
 				labelStatus.limpar();

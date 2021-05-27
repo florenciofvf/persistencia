@@ -25,7 +25,9 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -826,5 +828,9 @@ public class Util {
 			string = nome + "-" + (++contador);
 		}
 		return resposta;
+	}
+
+	public static String getDataHora() {
+		return new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date());
 	}
 }

@@ -299,7 +299,8 @@ public class UpdateContainer extends AbstratoContainer {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				int atualizados = Persistencia.executar(conn, instrucao);
-				labelStatus.setText("ATUALIZADOS [" + atualizados + "]");
+				labelStatus
+						.setText("[" + Util.getDataHora() + "] TOTAL DE REGISTROS ATUALIZADOS [" + atualizados + "]");
 				textArea.requestFocus();
 			} catch (Exception ex) {
 				labelStatus.limpar();
