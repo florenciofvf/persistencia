@@ -36,6 +36,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -181,12 +183,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 		private CheckBox chkCopiarAccessToken = new CheckBox();
+		private CheckBox chkRespostaImagem = new CheckBox();
 		private CheckBox chkRespostaJson = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
+			add(chkRespostaImagem);
 			add(chkRespostaJson);
 			add(chkCopiarAccessToken);
 			addButton(true, atualizarAcao);
@@ -195,6 +199,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			addButton(true, base64Acao);
 			addButton(retornar64Acao);
 			addButton(true, variaveisAcao);
+			chkRespostaImagem.setToolTipText(RequisicaoMensagens.getString("label.resposta_imagem"));
 			chkRespostaJson.setToolTipText(RequisicaoMensagens.getString("label.resposta_json"));
 			String hint = RequisicaoMensagens.getString("label.copiar_access_token",
 					RequisicaoMensagens.getString("label.resposta_json"));
@@ -203,10 +208,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void eventos() {
+			chkRespostaImagem.addActionListener(
+					e -> Preferencias.setBoolean("requisicao_response_imagem", chkRespostaImagem.isSelected()));
 			chkRespostaJson.addActionListener(
 					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
 			chkCopiarAccessToken.addActionListener(
 					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessToken.isSelected()));
+			chkRespostaImagem.setSelected(Preferencias.getBoolean("requisicao_response_imagem"));
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
 			chkCopiarAccessToken.setSelected(Preferencias.getBoolean("copiar_access_token"));
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
@@ -759,7 +767,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 					string = substituir(string, vAccessToken);
 				}
 				Tipo parametros = parser.parse(string);
-				String resposta = requisicao(parametros);
+				byte[] resposta = requisicao(parametros);
 				processarResposta(parser, resposta);
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
@@ -767,11 +775,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
-		private void processarResposta(Parser parser, String resposta) throws BadLocationException {
-			if (!Util.estaVazio(resposta) && toolbar.chkRespostaJson.isSelected()) {
-				processarJSON(parser, resposta);
+		private void processarResposta(Parser parser, byte[] resposta) throws BadLocationException {
+			if (resposta.length > 0 && toolbar.chkRespostaJson.isSelected()) {
+				processarJSON(parser, Util.getString(resposta));
+			} else if (resposta.length > 0 && toolbar.chkRespostaImagem.isSelected()) {
+				JOptionPane.showMessageDialog(RequisicaoContainer.this, new ImageIcon(resposta));
 			} else {
-				areaResultados.setText(resposta);
+				areaResultados.setText(Util.getString(resposta));
 			}
 		}
 
@@ -786,7 +796,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			setAccesToken(accessToken);
 		}
 
-		private String requisicao(Tipo parametros) throws IOException {
+		private byte[] requisicao(Tipo parametros) throws IOException {
 			if (parametros instanceof Objeto) {
 				Objeto objeto = (Objeto) parametros;
 				Tipo tipoUrl = objeto.getValor("url");
@@ -795,7 +805,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				String bodyParams = getBodyParams(objeto);
 				return requisicao(url, mapHeader, bodyParams);
 			}
-			return null;
+			return new byte[0];
 		}
 
 		private String getBodyParams(Objeto objeto) {
@@ -819,9 +829,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 			return mapHeader;
 		}
 
-		private String requisicao(String url, Map<String, String> header, String parametros) throws IOException {
+		private byte[] requisicao(String url, Map<String, String> header, String parametros) throws IOException {
 			if (Util.estaVazio(url)) {
-				return null;
+				return new byte[0];
 			}
 			URL url2 = new URL(url);
 			URLConnection conn = url2.openConnection();
@@ -829,7 +839,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			checarDoOutput(parametros, conn, verbo);
 			conn.connect();
 			sePost(parametros, conn, verbo);
-			return Util.getString(conn.getInputStream());
+			return Util.getArrayBytes(conn.getInputStream());
 		}
 
 		private void sePost(String parametros, URLConnection conn, String verbo) throws IOException {

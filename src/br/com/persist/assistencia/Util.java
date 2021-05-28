@@ -588,8 +588,16 @@ public class Util {
 	}
 
 	public static String getString(InputStream is) throws IOException {
+		return new String(getArrayBytes(is), StandardCharsets.UTF_8);
+	}
+
+	public static String getString(byte[] is) {
+		return new String(is, StandardCharsets.UTF_8);
+	}
+
+	public static byte[] getArrayBytes(InputStream is) throws IOException {
 		if (is == null) {
-			return null;
+			return new byte[0];
 		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		byte[] bytes = new byte[1024];
@@ -598,7 +606,7 @@ public class Util {
 			baos.write(bytes, 0, lidos);
 			lidos = is.read(bytes);
 		}
-		return new String(baos.toByteArray(), StandardCharsets.UTF_8);
+		return baos.toByteArray();
 	}
 
 	public static boolean iguais(Class<?> klass, String nome) {
