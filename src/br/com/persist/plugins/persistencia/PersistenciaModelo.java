@@ -299,7 +299,7 @@ public class PersistenciaModelo implements TableModel {
 		Map<String, String> resp = new HashMap<>();
 		for (Coluna coluna : getChaves()) {
 			Object valor = registro.get(coluna.getIndice());
-			resp.put(coluna.getNome(), valor.toString());
+			resp.put(coluna.getNome(), coluna.get(valor.toString()));
 		}
 		return resp;
 	}
