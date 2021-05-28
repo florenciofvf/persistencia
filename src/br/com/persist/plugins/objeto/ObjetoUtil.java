@@ -46,19 +46,7 @@ public class ObjetoUtil {
 	}
 
 	public static Map<String, String> criarMapaCampoChave(String string) {
-		Map<String, String> mapa = new HashMap<>();
-		if (!Util.estaVazio(string)) {
-			String[] strings = string.split(";");
-			if (strings != null) {
-				for (String chaveValor : strings) {
-					String[] stringsCV = chaveValor.split("=");
-					if (stringsCV != null && stringsCV.length > 1) {
-						mapa.put(stringsCV[0].trim(), stringsCV[1].trim());
-					}
-				}
-			}
-		}
-		return mapa;
+		return criarMapaSequencias(string);
 	}
 
 	public static Map<String, String> criarMapaSequencias(String string) {

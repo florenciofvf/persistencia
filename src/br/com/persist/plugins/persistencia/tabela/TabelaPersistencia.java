@@ -315,7 +315,7 @@ public class TabelaPersistencia extends JTable {
 				}
 			}
 			limparItemMapeamento();
-			String valorChave = getMapeamento().get(chave);
+			String valorChave = getMapeamento().get(chave.toLowerCase());
 			if (valorChave != null) {
 				itemMapeamento.setText(valorChave);
 				add(separator);
