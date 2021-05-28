@@ -2,6 +2,7 @@ package br.com.persist.plugins.conexao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Map;
 
 import org.xml.sax.Attributes;
 
@@ -9,7 +10,9 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
 public class Conexao {
+	private Map<String, String> mapaTiposFuncoes;
 	private String finalConsulta;
+	private String tiposFuncoes;
 	private final String nome;
 	private String constraint;
 	private String urlBanco;
@@ -79,6 +82,7 @@ public class Conexao {
 	public Conexao clonar(String novoNome) {
 		Conexao c = new Conexao(novoNome);
 		c.finalConsulta = finalConsulta;
+		c.tiposFuncoes = tiposFuncoes;
 		c.constraint = constraint;
 		c.urlBanco = urlBanco;
 		c.catalogo = catalogo;
@@ -92,6 +96,7 @@ public class Conexao {
 
 	public void aplicar(Attributes attr) {
 		finalConsulta = attr.getValue("finalConsulta");
+		tiposFuncoes = attr.getValue("tiposFuncoes");
 		constraint = attr.getValue("constraint");
 		urlBanco = attr.getValue("urlBanco");
 		catalogo = attr.getValue("catalogo");
@@ -114,6 +119,7 @@ public class Conexao {
 		util.atributo("catalogo", Util.escapar(catalogo));
 		util.atributo("esquema", Util.escapar(esquema));
 		util.atributo("driver", Util.escapar(driver));
+		util.atributo("tiposFuncoes", Util.escapar(tiposFuncoes));
 		util.fecharTag().finalizarTag("conexao");
 	}
 
@@ -174,5 +180,24 @@ public class Conexao {
 
 	public void setFiltro(String filtro) {
 		this.filtro = filtro;
+	}
+
+	public String getTiposFuncoes() {
+		return tiposFuncoes;
+	}
+
+	public void setTiposFuncoes(String tiposFuncoes) {
+		this.tiposFuncoes = tiposFuncoes;
+	}
+
+	public Map<String, String> getMapaTiposFuncoes() {
+		if (mapaTiposFuncoes == null) {
+			mapaTiposFuncoes = ConexaoUtil.criarMapaTiposFuncoes(tiposFuncoes);
+		}
+		return mapaTiposFuncoes;
+	}
+
+	public void setMapaTiposFuncoes(Map<String, String> mapaTiposFuncoes) {
+		this.mapaTiposFuncoes = mapaTiposFuncoes;
 	}
 }

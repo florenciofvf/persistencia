@@ -7,7 +7,7 @@ import br.com.persist.assistencia.Constantes;
 public class ConexaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private static final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "CONSTRAINT",
-			"FILTRO", "FINAL-CONSULTA", "ESQUEMA", "CATALOGO" };
+			"FILTRO", "FINAL-CONSULTA", "ESQUEMA", "CATALOGO", "TIPO=FUNCAO;TIPO=FUNCAO" };
 
 	@Override
 	public int getRowCount() {
@@ -58,6 +58,8 @@ public class ConexaoModelo extends AbstractTableModel {
 			return c.getEsquema();
 		case 10:
 			return c.getCatalogo();
+		case 11:
+			return c.getTiposFuncoes();
 		default:
 			return null;
 		}
@@ -100,6 +102,9 @@ public class ConexaoModelo extends AbstractTableModel {
 			break;
 		case 10:
 			c.setCatalogo(valor);
+			break;
+		case 11:
+			c.setTiposFuncoes(valor);
 			break;
 		default:
 		}
