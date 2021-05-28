@@ -6,7 +6,7 @@ import br.com.persist.assistencia.Constantes;
 
 public class ConexaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
-	private static final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "CONSTRAINT",
+	private static final String[] COLUNAS = { "STATUS", "NOME", "DRIVER", "URL", "LOGIN", "SENHA", "SELECT CONSTRAINT",
 			"FILTRO", "FINAL-CONSULTA", "ESQUEMA", "CATALOGO", "TIPO=FUNCAO;TIPO=FUNCAO" };
 
 	@Override

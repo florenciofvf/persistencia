@@ -5,13 +5,16 @@ import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
+import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
-import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -81,12 +85,29 @@ public class ConexaoContainer extends AbstratoContainer {
 	}
 
 	private void configurar() {
+		JTableHeader header = tabela.getTableHeader();
+		header.addMouseMotionListener(headerListenerInner);
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new ConexaoRendererStatus());
 		tabela.getColumnModel().getColumn(0).setCellEditor(new ConexaoEditorStatus());
 		tabela.getColumnModel().getColumn(3).setCellEditor(new ConexaoEditorURL());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.baixar();
 	}
+
+	private transient MouseMotionListener headerListenerInner = new MouseAdapter() {
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			int tableColuna = tabela.columnAtPoint(e.getPoint());
+			int modelColuna = tabela.convertColumnIndexToModel(tableColuna);
+			if (modelColuna == 6) {
+				tabela.getTableHeader().setToolTipText(ConexaoMensagens.getString("hint.coluna_select_constraint"));
+			} else if (modelColuna == 11) {
+				tabela.getTableHeader().setToolTipText(ConexaoMensagens.getString("hint.coluna_tipos_funcoes"));
+			} else {
+				tabela.getTableHeader().setToolTipText(null);
+			}
+		}
+	};
 
 	@Override
 	public void setJanela(Janela janela) {
