@@ -3,7 +3,7 @@
 <conexoes>
 	<conexao nome="question&#225;rio" usuario="root" senha="root" filtro="" finalConsulta="" constraint="" urlBanco="jdbc:mysql://localhost/questionario" catalogo="" esquema="" driver="com.mysql.jdbc.Driver" tiposFuncoes="">
 	</conexao>
-	<conexao nome="elei&#231;&#227;o" usuario="root" senha="@Dnhi1ey" filtro="" finalConsulta="LIMIT 10" constraint="" urlBanco="jdbc:mysql://localhost/eleicao" catalogo="eleicao" esquema="" driver="com.mysql.cj.jdbc.Driver" tiposFuncoes="java.sql.Timestamp=to_date({0}, &apos;DD/MM/YYYY&apos;)">
+	<conexao nome="elei&#231;&#227;o" usuario="root" senha="@Dnhi1ey" filtro="" finalConsulta="LIMIT 10" constraint="" urlBanco="jdbc:mysql://localhost/eleicao" catalogo="eleicao" esquema="" driver="com.mysql.cj.jdbc.Driver" tiposFuncoes="java.sql.Timestamp=to_date(#valor#, &apos;DD/MM/YYYY&apos;)">
 	</conexao>
 	<conexao nome="carro" usuario="root" senha="root" filtro="" finalConsulta="" constraint="" urlBanco="jdbc:mysql://localhost/carrodb" catalogo="" esquema="" driver="com.mysql.jdbc.Driver" tiposFuncoes="">
 	</conexao>

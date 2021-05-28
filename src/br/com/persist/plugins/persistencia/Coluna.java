@@ -1,7 +1,5 @@
 package br.com.persist.plugins.persistencia;
 
-import java.text.MessageFormat;
-
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
@@ -147,6 +145,6 @@ public class Coluna {
 		if (Util.estaVazio(funcao)) {
 			return string;
 		}
-		return MessageFormat.format(funcao, string);
+		return Util.replaceAll(funcao, "#valor#", string);
 	}
 }
