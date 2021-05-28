@@ -1554,8 +1554,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					private StringBuilder getConsultaColuna(Conexao conexao, String complemento) {
 						String selectAlter = objeto.getSelectAlternativo();
 						Coletor coletor = new Coletor();
-						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+						SetLista.view(true, objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 								InternalContainer.this);
+						if (coletor.estaVazio()) {
+							return new StringBuilder();
+						}
 						objeto.setSelectAlternativo("SELECT " + getNomeColunas(coletor));
 						StringBuilder builder = new StringBuilder();
 						montarSelect(conexao, complemento, builder);
