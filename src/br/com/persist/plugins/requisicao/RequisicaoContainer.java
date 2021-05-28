@@ -35,9 +35,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -59,8 +59,10 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TabbedPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -204,6 +206,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 			String hint = RequisicaoMensagens.getString("label.copiar_access_token",
 					RequisicaoMensagens.getString("label.resposta_json"));
 			chkCopiarAccessToken.setToolTipText(hint);
+			ButtonGroup grupo = new ButtonGroup();
+			grupo.add(chkRespostaImagem);
+			grupo.add(chkRespostaJson);
 			eventos();
 		}
 
@@ -521,6 +526,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private final ToolbarResultado toolbarResultado = new ToolbarResultado();
 		private final JTextPane areaParametros = new JTextPane();
 		private final JTextPane areaResultados = new JTextPane();
+		private final TabbedPane tabbedPane = new TabbedPane();
+		private final Label labelImagem = new Label();
 		private ScrollPane scrollPaneArea;
 		private final File file;
 
@@ -559,7 +566,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 			panel.add(BorderLayout.NORTH, toolbarResultado);
 			Panel panelArea = new Panel();
 			panelArea.add(BorderLayout.CENTER, areaResultados);
-			panel.add(BorderLayout.CENTER, new ScrollPane(panelArea));
+			tabbedPane.addTab("label.texto", Icones.TEXTO, new ScrollPane(panelArea));
+			tabbedPane.addTab("label.imagem", Icones.ICON, new ScrollPane(labelImagem));
+			panel.add(BorderLayout.CENTER, tabbedPane);
 			return panel;
 		}
 
@@ -777,10 +786,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void processarResposta(Parser parser, byte[] resposta) throws BadLocationException {
 			if (resposta.length > 0 && toolbar.chkRespostaJson.isSelected()) {
+				tabbedPane.setSelectedIndex(0);
 				processarJSON(parser, Util.getString(resposta));
 			} else if (resposta.length > 0 && toolbar.chkRespostaImagem.isSelected()) {
-				JOptionPane.showMessageDialog(RequisicaoContainer.this, new ImageIcon(resposta));
+				tabbedPane.setSelectedIndex(1);
+				labelImagem.setIcon(new ImageIcon(resposta));
 			} else {
+				tabbedPane.setSelectedIndex(0);
 				areaResultados.setText(Util.getString(resposta));
 			}
 		}
