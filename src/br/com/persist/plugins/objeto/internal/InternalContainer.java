@@ -605,7 +605,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
 					for (int linha : linhas) {
-						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true);
+						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true, null);
 						if (excluido == 0 || excluido == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
 							if (chaves.isEmpty()) {
@@ -887,7 +887,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 								InternalContainer.this);
 						if (!coletor.estaVazio()) {
-							modelo.getDados(linhas[0], sb, coletor);
+							modelo.getDados(linhas[0], sb, coletor, null);
 							Util.mensagem(InternalContainer.this, sb.toString());
 						}
 					}
@@ -933,8 +933,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 								InternalContainer.this);
 						if (!coletor.estaVazio()) {
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
-									false);
-							instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false);
+									false, conexao);
+							instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false, conexao);
 							if (!Util.estaVazio(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Atualizar");
 							}
@@ -972,8 +972,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
 								InternalContainer.this);
 						if (!coletor.estaVazio()) {
-							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
-									true);
+							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor, true,
+									conexao);
 							if (!Util.estaVazio(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 							}
@@ -1003,8 +1003,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						if (chaves.isEmpty()) {
 							return;
 						}
-						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false);
-						instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false);
+						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), false, conexao);
+						instrucao += Constantes.QL + " WHERE " + getComplementoChaves(false, conexao);
 						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Excluir");
 						}
@@ -1037,7 +1037,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						if (chaves.isEmpty()) {
 							return;
 						}
-						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true);
+						String instrucao = modelo.getDelete(linhas[0], objeto.getPrefixoNomeTabela(), true, conexao);
 						if (!Util.estaVazio(instrucao)) {
 							updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 						}
@@ -1093,13 +1093,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					int[] linhas = tabelaPersistencia.getSelectedRows();
 					if (linhas != null && linhas.length > 0) {
-						Map<String, String> chaves = modelo.getMapaChaves(linhas[0]);
+						Map<String, String> chaves = modelo.getMapaChaves(linhas[0], conexao);
 						if (chaves.isEmpty() || Util.estaVazio(instrucao.getValor())) {
 							return;
 						}
 						Map<String, List<String>> mapaChaves = criar(chaves);
 						for (int i = 1; i < linhas.length; i++) {
-							chaves = modelo.getMapaChaves(linhas[i]);
+							chaves = modelo.getMapaChaves(linhas[i], conexao);
 							mergear(mapaChaves, chaves);
 						}
 						String conteudo = ObjetoUtil.substituir(instrucao.getValor(), mapaChaves);
@@ -1456,7 +1456,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
 									InternalContainer.this);
 							if (!coletor.estaVazio()) {
-								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor, true);
+								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor, true,
+										conexao);
 								if (!Util.estaVazio(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 								}
@@ -1478,7 +1479,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Conexao conexao = getConexao();
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela(), true);
+							String instrucao = modelo.getDelete(objeto.getPrefixoNomeTabela(), true, conexao);
 							if (!Util.estaVazio(instrucao)) {
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Delete");
 							}
@@ -2019,28 +2020,29 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 	}
 
-	public String getComplementoChaves(boolean and) {
+	public String getComplementoChaves(boolean and, Conexao conexao) {
 		StringBuilder sb = new StringBuilder();
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
 		if (!indices.isEmpty()) {
-			Map<String, String> chaves = modelo.getMapaChaves(indices.get(0));
+			Map<String, String> chaves = modelo.getMapaChaves(indices.get(0), conexao);
 			if (chaves.size() == 1) {
-				sb.append(umaChave(modelo, indices, chaves, and));
+				sb.append(umaChave(modelo, indices, chaves, and, conexao));
 			} else if (chaves.size() > 1) {
-				sb.append(multiplasChaves(modelo, indices, chaves, and));
+				sb.append(multiplasChaves(modelo, indices, chaves, and, conexao));
 			}
 		}
 		return sb.toString();
 	}
 
-	private String umaChave(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves, boolean and) {
+	private String umaChave(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves, boolean and,
+			Conexao conexao) {
 		String[] array = criarArray(chaves);
 		String chave = array[0];
 		StringBuilder sb = new StringBuilder((and ? "AND " : "") + chave + " IN(" + array[1]);
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(", ");
-			chaves = modelo.getMapaChaves(indices.get(i));
+			chaves = modelo.getMapaChaves(indices.get(i), conexao);
 			sb.append(chaves.get(chave));
 		}
 		sb.append(")");
@@ -2057,7 +2059,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private String multiplasChaves(OrdenacaoModelo modelo, List<Integer> indices, Map<String, String> chaves,
-			boolean and) {
+			boolean and, Conexao conexao) {
 		StringBuilder sb = new StringBuilder();
 		if (indices.size() > 1) {
 			sb.append(and ? "AND (" : "(");
@@ -2067,7 +2069,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		sb.append(andChaves(chaves));
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(" OR ");
-			chaves = modelo.getMapaChaves(indices.get(i));
+			chaves = modelo.getMapaChaves(indices.get(i), conexao);
 			sb.append(andChaves(chaves));
 		}
 		if (indices.size() > 1) {

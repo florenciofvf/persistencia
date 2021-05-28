@@ -184,7 +184,7 @@ public class PersistenciaModelo implements TableModel {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
-						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true);
+						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true, null);
 				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
 				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
@@ -199,16 +199,17 @@ public class PersistenciaModelo implements TableModel {
 		}
 	}
 
-	public void getDados(int rowIndex, StringBuilder sb, Coletor coletor) {
+	public void getDados(int rowIndex, StringBuilder sb, Coletor coletor, Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
 		List<Object> valores = new ArrayList<>();
 		for (Coluna coluna : colunas) {
 			valores.add(registro.get(coluna.getIndice()));
 		}
-		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb, coletor);
+		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb, coletor, conexao);
 	}
 
-	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
+	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere,
+			Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
 			List<Object> valores = new ArrayList<>();
@@ -220,12 +221,12 @@ public class PersistenciaModelo implements TableModel {
 				valores.add(registro.get(coluna.getIndice()));
 			}
 			return gerarUpdate(registro, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
-					prefixoNomeTabela, coletor, comWhere);
+					prefixoNomeTabela, coletor, comWhere, conexao);
 		}
 		return null;
 	}
 
-	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
+	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao) {
 		if (contemChaves()) {
 			List<Object> valores = new ArrayList<>();
 			List<Coluna> naoChaves = getNaoChaves();
@@ -236,22 +237,22 @@ public class PersistenciaModelo implements TableModel {
 				valores.add(coluna.getNome());
 			}
 			return gerarUpdate(null, naoChaves.toArray(new Coluna[0]), valores.toArray(new Object[0]),
-					prefixoNomeTabela, coletor, comWhere);
+					prefixoNomeTabela, coletor, comWhere, conexao);
 		}
 		return null;
 	}
 
-	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
+	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
-			return gerarDelete(registro, prefixoNomeTabela, comWhere);
+			return gerarDelete(registro, prefixoNomeTabela, comWhere, conexao);
 		}
 		return null;
 	}
 
-	public String getDelete(String prefixoNomeTabela, boolean comWhere) {
+	public String getDelete(String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
 		if (contemChaves()) {
-			return gerarDelete(null, prefixoNomeTabela, comWhere);
+			return gerarDelete(null, prefixoNomeTabela, comWhere, conexao);
 		}
 		return null;
 	}
@@ -265,11 +266,11 @@ public class PersistenciaModelo implements TableModel {
 		return gerarInsert(null, prefixoNomeTabela, coletor);
 	}
 
-	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
+	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
 			try {
-				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere);
+				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere, conexao);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
 				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
 						false)) {
@@ -294,12 +295,12 @@ public class PersistenciaModelo implements TableModel {
 		return resp;
 	}
 
-	public Map<String, String> getMapaChaves(int rowIndex) {
+	public Map<String, String> getMapaChaves(int rowIndex, Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
 		Map<String, String> resp = new HashMap<>();
 		for (Coluna coluna : getChaves()) {
 			Object valor = registro.get(coluna.getIndice());
-			resp.put(coluna.getNome(), coluna.get(valor.toString()));
+			resp.put(coluna.getNome(), coluna.get(valor.toString(), conexao));
 		}
 		return resp;
 	}
@@ -330,13 +331,13 @@ public class PersistenciaModelo implements TableModel {
 		return true;
 	}
 
-	private void getDado(Coluna[] colunas, Object[] valores, StringBuilder sb, Coletor coletor) {
+	private void getDado(Coluna[] colunas, Object[] valores, StringBuilder sb, Coletor coletor, Conexao conexao) {
 		int i = 0;
 		Coluna coluna = null;
 		for (; i < colunas.length; i++) {
 			coluna = colunas[i];
 			if (coletor.contem(coluna.getNome())) {
-				sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i]));
+				sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i], conexao));
 				i++;
 				break;
 			}
@@ -344,13 +345,13 @@ public class PersistenciaModelo implements TableModel {
 		for (; i < colunas.length; i++) {
 			coluna = colunas[i];
 			if (coletor.contem(coluna.getNome())) {
-				sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i]));
+				sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i], conexao));
 			}
 		}
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores, String prefixoNomeTabela,
-			Coletor coletor, boolean comWhere) {
+			Coletor coletor, boolean comWhere, Conexao conexao) {
 		StringBuilder resposta = new StringBuilder(
 				"UPDATE " + prefixarEsquema(conexao, prefixoNomeTabela, tabela, Constantes.VAZIO) + " SET ");
 		int i = 0;
@@ -358,7 +359,7 @@ public class PersistenciaModelo implements TableModel {
 		for (; i < colunas.length; i++) {
 			coluna = colunas[i];
 			if (coletor.contem(coluna.getNome())) {
-				resposta.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[i]));
+				resposta.append(Constantes.QL + "  " + coluna.getNome() + " = " + coluna.get(valores[i], conexao));
 				i++;
 				break;
 			}
@@ -369,11 +370,11 @@ public class PersistenciaModelo implements TableModel {
 				continue;
 			}
 			if (coletor.contem(coluna.getNome())) {
-				resposta.append(Constantes.QL + ", " + coluna.getNome() + " = " + coluna.get(valores[i]));
+				resposta.append(Constantes.QL + ", " + coluna.getNome() + " = " + coluna.get(valores[i], conexao));
 			}
 		}
 		if (comWhere) {
-			resposta.append(montarWhere(registro));
+			resposta.append(montarWhere(registro, conexao));
 		}
 		return resposta.toString();
 	}
@@ -391,7 +392,7 @@ public class PersistenciaModelo implements TableModel {
 		for (; i < colunas.size(); i++) {
 			coluna = colunas.get(i);
 			if (coletor.contem(coluna.getNome())) {
-				appendCampoValor(Constantes.VAZIO, campo, valor, coluna, registro, prefixoNomeTabela);
+				appendCampoValor(Constantes.VAZIO, campo, valor, coluna, registro, prefixoNomeTabela, conexao);
 				i++;
 				break;
 			}
@@ -402,7 +403,7 @@ public class PersistenciaModelo implements TableModel {
 				continue;
 			}
 			if (coletor.contem(coluna.getNome())) {
-				appendCampoValor(", ", campo, valor, coluna, registro, prefixoNomeTabela);
+				appendCampoValor(", ", campo, valor, coluna, registro, prefixoNomeTabela, conexao);
 			}
 		}
 		campo.append(")" + Constantes.QL);
@@ -411,14 +412,14 @@ public class PersistenciaModelo implements TableModel {
 	}
 
 	private void appendCampoValor(String string, StringBuilder campo, StringBuilder valor, Coluna coluna,
-			List<Object> registro, String prefixoNomeTabela) {
+			List<Object> registro, String prefixoNomeTabela, Conexao conexao) {
 		campo.append(Constantes.TAB + string + coluna.getNome() + Constantes.QL);
 		if (Util.estaVazio(coluna.getSequencia())) {
 			if (registro != null) {
 				Object valoR = registro.get(coluna.getIndice());
-				valor.append(Constantes.TAB + string + coluna.get(valoR) + Constantes.QL);
+				valor.append(Constantes.TAB + string + coluna.get(valoR, conexao) + Constantes.QL);
 			} else {
-				valor.append(Constantes.TAB + string + coluna.get(coluna.getNome()) + Constantes.QL);
+				valor.append(Constantes.TAB + string + coluna.get(coluna.getNome(), conexao) + Constantes.QL);
 			}
 		} else {
 			valor.append(Constantes.TAB + string
@@ -427,16 +428,16 @@ public class PersistenciaModelo implements TableModel {
 		}
 	}
 
-	private String gerarDelete(List<Object> registro, String prefixoNomeTabela, boolean comWhere) {
+	private String gerarDelete(List<Object> registro, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
 		StringBuilder resposta = new StringBuilder(
 				"DELETE FROM " + prefixarEsquema(conexao, prefixoNomeTabela, tabela, Constantes.VAZIO));
 		if (comWhere) {
-			resposta.append(montarWhere(registro));
+			resposta.append(montarWhere(registro, conexao));
 		}
 		return resposta.toString();
 	}
 
-	private String montarWhere(List<Object> registro) {
+	private String montarWhere(List<Object> registro, Conexao conexao) {
 		List<Coluna> colunasChave = getChaves();
 		if (colunasChave.isEmpty()) {
 			throw new IllegalStateException("Sem coluna(s) chave(s).");
@@ -445,17 +446,17 @@ public class PersistenciaModelo implements TableModel {
 		Coluna coluna = colunasChave.get(0);
 		if (registro != null) {
 			Object valor = registro.get(coluna.getIndice());
-			resposta.append(coluna.getNome() + " = " + coluna.get(valor));
+			resposta.append(coluna.getNome() + " = " + coluna.get(valor, conexao));
 		} else {
-			resposta.append(coluna.getNome() + " = " + coluna.get(coluna.getNome()));
+			resposta.append(coluna.getNome() + " = " + coluna.get(coluna.getNome(), conexao));
 		}
 		for (int i = 1; i < colunasChave.size(); i++) {
 			coluna = colunasChave.get(i);
 			if (registro != null) {
 				Object valor = registro.get(coluna.getIndice());
-				resposta.append(" AND " + coluna.getNome() + " = " + coluna.get(valor));
+				resposta.append(" AND " + coluna.getNome() + " = " + coluna.get(valor, conexao));
 			} else {
-				resposta.append(" AND " + coluna.getNome() + " = " + coluna.get(coluna.getNome()));
+				resposta.append(" AND " + coluna.getNome() + " = " + coluna.get(coluna.getNome(), conexao));
 			}
 		}
 		return resposta.toString();

@@ -361,8 +361,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return container.getObjeto().equals(objeto);
 	}
 
-	public String getComplementoChaves(boolean and) {
-		return container.getComplementoChaves(and);
+	public String getComplementoChaves(boolean and, Conexao conexao) {
+		return container.getComplementoChaves(and, conexao);
 	}
 
 	public void selecionarConexao(Conexao conexao) {

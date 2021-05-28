@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.plugins.conexao.Conexao;
 
 public class OrdenacaoModelo extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
@@ -86,32 +87,33 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getColuna(indice);
 	}
 
-	public int excluirRegistro(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
-		return model.excluir(linhas[rowIndex].indice, prefixoNomeTabela, comWhere);
+	public int excluirRegistro(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
+		return model.excluir(linhas[rowIndex].indice, prefixoNomeTabela, comWhere, conexao);
 	}
 
 	public List<Object> getRegistro(int rowIndex) {
 		return model.getRegistro(linhas[rowIndex].indice);
 	}
 
-	public void getDados(int rowIndex, StringBuilder sb, Coletor coletor) {
-		model.getDados(linhas[rowIndex].indice, sb, coletor);
+	public void getDados(int rowIndex, StringBuilder sb, Coletor coletor, Conexao conexao) {
+		model.getDados(linhas[rowIndex].indice, sb, coletor, conexao);
 	}
 
-	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
-		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela, coletor, comWhere);
+	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere,
+			Conexao conexao) {
+		return model.getUpdate(linhas[rowIndex].indice, prefixoNomeTabela, coletor, comWhere, conexao);
 	}
 
-	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere) {
-		return model.getUpdate(prefixoNomeTabela, coletor, comWhere);
+	public String getUpdate(String prefixoNomeTabela, Coletor coletor, boolean comWhere, Conexao conexao) {
+		return model.getUpdate(prefixoNomeTabela, coletor, comWhere, conexao);
 	}
 
-	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere) {
-		return model.getDelete(linhas[rowIndex].indice, prefixoNomeTabela, comWhere);
+	public String getDelete(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
+		return model.getDelete(linhas[rowIndex].indice, prefixoNomeTabela, comWhere, conexao);
 	}
 
-	public String getDelete(String prefixoNomeTabela, boolean comWhere) {
-		return model.getDelete(prefixoNomeTabela, comWhere);
+	public String getDelete(String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
+		return model.getDelete(prefixoNomeTabela, comWhere, conexao);
 	}
 
 	public String getInsert(int rowIndex, String prefixoNomeTabela, Coletor coletor) {
@@ -126,8 +128,8 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getValoresChaves(linhas[rowIndex].indice);
 	}
 
-	public Map<String, String> getMapaChaves(int rowIndex) {
-		return model.getMapaChaves(linhas[rowIndex].indice);
+	public Map<String, String> getMapaChaves(int rowIndex, Conexao conexao) {
+		return model.getMapaChaves(linhas[rowIndex].indice, conexao);
 	}
 
 	public void excluirValoresChaves(List<List<IndiceValor>> listaValores) {

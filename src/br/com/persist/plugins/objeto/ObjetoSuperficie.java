@@ -715,7 +715,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			InternalConfig config = new InternalConfig(conexao.getNome(), objeto.getGrupo(), objeto.getTabela());
 			config.setGraphics(getGraphics());
 			if (interno != null) {
-				config.setComplemento(interno.getComplementoChaves(true));
+				config.setComplemento(interno.getComplementoChaves(true, conexao));
 			}
 			ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo().trim(), getGraphics(), config);
 		}
