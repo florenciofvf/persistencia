@@ -38,15 +38,16 @@ public class Persistencia {
 		mapa.put("java.math.BigDecimal", Boolean.TRUE);
 		mapa.put("java.math.BigInteger", Boolean.TRUE);
 		mapa.put("java.lang.Character", Boolean.FALSE);
+		mapa.put("java.sql.Timestamp", Boolean.FALSE);
 		mapa.put("java.lang.Boolean", Boolean.FALSE);
 		mapa.put("java.lang.Integer", Boolean.TRUE);
 		mapa.put("java.lang.String", Boolean.FALSE);
 		mapa.put("java.lang.Double", Boolean.TRUE);
-		mapa.put("java.lang.Date", Boolean.FALSE);
 		mapa.put("java.lang.Float", Boolean.TRUE);
 		mapa.put("java.lang.Short", Boolean.TRUE);
 		mapa.put("java.lang.Long", Boolean.TRUE);
 		mapa.put("java.lang.Byte", Boolean.TRUE);
+		mapa.put("java.sql.Date", Boolean.FALSE);
 	}
 
 	public static int executar(Connection conn, String sql) throws PersistenciaException {
