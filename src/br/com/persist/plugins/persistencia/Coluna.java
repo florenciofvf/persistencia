@@ -1,6 +1,10 @@
 package br.com.persist.plugins.persistencia;
 
+import java.text.MessageFormat;
+
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.conexao.Conexao;
 
 public class Coluna {
 	private final boolean colunaInfo;
@@ -118,13 +122,13 @@ public class Coluna {
 		return nome;
 	}
 
-	public String get(Object o) {
+	public String get(Object o, Conexao conexao) {
 		if (o == null) {
 			return Constantes.VAZIO;
 		}
 		String s = o.toString();
 		if (numero) {
-			return s;
+			return get(conexao, s);
 		}
 		while (s.length() > 0 && s.charAt(0) == '\'') {
 			s = s.substring(1, s.length());
@@ -132,6 +136,17 @@ public class Coluna {
 		while (s.length() > 0 && s.charAt(s.length() - 1) == '\'') {
 			s = s.substring(0, s.length() - 1);
 		}
-		return "'" + s + "'";
+		return get(conexao, "'" + s + "'");
+	}
+
+	private String get(Conexao conexao, String string) {
+		if (conexao == null) {
+			return string;
+		}
+		String funcao = conexao.getMapaTiposFuncoes().get(tipo.toLowerCase());
+		if (Util.estaVazio(funcao)) {
+			return string;
+		}
+		return MessageFormat.format(funcao, string);
 	}
 }
