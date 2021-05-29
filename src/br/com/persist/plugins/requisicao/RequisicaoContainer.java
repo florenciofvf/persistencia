@@ -211,8 +211,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private void eventos() {
 			chkCopiarAccessToken.addActionListener(
 					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessToken.isSelected()));
-			chkRespostaImagem.setSelected(Preferencias.getBoolean("requisicao_response_imagem"));
-			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
+			chkRespostaImagem.setSelected(Preferencias.getInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON) == 1);
+			chkRespostaJson.setSelected(Preferencias.getInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON) == 2);
 			chkCopiarAccessToken.setSelected(Preferencias.getBoolean("copiar_access_token"));
 			chkRespostaImagem.addActionListener(e -> chkRespostaImagemHandler());
 			chkRespostaJson.addActionListener(e -> chkRespostaJsonHandler());
@@ -226,14 +226,16 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void chkRespostaImagemHandler() {
-			Preferencias.setBoolean("requisicao_response_imagem", chkRespostaImagem.isSelected());
+			Preferencias.setInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON,
+					chkRespostaImagem.isSelected() ? 1 : 0);
 			if (chkRespostaImagem.isSelected()) {
 				chkRespostaJson.setSelected(false);
 			}
 		}
 
 		private void chkRespostaJsonHandler() {
-			Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected());
+			Preferencias.setInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON,
+					chkRespostaJson.isSelected() ? 2 : 0);
 			if (chkRespostaJson.isSelected()) {
 				chkRespostaImagem.setSelected(false);
 			}

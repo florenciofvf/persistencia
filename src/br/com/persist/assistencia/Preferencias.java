@@ -147,6 +147,11 @@ public class Preferencias {
 		return pref.get(chave, "");
 	}
 
+	public static int getInt(String chave) {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		return pref.getInt(chave, 0);
+	}
+
 	public static void setBoolean(String chave, boolean valor) {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean(chave, valor);
@@ -155,6 +160,11 @@ public class Preferencias {
 	public static void setString(String chave, String valor) {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.put(chave, valor == null ? "" : valor);
+	}
+
+	public static void setInt(String chave, int valor) {
+		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		pref.putInt(chave, valor);
 	}
 
 	public static boolean isFicharioComRolagem() {
