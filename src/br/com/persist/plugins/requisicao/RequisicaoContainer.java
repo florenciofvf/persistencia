@@ -35,7 +35,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JSplitPane;
@@ -206,22 +205,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 			String hint = RequisicaoMensagens.getString("label.copiar_access_token",
 					RequisicaoMensagens.getString("label.resposta_json"));
 			chkCopiarAccessToken.setToolTipText(hint);
-			ButtonGroup grupo = new ButtonGroup();
-			grupo.add(chkRespostaImagem);
-			grupo.add(chkRespostaJson);
 			eventos();
 		}
 
 		private void eventos() {
-			chkRespostaImagem.addActionListener(
-					e -> Preferencias.setBoolean("requisicao_response_imagem", chkRespostaImagem.isSelected()));
-			chkRespostaJson.addActionListener(
-					e -> Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected()));
 			chkCopiarAccessToken.addActionListener(
 					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessToken.isSelected()));
 			chkRespostaImagem.setSelected(Preferencias.getBoolean("requisicao_response_imagem"));
 			chkRespostaJson.setSelected(Preferencias.getBoolean("requisicao_response_json"));
 			chkCopiarAccessToken.setSelected(Preferencias.getBoolean("copiar_access_token"));
+			chkRespostaImagem.addActionListener(e -> chkRespostaImagemHandler());
+			chkRespostaJson.addActionListener(e -> chkRespostaJsonHandler());
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			retornar64Acao.setActionListener(e -> retornar64());
 			variaveisAcao.setActionListener(e -> variaveis());
@@ -229,6 +223,20 @@ public class RequisicaoContainer extends AbstratoContainer {
 			formatarAcao.setActionListener(e -> formatar());
 			base64Acao.setActionListener(e -> base64());
 			modeloAcao.setActionListener(e -> modelo());
+		}
+
+		private void chkRespostaImagemHandler() {
+			Preferencias.setBoolean("requisicao_response_imagem", chkRespostaImagem.isSelected());
+			if (chkRespostaImagem.isSelected()) {
+				chkRespostaJson.setSelected(false);
+			}
+		}
+
+		private void chkRespostaJsonHandler() {
+			Preferencias.setBoolean("requisicao_response_json", chkRespostaJson.isSelected());
+			if (chkRespostaJson.isSelected()) {
+				chkRespostaImagem.setSelected(false);
+			}
 		}
 
 		@Override
