@@ -709,6 +709,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 					AbstractDocument doc = (AbstractDocument) styledDoc;
 					json.toString(doc, false, 0);
 				}
+				selecionarAbaJSON();
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
@@ -739,11 +740,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 				Object valor = properties.get(chave);
 				sb.append(chave + "=" + (valor != null ? valor.toString() : "") + Constantes.QL);
 			}
+			selecionarAbaJSON();
 			areaResultados.setText(sb.toString());
 		}
 
 		private void base64(String string) {
 			try {
+				selecionarAbaJSON();
 				areaResultados.setText(Base64Util.criarBase64(string));
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
@@ -753,6 +756,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void retornar64(String string) {
 			try {
+				selecionarAbaJSON();
 				areaResultados.setText(Base64Util.retornarBase64(string));
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
@@ -784,15 +788,23 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
+		private void selecionarAbaJSON() {
+			tabbedPane.setSelectedIndex(0);
+		}
+
+		private void selecionarAbaImagem() {
+			tabbedPane.setSelectedIndex(1);
+		}
+
 		private void processarResposta(Parser parser, byte[] resposta) throws BadLocationException {
 			if (resposta.length > 0 && toolbar.chkRespostaJson.isSelected()) {
-				tabbedPane.setSelectedIndex(0);
+				selecionarAbaJSON();
 				processarJSON(parser, Util.getString(resposta));
 			} else if (resposta.length > 0 && toolbar.chkRespostaImagem.isSelected()) {
-				tabbedPane.setSelectedIndex(1);
+				selecionarAbaImagem();
 				labelImagem.setIcon(new ImageIcon(resposta));
 			} else {
-				tabbedPane.setSelectedIndex(0);
+				selecionarAbaJSON();
 				areaResultados.setText(Util.getString(resposta));
 			}
 		}
