@@ -1219,7 +1219,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 					list.sort(Collator.getInstance());
 					Coletor coletor = new Coletor();
-					SetLista.view(selecionadoObjeto.getId(), list, coletor, ObjetoSuperficie.this, true);
+					SetLista.view(selecionadoObjeto.getId(), list, coletor, ObjetoSuperficie.this,
+							new SetLista.Config(true, true));
 					if (coletor.size() == 1) {
 						Objeto outro = getObjeto(coletor.get(0));
 						selecionadoObjeto.inverterPosicao(outro);
@@ -1381,7 +1382,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			List<String> ids = montarIds(lista, objeto);
 			if (!ids.isEmpty()) {
 				Coletor coletor = new Coletor();
-				SetLista.view(objeto.getId(), ids, coletor, ObjetoSuperficie.this, true);
+				SetLista.view(objeto.getId(), ids, coletor, ObjetoSuperficie.this, new SetLista.Config(true, true));
 				if (coletor.size() == 1) {
 					selecionadoObjeto = null;
 					String id = coletor.get(0);
@@ -2200,7 +2201,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(controle.exportacao);
 		Coletor coletor = new Coletor();
 		SetLista.view(ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos), coletor,
-				ObjetoSuperficie.this, true);
+				ObjetoSuperficie.this, new SetLista.Config(false, true));
 		if (coletor.size() == 1) {
 			String nomeCampo = coletor.get(0);
 			processarCampo(controle, getCampo(campos, nomeCampo));
@@ -2675,7 +2676,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela());
-				SetLista.view(objeto.getId(), modelo.getLista(2), coletor, c, true);
+				SetLista.view(objeto.getId(), modelo.getLista(2), coletor, c, new SetLista.Config(false, true));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);
 			}

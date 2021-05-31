@@ -290,7 +290,8 @@ public class UpdateContainer extends AbstratoContainer {
 				return;
 			}
 			Coletor coletor = new Coletor();
-			SetLista.view(UpdateConstantes.ATUALIZACOES, arquivos, coletor, UpdateContainer.this, true);
+			SetLista.view(UpdateConstantes.ATUALIZACOES, arquivos, coletor, UpdateContainer.this,
+					new SetLista.Config(true, true));
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);

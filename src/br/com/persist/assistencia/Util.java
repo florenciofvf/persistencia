@@ -151,7 +151,7 @@ public class Util {
 		Coletor coletor = new Coletor();
 		JTableHeader tableHeader = table.getTableHeader();
 		TableColumnModel columnModel = tableHeader.getColumnModel();
-		SetLista.view(titulo, nomeColunas(columnModel), coletor, table, true);
+		SetLista.view(titulo, nomeColunas(columnModel), coletor, table, new SetLista.Config(true, true));
 		if (coletor.size() == 1) {
 			return copiarColunaUnicaString(columnModel, model, indices, comAspas, coletor);
 		}
@@ -177,7 +177,7 @@ public class Util {
 		Coletor coletor = new Coletor();
 		JTableHeader tableHeader = table.getTableHeader();
 		TableColumnModel columnModel = tableHeader.getColumnModel();
-		SetLista.view("Colunas", nomeColunas(columnModel), coletor, table);
+		SetLista.view("Colunas", nomeColunas(columnModel), coletor, table, new SetLista.Config(true, false));
 		if (coletor.estaVazio()) {
 			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
 		}

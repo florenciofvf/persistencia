@@ -885,7 +885,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						sb.append(Constantes.QL);
 						Coletor coletor = new Coletor();
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-								InternalContainer.this);
+								InternalContainer.this, null);
 						if (!coletor.estaVazio()) {
 							modelo.getDados(linhas[0], sb, coletor, null);
 							Util.mensagem(InternalContainer.this, sb.toString());
@@ -930,7 +930,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						}
 						Coletor coletor = new Coletor();
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
-								InternalContainer.this);
+								InternalContainer.this, new SetLista.Config(true, false));
 						if (!coletor.estaVazio()) {
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor,
 									false, conexao);
@@ -970,7 +970,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						}
 						Coletor coletor = new Coletor();
 						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
-								InternalContainer.this);
+								InternalContainer.this, new SetLista.Config(true, false));
 						if (!coletor.estaVazio()) {
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor, true,
 									conexao);
@@ -1062,7 +1062,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						if (linhas != null && linhas.length == 1) {
 							Coletor coletor = new Coletor();
 							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-									InternalContainer.this);
+									InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
 								String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor);
 								if (!Util.estaVazio(instrucao)) {
@@ -1428,7 +1428,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 							Coletor coletor = new Coletor();
 							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-									InternalContainer.this);
+									InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
 								String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela(), coletor);
 								if (!Util.estaVazio(instrucao)) {
@@ -1454,7 +1454,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 							Coletor coletor = new Coletor();
 							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
-									InternalContainer.this);
+									InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
 								String instrucao = modelo.getUpdate(objeto.getPrefixoNomeTabela(), coletor, true,
 										conexao);
@@ -1554,8 +1554,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					private StringBuilder getConsultaColuna(Conexao conexao, String complemento) {
 						String selectAlter = objeto.getSelectAlternativo();
 						Coletor coletor = new Coletor();
-						SetLista.view(true, objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-								InternalContainer.this);
+						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+								InternalContainer.this, new SetLista.Config(true, false));
 						if (coletor.estaVazio()) {
 							return new StringBuilder();
 						}
@@ -1723,7 +1723,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 					Coletor coletor = new Coletor();
 					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
-							coletor, InternalContainer.this);
+							coletor, InternalContainer.this, new SetLista.Config(true, true));
 					for (Pesquisa pesquisa : pesquisas) {
 						if (selecionado(pesquisa, coletor.getLista())) {
 							Referencia ref = (Referencia) mapaRef.get("ref");
