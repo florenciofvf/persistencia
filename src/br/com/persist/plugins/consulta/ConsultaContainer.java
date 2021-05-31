@@ -15,7 +15,9 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,7 +51,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -61,9 +63,10 @@ import br.com.persist.plugins.persistencia.Persistencia;
 
 public class ConsultaContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
+	private final transient ConsultaCor consultaCor = new ConsultaCor();
 	private final ToolbarTabela toolbarTabela = new ToolbarTabela();
 	private final JTable tabela = new JTable(new VazioModelo());
-	private final TextArea textArea = new TextArea();
+	private final TextPane textArea = new TextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
 	private final Label labelStatus = new Label();
@@ -109,7 +112,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, textArea, criarPanelTabela());
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(textArea), criarPanelTabela());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, split);
@@ -182,7 +185,15 @@ public class ConsultaContainer extends AbstratoContainer {
 	private void configurar() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.getAtualizarAcao());
+		textArea.addKeyListener(keyListenerInner);
 	}
+
+	private transient KeyListener keyListenerInner = new KeyAdapter() {
+		@Override
+		public void keyReleased(KeyEvent e) {
+			consultaCor.processar(textArea.getStyledDocument());
+		}
+	};
 
 	public String getConteudo() {
 		return textArea.getText();
@@ -325,7 +336,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea.getTextAreaInner());
+			String string = Util.getString(textArea);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
 			textArea.requestFocus();
@@ -333,7 +344,7 @@ public class ConsultaContainer extends AbstratoContainer {
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+			Util.getContentTransfered(textArea, numeros, letras);
 		}
 
 		@Override
@@ -367,7 +378,7 @@ public class ConsultaContainer extends AbstratoContainer {
 				return;
 			}
 			string = getString(string);
-			Util.insertStringArea(textArea.getTextAreaInner(), string);
+			Util.insertStringArea(textArea, string);
 		}
 
 		private String getString(String string) {
@@ -397,7 +408,7 @@ public class ConsultaContainer extends AbstratoContainer {
 			if (!Util.estaVazio(textArea.getText())) {
 				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 				if (conexao != null) {
-					String consulta = Util.getString(textArea.getTextAreaInner());
+					String consulta = Util.getString(textArea);
 					atualizar(conexao, consulta);
 				}
 			}
