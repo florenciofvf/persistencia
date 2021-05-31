@@ -202,6 +202,7 @@ public class ConsultaContainer extends AbstratoContainer {
 	private void abrir(String conteudo) {
 		if (!Util.estaVazio(conteudo)) {
 			textArea.setText(conteudo);
+			consultaCor.processar(textArea.getStyledDocument());
 			return;
 		}
 		abrirArquivo(file);
@@ -219,6 +220,7 @@ public class ConsultaContainer extends AbstratoContainer {
 					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
+				consultaCor.processar(textArea.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ConsultaConstantes.PAINEL_SELECT, ex, ConsultaContainer.this);
 			}
