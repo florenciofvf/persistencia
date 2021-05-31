@@ -238,7 +238,7 @@ class SetListaDialogo extends AbstratoDialogo {
 					listar.add(item.getRotulo());
 				}
 			}
-			if (obrigatorio && coletor.estaVazio()) {
+			if (obrigatorio && listar.isEmpty()) {
 				if (somenteUm) {
 					Util.mensagem(SetListaDialogo.this, Mensagens.getString("msg.selecione_um"));
 				} else {
