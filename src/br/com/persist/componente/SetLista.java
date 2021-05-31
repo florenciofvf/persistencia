@@ -26,23 +26,31 @@ public class SetLista {
 	private SetLista() {
 	}
 
-	public static void view(boolean obrigatorio, String titulo, List<String> lista, Coletor coletor, Component c,
-			boolean somenteUm) {
-		SetListaDialogo form = new SetListaDialogo(titulo, lista, coletor, somenteUm, obrigatorio);
+	public static void view(String titulo, List<String> lista, Coletor coletor, Component c, Config config) {
+		if (config == null) {
+			config = new Config();
+		}
+		SetListaDialogo form = new SetListaDialogo(titulo, lista, coletor, config.somenteUm, config.obrigatorio);
 		form.setLocationRelativeTo(c);
 		form.setVisible(true);
 	}
 
-	public static void view(boolean obrigatorio, String titulo, List<String> lista, Coletor coletor, Component c) {
-		view(obrigatorio, titulo, lista, coletor, c, false);
-	}
+	public static class Config {
+		final boolean obrigatorio;
+		final boolean somenteUm;
 
-	public static void view(String titulo, List<String> lista, Coletor coletor, Component c, boolean somenteUm) {
-		view(false, titulo, lista, coletor, c, somenteUm);
-	}
+		public Config(boolean obrigatorio, boolean somenteUm) {
+			this.obrigatorio = obrigatorio;
+			this.somenteUm = somenteUm;
+		}
 
-	public static void view(String titulo, List<String> lista, Coletor coletor, Component c) {
-		view(false, titulo, lista, coletor, c, false);
+		public Config(boolean somenteUm) {
+			this(false, somenteUm);
+		}
+
+		public Config() {
+			this(false, false);
+		}
 	}
 
 	public static class Coletor {

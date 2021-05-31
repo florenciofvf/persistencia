@@ -365,7 +365,8 @@ public class ConsultaContainer extends AbstratoContainer {
 				return;
 			}
 			Coletor coletor = new Coletor();
-			SetLista.view(ConsultaConstantes.CONSULTAS, arquivos, coletor, ConsultaContainer.this, true);
+			SetLista.view(ConsultaConstantes.CONSULTAS, arquivos, coletor, ConsultaContainer.this,
+					new SetLista.Config(true, true));
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);

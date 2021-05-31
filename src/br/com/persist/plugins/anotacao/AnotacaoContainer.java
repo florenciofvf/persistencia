@@ -238,7 +238,8 @@ public class AnotacaoContainer extends AbstratoContainer {
 				return;
 			}
 			Coletor coletor = new Coletor();
-			SetLista.view(AnotacaoConstantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this, true);
+			SetLista.view(AnotacaoConstantes.ANOTACOES, arquivos, coletor, AnotacaoContainer.this,
+					new SetLista.Config(true, true));
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);
