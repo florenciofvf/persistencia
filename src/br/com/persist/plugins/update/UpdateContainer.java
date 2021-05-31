@@ -41,18 +41,20 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
+import br.com.persist.plugins.consulta.ConsultaCor;
 import br.com.persist.plugins.persistencia.Persistencia;
 
 public class UpdateContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
-	private final TextArea textArea = new TextArea();
+	private final transient ConsultaCor consultaCor = new ConsultaCor();
+	private final TextPane textArea = new TextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> comboConexao;
@@ -115,6 +117,7 @@ public class UpdateContainer extends AbstratoContainer {
 	private void abrir(String conteudo) {
 		if (!Util.estaVazio(conteudo)) {
 			textArea.setText(conteudo);
+			consultaCor.processar(textArea.getStyledDocument());
 			return;
 		}
 		abrirArquivo(file);
@@ -132,6 +135,7 @@ public class UpdateContainer extends AbstratoContainer {
 					textArea.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
+				consultaCor.processar(textArea.getStyledDocument());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(UpdateConstantes.PAINEL_UPDATE, ex, UpdateContainer.this);
 			}
@@ -248,7 +252,7 @@ public class UpdateContainer extends AbstratoContainer {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea.getTextAreaInner());
+			String string = Util.getString(textArea);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
 			textArea.requestFocus();
@@ -256,7 +260,7 @@ public class UpdateContainer extends AbstratoContainer {
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+			Util.getContentTransfered(textArea, numeros, letras);
 		}
 
 		@Override
@@ -289,7 +293,7 @@ public class UpdateContainer extends AbstratoContainer {
 			if (!Util.estaVazio(textArea.getText())) {
 				Conexao conexao = (Conexao) comboConexao.getSelectedItem();
 				if (conexao != null) {
-					String instrucao = Util.getString(textArea.getTextAreaInner());
+					String instrucao = Util.getString(textArea);
 					atualizar(conexao, instrucao);
 				}
 			}
