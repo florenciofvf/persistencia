@@ -122,7 +122,7 @@ class Analise {
 	}
 
 	boolean ok(char c) {
-		return c >= 'A' && c <= 'Z';
+		return (c >= 'A' && c <= 'Z') || c == '_';
 	}
 }
 
