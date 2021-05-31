@@ -14,7 +14,9 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -109,7 +111,15 @@ public class UpdateContainer extends AbstratoContainer {
 	private void configurar() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
+		textArea.addKeyListener(keyListenerInner);
 	}
+
+	private transient KeyListener keyListenerInner = new KeyAdapter() {
+		@Override
+		public void keyReleased(KeyEvent e) {
+			consultaCor.processar(textArea.getStyledDocument());
+		}
+	};
 
 	public String getConteudo() {
 		return textArea.getText();
