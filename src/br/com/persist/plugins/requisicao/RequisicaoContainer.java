@@ -209,11 +209,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void eventos() {
-			chkCopiarAccessToken.addActionListener(
-					e -> Preferencias.setBoolean("copiar_access_token", chkCopiarAccessToken.isSelected()));
 			chkRespostaImagem.setSelected(Preferencias.getInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON) == 1);
 			chkRespostaJson.setSelected(Preferencias.getInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON) == 2);
 			chkCopiarAccessToken.setSelected(Preferencias.getBoolean("copiar_access_token"));
+			chkCopiarAccessToken.addActionListener(e -> chkCopiarAccessTokenHandler());
 			chkRespostaImagem.addActionListener(e -> chkRespostaImagemHandler());
 			chkRespostaJson.addActionListener(e -> chkRespostaJsonHandler());
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
@@ -223,6 +222,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 			formatarAcao.setActionListener(e -> formatar());
 			base64Acao.setActionListener(e -> base64());
 			modeloAcao.setActionListener(e -> modelo());
+			chkCopiarAccessTokenHandler();
+		}
+
+		private void chkCopiarAccessTokenHandler() {
+			if (!chkRespostaJson.isSelected() || chkRespostaImagem.isSelected()) {
+				chkCopiarAccessToken.setSelected(false);
+			}
+			Preferencias.setBoolean("copiar_access_token", chkCopiarAccessToken.isSelected());
 		}
 
 		private void chkRespostaImagemHandler() {
@@ -230,6 +237,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 					chkRespostaImagem.isSelected() ? 1 : 0);
 			if (chkRespostaImagem.isSelected()) {
 				chkRespostaJson.setSelected(false);
+				chkCopiarAccessToken.setSelected(false);
 			}
 		}
 
@@ -238,6 +246,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 					chkRespostaJson.isSelected() ? 2 : 0);
 			if (chkRespostaJson.isSelected()) {
 				chkRespostaImagem.setSelected(false);
+			} else {
+				chkCopiarAccessToken.setSelected(false);
 			}
 		}
 
