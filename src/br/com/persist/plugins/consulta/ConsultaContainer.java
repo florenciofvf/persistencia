@@ -347,6 +347,7 @@ public class ConsultaContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Util.getContentTransfered(textArea, numeros, letras);
+			consultaCor.processar(textArea.getStyledDocument());
 		}
 
 		@Override
@@ -382,6 +383,7 @@ public class ConsultaContainer extends AbstratoContainer {
 			}
 			string = getString(string);
 			Util.insertStringArea(textArea, string);
+			consultaCor.processar(textArea.getStyledDocument());
 		}
 
 		private String getString(String string) {

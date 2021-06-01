@@ -272,6 +272,7 @@ public class UpdateContainer extends AbstratoContainer {
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
 			Util.getContentTransfered(textArea, numeros, letras);
+			consultaCor.processar(textArea.getStyledDocument());
 		}
 
 		@Override
