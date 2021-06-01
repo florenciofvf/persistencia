@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -374,6 +375,27 @@ public class Util {
 	public static boolean confirmar(Component componente, String msg, boolean msgEhChave) {
 		return JOptionPane.showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
 				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
+	}
+
+	private static String[] getArraySimNaoContinuar() {
+		String sim = Mensagens.getString("label.sim");
+		String nao = Mensagens.getString("label.nao");
+		String sem = Mensagens.getString("label.nao_exibir");
+		return new String[] { sim, nao, sem };
+	}
+
+	public static boolean confirmar2(Component parent, String mensagem, AtomicBoolean atom) {
+		String[] botoes = getArraySimNaoContinuar();
+		int i = JOptionPane.showOptionDialog(parent, mensagem, Mensagens.getString("label.atencao"),
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, botoes, botoes[0]);
+		if (i < 0 || botoes[1].equals(botoes[i])) {
+			return false;
+		}
+		if (botoes[2].equals(botoes[i])) {
+			atom.set(false);
+			return true;
+		}
+		return botoes[0].equals(botoes[i]);
 	}
 
 	public static boolean confirmar(Component componente, String chaveMsg) {

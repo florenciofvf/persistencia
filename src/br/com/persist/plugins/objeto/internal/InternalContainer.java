@@ -604,8 +604,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(InternalContainer.this, false)) {
 					OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 					List<List<IndiceValor>> listaValores = new ArrayList<>();
+					AtomicBoolean atom = new AtomicBoolean(true);
 					for (int linha : linhas) {
-						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true, null);
+						int excluido = modelo.excluirRegistro(linha, objeto.getPrefixoNomeTabela(), true, null, atom);
 						if (excluido == 0 || excluido == 1) {
 							List<IndiceValor> chaves = modelo.getValoresChaves(linha);
 							if (chaves.isEmpty()) {

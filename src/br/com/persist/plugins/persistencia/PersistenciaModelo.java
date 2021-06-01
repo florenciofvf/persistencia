@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -266,14 +267,14 @@ public class PersistenciaModelo implements TableModel {
 		return gerarInsert(null, prefixoNomeTabela, coletor);
 	}
 
-	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
+	public int excluir(int rowIndex, String prefixoNomeTabela, boolean comWhere, Conexao conexao, AtomicBoolean atom) {
 		List<Object> registro = registros.get(rowIndex);
 		if (contemChaves()) {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere, conexao);
 				int i = Persistencia.executar(ConexaoProvedor.getConnection(this.conexao), delete);
-				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
-						false)) {
+				if (atom.get() && Util.confirmar2(componente,
+						PersistenciaMensagens.getString("msg.area_trans_tabela_registros"), atom)) {
 					Util.setContentTransfered(delete);
 				}
 				return i;
