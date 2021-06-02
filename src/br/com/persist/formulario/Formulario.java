@@ -63,6 +63,10 @@ public class Formulario extends JFrame implements SetFormulario {
 		ini();
 	}
 
+	public void atualizarTitulo() {
+		setTitle(Mensagens.getTituloAplicacao());
+	}
+
 	private void ini() {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout());

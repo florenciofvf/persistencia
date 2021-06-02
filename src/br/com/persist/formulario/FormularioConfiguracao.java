@@ -16,6 +16,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.assistencia.Preferencias;
@@ -40,6 +41,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final CheckBox chkTituloAbaMin = criarCheckBox("label.titulo_aba_min");
 	private final TextField txtFormFichaDialogo = new TextField();
 	private final TextField txtDefinirLargura = new TextField();
+	private final Button buttonConectaDesconecta = new Button();
 	private final TextField txtDefinirAltura = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
@@ -64,9 +66,9 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void montarLayout() {
-		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 		chkAplicarLarguraAoAbrirArquivo.setSelected(Preferencias.isAplicarLarguraAoAbrirArquivoObjeto());
 		chkAplicarAlturaAoAbrirArquivo.setSelected(Preferencias.isAplicarAlturaAoAbrirArquivoObjeto());
+		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, Preferencias.getPosicaoAbaFichario());
 		chkFecharComESCFormulario.setSelected(Preferencias.isFecharComESCFormulario());
 		chkFecharComESCInternal.setSelected(Preferencias.isFecharComESCInternal());
 		txtDefinirLargura.setText("" + Preferencias.getPorcHorizontalLocalForm());
@@ -90,6 +92,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		muro.camada(panelS(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(buttonAplicarLA)));
+		muro.camada(panelS(new PanelCenter(buttonConectaDesconecta)));
 		muro.camada(panel(0, 0, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
 				chkFecharComESCFormulario, chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin,
 				chkFicharioScroll, chkMonitorPreferencial));
@@ -138,6 +141,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				e -> Preferencias.setAplicarAlturaAoAbrirArquivoObjeto(chkAplicarAlturaAoAbrirArquivo.isSelected()));
 		txtFormDialogo.addActionListener(e -> Preferencias.setFormDialogo(txtFormDialogo.getText()));
 		txtFormFicha.addActionListener(e -> Preferencias.setFormFicha(txtFormFicha.getText()));
+		buttonConectaDesconecta.addActionListener(e -> buttonConectaDesconectaHandler());
 		txtDefinirLargura.addActionListener(e -> definirLargura());
 		txtDefinirAltura.addActionListener(e -> definirAltura());
 		txtFormFichaDialogo.addFocusListener(new FocusAdapter() {
@@ -174,6 +178,19 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 				definirAltura();
 			}
 		});
+		buttonConectaDesconectaText();
+	}
+
+	private void buttonConectaDesconectaHandler() {
+		Preferencias.setDesconectado(!Preferencias.isDesconectado());
+		buttonConectaDesconectaText();
+	}
+
+	private void buttonConectaDesconectaText() {
+		buttonConectaDesconecta
+				.setText("MANTER " + (Preferencias.isDesconectado() ? Constantes.CONECTADO : Constantes.DESCONECTADO));
+		setBorder(BorderFactory.createTitledBorder(Mensagens.getTituloAplicacao()));
+		formulario.atualizarTitulo();
 	}
 
 	private void definirLargura() {

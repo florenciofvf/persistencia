@@ -51,6 +51,7 @@ public class Constantes {
 	public static final String LABEL_LIMPAR = "label.limpar";
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final String LABEL_FECHAR = "label.fechar";
+	public static final String DESCONECTADO = "DESCONECTADO";
 	public static final String LABEL_BANCO = "label.banco";
 	public static final String LABEL_VAZIO = "label.vazio";
 	public static final String CHAVE_VALOR = "chave_valor";
@@ -58,6 +59,7 @@ public class Constantes {
 	public static final String LABEL_NOVO = "label.novo";
 	public static final String COR_FONTE = "COR_FONTE:";
 	public static final int TREZENTOS_QUARENTA_UM = 341;
+	public static final String CONECTADO = "CONECTADO";
 	public static final String DIALOG = "DIALOG";
 	public static final String CAMPOS = "CAMPOS";
 	public static final String ICONE = "ICONE:";

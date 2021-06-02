@@ -26,7 +26,7 @@ public class Main {
 	private static final Logger LOG = Logger.getGlobal();
 
 	public static void main(String[] args) {
-		String[] opcoes = new String[] { "CONECTADO", "DESCONECTADO" };
+		String[] opcoes = new String[] { Constantes.CONECTADO, Constantes.DESCONECTADO };
 		String opcao = Util.getValorInputDialog(null, opcoes);
 		if (opcao == null) {
 			return;
