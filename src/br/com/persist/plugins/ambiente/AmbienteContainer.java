@@ -34,10 +34,11 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
-import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -130,7 +131,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, textArea);
+		add(BorderLayout.CENTER, new ScrollPane(textArea));
 	}
 
 	public String getConteudo() {
