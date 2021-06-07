@@ -16,7 +16,7 @@ public class CheckBox extends JCheckBox {
 	}
 
 	public CheckBox(boolean selecionado) {
-		setSelected(selecionado);
+		super("", selecionado);
 	}
 
 	public CheckBox() {
