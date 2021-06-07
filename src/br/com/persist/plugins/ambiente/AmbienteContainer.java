@@ -32,10 +32,11 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.SetLista;
-import br.com.persist.componente.TextArea;
 import br.com.persist.componente.TextField;
+import br.com.persist.componente.TextPane;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -43,7 +44,7 @@ import br.com.persist.formulario.Formulario;
 
 public class AmbienteContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
-	private final TextArea textArea = new TextArea();
+	private final TextPane textArea = new TextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private AmbienteFormulario ambienteFormulario;
 	private AmbienteDialogo ambienteDialogo;
@@ -169,14 +170,17 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP);
+			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
+			add(chkPesquisaLocal);
 		}
 
 		@Override
@@ -256,7 +260,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea.getTextAreaInner());
+			String string = Util.getString(textArea);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
 			textArea.requestFocus();
@@ -264,7 +268,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+			Util.getContentTransfered(textArea, numeros, letras);
 		}
 
 		@Override
@@ -296,6 +300,10 @@ public class AmbienteContainer extends AbstratoContainer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtPesquisa.getText())) {
+				if (chkPesquisaLocal.isSelected()) {
+					Util.destacar(textArea.getStyledDocument(), txtPesquisa.getText());
+					return;
+				}
 				List<String> arquivos = Util.listarNomeBackup(fileParent, ambiente.chave);
 				StringBuilder sb = new StringBuilder();
 				for (String arquivo : arquivos) {
