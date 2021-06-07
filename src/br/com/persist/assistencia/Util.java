@@ -1,5 +1,6 @@
 package br.com.persist.assistencia;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -46,6 +47,10 @@ import javax.swing.table.TableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
@@ -767,6 +772,27 @@ public class Util {
 			pos = string.indexOf(atual, indice);
 		}
 		return string;
+	}
+
+	public static void destacar(StyledDocument doc, String pesquisado) {
+		try {
+			String string = doc.getText(0, doc.getLength());
+			if (estaVazio(string) || estaVazio(pesquisado)) {
+				return;
+			}
+			MutableAttributeSet att = new SimpleAttributeSet();
+			StyleConstants.setBackground(att, Color.CYAN);
+			int pos = string.indexOf(pesquisado);
+			int len = pesquisado.length();
+			int indice = 0;
+			while (pos != -1) {
+				doc.setCharacterAttributes(pos, len, att, true);
+				indice = pos + len;
+				pos = string.indexOf(pesquisado, indice);
+			}
+		} catch (BadLocationException e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
 	}
 
 	public static double menorEmPorcentagem(double menor, double maior) {

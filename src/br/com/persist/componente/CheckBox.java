@@ -15,6 +15,10 @@ public class CheckBox extends JCheckBox {
 		this(chaveRotulo, true);
 	}
 
+	public CheckBox(boolean selecionado) {
+		setSelected(selecionado);
+	}
+
 	public CheckBox() {
 	}
 }
