@@ -159,16 +159,17 @@ public class Util {
 		TableColumnModel columnModel = tableHeader.getColumnModel();
 		SetLista.view(titulo, nomeColunas(columnModel), coletor, table, new SetLista.Config(true, true));
 		if (coletor.size() == 1) {
-			return copiarColunaUnicaString(columnModel, model, indices, comAspas, coletor);
+			boolean emLinhas = confirmar(tableHeader, "msg.em_linhas");
+			return copiarColunaUnicaString(columnModel, model, indices, comAspas, coletor, emLinhas);
 		}
 		return Constantes.VAZIO;
 	}
 
 	private static String copiarColunaUnicaString(TableColumnModel columnModel, TableModel model, List<Integer> indices,
-			boolean comAspas, Coletor coletor) {
+			boolean comAspas, Coletor coletor, boolean emLinha) {
 		StringBuilder sb = new StringBuilder();
 		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
-		conteudo(sb, model, indices, selecionadas, comAspas);
+		conteudo(sb, model, indices, selecionadas, comAspas, emLinha);
 		return sb.toString();
 	}
 
@@ -283,20 +284,20 @@ public class Util {
 	}
 
 	private static void conteudo(StringBuilder sb, TableModel model, List<Integer> indices,
-			List<ColunaSel> selecionadas, boolean comAspas) {
+			List<ColunaSel> selecionadas, boolean comAspas, boolean emLinha) {
 		for (Integer i : indices) {
 			for (ColunaSel sel : selecionadas) {
 				Object obj = model.getValueAt(i, sel.indiceModel);
 				String val = obj == null ? Constantes.VAZIO : obj.toString();
-				conteudo(sb, comAspas, val);
+				conteudo(sb, comAspas, val, emLinha);
 			}
 		}
 	}
 
-	private static void conteudo(StringBuilder sb, boolean comAspas, String val) {
+	private static void conteudo(StringBuilder sb, boolean comAspas, String val, boolean emLinha) {
 		if (!estaVazio(val)) {
 			if (sb.length() > 0) {
-				sb.append(", ");
+				sb.append(emLinha ? Constantes.QL : ", ");
 			}
 			sb.append(comAspas ? citar(val) : val);
 		}
