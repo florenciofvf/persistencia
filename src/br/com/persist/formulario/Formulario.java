@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.SystemTray;
@@ -265,11 +264,11 @@ public class Formulario extends JFrame implements SetFormulario {
 		Rectangle form = getBounds();
 		Rectangle mont = getGraphicsConfiguration().getBounds();
 		if (Preferencias.isAbrirFormularioDireita()) {
-			return new Rectangle(form.x + form.width, form.y, mont.width - form.width - Math.abs(mont.x - form.x),
-					form.height);
+			return new Rectangle(espaco + form.x + form.width, form.y,
+					mont.width - form.width - Math.abs(mont.x - form.x) - espaco, form.height);
 		} else if (Preferencias.isAbrirFormularioAbaixo()) {
-			return new Rectangle(form.x, form.y + form.height, form.width,
-					mont.height - form.height - Math.abs(mont.y - form.y));
+			return new Rectangle(form.x, espaco + form.y + form.height, form.width,
+					mont.height - form.height - Math.abs(mont.y - form.y) - espaco);
 		}
 		return null;
 	}
