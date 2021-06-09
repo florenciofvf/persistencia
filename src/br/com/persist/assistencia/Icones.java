@@ -22,6 +22,7 @@ public class Icones {
 	public static final Icon REFERENCIA = criarImagem("reference");
 	public static final Icon ASC_TEXTO = criarImagem("asc_texto");
 	public static final Icon CENTRALIZAR = criarImagem("section");
+	public static final Icon SEPARADOR = criarImagem("separador");
 	public static final Icon EXECUTAR = criarImagem("executar");
 	public static final Icon EXPANDIR = criarImagem("expandir");
 	public static final Icon VERTICAL = criarImagem("vertical");
