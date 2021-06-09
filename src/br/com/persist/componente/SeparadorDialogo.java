@@ -1,4 +1,4 @@
-package br.com.persist.plugins.persistencia.tabela;
+package br.com.persist.componente;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -11,11 +11,6 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Button;
-import br.com.persist.componente.CheckBox;
-import br.com.persist.componente.Label;
-import br.com.persist.componente.Panel;
-import br.com.persist.componente.TextField;
 
 public class SeparadorDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;

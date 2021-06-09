@@ -186,6 +186,26 @@ public class Util {
 		return sb.toString();
 	}
 
+	private static void conteudo(StringBuilder sb, TableModel model, List<Integer> indices,
+			List<ColunaSel> selecionadas, boolean comAspas, boolean emLinha) {
+		for (Integer i : indices) {
+			for (ColunaSel sel : selecionadas) {
+				Object obj = model.getValueAt(i, sel.indiceModel);
+				String val = obj == null ? Constantes.VAZIO : obj.toString();
+				conteudo(sb, comAspas, val, emLinha);
+			}
+		}
+	}
+
+	private static void conteudo(StringBuilder sb, boolean comAspas, String val, boolean emLinha) {
+		if (!estaVazio(val)) {
+			if (sb.length() > 0) {
+				sb.append(emLinha ? Constantes.QL : ", ");
+			}
+			sb.append(comAspas ? citar(val) : val);
+		}
+	}
+
 	public static TransferidorTabular criarTransferidorTabular(JTable table, List<Integer> indices) {
 		if (table == null || indices == null) {
 			return null;
@@ -293,26 +313,6 @@ public class Util {
 			html.append("</tr>").append(Constantes.QL);
 			tabular.deleteCharAt(tabular.length() - 1);
 			tabular.append(Constantes.QL);
-		}
-	}
-
-	private static void conteudo(StringBuilder sb, TableModel model, List<Integer> indices,
-			List<ColunaSel> selecionadas, boolean comAspas, boolean emLinha) {
-		for (Integer i : indices) {
-			for (ColunaSel sel : selecionadas) {
-				Object obj = model.getValueAt(i, sel.indiceModel);
-				String val = obj == null ? Constantes.VAZIO : obj.toString();
-				conteudo(sb, comAspas, val, emLinha);
-			}
-		}
-	}
-
-	private static void conteudo(StringBuilder sb, boolean comAspas, String val, boolean emLinha) {
-		if (!estaVazio(val)) {
-			if (sb.length() > 0) {
-				sb.append(emLinha ? Constantes.QL : ", ");
-			}
-			sb.append(comAspas ? citar(val) : val);
 		}
 	}
 

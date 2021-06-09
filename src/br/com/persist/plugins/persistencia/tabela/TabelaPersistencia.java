@@ -26,6 +26,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao2;
 import br.com.persist.componente.Popup;
+import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.plugins.mapeamento.Mapeamento;
 import br.com.persist.plugins.mapeamento.MapeamentoProvedor;
 import br.com.persist.plugins.persistencia.Coluna;
