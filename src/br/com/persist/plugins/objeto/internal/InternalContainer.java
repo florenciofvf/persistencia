@@ -818,7 +818,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					pesquisa.setProcessado(false);
 					pesquisa.inicializarColetores(lista);
 					pesquisa.validoInvisibilidade(vinculoListener.validoInvisibilidade());
-					vinculoListener.pesquisar(getConexao(), pesquisa, Util.getStringLista(lista, apostrofes, false));
+					vinculoListener.pesquisar(getConexao(), pesquisa,
+							Util.getStringLista(lista, ", ", false, apostrofes));
 					pesquisarFinal(coluna);
 				}
 

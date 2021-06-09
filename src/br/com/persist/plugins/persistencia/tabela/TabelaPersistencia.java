@@ -325,35 +325,15 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuCopiarLinhas extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasQLSemVirgulaAcao = actionMenu("label.com_aspas_em_linhas_sem_v", Icones.ASPAS);
-			private Action semAspasQLSemVirgulaAcao = actionMenu("label.sem_aspas_em_linhas_sem_v");
-			private Action comAspasQLAcao = actionMenu("label.com_aspas_em_linhas", Icones.ASPAS);
-			private Action semAspasQLAcao = actionMenu("label.sem_aspas_em_linhas");
 
 			private MenuCopiarLinhas() {
 				super(TabelaMensagens.getString("label.copiar_header"), false, null);
-				addSeparator();
-				addMenuItem(semAspasQLAcao);
-				addMenuItem(comAspasQLAcao);
-				addSeparator();
-				addMenuItem(semAspasQLSemVirgulaAcao);
-				addMenuItem(comAspasQLSemVirgulaAcao);
-				semAspasQLSemVirgulaAcao.setActionListener(e -> copiarSemV(false));
-				comAspasQLSemVirgulaAcao.setActionListener(e -> copiarSemV(true));
-				semAspasQLAcao.setActionListener(e -> copiar(true, false));
-				comAspasQLAcao.setActionListener(e -> copiar(true, true));
-				semAspasAcao.setActionListener(e -> copiar(false, false));
-				comAspasAcao.setActionListener(e -> copiar(false, true));
+				semAspasAcao.setActionListener(e -> copiar(false));
+				comAspasAcao.setActionListener(e -> copiar(true));
 			}
 
-			private void copiar(boolean emLinhas, boolean aspas) {
-				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
-				Util.setContentTransfered(Util.getStringLista(lista, aspas, emLinhas));
-			}
-
-			private void copiarSemV(boolean aspas) {
-				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
-				Util.setContentTransfered(Util.getStringListaSemVirgula(lista, aspas));
+			private void copiar(boolean aspas) {
+				SeparadorDialogo.criar(PopupHeader.this, "Copiar", TabelaPersistencia.this, indiceColuna, aspas);
 			}
 		}
 
@@ -394,7 +374,7 @@ public class TabelaPersistencia extends JTable {
 
 			private void copiarIN(boolean aspas) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
-				String complemento = Util.getStringLista(lista, aspas, false);
+				String complemento = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.estaVazio(complemento)) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
@@ -418,7 +398,7 @@ public class TabelaPersistencia extends JTable {
 
 			private void copiarINDinamico(boolean aspas) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
-				String complemento = Util.getStringLista(lista, aspas, false);
+				String complemento = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.estaVazio(complemento)) {
 					Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");
 				} else {

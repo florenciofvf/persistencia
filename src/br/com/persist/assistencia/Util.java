@@ -126,6 +126,19 @@ public class Util {
 		return resposta;
 	}
 
+	public static List<String> getValoresLinha(JTable table, int coluna) {
+		TableModel modelo = table.getModel();
+		List<Integer> linhas = Util.getIndicesLinha(table);
+		List<String> resposta = new ArrayList<>();
+		for (int i : linhas) {
+			Object obj = modelo.getValueAt(i, coluna);
+			if (obj != null && !Util.estaVazio(obj.toString())) {
+				resposta.add(obj.toString());
+			}
+		}
+		return resposta;
+	}
+
 	public static void ajustar(JTable table, Graphics graphics) {
 		if (table == null || graphics == null) {
 			return;
@@ -488,15 +501,16 @@ public class Util {
 		}
 	}
 
-	public static String getStringLista(List<String> lista, boolean apostrofes, boolean emLinhas) {
+	public static String getStringLista(List<String> lista, String separador, boolean quebrarLinha,
+			boolean apostrofes) {
 		StringBuilder sb = new StringBuilder();
 		for (String string : lista) {
 			if (estaVazio(string)) {
 				continue;
 			}
 			if (sb.length() > 0) {
-				sb.append(", ");
-				if (emLinhas) {
+				sb.append(separador);
+				if (quebrarLinha) {
 					sb.append(Constantes.QL);
 				}
 			}
