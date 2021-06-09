@@ -269,10 +269,12 @@ public class Formulario extends JFrame implements SetFormulario {
 		double porcentagemAltura = Util.menorEmPorcentagem(formularioSize.height, monitorBounds.height);
 		if (criarRetanguloLargura(porcentagemLargura)) {
 			return new Rectangle(formularioLocation.x + formularioSize.width + espaco, formularioLocation.y,
-					monitorBounds.width - formularioSize.width - espaco, formularioSize.height);
+					monitorBounds.width - formularioSize.width - (espaco * 2) - formularioLocation.x,
+					formularioSize.height);
 		} else if (criarRetanguloAltura(porcentagemAltura)) {
 			return new Rectangle(formularioLocation.x, formularioLocation.y + formularioSize.height + espaco,
-					formularioSize.width, monitorBounds.height - formularioSize.height - espaco);
+					formularioSize.width,
+					monitorBounds.height - formularioSize.height - (espaco * 2) - formularioLocation.y);
 		}
 		return null;
 	}
