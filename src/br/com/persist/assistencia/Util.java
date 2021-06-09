@@ -52,6 +52,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.TextArea;
 import br.com.persist.componente.SetLista.Coletor;
@@ -159,51 +160,27 @@ public class Util {
 		}
 	}
 
-	public static String copiarColunaUnicaString(JTable table, List<Integer> indices, boolean comAspas, String titulo) {
-		if (table == null || indices == null) {
-			return Constantes.VAZIO;
+	public static void copiarColunaUnicaString(String titulo, JTable table, boolean comAspas) {
+		if (table == null) {
+			return;
 		}
 		TableModel model = table.getModel();
 		if (model == null || model.getColumnCount() < 1 || model.getRowCount() < 1) {
-			return Constantes.VAZIO;
+			return;
 		}
 		Coletor coletor = new Coletor();
 		JTableHeader tableHeader = table.getTableHeader();
 		TableColumnModel columnModel = tableHeader.getColumnModel();
 		SetLista.view(titulo, nomeColunas(columnModel), coletor, table, new SetLista.Config(true, true));
 		if (coletor.size() == 1) {
-			boolean emLinhas = confirmar(tableHeader, "msg.em_linhas");
-			return copiarColunaUnicaString(columnModel, model, indices, comAspas, coletor, emLinhas);
-		}
-		return Constantes.VAZIO;
-	}
-
-	private static String copiarColunaUnicaString(TableColumnModel columnModel, TableModel model, List<Integer> indices,
-			boolean comAspas, Coletor coletor, boolean emLinha) {
-		StringBuilder sb = new StringBuilder();
-		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
-		conteudo(sb, model, indices, selecionadas, comAspas, emLinha);
-		return sb.toString();
-	}
-
-	private static void conteudo(StringBuilder sb, TableModel model, List<Integer> indices,
-			List<ColunaSel> selecionadas, boolean comAspas, boolean emLinha) {
-		for (Integer i : indices) {
-			for (ColunaSel sel : selecionadas) {
-				Object obj = model.getValueAt(i, sel.indiceModel);
-				String val = obj == null ? Constantes.VAZIO : obj.toString();
-				conteudo(sb, comAspas, val, emLinha);
-			}
+			copiarColunaUnicaString(titulo, table, columnModel, comAspas, coletor);
 		}
 	}
 
-	private static void conteudo(StringBuilder sb, boolean comAspas, String val, boolean emLinha) {
-		if (!estaVazio(val)) {
-			if (sb.length() > 0) {
-				sb.append(emLinha ? Constantes.QL : ", ");
-			}
-			sb.append(comAspas ? citar(val) : val);
-		}
+	private static void copiarColunaUnicaString(String titulo, JTable table, TableColumnModel columnModel,
+			boolean comAspas, Coletor coletor) {
+		ColunaSel sel = colunasSelecionadas(coletor, columnModel).get(0);
+		SeparadorDialogo.criar(table, titulo, table, sel.indiceModel, comAspas);
 	}
 
 	public static TransferidorTabular criarTransferidorTabular(JTable table, List<Integer> indices) {

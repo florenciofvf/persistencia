@@ -115,11 +115,9 @@ class TabelaContainer extends Panel {
 			}
 
 			private void umaColuna(boolean comAspas) {
-				List<Integer> indices = Util.getIndicesLinha(tabela);
-				String string = Util.copiarColunaUnicaString(tabela, indices, comAspas,
-						comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
-								: Mensagens.getString("label.uma_coluna_sem_aspas"));
-				Util.setContentTransfered(string);
+				String titulo = comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
+						: Mensagens.getString("label.uma_coluna_sem_aspas");
+				Util.copiarColunaUnicaString(titulo, tabela, comAspas);
 			}
 
 			private void processar(int tipo) {
