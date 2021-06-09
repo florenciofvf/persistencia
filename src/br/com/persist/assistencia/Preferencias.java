@@ -25,6 +25,8 @@ public class Preferencias {
 	private static final Logger LOG = Logger.getGlobal();
 	private static boolean exibiuMensagemConnection;
 	private static boolean fecharComESCFormulario;
+	private static boolean abrirFormularioDireita;
+	private static boolean abrirFormularioAbaixo;
 	private static boolean fecharComESCInternal;
 	private static int porcHorizontalLocalForm;
 	private static boolean erroCriarConnection;
@@ -66,6 +68,8 @@ public class Preferencias {
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
 		fecharComESCFormulario = pref.getBoolean("fechar_com_ESC_formulario", false);
+		abrirFormularioDireita = pref.getBoolean("abrir_formulario_direita", false);
+		abrirFormularioAbaixo = pref.getBoolean("abrir_formulario_abaixo", false);
 		fecharComESCInternal = pref.getBoolean("fechar_com_ESC_internal", false);
 		porcHorizontalLocalForm = pref.getInt("porc_horizontal_local_form", 70);
 		formFichaDialogo = pref.get("form_ficha_dialogo", "FORM,FICHA,DIALOG");
@@ -105,7 +109,9 @@ public class Preferencias {
 		pref.putBoolean("aplicar_largura_abrir_arquivo_objeto", aplicarLarguraAoAbrirArquivoObjeto);
 		pref.putBoolean("aplicar_altura_abrir_arquivo_objeto", aplicarAlturaAoAbrirArquivoObjeto);
 		pref.putBoolean("fechar_com_ESC_formulario", fecharComESCFormulario);
+		pref.putBoolean("abrir_formulario_direita", abrirFormularioDireita);
 		pref.putInt("porc_horizontal_local_form", porcHorizontalLocalForm);
+		pref.putBoolean("abrir_formulario_abaixo", abrirFormularioAbaixo);
 		pref.putBoolean("fechar_com_ESC_internal", fecharComESCInternal);
 		pref.putInt("porc_vertical_local_form", porcVerticalLocalForm);
 		pref.putBoolean("fechar_com_ESC_dialogo", fecharComESCDialogo);
@@ -321,5 +327,21 @@ public class Preferencias {
 
 	public static void setMonitorPreferencial(boolean monitorPreferencial) {
 		Preferencias.monitorPreferencial = monitorPreferencial;
+	}
+
+	public static boolean isAbrirFormularioDireita() {
+		return abrirFormularioDireita;
+	}
+
+	public static void setAbrirFormularioDireita(boolean abrirFormularioDireita) {
+		Preferencias.abrirFormularioDireita = abrirFormularioDireita;
+	}
+
+	public static boolean isAbrirFormularioAbaixo() {
+		return abrirFormularioAbaixo;
+	}
+
+	public static void setAbrirFormularioAbaixo(boolean abrirFormularioAbaixo) {
+		Preferencias.abrirFormularioAbaixo = abrirFormularioAbaixo;
 	}
 }

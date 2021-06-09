@@ -279,12 +279,11 @@ public class Formulario extends JFrame implements SetFormulario {
 
 	private boolean criarRetanguloLargura(double porcentagemLargura) {
 		return porcentagemLargura <= Preferencias.getPorcHorizontalLocalForm()
-				&& Preferencias.isAplicarLarguraAoAbrirArquivoObjeto();
+				&& Preferencias.isAbrirFormularioDireita();
 	}
 
 	private boolean criarRetanguloAltura(double porcentagemAltura) {
-		return porcentagemAltura <= Preferencias.getPorcVerticalLocalForm()
-				&& Preferencias.isAplicarAlturaAoAbrirArquivoObjeto();
+		return porcentagemAltura <= Preferencias.getPorcVerticalLocalForm() && Preferencias.isAbrirFormularioAbaixo();
 	}
 
 	public void checarPreferenciasLarguraAltura() {
