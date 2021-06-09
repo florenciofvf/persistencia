@@ -260,31 +260,18 @@ public class Formulario extends JFrame implements SetFormulario {
 		}
 	}
 
-	private Rectangle criarPosicaoDimensaoSeValido() {
+	private Rectangle criarPosicaoDimensaoOuNull() {
 		final int espaco = 3;
-		Dimension formularioSize = getSize();
-		Point formularioLocation = getLocation();
-		Rectangle monitorBounds = getGraphicsConfiguration().getBounds();
-		double porcentagemLargura = Util.menorEmPorcentagem(formularioSize.width, monitorBounds.width);
-		double porcentagemAltura = Util.menorEmPorcentagem(formularioSize.height, monitorBounds.height);
-		if (criarRetanguloLargura(porcentagemLargura)) {
-			return new Rectangle(formularioLocation.x + formularioSize.width + espaco, formularioLocation.y,
-					monitorBounds.width - formularioSize.width - (espaco * 2) - formularioLocation.x,
-					formularioSize.height);
-		} else if (criarRetanguloAltura(porcentagemAltura)) {
-			return new Rectangle(formularioLocation.x, formularioLocation.y + formularioSize.height + espaco,
-					formularioSize.width,
-					monitorBounds.height - formularioSize.height - (espaco * 2) - formularioLocation.y);
+		Rectangle form = getBounds();
+		Rectangle mont = getGraphicsConfiguration().getBounds();
+		if (Preferencias.isAbrirFormularioDireita()) {
+			return new Rectangle(form.x + form.width, form.y, mont.width - form.width - Math.abs(mont.x - form.x),
+					form.height);
+		} else if (Preferencias.isAbrirFormularioAbaixo()) {
+			return new Rectangle(form.x, form.y + form.height, form.width,
+					mont.height - form.height - Math.abs(mont.y - form.y));
 		}
 		return null;
-	}
-
-	private boolean criarRetanguloLargura(double porcentagemLargura) {
-		return Preferencias.isAbrirFormularioDireita();
-	}
-
-	private boolean criarRetanguloAltura(double porcentagemAltura) {
-		return Preferencias.isAbrirFormularioAbaixo();
 	}
 
 	public void checarPreferenciasLarguraAltura() {
@@ -318,7 +305,7 @@ public class Formulario extends JFrame implements SetFormulario {
 	}
 
 	private static void posicionar(Formulario formulario, Window window) {
-		Rectangle rect = formulario.criarPosicaoDimensaoSeValido();
+		Rectangle rect = formulario.criarPosicaoDimensaoOuNull();
 		if (rect != null) {
 			window.setBounds((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
 		} else {
