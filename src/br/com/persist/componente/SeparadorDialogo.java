@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 
@@ -33,6 +34,11 @@ public class SeparadorDialogo extends AbstratoDialogo {
 		form.pack();
 		form.setLocationRelativeTo(component);
 		form.setVisible(true);
+	}
+
+	@Override
+	public void executarAoAbrirDialogo() {
+		container.checarCopias();
 	}
 }
 
@@ -73,5 +79,14 @@ class SeparadorContainer extends Panel {
 		String string = Util.getStringLista(lista, txtSeparador.getText(), chkQuebraLinha.isSelected(), comAspas);
 		Util.setContentTransfered(string);
 		dialogo.dispose();
+	}
+
+	public void checarCopias() {
+		List<String> lista = Util.getValoresLinha(table, indiceColuna);
+		if (lista.size() == 1) {
+			String string = Util.getStringLista(lista, Constantes.VAZIO, false, comAspas);
+			Util.setContentTransfered(string);
+			dialogo.dispose();
+		}
 	}
 }
