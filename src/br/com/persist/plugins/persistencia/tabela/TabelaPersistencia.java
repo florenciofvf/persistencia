@@ -334,7 +334,7 @@ public class TabelaPersistencia extends JTable {
 			}
 
 			private void copiar(boolean aspas) {
-				SeparadorDialogo.criar(PopupHeader.this, "Copiar", TabelaPersistencia.this, indiceColuna, aspas);
+				SeparadorDialogo.criar(TabelaPersistencia.this, "Copiar", TabelaPersistencia.this, indiceColuna, aspas);
 			}
 		}
 
