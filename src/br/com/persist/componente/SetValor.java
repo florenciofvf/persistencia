@@ -27,6 +27,9 @@ public class SetValor {
 		} else {
 			form = new SetValorDialogo((Frame) null, valor);
 		}
+		if (!Util.estaVazio(valor.get()) && valor.get().length() < 200) {
+			form.pack();
+		}
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
