@@ -1,6 +1,7 @@
 package br.com.persist.plugins.persistencia.tabela;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
@@ -45,15 +46,17 @@ public class TabelaDialogo extends AbstratoDialogo {
 		container.dialogoVisivel();
 	}
 
-	public static void criar(Dialog dialog, String titulo, MemoriaModelo modelo) {
-		TabelaDialogo form = new TabelaDialogo(dialog, titulo, modelo);
-		form.setLocationRelativeTo(dialog);
-		form.setVisible(true);
-	}
-
-	public static void criar(Frame frame, String titulo, MemoriaModelo modelo) {
-		TabelaDialogo form = new TabelaDialogo(frame, titulo, modelo);
-		form.setLocationRelativeTo(frame);
+	public static void criar(Component c, String titulo, MemoriaModelo modelo) {
+		Component comp = Util.getViewParent(c);
+		TabelaDialogo form = null;
+		if (comp instanceof Frame) {
+			form = new TabelaDialogo((Frame) comp, titulo, modelo);
+		} else if (comp instanceof Dialog) {
+			form = new TabelaDialogo((Dialog) comp, titulo, modelo);
+		} else {
+			form = new TabelaDialogo((Frame) null, titulo, modelo);
+		}
+		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
 }
