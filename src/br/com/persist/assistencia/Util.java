@@ -340,7 +340,7 @@ public class Util {
 		mensagem.setVisible(true);
 	}
 
-	private static Component getViewParent(Component componente) {
+	public static Component getViewParent(Component componente) {
 		Component view = componente;
 		while (view != null) {
 			if (view instanceof Frame || view instanceof Dialog) {

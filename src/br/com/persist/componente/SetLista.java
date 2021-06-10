@@ -4,6 +4,7 @@ import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -30,8 +31,16 @@ public class SetLista {
 		if (config == null) {
 			config = new Config();
 		}
-		SetListaDialogo form = new SetListaDialogo(titulo, lista, coletor, config.somenteUm, config.obrigatorio);
-		form.setLocationRelativeTo(c);
+		Component comp = Util.getViewParent(c);
+		SetListaDialogo form = null;
+		if (comp instanceof Frame) {
+			form = new SetListaDialogo((Frame) comp, titulo, lista, coletor, config.somenteUm, config.obrigatorio);
+		} else if (comp instanceof Dialog) {
+			form = new SetListaDialogo((Dialog) comp, titulo, lista, coletor, config.somenteUm, config.obrigatorio);
+		} else {
+			form = new SetListaDialogo((Frame) null, titulo, lista, coletor, config.somenteUm, config.obrigatorio);
+		}
+		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
 
@@ -136,20 +145,34 @@ class ItemRenderer extends JCheckBox implements ListCellRenderer<Item> {
 
 class SetListaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
+	private final JList<Item> lista = new JList<>();
 	private final Toolbar toolbar = new Toolbar();
-	private JList<Item> lista = new JList<>();
 	private final transient Coletor coletor;
 	private final boolean obrigatorio;
 	private final boolean somenteUm;
 
-	SetListaDialogo(String titulo, List<String> listaString, Coletor coletor, boolean somenteUm, boolean obrigatorio) {
-		super((Frame) null, titulo + " [" + listaString.size() + "]");
-		lista.setModel(criarModel(listaString, somenteUm));
-		lista.setCellRenderer(new ItemRenderer());
+	SetListaDialogo(Frame frame, String titulo, List<String> listaString, Coletor coletor, boolean somenteUm,
+			boolean obrigatorio) {
+		super(frame, titulo + " [" + listaString.size() + "]");
 		this.obrigatorio = obrigatorio;
 		this.somenteUm = somenteUm;
-		setSize(Constantes.SIZE3);
 		this.coletor = coletor;
+		init(listaString);
+	}
+
+	SetListaDialogo(Dialog dialog, String titulo, List<String> listaString, Coletor coletor, boolean somenteUm,
+			boolean obrigatorio) {
+		super(dialog, titulo + " [" + listaString.size() + "]");
+		this.obrigatorio = obrigatorio;
+		this.somenteUm = somenteUm;
+		this.coletor = coletor;
+		init(listaString);
+	}
+
+	private void init(List<String> listaString) {
+		lista.setModel(criarModel(listaString, somenteUm));
+		lista.setCellRenderer(new ItemRenderer());
+		setSize(Constantes.SIZE3);
 		toolbar.ini(this);
 		montarLayout();
 		eventos();
