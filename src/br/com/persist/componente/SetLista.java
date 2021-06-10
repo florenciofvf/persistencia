@@ -22,6 +22,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.SetLista.Config;
 
 public class SetLista {
 	private SetLista() {
@@ -34,11 +35,11 @@ public class SetLista {
 		Component comp = Util.getViewParent(c);
 		SetListaDialogo form = null;
 		if (comp instanceof Frame) {
-			form = new SetListaDialogo((Frame) comp, titulo, lista, coletor, config.somenteUm, config.obrigatorio);
+			form = new SetListaDialogo((Frame) comp, titulo, lista, coletor, config);
 		} else if (comp instanceof Dialog) {
-			form = new SetListaDialogo((Dialog) comp, titulo, lista, coletor, config.somenteUm, config.obrigatorio);
+			form = new SetListaDialogo((Dialog) comp, titulo, lista, coletor, config);
 		} else {
-			form = new SetListaDialogo((Frame) null, titulo, lista, coletor, config.somenteUm, config.obrigatorio);
+			form = new SetListaDialogo((Frame) null, titulo, lista, coletor, config);
 		}
 		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
@@ -148,29 +149,24 @@ class SetListaDialogo extends AbstratoDialogo {
 	private final JList<Item> lista = new JList<>();
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Coletor coletor;
-	private final boolean obrigatorio;
-	private final boolean somenteUm;
+	private final transient Config config;
 
-	SetListaDialogo(Frame frame, String titulo, List<String> listaString, Coletor coletor, boolean somenteUm,
-			boolean obrigatorio) {
+	SetListaDialogo(Frame frame, String titulo, List<String> listaString, Coletor coletor, Config config) {
 		super(frame, titulo + " [" + listaString.size() + "]");
-		this.obrigatorio = obrigatorio;
-		this.somenteUm = somenteUm;
 		this.coletor = coletor;
+		this.config = config;
 		init(listaString);
 	}
 
-	SetListaDialogo(Dialog dialog, String titulo, List<String> listaString, Coletor coletor, boolean somenteUm,
-			boolean obrigatorio) {
+	SetListaDialogo(Dialog dialog, String titulo, List<String> listaString, Coletor coletor, Config config) {
 		super(dialog, titulo + " [" + listaString.size() + "]");
-		this.obrigatorio = obrigatorio;
-		this.somenteUm = somenteUm;
 		this.coletor = coletor;
+		this.config = config;
 		init(listaString);
 	}
 
 	private void init(List<String> listaString) {
-		lista.setModel(criarModel(listaString, somenteUm));
+		lista.setModel(criarModel(listaString, config.somenteUm));
 		lista.setCellRenderer(new ItemRenderer());
 		setSize(Constantes.SIZE3);
 		toolbar.ini(this);
@@ -217,7 +213,7 @@ class SetListaDialogo extends AbstratoDialogo {
 			}
 
 			private void checarSomenteUm(Item item) {
-				if (somenteUm) {
+				if (config.somenteUm) {
 					ListModel<Item> model = lista.getModel();
 					for (int i = 0; i < model.getSize(); i++) {
 						Item a = model.getElementAt(i);
@@ -242,7 +238,7 @@ class SetListaDialogo extends AbstratoDialogo {
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
 			add(chkTodos);
-			chkTodos.setSelected(!somenteUm);
+			chkTodos.setSelected(!config.somenteUm);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
 		}
 
@@ -250,7 +246,7 @@ class SetListaDialogo extends AbstratoDialogo {
 			ListModel<Item> model = lista.getModel();
 			for (int i = 0; i < model.getSize(); i++) {
 				Item item = model.getElementAt(i);
-				if (somenteUm) {
+				if (config.somenteUm) {
 					item.setSelecionado(false);
 				} else {
 					item.setSelecionado(b);
@@ -269,8 +265,8 @@ class SetListaDialogo extends AbstratoDialogo {
 					listar.add(item.getRotulo());
 				}
 			}
-			if (obrigatorio && listar.isEmpty()) {
-				if (somenteUm) {
+			if (config.obrigatorio && listar.isEmpty()) {
+				if (config.somenteUm) {
 					Util.mensagem(SetListaDialogo.this, Mensagens.getString("msg.selecione_um"));
 				} else {
 					Util.mensagem(SetListaDialogo.this, Mensagens.getString("msg.selecione_mais"));
