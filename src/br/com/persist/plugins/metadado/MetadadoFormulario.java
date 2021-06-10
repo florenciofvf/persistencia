@@ -35,12 +35,14 @@ public class MetadadoFormulario extends AbstratoFormulario {
 		MetadadoFormulario form = new MetadadoFormulario(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario, Conexao conexao) {
 		MetadadoFormulario form = new MetadadoFormulario(formulario, conexao);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	@Override

@@ -37,6 +37,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		ObjetoFormulario form = new ObjetoFormulario(formulario, container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}
 
@@ -44,6 +45,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		ObjetoFormulario form = new ObjetoFormulario(formulario, file);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}
 

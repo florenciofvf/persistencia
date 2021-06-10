@@ -32,12 +32,14 @@ public class RequisicaoFormulario extends AbstratoFormulario {
 		RequisicaoFormulario form = new RequisicaoFormulario(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario, String conteudo, String idPagina) {
 		RequisicaoFormulario form = new RequisicaoFormulario(formulario, conteudo, idPagina);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	@Override

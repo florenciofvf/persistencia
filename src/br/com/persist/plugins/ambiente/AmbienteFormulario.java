@@ -32,12 +32,14 @@ public class AmbienteFormulario extends AbstratoFormulario {
 		AmbienteFormulario form = new AmbienteFormulario(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario, String conteudo, AmbienteContainer.Ambiente ambiente) {
 		AmbienteFormulario form = new AmbienteFormulario(formulario, conteudo, ambiente);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	@Override

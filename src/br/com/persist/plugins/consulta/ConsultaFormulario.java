@@ -35,12 +35,14 @@ public class ConsultaFormulario extends AbstratoFormulario {
 		ConsultaFormulario form = new ConsultaFormulario(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static ConsultaFormulario criar(Formulario formulario, Conexao conexao, String conteudo) {
 		ConsultaFormulario form = new ConsultaFormulario(formulario, conexao, conteudo);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}
 

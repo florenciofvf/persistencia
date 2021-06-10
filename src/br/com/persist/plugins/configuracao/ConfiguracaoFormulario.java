@@ -35,12 +35,14 @@ public class ConfiguracaoFormulario extends AbstratoFormulario {
 		ConfiguracaoFormulario form = new ConfiguracaoFormulario(container);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		ConfiguracaoFormulario form = new ConfiguracaoFormulario(formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 	}
 
 	@Override

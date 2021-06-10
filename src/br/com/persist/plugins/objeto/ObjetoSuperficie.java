@@ -737,9 +737,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		setComplemento(conexao, objeto);
 		AtomicReference<Formulario> ref = new AtomicReference<>();
 		setFormulario(ref);
-		ExternalFormulario form = ExternalFormulario.criar2(ref.get(), conexao, objeto, getGraphics());
-		form.setLocationRelativeTo(frame);
-		form.setVisible(true);
+		ExternalFormulario.criar(ref.get(), conexao, objeto, getGraphics());
 	}
 
 	private class Inversao {
@@ -1759,10 +1757,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		setComplemento(conexao, objeto);
 		AtomicReference<Formulario> ref = new AtomicReference<>();
 		setFormulario(ref);
-		ExternalFormulario form = ExternalFormulario.criar2(ref.get(), conexao, objeto, getGraphics());
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
-		Formulario.posicionarJanela(formulario, form);
+		ExternalFormulario.criar(ref.get(), conexao, objeto, getGraphics());
 	}
 
 	public void atualizarTotal(Conexao conexao, MenuItem menuItem, Label label) {
@@ -2567,7 +2562,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				y += 25;
 			}
 		}
-		Formulario.posicionarJanela(formulario, form);
 	}
 
 	private void destacarDeskopPagina(List<Objeto> objetos, Conexao conexao, InternalConfig config) {

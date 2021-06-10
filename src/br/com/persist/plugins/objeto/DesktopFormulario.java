@@ -31,6 +31,7 @@ public class DesktopFormulario extends AbstratoFormulario {
 		DesktopFormulario form = new DesktopFormulario();
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}
 

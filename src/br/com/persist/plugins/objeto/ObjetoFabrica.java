@@ -127,7 +127,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 					new File(ObjetoMensagens.getString("label.abrir_exportacao")));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
-			Formulario.posicionarJanela(formulario, form);
 		}
 
 		private void abrirExportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
@@ -143,7 +142,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario,
 					new File(ObjetoMensagens.getString("label.abrir_importacao")));
 			form.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
-			Formulario.posicionarJanela(formulario, form);
 		}
 
 		private void abrirImportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
@@ -157,7 +155,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void exportarMetadadoRaizFormulario(Formulario formulario, Metadado metadado) {
 			ObjetoFormulario form = ObjetoFormulario.criar(formulario, new File(Mensagens.getString("label.exportar")));
 			form.exportarMetadadoRaiz(metadado);
-			Formulario.posicionarJanela(formulario, form);
 		}
 
 		private void exportarMetadadoRaizFichario(Formulario formulario, Metadado metadado) {
@@ -233,7 +230,6 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		}
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file);
-		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, Graphics g,
@@ -262,6 +258,5 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			InternalConfig config) {
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file, coletor, g, config);
-		Formulario.posicionarJanela(formulario, form);
 	}
 }
