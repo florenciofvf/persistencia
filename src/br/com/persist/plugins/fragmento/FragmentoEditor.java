@@ -12,6 +12,6 @@ public class FragmentoEditor extends AbstratoEditor {
 	@Override
 	public void abrirModalEdicaoValor(JTable table, int row) {
 		Valor valor = FragmentoProvedor.getValor(row);
-		SetValor.view(valor);
+		SetValor.view(table, valor);
 	}
 }

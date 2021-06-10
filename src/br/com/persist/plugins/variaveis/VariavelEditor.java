@@ -12,6 +12,6 @@ public class VariavelEditor extends AbstratoEditor {
 	@Override
 	public void abrirModalEdicaoValor(JTable table, int row) {
 		Valor valor = VariavelProvedor.getValor(row);
-		SetValor.view(valor);
+		SetValor.view(table, valor);
 	}
 }

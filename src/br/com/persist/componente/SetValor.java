@@ -5,6 +5,8 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
@@ -15,8 +17,17 @@ public class SetValor {
 	private SetValor() {
 	}
 
-	public static void view(Valor valor) {
-		SetValorDialogo form = new SetValorDialogo(valor);
+	public static void view(Component c, Valor valor) {
+		Component comp = Util.getViewParent(c);
+		SetValorDialogo form = null;
+		if (comp instanceof Frame) {
+			form = new SetValorDialogo((Frame) comp, valor);
+		} else if (comp instanceof Dialog) {
+			form = new SetValorDialogo((Dialog) comp, valor);
+		} else {
+			form = new SetValorDialogo((Frame) null, valor);
+		}
+		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
 
@@ -35,10 +46,21 @@ class SetValorDialogo extends AbstratoDialogo {
 	private TextArea textArea = new TextArea();
 	private final transient Valor valor;
 
-	SetValorDialogo(Valor valor) {
-		super((Frame) null, valor.getTitle());
+	SetValorDialogo(Frame frame, Valor valor) {
+		super(frame, valor.getTitle());
 		textArea.setText(valor.get());
 		this.valor = valor;
+		init();
+	}
+
+	SetValorDialogo(Dialog dialog, Valor valor) {
+		super(dialog, valor.getTitle());
+		textArea.setText(valor.get());
+		this.valor = valor;
+		init();
+	}
+
+	private void init() {
 		toolbar.ini(null);
 		montarLayout();
 	}

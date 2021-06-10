@@ -12,6 +12,6 @@ public class ConexaoEditorURL extends AbstratoEditor {
 	@Override
 	public void abrirModalEdicaoValor(JTable table, int row) {
 		Valor valor = ConexaoProvedor.getValorUrl(row);
-		SetValor.view(valor);
+		SetValor.view(table, valor);
 	}
 }

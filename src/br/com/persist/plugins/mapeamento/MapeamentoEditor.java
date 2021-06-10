@@ -12,6 +12,6 @@ public class MapeamentoEditor extends AbstratoEditor {
 	@Override
 	public void abrirModalEdicaoValor(JTable table, int row) {
 		Valor valor = MapeamentoProvedor.getValor(row);
-		SetValor.view(valor);
+		SetValor.view(table, valor);
 	}
 }
