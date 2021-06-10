@@ -19,8 +19,14 @@ public class SeparadorDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final SeparadorContainer container;
 
-	private SeparadorDialogo(String titulo, JTable table, int indiceColuna, boolean comAspas) {
-		super((Frame) null, titulo);
+	private SeparadorDialogo(Frame frame, String titulo, JTable table, int indiceColuna, boolean comAspas) {
+		super(frame, titulo);
+		container = new SeparadorContainer(this, table, indiceColuna, comAspas);
+		montarLayout();
+	}
+
+	private SeparadorDialogo(Dialog dialog, String titulo, JTable table, int indiceColuna, boolean comAspas) {
+		super(dialog, titulo);
 		container = new SeparadorContainer(this, table, indiceColuna, comAspas);
 		montarLayout();
 	}
@@ -29,10 +35,18 @@ public class SeparadorDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static void criar(Component component, String titulo, JTable table, int indiceColuna, boolean comAspas) {
-		SeparadorDialogo form = new SeparadorDialogo(titulo, table, indiceColuna, comAspas);
+	public static void criar(Component c, String titulo, JTable table, int indiceColuna, boolean comAspas) {
+		Component comp = Util.getViewParent(c);
+		SeparadorDialogo form = null;
+		if (comp instanceof Frame) {
+			form = new SeparadorDialogo((Frame) comp, titulo, table, indiceColuna, comAspas);
+		} else if (comp instanceof Dialog) {
+			form = new SeparadorDialogo((Dialog) comp, titulo, table, indiceColuna, comAspas);
+		} else {
+			form = new SeparadorDialogo((Frame) null, titulo, table, indiceColuna, comAspas);
+		}
 		form.pack();
-		form.setLocationRelativeTo(component);
+		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
 
