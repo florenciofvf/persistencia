@@ -259,16 +259,16 @@ public class Formulario extends JFrame implements SetFormulario {
 		}
 	}
 
-	private Rectangle criarPosicaoDimensaoOuNull() {
+	private Rectangle criarDimensaoOuNull() {
 		final int espaco = 3;
 		Rectangle form = getBounds();
 		Rectangle mont = getGraphicsConfiguration().getBounds();
 		if (Preferencias.isAbrirFormularioDireita()) {
-			return new Rectangle(espaco + form.x + form.width, form.y,
-					mont.width - form.width - Math.abs(mont.x - form.x) - espaco, form.height);
+			return new Rectangle(form.x + form.width + espaco, form.y,
+					mont.width - form.width - Math.abs(form.x - mont.x) - espaco, form.height);
 		} else if (Preferencias.isAbrirFormularioAbaixo()) {
-			return new Rectangle(form.x, espaco + form.y + form.height, form.width,
-					mont.height - form.height - Math.abs(mont.y - form.y) - espaco);
+			return new Rectangle(form.x, form.y + form.height + espaco, form.width,
+					mont.height - form.height - Math.abs(form.y - mont.y) - espaco);
 		}
 		return null;
 	}
@@ -304,7 +304,7 @@ public class Formulario extends JFrame implements SetFormulario {
 	}
 
 	private static void posicionar(Formulario formulario, Window window) {
-		Rectangle rect = formulario.criarPosicaoDimensaoOuNull();
+		Rectangle rect = formulario.criarDimensaoOuNull();
 		if (rect != null) {
 			window.setBounds((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
 		} else {
