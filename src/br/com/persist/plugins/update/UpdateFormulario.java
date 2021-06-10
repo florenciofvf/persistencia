@@ -33,15 +33,11 @@ public class UpdateFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, UpdateContainer container) {
 		UpdateFormulario form = new UpdateFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static UpdateFormulario criar(Formulario formulario, Conexao conexao, String conteudo) {
 		UpdateFormulario form = new UpdateFormulario(formulario, conexao, conteudo);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}

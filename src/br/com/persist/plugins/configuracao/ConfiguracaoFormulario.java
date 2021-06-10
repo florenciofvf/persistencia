@@ -33,15 +33,11 @@ public class ConfiguracaoFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, ConfiguracaoContainer container) {
 		ConfiguracaoFormulario form = new ConfiguracaoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		ConfiguracaoFormulario form = new ConfiguracaoFormulario(formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

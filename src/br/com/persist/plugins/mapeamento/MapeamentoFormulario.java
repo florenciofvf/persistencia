@@ -32,15 +32,11 @@ public class MapeamentoFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, MapeamentoContainer container) {
 		MapeamentoFormulario form = new MapeamentoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		MapeamentoFormulario form = new MapeamentoFormulario(formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

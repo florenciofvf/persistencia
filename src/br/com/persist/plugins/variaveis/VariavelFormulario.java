@@ -32,15 +32,11 @@ public class VariavelFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, VariavelContainer container) {
 		VariavelFormulario form = new VariavelFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		VariavelFormulario form = new VariavelFormulario(formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

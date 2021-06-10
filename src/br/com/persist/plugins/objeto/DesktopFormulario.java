@@ -29,8 +29,6 @@ public class DesktopFormulario extends AbstratoFormulario {
 
 	public static DesktopFormulario criar(Formulario formulario) {
 		DesktopFormulario form = new DesktopFormulario();
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}

@@ -32,15 +32,11 @@ public class FragmentoFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, FragmentoContainer container) {
 		FragmentoFormulario form = new FragmentoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		FragmentoFormulario form = new FragmentoFormulario(formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

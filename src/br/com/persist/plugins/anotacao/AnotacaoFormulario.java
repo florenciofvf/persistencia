@@ -30,15 +30,11 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, AnotacaoContainer container) {
 		AnotacaoFormulario form = new AnotacaoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario, String conteudo) {
 		AnotacaoFormulario form = new AnotacaoFormulario(formulario, conteudo);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

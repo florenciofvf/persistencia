@@ -43,7 +43,6 @@ public class ExternalFormulario extends AbstratoFormulario {
 
 	public static ExternalFormulario criar(Formulario formulario, Conexao padrao, Objeto objeto, Graphics g) {
 		ExternalFormulario form = new ExternalFormulario(formulario, padrao, objeto, g);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}

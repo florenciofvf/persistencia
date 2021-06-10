@@ -32,15 +32,11 @@ public class AnexoFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, AnexoContainer container) {
 		AnexoFormulario form = new AnexoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		AnexoFormulario form = new AnexoFormulario(formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

@@ -32,15 +32,11 @@ public class ArquivoFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, ArquivoContainer container) {
 		ArquivoFormulario form = new ArquivoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		ArquivoFormulario form = new ArquivoFormulario(formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 

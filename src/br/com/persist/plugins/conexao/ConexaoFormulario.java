@@ -32,15 +32,11 @@ public class ConexaoFormulario extends AbstratoFormulario {
 
 	public static void criar(Formulario formulario, ConexaoContainer container) {
 		ConexaoFormulario form = new ConexaoFormulario(container);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
 	public static void criar(Formulario formulario) {
 		ConexaoFormulario form = new ConexaoFormulario(formulario);
-		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Formulario.posicionarJanela(formulario, form);
 	}
 
