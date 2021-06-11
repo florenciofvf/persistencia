@@ -51,12 +51,14 @@ public class TabelaDialogo extends AbstratoDialogo {
 		TabelaDialogo form = null;
 		if (comp instanceof Frame) {
 			form = new TabelaDialogo((Frame) comp, titulo, modelo);
+			Util.configSizeLocation((Frame) comp, form, c);
 		} else if (comp instanceof Dialog) {
 			form = new TabelaDialogo((Dialog) comp, titulo, modelo);
+			Util.configSizeLocation((Dialog) comp, form, c);
 		} else {
 			form = new TabelaDialogo((Frame) null, titulo, modelo);
+			form.setLocationRelativeTo(comp != null ? comp : c);
 		}
-		form.setLocationRelativeTo(comp != null ? comp : c);
 		form.setVisible(true);
 	}
 }
