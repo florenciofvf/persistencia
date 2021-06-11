@@ -375,12 +375,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 			ParserDialogo form = null;
 			if (comp instanceof Frame) {
 				form = ParserDialogo.criar((Frame) comp, parserListener);
+				Util.configSizeLocation((Frame) comp, form, RequisicaoContainer.this);
 			} else if (comp instanceof Dialog) {
 				form = ParserDialogo.criar((Dialog) comp, parserListener);
+				Util.configSizeLocation((Dialog) comp, form, RequisicaoContainer.this);
 			} else {
 				form = ParserDialogo.criar((Dialog) null, parserListener);
+				form.setLocationRelativeTo(comp != null ? comp : formulario);
 			}
-			form.setLocationRelativeTo(comp != null ? comp : formulario);
 			form.setVisible(true);
 		}
 
