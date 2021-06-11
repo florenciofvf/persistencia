@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Window;
@@ -46,6 +47,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.CellRenderer;
@@ -468,17 +470,28 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private void eventos() {
 				fragmentoAcao.setActionListener(e -> {
-					FragmentoDialogo form = FragmentoDialogo.criar(Util.getViewParentFrame(InternalContainer.this),
-							getFormulario(), fragmentoListener);
-					configLocationRelativeTo(form);
+					Frame frame = Util.getViewParentFrame(InternalContainer.this);
+					FragmentoDialogo form = FragmentoDialogo.criar(frame, getFormulario(), fragmentoListener);
+					config(frame, form);
 					form.setVisible(true);
 				});
 				variaveisAcao.setActionListener(e -> {
-					VariavelDialogo form = VariavelDialogo.criar(Util.getViewParentFrame(InternalContainer.this),
-							getFormulario());
-					configLocationRelativeTo(form);
+					Frame frame = Util.getViewParentFrame(InternalContainer.this);
+					VariavelDialogo form = VariavelDialogo.criar(frame, getFormulario());
+					config(frame, form);
 					form.setVisible(true);
 				});
+			}
+
+			private void config(Frame frame, AbstratoDialogo form) {
+				if (frame != null) {
+					if (form.getWidth() > frame.getWidth() || form.getHeight() > frame.getHeight()) {
+						form.setSize(frame.getSize());
+					}
+					form.setLocationRelativeTo(frame);
+				} else {
+					configLocationRelativeTo(form);
+				}
 			}
 		}
 

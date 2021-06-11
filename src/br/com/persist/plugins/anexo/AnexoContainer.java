@@ -311,7 +311,9 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 	private void config(Frame frame, AbstratoDialogo form) {
 		if (frame != null) {
-			form.setSize(frame.getSize());
+			if (form.getWidth() > frame.getWidth() || form.getHeight() > frame.getHeight()) {
+				form.setSize(frame.getSize());
+			}
 			form.setLocationRelativeTo(frame);
 		} else {
 			form.setSize(AnexoContainer.this.getSize());
