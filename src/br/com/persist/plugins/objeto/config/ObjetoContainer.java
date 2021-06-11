@@ -6,7 +6,6 @@ import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -690,7 +689,7 @@ public class ObjetoContainer extends Panel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			IconeDialogo form = IconeDialogo.criar((Dialog) null, objeto, label);
+			IconeDialogo form = IconeDialogo.criar(Util.getViewParentDialog(ObjetoContainer.this), objeto, label);
 			form.setLocationRelativeTo(ObjetoContainer.this);
 			form.setVisible(true);
 			objetoSuperficie.repaint();
