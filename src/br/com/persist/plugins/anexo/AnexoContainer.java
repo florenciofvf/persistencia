@@ -10,7 +10,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -300,7 +299,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	public void corFonteAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {
-			AnexoCorDialogo form = AnexoCorDialogo.criar((Frame) null, anexo);
+			AnexoCorDialogo form = AnexoCorDialogo.criar(Util.getViewParentFrame(AnexoContainer.this), anexo);
 			form.setLocationRelativeTo(AnexoContainer.this);
 			form.setVisible(true);
 			AnexoTreeUtil.refreshEstrutura(anexoTree, anexo);
@@ -311,7 +310,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	public void iconeAnexo(AnexoTree anexoTree) {
 		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			AnexoIconeDialogo form = AnexoIconeDialogo.criar((Frame) null, arquivo);
+			AnexoIconeDialogo form = AnexoIconeDialogo.criar(Util.getViewParentFrame(AnexoContainer.this), arquivo);
 			form.setLocationRelativeTo(AnexoContainer.this);
 			form.setVisible(true);
 			AnexoTreeUtil.refreshEstrutura(anexoTree, arquivo);

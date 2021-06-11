@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.Window;
@@ -470,12 +469,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 			private void eventos() {
 				fragmentoAcao.setActionListener(e -> {
-					FragmentoDialogo form = FragmentoDialogo.criar((Frame) null, getFormulario(), fragmentoListener);
+					FragmentoDialogo form = FragmentoDialogo.criar(Util.getViewParentFrame(InternalContainer.this),
+							getFormulario(), fragmentoListener);
 					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});
 				variaveisAcao.setActionListener(e -> {
-					VariavelDialogo form = VariavelDialogo.criar((Frame) null, getFormulario());
+					VariavelDialogo form = VariavelDialogo.criar(Util.getViewParentFrame(InternalContainer.this),
+							getFormulario());
 					configLocationRelativeTo(form);
 					form.setVisible(true);
 				});

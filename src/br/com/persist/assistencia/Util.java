@@ -351,6 +351,17 @@ public class Util {
 		return view;
 	}
 
+	public static Frame getViewParentFrame(Component componente) {
+		Component view = componente;
+		while (view != null) {
+			if (view instanceof Frame) {
+				return (Frame) view;
+			}
+			view = view.getParent();
+		}
+		return null;
+	}
+
 	public static Dialog getViewParentDialog(Component componente) {
 		Component view = componente;
 		while (view != null) {
