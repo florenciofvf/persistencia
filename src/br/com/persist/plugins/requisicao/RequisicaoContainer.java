@@ -14,6 +14,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -370,8 +371,16 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void modelo() {
-			ParserDialogo form = ParserDialogo.criar((Dialog) null, parserListener);
-			form.setLocationRelativeTo(formulario);
+			Component comp = Util.getViewParent(RequisicaoContainer.this);
+			ParserDialogo form = null;
+			if (comp instanceof Frame) {
+				form = ParserDialogo.criar((Frame) comp, parserListener);
+			} else if (comp instanceof Dialog) {
+				form = ParserDialogo.criar((Dialog) comp, parserListener);
+			} else {
+				form = ParserDialogo.criar((Dialog) null, parserListener);
+			}
+			form.setLocationRelativeTo(comp != null ? comp : formulario);
 			form.setVisible(true);
 		}
 
