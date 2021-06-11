@@ -27,7 +27,6 @@ public class UpdateDialogo extends AbstratoDialogo {
 
 	public static UpdateDialogo criar(Formulario formulario, Conexao conexao, String conteudo) {
 		UpdateDialogo form = new UpdateDialogo(formulario, formulario, conexao, conteudo);
-		form.setLocationRelativeTo(formulario);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 		return form;

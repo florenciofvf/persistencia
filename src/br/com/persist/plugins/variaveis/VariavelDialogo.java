@@ -34,7 +34,6 @@ public class VariavelDialogo extends AbstratoDialogo {
 
 	public static void criar(Formulario formulario) {
 		VariavelDialogo form = new VariavelDialogo(formulario, formulario);
-		form.setLocationRelativeTo(formulario);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 	}

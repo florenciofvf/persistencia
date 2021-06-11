@@ -34,7 +34,6 @@ public class FragmentoDialogo extends AbstratoDialogo {
 
 	public static void criar(Formulario formulario) {
 		FragmentoDialogo form = criar(formulario, formulario, null);
-		form.setLocationRelativeTo(formulario);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 	}

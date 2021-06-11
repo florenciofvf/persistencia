@@ -24,7 +24,6 @@ public class RequisicaoDialogo extends AbstratoDialogo {
 
 	public static void criar(Formulario formulario) {
 		RequisicaoDialogo form = new RequisicaoDialogo(formulario, formulario);
-		form.setLocationRelativeTo(formulario);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 	}

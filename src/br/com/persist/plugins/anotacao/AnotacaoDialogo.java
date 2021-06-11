@@ -24,7 +24,6 @@ public class AnotacaoDialogo extends AbstratoDialogo {
 
 	public static void criar(Formulario formulario) {
 		AnotacaoDialogo form = new AnotacaoDialogo(formulario, formulario);
-		form.setLocationRelativeTo(formulario);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 	}

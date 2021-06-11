@@ -34,7 +34,6 @@ public class ConexaoDialogo extends AbstratoDialogo {
 
 	public static void criar(Formulario formulario) {
 		ConexaoDialogo form = new ConexaoDialogo(formulario, formulario);
-		form.setLocationRelativeTo(formulario);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 	}
