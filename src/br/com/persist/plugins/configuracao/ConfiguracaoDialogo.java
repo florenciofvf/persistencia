@@ -28,8 +28,8 @@ public class ConfiguracaoDialogo extends AbstratoDialogo {
 	public static void criar(Formulario formulario) {
 		ConfiguracaoDialogo form = new ConfiguracaoDialogo(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Util.configSizeLocation(formulario, form, null);
+		form.setVisible(true);
 	}
 
 	@Override

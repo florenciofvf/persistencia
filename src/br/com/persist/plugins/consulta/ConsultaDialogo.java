@@ -28,8 +28,8 @@ public class ConsultaDialogo extends AbstratoDialogo {
 	public static ConsultaDialogo criar(Formulario formulario, Conexao conexao, String conteudo) {
 		ConsultaDialogo form = new ConsultaDialogo(formulario, formulario, conexao, conteudo);
 		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Util.configSizeLocation(formulario, form, null);
+		form.setVisible(true);
 		return form;
 	}
 

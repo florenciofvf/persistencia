@@ -35,8 +35,8 @@ public class MapeamentoDialogo extends AbstratoDialogo {
 	public static void criar(Formulario formulario) {
 		MapeamentoDialogo form = criar(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Util.configSizeLocation(formulario, form, null);
+		form.setVisible(true);
 	}
 
 	@Override

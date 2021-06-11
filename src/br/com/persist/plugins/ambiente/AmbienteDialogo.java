@@ -25,8 +25,8 @@ public class AmbienteDialogo extends AbstratoDialogo {
 	public static void criar(Formulario formulario, AmbienteContainer.Ambiente ambiente) {
 		AmbienteDialogo form = new AmbienteDialogo(formulario, formulario, ambiente);
 		form.setLocationRelativeTo(formulario);
-		form.setVisible(true);
 		Util.configSizeLocation(formulario, form, null);
+		form.setVisible(true);
 	}
 
 	@Override
