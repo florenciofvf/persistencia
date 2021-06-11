@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 
 public class AmbienteDialogo extends AbstratoDialogo {
@@ -25,6 +26,7 @@ public class AmbienteDialogo extends AbstratoDialogo {
 		AmbienteDialogo form = new AmbienteDialogo(formulario, formulario, ambiente);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Util.configSizeLocation(formulario, form, null);
 	}
 
 	@Override

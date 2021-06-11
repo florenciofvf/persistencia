@@ -47,7 +47,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
-import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.CellRenderer;
@@ -481,17 +480,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					config(frame, form);
 					form.setVisible(true);
 				});
-			}
-
-			private void config(Frame frame, AbstratoDialogo form) {
-				if (frame != null) {
-					if (form.getWidth() > frame.getWidth() || form.getHeight() > frame.getHeight()) {
-						form.setSize(frame.getSize());
-					}
-					form.setLocationRelativeTo(frame);
-				} else {
-					configLocationRelativeTo(form);
-				}
 			}
 		}
 
@@ -1816,13 +1804,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
 			if (abrirEmForm) {
-				ConsultaFormulario form = ConsultaFormulario.criar2(getFormulario(), conexao, instrucao);
-				configLocationRelativeTo(form);
+				Formulario frame = getFormulario();
+				ConsultaFormulario form = ConsultaFormulario.criar2(frame, conexao, instrucao);
+				config(frame, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			} else {
-				ConsultaDialogo form = ConsultaDialogo.criar2(getFormulario(), conexao, instrucao);
-				configLocationRelativeTo(form);
+				Formulario frame = getFormulario();
+				ConsultaDialogo form = ConsultaDialogo.criar2(frame, conexao, instrucao);
+				config(frame, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			}
@@ -1830,13 +1820,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private void updateFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
 			if (abrirEmForm) {
-				UpdateFormulario form = UpdateFormulario.criar2(getFormulario(), conexao, instrucao);
-				configLocationRelativeTo(form);
+				Formulario frame = getFormulario();
+				UpdateFormulario form = UpdateFormulario.criar2(frame, conexao, instrucao);
+				config(frame, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			} else {
-				UpdateDialogo form = UpdateDialogo.criar2(getFormulario(), conexao, instrucao);
-				configLocationRelativeTo(form);
+				Formulario frame = getFormulario();
+				UpdateDialogo form = UpdateDialogo.criar2(frame, conexao, instrucao);
+				config(frame, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			}
@@ -1849,6 +1841,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				return ref.get();
 			}
 			return null;
+		}
+
+		private void config(Window parent, Window child) {
+			if (parent != null) {
+				if (child.getWidth() > parent.getWidth() || child.getHeight() > parent.getHeight()) {
+					child.setSize(parent.getSize());
+				}
+				child.setLocationRelativeTo(parent);
+			} else {
+				configLocationRelativeTo(child);
+			}
 		}
 	}
 

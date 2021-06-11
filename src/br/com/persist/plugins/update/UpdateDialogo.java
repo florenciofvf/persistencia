@@ -6,6 +6,7 @@ import java.awt.Frame;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 
@@ -28,6 +29,7 @@ public class UpdateDialogo extends AbstratoDialogo {
 		UpdateDialogo form = new UpdateDialogo(formulario, formulario, conexao, conteudo);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Util.configSizeLocation(formulario, form, null);
 		return form;
 	}
 

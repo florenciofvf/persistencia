@@ -7,6 +7,7 @@ import java.awt.Frame;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 
 public class ConexaoDialogo extends AbstratoDialogo {
@@ -35,6 +36,7 @@ public class ConexaoDialogo extends AbstratoDialogo {
 		ConexaoDialogo form = new ConexaoDialogo(formulario, formulario);
 		form.setLocationRelativeTo(formulario);
 		form.setVisible(true);
+		Util.configSizeLocation(formulario, form, null);
 	}
 
 	@Override
