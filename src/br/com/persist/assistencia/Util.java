@@ -340,6 +340,20 @@ public class Util {
 		mensagem.setVisible(true);
 	}
 
+	public static void configSizeLocation(Window parent, Window child, Component c) {
+		if (parent != null) {
+			if (child.getWidth() > parent.getWidth() || child.getHeight() > parent.getHeight()) {
+				child.setSize(parent.getSize());
+			}
+			child.setLocationRelativeTo(parent);
+		} else if (c != null) {
+			child.setSize(c.getSize());
+			child.setLocationRelativeTo(c);
+		} else {
+			child.setLocationRelativeTo(null);
+		}
+	}
+
 	public static Component getViewParent(Component componente) {
 		Component view = componente;
 		while (view != null) {
