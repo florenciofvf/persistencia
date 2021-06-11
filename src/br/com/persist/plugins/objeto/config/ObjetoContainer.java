@@ -8,6 +8,7 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -337,22 +338,28 @@ public class ObjetoContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(Util.getViewParentDialog(ObjetoContainer.this),
-							objeto, MiscelaniaContainer.Tipo.CHAVEAMENTO);
-					form.setLocationRelativeTo(ObjetoContainer.this);
+					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+							MiscelaniaContainer.Tipo.CHAVEAMENTO);
+					config(dialog, form);
 					form.setVisible(true);
 					txtChaveamento.setText(objeto.getChaveamento());
 				}
 			}
 		};
 
+		private void config(Window parent, Window child) {
+			Util.configSizeLocation(parent, child, ObjetoContainer.this);
+		}
+
 		private transient MouseListener mapeamentoListener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(Util.getViewParentDialog(ObjetoContainer.this),
-							objeto, MiscelaniaContainer.Tipo.MAPEAMENTO);
-					form.setLocationRelativeTo(ObjetoContainer.this);
+					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+							MiscelaniaContainer.Tipo.MAPEAMENTO);
+					config(dialog, form);
 					form.setVisible(true);
 					txtMapeamento.setText(objeto.getMapeamento());
 				}
@@ -363,9 +370,10 @@ public class ObjetoContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar(Util.getViewParentDialog(ObjetoContainer.this),
-							objeto, MiscelaniaContainer.Tipo.SEQUENCIA);
-					form.setLocationRelativeTo(ObjetoContainer.this);
+					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+							MiscelaniaContainer.Tipo.SEQUENCIA);
+					config(dialog, form);
 					form.setVisible(true);
 					txtSequencias.setText(objeto.getSequencias());
 				}
