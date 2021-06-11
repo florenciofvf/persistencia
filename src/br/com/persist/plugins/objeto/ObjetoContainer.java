@@ -643,10 +643,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 	}
 
 	public Frame getFrame() {
-		if (objetoFormulario != null) {
-			return objetoFormulario;
-		}
-		return formulario;
+		return Util.getViewParentFrame(this);
 	}
 
 	public void excluido() {
