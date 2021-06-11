@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
@@ -1859,7 +1858,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ComplementoDialogo form = ComplementoDialogo.criar((Dialog) null, complementoListener);
+				ComplementoDialogo form = ComplementoDialogo.criar(Util.getViewParentFrame(InternalContainer.this),
+						complementoListener);
 				configLocationRelativeTo(form);
 				form.setVisible(true);
 			}
