@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -25,6 +26,7 @@ import java.util.Set;
 import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
+import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -299,10 +301,21 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	public void corFonteAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {
-			AnexoCorDialogo form = AnexoCorDialogo.criar(Util.getViewParentFrame(AnexoContainer.this), anexo);
-			form.setLocationRelativeTo(AnexoContainer.this);
+			Frame frame = Util.getViewParentFrame(AnexoContainer.this);
+			AnexoCorDialogo form = AnexoCorDialogo.criar(frame, anexo);
+			config(frame, form);
 			form.setVisible(true);
 			AnexoTreeUtil.refreshEstrutura(anexoTree, anexo);
+		}
+	}
+
+	private void config(Frame frame, AbstratoDialogo form) {
+		if (frame != null) {
+			form.setSize(frame.getSize());
+			form.setLocationRelativeTo(frame);
+		} else {
+			form.setSize(AnexoContainer.this.getSize());
+			form.setLocationRelativeTo(AnexoContainer.this);
 		}
 	}
 
@@ -310,8 +323,9 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	public void iconeAnexo(AnexoTree anexoTree) {
 		Anexo arquivo = anexoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			AnexoIconeDialogo form = AnexoIconeDialogo.criar(Util.getViewParentFrame(AnexoContainer.this), arquivo);
-			form.setLocationRelativeTo(AnexoContainer.this);
+			Frame frame = Util.getViewParentFrame(AnexoContainer.this);
+			AnexoIconeDialogo form = AnexoIconeDialogo.criar(frame, arquivo);
+			config(frame, form);
 			form.setVisible(true);
 			AnexoTreeUtil.refreshEstrutura(anexoTree, arquivo);
 		}
