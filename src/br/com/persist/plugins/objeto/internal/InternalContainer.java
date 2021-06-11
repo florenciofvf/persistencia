@@ -1842,16 +1842,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 			return null;
 		}
+	}
 
-		private void config(Window parent, Window child) {
-			if (parent != null) {
-				if (child.getWidth() > parent.getWidth() || child.getHeight() > parent.getHeight()) {
-					child.setSize(parent.getSize());
-				}
-				child.setLocationRelativeTo(parent);
-			} else {
-				configLocationRelativeTo(child);
+	private void config(Window parent, Window child) {
+		if (parent != null) {
+			if (child.getWidth() > parent.getWidth() || child.getHeight() > parent.getHeight()) {
+				child.setSize(parent.getSize());
 			}
+			child.setLocationRelativeTo(parent);
+		} else {
+			configLocationRelativeTo(child);
 		}
 	}
 
@@ -1874,9 +1874,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ComplementoDialogo form = ComplementoDialogo.criar(Util.getViewParentFrame(InternalContainer.this),
-						complementoListener);
-				configLocationRelativeTo(form);
+				Frame frame = Util.getViewParentFrame(InternalContainer.this);
+				ComplementoDialogo form = ComplementoDialogo.criar(frame, complementoListener);
+				config(frame, form);
 				form.setVisible(true);
 			}
 		}
