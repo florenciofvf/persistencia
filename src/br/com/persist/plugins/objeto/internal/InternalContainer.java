@@ -1806,7 +1806,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (abrirEmForm) {
 				Formulario frame = getFormulario();
 				ConsultaFormulario form = ConsultaFormulario.criar2(frame, conexao, instrucao);
-				config(frame, form);
+				Util.configSizeLocation(frame, form, InternalContainer.this);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			} else {
@@ -1822,7 +1822,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (abrirEmForm) {
 				Formulario frame = getFormulario();
 				UpdateFormulario form = UpdateFormulario.criar2(frame, conexao, instrucao);
-				config(frame, form);
+				Util.configSizeLocation(frame, form, InternalContainer.this);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			} else {
