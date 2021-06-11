@@ -337,8 +337,8 @@ public class ObjetoContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.CHAVEAMENTO);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(Util.getViewParentDialog(ObjetoContainer.this),
+							objeto, MiscelaniaContainer.Tipo.CHAVEAMENTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 					txtChaveamento.setText(objeto.getChaveamento());
@@ -350,8 +350,8 @@ public class ObjetoContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.MAPEAMENTO);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(Util.getViewParentDialog(ObjetoContainer.this),
+							objeto, MiscelaniaContainer.Tipo.MAPEAMENTO);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 					txtMapeamento.setText(objeto.getMapeamento());
@@ -363,8 +363,8 @@ public class ObjetoContainer extends Panel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() >= Constantes.DOIS) {
-					MiscelaniaDialogo form = MiscelaniaDialogo.criar((Dialog) null, objeto,
-							MiscelaniaContainer.Tipo.SEQUENCIA);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(Util.getViewParentDialog(ObjetoContainer.this),
+							objeto, MiscelaniaContainer.Tipo.SEQUENCIA);
 					form.setLocationRelativeTo(ObjetoContainer.this);
 					form.setVisible(true);
 					txtSequencias.setText(objeto.getSequencias());

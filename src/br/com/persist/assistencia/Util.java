@@ -351,6 +351,17 @@ public class Util {
 		return view;
 	}
 
+	public static Dialog getViewParentDialog(Component componente) {
+		Component view = componente;
+		while (view != null) {
+			if (view instanceof Dialog) {
+				return (Dialog) view;
+			}
+			view = view.getParent();
+		}
+		return null;
+	}
+
 	public static void mensagemFormulario(Component componente, String string) {
 		mensagemFormulario(componente, string, null);
 	}
