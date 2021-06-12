@@ -82,7 +82,7 @@ public class XMLUtil {
 		return "\"" + valor + "\"";
 	}
 
-	private XMLUtil print(String s) {
+	public XMLUtil print(String s) {
 		pw.print(s);
 		return this;
 	}

@@ -112,9 +112,11 @@ public class ObjetoUtil {
 	private static void criarArquivoVinculado(File file) throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2("vinculo").ql();
+		util.abrirTag2("vinculo");
+		util.print("<!--").ql();
 		VinculoHandler.paraTabela(util);
 		VinculoHandler.pesquisa(util);
+		util.print("-->").ql();
 		util.finalizarTag("vinculo");
 		util.close();
 	}
