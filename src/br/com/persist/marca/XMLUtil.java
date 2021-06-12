@@ -85,6 +85,10 @@ public class XMLUtil {
 		return this;
 	}
 
+	public XMLUtil tab() {
+		return print(Constantes.TAB);
+	}
+
 	public XMLUtil ql() {
 		return print(Constantes.QL);
 	}

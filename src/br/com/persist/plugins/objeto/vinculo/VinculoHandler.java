@@ -11,11 +11,14 @@ import org.xml.sax.SAXException;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Instrucao;
 
-class VinculoHandler extends XMLHandler {
+public class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
 	private final Map<String, ParaTabela> mapaParaTabela;
+	private static final String INSTRUCAO = "instrucao";
+	private static final String COR_FONTE = "corFonte";
 	private static final String TABELA = "tabela";
 	private static final String ICONE = "icone";
 	private static final String GRUPO = "grupo";
@@ -52,7 +55,7 @@ class VinculoHandler extends XMLHandler {
 			if (!Util.estaVazio(tabelaSelecionada)) {
 				mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> criarParaTabela(tabelaSelecionada, attributes));
 			}
-		} else if ("instrucao".equals(qName)) {
+		} else if (INSTRUCAO.equals(qName)) {
 			processarInstrucao(attributes);
 			limpar();
 		} else if ("ref".equals(qName) && selecionado != null) {
@@ -101,6 +104,38 @@ class VinculoHandler extends XMLHandler {
 		return paraTabela;
 	}
 
+	public static void paraTabela(XMLUtil util) {
+		util.abrirTag("para").atributo(TABELA, "NOME_TABELA").atributo(ICONE, "nome_icone")
+				.atributo(COR_FONTE, "#FFVVFF").ql();
+		util.tab().atributo("prefixoNomeTabela", "H_").ql();
+		util.tab().atributo("selectAlternativo", "").ql();
+		util.tab().atributo("finalConsulta", "").ql();
+		util.tab().atributo("ajustarAltura", true).ql();
+		util.tab().atributo("complemento", "").ql();
+		util.tab().atributo("mapeamento", "").ql();
+		util.tab().atributo("sequencias", "").ql();
+		util.tab().atributo("campoNomes", "").ql();
+		util.tab().atributo("colunaInfo", false).ql();
+		util.tab().atributo("destacavel", true).ql();
+		util.tab().atributo("linkAuto", true).ql();
+		util.tab().atributo("apelido", "ape").ql();
+		util.tab().atributo("orderBy", "").ql();
+		util.tab().atributo("chaves", "").ql();
+		util.tab().atributo(GRUPO, "").ql();
+		util.tab().atributo("sane", true).ql();
+		util.tab().atributo("ccsc", true).ql();
+		util.tab().atributo("bpnt", false).fecharTag();
+		util.abrirTag(INSTRUCAO);
+		util.atributo("nome", "Resumo da instrucao");
+		util.atributo("selecaoMultipla", "false");
+		util.atributo("ordem", "0").fecharTag();
+		util.conteudo("<![CDATA[").ql();
+		util.tab().conteudo("UPDATE candidato SET votos = 0 WHERE id = #id#").ql();
+		util.conteudo("]]>").ql();
+		util.finalizarTag(INSTRUCAO);
+		util.finalizarTag("para");
+	}
+
 	public static Referencia criar(Attributes attributes) {
 		Referencia ref = new Referencia(attributes.getValue(GRUPO), attributes.getValue(TABELA),
 				attributes.getValue("campo"));
@@ -125,7 +160,7 @@ class VinculoHandler extends XMLHandler {
 	}
 
 	private static Color getCorFonte(Attributes attributes) {
-		String corFonte = attributes.getValue("corFonte");
+		String corFonte = attributes.getValue(COR_FONTE);
 		if (!Util.estaVazio(corFonte)) {
 			return Color.decode(corFonte);
 		}
@@ -133,7 +168,7 @@ class VinculoHandler extends XMLHandler {
 	}
 
 	private static Color getCorFonte(Map<String, String> attributes) {
-		String corFonte = attributes.get("corFonte");
+		String corFonte = attributes.get(COR_FONTE);
 		if (!Util.estaVazio(corFonte)) {
 			return Color.decode(corFonte);
 		}
@@ -144,7 +179,7 @@ class VinculoHandler extends XMLHandler {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if ("pesquisa".equals(qName)) {
 			selecionado = null;
-		} else if ("instrucao".equals(qName)) {
+		} else if (INSTRUCAO.equals(qName)) {
 			ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
 			if (paraTabela != null && !paraTabela.getInstrucoes().isEmpty()) {
 				setValorInstrucao(paraTabela.getInstrucoes());

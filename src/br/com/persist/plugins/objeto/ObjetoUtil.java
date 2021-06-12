@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoUtil {
@@ -111,8 +112,8 @@ public class ObjetoUtil {
 	private static void criarArquivoVinculado(File file) throws XMLException {
 		XMLUtil util = new XMLUtil(file);
 		util.prologo();
-		util.abrirTag2("vinculo");
-		util.ql();
+		util.abrirTag2("vinculo").ql();
+		VinculoHandler.paraTabela(util);
 		util.finalizarTag("vinculo");
 		util.close();
 	}
