@@ -55,6 +55,12 @@ public class XMLUtil {
 		return print(">").ql();
 	}
 
+	public XMLUtil fecharTag2(int deltaTab) {
+		print("/>").ql();
+		tab += deltaTab;
+		return this;
+	}
+
 	public XMLUtil abrirTag2(String nome) {
 		return abrirTag(nome).fecharTag();
 	}
@@ -63,10 +69,6 @@ public class XMLUtil {
 		tabular().print("</" + nome + ">").ql();
 		tab--;
 		return this;
-	}
-
-	public XMLUtil abrirFinalizarTag(String nome) {
-		return abrirTag2(nome).finalizarTag(nome);
 	}
 
 	private XMLUtil tabular() {

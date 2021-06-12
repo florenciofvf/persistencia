@@ -114,6 +114,7 @@ public class ObjetoUtil {
 		util.prologo();
 		util.abrirTag2("vinculo").ql();
 		VinculoHandler.paraTabela(util);
+		VinculoHandler.pesquisa(util);
 		util.finalizarTag("vinculo");
 		util.close();
 	}

@@ -17,11 +17,19 @@ import br.com.persist.plugins.objeto.Instrucao;
 public class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
 	private final Map<String, ParaTabela> mapaParaTabela;
+	private static final String NOME_TABELA = "NOME_TABELA";
+	private static final String LIMPAR_APOS = "limparApos";
+	private static final String ICONE_GRUPO = "iconeGrupo";
+	private static final String INVISIVEL = "invisivel";
 	private static final String INSTRUCAO = "instrucao";
 	private static final String COR_FONTE = "corFonte";
+	private static final String PESQUISA = "pesquisa";
 	private static final String TABELA = "tabela";
+	private static final String CAMPO = "campo";
 	private static final String ICONE = "icone";
 	private static final String GRUPO = "grupo";
+	private static final String VAZIO = "vazio";
+	private static final String REF = "ref";
 	private final List<Pesquisa> pesquisas;
 	private String tabelaSelecionada;
 	private Pesquisa selecionado;
@@ -47,7 +55,7 @@ public class VinculoHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if ("pesquisa".equals(qName)) {
+		if (PESQUISA.equals(qName)) {
 			selecionado = new Pesquisa(attributes.getValue("nome"), criar(attributes));
 			pesquisas.add(selecionado);
 		} else if ("para".equals(qName)) {
@@ -58,7 +66,7 @@ public class VinculoHandler extends XMLHandler {
 		} else if (INSTRUCAO.equals(qName)) {
 			processarInstrucao(attributes);
 			limpar();
-		} else if ("ref".equals(qName) && selecionado != null) {
+		} else if (REF.equals(qName) && selecionado != null) {
 			selecionado.add(criar(attributes));
 		}
 	}
@@ -105,8 +113,8 @@ public class VinculoHandler extends XMLHandler {
 	}
 
 	public static void paraTabela(XMLUtil util) {
-		util.abrirTag("para").atributo(TABELA, "NOME_TABELA").atributo(ICONE, "nome_icone")
-				.atributo(COR_FONTE, "#FFVVFF").ql();
+		util.abrirTag("para").atributo(TABELA, NOME_TABELA).atributo(ICONE, "nome_icone").atributo(COR_FONTE, "#FFVVFF")
+				.ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
 		util.tab().atributo("finalConsulta", "").ql();
@@ -136,12 +144,22 @@ public class VinculoHandler extends XMLHandler {
 		util.finalizarTag("para");
 	}
 
+	public static void pesquisa(XMLUtil util) {
+		util.ql();
+		util.abrirTag(PESQUISA).atributo("nome", "Nome da pesquisa").atributo(TABELA, NOME_TABELA).atributo(CAMPO, "PK")
+				.atributo(ICONE_GRUPO, "").fecharTag();
+		util.abrirTag(REF).atributo(TABELA, NOME_TABELA).atributo(CAMPO, "FK").atributo(GRUPO, "")
+				.atributo(VAZIO, INVISIVEL).atributo(ICONE, "").atributo(COR_FONTE, "#AABBCC").fecharTag2(-1);
+		util.abrirTag(REF).atributo(TABELA, NOME_TABELA).atributo(LIMPAR_APOS, true).fecharTag2(-1);
+		util.finalizarTag(PESQUISA);
+	}
+
 	public static Referencia criar(Attributes attributes) {
 		Referencia ref = new Referencia(attributes.getValue(GRUPO), attributes.getValue(TABELA),
-				attributes.getValue("campo"));
-		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.getValue("vazio")));
-		String limparApos = attributes.getValue("limparApos");
-		ref.setIconeGrupo(attributes.getValue("iconeGrupo"));
+				attributes.getValue(CAMPO));
+		ref.setVazioInvisivel(INVISIVEL.equalsIgnoreCase(attributes.getValue(VAZIO)));
+		String limparApos = attributes.getValue(LIMPAR_APOS);
+		ref.setIconeGrupo(attributes.getValue(ICONE_GRUPO));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
 		ref.setIcone(attributes.getValue(ICONE));
 		ref.setCorFonte(getCorFonte(attributes));
@@ -149,10 +167,10 @@ public class VinculoHandler extends XMLHandler {
 	}
 
 	public static Referencia criar(Map<String, String> attributes) {
-		Referencia ref = new Referencia(attributes.get(GRUPO), attributes.get(TABELA), attributes.get("campo"));
-		ref.setVazioInvisivel("invisivel".equalsIgnoreCase(attributes.get("vazio")));
-		String limparApos = attributes.get("limparApos");
-		ref.setIconeGrupo(attributes.get("iconeGrupo"));
+		Referencia ref = new Referencia(attributes.get(GRUPO), attributes.get(TABELA), attributes.get(CAMPO));
+		ref.setVazioInvisivel(INVISIVEL.equalsIgnoreCase(attributes.get(VAZIO)));
+		String limparApos = attributes.get(LIMPAR_APOS);
+		ref.setIconeGrupo(attributes.get(ICONE_GRUPO));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
 		ref.setCorFonte(getCorFonte(attributes));
 		ref.setIcone(attributes.get(ICONE));
@@ -177,7 +195,7 @@ public class VinculoHandler extends XMLHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if ("pesquisa".equals(qName)) {
+		if (PESQUISA.equals(qName)) {
 			selecionado = null;
 		} else if (INSTRUCAO.equals(qName)) {
 			ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
