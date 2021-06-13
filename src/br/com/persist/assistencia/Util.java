@@ -343,7 +343,8 @@ public class Util {
 	public static void configSizeLocation(Window parent, Window child, Component c) {
 		if (parent != null) {
 			if (child.getWidth() > parent.getWidth() || child.getHeight() > parent.getHeight()) {
-				child.setSize(parent.getSize());
+				Dimension size = parent.getSize();
+				child.setSize((int) (size.width * .9), (int) (size.height * .9));
 			}
 			child.setLocationRelativeTo(parent);
 		} else if (c != null) {
