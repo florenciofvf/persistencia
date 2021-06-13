@@ -342,7 +342,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		Referencia referencia = objeto.getReferenciaPesquisa();
 		if (referencia != null) {
 			OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
+			int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo(), false);
 			if (coluna != -1) {
 				InternalUtil.atualizarColetores(tabelaPersistencia, coluna, referencia);
 			}
@@ -803,7 +803,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					int coluna = -1;
 					if (vinculoListener != null) {
 						coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia,
-								pesquisa.getReferencia().getCampo());
+								pesquisa.getReferencia().getCampo(), false);
 					}
 					if (coluna != -1) {
 						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(tabelaPersistencia, coluna);
@@ -1308,7 +1308,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private void destacarColunaTabela(String nome) {
 					if (!Util.estaVazio(nome)) {
-						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome);
+						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome, true);
 						if (coluna != -1) {
 							tabelaPersistencia.destacarColuna(coluna);
 						}
@@ -2233,7 +2233,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private void selecionarRegistros(Referencia referencia, String argumentos, OrdenacaoModelo modelo) {
-		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo());
+		int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, referencia.getCampo(), false);
 		if (coluna != -1) {
 			for (int i = 0; i < modelo.getRowCount(); i++) {
 				if (argumentos.equals(modelo.getValueAt(i, coluna))) {

@@ -10,12 +10,17 @@ public class TabelaPersistenciaUtil {
 	private TabelaPersistenciaUtil() {
 	}
 
-	public static int getIndiceColuna(TabelaPersistencia tabelaPersistencia, String nome) {
+	public static int getIndiceColuna(TabelaPersistencia tabelaPersistencia, String nome, boolean like) {
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		int qtdColunas = modelo.getColumnCount();
 		for (int i = 0; i < qtdColunas; i++) {
 			String coluna = modelo.getColumnName(i);
-			if (coluna.equalsIgnoreCase(nome)) {
+			if (like) {
+				coluna = coluna.toUpperCase();
+				if (nome != null && coluna.indexOf(nome.toUpperCase()) != -1) {
+					return i;
+				}
+			} else if (coluna.equalsIgnoreCase(nome)) {
 				return i;
 			}
 		}
