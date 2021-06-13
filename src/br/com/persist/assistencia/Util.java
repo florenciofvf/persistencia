@@ -171,7 +171,12 @@ public class Util {
 		Coletor coletor = new Coletor();
 		JTableHeader tableHeader = table.getTableHeader();
 		TableColumnModel columnModel = tableHeader.getColumnModel();
-		SetLista.view(titulo, nomeColunas(columnModel), coletor, table, new SetLista.Config(true, true));
+		List<String> listaNomes = nomeColunas(columnModel);
+		if (listaNomes.size() == 1) {
+			coletor.getLista().add(listaNomes.get(0));
+		} else {
+			SetLista.view(titulo, listaNomes, coletor, table, new SetLista.Config(true, true));
+		}
 		if (coletor.size() == 1) {
 			copiarColunaUnicaString(titulo, table, columnModel, comAspas, coletor);
 		}
