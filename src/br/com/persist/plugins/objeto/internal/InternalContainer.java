@@ -1845,29 +1845,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private void config(Window parent, Window child) {
-		if (parent != null) {
-			if (child.getWidth() > parent.getWidth() || child.getHeight() > parent.getHeight()) {
-				child.setSize(parent.getSize());
-			}
-			child.setLocationRelativeTo(parent);
-		} else {
-			configLocationRelativeTo(child);
-		}
-	}
-
-	private Component getComponente() {
-		Component resp = null;
-		if (componenteListener != null && componenteListener.getComponente() != null) {
-			resp = componenteListener.getComponente();
-		}
-		return resp;
-	}
-
-	private void configLocationRelativeTo(Window window) {
-		Component componente = getComponente();
-		if (componente != null) {
-			window.setLocationRelativeTo(componente);
-		}
+		Util.configSizeLocation(parent, child, InternalContainer.this);
 	}
 
 	private transient MouseListener mouseComplementoListener = new MouseAdapter() {
