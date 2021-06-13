@@ -1945,8 +1945,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private transient FragmentoListener fragmentoListener = new FragmentoListener() {
 		@Override
-		public void aplicarFragmento(Fragmento f) {
-			txtComplemento.setText(f.getValor());
+		public void aplicarFragmento(List<Fragmento> fragmentos) {
+			StringBuilder sb = new StringBuilder();
+			for (Fragmento f : fragmentos) {
+				if (sb.length() > 0) {
+					sb.append(" ");
+				}
+				sb.append(f.getValor());
+			}
+			txtComplemento.setText(sb.toString());
 			actionListenerInner.actionPerformed(null);
 		}
 

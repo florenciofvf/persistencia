@@ -5,13 +5,15 @@ import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
+import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
-import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -213,9 +215,12 @@ public class FragmentoContainer extends AbstratoContainer {
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1) {
-				Fragmento f = FragmentoProvedor.getFragmento(linhas[0]);
-				aplicarFragmento(f);
+			if (linhas != null && linhas.length > 0) {
+				List<Fragmento> frags = new ArrayList<>();
+				for (int i : linhas) {
+					frags.add(FragmentoProvedor.getFragmento(i));
+				}
+				aplicarFragmento(frags);
 			}
 		}
 
@@ -228,9 +233,9 @@ public class FragmentoContainer extends AbstratoContainer {
 			}
 		}
 
-		private void aplicarFragmento(Fragmento f) {
+		private void aplicarFragmento(List<Fragmento> frags) {
 			try {
-				listener.aplicarFragmento(f);
+				listener.aplicarFragmento(frags);
 			} finally {
 				if (janela != null) {
 					janela.fechar();
