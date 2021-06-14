@@ -345,6 +345,7 @@ public class Fichario extends JTabbedPane {
 			return false;
 		}
 		remove(indice);
+		checarExcluir();
 		return true;
 	}
 
@@ -355,6 +356,7 @@ public class Fichario extends JTabbedPane {
 		}
 		pagina.excluindoDoFichario(this);
 		remove(indice);
+		checarExcluir();
 		return true;
 	}
 
@@ -362,6 +364,29 @@ public class Fichario extends JTabbedPane {
 		Pagina pagina = getPagina(indice);
 		pagina.excluindoDoFichario(this);
 		remove(indice);
+		checarExcluir();
+	}
+
+	private class Checa extends Thread {
+		@Override
+		public void run() {
+			int indice = getTabCount() - 1;
+			while (indice >= 0) {
+				Pagina p = getPagina(indice);
+				Titulo titulo = p.getTitulo();
+				if (titulo.isAtivo()) {
+					break;
+				}
+				indice--;
+			}
+			if (indice >= 0 && indice < getTabCount()) {
+				setSelectedIndex(indice);
+			}
+		}
+	}
+
+	private void checarExcluir() {
+		new Checa().start();
 	}
 
 	public void adicionarPagina(Pagina pagina) {
