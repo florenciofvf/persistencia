@@ -345,7 +345,7 @@ public class Fichario extends JTabbedPane {
 			return false;
 		}
 		remove(indice);
-		checarExcluir();
+		checarSelecao();
 		return true;
 	}
 
@@ -356,7 +356,7 @@ public class Fichario extends JTabbedPane {
 		}
 		pagina.excluindoDoFichario(this);
 		remove(indice);
-		checarExcluir();
+		checarSelecao();
 		return true;
 	}
 
@@ -364,10 +364,10 @@ public class Fichario extends JTabbedPane {
 		Pagina pagina = getPagina(indice);
 		pagina.excluindoDoFichario(this);
 		remove(indice);
-		checarExcluir();
+		checarSelecao();
 	}
 
-	private class Checa extends Thread {
+	private class ChecaSelecao extends Thread {
 		@Override
 		public void run() {
 			int indice = getTabCount() - 1;
@@ -385,8 +385,8 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	private void checarExcluir() {
-		new Checa().start();
+	private void checarSelecao() {
+		new ChecaSelecao().start();
 	}
 
 	public void adicionarPagina(Pagina pagina) {
@@ -403,6 +403,7 @@ public class Fichario extends JTabbedPane {
 		setTabComponentAt(ultimoIndice, cabecalho);
 		setSelectedIndex(ultimoIndice);
 		pagina.adicionadoAoFichario(this);
+		checarSelecao();
 	}
 
 	public void fechandoFormulario(Formulario formulario) {
