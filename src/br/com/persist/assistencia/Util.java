@@ -581,6 +581,18 @@ public class Util {
 		return botoes[i];
 	}
 
+	public static String getValorInputDialog2(Component parent, String mensagem, String[] botoes) {
+		String msg = estaVazio(mensagem) ? Mensagens.getString("label.selecione_opcao") : mensagem;
+		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
+		int messageType = JOptionPane.PLAIN_MESSAGE;
+		int optionType = JOptionPane.DEFAULT_OPTION;
+		int i = showOptionDialog(parent, msg, titulo, optionType, new Config(messageType, null, botoes, botoes[0]));
+		if (i < 0) {
+			return null;
+		}
+		return botoes[i];
+	}
+
 	public static void stackTraceAndMessage(String tipo, Exception ex, Component componente) {
 		String msg = getStackTrace(tipo, ex);
 		mensagem(componente, msg);

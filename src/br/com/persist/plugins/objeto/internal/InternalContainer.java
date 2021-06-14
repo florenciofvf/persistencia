@@ -2124,7 +2124,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			String string = "";
 			if (!Util.estaVazio(txtComplemento.getText())) {
 				String[] simNao = getArraySimNao();
-				String opcao = Util.getValorInputDialog(InternalContainer.this,
+				String opcao = Util.getValorInputDialog2(InternalContainer.this,
 						ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
 				if (Util.estaVazio(opcao)) {
 					return;
@@ -2173,12 +2173,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		private String getPrefixo() {
-			return Util.getValorInputDialog(InternalContainer.this, Mensagens.getString("label.prefixo"),
+			return Util.getValorInputDialog2(InternalContainer.this, Mensagens.getString("label.prefixo"),
 					new String[] { " AND ", " OR " });
 		}
 
 		private String getOpcao() {
-			return Util.getValorInputDialog(InternalContainer.this, Mensagens.getString("label.operador"),
+			return Util.getValorInputDialog2(InternalContainer.this, Mensagens.getString("label.operador"),
 					new String[] { "=", "IN", "LIKE" });
 		}
 
