@@ -2142,7 +2142,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				return;
 			}
 			txtComplemento.setText(ltrim(string + prefixo + nome + getValor(opcao, memoria)));
-			if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
 		}

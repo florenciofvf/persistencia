@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
@@ -35,6 +36,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Icon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -411,8 +414,84 @@ public class Util {
 	}
 
 	public static boolean confirmar(Component componente, String msg, boolean msgEhChave) {
-		return JOptionPane.showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
+		return showConfirmDialog(componente, msgEhChave ? Mensagens.getString(msg) : msg,
 				Mensagens.getString(Constantes.LABEL_ATENCAO), JOptionPane.YES_OPTION) == JOptionPane.OK_OPTION;
+	}
+
+	public static class Config {
+		final int messageType;
+		final Icon icon;
+		final Object[] options;
+		final Object initialValue;
+
+		public Config(int messageType, Icon icon, Object[] options, Object initialValue) {
+			this.messageType = messageType;
+			this.icon = icon;
+			this.options = options;
+			this.initialValue = initialValue;
+		}
+
+		public Config(int messageType) {
+			this(messageType, null, null, null);
+		}
+	}
+
+	public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType) {
+		return showConfirmDialog(parentComponent, message, title, optionType, JOptionPane.QUESTION_MESSAGE);
+	}
+
+	public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType,
+			int messageType) {
+		return showConfirmDialog(parentComponent, message, title, optionType, messageType, null);
+	}
+
+	public static int showConfirmDialog(Component parentComponent, Object message, String title, int optionType,
+			int messageType, Icon icon) {
+		return showOptionDialog(parentComponent, message, title, optionType, new Config(messageType, icon, null, null));
+	}
+
+	public static int showOptionDialog(Component parentComponent, Object message, String title, int optionType,
+			Config config) {
+		JOptionPane pane = new JOptionPane(message, config.messageType, optionType, config.icon, config.options,
+				config.initialValue);
+		pane.setInitialValue(config.initialValue);
+		pane.setComponentOrientation(
+				((parentComponent == null) ? JOptionPane.getRootFrame() : parentComponent).getComponentOrientation());
+		JDialog dialog = pane.createDialog(parentComponent, title);
+		pane.selectInitialValue();
+		configLocation(dialog, parentComponent);
+		dialog.setVisible(true);
+		dialog.dispose();
+		return returnShowOptionDialog(config.options, pane);
+	}
+
+	private static void configLocation(JDialog dialog, Component componente) {
+		if (componente != null) {
+			Point pDialog = dialog.getLocation();
+			Point pComp = componente.getLocationOnScreen();
+			if (pDialog.y <= pComp.y) {
+				dialog.setLocation(dialog.getX(), dialog.getY() + 50);
+			}
+		}
+	}
+
+	private static int returnShowOptionDialog(Object[] options, JOptionPane pane) {
+		Object selectedValue = pane.getValue();
+		if (selectedValue == null) {
+			return JOptionPane.CLOSED_OPTION;
+		}
+		if (options == null) {
+			if (selectedValue instanceof Integer) {
+				return ((Integer) selectedValue).intValue();
+			}
+			return JOptionPane.CLOSED_OPTION;
+		}
+		for (int counter = 0, maxCounter = options.length; counter < maxCounter; counter++) {
+			if (options[counter].equals(selectedValue)) {
+				return counter;
+			}
+		}
+		return JOptionPane.CLOSED_OPTION;
 	}
 
 	private static String[] getArraySimNaoContinuar() {
@@ -420,6 +499,10 @@ public class Util {
 		String nao = Mensagens.getString("label.nao");
 		String sem = Mensagens.getString("label.nao_exibir");
 		return new String[] { sim, nao, sem };
+	}
+
+	public static boolean confirmar(Component componente, String chaveMsg) {
+		return confirmar(componente, chaveMsg, true);
 	}
 
 	public static boolean confirmar2(Component parent, String mensagem, AtomicBoolean atom) {
@@ -436,8 +519,13 @@ public class Util {
 		return botoes[0].equals(botoes[i]);
 	}
 
-	public static boolean confirmar(Component componente, String chaveMsg) {
-		return confirmar(componente, chaveMsg, true);
+	public static boolean confirmar3(Component componente, String chaveMsg) {
+		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
+		String mensagem = Mensagens.getString(chaveMsg);
+		int messageType = JOptionPane.QUESTION_MESSAGE;
+		int optionType = JOptionPane.YES_OPTION;
+		return showOptionDialog(componente, mensagem, titulo, optionType,
+				new Config(messageType)) == JOptionPane.OK_OPTION;
 	}
 
 	public static boolean confirmaSalvar(Component componente, int confirmacoes) {
