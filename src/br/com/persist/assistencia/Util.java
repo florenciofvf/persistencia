@@ -470,7 +470,7 @@ public class Util {
 			Point pDialog = dialog.getLocation();
 			Point pComp = componente.getLocationOnScreen();
 			if (pDialog.y <= pComp.y) {
-				dialog.setLocation(dialog.getX(), dialog.getY() + 50);
+				dialog.setLocation(dialog.getX(), dialog.getY() + 100);
 			}
 		}
 	}
