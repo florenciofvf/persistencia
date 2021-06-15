@@ -550,20 +550,20 @@ public class Util {
 	}
 
 	public static Object showInputDialog(Component parent, String titulo, String mensagem, String valorPadrao) {
-		return JOptionPane.showInputDialog(parent, mensagem, titulo, JOptionPane.PLAIN_MESSAGE, null, null,
+		return JOptionPane.showInputDialog(parent, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE, null, null,
 				valorPadrao);
 	}
 
 	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem,
 			String valorPadrao) {
 		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),
-				JOptionPane.PLAIN_MESSAGE, null, null, valorPadrao);
+				JOptionPane.INFORMATION_MESSAGE, null, null, valorPadrao);
 	}
 
 	public static Object getValorInputDialog(Component parent, String chaveTitulo, String mensagem, String valorPadrao,
 			String[] opcoes) {
 		return JOptionPane.showInputDialog(parent, mensagem, Mensagens.getString(chaveTitulo),
-				JOptionPane.PLAIN_MESSAGE, null, opcoes, valorPadrao);
+				JOptionPane.INFORMATION_MESSAGE, null, opcoes, valorPadrao);
 	}
 
 	public static String getValorInputDialog(Component parent, String[] botoes) {
@@ -573,7 +573,7 @@ public class Util {
 	public static String getValorInputDialog(Component parent, String mensagem, String[] botoes) {
 		int i = JOptionPane.showOptionDialog(parent,
 				estaVazio(mensagem) ? Mensagens.getString("label.selecione_opcao") : mensagem,
-				Mensagens.getString("label.atencao"), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+				Mensagens.getString("label.atencao"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
 				botoes, botoes[0]);
 		if (i < 0) {
 			return null;
@@ -584,7 +584,7 @@ public class Util {
 	public static String getValorInputDialog2(Component parent, String mensagem, String[] botoes) {
 		String msg = estaVazio(mensagem) ? Mensagens.getString("label.selecione_opcao") : mensagem;
 		String titulo = Mensagens.getString(Constantes.LABEL_ATENCAO);
-		int messageType = JOptionPane.PLAIN_MESSAGE;
+		int messageType = JOptionPane.INFORMATION_MESSAGE;
 		int optionType = JOptionPane.DEFAULT_OPTION;
 		int i = showOptionDialog(parent, msg, titulo, optionType, new Config(messageType, null, botoes, botoes[0]));
 		if (i < 0) {
