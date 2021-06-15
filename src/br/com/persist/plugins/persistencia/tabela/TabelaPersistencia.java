@@ -340,7 +340,7 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuColocarColuna extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
-			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho");
+			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho", Icones.ASPAS);
 			private Action semAspasAtalhoAcao = actionMenu("label.sem_aspas_atalho");
 			private final boolean numeros;
 			private final boolean letras;
