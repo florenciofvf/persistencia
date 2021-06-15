@@ -5,18 +5,23 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.PrintWriter;
 
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.ScrollPane;
+import br.com.persist.componente.TextField;
+import br.com.persist.componente.TextPane;
 
 public class MensagemContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private final TextArea textArea = new TextArea();
+	private final TextPane textArea = new TextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private final File file;
 
@@ -29,11 +34,12 @@ public class MensagemContainer extends Panel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, textArea);
+		add(BorderLayout.CENTER, new ScrollPane(textArea));
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private final TextField txtPesquisa = new TextField(35);
 
 		public void ini(Janela janela) {
 			if (file != null) {
@@ -41,11 +47,14 @@ public class MensagemContainer extends Panel {
 			} else {
 				super.ini(janela, COPIAR, COLAR);
 			}
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
+			add(txtPesquisa);
 		}
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(textArea.getTextAreaInner());
+			String string = Util.getString(textArea);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
 			textArea.requestFocus();
@@ -53,7 +62,7 @@ public class MensagemContainer extends Panel {
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
+			Util.getContentTransfered(textArea, numeros, letras);
 		}
 
 		@Override
@@ -63,6 +72,13 @@ public class MensagemContainer extends Panel {
 				salvoMensagem();
 			} catch (Exception e) {
 				Util.mensagem(MensagemContainer.this, e.getMessage());
+			}
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtPesquisa.getText())) {
+				Util.destacar(textArea.getStyledDocument(), txtPesquisa.getText());
 			}
 		}
 	}
