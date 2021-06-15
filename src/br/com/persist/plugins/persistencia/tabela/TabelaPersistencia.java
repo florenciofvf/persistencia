@@ -340,18 +340,24 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuColocarColuna extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho");
+			private Action semAspasAtalhoAcao = actionMenu("label.sem_aspas_atalho");
 			private final boolean numeros;
 			private final boolean letras;
 
 			private MenuColocarColuna(String titulo, boolean numero, boolean letra) {
 				super(TabelaMensagens.getString(titulo), false, null);
+				addMenuItem(true, semAspasAtalhoAcao);
+				addMenuItem(comAspasAtalhoAcao);
 				numeros = numero;
 				letras = letra;
-				semAspasAcao.setActionListener(e -> copiar(false));
-				comAspasAcao.setActionListener(e -> copiar(true));
+				semAspasAtalhoAcao.setActionListener(e -> copiar(false, true));
+				comAspasAtalhoAcao.setActionListener(e -> copiar(true, true));
+				semAspasAcao.setActionListener(e -> copiar(false, false));
+				comAspasAcao.setActionListener(e -> copiar(true, false));
 			}
 
-			private void copiar(boolean aspas) {
+			private void copiar(boolean aspas, boolean atalho) {
 				if (listener != null) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					String memoria = Util.getContentTransfered();
@@ -359,7 +365,11 @@ public class TabelaPersistencia extends JTable {
 					if (aspas && !Util.estaVazio(memoria)) {
 						memoria = Util.citar(memoria);
 					}
-					listener.colocarColunaComMemoria(TabelaPersistencia.this, coluna, memoria);
+					if (atalho) {
+						listener.colocarColunaComMemoriaAtalho(TabelaPersistencia.this, coluna, memoria);
+					} else {
+						listener.colocarColunaComMemoria(TabelaPersistencia.this, coluna, memoria);
+					}
 				}
 			}
 		}
