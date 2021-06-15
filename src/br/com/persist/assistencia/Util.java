@@ -571,14 +571,7 @@ public class Util {
 	}
 
 	public static String getValorInputDialog(Component parent, String mensagem, String[] botoes) {
-		int i = JOptionPane.showOptionDialog(parent,
-				estaVazio(mensagem) ? Mensagens.getString("label.selecione_opcao") : mensagem,
-				Mensagens.getString("label.atencao"), JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-				botoes, botoes[0]);
-		if (i < 0) {
-			return null;
-		}
-		return botoes[i];
+		return getValorInputDialog2(parent, mensagem, botoes);
 	}
 
 	public static String getValorInputDialog2(Component parent, String mensagem, String[] botoes) {
