@@ -2147,6 +2147,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 		}
 
+		@Override
+		public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabela, String nome, String memoria) {
+			String prefixo = "AND ";
+			String opcao = "=";
+			txtComplemento.setText(prefixo + nome + getValor(opcao, memoria));
+			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
+				actionListenerInner.actionPerformed(null);
+			}
+		}
+
 		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
 			String complemento = txtComplemento.getText();
 			String prefixo = getPrefixo();
