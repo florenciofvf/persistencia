@@ -2463,7 +2463,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	static Icon iconePesquisa(Pesquisa pesquisa) {
 		Referencia referencia = pesquisa.getReferencia();
 		String iconeGrupo = referencia.getIconeGrupo();
-		return Util.estaVazio(iconeGrupo) ? Icones.CONFIG2 : Imagens.getIcon(iconeGrupo);
+		return Util.estaVazio(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
 	}
 
 	private String ltrim(String s) {
