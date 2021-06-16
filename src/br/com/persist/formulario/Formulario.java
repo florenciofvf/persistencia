@@ -305,7 +305,7 @@ public class Formulario extends JFrame implements SetFormulario {
 
 	private static void posicionar(Formulario formulario, Window window) {
 		Rectangle rect = formulario.criarDimensaoOuNull();
-		rect = checarDimensoes(rect);
+		rect = checarDimensoes(rect, formulario.getGraphicsConfiguration().getBounds());
 		if (rect != null) {
 			window.setBounds((int) rect.getX(), (int) rect.getY(), (int) rect.getWidth(), (int) rect.getHeight());
 		} else {
@@ -314,9 +314,13 @@ public class Formulario extends JFrame implements SetFormulario {
 		window.setVisible(true);
 	}
 
-	private static Rectangle checarDimensoes(Rectangle rect) {
-		if (rect != null && (rect.width < 200 || rect.height < 100)) {
-			return null;
+	private static Rectangle checarDimensoes(Rectangle rect, Rectangle mont) {
+		if (mont != null && rect != null) {
+			double largura = Util.menorEmPorcentagem(rect.width, mont.width);
+			double altura = Util.menorEmPorcentagem(rect.height, mont.height);
+			if (largura < 25 || altura < 25) {
+				return null;
+			}
 		}
 		return rect;
 	}
