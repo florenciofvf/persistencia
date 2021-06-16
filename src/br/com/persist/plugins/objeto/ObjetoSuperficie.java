@@ -2666,7 +2666,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void selecionarCampo(Objeto objeto, Coletor coletor, Component c) {
 		Conexao conexao = container.getConexaoPadrao();
-		if (conexao != null && objeto != null && !Util.estaVazio(objeto.getTabela())) {
+		if (conexao == null) {
+			Util.mensagem(c, ObjetoMensagens.getString("msg.sem_conexao_sel"));
+			return;
+		}
+		if (objeto != null && Util.estaVazio(objeto.getTabela())) {
+			Util.mensagem(c, ObjetoMensagens.getString("msg.obj_sem_config_tabela", objeto.getId()));
+			return;
+		}
+		if (objeto != null) {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela());
