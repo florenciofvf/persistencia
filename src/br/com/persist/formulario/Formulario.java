@@ -316,8 +316,8 @@ public class Formulario extends JFrame implements SetFormulario {
 
 	private static Rectangle checarDimensoes(Rectangle rect, Rectangle mont) {
 		if (mont != null && rect != null) {
-			double largura = Util.menorEmPorcentagem(rect.width, mont.width);
-			double altura = Util.menorEmPorcentagem(rect.height, mont.height);
+			int largura = (int) Util.menorEmPorcentagem(rect.width, mont.width);
+			int altura = (int) Util.menorEmPorcentagem(rect.height, mont.height);
 			if (largura < 25 || altura < 25) {
 				return null;
 			}
