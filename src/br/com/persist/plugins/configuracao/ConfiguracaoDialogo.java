@@ -18,6 +18,7 @@ public class ConfiguracaoDialogo extends AbstratoDialogo {
 		super(frame, Mensagens.getString(Constantes.LABEL_CONFIGURACOES));
 		container = new ConfiguracaoContainer(this, formulario);
 		container.setConfiguracaoDialogo(this);
+		setModalityType(ModalityType.MODELESS);
 		montarLayout();
 	}
 
