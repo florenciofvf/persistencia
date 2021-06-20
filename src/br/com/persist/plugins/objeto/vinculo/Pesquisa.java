@@ -66,6 +66,7 @@ public class Pesquisa {
 		util.ql();
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
 		referencia.salvar(false, util);
+		util.fecharTag();
 		for (Referencia ref : referencias) {
 			ref.salvar(true, util);
 		}

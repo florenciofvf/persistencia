@@ -23,6 +23,12 @@ public class Vinculacao {
 		pesquisas = new ArrayList<>();
 	}
 
+	public void adicionarPesquisa(Pesquisa pesquisa) {
+		if (pesquisa != null) {
+			pesquisas.add(pesquisa);
+		}
+	}
+
 	public void abrir(String arquivo, Component componente) {
 		mapaParaTabela.clear();
 		pesquisas.clear();

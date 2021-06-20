@@ -1723,8 +1723,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					Vinculacao vinculacao = new Vinculacao();
 					vinculoListener.preencherVinculacao(vinculacao);
 					AtomicBoolean atom = new AtomicBoolean(false);
-					checarListaPesquisa(mapaRef, atom);
+					checarListaPesquisa(mapaRef, atom, vinculacao);
 					if (atom.get()) {
+						vinculoListener.salvarVinculacao(vinculacao);
 						return;
 					}
 					List<Pesquisa> pesquisas = objeto.getPesquisas();
@@ -1742,11 +1743,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 				}
 
-				private void checarListaPesquisa(Map<String, Object> mapaRef, AtomicBoolean atom) {
+				private void checarListaPesquisa(Map<String, Object> mapaRef, AtomicBoolean atom,
+						Vinculacao vinculacao) {
 					if (objeto.getPesquisas().isEmpty()) {
 						Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
 						objeto.getPesquisas().add(pesquisa);
 						objeto.addReferencias(pesquisa.getReferencias());
+						vinculacao.adicionarPesquisa(pesquisa);
 						buttonPesquisa.complemento(objeto);
 						buscaAuto = true;
 						atom.set(true);
