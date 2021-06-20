@@ -132,7 +132,9 @@ public class VinculoHandler extends XMLHandler {
 		util.tab().atributo("sane", true).ql();
 		util.tab().atributo("ccsc", true).ql();
 		util.tab().atributo("bpnt", false).fecharTag();
-		new Instrucao(".").modelo(util);
+		Instrucao i = new Instrucao("Resumo da instrucao");
+		i.setValor("UPDATE candidato SET votos = 0 WHERE id = #id#");
+		i.salvar(util);
 		util.finalizarTag("para");
 	}
 
