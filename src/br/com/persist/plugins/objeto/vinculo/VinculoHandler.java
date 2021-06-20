@@ -20,7 +20,7 @@ public class VinculoHandler extends XMLHandler {
 	private static final String LIMPAR_APOS = "limparApos";
 	private static final String ICONE_GRUPO = "iconeGrupo";
 	private static final String INVISIVEL = "invisivel";
-	private static final String INSTRUCAO = "instrucao";
+	public static final String INSTRUCAO = "instrucao";
 	private static final String COR_FONTE = "corFonte";
 	private static final String PESQUISA = "pesquisa";
 	private static final String TABELA = "tabela";
@@ -132,14 +132,7 @@ public class VinculoHandler extends XMLHandler {
 		util.tab().atributo("sane", true).ql();
 		util.tab().atributo("ccsc", true).ql();
 		util.tab().atributo("bpnt", false).fecharTag();
-		util.abrirTag(INSTRUCAO);
-		util.atributo("nome", "Resumo da instrucao");
-		util.atributo("selecaoMultipla", "false");
-		util.atributo("ordem", "0").fecharTag();
-		util.conteudo("<![CDATA[").ql();
-		util.tab().conteudo("UPDATE candidato SET votos = 0 WHERE id = #id#").ql();
-		util.conteudo("]]>").ql();
-		util.finalizarTag(INSTRUCAO);
+		new Instrucao(".").modelo(util);
 		util.finalizarTag("para");
 	}
 

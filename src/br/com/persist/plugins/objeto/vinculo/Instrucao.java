@@ -72,6 +72,17 @@ public class Instrucao implements Comparable<Instrucao> {
 		}
 	}
 
+	public void modelo(XMLUtil util) {
+		util.abrirTag(VinculoHandler.INSTRUCAO);
+		util.atributo("nome", "Resumo da instrucao");
+		util.atributo("selecaoMultipla", "false");
+		util.atributo("ordem", "0").fecharTag();
+		util.conteudo("<![CDATA[").ql();
+		util.tab().conteudo("UPDATE candidato SET votos = 0 WHERE id = #id#").ql();
+		util.conteudo("]]>").ql();
+		util.finalizarTag(VinculoHandler.INSTRUCAO);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
