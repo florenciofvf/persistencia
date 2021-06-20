@@ -60,6 +60,34 @@ public class Referencia {
 		builder.append(autonomo ? "/>" : "");
 	}
 
+	public void salvar(boolean autonomo, XMLUtil util) {
+		if (autonomo) {
+			util.abrirTag(VinculoHandler.REF);
+		}
+		util.atributo(VinculoHandler.TABELA, tabela);
+		if (!Util.estaVazio(campo)) {
+			util.atributo(VinculoHandler.CAMPO, campo);
+		}
+		if (!Util.estaVazio(grupo)) {
+			util.atributo(VinculoHandler.GRUPO, grupo);
+		}
+		if (limparApos) {
+			util.atributo(VinculoHandler.LIMPAR_APOS, true);
+		}
+		if (!Util.estaVazio(icone)) {
+			util.atributo(VinculoHandler.ICONE, icone);
+		}
+		if (vazioInvisivel) {
+			util.atributo(VinculoHandler.VAZIO, VinculoHandler.INVISIVEL);
+		}
+		if (corFonte != null) {
+			util.atributo(VinculoHandler.COR_FONTE, toHex(corFonte));
+		}
+		if (!Util.estaVazio(iconeGrupo)) {
+			util.atributo(VinculoHandler.ICONE_GRUPO, iconeGrupo);
+		}
+	}
+
 	public void modelo(XMLUtil util) {
 		util.abrirTag(VinculoHandler.REF).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
 				.atributo(VinculoHandler.CAMPO, "FK").atributo(VinculoHandler.GRUPO, "")
