@@ -43,20 +43,20 @@ public class Referencia {
 
 	public void descrever(boolean autonomo, StringBuilder builder) {
 		builder.append(autonomo ? "<ref" : "");
-		rotuloValor(builder, "tabela", tabela);
-		rotuloValor(builder, "campo", campo);
-		rotuloValor(builder, "grupo", grupo);
+		rotuloValor(builder, VinculoHandler.TABELA, tabela);
+		rotuloValor(builder, VinculoHandler.CAMPO, campo);
+		rotuloValor(builder, VinculoHandler.GRUPO, grupo);
 		if (limparApos) {
-			rotuloValor(builder, "limparApos", "" + limparApos);
+			rotuloValor(builder, VinculoHandler.LIMPAR_APOS, "" + limparApos);
 		}
-		rotuloValor(builder, "icone", icone);
+		rotuloValor(builder, VinculoHandler.ICONE, icone);
 		if (vazioInvisivel) {
-			rotuloValor(builder, "vazio", "invisivel");
+			rotuloValor(builder, VinculoHandler.VAZIO, VinculoHandler.INVISIVEL);
 		}
 		if (corFonte != null) {
-			rotuloValor(builder, "corFonte", toHex(corFonte));
+			rotuloValor(builder, VinculoHandler.COR_FONTE, toHex(corFonte));
 		}
-		rotuloValor(builder, "iconeGrupo", iconeGrupo);
+		rotuloValor(builder, VinculoHandler.ICONE_GRUPO, iconeGrupo);
 		builder.append(autonomo ? "/>" : "");
 	}
 
