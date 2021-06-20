@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
@@ -48,27 +47,6 @@ public class Pesquisa {
 	public boolean ehEquivalente(Pesquisa pesquisa, Objeto objeto) {
 		return pesquisa != null && nome.equals(pesquisa.nome) && referencia.igual(objeto)
 				&& pesquisa.referencia.igual(objeto);
-	}
-
-	public void descrever(StringBuilder builder) {
-		builder.append("\t<pesquisa");
-		Referencia.rotuloValor(builder, VinculoHandler.NOME, nome);
-		referencia.descrever(false, builder);
-		builder.append(">" + Constantes.QL);
-		for (Referencia ref : referencias) {
-			builder.append("\t\t");
-			ref.descrever(true, builder);
-			builder.append(Constantes.QL);
-		}
-		for (Referencia ref : referenciasApos) {
-			builder.append("\t\t");
-			ref.descrever(true, builder);
-			builder.append(Constantes.QL);
-		}
-		if (referencias.isEmpty() && referenciasApos.isEmpty()) {
-			builder.append(Constantes.QL);
-		}
-		builder.append("\t</pesquisa>");
 	}
 
 	public void salvar(XMLUtil util) {

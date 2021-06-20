@@ -2,6 +2,7 @@ package br.com.persist.marca;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 import br.com.persist.assistencia.Constantes;
@@ -9,6 +10,14 @@ import br.com.persist.assistencia.Constantes;
 public class XMLUtil {
 	private final PrintWriter pw;
 	private int tab = -1;
+
+	public XMLUtil(Writer out) throws XMLException {
+		try {
+			pw = new PrintWriter(out);
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
+	}
 
 	public XMLUtil(File file) throws XMLException {
 		try {

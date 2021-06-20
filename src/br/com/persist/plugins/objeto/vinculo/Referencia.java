@@ -41,25 +41,6 @@ public class Referencia {
 		}
 	}
 
-	public void descrever(boolean autonomo, StringBuilder builder) {
-		builder.append(autonomo ? "<ref" : "");
-		rotuloValor(builder, VinculoHandler.TABELA, tabela);
-		rotuloValor(builder, VinculoHandler.CAMPO, campo);
-		rotuloValor(builder, VinculoHandler.GRUPO, grupo);
-		if (limparApos) {
-			rotuloValor(builder, VinculoHandler.LIMPAR_APOS, "" + limparApos);
-		}
-		rotuloValor(builder, VinculoHandler.ICONE, icone);
-		if (vazioInvisivel) {
-			rotuloValor(builder, VinculoHandler.VAZIO, VinculoHandler.INVISIVEL);
-		}
-		if (corFonte != null) {
-			rotuloValor(builder, VinculoHandler.COR_FONTE, toHex(corFonte));
-		}
-		rotuloValor(builder, VinculoHandler.ICONE_GRUPO, iconeGrupo);
-		builder.append(autonomo ? "/>" : "");
-	}
-
 	public void salvar(boolean autonomo, XMLUtil util) {
 		if (autonomo) {
 			util.abrirTag(VinculoHandler.REF);
@@ -106,13 +87,13 @@ public class Referencia {
 		}
 	}
 
-	public static void atributoValor(XMLUtil util, String nome, String valor) {
+	static void atributoValor(XMLUtil util, String nome, String valor) {
 		if (!Util.estaVazio(valor)) {
 			util.atributo(nome, valor);
 		}
 	}
 
-	public static String toHex(Color color) {
+	static String toHex(Color color) {
 		StringBuilder sb = new StringBuilder("#");
 		sb.append(Integer.toHexString(color.getRed()).toUpperCase());
 		sb.append(Integer.toHexString(color.getGreen()).toUpperCase());
