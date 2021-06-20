@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class Pesquisa {
@@ -63,6 +64,17 @@ public class Pesquisa {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public void modelo(XMLUtil util) {
+		util.ql();
+		util.abrirTag(VinculoHandler.PESQUISA).atributo("nome", "Nome da pesquisa")
+				.atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA).atributo(VinculoHandler.CAMPO, "PK")
+				.atributo(VinculoHandler.GRUPO, "").atributo(VinculoHandler.ICONE_GRUPO, "")
+				.atributo(VinculoHandler.ICONE, "").atributo(VinculoHandler.COR_FONTE, "#AABBCC").fecharTag();
+		new Referencia(null, ".", null).modelo(util);
+		new Referencia(null, ".", null).modelo2(util);
+		util.finalizarTag(VinculoHandler.PESQUISA);
 	}
 
 	public Referencia getReferencia() {

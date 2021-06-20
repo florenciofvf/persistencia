@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
-import br.com.persist.marca.XMLUtil;
 
 public class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
@@ -109,17 +108,6 @@ public class VinculoHandler extends XMLHandler {
 		paraTabela.setCcsc(attributes.getValue("ccsc"));
 		paraTabela.setBpnt(attributes.getValue("bpnt"));
 		return paraTabela;
-	}
-
-	public static void pesquisa(XMLUtil util) {
-		util.ql();
-		util.abrirTag(PESQUISA).atributo("nome", "Nome da pesquisa").atributo(TABELA, NOME_TABELA).atributo(CAMPO, "PK")
-				.atributo(GRUPO, "").atributo(ICONE_GRUPO, "").atributo(ICONE, "").atributo(COR_FONTE, "#AABBCC")
-				.fecharTag();
-		util.abrirTag(REF).atributo(TABELA, NOME_TABELA).atributo(CAMPO, "FK").atributo(GRUPO, "")
-				.atributo(VAZIO, INVISIVEL).atributo(ICONE, "").atributo(COR_FONTE, "#AABBCC").fecharTag2(-1);
-		util.abrirTag(REF).atributo(TABELA, NOME_TABELA).atributo(LIMPAR_APOS, true).fecharTag2(-1);
-		util.finalizarTag(PESQUISA);
 	}
 
 	public static Referencia criar(Attributes attributes) {

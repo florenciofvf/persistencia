@@ -14,7 +14,8 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
-import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
+import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoUtil {
@@ -116,7 +117,7 @@ public class ObjetoUtil {
 		util.abrirTag2("vinculo");
 		util.print("<!--").ql();
 		new ParaTabela(".", null, null).modelo(util);
-		VinculoHandler.pesquisa(util);
+		new Pesquisa(".", new Referencia(null, ".", null)).modelo(util);
 		util.print("-->").ql();
 		util.finalizarTag("vinculo");
 		util.close();

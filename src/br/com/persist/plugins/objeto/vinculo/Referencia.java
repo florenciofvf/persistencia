@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class Referencia {
@@ -57,6 +58,18 @@ public class Referencia {
 		}
 		rotuloValor(builder, "iconeGrupo", iconeGrupo);
 		builder.append(autonomo ? "/>" : "");
+	}
+
+	public void modelo(XMLUtil util) {
+		util.abrirTag(VinculoHandler.REF).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
+				.atributo(VinculoHandler.CAMPO, "FK").atributo(VinculoHandler.GRUPO, "")
+				.atributo(VinculoHandler.VAZIO, VinculoHandler.INVISIVEL).atributo(VinculoHandler.ICONE, "")
+				.atributo(VinculoHandler.COR_FONTE, "#AABBCC").fecharTag2(-1);
+	}
+
+	public void modelo2(XMLUtil util) {
+		util.abrirTag(VinculoHandler.REF).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
+				.atributo(VinculoHandler.LIMPAR_APOS, true).fecharTag2(-1);
 	}
 
 	static void rotuloValor(StringBuilder builder, String rotulo, String valor) {
