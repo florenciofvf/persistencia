@@ -1,4 +1,4 @@
-package br.com.persist.plugins.objeto;
+package br.com.persist.plugins.objeto.vinculo;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;

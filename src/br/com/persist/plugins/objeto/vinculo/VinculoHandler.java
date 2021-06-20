@@ -12,7 +12,6 @@ import org.xml.sax.SAXException;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.plugins.objeto.Instrucao;
 
 public class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();

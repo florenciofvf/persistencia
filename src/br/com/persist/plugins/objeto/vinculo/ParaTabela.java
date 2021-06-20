@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.objeto.Instrucao;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class ParaTabela {
