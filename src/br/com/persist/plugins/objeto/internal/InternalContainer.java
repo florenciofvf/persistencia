@@ -1235,7 +1235,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				if (!Util.estaVazio(objeto.getScriptAdicaoHierarquico())) {
 					addMenuItem(scriptAdicaoHierAcao);
 				}
-				addMenuItem(new AdicionarHierarquicoAcao());
+				addMenuItem(new AdicionaHierarquicoAcao());
 				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
@@ -1697,10 +1697,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 			}
 
-			private class AdicionarHierarquicoAcao extends Action {
+			private class AdicionaHierarquicoAcao extends Action {
 				private static final long serialVersionUID = 1L;
 
-				private AdicionarHierarquicoAcao() {
+				private AdicionaHierarquicoAcao() {
 					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico"), false, Icones.HIERARQUIA);
 				}
 
@@ -1719,7 +1719,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					if (erro || mapaRef.get("pesquisa") == null || mapaRef.get("ref") == null) {
 						return;
 					}
-					checarListaPesquisa(mapaRef);
+					AtomicBoolean atom = new AtomicBoolean(false);
+					checarListaPesquisa(mapaRef, atom);
+					if (atom.get()) {
+						return;
+					}
 					List<Pesquisa> pesquisas = objeto.getPesquisas();
 					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 					Coletor coletor = new Coletor();
@@ -1735,13 +1739,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 				}
 
-				private void checarListaPesquisa(Map<String, Object> mapaRef) {
+				private void checarListaPesquisa(Map<String, Object> mapaRef, AtomicBoolean atom) {
 					if (objeto.getPesquisas().isEmpty()) {
 						Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
 						objeto.getPesquisas().add(pesquisa);
 						objeto.addReferencias(pesquisa.getReferencias());
 						buttonPesquisa.complemento(objeto);
 						buscaAuto = true;
+						atom.set(true);
 					}
 				}
 
