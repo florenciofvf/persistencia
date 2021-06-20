@@ -28,7 +28,7 @@ public class Pesquisa {
 
 	public void processar(Objeto objeto) {
 		if (referencia.igual(objeto)) {
-			objeto.getPesquisas().add(this);
+			objeto.addPesquisa(this);
 			objeto.addReferencias(referencias);
 			referencia.config(objeto);
 		}
@@ -45,7 +45,7 @@ public class Pesquisa {
 	}
 
 	public boolean ehEquivalente(Pesquisa pesquisa, Objeto objeto) {
-		return pesquisa != null && nome.equals(pesquisa.nome) && referencia.igual(objeto)
+		return pesquisa != null && nome.equalsIgnoreCase(pesquisa.nome) && referencia.igual(objeto)
 				&& pesquisa.referencia.igual(objeto);
 	}
 
@@ -141,6 +141,15 @@ public class Pesquisa {
 		for (Referencia ref : referencias) {
 			add(ref);
 		}
+	}
+
+	public static boolean contem(Pesquisa pesquisa, List<Pesquisa> pesquisas) {
+		for (Pesquisa pesq : pesquisas) {
+			if (pesq.nome.equalsIgnoreCase(pesquisa.nome) && pesq.referencia.igual(pesquisa.referencia)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static boolean contem(Referencia ref, List<Referencia> referencias) {

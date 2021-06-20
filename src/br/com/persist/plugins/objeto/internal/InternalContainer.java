@@ -1769,7 +1769,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Vinculacao vinculacao) {
 					if (objeto.getPesquisas().isEmpty()) {
 						Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
-						objeto.getPesquisas().add(pesquisa);
+						objeto.addPesquisa(pesquisa);
 						objeto.addReferencias(pesquisa.getReferencias());
 						vinculacao.adicionarPesquisa(pesquisa);
 						buttonPesquisa.complemento(objeto);

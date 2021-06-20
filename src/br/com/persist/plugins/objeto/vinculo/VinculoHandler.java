@@ -57,7 +57,9 @@ public class VinculoHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (PESQUISA.equals(qName)) {
 			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes));
-			pesquisas.add(selecionado);
+			if (!Pesquisa.contem(selecionado, pesquisas)) {
+				pesquisas.add(selecionado);
+			}
 		} else if (PARA.equals(qName)) {
 			tabelaSelecionada = attributes.getValue(TABELA);
 			if (!Util.estaVazio(tabelaSelecionada)) {
