@@ -76,17 +76,6 @@ public class Referencia {
 				.atributo(VinculoHandler.LIMPAR_APOS, true).fecharTag2(-1);
 	}
 
-	static void rotuloValor(StringBuilder builder, String rotulo, String valor) {
-		if (!Util.estaVazio(valor)) {
-			builder.append(" ");
-			builder.append(rotulo);
-			builder.append("=");
-			builder.append("\"");
-			builder.append(valor);
-			builder.append("\"");
-		}
-	}
-
 	static void atributoValor(XMLUtil util, String nome, String valor) {
 		if (!Util.estaVazio(valor)) {
 			util.atributo(nome, valor);
