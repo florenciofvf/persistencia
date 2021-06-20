@@ -1736,9 +1736,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					for (Pesquisa pesquisa : pesquisas) {
 						if (selecionado(pesquisa, coletor.getLista())) {
 							Referencia ref = (Referencia) mapaRef.get("ref");
+							atualizarPesquisa(vinculacao, atom, pesquisa, ref);
 							objeto.addReferencia(ref);
 							pesquisa.add(ref);
 							buscaAuto = true;
+						}
+					}
+					if (atom.get()) {
+						vinculoListener.salvarVinculacao(vinculacao);
+					}
+				}
+
+				private void atualizarPesquisa(Vinculacao vinculacao, AtomicBoolean atom, Pesquisa pesquisa,
+						Referencia ref) {
+					List<Pesquisa> lista = vinculacao.getPesquisas(objeto);
+					for (Pesquisa pesq : lista) {
+						if (pesq.ehEquivalente(pesquisa, objeto) && pesq.add(ref)) {
+							atom.set(true);
 						}
 					}
 				}

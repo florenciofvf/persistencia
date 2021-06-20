@@ -48,6 +48,16 @@ public class Vinculacao {
 		}
 	}
 
+	public List<Pesquisa> getPesquisas(Objeto objeto) {
+		List<Pesquisa> lista = new ArrayList<>();
+		for (Pesquisa p : pesquisas) {
+			if (p.igual(objeto)) {
+				lista.add(p);
+			}
+		}
+		return lista;
+	}
+
 	public void processar(Objeto objeto) {
 		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela());
 		if (paraTabela != null) {

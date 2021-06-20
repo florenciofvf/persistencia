@@ -41,6 +41,15 @@ public class Pesquisa {
 		}
 	}
 
+	public boolean igual(Objeto objeto) {
+		return referencia.igual(objeto);
+	}
+
+	public boolean ehEquivalente(Pesquisa pesquisa, Objeto objeto) {
+		return pesquisa != null && nome.equals(pesquisa.nome) && referencia.igual(objeto)
+				&& pesquisa.referencia.igual(objeto);
+	}
+
 	public void descrever(StringBuilder builder) {
 		builder.append("\t<pesquisa");
 		Referencia.rotuloValor(builder, VinculoHandler.NOME, nome);
@@ -130,15 +139,18 @@ public class Pesquisa {
 		return referenciasApos;
 	}
 
-	public void add(Referencia ref) {
+	public boolean add(Referencia ref) {
 		if (ref != null) {
 			if (!ref.isLimparApos() && !contem(ref, referencias)) {
 				referencias.add(ref);
 				ref.pesquisa = this;
+				return true;
 			} else if (ref.isLimparApos() && !contem(ref, referenciasApos)) {
 				referenciasApos.add(ref);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	public void addRef(Map<String, String> map) {

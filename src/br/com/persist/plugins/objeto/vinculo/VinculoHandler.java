@@ -2,7 +2,7 @@ package br.com.persist.plugins.objeto.vinculo;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class VinculoHandler extends XMLHandler {
 	private Pesquisa selecionado;
 
 	public VinculoHandler() {
-		mapaParaTabela = new HashMap<>();
+		mapaParaTabela = new LinkedHashMap<>();
 		pesquisas = new ArrayList<>();
 	}
 

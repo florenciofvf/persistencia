@@ -62,7 +62,9 @@ public class Instrucao implements Comparable<Instrucao> {
 		if (!Util.estaVazio(getValor())) {
 			util.abrirTag(VinculoHandler.INSTRUCAO);
 			util.atributo("nome", Util.escapar(nome));
-			util.atributo("selecaoMultipla", selecaoMultipla);
+			if (selecaoMultipla) {
+				util.atributo("selecaoMultipla", selecaoMultipla);
+			}
 			util.atributo("ordem", ordem).fecharTag();
 			util.conteudo("<![CDATA[").ql();
 			util.tab().conteudo(Util.escapar(getValor())).ql();
