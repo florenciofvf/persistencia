@@ -20,7 +20,7 @@
 		</instrucao>
 		<instrucao nome="Incluir candidato" ordem="0">
 			<![CDATA[
-				INSERT INTO candidato (eleicao_id, nome, votos) VALUES (65, &apos;CANDIDATO TESTE&apos;, 12)
+				INSERT INTO candidato (eleicao_id, nome, votos) VALUES (65, 'CANDIDATO TESTE', 12)
 			]]>
 		</instrucao>
 	</para>

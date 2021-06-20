@@ -67,7 +67,7 @@ public class Instrucao implements Comparable<Instrucao> {
 			}
 			util.atributo("ordem", ordem).fecharTag();
 			util.conteudo("<![CDATA[").ql();
-			util.tab().conteudo(Util.escapar(getValor())).ql();
+			util.tab().conteudo(getValor()).ql();
 			util.conteudo("]]>").ql();
 			util.finalizarTag(VinculoHandler.INSTRUCAO);
 		}
