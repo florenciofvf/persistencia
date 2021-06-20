@@ -15,21 +15,21 @@ import br.com.persist.marca.XMLUtil;
 
 public class VinculoHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
+	public static final String NOME_TABELA = "NOME_TABELA";
+	public static final String LIMPAR_APOS = "limparApos";
+	public static final String ICONE_GRUPO = "iconeGrupo";
 	private final Map<String, ParaTabela> mapaParaTabela;
-	private static final String NOME_TABELA = "NOME_TABELA";
-	private static final String LIMPAR_APOS = "limparApos";
-	private static final String ICONE_GRUPO = "iconeGrupo";
-	private static final String INVISIVEL = "invisivel";
+	public static final String INVISIVEL = "invisivel";
 	public static final String INSTRUCAO = "instrucao";
-	private static final String COR_FONTE = "corFonte";
-	private static final String PESQUISA = "pesquisa";
-	private static final String TABELA = "tabela";
-	private static final String CAMPO = "campo";
-	private static final String ICONE = "icone";
-	private static final String GRUPO = "grupo";
-	private static final String VAZIO = "vazio";
-	private static final String REF = "ref";
-	private final List<Pesquisa> pesquisas;
+	public static final String COR_FONTE = "corFonte";
+	public static final String PESQUISA = "pesquisa";
+	public static final String TABELA = "tabela";
+	public static final String CAMPO = "campo";
+	public static final String ICONE = "icone";
+	public static final String GRUPO = "grupo";
+	public static final String VAZIO = "vazio";
+	public static final String REF = "ref";
+	public final List<Pesquisa> pesquisas;
 	private String tabelaSelecionada;
 	private Pesquisa selecionado;
 
@@ -109,33 +109,6 @@ public class VinculoHandler extends XMLHandler {
 		paraTabela.setCcsc(attributes.getValue("ccsc"));
 		paraTabela.setBpnt(attributes.getValue("bpnt"));
 		return paraTabela;
-	}
-
-	public static void paraTabela(XMLUtil util) {
-		util.abrirTag("para").atributo(TABELA, NOME_TABELA).atributo(ICONE, "nome_icone").atributo(COR_FONTE, "#FFVVFF")
-				.ql();
-		util.tab().atributo("prefixoNomeTabela", "H_").ql();
-		util.tab().atributo("selectAlternativo", "").ql();
-		util.tab().atributo("finalConsulta", "").ql();
-		util.tab().atributo("ajustarAltura", true).ql();
-		util.tab().atributo("complemento", "").ql();
-		util.tab().atributo("mapeamento", "").ql();
-		util.tab().atributo("sequencias", "").ql();
-		util.tab().atributo("campoNomes", "").ql();
-		util.tab().atributo("colunaInfo", false).ql();
-		util.tab().atributo("destacavel", true).ql();
-		util.tab().atributo("linkAuto", true).ql();
-		util.tab().atributo("apelido", "ape").ql();
-		util.tab().atributo("orderBy", "").ql();
-		util.tab().atributo("chaves", "").ql();
-		util.tab().atributo(GRUPO, "").ql();
-		util.tab().atributo("sane", true).ql();
-		util.tab().atributo("ccsc", true).ql();
-		util.tab().atributo("bpnt", false).fecharTag();
-		Instrucao i = new Instrucao("Resumo da instrucao");
-		i.setValor("UPDATE candidato SET votos = 0 WHERE id = #id#");
-		i.salvar(util);
-		util.finalizarTag("para");
 	}
 
 	public static void pesquisa(XMLUtil util) {

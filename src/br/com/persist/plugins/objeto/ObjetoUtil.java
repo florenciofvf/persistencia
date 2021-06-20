@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -114,7 +115,7 @@ public class ObjetoUtil {
 		util.prologo();
 		util.abrirTag2("vinculo");
 		util.print("<!--").ql();
-		VinculoHandler.paraTabela(util);
+		new ParaTabela(".", null, null).modelo(util);
 		VinculoHandler.pesquisa(util);
 		util.print("-->").ql();
 		util.finalizarTag("vinculo");

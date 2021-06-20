@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class ParaTabela {
@@ -116,6 +117,33 @@ public class ParaTabela {
 		if (icone != null) {
 			objeto.setIcone(icone);
 		}
+	}
+
+	public void modelo(XMLUtil util) {
+		util.abrirTag("para").atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
+				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#FFVVFF").ql();
+		util.tab().atributo("prefixoNomeTabela", "H_").ql();
+		util.tab().atributo("selectAlternativo", "").ql();
+		util.tab().atributo("finalConsulta", "").ql();
+		util.tab().atributo("ajustarAltura", true).ql();
+		util.tab().atributo("complemento", "").ql();
+		util.tab().atributo("mapeamento", "").ql();
+		util.tab().atributo("sequencias", "").ql();
+		util.tab().atributo("campoNomes", "").ql();
+		util.tab().atributo("colunaInfo", false).ql();
+		util.tab().atributo("destacavel", true).ql();
+		util.tab().atributo("linkAuto", true).ql();
+		util.tab().atributo("apelido", "ape").ql();
+		util.tab().atributo("orderBy", "").ql();
+		util.tab().atributo("chaves", "").ql();
+		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
+		util.tab().atributo("sane", true).ql();
+		util.tab().atributo("ccsc", true).ql();
+		util.tab().atributo("bpnt", false).fecharTag();
+		Instrucao i = new Instrucao("Resumo da instrucao");
+		i.setValor("UPDATE candidato SET votos = 0 WHERE id = #id#");
+		i.salvar(util);
+		util.finalizarTag("para");
 	}
 
 	public String getTabela() {
