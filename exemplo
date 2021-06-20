@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <vinculo>
-
 	<para tabela="candidato">
 		<instrucao nome="total votos" ordem="0">
 			<![CDATA[

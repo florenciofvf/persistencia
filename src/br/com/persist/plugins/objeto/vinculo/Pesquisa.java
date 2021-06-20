@@ -49,8 +49,10 @@ public class Pesquisa {
 				&& pesquisa.referencia.igual(objeto);
 	}
 
-	public void salvar(XMLUtil util) {
-		util.ql();
+	public void salvar(XMLUtil util, boolean ql) {
+		if (ql) {
+			util.ql();
+		}
 		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
 		referencia.salvar(false, util);
 		util.fecharTag();

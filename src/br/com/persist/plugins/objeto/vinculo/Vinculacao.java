@@ -76,14 +76,17 @@ public class Vinculacao {
 		}
 		if (file != null && file.isFile()) {
 			try {
+				boolean ql = false;
 				XMLUtil util = new XMLUtil(file);
 				util.prologo();
 				util.abrirTag2(VINCULO);
 				for (ParaTabela paraTabela : mapaParaTabela.values()) {
-					paraTabela.salvar(util);
+					paraTabela.salvar(util, ql);
+					ql = true;
 				}
 				for (Pesquisa pesquisa : pesquisas) {
-					pesquisa.salvar(util);
+					pesquisa.salvar(util, ql);
+					ql = true;
 				}
 				util.finalizarTag(VINCULO);
 				util.close();

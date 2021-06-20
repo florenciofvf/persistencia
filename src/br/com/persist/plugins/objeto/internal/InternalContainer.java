@@ -800,7 +800,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					try {
 						StringWriter sw = new StringWriter();
 						XMLUtil util = new XMLUtil(sw);
-						pesquisa.salvar(util);
+						pesquisa.salvar(util, false);
 						util.close();
 						Util.mensagem(InternalContainer.this, sw.toString());
 					} catch (Exception ex) {

@@ -119,8 +119,10 @@ public class ParaTabela {
 		}
 	}
 
-	public void salvar(XMLUtil util) {
-		util.ql();
+	public void salvar(XMLUtil util, boolean ql) {
+		if (ql) {
+			util.ql();
+		}
 		util.abrirTag(VinculoHandler.PARA);
 		atributoValor(util, VinculoHandler.TABELA, tabela);
 		atributoValor(util, VinculoHandler.ICONE, icone);
