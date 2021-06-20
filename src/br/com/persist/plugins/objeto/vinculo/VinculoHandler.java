@@ -27,6 +27,7 @@ public class VinculoHandler extends XMLHandler {
 	public static final String ICONE = "icone";
 	public static final String GRUPO = "grupo";
 	public static final String VAZIO = "vazio";
+	public static final String NOME = "nome";
 	public static final String REF = "ref";
 	public final List<Pesquisa> pesquisas;
 	private String tabelaSelecionada;
@@ -54,7 +55,7 @@ public class VinculoHandler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (PESQUISA.equals(qName)) {
-			selecionado = new Pesquisa(attributes.getValue("nome"), criar(attributes));
+			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes));
 			pesquisas.add(selecionado);
 		} else if ("para".equals(qName)) {
 			tabelaSelecionada = attributes.getValue(TABELA);
@@ -77,7 +78,7 @@ public class VinculoHandler extends XMLHandler {
 	}
 
 	private void addInstrucao(Attributes attributes, List<Instrucao> lista) {
-		Instrucao i = new Instrucao(attributes.getValue("nome"));
+		Instrucao i = new Instrucao(attributes.getValue(NOME));
 		boolean sm = Boolean.parseBoolean(attributes.getValue("selecaoMultipla"));
 		String ordem = attributes.getValue("ordem");
 		if (!Util.estaVazio(ordem)) {

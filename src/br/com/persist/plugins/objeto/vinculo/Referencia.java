@@ -64,27 +64,22 @@ public class Referencia {
 		if (autonomo) {
 			util.abrirTag(VinculoHandler.REF);
 		}
-		util.atributo(VinculoHandler.TABELA, tabela);
-		if (!Util.estaVazio(campo)) {
-			util.atributo(VinculoHandler.CAMPO, campo);
-		}
-		if (!Util.estaVazio(grupo)) {
-			util.atributo(VinculoHandler.GRUPO, grupo);
-		}
+		atributoValor(util, VinculoHandler.TABELA, tabela);
+		atributoValor(util, VinculoHandler.CAMPO, campo);
+		atributoValor(util, VinculoHandler.GRUPO, grupo);
 		if (limparApos) {
-			util.atributo(VinculoHandler.LIMPAR_APOS, true);
+			atributoValor(util, VinculoHandler.LIMPAR_APOS, "" + limparApos);
 		}
-		if (!Util.estaVazio(icone)) {
-			util.atributo(VinculoHandler.ICONE, icone);
-		}
+		atributoValor(util, VinculoHandler.ICONE, icone);
 		if (vazioInvisivel) {
-			util.atributo(VinculoHandler.VAZIO, VinculoHandler.INVISIVEL);
+			atributoValor(util, VinculoHandler.VAZIO, VinculoHandler.INVISIVEL);
 		}
 		if (corFonte != null) {
-			util.atributo(VinculoHandler.COR_FONTE, toHex(corFonte));
+			atributoValor(util, VinculoHandler.COR_FONTE, toHex(corFonte));
 		}
-		if (!Util.estaVazio(iconeGrupo)) {
-			util.atributo(VinculoHandler.ICONE_GRUPO, iconeGrupo);
+		atributoValor(util, VinculoHandler.ICONE_GRUPO, iconeGrupo);
+		if (autonomo) {
+			util.fecharTag2(-1);
 		}
 	}
 
@@ -108,6 +103,12 @@ public class Referencia {
 			builder.append("\"");
 			builder.append(valor);
 			builder.append("\"");
+		}
+	}
+
+	public static void atributoValor(XMLUtil util, String nome, String valor) {
+		if (!Util.estaVazio(valor)) {
+			util.atributo(nome, valor);
 		}
 	}
 

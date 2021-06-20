@@ -43,7 +43,7 @@ public class Pesquisa {
 
 	public void descrever(StringBuilder builder) {
 		builder.append("\t<pesquisa");
-		Referencia.rotuloValor(builder, "nome", nome);
+		Referencia.rotuloValor(builder, VinculoHandler.NOME, nome);
 		referencia.descrever(false, builder);
 		builder.append(">" + Constantes.QL);
 		for (Referencia ref : referencias) {
@@ -62,19 +62,32 @@ public class Pesquisa {
 		builder.append("\t</pesquisa>");
 	}
 
-	public String getNome() {
-		return nome;
+	public void salvar(XMLUtil util) {
+		util.ql();
+		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
+		referencia.salvar(false, util);
+		for (Referencia ref : referencias) {
+			ref.salvar(true, util);
+		}
+		for (Referencia ref : referenciasApos) {
+			ref.salvar(true, util);
+		}
+		util.finalizarTag(VinculoHandler.PESQUISA);
 	}
 
 	public void modelo(XMLUtil util) {
 		util.ql();
-		util.abrirTag(VinculoHandler.PESQUISA).atributo("nome", "Nome da pesquisa")
+		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, "Nome da pesquisa")
 				.atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA).atributo(VinculoHandler.CAMPO, "PK")
 				.atributo(VinculoHandler.GRUPO, "").atributo(VinculoHandler.ICONE_GRUPO, "")
 				.atributo(VinculoHandler.ICONE, "").atributo(VinculoHandler.COR_FONTE, "#AABBCC").fecharTag();
 		new Referencia(null, ".", null).modelo(util);
 		new Referencia(null, ".", null).modelo2(util);
 		util.finalizarTag(VinculoHandler.PESQUISA);
+	}
+
+	public String getNome() {
+		return nome;
 	}
 
 	public Referencia getReferencia() {
