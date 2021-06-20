@@ -119,7 +119,7 @@ public class ParaTabela {
 		}
 	}
 
-	public void salvar(boolean autonomo, XMLUtil util) {
+	public void salvar(XMLUtil util) {
 		util.ql();
 		util.abrirTag(VinculoHandler.PARA);
 		atributoValor(util, VinculoHandler.TABELA, tabela);

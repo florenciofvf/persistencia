@@ -1625,6 +1625,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
+	public void preencherVinculacao(Vinculacao vinculacao) {
+		vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
+	}
+
+	public void salvarVinculacao(Vinculacao vinculacao) {
+		vinculacao.salvar(arquivoVinculo, ObjetoSuperficie.this);
+	}
+
 	public void desenharDesc(boolean b) {
 		for (Relacao relacao : relacoes) {
 			relacao.setDesenharDescricao(b);

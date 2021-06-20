@@ -30,6 +30,7 @@ import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
+import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -241,6 +242,20 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).adicionarHierarquico(conexao, objeto, mapaRef);
+			}
+		}
+
+		public void preencherVinculacao(Vinculacao vinculacao) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).preencherVinculacao(vinculacao);
+			}
+		}
+
+		public void salvarVinculacao(Vinculacao vinculacao) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).salvarVinculacao(vinculacao);
 			}
 		}
 	};

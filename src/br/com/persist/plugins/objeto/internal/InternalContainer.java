@@ -96,6 +96,7 @@ import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
+import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.IndiceValor;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
@@ -1719,6 +1720,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					if (erro || mapaRef.get("pesquisa") == null || mapaRef.get("ref") == null) {
 						return;
 					}
+					Vinculacao vinculacao = new Vinculacao();
+					vinculoListener.preencherVinculacao(vinculacao);
 					AtomicBoolean atom = new AtomicBoolean(false);
 					checarListaPesquisa(mapaRef, atom);
 					if (atom.get()) {

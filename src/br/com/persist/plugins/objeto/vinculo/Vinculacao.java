@@ -3,20 +3,23 @@ package br.com.persist.plugins.objeto.vinculo;
 import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
 
 public class Vinculacao {
 	private final Map<String, ParaTabela> mapaParaTabela;
+	private static final String VINCULO = "vinculo";
 	private final List<Pesquisa> pesquisas;
 
 	public Vinculacao() {
-		mapaParaTabela = new HashMap<>();
+		mapaParaTabela = new LinkedHashMap<>();
 		pesquisas = new ArrayList<>();
 	}
 
@@ -48,5 +51,41 @@ public class Vinculacao {
 		for (Pesquisa p : pesquisas) {
 			p.processar(objeto);
 		}
+	}
+
+	public void salvar(String arquivo, Component componente) {
+		File file = null;
+		if (!Util.estaVazio(arquivo)) {
+			file = new File(arquivo);
+		}
+		if (file != null && file.isFile()) {
+			try {
+				XMLUtil util = new XMLUtil(file);
+				util.prologo();
+				util.abrirTag2(VINCULO);
+				for (ParaTabela paraTabela : mapaParaTabela.values()) {
+					paraTabela.salvar(util);
+				}
+				for (Pesquisa pesquisa : pesquisas) {
+					pesquisa.salvar(util);
+				}
+				util.finalizarTag(VINCULO);
+				util.close();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SALVAR: " + file.getAbsolutePath(), ex, componente);
+			}
+		}
+	}
+
+	public static void criarArquivoVinculado(File file) throws XMLException {
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2(VINCULO);
+		util.print("<!--").ql();
+		new ParaTabela(".", null, null).modelo(util);
+		new Pesquisa(".", new Referencia(null, ".", null)).modelo(util);
+		util.print("-->").ql();
+		util.finalizarTag(VINCULO);
+		util.close();
 	}
 }

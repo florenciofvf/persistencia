@@ -13,6 +13,7 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
+import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public interface InternalListener {
 	public interface Vinculo {
@@ -21,6 +22,10 @@ public interface InternalListener {
 		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos);
 
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
+
+		public void preencherVinculacao(Vinculacao vinculacao);
+
+		public void salvarVinculacao(Vinculacao vinculacao);
 
 		public void pesquisarApos(Pesquisa pesquisa);
 
