@@ -28,6 +28,7 @@ public class VinculoHandler extends XMLHandler {
 	public static final String GRUPO = "grupo";
 	public static final String VAZIO = "vazio";
 	public static final String NOME = "nome";
+	public static final String PARA = "para";
 	public static final String REF = "ref";
 	public final List<Pesquisa> pesquisas;
 	private String tabelaSelecionada;
@@ -57,7 +58,7 @@ public class VinculoHandler extends XMLHandler {
 		if (PESQUISA.equals(qName)) {
 			selecionado = new Pesquisa(attributes.getValue(NOME), criar(attributes));
 			pesquisas.add(selecionado);
-		} else if ("para".equals(qName)) {
+		} else if (PARA.equals(qName)) {
 			tabelaSelecionada = attributes.getValue(TABELA);
 			if (!Util.estaVazio(tabelaSelecionada)) {
 				mapaParaTabela.computeIfAbsent(tabelaSelecionada, t -> criarParaTabela(tabelaSelecionada, attributes));

@@ -112,7 +112,7 @@ public class Referencia {
 		}
 	}
 
-	private String toHex(Color color) {
+	public static String toHex(Color color) {
 		StringBuilder sb = new StringBuilder("#");
 		sb.append(Integer.toHexString(color.getRed()).toUpperCase());
 		sb.append(Integer.toHexString(color.getGreen()).toUpperCase());

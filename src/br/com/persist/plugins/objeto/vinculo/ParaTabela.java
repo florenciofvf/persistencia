@@ -119,9 +119,53 @@ public class ParaTabela {
 		}
 	}
 
+	public void salvar(boolean autonomo, XMLUtil util) {
+		util.ql();
+		util.abrirTag(VinculoHandler.PARA);
+		atributoValor(util, VinculoHandler.TABELA, tabela);
+		atributoValor(util, VinculoHandler.ICONE, icone);
+		if (corFonte != null) {
+			atributoValor(util, VinculoHandler.COR_FONTE, Referencia.toHex(corFonte));
+		}
+		atributoValor(util, "prefixoNomeTabela", prefixoNomeTabela);
+		atributoValor(util, "selectAlternativo", selectAlternativo);
+		atributoValor(util, "finalConsulta", finalConsulta);
+		atributoValor(util, "ajustarAltura", ajustarAltura);
+		atributoValor(util, "complemento", complemento);
+		atributoValor(util, "mapeamento", mapeamento);
+		atributoValor(util, "sequencias", sequencias);
+		atributoValor(util, "campoNomes", campoNomes);
+		atributoValor(util, "colunaInfo", colunaInfo);
+		atributoValor(util, "destacavel", destacavel);
+		atributoValor(util, "linkAuto", linkAuto);
+		atributoValor(util, "apelido", apelido);
+		atributoValor(util, "orderBy", orderBy);
+		atributoValor(util, "chaves", chaves);
+		atributoValor(util, VinculoHandler.GRUPO, grupo);
+		atributoValor(util, "sane", sane);
+		atributoValor(util, "ccsc", ccsc);
+		atributoValor(util, "bpnt", bpnt);
+		util.fecharTag();
+		for (Instrucao i : instrucoes) {
+			i.salvar(util);
+		}
+		util.finalizarTag(VinculoHandler.PARA);
+	}
+
+	public static void atributoValor(XMLUtil util, String nome, boolean valor) {
+		if (valor) {
+			util.atributo(nome, valor);
+		}
+	}
+
+	public static void atributoValor(XMLUtil util, String nome, String valor) {
+		Referencia.atributoValor(util, nome, valor);
+	}
+
 	public void modelo(XMLUtil util) {
-		util.abrirTag("para").atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
-				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#FFVVFF").ql();
+		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)//
+				.atributo(VinculoHandler.ICONE, "nome_icone")//
+				.atributo(VinculoHandler.COR_FONTE, "#FFVVFF").ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
 		util.tab().atributo("finalConsulta", "").ql();
@@ -143,7 +187,7 @@ public class ParaTabela {
 		Instrucao i = new Instrucao("Resumo da instrucao");
 		i.setValor("UPDATE candidato SET votos = 0 WHERE id = #id#");
 		i.salvar(util);
-		util.finalizarTag("para");
+		util.finalizarTag(VinculoHandler.PARA);
 	}
 
 	public String getTabela() {
