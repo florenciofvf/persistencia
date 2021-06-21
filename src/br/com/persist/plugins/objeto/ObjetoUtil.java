@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,6 +13,8 @@ import java.util.Map.Entry;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -106,5 +109,13 @@ public class ObjetoUtil {
 		} catch (IOException e) {
 			Util.mensagem(componente, e.getMessage());
 		}
+	}
+
+	public static String getDescricao(Pesquisa pesquisa) throws XMLException {
+		StringWriter sw = new StringWriter();
+		XMLUtil util = new XMLUtil(sw);
+		pesquisa.salvar(util, false);
+		util.close();
+		return sw.toString();
 	}
 }

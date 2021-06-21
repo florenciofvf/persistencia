@@ -24,7 +24,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.StringWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +79,6 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
@@ -798,11 +796,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private void descricao() {
 					try {
-						StringWriter sw = new StringWriter();
-						XMLUtil util = new XMLUtil(sw);
-						pesquisa.salvar(util, false);
-						util.close();
-						Util.mensagem(InternalContainer.this, sw.toString());
+						Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
 					}
