@@ -2228,9 +2228,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {
 		if (campo != null && campo.indexOf(',') != -1) {
-			sb.append(Constantes.QL + "\t<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->");
+			sb.append(Constantes.QL + "\t<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->" + Constantes.QL);
 		}
-		sb.append(Constantes.QL + "\t<pesquisa");
+		sb.append("\t<pesquisa");
 		sb.append(" nome=" + citar(nome));
 		append(sb, tabela, campo);
 		sb.append(">");
