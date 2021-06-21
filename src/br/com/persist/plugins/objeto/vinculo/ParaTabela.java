@@ -148,8 +148,10 @@ public class ParaTabela {
 		atributoValor(util, "ccsc", ccsc);
 		atributoValor(util, "bpnt", bpnt);
 		util.fecharTag();
+		ql = false;
 		for (Instrucao i : instrucoes) {
-			i.salvar(util);
+			i.salvar(util, ql);
+			ql = true;
 		}
 		util.finalizarTag(VinculoHandler.PARA);
 	}
@@ -188,7 +190,7 @@ public class ParaTabela {
 		util.tab().atributo("bpnt", false).fecharTag();
 		Instrucao i = new Instrucao("Resumo da instrucao");
 		i.setValor("UPDATE candidato SET votos = 0 WHERE id = #id#");
-		i.salvar(util);
+		i.salvar(util, false);
 		util.finalizarTag(VinculoHandler.PARA);
 	}
 

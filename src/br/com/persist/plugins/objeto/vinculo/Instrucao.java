@@ -58,8 +58,11 @@ public class Instrucao implements Comparable<Instrucao> {
 		return i;
 	}
 
-	public void salvar(XMLUtil util) {
+	public void salvar(XMLUtil util, boolean ql) {
 		if (!Util.estaVazio(getValor())) {
+			if (ql) {
+				util.ql();
+			}
 			util.abrirTag(VinculoHandler.INSTRUCAO);
 			util.atributo("nome", Util.escapar(nome));
 			if (selecaoMultipla) {
