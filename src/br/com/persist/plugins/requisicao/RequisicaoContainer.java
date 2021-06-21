@@ -15,6 +15,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,6 +65,7 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
+import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -603,15 +606,19 @@ public class RequisicaoContainer extends AbstratoContainer {
 			return panel;
 		}
 
-		private class ToolbarParametro extends BarraButton {
+		private class ToolbarParametro extends BarraButton implements ActionListener {
 			private static final long serialVersionUID = 1L;
 			private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
+			private final TextField txtPesquisa = new TextField(35);
 
 			private ToolbarParametro() {
 				super.ini(null, LIMPAR, BAIXAR, COPIAR, COLAR);
 				buttonColar.addSeparator();
 				buttonColar.addItem(vAccessTokenAcao);
 				vAccessTokenAcao.setActionListener(e -> atualizarVar());
+				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+				txtPesquisa.addActionListener(this);
+				add(txtPesquisa);
 			}
 
 			private void atualizarVar() {
@@ -643,13 +650,24 @@ public class RequisicaoContainer extends AbstratoContainer {
 			protected void colar(boolean numeros, boolean letras) {
 				Util.getContentTransfered(areaParametros, numeros, letras);
 			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!Util.estaVazio(txtPesquisa.getText())) {
+					Util.destacar(areaParametros.getStyledDocument(), txtPesquisa.getText());
+				}
+			}
 		}
 
-		private class ToolbarResultado extends BarraButton {
+		private class ToolbarResultado extends BarraButton implements ActionListener {
 			private static final long serialVersionUID = 1L;
+			private final TextField txtPesquisa = new TextField(35);
 
 			private ToolbarResultado() {
 				super.ini(null, LIMPAR, COPIAR, COLAR);
+				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+				txtPesquisa.addActionListener(this);
+				add(txtPesquisa);
 			}
 
 			@Override
@@ -668,6 +686,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 			@Override
 			protected void colar(boolean numeros, boolean letras) {
 				Util.getContentTransfered(areaResultados, numeros, letras);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!Util.estaVazio(txtPesquisa.getText())) {
+					selecionarAbaJSON();
+					Util.destacar(areaResultados.getStyledDocument(), txtPesquisa.getText());
+				}
 			}
 		}
 
