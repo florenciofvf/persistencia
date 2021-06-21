@@ -65,7 +65,10 @@ public class Instrucao implements Comparable<Instrucao> {
 			if (selecaoMultipla) {
 				util.atributo("selecaoMultipla", selecaoMultipla);
 			}
-			util.atributo("ordem", ordem).fecharTag();
+			if (ordem != 0) {
+				util.atributo("ordem", ordem);
+			}
+			util.fecharTag();
 			util.conteudo("<![CDATA[").ql();
 			util.tab().conteudo(getValor()).ql();
 			util.conteudo("]]>").ql();
