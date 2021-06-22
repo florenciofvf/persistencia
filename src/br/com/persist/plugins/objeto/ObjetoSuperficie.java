@@ -1993,7 +1993,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
-			boolean circular) {
+			boolean circular, AtomicReference<String> ref) {
 		ExportacaoImportacao expImp = criarExportacaoImportacao(exportacao, circular);
 		expImp.processarPrincipal(tabela);
 		expImp.checarCriarPesquisa();
@@ -2005,7 +2005,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
-		expImp.vincular();
+		expImp.vincular(ref);
 		Util.mensagemFormulario(formulario, expImp.getString());
 	}
 
@@ -2426,7 +2426,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			return Constantes.VAZIO;
 		}
 
-		public void vincular() {
+		public void vincular(AtomicReference<String> ref) {
 			try {
 				arquivoVinculo = principal.getTabela().toLowerCase() + ".xml";
 				Vinculacao vinculo = getVinculacao(arquivoVinculo);
@@ -2436,6 +2436,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				} else if (vinculo != null && !listaRef.isEmpty()) {
 					salvar();
 				}
+				ref.set(arquivoVinculo);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("VINCULAR", ex, ObjetoSuperficie.this);
 			}

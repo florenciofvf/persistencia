@@ -503,7 +503,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 		}
-		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular);
+		AtomicReference<String> ref = new AtomicReference<>();
+		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, ref);
+		if (!Util.estaVazio(ref.get())) {
+			toolbar.txtArquivoVinculo.setText(ref.get());
+		}
 		btnSelecao.click();
 	}
 
