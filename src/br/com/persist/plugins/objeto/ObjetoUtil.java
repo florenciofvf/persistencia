@@ -118,4 +118,17 @@ public class ObjetoUtil {
 		util.close();
 		return sw.toString();
 	}
+
+	public static Vinculacao getVinculacao(Component componente, String arquivo) throws XMLException {
+		if (arquivo != null) {
+			File file = new File(arquivo);
+			if (!file.exists()) {
+				Vinculacao.criarArquivoVinculado(file);
+			}
+			Vinculacao vinculacao = new Vinculacao();
+			vinculacao.abrir(arquivo, componente);
+			return vinculacao;
+		}
+		return null;
+	}
 }

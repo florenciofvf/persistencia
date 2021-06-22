@@ -1635,6 +1635,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		vinculacao.salvar(arquivoVinculo, ObjetoSuperficie.this);
 	}
 
+	public Vinculacao getVinculacao(String arquivo) throws XMLException {
+		return ObjetoUtil.getVinculacao(ObjetoSuperficie.this, arquivo);
+	}
+
 	public void desenharDesc(boolean b) {
 		for (Relacao relacao : relacoes) {
 			relacao.setDesenharDescricao(b);
@@ -2001,6 +2005,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
+		expImp.vincular();
 		Util.mensagemFormulario(formulario, expImp.getString());
 	}
 
@@ -2419,6 +2424,35 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				Util.stackTraceAndMessage("DESCRICAO", ex, ObjetoSuperficie.this);
 			}
 			return Constantes.VAZIO;
+		}
+
+		public void vincular() {
+			try {
+				arquivoVinculo = principal.getTabela().toLowerCase() + ".xml";
+				Vinculacao vinculo = getVinculacao(arquivoVinculo);
+				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+				if (vinculo != null && pesquisa != null) {
+					salvar(pesquisa);
+				} else if (vinculo != null && !listaRef.isEmpty()) {
+					salvar();
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("VINCULAR", ex, ObjetoSuperficie.this);
+			}
+		}
+
+		private void salvar(Pesquisa pesquisa) {
+			vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
+			vinculacao.adicionarPesquisa(pesquisa);
+			salvarVinculacao(vinculacao);
+		}
+
+		private void salvar() {
+			vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
+			for (Pesquisa pesq : listaRef) {
+				vinculacao.adicionarPesquisa(pesq);
+			}
+			salvarVinculacao(vinculacao);
 		}
 	}
 
