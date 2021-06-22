@@ -43,6 +43,9 @@ public class Referencia {
 
 	public void salvar(boolean autonomo, XMLUtil util) {
 		if (autonomo) {
+			if (campo != null && campo.indexOf(',') != -1) {
+				util.ql().conteudo("<!-- MAIS DE UMA CHAVE NESTE ITEM-->").ql();
+			}
 			util.abrirTag(VinculoHandler.REF);
 		}
 		atributoValor(util, VinculoHandler.TABELA, tabela);

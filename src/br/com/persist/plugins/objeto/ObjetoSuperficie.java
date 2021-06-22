@@ -1974,20 +1974,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef,
 			Metadado tabela) {
-		Controle controle = new Controle(principal, mapaRef);
-		controle.raiz = tabela.getPai();
-		controle.checkInicialPesquisa();
-		processarDetalhes(controle, tabela);
-		if (controle.erro) {
+		Exportacao exportacao = new Exportacao(principal, mapaRef, tabela.getPai());
+		exportacao.criarPesquisa();
+		exportacao.processarDetalhes(tabela);
+		if (exportacao.erro) {
 			mapaRef.put(ObjetoConstantes.ERROR, Boolean.TRUE);
 			return;
 		}
-		controle.checkFinalPesquisa();
-		controle.localizarObjeto();
-		controle.objeto.setScriptAdicaoHierarquico(controle.sb.toString());
-		if (!controle.circular) {
-			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
-		}
+		exportacao.localizarObjeto();
+		exportacao.setScriptAdicaoHierarquico();
+		destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado tabela, boolean exportacao,
@@ -2120,193 +2116,111 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	private void processarCampo(Controle controle, Metadado campo) {
-		controle.campoProcessado = campo;
-		criarEAdicionar(controle);
-		criarEAdicionarRelacao(controle);
-		processarIdTabelaGrupoExportImport(controle);
-		processarChaves(controle);
-	}
-
-	private void criarEAdicionar(Controle controle) {
-		Objeto objeto = new Objeto(0, 0);
-		controle.objeto = objeto;
-		addObjeto(objeto);
-	}
-
-	private void criarEAdicionarRelacao(Controle controle) {
-		Relacao relacao = new Relacao(controle.principal, !controle.exportacao, controle.objeto, controle.exportacao);
-		relacao.setQuebrado(!controle.circular);
-		if (!controle.circular) {
-			relacao.setPontoDestino(false);
-			relacao.setPontoOrigem(false);
-		}
-		controle.relacao = relacao;
-		addRelacao(relacao);
-	}
-
-	private void processarIdTabelaGrupoExportImport(Controle controle) {
-		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
-		if (controle.exportacao) {
-			processarIdTabelaGrupoExportacao(controle.objeto, tabelaRef);
-		} else {
-			processarIdTabelaGrupoImportacao(controle, tabelaRef);
-		}
-		controle.objeto.setTabela(tabelaRef.getNomeTabela());
-	}
-
-	private void processarIdTabelaGrupoImportacao(Controle controle, Metadado tabelaRef) {
-		String nomeTabela = tabelaRef.getNomeTabela();
-		if (contemObjetoComTabela(nomeTabela)) {
-			String id = nomeTabela + Constantes.SEP2 + controle.campoProcessado.getDescricao();
-			controle.objeto.setId(id);
-			checagemId(controle.objeto, id, Constantes.SEP2);
-			controle.objeto.setGrupo(controle.campoProcessado.getDescricao());
-		} else {
-			controle.objeto.setId(nomeTabela);
-		}
-	}
-
-	private void processarChaves(Controle controle) {
-		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
-		Metadado tabela = controle.raiz.getMetadado(tabelaRef.getNomeTabela());
-		if (tabela != null) {
-			processarChaves(controle, tabela);
-		}
-	}
-
-	private void processarChaves(Controle controle, Metadado tabela) {
-		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
-		controle.relacao.setChaveDestino(tabelaRef.getNomeCampo());
-		controle.objeto.setChaves(tabela.getChaves());
-		if (controle.exportacao) {
-			refNaPesquisaPrincipal(controle);
-		} else {
-			pesquisaIndividualDetalhe(controle);
-		}
-	}
-
-	private void refNaPesquisaPrincipal(Controle controle) {
-		Metadado tabelaRef = controle.campoProcessado.getTabelaReferencia();
-		controle.ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), controle.objeto.getGrupo(), true);
-		controle.relacao.setChaveOrigem(controle.principal.getChaves());
-	}
-
-	private void pesquisaIndividualDetalhe(Controle controle) {
-		Metadado campoDetalhe = controle.campoProcessado;
-		Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
-		controle.pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), controle.objeto.getGrupo(),
-				controle.principal.getTabela(), campoDetalhe.getDescricao());
-		controle.relacao.setChaveOrigem(campoDetalhe.getDescricao());
-	}
-
-	private void processarDetalhes(Controle controle, Metadado tabela) {
-		List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(controle.exportacao);
-		Coletor coletor = new Coletor();
-		SetLista.view(ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos), coletor,
-				ObjetoSuperficie.this, new SetLista.Config(false, true));
-		if (coletor.size() == 1) {
-			String nomeCampo = coletor.get(0);
-			processarCampo(controle, getCampo(campos, nomeCampo));
-		} else {
-			controle.erro = true;
-		}
-	}
-
-	private Metadado getCampo(List<Metadado> campos, String nomeCampo) {
-		for (Metadado metadado : campos) {
-			if (metadado.getChaveTabelaReferencia().equals(nomeCampo)) {
-				return metadado;
-			}
-		}
-		return null;
-	}
-
-	private List<String> nomeCampos(List<Metadado> campos) {
-		return campos.stream().map(Metadado::getChaveTabelaReferencia).collect(Collectors.toList());
-	}
-
-	private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {
-		if (campo != null && campo.indexOf(',') != -1) {
-			sb.append(Constantes.QL + "\t<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->" + Constantes.QL);
-		}
-		sb.append("\t<pesquisa");
-		sb.append(" nome=" + citar(nome));
-		append(sb, tabela, campo);
-		sb.append(">");
-	}
-
-	private void append(StringBuilder sb, String tabela, String campo) {
-		sb.append(" tabela=" + citar(tabela));
-		sb.append(" campo=" + citar(campo));
-	}
-
-	private class Controle {
-		private StringBuilder sb = new StringBuilder();
+	private class Exportacao {
 		private final Map<String, Object> mapaRef;
-		Metadado campoProcessado;
 		final Objeto principal;
-		boolean exportacao;
-		boolean circular;
+		final Metadado raiz;
+		Metadado campoFK;
 		Relacao relacao;
 		Objeto objeto;
-		Metadado raiz;
 		boolean erro;
 
-		private Controle(Objeto principal, Map<String, Object> mapaRef) {
+		private Exportacao(Objeto principal, Map<String, Object> mapaRef, Metadado raiz) {
 			this.principal = principal;
 			this.mapaRef = mapaRef;
-			exportacao = true;
-			circular = false;
+			this.raiz = raiz;
 		}
 
-		private void checkInicialPesquisa() {
-			if (exportacao) {
-				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
+		private void criarPesquisa() {
+			criarPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
+		}
+
+		private void criarPesquisa(String nome, String tabela, String campo) {
+			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(null, tabela, campo)));
+		}
+
+		private void processarDetalhes(Metadado tabela) {
+			List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
+			Coletor coletor = new Coletor();
+			SetLista.view(ObjetoMensagens.getString("label.adicionar_hierarquico"), nomeCampos(campos), coletor,
+					ObjetoSuperficie.this, new SetLista.Config(false, true));
+			if (coletor.size() == 1) {
+				processarCampoFK(getCampo(campos, coletor.get(0)));
+			} else {
+				erro = true;
 			}
 		}
 
-		private void abrirPesquisa(String nome, String tabela, String campo) {
-			abrirPesquisaBuilder(sb, nome, tabela, campo);
-			mapaRef.put("pesquisa", new Pesquisa(nome, new Referencia(null, tabela, campo)));
+		private List<String> nomeCampos(List<Metadado> campos) {
+			return campos.stream().map(Metadado::getChaveTabelaReferencia).collect(Collectors.toList());
 		}
 
-		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
-			if (campo != null && campo.indexOf(',') != -1) {
-				sb.append(Constantes.QL + "\t\t<!-- MAIS DE UMA CHAVE NESTE ITEM-->");
+		private Metadado getCampo(List<Metadado> campos, String nomeCampo) {
+			for (Metadado metadado : campos) {
+				if (metadado.getChaveTabelaReferencia().equals(nomeCampo)) {
+					return metadado;
+				}
 			}
-			sb.append(Constantes.QL + "\t\t<ref");
-			append(sb, tabela, campo);
-			if (!Util.estaVazio(grupo)) {
-				sb.append(" grupo=" + citar(grupo));
+			return null;
+		}
+
+		private void processarCampoFK(Metadado campo) {
+			campoFK = campo;
+			criarEAdicionarObjeto();
+			criarEAdicionarRelacao();
+			processarIdTabelaGrupo();
+			processarChaves();
+		}
+
+		private void criarEAdicionarObjeto() {
+			Objeto obj = new Objeto(0, 0);
+			this.objeto = obj;
+			addObjeto(obj);
+		}
+
+		private void criarEAdicionarRelacao() {
+			Relacao rel = new Relacao(principal, false, objeto, true);
+			rel.setPontoDestino(false);
+			rel.setPontoOrigem(false);
+			rel.setQuebrado(true);
+			this.relacao = rel;
+			addRelacao(rel);
+		}
+
+		private void processarIdTabelaGrupo() {
+			Metadado tabelaRef = campoFK.getTabelaReferencia();
+			processarIdTabelaGrupoExportacao(objeto, tabelaRef);
+			objeto.setTabela(tabelaRef.getNomeTabela());
+		}
+
+		private void processarChaves() {
+			Metadado tabelaRef = campoFK.getTabelaReferencia();
+			Metadado tabela = raiz.getMetadado(tabelaRef.getNomeTabela());
+			if (tabela != null) {
+				processarChaves(tabela);
 			}
-			if (invisivel) {
-				sb.append(" vazio=" + citar(ObjetoConstantes.INVISIVEL));
-			}
-			sb.append(" />");
+		}
+
+		private void processarChaves(Metadado tabela) {
+			Metadado tabelaRef = campoFK.getTabelaReferencia();
+			relacao.setChaveDestino(tabelaRef.getNomeCampo());
+			relacao.setChaveOrigem(principal.getChaves());
+			objeto.setChaves(tabela.getChaves());
+			referenciaNaPesquisa();
+		}
+
+		private void referenciaNaPesquisa() {
+			Metadado tabelaRef = campoFK.getTabelaReferencia();
+			ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
+		}
+
+		private void ref(String tabela, String campo, String grupo) {
 			Referencia ref = new Referencia(grupo, tabela, campo);
-			ref.setVazioInvisivel(invisivel);
+			ref.setVazioInvisivel(true);
 			mapaRef.put("ref", ref);
 			Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
 			objeto.addReferencia(pesquisa.getReferencia());
 			pesquisa.add(ref);
-		}
-
-		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
-				String tabelaDetalhe, String campoDetalhe) {
-			abrirPesquisa(tabelaPrincipal, tabelaDetalhe, campoDetalhe);
-			ref(tabelaPrincipal, campoPrincipal, grupoPrincipal, false);
-			fecharPesquisa();
-		}
-
-		private void fecharPesquisa() {
-			sb.append(Constantes.QL + "\t</pesquisa>");
-		}
-
-		private void checkFinalPesquisa() {
-			if (exportacao) {
-				fecharPesquisa();
-			}
 		}
 
 		private void localizarObjeto() {
@@ -2322,10 +2236,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				objeto.setSelecionado(true);
 			}
 		}
-	}
 
-	private String citar(String s) {
-		return "\"" + s + "\"";
+		private void setScriptAdicaoHierarquico() {
+			try {
+				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+				if (pesquisa != null) {
+					objeto.setScriptAdicaoHierarquico(ObjetoUtil.getDescricao(pesquisa));
+				}
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("DESCRICAO", ex, ObjetoSuperficie.this);
+			}
+		}
 	}
 
 	private class Variaveis {
@@ -2364,10 +2285,29 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			raiz = metadado.getPai();
 		}
 
+		private void append(StringBuilder sb, String tabela, String campo) {
+			sb.append(" tabela=" + citar(tabela));
+			sb.append(" campo=" + citar(campo));
+		}
+
 		private void checkInicialPesquisa() {
 			if (exportacao) {
 				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
 			}
+		}
+
+		private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {
+			if (campo != null && campo.indexOf(',') != -1) {
+				sb.append(Constantes.QL + "\t<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->" + Constantes.QL);
+			}
+			sb.append("\t<pesquisa");
+			sb.append(" nome=" + citar(nome));
+			append(sb, tabela, campo);
+			sb.append(">");
+		}
+
+		private String citar(String s) {
+			return "\"" + s + "\"";
 		}
 
 		private void abrirPesquisa(String nome, String tabela, String campo) {
