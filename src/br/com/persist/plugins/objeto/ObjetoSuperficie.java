@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1990,9 +1992,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean circular) {
 		ExportacaoImportacao expImp = criarExportacaoImportacao(exportacao, circular);
 		expImp.processarPrincipal(tabela);
-		expImp.checkInicialPesquisa();
+		expImp.checarCriarPesquisa();
 		expImp.processarDetalhes(tabela);
-		expImp.checkFinalPesquisa();
 		expImp.localizarObjetos();
 		if (!expImp.circular) {
 			if (conexao == null) {
@@ -2000,7 +2001,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			destacar(conexao, ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
 		}
-		Util.mensagemFormulario(formulario, expImp.sb.toString());
+		Util.mensagemFormulario(formulario, expImp.getString());
 	}
 
 	private ExportacaoImportacao criarExportacaoImportacao(boolean exportacao, boolean circular) {
@@ -2158,8 +2159,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	private class ExportacaoImportacao {
 		final List<Objeto> objetos = new ArrayList<>();
-		private StringBuilder sb = new StringBuilder();
 		final Objeto principal = new Objeto(0, 0);
+		private final Map<String, Object> mapaRef;
+		private final List<Pesquisa> listaRef;
 		final boolean exportacao;
 		Metadado campoProcessado;
 		final boolean circular;
@@ -2171,6 +2173,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int y;
 
 		private ExportacaoImportacao(boolean exportacao, boolean circular) {
+			mapaRef = new LinkedHashMap<>();
+			listaRef = new ArrayList<>();
 			this.exportacao = exportacao;
 			this.circular = circular;
 		}
@@ -2197,33 +2201,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			raiz = metadado.getPai();
 		}
 
-		private void checkInicialPesquisa() {
+		private void checarCriarPesquisa() {
 			if (exportacao) {
-				abrirPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
+				criarPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
 			}
 		}
 
-		private void abrirPesquisa(String nome, String tabela, String campo) {
-			abrirPesquisaBuilder(sb, nome, tabela, campo);
-		}
-
-		private void abrirPesquisaBuilder(StringBuilder sb, String nome, String tabela, String campo) {
-			if (campo != null && campo.indexOf(',') != -1) {
-				sb.append(Constantes.QL + "\t<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->" + Constantes.QL);
-			}
-			sb.append("\t<pesquisa");
-			sb.append(" nome=" + citar(nome));
-			append(sb, tabela, campo);
-			sb.append(">");
-		}
-
-		private String citar(String s) {
-			return "\"" + s + "\"";
-		}
-
-		private void append(StringBuilder sb, String tabela, String campo) {
-			sb.append(" tabela=" + citar(tabela));
-			sb.append(" campo=" + citar(campo));
+		private void criarPesquisa(String nome, String tabela, String campo) {
+			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(null, tabela, campo)));
 		}
 
 		private void processarDetalhes(Metadado tabela) {
@@ -2294,31 +2279,24 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			relacao.setChaveDestino(tabelaRef.getNomeCampo());
 			objeto.setChaves(tabela.getChaves());
 			if (exportacao) {
-				refNaPesquisaPrincipal(objeto, relacao);
+				referenciaNaPesquisa(objeto, relacao);
 			} else {
 				pesquisaIndividualDetalhe(objeto, relacao);
 			}
 		}
 
-		private void refNaPesquisaPrincipal(Objeto objeto, Relacao relacao) {
+		private void referenciaNaPesquisa(Objeto objeto, Relacao relacao) {
 			Metadado tabelaRef = campoProcessado.getTabelaReferencia();
-			ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(), true);
+			ref(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo());
 			relacao.setChaveOrigem(principal.getChaves());
 		}
 
-		private void ref(String tabela, String campo, String grupo, boolean invisivel) {
-			if (campo != null && campo.indexOf(',') != -1) {
-				sb.append(Constantes.QL + "\t\t<!-- MAIS DE UMA CHAVE NESTE ITEM-->");
-			}
-			sb.append(Constantes.QL + "\t\t<ref");
-			append(sb, tabela, campo);
-			if (!Util.estaVazio(grupo)) {
-				sb.append(" grupo=" + citar(grupo));
-			}
-			if (invisivel) {
-				sb.append(" vazio=" + citar(ObjetoConstantes.INVISIVEL));
-			}
-			sb.append(" />");
+		private void ref(String tabela, String campo, String grupo) {
+			Referencia ref = new Referencia(grupo, tabela, campo);
+			ref.setVazioInvisivel(true);
+			mapaRef.put("ref", ref);
+			Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
+			pesquisa.add(ref);
 		}
 
 		private void pesquisaIndividualDetalhe(Objeto objeto, Relacao relacao) {
@@ -2331,19 +2309,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
 				String tabelaDetalhe, String campoDetalhe) {
-			abrirPesquisa(tabelaPrincipal, tabelaDetalhe, campoDetalhe);
-			ref(tabelaPrincipal, campoPrincipal, grupoPrincipal, false);
-			fecharPesquisa();
-		}
-
-		private void fecharPesquisa() {
-			sb.append(Constantes.QL + "\t</pesquisa>");
-		}
-
-		private void checkFinalPesquisa() {
-			if (exportacao) {
-				fecharPesquisa();
-			}
+			Pesquisa pesquisa = new Pesquisa(tabelaPrincipal, new Referencia(null, tabelaDetalhe, campoDetalhe));
+			Referencia ref = new Referencia(grupoPrincipal, tabelaPrincipal, campoPrincipal);
+			ref.setVazioInvisivel(false);
+			listaRef.add(pesquisa);
+			pesquisa.add(ref);
 		}
 
 		private void localizarObjetos() {
@@ -2428,6 +2398,27 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				setPreferredSize(new Dimension(0, y));
 				SwingUtilities.updateComponentTreeUI(getParent());
 			}
+		}
+
+		private String getString() {
+			try {
+				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+				if (pesquisa != null) {
+					return ObjetoUtil.getDescricao(pesquisa);
+				}
+				StringWriter sw = new StringWriter();
+				XMLUtil util = new XMLUtil(sw);
+				boolean ql = false;
+				for (Pesquisa pesq : listaRef) {
+					pesq.salvar(util, ql);
+					ql = true;
+				}
+				util.close();
+				return sw.toString();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("DESCRICAO", ex, ObjetoSuperficie.this);
+			}
+			return Constantes.VAZIO;
 		}
 	}
 
