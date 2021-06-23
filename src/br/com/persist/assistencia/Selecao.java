@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.text.JTextComponent;
 
+import br.com.persist.componente.Label;
+
 public class Selecao {
 	private List<Fragmento> lista = new ArrayList<>();
 	final JTextComponent component;
@@ -52,8 +54,9 @@ public class Selecao {
 		return indice;
 	}
 
-	public void selecionar() {
+	public void selecionar(Label label) {
 		if (component == null) {
+			label.setText(Constantes.VAZIO);
 			return;
 		}
 		if (indice < getTotal()) {
@@ -62,7 +65,9 @@ public class Selecao {
 			component.setSelectionEnd(frag.inicio + frag.total);
 			component.getCaret().setSelectionVisible(true);
 			indice++;
+			label.setText(indice + "/" + getTotal());
 		} else {
+			label.setText(Constantes.VAZIO);
 			indice = 0;
 		}
 	}

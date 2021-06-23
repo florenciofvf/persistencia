@@ -261,8 +261,7 @@ public class AnotacaoContainer extends AbstratoContainer {
 			if (!Util.estaVazio(txtPesquisa.getText())) {
 				if (chkPesquisaLocal.isSelected()) {
 					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
-					selecao.selecionar();
-					label.setText(selecao.getIndice() + "/" + selecao.getTotal());
+					selecao.selecionar(label);
 					return;
 				}
 				List<String> arquivos = Util.listarNomeBackup(fileParent, AnotacaoConstantes.ANOTACOES);

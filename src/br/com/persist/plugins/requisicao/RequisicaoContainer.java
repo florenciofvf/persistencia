@@ -658,8 +658,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			public void actionPerformed(ActionEvent e) {
 				if (!Util.estaVazio(txtPesquisa.getText())) {
 					selecao = Util.getSelecao(areaParametros, selecao, txtPesquisa.getText());
-					selecao.selecionar();
-					label.setText(selecao.getIndice() + "/" + selecao.getTotal());
+					selecao.selecionar(label);
 				}
 			}
 		}
@@ -700,8 +699,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				if (!Util.estaVazio(txtPesquisa.getText())) {
 					selecionarAbaJSON();
 					selecao = Util.getSelecao(areaResultados, selecao, txtPesquisa.getText());
-					selecao.selecionar();
-					label.setText(selecao.getIndice() + "/" + selecao.getTotal());
+					selecao.selecionar(label);
 				}
 			}
 		}
