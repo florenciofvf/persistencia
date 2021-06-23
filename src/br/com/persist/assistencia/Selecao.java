@@ -55,6 +55,9 @@ public class Selecao {
 	}
 
 	public void selecionar(Label label) {
+		if (label == null) {
+			return;
+		}
 		if (component == null) {
 			label.setText(Constantes.VAZIO);
 			return;
