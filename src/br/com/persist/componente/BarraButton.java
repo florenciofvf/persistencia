@@ -33,6 +33,7 @@ public class BarraButton extends JToolBar {
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
 	private Label labelNomeBackup = new Label();
+	protected Label label = new Label();
 	protected transient Janela janela;
 
 	public void ini(Janela janela, BarraButtonEnum... enuns) {

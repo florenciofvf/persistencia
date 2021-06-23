@@ -56,6 +56,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
@@ -610,6 +611,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			private static final long serialVersionUID = 1L;
 			private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
 			private final TextField txtPesquisa = new TextField(35);
+			private transient Selecao selecao;
 
 			private ToolbarParametro() {
 				super.ini(null, LIMPAR, BAIXAR, COPIAR, COLAR);
@@ -619,6 +621,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 				txtPesquisa.addActionListener(this);
 				add(txtPesquisa);
+				add(label);
 			}
 
 			private void atualizarVar() {
@@ -654,7 +657,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!Util.estaVazio(txtPesquisa.getText())) {
-					Util.destacar(areaParametros.getStyledDocument(), txtPesquisa.getText());
+					selecao = Util.getSelecao(areaParametros, selecao, txtPesquisa.getText());
+					selecao.selecionar();
+					label.setText(selecao.getIndice() + "/" + selecao.getTotal());
 				}
 			}
 		}
@@ -662,12 +667,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private class ToolbarResultado extends BarraButton implements ActionListener {
 			private static final long serialVersionUID = 1L;
 			private final TextField txtPesquisa = new TextField(35);
+			private transient Selecao selecao;
 
 			private ToolbarResultado() {
 				super.ini(null, LIMPAR, COPIAR, COLAR);
 				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 				txtPesquisa.addActionListener(this);
 				add(txtPesquisa);
+				add(label);
 			}
 
 			@Override
@@ -692,7 +699,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 			public void actionPerformed(ActionEvent e) {
 				if (!Util.estaVazio(txtPesquisa.getText())) {
 					selecionarAbaJSON();
-					Util.destacar(areaResultados.getStyledDocument(), txtPesquisa.getText());
+					selecao = Util.getSelecao(areaResultados, selecao, txtPesquisa.getText());
+					selecao.selecionar();
+					label.setText(selecao.getIndice() + "/" + selecao.getTotal());
 				}
 			}
 		}

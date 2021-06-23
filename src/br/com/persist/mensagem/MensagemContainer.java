@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.PrintWriter;
 
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
@@ -40,6 +41,7 @@ public class MensagemContainer extends Panel {
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
+		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
 			if (file != null) {
@@ -50,6 +52,7 @@ public class MensagemContainer extends Panel {
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
+			add(label);
 		}
 
 		@Override
@@ -78,7 +81,9 @@ public class MensagemContainer extends Panel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtPesquisa.getText())) {
-				Util.destacar(textArea.getStyledDocument(), txtPesquisa.getText());
+				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+				selecao.selecionar();
+				label.setText(selecao.getIndice() + "/" + selecao.getTotal());
 			}
 		}
 	}

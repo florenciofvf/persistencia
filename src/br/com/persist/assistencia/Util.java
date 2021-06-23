@@ -922,6 +922,15 @@ public class Util {
 		}
 	}
 
+	public static Selecao getSelecao(JTextComponent component, Selecao selecao, String string) {
+		if (selecao == null) {
+			return new Selecao(component, string);
+		} else if (selecao.igual(string)) {
+			return selecao;
+		}
+		return new Selecao(component, string);
+	}
+
 	public static double menorEmPorcentagem(double menor, double maior) {
 		return (menor * 100) / maior;
 	}

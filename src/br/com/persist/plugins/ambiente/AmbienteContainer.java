@@ -30,6 +30,7 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
@@ -173,6 +174,7 @@ public class AmbienteContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
+		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
@@ -182,6 +184,7 @@ public class AmbienteContainer extends AbstratoContainer {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(chkPesquisaLocal);
+			add(label);
 		}
 
 		@Override
@@ -302,7 +305,9 @@ public class AmbienteContainer extends AbstratoContainer {
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtPesquisa.getText())) {
 				if (chkPesquisaLocal.isSelected()) {
-					Util.destacar(textArea.getStyledDocument(), txtPesquisa.getText());
+					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+					selecao.selecionar();
+					label.setText(selecao.getIndice() + "/" + selecao.getTotal());
 					return;
 				}
 				List<String> arquivos = Util.listarNomeBackup(fileParent, ambiente.chave);
