@@ -70,6 +70,7 @@ public class Selecao {
 			indice++;
 			label.setText(indice + "/" + getTotal());
 		} else {
+			component.getCaret().setSelectionVisible(false);
 			label.setText(Constantes.VAZIO);
 			indice = 0;
 		}
