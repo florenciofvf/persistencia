@@ -48,6 +48,10 @@ public class Vinculacao {
 		}
 	}
 
+	public ParaTabela getParaTabela(String tabela) {
+		return mapaParaTabela.get(tabela);
+	}
+
 	public List<Pesquisa> getPesquisas(Objeto objeto) {
 		List<Pesquisa> lista = new ArrayList<>();
 		for (Pesquisa p : pesquisas) {

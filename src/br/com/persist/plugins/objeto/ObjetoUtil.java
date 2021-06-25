@@ -119,11 +119,16 @@ public class ObjetoUtil {
 		return sw.toString();
 	}
 
-	public static Vinculacao getVinculacao(Component componente, String arquivo) throws XMLException {
+	public static Vinculacao getVinculacao(Component componente, String arquivo, boolean criarSeInexistente)
+			throws XMLException {
 		if (arquivo != null) {
 			File file = new File(arquivo);
 			if (!file.exists()) {
-				Vinculacao.criarArquivoVinculado(file);
+				if (criarSeInexistente) {
+					Vinculacao.criarArquivoVinculado(file);
+				} else {
+					return null;
+				}
 			}
 			Vinculacao vinculacao = new Vinculacao();
 			vinculacao.abrir(arquivo, componente);

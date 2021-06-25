@@ -1635,8 +1635,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		vinculacao.salvar(arquivoVinculo, ObjetoSuperficie.this);
 	}
 
-	public Vinculacao getVinculacao(String arquivo) throws XMLException {
-		return ObjetoUtil.getVinculacao(ObjetoSuperficie.this, arquivo);
+	public Vinculacao getVinculacao() throws XMLException {
+		return getVinculacao(arquivoVinculo, false);
+	}
+
+	public Vinculacao getVinculacao(String arquivo, boolean criarSeInexistente) throws XMLException {
+		return ObjetoUtil.getVinculacao(ObjetoSuperficie.this, arquivo, criarSeInexistente);
 	}
 
 	public void desenharDesc(boolean b) {
@@ -2429,7 +2433,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		public void vincular(AtomicReference<String> ref) {
 			try {
 				arquivoVinculo = principal.getTabela().toLowerCase() + "_persist.xml";
-				Vinculacao vinculo = getVinculacao(arquivoVinculo);
+				Vinculacao vinculo = getVinculacao(arquivoVinculo, true);
 				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 				if (vinculo != null && pesquisa != null) {
 					salvar(pesquisa);

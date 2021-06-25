@@ -56,6 +56,7 @@ import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
+import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -428,7 +429,14 @@ public class ObjetoContainer extends Panel {
 				if (compChave == null) {
 					return;
 				}
-				ParaTabela para = null;
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = objetoSuperficie.getVinculacao();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("VINCULAR", ex, ObjetoContainer.this);
+					return;
+				}
+				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
 				if (para == null) {
 					return;
 				}
@@ -452,6 +460,7 @@ public class ObjetoContainer extends Panel {
 					para.setComplemento(compChave.getText());
 				}
 				processar(para);
+				objetoSuperficie.salvarVinculacao(vinculacao);
 			}
 
 			void processar(ParaTabela para) {
