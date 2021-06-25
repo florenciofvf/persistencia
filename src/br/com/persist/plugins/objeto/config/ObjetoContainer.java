@@ -60,6 +60,7 @@ import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
+	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private final BarraButton toolbar = new BarraButton();
 	private final ObjetoSuperficie objetoSuperficie;
 	private TextField txtTabela = new TextField();
@@ -409,7 +410,7 @@ public class ObjetoContainer extends Panel {
 
 		private class VinculadoPopup extends Popup {
 			private static final long serialVersionUID = 1L;
-			private Action action = actionMenu("label.aplicar_arq_vinculo");
+			private Action action = actionMenu(labelVinculo);
 			private transient CompChave compChave;
 
 			private VinculadoPopup() {
@@ -425,7 +426,7 @@ public class ObjetoContainer extends Panel {
 				try {
 					vinculacao = objetoSuperficie.getVinculacao();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("VINCULAR", ex, ObjetoContainer.this);
+					Util.stackTraceAndMessage("VINCULAR EM BANCO", ex, ObjetoContainer.this);
 					return;
 				}
 				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
@@ -793,7 +794,7 @@ public class ObjetoContainer extends Panel {
 
 		private class Toolbar extends BarraButton {
 			private static final long serialVersionUID = 1L;
-			private Action actionFonteVinculo = actionIcon("label.aplicar_arq_vinculo", Icones.SUCESSO);
+			private Action actionFonteVinculo = actionIcon(labelVinculo, Icones.SUCESSO);
 
 			private Toolbar() {
 				super.ini(null, COPIAR, COLAR0, APLICAR);
@@ -811,7 +812,7 @@ public class ObjetoContainer extends Panel {
 				try {
 					vinculacao = objetoSuperficie.getVinculacao();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("VINCULAR", ex, ObjetoContainer.this);
+					Util.stackTraceAndMessage("VINCULAR EM COR FONTE", ex, ObjetoContainer.this);
 					return;
 				}
 				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
@@ -892,21 +893,64 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class IconeListener extends MouseAdapter {
+		private Action action = actionMenu(labelVinculo);
+		private Popup popup = new Popup();
 		private final Objeto objeto;
 		private final Label label;
 
 		private IconeListener(Objeto objeto, Label label) {
 			this.objeto = objeto;
 			this.label = label;
+			popup.add(action);
+			action.setActionListener(e -> configIconeVinculo());
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			if (e.getClickCount() < Constantes.DOIS) {
+				return;
+			}
 			Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
 			IconeDialogo form = IconeDialogo.criar(dialog, objeto, label);
 			Util.configSizeLocation(dialog, form, ObjetoContainer.this);
 			form.setVisible(true);
 			objetoSuperficie.repaint();
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			processar(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			processar(e);
+		}
+
+		private void processar(MouseEvent e) {
+			if (e.isPopupTrigger() && !Util.estaVazio(objeto.getIcone())) {
+				popup.show(label, e.getX(), e.getY());
+			}
+		}
+
+		private void configIconeVinculo() {
+			if (Util.estaVazio(txtTabela.getText())) {
+				Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.config_tabela_aba_banco"));
+				return;
+			}
+			Vinculacao vinculacao = null;
+			try {
+				vinculacao = objetoSuperficie.getVinculacao();
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("VINCULAR EM ICONE", ex, ObjetoContainer.this);
+				return;
+			}
+			ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
+			if (para == null) {
+				return;
+			}
+			para.setIcone(objeto.getIcone());
+			objetoSuperficie.salvarVinculacao(vinculacao);
 		}
 	}
 

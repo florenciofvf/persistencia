@@ -26,11 +26,11 @@ public class ParaTabela {
 	private Color corFonte;
 	private String chaves;
 	private String grupo;
+	private String icone;
 	private String sane;
 	private String ccsc;
 	private String bpnt;
 	final String tabela;
-	final String icone;
 
 	public ParaTabela(String tabela, String icone, Color corFonte) {
 		if (Util.estaVazio(tabela)) {
@@ -115,7 +115,7 @@ public class ParaTabela {
 			objeto.setGrupo(grupo);
 		}
 		if (icone != null) {
-			objeto.setIcone(icone);//
+			objeto.setIcone(icone);
 		}
 	}
 
@@ -373,5 +373,9 @@ public class ParaTabela {
 
 	public void setCorFonte(Color corFonte) {
 		this.corFonte = corFonte;
+	}
+
+	public void setIcone(String icone) {
+		this.icone = icone;
 	}
 }
