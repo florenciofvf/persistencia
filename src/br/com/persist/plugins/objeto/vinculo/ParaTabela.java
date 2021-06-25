@@ -23,9 +23,9 @@ public class ParaTabela {
 	private String linkAuto;
 	private String apelido;
 	private String orderBy;
+	private Color corFonte;
 	private String chaves;
 	private String grupo;
-	final Color corFonte;
 	private String sane;
 	private String ccsc;
 	private String bpnt;
@@ -103,7 +103,7 @@ public class ParaTabela {
 			objeto.setSequencias(sequencias);
 		}
 		if (corFonte != null) {
-			objeto.setCorFonte(corFonte);//
+			objeto.setCorFonte(corFonte);
 		}
 		if (!Util.estaVazio(orderBy)) {
 			objeto.setOrderBy(orderBy);
@@ -369,5 +369,9 @@ public class ParaTabela {
 
 	public void setBpnt(String bpnt) {
 		this.bpnt = bpnt;
+	}
+
+	public void setCorFonte(Color corFonte) {
+		this.corFonte = corFonte;
 	}
 }

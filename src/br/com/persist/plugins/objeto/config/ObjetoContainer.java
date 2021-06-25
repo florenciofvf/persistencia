@@ -62,6 +62,7 @@ public class ObjetoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final BarraButton toolbar = new BarraButton();
 	private final ObjetoSuperficie objetoSuperficie;
+	private TextField txtTabela = new TextField();
 	private final transient Objeto objeto;
 	private final Fichario fichario;
 
@@ -236,7 +237,6 @@ public class ObjetoContainer extends Panel {
 		private TextField txtTabelas = new TextField();
 		private TextField txtApelido = new TextField();
 		private CheckBox chkLinkAuto = new CheckBox();
-		private TextField txtTabela = new TextField();
 		private TextField txtChaves = new TextField();
 		private TextField txtGrupo = new TextField();
 		private TextField txtJoins = new TextField();
@@ -406,14 +406,6 @@ public class ObjetoContainer extends Panel {
 				return null;
 			}
 		};
-
-		Action actionMenu(String chave, Icon icon) {
-			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
-		}
-
-		Action actionMenu(String chave) {
-			return actionMenu(chave, null);
-		}
 
 		private class VinculadoPopup extends Popup {
 			private static final long serialVersionUID = 1L;
@@ -801,10 +793,33 @@ public class ObjetoContainer extends Panel {
 
 		private class Toolbar extends BarraButton {
 			private static final long serialVersionUID = 1L;
+			private Action actionFonteVinculo = actionIcon("label.aplicar_arq_vinculo", Icones.SUCESSO);
 
 			private Toolbar() {
 				super.ini(null, COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
+				addButton(actionFonteVinculo);
+				actionFonteVinculo.setActionListener(e -> fonteVinculo());
+			}
+
+			private void fonteVinculo() {
+				if (Util.estaVazio(txtTabela.getText())) {
+					Util.mensagem(ObjetoContainer.this, ObjetoMensagens.getString("msg.config_tabela_aba_banco"));
+					return;
+				}
+				Vinculacao vinculacao = null;
+				try {
+					vinculacao = objetoSuperficie.getVinculacao();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("VINCULAR", ex, ObjetoContainer.this);
+					return;
+				}
+				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
+				if (para == null) {
+					return;
+				}
+				para.setCorFonte(colorChooser.getColor());
+				objetoSuperficie.salvarVinculacao(vinculacao);
 			}
 
 			@Override
@@ -893,6 +908,22 @@ public class ObjetoContainer extends Panel {
 			form.setVisible(true);
 			objetoSuperficie.repaint();
 		}
+	}
+
+	Action actionMenu(String chave, Icon icon) {
+		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+	}
+
+	Action actionMenu(String chave) {
+		return actionMenu(chave, null);
+	}
+
+	Action actionIcon(String chave, Icon icon) {
+		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
+	}
+
+	Action actionIcon(String chave) {
+		return actionIcon(chave, null);
 	}
 
 	private class Fichario extends TabbedPane {
