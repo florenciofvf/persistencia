@@ -92,7 +92,7 @@ public class VinculoHandler extends XMLHandler {
 	}
 
 	private static ParaTabela criarParaTabela(String tabela, Attributes attributes) {
-		ParaTabela paraTabela = new ParaTabela(tabela, attributes.getValue(ICONE), getCorFonte(attributes));
+		ParaTabela paraTabela = new ParaTabela(tabela);
 		paraTabela.setPrefixoNomeTabela(attributes.getValue("prefixoNomeTabela"));
 		paraTabela.setSelectAlternativo(attributes.getValue("selectAlternativo"));
 		paraTabela.setFinalConsulta(attributes.getValue("finalConsulta"));
@@ -111,6 +111,8 @@ public class VinculoHandler extends XMLHandler {
 		paraTabela.setSane(attributes.getValue("sane"));
 		paraTabela.setCcsc(attributes.getValue("ccsc"));
 		paraTabela.setBpnt(attributes.getValue("bpnt"));
+		paraTabela.setIcone(attributes.getValue(ICONE));
+		paraTabela.setCorFonte(getCorFonte(attributes));
 		return paraTabela;
 	}
 

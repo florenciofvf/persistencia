@@ -32,14 +32,12 @@ public class ParaTabela {
 	private String bpnt;
 	final String tabela;
 
-	public ParaTabela(String tabela, String icone, Color corFonte) {
+	public ParaTabela(String tabela) {
 		if (Util.estaVazio(tabela)) {
 			throw new IllegalStateException("Tabela vazia.");
 		}
 		instrucoes = new ArrayList<>();
-		this.corFonte = corFonte;
 		this.tabela = tabela;
-		this.icone = icone;
 	}
 
 	public List<Instrucao> getInstrucoes() {
