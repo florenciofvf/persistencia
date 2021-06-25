@@ -431,7 +431,8 @@ public class ObjetoContainer extends Panel {
 				}
 				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
 				if (para == null) {
-					return;
+					para = new ParaTabela(txtTabela.getText().trim(), null, null);
+					vinculacao.putParaTabela(para);
 				}
 				if ("APELIDO".equals(compChave.chave)) {
 					para.setApelido(compChave.getText());
@@ -817,7 +818,8 @@ public class ObjetoContainer extends Panel {
 				}
 				ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
 				if (para == null) {
-					return;
+					para = new ParaTabela(txtTabela.getText().trim(), null, null);
+					vinculacao.putParaTabela(para);
 				}
 				para.setCorFonte(colorChooser.getColor());
 				objetoSuperficie.salvarVinculacao(vinculacao);
@@ -947,7 +949,8 @@ public class ObjetoContainer extends Panel {
 			}
 			ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
 			if (para == null) {
-				return;
+				para = new ParaTabela(txtTabela.getText().trim(), null, null);
+				vinculacao.putParaTabela(para);
 			}
 			para.setIcone(objeto.getIcone());
 			objetoSuperficie.salvarVinculacao(vinculacao);

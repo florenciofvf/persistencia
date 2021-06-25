@@ -29,6 +29,10 @@ public class Vinculacao {
 		}
 	}
 
+	public void putParaTabela(ParaTabela paraTabela) {
+		mapaParaTabela.put(paraTabela.getTabela(), paraTabela);
+	}
+
 	public void abrir(String arquivo, Component componente) {
 		mapaParaTabela.clear();
 		pesquisas.clear();

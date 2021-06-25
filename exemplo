@@ -2,22 +2,25 @@
 
 <vinculo>
 	<para tabela="candidato">
-		<instrucao nome="total votos" ordem="0">
+		<instrucao nome="total votos">
 			<![CDATA[
 				UPDATE candidato SET votos = 0 WHERE id = #id#
 			]]>
 		</instrucao>
-		<instrucao nome="Todos os registros" ordem="0">
+
+		<instrucao nome="Todos os registros">
 			<![CDATA[
 				SELECT * FROM candidato WHERE id = #id#
 			]]>
 		</instrucao>
-		<instrucao nome="Excluir registro" ordem="0">
+
+		<instrucao nome="Excluir registro">
 			<![CDATA[
 				DELETE FROM candidato WHERE id = #id#
 			]]>
 		</instrucao>
-		<instrucao nome="Incluir candidato" ordem="0">
+
+		<instrucao nome="Incluir candidato">
 			<![CDATA[
 				INSERT INTO candidato (eleicao_id, nome, votos) VALUES (65, 'CANDIDATO TESTE', 12)
 			]]>
@@ -28,11 +31,14 @@
 	</para>
 
 	<para tabela="candidato2">
-		<instrucao nome="Alterar Total de Votos" selecaoMultipla="true" ordem="0">
+		<instrucao nome="Alterar Total de Votos" selecaoMultipla="true">
 			<![CDATA[
 				UPDATE candidato2 SET votos = 123 WHERE id IN (#id#)
 			]]>
 		</instrucao>
+	</para>
+
+	<para tabela="eleicao" icone="executar">
 	</para>
 
 	<pesquisa nome="Candidatos" tabela="eleicao" campo="id" iconeGrupo="boss">
