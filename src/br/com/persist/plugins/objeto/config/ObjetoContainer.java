@@ -20,8 +20,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Box;
+import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeEvent;
@@ -42,6 +45,7 @@ import br.com.persist.componente.LabelLinkListener;
 import br.com.persist.componente.LabelTextTemp;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelLeft;
+import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
 import br.com.persist.componente.TextArea;
@@ -51,6 +55,7 @@ import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
+import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 
 public class ObjetoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -214,6 +219,8 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelBanco extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private transient List<CompChave> vinculados = new ArrayList<>();
+		private VinculadoPopup popupVinculo = new VinculadoPopup();
 		private TextField txtFinalConsulta = new TextField();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
 		private TextField txtChaveamento = new TextField();
@@ -325,6 +332,179 @@ public class ObjetoContainer extends Panel {
 			txtMapeamento.addMouseListener(mapeamentoListener);
 			txtSequencias.addMouseListener(sequenciaListener);
 			add(BorderLayout.CENTER, new ScrollPane(container));
+			vincular();
+		}
+
+		private void vincular() {
+			vinculados.add(new CompChave(txtApelido, "APELIDO"));
+			vinculados.add(new CompChave(txtGrupo, "GRUPO"));
+			vinculados.add(new CompChave(txtChaves, "CHAVES"));
+			vinculados.add(new CompChave(txtSelectAlter, "SELECT_ALTER"));
+			vinculados.add(new CompChave(txtPrefixoNT, "PREFIXO_NT"));
+			vinculados.add(new CompChave(txtSequencias, "SEQUENCIA"));
+			vinculados.add(new CompChave(txtChaveamento, "CHAVEAMENTO"));
+			vinculados.add(new CompChave(txtMapeamento, "MAPEAMENTO"));
+			vinculados.add(new CompChave(txtComplemento, "COMPLEMENTO"));
+			vinculados.add(new CompChave(txtOrderBy, "ORDER_BY"));
+			vinculados.add(new CompChave(txtFinalConsulta, "FINAL_CONSULTA"));
+			vinculados.add(new CompChave(chkColunaInfo, "COLUNA_INFO"));
+			vinculados.add(new CompChave(chkAbrirAuto, "ABRIR_AUTO"));
+			vinculados.add(new CompChave(chkLinkAuto, "LINK_AUTO"));
+			vinculados.add(new CompChave(chkSANE, "SANE"));
+			vinculados.add(new CompChave(chkCCSC, "CCSC"));
+			vinculados.add(new CompChave(chkBPNT, "BPNT"));
+			vinculados.add(new CompChave(chkAjusteAutoForm, "AJUSTE_AUTO"));
+
+			txtApelido.addMouseListener(listenerVinculado);
+			txtGrupo.addMouseListener(listenerVinculado);
+			txtChaves.addMouseListener(listenerVinculado);
+			txtSelectAlter.addMouseListener(listenerVinculado);
+			txtPrefixoNT.addMouseListener(listenerVinculado);
+			txtSequencias.addMouseListener(listenerVinculado);
+			txtChaveamento.addMouseListener(listenerVinculado);
+			txtMapeamento.addMouseListener(listenerVinculado);
+			txtComplemento.addMouseListener(listenerVinculado);
+			txtOrderBy.addMouseListener(listenerVinculado);
+			txtFinalConsulta.addMouseListener(listenerVinculado);
+			chkColunaInfo.addMouseListener(listenerVinculado);
+			chkAbrirAuto.addMouseListener(listenerVinculado);
+			chkLinkAuto.addMouseListener(listenerVinculado);
+			chkSANE.addMouseListener(listenerVinculado);
+			chkCCSC.addMouseListener(listenerVinculado);
+			chkBPNT.addMouseListener(listenerVinculado);
+			chkAjusteAutoForm.addMouseListener(listenerVinculado);
+		}
+
+		private transient MouseListener listenerVinculado = new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				processar(e);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				processar(e);
+			}
+
+			private void processar(MouseEvent e) {
+				JComponent comp = (JComponent) e.getSource();
+				if (e.isPopupTrigger() && !Util.estaVazio(txtTabela.getText())) {
+					popupVinculo.compChave = getCompChave(comp);
+					if (popupVinculo.showValido()) {
+						popupVinculo.show(comp, e.getX(), e.getY());
+					}
+				}
+			}
+
+			private CompChave getCompChave(JComponent comp) {
+				for (CompChave cc : vinculados) {
+					if (cc.comp == comp) {
+						return cc;
+					}
+				}
+				return null;
+			}
+		};
+
+		Action actionMenu(String chave, Icon icon) {
+			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
+		}
+
+		Action actionMenu(String chave) {
+			return actionMenu(chave, null);
+		}
+
+		private class VinculadoPopup extends Popup {
+			private static final long serialVersionUID = 1L;
+			private Action action = actionMenu("label.aplicar_arq_vinculo");
+			private transient CompChave compChave;
+
+			private VinculadoPopup() {
+				add(action);
+				action.setActionListener(e -> processar());
+			}
+
+			void processar() {
+				if (compChave == null) {
+					return;
+				}
+				ParaTabela para = null;
+				if (para == null) {
+					return;
+				}
+				if ("APELIDO".equals(compChave.chave)) {
+					para.setApelido(compChave.getText());
+				} else if ("GRUPO".equals(compChave.chave)) {
+					para.setGrupo(compChave.getText());
+				} else if ("CHAVES".equals(compChave.chave)) {
+					para.setChaves(compChave.getText());
+				} else if ("SELECT_ALTER".equals(compChave.chave)) {
+					para.setSelectAlternativo(compChave.getText());
+				} else if ("PREFIXO_NT".equals(compChave.chave)) {
+					para.setPrefixoNomeTabela(compChave.getText());
+				} else if ("SEQUENCIA".equals(compChave.chave)) {
+					para.setSequencias(compChave.getText());
+				} else if ("CHAVEAMENTO".equals(compChave.chave)) {
+					para.setCampoNomes(compChave.getText());
+				} else if ("MAPEAMENTO".equals(compChave.chave)) {
+					para.setMapeamento(compChave.getText());
+				} else if ("COMPLEMENTO".equals(compChave.chave)) {
+					para.setComplemento(compChave.getText());
+				}
+				processar(para);
+			}
+
+			void processar(ParaTabela para) {
+				if ("ORDER_BY".equals(compChave.chave)) {
+					para.setOrderBy(compChave.getText());
+				} else if ("FINAL_CONSULTA".equals(compChave.chave)) {
+					para.setFinalConsulta(compChave.getText());
+				} else if ("COLUNA_INFO".equals(compChave.chave)) {
+					para.setColunaInfo(compChave.getBool());
+				} else if ("ABRIR_AUTO".equals(compChave.chave)) {
+					para.setDestacavel(compChave.getBool());
+				} else if ("LINK_AUTO".equals(compChave.chave)) {
+					para.setLinkAuto(compChave.getBool());
+				} else if ("SANE".equals(compChave.chave)) {
+					para.setSane(compChave.getBool());
+				} else if ("CCSC".equals(compChave.chave)) {
+					para.setCcsc(compChave.getBool());
+				} else if ("BPNT".equals(compChave.chave)) {
+					para.setBpnt(compChave.getBool());
+				} else if ("AJUSTE_AUTO".equals(compChave.chave)) {
+					para.setAjustarAltura(compChave.getBool());
+				}
+			}
+
+			boolean showValido() {
+				if (compChave == null) {
+					return false;
+				}
+				if (compChave.comp instanceof TextField) {
+					return !Util.estaVazio(((TextField) compChave.comp).getText());
+				} else if (compChave.comp instanceof CheckBox) {
+					return true;
+				}
+				return false;
+			}
+		}
+
+		class CompChave {
+			final JComponent comp;
+			final String chave;
+
+			CompChave(JComponent comp, String chave) {
+				this.chave = chave;
+				this.comp = comp;
+			}
+
+			String getText() {
+				return ((TextField) comp).getText();
+			}
+
+			String getBool() {
+				return "" + ((CheckBox) comp).isSelected();
+			}
 		}
 
 		private transient FocusListener focusListenerInner = new FocusAdapter() {

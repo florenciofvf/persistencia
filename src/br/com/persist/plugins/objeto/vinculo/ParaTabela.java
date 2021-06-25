@@ -103,7 +103,7 @@ public class ParaTabela {
 			objeto.setSequencias(sequencias);
 		}
 		if (corFonte != null) {
-			objeto.setCorFonte(corFonte);
+			objeto.setCorFonte(corFonte);//
 		}
 		if (!Util.estaVazio(orderBy)) {
 			objeto.setOrderBy(orderBy);
@@ -115,7 +115,7 @@ public class ParaTabela {
 			objeto.setGrupo(grupo);
 		}
 		if (icone != null) {
-			objeto.setIcone(icone);
+			objeto.setIcone(icone);//
 		}
 	}
 
@@ -167,9 +167,8 @@ public class ParaTabela {
 	}
 
 	public void modelo(XMLUtil util) {
-		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)//
-				.atributo(VinculoHandler.ICONE, "nome_icone")//
-				.atributo(VinculoHandler.COR_FONTE, "#FFVVFF").ql();
+		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
+				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#FFVVFF").ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
 		util.tab().atributo("finalConsulta", "").ql();
