@@ -28,13 +28,13 @@ public class IconeContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Objeto objeto;
-	private final Label label;
+	private final Label labelIcone;
 	private int totalIcones;
 
 	public IconeContainer(Janela janela, Objeto objeto, Label label) {
+		this.labelIcone = label;
 		this.objeto = objeto;
 		toolbar.ini(janela);
-		this.label = label;
 		montarLayout();
 	}
 
@@ -71,7 +71,7 @@ public class IconeContainer extends Panel {
 		private transient MouseListener mouseListenerInner = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				label.setIcon(getIcon());
+				labelIcone.setIcon(getIcon());
 				objeto.setIcone(nome);
 				MacroProvedor.imagem(objeto.getIcone());
 				toolbar.fechar();
@@ -89,8 +89,8 @@ public class IconeContainer extends Panel {
 		@Override
 		protected void limpar() {
 			MacroProvedor.imagem(null);
+			labelIcone.setIcon(null);
 			objeto.limparIcone();
-			label.setIcon(null);
 			fechar();
 		}
 	}
