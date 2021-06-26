@@ -338,43 +338,47 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void vincular() {
-			vinculados.add(new CompChave(txtApelido, "APELIDO"));
-			vinculados.add(new CompChave(txtGrupo, "GRUPO"));
-			vinculados.add(new CompChave(txtChaves, "CHAVES"));
-			vinculados.add(new CompChave(txtSelectAlter, "SELECT_ALTER"));
-			vinculados.add(new CompChave(txtPrefixoNT, "PREFIXO_NT"));
-			vinculados.add(new CompChave(txtSequencias, "SEQUENCIA"));
-			vinculados.add(new CompChave(txtChaveamento, "CHAVEAMENTO"));
-			vinculados.add(new CompChave(txtMapeamento, "MAPEAMENTO"));
-			vinculados.add(new CompChave(txtComplemento, "COMPLEMENTO"));
-			vinculados.add(new CompChave(txtOrderBy, "ORDER_BY"));
 			vinculados.add(new CompChave(txtFinalConsulta, "FINAL_CONSULTA"));
+			vinculados.add(new CompChave(chkAjusteAutoForm, "AJUSTE_AUTO"));
+			vinculados.add(new CompChave(txtSelectAlter, "SELECT_ALTER"));
+			vinculados.add(new CompChave(txtChaveamento, "CHAVEAMENTO"));
+			vinculados.add(new CompChave(txtComplemento, "COMPLEMENTO"));
 			vinculados.add(new CompChave(chkColunaInfo, "COLUNA_INFO"));
+			vinculados.add(new CompChave(txtMapeamento, "MAPEAMENTO"));
+			vinculados.add(new CompChave(txtPrefixoNT, "PREFIXO_NT"));
 			vinculados.add(new CompChave(chkAbrirAuto, "ABRIR_AUTO"));
+			vinculados.add(new CompChave(txtSequencias, "SEQUENCIA"));
 			vinculados.add(new CompChave(chkLinkAuto, "LINK_AUTO"));
+			vinculados.add(new CompChave(txtOrderBy, "ORDER_BY"));
+			vinculados.add(new CompChave(txtApelido, "APELIDO"));
+			vinculados.add(new CompChave(txtTabelas, "TABELAS"));
+			vinculados.add(new CompChave(txtChaves, "CHAVES"));
+			vinculados.add(new CompChave(txtJoins, "JOINS"));
+			vinculados.add(new CompChave(txtGrupo, "GRUPO"));
 			vinculados.add(new CompChave(chkSANE, "SANE"));
 			vinculados.add(new CompChave(chkCCSC, "CCSC"));
 			vinculados.add(new CompChave(chkBPNT, "BPNT"));
-			vinculados.add(new CompChave(chkAjusteAutoForm, "AJUSTE_AUTO"));
 
-			txtApelido.addMouseListener(listenerVinculado);
-			txtGrupo.addMouseListener(listenerVinculado);
-			txtChaves.addMouseListener(listenerVinculado);
-			txtSelectAlter.addMouseListener(listenerVinculado);
-			txtPrefixoNT.addMouseListener(listenerVinculado);
-			txtSequencias.addMouseListener(listenerVinculado);
-			txtChaveamento.addMouseListener(listenerVinculado);
-			txtMapeamento.addMouseListener(listenerVinculado);
-			txtComplemento.addMouseListener(listenerVinculado);
-			txtOrderBy.addMouseListener(listenerVinculado);
+			chkAjusteAutoForm.addMouseListener(listenerVinculado);
 			txtFinalConsulta.addMouseListener(listenerVinculado);
+			txtSelectAlter.addMouseListener(listenerVinculado);
+			txtChaveamento.addMouseListener(listenerVinculado);
+			txtComplemento.addMouseListener(listenerVinculado);
+			txtSequencias.addMouseListener(listenerVinculado);
+			txtMapeamento.addMouseListener(listenerVinculado);
 			chkColunaInfo.addMouseListener(listenerVinculado);
+			txtPrefixoNT.addMouseListener(listenerVinculado);
 			chkAbrirAuto.addMouseListener(listenerVinculado);
 			chkLinkAuto.addMouseListener(listenerVinculado);
+			txtOrderBy.addMouseListener(listenerVinculado);
+			txtTabelas.addMouseListener(listenerVinculado);
+			txtApelido.addMouseListener(listenerVinculado);
+			txtChaves.addMouseListener(listenerVinculado);
+			txtJoins.addMouseListener(listenerVinculado);
+			txtGrupo.addMouseListener(listenerVinculado);
 			chkSANE.addMouseListener(listenerVinculado);
 			chkCCSC.addMouseListener(listenerVinculado);
 			chkBPNT.addMouseListener(listenerVinculado);
-			chkAjusteAutoForm.addMouseListener(listenerVinculado);
 		}
 
 		private transient MouseListener listenerVinculado = new MouseAdapter() {
@@ -440,6 +444,10 @@ public class ObjetoContainer extends Panel {
 					para.setGrupo(compChave.getText());
 				} else if ("CHAVES".equals(compChave.chave)) {
 					para.setChaves(compChave.getText());
+				} else if ("JOINS".equals(compChave.chave)) {
+					para.setJoins(compChave.getText());
+				} else if ("TABELAS".equals(compChave.chave)) {
+					para.setTabelas(compChave.getText());
 				} else if ("SELECT_ALTER".equals(compChave.chave)) {
 					para.setSelectAlternativo(compChave.getText());
 				} else if ("PREFIXO_NT".equals(compChave.chave)) {
