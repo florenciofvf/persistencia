@@ -21,10 +21,12 @@ public class ParaTabela {
 	private String campoNomes;
 	private String mapeamento;
 	private String linkAuto;
+	private String tabelas;
 	private String apelido;
 	private String orderBy;
 	private Color corFonte;
 	private String chaves;
+	private String joins;
 	private String grupo;
 	private String icone;
 	private String sane;
@@ -106,8 +108,14 @@ public class ParaTabela {
 		if (!Util.estaVazio(orderBy)) {
 			objeto.setOrderBy(orderBy);
 		}
+		if (!Util.estaVazio(tabelas)) {
+			objeto.setTabelas(tabelas);
+		}
 		if (!Util.estaVazio(chaves)) {
 			objeto.setChaves(chaves);
+		}
+		if (!Util.estaVazio(joins)) {
+			objeto.setJoins(joins);
 		}
 		if (!Util.estaVazio(grupo)) {
 			objeto.setGrupo(grupo);
@@ -140,7 +148,9 @@ public class ParaTabela {
 		atributoValor(util, "linkAuto", linkAuto);
 		atributoValor(util, "apelido", apelido);
 		atributoValor(util, "orderBy", orderBy);
+		atributoValor(util, "tabelas", tabelas);
 		atributoValor(util, "chaves", chaves);
+		atributoValor(util, "joins", joins);
 		atributoValor(util, VinculoHandler.GRUPO, grupo);
 		atributoValor(util, "sane", sane);
 		atributoValor(util, "ccsc", ccsc);
@@ -180,7 +190,9 @@ public class ParaTabela {
 		util.tab().atributo("linkAuto", true).ql();
 		util.tab().atributo("apelido", "ape").ql();
 		util.tab().atributo("orderBy", "").ql();
+		util.tab().atributo("tabelas", "").ql();
 		util.tab().atributo("chaves", "").ql();
+		util.tab().atributo("joins", "").ql();
 		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
 		util.tab().atributo("sane", true).ql();
 		util.tab().atributo("ccsc", true).ql();
@@ -375,5 +387,21 @@ public class ParaTabela {
 
 	public void setIcone(String icone) {
 		this.icone = icone;
+	}
+
+	public String getTabelas() {
+		return tabelas;
+	}
+
+	public void setTabelas(String tabelas) {
+		this.tabelas = tabelas;
+	}
+
+	public String getJoins() {
+		return joins;
+	}
+
+	public void setJoins(String joins) {
+		this.joins = joins;
 	}
 }

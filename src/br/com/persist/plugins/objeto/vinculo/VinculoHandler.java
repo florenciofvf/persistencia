@@ -106,7 +106,9 @@ public class VinculoHandler extends XMLHandler {
 		paraTabela.setLinkAuto(attributes.getValue("linkAuto"));
 		paraTabela.setApelido(attributes.getValue("apelido"));
 		paraTabela.setOrderBy(attributes.getValue("orderBy"));
+		paraTabela.setTabelas(attributes.getValue("tabelas"));
 		paraTabela.setChaves(attributes.getValue("chaves"));
+		paraTabela.setJoins(attributes.getValue("joins"));
 		paraTabela.setGrupo(attributes.getValue(GRUPO));
 		paraTabela.setSane(attributes.getValue("sane"));
 		paraTabela.setCcsc(attributes.getValue("ccsc"));
