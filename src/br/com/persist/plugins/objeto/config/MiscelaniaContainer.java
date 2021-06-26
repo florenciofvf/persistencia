@@ -43,6 +43,8 @@ public class MiscelaniaContainer extends Panel {
 			mapa(builder);
 		} else if (Tipo.SEQUENCIA.equals(tipo)) {
 			seque(builder);
+		} else if (Tipo.COMPLEMENTO.equals(tipo)) {
+			compl(builder);
 		}
 		textArea.setText(builder.toString().trim());
 	}
@@ -93,8 +95,12 @@ public class MiscelaniaContainer extends Panel {
 		}
 	}
 
+	private void compl(StringBuilder builder) {
+		builder.append(objeto.getComplemento());
+	}
+
 	public enum Tipo {
-		CHAVEAMENTO, MAPEAMENTO, SEQUENCIA
+		COMPLEMENTO, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -126,6 +132,8 @@ public class MiscelaniaContainer extends Panel {
 					objeto.setMapeamento(Util.normalizar(textArea.getText(), false));
 				} else if (Tipo.SEQUENCIA.equals(tipo)) {
 					objeto.setSequencias(Util.normalizar(textArea.getText(), false));
+				} else if (Tipo.COMPLEMENTO.equals(tipo)) {
+					objeto.setComplemento(Util.normalizar(textArea.getText(), false));
 				}
 				fechar();
 			} catch (Exception ex) {
