@@ -154,6 +154,36 @@ class ItemRenderer extends JCheckBox implements ListCellRenderer<Item> {
 	}
 }
 
+class SetListaModelo extends AbstractListModel<Item> {
+	private static final long serialVersionUID = 1L;
+	private transient List<Item> listaItem;
+	private boolean itemSel;
+
+	public SetListaModelo(List<Item> listaItem, boolean sel) {
+		this.listaItem = listaItem;
+		itemSel = sel;
+	}
+
+	public int getSize() {
+		return listaItem.size();
+	}
+
+	public Item getElementAt(int i) {
+		return listaItem.get(i);
+	}
+
+	protected void notificarMudancas() {
+		fireContentsChanged(SetListaModelo.this, 0, getSize() - 1);
+	}
+
+	public void addItem(String string) {
+		if (!Util.estaVazio(string)) {
+			listaItem.add(new Item(string, itemSel));
+			notificarMudancas();
+		}
+	}
+}
+
 class SetListaDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final JList<Item> lista = new JList<>();
@@ -176,7 +206,7 @@ class SetListaDialogo extends AbstratoDialogo {
 	}
 
 	private void init(List<String> listaString) {
-		lista.setModel(criarModel(listaString, config.somenteUm));
+		lista.setModel(criarModel(listaString, config));
 		lista.setCellRenderer(new ItemRenderer());
 		setSize(Constantes.SIZE3);
 		toolbar.ini(this);
@@ -184,31 +214,18 @@ class SetListaDialogo extends AbstratoDialogo {
 		eventos();
 	}
 
-	private ListModel<Item> criarModel(List<String> lista, boolean somenteUm) {
-		List<Item> listaItem = criarListaItem(lista, somenteUm);
-		return criarModelo(listaItem);
+	private ListModel<Item> criarModel(List<String> lista, Config config) {
+		boolean sel = lista.size() == 1 || !config.somenteUm;
+		List<Item> listaItem = criarListaItem(lista, sel);
+		return new SetListaModelo(listaItem, sel);
 	}
 
-	private List<Item> criarListaItem(List<String> lista, boolean somenteUm) {
+	private List<Item> criarListaItem(List<String> lista, boolean sel) {
 		List<Item> listaItem = new ArrayList<>();
 		for (String string : lista) {
-			listaItem.add(new Item(string, lista.size() == 1 || !somenteUm));
+			listaItem.add(new Item(string, sel));
 		}
 		return listaItem;
-	}
-
-	private ListModel<Item> criarModelo(List<Item> listaItem) {
-		return new AbstractListModel<Item>() {
-			private static final long serialVersionUID = 1L;
-
-			public int getSize() {
-				return listaItem.size();
-			}
-
-			public Item getElementAt(int i) {
-				return listaItem.get(i);
-			}
-		};
 	}
 
 	private void eventos() {
@@ -254,6 +271,19 @@ class SetListaDialogo extends AbstratoDialogo {
 			}
 			chkTodos.setSelected(!config.somenteUm);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
+			criarAcao.setActionListener(e -> criarCampo());
+		}
+
+		private void criarCampo() {
+			Object resp = Util.getValorInputDialog(SetListaDialogo.this, "label.atencao",
+					Mensagens.getString("label.nome"), null);
+			if (resp != null && !Util.estaVazio(resp.toString())) {
+				crarCampo(resp.toString().trim());
+			}
+		}
+
+		private void crarCampo(String nome) {
+			((SetListaModelo) lista.getModel()).addItem(nome);
 		}
 
 		private void selecionar(boolean b) {
