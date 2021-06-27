@@ -74,6 +74,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.SetLista.Config;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
@@ -1730,11 +1731,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						vinculoListener.salvarVinculacao(vinculacao);
 						return;
 					}
+					processarPesquisa(mapaRef, vinculacao, atom);
+					if (atom.get()) {
+						vinculoListener.salvarVinculacao(vinculacao);
+					}
+				}
+
+				private void processarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao, AtomicBoolean atom) {
 					List<Pesquisa> pesquisas = objeto.getPesquisas();
 					List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
 					Coletor coletor = new Coletor();
+					Config config = new SetLista.Config(true, true);
+					config.setCriar(true);
 					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
-							coletor, InternalContainer.this, new SetLista.Config(true, true));
+							coletor, InternalContainer.this, config);
 					for (Pesquisa pesquisa : pesquisas) {
 						if (selecionado(pesquisa, coletor.getLista())) {
 							Referencia ref = (Referencia) mapaRef.get("ref");
@@ -1743,9 +1753,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							pesquisa.add(ref);
 							buscaAuto = true;
 						}
-					}
-					if (atom.get()) {
-						vinculoListener.salvarVinculacao(vinculacao);
 					}
 				}
 

@@ -156,12 +156,12 @@ class ItemRenderer extends JCheckBox implements ListCellRenderer<Item> {
 
 class SetListaModelo extends AbstractListModel<Item> {
 	private static final long serialVersionUID = 1L;
-	private transient List<Item> listaItem;
-	private boolean itemSel;
+	private final transient List<Item> listaItem;
+	private final transient Config config;
 
-	public SetListaModelo(List<Item> listaItem, boolean sel) {
+	public SetListaModelo(List<Item> listaItem, Config config) {
 		this.listaItem = listaItem;
-		itemSel = sel;
+		this.config = config;
 	}
 
 	public int getSize() {
@@ -178,7 +178,7 @@ class SetListaModelo extends AbstractListModel<Item> {
 
 	public void addItem(String string) {
 		if (!Util.estaVazio(string)) {
-			listaItem.add(new Item(string, itemSel));
+			listaItem.add(new Item(string, !config.somenteUm));
 			notificarMudancas();
 		}
 	}
@@ -217,7 +217,7 @@ class SetListaDialogo extends AbstratoDialogo {
 	private ListModel<Item> criarModel(List<String> lista, Config config) {
 		boolean sel = lista.size() == 1 || !config.somenteUm;
 		List<Item> listaItem = criarListaItem(lista, sel);
-		return new SetListaModelo(listaItem, sel);
+		return new SetListaModelo(listaItem, config);
 	}
 
 	private List<Item> criarListaItem(List<String> lista, boolean sel) {
