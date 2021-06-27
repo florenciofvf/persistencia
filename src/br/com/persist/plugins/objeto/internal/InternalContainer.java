@@ -1237,7 +1237,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void ini(Objeto objeto) {
-				if (!Util.estaVazio(objeto.getScriptAdicaoHierarquico())) {
+				if (objeto.getPesquisaAdicaoHierarquico() != null) {
 					addMenuItem(scriptAdicaoHierAcao);
 				}
 				addMenuItem(new AdicionaHierarquicoAcao());
@@ -1251,8 +1251,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				addMenu(true, new MenuCopiar());
 				addMenu(true, menuAlinhamento);
 				addMenu(true, menuTemp);
-				scriptAdicaoHierAcao.setActionListener(
-						e -> Util.mensagem(InternalContainer.this, objeto.getScriptAdicaoHierarquico()));
+				scriptAdicaoHierAcao.setActionListener(e -> descrever(objeto));
+			}
+
+			private void descrever(Objeto objeto) {
+				if (objeto.getPesquisaAdicaoHierarquico() == null) {
+					return;
+				}
+				try {
+					String descricao = ObjetoUtil.getDescricao(objeto.getPesquisaAdicaoHierarquico());
+					Util.mensagem(InternalContainer.this, descricao);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+				}
 			}
 
 			private class MenuTemp extends Menu {

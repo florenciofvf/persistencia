@@ -40,6 +40,7 @@ public class Objeto implements Runnable {
 	public static final Color COR_PADRAO = new Color(64, 105, 128);
 	public static final Color COR_PADRAO_FONTE = Color.BLACK;
 	private static final Logger LOG = Logger.getGlobal();
+	private Pesquisa pesquisaAdicaoHierarquico;
 	private final List<Referencia> referencias;
 	private Map<String, String> mapaSequencias;
 	private final Set<String> tabelasRepetidas;
@@ -48,7 +49,6 @@ public class Objeto implements Runnable {
 	private boolean clonarAoDestacar = true;
 	private final List<Pesquisa> pesquisas;
 	private final Set<String> complementos;
-	private String scriptAdicaoHierarquico;
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
 	private boolean ajusteAutoForm = true;
@@ -1024,14 +1024,6 @@ public class Objeto implements Runnable {
 		this.corTmp = corTmp;
 	}
 
-	public String getScriptAdicaoHierarquico() {
-		return scriptAdicaoHierarquico;
-	}
-
-	public void setScriptAdicaoHierarquico(String scriptAdicaoHierarquico) {
-		this.scriptAdicaoHierarquico = scriptAdicaoHierarquico;
-	}
-
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
@@ -1051,5 +1043,13 @@ public class Objeto implements Runnable {
 
 	public void setTotalRegistros(long totalRegistros) {
 		this.totalRegistros = totalRegistros;
+	}
+
+	public Pesquisa getPesquisaAdicaoHierarquico() {
+		return pesquisaAdicaoHierarquico;
+	}
+
+	public void setPesquisaAdicaoHierarquico(Pesquisa pesquisa) {
+		this.pesquisaAdicaoHierarquico = pesquisa;
 	}
 }

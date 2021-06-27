@@ -2155,14 +2155,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void setScriptAdicaoHierarquico() {
-			try {
-				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
-				if (pesquisa != null) {
-					objeto.setScriptAdicaoHierarquico(ObjetoUtil.getDescricao(pesquisa));
-				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("DESCRICAO", ex, ObjetoSuperficie.this);
-			}
+			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
+			objeto.setPesquisaAdicaoHierarquico(pesquisa);
 		}
 	}
 
