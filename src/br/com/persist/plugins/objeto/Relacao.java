@@ -294,7 +294,9 @@ public class Relacao {
 		util.fecharTag();
 		if (!Util.estaVazio(getDescricao())) {
 			util.abrirTag2("desc");
-			util.conteudo(Util.escapar(getDescricao())).ql();
+			util.conteudo("<![CDATA[").ql();
+			util.tab().conteudo(getDescricao()).ql();
+			util.conteudo("]]>").ql();
 			util.finalizarTag("desc");
 		}
 		util.finalizarTag("relacao");

@@ -29,7 +29,9 @@ public class Variavel {
 		util.atributo("nome", nome);
 		util.fecharTag();
 		util.abrirTag2(Constantes.VALOR);
-		util.conteudo(Util.escapar(getValor())).ql();
+		util.conteudo("<![CDATA[").ql();
+		util.conteudo(getValor()).ql();
+		util.conteudo("]]>").ql();
 		util.finalizarTag(Constantes.VALOR);
 		util.finalizarTag(VariavelConstantes.VARIAVEL);
 	}

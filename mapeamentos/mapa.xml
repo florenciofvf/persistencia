@@ -3,7 +3,8 @@
 <mapeamentos>
 	<mapeamento nome="coluna_info">
 		<valor>
-			private final List&lt;Arquivo&gt; arquivos;
+			<![CDATA[
+				private final List<Arquivo> arquivos;
 private boolean arquivoAberto;
 private boolean padraoAbrir;
 private boolean processado;
@@ -13,6 +14,7 @@ private Color corFonte;
 private Arquivo pai;
 private Icon icone;
 private File file;
+			]]>
 		</valor>
 	</mapeamento>
 </mapeamentos>
