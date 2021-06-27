@@ -13,7 +13,7 @@ public class Pesquisa {
 	private final List<Referencia> referenciasApos;
 	private final List<Referencia> referencias;
 	private final Referencia referencia;
-	private final String nome;
+	private String nome;
 
 	public Pesquisa(String nome, Referencia ref) {
 		Objects.requireNonNull(ref);
@@ -24,6 +24,12 @@ public class Pesquisa {
 		referencias = new ArrayList<>();
 		this.referencia = ref;
 		this.nome = nome;
+	}
+
+	public void setNome(String nome) {
+		if (!Util.estaVazio(nome)) {
+			this.nome = nome;
+		}
 	}
 
 	public void processar(Objeto objeto) {

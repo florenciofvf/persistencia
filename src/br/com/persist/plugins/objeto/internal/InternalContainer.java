@@ -1728,7 +1728,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					vinculoListener.preencherVinculacao(vinculacao);
 					AtomicBoolean atom = new AtomicBoolean(false);
 					if (objeto.getPesquisas().isEmpty()) {
-						adicionar(mapaRef, atom, vinculacao);
+						adicionar(mapaRef, atom, vinculacao, null);
 					}
 					if (atom.get()) {
 						vinculoListener.salvarVinculacao(vinculacao);
@@ -1749,7 +1749,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
 							coletor, InternalContainer.this, config);
 					if (coletor.size() == 1 && !contem(pesquisas, coletor.get(0))) {
-						adicionar(mapaRef, atom, vinculacao);
+						adicionar(mapaRef, atom, vinculacao, coletor.get(0));
 						return;
 					}
 					for (Pesquisa pesquisa : pesquisas) {
@@ -1773,8 +1773,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 				}
 
-				private void adicionar(Map<String, Object> mapaRef, AtomicBoolean atom, Vinculacao vinculacao) {
+				private void adicionar(Map<String, Object> mapaRef, AtomicBoolean atom, Vinculacao vinculacao,
+						String nome) {
 					Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
+					if (!Util.estaVazio(nome)) {
+						pesquisa.setNome(nome);
+					}
 					objeto.addPesquisa(pesquisa);
 					objeto.addReferencias(pesquisa.getReferencias());
 					vinculacao.adicionarPesquisa(pesquisa);
