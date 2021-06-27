@@ -2,7 +2,6 @@ package br.com.persist.plugins.objeto.internal;
 
 import org.xml.sax.Attributes;
 
-import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
 public class InternalForm {
@@ -30,7 +29,7 @@ public class InternalForm {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("form");
-		util.atributo("objeto", Util.escapar(objeto));
+		util.atributo("objeto", objeto);
 		util.atributo("largura", largura);
 		util.atributo("altura", altura);
 		util.atributo("x", x);

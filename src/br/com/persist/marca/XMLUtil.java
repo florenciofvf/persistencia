@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class XMLUtil {
 	private final PrintWriter pw;
@@ -88,7 +89,7 @@ public class XMLUtil {
 	}
 
 	private String citar(String valor) {
-		return "\"" + valor + "\"";
+		return "\"" + Util.escapar(valor) + "\"";
 	}
 
 	public XMLUtil print(String s) {

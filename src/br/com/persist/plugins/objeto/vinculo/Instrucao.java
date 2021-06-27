@@ -64,7 +64,7 @@ public class Instrucao implements Comparable<Instrucao> {
 				util.ql();
 			}
 			util.abrirTag(VinculoHandler.INSTRUCAO);
-			util.atributo("nome", Util.escapar(nome));
+			util.atributo("nome", nome);
 			if (selecaoMultipla) {
 				util.atributo("selecaoMultipla", selecaoMultipla);
 			}

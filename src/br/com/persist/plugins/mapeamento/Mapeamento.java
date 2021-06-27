@@ -26,7 +26,7 @@ public class Mapeamento {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag(MapeamentoConstantes.MAPEAMENTO);
-		util.atributo("nome", Util.escapar(nome));
+		util.atributo("nome", nome);
 		util.fecharTag();
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo(Util.escapar(getValor())).ql();

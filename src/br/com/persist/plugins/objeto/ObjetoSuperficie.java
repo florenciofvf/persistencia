@@ -1578,7 +1578,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		util.atributo("altura", getHeight());
 		util.atributo("arquivoVinculo", getArquivoVinculo());
 		if (conexao != null) {
-			util.atributo("conexao", Util.escapar(conexao.getNome()));
+			util.atributo("conexao", conexao.getNome());
 		}
 	}
 

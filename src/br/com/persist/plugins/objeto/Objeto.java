@@ -203,14 +203,14 @@ public class Objeto implements Runnable {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("objeto");
-		util.atributo("id", Util.escapar(id));
+		util.atributo("id", id);
 		util.atributo("transparente", thread == null ? transparente : transparenteBkp);
-		util.atributo("finalConsulta", Util.escapar(getFinalConsulta()));
-		util.atributo("chaveamento", Util.escapar(getChaveamento()));
-		util.atributo("complemento", Util.escapar(getComplemento()));
+		util.atributo("finalConsulta", getFinalConsulta());
+		util.atributo("chaveamento", getChaveamento());
+		util.atributo("complemento", getComplemento());
 		util.atributo("selectAlternativo", getSelectAlternativo());
 		util.atributo("apelidoParaJoins", getApelidoParaJoins());
-		util.atributo("orderBy", Util.escapar(getOrderBy()));
+		util.atributo("orderBy", getOrderBy());
 		util.atributo("ajusteAutoForm", ajusteAutoForm);
 		util.atributo("copiarDestac", clonarAoDestacar);
 		util.atributo("desloc_x_id", deslocamentoXId);
