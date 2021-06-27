@@ -98,6 +98,7 @@ import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
+import br.com.persist.plugins.objeto.vinculo.VinculoHandler;
 import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.IndiceValor;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
@@ -1720,7 +1721,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 				private void processarMapaReferencia(Map<String, Object> mapaRef) {
 					Boolean erro = (Boolean) mapaRef.get(ObjetoConstantes.ERROR);
-					if (erro || mapaRef.get("pesquisa") == null || mapaRef.get("ref") == null) {
+					if (erro || mapaRef.get(VinculoHandler.PESQUISA) == null || mapaRef.get("ref") == null) {
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
@@ -1745,6 +1746,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					config.setCriar(true);
 					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
 							coletor, InternalContainer.this, config);
+					if (coletor.size() == 1 && !contem(pesquisas, coletor.get(0))) {
+						addPesquisa(mapaRef, atom, vinculacao);
+						return;
+					}
 					for (Pesquisa pesquisa : pesquisas) {
 						if (selecionado(pesquisa, coletor.getLista())) {
 							Referencia ref = (Referencia) mapaRef.get("ref");
@@ -1769,19 +1774,36 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private void checarListaPesquisa(Map<String, Object> mapaRef, AtomicBoolean atom,
 						Vinculacao vinculacao) {
 					if (objeto.getPesquisas().isEmpty()) {
-						Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
-						objeto.addPesquisa(pesquisa);
-						objeto.addReferencias(pesquisa.getReferencias());
-						vinculacao.adicionarPesquisa(pesquisa);
-						buttonPesquisa.complemento(objeto);
-						buscaAuto = true;
-						atom.set(true);
+						adicionar(mapaRef, atom, vinculacao);
 					}
+				}
+
+				private void adicionar(Map<String, Object> mapaRef, AtomicBoolean atom, Vinculacao vinculacao) {
+					Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
+					objeto.addPesquisa(pesquisa);
+					objeto.addReferencias(pesquisa.getReferencias());
+					vinculacao.adicionarPesquisa(pesquisa);
+					buttonPesquisa.complemento(objeto);
+					buscaAuto = true;
+					atom.set(true);
+				}
+
+				private void addPesquisa(Map<String, Object> mapaRef, AtomicBoolean atom, Vinculacao vinculacao) {
+					adicionar(mapaRef, atom, vinculacao);
 				}
 
 				private boolean selecionado(Pesquisa pesquisa, List<String> lista) {
 					for (String string : lista) {
-						if (string.equals(pesquisa.getNome())) {
+						if (string.equalsIgnoreCase(pesquisa.getNome())) {
+							return true;
+						}
+					}
+					return false;
+				}
+
+				private boolean contem(List<Pesquisa> pesquisas, String string) {
+					for (Pesquisa pesquisa : pesquisas) {
+						if (pesquisa.getNome().equalsIgnoreCase(string)) {
 							return true;
 						}
 					}
