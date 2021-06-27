@@ -19,6 +19,7 @@ import javax.swing.ListModel;
 
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.SetLista.Coletor;
@@ -48,6 +49,7 @@ public class SetLista {
 	public static class Config {
 		final boolean obrigatorio;
 		final boolean somenteUm;
+		boolean criar;
 
 		public Config(boolean obrigatorio, boolean somenteUm) {
 			this.obrigatorio = obrigatorio;
@@ -60,6 +62,14 @@ public class SetLista {
 
 		public Config() {
 			this(false, false);
+		}
+
+		public boolean isCriar() {
+			return criar;
+		}
+
+		public void setCriar(boolean criar) {
+			this.criar = criar;
 		}
 	}
 
@@ -234,10 +244,14 @@ class SetListaDialogo extends AbstratoDialogo {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private final CheckBox chkTodos = new CheckBox("label.todos");
+		private Action criarAcao = Action.actionIcon("label.criar", Icones.CRIAR);
 
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
 			add(chkTodos);
+			if (config.criar) {
+				add(criarAcao);
+			}
 			chkTodos.setSelected(!config.somenteUm);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
 		}

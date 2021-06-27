@@ -56,7 +56,7 @@ public class Pesquisa {
 		if (referencia.getCampo() != null && referencia.getCampo().indexOf(',') != -1) {
 			util.ql().conteudo("<!-- MAIS DE UMA CHAVE-PRIMARIA NESTA PESQUISA-->").ql();
 		}
-		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, nome);
+		util.abrirTag(VinculoHandler.PESQUISA).atributo(VinculoHandler.NOME, Util.escapar(nome));
 		referencia.salvar(false, util);
 		util.fecharTag();
 		for (Referencia ref : referencias) {
