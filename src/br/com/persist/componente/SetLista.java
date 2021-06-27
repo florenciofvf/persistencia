@@ -236,7 +236,7 @@ class SetListaDialogo extends AbstratoDialogo {
 				Item item = lista.getModel().getElementAt(index);
 				checarSomenteUm(item);
 				item.setSelecionado(!item.isSelecionado());
-				lista.repaint(lista.getCellBounds(index, index));
+				lista.repaint();
 			}
 
 			private void checarSomenteUm(Item item) {
@@ -268,10 +268,10 @@ class SetListaDialogo extends AbstratoDialogo {
 			add(chkTodos);
 			if (config.criar) {
 				add(criarAcao);
+				criarAcao.setActionListener(e -> criarCampo());
 			}
 			chkTodos.setSelected(!config.somenteUm);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
-			criarAcao.setActionListener(e -> criarCampo());
 		}
 
 		private void criarCampo() {
