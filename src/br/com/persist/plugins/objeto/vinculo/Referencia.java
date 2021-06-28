@@ -95,8 +95,8 @@ public class Referencia {
 
 	static String toHexString(int i) {
 		StringBuilder sb = new StringBuilder(Integer.toHexString(i));
-		if (sb.length() == 1 && sb.charAt(0) == '0') {
-			sb.append("0");
+		if (sb.length() == 1) {
+			sb.insert(0, "0");
 		}
 		return sb.toString().toUpperCase();
 	}
