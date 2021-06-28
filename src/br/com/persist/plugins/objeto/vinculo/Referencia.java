@@ -87,10 +87,18 @@ public class Referencia {
 
 	static String toHex(Color color) {
 		StringBuilder sb = new StringBuilder("#");
-		sb.append(Integer.toHexString(color.getRed()).toUpperCase());
-		sb.append(Integer.toHexString(color.getGreen()).toUpperCase());
-		sb.append(Integer.toHexString(color.getBlue()).toUpperCase());
+		sb.append(toHexString(color.getRed()));
+		sb.append(toHexString(color.getGreen()));
+		sb.append(toHexString(color.getBlue()));
 		return sb.toString();
+	}
+
+	static String toHexString(int i) {
+		StringBuilder sb = new StringBuilder(Integer.toHexString(i));
+		if (sb.length() == 1 && sb.charAt(0) == '0') {
+			sb.append("0");
+		}
+		return sb.toString().toUpperCase();
 	}
 
 	public boolean igual(Referencia ref) {
