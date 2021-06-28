@@ -30,7 +30,7 @@ public class Variavel {
 		util.fecharTag();
 		util.abrirTag2(Constantes.VALOR);
 		util.conteudo("<![CDATA[").ql();
-		util.conteudo(getValor()).ql();
+		util.tab().conteudo(getValor()).ql();
 		util.conteudo("]]>").ql();
 		util.finalizarTag(Constantes.VALOR);
 		util.finalizarTag(VariavelConstantes.VARIAVEL);

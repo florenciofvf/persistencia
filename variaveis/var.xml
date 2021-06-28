@@ -4,63 +4,63 @@
 	<variavel nome="DELTA_AJUSTE_FORM_DISTANCIA_VERTICAL">
 		<valor>
 			<![CDATA[
-			18
+				18
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="DELTA_X_AJUSTE_FORM_OBJETO">
 		<valor>
 			<![CDATA[
-			25
+				25
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="DELTA_Y_AJUSTE_FORM_OBJETO">
 		<valor>
 			<![CDATA[
-			11
+				11
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER">
 		<valor>
 			<![CDATA[
-			90
+				90
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS">
 		<valor>
 			<![CDATA[
-			10
+				10
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS">
 		<valor>
 			<![CDATA[
-			30
+				30
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="LIMPAR2">
 		<valor>
 			<![CDATA[
-			AND 1 > 2
+				AND 1 > 2
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="DESTACAR_PROPRIO_LARGURA_INTERNAL">
 		<valor>
 			<![CDATA[
-			400
+				400
 			]]>
 		</valor>
 	</variavel>
 	<variavel nome="DESTACAR_PROPRIO_ALTURA_INTERNAL">
 		<valor>
 			<![CDATA[
-			75
+				75
 			]]>
 		</valor>
 	</variavel>
