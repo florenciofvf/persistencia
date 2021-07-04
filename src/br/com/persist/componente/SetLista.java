@@ -137,6 +137,32 @@ class Item {
 	public String toString() {
 		return rotulo;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((rotulo == null) ? 0 : rotulo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		if (rotulo == null) {
+			if (other.rotulo != null)
+				return false;
+		} else if (!rotulo.equalsIgnoreCase(other.rotulo)) {
+			return false;
+		}
+		return true;
+	}
 }
 
 class ItemRenderer extends JCheckBox implements ListCellRenderer<Item> {
@@ -178,8 +204,11 @@ class SetListaModelo extends AbstractListModel<Item> {
 
 	public void addItem(String string) {
 		if (!Util.estaVazio(string)) {
-			listaItem.add(new Item(string, !config.somenteUm));
-			notificarMudancas();
+			Item item = new Item(string, !config.somenteUm);
+			if (!listaItem.contains(item)) {
+				listaItem.add(item);
+				notificarMudancas();
+			}
 		}
 	}
 }
