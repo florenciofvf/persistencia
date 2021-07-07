@@ -1876,8 +1876,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				form.setVisible(true);
 			} else {
 				Formulario frame = getFormulario();
+				Component comp = Util.getViewParent(InternalContainer.this);
 				ConsultaDialogo form = ConsultaDialogo.criar2(frame, conexao, instrucao);
-				config(frame, form);
+				config2(comp, frame, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			}
@@ -1892,8 +1893,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				form.setVisible(true);
 			} else {
 				Formulario frame = getFormulario();
+				Component comp = Util.getViewParent(InternalContainer.this);
 				UpdateDialogo form = UpdateDialogo.criar2(frame, conexao, instrucao);
-				config(frame, form);
+				config2(comp, frame, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			}
@@ -1906,6 +1908,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				return ref.get();
 			}
 			return null;
+		}
+
+		private void config2(Component c, Window parent, Window child) {
+			if (c instanceof Window) {
+				Util.configSizeLocation((Window) c, child, InternalContainer.this);
+			} else {
+				Util.configSizeLocation(parent, child, InternalContainer.this);
+			}
 		}
 	}
 
