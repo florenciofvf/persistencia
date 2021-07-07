@@ -23,10 +23,12 @@ public class Vinculacao {
 		pesquisas = new ArrayList<>();
 	}
 
-	public void adicionarPesquisa(Pesquisa pesquisa) {
+	public boolean adicionarPesquisa(Pesquisa pesquisa) {
 		if (pesquisa != null && !Pesquisa.contem(pesquisa, pesquisas)) {
 			pesquisas.add(pesquisa);
+			return true;
 		}
+		return false;
 	}
 
 	public void putParaTabela(ParaTabela paraTabela) {

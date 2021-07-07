@@ -988,10 +988,12 @@ public class Objeto implements Runnable {
 		}
 	}
 
-	public void addPesquisa(Pesquisa pesq) {
+	public boolean addPesquisa(Pesquisa pesq) {
 		if (pesq != null && !Pesquisa.contem(pesq, pesquisas)) {
 			pesquisas.add(pesq);
+			return true;
 		}
+		return false;
 	}
 
 	public List<Pesquisa> getPesquisas() {

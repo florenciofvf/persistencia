@@ -2193,6 +2193,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		@Override
 		public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) {
+			if (vinculoListener == null) {
+				return;
+			}
 			String nomePesquisa = getStringOuNull("label.nome", ObjetoMensagens.getString("label.nome_pesquisa"));
 			if (nomePesquisa == null) {
 				return;
@@ -2209,6 +2212,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa, ref);
 			Referencia referencia = new Referencia(null, outraTabela, outroCampo);
 			pesquisa.add(referencia);
+			adicionar(pesquisa);
+		}
+
+		private void adicionar(Pesquisa pesquisa) {
+			if (objeto.addPesquisa(pesquisa)) {
+				Vinculacao vinculacao = new Vinculacao();
+				vinculoListener.preencherVinculacao(vinculacao);
+				objeto.addReferencias(pesquisa.getReferencias());
+				if (vinculacao.adicionarPesquisa(pesquisa)) {
+					toolbar.buttonPesquisa.complemento(objeto);
+					buscaAuto = true;
+					vinculoListener.salvarVinculacao(vinculacao);
+				}
+			}
 		}
 
 		@Override
