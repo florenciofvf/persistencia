@@ -248,6 +248,7 @@ public class TabelaPersistencia extends JTable {
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action detalheColunaAcao = Action.actionMenu(Constantes.LABEL_METADADOS, Icones.INFO);
+		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
 		private Action concatNomeColunaAcao = actionMenu("label.concatenar_nome_coluna");
 		private Action colocarNomeColunaAcao = actionMenu("label.colocar_nome_coluna");
@@ -265,6 +266,7 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(true, larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
 			addMenuItem(larguraTituloAcao);
+			addMenuItem(true, pesquisaApartirColunaAcao);
 			addMenuItem(true, concatNomeColunaAcao);
 			addMenuItem(colocarNomeColunaAcao);
 			addMenuItem(copiarNomeColunaAcao);
@@ -280,6 +282,12 @@ public class TabelaPersistencia extends JTable {
 			copiarNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
+			});
+			pesquisaApartirColunaAcao.setActionListener(e -> {
+				String coluna = getModel().getColumnName(indiceColuna);
+				if (listener != null) {
+					listener.pesquisaApartirColuna(TabelaPersistencia.this, coluna);
+				}
 			});
 			concatNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);

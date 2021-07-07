@@ -2183,6 +2183,34 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private class TabelaListener implements TabelaPersistenciaListener {
+		private String getStringOuNull(String chaveTitulo, String msg) {
+			Object resp = Util.getValorInputDialog(InternalContainer.this, chaveTitulo, msg, Constantes.VAZIO);
+			if (resp == null || Util.estaVazio(resp.toString())) {
+				return null;
+			}
+			return resp.toString();
+		}
+
+		@Override
+		public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) {
+			String nomePesquisa = getStringOuNull("label.nome", ObjetoMensagens.getString("label.nome_pesquisa"));
+			if (nomePesquisa == null) {
+				return;
+			}
+			String outraTabela = getStringOuNull("label.atencao", ObjetoMensagens.getString("label.nome_outra_tabela"));
+			if (outraTabela == null) {
+				return;
+			}
+			String outroCampo = getStringOuNull("label.atencao", ObjetoMensagens.getString("label.nome_outro_campo"));
+			if (outroCampo == null) {
+				return;
+			}
+			Referencia ref = new Referencia(null, objeto.getTabela(), nome);
+			Pesquisa pesquisa = new Pesquisa(nomePesquisa, ref);
+			Referencia referencia = new Referencia(null, outraTabela, outroCampo);
+			pesquisa.add(referencia);
+		}
+
 		@Override
 		public void colocarColunaComMemoria(TabelaPersistencia tabela, String nome, String memoria) {
 			String string = "";
