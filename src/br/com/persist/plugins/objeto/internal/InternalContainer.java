@@ -2192,7 +2192,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		@Override
-		public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome) {
+		public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String coluna) {
 			if (vinculoListener == null) {
 				return;
 			}
@@ -2200,17 +2200,47 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (nomePesquisa == null) {
 				return;
 			}
-			String outraTabela = getStringOuNull("label.atencao", ObjetoMensagens.getString("label.nome_outra_tabela"));
-			if (outraTabela == null) {
+			List<Objeto> objetos = vinculoListener.objetosComTabela();
+			if (objetos.isEmpty()) {
 				return;
 			}
-			String outroCampo = getStringOuNull("label.atencao", ObjetoMensagens.getString("label.nome_outro_campo"));
-			if (outroCampo == null) {
+			prepararPesquisa(coluna, nomePesquisa, objetos);
+		}
+
+		private void prepararPesquisa(String coluna, String nomePesquisa, List<Objeto> objetos) {
+			List<String> ids = objetos.stream().map(Objeto::getId).collect(Collectors.toList());
+			Coletor coletor = new Coletor();
+			SetLista.view(ObjetoMensagens.getString("label.nome_outra_tabela"), ids, coletor, InternalContainer.this,
+					new SetLista.Config(true, true));
+			if (coletor.size() != 1) {
 				return;
 			}
-			Referencia ref = new Referencia(null, objeto.getTabela(), nome);
+			String id = coletor.get(0);
+			Objeto obj = get(objetos, id);
+			if (obj == null) {
+				return;
+			}
+			criarPesquisa(coluna, nomePesquisa, obj);
+		}
+
+		private Objeto get(List<Objeto> lista, String id) {
+			for (Objeto obj : lista) {
+				if (obj.getId().contentEquals(id)) {
+					return obj;
+				}
+			}
+			return null;
+		}
+
+		private void criarPesquisa(String coluna, String nomePesquisa, Objeto obj) {
+			Coletor coletor = new Coletor();
+			vinculoListener.selecionarCampo(obj, coletor, InternalContainer.this);
+			if (coletor.size() != 1) {
+				return;
+			}
+			Referencia ref = new Referencia(null, objeto.getTabela(), coluna);
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa, ref);
-			Referencia referencia = new Referencia(null, outraTabela, outroCampo);
+			Referencia referencia = new Referencia(null, obj.getTabela(), coletor.get(0));
 			pesquisa.add(referencia);
 			adicionar(pesquisa);
 		}

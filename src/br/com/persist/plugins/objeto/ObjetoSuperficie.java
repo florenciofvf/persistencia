@@ -300,6 +300,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return resp;
 	}
 
+	public List<Objeto> objetosComTabela() {
+		List<Objeto> resp = new ArrayList<>();
+		for (Objeto objeto : objetos) {
+			if (!Util.estaVazio(objeto.getTabela())) {
+				resp.add(objeto);
+			}
+		}
+		return resp;
+	}
+
 	public List<String> getListaStringIds() {
 		List<String> resp = new ArrayList<>();
 		for (Objeto objeto : objetos) {

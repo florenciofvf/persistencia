@@ -21,6 +21,7 @@ import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
@@ -228,6 +229,21 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (desktop != null) {
 				desktop.pesquisarLink(refs, argumentos);
 			}
+		}
+
+		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).selecionarCampo(objeto, coletor, c);
+			}
+		}
+
+		public List<Objeto> objetosComTabela() {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				return ((ObjetoSuperficie) desktop).objetosComTabela();
+			}
+			return new ArrayList<>();
 		}
 
 		public boolean validoInvisibilidade() {
