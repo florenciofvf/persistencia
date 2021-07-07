@@ -70,4 +70,8 @@ public class ButtonPopup extends Button {
 			}
 		}
 	}
+
+	public void limparPopup() {
+		popup.limpar();
+	}
 }

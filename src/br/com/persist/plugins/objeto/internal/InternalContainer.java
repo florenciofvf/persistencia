@@ -757,6 +757,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void complemento(Objeto objeto) {
+				limparPopup();
 				List<Pesquisa> pesquisas = objeto.getPesquisas();
 				for (Pesquisa p : pesquisas) {
 					addMenu(new MenuPesquisa(p));

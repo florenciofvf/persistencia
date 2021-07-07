@@ -31,4 +31,10 @@ public class Popup extends JPopupMenu {
 	public void addMenuItem(MenuItem item) {
 		addMenuItem(false, item);
 	}
+
+	public void limpar() {
+		while (getComponentCount() > 0) {
+			remove(0);
+		}
+	}
 }
