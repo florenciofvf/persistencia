@@ -55,6 +55,10 @@ public class Pesquisa {
 				&& pesquisa.referencia.igual(objeto);
 	}
 
+	public boolean igual(Pesquisa pesquisa) {
+		return pesquisa != null && nome.equalsIgnoreCase(pesquisa.nome) && referencia.igual(pesquisa.referencia);
+	}
+
 	public void salvar(XMLUtil util, boolean ql) {
 		if (ql) {
 			util.ql();

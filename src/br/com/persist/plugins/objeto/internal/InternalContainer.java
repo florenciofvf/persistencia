@@ -2249,8 +2249,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (coletor.size() != 1) {
 				return;
 			}
-			Referencia ref = new Referencia(null, objeto.getTabela(), coluna);
-			Pesquisa pesquisa = new Pesquisa(nomePesquisa, ref);
+			Pesquisa pesquisa = new Pesquisa(nomePesquisa, new Referencia(null, objeto.getTabela(), coluna));
 			Referencia referencia = new Referencia(null, obj.getTabela(), coletor.get(0));
 			pesquisa.add(referencia);
 			adicionar(pesquisa);
