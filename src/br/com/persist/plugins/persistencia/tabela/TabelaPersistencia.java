@@ -263,10 +263,10 @@ public class TabelaPersistencia extends JTable {
 
 		private PopupHeader() {
 			addMenuItem(detalheColunaAcao);
-			addMenuItem(true, pesquisaApartirColunaAcao);
 			addMenuItem(true, larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
 			addMenuItem(larguraTituloAcao);
+			addMenuItem(true, pesquisaApartirColunaAcao);
 			addMenuItem(true, concatNomeColunaAcao);
 			addMenuItem(colocarNomeColunaAcao);
 			addMenuItem(copiarNomeColunaAcao);
