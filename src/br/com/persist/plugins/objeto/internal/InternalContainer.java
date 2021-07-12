@@ -1278,10 +1278,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private MenuTemp() {
 					super("label.temp");
 					addMenuItem(corAcao);
-					addMenuItem(true, larTitTodosAcao);
-					addMenuItem(true, destacarColunaAcao);
-					addMenuItem(true, tabelasRepetidasAcao);
 					addMenuItem(true, colunasComplAcao);
+					addMenuItem(true, larTitTodosAcao);
+					addMenuItem(true, tabelasRepetidasAcao);
+					addMenuItem(true, destacarColunaAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
 					tabelasRepetidasAcao.setActionListener(e -> tabelasRepetidas());
 					colunasComplAcao.setActionListener(e -> totalColunasCompl());
