@@ -1718,7 +1718,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private static final long serialVersionUID = 1L;
 
 				private AdicionaHierarquicoAcao() {
-					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico"), false, Icones.HIERARQUIA);
+					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico2"), false, Icones.HIERARQUIA);
 				}
 
 				@Override
@@ -2224,8 +2224,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		private void prepararPesquisa(String coluna, String nomePesquisa, List<Objeto> objetos) {
 			List<String> ids = objetos.stream().map(Objeto::getId).collect(Collectors.toList());
 			Coletor coletor = new Coletor();
-			SetLista.view(ObjetoMensagens.getString("label.nome_outra_tabela"), ids, coletor, InternalContainer.this,
-					new SetLista.Config(true, true));
+			SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.nome_outra_tabela"), ids, coletor,
+					InternalContainer.this, new SetLista.Config(true, true));
 			if (coletor.size() != 1) {
 				return;
 			}
