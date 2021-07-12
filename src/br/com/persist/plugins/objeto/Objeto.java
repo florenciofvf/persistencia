@@ -1056,4 +1056,13 @@ public class Objeto implements Runnable {
 	public void setPesquisaAdicaoHierarquico(Pesquisa pesquisa) {
 		this.pesquisaAdicaoHierarquico = pesquisa;
 	}
+
+	public Pesquisa getPesquisa(Pesquisa pesquisa) {
+		for (Pesquisa p : pesquisas) {
+			if (p.igual(pesquisa)) {
+				return p;
+			}
+		}
+		return null;
+	}
 }

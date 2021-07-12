@@ -2249,16 +2249,33 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (coletor.size() != 1) {
 				return;
 			}
+			Vinculacao vinculacao = new Vinculacao();
+			vinculoListener.preencherVinculacao(vinculacao);
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa, new Referencia(null, objeto.getTabela(), coluna));
 			Referencia referencia = new Referencia(null, obj.getTabela(), coletor.get(0));
-			pesquisa.add(referencia);
-			adicionar(pesquisa);
+			Pesquisa pesquisaObj = objeto.getPesquisa(pesquisa);
+			if (pesquisaObj != null) {
+				pesquisaObj.add(referencia);
+				objeto.addReferencia(referencia);
+				atualizar(vinculacao, pesquisa, referencia);
+			} else {
+				pesquisa.add(referencia);
+				adicionar(vinculacao, pesquisa);
+			}
 		}
 
-		private void adicionar(Pesquisa pesquisa) {
+		private void atualizar(Vinculacao vinculacao, Pesquisa pesquisa, Referencia referencia) {
+			Pesquisa pesquisaObj = vinculacao.getPesquisa(pesquisa);
+			if (pesquisaObj != null) {
+				pesquisaObj.add(referencia);
+				toolbar.buttonPesquisa.complemento(objeto);
+				buscaAuto = true;
+				vinculoListener.salvarVinculacao(vinculacao);
+			}
+		}
+
+		private void adicionar(Vinculacao vinculacao, Pesquisa pesquisa) {
 			if (objeto.addPesquisa(pesquisa)) {
-				Vinculacao vinculacao = new Vinculacao();
-				vinculoListener.preencherVinculacao(vinculacao);
 				objeto.addReferencias(pesquisa.getReferencias());
 				if (vinculacao.adicionarPesquisa(pesquisa)) {
 					toolbar.buttonPesquisa.complemento(objeto);
