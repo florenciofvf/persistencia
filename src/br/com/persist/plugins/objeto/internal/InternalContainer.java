@@ -2194,12 +2194,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	private class TabelaListener implements TabelaPersistenciaListener {
-		private String getStringOuNull(String chaveTitulo, String msg) {
-			Object resp = Util.getValorInputDialog(InternalContainer.this, chaveTitulo, msg, Constantes.VAZIO);
-			if (resp == null || Util.estaVazio(resp.toString())) {
-				return null;
-			}
-			return resp.toString();
+		private Coletor getNomePesquisa() {
+			List<Pesquisa> pesquisas = objeto.getPesquisas();
+			List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());
+			Coletor coletor = new Coletor();
+			Config config = new SetLista.Config(true, true);
+			config.setCriar(true);
+			SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.nome_pesquisa"), nomes, coletor,
+					InternalContainer.this, config);
+			return coletor;
 		}
 
 		@Override
@@ -2207,15 +2210,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (vinculoListener == null) {
 				return;
 			}
-			String nomePesquisa = getStringOuNull("label.nome", ObjetoMensagens.getString("label.nome_pesquisa"));
-			if (nomePesquisa == null) {
+			Coletor coletor = getNomePesquisa();
+			if (coletor.size() != 1) {
 				return;
 			}
 			List<Objeto> objetos = vinculoListener.objetosComTabela();
 			if (objetos.isEmpty()) {
 				return;
 			}
-			prepararPesquisa(coluna, nomePesquisa, objetos);
+			prepararPesquisa(coluna, coletor.get(0), objetos);
 		}
 
 		private void prepararPesquisa(String coluna, String nomePesquisa, List<Objeto> objetos) {
