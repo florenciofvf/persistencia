@@ -26,6 +26,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -1739,11 +1740,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					Vinculacao vinculacao = new Vinculacao();
 					vinculoListener.preencherVinculacao(vinculacao);
 					if (objeto.getPesquisas().isEmpty()) {
-						adicionar(mapaRef, vinculacao, null);
-						vinculoListener.salvarVinculacao(vinculacao);
-						return;
+						processarPesquisaVazio(mapaRef, vinculacao);
+					} else {
+						processarPesquisa(mapaRef, vinculacao);
 					}
-					processarPesquisa(mapaRef, vinculacao);
+				}
+
+				private void processarPesquisaVazio(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+					Pesquisa pesquisa = (Pesquisa) mapaRef.get(VinculoHandler.PESQUISA);
+					Coletor coletor = new Coletor();
+					Config config = new SetLista.Config(true, true);
+					config.setCriar(true);
+					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"),
+							Arrays.asList(pesquisa.getNome()), coletor, InternalContainer.this, config);
+					if (coletor.size() == 1) {
+						adicionar(mapaRef, vinculacao, coletor.get(0));
+						vinculoListener.salvarVinculacao(vinculacao);
+					}
 				}
 
 				private void processarPesquisa(Map<String, Object> mapaRef, Vinculacao vinculacao) {
