@@ -127,6 +127,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
+	private static final String LABEL_NOME_PESQUISA = "label.nome_pesquisa";
 	private transient TabelaListener tabelaListener = new TabelaListener();
 	private transient InternalListener.RelacaoObjeto relacaoObjetoListener;
 	private transient InternalListener.Visibilidade visibilidadeListener;
@@ -1751,7 +1752,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					Coletor coletor = new Coletor();
 					Config config = new SetLista.Config(true, true);
 					config.setCriar(true);
-					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"),
+					SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA),
 							Arrays.asList(pesquisa.getNome()), coletor, InternalContainer.this, config);
 					if (coletor.size() == 1) {
 						adicionar(mapaRef, vinculacao, coletor.get(0));
@@ -1765,8 +1766,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					Coletor coletor = new Coletor();
 					Config config = new SetLista.Config(true, true);
 					config.setCriar(true);
-					SetLista.view(objeto.getId() + ObjetoMensagens.getString("msg.adicionar_hierarquico"), nomes,
-							coletor, InternalContainer.this, config);
+					SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA), nomes, coletor,
+							InternalContainer.this, config);
 					if (coletor.size() == 1 && !contem(pesquisas, coletor.get(0))) {
 						adicionar(mapaRef, vinculacao, coletor.get(0));
 						vinculoListener.salvarVinculacao(vinculacao);
@@ -2213,7 +2214,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			Coletor coletor = new Coletor();
 			Config config = new SetLista.Config(true, true);
 			config.setCriar(true);
-			SetLista.view(objeto.getId() + ObjetoMensagens.getString("label.nome_pesquisa"), nomes, coletor,
+			SetLista.view(objeto.getId() + ObjetoMensagens.getString(LABEL_NOME_PESQUISA), nomes, coletor,
 					InternalContainer.this, config);
 			return coletor;
 		}
