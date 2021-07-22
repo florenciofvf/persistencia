@@ -776,17 +776,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private static final long serialVersionUID = 1L;
 				private Action elementosAcao = Action.actionMenu("label.elementos", null);
 				private Action descricaoAcao = Action.actionMenu("label.descricao", null);
+				private Action consultaAcao = Action.actionMenu("label.consulta", null);
 				private final transient Pesquisa pesquisa;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addMenuItem(true, elementosAcao);
 					addMenuItem(true, descricaoAcao);
+					addMenuItem(true, consultaAcao);
 					this.pesquisa = pesquisa;
 					semAspasAcao.setActionListener(e -> processar(false));
 					comAspasAcao.setActionListener(e -> processar(true));
 					elementosAcao.setActionListener(e -> elementos());
 					descricaoAcao.setActionListener(e -> descricao());
+					consultaAcao.setActionListener(e -> consulta());
 				}
 
 				private void elementos() {
@@ -804,6 +807,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+					}
+				}
+
+				private void consulta() {
+					try {
+						StringBuilder sb = new StringBuilder();
+						sb.append(pesquisa.getConsulta());
+						sb.append(Constantes.QL);
+						sb.append("-------------");
+						sb.append(Constantes.QL2);
+						sb.append(pesquisa.getConsultaReversa());
+						Util.mensagem(InternalContainer.this, sb.toString());
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("CONSULTA", ex, InternalContainer.this);
 					}
 				}
 

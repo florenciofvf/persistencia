@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
@@ -76,6 +77,33 @@ public class Pesquisa {
 			ref.salvar(true, util);
 		}
 		util.finalizarTag(VinculoHandler.PESQUISA);
+	}
+
+	public String getConsulta() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT a.* FROM " + getTabela() + " a" + Constantes.QL);
+		int i = 0;
+		for (Referencia ref : referencias) {
+			sb.append("   INNER JOIN " + ref.getTabela() + (" o_" + (++i)) + " ON a." + getCampo() + " = "
+					+ ("o_" + i + ".") + ref.getCampo() + Constantes.QL);
+		}
+		return sb.toString();
+	}
+
+	public String getConsultaReversa() {
+		StringBuilder sb = new StringBuilder();
+		for (Referencia ref : referencias) {
+			sb.append(ref.getConsulta() + Constantes.QL);
+		}
+		return sb.toString();
+	}
+
+	public String getTabela() {
+		return referencia.getTabela();
+	}
+
+	public String getCampo() {
+		return referencia.getCampo();
 	}
 
 	public void modelo(XMLUtil util) {

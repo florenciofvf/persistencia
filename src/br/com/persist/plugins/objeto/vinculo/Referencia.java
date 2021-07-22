@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.objeto.Objeto;
@@ -65,6 +66,14 @@ public class Referencia {
 		if (autonomo) {
 			util.fecharTag2(-1);
 		}
+	}
+
+	public String getConsulta() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT a.* FROM " + getTabela() + " a" + Constantes.QL);
+		sb.append("   INNER JOIN " + pesquisa.getTabela() + " b ON b." + pesquisa.getCampo() + " = a." + getCampo()
+				+ Constantes.QL);
+		return sb.toString();
 	}
 
 	public void modelo(XMLUtil util) {
