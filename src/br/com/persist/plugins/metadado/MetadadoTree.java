@@ -294,4 +294,9 @@ public class MetadadoTree extends Tree {
 			setSelectionPath(null);
 		}
 	}
+
+	public void preencher(List<Metadado> lista, String nome, boolean porParte) {
+		Metadado raiz = getRaiz();
+		raiz.preencher(lista, nome, porParte);
+	}
 }

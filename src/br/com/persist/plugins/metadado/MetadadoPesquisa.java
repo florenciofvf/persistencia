@@ -1,0 +1,57 @@
+package br.com.persist.plugins.metadado;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Label;
+
+public class MetadadoPesquisa {
+	private List<Metadado> lista = new ArrayList<>();
+	private final MetadadoTree metadadoTree;
+	final boolean porParte;
+	final String string;
+	int indice;
+
+	public MetadadoPesquisa(MetadadoTree metadadoTree, String string, boolean porParte) {
+		this.metadadoTree = metadadoTree;
+		this.porParte = porParte;
+		this.string = string;
+		if (metadadoTree != null && !Util.estaVazio(string)) {
+			metadadoTree.preencher(lista, string, porParte);
+		}
+	}
+
+	public boolean igual(String string, boolean porParte) {
+		boolean resp = this.string == null ? string == null : this.string.equalsIgnoreCase(string);
+		return resp && this.porParte == porParte;
+	}
+
+	public String getString() {
+		return string;
+	}
+
+	public int getTotal() {
+		return lista.size();
+	}
+
+	public int getIndice() {
+		return indice;
+	}
+
+	public void selecionar(Label label) {
+		if (label == null) {
+			return;
+		}
+		if (indice < getTotal()) {
+			Metadado metadado = lista.get(indice);
+			MetadadoTreeUtil.selecionarObjeto(metadadoTree, metadado);
+			indice++;
+			label.setText(indice + "/" + getTotal());
+		} else {
+			label.setText(Constantes.VAZIO);
+			indice = 0;
+		}
+	}
+}

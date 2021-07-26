@@ -133,6 +133,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		private final TextField txtMetadado = new TextField(35);
 		private final CheckBox chkPorParte = new CheckBox();
 		private ButtonInfo buttonInfo = new ButtonInfo();
+		private transient MetadadoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, ATUALIZAR, BAIXAR,
@@ -141,6 +142,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			add(true, comboConexao);
 			add(txtMetadado);
 			add(chkPorParte);
+			add(label);
 			add(progresso);
 			chkPorParte.setToolTipText(Mensagens.getString("label.por_parte"));
 			txtMetadado.setToolTipText(Mensagens.getString("label.pesquisar"));
@@ -151,8 +153,19 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtMetadado.getText())) {
-				metadadoTree.selecionar(txtMetadado.getText().trim(), chkPorParte.isSelected());
+				pesquisa = getPesquisa(metadadoTree, pesquisa, txtMetadado.getText(), chkPorParte.isSelected());
+				pesquisa.selecionar(label);
 			}
+		}
+
+		public MetadadoPesquisa getPesquisa(MetadadoTree metadadoTree, MetadadoPesquisa pesquisa, String string,
+				boolean porParte) {
+			if (pesquisa == null) {
+				return new MetadadoPesquisa(metadadoTree, string, porParte);
+			} else if (pesquisa.igual(string, porParte)) {
+				return pesquisa;
+			}
+			return new MetadadoPesquisa(metadadoTree, string, porParte);
 		}
 
 		@Override

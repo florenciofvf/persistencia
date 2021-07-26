@@ -107,6 +107,16 @@ public class Metadado implements Transferable {
 		return null;
 	}
 
+	public void preencher(List<Metadado> lista, String descricao, boolean porParte) {
+		if ((porParte && this.descricao.toUpperCase().indexOf(descricao.toUpperCase()) != -1)
+				|| this.descricao.equalsIgnoreCase(descricao)) {
+			lista.add(this);
+		}
+		for (Metadado m : filhos) {
+			m.preencher(lista, descricao, porParte);
+		}
+	}
+
 	public Metadado getMetadado(String descricao) {
 		return getMetadado(descricao, false);
 	}
