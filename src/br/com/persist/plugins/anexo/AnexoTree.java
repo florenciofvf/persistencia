@@ -236,4 +236,9 @@ public class AnexoTree extends Tree {
 			setSelectionPath(null);
 		}
 	}
+
+	public void preencher(List<Anexo> lista, String nome, boolean porParte) {
+		Anexo raiz = getRaiz();
+		raiz.preencher(lista, nome, porParte);
+	}
 }

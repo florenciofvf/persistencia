@@ -87,6 +87,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		private final CheckBox chkSempreTopAnex = new CheckBox();
 		private final TextField txtAnexo = new TextField(35);
 		private final CheckBox chkPorParte = new CheckBox();
+		private transient AnexoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR, SALVAR);
@@ -98,6 +99,7 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			add(chkSempreTopForm);
 			add(txtAnexo);
 			add(chkPorParte);
+			add(label);
 			eventos();
 		}
 
@@ -110,8 +112,19 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtAnexo.getText())) {
-				anexoTree.selecionar(txtAnexo.getText().trim(), chkPorParte.isSelected());
+				pesquisa = getPesquisa(anexoTree, pesquisa, txtAnexo.getText(), chkPorParte.isSelected());
+				pesquisa.selecionar(label);
 			}
+		}
+
+		public AnexoPesquisa getPesquisa(AnexoTree arquivoTree, AnexoPesquisa pesquisa, String string,
+				boolean porParte) {
+			if (pesquisa == null) {
+				return new AnexoPesquisa(arquivoTree, string, porParte);
+			} else if (pesquisa.igual(string, porParte)) {
+				return pesquisa;
+			}
+			return new AnexoPesquisa(arquivoTree, string, porParte);
 		}
 
 		private void topFormulario() {

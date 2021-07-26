@@ -126,6 +126,17 @@ public class Anexo {
 		return null;
 	}
 
+	public void preencher(List<Anexo> lista, String descricao, boolean porParte) {
+		String nome = file.getName();
+		if ((porParte && nome.toUpperCase().indexOf(descricao.toUpperCase()) != -1)
+				|| nome.equalsIgnoreCase(descricao)) {
+			lista.add(this);
+		}
+		for (Anexo a : filhos) {
+			a.preencher(lista, descricao, porParte);
+		}
+	}
+
 	private void processar() {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
