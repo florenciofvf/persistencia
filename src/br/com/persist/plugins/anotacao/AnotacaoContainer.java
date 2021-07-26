@@ -277,6 +277,8 @@ public class AnotacaoContainer extends AbstratoContainer {
 					}
 				}
 				textArea.setText(sb.toString());
+			} else {
+				label.limpar();
 			}
 		}
 	}

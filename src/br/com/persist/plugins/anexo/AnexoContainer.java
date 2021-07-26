@@ -114,6 +114,8 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			if (!Util.estaVazio(txtAnexo.getText())) {
 				pesquisa = getPesquisa(anexoTree, pesquisa, txtAnexo.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
+			} else {
+				label.limpar();
 			}
 		}
 

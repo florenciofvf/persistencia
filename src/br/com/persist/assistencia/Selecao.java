@@ -71,7 +71,7 @@ public class Selecao {
 			label.setText(indice + "/" + getTotal());
 		} else {
 			component.getCaret().setSelectionVisible(false);
-			label.setText(Constantes.VAZIO);
+			label.limpar();
 			indice = 0;
 		}
 	}

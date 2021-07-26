@@ -83,6 +83,8 @@ public class MensagemContainer extends Panel {
 			if (!Util.estaVazio(txtPesquisa.getText())) {
 				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
+			} else {
+				label.limpar();
 			}
 		}
 	}

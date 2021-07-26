@@ -116,6 +116,8 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			if (!Util.estaVazio(txtArquivo.getText())) {
 				pesquisa = getPesquisa(arquivoTree, pesquisa, txtArquivo.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
+			} else {
+				label.limpar();
 			}
 		}
 

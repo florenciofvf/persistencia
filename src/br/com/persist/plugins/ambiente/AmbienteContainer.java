@@ -322,6 +322,8 @@ public class AmbienteContainer extends AbstratoContainer {
 					}
 				}
 				textArea.setText(sb.toString());
+			} else {
+				label.limpar();
 			}
 		}
 	}

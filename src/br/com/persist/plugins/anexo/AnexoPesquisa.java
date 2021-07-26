@@ -3,7 +3,6 @@ package br.com.persist.plugins.anexo;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 
@@ -50,7 +49,7 @@ public class AnexoPesquisa {
 			indice++;
 			label.setText(indice + "/" + getTotal());
 		} else {
-			label.setText(Constantes.VAZIO);
+			label.limpar();
 			indice = 0;
 		}
 	}

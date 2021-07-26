@@ -155,6 +155,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			if (!Util.estaVazio(txtMetadado.getText())) {
 				pesquisa = getPesquisa(metadadoTree, pesquisa, txtMetadado.getText(), chkPorParte.isSelected());
 				pesquisa.selecionar(label);
+			} else {
+				label.limpar();
 			}
 		}
 
