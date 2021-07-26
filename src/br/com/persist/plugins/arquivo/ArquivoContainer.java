@@ -78,8 +78,8 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private Action statusAcao = Action.actionIcon("label.abertos", Icones.HIERARQUIA);
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopArq = new CheckBox();
+		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtArquivo = new TextField(35);
-		private final CheckBox chkPorParte = new CheckBox();
 		private transient ArquivoPesquisa pesquisa;
 
 		public void ini(Janela janela) {

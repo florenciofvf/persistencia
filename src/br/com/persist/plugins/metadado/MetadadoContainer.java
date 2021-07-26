@@ -131,7 +131,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		private static final long serialVersionUID = 1L;
 		private final JProgressBar progresso = new JProgressBar();
 		private final TextField txtMetadado = new TextField(35);
-		private final CheckBox chkPorParte = new CheckBox();
+		private final CheckBox chkPorParte = new CheckBox(true);
 		private ButtonInfo buttonInfo = new ButtonInfo();
 		private transient MetadadoPesquisa pesquisa;
 

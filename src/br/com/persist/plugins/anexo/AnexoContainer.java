@@ -85,8 +85,8 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 		private static final long serialVersionUID = 1L;
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopAnex = new CheckBox();
+		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtAnexo = new TextField(35);
-		private final CheckBox chkPorParte = new CheckBox();
 		private transient AnexoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
