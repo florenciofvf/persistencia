@@ -200,4 +200,9 @@ public class ArquivoTree extends Tree {
 			setSelectionPath(null);
 		}
 	}
+
+	public void preencher(List<Arquivo> lista, String nome, boolean porParte) {
+		Arquivo raiz = getRaiz();
+		raiz.preencher(lista, nome, porParte);
+	}
 }

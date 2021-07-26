@@ -80,6 +80,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private final CheckBox chkSempreTopArq = new CheckBox();
 		private final TextField txtArquivo = new TextField(35);
 		private final CheckBox chkPorParte = new CheckBox();
+		private transient ArquivoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, BAIXAR);
@@ -98,6 +99,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			add(fecharAcao);
 			add(txtArquivo);
 			add(chkPorParte);
+			add(label);
 			eventos();
 		}
 
@@ -112,8 +114,19 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtArquivo.getText())) {
-				arquivoTree.selecionar(txtArquivo.getText().trim(), chkPorParte.isSelected());
+				pesquisa = getPesquisa(arquivoTree, pesquisa, txtArquivo.getText(), chkPorParte.isSelected());
+				pesquisa.selecionar(label);
 			}
+		}
+
+		public ArquivoPesquisa getPesquisa(ArquivoTree arquivoTree, ArquivoPesquisa pesquisa, String string,
+				boolean porParte) {
+			if (pesquisa == null) {
+				return new ArquivoPesquisa(arquivoTree, string, porParte);
+			} else if (pesquisa.igual(string, porParte)) {
+				return pesquisa;
+			}
+			return new ArquivoPesquisa(arquivoTree, string, porParte);
 		}
 
 		private void topFormulario() {
