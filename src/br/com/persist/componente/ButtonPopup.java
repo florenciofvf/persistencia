@@ -71,6 +71,10 @@ public class ButtonPopup extends Button {
 		}
 	}
 
+	public Component[] getComponentes() {
+		return popup.getComponents();
+	}
+
 	public void limparPopup() {
 		popup.limpar();
 	}

@@ -16,4 +16,9 @@ public class MenuPadrao2 extends Menu {
 	public MenuPadrao2(String chaveRotulo) {
 		this(chaveRotulo, true, null);
 	}
+
+	public void habilitar(boolean b) {
+		semAspasAcao.setEnabled(b);
+		comAspasAcao.setEnabled(b);
+	}
 }

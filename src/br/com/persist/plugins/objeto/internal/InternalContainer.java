@@ -752,7 +752,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private class ButtonPesquisa extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
-			private boolean habilitado;
 
 			private ButtonPesquisa() {
 				super("label.buscaAuto", Icones.FIELDS);
@@ -764,12 +763,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				for (Pesquisa p : pesquisas) {
 					addMenu(new MenuPesquisa(p));
 				}
-				habilitado = !pesquisas.isEmpty();
-				setEnabled(habilitado);
+				setEnabled(!pesquisas.isEmpty());
 			}
 
 			private void habilitar(boolean b) {
-				setEnabled(habilitado && b);
+				for (Component c : getComponentes()) {
+					if (c instanceof MenuPesquisa) {
+						((MenuPesquisa) c).habilitar(b);
+					}
+				}
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
