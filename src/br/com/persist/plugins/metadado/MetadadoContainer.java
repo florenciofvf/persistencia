@@ -447,8 +447,15 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	private Map<String, Object> criarArgs(Metadado metadado, String metodo) {
 		Map<String, Object> args = new HashMap<>();
 		args.put(MetadadoEvento.ABRIR_METADADO, metadado);
-		args.put(MetadadoEvento.CONEXAO, getConexao());
 		args.put(MetadadoEvento.METODO, metodo);
+		Conexao conexao = getConexao();
+		args.put(MetadadoEvento.CONEXAO, conexao);
+		if (conexao != null) {
+			Conexao conn = ConexaoProvedor.getConexao(conexao.getNome());
+			if (conn != null) {
+				args.put(MetadadoEvento.CONEXAO, conn);
+			}
+		}
 		return args;
 	}
 
