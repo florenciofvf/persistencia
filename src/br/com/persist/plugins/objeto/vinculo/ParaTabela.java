@@ -12,6 +12,7 @@ public class ParaTabela {
 	private final List<Instrucao> instrucoes;
 	private String prefixoNomeTabela;
 	private String selectAlternativo;
+	private String clonarAoDestacar;
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String transparente;
@@ -54,6 +55,9 @@ public class ParaTabela {
 	}
 
 	public void config(Objeto objeto) {
+		if (!Util.estaVazio(clonarAoDestacar)) {
+			objeto.setClonarAoDestacar(Boolean.parseBoolean(clonarAoDestacar));
+		}
 		if (!Util.estaVazio(ajustarAltura)) {
 			objeto.setAjusteAutoForm(Boolean.parseBoolean(ajustarAltura));
 		}
@@ -141,6 +145,7 @@ public class ParaTabela {
 		}
 		atributoValor(util, "prefixoNomeTabela", prefixoNomeTabela);
 		atributoValor(util, "selectAlternativo", selectAlternativo);
+		atributoValor(util, "clonarAoDestacar", clonarAoDestacar);
 		atributoValor(util, "finalConsulta", finalConsulta);
 		atributoValor(util, "ajustarAltura", ajustarAltura);
 		atributoValor(util, "transparente", transparente);
@@ -184,8 +189,9 @@ public class ParaTabela {
 				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#FFVVFF").ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
-		util.tab().atributo("finalConsulta", "").ql();
+		util.tab().atributo("clonarAoDestacar", "").ql();
 		util.tab().atributo("ajustarAltura", true).ql();
+		util.tab().atributo("finalConsulta", "").ql();
 		util.tab().atributo("transparente", "").ql();
 		util.tab().atributo("complemento", "").ql();
 		util.tab().atributo("mapeamento", "").ql();
@@ -417,5 +423,13 @@ public class ParaTabela {
 
 	public void setTransparente(String transparente) {
 		this.transparente = transparente;
+	}
+
+	public String getClonarAoDestacar() {
+		return clonarAoDestacar;
+	}
+
+	public void setClonarAoDestacar(String clonarAoDestacar) {
+		this.clonarAoDestacar = clonarAoDestacar;
 	}
 }
