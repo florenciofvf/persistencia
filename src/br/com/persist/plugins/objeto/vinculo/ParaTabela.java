@@ -14,6 +14,7 @@ public class ParaTabela {
 	private String selectAlternativo;
 	private String ajustarAltura;
 	private String finalConsulta;
+	private String transparente;
 	private String complemento;
 	private String colunaInfo;
 	private String destacavel;
@@ -55,6 +56,9 @@ public class ParaTabela {
 	public void config(Objeto objeto) {
 		if (!Util.estaVazio(ajustarAltura)) {
 			objeto.setAjusteAutoForm(Boolean.parseBoolean(ajustarAltura));
+		}
+		if (!Util.estaVazio(transparente)) {
+			objeto.setTransparente(Boolean.parseBoolean(transparente));
 		}
 		if (!Util.estaVazio(colunaInfo)) {
 			objeto.setColunaInfo(Boolean.parseBoolean(colunaInfo));
@@ -139,6 +143,7 @@ public class ParaTabela {
 		atributoValor(util, "selectAlternativo", selectAlternativo);
 		atributoValor(util, "finalConsulta", finalConsulta);
 		atributoValor(util, "ajustarAltura", ajustarAltura);
+		atributoValor(util, "transparente", transparente);
 		atributoValor(util, "complemento", complemento);
 		atributoValor(util, "mapeamento", mapeamento);
 		atributoValor(util, "sequencias", sequencias);
@@ -181,6 +186,7 @@ public class ParaTabela {
 		util.tab().atributo("selectAlternativo", "").ql();
 		util.tab().atributo("finalConsulta", "").ql();
 		util.tab().atributo("ajustarAltura", true).ql();
+		util.tab().atributo("transparente", "").ql();
 		util.tab().atributo("complemento", "").ql();
 		util.tab().atributo("mapeamento", "").ql();
 		util.tab().atributo("sequencias", "").ql();
@@ -403,5 +409,13 @@ public class ParaTabela {
 
 	public void setJoins(String joins) {
 		this.joins = joins;
+	}
+
+	public String getTransparente() {
+		return transparente;
+	}
+
+	public void setTransparente(String transparente) {
+		this.transparente = transparente;
 	}
 }
