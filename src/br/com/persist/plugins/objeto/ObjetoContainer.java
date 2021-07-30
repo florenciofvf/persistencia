@@ -499,7 +499,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 	}
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
-			boolean circular) {
+			boolean circular, AtomicReference<String> tituloTemp) {
 		if (conexao != null) {
 			comboConexao.setSelectedItem(conexao);
 		}
@@ -507,6 +507,10 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, ref);
 		if (!Util.estaVazio(ref.get())) {
 			toolbar.txtArquivoVinculo.setText(ref.get());
+			arquivo = new File(ref.get() + ".tmp");
+			tituloTemp.set(arquivo.getName());
+			toolbar.salvar(arquivo);
+			toolbar.reabrirArquivo();
 		}
 		btnSelecao.click();
 	}

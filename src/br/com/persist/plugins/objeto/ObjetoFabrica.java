@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.Action;
 import javax.swing.JFileChooser;
@@ -132,8 +133,11 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void abrirExportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
 				boolean circular) {
 			ObjetoContainer container = criarObjetoContainer(formulario);
-			container.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular);
-			container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
+			AtomicReference<String> tituloTemp = new AtomicReference<>();
+			container.abrirExportacaoImportacaoMetadado(conexao, metadado, true, circular, tituloTemp);
+			if (Util.estaVazio(tituloTemp.get())) {
+				container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_exportacao"));
+			}
 			formulario.adicionarPagina(container);
 		}
 
@@ -147,8 +151,11 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		private void abrirImportacaoMetadadoFichario(Formulario formulario, Conexao conexao, Metadado metadado,
 				boolean circular) {
 			ObjetoContainer container = criarObjetoContainer(formulario);
-			container.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular);
-			container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
+			AtomicReference<String> tituloTemp = new AtomicReference<>();
+			container.abrirExportacaoImportacaoMetadado(conexao, metadado, false, circular, tituloTemp);
+			if (Util.estaVazio(tituloTemp.get())) {
+				container.setTituloTemporario(ObjetoMensagens.getString("label.abrir_importacao"));
+			}
 			formulario.adicionarPagina(container);
 		}
 

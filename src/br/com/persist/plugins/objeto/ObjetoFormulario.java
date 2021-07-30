@@ -3,8 +3,10 @@ package br.com.persist.plugins.objeto;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.io.File;
+import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.abstrato.AbstratoFormulario;
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
@@ -47,7 +49,11 @@ public class ObjetoFormulario extends AbstratoFormulario {
 
 	public void abrirExportacaoImportacaoMetadado(Conexao conexao, Metadado metadado, boolean exportacao,
 			boolean circular) {
-		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular);
+		AtomicReference<String> tituloTemp = new AtomicReference<>();
+		container.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, tituloTemp);
+		if (!Util.estaVazio(tituloTemp.get())) {
+			setTitle(tituloTemp.get());
+		}
 	}
 
 	public void abrirArquivo(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {
