@@ -10,6 +10,7 @@ public class ObjetoConstantes {
 	public static final String DELTA_X_AJUSTE_FORM_OBJETO = "DELTA_X_AJUSTE_FORM_OBJETO";
 	public static final String DELTA_Y_AJUSTE_FORM_OBJETO = "DELTA_Y_AJUSTE_FORM_OBJETO";
 	public static final String LABEL_ATUALIZAR_AUTO = "label.atualizar_auto";
+	public static final String PESQUISA_INVERTIDO = "pesquisa_invertido";
 	public static final String LABEL_DESKTOP_MIN = "label.desktop_min";
 	public static final int TIPO_CONTAINER_FORMULARIO = 0;
 	public static final int TIPO_CONTAINER_FICHARIO = 1;

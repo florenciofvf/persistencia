@@ -33,6 +33,17 @@ public class Pesquisa {
 		}
 	}
 
+	public Pesquisa inverter(String nome) {
+		if (referencias.size() != 1) {
+			return null;
+		}
+		Referencia ref = referencias.get(0);
+		Pesquisa resp = new Pesquisa(nome, ref.clonar());
+		resp.add(referencia.clonar());
+		return resp;
+
+	}
+
 	public void processar(Objeto objeto) {
 		if (referencia.igual(objeto)) {
 			objeto.addPesquisa(this);
