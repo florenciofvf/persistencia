@@ -2171,6 +2171,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (invertido != null) {
 				mapaRef.put(ObjetoConstantes.PESQUISA_INVERTIDO, invertido);
 				objeto.addPesquisa(invertido);
+				objeto.setBuscaAutoTemp(true);
 				objeto.addReferencias(invertido.getReferencias());
 				principal.addReferencia(invertido.getReferencia());
 			}

@@ -256,6 +256,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		} catch (Exception ex) {
 			mensagemException(ex);
 		}
+		if (objeto.isBuscaAutoTemp()) {
+			objeto.setBuscaAutoTemp(false);
+			buscaAuto = true;
+		}
 		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
 		configurarAltura();

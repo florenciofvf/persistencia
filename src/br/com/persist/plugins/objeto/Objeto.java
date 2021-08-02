@@ -65,6 +65,7 @@ public class Objeto implements Runnable {
 	private Color cor = COR_PADRAO;
 	private boolean checarLargura;
 	private static long sequencia;
+	private boolean buscaAutoTemp;
 	private String finalConsulta;
 	private boolean transparente;
 	private boolean selecionado;
@@ -1064,5 +1065,13 @@ public class Objeto implements Runnable {
 			}
 		}
 		return null;
+	}
+
+	public boolean isBuscaAutoTemp() {
+		return buscaAutoTemp;
+	}
+
+	public void setBuscaAutoTemp(boolean buscaAutoTemp) {
+		this.buscaAutoTemp = buscaAutoTemp;
 	}
 }
