@@ -2668,8 +2668,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			try {
 				Connection conn = ConexaoProvedor.getConnection(conexao);
 				MemoriaModelo modelo = Persistencia.criarModeloMetaDados(conn, conexao, objeto.getTabela());
-				SetLista.view("Coluna(s) de " + objeto.getId(), modelo.getLista(2), coletor, c,
-						new SetLista.Config(false, true));
+				SetLista.view(ObjetoMensagens.getString("label.colunas_de", objeto.getId()), modelo.getLista(2),
+						coletor, c, new SetLista.Config(false, true));
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("META-DADOS", ex, ObjetoSuperficie.this);
 			}
