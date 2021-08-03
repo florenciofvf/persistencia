@@ -2278,31 +2278,31 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (obj == null) {
 				return;
 			}
-			criarPesquisa(coluna, nomePesquisa, obj);
+			criarAtualizarPesquisa(coluna, nomePesquisa, obj);
 		}
 
 		private Objeto get(List<Objeto> lista, String id) {
 			for (Objeto obj : lista) {
-				if (obj.getId().contentEquals(id)) {
+				if (obj.getId().equals(id)) {
 					return obj;
 				}
 			}
 			return null;
 		}
 
-		private void criarPesquisa(String coluna, String nomePesquisa, Objeto obj) {
+		private void criarAtualizarPesquisa(String coluna, String nomePesquisa, Objeto objDetalhe) {
 			Coletor coletor = new Coletor();
-			vinculoListener.selecionarCampo(obj, coletor, InternalContainer.this);
+			vinculoListener.selecionarCampo(objDetalhe, coletor, InternalContainer.this);
 			if (coletor.size() != 1) {
 				return;
 			}
 			Vinculacao vinculacao = new Vinculacao();
 			vinculoListener.preencherVinculacao(vinculacao);
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa, new Referencia(null, objeto.getTabela(), coluna));
-			Referencia referencia = new Referencia(null, obj.getTabela(), coletor.get(0));
-			Pesquisa pesquisaObj = objeto.getPesquisa(pesquisa);
-			if (pesquisaObj != null) {
-				pesquisaObj.add(referencia);
+			Referencia referencia = new Referencia(null, objDetalhe.getTabela(), coletor.get(0));
+			Pesquisa existente = objeto.getPesquisa(pesquisa);
+			if (existente != null) {
+				existente.add(referencia);
 				objeto.addReferencia(referencia);
 				atualizar(vinculacao, pesquisa, referencia);
 			} else {
@@ -2312,11 +2312,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		private void atualizar(Vinculacao vinculacao, Pesquisa pesquisa, Referencia referencia) {
-			Pesquisa pesquisaObj = vinculacao.getPesquisa(pesquisa);
-			if (pesquisaObj != null) {
-				pesquisaObj.add(referencia);
+			Pesquisa existente = vinculacao.getPesquisa(pesquisa);
+			if (existente != null) {
+				existente.add(referencia);
 				toolbar.buttonPesquisa.complemento(objeto);
 				buscaAuto = true;
+				// --
 				vinculoListener.salvarVinculacao(vinculacao);
 			}
 		}
@@ -2327,6 +2328,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				if (vinculacao.adicionarPesquisa(pesquisa)) {
 					toolbar.buttonPesquisa.complemento(objeto);
 					buscaAuto = true;
+					// --
 					vinculoListener.salvarVinculacao(vinculacao);
 				}
 			}
