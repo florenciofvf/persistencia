@@ -2304,20 +2304,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (existente != null) {
 				existente.add(referencia);
 				objeto.addReferencia(referencia);
-				atualizar(vinculacao, pesquisa, referencia);
+				atualizar(vinculacao, pesquisa, referencia, objDetalhe);
 			} else {
 				pesquisa.add(referencia);
 				adicionar(vinculacao, pesquisa, objDetalhe);
 			}
 		}
 
-		private void atualizar(Vinculacao vinculacao, Pesquisa pesquisa, Referencia referencia) {
+		private void atualizar(Vinculacao vinculacao, Pesquisa pesquisa, Referencia referencia, Objeto objDetalhe) {
 			Pesquisa existente = vinculacao.getPesquisa(pesquisa);
 			if (existente != null) {
 				existente.add(referencia);
 				toolbar.buttonPesquisa.complemento(objeto);
 				buscaAuto = true;
-				// --
+				processarInvertido(vinculacao, existente, objDetalhe);
 				vinculoListener.salvarVinculacao(vinculacao);
 			}
 		}
