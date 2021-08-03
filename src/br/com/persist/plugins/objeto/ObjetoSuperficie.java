@@ -2059,11 +2059,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void criarPesquisa() {
-			criarPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
+			criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
+					principal.getChaves());
 		}
 
-		private void criarPesquisa(String nome, String tabela, String campo) {
-			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(null, tabela, campo)));
+		private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
+			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
 		}
 
 		private void processarDetalhes(Metadado tabela) {
@@ -2224,12 +2225,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void checarCriarPesquisa() {
 			if (exportacao) {
-				criarPesquisa(Mensagens.getString("label.andamento"), principal.getTabela(), principal.getChaves());
+				criarPesquisa(Mensagens.getString("label.andamento"), principal.getGrupo(), principal.getTabela(),
+						principal.getChaves());
 			}
 		}
 
-		private void criarPesquisa(String nome, String tabela, String campo) {
-			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(null, tabela, campo)));
+		private void criarPesquisa(String nome, String grupo, String tabela, String campo) {
+			mapaRef.put(ObjetoConstantes.PESQUISA, new Pesquisa(nome, new Referencia(grupo, tabela, campo)));
 		}
 
 		private void processarDetalhes(Metadado tabela) {
@@ -2324,13 +2326,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			Metadado campoDetalhe = campoProcessado;
 			Metadado tabelaRef = campoDetalhe.getTabelaReferencia();
 			pesquisaDetalhe(tabelaRef.getNomeTabela(), tabelaRef.getNomeCampo(), objeto.getGrupo(),
-					principal.getTabela(), campoDetalhe.getDescricao());
+					principal.getGrupo(), principal.getTabela(), campoDetalhe.getDescricao());
 			relacao.setChaveOrigem(campoDetalhe.getDescricao());
 		}
 
 		private void pesquisaDetalhe(String tabelaPrincipal, String campoPrincipal, String grupoPrincipal,
-				String tabelaDetalhe, String campoDetalhe) {
-			Pesquisa pesquisa = new Pesquisa(tabelaPrincipal, new Referencia(null, tabelaDetalhe, campoDetalhe));
+				String grupoDetalhe, String tabelaDetalhe, String campoDetalhe) {
+			Pesquisa pesquisa = new Pesquisa(tabelaPrincipal,
+					new Referencia(grupoDetalhe, tabelaDetalhe, campoDetalhe));
 			Referencia ref = new Referencia(grupoPrincipal, tabelaPrincipal, campoPrincipal);
 			ref.setVazioInvisivel(false);
 			listaRef.add(pesquisa);
