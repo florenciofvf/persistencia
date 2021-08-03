@@ -33,7 +33,11 @@ public class Pesquisa {
 		}
 	}
 
-	public Pesquisa inverter(String nome) {
+	public Pesquisa inverter(String nome, Objeto objeto) {
+		return objeto == null ? inverter(nome) : inverter2(nome, objeto);
+	}
+
+	private Pesquisa inverter(String nome) {
 		if (referencias.size() != 1) {
 			return null;
 		}
@@ -41,7 +45,17 @@ public class Pesquisa {
 		Pesquisa resp = new Pesquisa(nome, ref.clonar());
 		resp.add(referencia.clonar());
 		return resp;
+	}
 
+	private Pesquisa inverter2(String nome, Objeto objeto) {
+		for (Referencia ref : referencias) {
+			if (ref.igual(objeto)) {
+				Pesquisa resp = new Pesquisa(nome, ref.clonar());
+				resp.add(referencia.clonar());
+				return resp;
+			}
+		}
+		return null;
 	}
 
 	public void processar(Objeto objeto) {

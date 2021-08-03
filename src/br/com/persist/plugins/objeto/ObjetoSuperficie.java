@@ -2167,7 +2167,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private void setScriptAdicaoHierarquico() {
 			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 			objeto.setPesquisaAdicaoHierarquico(pesquisa);
-			Pesquisa invertido = pesquisa.inverter(principal.getId());
+			Pesquisa invertido = pesquisa.inverter(principal.getId(), null);
 			if (invertido != null) {
 				mapaRef.put(ObjetoConstantes.PESQUISA_INVERTIDO, invertido);
 				objeto.addPesquisa(invertido);

@@ -2298,8 +2298,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 			Vinculacao vinculacao = new Vinculacao();
 			vinculoListener.preencherVinculacao(vinculacao);
-			Pesquisa pesquisa = new Pesquisa(nomePesquisa, new Referencia(null, objeto.getTabela(), coluna));
-			Referencia referencia = new Referencia(null, objDetalhe.getTabela(), coletor.get(0));
+			Pesquisa pesquisa = new Pesquisa(nomePesquisa,
+					new Referencia(objeto.getGrupo(), objeto.getTabela(), coluna));
+			Referencia referencia = new Referencia(objDetalhe.getGrupo(), objDetalhe.getTabela(), coletor.get(0));
 			Pesquisa existente = objeto.getPesquisa(pesquisa);
 			if (existente != null) {
 				existente.add(referencia);
@@ -2335,7 +2336,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		private void processarInvertido(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) {
-			Pesquisa invertido = pesquisa.inverter(objeto.getId());
+			Pesquisa invertido = pesquisa.inverter(objeto.getId(), objDetalhe);
 			if (invertido != null) {
 				objDetalhe.addPesquisa(invertido);
 				objDetalhe.addReferencias(invertido.getReferencias());
