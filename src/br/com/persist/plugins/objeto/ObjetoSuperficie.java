@@ -2683,4 +2683,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			super.setFormulario(ref);
 		}
 	}
+
+	public void atualizarComplemento(Objeto objeto) {
+		InternalFormulario interno = getInternalFormulario(objeto);
+		if (interno != null) {
+			interno.atualizarComplemento(objeto);
+		}
+	}
 }

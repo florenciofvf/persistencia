@@ -238,6 +238,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
+		public void atualizarComplemento(Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).atualizarComplemento(objeto);
+			}
+		}
+
 		public List<Objeto> objetosComTabela() {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
@@ -378,6 +385,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void atualizarFormulario() {
 		container.atualizarFormulario();
+	}
+
+	public void atualizarComplemento(Objeto objeto) {
+		container.atualizarComplemento(objeto);
 	}
 
 	public void limpar2() {

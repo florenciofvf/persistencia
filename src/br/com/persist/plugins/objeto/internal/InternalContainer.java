@@ -2307,7 +2307,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				atualizar(vinculacao, pesquisa, referencia);
 			} else {
 				pesquisa.add(referencia);
-				adicionar(vinculacao, pesquisa);
+				adicionar(vinculacao, pesquisa, objDetalhe);
 			}
 		}
 
@@ -2322,15 +2322,26 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 		}
 
-		private void adicionar(Vinculacao vinculacao, Pesquisa pesquisa) {
+		private void adicionar(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) {
 			if (objeto.addPesquisa(pesquisa)) {
 				objeto.addReferencias(pesquisa.getReferencias());
 				if (vinculacao.adicionarPesquisa(pesquisa)) {
 					toolbar.buttonPesquisa.complemento(objeto);
 					buscaAuto = true;
-					// --
+					processarInvertido(vinculacao, pesquisa, objDetalhe);
 					vinculoListener.salvarVinculacao(vinculacao);
 				}
+			}
+		}
+
+		private void processarInvertido(Vinculacao vinculacao, Pesquisa pesquisa, Objeto objDetalhe) {
+			Pesquisa invertido = pesquisa.inverter(objeto.getId());
+			if (invertido != null) {
+				objDetalhe.addPesquisa(invertido);
+				objDetalhe.addReferencias(invertido.getReferencias());
+				objeto.addReferencia(invertido.getReferencia());
+				vinculacao.adicionarPesquisa(invertido);
+				vinculoListener.atualizarComplemento(objDetalhe);
 			}
 		}
 
@@ -2446,6 +2457,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			if (lista.size() == 1) {
 				vinculoListener.pesquisarLink(objeto.getReferencias(), lista.get(0));
 			}
+		}
+	}
+
+	public void atualizarComplemento(Objeto obj) {
+		if (obj != null && obj == objeto && !obj.getPesquisas().isEmpty()) {
+			buscaAuto = true;
+			toolbar.buttonPesquisa.complemento(obj);
 		}
 	}
 

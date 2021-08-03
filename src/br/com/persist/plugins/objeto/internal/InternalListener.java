@@ -30,6 +30,8 @@ public interface InternalListener {
 
 		public void salvarVinculacao(Vinculacao vinculacao);
 
+		public void atualizarComplemento(Objeto objeto);
+
 		public void pesquisarApos(Pesquisa pesquisa);
 
 		public List<Objeto> objetosComTabela();
