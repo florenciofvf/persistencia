@@ -2318,7 +2318,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			Referencia ref = new Referencia(grupo, tabela, campo);
 			ref.setVazioInvisivel(true);
 			mapaRef.put("ref", ref);
-			Pesquisa pesquisa = (Pesquisa) mapaRef.get("pesquisa");
+			Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 			pesquisa.add(ref);
 		}
 
