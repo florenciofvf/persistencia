@@ -847,7 +847,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 							pesquisa.setNome(nomeBkp);
 						} else {
 							pesq.setNome(nome);
-							setText(pesq.getNome());
+							setText(pesq.getNomeParaMenuItem());
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
 					}
