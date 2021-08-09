@@ -837,6 +837,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					if (resp != null && !Util.estaVazio(resp.toString())) {
 						String nomeBkp = pesquisa.getNome();
 						String nome = resp.toString();
+						if (nome.equalsIgnoreCase(pesquisa.getNome())) {
+							return;
+						}
 						pesquisa.setNome(nome);
 						if (vinculacao.getPesquisa(pesquisa) != null) {
 							Util.mensagem(InternalContainer.this,
