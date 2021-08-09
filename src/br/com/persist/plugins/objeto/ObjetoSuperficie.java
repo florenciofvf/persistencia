@@ -2464,6 +2464,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private void salvar(Pesquisa pesquisa) {
 			vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
 			vinculacao.adicionarPesquisa(pesquisa);
+			for (Referencia ref : pesquisa.getReferencias()) {
+				Pesquisa pesq = ref.inverter();
+				vinculacao.adicionarPesquisa(pesq);
+			}
 			salvarVinculacao(vinculacao);
 		}
 

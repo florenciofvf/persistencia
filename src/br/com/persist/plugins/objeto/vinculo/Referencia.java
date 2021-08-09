@@ -33,6 +33,12 @@ public class Referencia {
 		this.tabela = tabela;
 	}
 
+	public Pesquisa inverter() {
+		Pesquisa resp = new Pesquisa(pesquisa.getReferencia().tabela, clonar());
+		resp.add(pesquisa.getReferencia().clonar());
+		return resp;
+	}
+
 	public void config(Objeto objeto) {
 		if (corFonte != null) {
 			objeto.setCorFonte(corFonte);
