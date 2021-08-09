@@ -783,10 +783,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private Action elementosAcao = Action.actionMenu("label.elementos", null);
 				private Action descricaoAcao = Action.actionMenu("label.descricao", null);
 				private Action consultaAcao = Action.actionMenu("label.consulta", null);
+				private Action renomearAcao = Action.actionMenu("label.renomear", null);
 				private final transient Pesquisa pesquisa;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
+					addMenuItem(true, renomearAcao);
 					addMenuItem(true, elementosAcao);
 					addMenuItem(true, descricaoAcao);
 					addMenuItem(true, consultaAcao);
@@ -796,6 +798,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					elementosAcao.setActionListener(e -> elementos());
 					descricaoAcao.setActionListener(e -> descricao());
 					consultaAcao.setActionListener(e -> consulta());
+					renomearAcao.setActionListener(e -> renomear());
 				}
 
 				private void elementos() {
@@ -813,6 +816,37 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+					}
+				}
+
+				private void renomear() {
+					if (vinculoListener == null) {
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					vinculoListener.preencherVinculacao(vinculacao);
+					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+					if (pesq != null) {
+						renomear(pesq, vinculacao);
+					}
+				}
+
+				private void renomear(Pesquisa pesq, Vinculacao vinculacao) {
+					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.renomear", objeto.getId(),
+							pesq.getNome());
+					if (resp != null && !Util.estaVazio(resp.toString())) {
+						String nomeBkp = pesquisa.getNome();
+						String nome = resp.toString();
+						pesquisa.setNome(nome);
+						if (vinculacao.getPesquisa(pesquisa) != null) {
+							Util.mensagem(InternalContainer.this,
+									ObjetoMensagens.getString("msg.nome_pesquisa_existente", nome));
+							pesquisa.setNome(nomeBkp);
+						} else {
+							pesq.setNome(nome);
+							setText(pesq.getNome());
+							vinculoListener.salvarVinculacao(vinculacao);
+						}
 					}
 				}
 
