@@ -42,6 +42,7 @@ public class Pesquisa {
 			return null;
 		}
 		Referencia ref = referencias.get(0);
+		nome = nome == null ? referencia.getTabela() : nome;
 		Pesquisa resp = new Pesquisa(nome, ref.clonar());
 		resp.add(referencia.clonar());
 		return resp;

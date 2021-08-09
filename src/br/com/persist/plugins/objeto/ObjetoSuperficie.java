@@ -2453,7 +2453,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				if (vinculo != null && pesquisa != null) {
 					salvar(pesquisa);
 				} else if (vinculo != null && !listaRef.isEmpty()) {
-					salvar();
+					salvar(listaRef);
 				}
 				ref.set(arquivoVinculo);
 			} catch (Exception ex) {
@@ -2467,10 +2467,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			salvarVinculacao(vinculacao);
 		}
 
-		private void salvar() {
+		private void salvar(List<Pesquisa> listaRef) {
 			vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
 			for (Pesquisa pesq : listaRef) {
 				vinculacao.adicionarPesquisa(pesq);
+				Pesquisa invertido = pesq.inverter(null, null);
+				if (invertido != null) {
+					vinculacao.adicionarPesquisa(invertido);
+				}
 			}
 			salvarVinculacao(vinculacao);
 		}
