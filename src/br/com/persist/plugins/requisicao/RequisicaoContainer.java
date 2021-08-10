@@ -184,7 +184,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private Action variaveisAcao = actionIcon("label.variaveis_sistema", Icones.BOLA_AMARELA);
 		private Action retornar64Acao = actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
 		private Action formatarAcao = actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
-		private Action excluirAtivoAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
+		private Action excluirAtivoAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
 		private Action base64Acao = actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);

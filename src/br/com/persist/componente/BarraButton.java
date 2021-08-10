@@ -15,7 +15,7 @@ public class BarraButton extends JToolBar {
 	private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
 	protected Action aplicarAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
-	private Action excluirAcao = Action.actionIcon("label.excluir2", Icones.EXCLUIR);
+	private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
 	private Action limpar2Acao = Action.actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = Action.actionIcon("label.copiar2", Icones.COPIA);
 	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);

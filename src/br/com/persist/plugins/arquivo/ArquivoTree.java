@@ -148,7 +148,7 @@ public class ArquivoTree extends Tree {
 		private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
 		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
-		private Action excluirAcao = Action.actionMenu("label.excluir2", Icones.EXCLUIR);
+		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
 		private MenuAbrir menuAbrir = new MenuAbrir();
 
 		private ArquivoPopup() {
