@@ -1001,6 +1001,10 @@ public class Objeto implements Runnable {
 		return pesquisas;
 	}
 
+	public boolean excluir(Pesquisa pesquisa) {
+		return pesquisas.remove(pesquisa);
+	}
+
 	public Referencia getReferenciaPesquisa() {
 		return referenciaPesquisa;
 	}

@@ -77,6 +77,10 @@ public class Vinculacao {
 		return null;
 	}
 
+	public boolean excluir(Pesquisa pesquisa) {
+		return pesquisas.remove(pesquisa);
+	}
+
 	public void processar(Objeto objeto) {
 		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela());
 		if (paraTabela != null) {

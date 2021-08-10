@@ -784,11 +784,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				private Action descricaoAcao = Action.actionMenu("label.descricao", null);
 				private Action consultaAcao = Action.actionMenu("label.consulta", null);
 				private Action renomearAcao = Action.actionMenu("label.renomear", null);
+				private Action excluirAcao = Action.actionMenu("label.excluir", null);
 				private final transient Pesquisa pesquisa;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addMenuItem(true, renomearAcao);
+					addMenuItem(true, excluirAcao);
 					addMenuItem(true, elementosAcao);
 					addMenuItem(true, descricaoAcao);
 					addMenuItem(true, consultaAcao);
@@ -799,6 +801,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					descricaoAcao.setActionListener(e -> descricao());
 					consultaAcao.setActionListener(e -> consulta());
 					renomearAcao.setActionListener(e -> renomear());
+					excluirAcao.setActionListener(e -> excluir());
 				}
 
 				private void elementos() {
@@ -816,6 +819,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 						Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
 					} catch (Exception ex) {
 						Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+					}
+				}
+
+				private void excluir() {
+					if (vinculoListener == null) {
+						return;
+					}
+					Vinculacao vinculacao = new Vinculacao();
+					vinculoListener.preencherVinculacao(vinculacao);
+					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+					if (pesq != null
+							&& Util.confirmar(InternalContainer.this,
+									ObjetoMensagens.getString("msg.confirmar_exclusao_pesquisa"), false)
+							&& vinculacao.excluir(pesq) && objeto.excluir(pesquisa)) {
+						vinculoListener.salvarVinculacao(vinculacao);
+						toolbar.buttonPesquisa.complemento(objeto);
 					}
 				}
 
