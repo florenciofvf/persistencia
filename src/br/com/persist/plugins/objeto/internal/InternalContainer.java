@@ -912,7 +912,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 
 				private void pesquisarFinal(int coluna) {
-					setEnabled(pesquisa.isProcessado());
+					super.habilitar(pesquisa.isProcessado());
 					if (pesquisa.isProcessado()) {
 						vinculoListener.pesquisarApos(pesquisa);
 					}
