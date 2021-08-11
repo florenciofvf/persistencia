@@ -177,8 +177,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 		checarAtualizarVariavelProvedor(salvar);
 		configurarAltura(total, d, vDadosToolbarTableHeader, vMaximoRegistros, vMinimoForm);
-		checarDesktop();
-		configurarAjustes(true);
 	}
 
 	private void configurarAltura(int total, Dimension d, Variavel variavelDadosToolbarTableHeader,
