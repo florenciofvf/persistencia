@@ -197,12 +197,7 @@ public class ObjetoContainer extends Panel {
 			if (compChave == null) {
 				return false;
 			}
-			if (compChave.comp instanceof TextField) {
-				return !Util.estaVazio(((TextField) compChave.comp).getText());
-			} else if (compChave.comp instanceof CheckBox) {
-				return true;
-			}
-			return false;
+			return compChave.comp instanceof TextField || compChave.comp instanceof CheckBox;
 		}
 	}
 
