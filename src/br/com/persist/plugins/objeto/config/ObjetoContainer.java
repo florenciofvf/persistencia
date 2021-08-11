@@ -706,7 +706,7 @@ public class ObjetoContainer extends Panel {
 
 	private Panel criarLinhaComLink(String rotulo, boolean chaveRotulo, JComponent componente, String hint,
 			LabelLinkListener linkListener) {
-		Dimension largura = new Dimension(120, 0);
+		Dimension largura = new Dimension(150, 0);
 		Panel linha = new Panel();
 		Label label = new Label(rotulo, chaveRotulo);
 		label.setHorizontalAlignment(Label.RIGHT);
