@@ -300,6 +300,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		if (objeto.isSane() && todosVazio(complemento, conexao)) {
 			String msg = ObjetoMensagens.getString("msg.sane", objeto.getId() + " - " + objeto.getTabela());
 			Util.mensagem(InternalContainer.this, msg);
+			destacarTitulo = false;
 			return false;
 		}
 		if (!Util.estaVazio(txtComplemento.getText()) || !Util.estaVazio(complemento)
