@@ -34,6 +34,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Popup;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
@@ -479,7 +480,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	@Override
 	public Component getComponent() {
-		return this;
+		return new ScrollPane(this);
 	}
 
 	@Override
