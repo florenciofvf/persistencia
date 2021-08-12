@@ -38,5 +38,6 @@ public class DesktopFormulario extends AbstratoFormulario {
 		desktop.getDistribuicao().distribuir(-Constantes.VINTE);
 		desktop.atualizarFormularios();
 		desktop.getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
+		desktop.getAjuste().empilharFormularios();
 	}
 }

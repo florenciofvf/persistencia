@@ -2580,7 +2580,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				y += 25;
 			}
 		}
-		SwingUtilities.invokeLater(() -> desktop.getDistribuicao().distribuir(-Constantes.VINTE));
+		SwingUtilities.invokeLater(() -> {
+			desktop.getDistribuicao().distribuir(-Constantes.VINTE);
+			desktop.atualizarFormularios();
+			desktop.getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
+			desktop.getAjuste().empilharFormularios();
+		});
 		formulario.adicionarPagina(desktop);
 	}
 
