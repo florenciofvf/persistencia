@@ -1337,7 +1337,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				if (getContinua(lista)) {
 					String ajustes = nomeObjetosAjusteAuto(lista);
 					if (!Util.estaVazio(ajustes) && !Util.confirmar(ObjetoSuperficie.this,
-							ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", ajustes), false)) {
+							ObjetoMensagens.getString("msb.objeto_com_ajuste_auto", "[" + ajustes + "]"), false)) {
 						return;
 					}
 					destacar(container.getConexaoPadrao(), ObjetoConstantes.TIPO_CONTAINER_PROPRIO, null);
@@ -1348,7 +1348,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				StringBuilder sb = new StringBuilder();
 				for (Objeto objeto : lista) {
 					if (objeto.isAjusteAutoForm()) {
-						sb.append(objeto.getId() + Constantes.QL);
+						if (sb.length() > 0) {
+							sb.append(Constantes.QL + ",");
+						}
+						sb.append(objeto.getId());
 					}
 				}
 				return sb.toString();
