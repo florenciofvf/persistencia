@@ -22,7 +22,9 @@ public class Metadado implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(Metadado.class, "Metadado");
 	private final List<String> ordenadoExportacao = new ArrayList<>();
 	private final List<String> ordenadoImportacao = new ArrayList<>();
+	private final List<String> ordenadoCampos = new ArrayList<>();
 	private static final DataFlavor[] flavors = { flavor };
+	private boolean contabilizarCampos = true;
 	private final boolean contabilizavel;
 	private final List<Metadado> filhos;
 	private boolean contabilizar = true;
@@ -30,6 +32,7 @@ public class Metadado implements Transferable {
 	private int totalImportados;
 	private int totalExportados;
 	private boolean constraint;
+	private int totalCampos;
 	private boolean ehRaiz;
 	private boolean tabela;
 	private Metadado pai;
@@ -275,6 +278,16 @@ public class Metadado implements Transferable {
 		return total;
 	}
 
+	public String getOrdenadosCampos() {
+		StringBuilder sb = new StringBuilder(MetadadoMensagens.getString("label.ordenado_campos"));
+		sb.append(Constantes.QL2);
+		checarContabilizacaoCampos();
+		for (String string : ordenadoCampos) {
+			sb.append(string + Constantes.QL);
+		}
+		return sb.toString();
+	}
+
 	public String getOrdenadosExportacaoImportacao(boolean exportacao) {
 		StringBuilder sb = new StringBuilder(exportacao ? MetadadoMensagens.getString("label.ordenado_exportacao")
 				: MetadadoMensagens.getString("label.ordenado_importacao"));
@@ -306,9 +319,31 @@ public class Metadado implements Transferable {
 		}
 	}
 
+	private void checarContabilizacaoCampos() {
+		if (contabilizarCampos) {
+			for (Metadado tab : filhos) {
+				tab.contabilizarCampos();
+			}
+			contabilizarCampos = false;
+			montarOrdenacoesCampos();
+		}
+	}
+
 	private void contabilizarImportacaoExportacao() {
 		contabilizarImportacao();
 		contabilizarExportacao();
+	}
+
+	private void contabilizarCampos() {
+		totalCampos = 0;
+		Metadado metadado = getMetadado(Constantes.CAMPO);
+		if (metadado != null) {
+			totalCampos += metadado.getTotal();
+		}
+		metadado = getMetadado(Constantes.CAMPOS);
+		if (metadado != null) {
+			totalCampos += metadado.getTotal();
+		}
 	}
 
 	private void contabilizarImportacao() {
@@ -339,6 +374,15 @@ public class Metadado implements Transferable {
 		List<Metadado> temporario = new ArrayList<>(filhos);
 		montarOrdenacoesExportacoes(temporario);
 		montarOrdenacoesImportacoes(temporario);
+	}
+
+	private void montarOrdenacoesCampos() {
+		List<Metadado> temporario = new ArrayList<>(filhos);
+		ordenadoCampos.clear();
+		Collections.sort(temporario, (o1, o2) -> o2.totalCampos - o1.totalCampos);
+		for (Metadado meta : temporario) {
+			ordenadoCampos.add(meta.totalCampos + " - " + meta.descricao);
+		}
 	}
 
 	private void montarOrdenacoesImportacoes(List<Metadado> temporario) {

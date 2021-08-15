@@ -206,6 +206,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			private Action ordemExportAcao = actionMenu("label.ordenado_exportacao");
 			private Action ordemImportAcao = actionMenu("label.ordenado_importacao");
 			private Action localizarCampoAcao = actionMenu("label.localizar_campo");
+			private Action ordemCamposAcao = actionMenu("label.ordenado_campos");
 			private Action pksMultiplaAcao = actionMenu("label.pks_multiplas");
 			private Action pksAusentesAcao = actionMenu("label.pks_ausente");
 
@@ -218,7 +219,10 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 				addMenuItem(true, pksAusentesAcao);
 				addMenuItem(true, ordemExportAcao);
 				addMenuItem(true, ordemImportAcao);
+				addMenuItem(true, ordemCamposAcao);
 				addMenuItem(true, localizarCampoAcao);
+				ordemCamposAcao.setActionListener(
+						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.getOrdenadosCampos()));
 				pksMultiplaAcaoExport.setActionListener(
 						e -> Util.mensagemFormulario(MetadadoContainer.this, metadadoTree.pksMultiplaExport()));
 				queExportamAcao.setActionListener(
