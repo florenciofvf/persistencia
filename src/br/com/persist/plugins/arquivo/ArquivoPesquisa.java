@@ -3,10 +3,11 @@ package br.com.persist.plugins.arquivo;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Busca;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 
-public class ArquivoPesquisa {
+public class ArquivoPesquisa implements Busca {
 	private List<Arquivo> lista = new ArrayList<>();
 	private final ArquivoTree arquivoTree;
 	final boolean porParte;

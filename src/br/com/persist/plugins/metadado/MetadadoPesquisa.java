@@ -3,10 +3,11 @@ package br.com.persist.plugins.metadado;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Busca;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 
-public class MetadadoPesquisa {
+public class MetadadoPesquisa implements Busca {
 	private List<Metadado> lista = new ArrayList<>();
 	private final MetadadoTree metadadoTree;
 	final boolean porParte;

@@ -3,10 +3,11 @@ package br.com.persist.plugins.anexo;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Busca;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Label;
 
-public class AnexoPesquisa {
+public class AnexoPesquisa implements Busca {
 	private List<Anexo> lista = new ArrayList<>();
 	private final AnexoTree anexoTree;
 	final boolean porParte;

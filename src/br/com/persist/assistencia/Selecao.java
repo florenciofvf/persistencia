@@ -7,7 +7,7 @@ import javax.swing.text.JTextComponent;
 
 import br.com.persist.componente.Label;
 
-public class Selecao {
+public class Selecao implements Busca {
 	private List<Fragmento> lista = new ArrayList<>();
 	final JTextComponent component;
 	final String string;
