@@ -506,7 +506,9 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		AtomicReference<String> ref = new AtomicReference<>();
 		objetoSuperficie.abrirExportacaoImportacaoMetadado(conexao, metadado, exportacao, circular, ref);
 		if (!Util.estaVazio(ref.get())) {
+			objetoSuperficie.setAjusteAutomaticoForm(true);
 			toolbar.txtArquivoVinculo.setText(ref.get());
+			objetoSuperficie.setAjusteLarguraForm(true);
 			arquivo = new File(ref.get() + ".tmp");
 			tituloTemp.set(arquivo.getName());
 			toolbar.salvar(arquivo);
