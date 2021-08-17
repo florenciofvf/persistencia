@@ -284,6 +284,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			if (conexao != null) {
 				abrir(criarNomeArquivo(conexao));
 			}
+			pesquisa = null;
+			label.limpar();
 		}
 
 		private String criarNomeArquivo(Conexao conexao) {

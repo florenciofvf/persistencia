@@ -184,6 +184,8 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 				salvar();
 			}
 			modelo.abrirVisivel(anexoTree);
+			pesquisa = null;
+			label.limpar();
 		}
 
 		@Override

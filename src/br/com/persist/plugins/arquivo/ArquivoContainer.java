@@ -173,6 +173,8 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			ArquivoModelo modelo = new ArquivoModelo();
 			arquivoTree.setModel(modelo);
 			baixar(modelo);
+			pesquisa = null;
+			label.limpar();
 		}
 
 		private void baixar(ArquivoModelo modelo) {
