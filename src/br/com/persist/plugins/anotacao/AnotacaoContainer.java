@@ -194,6 +194,8 @@ public class AnotacaoContainer extends AbstratoContainer {
 		@Override
 		protected void baixar() {
 			abrir(null);
+			selecao = null;
+			label.limpar();
 		}
 
 		@Override

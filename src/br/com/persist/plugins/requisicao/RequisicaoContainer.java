@@ -639,6 +639,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 			@Override
 			protected void baixar() {
 				abrir();
+				selecao = null;
+				label.limpar();
 			}
 
 			@Override
