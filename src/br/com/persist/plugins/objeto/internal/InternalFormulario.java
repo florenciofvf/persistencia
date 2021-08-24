@@ -93,19 +93,23 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (y < 21) {
 			int altura = getHeight();
 			if (precisao > Constantes.QUATRO) {
-				processarNorte(altura);
+				processarNorte(altura, true);
 			} else if (precisao < -Constantes.QUATRO) {
 				processarSul(altura);
 			}
 		}
 	}
 
-	private void processarNorte(int altura) {
-		Variavel vMinimoForm = VariavelProvedor.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
-		if (vMinimoForm != null) {
-			int minimoForm = vMinimoForm.getInteiro(Constantes.TRINTA);
-			if (altura > minimoForm) {
-				setSize(getWidth(), minimoForm + container.getAlturaToolbar());
+	private void processarNorte(int alturaAtual, boolean update) {
+		Variavel varMinimoAltura = VariavelProvedor
+				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
+		int novaAltura = Constantes.TRINTA;
+		if (varMinimoAltura != null) {
+			novaAltura = varMinimoAltura.getInteiro(Constantes.TRINTA);
+		}
+		if (novaAltura != alturaAtual) {
+			setSize(getWidth(), novaAltura);
+			if (update) {
 				SwingUtilities.updateComponentTreeUI(this);
 			}
 		}
@@ -155,7 +159,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
 		Variavel vMaximoRegistros = VariavelProvedor
 				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
-		Variavel vMinimoForm = VariavelProvedor.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
+		Variavel varMinimoAltura = VariavelProvedor
+				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
 		if (vDadosToolbarTableHeader == null) {
 			vDadosToolbarTableHeader = new Variavel(
 					ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
@@ -169,24 +174,23 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			VariavelProvedor.adicionar(vMaximoRegistros);
 			salvar = true;
 		}
-		if (vMinimoForm == null) {
-			vMinimoForm = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
+		if (varMinimoAltura == null) {
+			varMinimoAltura = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
 					Constantes.VAZIO + Constantes.TRINTA);
-			VariavelProvedor.adicionar(vMinimoForm);
+			VariavelProvedor.adicionar(varMinimoAltura);
 			salvar = true;
 		}
 		checarAtualizarVariavelProvedor(salvar);
-		configurarAltura(total, d, vDadosToolbarTableHeader, vMaximoRegistros, vMinimoForm);
+		configurarAltura(total, d, vDadosToolbarTableHeader, vMaximoRegistros);
 	}
 
 	private void configurarAltura(int total, Dimension d, Variavel variavelDadosToolbarTableHeader,
-			Variavel variavelMaximoRegistros, Variavel variavelMinimoForm) {
+			Variavel variavelMaximoRegistros) {
 		int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
 		int maximoRegistros = variavelMaximoRegistros.getInteiro(Constantes.DEZ);
-		int minimoForm = variavelMinimoForm.getInteiro(Constantes.TRINTA);
 		int alturaToolbar = container.getAlturaToolbar();
 		if (total < 1) {
-			setSize(d.width, minimoForm + alturaToolbar);
+			processarNorte(d.height, false);
 		} else if (total <= maximoRegistros) {
 			setSize(d.width, dadosToolbarTableHeader + total * 15 + alturaToolbar);
 		} else {

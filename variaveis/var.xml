@@ -39,7 +39,7 @@
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS">
 		<valor>
 			<![CDATA[
-				-5
+				25
 			]]>
 		</valor>
 	</variavel>
