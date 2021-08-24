@@ -117,7 +117,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (vDadosToolbarTableHeader != null) {
 			int dadosToolbarTableHeader = vDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
 			if (altura < dadosToolbarTableHeader) {
-				setSize(getWidth(), dadosToolbarTableHeader);
+				setSize(getWidth(), dadosToolbarTableHeader + container.getAlturaToolbar());
 				SwingUtilities.updateComponentTreeUI(this);
 			}
 		}

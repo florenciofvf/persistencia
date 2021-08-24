@@ -25,7 +25,7 @@
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER">
 		<valor>
 			<![CDATA[
-				90
+				70
 			]]>
 		</valor>
 	</variavel>
@@ -39,7 +39,7 @@
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS">
 		<valor>
 			<![CDATA[
-				30
+				-5
 			]]>
 		</valor>
 	</variavel>
