@@ -105,7 +105,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (vMinimoForm != null) {
 			int minimoForm = vMinimoForm.getInteiro(Constantes.TRINTA);
 			if (altura > minimoForm) {
-				setSize(getWidth(), minimoForm);
+				setSize(getWidth(), minimoForm + container.getAlturaToolbar());
 				SwingUtilities.updateComponentTreeUI(this);
 			}
 		}
