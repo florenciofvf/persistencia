@@ -22,13 +22,6 @@
 			]]>
 		</valor>
 	</variavel>
-	<variavel nome="ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER">
-		<valor>
-			<![CDATA[
-				80
-			]]>
-		</valor>
-	</variavel>
 	<variavel nome="ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS">
 		<valor>
 			<![CDATA[

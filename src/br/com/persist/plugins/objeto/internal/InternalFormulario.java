@@ -3,7 +3,6 @@ package br.com.persist.plugins.objeto.internal;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -16,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import br.com.persist.abstrato.AbstratoInternalFrame;
 import br.com.persist.abstrato.DesktopAlinhamento;
@@ -95,7 +95,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (precisao > Constantes.QUATRO) {
 				processarNorte(altura, true);
 			} else if (precisao < -Constantes.QUATRO) {
-				processarSul(altura);
+				processarSul(altura, true);
 			}
 		}
 	}
@@ -115,16 +115,26 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	private void processarSul(int altura) {
-		Variavel vDadosToolbarTableHeader = VariavelProvedor
-				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
-		if (vDadosToolbarTableHeader != null) {
-			int dadosToolbarTableHeader = vDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
-			if (altura < dadosToolbarTableHeader) {
-				setSize(getWidth(), dadosToolbarTableHeader + container.getAlturaToolbar());
-				SwingUtilities.updateComponentTreeUI(this);
+	private void processarSul(int alturaAtual, boolean update) {
+		int totalRegistros = container.getTotalRegistros();
+		if (totalRegistros < 1) {
+			int alturaTitulo = getAlturaTitulo();
+			int alturaToolbar = container.getAlturaToolbar();
+			int alturaHeader = container.getAlturaTableHeader();
+			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader;
+			if (novaAltura != alturaAtual) {
+				setSize(getWidth(), novaAltura);
+				if (update) {
+					SwingUtilities.updateComponentTreeUI(this);
+				}
 			}
+		} else {
+			configurarAltura(totalRegistros, update);
 		}
+	}
+
+	private int getAlturaTitulo() {
+		return ((BasicInternalFrameUI) getUI()).getNorthPane().getHeight();
 	}
 
 	public static InternalFormulario criar(Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
@@ -152,28 +162,18 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void configurarAltura(int total) {
-		Dimension d = getSize();
+	public void configurarAltura(int total, boolean update) {
 		boolean salvar = false;
-		Variavel vDadosToolbarTableHeader = VariavelProvedor
-				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER);
-		Variavel vMaximoRegistros = VariavelProvedor
+		Variavel varMaximoRegistro = VariavelProvedor
 				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
+		if (varMaximoRegistro == null) {
+			varMaximoRegistro = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
+					Constantes.VAZIO + Constantes.DEZ);
+			VariavelProvedor.adicionar(varMaximoRegistro);
+			salvar = true;
+		}
 		Variavel varMinimoAltura = VariavelProvedor
 				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS);
-		if (vDadosToolbarTableHeader == null) {
-			vDadosToolbarTableHeader = new Variavel(
-					ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_DADOS_TOOLBAR_TABLEHEADER,
-					Constantes.VAZIO + Constantes.SETENTA);
-			VariavelProvedor.adicionar(vDadosToolbarTableHeader);
-			salvar = true;
-		}
-		if (vMaximoRegistros == null) {
-			vMaximoRegistros = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS,
-					Constantes.VAZIO + Constantes.DEZ);
-			VariavelProvedor.adicionar(vMaximoRegistros);
-			salvar = true;
-		}
 		if (varMinimoAltura == null) {
 			varMinimoAltura = new Variavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_SEM_REGISTROS,
 					Constantes.VAZIO + Constantes.TRINTA);
@@ -181,20 +181,21 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			salvar = true;
 		}
 		checarAtualizarVariavelProvedor(salvar);
-		configurarAltura(total, d, vDadosToolbarTableHeader, vMaximoRegistros);
-	}
-
-	private void configurarAltura(int total, Dimension d, Variavel variavelDadosToolbarTableHeader,
-			Variavel variavelMaximoRegistros) {
-		int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
-		int maximoRegistros = variavelMaximoRegistros.getInteiro(Constantes.DEZ);
-		int alturaToolbar = container.getAlturaToolbar();
 		if (total < 1) {
-			processarNorte(d.height, false);
-		} else if (total <= maximoRegistros) {
-			setSize(d.width, dadosToolbarTableHeader + total * 15 + alturaToolbar);
+			processarNorte(getHeight(), false);
 		} else {
-			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 15 + alturaToolbar);
+			int alturaTitulo = getAlturaTitulo();
+			int alturaToolbar = container.getAlturaToolbar();
+			int alturaHeader = container.getAlturaTableHeader();
+			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader;
+			int maximoRegistros = varMaximoRegistro.getInteiro(Constantes.DEZ);
+			if (total > maximoRegistros) {
+				total = maximoRegistros;
+			}
+			setSize(getWidth(), novaAltura + total * container.getAlturaTableRegistro());
+		}
+		if (update) {
+			SwingUtilities.updateComponentTreeUI(this);
 		}
 	}
 

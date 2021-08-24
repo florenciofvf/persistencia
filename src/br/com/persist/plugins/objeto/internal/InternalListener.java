@@ -40,7 +40,7 @@ public interface InternalListener {
 	}
 
 	public interface ConfiguraAltura {
-		public void configurarAltura(int total);
+		public void configurarAltura(int total, boolean update);
 	}
 
 	public interface Alinhamento {

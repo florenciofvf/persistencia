@@ -248,6 +248,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		return toolbar.getHeight();
 	}
 
+	public int getAlturaTableRegistro() {
+		return tabelaPersistencia.getRowHeight();
+	}
+
+	public int getTotalRegistros() {
+		return tabelaPersistencia.getModel().getRowCount();
+	}
+
+	public int getAlturaTableHeader() {
+		return tabelaPersistencia.getTableHeader().getHeight();
+	}
+
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		antesProcessar();
 		if (Preferencias.isDesconectado()) {
@@ -436,7 +448,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private void configurarAltura() {
 		if (objeto.isAjusteAutoForm() && configuraAlturaListener != null) {
-			configuraAlturaListener.configurarAltura(tabelaPersistencia.getModel().getRowCount());
+			configuraAlturaListener.configurarAltura(tabelaPersistencia.getModel().getRowCount(), false);
 		}
 	}
 
