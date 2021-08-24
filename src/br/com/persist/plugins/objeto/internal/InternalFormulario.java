@@ -188,9 +188,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (total < 1) {
 			setSize(d.width, minimoForm + alturaToolbar);
 		} else if (total <= maximoRegistros) {
-			setSize(d.width, dadosToolbarTableHeader + total * 20 + (total == 1 ? 5 : -total) + alturaToolbar);
+			setSize(d.width, dadosToolbarTableHeader + total * 15 + alturaToolbar);
 		} else {
-			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 20 + (-maximoRegistros) + alturaToolbar);
+			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 15 + alturaToolbar);
 		}
 	}
 
