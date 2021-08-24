@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,6 +43,7 @@ import java.util.stream.Collectors;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -76,7 +78,6 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.SetLista.Config;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
@@ -139,7 +140,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private transient InternalListener.Vinculo vinculoListener;
 	private transient InternalListener.Largura larguraListener;
 	private transient InternalListener.Selecao selecaoListener;
-	private final TextField txtComplemento = new TextField(33);
+	private final JTextArea txtComplemento = new JTextArea();
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
 	private ScrollPane scrollPane = new ScrollPane();
@@ -158,7 +159,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
 		comboConexao = ConexaoProvedor.criarComboConexao(padrao);
-		txtComplemento.addActionListener(actionListenerInner);
 		txtComplemento.setText(objeto.getComplemento());
 		comboConexao.addItemListener(this);
 		toolbar.ini(janela, objeto);
@@ -223,6 +223,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		});
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
 		getActionMap().put(Constantes.EXEC, toolbar.buttonSincronizar.atualizarAcao);
+		txtComplemento.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_ENTER) {
+					actionListenerInner.actionPerformed(null);
+					e.consume();
+				}
+			}
+		});
 	}
 
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
@@ -539,7 +548,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			}
 
 			private void limpar() {
-				txtComplemento.limpar();
+				txtComplemento.setText(Constantes.VAZIO);
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -1266,7 +1275,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					}
 					String[] chaves = objeto.getChavesArray();
 					if (chaves.length != 1) {
-						txtComplemento.limpar();
+						txtComplemento.setText(Constantes.VAZIO);
 						return;
 					}
 					if (minimo) {
