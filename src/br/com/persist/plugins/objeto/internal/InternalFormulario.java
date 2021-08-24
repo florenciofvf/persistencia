@@ -184,12 +184,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		int dadosToolbarTableHeader = variavelDadosToolbarTableHeader.getInteiro(Constantes.SETENTA);
 		int maximoRegistros = variavelMaximoRegistros.getInteiro(Constantes.DEZ);
 		int minimoForm = variavelMinimoForm.getInteiro(Constantes.TRINTA);
+		int alturaToolbar = container.getAlturaToolbar();
 		if (total < 1) {
-			setSize(d.width, minimoForm);
+			setSize(d.width, minimoForm + alturaToolbar);
 		} else if (total <= maximoRegistros) {
-			setSize(d.width, dadosToolbarTableHeader + total * 20 + (total == 1 ? 5 : -total));
+			setSize(d.width, dadosToolbarTableHeader + total * 20 + (total == 1 ? 5 : -total) + alturaToolbar);
 		} else {
-			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 20 + (-maximoRegistros));
+			setSize(d.width, dadosToolbarTableHeader + maximoRegistros * 20 + (-maximoRegistros) + alturaToolbar);
 		}
 	}
 

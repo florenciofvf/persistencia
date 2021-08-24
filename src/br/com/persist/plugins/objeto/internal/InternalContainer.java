@@ -17,6 +17,8 @@ import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -232,6 +234,18 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 				}
 			}
 		});
+		toolbar.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				if (toolbar.ajustarAltura()) {
+					configurarAltura();
+				}
+			}
+		});
+	}
+
+	public int getAlturaToolbar() {
+		return toolbar.getHeight();
 	}
 
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
@@ -448,6 +462,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		private final Label labelTotal = new Label(Color.BLUE);
 		private final ButtonInfo buttonInfo = new ButtonInfo();
 		private transient Thread thread;
+		private int ultimaAltura;
 
 		protected void ini(Janela janela, Objeto objeto) {
 			super.ini(janela);
@@ -467,6 +482,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			buttonInfo.ini(objeto);
 			buttonUpdate.complemento(objeto);
 			buttonPesquisa.complemento(objeto);
+			setFloatable(false);
+		}
+
+		private boolean ajustarAltura() {
+			int altura = getHeight();
+			boolean resp = ultimaAltura != altura;
+			ultimaAltura = altura;
+			return resp;
 		}
 
 		private void habilitarUpdateExcluir(boolean b) {
