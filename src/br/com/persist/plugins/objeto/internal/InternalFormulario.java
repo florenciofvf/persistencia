@@ -121,7 +121,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			int alturaTitulo = getAlturaTitulo();
 			int alturaToolbar = container.getAlturaToolbar();
 			int alturaHeader = container.getAlturaTableHeader();
-			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader;
+			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader + Constantes.DEZ;
 			if (novaAltura != alturaAtual) {
 				setSize(getWidth(), novaAltura);
 				if (update) {
@@ -187,10 +187,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			int alturaTitulo = getAlturaTitulo();
 			int alturaToolbar = container.getAlturaToolbar();
 			int alturaHeader = container.getAlturaTableHeader();
-			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader;
+			int novaAltura = alturaTitulo + alturaToolbar + alturaHeader + Constantes.DEZ;
 			int maximoRegistros = varMaximoRegistro.getInteiro(Constantes.DEZ);
 			if (total > maximoRegistros) {
 				total = maximoRegistros;
+			}
+			if (container.scrollHorizontalVisivel()) {
+				total++;
 			}
 			setSize(getWidth(), novaAltura + total * container.getAlturaTableRegistro());
 		}
