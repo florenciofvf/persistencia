@@ -97,6 +97,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			} else if (precisao < -Constantes.QUATRO) {
 				processarSul(altura, true);
 			}
+			if (desktop != null) {
+				desktop.repaint();
+			}
 		}
 	}
 
