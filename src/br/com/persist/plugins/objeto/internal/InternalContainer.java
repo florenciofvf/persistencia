@@ -503,6 +503,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 		private boolean ajustarAltura() {
 			int altura = getHeight();
+			if (ultimaAltura == 0) {
+				ultimaAltura = altura;
+				return false;
+			}
 			boolean resp = ultimaAltura != altura;
 			ultimaAltura = altura;
 			return resp;
