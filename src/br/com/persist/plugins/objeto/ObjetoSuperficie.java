@@ -2585,7 +2585,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			desktop.atualizarFormularios();
 			desktop.getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
 			desktop.getAjustar().usarFormularios(true);
-			desktop.getAjuste().empilharFormularios();
+			SwingUtilities.invokeLater(() -> desktop.getAjuste().empilharFormularios());
 		});
 		formulario.adicionarPagina(desktop);
 	}
