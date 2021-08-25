@@ -238,7 +238,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				if (toolbar.ajustarAltura() && configuraAlturaListener != null) {
-					configuraAlturaListener.configurarAltura(getTotalRegistros(), false);
+					configuraAlturaListener.configurarAltura(getTotalRegistros(), false, false);
 				}
 			}
 		});
@@ -452,7 +452,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	private void configurarAltura() {
 		if (objeto.isAjusteAutoForm() && configuraAlturaListener != null) {
-			configuraAlturaListener.configurarAltura(getTotalRegistros(), false);
+			configuraAlturaListener.configurarAltura(getTotalRegistros(), true, false);
 		}
 	}
 

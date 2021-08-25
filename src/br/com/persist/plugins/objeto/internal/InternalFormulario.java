@@ -129,7 +129,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 				}
 			}
 		} else {
-			configurarAltura(totalRegistros, update);
+			configurarAltura(totalRegistros, true, update);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void configurarAltura(int total, boolean update) {
+	public void configurarAltura(int total, boolean norteSemRegistros, boolean update) {
 		boolean salvar = false;
 		Variavel varMaximoRegistro = VariavelProvedor
 				.getVariavel(ObjetoConstantes.ALTURMA_MINIMA_FORMULARIO_MAXIMO_DE_REGISTROS);
@@ -182,7 +182,11 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 		checarAtualizarVariavelProvedor(salvar);
 		if (total < 1) {
-			processarNorte(getHeight(), false);
+			if (norteSemRegistros) {
+				processarNorte(getHeight(), false);
+			} else {
+				processarSul(getHeight(), false);
+			}
 		} else {
 			int alturaTitulo = getAlturaTitulo();
 			int alturaToolbar = container.getAlturaToolbar();
