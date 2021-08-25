@@ -2,8 +2,6 @@ package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
 
-import javax.swing.SwingUtilities;
-
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
@@ -41,6 +39,6 @@ public class DesktopFormulario extends AbstratoFormulario {
 		desktop.atualizarFormularios();
 		desktop.getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
 		desktop.getAjustar().usarFormularios(true);
-		SwingUtilities.invokeLater(() -> desktop.getAjuste().empilharFormularios());
+		desktop.getAjuste().empilharFormularios();
 	}
 }
