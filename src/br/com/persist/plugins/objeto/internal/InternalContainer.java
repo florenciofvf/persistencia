@@ -301,7 +301,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 		toolbar.buttonPesquisa.habilitar(tabelaPersistencia.getModel().getRowCount() > 0 && buscaAuto);
 		tabelaListener.tabelaMouseClick(tabelaPersistencia, -1);
-		configurarAltura();
+		SwingUtilities.invokeLater(InternalContainer.this::configurarAltura);
 	}
 
 	private OrdenacaoModelo consultarEModeloOrdenacao(Conexao conexao, Parametros param) throws PersistenciaException {
