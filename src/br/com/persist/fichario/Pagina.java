@@ -11,6 +11,8 @@ public interface Pagina {
 
 	public void adicionadoAoFichario(Fichario fichario);
 
+	public void invertidoNoFichario(Fichario fichario);
+
 	public void excluindoDoFichario(Fichario fichario);
 
 	public String getStringPersistencia();

@@ -26,6 +26,10 @@ public abstract class AbstratoContainer extends Panel implements Pagina {
 	}
 
 	@Override
+	public void invertidoNoFichario(Fichario fichario) {
+	}
+
+	@Override
 	public void excluindoDoFichario(Fichario fichario) {
 	}
 

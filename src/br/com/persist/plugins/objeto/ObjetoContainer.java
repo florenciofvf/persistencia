@@ -657,6 +657,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 	}
 
 	@Override
+	public void invertidoNoFichario(Fichario fichario) {
+		objetoSuperficie.invertidoNoFichario(fichario);
+	}
+
+	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
 		toolbar.paginaVisivel();
 		objetoSuperficie.adicionadoAoFichario(fichario);

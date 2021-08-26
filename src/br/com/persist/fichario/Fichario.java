@@ -538,6 +538,7 @@ public class Fichario extends JTabbedPane {
 			if (pagina.getComponent() == null) {
 				setEnabledAt(destino, false);
 			} else {
+				pagina.invertidoNoFichario(Fichario.this);
 				setSelectedIndex(destino);
 			}
 		}

@@ -23,6 +23,7 @@ import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
@@ -444,6 +445,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		if (config != null && ehTabela(config)) {
 			SwingUtilities.invokeLater(() -> container.aplicarConfig(config));
 		}
+	}
+
+	public void invertidoNoFichario(Fichario fichario) {
+		container.invertidoNoFichario(fichario);
 	}
 
 	public boolean isProcessadoPesquisa() {

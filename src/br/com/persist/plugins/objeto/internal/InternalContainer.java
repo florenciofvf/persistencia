@@ -2740,6 +2740,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		LOG.log(Level.FINEST, "processar");
 	}
 
+	@Override
+	public void invertidoNoFichario(Fichario fichario) {
+		toolbar.ultimaAltura = 0;
+	}
+
 	public void formularioVisivel() {
 		Util.ajustar(tabelaPersistencia, getGraphics());
 	}

@@ -464,6 +464,15 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	}
 
 	@Override
+	public void invertidoNoFichario(Fichario fichario) {
+		for (JInternalFrame frame : getAllFrames()) {
+			if (frame instanceof InternalFormulario) {
+				((InternalFormulario) frame).invertidoNoFichario(fichario);
+			}
+		}
+	}
+
+	@Override
 	public void excluindoDoFichario(Fichario fichario) {
 		LOG.log(Level.FINEST, "excluindoDoFichario");
 	}

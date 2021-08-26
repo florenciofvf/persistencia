@@ -18,6 +18,10 @@ public abstract class AbstratoPagina implements Pagina {
 	}
 
 	@Override
+	public void invertidoNoFichario(Fichario fichario) {
+	}
+
+	@Override
 	public void excluindoDoFichario(Fichario fichario) {
 	}
 
