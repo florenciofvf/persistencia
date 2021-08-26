@@ -2617,11 +2617,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		}
 
 		@Override
-		public void run() {
+		public synchronized void run() {
 			while (destacarTitulo && contador < Constantes.DEZ && !Thread.currentThread().isInterrupted()) {
 				try {
 					destacarTitulo(original);
-					Thread.sleep(300);
+					wait(300);
 					contador++;
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();

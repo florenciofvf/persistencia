@@ -288,7 +288,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public int getIndice(Component component) {
+	public synchronized int getIndice(Component component) {
 		for (int i = 0; i < getTabCount(); i++) {
 			if (getComponentAt(i) == component) {
 				return i;
@@ -297,7 +297,7 @@ public class Fichario extends JTabbedPane {
 		return -1;
 	}
 
-	public int getIndice(File file) {
+	public synchronized int getIndice(File file) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Pagina pagina = getPagina(i);
 			File paginaFile = pagina.getFile();
@@ -323,7 +323,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public int getIndice(Pagina pagina) {
+	public synchronized int getIndice(Pagina pagina) {
 		for (int i = 0; i < getTabCount(); i++) {
 			Pagina p = getPagina(i);
 			if (p == pagina) {
@@ -333,13 +333,13 @@ public class Fichario extends JTabbedPane {
 		return -1;
 	}
 
-	public void fecharTodos() {
+	public synchronized void fecharTodos() {
 		while (getTabCount() > 0) {
 			excluirPagina(0);
 		}
 	}
 
-	public boolean liberarPagina(Pagina pagina) {
+	public synchronized boolean liberarPagina(Pagina pagina) {
 		int indice = getIndice(pagina);
 		if (indice == -1) {
 			return false;
@@ -349,7 +349,7 @@ public class Fichario extends JTabbedPane {
 		return true;
 	}
 
-	public boolean excluirPagina(Pagina pagina) {
+	public synchronized boolean excluirPagina(Pagina pagina) {
 		int indice = getIndice(pagina);
 		if (indice == -1) {
 			return false;
@@ -360,7 +360,7 @@ public class Fichario extends JTabbedPane {
 		return true;
 	}
 
-	public void excluirPagina(int indice) {
+	public synchronized void excluirPagina(int indice) {
 		Pagina pagina = getPagina(indice);
 		pagina.excluindoDoFichario(this);
 		remove(indice);
@@ -389,7 +389,7 @@ public class Fichario extends JTabbedPane {
 		new ChecaSelecao().start();
 	}
 
-	public void adicionarPagina(Pagina pagina) {
+	public synchronized void adicionarPagina(Pagina pagina) {
 		if (pagina == null) {
 			throw new IllegalArgumentException("pagina nula.");
 		}
@@ -440,7 +440,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	private void restaurarPagina(Formulario formulario, String linha) {
+	private synchronized void restaurarPagina(Formulario formulario, String linha) {
 		int pos = linha.indexOf(Constantes.III);
 		String classeFabrica = linha.substring(0, pos);
 		String stringPersistencia = linha.substring(pos + Constantes.III.length());
@@ -452,7 +452,7 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	private Pagina getPagina(int i) {
+	private synchronized Pagina getPagina(int i) {
 		Component tab = getTabComponentAt(i);
 		Cabecalho cabecalho = (Cabecalho) tab;
 		return cabecalho.getPagina();
