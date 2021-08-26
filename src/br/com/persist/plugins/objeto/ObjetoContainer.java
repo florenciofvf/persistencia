@@ -38,7 +38,6 @@ import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -536,10 +535,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
 		objetoSuperficie.setAjusteLarguraForm(coletor.getAjusteLarguraForm().get());
 		toolbar.chkAjusteAutomatico.setSelected(coletor.getAjusteAutoForm().get());
-		SwingUtilities.invokeLater(() -> {
-			objetoSuperficie.configurarLargura(getSize());
-			objetoSuperficie.repaint();
-		});
+		objetoSuperficie.configurarLargura(getSize());
 	}
 
 	private Conexao selecionarConexao(ObjetoColetor coletor, InternalConfig config) {
