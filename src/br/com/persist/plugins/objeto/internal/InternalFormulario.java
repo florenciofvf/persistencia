@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -137,7 +138,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	private int getAlturaTitulo() {
-		return ((BasicInternalFrameUI) getUI()).getNorthPane().getHeight();
+		JComponent c = ((BasicInternalFrameUI) getUI()).getNorthPane();
+		return c == null ? 0 : c.getHeight();
 	}
 
 	public static InternalFormulario criar(Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
