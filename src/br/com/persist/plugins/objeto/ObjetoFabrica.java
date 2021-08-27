@@ -1,6 +1,5 @@
 package br.com.persist.plugins.objeto;
 
-import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -239,31 +238,30 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		form.abrirArquivo(file);
 	}
 
-	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, Graphics g,
-			InternalConfig config) {
+	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, InternalConfig config) {
 		File file = ArquivoProvedor.restaurarStringPersistencia(stringPersistencia);
 		if (file != null) {
 			if (file.exists() && file.isFile()) {
-				abrirArquivo(formulario, g, config, file);
+				abrirArquivo(formulario, config, file);
 			} else {
 				Util.mensagem(formulario, Mensagens.getString("msg.arquivo_invalido", file.getAbsolutePath()));
 			}
 		}
 	}
 
-	private static void abrirArquivo(Formulario formulario, Graphics g, InternalConfig config, File file) {
+	private static void abrirArquivo(Formulario formulario, InternalConfig config, File file) {
 		try {
 			ObjetoColetor objetoColetor = new ObjetoColetor();
 			XML.processar(file, new ObjetoHandler(objetoColetor));
-			abrirNoFormulario(formulario, file, objetoColetor, g, config);
+			abrirNoFormulario(formulario, file, objetoColetor, config);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, formulario);
 		}
 	}
 
-	private static void abrirNoFormulario(Formulario formulario, File file, ObjetoColetor coletor, Graphics g,
+	private static void abrirNoFormulario(Formulario formulario, File file, ObjetoColetor coletor,
 			InternalConfig config) {
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
-		form.abrirArquivo(file, coletor, g, config);
+		form.abrirArquivo(file, coletor, config);
 	}
 }

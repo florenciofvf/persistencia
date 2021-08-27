@@ -729,7 +729,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (interno != null) {
 				config.setComplemento(interno.getComplementoChaves(true, conexao));
 			}
-			ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo().trim(), getGraphics(), config);
+			ObjetoFabrica.abrirNoFormulario(formulario, objeto.getArquivo().trim(), config);
 		}
 	};
 

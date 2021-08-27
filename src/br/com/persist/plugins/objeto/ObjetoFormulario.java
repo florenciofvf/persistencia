@@ -1,7 +1,6 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -56,8 +55,8 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		}
 	}
 
-	public void abrirArquivo(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {
-		container.abrir(file, coletor, g, config);
+	public void abrirArquivo(File file, ObjetoColetor coletor, InternalConfig config) {
+		container.abrir(file, coletor, config);
 	}
 
 	public void exportarMetadadoRaiz(Metadado metadado) {

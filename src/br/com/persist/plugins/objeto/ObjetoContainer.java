@@ -13,7 +13,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
@@ -350,7 +349,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				excluido();
 				ObjetoColetor objetoColetor = new ObjetoColetor();
 				XML.processar(arquivo, new ObjetoHandler(objetoColetor));
-				abrir(arquivo, objetoColetor, null, null);
+				abrir(arquivo, objetoColetor, null);
 				txtPrefixoNomeTabela.limpar();
 				tituloTemporario = null;
 				labelStatus.limpar();
@@ -521,7 +520,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, ObjetoColetor coletor, Graphics g, InternalConfig config) {
+	public void abrir(File file, ObjetoColetor coletor, InternalConfig config) {
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
 		objetoSuperficie.abrir(coletor);
 		arquivo = file;
@@ -529,7 +528,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		Conexao conexaoSel = selecionarConexao(coletor, config);
 		Conexao conexao = getConexaoPadrao();
 		if (conexao != null && conexaoSel != null && conexaoSel.equals(conexao)) {
-			adicionarInternalFormulario(conexao, coletor, g, config);
+			adicionarInternalFormulario(conexao, coletor, config);
 		}
 		toolbar.chkAjusteLarguraFrm.setSelected(coletor.getAjusteLarguraForm().get());
 		objetoSuperficie.setAjusteAutomaticoForm(coletor.getAjusteAutoForm().get());
@@ -566,8 +565,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		return null;
 	}
 
-	private void adicionarInternalFormulario(Conexao conexao, ObjetoColetor coletor, Graphics g,
-			InternalConfig config) {
+	private void adicionarInternalFormulario(Conexao conexao, ObjetoColetor coletor, InternalConfig config) {
 		for (InternalForm form : coletor.getForms()) {
 			Objeto instancia = null;
 			for (Objeto objeto : coletor.getObjetos()) {
