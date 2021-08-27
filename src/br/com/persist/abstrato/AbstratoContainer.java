@@ -33,6 +33,10 @@ public abstract class AbstratoContainer extends Panel implements Pagina {
 	public void excluindoDoFichario(Fichario fichario) {
 	}
 
+	@Override
+	public void formularioAtivado(Fichario fichario) {
+	}
+
 	public abstract void setJanela(Janela janela);
 
 	@Override

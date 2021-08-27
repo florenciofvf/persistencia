@@ -2803,6 +2803,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		LOG.log(Level.FINEST, "excluindoDoFichario");
 	}
 
+	@Override
+	public void formularioAtivado(Fichario fichario) {
+		processar(fichario.getGraphics());
+	}
+
 	static Icon iconePesquisa(Pesquisa pesquisa) {
 		Referencia referencia = pesquisa.getReferencia();
 		String iconeGrupo = referencia.getIconeGrupo();

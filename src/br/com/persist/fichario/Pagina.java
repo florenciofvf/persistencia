@@ -15,6 +15,8 @@ public interface Pagina {
 
 	public void excluindoDoFichario(Fichario fichario);
 
+	public void formularioAtivado(Fichario fichario);
+
 	public String getStringPersistencia();
 
 	public Class<?> getClasseFabrica();

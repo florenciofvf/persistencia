@@ -17,6 +17,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -2713,5 +2714,16 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	@Override
 	public void executarAoAbrirFormulario() {
 		LOG.log(Level.FINEST, "executarAoAbrirFormulario");
+	}
+
+	@Override
+	public void formularioAtivado(Fichario fichario) {
+		for (JInternalFrame frame : getAllFrames()) {
+			try {
+				frame.setSelected(true);
+			} catch (PropertyVetoException e) {
+				LOG.log(Level.FINEST, "{0}", e.getMessage());
+			}
+		}
 	}
 }

@@ -455,6 +455,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	}
 
 	@Override
+	public void formularioAtivado(Fichario fichario) {
+		adicionadoAoFichario(null);
+	}
+
+	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
 		LOG.log(Level.FINEST, "processar");
 	}

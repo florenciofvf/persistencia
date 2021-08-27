@@ -188,6 +188,11 @@ public class Formulario extends JFrame implements SetFormulario {
 					servico.fechandoFormulario(Formulario.this);
 				}
 			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				fichario.formularioAtivado(Formulario.this);
+			}
 		});
 	}
 

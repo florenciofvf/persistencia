@@ -675,6 +675,12 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		objetoSuperficie.executarAoAbrirFormulario();
 	}
 
+	@Override
+	public void formularioAtivado(Fichario fichario) {
+		toolbar.formularioVisivel();
+		objetoSuperficie.formularioAtivado(fichario);
+	}
+
 	public void formularioFechado() {
 		excluido();
 	}

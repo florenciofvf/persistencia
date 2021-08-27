@@ -26,6 +26,10 @@ public abstract class AbstratoPagina implements Pagina {
 	}
 
 	@Override
+	public void formularioAtivado(Fichario fichario) {
+	}
+
+	@Override
 	public Component getComponent() {
 		return null;
 	}

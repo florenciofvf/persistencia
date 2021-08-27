@@ -454,8 +454,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	@Override
-	public void executarAoAbrirFormulario() {
+	public void executarAoAtivarFormulario() {
 		container.processar(getGraphics());
 		container.formularioVisivel();
+	}
+
+	@Override
+	public void executarAoAbrirFormulario() {
+		executarAoAtivarFormulario();
 	}
 }

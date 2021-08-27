@@ -420,6 +420,14 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
+	public void formularioAtivado(Formulario formulario) {
+		int total = getTabCount();
+		for (int i = 0; i < total; i++) {
+			Pagina pagina = getPagina(i);
+			pagina.formularioAtivado(this);
+		}
+	}
+
 	public void visivelFormulario(Formulario formulario) {
 		File file = new File(Constantes.PERSISTENCIA_FVF);
 		if (file.exists()) {

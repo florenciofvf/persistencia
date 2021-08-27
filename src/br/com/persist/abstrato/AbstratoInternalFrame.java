@@ -59,6 +59,11 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 	private void configurar() {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
+			public void internalFrameActivated(InternalFrameEvent e) {
+				executarAoAtivarFormulario();
+			}
+
+			@Override
 			public void internalFrameOpened(InternalFrameEvent e) {
 				executarAoAbrirFormulario();
 			}
@@ -68,6 +73,9 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 				executarAoFecharFormulario();
 			}
 		});
+	}
+
+	public void executarAoAtivarFormulario() {
 	}
 
 	public void executarAoAbrirFormulario() {
