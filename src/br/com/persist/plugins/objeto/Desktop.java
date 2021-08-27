@@ -445,7 +445,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
 		getDistribuicao().distribuir(-Constantes.VINTE);
-		atualizarFormularios();
 		getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
 		getAjustar().usarFormularios(true);
 		getAjuste().empilharFormularios();
@@ -453,14 +452,6 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	public void executarAoAbrirFormulario() {
 		adicionadoAoFichario(null);
-	}
-
-	public void executarAoAbrirParent() {
-		for (JInternalFrame frame : getAllFrames()) {
-			if (frame instanceof InternalFormulario) {
-				((InternalFormulario) frame).executarAoAbrirFormulario();
-			}
-		}
 	}
 
 	@Override

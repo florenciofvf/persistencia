@@ -670,9 +670,9 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		excluido();
 	}
 
-	public void formularioVisivel() {
+	public void executarAoAbrirFormulario() {
 		toolbar.formularioVisivel();
-		objetoSuperficie.executarAoAbrirParent();
+		objetoSuperficie.executarAoAbrirFormulario();
 	}
 
 	public void formularioFechado() {

@@ -59,6 +59,7 @@ import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.SetLista;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
@@ -2702,5 +2703,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (interno != null) {
 			interno.atualizarComplemento(objeto);
 		}
+	}
+
+	@Override
+	public void adicionadoAoFichario(Fichario fichario) {
+		LOG.log(Level.FINEST, "adicionadoAoFichario");
+	}
+
+	@Override
+	public void executarAoAbrirFormulario() {
+		LOG.log(Level.FINEST, "executarAoAbrirFormulario");
 	}
 }
