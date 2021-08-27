@@ -13,6 +13,7 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,6 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
-import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -444,10 +444,12 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		getDistribuicao().distribuir(-Constantes.VINTE);
-		getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
-		getAjustar().usarFormularios(true);
-		getAjuste().empilharFormularios();
+		/*
+		 * getDistribuicao().distribuir(-Constantes.VINTE);
+		 * getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
+		 * getAjustar().usarFormularios(true);
+		 * getAjuste().empilharFormularios();
+		 */
 	}
 
 	public void executarAoAbrirFormulario() {
@@ -456,7 +458,13 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	@Override
 	public void formularioAtivado(Fichario fichario) {
-		adicionadoAoFichario(null);
+		for (JInternalFrame frame : getAllFrames()) {
+			try {
+				frame.setSelected(true);
+			} catch (PropertyVetoException e) {
+				LOG.log(Level.FINEST, "{0}", e.getMessage());
+			}
+		}
 	}
 
 	@Override

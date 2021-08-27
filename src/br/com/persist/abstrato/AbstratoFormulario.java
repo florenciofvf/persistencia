@@ -73,6 +73,11 @@ public abstract class AbstratoFormulario extends JFrame implements Janela {
 			public void windowClosing(WindowEvent e) {
 				executarAoFecharFormulario();
 			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				formularioAtivado();
+			}
 		});
 	}
 
@@ -80,6 +85,9 @@ public abstract class AbstratoFormulario extends JFrame implements Janela {
 	}
 
 	public void executarAoFecharFormulario() {
+	}
+
+	public void formularioAtivado() {
 	}
 
 	public void excluirContainer() {

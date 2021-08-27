@@ -352,6 +352,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				abrir(arquivo, objetoColetor, null);
 				txtPrefixoNomeTabela.limpar();
 				tituloTemporario = null;
+				formularioAtivado(null);
 				labelStatus.limpar();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);

@@ -36,4 +36,9 @@ public class DesktopFormulario extends AbstratoFormulario {
 	public void executarAoAbrirFormulario() {
 		desktop.executarAoAbrirFormulario();
 	}
+
+	@Override
+	public void formularioAtivado() {
+		desktop.formularioAtivado(null);
+	}
 }
