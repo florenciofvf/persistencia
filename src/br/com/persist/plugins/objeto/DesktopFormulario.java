@@ -3,7 +3,6 @@ package br.com.persist.plugins.objeto;
 import java.awt.BorderLayout;
 
 import br.com.persist.abstrato.AbstratoFormulario;
-import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.componente.ScrollPane;
@@ -35,10 +34,6 @@ public class DesktopFormulario extends AbstratoFormulario {
 
 	@Override
 	public void executarAoAbrirFormulario() {
-		desktop.getDistribuicao().distribuir(-Constantes.VINTE);
-		desktop.atualizarFormularios();
-		desktop.getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
-		desktop.getAjustar().usarFormularios(true);
-		desktop.getAjuste().empilharFormularios();
+		desktop.executarAoAbrirFormulario();
 	}
 }

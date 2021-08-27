@@ -3,10 +3,8 @@ package br.com.persist.plugins.objeto.internal;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +42,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private boolean processadoPesquisa;
 	private Desktop desktop;
 
-	public InternalFormulario(Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
+	public InternalFormulario(Conexao padrao, Objeto objeto, boolean buscaAuto) {
 		super(objeto.getId());
-		container = new InternalContainer(this, padrao, objeto, g, buscaAuto);
+		container = new InternalContainer(this, padrao, objeto, buscaAuto);
 		container.setConfiguraAlturaListener(InternalFormulario.this::configurarAltura);
 		container.setRelacaoObjetoListener(InternalFormulario.this::listarRelacoes);
 		container.setAlinhamentoListener(InternalFormulario.this::alinhar);
@@ -143,8 +141,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return c == null ? 0 : c.getHeight();
 	}
 
-	public static InternalFormulario criar(Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
-		return new InternalFormulario(padrao, objeto, g, buscaAuto);
+	public static InternalFormulario criar(Conexao padrao, Objeto objeto, boolean buscaAuto) {
+		return new InternalFormulario(padrao, objeto, buscaAuto);
 	}
 
 	private void checarDesktop() {
@@ -359,11 +357,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	public void selecionar(boolean b) {
-		try {
-			setSelected(b);
-		} catch (PropertyVetoException e) {
-			LOG.log(Level.FINEST, "{0}", b);
-		}
+		LOG.log(Level.FINEST, "{0}", b);
 	}
 
 	public boolean ehReferencia(Referencia referencia) {
@@ -443,7 +437,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	public void aplicar(InternalConfig config) {
 		if (config != null && ehTabela(config)) {
-			SwingUtilities.invokeLater(() -> container.aplicarConfig(config));
+			container.aplicarConfig(config);
 		}
 	}
 
@@ -461,6 +455,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	@Override
 	public void executarAoAbrirFormulario() {
+		container.processar(getGraphics());
 		container.formularioVisivel();
 	}
 }

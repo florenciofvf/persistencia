@@ -2,7 +2,6 @@ package br.com.persist.plugins.objeto;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -29,6 +28,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -282,7 +282,7 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				Object[] array = (Object[]) transferable.getTransferData(flavor);
 				Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
 				if (!contemReferencia(objeto)) {
-					montarEAdicionarInternalFormulario(array, e.getLocation(), null, false, null);
+					montarEAdicionarInternalFormulario(array, e.getLocation(), false, null);
 					processado.set(true);
 				}
 			} catch (Exception ex) {
@@ -311,15 +311,12 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		return false;
 	}
 
-	public void montarEAdicionarInternalFormulario(Object[] array, Point point, Graphics g, boolean buscaAuto,
+	public void montarEAdicionarInternalFormulario(Object[] array, Point point, boolean buscaAuto,
 			InternalConfig config) {
 		Dimension dimension = (Dimension) array[InternalTransferidor.ARRAY_INDICE_DIM];
 		Conexao conexao = (Conexao) array[InternalTransferidor.ARRAY_INDICE_CON];
 		Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
-		if (g == null) {
-			g = getGraphics();
-		}
-		criarAdicionarInternaFormulario(point, g, buscaAuto, config, dimension, conexao, objeto);
+		criarAdicionarInternaFormulario(point, buscaAuto, config, dimension, conexao, objeto);
 	}
 
 	public static void setComplemento(Conexao conexao, Objeto objeto) {
@@ -340,11 +337,11 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 		return !Util.estaVazio(conexao.getFinalConsulta()) && Util.estaVazio(objeto.getFinalConsulta());
 	}
 
-	private void criarAdicionarInternaFormulario(Point point, Graphics g, boolean buscaAuto, InternalConfig config,
+	private void criarAdicionarInternaFormulario(Point point, boolean buscaAuto, InternalConfig config,
 			Dimension dimension, Conexao conexao, Objeto objeto) {
 		setComplemento(conexao, objeto);
 		objeto.setChecarLargura(true);
-		InternalFormulario internal = new InternalFormulario(conexao, objeto, g, buscaAuto);
+		InternalFormulario internal = new InternalFormulario(conexao, objeto, buscaAuto);
 		internal.setLocation(point);
 		internal.setSize(dimension);
 		internal.setVisible(true);
@@ -447,7 +444,15 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		executarAoAbrirParent();
+		getDistribuicao().distribuir(-Constantes.VINTE);
+		atualizarFormularios();
+		getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
+		getAjustar().usarFormularios(true);
+		getAjuste().empilharFormularios();
+	}
+
+	public void executarAoAbrirFormulario() {
+		adicionadoAoFichario(null);
 	}
 
 	public void executarAoAbrirParent() {

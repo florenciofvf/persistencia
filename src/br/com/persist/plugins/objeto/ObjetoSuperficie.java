@@ -749,7 +749,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		setComplemento(conexao, objeto);
 		AtomicReference<Formulario> ref = new AtomicReference<>();
 		setFormulario(ref);
-		ExternalFormulario.criar(ref.get(), conexao, objeto, getGraphics());
+		ExternalFormulario.criar(ref.get(), conexao, objeto);
 	}
 
 	private class Inversao {
@@ -1788,7 +1788,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		setComplemento(conexao, objeto);
 		AtomicReference<Formulario> ref = new AtomicReference<>();
 		setFormulario(ref);
-		ExternalFormulario.criar(ref.get(), conexao, objeto, getGraphics());
+		ExternalFormulario.criar(ref.get(), conexao, objeto);
 	}
 
 	public void atualizarTotal(Conexao conexao, MenuItem menuItem, Label label) {
@@ -2561,7 +2561,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
-				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
+				form.getDesktop().montarEAdicionarInternalFormulario(array, new Point(x, y), false, config);
 				x += 25;
 				y += 25;
 			}
@@ -2575,18 +2575,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto);
-				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), null, false, config);
+				desktop.montarEAdicionarInternalFormulario(array, new Point(x, y), false, config);
 				x += 25;
 				y += 25;
 			}
 		}
-		SwingUtilities.invokeLater(() -> {
-			desktop.getDistribuicao().distribuir(-Constantes.VINTE);
-			desktop.atualizarFormularios();
-			desktop.getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
-			desktop.getAjustar().usarFormularios(true);
-			desktop.getAjuste().empilharFormularios();
-		});
 		formulario.adicionarPagina(desktop);
 	}
 
@@ -2594,7 +2587,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : listaObjetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				setComplemento(conexao, objeto);
-				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, getGraphics(), false));
+				formulario.adicionarPagina(new InternalContainer(null, conexao, objeto, false));
 			}
 		}
 	}
@@ -2646,7 +2639,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			if (!Util.estaVazio(objeto.getTabela())) {
 				Object[] array = InternalTransferidor.criarArray(conexao, objeto, dimension);
-				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), null, false,
+				montarEAdicionarInternalFormulario(array, new Point(objeto.getX() + x, objeto.getY() + y), false,
 						config);
 			}
 		}

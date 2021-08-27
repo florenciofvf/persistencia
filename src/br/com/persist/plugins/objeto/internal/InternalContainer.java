@@ -154,7 +154,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	private boolean buscaAuto;
 	private int contadorAuto;
 
-	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, Graphics g, boolean buscaAuto) {
+	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, boolean buscaAuto) {
 		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
 		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
 		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
@@ -168,14 +168,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		this.objeto = objeto;
 		montarLayout();
 		configurar();
-		SwingUtilities.invokeLater(() -> processar(g));
 	}
 
-	private void processar(Graphics g) {
+	public void processar(Graphics g) {
 		processar("", g, null);
 	}
 
-	private void atualizar() {
+	protected void atualizar() {
 		Container parent = this;
 		Desktop desktop = null;
 		while (parent != null) {
@@ -965,8 +964,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 					if (pesquisa.isProcessado()) {
 						vinculoListener.pesquisarApos(pesquisa);
 					}
-					SwingUtilities.invokeLater(() -> processarColunaInfo(coluna));
-					SwingUtilities.invokeLater(InternalContainer.this::atualizar);
+					processarColunaInfo(coluna);
+					InternalContainer.this.atualizar();
 				}
 
 				private void processarColunaInfo(int coluna) {
@@ -2796,7 +2795,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		LOG.log(Level.FINEST, "adicionadoAoFichario");
+		processar(fichario.getGraphics());
 	}
 
 	@Override

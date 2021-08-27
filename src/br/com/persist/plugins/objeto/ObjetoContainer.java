@@ -578,7 +578,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			if (instancia != null) {
 				Object[] array = InternalTransferidor.criarArray(conexao, instancia,
 						new Dimension(form.getLargura(), form.getAltura()));
-				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(form.getX(), form.getY()), g, true,
+				objetoSuperficie.montarEAdicionarInternalFormulario(array, new Point(form.getX(), form.getY()), true,
 						config);
 			}
 		}

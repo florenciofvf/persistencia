@@ -2,7 +2,6 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.abstrato.AbstratoFormulario;
@@ -15,9 +14,9 @@ public class ExternalFormulario extends AbstratoFormulario {
 	private final InternalContainer container;
 	private final Formulario formulario;
 
-	private ExternalFormulario(Formulario formulario, Conexao padrao, Objeto objeto, Graphics g) {
+	private ExternalFormulario(Formulario formulario, Conexao padrao, Objeto objeto) {
 		super(objeto.getId());
-		container = new InternalContainer(this, padrao, objeto, g, false);
+		container = new InternalContainer(this, padrao, objeto, false);
 		container.setDimensaoListener(ExternalFormulario.this::getSize);
 		container.setTituloListener(ExternalFormulario.this::setTitle);
 		container.setComponenteListener(componenteListener);
@@ -41,14 +40,15 @@ public class ExternalFormulario extends AbstratoFormulario {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static ExternalFormulario criar(Formulario formulario, Conexao padrao, Objeto objeto, Graphics g) {
-		ExternalFormulario form = new ExternalFormulario(formulario, padrao, objeto, g);
+	public static ExternalFormulario criar(Formulario formulario, Conexao padrao, Objeto objeto) {
+		ExternalFormulario form = new ExternalFormulario(formulario, padrao, objeto);
 		Formulario.posicionarJanela(formulario, form);
 		return form;
 	}
 
 	@Override
 	public void executarAoAbrirFormulario() {
+		container.processar(getGraphics());
 		container.formularioVisivel();
 	}
 }
