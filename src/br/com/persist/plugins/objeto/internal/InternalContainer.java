@@ -137,6 +137,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private transient TabelaListener tabelaListener = new TabelaListener();
 	private transient InternalListener.RelacaoObjeto relacaoObjetoListener;
 	private transient InternalListener.Visibilidade visibilidadeListener;
+	private final TxtComplemento txtComplemento = new TxtComplemento();
 	private transient InternalListener.Alinhamento alinhamentoListener;
 	private transient InternalListener.Componente componenteListener;
 	private Panel panelAguardando = new Panel(new GridBagLayout());
@@ -145,7 +146,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private transient InternalListener.Vinculo vinculoListener;
 	private transient InternalListener.Largura larguraListener;
 	private transient InternalListener.Selecao selecaoListener;
-	private final JTextArea txtComplemento = new JTextArea();
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
 	private ScrollPane scrollPane = new ScrollPane();
@@ -236,14 +236,30 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 			}
 		});
-		toolbar.addComponentListener(new ComponentAdapter() {
+		txtComplemento.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				if (toolbar.ajustarAltura() && configuraAlturaListener != null) {
+				if (txtComplemento.ajustarAltura() && configuraAlturaListener != null) {
 					configuraAlturaListener.configurarAltura(getTotalRegistros(), false, false);
 				}
 			}
 		});
+	}
+
+	private class TxtComplemento extends JTextArea {
+		private static final long serialVersionUID = 1L;
+		private int ultimaAltura;
+
+		private boolean ajustarAltura() {
+			int altura = getHeight();
+			if (ultimaAltura == 0) {
+				ultimaAltura = altura;
+				return false;
+			}
+			boolean resp = ultimaAltura != altura;
+			ultimaAltura = altura;
+			return resp;
+		}
 	}
 
 	public int getAlturaToolbar() {
@@ -476,7 +492,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		private final Label labelTotal = new Label(Color.BLUE);
 		private final ButtonInfo buttonInfo = new ButtonInfo();
 		private transient Thread thread;
-		private int ultimaAltura;
 
 		protected void ini(Janela janela, Objeto objeto) {
 			super.ini(janela);
@@ -497,17 +512,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			buttonUpdate.complemento(objeto);
 			buttonPesquisa.complemento(objeto);
 			setFloatable(false);
-		}
-
-		private boolean ajustarAltura() {
-			int altura = getHeight();
-			if (ultimaAltura == 0) {
-				ultimaAltura = altura;
-				return false;
-			}
-			boolean resp = ultimaAltura != altura;
-			ultimaAltura = altura;
-			return resp;
 		}
 
 		private void habilitarUpdateExcluir(boolean b) {
@@ -2744,7 +2748,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	@Override
 	public void invertidoNoFichario(Fichario fichario) {
-		toolbar.ultimaAltura = 0;
+		txtComplemento.ultimaAltura = 0;
 	}
 
 	@Override

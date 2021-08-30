@@ -370,7 +370,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		checarSelecao();
 	}
 
-	private class ChecaSelecao extends Thread {
+	protected class ChecaSelecao extends Thread {
 		@Override
 		public void run() {
 			int indice = getTabCount() - 1;
@@ -389,7 +389,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 	}
 
 	private void checarSelecao() {
-		new ChecaSelecao().start();
+		/* new ChecaSelecao().start(); */
 	}
 
 	public synchronized void adicionarPagina(Pagina pagina) {
