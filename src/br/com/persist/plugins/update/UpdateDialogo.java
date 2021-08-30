@@ -1,6 +1,7 @@
 package br.com.persist.plugins.update;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
@@ -36,7 +37,6 @@ public class UpdateDialogo extends AbstratoDialogo {
 		return new UpdateDialogo(formulario, formulario, conexao, conteudo);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
@@ -45,7 +45,7 @@ public class UpdateDialogo extends AbstratoDialogo {
 	}
 
 	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler(dialog);
 	}
 }

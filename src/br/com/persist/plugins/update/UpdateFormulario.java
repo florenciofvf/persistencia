@@ -1,6 +1,7 @@
 package br.com.persist.plugins.update;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.assistencia.Constantes;
@@ -46,7 +47,6 @@ public class UpdateFormulario extends AbstratoFormulario {
 		return new UpdateFormulario(formulario, conexao, conteudo);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
@@ -55,7 +55,7 @@ public class UpdateFormulario extends AbstratoFormulario {
 	}
 
 	@Override
-	public void executarAoAbrirFormulario() {
-		container.formularioVisivel();
+	public void windowOpenedHandler(Window window) {
+		container.windowOpenedHandler(window);
 	}
 }

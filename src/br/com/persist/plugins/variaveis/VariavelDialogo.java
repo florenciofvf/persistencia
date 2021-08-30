@@ -38,17 +38,11 @@ public class VariavelDialogo extends AbstratoDialogo {
 		form.setVisible(true);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
 		container.setVariavelDialogo(null);
 		fechar();
-	}
-
-	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
 	}
 
 	public static VariavelDialogo criar(Dialog dialog, Formulario formulario) {
@@ -57,5 +51,10 @@ public class VariavelDialogo extends AbstratoDialogo {
 
 	public static VariavelDialogo criar(Frame frame, Formulario formulario) {
 		return new VariavelDialogo(frame, formulario);
+	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler(dialog);
 	}
 }

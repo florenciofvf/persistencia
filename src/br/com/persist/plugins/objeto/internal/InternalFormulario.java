@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComponent;
+import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -40,6 +41,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private final InternalContainer container;
 	private boolean processadoPesquisa;
+	private boolean processado;
 	private Desktop desktop;
 
 	public InternalFormulario(Conexao padrao, Objeto objeto, boolean buscaAuto) {
@@ -454,13 +456,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	@Override
-	public void executarAoAtivarFormulario() {
-		container.processar(getGraphics());
-		container.formularioVisivel();
-	}
-
-	@Override
-	public void executarAoAbrirFormulario() {
-		executarAoAtivarFormulario();
+	public void windowInternalActivatedHandler(JInternalFrame internal) {
+		if (!processado) {
+			processado = true;
+			container.windowInternalActivatedHandler(this);
+		}
 	}
 }

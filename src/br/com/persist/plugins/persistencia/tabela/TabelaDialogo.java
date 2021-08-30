@@ -41,11 +41,6 @@ public class TabelaDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
-	}
-
 	public static void criar(Component c, String titulo, MemoriaModelo modelo) {
 		Component comp = Util.getViewParent(c);
 		TabelaDialogo form = null;
@@ -60,6 +55,11 @@ public class TabelaDialogo extends AbstratoDialogo {
 			form.setLocationRelativeTo(comp != null ? comp : c);
 		}
 		form.setVisible(true);
+	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler(dialog);
 	}
 }
 
@@ -141,7 +141,7 @@ class TabelaContainer extends Panel {
 		}
 	}
 
-	void dialogoVisivel() {
+	void dialogOpenedHandler(Dialog dialog) {
 		Util.ajustar(tabela, getGraphics());
 	}
 }

@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -67,7 +68,6 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		container.abrirArquivo(file);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
@@ -76,12 +76,17 @@ public class ObjetoFormulario extends AbstratoFormulario {
 	}
 
 	@Override
-	public void executarAoAbrirFormulario() {
-		container.executarAoAbrirFormulario();
+	public void windowActivatedHandler(Window window) {
+		container.windowActivatedHandler(window);
 	}
 
 	@Override
-	public void executarAoFecharFormulario() {
+	public void windowOpenedHandler(Window window) {
+		container.windowOpenedHandler(window);
+	}
+
+	@Override
+	public void windowClosingHandler(Window window) {
 		container.formularioFechado();
 	}
 }

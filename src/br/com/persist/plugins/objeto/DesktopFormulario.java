@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.assistencia.Constantes;
@@ -33,12 +34,12 @@ public class DesktopFormulario extends AbstratoFormulario {
 	}
 
 	@Override
-	public void executarAoAbrirFormulario() {
-		desktop.executarAoAbrirFormulario();
+	public void windowOpenedHandler(Window window) {
+		desktop.windowOpenedHandler(window);
 	}
 
 	@Override
-	public void formularioAtivado() {
-		desktop.formularioAtivado(null);
+	public void windowActivatedHandler(Window window) {
+		desktop.windowActivatedHandler(window);
 	}
 }

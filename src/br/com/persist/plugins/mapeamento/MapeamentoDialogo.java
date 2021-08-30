@@ -38,17 +38,11 @@ public class MapeamentoDialogo extends AbstratoDialogo {
 		form.setVisible(true);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
 		container.setMapeamentoDialogo(null);
 		fechar();
-	}
-
-	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
 	}
 
 	public static MapeamentoDialogo criar(Dialog dialog, Formulario formulario) {
@@ -57,5 +51,10 @@ public class MapeamentoDialogo extends AbstratoDialogo {
 
 	public static MapeamentoDialogo criar(Frame frame, Formulario formulario) {
 		return new MapeamentoDialogo(frame, formulario);
+	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler(dialog);
 	}
 }

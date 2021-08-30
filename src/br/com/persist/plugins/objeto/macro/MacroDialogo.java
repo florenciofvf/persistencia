@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto.macro;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
@@ -28,7 +29,7 @@ public class MacroDialogo extends AbstratoDialogo {
 	}
 
 	@Override
-	public void executarAoAbrirDialogo() {
+	public void dialogOpenedHandler(Dialog dialog) {
 		container.selecionar(0);
 	}
 }

@@ -1,6 +1,7 @@
 package br.com.persist.plugins.anotacao;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.formulario.Formulario;
@@ -38,7 +39,6 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
@@ -47,7 +47,7 @@ public class AnotacaoFormulario extends AbstratoFormulario {
 	}
 
 	@Override
-	public void executarAoAbrirFormulario() {
-		container.formularioVisivel();
+	public void windowOpenedHandler(Window window) {
+		container.windowOpenedHandler(this);
 	}
 }

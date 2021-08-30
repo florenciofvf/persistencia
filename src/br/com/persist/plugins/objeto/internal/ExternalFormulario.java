@@ -2,6 +2,7 @@ package br.com.persist.plugins.objeto.internal;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Window;
 import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.abstrato.AbstratoFormulario;
@@ -47,8 +48,7 @@ public class ExternalFormulario extends AbstratoFormulario {
 	}
 
 	@Override
-	public void executarAoAbrirFormulario() {
-		container.processar(getGraphics());
-		container.formularioVisivel();
+	public void windowActivatedHandler(Window window) {
+		container.windowActivatedHandler(this);
 	}
 }

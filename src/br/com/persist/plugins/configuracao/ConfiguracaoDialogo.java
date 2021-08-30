@@ -1,6 +1,7 @@
 package br.com.persist.plugins.configuracao;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Frame;
 
 import br.com.persist.abstrato.AbstratoDialogo;
@@ -32,7 +33,6 @@ public class ConfiguracaoDialogo extends AbstratoDialogo {
 		form.setVisible(true);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
@@ -41,12 +41,12 @@ public class ConfiguracaoDialogo extends AbstratoDialogo {
 	}
 
 	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler(this);
 	}
 
 	@Override
-	public void executarAoFecharDialogo() {
+	public void dialogClosingHandler(Dialog dialog) {
 		Preferencias.salvar();
 	}
 }

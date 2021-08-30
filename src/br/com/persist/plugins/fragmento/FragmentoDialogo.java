@@ -38,17 +38,11 @@ public class FragmentoDialogo extends AbstratoDialogo {
 		form.setVisible(true);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
 		container.setFragmentoDialogo(null);
 		fechar();
-	}
-
-	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
 	}
 
 	public static FragmentoDialogo criar(Dialog dialog, Formulario formulario, FragmentoListener listener) {
@@ -57,5 +51,10 @@ public class FragmentoDialogo extends AbstratoDialogo {
 
 	public static FragmentoDialogo criar(Frame frame, Formulario formulario, FragmentoListener listener) {
 		return new FragmentoDialogo(frame, formulario, listener);
+	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler(dialog);
 	}
 }

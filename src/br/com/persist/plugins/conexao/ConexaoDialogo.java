@@ -38,17 +38,11 @@ public class ConexaoDialogo extends AbstratoDialogo {
 		form.setVisible(true);
 	}
 
-	@Override
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
 		container.setConexaoDialogo(null);
 		fechar();
-	}
-
-	@Override
-	public void executarAoAbrirDialogo() {
-		container.dialogoVisivel();
 	}
 
 	public static ConexaoDialogo criar(Dialog dialog, Formulario formulario) {
@@ -57,5 +51,10 @@ public class ConexaoDialogo extends AbstratoDialogo {
 
 	public static ConexaoDialogo criar(Frame frame, Formulario formulario) {
 		return new ConexaoDialogo(frame, formulario);
+	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler(this);
 	}
 }

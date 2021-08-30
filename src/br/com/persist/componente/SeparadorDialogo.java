@@ -51,7 +51,7 @@ public class SeparadorDialogo extends AbstratoDialogo {
 	}
 
 	@Override
-	public void executarAoAbrirDialogo() {
+	public void dialogOpenedHandler(Dialog dialog) {
 		container.checarCopias();
 	}
 }
