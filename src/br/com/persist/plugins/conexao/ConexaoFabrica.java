@@ -1,5 +1,6 @@
 package br.com.persist.plugins.conexao;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ConexaoFabrica extends AbstratoFabricaContainer {
 
 	private class ConexaoServico extends AbstratoServico {
 		@Override
-		public void visivelFormulario(Formulario formulario) {
+		public void windowOpenedHandler(Window window) {
 			ConexaoProvedor.inicializar();
 		}
 

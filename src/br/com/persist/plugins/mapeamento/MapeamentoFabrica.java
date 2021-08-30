@@ -1,5 +1,6 @@
 package br.com.persist.plugins.mapeamento;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +45,7 @@ public class MapeamentoFabrica extends AbstratoFabricaContainer {
 
 	private class MapeamentoServico extends AbstratoServico {
 		@Override
-		public void visivelFormulario(Formulario formulario) {
+		public void windowOpenedHandler(Window window) {
 			MapeamentoProvedor.inicializar();
 		}
 	}

@@ -1,5 +1,6 @@
 package br.com.persist.plugins.variaveis;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +45,7 @@ public class VariavelFabrica extends AbstratoFabricaContainer {
 
 	private class VariavelServico extends AbstratoServico {
 		@Override
-		public void visivelFormulario(Formulario formulario) {
+		public void windowOpenedHandler(Window window) {
 			VariavelProvedor.inicializar();
 		}
 	}

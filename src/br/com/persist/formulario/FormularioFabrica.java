@@ -1,5 +1,6 @@
 package br.com.persist.formulario;
 
+import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,16 +43,16 @@ public class FormularioFabrica extends AbstratoFabricaContainer {
 
 	private class FecharServico extends AbstratoServico {
 		@Override
-		public void fechandoFormulario(Formulario formulario) {
+		public void windowClosingHandler(Window window) {
 			itemFechar.doClick();
 		}
 	}
 
 	private class FormularioServico extends AbstratoServico {
 		@Override
-		public void visivelFormulario(Formulario formulario) {
-			formulario.definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
-			formulario.definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
+		public void windowOpenedHandler(Window window) {
+			((Formulario) window).definirLarguraEmPorcentagem(Preferencias.getPorcHorizontalLocalForm());
+			((Formulario) window).definirAlturaEmPorcentagem(Preferencias.getPorcVerticalLocalForm());
 		}
 	}
 

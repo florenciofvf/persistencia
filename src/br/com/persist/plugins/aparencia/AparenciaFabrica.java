@@ -1,5 +1,6 @@
 package br.com.persist.plugins.aparencia;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ public class AparenciaFabrica extends AbstratoFabricaContainer {
 
 	private class AparenciaServico extends AbstratoServico {
 		@Override
-		public void visivelFormulario(Formulario formulario) {
+		public void windowOpenedHandler(Window window) {
 			if (padrao != null) {
 				padrao.doClick();
 			}

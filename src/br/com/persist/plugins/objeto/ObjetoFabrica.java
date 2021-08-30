@@ -1,5 +1,6 @@
 package br.com.persist.plugins.objeto;
 
+import java.awt.Window;
 import java.awt.event.InputEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 
 	private class ObjetoServico extends AbstratoServico {
 		@Override
-		public void visivelFormulario(Formulario formulario) {
+		public void windowOpenedHandler(Window window) {
 			MacroProvedor.inicializar();
 		}
 
