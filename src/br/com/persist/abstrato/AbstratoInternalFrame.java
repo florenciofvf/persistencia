@@ -18,7 +18,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.Janela;
 
-public abstract class AbstratoInternalFrame extends JInternalFrame implements Janela {
+public abstract class AbstratoInternalFrame extends JInternalFrame implements Janela, WindowInternalHandler {
 	private static final long serialVersionUID = 1L;
 
 	public AbstratoInternalFrame(String titulo) {
@@ -60,30 +60,30 @@ public abstract class AbstratoInternalFrame extends JInternalFrame implements Ja
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameActivated(InternalFrameEvent e) {
-				executarAoAtivarFormulario();
-			}
-
-			@Override
-			public void internalFrameOpened(InternalFrameEvent e) {
-				executarAoAbrirFormulario();
+				windowInternalActivatedHandler(AbstratoInternalFrame.this);
 			}
 
 			@Override
 			public void internalFrameClosing(InternalFrameEvent e) {
-				executarAoFecharFormulario();
+				windowInternalClosingHandler(AbstratoInternalFrame.this);
+			}
+
+			@Override
+			public void internalFrameOpened(InternalFrameEvent e) {
+				windowInternalOpenedHandler(AbstratoInternalFrame.this);
 			}
 		});
 	}
 
-	public void executarAoAtivarFormulario() {
+	@Override
+	public void windowInternalActivatedHandler(JInternalFrame window) {
 	}
 
-	public void executarAoAbrirFormulario() {
+	@Override
+	public void windowInternalClosingHandler(JInternalFrame window) {
 	}
 
-	public void executarAoFecharFormulario() {
-	}
-
-	public void excluirContainer() {
+	@Override
+	public void windowInternalOpenedHandler(JInternalFrame window) {
 	}
 }

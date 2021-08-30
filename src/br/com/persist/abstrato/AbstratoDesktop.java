@@ -2,6 +2,7 @@ package br.com.persist.abstrato;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Window;
 
 import javax.swing.Icon;
 import javax.swing.JDesktopPane;
@@ -13,8 +14,10 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.Menu;
+import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.FicharioHandler;
 
-public abstract class AbstratoDesktop extends JDesktopPane {
+public abstract class AbstratoDesktop extends JDesktopPane implements WindowHandler, FicharioHandler {
 	private static final long serialVersionUID = 1L;
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
@@ -319,5 +322,21 @@ public abstract class AbstratoDesktop extends JDesktopPane {
 
 	public Ajuste getAjuste() {
 		return ajuste;
+	}
+
+	@Override
+	public void tabActivatedHandler(Fichario fichario) {
+	}
+
+	@Override
+	public void windowActivatedHandler(Window window) {
+	}
+
+	@Override
+	public void windowClosingHandler(Window window) {
+	}
+
+	@Override
+	public void windowOpenedHandler(Window window) {
 	}
 }

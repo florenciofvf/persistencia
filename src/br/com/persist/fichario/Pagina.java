@@ -6,7 +6,7 @@ import java.util.Map;
 
 import br.com.persist.formulario.Formulario;
 
-public interface Pagina {
+public interface Pagina extends FicharioHandler {
 	public void processar(Formulario formulario, Map<String, Object> args);
 
 	public void adicionadoAoFichario(Fichario fichario);
@@ -14,8 +14,6 @@ public interface Pagina {
 	public void invertidoNoFichario(Fichario fichario);
 
 	public void excluindoDoFichario(Fichario fichario);
-
-	public void formularioAtivado(Fichario fichario);
 
 	public String getStringPersistencia();
 

@@ -20,7 +20,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.componente.Janela;
 
-public abstract class AbstratoDialogo extends JDialog implements Janela {
+public abstract class AbstratoDialogo extends JDialog implements Janela, DialogHandler {
 	private static final long serialVersionUID = 1L;
 
 	public AbstratoDialogo(Dialog dialog, String titulo) {
@@ -72,23 +72,31 @@ public abstract class AbstratoDialogo extends JDialog implements Janela {
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowOpened(WindowEvent e) {
-				executarAoAbrirDialogo();
+			public void windowActivated(WindowEvent e) {
+				dialogActivatedHandler(AbstratoDialogo.this);
 			}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				executarAoFecharDialogo();
+				dialogClosingHandler(AbstratoDialogo.this);
+			}
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				dialogOpenedHandler(AbstratoDialogo.this);
 			}
 		});
 	}
 
-	public void executarAoAbrirDialogo() {
+	@Override
+	public void dialogActivatedHandler(Dialog dialog) {
 	}
 
-	public void executarAoFecharDialogo() {
+	@Override
+	public void dialogClosingHandler(Dialog dialog) {
 	}
 
-	public void excluirContainer() {
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
 	}
 }

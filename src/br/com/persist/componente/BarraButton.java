@@ -1,16 +1,25 @@
 package br.com.persist.componente;
 
 import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Window;
 
+import javax.swing.JInternalFrame;
 import javax.swing.JToolBar;
 
+import br.com.persist.abstrato.DialogHandler;
+import br.com.persist.abstrato.WindowHandler;
+import br.com.persist.abstrato.WindowInternalHandler;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
+import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.FicharioHandler;
 
 import static br.com.persist.componente.BarraButtonEnum.*;
 
-public class BarraButton extends JToolBar {
+public abstract class BarraButton extends JToolBar
+		implements WindowHandler, DialogHandler, FicharioHandler, WindowInternalHandler {
 	private static final long serialVersionUID = 1L;
 	private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
@@ -437,5 +446,45 @@ public class BarraButton extends JToolBar {
 		if (janela != null) {
 			janela.fechar();
 		}
+	}
+
+	@Override
+	public void windowInternalActivatedHandler(JInternalFrame internal) {
+	}
+
+	@Override
+	public void windowInternalClosingHandler(JInternalFrame internal) {
+	}
+
+	@Override
+	public void windowInternalOpenedHandler(JInternalFrame internal) {
+	}
+
+	@Override
+	public void tabActivatedHandler(Fichario fichario) {
+	}
+
+	@Override
+	public void dialogActivatedHandler(Dialog dialog) {
+	}
+
+	@Override
+	public void dialogClosingHandler(Dialog dialog) {
+	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+	}
+
+	@Override
+	public void windowActivatedHandler(Window window) {
+	}
+
+	@Override
+	public void windowClosingHandler(Window window) {
+	}
+
+	@Override
+	public void windowOpenedHandler(Window window) {
 	}
 }

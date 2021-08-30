@@ -1,6 +1,7 @@
 package br.com.persist.abstrato;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -19,7 +20,7 @@ import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Janela;
 
-public abstract class AbstratoFormulario extends JFrame implements Janela {
+public abstract class AbstratoFormulario extends JFrame implements Janela, WindowHandler {
 	private static final long serialVersionUID = 1L;
 
 	public AbstratoFormulario(String titulo) {
@@ -65,31 +66,31 @@ public abstract class AbstratoFormulario extends JFrame implements Janela {
 	private void configurar() {
 		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowOpened(WindowEvent e) {
-				executarAoAbrirFormulario();
+			public void windowActivated(WindowEvent e) {
+				windowActivatedHandler(AbstratoFormulario.this);
 			}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				executarAoFecharFormulario();
+				windowClosingHandler(AbstratoFormulario.this);
 			}
 
 			@Override
-			public void windowActivated(WindowEvent e) {
-				formularioAtivado();
+			public void windowOpened(WindowEvent e) {
+				windowOpenedHandler(AbstratoFormulario.this);
 			}
 		});
 	}
 
-	public void executarAoAbrirFormulario() {
+	@Override
+	public void windowActivatedHandler(Window window) {
 	}
 
-	public void executarAoFecharFormulario() {
+	@Override
+	public void windowClosingHandler(Window window) {
 	}
 
-	public void formularioAtivado() {
-	}
-
-	public void excluirContainer() {
+	@Override
+	public void windowOpenedHandler(Window window) {
 	}
 }
