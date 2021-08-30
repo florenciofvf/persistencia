@@ -8,6 +8,7 @@ import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -158,12 +159,13 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 			ArquivoFormulario.criar(formulario);
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 			chkSempreTopArq.setEnabled(arquivoFormulario != null);
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 			chkSempreTopArq.setEnabled(arquivoFormulario != null);
 		}
@@ -349,11 +351,12 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 	}
 
 	@Override

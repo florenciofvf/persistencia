@@ -13,6 +13,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -37,9 +39,9 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
-import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -179,15 +181,17 @@ public class AnotacaoContainer extends AbstratoContainer {
 			AnotacaoFormulario.criar(formulario, Constantes.VAZIO);
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 		}
 
-		void dialogoVisivel() {
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
 		}
 
@@ -287,15 +291,17 @@ public class AnotacaoContainer extends AbstratoContainer {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 	}
 
-	public void dialogoVisivel() {
-		toolbar.dialogoVisivel();
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		toolbar.dialogOpenedHandler(dialog);
 	}
 
 	@Override

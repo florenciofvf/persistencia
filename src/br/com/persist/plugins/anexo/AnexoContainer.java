@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Frame;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -156,12 +157,13 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 			AnexoFormulario.criar(formulario);
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 			chkSempreTopAnex.setEnabled(anexoFormulario != null);
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 			chkSempreTopAnex.setEnabled(anexoFormulario != null);
 		}
@@ -376,11 +378,12 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 	}
 
 	@Override

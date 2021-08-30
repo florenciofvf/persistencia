@@ -7,6 +7,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,18 +127,20 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			ConfiguracaoFormulario.criar(formulario);
 		}
 
-		void formularioVisivel() {
-			painelConfiguracao.formularioVisivel();
+		@Override
+		public void windowOpenedHandler(Window window) {
+			painelConfiguracao.windowOpenedHandler(window);
 			buttonDestacar.estadoFormulario();
 		}
 
-		void paginaVisivel() {
-			painelConfiguracao.paginaVisivel();
+		void adicionadoAoFichario() {
+			painelConfiguracao.adicionadoAoFichario();
 			buttonDestacar.estadoFichario();
 		}
 
-		void dialogoVisivel() {
-			painelConfiguracao.dialogoVisivel();
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
+			painelConfiguracao.dialogOpenedHandler(dialog);
 			buttonDestacar.estadoDialogo();
 		}
 
@@ -149,15 +153,17 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 	}
 
-	public void dialogoVisivel() {
-		toolbar.dialogoVisivel();
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		toolbar.dialogOpenedHandler(dialog);
 	}
 
 	@Override
@@ -217,21 +223,21 @@ public class ConfiguracaoContainer extends AbstratoContainer {
 			}
 		}
 
-		void formularioVisivel() {
+		void windowOpenedHandler(Window window) {
 			for (AbstratoConfiguracao ac : lista) {
-				ac.formularioVisivel();
+				ac.windowOpenedHandler(window);
 			}
 		}
 
-		void dialogoVisivel() {
+		void dialogOpenedHandler(Dialog dialog) {
 			for (AbstratoConfiguracao ac : lista) {
-				ac.dialogoVisivel();
+				ac.dialogOpenedHandler(dialog);
 			}
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			for (AbstratoConfiguracao ac : lista) {
-				ac.paginaVisivel();
+				ac.adicionadoAoFichario();
 			}
 		}
 	}

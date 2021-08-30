@@ -9,6 +9,7 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -190,11 +191,12 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			MetadadoFormulario.criar(formulario, (Conexao) null);
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 		}
 
@@ -531,11 +533,12 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 	}
 
 	@Override

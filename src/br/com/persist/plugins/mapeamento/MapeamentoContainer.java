@@ -10,6 +10,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -120,15 +122,17 @@ public class MapeamentoContainer extends AbstratoContainer {
 			MapeamentoFormulario.criar(formulario);
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 		}
 
-		void dialogoVisivel() {
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
 		}
 
@@ -194,17 +198,19 @@ public class MapeamentoContainer extends AbstratoContainer {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 		ajustarTabela();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 		ajustarTabela();
 	}
 
-	public void dialogoVisivel() {
-		toolbar.dialogoVisivel();
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		toolbar.dialogOpenedHandler(dialog);
 		ajustarTabela();
 	}
 

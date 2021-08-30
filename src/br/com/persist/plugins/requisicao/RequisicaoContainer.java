@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -293,15 +294,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 			RequisicaoFormulario.criar(formulario, null, null);
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 		}
 
-		void dialogoVisivel() {
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
 		}
 
@@ -436,15 +439,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 	}
 
-	public void dialogoVisivel() {
-		toolbar.dialogoVisivel();
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		toolbar.dialogOpenedHandler(dialog);
 	}
 
 	@Override

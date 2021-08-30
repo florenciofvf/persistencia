@@ -13,6 +13,8 @@ import static br.com.persist.componente.BarraButtonEnum.SALVAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -224,15 +226,17 @@ public class AmbienteContainer extends AbstratoContainer {
 			AmbienteFormulario.criar(formulario, null, ambiente);
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 		}
 
-		void dialogoVisivel() {
+		@Override
+		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
 		}
 
@@ -332,15 +336,17 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 	}
 
-	public void formularioVisivel() {
-		toolbar.formularioVisivel();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
 	}
 
-	public void dialogoVisivel() {
-		toolbar.dialogoVisivel();
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		toolbar.dialogOpenedHandler(dialog);
 	}
 
 	@Override

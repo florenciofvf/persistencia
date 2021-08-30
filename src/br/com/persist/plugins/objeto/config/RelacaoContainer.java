@@ -56,8 +56,8 @@ import br.com.persist.plugins.objeto.macro.MacroProvedor;
 
 public class RelacaoContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private final BarraButton toolbar = new BarraButton();
 	private final ObjetoSuperficie objetoSuperficie;
+	private final Toolbar toolbar = new Toolbar();
 	private final transient Relacao relacao;
 
 	public RelacaoContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Relacao relacao) {
@@ -71,6 +71,10 @@ public class RelacaoContainer extends Panel {
 	private void montarLayout() {
 		add(BorderLayout.CENTER, new Fichario());
 		add(BorderLayout.NORTH, toolbar);
+	}
+
+	private class Toolbar extends BarraButton {
+		private static final long serialVersionUID = 1L;
 	}
 
 	private class PanelDescricao extends Panel implements ActionListener {
