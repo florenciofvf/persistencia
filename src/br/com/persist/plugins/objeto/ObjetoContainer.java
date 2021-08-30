@@ -14,6 +14,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -325,12 +326,13 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			}
 		}
 
-		void formularioVisivel() {
+		@Override
+		public void windowOpenedHandler(Window window) {
 			buttonDestacar.estadoFormulario();
 			estadoSelecao();
 		}
 
-		void paginaVisivel() {
+		void adicionadoAoFichario() {
 			buttonDestacar.estadoFichario();
 			estadoSelecao();
 		}
@@ -352,8 +354,8 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				abrir(arquivo, objetoColetor, null);
 				txtPrefixoNomeTabela.limpar();
 				tituloTemporario = null;
-				formularioAtivado(null);
 				labelStatus.limpar();
+				ObjetoContainer.this.windowActivatedHandler(null);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("BAIXAR: " + arquivo.getAbsolutePath(), ex, formulario);
 			}
@@ -662,7 +664,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		toolbar.paginaVisivel();
+		toolbar.adicionadoAoFichario();
 		objetoSuperficie.adicionadoAoFichario(fichario);
 	}
 
@@ -671,15 +673,21 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		excluido();
 	}
 
-	public void executarAoAbrirFormulario() {
-		toolbar.formularioVisivel();
-		objetoSuperficie.executarAoAbrirFormulario();
+	@Override
+	public void windowOpenedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
+		objetoSuperficie.windowOpenedHandler(window);
 	}
 
 	@Override
-	public void formularioAtivado(Fichario fichario) {
-		toolbar.formularioVisivel();
-		objetoSuperficie.formularioAtivado(fichario);
+	public void windowActivatedHandler(Window window) {
+		toolbar.windowOpenedHandler(window);
+		objetoSuperficie.windowActivatedHandler(window);
+	}
+
+	@Override
+	public void tabActivatedHandler(Fichario fichario) {
+		objetoSuperficie.tabActivatedHandler(fichario);
 	}
 
 	public void formularioFechado() {

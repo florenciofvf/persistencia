@@ -100,7 +100,7 @@ class SetValorDialogo extends AbstratoDialogo {
 	}
 
 	@Override
-	public void executarAoFecharDialogo() {
+	public void dialogClosingHandler(Dialog dialog) {
 		valor.set(textArea.getText());
 	}
 

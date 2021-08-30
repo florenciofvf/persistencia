@@ -175,9 +175,9 @@ public class Formulario extends JFrame implements SetFormulario {
 				menuPrincipal.carregarMenu();
 				Preferencias.abrir();
 				for (Servico servico : servicos) {
-					servico.visivelFormulario(Formulario.this);
+					servico.windowOpenedHandler(Formulario.this);
 				}
-				fichario.visivelFormulario(Formulario.this);
+				fichario.windowOpenedHandler(Formulario.this);
 				fichario.ativarNavegacao();
 				iconeBandeja();
 			}
@@ -185,13 +185,13 @@ public class Formulario extends JFrame implements SetFormulario {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				for (Servico servico : servicos) {
-					servico.fechandoFormulario(Formulario.this);
+					servico.windowClosingHandler(Formulario.this);
 				}
 			}
 
 			@Override
 			public void windowActivated(WindowEvent e) {
-				fichario.formularioAtivado(Formulario.this);
+				fichario.windowActivatedHandler(Formulario.this);
 			}
 		});
 	}

@@ -3,8 +3,10 @@ package br.com.persist.plugins.objeto;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
@@ -244,17 +246,17 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	@Override
-	public void formularioVisivel() {
+	public void windowOpenedHandler(Window window) {
 		checkPesquisa();
 	}
 
 	@Override
-	public void paginaVisivel() {
+	public void dialogOpenedHandler(Dialog dialog) {
 		checkPesquisa();
 	}
 
 	@Override
-	public void dialogoVisivel() {
+	public void adicionadoAoFichario() {
 		checkPesquisa();
 	}
 }

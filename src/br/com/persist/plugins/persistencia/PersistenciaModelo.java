@@ -185,7 +185,7 @@ public class PersistenciaModelo implements TableModel {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
-						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true, null);
+						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true, this.conexao);
 				Persistencia.executar(ConexaoProvedor.getConnection(this.conexao), update);
 				registro.set(columnIndex, aValue);
 				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),

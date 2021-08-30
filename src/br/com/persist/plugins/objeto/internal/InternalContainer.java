@@ -45,6 +45,7 @@ import java.util.stream.Collectors;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -54,6 +55,8 @@ import javax.swing.table.TableModel;
 
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.abstrato.DesktopAlinhamento;
+import br.com.persist.abstrato.WindowHandler;
+import br.com.persist.abstrato.WindowInternalHandler;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
@@ -123,7 +126,7 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class InternalContainer extends Panel implements ItemListener, Pagina {
+public class InternalContainer extends Panel implements ItemListener, Pagina, WindowHandler, WindowInternalHandler {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private static final String CHAVE_MSG_CONCAT_COMPLEMENTO = "msg.concatenar_complemento";
@@ -2744,10 +2747,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 		toolbar.ultimaAltura = 0;
 	}
 
-	public void formularioVisivel() {
-		Util.ajustar(tabelaPersistencia, getGraphics());
-	}
-
 	@Override
 	public String getStringPersistencia() {
 		return Constantes.VAZIO;
@@ -2804,8 +2803,40 @@ public class InternalContainer extends Panel implements ItemListener, Pagina {
 	}
 
 	@Override
-	public void formularioAtivado(Fichario fichario) {
-		processar(fichario.getGraphics());
+	public void windowActivatedHandler(Window window) {
+		processar(getGraphics());
+		Util.ajustar(tabelaPersistencia, getGraphics());
+	}
+
+	@Override
+	public void windowOpenedHandler(Window window) {
+		LOG.log(Level.FINEST, "windowOpenedHandler");
+	}
+
+	@Override
+	public void tabActivatedHandler(Fichario fichario) {
+		Util.ajustar(tabelaPersistencia, getGraphics());
+	}
+
+	@Override
+	public void windowClosingHandler(Window window) {
+		LOG.log(Level.FINEST, "windowClosingHandler");
+	}
+
+	@Override
+	public void windowInternalActivatedHandler(JInternalFrame internal) {
+		processar(getGraphics());
+		Util.ajustar(tabelaPersistencia, getGraphics());
+	}
+
+	@Override
+	public void windowInternalClosingHandler(JInternalFrame internal) {
+		LOG.log(Level.FINEST, "windowInternalClosingHandler");
+	}
+
+	@Override
+	public void windowInternalOpenedHandler(JInternalFrame internal) {
+		LOG.log(Level.FINEST, "windowInternalOpenedHandler");
 	}
 
 	static Icon iconePesquisa(Pesquisa pesquisa) {

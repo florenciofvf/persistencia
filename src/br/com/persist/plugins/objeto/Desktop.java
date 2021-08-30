@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Window;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -29,6 +30,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.abstrato.AbstratoDesktop;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.abstrato.DesktopLargura;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -36,6 +38,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.FicharioHandler;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -50,7 +53,7 @@ import br.com.persist.plugins.objeto.vinculo.Referencia;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class Desktop extends AbstratoDesktop implements Pagina {
+public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler {
 	private static final long serialVersionUID = 1L;
 	private final DesktopPopup popup = new DesktopPopup();
 	private static final Logger LOG = Logger.getGlobal();
@@ -444,20 +447,13 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		/*
-		 * getDistribuicao().distribuir(-Constantes.VINTE);
-		 * getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
-		 * getAjustar().usarFormularios(true);
-		 * getAjuste().empilharFormularios();
-		 */
-	}
-
-	public void executarAoAbrirFormulario() {
-		adicionadoAoFichario(null);
+		getLarguras().configurar(DesktopLargura.TOTAL_A_DIREITA);
+		getAjustar().usarFormularios(true);
+		getAjuste().empilharFormularios();
 	}
 
 	@Override
-	public void formularioAtivado(Fichario fichario) {
+	public void windowActivatedHandler(Window window) {
 		for (JInternalFrame frame : getAllFrames()) {
 			try {
 				frame.setSelected(true);
@@ -465,6 +461,17 @@ public class Desktop extends AbstratoDesktop implements Pagina {
 				LOG.log(Level.FINEST, "{0}", e.getMessage());
 			}
 		}
+		adicionadoAoFichario(null);
+	}
+
+	@Override
+	public void tabActivatedHandler(Fichario fichario) {
+		windowActivatedHandler(null);
+	}
+
+	@Override
+	public void windowOpenedHandler(Window window) {
+		LOG.log(Level.FINEST, "windowOpenedHandler");
 	}
 
 	@Override

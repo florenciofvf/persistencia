@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Window;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
@@ -42,13 +43,14 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import br.com.persist.abstrato.FabricaContainer;
+import br.com.persist.abstrato.WindowHandler;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioEvento;
 
-public class Fichario extends JTabbedPane {
+public class Fichario extends JTabbedPane implements WindowHandler {
 	private static final long serialVersionUID = 1L;
 	private final transient Navegacao navegacaoEsquerdo = new Navegacao(ESQUERDO);
 	private final transient Navegacao navegacaoDireito = new Navegacao(DIREITO);
@@ -179,6 +181,7 @@ public class Fichario extends JTabbedPane {
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
+			tabSelected(getSelectedIndex());
 			if (habilitado) {
 				direito.clear();
 				push(esquerdo, ultimo);
@@ -401,7 +404,9 @@ public class Fichario extends JTabbedPane {
 		setToolTipTextAt(ultimoIndice, titulo.getHint());
 		setEnabledAt(ultimoIndice, titulo.isAtivo());
 		setTabComponentAt(ultimoIndice, cabecalho);
-		setSelectedIndex(ultimoIndice);
+		if (pagina.getComponent() != null) {
+			setSelectedIndex(ultimoIndice);
+		}
 		pagina.adicionadoAoFichario(this);
 		checarSelecao();
 	}
@@ -420,15 +425,25 @@ public class Fichario extends JTabbedPane {
 		}
 	}
 
-	public void formularioAtivado(Formulario formulario) {
-		int total = getTabCount();
-		for (int i = 0; i < total; i++) {
+	public void tabSelected(int i) {
+		if (i >= 0 && i < getTabCount()) {
 			Pagina pagina = getPagina(i);
-			pagina.formularioAtivado(this);
+			pagina.tabActivatedHandler(this);
 		}
 	}
 
-	public void visivelFormulario(Formulario formulario) {
+	@Override
+	public void windowActivatedHandler(Window window) {
+		tabSelected(getSelectedIndex());
+	}
+
+	@Override
+	public void windowClosingHandler(Window window) {
+		LOG.log(Level.FINEST, "windowClosingHandler");
+	}
+
+	@Override
+	public void windowOpenedHandler(Window window) {
 		File file = new File(Constantes.PERSISTENCIA_FVF);
 		if (file.exists()) {
 			List<String> linhas = new ArrayList<>();
@@ -443,7 +458,7 @@ public class Fichario extends JTabbedPane {
 				Util.stackTraceAndMessage("RESTAURAR PAGINAS", ex, Fichario.this);
 			}
 			for (String s : linhas) {
-				restaurarPagina(formulario, s);
+				restaurarPagina((Formulario) window, s);
 			}
 		}
 	}

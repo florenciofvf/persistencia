@@ -63,8 +63,8 @@ public class ObjetoContainer extends Panel {
 	private transient List<CompChave> vinculados = new ArrayList<>();
 	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
-	private final BarraButton toolbar = new BarraButton();
 	private final ObjetoSuperficie objetoSuperficie;
+	private final Toolbar toolbar = new Toolbar();
 	private TextField txtTabela = new TextField();
 	private final transient Objeto objeto;
 	private final Fichario fichario;
@@ -81,6 +81,10 @@ public class ObjetoContainer extends Panel {
 	private void montarLayout() {
 		add(BorderLayout.CENTER, fichario);
 		add(BorderLayout.NORTH, toolbar);
+	}
+
+	private class Toolbar extends BarraButton {
+		private static final long serialVersionUID = 1L;
 	}
 
 	private transient MouseListener listenerVinculado = new MouseAdapter() {

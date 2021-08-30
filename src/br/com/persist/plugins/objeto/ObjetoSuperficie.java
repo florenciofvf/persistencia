@@ -12,11 +12,13 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -2711,7 +2713,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	@Override
-	public void executarAoAbrirFormulario() {
-		LOG.log(Level.FINEST, "executarAoAbrirFormulario");
+	public void windowActivatedHandler(Window window) {
+		for (JInternalFrame frame : getAllFrames()) {
+			try {
+				frame.setSelected(true);
+			} catch (PropertyVetoException e) {
+				LOG.log(Level.FINEST, "{0}", e.getMessage());
+			}
+		}
 	}
 }
