@@ -2629,7 +2629,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			while (destacarTitulo && contador < Constantes.DEZ && !Thread.currentThread().isInterrupted()) {
 				try {
 					destacarTitulo(original);
-					wait(300);
+					wait(500);
 					contador++;
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
@@ -2652,7 +2652,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				tituloListener.setTitulo(esq.substring(indice) + titulo + dir.substring(indice));
 			}
 			if (selecaoListener != null) {
-				selecaoListener.selecionar(indice % 2 == 0);
+				SwingUtilities.invokeLater(() -> selecaoListener.selecionar(indice % 2 == 0));
 			}
 			indice--;
 		}

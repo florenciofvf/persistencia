@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -366,7 +367,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	}
 
 	public void selecionar(boolean b) {
-		LOG.log(Level.FINEST, "{0}", b);
+		try {
+			if (isEnabled() && isVisible()) {
+				setSelected(b);
+			}
+		} catch (PropertyVetoException e) {
+			LOG.log(Level.FINEST, "{0}", b);
+		}
 	}
 
 	public boolean ehReferencia(Referencia referencia) {
