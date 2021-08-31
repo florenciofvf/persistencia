@@ -129,6 +129,7 @@ public class Objeto implements Runnable {
 
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
+		o.referenciaPesquisa = referenciaPesquisa;
 		o.selectAlternativo = selectAlternativo;
 		o.clonarAoDestacar = clonarAoDestacar;
 		o.apelidoParaJoins = apelidoParaJoins;
