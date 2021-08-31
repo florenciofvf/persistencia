@@ -971,8 +971,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					if (pesquisa.isProcessado()) {
 						vinculoListener.pesquisarApos(pesquisa);
 					}
-					processarColunaInfo(coluna);
-					InternalContainer.this.atualizar();
+					SwingUtilities.invokeLater(() -> processarColunaInfo(coluna));
+					SwingUtilities.invokeLater(InternalContainer.this::atualizar);
 				}
 
 				private void processarColunaInfo(int coluna) {
