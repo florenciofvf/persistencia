@@ -59,6 +59,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	private static final Logger LOG = Logger.getGlobal();
 	private boolean ajusteAutomatico = true;
 	private boolean ajusteAutomaticoForm;
+	private final ScrollPane scrollPane;
 	private boolean ajusteLarguraForm;
 
 	public Desktop(boolean extensao) {
@@ -66,6 +67,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 			addMouseListener(mouseListenerInner);
 		}
 		new DropTarget(this, dropTargetListener);
+		scrollPane = new ScrollPane(this);
 	}
 
 	public void atualizarFormularios() {
@@ -505,7 +507,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 
 	@Override
 	public Component getComponent() {
-		return new ScrollPane(this);
+		return scrollPane;
 	}
 
 	@Override
