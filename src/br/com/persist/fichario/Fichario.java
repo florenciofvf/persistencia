@@ -348,7 +348,6 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 			return false;
 		}
 		remove(indice);
-		checarSelecao();
 		return true;
 	}
 
@@ -359,7 +358,6 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		}
 		pagina.excluindoDoFichario(this);
 		remove(indice);
-		checarSelecao();
 		return true;
 	}
 
@@ -367,29 +365,6 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		Pagina pagina = getPagina(indice);
 		pagina.excluindoDoFichario(this);
 		remove(indice);
-		checarSelecao();
-	}
-
-	protected class ChecaSelecao extends Thread {
-		@Override
-		public void run() {
-			int indice = getTabCount() - 1;
-			while (indice >= 0) {
-				Pagina p = getPagina(indice);
-				Titulo titulo = p.getTitulo();
-				if (titulo.isAtivo()) {
-					break;
-				}
-				indice--;
-			}
-			if (indice >= 0 && indice < getTabCount()) {
-				setSelectedIndex(indice);
-			}
-		}
-	}
-
-	private void checarSelecao() {
-		/* new ChecaSelecao().start(); */
 	}
 
 	public synchronized void adicionarPagina(Pagina pagina) {
@@ -408,7 +383,6 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 			setSelectedIndex(ultimoIndice);
 		}
 		pagina.adicionadoAoFichario(this);
-		checarSelecao();
 	}
 
 	public void fechandoFormulario(Formulario formulario) {
@@ -475,7 +449,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 		}
 	}
 
-	private synchronized Pagina getPagina(int i) {
+	public synchronized Pagina getPagina(int i) {
 		Component tab = getTabComponentAt(i);
 		Cabecalho cabecalho = (Cabecalho) tab;
 		return cabecalho.getPagina();
