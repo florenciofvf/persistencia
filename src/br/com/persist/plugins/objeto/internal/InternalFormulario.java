@@ -3,6 +3,7 @@ package br.com.persist.plugins.objeto.internal;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
@@ -140,7 +141,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private int getAlturaTitulo() {
 		JComponent c = ((BasicInternalFrameUI) getUI()).getNorthPane();
-		return c == null ? 0 : c.getHeight();
+		if (c != null) {
+			Dimension preferredSize = c.getPreferredSize();
+			if (preferredSize != null) {
+				return (int) preferredSize.getHeight();
+			}
+		}
+		return 0;
 	}
 
 	public static InternalFormulario criar(Conexao padrao, Objeto objeto, boolean buscaAuto) {
