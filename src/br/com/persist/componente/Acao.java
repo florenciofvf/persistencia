@@ -37,4 +37,8 @@ public abstract class Acao extends AbstractAction {
 	public void text(String rotulo) {
 		setRotulo(menu, rotulo, false);
 	}
+
+	public void hint(String string) {
+		putValue(Action.SHORT_DESCRIPTION, string);
+	}
 }

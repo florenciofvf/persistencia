@@ -751,7 +751,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addMenuItem(true, sincronizarAcao);
 				addMenuItem(true, itemAtualizarAuto);
 				itemAtualizarAuto.setText(itemAtualizarAuto.getText() + "   ");
-				itemAtualizarAuto.setToolTipText(ObjetoMensagens.getString("hint.atualizar_auto"));
+				itemAtualizarAuto.setToolTipText(ObjetoMensagens.getString("hint.item_atualizacao_auto"));
+				sincronizarAcao.hint(ObjetoMensagens.getString("hint.item_sincronizacao"));
+				atualizarAcao.hint(ObjetoMensagens.getString("hint.item_atualizacao"));
 				eventos();
 			}
 
