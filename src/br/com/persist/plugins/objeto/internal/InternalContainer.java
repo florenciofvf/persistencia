@@ -149,6 +149,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
 	private ScrollPane scrollPane = new ScrollPane();
+	private transient InternalConfig internalConfig;
 	private final JComboBox<Conexao> comboConexao;
 	private final Toolbar toolbar = new Toolbar();
 	private CabecalhoColuna cabecalhoFiltro;
@@ -2829,9 +2830,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		LOG.log(Level.FINEST, "windowClosingHandler");
 	}
 
+	private boolean ehTabela(InternalConfig config) {
+		return config.igual(objeto);
+	}
+
 	@Override
 	public void windowInternalActivatedHandler(JInternalFrame internal) {
-		processar(getGraphics());
+		InternalConfig config = internalConfig;
+		internalConfig = null;
+		if (config != null && ehTabela(config)) {
+			aplicarConfig(config);
+		} else {
+			processar(getGraphics());
+		}
 		Util.ajustar(tabelaPersistencia, getGraphics());
 	}
 
@@ -2860,5 +2871,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			i++;
 		}
 		return s.substring(i);
+	}
+
+	public InternalConfig getInternalConfig() {
+		return internalConfig;
+	}
+
+	public void setInternalConfig(InternalConfig internalConfig) {
+		this.internalConfig = internalConfig;
 	}
 }

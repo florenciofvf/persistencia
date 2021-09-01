@@ -347,11 +347,11 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		setComplemento(conexao, objeto);
 		objeto.setChecarLargura(true);
 		InternalFormulario internal = new InternalFormulario(conexao, objeto, buscaAuto);
+		internal.setInternalConfig(config);
 		internal.setLocation(point);
 		internal.setSize(dimension);
 		internal.setVisible(true);
 		add(internal);
-		internal.aplicar(config);
 	}
 
 	private class DesktopPopup extends Popup {

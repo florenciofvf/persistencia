@@ -380,10 +380,6 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return referencia.igual(container.getObjeto());
 	}
 
-	public boolean ehTabela(InternalConfig config) {
-		return config.igual(container.getObjeto());
-	}
-
 	public boolean ehTabela(Objeto objeto) {
 		return objeto.igual(container.getObjeto());
 	}
@@ -451,10 +447,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	public void aplicar(InternalConfig config) {
-		if (config != null && ehTabela(config)) {
-			container.aplicarConfig(config);
-		}
+	public void setInternalConfig(InternalConfig config) {
+		container.setInternalConfig(config);
 	}
 
 	public void invertidoNoFichario(Fichario fichario) {
