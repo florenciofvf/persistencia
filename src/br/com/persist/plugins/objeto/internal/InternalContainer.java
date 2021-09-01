@@ -863,6 +863,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void elementos() {
+					try {
+						Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+					}
+				}
+
+				private void descricao() {
 					StringBuilder sb = new StringBuilder();
 					sb.append(Mensagens.getString("label.total") + ": " + pesquisa.getReferencias().size());
 					sb.append(Constantes.QL + "-----------------");
@@ -870,14 +878,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						sb.append(Constantes.QL + ref.toString2());
 					}
 					Util.mensagem(InternalContainer.this, sb.toString());
-				}
-
-				private void descricao() {
-					try {
-						Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
-					}
 				}
 
 				private void excluir() {
