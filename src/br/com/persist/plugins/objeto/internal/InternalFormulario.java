@@ -210,7 +210,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			if (total > maximoRegistros) {
 				total = maximoRegistros;
 			}
-			total++;
+			if (container.scrollVisivel()) {
+				total++;
+			}
 			setSize(getWidth(), novaAltura + total * container.getAlturaTableRegistro());
 		}
 		if (update) {

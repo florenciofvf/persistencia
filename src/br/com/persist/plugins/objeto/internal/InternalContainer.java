@@ -279,6 +279,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		return tabelaPersistencia.getTableHeader().getHeight();
 	}
 
+	public boolean scrollVisivel() {
+		return tabelaPersistencia.getPreferredSize().width > scrollPane.getViewport().getWidth();
+	}
+
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		antesProcessar();
 		if (Preferencias.isDesconectado()) {
