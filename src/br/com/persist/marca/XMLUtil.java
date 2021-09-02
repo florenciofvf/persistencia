@@ -33,6 +33,10 @@ public class XMLUtil {
 				.ql().ql();
 	}
 
+	public XMLUtil atributoCheck(String nome, boolean valor) {
+		return valor ? print(" " + nome + "=" + citar(Constantes.VAZIO + valor)) : this;
+	}
+
 	public XMLUtil atributo(String nome, boolean valor) {
 		return print(" " + nome + "=" + citar(Constantes.VAZIO + valor));
 	}
@@ -43,6 +47,10 @@ public class XMLUtil {
 
 	public XMLUtil atributo(String nome, long valor) {
 		return print(" " + nome + "=" + citar(Constantes.VAZIO + valor));
+	}
+
+	public XMLUtil atributoCheck(String nome, String valor) {
+		return Util.estaVazio(valor) ? this : print(" " + nome + "=" + citar(valor));
 	}
 
 	public XMLUtil atributo(String nome, String valor) {

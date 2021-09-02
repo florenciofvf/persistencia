@@ -279,17 +279,17 @@ public class Relacao {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("relacao");
-		util.atributo("chaveDestino", getChaveDestino());
-		util.atributo("chaveOrigem", getChaveOrigem());
-		util.atributo("destino", destino.getId());
-		util.atributo("desenharDescricao", desenharDescricao);
-		util.atributo("origem", origem.getId());
+		util.atributoCheck("chaveDestino", getChaveDestino());
+		util.atributoCheck("chaveOrigem", getChaveOrigem());
+		util.atributoCheck("destino", destino.getId());
+		util.atributoCheck("desenharDescricao", desenharDescricao);
+		util.atributoCheck("origem", origem.getId());
 		util.atributo("desloc_x_desc", deslocamentoXDesc);
 		util.atributo("desloc_y_desc", deslocamentoYDesc);
 		util.atributo("corFonte", corFonte.getRGB());
-		util.atributo("pontoDestino", pontoDestino);
-		util.atributo("pontoOrigem", pontoOrigem);
-		util.atributo("quebrado", quebrado);
+		util.atributoCheck("pontoDestino", pontoDestino);
+		util.atributoCheck("pontoOrigem", pontoOrigem);
+		util.atributoCheck("quebrado", quebrado);
 		util.atributo("cor", cor.getRGB());
 		util.fecharTag();
 		if (!Util.estaVazio(getDescricao())) {
