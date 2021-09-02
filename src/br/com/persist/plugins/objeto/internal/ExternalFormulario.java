@@ -14,6 +14,7 @@ public class ExternalFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final InternalContainer container;
 	private final Formulario formulario;
+	private boolean processado;
 
 	private ExternalFormulario(Formulario formulario, Conexao padrao, Objeto objeto) {
 		super(objeto.getId());
@@ -49,6 +50,9 @@ public class ExternalFormulario extends AbstratoFormulario {
 
 	@Override
 	public void windowActivatedHandler(Window window) {
-		container.windowActivatedHandler(this);
+		if (!processado) {
+			processado = true;
+			container.windowActivatedHandler(this);
+		}
 	}
 }

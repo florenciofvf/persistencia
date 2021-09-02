@@ -2815,8 +2815,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	@Override
 	public void windowActivatedHandler(Window window) {
-		processar(getGraphics());
-		Util.ajustar(tabelaPersistencia, getGraphics());
+		windowInternalActivatedHandler(null);
 	}
 
 	@Override
