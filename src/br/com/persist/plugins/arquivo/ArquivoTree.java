@@ -120,15 +120,6 @@ public class ArquivoTree extends Tree {
 			}
 		}
 
-		private void checkPopupTrigger(MouseEvent e) {
-			if (e.isPopupTrigger()) {
-				TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
-				if (clicado != null) {
-					setSelectionPath(clicado);
-				}
-			}
-		}
-
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (popupTrigger) {
