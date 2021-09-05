@@ -1,6 +1,5 @@
 package br.com.persist.plugins.metadado;
 
-import java.awt.Rectangle;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceDragEvent;
@@ -20,12 +19,12 @@ import java.util.logging.Logger;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import br.com.persist.componente.Popup;
-import br.com.persist.componente.Tree;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao1;
+import br.com.persist.componente.Popup;
+import br.com.persist.componente.Tree;
 
 public class MetadadoTree extends Tree {
 	private static final long serialVersionUID = 1L;
@@ -116,21 +115,20 @@ public class MetadadoTree extends Tree {
 			if (!e.isPopupTrigger() || getObjetoSelecionado() == null) {
 				return;
 			}
-			TreePath metadadoClicado = getClosestPathForLocation(e.getX(), e.getY());
-			TreePath metadadoSelecionado = getSelectionPath();
+			TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+			TreePath selecionado = getSelectionPath();
 			popupTrigger = true;
-			if (metadadoClicado == null || metadadoSelecionado == null) {
+			if (!validos(clicado, selecionado)) {
 				setSelectionPath(null);
 				return;
 			}
-			Rectangle rectangle = getPathBounds(metadadoClicado);
-			if (rectangle == null || !rectangle.contains(e.getX(), e.getY())) {
+			if (!localValido(clicado, e)) {
 				setSelectionPath(null);
 				return;
 			}
-			if (metadadoClicado.equals(metadadoSelecionado)) {
-				if (metadadoSelecionado.getLastPathComponent() instanceof Metadado) {
-					Metadado metadado = (Metadado) metadadoSelecionado.getLastPathComponent();
+			if (clicado.equals(selecionado)) {
+				if (selecionado.getLastPathComponent() instanceof Metadado) {
+					Metadado metadado = (Metadado) selecionado.getLastPathComponent();
 					metadadosPopup.preShow(metadado);
 					metadadosPopup.show(MetadadoTree.this, e.getX(), e.getY());
 				} else {
@@ -144,6 +142,16 @@ public class MetadadoTree extends Tree {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (popupTrigger) {
+				return;
+			}
+			TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+			TreePath selecionado = getSelectionPath();
+			if (!validos(clicado, selecionado)) {
+				setSelectionPath(null);
+				return;
+			}
+			if (!localValido(clicado, e)) {
+				setSelectionPath(null);
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {

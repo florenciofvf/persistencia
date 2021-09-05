@@ -123,19 +123,19 @@ public class ArquivoTree extends Tree {
 			if (popupTrigger) {
 				return;
 			}
+			TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+			TreePath selecionado = getSelectionPath();
+			if (!validos(clicado, selecionado)) {
+				setSelectionPath(null);
+				return;
+			}
+			if (!localValido(clicado, e)) {
+				setSelectionPath(null);
+				return;
+			}
 			if (e.getClickCount() >= Constantes.DOIS) {
 				ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this));
 			} else {
-				TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
-				TreePath selecionado = getSelectionPath();
-				if (!validos(clicado, selecionado)) {
-					setSelectionPath(null);
-					return;
-				}
-				if (!localValido(clicado, e)) {
-					setSelectionPath(null);
-					return;
-				}
 				Arquivo arquivo = (Arquivo) clicado.getLastPathComponent();
 				if (arquivo == null || !arquivo.isFile()) {
 					setSelectionPath(null);

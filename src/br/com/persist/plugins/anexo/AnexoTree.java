@@ -1,6 +1,5 @@
 package br.com.persist.plugins.anexo;
 
-import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -94,21 +93,20 @@ public class AnexoTree extends Tree {
 			if (!e.isPopupTrigger() || getObjetoSelecionado() == null) {
 				return;
 			}
-			TreePath anexoClicado = getClosestPathForLocation(e.getX(), e.getY());
-			TreePath anexoSelecionado = getSelectionPath();
+			TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+			TreePath selecionado = getSelectionPath();
 			popupTrigger = true;
-			if (anexoClicado == null || anexoSelecionado == null) {
+			if (!validos(clicado, selecionado)) {
 				setSelectionPath(null);
 				return;
 			}
-			Rectangle rectangle = getPathBounds(anexoClicado);
-			if (rectangle == null || !rectangle.contains(e.getX(), e.getY())) {
+			if (!localValido(clicado, e)) {
 				setSelectionPath(null);
 				return;
 			}
-			if (anexoClicado.equals(anexoSelecionado)) {
-				if (anexoSelecionado.getLastPathComponent() instanceof Anexo) {
-					Anexo anexo = (Anexo) anexoSelecionado.getLastPathComponent();
+			if (clicado.equals(selecionado)) {
+				if (selecionado.getLastPathComponent() instanceof Anexo) {
+					Anexo anexo = (Anexo) selecionado.getLastPathComponent();
 					anexoPopup.preShow(anexo);
 					anexoPopup.show(AnexoTree.this, e.getX(), e.getY());
 				} else {
@@ -122,6 +120,16 @@ public class AnexoTree extends Tree {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (popupTrigger) {
+				return;
+			}
+			TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+			TreePath selecionado = getSelectionPath();
+			if (!validos(clicado, selecionado)) {
+				setSelectionPath(null);
+				return;
+			}
+			if (!localValido(clicado, e)) {
+				setSelectionPath(null);
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {
