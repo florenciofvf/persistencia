@@ -91,7 +91,7 @@ public class ArquivoTree extends Tree {
 
 		private void processar(MouseEvent e) {
 			popupTrigger = false;
-			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
+			if (!e.isPopupTrigger() || getObjetoSelecionado() == null) {
 				return;
 			}
 			TreePath arquivoClicado = getClosestPathForLocation(e.getX(), e.getY());
@@ -138,10 +138,6 @@ public class ArquivoTree extends Tree {
 			}
 		}
 	};
-
-	public void desabilitarPopup() {
-		popupDesabilitado = true;
-	}
 
 	private class ArquivoPopup extends Popup {
 		private static final long serialVersionUID = 1L;

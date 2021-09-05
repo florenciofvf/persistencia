@@ -7,7 +7,6 @@ import javax.swing.tree.TreeSelectionModel;
 
 public class Tree extends JTree {
 	private static final long serialVersionUID = 1L;
-	protected boolean popupDesabilitado;
 	protected boolean popupTrigger;
 
 	public Tree(TreeModel newModel) {

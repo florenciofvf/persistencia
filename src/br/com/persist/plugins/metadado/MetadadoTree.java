@@ -112,7 +112,7 @@ public class MetadadoTree extends Tree {
 
 		private void processar(MouseEvent e) {
 			popupTrigger = false;
-			if (!e.isPopupTrigger() || popupDesabilitado || getObjetoSelecionado() == null) {
+			if (!e.isPopupTrigger() || getObjetoSelecionado() == null) {
 				return;
 			}
 			TreePath metadadoClicado = getClosestPathForLocation(e.getX(), e.getY());
@@ -154,10 +154,6 @@ public class MetadadoTree extends Tree {
 			}
 		}
 	};
-
-	public void desabilitarPopup() {
-		popupDesabilitado = true;
-	}
 
 	private class MetadadosPopup extends Popup {
 		private static final long serialVersionUID = 1L;
