@@ -91,6 +91,7 @@ public class ArquivoTree extends Tree {
 
 		private void processar(MouseEvent e) {
 			popupTrigger = false;
+			checkPopupTrigger(e);
 			if (!e.isPopupTrigger() || getObjetoSelecionado() == null) {
 				return;
 			}
@@ -116,6 +117,15 @@ public class ArquivoTree extends Tree {
 				}
 			} else {
 				setSelectionPath(null);
+			}
+		}
+
+		private void checkPopupTrigger(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+				if (clicado != null) {
+					setSelectionPath(clicado);
+				}
 			}
 		}
 
