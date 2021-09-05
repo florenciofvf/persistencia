@@ -402,7 +402,9 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 	public void tabSelected(int i) {
 		if (i >= 0 && i < getTabCount()) {
 			Pagina pagina = getPagina(i);
-			pagina.tabActivatedHandler(this);
+			if (pagina != null) {
+				pagina.tabActivatedHandler(this);
+			}
 		}
 	}
 
@@ -451,6 +453,9 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 
 	public synchronized Pagina getPagina(int i) {
 		Component tab = getTabComponentAt(i);
+		if (tab == null) {
+			return null;
+		}
 		Cabecalho cabecalho = (Cabecalho) tab;
 		return cabecalho.getPagina();
 	}
