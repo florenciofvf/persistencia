@@ -1,5 +1,6 @@
 package br.com.persist.componente;
 
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
@@ -21,11 +22,20 @@ public class Tree extends JTree {
 	}
 
 	protected void checkPopupTrigger(MouseEvent e) {
-		if (e.isPopupTrigger()) {
+		if (e != null && e.isPopupTrigger()) {
 			TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
 			if (clicado != null) {
 				setSelectionPath(clicado);
 			}
 		}
+	}
+
+	protected boolean validos(TreePath clicado, TreePath selecionado) {
+		return clicado != null && selecionado != null;
+	}
+
+	protected boolean localValido(TreePath clicado, MouseEvent e) {
+		Rectangle rectangle = getPathBounds(clicado);
+		return rectangle != null && e != null && rectangle.contains(e.getX(), e.getY());
 	}
 }

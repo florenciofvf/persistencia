@@ -1,6 +1,5 @@
 package br.com.persist.plugins.arquivo;
 
-import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -95,21 +94,20 @@ public class ArquivoTree extends Tree {
 			if (!e.isPopupTrigger() || getObjetoSelecionado() == null) {
 				return;
 			}
-			TreePath arquivoClicado = getClosestPathForLocation(e.getX(), e.getY());
-			TreePath arquivoSelecionado = getSelectionPath();
+			TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+			TreePath selecionado = getSelectionPath();
 			popupTrigger = true;
-			if (arquivoClicado == null || arquivoSelecionado == null) {
+			if (!validos(clicado, selecionado)) {
 				setSelectionPath(null);
 				return;
 			}
-			Rectangle rectangle = getPathBounds(arquivoClicado);
-			if (rectangle == null || !rectangle.contains(e.getX(), e.getY())) {
+			if (!localValido(clicado, e)) {
 				setSelectionPath(null);
 				return;
 			}
-			if (arquivoClicado.equals(arquivoSelecionado)) {
-				if (arquivoSelecionado.getLastPathComponent() instanceof Arquivo) {
-					Arquivo arquivo = (Arquivo) arquivoSelecionado.getLastPathComponent();
+			if (clicado.equals(selecionado)) {
+				if (selecionado.getLastPathComponent() instanceof Arquivo) {
+					Arquivo arquivo = (Arquivo) selecionado.getLastPathComponent();
 					arvorePopup.preShow(arquivo);
 					arvorePopup.show(ArquivoTree.this, e.getX(), e.getY());
 				} else {
@@ -128,14 +126,22 @@ public class ArquivoTree extends Tree {
 			if (e.getClickCount() >= Constantes.DOIS) {
 				ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this));
 			} else {
-				TreePath pathClicado = getClosestPathForLocation(e.getX(), e.getY());
-				if (pathClicado != null) {
-					Arquivo arquivo = (Arquivo) pathClicado.getLastPathComponent();
-					if (arquivo == null || !arquivo.isFile()) {
-						return;
-					}
-					ouvintes.forEach(o -> o.clickArquivo(ArquivoTree.this));
+				TreePath clicado = getClosestPathForLocation(e.getX(), e.getY());
+				TreePath selecionado = getSelectionPath();
+				if (!validos(clicado, selecionado)) {
+					setSelectionPath(null);
+					return;
 				}
+				if (!localValido(clicado, e)) {
+					setSelectionPath(null);
+					return;
+				}
+				Arquivo arquivo = (Arquivo) clicado.getLastPathComponent();
+				if (arquivo == null || !arquivo.isFile()) {
+					setSelectionPath(null);
+					return;
+				}
+				ouvintes.forEach(o -> o.clickArquivo(ArquivoTree.this));
 			}
 		}
 	};
