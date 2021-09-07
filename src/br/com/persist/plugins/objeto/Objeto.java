@@ -832,15 +832,11 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTitle(String complemento) {
-		return getTabela() + " - " + getId() + " - " + complemento + " ";
+		return getId() + " - " + getTabela() + " - " + complemento + " ";
 	}
 
 	public String getTitle(OrdenacaoModelo modelo) {
-		return getTabela() + " - " + getId() + " [" + modelo.getRowCount() + "]";
-	}
-
-	public String getTitle(OrdenacaoModelo modelo, String complemento) {
-		return getTabela() + " - " + getId() + " [" + modelo.getRowCount() + "] - " + complemento;
+		return getId() + " - " + getTabela() + " [" + modelo.getRowCount() + "]";
 	}
 
 	public int getDeslocamentoXId() {
