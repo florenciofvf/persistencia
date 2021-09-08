@@ -2419,6 +2419,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa,
 					new Referencia(objeto.getGrupo(), objeto.getTabela(), coluna));
 			Referencia referencia = new Referencia(objDetalhe.getGrupo(), objDetalhe.getTabela(), coletor.get(0));
+			referencia.setVazioInvisivel(true);
 			Pesquisa existente = objeto.getPesquisa(pesquisa);
 			if (existente != null) {
 				existente.add(referencia);
