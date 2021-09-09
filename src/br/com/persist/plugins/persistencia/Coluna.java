@@ -87,6 +87,14 @@ public class Coluna {
 		return !chave;
 	}
 
+	public boolean isAutoInc() {
+		return autoInc;
+	}
+
+	public boolean isNulavel() {
+		return nulavel;
+	}
+
 	public boolean isNumero() {
 		return numero;
 	}

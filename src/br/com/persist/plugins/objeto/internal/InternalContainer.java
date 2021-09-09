@@ -1566,7 +1566,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private MenuDML() {
 					super("label.dml", Icones.EXECUTAR);
-					add(false, new MenuInsert());
+					add(false, new MenuInsert(true));
+					add(false, new MenuInsert(false));
 					add(true, new MenuUpdate());
 					add(true, new MenuDelete());
 					add(true, new MenuSelect());
@@ -1576,11 +1577,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private class MenuInsert extends MenuPadrao3 {
 					private static final long serialVersionUID = 1L;
+					private final boolean camposObrigatorios;
 
-					private MenuInsert() {
-						super(Constantes.LABEL_INSERT, Icones.CRIAR);
+					private MenuInsert(boolean camposObrigatorios) {
+						super(camposObrigatorios ? Constantes.LABEL_INSERT_CMP_OBRIG : Constantes.LABEL_INSERT,
+								Icones.CRIAR);
 						formularioAcao.setActionListener(e -> abrirUpdate(true));
 						dialogoAcao.setActionListener(e -> abrirUpdate(false));
+						this.camposObrigatorios = camposObrigatorios;
 					}
 
 					private void abrirUpdate(boolean abrirEmForm) {
@@ -1588,8 +1592,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (conexao != null) {
 							OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 							Coletor coletor = new Coletor();
-							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-									InternalContainer.this, new SetLista.Config(true, false));
+							SetLista.view(objeto.getId(),
+									camposObrigatorios ? tabelaPersistencia.getListaNomeColunasObrigatorias()
+											: tabelaPersistencia.getListaNomeColunas(true),
+									coletor, InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
 								String instrucao = modelo.getInsert(objeto.getPrefixoNomeTabela(), coletor);
 								if (!Util.estaVazio(instrucao)) {

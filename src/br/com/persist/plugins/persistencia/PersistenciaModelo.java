@@ -140,6 +140,16 @@ public class PersistenciaModelo implements TableModel {
 		return lista;
 	}
 
+	public List<String> getListaNomeColunasObrigatorias() {
+		List<String> lista = new ArrayList<>();
+		for (Coluna c : colunas) {
+			if (!c.isColunaInfo() && !c.isNulavel()) {
+				lista.add(c.getNome());
+			}
+		}
+		return lista;
+	}
+
 	public Conexao getConexao() {
 		return conexao;
 	}
