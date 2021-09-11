@@ -52,6 +52,9 @@ public class Objeto implements Runnable {
 	public static final int DIAMETRO = 36;
 	private Referencia referenciaPesquisa;
 	private boolean ajusteAutoForm = true;
+	private boolean chaveamentoAlterado;
+	private boolean mapeamentoAlterado;
+	private boolean sequenciasAlterado;
 	private boolean desenharId = true;
 	private boolean abrirAuto = true;
 	private int deslocamentoXId = -5;
@@ -470,6 +473,7 @@ public class Objeto implements Runnable {
 
 	public void setSequencias(String sequencias) {
 		this.sequencias = sequencias;
+		sequenciasAlterado = true;
 	}
 
 	public String getSequencias() {
@@ -721,6 +725,7 @@ public class Objeto implements Runnable {
 
 	public void setChaveamento(String chaveamento) {
 		this.chaveamento = chaveamento;
+		chaveamentoAlterado = true;
 	}
 
 	public boolean contem(int x, int y) {
@@ -913,6 +918,7 @@ public class Objeto implements Runnable {
 
 	public void setMapeamento(String mapeamento) {
 		this.mapeamento = mapeamento;
+		mapeamentoAlterado = true;
 	}
 
 	public Map<String, String> getMapaSequencias() {
@@ -1074,5 +1080,29 @@ public class Objeto implements Runnable {
 
 	public void setBuscaAutoTemp(boolean buscaAutoTemp) {
 		this.buscaAutoTemp = buscaAutoTemp;
+	}
+
+	public boolean isSequenciasAlterado() {
+		return sequenciasAlterado;
+	}
+
+	public void setSequenciasAlterado(boolean sequenciasAlterado) {
+		this.sequenciasAlterado = sequenciasAlterado;
+	}
+
+	public boolean isChaveamentoAlterado() {
+		return chaveamentoAlterado;
+	}
+
+	public void setChaveamentoAlterado(boolean chaveamentoAlterado) {
+		this.chaveamentoAlterado = chaveamentoAlterado;
+	}
+
+	public boolean isMapeamentoAlterado() {
+		return mapeamentoAlterado;
+	}
+
+	public void setMapeamentoAlterado(boolean mapeamentoAlterado) {
+		this.mapeamentoAlterado = mapeamentoAlterado;
 	}
 }

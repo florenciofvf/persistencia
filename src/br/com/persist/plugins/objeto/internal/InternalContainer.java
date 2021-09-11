@@ -161,6 +161,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, boolean buscaAuto) {
 		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
 		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
+		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
 		comboConexao = ConexaoProvedor.criarComboConexao(padrao);
@@ -330,8 +331,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		tabelaPersistencia.setModel(modeloOrdenacao);
 		persistenciaModelo.setConexao(conexao);
 		persistenciaModelo.setComponente(this);
+		checarAtributosObjeto();
 		checarScrollPane();
 		return modeloOrdenacao;
+	}
+
+	private void checarAtributosObjeto() {
+		if (objeto.isChaveamentoAlterado()) {
+			objeto.setChaveamentoAlterado(false);
+			tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
+		}
+		if (objeto.isMapeamentoAlterado()) {
+			objeto.setMapeamentoAlterado(false);
+			tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
+		}
 	}
 
 	private void checarScrollPane() {
@@ -381,7 +394,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private PersistenciaModelo.Parametros criarParametros(Connection conn, Conexao conexao, String consulta) {
 		Parametros param = new Parametros(conn, conexao, consulta);
-		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
+		if (objeto.isSequenciasAlterado()) {
+			objeto.setSequenciasAlterado(false);
+			objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
+		}
 		param.setMapaSequencia(objeto.getMapaSequencias());
 		param.setColunasChave(objeto.getChavesArray());
 		param.setComColunaInfo(objeto.isColunaInfo());
