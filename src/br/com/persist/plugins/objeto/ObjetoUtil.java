@@ -38,7 +38,7 @@ public class ObjetoUtil {
 	private static void aux(String string, Map<String, List<String>> mapa) {
 		String[] strings = string.split("=");
 		if (strings != null && strings.length > 1) {
-			String campo = strings[0].trim();
+			String campo = strings[0].trim().toLowerCase();
 			List<String> lista = mapa.computeIfAbsent(campo, t -> new ArrayList<>());
 			String nomes = strings[1];
 			String[] strNomes = nomes.split(",");

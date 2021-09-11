@@ -321,7 +321,7 @@ public class TabelaPersistencia extends JTable {
 			larguraColuna = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
 			menuIN.setText("AND IN - " + chave);
 			limparMenuChaveamento();
-			List<String> lista = getChaveamento().get(chave);
+			List<String> lista = getChaveamento().get(chave.toLowerCase());
 			if (lista != null) {
 				for (String coluna : lista) {
 					add(new MenuItemChaveamento(coluna));
