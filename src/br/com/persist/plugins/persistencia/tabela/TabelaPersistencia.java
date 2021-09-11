@@ -319,7 +319,7 @@ public class TabelaPersistencia extends JTable {
 		private void preShow(String chave) {
 			FontMetrics fontMetrics = getFontMetrics(getFont());
 			larguraColuna = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
-			menuIN.setText("AND IN - " + chave);
+			menuIN.setText("AND " + chave + " IN");
 			limparMenuChaveamento();
 			List<String> lista = getChaveamento().get(chave.toLowerCase());
 			if (lista != null) {
@@ -413,7 +413,7 @@ public class TabelaPersistencia extends JTable {
 
 			private MenuItemChaveamento(String coluna) {
 				super(Constantes.LABEL_VAZIO);
-				setText("AND IN - " + coluna);
+				setText("AND " + coluna + " IN");
 				this.nomeColuna = coluna;
 				semAspasAcao.setActionListener(e -> copiarINDinamico(false));
 				comAspasAcao.setActionListener(e -> copiarINDinamico(true));
