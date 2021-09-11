@@ -2705,6 +2705,15 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
+	public void sequenciaChaveamentoMapeamento(Component componente, Objeto objeto) {
+		InternalFormulario interno = getInternalFormulario(objeto);
+		if (interno == null) {
+			Util.mensagem(componente, ObjetoMensagens.getString("msg.sem_form_seq_chave_mapa", objeto.getId()));
+		} else {
+			interno.sequenciaChaveamentoMapeamento(objeto);
+		}
+	}
+
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
 		LOG.log(Level.FINEST, "adicionadoAoFichario");

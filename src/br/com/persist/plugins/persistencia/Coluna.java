@@ -6,7 +6,6 @@ import br.com.persist.plugins.conexao.Conexao;
 
 public class Coluna {
 	private final boolean colunaInfo;
-	private final String sequencia;
 	private final String tipoBanco;
 	private final boolean autoInc;
 	private final boolean nulavel;
@@ -17,6 +16,7 @@ public class Coluna {
 	private final String tipo;
 	private final int tamanho;
 	private final int indice;
+	private String sequencia;
 
 	public Coluna(String nome, int indice) {
 		this(nome, indice, false, false, false, null, new Config(-1, null, false, false, false, null));
@@ -154,5 +154,9 @@ public class Coluna {
 			return string;
 		}
 		return Util.replaceAll(funcao, "#valor#", string);
+	}
+
+	public void setSequencia(String sequencia) {
+		this.sequencia = sequencia;
 	}
 }

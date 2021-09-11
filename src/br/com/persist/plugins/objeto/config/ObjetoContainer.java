@@ -602,8 +602,10 @@ public class ObjetoContainer extends Panel {
 		public void actionPerformed(ActionEvent e) {
 			if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txtChaveamento.getText());
+				objetoSuperficie.sequenciaChaveamentoMapeamento(ObjetoContainer.this, objeto);
 			} else if (txtMapeamento == e.getSource()) {
 				objeto.setMapeamento(txtMapeamento.getText());
+				objetoSuperficie.sequenciaChaveamentoMapeamento(ObjetoContainer.this, objeto);
 			} else if (txtFinalConsulta == e.getSource()) {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
 			} else if (txtComplemento == e.getSource()) {
@@ -622,6 +624,7 @@ public class ObjetoContainer extends Panel {
 				objeto.setChaves(txtChaves.getText());
 			} else if (txtSequencias == e.getSource()) {
 				objeto.setSequencias(txtSequencias.getText());
+				objetoSuperficie.sequenciaChaveamentoMapeamento(ObjetoContainer.this, objeto);
 			}
 			actionPerformedCont(e);
 			objetoSuperficie.repaint();

@@ -79,6 +79,10 @@ public class TabelaPersistencia extends JTable {
 		return (OrdenacaoModelo) getModel();
 	}
 
+	public void atualizarSequencias(Map<String, String> mapaSequencia) {
+		getModelo().atualizarSequencias(mapaSequencia);
+	}
+
 	public void setTabelaPersistenciaListener(TabelaPersistenciaListener listener) {
 		this.listener = listener;
 	}

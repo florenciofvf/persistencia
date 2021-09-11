@@ -61,6 +61,10 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getColumnName(column);
 	}
 
+	public void atualizarSequencias(Map<String, String> mapaSequencia) {
+		model.atualizarSequencias(mapaSequencia);
+	}
+
 	public String getNomeColunas(String apelido) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < getColumnCount(); i++) {

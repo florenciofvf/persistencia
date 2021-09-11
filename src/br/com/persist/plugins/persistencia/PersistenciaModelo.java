@@ -51,6 +51,13 @@ public class PersistenciaModelo implements TableModel {
 		return new PersistenciaModelo(colunas, registros, null, null);
 	}
 
+	public void atualizarSequencias(Map<String, String> mapaSequencia) {
+		for (Coluna c : colunas) {
+			String nomeSequencia = mapaSequencia.get(c.getNome().toLowerCase());
+			c.setSequencia(nomeSequencia);
+		}
+	}
+
 	public static class Parametros {
 		private Map<String, String> mapaSequencia;
 		private final Conexao conexao;

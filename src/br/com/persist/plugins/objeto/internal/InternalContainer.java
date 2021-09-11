@@ -159,13 +159,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private int contadorAuto;
 
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, boolean buscaAuto) {
-		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
-		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
-		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
 		comboConexao = ConexaoProvedor.criarComboConexao(padrao);
 		txtComplemento.setText(objeto.getComplemento());
+		sequenciaChaveamentoMapeamento(objeto);
 		comboConexao.addItemListener(this);
 		toolbar.ini(janela, objeto);
 		this.buscaAuto = buscaAuto;
@@ -2607,6 +2605,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			buscaAuto = true;
 			toolbar.buttonPesquisa.complemento(obj);
 		}
+	}
+
+	public void sequenciaChaveamentoMapeamento(Objeto objeto) {
+		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
+		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
+		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
+		tabelaPersistencia.atualizarSequencias(objeto.getMapaSequencias());
 	}
 
 	public void pesquisarLink(Referencia referencia, String argumentos) {
