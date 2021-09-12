@@ -742,20 +742,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (conexao == null) {
 					return;
 				}
-				String complement = Util.getContentTransfered();
-				if (Util.estaVazio(complement)) {
+				String complemento = Util.getContentTransfered();
+				if (Util.estaVazio(complemento)) {
 					txtComplemento.setText(objeto.getComplemento());
 				} else {
 					if (normal) {
-						txtComplemento.setText(complement);
+						txtComplemento.setText(get(complemento.trim()));
 					} else {
 						String s = txtComplemento.getText().trim();
-						txtComplemento.setText(s + " " + complement);
+						txtComplemento.setText(s + " " + get(complemento.trim()));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
 					}
 				}
+			}
+
+			private String get(String complemento) {
+				String apelido = objeto.getApelidoParaJoins();
+				if (Util.estaVazio(apelido)) {
+					return complemento;
+				}
+				int pos = complemento.indexOf(' ');
+				if (pos < 0) {
+					return complemento;
+				}
+				return complemento.substring(0, pos + 1) + apelido + "." + complemento.substring(pos + 1).trim();
 			}
 		}
 
@@ -1347,13 +1359,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					if (minimo) {
-						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MIN(" + chaves[0] + ") FROM "
+						txtComplemento.setText("AND " + get(chaves[0]) + " = (SELECT MIN(" + chaves[0] + ") FROM "
 								+ objeto.getTabelaEsquema(conexao) + ")");
 					} else {
-						txtComplemento.setText("AND " + chaves[0] + " = (SELECT MAX(" + chaves[0] + ") FROM "
+						txtComplemento.setText("AND " + get(chaves[0]) + " = (SELECT MAX(" + chaves[0] + ") FROM "
 								+ objeto.getTabelaEsquema(conexao) + ")");
 					}
 					actionListenerInner.actionPerformed(null);
+				}
+
+				private String get(String string) {
+					String apelido = objeto.getApelidoParaJoins();
+					if (Util.estaVazio(apelido)) {
+						return string;
+					}
+					return apelido + "." + string;
 				}
 			}
 
