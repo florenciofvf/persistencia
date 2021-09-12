@@ -1775,7 +1775,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void pesquisarReferencia(Conexao conexao, Referencia referencia, String argumentos, Objeto objeto) {
-		objeto.setComplemento("AND " + referencia.getCampo() + " IN (" + argumentos + ")");
+		objeto.setComplemento("AND " + getRefCampo(objeto, referencia) + " IN (" + argumentos + ")");
 		objeto.setReferenciaPesquisa(referencia);
 		if (ObjetoPreferencia.isAbrirAutoDestacado()) {
 			criarExternalFormulario(conexao != null ? conexao : container.getConexaoPadrao(), objeto.clonar());
@@ -1783,6 +1783,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			objeto.setSelecionado(true);
 		}
 		referencia.setProcessado(true);
+	}
+
+	public static String getRefCampo(Objeto objeto, Referencia ref) {
+		String apelido = objeto.getApelidoParaJoins();
+		return (Util.estaVazio(apelido) ? "" : apelido + ".") + ref.getCampo();
 	}
 
 	private void criarExternalFormulario(Conexao conexao, Objeto objeto) {

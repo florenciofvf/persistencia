@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <vinculo>
-	<para tabela="candidato">
+	<para tabela="candidato" apelido="c">
 		<instrucao nome="total votos">
 			<![CDATA[
 				UPDATE candidato SET votos = 0 WHERE id = #id#
