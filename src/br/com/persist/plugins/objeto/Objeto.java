@@ -562,7 +562,18 @@ public class Objeto implements Runnable {
 
 	public void orderBy(StringBuilder sb) {
 		if (!Util.estaVazio(orderBy)) {
-			sb.append(" ORDER BY " + orderBy);
+			sb.append(" ORDER BY ");
+			if (Util.estaVazio(apelidoParaJoins)) {
+				sb.append(orderBy);
+			} else {
+				String apelido = apelidoParaJoins + ".";
+				String order = orderBy.trim();
+				if (order.startsWith(apelido)) {
+					sb.append(orderBy);
+				} else {
+					sb.append(apelido + order);
+				}
+			}
 		}
 	}
 
