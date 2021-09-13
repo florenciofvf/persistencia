@@ -508,6 +508,31 @@ public class Objeto implements Runnable {
 		}
 	}
 
+	public String comApelido(String complemento) {
+		if (Util.estaVazio(apelidoParaJoins)) {
+			return complemento;
+		}
+		int pos = complemento.indexOf(' ');
+		if (pos < 0) {
+			return complemento;
+		}
+		pos++;
+		String prefixo = complemento.substring(0, pos);
+		complemento = complemento.substring(pos).trim();
+		String apelido = apelidoParaJoins + ".";
+		if (complemento.startsWith(apelido)) {
+			return prefixo + complemento;
+		}
+		return prefixo + apelido + complemento;
+	}
+
+	public String semApelido(String complemento) {
+		if (Util.estaVazio(apelidoParaJoins)) {
+			return complemento;
+		}
+		return Util.replaceAll(complemento, apelidoParaJoins + ".", "");
+	}
+
 	public void joins(StringBuilder sb, Conexao conexao, String prefixoNomeTabela) {
 		String tabs = getTabelas();
 		String jois = getJoins();

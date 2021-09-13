@@ -734,7 +734,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void copiarComplemento() {
 				String string = txtComplemento.getText().trim();
-				Util.setContentTransfered(string);
+				Util.setContentTransfered(objeto.semApelido(string));
 			}
 
 			private void processar(boolean normal) {
@@ -746,28 +746,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (Util.estaVazio(complemento)) {
 					txtComplemento.setText(objeto.getComplemento());
 				} else {
+					complemento = complemento.trim();
 					if (normal) {
-						txtComplemento.setText(get(complemento.trim()));
+						txtComplemento.setText(objeto.comApelido(complemento));
 					} else {
 						String s = txtComplemento.getText().trim();
-						txtComplemento.setText(s + " " + get(complemento.trim()));
+						txtComplemento.setText(s + " " + objeto.comApelido(complemento));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
 					}
 				}
-			}
-
-			private String get(String complemento) {
-				String apelido = objeto.getApelidoParaJoins();
-				if (Util.estaVazio(apelido)) {
-					return complemento;
-				}
-				int pos = complemento.indexOf(' ');
-				if (pos < 0) {
-					return complemento;
-				}
-				return complemento.substring(0, pos + 1) + apelido + "." + complemento.substring(pos + 1).trim();
 			}
 		}
 
