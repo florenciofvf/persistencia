@@ -509,10 +509,14 @@ public class Objeto implements Runnable {
 	}
 
 	public String comApelido(String complemento) {
-		if (Util.estaVazio(apelidoParaJoins)) {
+		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(complemento)) {
 			return complemento;
 		}
-		int pos = complemento.indexOf(' ');
+		int ini = 0;
+		while (ini < complemento.length() && complemento.charAt(ini) <= ' ') {
+			ini++;
+		}
+		int pos = complemento.indexOf(' ', ini);
 		if (pos < 0) {
 			return complemento;
 		}
@@ -521,6 +525,9 @@ public class Objeto implements Runnable {
 		complemento = complemento.substring(pos).trim();
 		String apelido = apelidoParaJoins + ".";
 		if (complemento.startsWith(apelido)) {
+			return prefixo + complemento;
+		}
+		if (complemento.length() > 0 && (complemento.charAt(0) >= '0' && complemento.charAt(0) <= '9')) {
 			return prefixo + complemento;
 		}
 		return prefixo + apelido + complemento;

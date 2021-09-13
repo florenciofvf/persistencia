@@ -159,10 +159,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private int contadorAuto;
 
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, boolean buscaAuto) {
+		txtComplemento.setText(objeto.comApelido(objeto.getComplemento()));
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
 		comboConexao = ConexaoProvedor.criarComboConexao(padrao);
-		txtComplemento.setText(objeto.getComplemento());
 		sequenciaChaveamentoMapeamento(objeto);
 		comboConexao.addItemListener(this);
 		toolbar.ini(janela, objeto);
@@ -605,7 +605,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						string = txtComplemento.getText() + " ";
 					}
 				}
-				txtComplemento.setText(ltrim(string + objeto.getComplemento()));
+				txtComplemento.setText(ltrim(objeto.comApelido(string + objeto.getComplemento())));
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -638,7 +638,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						string = txtComplemento.getText() + " ";
 					}
 				}
-				txtComplemento.setText(ltrim(string + filtro));
+				txtComplemento.setText(ltrim(objeto.comApelido(string + filtro)));
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -653,7 +653,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					salvar = true;
 				}
 				checarSalvarVariavelProvedor(salvar);
-				txtComplemento.setText(cv.getValor());
+				txtComplemento.setText(objeto.comApelido(cv.getValor()));
 				actionListenerInner.actionPerformed(null);
 			}
 
@@ -742,7 +742,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 				String complemento = Util.getContentTransfered();
 				if (Util.estaVazio(complemento)) {
-					txtComplemento.setText(objeto.getComplemento());
+					txtComplemento.setText(objeto.comApelido(objeto.getComplemento()));
 				} else {
 					complemento = complemento.trim();
 					if (normal) {
@@ -2121,7 +2121,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private transient ComplementoListener complementoListener = new ComplementoListener() {
 		@Override
 		public void processarComplemento(String string) {
-			txtComplemento.setText(string);
+			txtComplemento.setText(objeto.comApelido(string));
 			actionListenerInner.actionPerformed(null);
 		}
 
@@ -2211,7 +2211,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 				sb.append(f.getValor());
 			}
-			txtComplemento.setText(sb.toString());
+			txtComplemento.setText(objeto.comApelido(sb.toString()));
 			actionListenerInner.actionPerformed(null);
 		}
 
@@ -2247,13 +2247,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void aplicarInternalConfig(InternalConfig config) {
 		String complemento = txtComplemento.getText();
-		txtComplemento.setText(config.getComplemento());
+		txtComplemento.setText(objeto.comApelido(config.getComplemento()));
 		processado.set(true);
 		destacarTitulo = true;
 		actionListenerInner.actionPerformed(null);
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
 		if (!processado.get()) {
-			txtComplemento.setText(complemento);
+			txtComplemento.setText(objeto.comApelido(complemento));
 		}
 	}
 
@@ -2508,7 +2508,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(ltrim(string + prefixo + nome + getValor(opcao, memoria)));
+			txtComplemento.setText(
+					ltrim(objeto.comApelido(string + objeto.comApelido(prefixo + nome) + getValor(opcao, memoria))));
 			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -2518,7 +2519,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabela, String nome, String memoria) {
 			String prefixo = "AND ";
 			String opcao = "=";
-			txtComplemento.setText(prefixo + nome + getValor(opcao, memoria));
+			txtComplemento.setText(objeto.comApelido(prefixo + nome) + getValor(opcao, memoria));
 			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -2534,7 +2535,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(ltrim(complemento + prefixo + nome + getValor(opcao, Constantes.VAZIO)));
+			txtComplemento.setText(ltrim(objeto
+					.comApelido(complemento + objeto.comApelido(prefixo + nome) + getValor(opcao, Constantes.VAZIO))));
 		}
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
@@ -2546,7 +2548,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(ltrim(prefixo + nome + getValor(opcao, Constantes.VAZIO)));
+			txtComplemento.setText(ltrim(objeto.comApelido(prefixo + nome) + getValor(opcao, Constantes.VAZIO)));
 		}
 
 		private String getPrefixo() {

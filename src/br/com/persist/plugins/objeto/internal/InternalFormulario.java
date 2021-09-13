@@ -116,9 +116,9 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 		if (novaAltura != alturaAtual) {
 			setSize(getWidth(), novaAltura);
-			if (update) {
-				SwingUtilities.updateComponentTreeUI(this);
-			}
+		}
+		if (update) {
+			SwingUtilities.updateComponentTreeUI(this);
 		}
 	}
 
