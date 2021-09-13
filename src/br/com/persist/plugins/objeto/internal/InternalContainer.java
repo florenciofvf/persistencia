@@ -99,7 +99,6 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
-import br.com.persist.plugins.objeto.ObjetoSuperficie;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
@@ -493,8 +492,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos) {
 		if (conexao != null) {
 			selecionarConexao(conexao);
-			txtComplemento
-					.setText("AND " + ObjetoSuperficie.getRefCampo(objeto, referencia) + " IN (" + argumentos + ")");
+			txtComplemento.setText(objeto.comApelido("AND " + referencia.getCampo()) + " IN (" + argumentos + ")");
 			destacarTitulo = true;
 			actionListenerInner.actionPerformed(null);
 		}
