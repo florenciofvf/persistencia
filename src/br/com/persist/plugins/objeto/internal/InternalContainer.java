@@ -1346,21 +1346,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					if (minimo) {
-						txtComplemento.setText("AND " + get(chaves[0]) + " = (SELECT MIN(" + chaves[0] + ") FROM "
-								+ objeto.getTabelaEsquema(conexao) + ")");
+						txtComplemento.setText(objeto.comApelido("AND " + chaves[0]) + " = (SELECT MIN(" + chaves[0]
+								+ ") FROM " + objeto.getTabelaEsquema(conexao) + ")");
 					} else {
-						txtComplemento.setText("AND " + get(chaves[0]) + " = (SELECT MAX(" + chaves[0] + ") FROM "
-								+ objeto.getTabelaEsquema(conexao) + ")");
+						txtComplemento.setText(objeto.comApelido("AND " + chaves[0]) + " = (SELECT MAX(" + chaves[0]
+								+ ") FROM " + objeto.getTabelaEsquema(conexao) + ")");
 					}
 					actionListenerInner.actionPerformed(null);
-				}
-
-				private String get(String string) {
-					String apelido = objeto.getApelidoParaJoins();
-					if (Util.estaVazio(apelido)) {
-						return string;
-					}
-					return apelido + "." + string;
 				}
 			}
 
