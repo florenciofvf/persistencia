@@ -159,10 +159,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private int contadorAuto;
 
 	public InternalContainer(Janela janela, Conexao padrao, Objeto objeto, boolean buscaAuto) {
-		txtComplemento.setText(objeto.comApelido(objeto.getComplemento()));
 		tabelaPersistencia.setTabelaPersistenciaListener(tabelaListener);
 		txtComplemento.addMouseListener(mouseComplementoListener);
 		comboConexao = ConexaoProvedor.criarComboConexao(padrao);
+		txtComplemento.setText(objeto.getComplemento());
 		sequenciaChaveamentoMapeamento(objeto);
 		comboConexao.addItemListener(this);
 		toolbar.ini(janela, objeto);
@@ -258,6 +258,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			boolean resp = ultimaAltura != altura;
 			ultimaAltura = altura;
 			return resp;
+		}
+
+		@Override
+		public void setText(String string) {
+			super.setText(Util.ltrim(string));
+		}
+
+		private void setTextAnd(String campo, String string) {
+			setText(objeto.comApelido("AND", campo) + string);
 		}
 	}
 
@@ -492,7 +501,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos) {
 		if (conexao != null) {
 			selecionarConexao(conexao);
-			txtComplemento.setText(objeto.comApelido("AND " + referencia.getCampo()) + " IN (" + argumentos + ")");
+			txtComplemento.setTextAnd(referencia.getCampo(), " IN (" + argumentos + ")");
 			destacarTitulo = true;
 			actionListenerInner.actionPerformed(null);
 		}
@@ -605,7 +614,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						string = txtComplemento.getText() + " ";
 					}
 				}
-				txtComplemento.setText(ltrim(objeto.comApelido(string + objeto.getComplemento())));
+				txtComplemento.setText(string + objeto.getComplemento());
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -638,7 +647,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						string = txtComplemento.getText() + " ";
 					}
 				}
-				txtComplemento.setText(ltrim(string + filtro));
+				txtComplemento.setText(string + filtro);
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -653,7 +662,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					salvar = true;
 				}
 				checarSalvarVariavelProvedor(salvar);
-				txtComplemento.setText(objeto.comApelido(cv.getValor()));
+				txtComplemento.setText(cv.getValor());
 				actionListenerInner.actionPerformed(null);
 			}
 
@@ -742,14 +751,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 				String complemento = Util.getContentTransfered();
 				if (Util.estaVazio(complemento)) {
-					txtComplemento.setText(objeto.comApelido(objeto.getComplemento()));
+					txtComplemento.setText(objeto.getComplemento());
 				} else {
 					complemento = complemento.trim();
 					if (normal) {
-						txtComplemento.setText(objeto.comApelido(complemento));
+						txtComplemento.setText(complemento);
 					} else {
 						String s = txtComplemento.getText().trim();
-						txtComplemento.setText(s + " " + objeto.comApelido(complemento));
+						txtComplemento.setText(s + " " + complemento);
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
@@ -1346,10 +1355,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					if (minimo) {
-						txtComplemento.setText(objeto.comApelido("AND " + chaves[0]) + " = (SELECT MIN(" + chaves[0]
+						txtComplemento.setText(objeto.comApelido("AND", chaves[0]) + " = (SELECT MIN(" + chaves[0]
 								+ ") FROM " + objeto.getTabelaEsquema(conexao) + ")");
 					} else {
-						txtComplemento.setText(objeto.comApelido("AND " + chaves[0]) + " = (SELECT MAX(" + chaves[0]
+						txtComplemento.setText(objeto.comApelido("AND", chaves[0]) + " = (SELECT MAX(" + chaves[0]
 								+ ") FROM " + objeto.getTabelaEsquema(conexao) + ")");
 					}
 					actionListenerInner.actionPerformed(null);
@@ -2121,7 +2130,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private transient ComplementoListener complementoListener = new ComplementoListener() {
 		@Override
 		public void processarComplemento(String string) {
-			txtComplemento.setText(objeto.comApelido(string));
+			txtComplemento.setText(string);
 			actionListenerInner.actionPerformed(null);
 		}
 
@@ -2211,7 +2220,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 				sb.append(f.getValor());
 			}
-			txtComplemento.setText(objeto.comApelido(sb.toString()));
+			txtComplemento.setText(sb.toString());
 			actionListenerInner.actionPerformed(null);
 		}
 
@@ -2247,13 +2256,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void aplicarInternalConfig(InternalConfig config) {
 		String complemento = txtComplemento.getText();
-		txtComplemento.setText(objeto.comApelido(config.getComplemento()));
+		txtComplemento.setText(config.getComplemento());
 		processado.set(true);
 		destacarTitulo = true;
 		actionListenerInner.actionPerformed(null);
 		Util.ajustar(tabelaPersistencia, config.getGraphics());
 		if (!processado.get()) {
-			txtComplemento.setText(objeto.comApelido(complemento));
+			txtComplemento.setText(complemento);
 		}
 	}
 
@@ -2508,8 +2517,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(
-					ltrim(objeto.comApelido(string + objeto.comApelido(prefixo + nome) + getValor(opcao, memoria))));
+			String comApelido = objeto.comApelido(prefixo, nome);
+			txtComplemento.setText(string + comApelido + getValor(opcao, memoria));
 			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -2517,9 +2526,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		@Override
 		public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabela, String nome, String memoria) {
-			String prefixo = "AND ";
-			String opcao = "=";
-			txtComplemento.setText(objeto.comApelido(prefixo + nome) + getValor(opcao, memoria));
+			txtComplemento.setText(objeto.comApelido("AND", nome) + getValor("=", memoria));
 			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -2535,8 +2542,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(ltrim(objeto
-					.comApelido(complemento + objeto.comApelido(prefixo + nome) + getValor(opcao, Constantes.VAZIO))));
+			String comApelido = objeto.comApelido(prefixo, nome);
+			txtComplemento.setText(complemento + comApelido + getValor(opcao, Constantes.VAZIO));
 		}
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
@@ -2548,7 +2555,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
-			txtComplemento.setText(ltrim(objeto.comApelido(prefixo + nome) + getValor(opcao, Constantes.VAZIO)));
+			String comApelido = objeto.comApelido(prefixo, nome);
+			txtComplemento.setText(comApelido + getValor(opcao, Constantes.VAZIO));
 		}
 
 		private String getPrefixo() {
@@ -2894,17 +2902,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		Referencia referencia = pesquisa.getReferencia();
 		String iconeGrupo = referencia.getIconeGrupo();
 		return Util.estaVazio(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
-	}
-
-	private String ltrim(String s) {
-		if (Util.estaVazio(s)) {
-			return s;
-		}
-		int i = 0;
-		while (s.charAt(i) <= ' ') {
-			i++;
-		}
-		return s.substring(i);
 	}
 
 	public InternalConfig getInternalConfig() {

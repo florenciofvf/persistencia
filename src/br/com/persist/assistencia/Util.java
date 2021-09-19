@@ -1025,4 +1025,15 @@ public class Util {
 	public static String getDataHora() {
 		return new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date());
 	}
+
+	public static String ltrim(String s) {
+		if (Util.estaVazio(s)) {
+			return s;
+		}
+		int i = 0;
+		while (s.charAt(i) <= ' ') {
+			i++;
+		}
+		return s.substring(i);
+	}
 }
