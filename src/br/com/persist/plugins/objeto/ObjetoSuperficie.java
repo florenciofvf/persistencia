@@ -1775,7 +1775,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void pesquisarReferencia(Conexao conexao, Referencia referencia, String argumentos, Objeto objeto) {
-		objeto.setComplemento(objeto.comApelido("AND " + referencia.getCampo()) + " IN (" + argumentos + ")");
+		String comApelido = objeto.comApelido("AND", referencia.getCampo());
+		objeto.setComplemento(comApelido + " IN (" + argumentos + ")");
 		objeto.setReferenciaPesquisa(referencia);
 		if (ObjetoPreferencia.isAbrirAutoDestacado()) {
 			criarExternalFormulario(conexao != null ? conexao : container.getConexaoPadrao(), objeto.clonar());

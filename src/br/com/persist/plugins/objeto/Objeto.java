@@ -508,36 +508,18 @@ public class Objeto implements Runnable {
 		}
 	}
 
-	public String comApelido(String complemento) {
-		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(complemento)) {
-			return complemento;
+	public String comApelido(String prefixo, String campo) {
+		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(campo)) {
+			return prefixo + " " + campo;
 		}
-		int ini = 0;
-		while (ini < complemento.length() && complemento.charAt(ini) <= ' ') {
-			ini++;
-		}
-		int pos = complemento.indexOf(' ', ini);
-		if (pos < 0) {
-			return complemento;
-		}
-		pos++;
-		String prefixo = complemento.substring(0, pos);
-		complemento = complemento.substring(pos).trim();
-		String apelido = apelidoParaJoins + ".";
-		if (complemento.startsWith(apelido)) {
-			return prefixo + complemento;
-		}
-		if (complemento.length() > 0 && (complemento.charAt(0) >= '0' && complemento.charAt(0) <= '9')) {
-			return prefixo + complemento;
-		}
-		return prefixo + apelido + complemento;
+		return prefixo + " " + apelidoParaJoins + "." + campo;
 	}
 
-	public String semApelido(String complemento) {
+	public String semApelido(String string) {
 		if (Util.estaVazio(apelidoParaJoins)) {
-			return complemento;
+			return string;
 		}
-		return Util.replaceAll(complemento, apelidoParaJoins + ".", "");
+		return Util.replaceAll(string, apelidoParaJoins + ".", "");
 	}
 
 	public void joins(StringBuilder sb, Conexao conexao, String prefixoNomeTabela) {
