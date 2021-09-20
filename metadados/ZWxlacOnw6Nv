@@ -114,6 +114,28 @@
 				</metadado>
 			</metadado>
 		</metadado>
+		<metadado descricao="chavedupla" tabela="true" constraint="false" tag="" contabilizavel="false">
+			<metadado descricao="CAMPOS" tabela="false" constraint="false" tag="" contabilizavel="true">
+				<metadado descricao="id" tabela="false" constraint="false" tag="" contabilizavel="false">
+				</metadado>
+				<metadado descricao="id2" tabela="false" constraint="false" tag="" contabilizavel="false">
+				</metadado>
+				<metadado descricao="descricao" tabela="false" constraint="false" tag="" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CHAVES_PRIMARIAS" tabela="false" constraint="false" tag="" contabilizavel="true">
+				<metadado descricao="id" tabela="false" constraint="false" tag="" contabilizavel="false">
+				</metadado>
+				<metadado descricao="id2" tabela="false" constraint="false" tag="" contabilizavel="false">
+				</metadado>
+			</metadado>
+			<metadado descricao="CONSTRAINTS" tabela="false" constraint="false" tag="" contabilizavel="true">
+				<metadado descricao="PRIMARY" tabela="false" constraint="true" tag="id" contabilizavel="false">
+				</metadado>
+				<metadado descricao="PRIMARY" tabela="false" constraint="true" tag="id2" contabilizavel="false">
+				</metadado>
+			</metadado>
+		</metadado>
 		<metadado descricao="eleicao" tabela="true" constraint="false" tag="" contabilizavel="false">
 			<metadado descricao="CAMPOS" tabela="false" constraint="false" tag="" contabilizavel="true">
 				<metadado descricao="ID" tabela="false" constraint="false" tag="" contabilizavel="false">
@@ -123,48 +145,6 @@
 				<metadado descricao="DATA_INICIADA" tabela="false" constraint="false" tag="" contabilizavel="false">
 				</metadado>
 				<metadado descricao="DATA_FINALIZADA" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna5" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna6" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna7" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna8" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna9" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna10" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna11" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna12" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna13" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna14" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna15" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna16" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna17" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna18" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna19" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna20" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna21" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna22" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna23" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna24" tabela="false" constraint="false" tag="" contabilizavel="false">
-				</metadado>
-				<metadado descricao="coluna25" tabela="false" constraint="false" tag="" contabilizavel="false">
 				</metadado>
 			</metadado>
 			<metadado descricao="CHAVE_PRIMARIA" tabela="false" constraint="false" tag="" contabilizavel="true">

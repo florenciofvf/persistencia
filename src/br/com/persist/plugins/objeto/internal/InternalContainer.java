@@ -2340,11 +2340,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		} else {
 			sb.append(and ? "AND " : "");
 		}
-		sb.append(andChaves(chaves));
+		sb.append(andChaves(chaves, and));
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(" OR ");
 			chaves = modelo.getMapaChaves(indices.get(i), conexao);
-			sb.append(andChaves(chaves));
+			sb.append(andChaves(chaves, and));
 		}
 		if (indices.size() > 1) {
 			sb.append(")");
@@ -2352,13 +2352,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		return sb.toString();
 	}
 
-	private String andChaves(Map<String, String> map) {
+	private String andChaves(Map<String, String> map, boolean and) {
 		Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 		Entry<String, String> entry = it.next();
-		StringBuilder sb = new StringBuilder("(" + entry.getKey() + " = " + entry.getValue());
+		StringBuilder sb = new StringBuilder("(" + (and ? objeto.comApelido(entry.getKey()) : entry.getKey()));
+		sb.append(" = " + entry.getValue());
 		while (it.hasNext()) {
 			entry = it.next();
-			sb.append(" AND " + entry.getKey() + " = " + entry.getValue());
+			sb.append(and ? objeto.comApelido(" AND", entry.getKey()) : " AND " + entry.getKey());
+			sb.append(" = " + entry.getValue());
 		}
 		sb.append(")");
 		return sb.toString();

@@ -515,6 +515,13 @@ public class Objeto implements Runnable {
 		return prefixo + " " + apelidoParaJoins + "." + campo;
 	}
 
+	public String comApelido(String campo) {
+		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(campo)) {
+			return campo;
+		}
+		return apelidoParaJoins + "." + campo;
+	}
+
 	public String semApelido(String string) {
 		if (Util.estaVazio(apelidoParaJoins)) {
 			return string;
