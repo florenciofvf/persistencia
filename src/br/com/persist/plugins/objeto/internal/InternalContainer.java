@@ -1013,6 +1013,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							InternalUtil.consolidarColetores(tabelaPersistencia, linha, coluna, pesquisa);
 						}
 						Util.ajustar(tabelaPersistencia, InternalContainer.this.getGraphics());
+						if (configuraAlturaListener != null) {
+							configuraAlturaListener.configurarAltura(getTotalRegistros(), false, false);
+						}
 					}
 				}
 			}
