@@ -2311,7 +2311,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			Conexao conexao) {
 		String[] array = criarArray(chaves);
 		String chave = array[0];
-		StringBuilder sb = new StringBuilder((and ? "AND " : "") + chave + " IN(" + array[1]);
+		StringBuilder sb = new StringBuilder();
+		sb.append(and ? objeto.comApelido("AND", chave) : chave);
+		sb.append(" IN(" + array[1]);
 		for (int i = 1; i < indices.size(); i++) {
 			sb.append(", ");
 			chaves = modelo.getMapaChaves(indices.get(i), conexao);
