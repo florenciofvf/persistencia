@@ -2564,7 +2564,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private String getPrefixo() {
 			return Util.getValorInputDialog2(InternalContainer.this, Mensagens.getString("label.prefixo"),
-					new String[] { " AND ", " OR " });
+					new String[] { " AND", " OR" });
 		}
 
 		private String getOpcao() {
