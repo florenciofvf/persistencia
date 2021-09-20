@@ -509,10 +509,13 @@ public class Objeto implements Runnable {
 	}
 
 	public String comApelido(String prefixo, String campo) {
-		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(campo)) {
-			return prefixo + " " + campo;
+		if (prefixo == null) {
+			prefixo = Constantes.VAZIO;
 		}
-		return prefixo + " " + apelidoParaJoins + "." + campo;
+		if (Util.estaVazio(apelidoParaJoins) || Util.estaVazio(campo)) {
+			return prefixo.trim() + " " + campo;
+		}
+		return prefixo.trim() + " " + apelidoParaJoins + "." + campo;
 	}
 
 	public String comApelido(String campo) {
