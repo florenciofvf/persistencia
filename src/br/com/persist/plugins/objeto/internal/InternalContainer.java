@@ -268,6 +268,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		private void setTextAnd(String campo, String string) {
 			setText(objeto.comApelido("AND", campo) + string);
 		}
+
+		private void focus() {
+			SwingUtilities.invokeLater(this::requestFocus);
+		}
 	}
 
 	public int getAlturaToolbar() {
@@ -2563,6 +2567,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
 			txtComplemento.setText(comApelido + getValor(opcao, Constantes.VAZIO));
+			txtComplemento.focus();
 		}
 
 		private String getPrefixo() {
