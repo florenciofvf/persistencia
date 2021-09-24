@@ -2567,6 +2567,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
 			txtComplemento.setText(comApelido + getValor(opcao, Constantes.VAZIO));
+			toolbar.requestFocus();
 			txtComplemento.focus();
 		}
 
