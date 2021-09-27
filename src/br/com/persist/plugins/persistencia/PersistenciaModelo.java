@@ -60,6 +60,7 @@ public class PersistenciaModelo implements TableModel {
 
 	public static class Parametros {
 		private Map<String, String> mapaSequencia;
+		private Map<String, String> mapaFuncoes;
 		private final Conexao conexao;
 		private final String consulta;
 		private String[] colunasChave;
@@ -71,6 +72,14 @@ public class PersistenciaModelo implements TableModel {
 			this.consulta = consulta;
 			this.conexao = conexao;
 			this.conn = conn;
+		}
+
+		public Map<String, String> getMapaFuncoes() {
+			return mapaFuncoes;
+		}
+
+		public void setMapaFuncoes(Map<String, String> mapaFuncoes) {
+			this.mapaFuncoes = mapaFuncoes;
 		}
 
 		public Map<String, String> getMapaSequencia() {

@@ -1,5 +1,7 @@
 package br.com.persist.plugins.persistencia;
 
+import java.util.Map;
+
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
@@ -17,6 +19,7 @@ public class Coluna {
 	private final int tamanho;
 	private final int indice;
 	private String sequencia;
+	private String funcao;
 
 	public Coluna(String nome, int indice) {
 		this(nome, indice, false, false, false, null, new Config(-1, null, false, false, false, null));
@@ -58,6 +61,9 @@ public class Coluna {
 
 	public String getDetalhe() {
 		StringBuilder sb = new StringBuilder();
+		if (!Util.estaVazio(funcao)) {
+			sb.append("FUNCAO: " + funcao + Constantes.QL);
+		}
 		sb.append("AUTO_INCREMENTO: " + autoInc + Constantes.QL);
 		sb.append("NUMERICO: " + numero + Constantes.QL);
 		sb.append("TAMANHO: " + tamanho + Constantes.QL);
@@ -149,14 +155,28 @@ public class Coluna {
 		if (conexao == null) {
 			return string;
 		}
-		String funcao = conexao.getMapaTiposFuncoes().get(tipo.toLowerCase());
-		if (Util.estaVazio(funcao)) {
+		String funcaoMap = conexao.getMapaTiposFuncoes().get(tipo.toLowerCase());
+		if (Util.estaVazio(funcaoMap)) {
 			return string;
 		}
-		return Util.replaceAll(funcao, "#valor#", string);
+		return Util.replaceAll(funcaoMap, "#valor#", string);
 	}
 
 	public void setSequencia(String sequencia) {
 		this.sequencia = sequencia;
+	}
+
+	public String getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(String funcao) {
+		this.funcao = funcao;
+	}
+
+	public void configFuncao(Map<String, String> funcoes) {
+		if (funcoes != null) {
+			funcao = funcoes.get(tipo.toLowerCase());
+		}
 	}
 }

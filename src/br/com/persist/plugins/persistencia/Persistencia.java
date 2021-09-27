@@ -238,15 +238,16 @@ public class Persistencia {
 	}
 
 	public static MemoriaModelo criarMemoriaModelo(Connection conn, String consulta) throws PersistenciaException {
-		return criarMemoriaModelo(conn, consulta, new String[0], false, new HashMap<>());
+		return criarMemoriaModelo(conn, consulta, new String[0], false, new HashMap<>(), new HashMap<>());
 	}
 
 	public static MemoriaModelo criarMemoriaModelo(Connection conn, String consulta, String[] chaves,
-			boolean colunaInfo, Map<String, String> mapaSequencia) throws PersistenciaException {
+			boolean colunaInfo, Map<String, String> mapaSequencia, Map<String, String> mapaFuncoes)
+			throws PersistenciaException {
 		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
-				List<Coluna> colunas = criarColunas(rsmd, chaves, colunaInfo, mapaSequencia);
+				List<Coluna> colunas = criarColunas(rsmd, chaves, colunaInfo, mapaSequencia, mapaFuncoes);
 				return criarMemoriaModelo(rs, colunas, colunaInfo);
 			}
 		} catch (Exception ex) {
@@ -286,7 +287,7 @@ public class Persistencia {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
 				List<Coluna> colunas = criarColunas(rsmd, parametros.getColunasChave(), parametros.isComColunaInfo(),
-						parametros.getMapaSequencia());
+						parametros.getMapaSequencia(), parametros.getMapaFuncoes());
 				return criarPersistenciaModelo(rs, colunas, parametros);
 			}
 		} catch (Exception ex) {
@@ -317,7 +318,7 @@ public class Persistencia {
 	}
 
 	private static List<Coluna> criarColunas(ResultSetMetaData rsmd, String[] chaves, boolean colunaInfo,
-			Map<String, String> mapaSequencia) throws PersistenciaException {
+			Map<String, String> mapaSequencia, Map<String, String> mapaFuncoes) throws PersistenciaException {
 		Map<String, Boolean> mapa = criarMapaTipos();
 		List<Coluna> colunas = new ArrayList<>();
 		if (mapaSequencia == null) {
@@ -350,6 +351,7 @@ public class Persistencia {
 				String nomeSequencia = mapaSequencia.get(nome.toLowerCase());
 				Coluna coluna = new Coluna(nome, i - 1, numero, chave, blob, classe,
 						new Coluna.Config(tamanho, tipoBanco, nulavel, false, autoInc, nomeSequencia));
+				coluna.configFuncao(mapaFuncoes);
 				colunas.add(coluna);
 			}
 			if (colunaInfo) {

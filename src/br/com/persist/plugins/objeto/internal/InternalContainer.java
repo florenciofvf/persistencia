@@ -409,6 +409,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			objeto.setSequenciasAlterado(false);
 			objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		}
+		param.setMapaFuncoes(conexao.getMapaTiposFuncoes());
 		param.setMapaSequencia(objeto.getMapaSequencias());
 		param.setColunasChave(objeto.getChavesArray());
 		param.setComColunaInfo(objeto.isColunaInfo());
