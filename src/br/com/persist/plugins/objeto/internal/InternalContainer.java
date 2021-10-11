@@ -2579,7 +2579,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private String getOpcao() {
 			return Util.getValorInputDialog2(InternalContainer.this, Mensagens.getString("label.operador"),
-					new String[] { "=", "IN", "LIKE" });
+					new String[] { "=", "IN", "LIKE", "IS NULL", "IS NOT NULL" });
 		}
 
 		private String getValor(String opcao, String string) {
@@ -2589,6 +2589,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				return " IN (" + string + ")";
 			} else if ("LIKE".equals(opcao)) {
 				return " LIKE '%" + string + "%'";
+			} else if ("IS NULL".equals(opcao)) {
+				return " IS NULL";
+			} else if ("IS NOT NULL".equals(opcao)) {
+				return " IS NOT NULL";
 			}
 			return Constantes.VAZIO;
 		}
