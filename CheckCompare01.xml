@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<check>
-	<sentenca>igual(parseString(A), parseString(B))</sentenca>
-	<sentenca>igual(parseString(X), parseString(X), iguais)</sentenca>
-	<sentenca>igual(IGUAL, parseString(Maria da Silva), field(nome))</sentenca>
-	<sentenca>igual(field(nome), parseString(Maria da Silva))</sentenca>
-</check>
