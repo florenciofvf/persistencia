@@ -1494,13 +1494,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.coluna",
 							Mensagens.getString("label.coluna"), Constantes.VAZIO);
 					if (resp != null && !Util.estaVazio(resp.toString())) {
-						destacarColunaTabela(resp.toString());
+						String[] strings = resp.toString().split(",");
+						for (String string : strings) {
+							destacarColunaTabela(string);
+						}
 					}
 				}
 
 				private void destacarColunaTabela(String nome) {
 					if (!Util.estaVazio(nome)) {
-						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome, true);
+						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome.trim(), true);
 						if (coluna != -1) {
 							tabelaPersistencia.destacarColuna(coluna);
 						}
