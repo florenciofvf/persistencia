@@ -1111,11 +1111,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private CopiarColar() {
 		}
 
-		public static void copiar(ObjetoSuperficie objetoSuperficie) {
+		public static boolean copiar(ObjetoSuperficie objetoSuperficie) {
 			copiados.clear();
 			for (Objeto objeto : objetoSuperficie.getSelecionados()) {
 				copiados.add(objeto.clonar());
 			}
+			return !copiados.isEmpty();
 		}
 
 		public static void colar(ObjetoSuperficie superficie, boolean b, int x, int y) {

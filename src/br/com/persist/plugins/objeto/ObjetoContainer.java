@@ -403,7 +403,9 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		protected void copiar() {
-			ObjetoSuperficie.CopiarColar.copiar(objetoSuperficie);
+			if (ObjetoSuperficie.CopiarColar.copiar(objetoSuperficie)) {
+				copiarMensagem(".");
+			}
 		}
 
 		@Override
