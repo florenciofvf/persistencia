@@ -36,9 +36,9 @@ public abstract class BarraButton extends JToolBar
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
 	private Action atualizarAcao = Action.actionIconAtualizar();
 	private LabelTextTemp labelTextTemp2 = new LabelTextTemp();
+	protected Action salvarAcao = Action.actionIconSalvar();
 	protected ButtonColar buttonColar = new ButtonColar();
 	private Action baixarAcao = Action.actionIconBaixar();
-	private Action salvarAcao = Action.actionIconSalvar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
 	private Label labelNomeBackup = new Label();
