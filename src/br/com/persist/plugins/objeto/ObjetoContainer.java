@@ -33,8 +33,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.InputMap;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -228,6 +231,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			txtPrefixoNomeTabela.setToolTipText(ObjetoMensagens.getString("label.prefixo_nt"));
 			configAtalho(excluirAcao, KeyEvent.VK_D);
 			configAtalho(colar0Acao, KeyEvent.VK_V);
+			configMover();
 		}
 
 		private void eventos() {
@@ -485,11 +489,65 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private void configAtalho(Acao acao, int tecla) {
-			ObjetoContainer.this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ObjetoSuperficie.getKeyStroke(tecla),
-					acao.getChave());
-			ObjetoContainer.this.getActionMap().put(acao.getChave(), acao);
+			inputMap().put(ObjetoSuperficie.getKeyStrokeCtrl(tecla), acao.getChave());
+			actionMap().put(acao.getChave(), acao);
+		}
+
+		private void configMover() {
+			inputMap().put(ObjetoSuperficie.getKeyStrokeMeta(KeyEvent.VK_RIGHT), "mover_right");
+			inputMap().put(ObjetoSuperficie.getKeyStrokeMeta(KeyEvent.VK_LEFT), "mover_left");
+			inputMap().put(ObjetoSuperficie.getKeyStrokeMeta(KeyEvent.VK_DOWN), "mover_down");
+			inputMap().put(ObjetoSuperficie.getKeyStrokeMeta(KeyEvent.VK_UP), "mover_up");
+			actionMap().put("mover_right", moverRight);
+			actionMap().put("mover_left", moverLeft);
+			actionMap().put("mover_down", moverDown);
+			actionMap().put("mover_up", moverUp);
+		}
+
+		private InputMap inputMap() {
+			return ObjetoContainer.this.getInputMap(WHEN_IN_FOCUSED_WINDOW);
+		}
+
+		private ActionMap actionMap() {
+			return ObjetoContainer.this.getActionMap();
 		}
 	}
+
+	private transient javax.swing.Action moverRight = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			objetoSuperficie.mover('R');
+		}
+	};
+
+	private transient javax.swing.Action moverLeft = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			objetoSuperficie.mover('L');
+		}
+	};
+
+	private transient javax.swing.Action moverDown = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			objetoSuperficie.mover('D');
+		}
+	};
+
+	private transient javax.swing.Action moverUp = new AbstractAction() {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			objetoSuperficie.mover('U');
+		}
+	};
 
 	public Conexao getConexaoPadrao() {
 		return (Conexao) comboConexao.getSelectedItem();

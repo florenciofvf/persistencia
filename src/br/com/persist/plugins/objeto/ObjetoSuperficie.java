@@ -122,12 +122,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	private void configurar() {
-		inputMap().put(getKeyStroke(KeyEvent.VK_T), "thread_processar");
-		inputMap().put(getKeyStroke(KeyEvent.VK_Y), "thread_desativar");
-		inputMap().put(getKeyStroke(KeyEvent.VK_N), "macro_lista");
-		inputMap().put(getKeyStroke(KeyEvent.VK_Z), "zoom_menos");
-		inputMap().put(getKeyStroke(KeyEvent.VK_X), "zoom_mais");
-		inputMap().put(getKeyStroke(KeyEvent.VK_M), "macro");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_T), "thread_processar");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_Y), "thread_desativar");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_N), "macro_lista");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_Z), "zoom_menos");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_X), "zoom_mais");
+		inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_M), "macro");
 		getActionMap().put("thread_processar", threadProcessar);
 		getActionMap().put("thread_desativar", threadDesativar);
 		getActionMap().put("macro_lista", macroLista);
@@ -166,6 +166,23 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		if (popup2 != null) {
 			SwingUtilities.updateComponentTreeUI(popup2);
 		}
+	}
+
+	public void mover(char c) {
+		for (Objeto objeto : objetos) {
+			if (objeto.isSelecionado()) {
+				if (c == 'L') {
+					objeto.x -= 5;
+				} else if (c == 'R') {
+					objeto.x += 5;
+				} else if (c == 'U') {
+					objeto.y -= 5;
+				} else if (c == 'D') {
+					objeto.y += 5;
+				}
+			}
+		}
+		repaint();
 	}
 
 	private transient javax.swing.Action threadProcessar = new AbstractAction() {
@@ -1382,7 +1399,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					RelacaoDialogo.criar(frame, ObjetoSuperficie.this, selecionadoRelacao);
 				}
 			});
-			inputMap().put(getKeyStroke(KeyEvent.VK_C), copiarAcao.getChave());
+			inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_C), copiarAcao.getChave());
 			ObjetoSuperficie.this.getActionMap().put(copiarAcao.getChave(), copiarAcao);
 			copiarAcao.setActionListener(e -> CopiarColar.copiar(ObjetoSuperficie.this));
 		}
@@ -1568,8 +1585,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		return getInputMap(WHEN_IN_FOCUSED_WINDOW);
 	}
 
-	public static KeyStroke getKeyStroke(int keyCode) {
+	public static KeyStroke getKeyStrokeCtrl(int keyCode) {
 		return KeyStroke.getKeyStroke(keyCode, InputEvent.CTRL_MASK);
+	}
+
+	public static KeyStroke getKeyStrokeMeta(int keyCode) {
+		return KeyStroke.getKeyStroke(keyCode, InputEvent.META_MASK);
 	}
 
 	public void salvar(File file, Conexao conexao) throws XMLException {
