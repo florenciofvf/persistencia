@@ -1399,8 +1399,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					RelacaoDialogo.criar(frame, ObjetoSuperficie.this, selecionadoRelacao);
 				}
 			});
-			inputMap().put(getKeyStrokeCtrl(KeyEvent.VK_C), copiarAcao.getChave());
-			ObjetoSuperficie.this.getActionMap().put(copiarAcao.getChave(), copiarAcao);
 			copiarAcao.setActionListener(e -> CopiarColar.copiar(ObjetoSuperficie.this));
 		}
 

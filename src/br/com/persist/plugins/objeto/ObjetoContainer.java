@@ -230,6 +230,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			txtArquivoVinculo.setToolTipText(ObjetoMensagens.getString("hint.arquivo_vinculado"));
 			txtPrefixoNomeTabela.setToolTipText(ObjetoMensagens.getString("label.prefixo_nt"));
 			configAtalho(excluirAcao, KeyEvent.VK_D);
+			configAtalho(copiarAcao, KeyEvent.VK_C);
 			configAtalho(colar0Acao, KeyEvent.VK_V);
 			configMover();
 		}

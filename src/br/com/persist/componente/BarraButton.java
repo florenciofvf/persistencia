@@ -28,8 +28,8 @@ public abstract class BarraButton extends JToolBar
 	private Action limpar2Acao = Action.actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = Action.actionIcon("label.copiar2", Icones.COPIA);
 	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);
+	protected Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 	protected Action colar0Acao = Action.actionIcon("label.colar", Icones.COLAR);
-	private Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
 	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
 	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
 	protected LabelTextTemp labelTextTempSalvo = new LabelTextTemp();
