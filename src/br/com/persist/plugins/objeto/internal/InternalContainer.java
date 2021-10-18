@@ -2533,6 +2533,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
 			txtComplemento.setText(string + comApelido + getValor(opcao, memoria));
+			focus();
 			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -2541,6 +2542,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		@Override
 		public void colocarColunaComMemoriaAtalho(TabelaPersistencia tabela, String nome, String memoria) {
 			txtComplemento.setText(objeto.comApelido("AND", nome) + getValor("=", memoria));
+			focus();
 			if (Util.confirmar3(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 				actionListenerInner.actionPerformed(null);
 			}
@@ -2558,6 +2560,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
 			txtComplemento.setText(complemento + comApelido + getValor(opcao, Constantes.VAZIO));
+			focus();
 		}
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
@@ -2571,6 +2574,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
 			txtComplemento.setText(comApelido + getValor(opcao, Constantes.VAZIO));
+			focus();
+		}
+
+		private void focus() {
 			toolbar.requestFocus();
 			txtComplemento.focus();
 		}
