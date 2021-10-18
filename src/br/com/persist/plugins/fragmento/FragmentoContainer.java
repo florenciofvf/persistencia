@@ -1,7 +1,7 @@
 package br.com.persist.plugins.fragmento;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
-import static br.com.persist.componente.BarraButtonEnum.APLICAR;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
@@ -95,7 +95,8 @@ public class FragmentoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela, FragmentoListener listener) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					EXCLUIR, COPIAR, APLICAR);
+					EXCLUIR, COPIAR, APLICAR_BOTAO);
+			buttonAplicar.setTextAplicar2(FragmentoMensagens.getString("label.aplicar_concatenado"));
 			setListener(listener);
 		}
 
@@ -220,11 +221,33 @@ public class FragmentoContainer extends AbstratoContainer {
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
 			if (linhas != null && linhas.length > 0) {
-				List<Fragmento> frags = new ArrayList<>();
-				for (int i : linhas) {
-					frags.add(FragmentoProvedor.getFragmento(i));
+				aplicarListaFragmento(linhas, false);
+			}
+		}
+
+		@Override
+		protected void aplicar2() {
+			int[] linhas = tabela.getSelectedRows();
+			if (linhas != null && linhas.length > 0) {
+				aplicarListaFragmento(linhas, true);
+			}
+		}
+
+		private void aplicarListaFragmento(int[] linhas, boolean concatenar) {
+			List<Fragmento> frags = new ArrayList<>();
+			for (int i : linhas) {
+				frags.add(FragmentoProvedor.getFragmento(i));
+			}
+			aplicarFragmento(frags, concatenar);
+		}
+
+		private void aplicarFragmento(List<Fragmento> frags, boolean concatenar) {
+			try {
+				listener.aplicarFragmento(frags, concatenar);
+			} finally {
+				if (janela != null) {
+					janela.fechar();
 				}
-				aplicarFragmento(frags);
 			}
 		}
 
@@ -234,16 +257,6 @@ public class FragmentoContainer extends AbstratoContainer {
 			if (linhas != null && linhas.length == 1 && Util.confirmaExclusao(FragmentoContainer.this, false)) {
 				FragmentoProvedor.excluir(linhas[0]);
 				fragmentoModelo.fireTableDataChanged();
-			}
-		}
-
-		private void aplicarFragmento(List<Fragmento> frags) {
-			try {
-				listener.aplicarFragmento(frags);
-			} finally {
-				if (janela != null) {
-					janela.fechar();
-				}
 			}
 		}
 	}

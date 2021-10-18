@@ -248,15 +248,19 @@ public abstract class BarraButton extends JToolBar
 
 	protected class ButtonAplicar extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
-		protected Action aplicar2Acao = Action.actionIcon(Constantes.LABEL_APLICAR, null);
-		protected Action aplicarAcao = Action.actionIcon(Constantes.LABEL_APLICAR, null);
+		protected Action aplicar2Acao = Action.actionMenu(Constantes.LABEL_APLICAR, null);
+		protected Action aplicarAcao = Action.actionMenu(Constantes.LABEL_APLICAR, null);
 
 		protected ButtonAplicar() {
 			super(Constantes.LABEL_APLICAR, Icones.SUCESSO);
 			addMenuItem(aplicarAcao);
 			aplicarAcao.setActionListener(e -> aplicar());
-			addMenuItem(aplicar2Acao);
+			addMenuItem(true, aplicar2Acao);
 			aplicar2Acao.setActionListener(e -> aplicar2());
+		}
+
+		public void setTextAplicar2(String text) {
+			aplicar2Acao.text(text);
 		}
 	}
 

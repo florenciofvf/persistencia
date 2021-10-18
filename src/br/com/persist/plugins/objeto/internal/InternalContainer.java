@@ -2223,7 +2223,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private transient FragmentoListener fragmentoListener = new FragmentoListener() {
 		@Override
-		public void aplicarFragmento(List<Fragmento> fragmentos) {
+		public void aplicarFragmento(List<Fragmento> fragmentos, boolean concatenar) {
 			StringBuilder sb = new StringBuilder();
 			for (Fragmento f : fragmentos) {
 				if (sb.length() > 0) {
@@ -2231,7 +2231,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 				sb.append(f.getValor());
 			}
-			txtComplemento.setText(sb.toString());
+			String complemento = txtComplemento.getText();
+			if (!concatenar) {
+				complemento = "";
+			} else if (!Util.estaVazio(complemento)) {
+				complemento = complemento.trim() + " ";
+			}
+			txtComplemento.setText(complemento + sb.toString());
 			actionListenerInner.actionPerformed(null);
 		}
 
