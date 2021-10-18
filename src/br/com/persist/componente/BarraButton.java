@@ -21,9 +21,9 @@ import static br.com.persist.componente.BarraButtonEnum.*;
 public abstract class BarraButton extends JToolBar
 		implements WindowHandler, DialogHandler, FicharioHandler, WindowInternalHandler {
 	private static final long serialVersionUID = 1L;
+	protected Action aplicarAcao = Action.actionIcon(Constantes.LABEL_APLICAR, Icones.SUCESSO);
 	private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
-	protected Action aplicarAcao = Action.actionIcon("label.aplicar", Icones.SUCESSO);
 	private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
 	private Action limpar2Acao = Action.actionIcon("label.limpar2", Icones.PANEL4);
 	private Action copiar2Acao = Action.actionIcon("label.copiar2", Icones.COPIA);
@@ -41,6 +41,7 @@ public abstract class BarraButton extends JToolBar
 	private Action baixarAcao = Action.actionIconBaixar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
+	protected transient ButtonAplicar buttonAplicar;
 	private Label labelNomeBackup = new Label();
 	protected Label label = new Label();
 	protected transient Janela janela;
@@ -69,6 +70,7 @@ public abstract class BarraButton extends JToolBar
 		configCopiar2(enuns);
 		configColar2(enuns);
 		configAplicar(enuns);
+		configButtonAplicar(enuns);
 		configBackup(enuns);
 	}
 
@@ -237,6 +239,27 @@ public abstract class BarraButton extends JToolBar
 		}
 	}
 
+	private void configButtonAplicar(BarraButtonEnum... enuns) {
+		if (contem(APLICAR_BOTAO, enuns)) {
+			buttonAplicar = new ButtonAplicar();
+			add(buttonAplicar);
+		}
+	}
+
+	protected class ButtonAplicar extends ButtonPopup {
+		private static final long serialVersionUID = 1L;
+		protected Action aplicar2Acao = Action.actionIcon(Constantes.LABEL_APLICAR, null);
+		protected Action aplicarAcao = Action.actionIcon(Constantes.LABEL_APLICAR, null);
+
+		protected ButtonAplicar() {
+			super(Constantes.LABEL_APLICAR, Icones.SUCESSO);
+			addMenuItem(aplicarAcao);
+			aplicarAcao.setActionListener(e -> aplicar());
+			addMenuItem(aplicar2Acao);
+			aplicar2Acao.setActionListener(e -> aplicar2());
+		}
+	}
+
 	protected class ButtonDestacar extends ButtonPopup {
 		private static final long serialVersionUID = 1L;
 		protected Action destacarEmFormulario = Action.actionMenu("label.destacar_formulario", null);
@@ -368,6 +391,10 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected void aplicar() {
+		throw new UnsupportedOperationException();
+	}
+
+	protected void aplicar2() {
 		throw new UnsupportedOperationException();
 	}
 
