@@ -2554,22 +2554,19 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
-		public void concatenarNomeColuna(TabelaPersistencia tabela, String nome) {
-			String complemento = txtComplemento.getText();
-			String prefixo = getPrefixo();
-			if (Util.estaVazio(prefixo)) {
-				return;
-			}
-			String opcao = getOpcao();
-			if (Util.estaVazio(opcao)) {
-				return;
-			}
-			String comApelido = objeto.comApelido(prefixo, nome);
-			txtComplemento.setText(complemento + comApelido + getValor(opcao, Constantes.VAZIO));
-			focus();
-		}
-
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
+			String string = "";
+			if (!Util.estaVazio(txtComplemento.getText())) {
+				String[] simNao = getArraySimNao();
+				String opcao = Util.getValorInputDialog(InternalContainer.this,
+						ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
+				if (Util.estaVazio(opcao)) {
+					return;
+				}
+				if (simNao[0].equals(opcao)) {
+					string = txtComplemento.getText() + " ";
+				}
+			}
 			String prefixo = getPrefixo();
 			if (Util.estaVazio(prefixo)) {
 				return;
@@ -2579,7 +2576,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				return;
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
-			txtComplemento.setText(comApelido + getValor(opcao, Constantes.VAZIO));
+			txtComplemento.setText(string + comApelido + getValor(opcao, Constantes.VAZIO));
 			focus();
 		}
 

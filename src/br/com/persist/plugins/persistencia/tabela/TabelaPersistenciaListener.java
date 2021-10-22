@@ -9,7 +9,5 @@ public interface TabelaPersistenciaListener {
 
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome);
 
-	public void concatenarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome);
-
 	public void colocarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome);
 }
