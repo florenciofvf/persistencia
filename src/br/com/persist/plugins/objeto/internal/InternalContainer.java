@@ -129,7 +129,6 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 public class InternalContainer extends Panel implements ItemListener, Pagina, WindowHandler, WindowInternalHandler {
 	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
-	private static final String CHAVE_MSG_CONCAT_COMPLEMENTO = "msg.concatenar_complemento";
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
 	private final Button btnArrasto = new Button(Action.actionIconDestacar());
@@ -610,8 +609,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				String string = "";
 				if (!Util.estaVazio(txtComplemento.getText())) {
 					String[] simNao = getArraySimNao();
-					String opcao = Util.getValorInputDialog(InternalContainer.this,
-							ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
+					String opcao = opcaoConcatenar(simNao);
 					if (Util.estaVazio(opcao)) {
 						return;
 					}
@@ -643,8 +641,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				String string = "";
 				if (!Util.estaVazio(txtComplemento.getText())) {
 					String[] simNao = getArraySimNao();
-					String opcao = Util.getValorInputDialog(InternalContainer.this,
-							ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
+					String opcao = opcaoConcatenar(simNao);
 					if (Util.estaVazio(opcao)) {
 						return;
 					}
@@ -2405,6 +2402,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		return new String[] { sim, nao };
 	}
 
+	private String opcaoConcatenar(String[] simNao) {
+		return Util.getValorInputDialog2(InternalContainer.this,
+				ObjetoMensagens.getString("msg.concatenar_complemento"), simNao);
+	}
+
 	private class TabelaListener implements TabelaPersistenciaListener {
 		private Coletor getNomePesquisa() {
 			List<Pesquisa> pesquisas = objeto.getPesquisas();
@@ -2520,8 +2522,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			String string = "";
 			if (!Util.estaVazio(txtComplemento.getText())) {
 				String[] simNao = getArraySimNao();
-				String opcao = Util.getValorInputDialog2(InternalContainer.this,
-						ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
+				String opcao = opcaoConcatenar(simNao);
 				if (Util.estaVazio(opcao)) {
 					return;
 				}
@@ -2558,8 +2559,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			String string = "";
 			if (!Util.estaVazio(txtComplemento.getText())) {
 				String[] simNao = getArraySimNao();
-				String opcao = Util.getValorInputDialog(InternalContainer.this,
-						ObjetoMensagens.getString(CHAVE_MSG_CONCAT_COMPLEMENTO), simNao);
+				String opcao = opcaoConcatenar(simNao);
 				if (Util.estaVazio(opcao)) {
 					return;
 				}
