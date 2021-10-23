@@ -2,6 +2,8 @@ package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.assistencia.Constantes;
@@ -16,7 +18,18 @@ public class DesktopFormulario extends AbstratoFormulario {
 	private DesktopFormulario() {
 		super(Mensagens.getString(Constantes.LABEL_FORMULARIO));
 		desktop = new Desktop(false);
+		desktop.setAjusteLarguraForm(true);
 		montarLayout();
+		config();
+	}
+
+	private void config() {
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				desktop.configurarLargura(getSize());
+			}
+		});
 	}
 
 	private void montarLayout() {

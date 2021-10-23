@@ -136,13 +136,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		getActionMap().put("macro", macro);
 	}
 
-	public void configurarLargura(Dimension dimension) {
-		if (isAjusteLarguraForm()) {
-			setSize(dimension);
-			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
-		}
-	}
-
 	public void checarLargura(InternalContainer invocador) {
 		if (isAjusteLarguraForm()) {
 			setSize(container.getSize());

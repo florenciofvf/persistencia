@@ -70,6 +70,13 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		scrollPane = new ScrollPane(this);
 	}
 
+	public void configurarLargura(Dimension dimension) {
+		if (isAjusteLarguraForm()) {
+			setSize(dimension);
+			larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
+		}
+	}
+
 	public void atualizarFormularios() {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
