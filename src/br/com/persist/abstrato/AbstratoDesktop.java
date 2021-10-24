@@ -185,11 +185,17 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			addMenuItem(totalAcao);
 			addMenuItem(direitoAcao);
 			addMenuItem(esquerdoAcao);
+			direitoAutoAcao.setActionListener(e -> ajusteLarguraForm((JCheckBoxMenuItem) e.getSource()));
 			esquerdoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_ESQUERDA));
 			direitoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_DIREITA));
 			totalAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL));
-			direitoAutoAcao
-					.setActionListener(e -> setAjusteLarguraForm(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+		}
+
+		private void ajusteLarguraForm(JCheckBoxMenuItem check) {
+			setAjusteLarguraForm(check.isSelected());
+			if (check.isSelected()) {
+				larguras.configurar(DesktopLargura.TOTAL_A_DIREITA);
+			}
 		}
 
 		public void addTotalDireitoAuto() {
