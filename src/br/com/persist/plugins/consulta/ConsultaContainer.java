@@ -17,6 +17,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -41,17 +43,20 @@ import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.TransferidorTabular;
 import br.com.persist.assistencia.Util;
 import br.com.persist.assistencia.VazioModelo;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
+import br.com.persist.componente.TextField;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
@@ -248,17 +253,26 @@ public class ConsultaContainer extends AbstratoContainer {
 		return Action.acaoMenu(ConsultaMensagens.getString(chave), null);
 	}
 
-	private class Toolbar extends BarraButton {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action colarSemAspasAcao = actionMenu("label.colar_sem_aspas");
+		private final CheckBox chkPesquisaLocal = new CheckBox(true);
+		private final TextField txtPesquisa = new TextField(35);
+		private transient Selecao selecao;
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP, ATUALIZAR);
 			add(true, comboConexao);
+			add(txtPesquisa);
+			add(chkPesquisaLocal);
+			add(label);
 			buttonColar.addSeparator();
 			buttonColar.addItem(colarSemAspasAcao);
 			colarSemAspasAcao.setActionListener(e -> colarSemAspas());
+			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
 		}
 
 		@Override
@@ -375,6 +389,32 @@ public class ConsultaContainer extends AbstratoContainer {
 				abrirArquivo(arq);
 				backup = arq;
 				setNomeBackup(coletor.get(0));
+			}
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtPesquisa.getText())) {
+				if (chkPesquisaLocal.isSelected()) {
+					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+					selecao.selecionar(label);
+					return;
+				}
+				List<String> arquivos = Util.listarNomeBackup(fileParent, ConsultaConstantes.CONSULTAS);
+				StringBuilder sb = new StringBuilder();
+				for (String arquivo : arquivos) {
+					String resultado = Util.pesquisar(new File(fileParent, arquivo), txtPesquisa.getText());
+					if (!Util.estaVazio(resultado)) {
+						if (sb.length() > 0) {
+							sb.append(Constantes.QL);
+						}
+						sb.append(arquivo + Constantes.QL);
+						sb.append(resultado);
+					}
+				}
+				textArea.setText(sb.toString());
+			} else {
+				label.limpar();
 			}
 		}
 
