@@ -60,7 +60,6 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 	private boolean ajusteAutomatico = true;
 	private boolean ajusteAutomaticoForm;
 	private final ScrollPane scrollPane;
-	private boolean ajusteLarguraForm;
 
 	public Desktop(boolean extensao) {
 		if (!extensao) {
@@ -203,6 +202,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.isPopupTrigger() && getAllFrames().length > 0) {
+				popup.preShow();
 				popup.show(Desktop.this, e.getX(), e.getY());
 			}
 		}
@@ -210,6 +210,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (e.isPopupTrigger() && getAllFrames().length > 0) {
+				popup.preShow();
 				popup.show(Desktop.this, e.getX(), e.getY());
 			}
 		}
@@ -369,6 +370,10 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 			add(true, menuLargura);
 			add(true, menuAjuste);
 		}
+
+		private void preShow() {
+			menuLargura.setTotalDireitoAuto(isAjusteLarguraForm());
+		}
 	}
 
 	public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos) {
@@ -444,14 +449,6 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 
 	public void setAjusteAutomaticoForm(boolean ajusteAutomaticoForm) {
 		this.ajusteAutomaticoForm = ajusteAutomaticoForm;
-	}
-
-	public boolean isAjusteLarguraForm() {
-		return ajusteLarguraForm;
-	}
-
-	public void setAjusteLarguraForm(boolean ajusteLarguraForm) {
-		this.ajusteLarguraForm = ajusteLarguraForm;
 	}
 
 	@Override

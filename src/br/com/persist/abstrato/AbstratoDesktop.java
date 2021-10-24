@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.Window;
 
 import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
@@ -27,6 +28,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	protected final transient Larguras larguras = new Larguras();
 	protected final transient Ajustar ajustar = new Ajustar();
 	protected final transient Ajuste ajuste = new Ajuste();
+	private boolean ajusteLarguraForm;
 
 	public class Distribuicao {
 		public void distribuir(int delta) {
@@ -162,11 +164,21 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 	public abstract void aproximarObjetoFormularioImpl(boolean objetoAoFormulario, boolean updateTree);
 
+	public void addTotalDireitoAuto() {
+		menuLargura.addTotalDireitoAuto();
+	}
+
+	public void setTotalDireitoAuto(boolean b) {
+		menuLargura.setTotalDireitoAuto(b);
+	}
+
 	protected class MenuLargura extends Menu {
 		private static final long serialVersionUID = 1L;
+		private Action direitoAutoAcao = actionMenu("label.total_direito_auto", Icones.ALINHA_DIREITO);
 		private Action esquerdoAcao = actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
+		private JCheckBoxMenuItem checkDireitoAuto;
 
 		protected MenuLargura() {
 			super(AbstratoMensagens.getString("label.largura"), false, Icones.RECT);
@@ -176,9 +188,25 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 			esquerdoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_ESQUERDA));
 			direitoAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL_A_DIREITA));
 			totalAcao.setActionListener(e -> larguras.configurar(DesktopLargura.TOTAL));
+			direitoAutoAcao
+					.setActionListener(e -> setAjusteLarguraForm(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+		}
+
+		public void addTotalDireitoAuto() {
+			if (checkDireitoAuto == null) {
+				checkDireitoAuto = new JCheckBoxMenuItem(direitoAutoAcao);
+				add(true, checkDireitoAuto);
+			}
+		}
+
+		public void setTotalDireitoAuto(boolean b) {
+			if (checkDireitoAuto != null) {
+				checkDireitoAuto.setSelected(b);
+			}
 		}
 
 		public void habilitar(boolean b) {
+			direitoAutoAcao.setEnabled(b);
 			esquerdoAcao.setEnabled(b);
 			direitoAcao.setEnabled(b);
 			totalAcao.setEnabled(b);
@@ -338,5 +366,13 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 
 	@Override
 	public void windowOpenedHandler(Window window) {
+	}
+
+	public boolean isAjusteLarguraForm() {
+		return ajusteLarguraForm;
+	}
+
+	public void setAjusteLarguraForm(boolean ajusteLarguraForm) {
+		this.ajusteLarguraForm = ajusteLarguraForm;
 	}
 }
