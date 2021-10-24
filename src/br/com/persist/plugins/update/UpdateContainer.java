@@ -117,7 +117,7 @@ public class UpdateContainer extends AbstratoContainer {
 
 	private void configurar() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
+		getActionMap().put(Constantes.EXEC, toolbar.updateAcao);
 		textArea.addKeyListener(keyListenerInner);
 	}
 
@@ -179,22 +179,22 @@ public class UpdateContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private Action atualizarAcao = Action.actionIconUpdate();
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
+		private Action updateAcao = Action.actionIconUpdate();
 		private transient Selecao selecao;
 
 		protected void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR, BACKUP);
-			addButton(atualizarAcao);
+			addButton(updateAcao);
 			add(true, comboConexao);
 			add(txtPesquisa);
 			add(chkPesquisaLocal);
 			add(label);
 			chkPesquisaLocal.setToolTipText(Mensagens.getString("label.pesquisa_local"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			atualizarAcao.setActionListener(e -> atualizar());
+			updateAcao.setActionListener(e -> atualizar());
 			txtPesquisa.addActionListener(this);
 		}
 
