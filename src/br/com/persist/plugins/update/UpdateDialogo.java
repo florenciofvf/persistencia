@@ -26,15 +26,15 @@ public class UpdateDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static UpdateDialogo criar(Formulario formulario, Conexao conexao, String conteudo) {
-		UpdateDialogo form = new UpdateDialogo(formulario, formulario, conexao, conteudo);
+	public static UpdateDialogo criar(Frame frame, Formulario formulario, Conexao conexao, String conteudo) {
+		UpdateDialogo form = new UpdateDialogo(frame, formulario, conexao, conteudo);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 		return form;
 	}
 
-	public static UpdateDialogo criar2(Formulario formulario, Conexao conexao, String conteudo) {
-		return new UpdateDialogo(formulario, formulario, conexao, conteudo);
+	public static UpdateDialogo criar2(Frame frame, Formulario formulario, Conexao conexao, String conteudo) {
+		return new UpdateDialogo(frame, formulario, conexao, conteudo);
 	}
 
 	public void excluirContainer() {

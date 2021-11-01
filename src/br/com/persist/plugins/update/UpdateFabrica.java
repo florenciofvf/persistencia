@@ -49,7 +49,7 @@ public class UpdateFabrica extends AbstratoFabricaContainer {
 			ficharioAcao.setActionListener(
 					e -> formulario.adicionarPagina(new UpdateContainer(null, formulario, null, null)));
 			formularioAcao.setActionListener(e -> UpdateFormulario.criar(formulario, null, null));
-			dialogoAcao.setActionListener(e -> UpdateDialogo.criar(formulario, null, null));
+			dialogoAcao.setActionListener(e -> UpdateDialogo.criar(formulario, formulario, null, null));
 		}
 	}
 }

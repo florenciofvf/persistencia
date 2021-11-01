@@ -2086,16 +2086,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private void updateFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
 			if (abrirEmForm) {
-				Formulario frame = getFormulario();
-				UpdateFormulario form = UpdateFormulario.criar2(frame, conexao, instrucao);
-				Formulario.posicionarJanela(frame, form);
+				Formulario formulario = getFormulario();
+				UpdateFormulario form = UpdateFormulario.criar2(formulario, conexao, instrucao);
+				Formulario.posicionarJanela(formulario, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			} else {
-				Formulario frame = getFormulario();
+				Formulario formulario = getFormulario();
+				Frame frame = Util.getViewParentFrame(InternalContainer.this);
 				Component comp = Util.getViewParent(InternalContainer.this);
-				UpdateDialogo form = UpdateDialogo.criar2(frame, conexao, instrucao);
-				config2(comp, frame, form);
+				UpdateDialogo form = UpdateDialogo.criar2(frame, formulario, conexao, instrucao);
+				config2(comp, formulario, form);
 				form.setTitle(titulo);
 				form.setVisible(true);
 			}
