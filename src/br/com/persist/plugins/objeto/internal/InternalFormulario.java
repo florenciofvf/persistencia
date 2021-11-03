@@ -45,6 +45,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private boolean processadoPesquisa;
 	private boolean processado;
 	private Desktop desktop;
+	private long ultimo;
 
 	public InternalFormulario(Conexao padrao, Objeto objeto, boolean buscaAuto) {
 		super(objeto.getId());
@@ -70,7 +71,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private void configurar2() {
 		addPropertyChangeListener(IS_MAXIMUM_PROPERTY, evt -> checarMaximizado(evt.getNewValue()));
-		addMouseWheelListener(e -> checarAltura(e.getY(), e.getWheelRotation()));
+		addMouseWheelListener(e -> checarAltura(e.getY(), e.getWheelRotation(), System.currentTimeMillis()));
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -93,12 +94,20 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	private void checarAltura(int y, int precisao) {
+	private synchronized void checarAltura(int y, int precisao, long time) {
+		if (precisao == 0) {
+			return;
+		}
+		long diff = time - ultimo;
+		ultimo = time;
+		if (diff < 1000) {
+			return;
+		}
 		if (y < 21) {
 			int altura = getHeight();
-			if (precisao > Constantes.QUATRO) {
+			if (precisao > 0) {
 				processarNorte(altura, true);
-			} else if (precisao < -Constantes.QUATRO) {
+			} else if (precisao < 0) {
 				processarSul(altura, true);
 			}
 			if (desktop != null) {
