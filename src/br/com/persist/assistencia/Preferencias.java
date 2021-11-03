@@ -52,17 +52,6 @@ public class Preferencias {
 		}
 	}
 
-	private static void abrirOutras() {
-		try {
-			for (Class<?> klass : outrasPreferencias) {
-				Method method = klass.getDeclaredMethod("abrir");
-				method.invoke(null);
-			}
-		} catch (Exception ex) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
-		}
-	}
-
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
@@ -93,10 +82,10 @@ public class Preferencias {
 		abrirOutras();
 	}
 
-	private static void salvarOutras() {
+	private static void abrirOutras() {
 		try {
 			for (Class<?> klass : outrasPreferencias) {
-				Method method = klass.getDeclaredMethod("salvar");
+				Method method = klass.getDeclaredMethod("abrir");
 				method.invoke(null);
 			}
 		} catch (Exception ex) {
@@ -123,6 +112,17 @@ public class Preferencias {
 		pref.put("form_dialogo", formDialogo);
 		pref.put("form_ficha", formFicha);
 		salvarOutras();
+	}
+
+	private static void salvarOutras() {
+		try {
+			for (Class<?> klass : outrasPreferencias) {
+				Method method = klass.getDeclaredMethod("salvar");
+				method.invoke(null);
+			}
+		} catch (Exception ex) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
+		}
 	}
 
 	public static void inicializar() {
