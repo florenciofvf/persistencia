@@ -100,7 +100,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 		long diff = time - ultimo;
 		ultimo = time;
-		if (diff < 1000) {
+		if (diff < 90) {
 			return;
 		}
 		if (y < 21) {
