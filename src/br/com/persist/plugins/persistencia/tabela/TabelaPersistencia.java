@@ -264,7 +264,8 @@ public class TabelaPersistencia extends JTable {
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
-		private Separator separator = new Separator();
+		private Separator separatorChave = new Separator();
+		private Separator separatorInfo = new Separator();
 		private MenuIN menuIN = new MenuIN();
 		private int larguraColuna;
 		private int indiceColuna;
@@ -326,7 +327,8 @@ public class TabelaPersistencia extends JTable {
 			menuIN.setText("AND " + chave + " IN");
 			limparMenuChaveamento();
 			List<String> lista = getChaveamento().get(chave.toLowerCase());
-			if (lista != null) {
+			if (lista != null && !lista.isEmpty()) {
+				add(separatorChave);
 				for (String coluna : lista) {
 					add(new MenuItemChaveamento(coluna));
 				}
@@ -335,7 +337,7 @@ public class TabelaPersistencia extends JTable {
 			String valorChave = getMapeamento().get(chave.toLowerCase());
 			if (valorChave != null) {
 				itemMapeamento.setText(valorChave);
-				add(separator);
+				add(separatorInfo);
 				add(itemMapeamento);
 			}
 		}
@@ -445,6 +447,7 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private void limparMenuChaveamento() {
+			remove(separatorChave);
 			MenuItemChaveamento menu = getPrimeiroMenuItemChaveamento();
 			while (menu != null) {
 				remove(menu);
@@ -453,7 +456,7 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private void limparItemMapeamento() {
-			remove(separator);
+			remove(separatorInfo);
 			remove(itemMapeamento);
 		}
 
