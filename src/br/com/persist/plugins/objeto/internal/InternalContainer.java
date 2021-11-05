@@ -1554,6 +1554,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action umaColunaSemAcao = Action.actionMenu("label.uma_coluna_sem_aspas", null);
 				private Action umaColunaComAcao = Action.actionMenu("label.uma_coluna_com_aspas", null);
 				private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
+				private Action nomeColunasAcao = Action.actionMenu("label.nome_colunas", null);
 				private Action tabularAcao = Action.actionMenu("label.tabular", null);
 				private Action htmlAcao = Action.actionMenu("label.html", null);
 
@@ -1565,9 +1566,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(true, transferidorAcao);
 					addMenuItem(true, umaColunaSemAcao);
 					addMenuItem(umaColunaComAcao);
+					addMenuItem(true, nomeColunasAcao);
 					umaColunaSemAcao.setActionListener(e -> umaColuna(false));
 					umaColunaComAcao.setActionListener(e -> umaColuna(true));
 					transferidorAcao.setActionListener(e -> processar(0));
+					nomeColunasAcao.setActionListener(e -> nomeColunas());
 					tabularAcao.setActionListener(e -> processar(1));
 					htmlAcao.setActionListener(e -> processar(2));
 				}
@@ -1576,6 +1579,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					String titulo = comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
 							: Mensagens.getString("label.uma_coluna_sem_aspas");
 					Util.copiarColunaUnicaString(titulo, tabelaPersistencia, comAspas);
+				}
+
+				private void nomeColunas() {
+					Util.copiarNomeColunas(Mensagens.getString("label.nome_colunas"), tabelaPersistencia);
 				}
 
 				private void processar(int tipo) {
