@@ -163,6 +163,19 @@ public class Util {
 		}
 	}
 
+	public static void copiarNomeColunas(String titulo, JTable table) {
+		if (table == null) {
+			return;
+		}
+		Coletor coletor = new Coletor();
+		JTableHeader tableHeader = table.getTableHeader();
+		TableColumnModel columnModel = tableHeader.getColumnModel();
+		SetLista.view(titulo, nomeColunas(columnModel), coletor, table, new SetLista.Config(true, false));
+		if (!coletor.estaVazio()) {
+			SeparadorDialogo.criar(table, titulo, null, 0, false, coletor.getLista());
+		}
+	}
+
 	public static void copiarColunaUnicaString(String titulo, JTable table, boolean comAspas) {
 		if (table == null) {
 			return;
@@ -188,7 +201,7 @@ public class Util {
 	private static void copiarColunaUnicaString(String titulo, JTable table, TableColumnModel columnModel,
 			boolean comAspas, Coletor coletor) {
 		ColunaSel sel = colunasSelecionadas(coletor, columnModel).get(0);
-		SeparadorDialogo.criar(table, titulo, table, sel.indiceModel, comAspas);
+		SeparadorDialogo.criar(table, titulo, table, sel.indiceModel, comAspas, null);
 	}
 
 	public static TransferidorTabular criarTransferidorTabular(JTable table, List<Integer> indices) {

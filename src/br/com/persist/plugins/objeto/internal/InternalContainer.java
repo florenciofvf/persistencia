@@ -1564,9 +1564,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(htmlAcao);
 					addMenuItem(true, tabularAcao);
 					addMenuItem(true, transferidorAcao);
+					addMenuItem(true, nomeColunasAcao);
 					addMenuItem(true, umaColunaSemAcao);
 					addMenuItem(umaColunaComAcao);
-					addMenuItem(true, nomeColunasAcao);
 					umaColunaSemAcao.setActionListener(e -> umaColuna(false));
 					umaColunaComAcao.setActionListener(e -> umaColuna(true));
 					transferidorAcao.setActionListener(e -> processar(0));
