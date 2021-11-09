@@ -744,7 +744,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					String[] array = new String[] { objeto.getTabelaEsquema(conexao), objeto.getTabela() };
 					String opcao = Util.getValorInputDialog2(InternalContainer.this, null, array);
 					if (!Util.estaVazio(opcao)) {
-						Util.setContentTransfered(objeto.getTabelaEsquema(conexao));
+						Util.setContentTransfered(opcao);
 					}
 				} else {
 					Util.setContentTransfered(objeto.getTabelaEsquema(conexao));
