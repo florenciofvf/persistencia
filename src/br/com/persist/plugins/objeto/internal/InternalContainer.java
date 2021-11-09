@@ -738,7 +738,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void copiarNomeTabela() {
-				Util.setContentTransfered(objeto.getTabelaEsquema(getConexao()));
+				Conexao conexao = getConexao();
+				if (conexao != null && !Util.estaVazio(conexao.getEsquema())
+						|| !Util.estaVazio(objeto.getApelidoParaJoins())) {
+					String[] array = new String[] { objeto.getTabelaEsquema(conexao), objeto.getTabela() };
+					String opcao = Util.getValorInputDialog2(InternalContainer.this, null, array);
+					if (!Util.estaVazio(opcao)) {
+						Util.setContentTransfered(objeto.getTabelaEsquema(conexao));
+					}
+				} else {
+					Util.setContentTransfered(objeto.getTabelaEsquema(conexao));
+				}
 			}
 
 			private void copiarComplemento() {
