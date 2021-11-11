@@ -23,6 +23,7 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
+import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao2;
 import br.com.persist.componente.Popup;
@@ -256,10 +257,8 @@ public class TabelaPersistencia extends JTable {
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action detalheColunaAcao = Action.actionMenu(Constantes.LABEL_METADADOS, Icones.INFO);
-		private Action colocarNomeColunaAcaoAtalho = actionMenu("label.colocar_nome_coluna_atalho");
 		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
-		private Action colocarNomeColunaAcao = actionMenu("label.colocar_nome_coluna");
 		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
@@ -276,8 +275,7 @@ public class TabelaPersistencia extends JTable {
 			addMenuItem(larguraColunaAcao);
 			addMenuItem(larguraTituloAcao);
 			addMenuItem(true, pesquisaApartirColunaAcao);
-			addMenuItem(true, colocarNomeColunaAcaoAtalho);
-			addMenuItem(colocarNomeColunaAcao);
+			add(true, new MenuColocarNomeColuna());
 			addMenuItem(copiarNomeColunaAcao);
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
@@ -296,18 +294,6 @@ public class TabelaPersistencia extends JTable {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
 					listener.pesquisaApartirColuna(TabelaPersistencia.this, coluna);
-				}
-			});
-			colocarNomeColunaAcaoAtalho.setActionListener(e -> {
-				String coluna = getModel().getColumnName(indiceColuna);
-				if (listener != null) {
-					listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna);
-				}
-			});
-			colocarNomeColunaAcao.setActionListener(e -> {
-				String coluna = getModel().getColumnName(indiceColuna);
-				if (listener != null) {
-					listener.colocarNomeColuna(TabelaPersistencia.this, coluna);
 				}
 			});
 			detalheColunaAcao.setActionListener(e -> {
@@ -339,6 +325,31 @@ public class TabelaPersistencia extends JTable {
 				itemMapeamento.setText(valorChave);
 				add(separatorInfo);
 				add(itemMapeamento);
+			}
+		}
+
+		private class MenuColocarNomeColuna extends Menu {
+			private static final long serialVersionUID = 1L;
+			private Action atalhoAcao = actionMenu("label.atalho");
+			private Action opcoesAcao = actionMenu("label.opcoes");
+
+			private MenuColocarNomeColuna() {
+				super(TabelaMensagens.getString("label.colocar_nome_coluna"), false, null);
+				addMenuItem(opcoesAcao);
+				addMenuItem(true, atalhoAcao);
+				opcoesAcao.setActionListener(e -> colocarNomeColuna(false));
+				atalhoAcao.setActionListener(e -> colocarNomeColuna(true));
+			}
+
+			private void colocarNomeColuna(boolean atalho) {
+				if (listener != null) {
+					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+					if (atalho) {
+						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna);
+					} else {
+						listener.colocarNomeColuna(TabelaPersistencia.this, coluna);
+					}
+				}
 			}
 		}
 
