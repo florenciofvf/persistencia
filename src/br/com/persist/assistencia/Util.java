@@ -176,6 +176,14 @@ public class Util {
 		}
 	}
 
+	public static void copiarNomeColunas(String titulo, Component c, List<String> nomes) {
+		Coletor coletor = new Coletor();
+		SetLista.view(titulo, nomes, coletor, c, new SetLista.Config(true, false));
+		if (!coletor.estaVazio()) {
+			SeparadorDialogo.criar(c, titulo, null, 0, false, coletor.getLista());
+		}
+	}
+
 	public static void copiarColunaUnicaString(String titulo, JTable table, boolean comAspas) {
 		if (table == null) {
 			return;

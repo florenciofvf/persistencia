@@ -1592,7 +1592,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void nomeColunas() {
-					Util.copiarNomeColunas(Mensagens.getString("label.nome_colunas"), tabelaPersistencia);
+					List<String> nomeColunas = tabelaPersistencia.getListaNomeColunas(true);
+					Util.copiarNomeColunas(Mensagens.getString("label.nome_colunas"), tabelaPersistencia, nomeColunas);
 				}
 
 				private void processar(int tipo) {
