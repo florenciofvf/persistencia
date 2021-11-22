@@ -1428,7 +1428,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
 				addMenuItem(true, new MetaDadosAcao());
-				addMenuItem(true, new InfoBancoAcao());
+				addMenuItem(new InfoBancoAcao());
 				addMenuItem(new EsquemaAcao());
 				addMenu(true, new MenuDML());
 				addMenu(true, new MenuCopiar());
@@ -2065,7 +2065,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private static final long serialVersionUID = 1L;
 
 				private MetaDadosAcao() {
-					super(true, Constantes.LABEL_METADADOS, null);
+					super(true, "label.info_colunas", null);
 				}
 
 				@Override
