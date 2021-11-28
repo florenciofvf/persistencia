@@ -6,8 +6,6 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -17,6 +15,8 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.OrdemModel;
+import br.com.persist.componente.OrdemTable;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.plugins.persistencia.MemoriaModelo;
@@ -63,12 +63,11 @@ public class TabelaDialogo extends AbstratoDialogo {
 	}
 }
 
-class TabelaMemoria extends JTable {
+class TabelaMemoria extends OrdemTable {
 	private static final long serialVersionUID = 1L;
 
 	public TabelaMemoria(MemoriaModelo modelo) {
-		super(modelo);
-		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		super(new OrdemModel(modelo));
 	}
 }
 
