@@ -32,10 +32,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -855,11 +857,29 @@ public class RequisicaoContainer extends AbstratoContainer {
 					string = substituir(string, vAccessToken);
 				}
 				Tipo parametros = parser.parse(string);
-				byte[] resposta = requisicao(parametros);
+				AtomicReference<Map<String, List<String>>> mapHeader = new AtomicReference<>();
+				byte[] resposta = requisicao(parametros, mapHeader);
+				checarConteudoImagem(mapHeader);
 				processarResposta(parser, resposta);
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
+			}
+		}
+
+		private void checarConteudoImagem(AtomicReference<Map<String, List<String>>> mapHeader) {
+			Map<String, List<String>> map = mapHeader.get();
+			if (map != null) {
+				List<String> list = map.get("Content-Type");
+				if (list != null) {
+					for (String string : list) {
+						if (!Util.estaVazio(string) && string.indexOf("image/") != -1) {
+							toolbar.chkRespostaImagem.setSelected(true);
+							toolbar.chkRespostaImagemHandler();
+							return;
+						}
+					}
+				}
 			}
 		}
 
@@ -895,14 +915,15 @@ public class RequisicaoContainer extends AbstratoContainer {
 			setAccesToken(accessToken);
 		}
 
-		private byte[] requisicao(Tipo parametros) throws IOException {
+		private byte[] requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapHeaderResult)
+				throws IOException {
 			if (parametros instanceof Objeto) {
 				Objeto objeto = (Objeto) parametros;
 				Tipo tipoUrl = objeto.getValor("url");
 				String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
 				Map<String, String> mapHeader = getMapHeader(objeto);
 				String bodyParams = getBodyParams(objeto);
-				return requisicao(url, mapHeader, bodyParams);
+				return requisicao(url, mapHeader, bodyParams, mapHeaderResult);
 			}
 			return new byte[0];
 		}
@@ -928,7 +949,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 			return mapHeader;
 		}
 
-		private byte[] requisicao(String url, Map<String, String> header, String parametros) throws IOException {
+		private byte[] requisicao(String url, Map<String, String> header, String parametros,
+				AtomicReference<Map<String, List<String>>> mapHeader) throws IOException {
 			if (Util.estaVazio(url)) {
 				return new byte[0];
 			}
@@ -938,6 +960,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 			checarDoOutput(parametros, conn, verbo);
 			conn.connect();
 			sePost(parametros, conn, verbo);
+			if (mapHeader != null) {
+				mapHeader.set(conn.getHeaderFields());
+			}
 			return Util.getArrayBytes(conn.getInputStream());
 		}
 
