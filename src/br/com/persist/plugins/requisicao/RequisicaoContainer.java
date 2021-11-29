@@ -869,25 +869,34 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		private void checarConteudoImagem(AtomicReference<Map<String, List<String>>> mapHeader) {
 			Map<String, List<String>> map = mapHeader.get();
+			AtomicBoolean conteudoImagem = new AtomicBoolean(false);
 			if (map != null) {
-				List<String> list = map.get("Content-Type");
-				if (list == null) {
-					list = map.get("content-type");
-				}
-				if (list == null) {
-					list = map.get("CONTENT-TYPE");
-				}
-
+				List<String> list = getList(map);
 				if (list != null) {
 					for (String string : list) {
-						if (!Util.estaVazio(string) && string.indexOf("image/") != -1) {
+						if (!Util.estaVazio(string) && string.toLowerCase().indexOf("image/") != -1) {
 							toolbar.chkRespostaImagem.setSelected(true);
 							toolbar.chkRespostaImagemHandler();
+							conteudoImagem.set(true);
 							return;
 						}
 					}
 				}
 			}
+			if (!conteudoImagem.get() && toolbar.chkRespostaImagem.isSelected()) {
+				toolbar.chkRespostaImagem.setSelected(false);
+			}
+		}
+
+		private List<String> getList(Map<String, List<String>> map) {
+			List<String> list = map.get("Content-Type");
+			if (list == null) {
+				list = map.get("content-type");
+			}
+			if (list == null) {
+				list = map.get("CONTENT-TYPE");
+			}
+			return list;
 		}
 
 		private void selecionarAbaJSON() {
