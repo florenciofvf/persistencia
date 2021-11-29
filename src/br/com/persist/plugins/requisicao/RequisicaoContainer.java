@@ -871,6 +871,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 			Map<String, List<String>> map = mapHeader.get();
 			if (map != null) {
 				List<String> list = map.get("Content-Type");
+				if (list == null) {
+					list = map.get("content-type");
+				}
+				if (list == null) {
+					list = map.get("CONTENT-TYPE");
+				}
+
 				if (list != null) {
 					for (String string : list) {
 						if (!Util.estaVazio(string) && string.indexOf("image/") != -1) {
