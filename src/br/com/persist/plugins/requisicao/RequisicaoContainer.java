@@ -859,7 +859,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				Tipo parametros = parser.parse(string);
 				AtomicReference<Map<String, List<String>>> mapHeader = new AtomicReference<>();
 				byte[] resposta = requisicao(parametros, mapHeader);
-				checarConteudoImagem(mapHeader);
+				checarConteudo(mapHeader);
 				processarResposta(parser, resposta);
 				areaParametros.requestFocus();
 			} catch (Exception ex) {
@@ -867,24 +867,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 
-		private void checarConteudoImagem(AtomicReference<Map<String, List<String>>> mapHeader) {
+		private void checarConteudo(AtomicReference<Map<String, List<String>>> mapHeader) {
 			Map<String, List<String>> map = mapHeader.get();
-			AtomicBoolean conteudoImagem = new AtomicBoolean(false);
 			if (map != null) {
 				List<String> list = getList(map);
 				if (list != null) {
-					for (String string : list) {
-						if (!Util.estaVazio(string) && string.toLowerCase().indexOf("image/") != -1) {
-							toolbar.chkRespostaImagem.setSelected(true);
-							toolbar.chkRespostaImagemHandler();
-							conteudoImagem.set(true);
-							return;
-						}
-					}
+					checarImagem(list);
+					checarJson(list);
 				}
-			}
-			if (!conteudoImagem.get() && toolbar.chkRespostaImagem.isSelected()) {
-				toolbar.chkRespostaImagem.setSelected(false);
 			}
 		}
 
@@ -897,6 +887,33 @@ public class RequisicaoContainer extends AbstratoContainer {
 				list = map.get("CONTENT-TYPE");
 			}
 			return list;
+		}
+
+		private void checarImagem(List<String> list) {
+			AtomicBoolean imagem = new AtomicBoolean(false);
+			for (String string : list) {
+				if (!Util.estaVazio(string) && string.toLowerCase().indexOf("image/") != -1) {
+					toolbar.chkRespostaImagem.setSelected(true);
+					toolbar.chkRespostaImagemHandler();
+					imagem.set(true);
+					return;
+				}
+			}
+			if (!imagem.get() && toolbar.chkRespostaImagem.isSelected()) {
+				toolbar.chkRespostaImagem.setSelected(false);
+			}
+		}
+
+		private void checarJson(List<String> list) {
+			if (list.size() == 1) {
+				for (String string : list) {
+					if (!Util.estaVazio(string) && string.toLowerCase().indexOf("json") != -1) {
+						toolbar.chkRespostaJson.setSelected(true);
+						toolbar.chkRespostaJsonHandler();
+						return;
+					}
+				}
+			}
 		}
 
 		private void selecionarAbaJSON() {
