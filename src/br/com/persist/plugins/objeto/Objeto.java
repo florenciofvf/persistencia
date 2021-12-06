@@ -75,10 +75,10 @@ public class Objeto implements Runnable {
 	private boolean ccsc = true;
 	private boolean sane = true;
 	private long totalRegistros;
-	private boolean controlado;
 	private String complemento;
 	private String chaveamento;
 	private boolean colunaInfo;
+	private boolean travadoSel;
 	private String sequencias;
 	private String mapeamento;
 	private boolean processar;
@@ -326,7 +326,7 @@ public class Objeto implements Runnable {
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 		if (!this.selecionado) {
-			controlado = false;
+			travadoSel = false;
 		}
 	}
 
@@ -924,12 +924,12 @@ public class Objeto implements Runnable {
 		y += i;
 	}
 
-	public boolean isControlado() {
-		return controlado;
+	public boolean isTravadoSel() {
+		return travadoSel;
 	}
 
-	public void setControlado(boolean controlado) {
-		this.controlado = controlado;
+	public void setTravadoSel(boolean travadoSel) {
+		this.travadoSel = travadoSel;
 	}
 
 	public boolean isCcsc() {

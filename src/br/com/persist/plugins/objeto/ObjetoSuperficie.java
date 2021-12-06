@@ -402,7 +402,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			} else {
 				if (selecionadoObjeto != null) {
 					selecionadoObjeto.setSelecionado(false);
-					selecionadoObjeto.setControlado(false);
+					selecionadoObjeto.setTravadoSel(false);
 				}
 				if (selecionadoRelacao != null) {
 					selecionadoRelacao.setSelecionado(false);
@@ -594,8 +594,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				if (objeto.contem(x, y)) {
 					objeto.setSelecionado(true);
 					selecionadoObjeto = objeto;
-					if (!objeto.isControlado()) {
-						objeto.setControlado(e.isShiftDown());
+					if (!objeto.isTravadoSel()) {
+						objeto.setTravadoSel(e.isShiftDown());
 					}
 					break;
 				}
@@ -604,10 +604,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				selecionadoObjeto = null;
 			}
 			if (selecionadoObjeto != null) {
-				if (selecionadoObjeto.isControlado()) {
+				if (selecionadoObjeto.isTravadoSel()) {
 					for (Objeto objeto : objetos) {
 						if (objeto.isSelecionado()) {
-							objeto.setControlado(true);
+							objeto.setTravadoSel(true);
 						}
 					}
 				} else {
@@ -678,7 +678,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				for (Objeto objeto : objetos) {
 					if (area.contem(objeto)) {
 						objeto.setSelecionado(true);
-						objeto.setControlado(true);
+						objeto.setTravadoSel(true);
 					}
 				}
 			}
@@ -1118,7 +1118,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				Objeto clone = get(objeto, superficie);
 				superficie.addObjeto(clone);
 				clone.setSelecionado(true);
-				clone.setControlado(true);
+				clone.setTravadoSel(true);
 				if (b) {
 					clone.setX(x);
 					clone.setY(y);
@@ -1683,7 +1683,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(b);
 			if (b) {
-				objeto.setControlado(true);
+				objeto.setTravadoSel(true);
 			}
 		}
 		repaint();
