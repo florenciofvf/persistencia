@@ -78,7 +78,6 @@ public class Objeto implements Runnable {
 	private String complemento;
 	private String chaveamento;
 	private boolean colunaInfo;
-	private boolean travadoSel;
 	private String sequencias;
 	private String mapeamento;
 	private boolean processar;
@@ -325,9 +324,6 @@ public class Objeto implements Runnable {
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
-		if (!this.selecionado) {
-			travadoSel = false;
-		}
 	}
 
 	public void setFinalConsulta(String finalConsulta) {
@@ -922,14 +918,6 @@ public class Objeto implements Runnable {
 
 	public void deltaY(int i) {
 		y += i;
-	}
-
-	public boolean isTravadoSel() {
-		return travadoSel;
-	}
-
-	public void setTravadoSel(boolean travadoSel) {
-		this.travadoSel = travadoSel;
 	}
 
 	public boolean isCcsc() {

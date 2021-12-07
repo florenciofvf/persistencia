@@ -400,7 +400,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			} else {
 				if (selecionadoObjeto != null) {
 					selecionadoObjeto.setSelecionado(false);
-					selecionadoObjeto.setTravadoSel(false);
 				}
 				if (selecionadoRelacao != null) {
 					selecionadoRelacao.setSelecionado(false);
@@ -577,6 +576,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private transient MouseAdapter mouseAdapterSelecao = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
+			boolean shift = e.isShiftDown();
 			selecionadoRelacao = null;
 			selecionadoObjeto = null;
 			int x = e.getX();
@@ -590,10 +590,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
-					objeto.setSelecionado(true);
-					selecionadoObjeto = objeto;
-					if (!objeto.isTravadoSel()) {
-						objeto.setTravadoSel(e.isShiftDown());
+					if (shift) {
+						objeto.setSelecionado(!objeto.isSelecionado());
+					} else {
+						objeto.setSelecionado(true);
+					}
+					if (objeto.isSelecionado()) {
+						selecionadoObjeto = objeto;
 					}
 					break;
 				}
@@ -602,13 +605,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				selecionadoObjeto = null;
 			}
 			if (selecionadoObjeto != null) {
-				if (selecionadoObjeto.isTravadoSel()) {
-					for (Objeto objeto : objetos) {
-						if (objeto.isSelecionado()) {
-							objeto.setTravadoSel(true);
-						}
-					}
-				} else {
+				if (!shift) {
 					for (Objeto objeto : objetos) {
 						if (objeto != selecionadoObjeto) {
 							objeto.setSelecionado(false);
@@ -616,12 +613,14 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			} else {
-				limparSelecao();
-				for (Relacao relacao : relacoes) {
-					if (relacao.contem(x, y)) {
-						relacao.setSelecionado(true);
-						selecionadoRelacao = relacao;
-						break;
+				if (!shift) {
+					limparSelecao();
+					for (Relacao relacao : relacoes) {
+						if (relacao.contem(x, y)) {
+							relacao.setSelecionado(true);
+							selecionadoRelacao = relacao;
+							break;
+						}
 					}
 				}
 			}
@@ -675,7 +674,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				for (Objeto objeto : objetos) {
 					if (area.contem(objeto)) {
 						objeto.setSelecionado(true);
-						objeto.setTravadoSel(true);
 					}
 				}
 			}
@@ -1091,7 +1089,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				Objeto clone = get(objeto, superficie);
 				superficie.addObjeto(clone);
 				clone.setSelecionado(true);
-				clone.setTravadoSel(true);
 				if (b) {
 					clone.setX(x);
 					clone.setY(y);
@@ -1655,9 +1652,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	public void selecaoGeral(boolean b) {
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(b);
-			if (b) {
-				objeto.setTravadoSel(true);
-			}
 		}
 		repaint();
 	}
