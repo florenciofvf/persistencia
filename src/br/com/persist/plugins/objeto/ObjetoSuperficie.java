@@ -95,7 +95,6 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private static final long serialVersionUID = 1L;
 	private final transient Vinculacao vinculacao = new Vinculacao();
-	private final transient Inversao inversao = new Inversao();
 	private SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private SuperficiePopup popup = new SuperficiePopup();
 	private static final Logger LOG = Logger.getGlobal();
@@ -297,7 +296,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	}
 
 	public void limparSelecao() {
-		inversao.ultimo = null;
 		for (Objeto objeto : objetos) {
 			objeto.setSelecionado(false);
 		}
@@ -614,7 +612,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					for (Objeto objeto : objetos) {
 						if (objeto != selecionadoObjeto) {
 							objeto.setSelecionado(false);
-							inversao.anular(objeto);
 						}
 					}
 				}
@@ -698,9 +695,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.isShiftDown()) {
-				inversao.inverterSelecao(selecionadoObjeto);
-			}
 			if (selecionadoObjeto != null && !selecionadoObjeto.isSelecionado()) {
 				selecionadoObjeto = null;
 			}
@@ -763,27 +757,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		AtomicReference<Formulario> ref = new AtomicReference<>();
 		setFormulario(ref);
 		ExternalFormulario.criar(ref.get(), conexao, objeto);
-	}
-
-	private class Inversao {
-		Objeto ultimo;
-		boolean sel;
-
-		void inverterSelecao(Objeto objeto) {
-			if (ultimo != null && ultimo == objeto) {
-				objeto.setSelecionado(!sel);
-			}
-			ultimo = objeto;
-			if (ultimo != null) {
-				sel = ultimo.isSelecionado();
-			}
-		}
-
-		void anular(Objeto objeto) {
-			if (ultimo == objeto) {
-				ultimo = null;
-			}
-		}
 	}
 
 	public Formulario getFormulario() {
