@@ -18,6 +18,7 @@ public class VinculoHandler extends XMLHandler {
 	public static final String LIMPAR_APOS = "limparApos";
 	public static final String ICONE_GRUPO = "iconeGrupo";
 	private final Map<String, ParaTabela> mapaParaTabela;
+	public static final String CONCATENAR = "concatenar";
 	public static final String INVISIVEL = "invisivel";
 	public static final String INSTRUCAO = "instrucao";
 	public static final String COR_FONTE = "corFonte";
@@ -127,6 +128,7 @@ public class VinculoHandler extends XMLHandler {
 		String limparApos = attributes.getValue(LIMPAR_APOS);
 		ref.setIconeGrupo(attributes.getValue(ICONE_GRUPO));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
+		ref.setConcatenar(attributes.getValue(CONCATENAR));
 		ref.setIcone(attributes.getValue(ICONE));
 		ref.setCorFonte(getCorFonte(attributes));
 		return ref;
@@ -137,6 +139,7 @@ public class VinculoHandler extends XMLHandler {
 		ref.setVazioInvisivel(INVISIVEL.equalsIgnoreCase(attributes.get(VAZIO)));
 		String limparApos = attributes.get(LIMPAR_APOS);
 		ref.setIconeGrupo(attributes.get(ICONE_GRUPO));
+		ref.setConcatenar(attributes.get(CONCATENAR));
 		ref.setLimparApos(Boolean.parseBoolean(limparApos));
 		ref.setCorFonte(getCorFonte(attributes));
 		ref.setIcone(attributes.get(ICONE));

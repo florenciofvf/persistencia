@@ -19,6 +19,7 @@ public class Referencia {
 	private boolean processado;
 	private boolean limparApos;
 	private String iconeGrupo;
+	private String concatenar;
 	Pesquisa pesquisa;
 	Color corFonte;
 	String icone;
@@ -69,6 +70,7 @@ public class Referencia {
 			atributoValor(util, VinculoHandler.COR_FONTE, toHex(corFonte));
 		}
 		atributoValor(util, VinculoHandler.ICONE_GRUPO, iconeGrupo);
+		atributoValor(util, VinculoHandler.CONCATENAR, concatenar);
 		if (autonomo) {
 			util.fecharTag2(-1);
 		}
@@ -86,7 +88,7 @@ public class Referencia {
 		util.abrirTag(VinculoHandler.REF).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
 				.atributo(VinculoHandler.CAMPO, "FK").atributo(VinculoHandler.GRUPO, "")
 				.atributo(VinculoHandler.VAZIO, VinculoHandler.INVISIVEL).atributo(VinculoHandler.ICONE, "")
-				.atributo(VinculoHandler.COR_FONTE, "#AABBCC").fecharTag2(-1);
+				.atributo(VinculoHandler.COR_FONTE, "#AABBCC").atributo(VinculoHandler.CONCATENAR, "").fecharTag2(-1);
 	}
 
 	public void modelo2(XMLUtil util) {
@@ -241,5 +243,13 @@ public class Referencia {
 			sb.append(" GRUPO=" + grupo);
 		}
 		return sb.toString();
+	}
+
+	public String getConcatenar() {
+		return concatenar;
+	}
+
+	public void setConcatenar(String concatenar) {
+		this.concatenar = concatenar;
 	}
 }
