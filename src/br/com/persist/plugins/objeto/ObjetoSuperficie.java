@@ -539,6 +539,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				return;
 			}
 			boolean shift = e.isShiftDown();
+			boolean alt = e.isAltDown();
+			boolean ctrl = alt && shift;
 			ultX = e.getX();
 			ultY = e.getY();
 			destino = null;
@@ -556,11 +558,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			Relacao relacao = getRelacao(origem, destino);
 			if (relacao == null) {
-				relacao = new Relacao(origem, false, destino, !shift);
+				relacao = new Relacao(origem, false, destino, !ctrl);
 				addRelacao(relacao);
 			}
 			repaint();
-			if (!shift) {
+			if (!ctrl) {
 				RelacaoDialogo.criar(container.getFrame(), ObjetoSuperficie.this, relacao);
 			}
 		}
@@ -577,6 +579,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			boolean shift = e.isShiftDown();
+			boolean alt = e.isAltDown();
+			boolean ctrl = alt && shift;
 			selecionadoRelacao = null;
 			selecionadoObjeto = null;
 			int x = e.getX();
@@ -590,7 +594,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			}
 			for (Objeto objeto : objetos) {
 				if (objeto.contem(x, y)) {
-					if (shift) {
+					if (ctrl) {
 						objeto.setSelecionado(!objeto.isSelecionado());
 					} else {
 						objeto.setSelecionado(true);
@@ -601,11 +605,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					break;
 				}
 			}
-			if (e.isControlDown()) {
-				selecionadoObjeto = null;
-			}
 			if (selecionadoObjeto != null) {
-				if (!shift) {
+				if (!ctrl) {
 					for (Objeto objeto : objetos) {
 						if (objeto != selecionadoObjeto) {
 							objeto.setSelecionado(false);
@@ -613,7 +614,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					}
 				}
 			} else {
-				if (!shift) {
+				if (!ctrl) {
 					limparSelecao();
 					for (Relacao relacao : relacoes) {
 						if (relacao.contem(x, y)) {
