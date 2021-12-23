@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -578,6 +579,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private transient MouseAdapter mouseAdapterSelecao = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent e) {
+			AtomicBoolean sel = new AtomicBoolean(false);
 			boolean shift = e.isShiftDown();
 			boolean alt = e.isAltDown();
 			boolean ctrl = alt && shift;
@@ -589,41 +591,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			area.y1 = y;
 			ultX = x;
 			ultY = y;
-			for (Relacao relacao : relacoes) {
-				relacao.setSelecionado(false);
-			}
-			for (Objeto objeto : objetos) {
-				if (objeto.contem(x, y)) {
-					if (ctrl) {
-						objeto.setSelecionado(!objeto.isSelecionado());
-					} else {
-						objeto.setSelecionado(true);
-					}
-					if (objeto.isSelecionado()) {
-						selecionadoObjeto = objeto;
-					}
-					break;
-				}
-			}
+			deselRelacoes();
+			pressedObjeto(ctrl, x, y, sel);
 			if (selecionadoObjeto != null) {
-				if (!ctrl) {
-					for (Objeto objeto : objetos) {
-						if (objeto != selecionadoObjeto) {
-							objeto.setSelecionado(false);
-						}
-					}
-				}
+				pressedObjetoFinal(ctrl, sel.get());
 			} else {
-				if (!ctrl) {
-					limparSelecao();
-					for (Relacao relacao : relacoes) {
-						if (relacao.contem(x, y)) {
-							relacao.setSelecionado(true);
-							selecionadoRelacao = relacao;
-							break;
-						}
-					}
-				}
+				pressedRelacao(ctrl, x, y);
 			}
 			repaint();
 			if (e.isPopupTrigger() && (selecionadoObjeto != null || selecionadoRelacao != null)) {
@@ -634,6 +607,52 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				popup2.yLocal = y;
 				popup2.preShow(getAllFrames().length > 0);
 				popup2.show(ObjetoSuperficie.this, x, y);
+			}
+		}
+
+		private void deselRelacoes() {
+			for (Relacao relacao : relacoes) {
+				relacao.setSelecionado(false);
+			}
+		}
+
+		private void pressedObjeto(boolean ctrl, int x, int y, AtomicBoolean atom) {
+			for (Objeto objeto : objetos) {
+				if (objeto.contem(x, y)) {
+					if (ctrl) {
+						objeto.setSelecionado(!objeto.isSelecionado());
+					} else {
+						atom.set(objeto.isSelecionado());
+						objeto.setSelecionado(true);
+					}
+					if (objeto.isSelecionado()) {
+						selecionadoObjeto = objeto;
+					}
+					break;
+				}
+			}
+		}
+
+		private void pressedObjetoFinal(boolean ctrl, boolean sel) {
+			if (!ctrl && !sel) {
+				for (Objeto objeto : objetos) {
+					if (objeto != selecionadoObjeto) {
+						objeto.setSelecionado(false);
+					}
+				}
+			}
+		}
+
+		private void pressedRelacao(boolean ctrl, int x, int y) {
+			if (!ctrl) {
+				limparSelecao();
+				for (Relacao relacao : relacoes) {
+					if (relacao.contem(x, y)) {
+						relacao.setSelecionado(true);
+						selecionadoRelacao = relacao;
+						break;
+					}
+				}
 			}
 		}
 
