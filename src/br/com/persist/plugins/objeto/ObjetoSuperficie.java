@@ -107,6 +107,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	private transient Relacao[] relacoes;
 	private final Formulario formulario;
 	private transient Objeto[] objetos;
+	private boolean validoArrastar;
 	private String arquivoVinculo;
 	private byte estado;
 	private int ultX;
@@ -585,6 +586,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean ctrl = alt && shift;
 			selecionadoRelacao = null;
 			selecionadoObjeto = null;
+			validoArrastar = false;
 			int x = e.getX();
 			int y = e.getY();
 			area.x1 = x;
@@ -595,6 +597,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			pressedObjeto(ctrl, x, y, sel);
 			if (selecionadoObjeto != null) {
 				pressedObjetoFinal(ctrl, sel.get());
+				validoArrastar = true;
 			} else {
 				pressedRelacao(ctrl, x, y);
 			}
@@ -663,17 +666,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			boolean movimentou = false;
 			int recX = e.getX();
 			int recY = e.getY();
-			for (Objeto objeto : objetos) {
-				if (objeto.isSelecionado()) {
-					if (alt && !shift) {
-						objeto.x += recX - ultX;
-					} else if (!alt && shift) {
-						objeto.y += recY - ultY;
-					} else {
-						objeto.x += recX - ultX;
-						objeto.y += recY - ultY;
+			if (validoArrastar) {
+				for (Objeto objeto : objetos) {
+					if (objeto.isSelecionado()) {
+						if (alt && !shift) {
+							objeto.x += recX - ultX;
+						} else if (!alt && shift) {
+							objeto.y += recY - ultY;
+						} else {
+							objeto.x += recX - ultX;
+							objeto.y += recY - ultY;
+						}
+						movimentou = true;
 					}
-					movimentou = true;
 				}
 			}
 			ultX = recX;
