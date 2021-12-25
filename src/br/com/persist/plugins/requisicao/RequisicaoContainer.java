@@ -618,6 +618,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			private static final long serialVersionUID = 1L;
 			private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
 			private final TextField txtPesquisa = new TextField(35);
+			private CheckBox chkModoTabela = new CheckBox();
 			private transient Selecao selecao;
 
 			private ToolbarParametro() {
@@ -629,6 +630,12 @@ public class RequisicaoContainer extends AbstratoContainer {
 				txtPesquisa.addActionListener(this);
 				add(txtPesquisa);
 				add(label);
+				add(chkModoTabela);
+				chkModoTabela.setToolTipText(RequisicaoMensagens.getString("label.modo_tabela"));
+				chkModoTabela.addActionListener(e -> modoTabelaHandler());
+			}
+
+			private void modoTabelaHandler() {
 			}
 
 			private void atualizarVar() {
