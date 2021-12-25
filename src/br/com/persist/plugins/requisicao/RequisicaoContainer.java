@@ -45,6 +45,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -66,6 +67,8 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
+import br.com.persist.componente.OrdemModel;
+import br.com.persist.componente.OrdemTable;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TabbedPane;
@@ -79,6 +82,7 @@ import br.com.persist.parser.ParserDialogo;
 import br.com.persist.parser.ParserListener;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
+import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -570,7 +574,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private final JTextPane areaResultados = new JTextPane();
 		private final TabbedPane tabbedPane = new TabbedPane();
 		private final Label labelImagem = new Label();
+		private final Tabela tabela = new Tabela();
 		private ScrollPane scrollPaneArea;
+		private JSplitPane split;
 		private final File file;
 
 		private Pagina(File file) {
@@ -579,8 +585,16 @@ public class RequisicaoContainer extends AbstratoContainer {
 			abrir();
 		}
 
+		class Tabela extends OrdemTable {
+			private static final long serialVersionUID = 1L;
+
+			public Tabela() {
+				super(new OrdemModel(new RequisicaoModelo()));
+			}
+		}
+
 		private void montarLayout() {
-			JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
+			split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
 			split.setDividerLocation(Constantes.SIZE.height / 2);
 			add(BorderLayout.CENTER, split);
 		}
@@ -632,10 +646,38 @@ public class RequisicaoContainer extends AbstratoContainer {
 				add(label);
 				add(chkModoTabela);
 				chkModoTabela.setToolTipText(RequisicaoMensagens.getString("label.modo_tabela"));
-				chkModoTabela.addActionListener(e -> modoTabelaHandler());
+				chkModoTabela.addActionListener(e -> modoTabelaHandler(chkModoTabela.isSelected()));
 			}
 
-			private void modoTabelaHandler() {
+			private void modoTabelaHandler(boolean modoTabela) {
+				if (modoTabela) {
+					configModoTabela();
+				} else {
+					configModoTexto();
+				}
+			}
+
+			private void configModoTabela() {
+				Panel panel = new Panel();
+				panel.add(BorderLayout.NORTH, toolbarParametro);
+				// Panel panelArea = new Panel();
+				// panelArea.add(BorderLayout.CENTER, table);
+				scrollPaneArea = new ScrollPane(/* panelArea */tabela);
+				panel.add(BorderLayout.CENTER, scrollPaneArea);
+				split.setLeftComponent(panel);
+				split.setDividerLocation(Constantes.SIZE.height / 2);
+				Util.ajustar(tabela, getGraphics());
+			}
+
+			private void configModoTexto() {
+				Panel panel = new Panel();
+				panel.add(BorderLayout.NORTH, toolbarParametro);
+				Panel panelArea = new Panel();
+				panelArea.add(BorderLayout.CENTER, areaParametros);
+				scrollPaneArea = new ScrollPane(panelArea);
+				panel.add(BorderLayout.CENTER, scrollPaneArea);
+				split.setLeftComponent(panel);
+				split.setDividerLocation(Constantes.SIZE.height / 2);
 			}
 
 			private void atualizarVar() {
