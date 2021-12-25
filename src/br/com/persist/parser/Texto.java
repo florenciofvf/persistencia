@@ -12,6 +12,7 @@ import javax.swing.text.StyleConstants;
 public class Texto extends Tipo {
 	private static final MutableAttributeSet att;
 	private final String conteudo;
+	private String alternativo;
 
 	public Texto(String conteudo) {
 		Objects.requireNonNull(conteudo);
@@ -21,18 +22,34 @@ public class Texto extends Tipo {
 	@Override
 	public void toString(StringBuilder sb, boolean comTab, int tab) {
 		super.toString(sb, comTab, tab);
-		sb.append(citar(conteudo));
+		if (alternativo != null) {
+			sb.append(citar(alternativo));
+		} else {
+			sb.append(citar(conteudo));
+		}
 	}
 
 	@Override
 	public void toString(AbstractDocument doc, boolean comTab, int tab) throws BadLocationException {
 		super.toString(doc, comTab, tab);
-		insert(doc, citar(conteudo), att);
+		if (alternativo != null) {
+			insert(doc, citar(alternativo), att);
+		} else {
+			insert(doc, citar(conteudo), att);
+		}
+	}
+
+	public String getAlternativo() {
+		return alternativo;
+	}
+
+	public void setAlternativo(String alternativo) {
+		this.alternativo = alternativo;
 	}
 
 	@Override
 	public String toString() {
-		return conteudo;
+		return alternativo != null ? alternativo : conteudo;
 	}
 
 	static {

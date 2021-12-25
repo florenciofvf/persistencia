@@ -681,8 +681,25 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 			private RequisicaoModelo criarRequisicaoModelo() {
 				RequisicaoModelo modelo = new RequisicaoModelo();
-
+				Fragmento frag = new Fragmento(areaParametros.getText());
+				String string = frag.proximo();
+				while (!Util.estaVazio(string)) {
+					Requisicao req = criar(string);
+					modelo.adicionar(req);
+					string = frag.proximo();
+				}
 				return modelo;
+			}
+
+			private Requisicao criar(String string) {
+				try {
+					Parser parser = new Parser();
+					Tipo tipo = parser.parse(string);
+					return new Requisicao(tipo);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
+				}
+				return null;
 			}
 
 			private void configModoTexto() {

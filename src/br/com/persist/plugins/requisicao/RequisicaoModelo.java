@@ -20,6 +20,12 @@ public class RequisicaoModelo implements TableModel {
 		return null;
 	}
 
+	public void adicionar(Requisicao req) {
+		if (req != null) {
+			lista.add(req);
+		}
+	}
+
 	@Override
 	public int getRowCount() {
 		return lista.size();
