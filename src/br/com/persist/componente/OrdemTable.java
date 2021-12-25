@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 import br.com.persist.assistencia.Constantes;
 
@@ -17,7 +18,12 @@ public class OrdemTable extends JTable {
 		super(model);
 		tableHeader.addMouseListener(headerListenerInner);
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		configHeader(model);
+	}
+
+	@Override
+	public void setModel(TableModel dataModel) {
+		super.setModel(dataModel);
+		configHeader((OrdemModel) dataModel);
 	}
 
 	private void configHeader(OrdemModel model) {
