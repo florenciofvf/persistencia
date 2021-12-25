@@ -45,7 +45,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -82,7 +81,6 @@ import br.com.persist.parser.ParserDialogo;
 import br.com.persist.parser.ParserListener;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
-import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
@@ -591,6 +589,19 @@ public class RequisicaoContainer extends AbstratoContainer {
 			public Tabela() {
 				super(new OrdemModel(new RequisicaoModelo()));
 			}
+
+			Requisicao getRequisicao() {
+				int[] linhas = getSelectedRows();
+				if (linhas != null && linhas.length == 1) {
+					int indice = ((OrdemModel) getModel()).getRowIndex(linhas[0]);
+					return getModelo().getRequisicao(indice);
+				}
+				return null;
+			}
+
+			RequisicaoModelo getModelo() {
+				return (RequisicaoModelo) ((OrdemModel) getModel()).getModel();
+			}
 		}
 
 		private void montarLayout() {
@@ -660,13 +671,18 @@ public class RequisicaoContainer extends AbstratoContainer {
 			private void configModoTabela() {
 				Panel panel = new Panel();
 				panel.add(BorderLayout.NORTH, toolbarParametro);
-				// Panel panelArea = new Panel();
-				// panelArea.add(BorderLayout.CENTER, table);
-				scrollPaneArea = new ScrollPane(/* panelArea */tabela);
+				tabela.setModel(new OrdemModel(criarRequisicaoModelo()));
+				scrollPaneArea = new ScrollPane(tabela);
 				panel.add(BorderLayout.CENTER, scrollPaneArea);
 				split.setLeftComponent(panel);
 				split.setDividerLocation(Constantes.SIZE.height / 2);
 				Util.ajustar(tabela, getGraphics());
+			}
+
+			private RequisicaoModelo criarRequisicaoModelo() {
+				RequisicaoModelo modelo = new RequisicaoModelo();
+
+				return modelo;
 			}
 
 			private void configModoTexto() {
@@ -891,10 +907,19 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void atualizar() {
-			if (!Util.estaVazio(areaParametros.getText())) {
-				String string = Util.getString(areaParametros);
-				areaResultados.setText(Constantes.VAZIO);
-				atualizar(string);
+			if (toolbarParametro.chkModoTabela.isSelected()) {
+				Requisicao req = tabela.getRequisicao();
+				if (req != null) {
+					String string = req.getString();
+					areaResultados.setText(Constantes.VAZIO);
+					atualizar(string);
+				}
+			} else {
+				if (!Util.estaVazio(areaParametros.getText())) {
+					String string = Util.getString(areaParametros);
+					areaResultados.setText(Constantes.VAZIO);
+					atualizar(string);
+				}
 			}
 		}
 

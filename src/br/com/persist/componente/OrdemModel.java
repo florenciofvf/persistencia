@@ -42,6 +42,10 @@ public class OrdemModel extends AbstractTableModel {
 		return model;
 	}
 
+	public int getRowIndex(int rowIndex) {
+		return linhas[rowIndex].indice;
+	}
+
 	@Override
 	public int getRowCount() {
 		return model.getRowCount();

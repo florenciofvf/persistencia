@@ -13,6 +13,13 @@ public class RequisicaoModelo implements TableModel {
 	private final List<Requisicao> lista = new ArrayList<>();
 	private static final Logger LOG = Logger.getGlobal();
 
+	public Requisicao getRequisicao(int i) {
+		if (i >= 0 && i < lista.size()) {
+			return lista.get(i);
+		}
+		return null;
+	}
+
 	@Override
 	public int getRowCount() {
 		return lista.size();
