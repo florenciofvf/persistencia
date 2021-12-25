@@ -683,7 +683,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				RequisicaoModelo modelo = new RequisicaoModelo();
 				Fragmento frag = new Fragmento(areaParametros.getText());
 				String string = frag.proximo();
-				while (!Util.estaVazio(string)) {
+				while (string.length() > 0) {
 					Requisicao req = criar(string);
 					modelo.adicionar(req);
 					string = frag.proximo();
@@ -692,6 +692,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 
 			private Requisicao criar(String string) {
+				if (Util.estaVazio(string)) {
+					return null;
+				}
 				try {
 					Parser parser = new Parser();
 					Tipo tipo = parser.parse(string);

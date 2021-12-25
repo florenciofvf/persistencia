@@ -14,17 +14,17 @@ public class Fragmento {
 			char c = string.charAt(indice);
 			if (c != '\n') {
 				sb.append(c);
-				indice++;
 			} else {
 				if (indice + 1 < string.length()) {
 					char d = string.charAt(indice + 1);
 					if (d == '\n') {
+						sb.append(d);
 						indice++;
 						break;
 					}
-					indice++;
 				}
 			}
+			indice++;
 		}
 		return sb.toString();
 	}
