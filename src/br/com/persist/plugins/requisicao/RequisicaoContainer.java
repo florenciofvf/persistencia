@@ -573,7 +573,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private final TabbedPane tabbedPane = new TabbedPane();
 		private final Label labelImagem = new Label();
 		private final Tabela tabela = new Tabela();
-		private ScrollPane scrollPaneArea;
+		private ScrollPane scrollPane;
 		private JSplitPane split;
 		private final File file;
 
@@ -615,17 +615,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 			panel.add(BorderLayout.NORTH, toolbarParametro);
 			Panel panelArea = new Panel();
 			panelArea.add(BorderLayout.CENTER, areaParametros);
-			scrollPaneArea = new ScrollPane(panelArea);
-			panel.add(BorderLayout.CENTER, scrollPaneArea);
+			scrollPane = new ScrollPane(panelArea);
+			panel.add(BorderLayout.CENTER, scrollPane);
 			return panel;
 		}
 
 		private int getValueScrollPane() {
-			return scrollPaneArea.getVerticalScrollBar().getValue();
+			return scrollPane.getVerticalScrollBar().getValue();
 		}
 
 		private void setValueScrollPane(int value) {
-			SwingUtilities.invokeLater(() -> scrollPaneArea.getVerticalScrollBar().setValue(value));
+			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 		}
 
 		private Panel criarPanelResultado() {
@@ -672,8 +672,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 				Panel panel = new Panel();
 				panel.add(BorderLayout.NORTH, toolbarParametro);
 				tabela.setModel(new OrdemModel(criarRequisicaoModelo()));
-				scrollPaneArea = new ScrollPane(tabela);
-				panel.add(BorderLayout.CENTER, scrollPaneArea);
+				scrollPane.getViewport().setView(tabela);
+				panel.add(BorderLayout.CENTER, scrollPane);
 				split.setLeftComponent(panel);
 				split.setDividerLocation(Constantes.SIZE.height / 2);
 				Util.ajustar(tabela, getGraphics());
@@ -710,8 +710,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 				panel.add(BorderLayout.NORTH, toolbarParametro);
 				Panel panelArea = new Panel();
 				panelArea.add(BorderLayout.CENTER, areaParametros);
-				scrollPaneArea = new ScrollPane(panelArea);
-				panel.add(BorderLayout.CENTER, scrollPaneArea);
+				scrollPane.getViewport().setView(panelArea);
+				panel.add(BorderLayout.CENTER, scrollPane);
 				split.setLeftComponent(panel);
 				split.setDividerLocation(Constantes.SIZE.height / 2);
 			}
