@@ -7,6 +7,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.conexao.Conexao;
 
 public class Coluna {
+	private String valorAlternativoInsert;
 	private final boolean colunaInfo;
 	private final String tipoBanco;
 	private final boolean autoInc;
@@ -178,5 +179,13 @@ public class Coluna {
 		if (funcoes != null) {
 			funcao = funcoes.get(tipo.toLowerCase());
 		}
+	}
+
+	public String getValorAlternativoInsert() {
+		return valorAlternativoInsert;
+	}
+
+	public void setValorAlternativoInsert(String valorAlternativoInsert) {
+		this.valorAlternativoInsert = valorAlternativoInsert;
 	}
 }

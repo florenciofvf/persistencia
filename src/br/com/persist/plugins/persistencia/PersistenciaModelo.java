@@ -444,7 +444,7 @@ public class PersistenciaModelo implements TableModel {
 		if (Util.estaVazio(coluna.getSequencia())) {
 			if (registro != null) {
 				Object valoR = registro.get(coluna.getIndice());
-				valor.append(Constantes.TAB + string + coluna.get(valoR, conexao) + Constantes.QL);
+				valor.append(Constantes.TAB + string + getValor(coluna, coluna.get(valoR, conexao)) + Constantes.QL);
 			} else {
 				valor.append(Constantes.TAB + string + coluna.get(coluna.getNome(), conexao) + Constantes.QL);
 			}
@@ -453,6 +453,10 @@ public class PersistenciaModelo implements TableModel {
 					+ prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia(), Constantes.VAZIO)
 					+ Constantes.QL);
 		}
+	}
+
+	private String getValor(Coluna coluna, String valor) {
+		return Util.estaVazio(coluna.getValorAlternativoInsert()) ? valor : coluna.getValorAlternativoInsert();
 	}
 
 	private String gerarDelete(List<Object> registro, String prefixoNomeTabela, boolean comWhere, Conexao conexao) {
