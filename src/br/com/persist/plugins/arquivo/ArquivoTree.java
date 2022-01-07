@@ -134,7 +134,10 @@ public class ArquivoTree extends Tree {
 				return;
 			}
 			if (e.getClickCount() >= Constantes.DOIS) {
-				ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this));
+				Arquivo arquivo = getObjetoSelecionado();
+				if (arquivo != null && arquivo.isFile()) {
+					ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this));
+				}
 			} else {
 				Arquivo arquivo = (Arquivo) clicado.getLastPathComponent();
 				if (arquivo == null || !arquivo.isFile()) {
