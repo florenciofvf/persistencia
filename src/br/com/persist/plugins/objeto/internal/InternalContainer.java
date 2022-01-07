@@ -1259,10 +1259,23 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 									InternalContainer.this, new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
+								checarColunaInsertAlternativo(modelo, coletor);
 								String instrucao = modelo.getInsert(linhas[0], objeto.getPrefixoNomeTabela(), coletor);
 								if (!Util.estaVazio(instrucao)) {
 									updateFormDialog(abrirEmForm, conexao, instrucao, "Insert");
 								}
+							}
+						}
+					}
+				}
+
+				private void checarColunaInsertAlternativo(OrdenacaoModelo modelo, Coletor coletor) {
+					for (String col : coletor.getLista()) {
+						Variavel var = VariavelProvedor.getVariavel("INSERT_" + objeto.getTabela() + "_" + col);
+						if (var != null) {
+							Coluna coluna = modelo.getColuna(col);
+							if (coluna != null) {
+								coluna.setValorAlternativoInsert(var.getValor());
 							}
 						}
 					}
