@@ -229,6 +229,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.isShiftDown() && e.getKeyCode() == KeyEvent.VK_ENTER) {
+					getConexao();
 					actionListenerInner.actionPerformed(null);
 					e.consume();
 				}
@@ -512,6 +513,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			txtComplemento.setTextAnd(referencia.getCampo(), " IN (" + argumentos + ")" + concat);
 			destacarTitulo = true;
 			actionListenerInner.actionPerformed(null);
+		} else {
+			Util.mensagem(InternalContainer.this, Constantes.CONEXAO_NULA);
 		}
 	}
 
@@ -2249,6 +2252,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public Conexao getConexao() {
 		if (Preferencias.isDesconectado()) {
+			Util.mensagem(InternalContainer.this, Constantes.DESCONECTADO);
 			return null;
 		}
 		return (Conexao) comboConexao.getSelectedItem();
