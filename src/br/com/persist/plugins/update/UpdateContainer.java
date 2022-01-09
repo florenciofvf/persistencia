@@ -348,6 +348,8 @@ public class UpdateContainer extends AbstratoContainer {
 				if (conexao != null) {
 					String instrucao = Util.getString(textArea);
 					atualizar(conexao, instrucao);
+				} else {
+					Util.mensagem(UpdateContainer.this, Constantes.CONEXAO_NULA);
 				}
 			}
 		}

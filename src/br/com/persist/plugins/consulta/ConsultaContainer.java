@@ -457,6 +457,8 @@ public class ConsultaContainer extends AbstratoContainer {
 				if (conexao != null) {
 					String consulta = Util.getString(textArea);
 					atualizar(conexao, consulta);
+				} else {
+					Util.mensagem(ConsultaContainer.this, Constantes.CONEXAO_NULA);
 				}
 			}
 		}
