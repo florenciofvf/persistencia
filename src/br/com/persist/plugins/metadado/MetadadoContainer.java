@@ -285,6 +285,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				abrir(criarNomeArquivo(conexao));
+			} else {
+				Util.mensagem(MetadadoContainer.this, Constantes.CONEXAO_NULA);
 			}
 			pesquisa = null;
 			label.limpar();
@@ -337,6 +339,8 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			Conexao conexao = getConexao();
 			if (conexao != null) {
 				new Thread(() -> atualizar(conexao)).start();
+			} else {
+				Util.mensagem(MetadadoContainer.this, Constantes.CONEXAO_NULA);
 			}
 		}
 
