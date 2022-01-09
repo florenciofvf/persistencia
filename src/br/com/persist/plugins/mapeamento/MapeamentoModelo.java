@@ -30,7 +30,7 @@ public class MapeamentoModelo extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return 1 == columnIndex;
 	}
 
 	@Override

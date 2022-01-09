@@ -30,7 +30,7 @@ public class FragmentoModelo extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return 2 == columnIndex;
 	}
 
 	@Override
