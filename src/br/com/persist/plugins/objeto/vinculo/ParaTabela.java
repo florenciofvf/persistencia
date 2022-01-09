@@ -186,7 +186,7 @@ public class ParaTabela {
 
 	public void modelo(XMLUtil util) {
 		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
-				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#FFVVFF").ql();
+				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#FFAAFF").ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
 		util.tab().atributo("clonarAoDestacar", "").ql();
