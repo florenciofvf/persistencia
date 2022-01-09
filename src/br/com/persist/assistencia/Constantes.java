@@ -54,6 +54,7 @@ public class Constantes {
 	public static final String LABEL_ANEXOS = "label.anexos";
 	public static final String LABEL_FECHAR = "label.fechar";
 	public static final String DESCONECTADO = "DESCONECTADO";
+	public static final String CONEXAO_NULA = "CONEXAO_NULA";
 	public static final String LABEL_BANCO = "label.banco";
 	public static final String LABEL_VAZIO = "label.vazio";
 	public static final String CHAVE_VALOR = "chave_valor";

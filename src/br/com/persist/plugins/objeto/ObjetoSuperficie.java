@@ -1804,6 +1804,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			if (total > 0) {
 				new ThreadTotal(conexao, menuItem, label, total).start();
 			}
+		} else {
+			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
 		}
 	}
 
@@ -1835,6 +1837,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		@Override
 		public void run() {
+			if (Preferencias.isDesconectado()) {
+				Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
+				return;
+			}
 			label.setForeground(ObjetoPreferencia.getCorTotalAtual());
 			label.setText("0 / " + total);
 			boolean processado = false;
@@ -1888,6 +1894,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 	public void compararRecent(Conexao conexao, MenuItem menuItem, Label label) {
 		if (conexao == null) {
+			Util.mensagem(ObjetoSuperficie.this, Constantes.CONEXAO_NULA);
 			return;
 		}
 		Font font = getFont();
@@ -1919,6 +1926,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		@Override
 		public void run() {
+			if (Preferencias.isDesconectado()) {
+				Util.mensagem(ObjetoSuperficie.this, Constantes.DESCONECTADO);
+				return;
+			}
 			label.setForeground(ObjetoPreferencia.getCorComparaRec());
 			label.setText("0 / " + total);
 			boolean processado = false;
