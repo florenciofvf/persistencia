@@ -505,12 +505,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	public void pesquisar(Conexao conexao, Referencia referencia, String argumentos) {
 		if (conexao != null) {
-			String concat = "";
 			selecionarConexao(conexao);
-			if (!Util.estaVazio(referencia.getConcatenar())) {
-				concat = " " + referencia.getConcatenar();
-			}
-			txtComplemento.setTextAnd(referencia.getCampo(), " IN (" + argumentos + ")" + concat);
+			txtComplemento.setTextAnd(referencia.getCampo(), " IN (" + argumentos + ")" + referencia.getConcatenar());
 			destacarTitulo = true;
 			actionListenerInner.actionPerformed(null);
 		} else {

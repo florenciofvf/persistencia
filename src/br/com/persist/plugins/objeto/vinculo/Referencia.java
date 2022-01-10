@@ -246,7 +246,10 @@ public class Referencia {
 	}
 
 	public String getConcatenar() {
-		return concatenar;
+		if (Util.estaVazio(concatenar)) {
+			return Constantes.VAZIO;
+		}
+		return " " + concatenar;
 	}
 
 	public void setConcatenar(String concatenar) {
