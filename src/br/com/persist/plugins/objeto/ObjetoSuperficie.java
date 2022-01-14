@@ -2092,7 +2092,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			List<Metadado> campos = tabela.getListaCampoExportacaoImportacao(true);
 			Coletor coletor = new Coletor();
 			SetLista.view(principal.getId() + ObjetoMensagens.getString("label.adicionar_hierarquico"),
-					nomeCampos(campos), coletor, ObjetoSuperficie.this, new SetLista.Config(false, true));
+					nomeCampos(campos), coletor, ObjetoSuperficie.this, new SetLista.Config(true, true));
 			if (coletor.size() == 1) {
 				processarCampoFK(getCampo(campos, coletor.get(0)));
 			} else {
