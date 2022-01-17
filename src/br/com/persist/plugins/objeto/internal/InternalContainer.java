@@ -490,7 +490,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void configTableColumn(TableColumn tableColumn, Coluna coluna) {
 		if (coluna.isChave()) {
-			tableColumn.setCellRenderer(new CellRenderer(Color.GRAY, Color.WHITE));
+			tableColumn.setCellRenderer(new CellRenderer());
 		}
 		if (coluna.isColunaInfo()) {
 			tableColumn.setCellRenderer(new InternalRenderer());

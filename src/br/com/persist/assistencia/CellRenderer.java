@@ -16,6 +16,10 @@ public class CellRenderer extends DefaultTableCellRenderer {
 		this.foreGround = foreGround;
 	}
 
+	public CellRenderer() {
+		this(Color.GRAY, Color.WHITE);
+	}
+
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {

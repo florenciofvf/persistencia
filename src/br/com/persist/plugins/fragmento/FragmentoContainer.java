@@ -24,6 +24,7 @@ import javax.swing.JTable;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -79,6 +80,8 @@ public class FragmentoContainer extends AbstratoContainer {
 	}
 
 	private void configurar() {
+		tabela.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
+		tabela.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
 		tabela.getColumnModel().getColumn(2).setCellEditor(new FragmentoEditor());
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.baixar();
