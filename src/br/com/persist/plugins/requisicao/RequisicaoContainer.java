@@ -55,6 +55,7 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Base64Util;
+import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -672,6 +673,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				Panel panel = new Panel();
 				panel.add(BorderLayout.NORTH, toolbarParametro);
 				tabela.setModel(new OrdemModel(criarRequisicaoModelo()));
+				tabela.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
 				scrollPane.getViewport().setView(tabela);
 				panel.add(BorderLayout.CENTER, scrollPane);
 				split.setLeftComponent(panel);
