@@ -391,6 +391,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		return referencia.igual(container.getObjeto());
 	}
 
+	public boolean coringa(Referencia referencia) {
+		return referencia.coringa(container.getObjeto());
+	}
+
 	public boolean ehTabela(Objeto objeto) {
 		return objeto.igual(container.getObjeto());
 	}

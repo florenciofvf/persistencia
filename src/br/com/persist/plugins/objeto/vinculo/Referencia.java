@@ -132,6 +132,10 @@ public class Referencia {
 				&& tabela.equalsIgnoreCase(objeto.getTabela());
 	}
 
+	public boolean coringa(Objeto objeto) {
+		return objeto != null && grupo.equalsIgnoreCase(objeto.getGrupo()) && "*".equals(tabela);
+	}
+
 	public Referencia clonar() {
 		return new Referencia(grupo, tabela, campo);
 	}

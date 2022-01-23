@@ -412,7 +412,7 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 
 	private void pesquisarApos(Pesquisa pesquisa, InternalFormulario interno) {
 		for (Referencia referencia : pesquisa.getReferenciasApos()) {
-			if (interno.ehReferencia(referencia)) {
+			if (interno.ehReferencia(referencia) || interno.coringa(referencia)) {
 				interno.pesquisarApos();
 			}
 		}
