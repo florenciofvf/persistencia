@@ -44,7 +44,6 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -501,75 +500,11 @@ public class RequisicaoContainer extends AbstratoContainer {
 		};
 	}
 
-	private class RequisicaoFichario extends JTabbedPane {
-		private static final long serialVersionUID = 1L;
-
-		private void adicionarPagina(Pagina pagina) {
-			addTab(pagina.getNome(), pagina);
-			int ultimoIndice = getTabCount() - 1;
-			setSelectedIndex(ultimoIndice);
-		}
-
-		private void excluirPaginas() {
-			while (getTabCount() > 0) {
-				removeTabAt(0);
-			}
-		}
-
-		private int getIndiceAtivo() {
-			return getSelectedIndex();
-		}
-
-		private Pagina getPaginaAtiva() {
-			int indice = getSelectedIndex();
-			if (indice != -1) {
-				return (Pagina) getComponentAt(indice);
-			}
-			return null;
-		}
-
-		private Pagina getPagina(String idPagina) {
-			for (int i = 0; i < getTabCount(); i++) {
-				Component cmp = getComponentAt(i);
-				if (cmp instanceof Pagina) {
-					Pagina p = (Pagina) cmp;
-					if (p.getNome().equals(idPagina)) {
-						return p;
-					}
-				}
-			}
-			return null;
-		}
-
-		private int getIndicePagina(Pagina pagina) {
-			for (int i = 0; i < getTabCount(); i++) {
-				Component cmp = getComponentAt(i);
-				if (cmp instanceof Pagina) {
-					Pagina p = (Pagina) cmp;
-					if (p == pagina) {
-						return i;
-					}
-				}
-			}
-			return -1;
-		}
-
-		private void setConteudo(String conteudo, String idPagina) {
-			Pagina pagina = getPagina(idPagina);
-			if (pagina != null) {
-				if (!Util.estaVazio(conteudo)) {
-					pagina.areaParametros.setText(conteudo);
-				}
-				setSelectedIndex(getIndicePagina(pagina));
-			}
-		}
-	}
-
-	private class Pagina extends Panel {
+	public class Pagina extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 		private final ToolbarResultado toolbarResultado = new ToolbarResultado();
-		private final JTextPane areaParametros = new JTextPane();
+		public final JTextPane areaParametros = new JTextPane();
 		private final JTextPane areaResultados = new JTextPane();
 		private final TabbedPane tabbedPane = new TabbedPane();
 		private final Label labelImagem = new Label();
@@ -808,7 +743,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			return areaParametros.getText();
 		}
 
-		private String getNome() {
+		public String getNome() {
 			return file.getName();
 		}
 
