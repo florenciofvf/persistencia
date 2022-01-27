@@ -3,10 +3,7 @@ package br.com.persist.plugins.requisicao;
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.CLONAR_EM_FORMULARIO;
-import static br.com.persist.componente.BarraButtonEnum.COLAR;
-import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
-import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
@@ -16,73 +13,31 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
-import br.com.persist.assistencia.Base64Util;
-import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.Preferencias;
-import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
-import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
-import br.com.persist.componente.Label;
-import br.com.persist.componente.OrdemModel;
-import br.com.persist.componente.OrdemTable;
-import br.com.persist.componente.Panel;
-import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TabbedPane;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.parser.Objeto;
-import br.com.persist.parser.Parser;
 import br.com.persist.parser.ParserDialogo;
 import br.com.persist.parser.ParserListener;
-import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
-import br.com.persist.plugins.variaveis.Variavel;
-import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class RequisicaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
@@ -134,7 +89,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 	}
 
 	public String getConteudo() {
-		Pagina ativa = fichario.getPaginaAtiva();
+		RequisicaoPagina ativa = fichario.getPaginaAtiva();
 		if (ativa != null) {
 			return ativa.getConteudo();
 		}
@@ -142,7 +97,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 	}
 
 	public String getIdPagina() {
-		Pagina ativa = fichario.getPaginaAtiva();
+		RequisicaoPagina ativa = fichario.getPaginaAtiva();
 		if (ativa != null) {
 			return ativa.getNome();
 		}
@@ -159,7 +114,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					Pagina pagina = new Pagina(f);
+					RequisicaoPagina pagina = new RequisicaoPagina(f);
 					fichario.adicionarPagina(pagina);
 				}
 			}
@@ -193,38 +148,21 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private Action base64Acao = actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
-		private CheckBox chkCopiarAccessToken = new CheckBox();
-		private CheckBox chkRespostaImagem = new CheckBox();
-		private CheckBox chkRespostaJson = new CheckBox();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
-			add(chkRespostaImagem);
-			add(chkRespostaJson);
-			add(chkCopiarAccessToken);
 			addButton(true, atualizarAcao);
 			addButton(true, formatarAcao);
 			addButton(modeloAcao);
 			addButton(true, base64Acao);
 			addButton(retornar64Acao);
 			addButton(true, variaveisAcao);
-			chkRespostaImagem.setToolTipText(RequisicaoMensagens.getString("label.resposta_imagem"));
-			chkRespostaJson.setToolTipText(RequisicaoMensagens.getString("label.resposta_json"));
-			String hint = RequisicaoMensagens.getString("label.copiar_access_token",
-					RequisicaoMensagens.getString("label.resposta_json"));
-			chkCopiarAccessToken.setToolTipText(hint);
 			eventos();
 		}
 
 		private void eventos() {
-			chkRespostaImagem.setSelected(Preferencias.getInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON) == 1);
-			chkRespostaJson.setSelected(Preferencias.getInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON) == 2);
-			chkCopiarAccessToken.setSelected(Preferencias.getBoolean("copiar_access_token"));
-			chkCopiarAccessToken.addActionListener(e -> chkCopiarAccessTokenHandler());
-			chkRespostaImagem.addActionListener(e -> chkRespostaImagemHandler());
-			chkRespostaJson.addActionListener(e -> chkRespostaJsonHandler());
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
 			retornar64Acao.setActionListener(e -> retornar64());
 			variaveisAcao.setActionListener(e -> variaveis());
@@ -232,33 +170,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			formatarAcao.setActionListener(e -> formatar());
 			base64Acao.setActionListener(e -> base64());
 			modeloAcao.setActionListener(e -> modelo());
-			chkCopiarAccessTokenHandler();
-		}
-
-		private void chkCopiarAccessTokenHandler() {
-			if (!chkRespostaJson.isSelected() || chkRespostaImagem.isSelected()) {
-				chkCopiarAccessToken.setSelected(false);
-			}
-			Preferencias.setBoolean("copiar_access_token", chkCopiarAccessToken.isSelected());
-		}
-
-		private void chkRespostaImagemHandler() {
-			Preferencias.setInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON,
-					chkRespostaImagem.isSelected() ? 1 : 0);
-			if (chkRespostaImagem.isSelected()) {
-				chkRespostaJson.setSelected(false);
-				chkCopiarAccessToken.setSelected(false);
-			}
-		}
-
-		private void chkRespostaJsonHandler() {
-			Preferencias.setInt(RequisicaoConstantes.REQUISICAO_RESPONSE_IMG_JSON,
-					chkRespostaJson.isSelected() ? 2 : 0);
-			if (chkRespostaJson.isSelected()) {
-				chkRespostaImagem.setSelected(false);
-			} else {
-				chkCopiarAccessToken.setSelected(false);
-			}
 		}
 
 		@Override
@@ -327,7 +238,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 			try {
 				if (f.createNewFile()) {
-					Pagina pagina = new Pagina(f);
+					RequisicaoPagina pagina = new RequisicaoPagina(f);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {
@@ -342,13 +253,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		@Override
 		protected void salvar() {
-			Pagina ativa = fichario.getPaginaAtiva();
+			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				salvar(ativa);
 			}
 		}
 
-		private void salvar(Pagina ativa) {
+		private void salvar(RequisicaoPagina ativa) {
 			AtomicBoolean atomic = new AtomicBoolean(false);
 			ativa.salvar(atomic);
 			if (atomic.get()) {
@@ -357,7 +268,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void excluirAtivo() {
-			Pagina ativa = fichario.getPaginaAtiva();
+			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null && Util.confirmar(RequisicaoContainer.this,
 					RequisicaoMensagens.getString("msg.confirmar_excluir_ativa"), false)) {
 				int indice = fichario.getSelectedIndex();
@@ -368,14 +279,14 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 		@Override
 		protected void atualizar() {
-			Pagina ativa = fichario.getPaginaAtiva();
+			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.atualizar();
 			}
 		}
 
 		private void formatar() {
-			Pagina ativa = fichario.getPaginaAtiva();
+			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.formatar();
 			}
@@ -398,21 +309,21 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private void base64() {
-			Pagina ativa = fichario.getPaginaAtiva();
+			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.base64();
 			}
 		}
 
 		private void retornar64() {
-			Pagina ativa = fichario.getPaginaAtiva();
+			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.retornar64();
 			}
 		}
 
 		private void variaveis() {
-			Pagina ativa = fichario.getPaginaAtiva();
+			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.variaveis();
 			}
@@ -458,7 +369,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	@Override
 	public String getStringPersistencia() {
-		Pagina ativa = fichario.getPaginaAtiva();
+		RequisicaoPagina ativa = fichario.getPaginaAtiva();
 		if (ativa != null) {
 			return ativa.getNome();
 		}
@@ -498,592 +409,5 @@ public class RequisicaoContainer extends AbstratoContainer {
 				return Icones.URL;
 			}
 		};
-	}
-
-	public class Pagina extends Panel {
-		private static final long serialVersionUID = 1L;
-		private final ToolbarParametro toolbarParametro = new ToolbarParametro();
-		private final ToolbarResultado toolbarResultado = new ToolbarResultado();
-		public final JTextPane areaParametros = new JTextPane();
-		private final JTextPane areaResultados = new JTextPane();
-		private final TabbedPane tabbedPane = new TabbedPane();
-		private final Label labelImagem = new Label();
-		private final Tabela tabela = new Tabela();
-		private ScrollPane scrollPane;
-		private JSplitPane split;
-		private final File file;
-
-		private Pagina(File file) {
-			this.file = file;
-			montarLayout();
-			abrir();
-		}
-
-		class Tabela extends OrdemTable {
-			private static final long serialVersionUID = 1L;
-
-			public Tabela() {
-				super(new OrdemModel(new RequisicaoModelo()));
-			}
-
-			Requisicao getRequisicao() {
-				int[] linhas = getSelectedRows();
-				if (linhas != null && linhas.length == 1) {
-					int indice = ((OrdemModel) getModel()).getRowIndex(linhas[0]);
-					return getModelo().getRequisicao(indice);
-				}
-				return null;
-			}
-
-			RequisicaoModelo getModelo() {
-				return (RequisicaoModelo) ((OrdemModel) getModel()).getModel();
-			}
-		}
-
-		private void montarLayout() {
-			split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
-			split.setDividerLocation(Constantes.SIZE.height / 2);
-			add(BorderLayout.CENTER, split);
-		}
-
-		private Panel criarPanelParametro() {
-			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, toolbarParametro);
-			Panel panelArea = new Panel();
-			panelArea.add(BorderLayout.CENTER, areaParametros);
-			scrollPane = new ScrollPane(panelArea);
-			panel.add(BorderLayout.CENTER, scrollPane);
-			return panel;
-		}
-
-		private int getValueScrollPane() {
-			return scrollPane.getVerticalScrollBar().getValue();
-		}
-
-		private void setValueScrollPane(int value) {
-			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
-		}
-
-		private Panel criarPanelResultado() {
-			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, toolbarResultado);
-			Panel panelArea = new Panel();
-			panelArea.add(BorderLayout.CENTER, areaResultados);
-			tabbedPane.addTab("label.texto", Icones.TEXTO, new ScrollPane(panelArea));
-			tabbedPane.addTab("label.imagem", Icones.ICON, new ScrollPane(labelImagem));
-			panel.add(BorderLayout.CENTER, tabbedPane);
-			return panel;
-		}
-
-		private class ToolbarParametro extends BarraButton implements ActionListener {
-			private static final long serialVersionUID = 1L;
-			private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
-			private final TextField txtPesquisa = new TextField(35);
-			private CheckBox chkModoTabela = new CheckBox();
-			private transient Selecao selecao;
-
-			private ToolbarParametro() {
-				super.ini(null, LIMPAR, BAIXAR, COPIAR, COLAR);
-				buttonColar.addSeparator();
-				buttonColar.addItem(vAccessTokenAcao);
-				vAccessTokenAcao.setActionListener(e -> atualizarVar());
-				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-				txtPesquisa.addActionListener(this);
-				add(txtPesquisa);
-				add(label);
-				add(chkModoTabela);
-				chkModoTabela.setToolTipText(RequisicaoMensagens.getString("label.modo_tabela"));
-				chkModoTabela.addActionListener(e -> modoTabelaHandler(chkModoTabela.isSelected()));
-			}
-
-			private void modoTabelaHandler(boolean modoTabela) {
-				if (modoTabela) {
-					configModoTabela();
-				} else {
-					configModoTexto();
-				}
-			}
-
-			private void configModoTabela() {
-				Panel panel = new Panel();
-				panel.add(BorderLayout.NORTH, toolbarParametro);
-				tabela.setModel(new OrdemModel(criarRequisicaoModelo()));
-				tabela.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
-				scrollPane.getViewport().setView(tabela);
-				panel.add(BorderLayout.CENTER, scrollPane);
-				split.setLeftComponent(panel);
-				split.setDividerLocation(Constantes.SIZE.height / 2);
-				Util.ajustar(tabela, getGraphics());
-			}
-
-			private RequisicaoModelo criarRequisicaoModelo() {
-				RequisicaoModelo modelo = new RequisicaoModelo();
-				Fragmento frag = new Fragmento(areaParametros.getText());
-				String string = frag.proximo();
-				while (string.length() > 0) {
-					Requisicao req = criar(string);
-					modelo.adicionar(req);
-					string = frag.proximo();
-				}
-				return modelo;
-			}
-
-			private Requisicao criar(String string) {
-				if (Util.estaVazio(string)) {
-					return null;
-				}
-				try {
-					Parser parser = new Parser();
-					Tipo tipo = parser.parse(string);
-					return new Requisicao(tipo);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-				}
-				return null;
-			}
-
-			private void configModoTexto() {
-				Panel panel = new Panel();
-				panel.add(BorderLayout.NORTH, toolbarParametro);
-				Panel panelArea = new Panel();
-				panelArea.add(BorderLayout.CENTER, areaParametros);
-				scrollPane.getViewport().setView(panelArea);
-				panel.add(BorderLayout.CENTER, scrollPane);
-				split.setLeftComponent(panel);
-				split.setDividerLocation(Constantes.SIZE.height / 2);
-			}
-
-			private void atualizarVar() {
-				String string = Util.getContentTransfered();
-				if (!Util.estaVazio(string)) {
-					setAccesToken(string);
-				}
-			}
-
-			@Override
-			protected void limpar() {
-				areaParametros.setText(Constantes.VAZIO);
-			}
-
-			@Override
-			protected void baixar() {
-				abrir();
-				selecao = null;
-				label.limpar();
-			}
-
-			@Override
-			protected void copiar() {
-				String string = Util.getString(areaParametros);
-				Util.setContentTransfered(string);
-				copiarMensagem(string);
-				areaParametros.requestFocus();
-			}
-
-			@Override
-			protected void colar(boolean numeros, boolean letras) {
-				Util.getContentTransfered(areaParametros, numeros, letras);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!Util.estaVazio(txtPesquisa.getText())) {
-					selecao = Util.getSelecao(areaParametros, selecao, txtPesquisa.getText());
-					selecao.selecionar(label);
-				} else {
-					label.limpar();
-				}
-			}
-		}
-
-		private class ToolbarResultado extends BarraButton implements ActionListener {
-			private static final long serialVersionUID = 1L;
-			private final TextField txtPesquisa = new TextField(35);
-			private transient Selecao selecao;
-
-			private ToolbarResultado() {
-				super.ini(null, LIMPAR, COPIAR, COLAR);
-				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-				txtPesquisa.addActionListener(this);
-				add(txtPesquisa);
-				add(label);
-			}
-
-			@Override
-			protected void limpar() {
-				areaResultados.setText(Constantes.VAZIO);
-			}
-
-			@Override
-			protected void copiar() {
-				String string = Util.getString(areaResultados);
-				Util.setContentTransfered(string);
-				copiarMensagem(string);
-				areaResultados.requestFocus();
-			}
-
-			@Override
-			protected void colar(boolean numeros, boolean letras) {
-				Util.getContentTransfered(areaResultados, numeros, letras);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!Util.estaVazio(txtPesquisa.getText())) {
-					selecionarAbaJSON();
-					selecao = Util.getSelecao(areaResultados, selecao, txtPesquisa.getText());
-					selecao.selecionar(label);
-				} else {
-					label.limpar();
-				}
-			}
-		}
-
-		private String getConteudo() {
-			return areaParametros.getText();
-		}
-
-		public String getNome() {
-			return file.getName();
-		}
-
-		private void abrir() {
-			areaParametros.setText(Constantes.VAZIO);
-			if (file.exists()) {
-				try (BufferedReader br = new BufferedReader(
-						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-					StringBuilder sb = new StringBuilder();
-					int value = getValueScrollPane();
-					String linha = br.readLine();
-					while (linha != null) {
-						sb.append(linha + Constantes.QL);
-						linha = br.readLine();
-					}
-					areaParametros.setText(sb.toString());
-					setValueScrollPane(value);
-				} catch (Exception ex) {
-					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
-				}
-			}
-		}
-
-		private void excluir() {
-			if (file.exists()) {
-				Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
-				try {
-					Files.delete(path);
-				} catch (IOException e) {
-					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, e, RequisicaoContainer.this);
-				}
-			}
-		}
-
-		private void salvar(AtomicBoolean atomic) {
-			if (!Util.confirmaSalvarMsg(RequisicaoContainer.this, Constantes.TRES,
-					RequisicaoMensagens.getString("msg.confirmar_salvar_ativa"))) {
-				return;
-			}
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(areaParametros.getText());
-				atomic.set(true);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoContainer.this);
-			}
-		}
-
-		private void formatar() {
-			if (!Util.estaVazio(areaParametros.getText())) {
-				String string = Util.getString(areaParametros);
-				areaResultados.setText(Constantes.VAZIO);
-				formatar(string);
-			}
-		}
-
-		private void formatar(String string) {
-			try {
-				Parser parser = new Parser();
-				Tipo json = parser.parse(string);
-				StyledDocument styledDoc = areaResultados.getStyledDocument();
-				if (styledDoc instanceof AbstractDocument) {
-					AbstractDocument doc = (AbstractDocument) styledDoc;
-					json.toString(doc, false, 0);
-				}
-				selecionarAbaJSON();
-				areaParametros.requestFocus();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-			}
-		}
-
-		private void base64() {
-			if (!Util.estaVazio(areaParametros.getText())) {
-				String string = Util.getString(areaParametros);
-				areaResultados.setText(Constantes.VAZIO);
-				base64(string);
-			}
-		}
-
-		private void retornar64() {
-			if (!Util.estaVazio(areaParametros.getText())) {
-				String string = Util.getString(areaParametros);
-				areaResultados.setText(Constantes.VAZIO);
-				retornar64(string);
-			}
-		}
-
-		private void variaveis() {
-			StringBuilder sb = new StringBuilder();
-			Properties properties = System.getProperties();
-			Set<String> chaves = properties.stringPropertyNames();
-			for (String chave : chaves) {
-				Object valor = properties.get(chave);
-				sb.append(chave + "=" + (valor != null ? valor.toString() : "") + Constantes.QL);
-			}
-			selecionarAbaJSON();
-			areaResultados.setText(sb.toString());
-		}
-
-		private void base64(String string) {
-			try {
-				selecionarAbaJSON();
-				areaResultados.setText(Base64Util.criarBase64(string));
-				areaParametros.requestFocus();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-			}
-		}
-
-		private void retornar64(String string) {
-			try {
-				selecionarAbaJSON();
-				areaResultados.setText(Base64Util.retornarBase64(string));
-				areaParametros.requestFocus();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-			}
-		}
-
-		private void atualizar() {
-			if (toolbarParametro.chkModoTabela.isSelected()) {
-				Requisicao req = tabela.getRequisicao();
-				if (req != null) {
-					String string = req.getString();
-					areaResultados.setText(Constantes.VAZIO);
-					atualizar(string);
-				}
-			} else {
-				if (!Util.estaVazio(areaParametros.getText())) {
-					String string = Util.getString(areaParametros);
-					areaResultados.setText(Constantes.VAZIO);
-					atualizar(string);
-				}
-			}
-		}
-
-		private void atualizar(String string) {
-			try {
-				Parser parser = new Parser();
-				Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
-				if (vAccessToken != null) {
-					string = substituir(string, vAccessToken);
-				}
-				Tipo parametros = parser.parse(string);
-				AtomicReference<Map<String, List<String>>> mapHeader = new AtomicReference<>();
-				byte[] resposta = requisicao(parametros, mapHeader);
-				checarConteudo(mapHeader);
-				processarResposta(parser, resposta);
-				areaParametros.requestFocus();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-			}
-		}
-
-		private void checarConteudo(AtomicReference<Map<String, List<String>>> mapHeader) {
-			Map<String, List<String>> map = mapHeader.get();
-			if (map != null) {
-				List<String> list = getList(map);
-				if (list != null) {
-					checarImagem(list);
-					checarJson(list);
-				}
-			}
-		}
-
-		private List<String> getList(Map<String, List<String>> map) {
-			List<String> list = map.get("Content-Type");
-			if (list == null) {
-				list = map.get("content-type");
-			}
-			if (list == null) {
-				list = map.get("CONTENT-TYPE");
-			}
-			return list;
-		}
-
-		private void checarImagem(List<String> list) {
-			AtomicBoolean imagem = new AtomicBoolean(false);
-			for (String string : list) {
-				if (!Util.estaVazio(string) && string.toLowerCase().indexOf("image/") != -1) {
-					toolbar.chkRespostaImagem.setSelected(true);
-					toolbar.chkRespostaImagemHandler();
-					imagem.set(true);
-					return;
-				}
-			}
-			if (!imagem.get() && toolbar.chkRespostaImagem.isSelected()) {
-				toolbar.chkRespostaImagem.setSelected(false);
-			}
-		}
-
-		private void checarJson(List<String> list) {
-			if (list.size() == 1) {
-				for (String string : list) {
-					if (!Util.estaVazio(string) && string.toLowerCase().indexOf("json") != -1) {
-						toolbar.chkRespostaJson.setSelected(true);
-						toolbar.chkRespostaJsonHandler();
-						return;
-					}
-				}
-			}
-		}
-
-		private void selecionarAbaJSON() {
-			tabbedPane.setSelectedIndex(0);
-		}
-
-		private void selecionarAbaImagem() {
-			tabbedPane.setSelectedIndex(1);
-		}
-
-		private void processarResposta(Parser parser, byte[] resposta) throws BadLocationException {
-			if (resposta.length > 0 && toolbar.chkRespostaJson.isSelected()) {
-				selecionarAbaJSON();
-				processarJSON(parser, Util.getString(resposta));
-			} else if (resposta.length > 0 && toolbar.chkRespostaImagem.isSelected()) {
-				selecionarAbaImagem();
-				labelImagem.setIcon(new ImageIcon(resposta));
-			} else {
-				selecionarAbaJSON();
-				areaResultados.setText(Util.getString(resposta));
-			}
-		}
-
-		private void processarJSON(Parser parser, String resposta) throws BadLocationException {
-			StyledDocument styledDoc = areaResultados.getStyledDocument();
-			Tipo json = parser.parse(resposta);
-			if (styledDoc instanceof AbstractDocument) {
-				AbstractDocument doc = (AbstractDocument) styledDoc;
-				json.toString(doc, false, 0);
-			}
-			String accessToken = getAccessToken(json);
-			setAccesToken(accessToken);
-		}
-
-		private byte[] requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapHeaderResult)
-				throws IOException {
-			if (parametros instanceof Objeto) {
-				Objeto objeto = (Objeto) parametros;
-				Tipo tipoUrl = objeto.getValor("url");
-				String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
-				Map<String, String> mapHeader = getMapHeader(objeto);
-				String bodyParams = getBodyParams(objeto);
-				return requisicao(url, mapHeader, bodyParams, mapHeaderResult);
-			}
-			return new byte[0];
-		}
-
-		private String getBodyParams(Objeto objeto) {
-			Tipo tipoBody = objeto.getValor("body");
-			String bodyParams = null;
-			if (tipoBody instanceof Objeto) {
-				Objeto objBody = (Objeto) tipoBody;
-				Tipo params = objBody.getValor("parameters");
-				bodyParams = params instanceof Texto ? params.toString() : null;
-			}
-			return bodyParams;
-		}
-
-		private Map<String, String> getMapHeader(Objeto objeto) {
-			Map<String, String> mapHeader = null;
-			Tipo tipoHeader = objeto.getValor("header");
-			if (tipoHeader instanceof Objeto) {
-				Objeto objHeader = (Objeto) tipoHeader;
-				mapHeader = objHeader.getAtributosString();
-			}
-			return mapHeader;
-		}
-
-		private byte[] requisicao(String url, Map<String, String> header, String parametros,
-				AtomicReference<Map<String, List<String>>> mapHeader) throws IOException {
-			if (Util.estaVazio(url)) {
-				return new byte[0];
-			}
-			URL url2 = new URL(url);
-			URLConnection conn = url2.openConnection();
-			String verbo = setRequestPropertyAndGetVerbo(header, conn);
-			checarDoOutput(parametros, conn, verbo);
-			conn.connect();
-			sePost(parametros, conn, verbo);
-			if (mapHeader != null) {
-				mapHeader.set(conn.getHeaderFields());
-			}
-			return Util.getArrayBytes(conn.getInputStream());
-		}
-
-		private void sePost(String parametros, URLConnection conn, String verbo) throws IOException {
-			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
-				OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-				osw.write(parametros);
-				osw.flush();
-			}
-		}
-
-		private void checarDoOutput(String parametros, URLConnection conn, String verbo) {
-			if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
-				conn.setDoOutput(true);
-			}
-		}
-
-		private String setRequestPropertyAndGetVerbo(Map<String, String> header, URLConnection conn) {
-			String verbo = null;
-			if (header != null) {
-				verbo = header.get("Request-Method");
-				for (Map.Entry<String, String> entry : header.entrySet()) {
-					conn.setRequestProperty(entry.getKey(), entry.getValue());
-				}
-			}
-			return verbo;
-		}
-
-		private String getAccessToken(Tipo tipo) {
-			if (tipo instanceof Objeto) {
-				Objeto objeto = (Objeto) tipo;
-				Tipo tipoAccessToken = objeto.getValor("access_token");
-				return tipoAccessToken instanceof Texto ? tipoAccessToken.toString() : null;
-			}
-			return null;
-		}
-
-		private void setAccesToken(String accessToken) {
-			if (!Util.estaVazio(accessToken)) {
-				Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
-				if (vAccessToken == null) {
-					vAccessToken = new Variavel(RequisicaoConstantes.VAR_ACCESS_TOKEN, accessToken);
-					VariavelProvedor.adicionar(vAccessToken);
-				} else {
-					vAccessToken.setValor(accessToken);
-				}
-				if (toolbar.chkCopiarAccessToken.isSelected()) {
-					Util.setContentTransfered(accessToken);
-				}
-			}
-		}
-
-		private String substituir(String instrucao, Variavel v) {
-			if (instrucao == null) {
-				instrucao = Constantes.VAZIO;
-			}
-			return instrucao.replaceAll("#" + v.getNome() + "#", v.getValor());
-		}
 	}
 }
