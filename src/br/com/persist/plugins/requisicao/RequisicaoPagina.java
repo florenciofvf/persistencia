@@ -15,10 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -49,9 +46,7 @@ import br.com.persist.componente.OrdemTable;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
-import br.com.persist.parser.Objeto;
 import br.com.persist.parser.Parser;
-import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoHTML;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoImagem;
@@ -59,7 +54,6 @@ import br.com.persist.plugins.requisicao.conteudo.ConteudoJSON;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoTexto;
 import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudo;
 import br.com.persist.plugins.requisicao.conteudo.RequisicaoHeader;
-import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class RequisicaoPagina extends Panel {
@@ -493,10 +487,17 @@ public class RequisicaoPagina extends Panel {
 	}
 
 	private void processarResposta(InputStream resposta) throws Exception {
+		excluirAbas();
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
 		Component view = conteudo.exibir(resposta);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);
+	}
+
+	private void excluirAbas() {
+		while (tabbedPane.getTabCount() > 0) {
+			tabbedPane.removeTabAt(0);
+		}
 	}
 }
