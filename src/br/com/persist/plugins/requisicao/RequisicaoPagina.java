@@ -451,7 +451,8 @@ public class RequisicaoPagina extends Panel {
 			Tipo parametros = parser.parse(string);
 			AtomicReference<Map<String, List<String>>> mapHeader = new AtomicReference<>();
 			InputStream is = RequisicaoUtil.requisicao(parametros, mapHeader);
-			configConteudo(mapHeader);
+			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
+			configConteudo(mapHeader, varCookie);
 			processarResposta(is);
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
@@ -459,7 +460,7 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
-	private void configConteudo(AtomicReference<Map<String, List<String>>> mapHeader) {
+	private void configConteudo(AtomicReference<Map<String, List<String>>> mapHeader, String varCookie) {
 		tipoConteudo = RequisicaoConstantes.CONTEUDO_TEXTO;
 		Map<String, List<String>> map = mapHeader.get();
 		if (map != null) {
@@ -467,7 +468,7 @@ public class RequisicaoPagina extends Panel {
 			if (list != null) {
 				configConteudo(list);
 			}
-			RequisicaoHeader.setSetCookie(map);
+			RequisicaoHeader.setVarCookie(map, varCookie);
 		}
 	}
 

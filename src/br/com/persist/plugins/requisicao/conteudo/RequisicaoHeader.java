@@ -53,21 +53,19 @@ public abstract class RequisicaoHeader implements RequisicaoConteudo {
 		}
 	}
 
-	public static void setSetCookie(Map<String, List<String>> map) {
-		if (map == null) {
+	public static void setVarCookie(Map<String, List<String>> map, String varCookie) {
+		if (map == null || Util.estaVazio(varCookie)) {
 			return;
 		}
 		List<String> lista = map.get("Set-Cookie");
 		if (lista != null && !lista.isEmpty()) {
 			String valor = lista.get(0);
-			if (!Util.estaVazio(valor)) {
-				Variavel vSetCookie = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_SET_COOKIE);
-				if (vSetCookie == null) {
-					vSetCookie = new Variavel(RequisicaoConstantes.VAR_SET_COOKIE, valor);
-					VariavelProvedor.adicionar(vSetCookie);
-				} else {
-					vSetCookie.setValor(valor);
-				}
+			Variavel var = VariavelProvedor.getVariavel(varCookie);
+			if (var == null) {
+				var = new Variavel(varCookie, valor);
+				VariavelProvedor.adicionar(var);
+			} else {
+				var.setValor(valor);
 			}
 		}
 	}

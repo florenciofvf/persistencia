@@ -30,6 +30,15 @@ public class RequisicaoUtil {
 		return list;
 	}
 
+	public static String getAtributoVarCookie(Tipo parametros) {
+		if (parametros instanceof Objeto) {
+			Objeto objeto = (Objeto) parametros;
+			Tipo tipo = objeto.getValor("SetVarCookie");
+			return tipo instanceof Texto ? tipo.toString() : null;
+		}
+		return null;
+	}
+
 	public static InputStream requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapHeaderResult)
 			throws IOException {
 		if (parametros instanceof Objeto) {
