@@ -493,6 +493,7 @@ public class RequisicaoPagina extends Panel {
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);
+		resposta.close();
 	}
 
 	private void excluirAbas() {
