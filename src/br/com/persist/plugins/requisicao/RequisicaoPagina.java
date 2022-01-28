@@ -277,31 +277,32 @@ public class RequisicaoPagina extends Panel {
 
 		@Override
 		protected void limpar() {
-			//areaResultados.setText(Constantes.VAZIO);
+			// areaResultados.setText(Constantes.VAZIO);
 		}
 
 		@Override
 		protected void copiar() {
-//			String string = Util.getString(areaResultados);
-//			Util.setContentTransfered(string);
-//			copiarMensagem(string);
-//			areaResultados.requestFocus();
+			// String string = Util.getString(areaResultados);
+			// Util.setContentTransfered(string);
+			// copiarMensagem(string);
+			// areaResultados.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-//			Util.getContentTransfered(areaResultados, numeros, letras);
+			// Util.getContentTransfered(areaResultados, numeros, letras);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			if (!Util.estaVazio(txtPesquisa.getText())) {
-//				selecionarAbaJSON();
-//				selecao = Util.getSelecao(areaResultados, selecao, txtPesquisa.getText());
-//				selecao.selecionar(label);
-//			} else {
-//				label.limpar();
-//			}
+			// if (!Util.estaVazio(txtPesquisa.getText())) {
+			// selecionarAbaJSON();
+			// selecao = Util.getSelecao(areaResultados, selecao,
+			// txtPesquisa.getText());
+			// selecao.selecionar(label);
+			// } else {
+			// label.limpar();
+			// }
 		}
 	}
 
@@ -358,43 +359,44 @@ public class RequisicaoPagina extends Panel {
 	}
 
 	public void formatar() {
-//		if (!Util.estaVazio(areaParametros.getText())) {
-//			String string = Util.getString(areaParametros);
-//			areaResultados.setText(Constantes.VAZIO);
-//			formatar(string);
-//		}
+		// if (!Util.estaVazio(areaParametros.getText())) {
+		// String string = Util.getString(areaParametros);
+		// areaResultados.setText(Constantes.VAZIO);
+		// formatar(string);
+		// }
 	}
 
 	private void formatar(String string) {
-//		try {
-//			Parser parser = new Parser();
-//			Tipo json = parser.parse(string);
-//			StyledDocument styledDoc = areaResultados.getStyledDocument();
-//			if (styledDoc instanceof AbstractDocument) {
-//				AbstractDocument doc = (AbstractDocument) styledDoc;
-//				json.toString(doc, false, 0);
-//			}
-//			selecionarAbaJSON();
-//			areaParametros.requestFocus();
-//		} catch (Exception ex) {
-//			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-//		}
+		// try {
+		// Parser parser = new Parser();
+		// Tipo json = parser.parse(string);
+		// StyledDocument styledDoc = areaResultados.getStyledDocument();
+		// if (styledDoc instanceof AbstractDocument) {
+		// AbstractDocument doc = (AbstractDocument) styledDoc;
+		// json.toString(doc, false, 0);
+		// }
+		// selecionarAbaJSON();
+		// areaParametros.requestFocus();
+		// } catch (Exception ex) {
+		// Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex,
+		// this);
+		// }
 	}
 
 	public void base64() {
-//		if (!Util.estaVazio(areaParametros.getText())) {
-//			String string = Util.getString(areaParametros);
-//			areaResultados.setText(Constantes.VAZIO);
-//			base64(string);
-//		}
+		// if (!Util.estaVazio(areaParametros.getText())) {
+		// String string = Util.getString(areaParametros);
+		// areaResultados.setText(Constantes.VAZIO);
+		// base64(string);
+		// }
 	}
 
 	public void retornar64() {
-//		if (!Util.estaVazio(areaParametros.getText())) {
-//			String string = Util.getString(areaParametros);
-//			areaResultados.setText(Constantes.VAZIO);
-//			retornar64(string);
-//		}
+		// if (!Util.estaVazio(areaParametros.getText())) {
+		// String string = Util.getString(areaParametros);
+		// areaResultados.setText(Constantes.VAZIO);
+		// retornar64(string);
+		// }
 	}
 
 	public void variaveis() {
@@ -405,28 +407,30 @@ public class RequisicaoPagina extends Panel {
 			Object valor = properties.get(chave);
 			sb.append(chave + "=" + (valor != null ? valor.toString() : "") + Constantes.QL);
 		}
-//		selecionarAbaJSON();
-//		areaResultados.setText(sb.toString());
+		// selecionarAbaJSON();
+		// areaResultados.setText(sb.toString());
 	}
 
 	private void base64(String string) {
-//		try {
-//			selecionarAbaJSON();
-//			areaResultados.setText(Base64Util.criarBase64(string));
-//			areaParametros.requestFocus();
-//		} catch (Exception ex) {
-//			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-//		}
+		// try {
+		// selecionarAbaJSON();
+		// areaResultados.setText(Base64Util.criarBase64(string));
+		// areaParametros.requestFocus();
+		// } catch (Exception ex) {
+		// Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex,
+		// this);
+		// }
 	}
 
 	private void retornar64(String string) {
-//		try {
-//			selecionarAbaJSON();
-//			areaResultados.setText(Base64Util.retornarBase64(string));
-//			areaParametros.requestFocus();
-//		} catch (Exception ex) {
-//			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-//		}
+		// try {
+		// selecionarAbaJSON();
+		// areaResultados.setText(Base64Util.retornarBase64(string));
+		// areaParametros.requestFocus();
+		// } catch (Exception ex) {
+		// Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex,
+		// this);
+		// }
 	}
 
 	public void atualizar() {
@@ -434,13 +438,13 @@ public class RequisicaoPagina extends Panel {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
 				String string = req.getString();
-				//areaResultados.setText(Constantes.VAZIO);
+				// areaResultados.setText(Constantes.VAZIO);
 				atualizar(string);
 			}
 		} else {
 			if (!Util.estaVazio(areaParametros.getText())) {
 				String string = Util.getString(areaParametros);
-//				areaResultados.setText(Constantes.VAZIO);
+				// areaResultados.setText(Constantes.VAZIO);
 				atualizar(string);
 			}
 		}
@@ -449,13 +453,10 @@ public class RequisicaoPagina extends Panel {
 	private void atualizar(String string) {
 		try {
 			Parser parser = new Parser();
-			Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
-			if (vAccessToken != null) {
-				string = substituir(string, vAccessToken);
-			}
+			string = VariavelProvedor.substituir(string);
 			Tipo parametros = parser.parse(string);
 			AtomicReference<Map<String, List<String>>> mapHeader = new AtomicReference<>();
-			InputStream is = requisicao(parametros, mapHeader);
+			InputStream is = RequisicaoUtil.requisicao(parametros, mapHeader);
 			configConteudo(mapHeader);
 			processarResposta(is);
 			areaParametros.requestFocus();
@@ -468,10 +469,11 @@ public class RequisicaoPagina extends Panel {
 		tipoConteudo = RequisicaoConstantes.CONTEUDO_TEXTO;
 		Map<String, List<String>> map = mapHeader.get();
 		if (map != null) {
-			List<String> list = getList(map);
+			List<String> list = RequisicaoUtil.getList(map);
 			if (list != null) {
 				configConteudo(list);
 			}
+			RequisicaoHeader.setSetCookie(map);
 		}
 	}
 
@@ -490,103 +492,11 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
-	private List<String> getList(Map<String, List<String>> map) {
-		List<String> list = map.get("Content-Type");
-		if (list == null) {
-			list = map.get("content-type");
-		}
-		if (list == null) {
-			list = map.get("CONTENT-TYPE");
-		}
-		return list;
-	}
-
 	private void processarResposta(InputStream resposta) throws Exception {
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
 		Component view = conteudo.exibir(resposta);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
-	}
-
-	private InputStream requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapHeaderResult)
-			throws IOException {
-		if (parametros instanceof Objeto) {
-			Objeto objeto = (Objeto) parametros;
-			Tipo tipoUrl = objeto.getValor("url");
-			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
-			Map<String, String> mapHeader = getMapHeader(objeto);
-			String bodyParams = getBodyParams(objeto);
-			return requisicao(url, mapHeader, bodyParams, mapHeaderResult);
-		}
-		return null;
-	}
-
-	private String getBodyParams(Objeto objeto) {
-		Tipo tipoBody = objeto.getValor("body");
-		String bodyParams = null;
-		if (tipoBody instanceof Objeto) {
-			Objeto objBody = (Objeto) tipoBody;
-			Tipo params = objBody.getValor("parameters");
-			bodyParams = params instanceof Texto ? params.toString() : null;
-		}
-		return bodyParams;
-	}
-
-	private Map<String, String> getMapHeader(Objeto objeto) {
-		Map<String, String> mapHeader = null;
-		Tipo tipoHeader = objeto.getValor("header");
-		if (tipoHeader instanceof Objeto) {
-			Objeto objHeader = (Objeto) tipoHeader;
-			mapHeader = objHeader.getAtributosString();
-		}
-		return mapHeader;
-	}
-
-	private InputStream requisicao(String url, Map<String, String> header, String parametros,
-			AtomicReference<Map<String, List<String>>> mapHeader) throws IOException {
-		if(Util.estaVazio(url)) {
-			return null;
-		}
-		URL url2 = new URL(url);
-		URLConnection conn = url2.openConnection();
-		String verbo = setRequestPropertyAndGetVerbo(header, conn);
-		checarDoOutput(parametros, conn, verbo);
-		conn.connect();
-		sePost(parametros, conn, verbo);
-		if (mapHeader != null) {
-			mapHeader.set(conn.getHeaderFields());
-		}
-		return conn.getInputStream();
-	}
-
-	private void sePost(String parametros, URLConnection conn, String verbo) throws IOException {
-		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
-			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-			osw.write(parametros);
-			osw.flush();
-		}
-	}
-
-	private void checarDoOutput(String parametros, URLConnection conn, String verbo) {
-		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
-			conn.setDoOutput(true);
-		}
-	}
-
-	private String setRequestPropertyAndGetVerbo(Map<String, String> header, URLConnection conn) {
-		String verbo = null;
-		if (header != null) {
-			verbo = header.get("Request-Method");
-			for (Map.Entry<String, String> entry : header.entrySet()) {
-				conn.setRequestProperty(entry.getKey(), entry.getValue());
-			}
-		}
-		return verbo;
-	}
-
-	private String substituir(String instrucao, Variavel v) {
-		if (instrucao == null) {
-			instrucao = Constantes.VAZIO;
-		}
-		return instrucao.replaceAll("#" + v.getNome() + "#", v.getValor());
+		int ultimoIndice = tabbedPane.getTabCount() - 1;
+		tabbedPane.setSelectedIndex(ultimoIndice);
 	}
 }

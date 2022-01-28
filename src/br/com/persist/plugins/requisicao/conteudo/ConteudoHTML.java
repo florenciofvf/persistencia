@@ -10,7 +10,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ScrollPane;
 
-public class ConteudoHTML implements RequisicaoConteudo {
+public class ConteudoHTML extends RequisicaoHeader {
 
 	@Override
 	public Component exibir(InputStream is) throws Exception {
@@ -18,6 +18,7 @@ public class ConteudoHTML implements RequisicaoConteudo {
 		area.setContentType("text/html");
 		String string = Util.getString(is);
 		area.setText(string);
+		setAuthToken(string);
 		return new ScrollPane(area);
 	}
 
