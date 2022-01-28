@@ -1,5 +1,6 @@
 package br.com.persist.plugins.requisicao.conteudo;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.InputStream;
 
@@ -11,6 +12,7 @@ import javax.swing.text.StyledDocument;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
@@ -31,7 +33,9 @@ public class ConteudoJSON extends RequisicaoHeader {
 		}
 		String accessToken = getAccessToken(json);
 		setAccesToken(accessToken);
-		return new ScrollPane(area);
+		Panel panel = new Panel();
+		panel.add(BorderLayout.NORTH, area);
+		return new ScrollPane(panel);
 	}
 
 	@Override
