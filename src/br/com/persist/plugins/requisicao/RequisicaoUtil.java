@@ -30,6 +30,15 @@ public class RequisicaoUtil {
 		return list;
 	}
 
+	public static String getAtributoVarAuthToken(Tipo parametros) {
+		if (parametros instanceof Objeto) {
+			Objeto objeto = (Objeto) parametros;
+			Tipo tipo = objeto.getValor("SetVarAuthToken");
+			return tipo instanceof Texto ? tipo.toString() : null;
+		}
+		return null;
+	}
+
 	public static String getAtributoVarCookie(Tipo parametros) {
 		if (parametros instanceof Objeto) {
 			Objeto objeto = (Objeto) parametros;

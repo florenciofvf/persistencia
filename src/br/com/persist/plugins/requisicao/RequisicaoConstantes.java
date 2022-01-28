@@ -5,7 +5,6 @@ public class RequisicaoConstantes {
 	public static final String PAINEL_REQUISICAO = "PAINEL REQUISICAO";
 	public static final String VAR_ACCESS_TOKEN = "VAR_ACCESS_TOKEN";
 	public static final String LABEL_REQUISICAO = "label.requisicao";
-	public static final String VAR_AUTH_TOKEN = "VAR_AUTH_TOKEN";
 	public static final String REQUISICOES = "requisicoes";
 	public static final int CONTEUDO_IMAGEM = 1;
 	public static final int CONTEUDO_TEXTO = 0;

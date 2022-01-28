@@ -453,7 +453,7 @@ public class RequisicaoPagina extends Panel {
 			InputStream is = RequisicaoUtil.requisicao(parametros, mapHeader);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
 			configConteudo(mapHeader, varCookie);
-			processarResposta(is);
+			processarResposta(is, parametros);
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
@@ -487,10 +487,10 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
-	private void processarResposta(InputStream resposta) throws Exception {
+	private void processarResposta(InputStream resposta, Tipo parametros) throws Exception {
 		excluirAbas();
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
-		Component view = conteudo.exibir(resposta);
+		Component view = conteudo.exibir(resposta, parametros);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);

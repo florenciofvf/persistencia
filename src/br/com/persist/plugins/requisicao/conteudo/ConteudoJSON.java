@@ -2,11 +2,13 @@ package br.com.persist.plugins.requisicao.conteudo;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 import br.com.persist.assistencia.Constantes;
@@ -16,12 +18,14 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
+import br.com.persist.plugins.requisicao.RequisicaoException;
 
 public class ConteudoJSON extends RequisicaoHeader {
 	private final Parser parser = new Parser();
 
 	@Override
-	public Component exibir(InputStream is) throws Exception {
+	public Component exibir(InputStream is, Tipo parametros)
+			throws RequisicaoException, IOException, BadLocationException {
 		JTextPane area = new JTextPane();
 		area.setText(Constantes.VAZIO);
 		String string = Util.getString(is);

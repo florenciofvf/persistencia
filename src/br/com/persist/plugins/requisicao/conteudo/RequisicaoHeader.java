@@ -34,22 +34,23 @@ public abstract class RequisicaoHeader implements RequisicaoConteudo {
 		}
 	}
 
-	protected void setAuthToken(String string) {
-		if (!Util.estaVazio(string)) {
-			String str = "name=\"authenticity_token\" value=\"";
-			int pos = string.indexOf(str);
-			if (pos == -1) {
-				return;
-			}
-			int pos2 = string.indexOf('"', pos + str.length() + 1);
-			String valor = string.substring(pos + str.length(), pos2);
-			Variavel vAuthToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_AUTH_TOKEN);
-			if (vAuthToken == null) {
-				vAuthToken = new Variavel(RequisicaoConstantes.VAR_AUTH_TOKEN, valor);
-				VariavelProvedor.adicionar(vAuthToken);
-			} else {
-				vAuthToken.setValor(valor);
-			}
+	protected void setVarAuthToken(String string, String varAuthToken) {
+		if (Util.estaVazio(string) || Util.estaVazio(varAuthToken)) {
+			return;
+		}
+		String str = "name=\"authenticity_token\" value=\"";
+		int pos = string.indexOf(str);
+		if (pos == -1) {
+			return;
+		}
+		int pos2 = string.indexOf('"', pos + str.length() + 1);
+		String valor = string.substring(pos + str.length(), pos2);
+		Variavel var = VariavelProvedor.getVariavel(varAuthToken);
+		if (var == null) {
+			var = new Variavel(varAuthToken, valor);
+			VariavelProvedor.adicionar(var);
+		} else {
+			var.setValor(valor);
 		}
 	}
 
