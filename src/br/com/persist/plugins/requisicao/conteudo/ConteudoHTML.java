@@ -41,15 +41,21 @@ public class ConteudoHTML extends RequisicaoHeader {
 				URL url = e.getURL();
 				String desc = e.getDescription();
 				if (url == null && !Util.estaVazio(desc)) {
-					Object obj = Util.getValorInputDialog(null, "label.atencao", "Complete a URL", desc);
-					if (obj != null) {
+					Object resp = Util.getValorInputDialog(null, "label.atencao", "Complete a URL", desc);
+					if (resp != null && !Util.estaVazio(resp.toString())) {
 						try {
-							url = new URL(obj.toString());
+							url = new URL(resp.toString().trim());
 						} catch (Exception ex) {
 							pane.setText("Erro: " + ex.getMessage());
 						}
 					}
 				}
+				executar(pane, url);
+			}
+		}
+
+		private void executar(JEditorPane pane, URL url) {
+			if (url != null) {
 				try {
 					pane.setPage(url);
 				} catch (Exception ex) {
