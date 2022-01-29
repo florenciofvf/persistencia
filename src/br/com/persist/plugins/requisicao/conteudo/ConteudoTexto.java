@@ -1,24 +1,32 @@
 package br.com.persist.plugins.requisicao.conteudo;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.Icon;
+import javax.swing.JTextPane;
 
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.TextArea;
+import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Tipo;
 
 public class ConteudoTexto implements RequisicaoConteudo {
 
 	@Override
 	public Component exibir(InputStream is, Tipo parametros) throws IOException {
-		TextArea area = new TextArea();
+		JTextPane textPane = new JTextPane();
 		String string = Util.getString(is);
-		area.setText(string);
-		return area;
+		textPane.setText(string);
+
+		Panel panel = new Panel();
+		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		panel.add(BorderLayout.CENTER, new ScrollPane(textPane));
+
+		return panel;
 	}
 
 	@Override
