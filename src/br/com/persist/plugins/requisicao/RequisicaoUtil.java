@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.parser.Logico;
 import br.com.persist.parser.Objeto;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
@@ -28,6 +29,16 @@ public class RequisicaoUtil {
 			list = map.get("CONTENT-TYPE");
 		}
 		return list;
+	}
+
+	public static boolean getAutoSaveVar(Tipo parametros) {
+		if (parametros instanceof Objeto) {
+			Objeto objeto = (Objeto) parametros;
+			Tipo tipo = objeto.getValor("AutoSaveVar");
+			String string = tipo instanceof Logico ? tipo.toString() : null;
+			return Boolean.parseBoolean(string);
+		}
+		return false;
 	}
 
 	public static String getAtributoVarAuthToken(Tipo parametros) {

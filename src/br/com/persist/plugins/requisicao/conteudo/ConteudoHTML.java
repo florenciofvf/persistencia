@@ -15,6 +15,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Tipo;
+import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 import br.com.persist.plugins.requisicao.RequisicaoException;
 import br.com.persist.plugins.requisicao.RequisicaoUtil;
 
@@ -46,7 +47,7 @@ public class ConteudoHTML extends RequisicaoHeader {
 						try {
 							url = new URL(resp.toString().trim());
 						} catch (Exception ex) {
-							pane.setText("Erro: " + ex.getMessage());
+							Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, pane);
 						}
 					}
 				}
@@ -59,7 +60,7 @@ public class ConteudoHTML extends RequisicaoHeader {
 				try {
 					pane.setPage(url);
 				} catch (Exception ex) {
-					pane.setText("Erro: " + ex.getMessage());
+					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, pane);
 				}
 			}
 		}

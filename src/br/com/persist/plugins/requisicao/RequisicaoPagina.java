@@ -31,6 +31,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -70,6 +72,7 @@ public class RequisicaoPagina extends Panel {
 	private final PopupFichario popupFichario = new PopupFichario();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
+	private static final Logger LOG = Logger.getGlobal();
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
 	private JSplitPane split;
@@ -88,7 +91,7 @@ public class RequisicaoPagina extends Panel {
 		abrir();
 	}
 
-	class PopupFichario extends Popup {
+	private class PopupFichario extends Popup {
 		private static final long serialVersionUID = 1L;
 		private Action fecharTodas = actionMenu("label.fechar_todas_abas");
 		private Action fechar = actionMenu("label.fechar_aba_ativa");
@@ -132,7 +135,7 @@ public class RequisicaoPagina extends Panel {
 		}
 	};
 
-	class Tabela extends OrdemTable {
+	private class Tabela extends OrdemTable {
 		private static final long serialVersionUID = 1L;
 
 		public Tabela() {
@@ -489,5 +492,12 @@ public class RequisicaoPagina extends Panel {
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);
 		resposta.close();
+		if (RequisicaoUtil.getAutoSaveVar(parametros)) {
+			try {
+				VariavelProvedor.salvar();
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
 	}
 }
