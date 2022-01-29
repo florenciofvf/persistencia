@@ -31,7 +31,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.logging.Logger;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -83,6 +82,7 @@ public class RequisicaoPagina extends Panel {
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_TEXTO, new ConteudoTexto());
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_JSON, new ConteudoJSON());
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_HTML, new ConteudoHTML());
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.addMouseListener(mouseListenerFichario);
 		this.file = file;
 		montarLayout();
@@ -91,11 +91,20 @@ public class RequisicaoPagina extends Panel {
 
 	class PopupFichario extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action fecharTodas = actionMenu("label.fechar_todas_abas");
 		private Action fechar = actionMenu("label.fechar_aba_ativa");
 
 		PopupFichario() {
+			addMenuItem(fecharTodas);
 			addMenuItem(fechar);
+			fecharTodas.setActionListener(e -> fecharTodas());
 			fechar.setActionListener(e -> fechar());
+		}
+
+		void fecharTodas() {
+			while (tabbedPane.getTabCount() > 0) {
+				tabbedPane.removeTabAt(0);
+			}
 		}
 
 		void fechar() {
