@@ -9,6 +9,9 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +47,7 @@ import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.OrdemModel;
 import br.com.persist.componente.OrdemTable;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.parser.Parser;
@@ -61,6 +65,7 @@ public class RequisicaoPagina extends Panel {
 	private final transient Map<Integer, RequisicaoConteudo> mapaConteudo = new HashMap<>();
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final ToolbarResultado toolbarResultado = new ToolbarResultado();
+	private final PopupFichario popupFichario = new PopupFichario();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private final Tabela tabela = new Tabela();
@@ -74,10 +79,46 @@ public class RequisicaoPagina extends Panel {
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_TEXTO, new ConteudoTexto());
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_JSON, new ConteudoJSON());
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_HTML, new ConteudoHTML());
+		tabbedPane.addMouseListener(mouseListenerFichario);
 		this.file = file;
 		montarLayout();
 		abrir();
 	}
+
+	class PopupFichario extends Popup {
+		private static final long serialVersionUID = 1L;
+		private Action fechar = actionMenu("label.fechar_aba_ativa");
+
+		PopupFichario() {
+			addMenuItem(fechar);
+			fechar.setActionListener(e -> fechar());
+		}
+
+		void fechar() {
+			int indice = tabbedPane.getSelectedIndex();
+			if (indice != -1) {
+				tabbedPane.removeTabAt(indice);
+			}
+		}
+	}
+
+	private transient MouseListener mouseListenerFichario = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			processar(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			processar(e);
+		}
+
+		private void processar(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				popupFichario.show(tabbedPane, e.getX(), e.getY());
+			}
+		}
+	};
 
 	class Tabela extends OrdemTable {
 		private static final long serialVersionUID = 1L;
