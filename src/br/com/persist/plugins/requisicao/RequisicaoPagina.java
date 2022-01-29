@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Logger;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -37,6 +39,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 
+import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
@@ -420,19 +423,19 @@ public class RequisicaoPagina extends Panel {
 	}
 
 	public void base64() {
-		// if (!Util.estaVazio(areaParametros.getText())) {
-		// String string = Util.getString(areaParametros);
-		// areaResultados.setText(Constantes.VAZIO);
-		// base64(string);
-		// }
+		if (!Util.estaVazio(areaParametros.getText())) {
+			String string = Util.getString(areaParametros);
+			conteudoTexto(Base64Util.criarBase64(string));
+			areaParametros.requestFocus();
+		}
 	}
 
 	public void retornar64() {
-		// if (!Util.estaVazio(areaParametros.getText())) {
-		// String string = Util.getString(areaParametros);
-		// areaResultados.setText(Constantes.VAZIO);
-		// retornar64(string);
-		// }
+		if (!Util.estaVazio(areaParametros.getText())) {
+			String string = Util.getString(areaParametros);
+			conteudoTexto(Base64Util.retornarBase64(string));
+			areaParametros.requestFocus();
+		}
 	}
 
 	public void variaveis() {
@@ -443,30 +446,19 @@ public class RequisicaoPagina extends Panel {
 			Object valor = properties.get(chave);
 			sb.append(chave + "=" + (valor != null ? valor.toString() : "") + Constantes.QL);
 		}
-		// selecionarAbaJSON();
-		// areaResultados.setText(sb.toString());
+		conteudoTexto(sb.toString());
 	}
 
-	private void base64(String string) {
-		// try {
-		// selecionarAbaJSON();
-		// areaResultados.setText(Base64Util.criarBase64(string));
-		// areaParametros.requestFocus();
-		// } catch (Exception ex) {
-		// Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex,
-		// this);
-		// }
-	}
-
-	private void retornar64(String string) {
-		// try {
-		// selecionarAbaJSON();
-		// areaResultados.setText(Base64Util.retornarBase64(string));
-		// areaParametros.requestFocus();
-		// } catch (Exception ex) {
-		// Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex,
-		// this);
-		// }
+	private void conteudoTexto(String string) {
+		if (Util.estaVazio(string)) {
+			return;
+		}
+		try {
+			configConteudo(new AtomicReference<Map<String, List<String>>>(), null);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
+		}
 	}
 
 	public void atualizar() {
