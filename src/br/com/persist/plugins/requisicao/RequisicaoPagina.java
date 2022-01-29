@@ -398,28 +398,11 @@ public class RequisicaoPagina extends Panel {
 	}
 
 	public void formatar() {
-		// if (!Util.estaVazio(areaParametros.getText())) {
-		// String string = Util.getString(areaParametros);
-		// areaResultados.setText(Constantes.VAZIO);
-		// formatar(string);
-		// }
-	}
-
-	private void formatar(String string) {
-		// try {
-		// Parser parser = new Parser();
-		// Tipo json = parser.parse(string);
-		// StyledDocument styledDoc = areaResultados.getStyledDocument();
-		// if (styledDoc instanceof AbstractDocument) {
-		// AbstractDocument doc = (AbstractDocument) styledDoc;
-		// json.toString(doc, false, 0);
-		// }
-		// selecionarAbaJSON();
-		// areaParametros.requestFocus();
-		// } catch (Exception ex) {
-		// Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex,
-		// this);
-		// }
+		if (!Util.estaVazio(areaParametros.getText())) {
+			String string = Util.getString(areaParametros);
+			conteudoJson(string);
+			areaParametros.requestFocus();
+		}
 	}
 
 	public void base64() {
@@ -455,6 +438,18 @@ public class RequisicaoPagina extends Panel {
 		}
 		try {
 			configConteudo(new AtomicReference<Map<String, List<String>>>(), null);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
+		}
+	}
+
+	private void conteudoJson(String string) {
+		if (Util.estaVazio(string)) {
+			return;
+		}
+		try {
+			tipoConteudo = RequisicaoConstantes.CONTEUDO_JSON;
 			processarResposta(new ByteArrayInputStream(string.getBytes()), null);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
