@@ -35,6 +35,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.text.BadLocationException;
 
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
@@ -473,13 +474,11 @@ public class RequisicaoPagina extends Panel {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
 				String string = req.getString();
-				// areaResultados.setText(Constantes.VAZIO);
 				atualizar(string);
 			}
 		} else {
 			if (!Util.estaVazio(areaParametros.getText())) {
 				String string = Util.getString(areaParametros);
-				// areaResultados.setText(Constantes.VAZIO);
 				atualizar(string);
 			}
 		}
@@ -528,19 +527,13 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
-	private void processarResposta(InputStream resposta, Tipo parametros) throws Exception {
-		excluirAbas();
+	private void processarResposta(InputStream resposta, Tipo parametros)
+			throws RequisicaoException, IOException, BadLocationException {
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
 		Component view = conteudo.exibir(resposta, parametros);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);
 		resposta.close();
-	}
-
-	private void excluirAbas() {
-		while (tabbedPane.getTabCount() > 0) {
-			tabbedPane.removeTabAt(0);
-		}
 	}
 }
