@@ -26,10 +26,10 @@ public class ConteudoJSON extends RequisicaoHeader {
 	@Override
 	public Component exibir(InputStream is, Tipo parametros)
 			throws RequisicaoException, IOException, BadLocationException {
-		JTextPane area = new JTextPane();
-		area.setText(Constantes.VAZIO);
+		JTextPane textPane = new JTextPane();
+		textPane.setText(Constantes.VAZIO);
 		String string = Util.getString(is);
-		StyledDocument styledDoc = area.getStyledDocument();
+		StyledDocument styledDoc = textPane.getStyledDocument();
 		Tipo json = parser.parse(string);
 		if (styledDoc instanceof AbstractDocument) {
 			AbstractDocument doc = (AbstractDocument) styledDoc;
@@ -37,9 +37,15 @@ public class ConteudoJSON extends RequisicaoHeader {
 		}
 		String accessToken = getAccessToken(json);
 		setAccesToken(accessToken);
+
+		Panel panelTextPane = new Panel();
+		panelTextPane.add(BorderLayout.CENTER, textPane);
+
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, area);
-		return new ScrollPane(panel);
+		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
+
+		return panel;
 	}
 
 	@Override
