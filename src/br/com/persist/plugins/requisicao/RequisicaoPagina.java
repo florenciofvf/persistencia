@@ -67,7 +67,6 @@ public class RequisicaoPagina extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final transient Map<Integer, RequisicaoConteudo> mapaConteudo = new HashMap<>();
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
-	private final ToolbarResultado toolbarResultado = new ToolbarResultado();
 	private final PopupFichario popupFichario = new PopupFichario();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
@@ -170,19 +169,18 @@ public class RequisicaoPagina extends Panel {
 		return panel;
 	}
 
+	private Panel criarPanelResultado() {
+		Panel panel = new Panel();
+		panel.add(BorderLayout.CENTER, tabbedPane);
+		return panel;
+	}
+
 	private int getValueScrollPane() {
 		return scrollPane.getVerticalScrollBar().getValue();
 	}
 
 	private void setValueScrollPane(int value) {
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
-	}
-
-	private Panel criarPanelResultado() {
-		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, toolbarResultado);
-		panel.add(BorderLayout.CENTER, tabbedPane);
-		return panel;
 	}
 
 	static Action actionMenu(String chave) {
@@ -310,50 +308,6 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
-	private class ToolbarResultado extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
-		private final TextField txtPesquisa = new TextField(35);
-		private transient Selecao selecao;
-
-		private ToolbarResultado() {
-			super.ini(null, LIMPAR, COPIAR, COLAR);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			txtPesquisa.addActionListener(this);
-			add(txtPesquisa);
-			add(label);
-		}
-
-		@Override
-		protected void limpar() {
-			// areaResultados.setText(Constantes.VAZIO);
-		}
-
-		@Override
-		protected void copiar() {
-			// String string = Util.getString(areaResultados);
-			// Util.setContentTransfered(string);
-			// copiarMensagem(string);
-			// areaResultados.requestFocus();
-		}
-
-		@Override
-		protected void colar(boolean numeros, boolean letras) {
-			// Util.getContentTransfered(areaResultados, numeros, letras);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// if (!Util.estaVazio(txtPesquisa.getText())) {
-			// selecionarAbaJSON();
-			// selecao = Util.getSelecao(areaResultados, selecao,
-			// txtPesquisa.getText());
-			// selecao.selecionar(label);
-			// } else {
-			// label.limpar();
-			// }
-		}
-	}
-
 	public String getConteudo() {
 		return areaParametros.getText();
 	}
@@ -425,7 +379,11 @@ public class RequisicaoPagina extends Panel {
 	public void retornar64() {
 		if (!Util.estaVazio(areaParametros.getText())) {
 			String string = Util.getString(areaParametros);
-			conteudoTexto(Base64Util.retornarBase64(string));
+			try {
+				conteudoTexto(Base64Util.retornarBase64(string));
+			} catch (Exception ex) {
+				conteudoTexto(ex.getMessage());
+			}
 			areaParametros.requestFocus();
 		}
 	}
