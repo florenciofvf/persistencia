@@ -466,23 +466,45 @@ public class RequisicaoPagina extends Panel {
 	}
 
 	private void iniciarRequisicoes(Tipo tipo) {
-		String attTentativas = "tentativas";
-		String attSleep = "sleep";
-		int total = 1;
 		if (tipo instanceof Objeto) {
-			if (ObjetoUtil.contemAtributo(tipo, attTentativas)) {
-				String s = ObjetoUtil.getValorAtributo(tipo, attTentativas);
+			iniciarRequisicoesObjeto(tipo);
+		} else if (tipo instanceof Array) {
+			iniciarRequisicoesArray(tipo);
+		}
+	}
+
+	private void iniciarRequisicoesObjeto(Tipo tipo) {
+		int total = 1;
+		if (ObjetoUtil.contemAtributo(tipo, RequisicaoConstantes.TENTATIVAS)) {
+			String s = ObjetoUtil.getValorAtributo(tipo, RequisicaoConstantes.TENTATIVAS);
+			total = Integer.parseInt(s);
+		}
+		if (ObjetoUtil.contemAtributo(tipo, RequisicaoConstantes.SLEEP)) {
+			String s = ObjetoUtil.getValorAtributo(tipo, RequisicaoConstantes.SLEEP);
+			sleep = Integer.parseInt(s);
+		}
+		for (int i = 1; i <= total; i++) {
+			requisicoes.add(TipoUtil.toString(tipo));
+		}
+	}
+
+	private void iniciarRequisicoesArray(Tipo tipo) {
+		List<String> lista = new ArrayList<>();
+		Array array = (Array) tipo;
+		int total = 1;
+		for (Tipo item : array.getLista()) {
+			if (ObjetoUtil.contemAtributo(item, RequisicaoConstantes.TENTATIVAS)) {
+				String s = ObjetoUtil.getValorAtributo(item, RequisicaoConstantes.TENTATIVAS);
 				total = Integer.parseInt(s);
 			}
-			if (ObjetoUtil.contemAtributo(tipo, attSleep)) {
-				String s = ObjetoUtil.getValorAtributo(tipo, attSleep);
+			if (ObjetoUtil.contemAtributo(item, RequisicaoConstantes.SLEEP)) {
+				String s = ObjetoUtil.getValorAtributo(item, RequisicaoConstantes.SLEEP);
 				sleep = Integer.parseInt(s);
 			}
-			for (int i = 1; i <= total; i++) {
-				requisicoes.add(TipoUtil.toString(tipo));
-			}
-		} else if (tipo instanceof Array) {
-
+			lista.add(TipoUtil.toString(item));
+		}
+		for (int i = 1; i <= total; i++) {
+			requisicoes.addAll(lista);
 		}
 	}
 
@@ -543,6 +565,9 @@ public class RequisicaoPagina extends Panel {
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}
+		}
+		if (ObjetoUtil.contemAtributo(parametros, RequisicaoConstantes.TENTATIVAS)) {
+			requisicoes.clear();
 		}
 	}
 }
