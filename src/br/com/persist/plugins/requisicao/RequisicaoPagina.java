@@ -122,12 +122,12 @@ public class RequisicaoPagina extends Panel {
 		private void fecharEsquerda() {
 			Component ativa = getAbaAtiva();
 			if (ativa != null) {
-				for (int i = 0; i < tabbedPane.getTabCount(); i++) {
-					Component aba = getAba(i);
+				while (tabbedPane.getTabCount() > 0) {
+					Component aba = getAba(0);
 					if (aba == ativa) {
 						break;
 					} else {
-						tabbedPane.removeTabAt(i);
+						tabbedPane.removeTabAt(0);
 					}
 				}
 			}
@@ -136,12 +136,12 @@ public class RequisicaoPagina extends Panel {
 		private void fecharDireita() {
 			Component ativa = getAbaAtiva();
 			if (ativa != null) {
-				for (int i = tabbedPane.getTabCount() - 1; i >= 0; i--) {
-					Component aba = getAba(i);
+				while (tabbedPane.getTabCount() > 0) {
+					Component aba = getAba(tabbedPane.getTabCount() - 1);
 					if (aba == ativa) {
 						break;
 					} else {
-						tabbedPane.removeTabAt(i);
+						tabbedPane.removeTabAt(tabbedPane.getTabCount() - 1);
 					}
 				}
 			}
@@ -150,8 +150,18 @@ public class RequisicaoPagina extends Panel {
 		private void fecharOutras() {
 			Component ativa = getAbaAtiva();
 			if (ativa != null) {
-				fecharEsquerda();
-				fecharDireita();
+				while (tabbedPane.getTabCount() != 1) {
+					excluirMenos(ativa);
+				}
+			}
+		}
+
+		private void excluirMenos(Component ativa) {
+			for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+				Component aba = getAba(i);
+				if (aba != ativa) {
+					tabbedPane.removeTabAt(i);
+				}
 			}
 		}
 
