@@ -5,6 +5,7 @@ import java.util.Objects;
 import br.com.persist.parser.Objeto;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
+import br.com.persist.parser.TipoUtil;
 
 public class Requisicao {
 	private final Tipo tipo;
@@ -34,9 +35,7 @@ public class Requisicao {
 			if (tipoUrl instanceof Texto) {
 				((Texto) tipoUrl).setAlternativo(url);
 			}
-			StringBuilder sb = new StringBuilder();
-			objeto.toString(sb, true, 0);
-			return sb.toString();
+			return TipoUtil.toString(objeto);
 		}
 		return null;
 	}

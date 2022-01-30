@@ -27,27 +27,6 @@ public class Parser {
 		return parse(sb.toString());
 	}
 
-	private void processarDadosBasicos() {
-		if (selecionado instanceof Array) {
-			((Array) selecionado).adicionar(atom.valor);
-			ultimoAtom = null;
-		} else {
-			ultimoAtom = atom;
-		}
-	}
-
-	private void processarDoisPontos() {
-		int bkp = indice;
-		gerarAtom();
-		checarAtom();
-		if (dadosBasicos(atom)) {
-			((Objeto) selecionado).atributo(ultimoAtom.valor.toString(), atom.valor);
-			ultimoAtom = null;
-		} else {
-			indice = bkp;
-		}
-	}
-
 	public Tipo parse(String string) {
 		Tipo raiz = null;
 		indice = 0;
@@ -85,6 +64,27 @@ public class Parser {
 			gerarAtom();
 		}
 		return raiz;
+	}
+
+	private void processarDadosBasicos() {
+		if (selecionado instanceof Array) {
+			((Array) selecionado).adicionar(atom.valor);
+			ultimoAtom = null;
+		} else {
+			ultimoAtom = atom;
+		}
+	}
+
+	private void processarDoisPontos() {
+		int bkp = indice;
+		gerarAtom();
+		checarAtom();
+		if (dadosBasicos(atom)) {
+			((Objeto) selecionado).atributo(ultimoAtom.valor.toString(), atom.valor);
+			ultimoAtom = null;
+		} else {
+			indice = bkp;
+		}
 	}
 
 	private void adicionar(Tipo tipo) {

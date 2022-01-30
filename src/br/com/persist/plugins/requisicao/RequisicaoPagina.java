@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,8 +56,12 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
+import br.com.persist.parser.Array;
+import br.com.persist.parser.Objeto;
+import br.com.persist.parser.ObjetoUtil;
 import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
+import br.com.persist.parser.TipoUtil;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoHTML;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoImagem;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoJSON;
@@ -70,6 +75,7 @@ public class RequisicaoPagina extends Panel {
 	private final transient Map<Integer, RequisicaoConteudo> mapaConteudo = new HashMap<>();
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final PopupFichario popupFichario = new PopupFichario();
+	private final List<String> requisicoes = new ArrayList<>();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private static final Logger LOG = Logger.getGlobal();
@@ -78,6 +84,7 @@ public class RequisicaoPagina extends Panel {
 	private JSplitPane split;
 	private int tipoConteudo;
 	private final File file;
+	private int sleep;
 
 	public RequisicaoPagina(File file) {
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_IMAGEM, new ConteudoImagem());
@@ -431,13 +438,51 @@ public class RequisicaoPagina extends Panel {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
 				String string = req.getString();
-				atualizar(string);
+				processar(string);
 			}
 		} else {
 			if (!Util.estaVazio(areaParametros.getText())) {
 				String string = Util.getString(areaParametros);
-				atualizar(string);
+				processar(string);
 			}
+		}
+	}
+
+	private void processar(String string) {
+		requisicoes.clear();
+		sleep = 0;
+		Parser parser = new Parser();
+		Tipo tipo = parser.parse(string);
+		iniciarRequisicoes(tipo);
+		for (int i = 0; i < requisicoes.size(); i++) {
+			String str = requisicoes.get(i);
+			atualizar(str);
+			try {
+				Thread.sleep(sleep);
+			} catch (Exception ex) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, ex);
+			}
+		}
+	}
+
+	private void iniciarRequisicoes(Tipo tipo) {
+		String attTentativas = "tentativas";
+		String attSleep = "sleep";
+		int total = 1;
+		if (tipo instanceof Objeto) {
+			if (ObjetoUtil.contemAtributo(tipo, attTentativas)) {
+				String s = ObjetoUtil.getValorAtributo(tipo, attTentativas);
+				total = Integer.parseInt(s);
+			}
+			if (ObjetoUtil.contemAtributo(tipo, attSleep)) {
+				String s = ObjetoUtil.getValorAtributo(tipo, attSleep);
+				sleep = Integer.parseInt(s);
+			}
+			for (int i = 1; i <= total; i++) {
+				requisicoes.add(TipoUtil.toString(tipo));
+			}
+		} else if (tipo instanceof Array) {
+
 		}
 	}
 
