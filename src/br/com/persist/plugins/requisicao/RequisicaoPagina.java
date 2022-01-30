@@ -100,27 +100,84 @@ public class RequisicaoPagina extends Panel {
 
 	private class PopupFichario extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action fecharEsquerda = actionMenu("label.fechar_todas_esquerda");
+		private Action fecharDireita = actionMenu("label.fechar_todas_direita");
+		private Action fecharOutras = actionMenu("label.fechar_outras_abas");
 		private Action fecharTodas = actionMenu("label.fechar_todas_abas");
 		private Action fechar = actionMenu("label.fechar_aba_ativa");
 
 		PopupFichario() {
-			addMenuItem(fecharTodas);
+			addMenuItem(fecharEsquerda);
+			addMenuItem(fecharDireita);
+			addMenuItem(true, fecharOutras);
 			addMenuItem(fechar);
+			addMenuItem(true, fecharTodas);
+			fecharEsquerda.setActionListener(e -> fecharEsquerda());
+			fecharDireita.setActionListener(e -> fecharDireita());
+			fecharOutras.setActionListener(e -> fecharOutras());
 			fecharTodas.setActionListener(e -> fecharTodas());
 			fechar.setActionListener(e -> fechar());
 		}
 
-		void fecharTodas() {
+		private void fecharEsquerda() {
+			Component ativa = getAbaAtiva();
+			if (ativa != null) {
+				for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+					Component aba = getAba(i);
+					if (aba == ativa) {
+						break;
+					} else {
+						tabbedPane.removeTabAt(i);
+					}
+				}
+			}
+		}
+
+		private void fecharDireita() {
+			Component ativa = getAbaAtiva();
+			if (ativa != null) {
+				for (int i = tabbedPane.getTabCount() - 1; i >= 0; i--) {
+					Component aba = getAba(i);
+					if (aba == ativa) {
+						break;
+					} else {
+						tabbedPane.removeTabAt(i);
+					}
+				}
+			}
+		}
+
+		private void fecharOutras() {
+			Component ativa = getAbaAtiva();
+			if (ativa != null) {
+				fecharEsquerda();
+				fecharDireita();
+			}
+		}
+
+		private void fecharTodas() {
 			while (tabbedPane.getTabCount() > 0) {
 				tabbedPane.removeTabAt(0);
 			}
 		}
 
-		void fechar() {
+		private void fechar() {
 			int indice = tabbedPane.getSelectedIndex();
 			if (indice != -1) {
 				tabbedPane.removeTabAt(indice);
 			}
+		}
+
+		private Component getAbaAtiva() {
+			int indice = tabbedPane.getSelectedIndex();
+			if (indice != -1) {
+				return tabbedPane.getComponentAt(indice);
+			}
+			return null;
+		}
+
+		private Component getAba(int indice) {
+			return tabbedPane.getComponentAt(indice);
 		}
 	}
 
