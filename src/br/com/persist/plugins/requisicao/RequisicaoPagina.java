@@ -529,9 +529,13 @@ public class RequisicaoPagina extends Panel {
 	private void processar(String string) {
 		requisicoes.clear();
 		sleep = 0;
-		Parser parser = new Parser();
-		Tipo tipo = parser.parse(string);
-		iniciarRequisicoes(tipo);
+		try {
+			Parser parser = new Parser();
+			Tipo tipo = parser.parse(string);
+			iniciarRequisicoes(tipo);
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
+		}
 		for (int i = 0; i < requisicoes.size(); i++) {
 			String str = requisicoes.get(i);
 			atualizar(str);
