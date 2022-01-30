@@ -119,6 +119,16 @@ public class RequisicaoPagina extends Panel {
 			fechar.setActionListener(e -> fechar());
 		}
 
+		private void preShow() {
+			int indice = tabbedPane.getSelectedIndex();
+			int count = tabbedPane.getTabCount();
+			fecharEsquerda.setEnabled(indice > 0 && count > 1);
+			fecharDireita.setEnabled(indice != -1 && count > 1 && indice < count - 1);
+			fechar.setEnabled(getAbaAtiva() != null);
+			fecharOutras.setEnabled(count > 1);
+			fecharTodas.setEnabled(count > 1);
+		}
+
 		private void fecharEsquerda() {
 			Component ativa = getAbaAtiva();
 			if (ativa != null) {
@@ -204,6 +214,7 @@ public class RequisicaoPagina extends Panel {
 
 		private void processar(MouseEvent e) {
 			if (e.isPopupTrigger()) {
+				popupFichario.preShow();
 				popupFichario.show(tabbedPane, e.getX(), e.getY());
 			}
 		}
