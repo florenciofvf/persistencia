@@ -59,7 +59,7 @@ public class RequisicaoUtil {
 		return null;
 	}
 
-	public static InputStream requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapHeaderResult)
+	public static InputStream requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapResponseHeader)
 			throws IOException {
 		if (parametros instanceof Objeto) {
 			Objeto objeto = (Objeto) parametros;
@@ -67,7 +67,7 @@ public class RequisicaoUtil {
 			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
 			Map<String, String> mapHeader = getMapHeader(objeto);
 			String bodyParams = getBodyParams(objeto);
-			return requisicao(url, mapHeader, bodyParams, mapHeaderResult);
+			return requisicao(url, mapHeader, bodyParams, mapResponseHeader);
 		}
 		return null;
 	}
@@ -94,7 +94,7 @@ public class RequisicaoUtil {
 	}
 
 	public static InputStream requisicao(String url, Map<String, String> header, String parametros,
-			AtomicReference<Map<String, List<String>>> mapHeader) throws IOException {
+			AtomicReference<Map<String, List<String>>> mapResponseHeader) throws IOException {
 		if (Util.estaVazio(url)) {
 			return null;
 		}
@@ -104,8 +104,8 @@ public class RequisicaoUtil {
 		checarDoOutput(parametros, conn, verbo);
 		conn.connect();
 		sePost(parametros, conn, verbo);
-		if (mapHeader != null) {
-			mapHeader.set(conn.getHeaderFields());
+		if (mapResponseHeader != null) {
+			mapResponseHeader.set(conn.getHeaderFields());
 		}
 		return conn.getInputStream();
 	}

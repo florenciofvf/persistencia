@@ -281,7 +281,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		protected void atualizar() {
 			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
-				ativa.atualizar();
+				ativa.processar();
 			}
 		}
 

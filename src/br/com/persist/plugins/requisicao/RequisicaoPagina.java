@@ -433,7 +433,7 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
-	public void atualizar() {
+	public void processar() {
 		if (toolbarParametro.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
@@ -513,10 +513,10 @@ public class RequisicaoPagina extends Panel {
 			Parser parser = new Parser();
 			string = VariavelProvedor.substituir(string);
 			Tipo parametros = parser.parse(string);
-			AtomicReference<Map<String, List<String>>> mapHeader = new AtomicReference<>();
-			InputStream is = RequisicaoUtil.requisicao(parametros, mapHeader);
+			AtomicReference<Map<String, List<String>>> mapResponseHeader = new AtomicReference<>();
+			InputStream is = RequisicaoUtil.requisicao(parametros, mapResponseHeader);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
-			configConteudo(mapHeader, varCookie);
+			configConteudo(mapResponseHeader, varCookie);
 			processarResposta(is, parametros);
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
