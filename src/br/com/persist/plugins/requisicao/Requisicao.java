@@ -29,8 +29,8 @@ public class Requisicao {
 		} else if (tipo instanceof Array) {
 			Array array = (Array) tipo;
 			desc = "Objeto Array [" + array.getLista().size() + "]";
-		} else {
-			desc = getClass().getName();
+		} else if (tipo != null) {
+			desc = tipo.getClass().getName();
 		}
 	}
 
