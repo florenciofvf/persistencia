@@ -25,9 +25,10 @@ public class Requisicao {
 			Tipo tipoUrl = objeto.getValor("url");
 			url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
 			Tipo tipoDesc = objeto.getValor("desc");
-			desc = tipoDesc instanceof Texto ? tipoDesc.toString() : "Sem atributo desc";
+			desc = tipoDesc instanceof Texto ? tipoDesc.toString() : "Objeto sem atributo desc";
 		} else if (tipo instanceof Array) {
-			desc = "Objeto Array";
+			Array array = (Array) tipo;
+			desc = "Objeto Array [" + array.getLista().size() + "]";
 		} else {
 			desc = getClass().getName();
 		}
