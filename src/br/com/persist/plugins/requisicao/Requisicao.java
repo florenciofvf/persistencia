@@ -2,6 +2,7 @@ package br.com.persist.plugins.requisicao;
 
 import java.util.Objects;
 
+import br.com.persist.parser.Array;
 import br.com.persist.parser.Objeto;
 import br.com.persist.parser.Texto;
 import br.com.persist.parser.Tipo;
@@ -24,7 +25,11 @@ public class Requisicao {
 			Tipo tipoUrl = objeto.getValor("url");
 			url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
 			Tipo tipoDesc = objeto.getValor("desc");
-			desc = tipoDesc instanceof Texto ? tipoDesc.toString() : null;
+			desc = tipoDesc instanceof Texto ? tipoDesc.toString() : "Sem atributo desc";
+		} else if (tipo instanceof Array) {
+			desc = "Objeto Array";
+		} else {
+			desc = getClass().getName();
 		}
 	}
 
