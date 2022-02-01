@@ -107,10 +107,10 @@ public class RequisicaoPagina extends Panel {
 		private Action fechar = actionMenu("label.fechar_aba_ativa");
 
 		PopupFichario() {
-			addMenuItem(fecharEsquerda);
-			addMenuItem(fecharDireita);
-			addMenuItem(true, fecharOutras);
 			addMenuItem(fechar);
+			addMenuItem(fecharOutras);
+			addMenuItem(true, fecharEsquerda);
+			addMenuItem(fecharDireita);
 			addMenuItem(true, fecharTodas);
 			fecharEsquerda.setActionListener(e -> fecharEsquerda());
 			fecharDireita.setActionListener(e -> fecharDireita());
