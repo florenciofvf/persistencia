@@ -4,8 +4,13 @@ public class FragmentoUtil {
 	private int indice;
 	private final String string;
 
-	public FragmentoUtil(String string) {
+	public FragmentoUtil(String string, int indice) {
 		this.string = string.trim();
+		this.indice = indice;
+	}
+
+	public FragmentoUtil(String string) {
+		this(string, 0);
 	}
 
 	public String proximo() {
@@ -13,9 +18,8 @@ public class FragmentoUtil {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			sb.append(c);
-			if (c == '\n') {
+			if (c == '\n' && finalFragmento(indice + 1)) {
 				indice++;
-				avancar(sb);
 				break;
 			}
 			indice++;
@@ -23,7 +27,8 @@ public class FragmentoUtil {
 		return sb.toString();
 	}
 
-	private void avancar(StringBuilder sb) {
+	private boolean finalFragmento(int indice) {
+		StringBuilder sb = new StringBuilder();
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			sb.append(c);
@@ -32,5 +37,6 @@ public class FragmentoUtil {
 			}
 			indice++;
 		}
+		return sb.toString().trim().isEmpty();
 	}
 }

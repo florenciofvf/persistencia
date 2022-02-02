@@ -806,44 +806,17 @@ public class Util {
 	}
 
 	private static int getIni(int pos, String string) {
-		int ini = pos;
-		if (ini == string.length() && !string.isEmpty()) {
-			ini--;
+		if (estaVazio(string) || pos < 1) {
+			return 0;
 		}
-		while (ini >= 0 && ini < string.length()) {
-			char c = string.charAt(ini);
-			int posAnt = ini - 1;
-			if (posAnt >= 0) {
-				char d = string.charAt(posAnt);
-				boolean parar = false;
-				if (c == '\n' && d == '\n') {
-					parar = true;
-					ini++;
-				} else if (d == '\n' && posAnt == 0) {
-					parar = true;
-				}
-				if (parar) {
-					break;
-				}
-			}
-			ini--;
-		}
-		return ini;
+		StringBuilder sb = new StringBuilder(string.substring(0, pos));
+		FragmentoUtil util = new FragmentoUtil(sb.reverse().toString());
+		return pos - util.proximo().length();
 	}
 
 	private static int getFim(int pos, String string) {
-		int fim = pos;
-		while (fim < string.length()) {
-			char c = string.charAt(fim);
-			if (fim + 1 < string.length()) {
-				char d = string.charAt(fim + 1);
-				if (c == '\n' && d == '\n') {
-					break;
-				}
-			}
-			fim++;
-		}
-		return fim;
+		FragmentoUtil util = new FragmentoUtil(string, pos);
+		return pos + util.proximo().length();
 	}
 
 	public static String getString(JTextComponent area) {
