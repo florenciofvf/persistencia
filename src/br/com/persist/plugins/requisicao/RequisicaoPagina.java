@@ -67,10 +67,11 @@ import br.com.persist.plugins.requisicao.conteudo.ConteudoImagem;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoJSON;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoTexto;
 import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudo;
+import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudoListener;
 import br.com.persist.plugins.requisicao.conteudo.RequisicaoHeader;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class RequisicaoPagina extends Panel {
+public class RequisicaoPagina extends Panel implements RequisicaoConteudoListener {
 	private static final long serialVersionUID = 1L;
 	private final transient Map<Integer, RequisicaoConteudo> mapaConteudo = new HashMap<>();
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
@@ -79,6 +80,7 @@ public class RequisicaoPagina extends Panel {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private static final Logger LOG = Logger.getGlobal();
+	private transient RequisicaoRota requisicaoRota;
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
 	private JSplitPane split;
@@ -511,7 +513,8 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
-	public void processar() {
+	public void processar(RequisicaoRota requisicaoRota) {
+		this.requisicaoRota = requisicaoRota;
 		if (toolbarParametro.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
@@ -524,6 +527,36 @@ public class RequisicaoPagina extends Panel {
 				processar(string);
 			}
 		}
+	}
+
+	@Override
+	public void processarRota(String rota, String link) {
+		if (Util.estaVazio(rota) || Util.estaVazio(link)) {
+			return;
+		}
+		String valor = requisicaoRota.getValor(rota);
+		if (Util.estaVazio(valor)) {
+			return;
+		}
+		try {
+			Parser parser = new Parser();
+			Tipo tipo = parser.parse(valor);
+			Requisicao req = new Requisicao(tipo);
+			req.setUrl(checkUrl(req.getUrl(), link));
+			processar(req.getString());
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
+		}
+	}
+
+	private String checkUrl(String url, String link) {
+		if (url.endsWith("/") && link.startsWith("/")) {
+			return url + link.substring(1);
+		}
+		if (url.endsWith("\\") && link.startsWith("\\")) {
+			return url + link.substring(1);
+		}
+		return url + link;
 	}
 
 	public void adicionarRota(RequisicaoRota rota) {
@@ -662,6 +695,7 @@ public class RequisicaoPagina extends Panel {
 	private void processarResposta(InputStream resposta, Tipo parametros)
 			throws RequisicaoException, IOException, BadLocationException {
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
+		conteudo.setRequisicaoConteudoListener(this);
 		Component view = conteudo.exibir(resposta, parametros);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
