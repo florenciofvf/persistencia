@@ -696,6 +696,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			throws RequisicaoException, IOException, BadLocationException {
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
 		conteudo.setRequisicaoConteudoListener(this);
+		conteudo.setRequisicaoRota(requisicaoRota);
 		Component view = conteudo.exibir(resposta, parametros);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
