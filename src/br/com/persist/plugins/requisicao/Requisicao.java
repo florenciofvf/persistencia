@@ -42,6 +42,8 @@ public class Requisicao {
 				((Texto) tipoUrl).setAlternativo(url);
 			}
 			return TipoUtil.toString(objeto);
+		} else if (tipo != null) {
+			return TipoUtil.toString(tipo);
 		}
 		return null;
 	}

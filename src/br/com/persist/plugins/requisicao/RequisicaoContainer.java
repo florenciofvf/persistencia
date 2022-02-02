@@ -31,6 +31,7 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -42,6 +43,7 @@ import br.com.persist.parser.Tipo;
 public class RequisicaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final RequisicaoFichario fichario = new RequisicaoFichario();
+	private final transient RequisicaoRota rota = new RequisicaoRota();
 	private static final File file = new File("requisicoes");
 	private static final Logger LOG = Logger.getGlobal();
 	private RequisicaoFormulario requisicaoFormulario;
@@ -148,6 +150,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		private Action base64Acao = actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
 		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
+		private ButtonRota buttonRota = new ButtonRota();
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
@@ -159,6 +162,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			addButton(true, base64Acao);
 			addButton(retornar64Acao);
 			addButton(true, variaveisAcao);
+			add(buttonRota);
 			eventos();
 		}
 
@@ -326,6 +330,38 @@ public class RequisicaoContainer extends AbstratoContainer {
 			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.variaveis();
+			}
+		}
+
+		private class ButtonRota extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action adicionarAcao = Action.actionMenu("label.adicionar", null);
+			private Action exibirAcao = Action.actionMenu("label.exibir", null);
+			private Action limparAcao = Action.actionMenu("label.limpar", null);
+
+			private ButtonRota() {
+				super("label.rotas", Icones.BOLA_AMARELA);
+				addMenuItem(adicionarAcao);
+				addMenuItem(exibirAcao);
+				addMenuItem(limparAcao);
+				adicionarAcao.setActionListener(e -> adicionarRota());
+				exibirAcao.setActionListener(e -> exibir());
+				limparAcao.setActionListener(e -> limpar());
+			}
+
+			private void exibir() {
+				Util.mensagem(RequisicaoContainer.this, rota.toString());
+			}
+
+			private void limpar() {
+				rota.limpar();
+			}
+
+			private void adicionarRota() {
+				RequisicaoPagina ativa = fichario.getPaginaAtiva();
+				if (ativa != null) {
+					ativa.adicionarRota(rota);
+				}
 			}
 		}
 	}

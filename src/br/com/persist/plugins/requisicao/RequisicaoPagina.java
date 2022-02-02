@@ -526,6 +526,32 @@ public class RequisicaoPagina extends Panel {
 		}
 	}
 
+	public void adicionarRota(RequisicaoRota rota) {
+		if (toolbarParametro.chkModoTabela.isSelected()) {
+			Requisicao req = tabela.getRequisicao();
+			if (req != null) {
+				String string = req.getString();
+				adicionarRota(rota, string);
+			}
+		} else {
+			if (!Util.estaVazio(areaParametros.getText())) {
+				String string = Util.getString(areaParametros);
+				adicionarRota(rota, string);
+			}
+		}
+	}
+
+	private void adicionarRota(RequisicaoRota rota, String string) {
+		try {
+			Parser parser = new Parser();
+			Tipo tipo = parser.parse(string);
+			Requisicao req = new Requisicao(tipo);
+			rota.adicionar(req.getDesc(), req.getString());
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
+		}
+	}
+
 	private void processar(String string) {
 		requisicoes.clear();
 		sleep = 0;
