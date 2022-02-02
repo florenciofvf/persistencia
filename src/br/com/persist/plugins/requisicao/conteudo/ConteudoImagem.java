@@ -14,7 +14,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoException;
 
-public class ConteudoImagem implements RequisicaoConteudo {
+public class ConteudoImagem extends AbstratoRequisicaoConteudo {
 
 	@Override
 	public Component exibir(InputStream is, Tipo parametros) throws RequisicaoException, IOException {

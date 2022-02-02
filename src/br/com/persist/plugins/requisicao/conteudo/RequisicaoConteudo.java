@@ -22,6 +22,7 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.TextField;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoException;
+import br.com.persist.plugins.requisicao.RequisicaoRota;
 
 public interface RequisicaoConteudo {
 	public Component exibir(InputStream is, Tipo parametros)
@@ -30,6 +31,14 @@ public interface RequisicaoConteudo {
 	public String titulo();
 
 	public Icon icone();
+
+	public void setRequisicaoConteudoListener(RequisicaoConteudoListener listener);
+
+	public RequisicaoConteudoListener getRequisicaoConteudoListener();
+
+	public void setRequisicaoRota(RequisicaoRota rota);
+
+	public RequisicaoRota getRequisicaoRota();
 
 	public default BarraButton criarToolbarPesquisa(JTextPane textPane) {
 		return new ToolbarPesquisa(textPane);

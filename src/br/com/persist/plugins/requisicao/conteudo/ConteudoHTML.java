@@ -40,19 +40,33 @@ public class ConteudoHTML extends RequisicaoHeader {
 			if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 				JEditorPane pane = (JEditorPane) e.getSource();
 				URL url = e.getURL();
-				String desc = e.getDescription();
-				if (url == null && !Util.estaVazio(desc)) {
-					Object resp = Util.getValorInputDialog(null, "label.atencao", "Complete a URL", desc);
-					if (resp != null && !Util.estaVazio(resp.toString())) {
-						try {
-							url = new URL(resp.toString().trim());
-						} catch (Exception ex) {
-							Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, pane);
-						}
-					}
+				if (url != null) {
+					executar(pane, url);
+					return;
 				}
-				executar(pane, url);
+				String desc = e.getDescription();
+				if (!Util.estaVazio(desc)) {
+					String rota = getRequisicaoRota().getStringRota(desc);
+					if (!Util.estaVazio(rota)) {
+						getRequisicaoConteudoListener().processarRota(rota, desc);
+						return;
+					}
+					processarLink(pane, desc);
+				}
 			}
+		}
+
+		private void processarLink(JEditorPane pane, String desc) {
+			URL url = null;
+			Object resp = Util.getValorInputDialog(null, "label.atencao", "Complete a URL", desc);
+			if (resp != null && !Util.estaVazio(resp.toString())) {
+				try {
+					url = new URL(resp.toString().trim());
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, pane);
+				}
+			}
+			executar(pane, url);
 		}
 
 		private void executar(JEditorPane pane, URL url) {

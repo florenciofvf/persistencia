@@ -11,7 +11,7 @@ import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public abstract class RequisicaoHeader implements RequisicaoConteudo {
+public abstract class RequisicaoHeader extends AbstratoRequisicaoConteudo implements RequisicaoConteudo {
 
 	protected String getAccessToken(Tipo tipo) {
 		if (tipo instanceof Objeto) {
