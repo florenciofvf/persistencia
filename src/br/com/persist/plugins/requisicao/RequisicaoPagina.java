@@ -44,6 +44,7 @@ import javax.swing.text.BadLocationException;
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.FragmentoUtil;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
@@ -320,7 +321,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 
 		private RequisicaoModelo criarRequisicaoModelo() {
 			RequisicaoModelo modelo = new RequisicaoModelo();
-			Fragmento frag = new Fragmento(areaParametros.getText());
+			FragmentoUtil frag = new FragmentoUtil(areaParametros.getText());
 			String string = frag.proximo();
 			while (string.length() > 0) {
 				Requisicao req = criar(string);
