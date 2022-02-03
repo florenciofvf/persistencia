@@ -5,7 +5,7 @@ public class FragmentoUtil {
 	private final String string;
 
 	public FragmentoUtil(String string, int indice) {
-		this.string = string.trim();
+		this.string = string;
 		this.indice = indice;
 	}
 
