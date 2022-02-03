@@ -2,11 +2,13 @@ package br.com.persist.plugins.requisicao.conteudo;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -44,6 +46,7 @@ public class ConteudoJSON extends RequisicaoHeader {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
 		panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
+		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 
 		return panel;
 	}

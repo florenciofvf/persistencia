@@ -2,11 +2,13 @@ package br.com.persist.plugins.requisicao.conteudo;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
@@ -25,6 +27,7 @@ public class ConteudoTexto extends AbstratoRequisicaoConteudo {
 		Panel panel = new Panel();
 		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
 		panel.add(BorderLayout.CENTER, new ScrollPane(textPane));
+		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 
 		return panel;
 	}
