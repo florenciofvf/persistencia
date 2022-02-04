@@ -26,7 +26,7 @@ import br.com.persist.plugins.requisicao.RequisicaoUtil;
 public class ConteudoHTML extends RequisicaoHeader {
 
 	@Override
-	public Component exibir(InputStream is, Tipo parametros) throws RequisicaoException, IOException {
+	public Component exibir(InputStream is, Tipo parametros, String uri) throws RequisicaoException, IOException {
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
 		textPane.addHyperlinkListener(new Listener());
@@ -40,7 +40,7 @@ public class ConteudoHTML extends RequisicaoHeader {
 		panelTextPane.add(BorderLayout.CENTER, textPane);
 
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, uri));
 		panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
 		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 

@@ -19,13 +19,14 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Label;
 import br.com.persist.componente.TextField;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoException;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
 
 public interface RequisicaoConteudo {
-	public Component exibir(InputStream is, Tipo parametros)
+	public Component exibir(InputStream is, Tipo parametros, String uri)
 			throws RequisicaoException, IOException, BadLocationException;
 
 	public String titulo();
@@ -40,23 +41,26 @@ public interface RequisicaoConteudo {
 
 	public RequisicaoRota getRequisicaoRota();
 
-	public default BarraButton criarToolbarPesquisa(JTextPane textPane) {
-		return new ToolbarPesquisa(textPane);
+	public default BarraButton criarToolbarPesquisa(JTextPane textPane, String uri) {
+		return new ToolbarPesquisa(textPane, uri);
 	}
 
 	public class ToolbarPesquisa extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
+		private Label labelUri = new Label();
 		private transient Selecao selecao;
 		private final JTextPane textPane;
 
-		public ToolbarPesquisa(JTextPane textPane) {
+		public ToolbarPesquisa(JTextPane textPane, String uri) {
 			super.ini(null, LIMPAR, COPIAR, COLAR);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			this.textPane = textPane;
+			labelUri.setText(uri);
 			add(txtPesquisa);
 			add(label);
+			add(labelUri);
 		}
 
 		@Override

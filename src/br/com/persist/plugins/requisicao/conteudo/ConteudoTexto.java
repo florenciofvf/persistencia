@@ -19,13 +19,13 @@ import br.com.persist.parser.Tipo;
 public class ConteudoTexto extends AbstratoRequisicaoConteudo {
 
 	@Override
-	public Component exibir(InputStream is, Tipo parametros) throws IOException {
+	public Component exibir(InputStream is, Tipo parametros, String uri) throws IOException {
 		JTextPane textPane = new JTextPane();
 		String string = Util.getString(is);
 		textPane.setText(string);
 
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, uri));
 		panel.add(BorderLayout.CENTER, new ScrollPane(textPane));
 		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 

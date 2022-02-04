@@ -17,7 +17,7 @@ import br.com.persist.plugins.requisicao.RequisicaoException;
 public class ConteudoImagem extends AbstratoRequisicaoConteudo {
 
 	@Override
-	public Component exibir(InputStream is, Tipo parametros) throws RequisicaoException, IOException {
+	public Component exibir(InputStream is, Tipo parametros, String uri) throws RequisicaoException, IOException {
 		Label label = new Label();
 		byte[] bytes = Util.getArrayBytes(is);
 		label.setIcon(new ImageIcon(bytes));
