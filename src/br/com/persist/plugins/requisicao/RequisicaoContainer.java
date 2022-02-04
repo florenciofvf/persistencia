@@ -143,13 +143,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private Action variaveisAcao = actionIcon("label.variaveis_sistema", Icones.BOLA_AMARELA);
-		private Action retornar64Acao = actionIcon("label.retornar_base64", Icones.BOLA_AMARELA);
-		private Action formatarAcao = actionIcon("label.formatar_frag_json", Icones.BOLA_VERDE);
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-		private Action base64Acao = actionIcon("label.criar_base64", Icones.BOLA_AMARELA);
-		private Action modeloAcao = Action.actionIcon("label.modelo", Icones.BOLA_VERDE);
 		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
+		private ButtonUtil buttonUtil = new ButtonUtil();
 		private ButtonRota buttonRota = new ButtonRota();
 
 		public void ini(Janela janela) {
@@ -157,23 +153,77 @@ public class RequisicaoContainer extends AbstratoContainer {
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
 			addButton(true, atualizarAcao);
-			addButton(true, formatarAcao);
-			addButton(modeloAcao);
-			addButton(true, base64Acao);
-			addButton(retornar64Acao);
-			addButton(true, variaveisAcao);
+			add(true, buttonUtil);
 			add(buttonRota);
-			eventos();
+			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
+			atualizarAcao.setActionListener(e -> atualizar());
 		}
 
-		private void eventos() {
-			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
-			retornar64Acao.setActionListener(e -> retornar64());
-			variaveisAcao.setActionListener(e -> variaveis());
-			atualizarAcao.setActionListener(e -> atualizar());
-			formatarAcao.setActionListener(e -> formatar());
-			base64Acao.setActionListener(e -> base64());
-			modeloAcao.setActionListener(e -> modelo());
+		private class ButtonUtil extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action formatarAcao = actionMenu("label.formatar_frag_json");
+			private Action variaveisAcao = actionMenu("label.variaveis_sistema");
+			private Action modeloAcao = Action.actionMenu("label.modelo", null);
+			private Action retornar64Acao = actionMenu("label.retornar_base64");
+			private Action base64Acao = actionMenu("label.criar_base64");
+
+			private ButtonUtil() {
+				super("label.util", Icones.BOLA_VERDE);
+				addMenuItem(modeloAcao);
+				addMenuItem(formatarAcao);
+				addMenuItem(base64Acao);
+				addMenuItem(retornar64Acao);
+				addMenuItem(variaveisAcao);
+				retornar64Acao.setActionListener(e -> retornar64());
+				variaveisAcao.setActionListener(e -> variaveis());
+				formatarAcao.setActionListener(e -> formatar());
+				base64Acao.setActionListener(e -> base64());
+				modeloAcao.setActionListener(e -> modelo());
+			}
+
+			private void formatar() {
+				RequisicaoPagina ativa = fichario.getPaginaAtiva();
+				if (ativa != null) {
+					ativa.formatar();
+				}
+			}
+
+			private void modelo() {
+				Component comp = Util.getViewParent(RequisicaoContainer.this);
+				ParserDialogo form = null;
+				if (comp instanceof Frame) {
+					form = ParserDialogo.criar((Frame) comp, parserListener);
+					Util.configSizeLocation((Frame) comp, form, RequisicaoContainer.this);
+				} else if (comp instanceof Dialog) {
+					form = ParserDialogo.criar((Dialog) comp, parserListener);
+					Util.configSizeLocation((Dialog) comp, form, RequisicaoContainer.this);
+				} else {
+					form = ParserDialogo.criar((Dialog) null, parserListener);
+					form.setLocationRelativeTo(comp != null ? comp : formulario);
+				}
+				form.setVisible(true);
+			}
+
+			private void base64() {
+				RequisicaoPagina ativa = fichario.getPaginaAtiva();
+				if (ativa != null) {
+					ativa.base64();
+				}
+			}
+
+			private void retornar64() {
+				RequisicaoPagina ativa = fichario.getPaginaAtiva();
+				if (ativa != null) {
+					ativa.retornar64();
+				}
+			}
+
+			private void variaveis() {
+				RequisicaoPagina ativa = fichario.getPaginaAtiva();
+				if (ativa != null) {
+					ativa.variaveis();
+				}
+			}
 		}
 
 		@Override
@@ -286,50 +336,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
 				ativa.processar(rota);
-			}
-		}
-
-		private void formatar() {
-			RequisicaoPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.formatar();
-			}
-		}
-
-		private void modelo() {
-			Component comp = Util.getViewParent(RequisicaoContainer.this);
-			ParserDialogo form = null;
-			if (comp instanceof Frame) {
-				form = ParserDialogo.criar((Frame) comp, parserListener);
-				Util.configSizeLocation((Frame) comp, form, RequisicaoContainer.this);
-			} else if (comp instanceof Dialog) {
-				form = ParserDialogo.criar((Dialog) comp, parserListener);
-				Util.configSizeLocation((Dialog) comp, form, RequisicaoContainer.this);
-			} else {
-				form = ParserDialogo.criar((Dialog) null, parserListener);
-				form.setLocationRelativeTo(comp != null ? comp : formulario);
-			}
-			form.setVisible(true);
-		}
-
-		private void base64() {
-			RequisicaoPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.base64();
-			}
-		}
-
-		private void retornar64() {
-			RequisicaoPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.retornar64();
-			}
-		}
-
-		private void variaveis() {
-			RequisicaoPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.variaveis();
 			}
 		}
 
