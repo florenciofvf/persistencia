@@ -56,8 +56,8 @@ public interface RequisicaoConteudo {
 			super.ini(null, LIMPAR, COPIAR, COLAR);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
+			labelUri.setText("[" + uri + "]");
 			this.textPane = textPane;
-			labelUri.setText(uri);
 			add(txtPesquisa);
 			add(label);
 			add(labelUri);

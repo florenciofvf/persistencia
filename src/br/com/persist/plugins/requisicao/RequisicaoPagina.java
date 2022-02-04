@@ -454,7 +454,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 	public void formatar() {
 		if (!Util.estaVazio(areaParametros.getText())) {
 			String string = Util.getString(areaParametros);
-			conteudoJson(string);
+			conteudoJson(string, "formatar()");
 			areaParametros.requestFocus();
 		}
 	}
@@ -462,7 +462,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 	public void base64() {
 		if (!Util.estaVazio(areaParametros.getText())) {
 			String string = Util.getString(areaParametros);
-			conteudoTexto(Base64Util.criarBase64(string));
+			conteudoTexto(Base64Util.criarBase64(string), "base64()");
 			areaParametros.requestFocus();
 		}
 	}
@@ -471,9 +471,9 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		if (!Util.estaVazio(areaParametros.getText())) {
 			String string = Util.getString(areaParametros);
 			try {
-				conteudoTexto(Base64Util.retornarBase64(string));
+				conteudoTexto(Base64Util.retornarBase64(string), "retornar64()");
 			} catch (Exception ex) {
-				conteudoTexto(ex.getMessage());
+				conteudoTexto(ex.getMessage(), "retornar64()");
 			}
 			areaParametros.requestFocus();
 		}
@@ -487,28 +487,28 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			Object valor = properties.get(chave);
 			sb.append(chave + "=" + (valor != null ? valor.toString() : "") + Constantes.QL);
 		}
-		conteudoTexto(sb.toString());
+		conteudoTexto(sb.toString(), "variaveis()");
 	}
 
-	private void conteudoTexto(String string) {
+	private void conteudoTexto(String string, String uri) {
 		if (Util.estaVazio(string)) {
 			return;
 		}
 		try {
 			configConteudo(new AtomicReference<Map<String, List<String>>>(), null);
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
 	}
 
-	private void conteudoJson(String string) {
+	private void conteudoJson(String string, String uri) {
 		if (Util.estaVazio(string)) {
 			return;
 		}
 		try {
 			tipoConteudo = RequisicaoConstantes.CONTEUDO_JSON;
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
@@ -655,11 +655,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			Parser parser = new Parser();
 			string = VariavelProvedor.substituir(string);
 			Tipo parametros = parser.parse(string);
+			StringBuilder sbUrl = new StringBuilder();
 			AtomicReference<Map<String, List<String>>> mapResponseHeader = new AtomicReference<>();
-			InputStream is = RequisicaoUtil.requisicao(parametros, mapResponseHeader);
+			InputStream is = RequisicaoUtil.requisicao(parametros, mapResponseHeader, sbUrl);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
 			configConteudo(mapResponseHeader, varCookie);
-			processarResposta(is, parametros);
+			processarResposta(is, parametros, sbUrl.toString());
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
@@ -693,12 +694,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		}
 	}
 
-	private void processarResposta(InputStream resposta, Tipo parametros)
+	private void processarResposta(InputStream resposta, Tipo parametros, String uri)
 			throws RequisicaoException, IOException, BadLocationException {
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
 		conteudo.setRequisicaoConteudoListener(this);
 		conteudo.setRequisicaoRota(requisicaoRota);
-		Component view = conteudo.exibir(resposta, parametros);
+		Component view = conteudo.exibir(resposta, parametros, uri);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);

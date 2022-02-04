@@ -59,12 +59,13 @@ public class RequisicaoUtil {
 		return null;
 	}
 
-	public static InputStream requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapResponseHeader)
-			throws IOException {
+	public static InputStream requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapResponseHeader,
+			StringBuilder sbUrl) throws IOException {
 		if (parametros instanceof Objeto) {
 			Objeto objeto = (Objeto) parametros;
 			Tipo tipoUrl = objeto.getValor("url");
 			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
+			sbUrl.append(url);
 			Map<String, String> mapHeader = getMapHeader(objeto);
 			String bodyParams = getBodyParams(objeto);
 			return requisicao(url, mapHeader, bodyParams, mapResponseHeader);
