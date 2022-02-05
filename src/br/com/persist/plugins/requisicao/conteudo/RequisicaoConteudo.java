@@ -45,6 +45,10 @@ public interface RequisicaoConteudo {
 		return new ToolbarPesquisa(textPane, uri);
 	}
 
+	public default BarraButton criarToolbarPesquisa(String uri) {
+		return new ToolbarPesquisa(uri);
+	}
+
 	public class ToolbarPesquisa extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
@@ -60,6 +64,13 @@ public interface RequisicaoConteudo {
 			this.textPane = textPane;
 			add(txtPesquisa);
 			add(label);
+			add(labelUri);
+		}
+
+		public ToolbarPesquisa(String uri) {
+			super.ini(null);
+			labelUri.setText("[" + uri + "]");
+			this.textPane = null;
 			add(labelUri);
 		}
 
