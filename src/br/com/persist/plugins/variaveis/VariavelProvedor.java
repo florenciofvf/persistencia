@@ -31,6 +31,22 @@ public class VariavelProvedor {
 		return null;
 	}
 
+	public static void excluir(int[] indices) {
+		List<Variavel> lista = new ArrayList<>();
+		for (int i : indices) {
+			Variavel v = getVariavel(i);
+			if (v != null) {
+				lista.add(v);
+			}
+		}
+		for (Variavel var : lista) {
+			int indice = getIndice(var.getNome());
+			if (indice != -1) {
+				excluir(indice);
+			}
+		}
+	}
+
 	public static void excluir(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			lista.remove(indice);

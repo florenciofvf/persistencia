@@ -201,8 +201,8 @@ public class VariavelContainer extends AbstratoContainer {
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1 && Util.confirmaExclusao(VariavelContainer.this, false)) {
-				VariavelProvedor.excluir(linhas[0]);
+			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(VariavelContainer.this, false)) {
+				VariavelProvedor.excluir(linhas);
 				variavelModelo.fireTableDataChanged();
 			}
 		}
