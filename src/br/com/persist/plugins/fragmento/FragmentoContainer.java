@@ -257,8 +257,8 @@ public class FragmentoContainer extends AbstratoContainer {
 		@Override
 		protected void excluir() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length == 1 && Util.confirmaExclusao(FragmentoContainer.this, false)) {
-				FragmentoProvedor.excluir(linhas[0]);
+			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(FragmentoContainer.this, false)) {
+				FragmentoProvedor.excluir(linhas);
 				fragmentoModelo.fireTableDataChanged();
 			}
 		}

@@ -34,6 +34,22 @@ public class FragmentoProvedor {
 		return null;
 	}
 
+	public static void excluir(int[] indices) {
+		List<Fragmento> lista = new ArrayList<>();
+		for (int i : indices) {
+			Fragmento f = getFragmento(i);
+			if (f != null) {
+				lista.add(f);
+			}
+		}
+		for (Fragmento frag : lista) {
+			int indice = getIndice(frag.getResumo());
+			if (indice != -1) {
+				excluir(indice);
+			}
+		}
+	}
+
 	public static void excluir(int indice) {
 		if (indice >= 0 && indice < getSize()) {
 			lista.remove(indice);
@@ -49,10 +65,10 @@ public class FragmentoProvedor {
 		return null;
 	}
 
-	public static int getIndice(String nome) {
+	public static int getIndice(String resumo) {
 		for (int i = 0; i < lista.size(); i++) {
 			Fragmento f = lista.get(i);
-			if (f.getResumo().equals(nome)) {
+			if (f.getResumo().equals(resumo)) {
 				return i;
 			}
 		}
