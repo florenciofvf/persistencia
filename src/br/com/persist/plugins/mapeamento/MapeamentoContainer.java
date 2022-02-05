@@ -4,6 +4,7 @@ import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
+import static br.com.persist.componente.BarraButtonEnum.EXCLUIR;
 import static br.com.persist.componente.BarraButtonEnum.NOVO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 import static br.com.persist.componente.BarraButtonEnum.SALVAR;
@@ -92,7 +93,7 @@ public class MapeamentoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					COPIAR);
+					EXCLUIR, COPIAR);
 		}
 
 		@Override
@@ -194,6 +195,15 @@ public class MapeamentoContainer extends AbstratoContainer {
 						adicionar(m.clonar(nome));
 					}
 				}
+			}
+		}
+
+		@Override
+		protected void excluir() {
+			int[] linhas = tabela.getSelectedRows();
+			if (linhas != null && linhas.length > 0 && Util.confirmaExclusao(MapeamentoContainer.this, false)) {
+				MapeamentoProvedor.excluir(linhas);
+				mapeamentoModelo.fireTableDataChanged();
 			}
 		}
 	}

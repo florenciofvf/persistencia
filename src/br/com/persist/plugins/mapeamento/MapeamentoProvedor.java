@@ -31,6 +31,28 @@ public class MapeamentoProvedor {
 		return null;
 	}
 
+	public static void excluir(int[] indices) {
+		List<Mapeamento> lista = new ArrayList<>();
+		for (int i : indices) {
+			Mapeamento m = getMapeamento(i);
+			if (m != null) {
+				lista.add(m);
+			}
+		}
+		for (Mapeamento map : lista) {
+			int indice = getIndice(map.getNome());
+			if (indice != -1) {
+				excluir(indice);
+			}
+		}
+	}
+
+	public static void excluir(int indice) {
+		if (indice >= 0 && indice < getSize()) {
+			lista.remove(indice);
+		}
+	}
+
 	public static Mapeamento getMapeamento(String nome) {
 		for (Mapeamento m : lista) {
 			if (m.getNome().equals(nome)) {
