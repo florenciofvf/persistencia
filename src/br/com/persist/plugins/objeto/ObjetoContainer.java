@@ -572,7 +572,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			objetoSuperficie.setAjusteAutomaticoForm(true);
 			toolbar.txtArquivoVinculo.setText(ref.get());
 			objetoSuperficie.setAjusteLarguraForm(true);
-			arquivo = new File(ref.get() + ".obj.tmp");
+			arquivo = new File(ref.get());
 			tituloTemp.set(arquivo.getName());
 			toolbar.salvar(arquivo);
 			toolbar.reabrirArquivo();

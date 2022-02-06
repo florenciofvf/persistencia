@@ -2468,7 +2468,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		public void vincular(AtomicReference<String> ref) {
 			try {
-				arquivoVinculo = principal.getTabela().toLowerCase() + "_persist.xml";
+				String nomeTabela = principal.getTabela().toLowerCase();
+				arquivoVinculo = nomeTabela + "_vinculo.xml";
 				Vinculacao vinculo = getVinculacao(arquivoVinculo, true);
 				Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA);
 				if (vinculo != null && pesquisa != null) {
@@ -2476,7 +2477,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 				} else if (vinculo != null && !listaRef.isEmpty()) {
 					salvar(listaRef);
 				}
-				ref.set(arquivoVinculo);
+				ref.set(nomeTabela + ".xml");
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("VINCULAR", ex, ObjetoSuperficie.this);
 			}
