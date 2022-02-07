@@ -1586,9 +1586,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		salvarAtributos(conexao, util);
 		util.fecharTag();
 		salvarObjetos(util);
-		util.ql();
 		salvarRelacoes(util);
-		util.ql();
 		salvarForms(util);
 		util.finalizarTag("fvf");
 		util.close();
@@ -1610,11 +1608,17 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			objeto.salvar(util);
 		}
+		if (objetos.length > 0) {
+			util.ql();
+		}
 	}
 
 	private void salvarRelacoes(XMLUtil util) {
 		for (Relacao relacao : relacoes) {
 			relacao.salvar(util);
+		}
+		if (relacoes.length > 0) {
+			util.ql();
 		}
 	}
 
