@@ -276,6 +276,7 @@ public class AmbienteContainer extends AbstratoContainer {
 			if (coletor.size() == 1) {
 				File arq = new File(fileParent, coletor.get(0));
 				abrirArquivo(arq);
+				selecao = null;
 				backup = arq;
 				setNomeBackup(coletor.get(0));
 			}
@@ -302,6 +303,7 @@ public class AmbienteContainer extends AbstratoContainer {
 					}
 				}
 				textArea.setText(sb.toString());
+				selecao = null;
 			} else {
 				label.limpar();
 			}
@@ -324,6 +326,7 @@ public class AmbienteContainer extends AbstratoContainer {
 				}
 			}
 			textArea.setText(sb.toString());
+			selecao = null;
 		}
 	}
 
