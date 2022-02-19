@@ -12,8 +12,8 @@ public class AmbienteDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final AmbienteContainer container;
 
-	private AmbienteDialogo(Frame frame, Formulario formulario, AmbienteContainer.Ambiente ambiente) {
-		super(frame, ambiente.getDescricao());
+	private AmbienteDialogo(Frame frame, Formulario formulario, Ambiente ambiente) {
+		super(frame, ambiente.titulo);
 		container = new AmbienteContainer(this, formulario, null, ambiente);
 		container.setAmbienteDialogo(this);
 		montarLayout();
@@ -23,7 +23,7 @@ public class AmbienteDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static void criar(Formulario formulario, AmbienteContainer.Ambiente ambiente) {
+	public static void criar(Formulario formulario, Ambiente ambiente) {
 		AmbienteDialogo form = new AmbienteDialogo(formulario, formulario, ambiente);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);

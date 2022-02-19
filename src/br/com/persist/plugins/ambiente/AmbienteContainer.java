@@ -51,8 +51,8 @@ public class AmbienteContainer extends AbstratoContainer {
 	private final TextPane textArea = new TextPane();
 	private final Toolbar toolbar = new Toolbar();
 	private AmbienteFormulario ambienteFormulario;
+	private final transient Ambiente ambiente;
 	private AmbienteDialogo ambienteDialogo;
-	private final Ambiente ambiente;
 	private final File fileParent;
 	private final File file;
 	private File backup;
@@ -69,45 +69,6 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	public Ambiente getAmbiente() {
 		return ambiente;
-	}
-
-	public enum Ambiente {
-		DESENVOLVIMENTO("desenv", "label.desenv"), HOLOMOGACAO("homolog", "label.homolog"), TREINAMENTO("treina",
-				"label.treina"), PARAMETRO("parametros", "label.parametros"), PRODUCAO("producao",
-						"label.producao"), RASCUNHO("rascunho", "label.rascunho"), LEMBRETE("lembrete",
-								"label.lembrete"), VARIAVEL("variaveis", "label.variaveis"), SCRIPTS("scripts",
-										"label.scripts"), ESTUDO("estudo", "label.estudo"), TESTE("teste",
-												"label.teste"), BUGS("bugs", "label.bugs");
-		private final String chaveTitulo;
-		private final String tituloMin;
-		private final String descricao;
-		private final String titulo;
-		private final String chave;
-
-		private Ambiente(String chave, String desc) {
-			chaveTitulo = "label." + chave;
-			tituloMin = AmbienteMensagens.getString(chaveTitulo + "_min");
-			this.descricao = AmbienteMensagens.getString(desc);
-			titulo = AmbienteMensagens.getString(chaveTitulo);
-			this.chave = chave;
-		}
-
-		public String getChaveTitulo() {
-			return chaveTitulo;
-		}
-
-		public String getDescricao() {
-			return descricao;
-		}
-
-		public static Ambiente get(String nome) {
-			for (Ambiente a : values()) {
-				if (a.chave.equals(nome)) {
-					return a;
-				}
-			}
-			throw new IllegalArgumentException();
-		}
 	}
 
 	public AmbienteDialogo getAmbienteDialogo() {
@@ -379,7 +340,7 @@ public class AmbienteContainer extends AbstratoContainer {
 
 			@Override
 			public String getHint() {
-				return ambiente.descricao;
+				return ambiente.titulo;
 			}
 
 			@Override

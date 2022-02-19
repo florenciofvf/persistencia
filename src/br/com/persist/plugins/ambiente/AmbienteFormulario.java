@@ -10,15 +10,15 @@ public class AmbienteFormulario extends AbstratoFormulario {
 	private static final long serialVersionUID = 1L;
 	private final AmbienteContainer container;
 
-	private AmbienteFormulario(Formulario formulario, String conteudo, AmbienteContainer.Ambiente ambiente) {
-		super(ambiente.getDescricao());
+	private AmbienteFormulario(Formulario formulario, String conteudo, Ambiente ambiente) {
+		super(ambiente.titulo);
 		container = new AmbienteContainer(this, formulario, conteudo, ambiente);
 		container.setAmbienteFormulario(this);
 		montarLayout();
 	}
 
 	private AmbienteFormulario(AmbienteContainer container) {
-		super(container.getAmbiente().getDescricao());
+		super(container.getAmbiente().titulo);
 		container.setAmbienteFormulario(this);
 		this.container = container;
 		container.setJanela(this);
@@ -34,7 +34,7 @@ public class AmbienteFormulario extends AbstratoFormulario {
 		Formulario.posicionarJanela(formulario, form);
 	}
 
-	public static void criar(Formulario formulario, String conteudo, AmbienteContainer.Ambiente ambiente) {
+	public static void criar(Formulario formulario, String conteudo, Ambiente ambiente) {
 		AmbienteFormulario form = new AmbienteFormulario(formulario, conteudo, ambiente);
 		Formulario.posicionarJanela(formulario, form);
 	}
