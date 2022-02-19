@@ -34,6 +34,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
@@ -135,6 +136,8 @@ public class AmbienteContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private Action pesquisaGeralAcao = Action.acaoIcon(AmbienteMensagens.getString("label.pesquisa_geral"),
+				Icones.BOLA_AMARELA);
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
@@ -148,6 +151,16 @@ public class AmbienteContainer extends AbstratoContainer {
 			add(txtPesquisa);
 			add(chkPesquisaLocal);
 			add(label);
+			addButton(pesquisaGeralAcao);
+			pesquisaGeralAcao.setActionListener(e -> pesquisarGeral());
+		}
+
+		private void pesquisarGeral() {
+			Object resp = Util.getValorInputDialog(AmbienteContainer.this, "label.atencao",
+					AmbienteMensagens.getString("label.pesquisa_geral"), null);
+			if (resp != null && !Util.estaVazio(resp.toString())) {
+				pesquisaGeral(resp.toString());
+			}
 		}
 
 		@Override
@@ -292,6 +305,25 @@ public class AmbienteContainer extends AbstratoContainer {
 			} else {
 				label.limpar();
 			}
+		}
+
+		private void pesquisaGeral(String pesquisado) {
+			File[] arquivos = fileParent.listFiles();
+			if (arquivos == null || Util.estaVazio(pesquisado)) {
+				return;
+			}
+			StringBuilder sb = new StringBuilder();
+			for (File arquivo : arquivos) {
+				String resultado = Util.pesquisar(arquivo, pesquisado);
+				if (!Util.estaVazio(resultado)) {
+					if (sb.length() > 0) {
+						sb.append(Constantes.QL);
+					}
+					sb.append(arquivo.getName() + Constantes.QL);
+					sb.append(resultado);
+				}
+			}
+			textArea.setText(sb.toString());
 		}
 	}
 
