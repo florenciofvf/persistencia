@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -782,6 +783,12 @@ public class Util {
 			lidos = is.read(bytes);
 		}
 		return baos.toByteArray();
+	}
+
+	public static void salvar(File file, byte[] bytes) throws IOException {
+		try (FileOutputStream fos = new FileOutputStream(file)) {
+			fos.write(bytes);
+		}
 	}
 
 	public static boolean iguais(Class<?> klass, String nome) {
