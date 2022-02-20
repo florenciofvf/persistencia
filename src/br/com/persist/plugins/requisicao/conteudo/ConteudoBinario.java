@@ -2,6 +2,7 @@ package br.com.persist.plugins.requisicao.conteudo;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,10 +37,11 @@ public class ConteudoBinario extends AbstratoRequisicaoConteudo {
 		private final byte[] bytes;
 
 		private PanelBinario(byte[] bytes) {
+			setLayout(new GridBagLayout());
 			this.bytes = bytes;
 			Muro muro = new Muro();
 			muro.camada(btnBaixar);
-			add(BorderLayout.CENTER, muro);
+			add(muro);
 			btnBaixar.addActionListener(e -> baixar());
 		}
 

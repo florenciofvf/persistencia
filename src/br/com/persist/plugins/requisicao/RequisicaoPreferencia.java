@@ -13,7 +13,7 @@ public class RequisicaoPreferencia {
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		binarios = pref.get("requisicoes_binarios", "application/dpf");
+		binarios = pref.get("requisicoes_binarios", "application/pdf");
 	}
 
 	public static void salvar() {
