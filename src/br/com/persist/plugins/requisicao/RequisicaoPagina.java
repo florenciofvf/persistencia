@@ -456,7 +456,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 	public void formatar() {
 		if (!Util.estaVazio(areaParametros.getText())) {
 			String string = Util.getString(areaParametros);
-			conteudoJson(string, "formatar()");
+			conteudoJson(string, "formatar()", null);
 			areaParametros.requestFocus();
 		}
 	}
@@ -497,20 +497,20 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			return;
 		}
 		try {
-			configConteudo(new AtomicReference<Map<String, List<String>>>(), null);
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri);
+			String mime = configConteudo(new AtomicReference<Map<String, List<String>>>(), null);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, mime);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
 	}
 
-	private void conteudoJson(String string, String uri) {
+	private void conteudoJson(String string, String uri, String mime) {
 		if (Util.estaVazio(string)) {
 			return;
 		}
 		try {
 			tipoConteudo = RequisicaoConstantes.CONTEUDO_JSON;
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, mime);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
@@ -661,24 +661,27 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			AtomicReference<Map<String, List<String>>> mapResponseHeader = new AtomicReference<>();
 			InputStream is = RequisicaoUtil.requisicao(parametros, mapResponseHeader, sbUrl);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
-			configConteudo(mapResponseHeader, varCookie);
-			processarResposta(is, parametros, sbUrl.toString());
+			String mime = configConteudo(mapResponseHeader, varCookie);
+			processarResposta(is, parametros, sbUrl.toString(), mime);
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
 	}
 
-	private void configConteudo(AtomicReference<Map<String, List<String>>> mapHeader, String varCookie) {
+	private String configConteudo(AtomicReference<Map<String, List<String>>> mapHeader, String varCookie) {
+		String mime = null;
 		tipoConteudo = RequisicaoConstantes.CONTEUDO_TEXTO;
 		Map<String, List<String>> map = mapHeader.get();
 		if (map != null) {
 			List<String> list = RequisicaoUtil.getList(map);
 			if (list != null) {
 				configConteudo(list);
+				mime = list.toString();
 			}
 			RequisicaoHeader.setVarCookie(map, varCookie);
 		}
+		return mime;
 	}
 
 	private void configConteudo(List<String> list) {
@@ -698,12 +701,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		}
 	}
 
-	private void processarResposta(InputStream resposta, Tipo parametros, String uri)
+	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime)
 			throws RequisicaoException, IOException, BadLocationException {
 		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
 		conteudo.setRequisicaoConteudoListener(this);
 		conteudo.setRequisicaoRota(requisicaoRota);
-		Component view = conteudo.exibir(resposta, parametros, uri);
+		Component view = conteudo.exibir(resposta, parametros, uri, mime);
 		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);

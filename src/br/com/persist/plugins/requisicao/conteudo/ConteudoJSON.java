@@ -26,7 +26,7 @@ public class ConteudoJSON extends RequisicaoHeader {
 	private final Parser parser = new Parser();
 
 	@Override
-	public Component exibir(InputStream is, Tipo parametros, String uri)
+	public Component exibir(InputStream is, Tipo parametros, String uri, String mime)
 			throws RequisicaoException, IOException, BadLocationException {
 		JTextPane textPane = new JTextPane();
 		textPane.setText(Constantes.VAZIO);
@@ -44,7 +44,7 @@ public class ConteudoJSON extends RequisicaoHeader {
 		panelTextPane.add(BorderLayout.CENTER, textPane);
 
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, uri));
+		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, uri, mime));
 		panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
 		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 

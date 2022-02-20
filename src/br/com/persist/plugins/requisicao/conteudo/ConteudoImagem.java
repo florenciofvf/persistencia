@@ -21,13 +21,14 @@ import br.com.persist.plugins.requisicao.RequisicaoException;
 public class ConteudoImagem extends AbstratoRequisicaoConteudo {
 
 	@Override
-	public Component exibir(InputStream is, Tipo parametros, String uri) throws RequisicaoException, IOException {
+	public Component exibir(InputStream is, Tipo parametros, String uri, String mime)
+			throws RequisicaoException, IOException {
 		Label label = new Label();
 		byte[] bytes = Util.getArrayBytes(is);
 		label.setIcon(new ImageIcon(bytes));
 
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(uri));
+		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(uri, mime));
 		panel.add(BorderLayout.CENTER, new ScrollPane(label));
 		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
 

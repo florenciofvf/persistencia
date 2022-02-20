@@ -26,7 +26,7 @@ import br.com.persist.plugins.requisicao.RequisicaoException;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
 
 public interface RequisicaoConteudo {
-	public Component exibir(InputStream is, Tipo parametros, String uri)
+	public Component exibir(InputStream is, Tipo parametros, String uri, String mime)
 			throws RequisicaoException, IOException, BadLocationException;
 
 	public String titulo();
@@ -41,12 +41,12 @@ public interface RequisicaoConteudo {
 
 	public RequisicaoRota getRequisicaoRota();
 
-	public default BarraButton criarToolbarPesquisa(JTextPane textPane, String uri) {
-		return new ToolbarPesquisa(textPane, uri);
+	public default BarraButton criarToolbarPesquisa(JTextPane textPane, String uri, String mime) {
+		return new ToolbarPesquisa(textPane, uri, mime);
 	}
 
-	public default BarraButton criarToolbarPesquisa(String uri) {
-		return new ToolbarPesquisa(uri);
+	public default BarraButton criarToolbarPesquisa(String uri, String mime) {
+		return new ToolbarPesquisa(uri, mime);
 	}
 
 	public class ToolbarPesquisa extends BarraButton implements ActionListener {
@@ -56,20 +56,20 @@ public interface RequisicaoConteudo {
 		private transient Selecao selecao;
 		private final JTextPane textPane;
 
-		public ToolbarPesquisa(JTextPane textPane, String uri) {
+		public ToolbarPesquisa(JTextPane textPane, String uri, String mime) {
 			super.ini(null, LIMPAR, COPIAR, COLAR);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
-			labelUri.setText("[" + uri + "]");
+			labelUri.setText("[" + uri + "]" + (mime != null ? " - " + mime : ""));
 			this.textPane = textPane;
 			add(txtPesquisa);
 			add(label);
 			add(labelUri);
 		}
 
-		public ToolbarPesquisa(String uri) {
+		public ToolbarPesquisa(String uri, String mime) {
 			super.ini(null);
-			labelUri.setText("[" + uri + "]");
+			labelUri.setText("[" + uri + "]" + (mime != null ? " - " + mime : ""));
 			this.textPane = null;
 			add(labelUri);
 		}
