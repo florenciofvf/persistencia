@@ -63,6 +63,7 @@ import br.com.persist.parser.ObjetoUtil;
 import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
 import br.com.persist.parser.TipoUtil;
+import br.com.persist.plugins.requisicao.conteudo.ConteudoBinario;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoHTML;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoImagem;
 import br.com.persist.plugins.requisicao.conteudo.ConteudoJSON;
@@ -90,6 +91,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 	private int sleep;
 
 	public RequisicaoPagina(File file) {
+		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_BINARIO, new ConteudoBinario());
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_IMAGEM, new ConteudoImagem());
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_TEXTO, new ConteudoTexto());
 		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_JSON, new ConteudoJSON());
@@ -689,6 +691,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 					tipoConteudo = RequisicaoConstantes.CONTEUDO_JSON;
 				} else if (s.indexOf("html") != -1) {
 					tipoConteudo = RequisicaoConstantes.CONTEUDO_HTML;
+				} else if (RequisicaoPreferencia.ehBinario(s)) {
+					tipoConteudo = RequisicaoConstantes.CONTEUDO_BINARIO;
 				}
 			}
 		}

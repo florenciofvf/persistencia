@@ -2,6 +2,7 @@ package br.com.persist.plugins.requisicao;
 
 import java.util.prefs.Preferences;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoPreferencia {
@@ -29,5 +30,21 @@ public class RequisicaoPreferencia {
 
 	public static void setBinarios(String binarios) {
 		RequisicaoPreferencia.binarios = binarios;
+	}
+
+	public static boolean ehBinario(String string) {
+		if (Util.estaVazio(string)) {
+			return false;
+		}
+		string = string.trim();
+		String[] array = getBinarios().split(",");
+		if (array != null) {
+			for (String s : array) {
+				if (!Util.estaVazio(s) && s.trim().equalsIgnoreCase(string)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
