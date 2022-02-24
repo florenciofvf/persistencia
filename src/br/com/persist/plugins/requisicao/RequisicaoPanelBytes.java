@@ -54,7 +54,7 @@ public class RequisicaoPanelBytes extends Panel {
 	}
 
 	public Icon getIcone() {
-		return Icones.ICON;
+		return Icones.BAIXAR;
 	}
 
 	public String getTitulo() {
@@ -78,8 +78,8 @@ public class RequisicaoPanelBytes extends Panel {
 		private final String mime;
 
 		private BarraInfo(String uri, String mime) {
+			labelMime.setText(" - [" + mime + "]");
 			labelURI.setText("[" + uri + "]");
-			labelMime.setText(" - " + mime);
 			this.mime = mime;
 			add(labelURI);
 			add(labelMime);
