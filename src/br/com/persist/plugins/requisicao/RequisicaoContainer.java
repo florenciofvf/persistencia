@@ -58,7 +58,6 @@ public class RequisicaoContainer extends AbstratoContainer {
 		montarLayout();
 		configurar();
 		poolVisualizador = new RequisicaoPoolVisualizador();
-		poolVisualizador.inicializar(formulario);
 		abrir(conteudo, idPagina);
 	}
 
@@ -126,6 +125,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 		}
 		fichario.setConteudo(conteudo, idPagina);
+		poolVisualizador.inicializar(formulario);
 	}
 
 	@Override
