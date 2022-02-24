@@ -32,6 +32,7 @@ public class RequisicaoPoolVisualizador {
 		if (!file.exists()) {
 			return;
 		}
+		limpar();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 			String linha = br.readLine();
 			while (linha != null) {
@@ -40,6 +41,13 @@ public class RequisicaoPoolVisualizador {
 			}
 		} catch (IOException e) {
 			Util.mensagem(parent, e.getMessage());
+		}
+	}
+
+	private void limpar() {
+		selecionado = null;
+		for (int i = 1; i < visualizadores.length; i++) {
+			visualizadores[i].limpar();
 		}
 	}
 

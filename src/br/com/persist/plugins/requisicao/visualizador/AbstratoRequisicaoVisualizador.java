@@ -51,6 +51,11 @@ public abstract class AbstratoRequisicaoVisualizador implements RequisicaoVisual
 		}
 	}
 
+	@Override
+	public void limpar() {
+		mimes.clear();
+	}
+
 	public void setRequisicaoVisualizadorListener(RequisicaoVisualizadorListener requisicaoVisualizadorListener) {
 		this.requisicaoVisualizadorListener = requisicaoVisualizadorListener;
 	}

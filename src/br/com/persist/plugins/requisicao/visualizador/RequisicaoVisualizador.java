@@ -39,6 +39,8 @@ public interface RequisicaoVisualizador {
 
 	public Icon getIcone();
 
+	public void limpar();
+
 	public void setRequisicaoVisualizadorListener(RequisicaoVisualizadorListener listener);
 
 	public RequisicaoVisualizadorListener getRequisicaoVisualizadorListener();
