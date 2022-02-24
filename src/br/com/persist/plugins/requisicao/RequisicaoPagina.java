@@ -705,11 +705,13 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 	public void associarMimeVisualizador(String mime, RequisicaoVisualizador visualizador) {
 		poolVisualizador.associar(this, mime, visualizador);
-		int indice = tabbedPane.getSelectedIndex();
-		if (indice != -1) {
-			tabbedPane.setTitleAt(indice, visualizador.getTitulo());
-			tabbedPane.setIconAt(indice, visualizador.getIcone());
-		}
+		SwingUtilities.invokeLater(() -> {
+			int indice = tabbedPane.getSelectedIndex();
+			if (indice != -1) {
+				tabbedPane.setTitleAt(indice, visualizador.getTitulo());
+				tabbedPane.setIconAt(indice, visualizador.getIcone());
+			}
+		});
 	}
 
 	public RequisicaoVisualizador getVisualizador(String mime) {
