@@ -3,8 +3,6 @@ package br.com.persist.plugins.requisicao.conteudo;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Rectangle;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -16,32 +14,33 @@ import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Tipo;
-import br.com.persist.plugins.requisicao.RequisicaoException;
 
 public class ConteudoImagem extends AbstratoRequisicaoConteudo {
 
 	@Override
-	public Component exibir(InputStream is, Tipo parametros, String uri, String mime)
-			throws RequisicaoException, IOException {
-		Label label = new Label();
-		byte[] bytes = Util.getArrayBytes(is);
-		label.setIcon(new ImageIcon(bytes));
+	public Component exibidor(Component parent, byte[] bytes, Tipo parametros) {
+		try {
+			Label label = new Label();
+			label.setIcon(new ImageIcon(bytes));
 
-		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(uri, mime));
-		panel.add(BorderLayout.CENTER, new ScrollPane(label));
-		SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
+			Panel panel = new Panel();
+			panel.add(BorderLayout.CENTER, new ScrollPane(label));
+			SwingUtilities.invokeLater(() -> label.scrollRectToVisible(new Rectangle()));
 
-		return panel;
+			return panel;
+		} catch (Exception e) {
+			Util.mensagem(parent, e.getMessage());
+			return null;
+		}
 	}
 
 	@Override
-	public String titulo() {
+	public String toString() {
 		return "Imagem";
 	}
 
 	@Override
-	public Icon icone() {
+	public Icon getIcone() {
 		return Icones.ICON;
 	}
 }

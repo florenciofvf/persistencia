@@ -3,8 +3,6 @@ package br.com.persist.plugins.requisicao.conteudo;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Rectangle;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
 import javax.swing.Icon;
@@ -20,32 +18,35 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoConstantes;
-import br.com.persist.plugins.requisicao.RequisicaoException;
 import br.com.persist.plugins.requisicao.RequisicaoUtil;
 
 public class ConteudoHTML extends RequisicaoHeader {
 
 	@Override
-	public Component exibir(InputStream is, Tipo parametros, String uri, String mime)
-			throws RequisicaoException, IOException {
-		JTextPane textPane = new JTextPane();
-		textPane.setEditable(false);
-		textPane.addHyperlinkListener(new Listener());
-		textPane.setContentType("text/html");
-		String string = Util.getString(is);
-		textPane.setText(string);
-		String varAuthToken = RequisicaoUtil.getAtributoVarAuthToken(parametros);
-		setVarAuthToken(string, varAuthToken);
+	public Component exibidor(Component parent, byte[] bytes, Tipo parametros) {
+		try {
+			JTextPane textPane = new JTextPane();
+			textPane.setEditable(false);
+			textPane.addHyperlinkListener(new Listener());
+			textPane.setContentType("text/html");
+			String string = Util.getString(bytes);
+			textPane.setText(string);
+			String varAuthToken = RequisicaoUtil.getAtributoVarAuthToken(parametros);
+			setVarAuthToken(string, varAuthToken);
 
-		Panel panelTextPane = new Panel();
-		panelTextPane.add(BorderLayout.CENTER, textPane);
+			Panel panelTextPane = new Panel();
+			panelTextPane.add(BorderLayout.CENTER, textPane);
 
-		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane, uri, mime));
-		panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
-		SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+			Panel panel = new Panel();
+			panel.add(BorderLayout.NORTH, criarToolbarPesquisa(textPane));
+			panel.add(BorderLayout.CENTER, new ScrollPane(panelTextPane));
+			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
 
-		return panel;
+			return panel;
+		} catch (Exception e) {
+			Util.mensagem(parent, e.getMessage());
+			return null;
+		}
 	}
 
 	private class Listener implements HyperlinkListener {
@@ -95,12 +96,12 @@ public class ConteudoHTML extends RequisicaoHeader {
 	}
 
 	@Override
-	public String titulo() {
+	public String toString() {
 		return "Html";
 	}
 
 	@Override
-	public Icon icone() {
+	public Icon getIcone() {
 		return Icones.URL;
 	}
 }
