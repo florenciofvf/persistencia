@@ -42,6 +42,7 @@ import br.com.persist.parser.Tipo;
 
 public class RequisicaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
+	private final transient RequisicaoVisualizador visualizador = new RequisicaoVisualizador();
 	private final RequisicaoFichario fichario = new RequisicaoFichario();
 	private final transient RequisicaoRota rota = new RequisicaoRota();
 	private static final File file = new File("requisicoes");
@@ -335,7 +336,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		protected void atualizar() {
 			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
-				ativa.processar(rota);
+				ativa.processar(rota, visualizador);
 			}
 		}
 

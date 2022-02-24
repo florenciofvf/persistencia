@@ -25,7 +25,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -39,7 +38,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
-import javax.swing.text.BadLocationException;
 
 import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
@@ -63,11 +61,6 @@ import br.com.persist.parser.ObjetoUtil;
 import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
 import br.com.persist.parser.TipoUtil;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoBinario;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoHTML;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoImagem;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoJSON;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoTexto;
 import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudo;
 import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudoListener;
 import br.com.persist.plugins.requisicao.conteudo.RequisicaoHeader;
@@ -75,27 +68,21 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class RequisicaoPagina extends Panel implements RequisicaoConteudoListener {
 	private static final long serialVersionUID = 1L;
-	private final transient Map<Integer, RequisicaoConteudo> mapaConteudo = new HashMap<>();
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final PopupFichario popupFichario = new PopupFichario();
 	private final List<String> requisicoes = new ArrayList<>();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
+	private transient RequisicaoVisualizador visualizador;
 	private static final Logger LOG = Logger.getGlobal();
 	private transient RequisicaoRota requisicaoRota;
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
 	private JSplitPane split;
-	private int tipoConteudo;
 	private final File file;
 	private int sleep;
 
 	public RequisicaoPagina(File file) {
-		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_BINARIO, new ConteudoBinario());
-		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_IMAGEM, new ConteudoImagem());
-		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_TEXTO, new ConteudoTexto());
-		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_JSON, new ConteudoJSON());
-		mapaConteudo.put(RequisicaoConstantes.CONTEUDO_HTML, new ConteudoHTML());
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.addMouseListener(mouseListenerFichario);
 		this.file = file;
@@ -456,7 +443,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 	public void formatar() {
 		if (!Util.estaVazio(areaParametros.getText())) {
 			String string = Util.getString(areaParametros);
-			conteudoJson(string, "formatar()", null);
+			conteudoJson(string, "formatar()");
 			areaParametros.requestFocus();
 		}
 	}
@@ -497,27 +484,26 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			return;
 		}
 		try {
-			String mime = configConteudo(new AtomicReference<Map<String, List<String>>>(), null);
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, mime);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, "TEXTO");
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
 	}
 
-	private void conteudoJson(String string, String uri, String mime) {
+	private void conteudoJson(String string, String uri) {
 		if (Util.estaVazio(string)) {
 			return;
 		}
 		try {
-			tipoConteudo = RequisicaoConstantes.CONTEUDO_JSON;
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, mime);
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, "JSON");
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
 	}
 
-	public void processar(RequisicaoRota requisicaoRota) {
+	public void processar(RequisicaoRota requisicaoRota, RequisicaoVisualizador visualizador) {
 		this.requisicaoRota = requisicaoRota;
+		this.visualizador = visualizador;
 		if (toolbarParametro.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
@@ -661,7 +647,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			AtomicReference<Map<String, List<String>>> mapResponseHeader = new AtomicReference<>();
 			InputStream is = RequisicaoUtil.requisicao(parametros, mapResponseHeader, sbUrl);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
-			String mime = configConteudo(mapResponseHeader, varCookie);
+			String mime = getMime(mapResponseHeader, varCookie);
 			processarResposta(is, parametros, sbUrl.toString(), mime);
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
@@ -669,45 +655,38 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		}
 	}
 
-	private String configConteudo(AtomicReference<Map<String, List<String>>> mapHeader, String varCookie) {
+	private String getMime(AtomicReference<Map<String, List<String>>> mapHeader, String varCookie) {
 		String mime = null;
-		tipoConteudo = RequisicaoConstantes.CONTEUDO_TEXTO;
 		Map<String, List<String>> map = mapHeader.get();
 		if (map != null) {
 			List<String> list = RequisicaoUtil.getList(map);
-			if (list != null) {
-				configConteudo(list);
-				mime = list.toString();
+			if (list != null && !list.isEmpty()) {
+				mime = get(list);
 			}
 			RequisicaoHeader.setVarCookie(map, varCookie);
 		}
 		return mime;
 	}
 
-	private void configConteudo(List<String> list) {
+	private String get(List<String> list) {
+		StringBuilder sb = new StringBuilder();
 		for (String string : list) {
 			if (!Util.estaVazio(string)) {
-				String s = string.toLowerCase();
-				if (s.indexOf("image/") != -1) {
-					tipoConteudo = RequisicaoConstantes.CONTEUDO_IMAGEM;
-				} else if (s.indexOf("json") != -1) {
-					tipoConteudo = RequisicaoConstantes.CONTEUDO_JSON;
-				} else if (s.indexOf("html") != -1) {
-					tipoConteudo = RequisicaoConstantes.CONTEUDO_HTML;
-				} else if (RequisicaoPreferencia.ehBinario(s)) {
-					tipoConteudo = RequisicaoConstantes.CONTEUDO_BINARIO;
+				if (sb.length() > 0) {
+					sb.append(" ");
 				}
+				sb.append(string.trim());
 			}
 		}
+		return sb.toString().trim();
 	}
 
-	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime)
-			throws RequisicaoException, IOException, BadLocationException {
-		RequisicaoConteudo conteudo = mapaConteudo.get(tipoConteudo);
-		conteudo.setRequisicaoConteudoListener(this);
-		conteudo.setRequisicaoRota(requisicaoRota);
-		Component view = conteudo.exibir(resposta, parametros, uri, mime);
-		tabbedPane.addTab(conteudo.titulo(), conteudo.icone(), view);
+	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime) throws IOException {
+		RequisicaoPanelConteudo panelConteudo = new RequisicaoPanelConteudo(this, resposta, parametros);
+		panelConteudo.setRequisicaoConteudoListener(this);
+		panelConteudo.setRequisicaoRota(requisicaoRota);
+		panelConteudo.configuracoes(uri, mime);
+		tabbedPane.addTab(panelConteudo.getTitulo(), panelConteudo.getIcone(), panelConteudo);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);
 		resposta.close();
@@ -721,5 +700,22 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		if (ObjetoUtil.contemAtributo(parametros, RequisicaoConstantes.TENTATIVAS)) {
 			requisicoes.clear();
 		}
+	}
+
+	public void associarMimeVisualizador(String mime, RequisicaoConteudo requisicaoConteudo) {
+		visualizador.associar(this, mime, requisicaoConteudo);
+		int indice = tabbedPane.getSelectedIndex();
+		if (indice != -1) {
+			tabbedPane.setTitleAt(indice, requisicaoConteudo.getTitulo());
+			tabbedPane.setIconAt(indice, requisicaoConteudo.getIcone());
+		}
+	}
+
+	public RequisicaoConteudo getVisualizador(String mime) {
+		return visualizador.getVisualizador(mime);
+	}
+
+	public RequisicaoConteudo[] getVisualizadores() {
+		return visualizador.getVisualizadores();
 	}
 }
