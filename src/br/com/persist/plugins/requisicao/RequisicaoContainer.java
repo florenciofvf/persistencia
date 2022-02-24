@@ -57,6 +57,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		montarLayout();
 		configurar();
 		abrir(conteudo, idPagina);
+		visualizador.inicializar(formulario);
 	}
 
 	public RequisicaoDialogo getRequisicaoDialogo() {
