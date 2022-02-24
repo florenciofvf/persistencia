@@ -7,31 +7,37 @@ import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
-import br.com.persist.componente.Label;
 import br.com.persist.componente.TextField;
 import br.com.persist.parser.Tipo;
-import br.com.persist.plugins.requisicao.RequisicaoException;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
 
 public interface RequisicaoConteudo {
-	public Component exibir(InputStream is, Tipo parametros, String uri, String mime)
-			throws RequisicaoException, IOException, BadLocationException;
+	public Component exibidor(Component parent, byte[] bytes, Tipo parametros);
 
-	public String titulo();
+	public Set<String> getMimes();
 
-	public Icon icone();
+	public void adicionarMime(String mime);
+
+	public void excluirMime(String mime);
+
+	public boolean contemMime(String mime);
+
+	public void salvar(PrintWriter pw);
+
+	public String getTitulo();
+
+	public Icon getIcone();
 
 	public void setRequisicaoConteudoListener(RequisicaoConteudoListener listener);
 
@@ -41,37 +47,23 @@ public interface RequisicaoConteudo {
 
 	public RequisicaoRota getRequisicaoRota();
 
-	public default BarraButton criarToolbarPesquisa(JTextPane textPane, String uri, String mime) {
-		return new ToolbarPesquisa(textPane, uri, mime);
-	}
-
-	public default BarraButton criarToolbarPesquisa(String uri, String mime) {
-		return new ToolbarPesquisa(uri, mime);
+	public default BarraButton criarToolbarPesquisa(JTextPane textPane) {
+		return new ToolbarPesquisa(textPane);
 	}
 
 	public class ToolbarPesquisa extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
-		private Label labelUri = new Label();
 		private transient Selecao selecao;
 		private final JTextPane textPane;
 
-		public ToolbarPesquisa(JTextPane textPane, String uri, String mime) {
+		public ToolbarPesquisa(JTextPane textPane) {
 			super.ini(null, LIMPAR, COPIAR, COLAR);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
-			labelUri.setText("[" + uri + "]" + (mime != null ? " - " + mime : ""));
 			this.textPane = textPane;
 			add(txtPesquisa);
 			add(label);
-			add(labelUri);
-		}
-
-		public ToolbarPesquisa(String uri, String mime) {
-			super.ini(null);
-			labelUri.setText("[" + uri + "]" + (mime != null ? " - " + mime : ""));
-			this.textPane = null;
-			add(labelUri);
 		}
 
 		@Override
