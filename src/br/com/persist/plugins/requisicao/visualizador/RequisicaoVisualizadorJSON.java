@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.conteudo;
+package br.com.persist.plugins.requisicao.visualizador;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -18,7 +18,7 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
 
-public class ConteudoJSON extends RequisicaoHeader {
+public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	private final Parser parser = new Parser();
 
 	@Override

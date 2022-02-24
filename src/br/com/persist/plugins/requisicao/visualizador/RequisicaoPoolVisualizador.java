@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao;
+package br.com.persist.plugins.requisicao.visualizador;
 
 import java.awt.Component;
 import java.io.BufferedReader;
@@ -11,24 +11,20 @@ import java.io.PrintWriter;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoHTML;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoImagem;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoJSON;
-import br.com.persist.plugins.requisicao.conteudo.ConteudoTexto;
-import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudo;
+import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 
-public class RequisicaoVisualizador {
-	private final RequisicaoConteudo[] visualizadores;
-	private RequisicaoConteudo selecionado;
+public class RequisicaoPoolVisualizador {
+	private final RequisicaoVisualizador[] visualizadores;
+	private RequisicaoVisualizador selecionado;
 	private final File file;
 
-	public RequisicaoVisualizador() {
-		visualizadores = new RequisicaoConteudo[] { null, new ConteudoImagem(), new ConteudoTexto(), new ConteudoHTML(),
-				new ConteudoJSON() };
+	public RequisicaoPoolVisualizador() {
+		visualizadores = new RequisicaoVisualizador[] { null, new RequisicaoVisualizadorImagem(),
+				new RequisicaoVisualizadorTexto(), new RequisicaoVisualizadorHTML(), new RequisicaoVisualizadorJSON() };
 		file = new File(RequisicaoConstantes.REQUISICOES + Constantes.SEPARADOR + "mimes");
 	}
 
-	public RequisicaoConteudo[] getVisualizadores() {
+	public RequisicaoVisualizador[] getVisualizadores() {
 		return visualizadores;
 	}
 
@@ -61,7 +57,7 @@ public class RequisicaoVisualizador {
 	private void selecionar(String string) {
 		selecionado = null;
 		for (int i = 1; i < visualizadores.length; i++) {
-			RequisicaoConteudo obj = visualizadores[i];
+			RequisicaoVisualizador obj = visualizadores[i];
 			if (obj.getTitulo().equals(string)) {
 				selecionado = obj;
 			}
@@ -79,9 +75,9 @@ public class RequisicaoVisualizador {
 		}
 	}
 
-	public void associar(Component parent, String mime, RequisicaoConteudo requisicaoConteudo) {
+	public void associar(Component parent, String mime, RequisicaoVisualizador visualizador) {
 		excluirMime(mime);
-		requisicaoConteudo.adicionarMime(mime);
+		visualizador.adicionarMime(mime);
 		salvar(parent);
 	}
 
@@ -91,9 +87,9 @@ public class RequisicaoVisualizador {
 		}
 	}
 
-	public RequisicaoConteudo getVisualizador(String mime) {
+	public RequisicaoVisualizador getVisualizador(String mime) {
 		for (int i = 1; i < visualizadores.length; i++) {
-			RequisicaoConteudo obj = visualizadores[i];
+			RequisicaoVisualizador obj = visualizadores[i];
 			if (obj.contemMime(mime)) {
 				return obj;
 			}

@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.conteudo;
+package br.com.persist.plugins.requisicao.visualizador;
 
 import java.io.PrintWriter;
 import java.util.HashSet;
@@ -7,12 +7,12 @@ import java.util.Set;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
 
-public abstract class AbstratoRequisicaoConteudo implements RequisicaoConteudo {
-	private RequisicaoConteudoListener requisicaoConteudoListener;
+public abstract class AbstratoRequisicaoVisualizador implements RequisicaoVisualizador {
+	private RequisicaoVisualizadorListener requisicaoVisualizadorListener;
 	private RequisicaoRota requisicaoRota;
 	private final Set<String> mimes;
 
-	public AbstratoRequisicaoConteudo() {
+	public AbstratoRequisicaoVisualizador() {
 		mimes = new HashSet<>();
 	}
 
@@ -51,12 +51,12 @@ public abstract class AbstratoRequisicaoConteudo implements RequisicaoConteudo {
 		}
 	}
 
-	public RequisicaoConteudoListener getRequisicaoConteudoListener() {
-		return requisicaoConteudoListener;
+	public void setRequisicaoVisualizadorListener(RequisicaoVisualizadorListener requisicaoVisualizadorListener) {
+		this.requisicaoVisualizadorListener = requisicaoVisualizadorListener;
 	}
 
-	public void setRequisicaoConteudoListener(RequisicaoConteudoListener requisicaoConteudoListener) {
-		this.requisicaoConteudoListener = requisicaoConteudoListener;
+	public RequisicaoVisualizadorListener getRequisicaoVisualizadorListener() {
+		return requisicaoVisualizadorListener;
 	}
 
 	public RequisicaoRota getRequisicaoRota() {

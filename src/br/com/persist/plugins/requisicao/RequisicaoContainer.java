@@ -39,11 +39,12 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.parser.ParserDialogo;
 import br.com.persist.parser.ParserListener;
 import br.com.persist.parser.Tipo;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 
 public class RequisicaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
-	private final transient RequisicaoVisualizador visualizador = new RequisicaoVisualizador();
 	private final RequisicaoFichario fichario = new RequisicaoFichario();
+	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final transient RequisicaoRota rota = new RequisicaoRota();
 	private static final File file = new File("requisicoes");
 	private static final Logger LOG = Logger.getGlobal();
@@ -57,7 +58,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 		montarLayout();
 		configurar();
 		abrir(conteudo, idPagina);
-		visualizador.inicializar(formulario);
+		poolVisualizador = new RequisicaoPoolVisualizador();
+		poolVisualizador.inicializar(formulario);
 	}
 
 	public RequisicaoDialogo getRequisicaoDialogo() {
@@ -337,7 +339,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		protected void atualizar() {
 			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
-				ativa.processar(rota, visualizador);
+				ativa.processar(rota, poolVisualizador);
 			}
 		}
 

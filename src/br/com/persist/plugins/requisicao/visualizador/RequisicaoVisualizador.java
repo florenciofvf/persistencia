@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.conteudo;
+package br.com.persist.plugins.requisicao.visualizador;
 
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
@@ -22,7 +22,7 @@ import br.com.persist.componente.TextField;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
 
-public interface RequisicaoConteudo {
+public interface RequisicaoVisualizador {
 	public Component exibidor(Component parent, byte[] bytes, Tipo parametros);
 
 	public Set<String> getMimes();
@@ -39,9 +39,9 @@ public interface RequisicaoConteudo {
 
 	public Icon getIcone();
 
-	public void setRequisicaoConteudoListener(RequisicaoConteudoListener listener);
+	public void setRequisicaoVisualizadorListener(RequisicaoVisualizadorListener listener);
 
-	public RequisicaoConteudoListener getRequisicaoConteudoListener();
+	public RequisicaoVisualizadorListener getRequisicaoVisualizadorListener();
 
 	public void setRequisicaoRota(RequisicaoRota rota);
 

@@ -19,12 +19,12 @@ import br.com.persist.componente.Button;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
 import br.com.persist.parser.Tipo;
-import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudo;
-import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudoListener;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
 
 public class RequisicaoPanelConteudo extends Panel {
 	private static final long serialVersionUID = 1L;
-	private transient RequisicaoConteudoListener requisicaoConteudoListener;
+	private transient RequisicaoVisualizadorListener requisicaoVisualizadorListener;
 	private transient RequisicaoRota requisicaoRota;
 	private final RequisicaoPagina requisicaoPagina;
 	private final transient Tipo parametros;
@@ -38,12 +38,12 @@ public class RequisicaoPanelConteudo extends Panel {
 		this.parametros = parametros;
 	}
 
-	public void setRequisicaoConteudoListener(RequisicaoConteudoListener requisicaoConteudoListener) {
-		this.requisicaoConteudoListener = requisicaoConteudoListener;
+	public void setRequisicaoVisualizadorListener(RequisicaoVisualizadorListener requisicaoVisualizadorListener) {
+		this.requisicaoVisualizadorListener = requisicaoVisualizadorListener;
 	}
 
-	public RequisicaoConteudoListener getRequisicaoConteudoListener() {
-		return requisicaoConteudoListener;
+	public RequisicaoVisualizadorListener getRequisicaoVisualizadorListener() {
+		return requisicaoVisualizadorListener;
 	}
 
 	public void setRequisicaoRota(RequisicaoRota requisicaoRota) {
@@ -71,7 +71,7 @@ public class RequisicaoPanelConteudo extends Panel {
 
 	private class BarraInfo extends JToolBar {
 		private static final long serialVersionUID = 1L;
-		private JComboBox<RequisicaoConteudo> cmbVisualizador = new JComboBox<>();
+		private JComboBox<RequisicaoVisualizador> cmbVisualizador = new JComboBox<>();
 		private Label labelVisualizador = new Label("label.visualizador");
 		private Button btnBaixar = new Button("label.baixar");
 		private Label labelMime = new Label();
@@ -99,23 +99,25 @@ public class RequisicaoPanelConteudo extends Panel {
 
 		private void processarVisualizador(ItemEvent e) {
 			if (ItemEvent.SELECTED == e.getStateChange()) {
-				RequisicaoConteudo requisicaoConteudo = (RequisicaoConteudo) cmbVisualizador.getSelectedItem();
-				if (requisicaoConteudo == null) {
+				RequisicaoVisualizador requisicaoVisualizador = (RequisicaoVisualizador) cmbVisualizador
+						.getSelectedItem();
+				if (requisicaoVisualizador == null) {
 					return;
 				}
-				requisicaoConteudo.setRequisicaoRota(requisicaoRota);
-				requisicaoConteudo.setRequisicaoConteudoListener(requisicaoConteudoListener);
-				Component visualizador = requisicaoConteudo.exibidor(RequisicaoPanelConteudo.this, bytes, parametros);
+				requisicaoVisualizador.setRequisicaoRota(requisicaoRota);
+				requisicaoVisualizador.setRequisicaoVisualizadorListener(requisicaoVisualizadorListener);
+				Component visualizador = requisicaoVisualizador.exibidor(RequisicaoPanelConteudo.this, bytes,
+						parametros);
 				if (visualizador != null) {
 					RequisicaoPanelConteudo.this.add(BorderLayout.CENTER, visualizador);
-					requisicaoPagina.associarMimeVisualizador(mime, requisicaoConteudo);
+					requisicaoPagina.associarMimeVisualizador(mime, requisicaoVisualizador);
 				}
 			}
 		}
 
 		private void checarView() {
-			RequisicaoConteudo requisicaoConteudo = requisicaoPagina.getVisualizador(mime);
-			cmbVisualizador.setSelectedItem(requisicaoConteudo);
+			RequisicaoVisualizador requisicaoVisualizador = requisicaoPagina.getVisualizador(mime);
+			cmbVisualizador.setSelectedItem(requisicaoVisualizador);
 		}
 
 		private void baixar() {

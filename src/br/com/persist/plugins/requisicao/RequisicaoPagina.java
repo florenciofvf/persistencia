@@ -61,19 +61,20 @@ import br.com.persist.parser.ObjetoUtil;
 import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
 import br.com.persist.parser.TipoUtil;
-import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudo;
-import br.com.persist.plugins.requisicao.conteudo.RequisicaoConteudoListener;
-import br.com.persist.plugins.requisicao.conteudo.RequisicaoHeader;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHeader;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class RequisicaoPagina extends Panel implements RequisicaoConteudoListener {
+public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorListener {
 	private static final long serialVersionUID = 1L;
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final PopupFichario popupFichario = new PopupFichario();
+	private transient RequisicaoPoolVisualizador poolVisualizador;
 	private final List<String> requisicoes = new ArrayList<>();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
-	private transient RequisicaoVisualizador visualizador;
 	private static final Logger LOG = Logger.getGlobal();
 	private transient RequisicaoRota requisicaoRota;
 	private final Tabela tabela = new Tabela();
@@ -348,7 +349,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		private void atualizarVar() {
 			String string = Util.getContentTransfered();
 			if (!Util.estaVazio(string)) {
-				RequisicaoHeader.setAccesToken(string);
+				RequisicaoVisualizadorHeader.setAccesToken(string);
 			}
 		}
 
@@ -501,9 +502,9 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		}
 	}
 
-	public void processar(RequisicaoRota requisicaoRota, RequisicaoVisualizador visualizador) {
+	public void processar(RequisicaoRota requisicaoRota, RequisicaoPoolVisualizador poolVisualizador) {
+		this.poolVisualizador = poolVisualizador;
 		this.requisicaoRota = requisicaoRota;
-		this.visualizador = visualizador;
 		if (toolbarParametro.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
@@ -663,7 +664,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 			if (list != null && !list.isEmpty()) {
 				mime = get(list);
 			}
-			RequisicaoHeader.setVarCookie(map, varCookie);
+			RequisicaoVisualizadorHeader.setVarCookie(map, varCookie);
 		}
 		return mime;
 	}
@@ -683,7 +684,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 
 	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime) throws IOException {
 		RequisicaoPanelConteudo panelConteudo = new RequisicaoPanelConteudo(this, resposta, parametros);
-		panelConteudo.setRequisicaoConteudoListener(this);
+		panelConteudo.setRequisicaoVisualizadorListener(this);
 		panelConteudo.setRequisicaoRota(requisicaoRota);
 		panelConteudo.configuracoes(uri, mime);
 		tabbedPane.addTab(panelConteudo.getTitulo(), panelConteudo.getIcone(), panelConteudo);
@@ -702,20 +703,20 @@ public class RequisicaoPagina extends Panel implements RequisicaoConteudoListene
 		}
 	}
 
-	public void associarMimeVisualizador(String mime, RequisicaoConteudo requisicaoConteudo) {
-		visualizador.associar(this, mime, requisicaoConteudo);
+	public void associarMimeVisualizador(String mime, RequisicaoVisualizador visualizador) {
+		poolVisualizador.associar(this, mime, visualizador);
 		int indice = tabbedPane.getSelectedIndex();
 		if (indice != -1) {
-			tabbedPane.setTitleAt(indice, requisicaoConteudo.getTitulo());
-			tabbedPane.setIconAt(indice, requisicaoConteudo.getIcone());
+			tabbedPane.setTitleAt(indice, visualizador.getTitulo());
+			tabbedPane.setIconAt(indice, visualizador.getIcone());
 		}
 	}
 
-	public RequisicaoConteudo getVisualizador(String mime) {
-		return visualizador.getVisualizador(mime);
+	public RequisicaoVisualizador getVisualizador(String mime) {
+		return poolVisualizador.getVisualizador(mime);
 	}
 
-	public RequisicaoConteudo[] getVisualizadores() {
-		return visualizador.getVisualizadores();
+	public RequisicaoVisualizador[] getVisualizadores() {
+		return poolVisualizador.getVisualizadores();
 	}
 }

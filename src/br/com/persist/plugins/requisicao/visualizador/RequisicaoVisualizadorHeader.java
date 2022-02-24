@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.conteudo;
+package br.com.persist.plugins.requisicao.visualizador;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,8 @@ import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public abstract class RequisicaoHeader extends AbstratoRequisicaoConteudo implements RequisicaoConteudo {
+public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVisualizador
+		implements RequisicaoVisualizador {
 
 	protected String getAccessToken(Tipo tipo) {
 		if (tipo instanceof Objeto) {

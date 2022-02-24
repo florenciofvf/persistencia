@@ -1,4 +1,4 @@
-package br.com.persist.plugins.requisicao.conteudo;
+package br.com.persist.plugins.requisicao.visualizador;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -20,7 +20,7 @@ import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 import br.com.persist.plugins.requisicao.RequisicaoUtil;
 
-public class ConteudoHTML extends RequisicaoHeader {
+public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 
 	@Override
 	public Component exibidor(Component parent, byte[] bytes, Tipo parametros) {
@@ -63,7 +63,7 @@ public class ConteudoHTML extends RequisicaoHeader {
 				if (!Util.estaVazio(desc)) {
 					String rota = getRequisicaoRota().getStringRota(desc);
 					if (!Util.estaVazio(rota)) {
-						getRequisicaoConteudoListener().processarRota(rota, desc);
+						getRequisicaoVisualizadorListener().processarRota(rota, desc);
 						return;
 					}
 					processarLink(pane, desc);
