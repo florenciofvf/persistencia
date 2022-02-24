@@ -57,9 +57,9 @@ public class RequisicaoContainer extends AbstratoContainer {
 		toolbar.ini(janela);
 		montarLayout();
 		configurar();
-		abrir(conteudo, idPagina);
 		poolVisualizador = new RequisicaoPoolVisualizador();
 		poolVisualizador.inicializar(formulario);
+		abrir(conteudo, idPagina);
 	}
 
 	public RequisicaoDialogo getRequisicaoDialogo() {
@@ -120,7 +120,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					RequisicaoPagina pagina = new RequisicaoPagina(f);
+					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
 					fichario.adicionarPagina(pagina);
 				}
 			}
@@ -296,7 +296,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			}
 			try {
 				if (f.createNewFile()) {
-					RequisicaoPagina pagina = new RequisicaoPagina(f);
+					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
 					fichario.adicionarPagina(pagina);
 				}
 			} catch (IOException ex) {
@@ -339,7 +339,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		protected void atualizar() {
 			RequisicaoPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null) {
-				ativa.processar(rota, poolVisualizador);
+				ativa.processar();
 			}
 		}
 

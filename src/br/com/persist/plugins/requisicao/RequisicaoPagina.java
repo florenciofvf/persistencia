@@ -70,22 +70,24 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorListener {
 	private static final long serialVersionUID = 1L;
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
+	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final PopupFichario popupFichario = new PopupFichario();
-	private transient RequisicaoPoolVisualizador poolVisualizador;
 	private final List<String> requisicoes = new ArrayList<>();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
+	private final transient RequisicaoRota requisicaoRota;
 	private static final Logger LOG = Logger.getGlobal();
-	private transient RequisicaoRota requisicaoRota;
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
 	private JSplitPane split;
 	private final File file;
 	private int sleep;
 
-	public RequisicaoPagina(File file) {
+	public RequisicaoPagina(RequisicaoPoolVisualizador poolVisualizador, RequisicaoRota requisicaoRota, File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.addMouseListener(mouseListenerFichario);
+		this.poolVisualizador = poolVisualizador;
+		this.requisicaoRota = requisicaoRota;
 		this.file = file;
 		montarLayout();
 		abrir();
@@ -502,9 +504,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 	}
 
-	public void processar(RequisicaoRota requisicaoRota, RequisicaoPoolVisualizador poolVisualizador) {
-		this.poolVisualizador = poolVisualizador;
-		this.requisicaoRota = requisicaoRota;
+	public void processar() {
 		if (toolbarParametro.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
