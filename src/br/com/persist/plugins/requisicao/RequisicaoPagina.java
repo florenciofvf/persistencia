@@ -683,11 +683,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime) throws IOException {
-		RequisicaoPanelConteudo panelConteudo = new RequisicaoPanelConteudo(this, resposta, parametros);
-		panelConteudo.setRequisicaoVisualizadorListener(this);
-		panelConteudo.setRequisicaoRota(requisicaoRota);
-		panelConteudo.configuracoes(uri, mime);
-		tabbedPane.addTab(panelConteudo.getTitulo(), panelConteudo.getIcone(), panelConteudo);
+		RequisicaoPanelBytes panelBytes = new RequisicaoPanelBytes(this, resposta, parametros);
+		panelBytes.setRequisicaoVisualizadorListener(this);
+		panelBytes.setRequisicaoRota(requisicaoRota);
+		panelBytes.configuracoes(uri, mime);
+		tabbedPane.addTab(panelBytes.getTitulo(), panelBytes.getIcone(), panelBytes);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);
 		resposta.close();

@@ -22,7 +22,7 @@ import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
 
-public class RequisicaoPanelConteudo extends Panel {
+public class RequisicaoPanelBytes extends Panel {
 	private static final long serialVersionUID = 1L;
 	private transient RequisicaoVisualizadorListener requisicaoVisualizadorListener;
 	private transient RequisicaoRota requisicaoRota;
@@ -31,8 +31,7 @@ public class RequisicaoPanelConteudo extends Panel {
 	private String titulo = "Bytes";
 	private final byte[] bytes;
 
-	public RequisicaoPanelConteudo(RequisicaoPagina requisicaoPagina, InputStream is, Tipo parametros)
-			throws IOException {
+	public RequisicaoPanelBytes(RequisicaoPagina requisicaoPagina, InputStream is, Tipo parametros) throws IOException {
 		this.requisicaoPagina = requisicaoPagina;
 		bytes = Util.getArrayBytes(is);
 		this.parametros = parametros;
@@ -106,10 +105,9 @@ public class RequisicaoPanelConteudo extends Panel {
 				}
 				requisicaoVisualizador.setRequisicaoRota(requisicaoRota);
 				requisicaoVisualizador.setRequisicaoVisualizadorListener(requisicaoVisualizadorListener);
-				Component visualizador = requisicaoVisualizador.exibidor(RequisicaoPanelConteudo.this, bytes,
-						parametros);
+				Component visualizador = requisicaoVisualizador.exibidor(RequisicaoPanelBytes.this, bytes, parametros);
 				if (visualizador != null) {
-					RequisicaoPanelConteudo.this.add(BorderLayout.CENTER, visualizador);
+					RequisicaoPanelBytes.this.add(BorderLayout.CENTER, visualizador);
 					requisicaoPagina.associarMimeVisualizador(mime, requisicaoVisualizador);
 				}
 			}
