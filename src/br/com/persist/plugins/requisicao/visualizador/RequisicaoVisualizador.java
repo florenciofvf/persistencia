@@ -18,6 +18,7 @@ import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Nil;
 import br.com.persist.componente.TextField;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
@@ -60,7 +61,7 @@ public interface RequisicaoVisualizador {
 		private final JTextPane textPane;
 
 		public ToolbarPesquisa(JTextPane textPane) {
-			super.ini(null, LIMPAR, COPIAR, COLAR);
+			super.ini(new Nil(), LIMPAR, COPIAR, COLAR);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			this.textPane = textPane;

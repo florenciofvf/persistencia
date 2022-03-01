@@ -49,6 +49,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.CheckBox;
+import br.com.persist.componente.Nil;
 import br.com.persist.componente.OrdemModel;
 import br.com.persist.componente.OrdemTable;
 import br.com.persist.componente.Panel;
@@ -63,8 +64,8 @@ import br.com.persist.parser.Tipo;
 import br.com.persist.parser.TipoUtil;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
-import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHeader;
+import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorListener {
@@ -278,7 +279,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		private transient Selecao selecao;
 
 		private ToolbarParametro() {
-			super.ini(null, LIMPAR, BAIXAR, COPIAR, COLAR);
+			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
 			buttonColar.addSeparator();
 			buttonColar.addItem(vAccessTokenAcao);
 			vAccessTokenAcao.setActionListener(e -> atualizarVar());

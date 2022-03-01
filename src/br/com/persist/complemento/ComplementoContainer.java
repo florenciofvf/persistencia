@@ -22,6 +22,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
+import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 
@@ -96,7 +97,7 @@ public class ComplementoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 
 		private ToolbarArea() {
-			super.ini(null, LIMPAR, COPIAR, COLAR);
+			super.ini(new Nil(), LIMPAR, COPIAR, COLAR);
 		}
 
 		@Override
@@ -124,7 +125,7 @@ public class ComplementoContainer extends Panel {
 				.acaoIcon(ComplementoMensagens.getString("label.limpar_complementos"), Icones.EXCLUIR);
 
 		private ToolbarLista() {
-			super.ini(null);
+			super.ini(new Nil());
 			addButton(limparComplementosAcao);
 			limparComplementosAcao.setActionListener(e -> limparComplementos());
 		}
