@@ -53,11 +53,12 @@ import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
+import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SetLista;
-import br.com.persist.componente.TextField;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
@@ -139,7 +140,7 @@ public class ConsultaContainer extends AbstratoContainer {
 		private ButtonCopiar buttonCopiar = new ButtonCopiar();
 
 		private ToolbarTabela() {
-			super.ini(null);
+			super.ini(new Nil());
 			add(buttonCopiar);
 		}
 
