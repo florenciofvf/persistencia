@@ -43,6 +43,7 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.LabelLinkListener;
 import br.com.persist.componente.LabelTextTemp;
+import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.PanelLeft;
 import br.com.persist.componente.Popup;
@@ -794,7 +795,7 @@ public class ObjetoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR);
+				super.ini(new Nil(), COPIAR, COLAR);
 			}
 
 			@Override
@@ -836,7 +837,7 @@ public class ObjetoContainer extends Panel {
 			private Action actionFonteVinculo = actionIcon(labelVinculo, Icones.SUCESSO);
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR0, APLICAR);
+				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 				addButton(actionFonteVinculo);
 				actionFonteVinculo.setActionListener(e -> fonteVinculo());
@@ -907,7 +908,7 @@ public class ObjetoContainer extends Panel {
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
-				super.ini(null, COPIAR, COLAR0, APLICAR);
+				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);
 				aplicarAcao.text(ObjetoMensagens.getString("label.reaplicar_macro"));
 			}
 
