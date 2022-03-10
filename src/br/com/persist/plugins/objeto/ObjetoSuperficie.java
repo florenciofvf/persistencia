@@ -1993,8 +1993,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		int y = 20;
 		for (int i = 0; i < metadado.getTotal(); i++) {
 			Metadado filho = metadado.getMetadado(i);
-			processadoMetadado(filho, new Point(10, y), true, false);
-			y += 30;
+			if (filho.isSelecionado()) {
+				processadoMetadado(filho, new Point(10, y), true, false);
+				y += 30;
+			}
 		}
 		setPreferredSize(new Dimension(0, y));
 		SwingUtilities.updateComponentTreeUI(getParent());

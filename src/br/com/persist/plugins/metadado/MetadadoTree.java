@@ -217,8 +217,10 @@ public class MetadadoTree extends Tree {
 					meta.setSelecionado(true);
 				}
 				Coletor coletor = new Coletor();
-				SetLista.view(MetadadoMensagens.getString("label.exportar_objetos"), nomes, coletor, MetadadoTree.this,
-						new SetLista.Config(true, false));
+				SetLista.view(
+						form ? MetadadoMensagens.getString("label.exportar_objetos_form")
+								: MetadadoMensagens.getString("label.exportar_objetos_fich"),
+						nomes, coletor, MetadadoTree.this, new SetLista.Config(true, false));
 				if (!coletor.estaVazio()) {
 					exportar(coletor, metadado, form);
 				}
