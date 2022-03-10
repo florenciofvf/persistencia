@@ -31,6 +31,7 @@ public class Metadado implements Transferable {
 	private final String descricao;
 	private int totalImportados;
 	private int totalExportados;
+	private boolean selecionado;
 	private boolean constraint;
 	private int totalCampos;
 	private boolean ehRaiz;
@@ -506,5 +507,13 @@ public class Metadado implements Transferable {
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 }

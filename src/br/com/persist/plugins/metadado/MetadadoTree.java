@@ -24,6 +24,8 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.componente.Popup;
+import br.com.persist.componente.SetLista;
+import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.Tree;
 
 public class MetadadoTree extends Tree {
@@ -199,8 +201,39 @@ public class MetadadoTree extends Tree {
 
 			MenuExportacao() {
 				super("label.exportar", Icones.ABRIR, false);
-				formularioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFormArquivo(MetadadoTree.this)));
-				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.exportarFichArquivo(MetadadoTree.this)));
+				formularioAcao.setActionListener(e -> initExportacao(true));
+				ficharioAcao.setActionListener(e -> initExportacao(false));
+			}
+
+			private void initExportacao(boolean form) {
+				Metadado metadado = getObjetoSelecionado();
+				if (metadado == null) {
+					return;
+				}
+				List<String> nomes = new ArrayList<>();
+				for (int i = 0; i < metadado.getTotal(); i++) {
+					Metadado meta = metadado.getMetadado(i);
+					nomes.add(meta.getDescricao());
+					meta.setSelecionado(true);
+				}
+				Coletor coletor = new Coletor();
+				SetLista.view(MetadadoMensagens.getString("label.exportar_objetos"), nomes, coletor, MetadadoTree.this,
+						new SetLista.Config(true, false));
+				if (!coletor.estaVazio()) {
+					exportar(coletor, metadado, form);
+				}
+			}
+
+			private void exportar(Coletor coletor, Metadado metadado, boolean form) {
+				for (int i = 0; i < metadado.getTotal(); i++) {
+					Metadado meta = metadado.getMetadado(i);
+					meta.setSelecionado(coletor.contem(meta.getDescricao()));
+				}
+				if (form) {
+					ouvintes.forEach(o -> o.exportarFormArquivo(MetadadoTree.this));
+				} else {
+					ouvintes.forEach(o -> o.exportarFichArquivo(MetadadoTree.this));
+				}
 			}
 		}
 
