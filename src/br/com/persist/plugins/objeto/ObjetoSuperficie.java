@@ -194,6 +194,20 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	};
 
+	public void ativarObjetos(String string) {
+		if (Util.estaVazio(string)) {
+			return;
+		}
+		string = string.trim().toUpperCase();
+		for (Objeto objeto : objetos) {
+			if (objeto.getId().toUpperCase().indexOf(string) != -1) {
+				objeto.setProcessar(true);
+				objeto.ativar();
+			}
+		}
+		repaint();
+	}
+
 	private transient javax.swing.Action threadDesativar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 
@@ -207,6 +221,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			repaint();
 		}
 	};
+
+	public void desativarObjetos() {
+		for (Objeto objeto : objetos) {
+			objeto.desativar();
+		}
+		repaint();
+	}
 
 	private transient javax.swing.Action macroLista = new AbstractAction() {
 		private static final long serialVersionUID = 1L;

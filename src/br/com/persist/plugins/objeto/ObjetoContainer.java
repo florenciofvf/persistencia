@@ -257,7 +257,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private void destacarObjetos() {
-			//
+			if (Util.estaVazio(txtDestacaObjeto.getText())) {
+				objetoSuperficie.desativarObjetos();
+			} else {
+				objetoSuperficie.ativarObjetos(txtDestacaObjeto.getText());
+			}
 		}
 
 		private void abrirArquivoVinculado() {
@@ -367,6 +371,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				XML.processar(arquivo, new ObjetoHandler(objetoColetor));
 				abrir(arquivo, objetoColetor, null);
 				txtPrefixoNomeTabela.limpar();
+				txtDestacaObjeto.limpar();
 				tituloTemporario = null;
 				labelStatus.limpar();
 				ObjetoContainer.this.windowActivatedHandler(null);
