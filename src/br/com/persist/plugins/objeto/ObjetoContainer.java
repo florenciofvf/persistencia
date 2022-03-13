@@ -196,6 +196,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		private Action criarObjetoAcao = actionIcon("label.criar_objeto", Icones.CRIAR);
 		private TextField txtPrefixoNomeTabela = new TextField(5);
 		private TextField txtArquivoVinculo = new TextField(10);
+		private TextField txtDestacaObjeto = new TextField(10);
 		private CheckBox chkAjusteAutomatico = new CheckBox();
 		private CheckBox chkAjusteLarguraFrm = new CheckBox();
 		private Popup popupArquivoVinculado = new Popup();
@@ -218,9 +219,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			add(labelStatus);
 			add(true, txtPrefixoNomeTabela);
 			add(true, txtArquivoVinculo);
+			add(true, txtDestacaObjeto);
 			eventos();
 			arquivoVinculadoAcao.setActionListener(e -> abrirArquivoVinculado());
 			txtArquivoVinculo.addMouseListener(mouseListenerPopupVinculado);
+			txtDestacaObjeto.addActionListener(e -> destacarObjetos());
 			popupArquivoVinculado.add(arquivoVinculadoAcao);
 		}
 
@@ -228,6 +231,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			chkAjusteLarguraFrm.setToolTipText(ObjetoMensagens.getString("label.ajuste_largura_form"));
 			chkAjusteAutomatico.setToolTipText(ObjetoMensagens.getString("label.ajuste_automatico"));
 			txtArquivoVinculo.setToolTipText(ObjetoMensagens.getString("hint.arquivo_vinculado"));
+			txtDestacaObjeto.setToolTipText(ObjetoMensagens.getString("label.destacar_objetos"));
 			txtPrefixoNomeTabela.setToolTipText(ObjetoMensagens.getString("label.prefixo_nt"));
 			configAtalho(excluirAcao, KeyEvent.VK_D);
 			configAtalho(salvarAcao, KeyEvent.VK_S);
@@ -250,6 +254,10 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			txtArquivoVinculo.addFocusListener(focusListenerArquivoVinculo);
 			txtArquivoVinculo.addActionListener(e -> setArquivoVinculo());
 			criarObjetoAcao.setActionListener(e -> criarObjeto());
+		}
+
+		private void destacarObjetos() {
+			//
 		}
 
 		private void abrirArquivoVinculado() {
