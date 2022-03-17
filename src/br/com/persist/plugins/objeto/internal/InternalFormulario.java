@@ -250,10 +250,10 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 
 		@Override
-		public void pesquisarApos(Pesquisa pesquisa) {
+		public void pesquisarApos(Objeto fonte, Pesquisa pesquisa) {
 			checarDesktop();
 			if (desktop != null) {
-				desktop.pesquisarApos(pesquisa);
+				desktop.pesquisarApos(fonte, pesquisa);
 			}
 		}
 

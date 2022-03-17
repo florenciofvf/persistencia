@@ -399,18 +399,21 @@ public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler 
 		}
 	}
 
-	public void pesquisarApos(Pesquisa pesquisa) {
+	public void pesquisarApos(Objeto fonte, Pesquisa pesquisa) {
 		for (JInternalFrame frame : getAllFrames()) {
 			if (frame instanceof InternalFormulario) {
 				InternalFormulario interno = (InternalFormulario) frame;
 				if (!interno.isProcessadoPesquisa()) {
-					pesquisarApos(pesquisa, interno);
+					pesquisarApos(fonte, pesquisa, interno);
 				}
 			}
 		}
 	}
 
-	private void pesquisarApos(Pesquisa pesquisa, InternalFormulario interno) {
+	private void pesquisarApos(Objeto fonte, Pesquisa pesquisa, InternalFormulario interno) {
+		if (fonte == interno.getInternalContainer().getObjeto()) {
+			return;
+		}
 		for (Referencia referencia : pesquisa.getReferenciasApos()) {
 			if (interno.ehReferencia(referencia) || interno.coringa(referencia)) {
 				interno.pesquisarApos();

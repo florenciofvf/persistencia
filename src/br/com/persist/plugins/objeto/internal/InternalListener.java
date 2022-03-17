@@ -26,13 +26,13 @@ public interface InternalListener {
 
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
 
+		public void pesquisarApos(Objeto fonte, Pesquisa pesquisa);
+
 		public void preencherVinculacao(Vinculacao vinculacao);
 
 		public void salvarVinculacao(Vinculacao vinculacao);
 
 		public void atualizarComplemento(Objeto objeto);
-
-		public void pesquisarApos(Pesquisa pesquisa);
 
 		public List<Objeto> objetosComTabela();
 
