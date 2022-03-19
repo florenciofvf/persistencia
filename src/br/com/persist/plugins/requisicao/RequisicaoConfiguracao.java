@@ -1,17 +1,11 @@
 package br.com.persist.plugins.requisicao;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Muro;
 import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
-import br.com.persist.componente.Panel;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoConfiguracao extends AbstratoConfiguracao {
@@ -30,29 +24,12 @@ public class RequisicaoConfiguracao extends AbstratoConfiguracao {
 		chkExibirArqMimes.setSelected(RequisicaoPreferencia.isExibirArqMimes());
 
 		Muro muro = new Muro();
-		muro.camada(panel(0, 0, chkExibirArqMimes, chkAbrirModoTabela));
+		muro.camada(Muro.panelGrid(chkExibirArqMimes, chkAbrirModoTabela));
 		add(BorderLayout.CENTER, muro);
 	}
 
 	static CheckBox criarCheckBox(String chaveRotulo) {
 		return new CheckBox(RequisicaoMensagens.getString(chaveRotulo), false);
-	}
-
-	public static Panel panel(int top, int bottom, Component... comps) {
-		Panel container = new Panel(new GridLayout(0, 1));
-		container.setBorder(BorderFactory.createMatteBorder(top, 0, bottom, 0, Color.GRAY));
-		for (Component c : comps) {
-			container.add(c);
-		}
-		return container;
-	}
-
-	public static Panel panelN(Component... comps) {
-		return panel(1, 0, comps);
-	}
-
-	public static Panel panelS(Component... comps) {
-		return panel(0, 1, comps);
 	}
 
 	private void configurar() {
