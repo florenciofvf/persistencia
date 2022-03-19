@@ -119,6 +119,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
+					if (RequisicaoConstantes.MIMES.equalsIgnoreCase(f.getName())
+							&& !RequisicaoPreferencia.isExibirArqMimes()) {
+						continue;
+					}
 					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
 					fichario.adicionarPagina(pagina);
 				}
@@ -289,6 +293,11 @@ public class RequisicaoContainer extends AbstratoContainer {
 				return;
 			}
 			String nome = resp.toString();
+			if (RequisicaoConstantes.MIMES.equalsIgnoreCase(nome)) {
+				Util.mensagem(RequisicaoContainer.this, Mensagens.getString("label.indentificador_reservado"));
+				return;
+			}
+
 			File f = new File(file, nome);
 			if (f.exists()) {
 				Util.mensagem(RequisicaoContainer.this, Mensagens.getString("label.indentificador_ja_existente"));

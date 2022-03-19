@@ -21,7 +21,7 @@ public class RequisicaoPoolVisualizador {
 	public RequisicaoPoolVisualizador() {
 		visualizadores = new RequisicaoVisualizador[] { null, new RequisicaoVisualizadorImagem(),
 				new RequisicaoVisualizadorTexto(), new RequisicaoVisualizadorHTML(), new RequisicaoVisualizadorJSON() };
-		file = new File(RequisicaoConstantes.REQUISICOES + Constantes.SEPARADOR + "mimes");
+		file = new File(RequisicaoConstantes.REQUISICOES + Constantes.SEPARADOR + RequisicaoConstantes.MIMES);
 	}
 
 	public RequisicaoVisualizador[] getVisualizadores() {

@@ -8,6 +8,7 @@ public class RequisicaoConstantes {
 	public static final String REQUISICOES = "requisicoes";
 	public static final String TENTATIVAS = "tentativas";
 	public static final String SLEEP = "sleep";
+	public static final String MIMES = "mimes";
 
 	private RequisicaoConstantes() {
 	}
