@@ -2,49 +2,40 @@ package br.com.persist.plugins.requisicao;
 
 import java.util.prefs.Preferences;
 
-import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoPreferencia {
-	private static String binarios;
+	private static boolean abrirModoTabela;
+	private static boolean exibirArqMimes;
 
 	private RequisicaoPreferencia() {
 	}
 
 	public static void abrir() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		binarios = pref.get("requisicoes_binarios", "application/pdf");
+		abrirModoTabela = pref.getBoolean("requisicao_abrir_modo_tabela", false);
+		exibirArqMimes = pref.getBoolean("requisicao_exibir_arq_mimes", false);
 	}
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
-		pref.put("requisicoes_binarios", binarios);
+		pref.putBoolean("requisicao_abrir_modo_tabela", abrirModoTabela);
+		pref.putBoolean("requisicao_exibir_arq_mimes", exibirArqMimes);
 	}
 
-	public static String getBinarios() {
-		if (binarios == null) {
-			binarios = "";
-		}
-		return binarios;
+	public static boolean isAbrirModoTabela() {
+		return abrirModoTabela;
 	}
 
-	public static void setBinarios(String binarios) {
-		RequisicaoPreferencia.binarios = binarios;
+	public static void setAbrirModoTabela(boolean abrirModoTabela) {
+		RequisicaoPreferencia.abrirModoTabela = abrirModoTabela;
 	}
 
-	public static boolean ehBinario(String string) {
-		if (Util.estaVazio(string)) {
-			return false;
-		}
-		string = string.trim();
-		String[] array = getBinarios().split(",");
-		if (array != null) {
-			for (String s : array) {
-				if (!Util.estaVazio(s) && s.trim().equalsIgnoreCase(string)) {
-					return true;
-				}
-			}
-		}
-		return false;
+	public static boolean isExibirArqMimes() {
+		return exibirArqMimes;
+	}
+
+	public static void setExibirArqMimes(boolean exibirArqMimes) {
+		RequisicaoPreferencia.exibirArqMimes = exibirArqMimes;
 	}
 }

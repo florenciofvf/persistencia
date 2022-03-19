@@ -4,22 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 import javax.swing.BorderFactory;
 
 import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.assistencia.Muro;
+import br.com.persist.componente.CheckBox;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.PanelCenter;
-import br.com.persist.componente.TextField;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
-	private final TextField txtBinarios = new TextField();
+	private final CheckBox chkAbrirModoTabela = criarCheckBox("label.padrao_abrir_tabela");
+	private final CheckBox chkExibirArqMimes = criarCheckBox("label.exibir_arq_mimes");
 
 	public RequisicaoConfiguracao(Formulario formulario) {
 		super(formulario, RequisicaoMensagens.getString("label.plugin_requisicao"));
@@ -28,10 +26,16 @@ public class RequisicaoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void montarLayout() {
-		txtBinarios.setText(RequisicaoPreferencia.getBinarios());
+		chkAbrirModoTabela.setSelected(RequisicaoPreferencia.isAbrirModoTabela());
+		chkExibirArqMimes.setSelected(RequisicaoPreferencia.isExibirArqMimes());
+
 		Muro muro = new Muro();
-		muro.camada(panelS(new PanelCenter(criarLabel("label.tipos_binarios"), txtBinarios)));
+		muro.camada(panel(0, 0, chkExibirArqMimes, chkAbrirModoTabela));
 		add(BorderLayout.CENTER, muro);
+	}
+
+	static CheckBox criarCheckBox(String chaveRotulo) {
+		return new CheckBox(RequisicaoMensagens.getString(chaveRotulo), false);
 	}
 
 	public static Panel panel(int top, int bottom, Component... comps) {
@@ -52,16 +56,13 @@ public class RequisicaoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void configurar() {
-		txtBinarios.addActionListener(e -> RequisicaoPreferencia.setBinarios(txtBinarios.getText()));
-		txtBinarios.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				RequisicaoPreferencia.setBinarios(txtBinarios.getText());
-			}
-		});
+		chkAbrirModoTabela
+				.addActionListener(e -> RequisicaoPreferencia.setAbrirModoTabela(chkAbrirModoTabela.isSelected()));
+		chkExibirArqMimes
+				.addActionListener(e -> RequisicaoPreferencia.setExibirArqMimes(chkExibirArqMimes.isSelected()));
 	}
 
-	private Label criarLabel(String chaveRotulo) {
+	public Label criarLabel(String chaveRotulo) {
 		return new Label(RequisicaoMensagens.getString(chaveRotulo), false);
 	}
 }
