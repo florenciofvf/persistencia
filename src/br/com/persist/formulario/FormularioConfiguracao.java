@@ -1,10 +1,7 @@
 package br.com.persist.formulario;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -89,38 +86,24 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		Label email = criarLabelTitulo("contato");
 		email.setText(email.getText() + " - " + Mensagens.getString("versao"));
-		muro.camada(panelS(email, tituloLocalAbas, panelPosicoes));
-		muro.camada(panelS(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
-				new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
-				new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha)));
-		muro.camada(panelS(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
+		muro.camada(Muro.panelGridBorderBottom(email, tituloLocalAbas, panelPosicoes));
+		muro.camada(
+				Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.form_ficha_dialogo"), txtFormFichaDialogo),
+						new PanelCenter(criarLabel("label.form_dialogo"), txtFormDialogo),
+						new PanelCenter(criarLabel("label.form_ficha"), txtFormFicha)));
+		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(criarLabel("label.definir_largura"), txtDefinirLargura),
 				new PanelCenter(criarLabel("label.definir_altura"), txtDefinirAltura),
 				new PanelCenter(buttonAplicarLA)));
-		muro.camada(panelS(new PanelCenter(buttonConectaDesconecta)));
-		muro.camada(panel(0, 0, chkMonitorPreferencial, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
-				chkAbrirFormularioDireita, chkAbrirFormularioAbaixo, chkFecharComESCFormulario, chkFecharComESCInternal,
-				chkFecharComESCDialogo, chkTituloAbaMin, chkFicharioScroll));
+		muro.camada(Muro.panelGridBorderBottom(new PanelCenter(buttonConectaDesconecta)));
+		muro.camada(
+				Muro.panelGrid(chkMonitorPreferencial, chkAplicarLarguraAoAbrirArquivo, chkAplicarAlturaAoAbrirArquivo,
+						chkAbrirFormularioDireita, chkAbrirFormularioAbaixo, chkFecharComESCFormulario,
+						chkFecharComESCInternal, chkFecharComESCDialogo, chkTituloAbaMin, chkFicharioScroll));
 		if (Preferencias.isMonitorPreferencial()) {
-			muro.camada(panelN(criarLabelTituloRotulo("label.monitor_preferencial"), new PainelMonitorPreferencial()));
+			muro.camada(Muro.panelGridBorderTop(criarLabelTituloRotulo("label.monitor_preferencial"),
+					new PainelMonitorPreferencial()));
 		}
 		add(BorderLayout.CENTER, muro);
-	}
-
-	public static Panel panel(int top, int bottom, Component... comps) {
-		Panel container = new Panel(new GridLayout(0, 1));
-		container.setBorder(BorderFactory.createMatteBorder(top, 0, bottom, 0, Color.GRAY));
-		for (Component c : comps) {
-			container.add(c);
-		}
-		return container;
-	}
-
-	public static Panel panelN(Component... comps) {
-		return panel(1, 0, comps);
-	}
-
-	public static Panel panelS(Component... comps) {
-		return panel(0, 1, comps);
 	}
 
 	private void configurar() {

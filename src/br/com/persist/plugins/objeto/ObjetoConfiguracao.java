@@ -2,7 +2,6 @@ package br.com.persist.plugins.objeto;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -82,11 +81,11 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		Label tituloIntervaloCompara = criarLabelTitulo("label.intervalo_comparacao_titulo");
 		Label tituloDestacado = criarLabelTitulo("label.tipo_container_pesquisa_auto");
 		Label tituloIntervalo = criarLabelTitulo("label.intervalo_pesquisa_auto");
-		muro.camada(panelS(tituloIntervalo, panelIntervalos));
-		muro.camada(panelS(tituloIntervaloCompara, panelIntervalosCompara,
+		muro.camada(Muro.panelGridBorderBottom(tituloIntervalo, panelIntervalos));
+		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
 				chkHabitInnerJoinsObj));
-		muro.camada(panel(0, 0, chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
+		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
 		add(BorderLayout.CENTER, muro);
@@ -115,23 +114,6 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			grupo.add(radio);
 		}
 		return panel;
-	}
-
-	public static Panel panel(int top, int bottom, Component... comps) {
-		Panel container = new Panel(new GridLayout(0, 1));
-		container.setBorder(BorderFactory.createMatteBorder(top, 0, bottom, 0, Color.GRAY));
-		for (Component c : comps) {
-			container.add(c);
-		}
-		return container;
-	}
-
-	public static Panel panelN(Component... comps) {
-		return panel(1, 0, comps);
-	}
-
-	public static Panel panelS(Component... comps) {
-		return panel(0, 1, comps);
 	}
 
 	private void configurar() {
