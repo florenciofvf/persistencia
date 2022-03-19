@@ -418,6 +418,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
+		if (RequisicaoPreferencia.isAbrirModoTabela()) {
+			SwingUtilities.invokeLater(() -> {
+				toolbarParametro.modoTabelaHandler(true);
+				toolbarParametro.chkModoTabela.setSelected(true);
+			});
+		}
 	}
 
 	public void excluir() {
