@@ -260,11 +260,13 @@ public class TabelaPersistencia extends JTable {
 		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
 		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
+		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private Separator separatorChave = new Separator();
 		private Separator separatorInfo = new Separator();
+		private static final String AND = "AND ";
 		private MenuIN menuIN = new MenuIN();
 		private int larguraColuna;
 		private int indiceColuna;
@@ -310,7 +312,7 @@ public class TabelaPersistencia extends JTable {
 		private void preShow(String chave) {
 			FontMetrics fontMetrics = getFontMetrics(getFont());
 			larguraColuna = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
-			menuIN.setText("AND " + chave + " IN");
+			menuIN.setText(AND + chave + " IN");
 			limparMenuChaveamento();
 			List<String> lista = getChaveamento().get(chave.toLowerCase());
 			if (lista != null && !lista.isEmpty()) {
@@ -325,6 +327,36 @@ public class TabelaPersistencia extends JTable {
 				itemMapeamento.setText(valorChave);
 				add(separatorInfo);
 				add(itemMapeamento);
+			}
+		}
+
+		private class ProcessarTitulo extends MouseAdapter {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() instanceof Menu) {
+					Menu menu = (Menu) e.getSource();
+					processar(menu);
+				}
+			}
+
+			private void processar(Menu menu) {
+				String titulo = menu.getText();
+				if (!Util.estaVazio(titulo)) {
+					if (titulo.startsWith(AND)) {
+						titulo = titulo.substring(AND.length());
+					} else {
+						titulo = AND + titulo;
+					}
+					menu.setText(titulo);
+				}
+			}
+
+			private String get(Menu menu) {
+				String titulo = menu.getText();
+				if (!Util.estaVazio(titulo)) {
+					return titulo.startsWith(AND) ? AND : Constantes.VAZIO;
+				}
+				return Constantes.VAZIO;
 			}
 		}
 
@@ -411,6 +443,7 @@ public class TabelaPersistencia extends JTable {
 				super(Constantes.LABEL_VAZIO);
 				semAspasAcao.setActionListener(e -> copiarIN(false));
 				comAspasAcao.setActionListener(e -> copiarIN(true));
+				addMouseListener(processarTitulo);
 			}
 
 			private void copiarIN(boolean aspas) {
@@ -418,7 +451,7 @@ public class TabelaPersistencia extends JTable {
 				String complemento = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.estaVazio(complemento)) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-					Util.setContentTransfered("AND " + coluna + " IN (" + complemento + ")");
+					Util.setContentTransfered(processarTitulo.get(MenuIN.this) + coluna + " IN (" + complemento + ")");
 				} else {
 					Util.setContentTransfered(" ");
 				}
