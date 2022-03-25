@@ -464,17 +464,19 @@ public class TabelaPersistencia extends JTable {
 
 			private MenuItemChaveamento(String coluna) {
 				super(Constantes.LABEL_VAZIO);
-				setText("AND " + coluna + " IN");
+				setText(AND + coluna + " IN");
 				this.nomeColuna = coluna;
 				semAspasAcao.setActionListener(e -> copiarINDinamico(false));
 				comAspasAcao.setActionListener(e -> copiarINDinamico(true));
+				addMouseListener(processarTitulo);
 			}
 
 			private void copiarINDinamico(boolean aspas) {
 				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
 				String complemento = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.estaVazio(complemento)) {
-					Util.setContentTransfered("AND " + nomeColuna + " IN (" + complemento + ")");
+					Util.setContentTransfered(
+							processarTitulo.get(MenuItemChaveamento.this) + nomeColuna + " IN (" + complemento + ")");
 				} else {
 					Util.setContentTransfered(" ");
 				}
