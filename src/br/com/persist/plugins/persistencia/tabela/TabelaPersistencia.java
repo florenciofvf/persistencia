@@ -371,6 +371,12 @@ public class TabelaPersistencia extends JTable {
 				addMenuItem(true, atalhoAcao);
 				opcoesAcao.setActionListener(e -> colocarNomeColuna(false));
 				atalhoAcao.setActionListener(e -> colocarNomeColuna(true));
+				addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						colocarNomeColuna(true);
+					}
+				});
 			}
 
 			private void colocarNomeColuna(boolean atalho) {
@@ -417,6 +423,12 @@ public class TabelaPersistencia extends JTable {
 				comAspasAtalhoAcao.setActionListener(e -> copiar(true, true));
 				semAspasAcao.setActionListener(e -> copiar(false, false));
 				comAspasAcao.setActionListener(e -> copiar(true, false));
+				addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						copiar(true, true);
+					}
+				});
 			}
 
 			private void copiar(boolean aspas, boolean atalho) {
