@@ -213,7 +213,7 @@ public class TabelaPersistencia extends JTable {
 	public void larguraColuna(int coluna) {
 		TableColumn tableColumn = getTableColumn(coluna);
 		int atual = tableColumn.getWidth();
-		Object resp = Util.getValorInputDialog(TabelaPersistencia.this, "label.largura_coluna", "" + atual, "" + atual);
+		Object resp = Util.getValorInputDialog(TabelaPersistencia.this, "label.largura_manual", "" + atual, "" + atual);
 		if (resp == null || Util.estaVazio(resp.toString())) {
 			return;
 		}
@@ -258,7 +258,7 @@ public class TabelaPersistencia extends JTable {
 		private static final long serialVersionUID = 1L;
 		private Action detalheColunaAcao = Action.actionMenu(Constantes.LABEL_METADADOS, Icones.INFO);
 		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
-		private Action larguraColunaAcao = Action.actionMenu("label.largura_coluna", null);
+		private Action larguraColunaAcao = Action.actionMenu("label.largura_manual", null);
 		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
@@ -273,9 +273,9 @@ public class TabelaPersistencia extends JTable {
 
 		private PopupHeader() {
 			addMenuItem(detalheColunaAcao);
-			addMenuItem(true, larguraMinimaAcao);
+			addMenuItem(true, larguraTituloAcao);
+			addMenuItem(larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
-			addMenuItem(larguraTituloAcao);
 			addMenuItem(true, pesquisaApartirColunaAcao);
 			add(true, new MenuColocarNomeColuna());
 			addMenuItem(copiarNomeColunaAcao);
