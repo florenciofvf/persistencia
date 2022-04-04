@@ -393,9 +393,15 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuCopiarLinhas extends MenuPadrao2 {
 			private static final long serialVersionUID = 1L;
+			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho", Icones.ASPAS);
+			private Action semAspasAtalhoAcao = actionMenu("label.sem_aspas_atalho");
 
 			private MenuCopiarLinhas() {
 				super(TabelaMensagens.getString("label.copiar_header"), false, null);
+				addMenuItem(true, semAspasAtalhoAcao);
+				addMenuItem(comAspasAtalhoAcao);
+				semAspasAtalhoAcao.setActionListener(e -> copiarAtalho(false));
+				comAspasAtalhoAcao.setActionListener(e -> copiarAtalho(true));
 				semAspasAcao.setActionListener(e -> copiar(false));
 				comAspasAcao.setActionListener(e -> copiar(true));
 			}
@@ -403,6 +409,14 @@ public class TabelaPersistencia extends JTable {
 			private void copiar(boolean aspas) {
 				SeparadorDialogo.criar(TabelaPersistencia.this, "Copiar", TabelaPersistencia.this, indiceColuna, aspas,
 						null);
+			}
+
+			private void copiarAtalho(boolean aspas) {
+				List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
+				String string = Util.getStringLista(lista, ", ", false, aspas);
+				if (!Util.estaVazio(string)) {
+					Util.setContentTransfered(string);
+				}
 			}
 		}
 
