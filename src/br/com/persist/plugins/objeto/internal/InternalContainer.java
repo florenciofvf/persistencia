@@ -903,6 +903,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					consultaAcao.setActionListener(e -> consulta());
 					renomearAcao.setActionListener(e -> renomear());
 					excluirAcao.setActionListener(e -> excluir());
+					addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							if (comAspasAcao.isEnabled()) {
+								processar(true);
+							}
+						}
+					});
 				}
 
 				private void elementos() {
