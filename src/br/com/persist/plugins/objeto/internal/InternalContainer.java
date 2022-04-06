@@ -1523,7 +1523,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void destacarColuna() {
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.coluna",
-							Mensagens.getString("label.coluna"), Constantes.VAZIO);
+							Mensagens.getString("label.coluna_outra_coluna"), Constantes.VAZIO);
 					if (resp != null && !Util.estaVazio(resp.toString())) {
 						String[] strings = resp.toString().split(",");
 						for (String string : strings) {
