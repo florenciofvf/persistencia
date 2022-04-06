@@ -5,7 +5,7 @@ public interface TabelaPersistenciaListener {
 
 	public void colocarColunaComMemoria(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
 
-	public void colocarNomeColunaAtalho(TabelaPersistencia tabelaPersistencia, String nome);
+	public void colocarNomeColunaAtalho(TabelaPersistencia tabelaPersistencia, String nome, boolean concat);
 
 	public void tabelaMouseClick(TabelaPersistencia tabelaPersistencia, int colunaClicada);
 

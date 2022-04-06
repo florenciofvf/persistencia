@@ -53,6 +53,10 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		return this;
 	}
 
+	public String getNome() {
+		return descricao.getText();
+	}
+
 	private class Descricao extends Label {
 		private static final long serialVersionUID = 1L;
 

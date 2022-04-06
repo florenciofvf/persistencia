@@ -2599,8 +2599,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
-		public void colocarNomeColunaAtalho(TabelaPersistencia tabela, String nome) {
-			txtComplemento.setText(objeto.comApelido("AND", nome) + getValor("=", Constantes.VAZIO));
+		public void colocarNomeColunaAtalho(TabelaPersistencia tabela, String nome, boolean concat) {
+			String string = txtComplemento.getText();
+			if (!concat) {
+				string = "";
+			}
+			txtComplemento.setText(string + objeto.comApelido("AND", nome) + getValor("=", Constantes.VAZIO));
 			focus();
 		}
 

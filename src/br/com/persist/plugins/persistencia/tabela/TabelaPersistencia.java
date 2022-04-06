@@ -166,6 +166,15 @@ public class TabelaPersistencia extends JTable {
 				TableColumnModel columnModel = getColumnModel();
 				TableColumn tableColumn = columnModel.getColumn(tableColuna);
 				CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
+
+				boolean shift = e.isShiftDown();
+				boolean alt = e.isAltDown();
+				boolean ctrl = alt && shift;
+				if (ctrl && listener != null) {
+					listener.colocarNomeColunaAtalho(TabelaPersistencia.this, cabecalho.getNome(), true);
+					return;
+				}
+
 				int resto = getResto(e.getX(), tableColumn);
 				if (cabecalho.isOrdenacao(resto)) {
 					cabecalho.ordenar();
@@ -383,7 +392,7 @@ public class TabelaPersistencia extends JTable {
 				if (listener != null) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					if (atalho) {
-						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna);
+						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna, false);
 					} else {
 						listener.colocarNomeColuna(TabelaPersistencia.this, coluna);
 					}
