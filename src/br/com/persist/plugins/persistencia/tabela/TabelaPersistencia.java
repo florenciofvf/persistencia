@@ -170,8 +170,12 @@ public class TabelaPersistencia extends JTable {
 				boolean shift = e.isShiftDown();
 				boolean alt = e.isAltDown();
 				boolean ctrl = alt && shift;
-				if (ctrl && listener != null) {
-					listener.colocarNomeColunaAtalho(TabelaPersistencia.this, cabecalho.getNome(), true);
+				if ((ctrl || shift) && listener != null) {
+					boolean concat = shift;
+					if (ctrl) {
+						concat = false;
+					}
+					listener.colocarNomeColunaAtalho(TabelaPersistencia.this, cabecalho.getNome(), concat);
 					return;
 				}
 
