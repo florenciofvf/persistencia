@@ -1,6 +1,7 @@
 package br.com.persist.plugins.objeto.vinculo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -198,6 +199,29 @@ public class Pesquisa {
 			}
 		}
 		return false;
+	}
+
+	public boolean contemLimparResto() {
+		for (Referencia ref : referenciasApos) {
+			if (ref.ehCoringa()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean addLimparResto() {
+		return add(new Referencia(null, "*", null));
+	}
+
+	public void excluirLimparResto() {
+		Iterator<Referencia> it = referenciasApos.iterator();
+		while (it.hasNext()) {
+			Referencia ref = it.next();
+			if (ref.ehCoringa()) {
+				it.remove();
+			}
+		}
 	}
 
 	public void addRef(Map<String, String> map) {
