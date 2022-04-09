@@ -87,6 +87,8 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.icone.IconeDialogo;
+import br.com.persist.icone.IconeListener;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
@@ -963,13 +965,53 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private static final long serialVersionUID = 1L;
 					private Action addLimparRestoAcao = actionMenu("label.add_limpar_resto");
 					private Action excLimparRestoAcao = actionMenu("label.exc_limpar_resto");
+					private Action iconeAcao = Action.actionMenu("label.icone", null);
 
 					private MenuUtil() {
 						super("label.util");
 						addMenuItem(addLimparRestoAcao);
 						addMenuItem(excLimparRestoAcao);
+						addMenuItem(true, iconeAcao);
 						addLimparRestoAcao.setActionListener(e -> processar(true));
 						excLimparRestoAcao.setActionListener(e -> processar(false));
+						iconeAcao.setActionListener(e -> icone());
+					}
+
+					private void icone() {
+						IconeDialogo.criar(pesquisa.getNomeParaMenuItem(), new ListenerIcone(),
+								pesquisa.getReferencia().getIconeGrupo());
+					}
+
+					private class ListenerIcone implements IconeListener {
+						@Override
+						public void setIcone(String nome) {
+							if (vinculoListener == null) {
+								return;
+							}
+							Vinculacao vinculacao = new Vinculacao();
+							vinculoListener.preencherVinculacao(vinculacao);
+							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+							if (pesq != null) {
+								MenuPesquisa.this.setIcon(Imagens.getIcon(nome));
+								pesq.getReferencia().setIconeGrupo(nome);
+								vinculoListener.salvarVinculacao(vinculacao);
+							}
+						}
+
+						@Override
+						public void limparIcone() {
+							if (vinculoListener == null) {
+								return;
+							}
+							Vinculacao vinculacao = new Vinculacao();
+							vinculoListener.preencherVinculacao(vinculacao);
+							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+							if (pesq != null) {
+								MenuPesquisa.this.setIcon(null);
+								pesq.getReferencia().setIconeGrupo(Constantes.VAZIO);
+								vinculoListener.salvarVinculacao(vinculacao);
+							}
+						}
 					}
 
 					private void processar(boolean adicionar) {
@@ -3028,8 +3070,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	static Icon iconePesquisa(Pesquisa pesquisa) {
-		Referencia referencia = pesquisa.getReferencia();
-		String iconeGrupo = referencia.getIconeGrupo();
+		String iconeGrupo = pesquisa.getReferencia().getIconeGrupo();
 		return Util.estaVazio(iconeGrupo) ? null : Imagens.getIcon(iconeGrupo);
 	}
 
