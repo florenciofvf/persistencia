@@ -881,11 +881,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private class MenuPesquisa extends MenuPadrao2 {
 				private static final long serialVersionUID = 1L;
-				private Action elementosAcao = Action.actionMenu("label.elementos", null);
-				private Action descricaoAcao = Action.actionMenu("label.descricao", null);
-				private Action consultaAcao = Action.actionMenu("label.consulta", null);
 				private Action renomearAcao = Action.actionMenu("label.renomear", null);
 				private Action excluirAcao = Action.actionMenu("label.excluir", null);
+				private MenuInfo menuInfo = new MenuInfo();
 				private MenuUtil menuUtil = new MenuUtil();
 				private final transient Pesquisa pesquisa;
 
@@ -893,17 +891,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					super(pesquisa.getNomeParaMenuItem(), false, iconePesquisa(pesquisa));
 					addMenuItem(true, renomearAcao);
 					addMenuItem(true, excluirAcao);
-					addMenuItem(true, elementosAcao);
-					addMenuItem(true, descricaoAcao);
-					addMenuItem(true, consultaAcao);
+					addSeparator();
+					add(menuInfo);
 					addSeparator();
 					add(menuUtil);
 					this.pesquisa = pesquisa;
 					semAspasAcao.setActionListener(e -> processar(false));
 					comAspasAcao.setActionListener(e -> processar(true));
-					elementosAcao.setActionListener(e -> elementos());
-					descricaoAcao.setActionListener(e -> descricao());
-					consultaAcao.setActionListener(e -> consulta());
 					renomearAcao.setActionListener(e -> renomear());
 					excluirAcao.setActionListener(e -> excluir());
 					addMouseListener(new MouseAdapter() {
@@ -916,10 +910,59 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					});
 				}
 
+				private class MenuInfo extends Menu {
+					private static final long serialVersionUID = 1L;
+					private Action elementosAcao = Action.actionMenu("label.elementos", null);
+					private Action descricaoAcao = Action.actionMenu("label.descricao", null);
+					private Action consultaAcao = Action.actionMenu("label.consulta", null);
+
+					private MenuInfo() {
+						super("label.info");
+						addMenuItem(elementosAcao);
+						addMenuItem(true, descricaoAcao);
+						addMenuItem(true, consultaAcao);
+						elementosAcao.setActionListener(e -> elementos());
+						descricaoAcao.setActionListener(e -> descricao());
+						consultaAcao.setActionListener(e -> consulta());
+					}
+
+					private void elementos() {
+						try {
+							Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+						}
+					}
+
+					private void descricao() {
+						StringBuilder sb = new StringBuilder();
+						sb.append(Mensagens.getString("label.total") + ": " + pesquisa.getReferencias().size());
+						sb.append(Constantes.QL + "-----------------");
+						for (Referencia ref : pesquisa.getReferencias()) {
+							sb.append(Constantes.QL + ref.toString2());
+						}
+						Util.mensagem(InternalContainer.this, sb.toString());
+					}
+
+					private void consulta() {
+						try {
+							StringBuilder sb = new StringBuilder();
+							sb.append(pesquisa.getConsulta());
+							sb.append(Constantes.QL);
+							sb.append("-------------");
+							sb.append(Constantes.QL2);
+							sb.append(pesquisa.getConsultaReversa());
+							Util.mensagem(InternalContainer.this, sb.toString());
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage("CONSULTA", ex, InternalContainer.this);
+						}
+					}
+				}
+
 				private class MenuUtil extends Menu {
+					private static final long serialVersionUID = 1L;
 					private Action addLimparRestoAcao = actionMenu("label.add_limpar_resto");
 					private Action excLimparRestoAcao = actionMenu("label.exc_limpar_resto");
-					private static final long serialVersionUID = 1L;
 
 					private MenuUtil() {
 						super("label.util");
@@ -946,24 +989,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					}
-				}
-
-				private void elementos() {
-					try {
-						Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
-					}
-				}
-
-				private void descricao() {
-					StringBuilder sb = new StringBuilder();
-					sb.append(Mensagens.getString("label.total") + ": " + pesquisa.getReferencias().size());
-					sb.append(Constantes.QL + "-----------------");
-					for (Referencia ref : pesquisa.getReferencias()) {
-						sb.append(Constantes.QL + ref.toString2());
-					}
-					Util.mensagem(InternalContainer.this, sb.toString());
 				}
 
 				private void excluir() {
@@ -1013,20 +1038,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							setText(pesq.getNomeParaMenuItem());
 							vinculoListener.salvarVinculacao(vinculacao);
 						}
-					}
-				}
-
-				private void consulta() {
-					try {
-						StringBuilder sb = new StringBuilder();
-						sb.append(pesquisa.getConsulta());
-						sb.append(Constantes.QL);
-						sb.append("-------------");
-						sb.append(Constantes.QL2);
-						sb.append(pesquisa.getConsultaReversa());
-						Util.mensagem(InternalContainer.this, sb.toString());
-					} catch (Exception ex) {
-						Util.stackTraceAndMessage("CONSULTA", ex, InternalContainer.this);
 					}
 				}
 
