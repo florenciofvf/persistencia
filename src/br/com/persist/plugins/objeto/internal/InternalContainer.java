@@ -993,6 +993,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 							if (pesq != null) {
 								MenuPesquisa.this.setIcon(Imagens.getIcon(nome));
+								pesquisa.getReferencia().setIconeGrupo(nome);
 								pesq.getReferencia().setIconeGrupo(nome);
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
@@ -1008,6 +1009,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 							if (pesq != null) {
 								MenuPesquisa.this.setIcon(null);
+								pesquisa.getReferencia().setIconeGrupo(Constantes.VAZIO);
 								pesq.getReferencia().setIconeGrupo(Constantes.VAZIO);
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
@@ -1023,9 +1025,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 						if (pesq != null) {
 							if (adicionar && !pesq.contemLimparResto()) {
+								pesquisa.addLimparResto();
 								pesq.addLimparResto();
 								vinculoListener.salvarVinculacao(vinculacao);
 							} else if (!adicionar && pesq.contemLimparResto()) {
+								pesquisa.excluirLimparResto();
 								pesq.excluirLimparResto();
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
