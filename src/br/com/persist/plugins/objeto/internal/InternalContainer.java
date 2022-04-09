@@ -886,6 +886,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				private Action consultaAcao = Action.actionMenu("label.consulta", null);
 				private Action renomearAcao = Action.actionMenu("label.renomear", null);
 				private Action excluirAcao = Action.actionMenu("label.excluir", null);
+				private MenuUtil menuUtil = new MenuUtil();
 				private final transient Pesquisa pesquisa;
 
 				private MenuPesquisa(Pesquisa pesquisa) {
@@ -895,6 +896,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(true, elementosAcao);
 					addMenuItem(true, descricaoAcao);
 					addMenuItem(true, consultaAcao);
+					addSeparator();
+					add(menuUtil);
 					this.pesquisa = pesquisa;
 					semAspasAcao.setActionListener(e -> processar(false));
 					comAspasAcao.setActionListener(e -> processar(true));
@@ -911,6 +914,38 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							}
 						}
 					});
+				}
+
+				private class MenuUtil extends Menu {
+					private Action addLimparRestoAcao = actionMenu("label.add_limpar_resto");
+					private Action excLimparRestoAcao = actionMenu("label.exc_limpar_resto");
+					private static final long serialVersionUID = 1L;
+
+					private MenuUtil() {
+						super("label.util");
+						addMenuItem(addLimparRestoAcao);
+						addMenuItem(excLimparRestoAcao);
+						addLimparRestoAcao.setActionListener(e -> processar(true));
+						excLimparRestoAcao.setActionListener(e -> processar(false));
+					}
+
+					private void processar(boolean adicionar) {
+						if (vinculoListener == null) {
+							return;
+						}
+						Vinculacao vinculacao = new Vinculacao();
+						vinculoListener.preencherVinculacao(vinculacao);
+						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+						if (pesq != null) {
+							if (adicionar && !pesq.contemLimparResto()) {
+								pesq.addLimparResto();
+								vinculoListener.salvarVinculacao(vinculacao);
+							} else if (!adicionar && pesq.contemLimparResto()) {
+								pesq.excluirLimparResto();
+								vinculoListener.salvarVinculacao(vinculacao);
+							}
+						}
+					}
 				}
 
 				private void elementos() {

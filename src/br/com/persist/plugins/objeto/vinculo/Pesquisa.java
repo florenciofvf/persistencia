@@ -211,7 +211,9 @@ public class Pesquisa {
 	}
 
 	public boolean addLimparResto() {
-		return add(new Referencia(null, "*", null));
+		Referencia ref = new Referencia(null, "*", null);
+		ref.setLimparApos(true);
+		return add(ref);
 	}
 
 	public void excluirLimparResto() {
