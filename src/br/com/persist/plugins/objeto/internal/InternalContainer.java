@@ -1042,7 +1042,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 					if (pesq != null
 							&& Util.confirmar(InternalContainer.this,
-									ObjetoMensagens.getString("msg.confirmar_exclusao_pesquisa"), false)
+									ObjetoMensagens.getString("msg.confirmar_exclusao_pesquisa", pesq.getNome()), false)
 							&& vinculacao.excluir(pesq) && objeto.excluir(pesquisa)) {
 						vinculoListener.salvarVinculacao(vinculacao);
 						toolbar.buttonPesquisa.complemento(objeto);
