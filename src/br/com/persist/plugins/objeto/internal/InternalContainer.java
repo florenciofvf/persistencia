@@ -965,15 +965,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					private static final long serialVersionUID = 1L;
 					private Action addLimparRestoAcao = actionMenu("label.add_limpar_resto");
 					private Action excLimparRestoAcao = actionMenu("label.exc_limpar_resto");
+					private Action vazioInvisivelAcao = actionMenu("label.vazio_invisivel");
+					private Action vazioVisivelAcao = actionMenu("label.vazio_visivel");
 					private Action iconeAcao = Action.actionMenu("label.icone", null);
 
 					private MenuUtil() {
 						super("label.util");
 						addMenuItem(addLimparRestoAcao);
 						addMenuItem(excLimparRestoAcao);
+						addMenuItem(true, vazioInvisivelAcao);
+						addMenuItem(vazioVisivelAcao);
 						addMenuItem(true, iconeAcao);
 						addLimparRestoAcao.setActionListener(e -> processar(true));
 						excLimparRestoAcao.setActionListener(e -> processar(false));
+						vazioInvisivelAcao.setActionListener(e -> vazio(true));
+						vazioVisivelAcao.setActionListener(e -> vazio(false));
 						iconeAcao.setActionListener(e -> icone());
 					}
 
@@ -1031,6 +1037,26 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							} else if (!adicionar && pesq.contemLimparResto()) {
 								pesquisa.excluirLimparResto();
 								pesq.excluirLimparResto();
+								vinculoListener.salvarVinculacao(vinculacao);
+							}
+						}
+					}
+
+					private void vazio(boolean invisivel) {
+						if (vinculoListener == null) {
+							return;
+						}
+						Vinculacao vinculacao = new Vinculacao();
+						vinculoListener.preencherVinculacao(vinculacao);
+						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
+						if (pesq != null) {
+							if (invisivel) {
+								pesquisa.setVazioInvisivel();
+								pesq.setVazioInvisivel();
+								vinculoListener.salvarVinculacao(vinculacao);
+							} else {
+								pesquisa.setVazioVisivel();
+								pesq.setVazioVisivel();
 								vinculoListener.salvarVinculacao(vinculacao);
 							}
 						}

@@ -200,6 +200,14 @@ public class Referencia {
 		this.vazioInvisivel = vazioInvisivel;
 	}
 
+	public void setVazioInvisivel() {
+		this.vazioInvisivel = true;
+	}
+
+	public void setVazioVisivel() {
+		this.vazioInvisivel = false;
+	}
+
 	public boolean isLimparApos() {
 		return limparApos;
 	}

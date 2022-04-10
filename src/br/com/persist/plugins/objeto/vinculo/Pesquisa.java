@@ -170,6 +170,18 @@ public class Pesquisa {
 		}
 	}
 
+	public void setVazioInvisivel() {
+		for (Referencia ref : referencias) {
+			ref.setVazioInvisivel();
+		}
+	}
+
+	public void setVazioVisivel() {
+		for (Referencia ref : referencias) {
+			ref.setVazioVisivel();
+		}
+	}
+
 	public boolean isProcessado() {
 		for (Referencia ref : referencias) {
 			if (ref.isProcessado()) {
