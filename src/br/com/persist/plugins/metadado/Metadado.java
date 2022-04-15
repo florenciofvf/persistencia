@@ -371,6 +371,28 @@ public class Metadado implements Transferable {
 		}
 	}
 
+	public List<String> getListaCampoExportadoPara(String campo) {
+		List<String> lista = new ArrayList<>();
+		List<Metadado> campos = getListaCampoExportacaoImportacao(true);
+		for (Metadado metadado : campos) {
+			if (metadado.getDescricao().equalsIgnoreCase(campo)) {
+				lista.add(metadado.getTabelaReferencia().getDescricao());
+			}
+		}
+		return lista;
+	}
+
+	public List<String> getListaCampoImportadoDe(String campo) {
+		List<String> lista = new ArrayList<>();
+		List<Metadado> campos = getListaCampoExportacaoImportacao(false);
+		for (Metadado metadado : campos) {
+			if (metadado.getDescricao().equalsIgnoreCase(campo)) {
+				lista.add(metadado.getTabelaReferencia().getDescricao());
+			}
+		}
+		return lista;
+	}
+
 	private void montarOrdenacoes() {
 		List<Metadado> temporario = new ArrayList<>(filhos);
 		montarOrdenacoesExportacoes(temporario);
@@ -428,16 +450,6 @@ public class Metadado implements Transferable {
 				tipo.preencher(lista);
 			}
 		}
-		return lista;
-	}
-
-	public List<String> getListaCampoExportadoPara(String campo) {
-		List<String> lista = new ArrayList<>();
-		return lista;
-	}
-
-	public List<String> getListaCampoImportadoDe(String campo) {
-		List<String> lista = new ArrayList<>();
 		return lista;
 	}
 
