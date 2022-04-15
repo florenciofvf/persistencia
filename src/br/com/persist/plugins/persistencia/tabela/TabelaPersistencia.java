@@ -269,7 +269,6 @@ public class TabelaPersistencia extends JTable {
 
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action detalheColunaAcao = Action.actionMenu(Constantes.LABEL_METADADOS, Icones.INFO);
 		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_manual", null);
 		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
@@ -277,6 +276,7 @@ public class TabelaPersistencia extends JTable {
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
+		private MenuMetadados menuMetadados = new MenuMetadados();
 		private Separator separatorChave = new Separator();
 		private Separator separatorInfo = new Separator();
 		private static final String AND = "AND ";
@@ -285,7 +285,7 @@ public class TabelaPersistencia extends JTable {
 		private int indiceColuna;
 
 		private PopupHeader() {
-			addMenuItem(detalheColunaAcao);
+			add(menuMetadados);
 			addMenuItem(true, larguraTituloAcao);
 			addMenuItem(larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
@@ -300,6 +300,47 @@ public class TabelaPersistencia extends JTable {
 			eventos();
 		}
 
+		private class MenuMetadados extends Menu {
+			private static final long serialVersionUID = 1L;
+			private Action infoColunaAcao = Action.actionMenu("label.info", null);
+			private Action exportaParaAcao = actionMenu("label.exporta_para");
+			private Action importaDeAcao = actionMenu("label.importa_de");
+
+			private MenuMetadados() {
+				super(Constantes.LABEL_METADADOS, Icones.INFO);
+				addMenuItem(infoColunaAcao);
+				addMenuItem(true, exportaParaAcao);
+				addMenuItem(true, importaDeAcao);
+				exportaParaAcao.setActionListener(e -> importarExportarInfo(true));
+				importaDeAcao.setActionListener(e -> importarExportarInfo(false));
+				addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						infoColuna();
+					}
+				});
+				infoColunaAcao.setActionListener(e -> infoColuna());
+			}
+
+			private void infoColuna() {
+				Coluna coluna = ((OrdenacaoModelo) TabelaPersistencia.this.getModel()).getColuna(indiceColuna);
+				if (coluna != null) {
+					Util.mensagem(TabelaPersistencia.this, coluna.getDetalhe());
+				}
+			}
+
+			private void importarExportarInfo(boolean exportar) {
+				if (listener != null) {
+					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+					if (exportar) {
+						listener.infoExportarColunaPara(coluna);
+					} else {
+						listener.infoImportarColunaDe(coluna);
+					}
+				}
+			}
+		}
+
 		private void eventos() {
 			copiarNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
@@ -309,12 +350,6 @@ public class TabelaPersistencia extends JTable {
 				String coluna = getModel().getColumnName(indiceColuna);
 				if (listener != null) {
 					listener.pesquisaApartirColuna(TabelaPersistencia.this, coluna);
-				}
-			});
-			detalheColunaAcao.setActionListener(e -> {
-				Coluna coluna = ((OrdenacaoModelo) getModel()).getColuna(indiceColuna);
-				if (coluna != null) {
-					Util.mensagem(TabelaPersistencia.this, coluna.getDetalhe());
 				}
 			});
 			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));

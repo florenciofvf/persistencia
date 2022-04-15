@@ -2810,6 +2810,16 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				vinculoListener.pesquisarLink(objeto.getReferencias(), lista.get(0));
 			}
 		}
+
+		@Override
+		public void infoExportarColunaPara(String coluna) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void infoImportarColunaDe(String coluna) {
+			// TODO Auto-generated method stub
+		}
 	}
 
 	public void atualizarComplemento(Objeto obj) {

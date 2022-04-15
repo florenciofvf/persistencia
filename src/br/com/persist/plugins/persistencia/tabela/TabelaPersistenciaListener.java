@@ -12,4 +12,8 @@ public interface TabelaPersistenciaListener {
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome);
 
 	public void colocarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome);
+
+	public void infoExportarColunaPara(String coluna);
+
+	public void infoImportarColunaDe(String coluna);
 }
