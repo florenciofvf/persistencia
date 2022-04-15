@@ -431,6 +431,16 @@ public class Metadado implements Transferable {
 		return lista;
 	}
 
+	public List<String> getListaCampoExportadoPara(String campo) {
+		List<String> lista = new ArrayList<>();
+		return lista;
+	}
+
+	public List<String> getListaCampoImportadoDe(String campo) {
+		List<String> lista = new ArrayList<>();
+		return lista;
+	}
+
 	private void preencher(List<Metadado> lista) {
 		for (Metadado campo : filhos) {
 			lista.add(campo);

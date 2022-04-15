@@ -2831,7 +2831,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void campoExportadoPara(Metadado metadado, String coluna) {
-
+			List<String> lista = metadado.getListaCampoExportadoPara(coluna);
+			String string = Util.getStringListaSemVirgula(lista, false);
+			Util.mensagem(InternalContainer.this, string);
 		}
 
 		@Override
@@ -2853,7 +2855,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private void campoImportadoDe(Metadado metadado, String coluna) {
-
+			List<String> lista = metadado.getListaCampoImportadoDe(coluna);
+			String string = Util.getStringListaSemVirgula(lista, false);
+			Util.mensagem(InternalContainer.this, string);
 		}
 	}
 
