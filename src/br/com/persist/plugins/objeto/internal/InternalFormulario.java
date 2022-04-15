@@ -302,6 +302,13 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
+		public void getMetadado(AtomicReference<Object> ref, Objeto objeto) {
+			checarDesktop();
+			if (desktop instanceof ObjetoSuperficie) {
+				((ObjetoSuperficie) desktop).getMetadado(ref, objeto);
+			}
+		}
+
 		public void preencherVinculacao(Vinculacao vinculacao) {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {

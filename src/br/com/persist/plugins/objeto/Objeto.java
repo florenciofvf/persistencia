@@ -30,6 +30,7 @@ import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
+import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -81,6 +82,7 @@ public class Objeto implements Runnable {
 	private String sequencias;
 	private String mapeamento;
 	private boolean processar;
+	private Metadado metadado;
 	private String descricao;
 	private String orderBy;
 	boolean visivel = true;
@@ -1124,5 +1126,13 @@ public class Objeto implements Runnable {
 
 	public void setMapeamentoAlterado(boolean mapeamentoAlterado) {
 		this.mapeamentoAlterado = mapeamentoAlterado;
+	}
+
+	public Metadado getMetadado() {
+		return metadado;
+	}
+
+	public void setMetadado(Metadado metadado) {
+		this.metadado = metadado;
 	}
 }

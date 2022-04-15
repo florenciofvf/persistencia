@@ -24,6 +24,8 @@ public interface InternalListener {
 
 		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c);
 
+		public void getMetadado(AtomicReference<Object> ref, Objeto objeto);
+
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
 
 		public void pesquisarApos(Objeto fonte, Pesquisa pesquisa);

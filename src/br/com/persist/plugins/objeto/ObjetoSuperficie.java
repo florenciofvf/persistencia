@@ -2040,6 +2040,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
+	public void getMetadado(AtomicReference<Object> ref, Objeto objeto) {
+		Map<String, Object> args = new HashMap<>();
+		args.put(MetadadoEvento.GET_METADADO_OBJETO, objeto.getTabela());
+		formulario.processar(args);
+		Metadado metadado = (Metadado) args.get(MetadadoConstantes.METADADO);
+		if (metadado == null) {
+			Util.mensagem(ObjetoSuperficie.this,
+					ObjetoMensagens.getString("msb.inexistente_get_metadado", objeto.getId()));
+		} else {
+			ref.set(metadado);
+		}
+	}
+
 	private void criarObjetoHierarquico(Conexao conexao, Objeto principal, Map<String, Object> mapaRef,
 			Metadado tabela) {
 		Exportacao exportacao = new Exportacao(principal, mapaRef, tabela.getPai());

@@ -96,6 +96,7 @@ import br.com.persist.plugins.consulta.ConsultaFormulario;
 import br.com.persist.plugins.fragmento.Fragmento;
 import br.com.persist.plugins.fragmento.FragmentoDialogo;
 import br.com.persist.plugins.fragmento.FragmentoListener;
+import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoConstantes;
@@ -2813,12 +2814,46 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		@Override
 		public void campoExportadoPara(String coluna) {
-			// TODO Auto-generated method stub
+			Metadado metadado = objeto.getMetadado();
+			if (metadado != null) {
+				campoExportadoPara(metadado, coluna);
+				return;
+			}
+			if (vinculoListener != null) {
+				AtomicReference<Object> ref = new AtomicReference<>();
+				vinculoListener.getMetadado(ref, objeto);
+				if (ref.get() instanceof Metadado) {
+					metadado = (Metadado) ref.get();
+					objeto.setMetadado(metadado);
+					campoExportadoPara(metadado, coluna);
+				}
+			}
+		}
+
+		private void campoExportadoPara(Metadado metadado, String coluna) {
+
 		}
 
 		@Override
 		public void campoImportadoDe(String coluna) {
-			// TODO Auto-generated method stub
+			Metadado metadado = objeto.getMetadado();
+			if (metadado != null) {
+				campoImportadoDe(metadado, coluna);
+				return;
+			}
+			if (vinculoListener != null) {
+				AtomicReference<Object> ref = new AtomicReference<>();
+				vinculoListener.getMetadado(ref, objeto);
+				if (ref.get() instanceof Metadado) {
+					metadado = (Metadado) ref.get();
+					objeto.setMetadado(metadado);
+					campoImportadoDe(metadado, coluna);
+				}
+			}
+		}
+
+		private void campoImportadoDe(Metadado metadado, String coluna) {
+
 		}
 	}
 
