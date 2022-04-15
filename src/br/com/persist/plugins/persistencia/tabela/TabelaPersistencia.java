@@ -302,9 +302,9 @@ public class TabelaPersistencia extends JTable {
 
 		private class MenuMetadados extends Menu {
 			private static final long serialVersionUID = 1L;
+			private Action exportaParaAcao = actionMenu("label.campo_exportado_para");
+			private Action importaDeAcao = actionMenu("label.campo_importado_de");
 			private Action infoColunaAcao = Action.actionMenu("label.info", null);
-			private Action exportaParaAcao = actionMenu("label.exporta_para");
-			private Action importaDeAcao = actionMenu("label.importa_de");
 
 			private MenuMetadados() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
@@ -333,9 +333,9 @@ public class TabelaPersistencia extends JTable {
 				if (listener != null) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					if (exportar) {
-						listener.infoExportarColunaPara(coluna);
+						listener.campoExportadoPara(coluna);
 					} else {
-						listener.infoImportarColunaDe(coluna);
+						listener.campoImportadoDe(coluna);
 					}
 				}
 			}

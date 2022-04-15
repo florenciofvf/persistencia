@@ -13,7 +13,7 @@ public interface TabelaPersistenciaListener {
 
 	public void colocarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome);
 
-	public void infoExportarColunaPara(String coluna);
+	public void campoExportadoPara(String coluna);
 
-	public void infoImportarColunaDe(String coluna);
+	public void campoImportadoDe(String coluna);
 }

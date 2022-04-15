@@ -2812,12 +2812,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		@Override
-		public void infoExportarColunaPara(String coluna) {
+		public void campoExportadoPara(String coluna) {
 			// TODO Auto-generated method stub
 		}
 
 		@Override
-		public void infoImportarColunaDe(String coluna) {
+		public void campoImportadoDe(String coluna) {
 			// TODO Auto-generated method stub
 		}
 	}
