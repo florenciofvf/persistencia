@@ -452,6 +452,12 @@ public class TabelaPersistencia extends JTable {
 				comAspasAtalhoAcao.setActionListener(e -> copiarAtalho(true));
 				semAspasAcao.setActionListener(e -> copiar(false));
 				comAspasAcao.setActionListener(e -> copiar(true));
+				addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						copiarAtalho(true);
+					}
+				});
 			}
 
 			private void copiar(boolean aspas) {
