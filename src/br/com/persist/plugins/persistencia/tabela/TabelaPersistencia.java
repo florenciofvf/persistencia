@@ -175,7 +175,8 @@ public class TabelaPersistencia extends JTable {
 					if (ctrl) {
 						concat = false;
 					}
-					listener.colocarNomeColunaAtalho(TabelaPersistencia.this, cabecalho.getNome(), concat);
+					listener.colocarNomeColunaAtalho(TabelaPersistencia.this, cabecalho.getNome(), concat,
+							cabecalho.getColuna());
 					return;
 				}
 
@@ -431,7 +432,7 @@ public class TabelaPersistencia extends JTable {
 				if (listener != null) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					if (atalho) {
-						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna, false);
+						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna, false, null);
 					} else {
 						listener.colocarNomeColuna(TabelaPersistencia.this, coluna);
 					}

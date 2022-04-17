@@ -78,6 +78,10 @@ public class Coluna {
 		return sb.toString();
 	}
 
+	public boolean isValidoConsulta() {
+		return !isBlob() && !isColunaInfo();
+	}
+
 	public boolean isColunaInfo() {
 		return colunaInfo;
 	}

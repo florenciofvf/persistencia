@@ -27,6 +27,7 @@ import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 public class CabecalhoColuna extends Panel implements TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 	private final transient CabecalhoColunaListener listener;
+	private final transient Coluna coluna;
 	private final OrdenacaoModelo modelo;
 	private final Ordenacao ordenacao;
 	private final Descricao descricao;
@@ -43,6 +44,7 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 		this.comFiltro = comFiltro;
 		this.listener = listener;
 		this.modelo = modelo;
+		this.coluna = coluna;
 		if (comFiltro) {
 			add(BorderLayout.EAST, filtro);
 		}
@@ -55,6 +57,10 @@ public class CabecalhoColuna extends Panel implements TableCellRenderer {
 
 	public String getNome() {
 		return descricao.getText();
+	}
+
+	public Coluna getColuna() {
+		return coluna;
 	}
 
 	private class Descricao extends Label {
