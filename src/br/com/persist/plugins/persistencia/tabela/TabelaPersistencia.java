@@ -154,7 +154,10 @@ public class TabelaPersistencia extends JTable {
 				int tableColuna = columnAtPoint(e.getPoint());
 				int modelColuna = convertColumnIndexToModel(tableColuna);
 				popupHeader.indiceColuna = modelColuna;
-				popupHeader.preShow(getModel().getColumnName(modelColuna));
+				TableColumnModel columnModel = getColumnModel();
+				TableColumn tableColumn = columnModel.getColumn(tableColuna);
+				CabecalhoColuna cabecalho = (CabecalhoColuna) tableColumn.getHeaderRenderer();
+				popupHeader.preShow(getModel().getColumnName(modelColuna), cabecalho.getColuna());
 				popupHeader.show(tableHeader, e.getX(), e.getY());
 			}
 		}
@@ -281,6 +284,7 @@ public class TabelaPersistencia extends JTable {
 		private Separator separatorChave = new Separator();
 		private Separator separatorInfo = new Separator();
 		private static final String AND = "AND ";
+		private transient Coluna colunaTabela;
 		private MenuIN menuIN = new MenuIN();
 		private int larguraColuna;
 		private int indiceColuna;
@@ -358,7 +362,7 @@ public class TabelaPersistencia extends JTable {
 			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
 		}
 
-		private void preShow(String chave) {
+		private void preShow(String chave, Coluna colunaTabela) {
 			FontMetrics fontMetrics = getFontMetrics(getFont());
 			larguraColuna = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
 			menuIN.setText(AND + chave + " IN");
@@ -377,6 +381,7 @@ public class TabelaPersistencia extends JTable {
 				add(separatorInfo);
 				add(itemMapeamento);
 			}
+			this.colunaTabela = colunaTabela;
 		}
 
 		private class ProcessarTitulo extends MouseAdapter {
@@ -432,7 +437,7 @@ public class TabelaPersistencia extends JTable {
 				if (listener != null) {
 					String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 					if (atalho) {
-						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna, false, null);
+						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna, false, colunaTabela);
 					} else {
 						listener.colocarNomeColuna(TabelaPersistencia.this, coluna);
 					}
