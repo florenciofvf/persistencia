@@ -612,7 +612,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void limparPeloObjeto() {
-				String string = "";
+				String string = Constantes.VAZIO;
 				if (!Util.estaVazio(txtComplemento.getText())) {
 					String[] simNao = getArraySimNao();
 					String opcao = opcaoConcatenar(simNao);
@@ -620,10 +620,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					if (simNao[0].equals(opcao)) {
-						string = txtComplemento.getText() + " ";
+						string = txtComplemento.getText();
 					}
 				}
-				txtComplemento.setText(string + objeto.getComplemento());
+				txtComplemento.setText(Util.concatenar(string, objeto.getComplemento()));
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -644,7 +644,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				} else if (conexao != null && !Util.estaVazio(conexao.getFinalConsulta())) {
 					filtro = conexao.getFinalConsulta();
 				}
-				String string = "";
+				String string = Constantes.VAZIO;
 				if (!Util.estaVazio(txtComplemento.getText())) {
 					String[] simNao = getArraySimNao();
 					String opcao = opcaoConcatenar(simNao);
@@ -652,10 +652,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					if (simNao[0].equals(opcao)) {
-						string = txtComplemento.getText() + " ";
+						string = txtComplemento.getText();
 					}
 				}
-				txtComplemento.setText(string + filtro);
+				txtComplemento.setText(Util.concatenar(string, filtro));
 				if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 					actionListenerInner.actionPerformed(null);
 				}
@@ -776,7 +776,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						txtComplemento.setText(complemento);
 					} else {
 						String s = txtComplemento.getText().trim();
-						txtComplemento.setText(s + " " + complemento);
+						txtComplemento.setText(Util.concatenar(s, complemento));
 					}
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
@@ -2393,11 +2393,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 			String complemento = txtComplemento.getText();
 			if (!concatenar) {
-				complemento = "";
+				complemento = Constantes.VAZIO;
 			} else if (!Util.estaVazio(complemento)) {
-				complemento = complemento.trim() + " ";
+				complemento = complemento.trim();
 			}
-			txtComplemento.setText(complemento + sb.toString());
+			txtComplemento.setText(Util.concatenar(complemento, sb.toString()));
 			actionListenerInner.actionPerformed(null);
 		}
 
@@ -2727,12 +2727,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (coluna != null && coluna.isValidoConsulta() && !coluna.isNumero()) {
 				valor = "''";
 			}
-			txtComplemento.setText(string + objeto.comApelido("AND", nome) + getValor("=", valor));
+			txtComplemento.setText(Util.concatenar(string, objeto.comApelido("AND", nome), getValor("=", valor)));
 			focus();
 		}
 
 		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
-			String string = "";
+			String string = Constantes.VAZIO;
 			if (!Util.estaVazio(txtComplemento.getText())) {
 				String[] simNao = getArraySimNao();
 				String opcao = opcaoConcatenar(simNao);
@@ -2740,7 +2740,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					return;
 				}
 				if (simNao[0].equals(opcao)) {
-					string = txtComplemento.getText() + " ";
+					string = txtComplemento.getText();
 				}
 			}
 			String prefixo = getPrefixo();
@@ -2752,7 +2752,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				return;
 			}
 			String comApelido = objeto.comApelido(prefixo, nome);
-			txtComplemento.setText(string + comApelido + getValor(opcao, Constantes.VAZIO));
+			txtComplemento.setText(Util.concatenar(string, comApelido, getValor(opcao, Constantes.VAZIO)));
 			focus();
 		}
 

@@ -1037,4 +1037,20 @@ public class Util {
 		}
 		return s.substring(i);
 	}
+
+	public static String concatenar(String... strings) {
+		if (strings == null) {
+			return Constantes.VAZIO;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (String string : strings) {
+			if (sb.length() > 0) {
+				sb.append(' ');
+			}
+			if (string != null) {
+				sb.append(string.trim());
+			}
+		}
+		return sb.toString();
+	}
 }
