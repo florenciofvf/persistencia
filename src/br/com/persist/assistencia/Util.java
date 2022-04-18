@@ -1044,10 +1044,10 @@ public class Util {
 		}
 		StringBuilder sb = new StringBuilder();
 		for (String string : strings) {
-			if (sb.length() > 0) {
-				sb.append(' ');
-			}
-			if (string != null) {
+			if (!estaVazio(string)) {
+				if (sb.length() > 0) {
+					sb.append(' ');
+				}
 				sb.append(string.trim());
 			}
 		}
