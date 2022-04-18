@@ -2731,7 +2731,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			focus();
 		}
 
-		public void colocarNomeColuna(TabelaPersistencia tabela, String nome) {
+		public void colocarNomeColuna(TabelaPersistencia tabela, String nome, Coluna coluna) {
 			String string = Constantes.VAZIO;
 			if (!Util.estaVazio(txtComplemento.getText())) {
 				String[] simNao = getArraySimNao();
@@ -2751,8 +2751,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (Util.estaVazio(opcao)) {
 				return;
 			}
+			String valor = Constantes.VAZIO;
+			if (coluna != null && coluna.isValidoConsulta() && !coluna.isNumero()) {
+				valor = "''";
+			}
 			String comApelido = objeto.comApelido(prefixo, nome);
-			txtComplemento.setText(Util.concatenar(string, comApelido, getValor(opcao, Constantes.VAZIO)));
+			txtComplemento.setText(Util.concatenar(string, comApelido, getValor(opcao, valor)));
 			focus();
 		}
 
@@ -2777,6 +2781,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			} else if ("IN".equals(opcao)) {
 				return " IN (" + string + ")";
 			} else if ("LIKE".equals(opcao)) {
+				if ("''".equals(string)) {
+					string = Constantes.VAZIO;
+				}
 				return " LIKE '%" + string + "%'";
 			} else if ("IS NULL".equals(opcao)) {
 				return " IS NULL";

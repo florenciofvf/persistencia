@@ -10,11 +10,11 @@ public interface TabelaPersistenciaListener {
 
 	public void colocarColunaComMemoria(TabelaPersistencia tabelaPersistencia, String nome, String memoria);
 
+	public void colocarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome, Coluna coluna);
+
 	public void tabelaMouseClick(TabelaPersistencia tabelaPersistencia, int colunaClicada);
 
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome);
-
-	public void colocarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome);
 
 	public void campoExportadoPara(String coluna);
 

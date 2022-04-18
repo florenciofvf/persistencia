@@ -439,7 +439,7 @@ public class TabelaPersistencia extends JTable {
 					if (atalho) {
 						listener.colocarNomeColunaAtalho(TabelaPersistencia.this, coluna, false, colunaTabela);
 					} else {
-						listener.colocarNomeColuna(TabelaPersistencia.this, coluna);
+						listener.colocarNomeColuna(TabelaPersistencia.this, coluna, colunaTabela);
 					}
 				}
 			}
