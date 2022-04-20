@@ -34,6 +34,13 @@ public class Requisicao {
 		}
 	}
 
+	public Requisicao clonar() {
+		Requisicao resp = new Requisicao(tipo);
+		resp.desc = desc;
+		resp.url = url;
+		return resp;
+	}
+
 	public String getString() {
 		if (tipo instanceof Objeto) {
 			Objeto objeto = (Objeto) tipo;

@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Icon;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
@@ -43,6 +44,7 @@ import br.com.persist.assistencia.Base64Util;
 import br.com.persist.assistencia.CellRenderer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.FragmentoUtil;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
@@ -232,6 +234,25 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			return null;
 		}
 
+		void clonarSelecionados() {
+			int[] linhas = getSelectedRows();
+			if (linhas != null) {
+				RequisicaoModelo modelo = getModelo();
+				int total = modelo.getRowCount();
+				for (int i : linhas) {
+					int indice = ((OrdemModel) getModel()).getRowIndex(i);
+					Requisicao req = modelo.getRequisicao(indice);
+					if (req != null) {
+						modelo.adicionar(req.clonar());
+					}
+				}
+				if (modelo.getRowCount() != total) {
+					setModel(new OrdemModel(modelo));
+					Util.ajustar(this, RequisicaoPagina.this.getGraphics());
+				}
+			}
+		}
+
 		RequisicaoModelo getModelo() {
 			return (RequisicaoModelo) ((OrdemModel) getModel()).getModel();
 		}
@@ -271,8 +292,13 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		return Action.acaoMenu(RequisicaoMensagens.getString(chave), null);
 	}
 
+	static Action actionIcon(String chave, Icon icon) {
+		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
+	}
+
 	private class ToolbarParametro extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private Action clonarSelAcao = actionIcon("label.clonar_selecionados", Icones.COPIA);
 		private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
 		private final TextField txtPesquisa = new TextField(35);
 		private CheckBox chkModoTabela = new CheckBox();
@@ -280,6 +306,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		private ToolbarParametro() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
+			addButton(clonarSelAcao);
 			buttonColar.addSeparator();
 			buttonColar.addItem(vAccessTokenAcao);
 			vAccessTokenAcao.setActionListener(e -> atualizarVar());
@@ -288,6 +315,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			add(txtPesquisa);
 			add(label);
 			add(chkModoTabela);
+			clonarSelAcao.setActionListener(e -> clonarSelecionados());
 			chkModoTabela.setToolTipText(RequisicaoMensagens.getString("label.modo_tabela"));
 			chkModoTabela.addActionListener(e -> modoTabelaHandler(chkModoTabela.isSelected()));
 		}
@@ -297,6 +325,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				configModoTabela();
 			} else {
 				configModoTexto();
+			}
+		}
+
+		private void clonarSelecionados() {
+			if (chkModoTabela.isSelected()) {
+				tabela.clonarSelecionados();
 			}
 		}
 
