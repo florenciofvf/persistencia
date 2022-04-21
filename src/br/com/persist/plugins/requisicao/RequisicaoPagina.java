@@ -239,16 +239,21 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			if (linhas != null) {
 				RequisicaoModelo modelo = getModelo();
 				int total = modelo.getRowCount();
+				List<Integer> lista = new ArrayList<>();
 				for (int i : linhas) {
 					int indice = ((OrdemModel) getModel()).getRowIndex(i);
 					Requisicao req = modelo.getRequisicao(indice);
 					if (req != null) {
-						modelo.adicionar(req.clonar());
+						lista.add(modelo.adicionar(req.clonar()));
+						lista.add(i);
 					}
 				}
 				if (modelo.getRowCount() != total) {
 					setModel(new OrdemModel(modelo));
 					Util.ajustar(this, RequisicaoPagina.this.getGraphics());
+					for (int i : lista) {
+						addRowSelectionInterval(i, i);
+					}
 				}
 			}
 		}

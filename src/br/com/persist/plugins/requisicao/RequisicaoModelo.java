@@ -20,10 +20,12 @@ public class RequisicaoModelo implements TableModel {
 		return null;
 	}
 
-	public void adicionar(Requisicao req) {
+	public int adicionar(Requisicao req) {
 		if (req != null) {
 			lista.add(req);
+			return lista.size() - 1;
 		}
+		return -1;
 	}
 
 	@Override
