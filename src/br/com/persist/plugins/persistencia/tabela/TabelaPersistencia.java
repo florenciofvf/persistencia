@@ -279,6 +279,7 @@ public class TabelaPersistencia extends JTable {
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
+		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private MenuMetadados menuMetadados = new MenuMetadados();
 		private Separator separatorChave = new Separator();
@@ -300,7 +301,7 @@ public class TabelaPersistencia extends JTable {
 			add(true, new MenuColocarColuna("label.copiar_nome_coluna_concat_n", true, false));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_l", false, true));
 			add(new MenuColocarColuna("label.copiar_nome_coluna_concat_t", false, false));
-			add(true, new MenuCopiarLinhas());
+			add(true, menuCopiarLinhas);
 			add(true, menuIN);
 			eventos();
 		}
@@ -366,6 +367,7 @@ public class TabelaPersistencia extends JTable {
 			FontMetrics fontMetrics = getFontMetrics(getFont());
 			larguraColuna = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
 			menuIN.setText(AND + chave + " IN");
+			menuCopiarLinhas.setIcon(null);
 			limparMenuChaveamento();
 			List<String> lista = getChaveamento().get(chave.toLowerCase());
 			if (lista != null && !lista.isEmpty()) {
@@ -476,6 +478,7 @@ public class TabelaPersistencia extends JTable {
 				String string = Util.getStringLista(lista, ", ", false, aspas);
 				if (!Util.estaVazio(string)) {
 					Util.setContentTransfered(string);
+					setIcon(Icones.SUCESSO);
 				}
 			}
 		}
