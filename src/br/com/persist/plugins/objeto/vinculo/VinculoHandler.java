@@ -70,6 +70,9 @@ public class VinculoHandler extends XMLHandler {
 		} else if (INSTRUCAO.equals(qName)) {
 			processarInstrucao(attributes);
 			limpar();
+		} else if (FILTRO.equals(qName)) {
+			processarFiltro(attributes);
+			limpar();
 		} else if (REF.equals(qName) && selecionado != null) {
 			selecionado.add(criar(attributes));
 		}
@@ -82,6 +85,13 @@ public class VinculoHandler extends XMLHandler {
 		}
 	}
 
+	private void processarFiltro(Attributes attributes) {
+		ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
+		if (paraTabela != null) {
+			addFiltro(attributes, paraTabela.getFiltros());
+		}
+	}
+
 	private void addInstrucao(Attributes attributes, List<Instrucao> lista) {
 		Instrucao i = new Instrucao(attributes.getValue(NOME));
 		boolean sm = Boolean.parseBoolean(attributes.getValue("selecaoMultipla"));
@@ -91,6 +101,15 @@ public class VinculoHandler extends XMLHandler {
 		}
 		i.setSelecaoMultipla(sm);
 		lista.add(i);
+	}
+
+	private void addFiltro(Attributes attributes, List<Filtro> lista) {
+		Filtro f = new Filtro(attributes.getValue(NOME));
+		String ordem = attributes.getValue("ordem");
+		if (!Util.estaVazio(ordem)) {
+			f.setOrdem(Integer.parseInt(ordem));
+		}
+		lista.add(f);
 	}
 
 	private static ParaTabela criarParaTabela(String tabela, Attributes attributes) {
@@ -173,6 +192,12 @@ public class VinculoHandler extends XMLHandler {
 				setValorInstrucao(paraTabela.getInstrucoes());
 			}
 			limpar();
+		} else if (FILTRO.equals(qName)) {
+			ParaTabela paraTabela = mapaParaTabela.get(tabelaSelecionada);
+			if (paraTabela != null && !paraTabela.getFiltros().isEmpty()) {
+				setValorFiltro(paraTabela.getFiltros());
+			}
+			limpar();
 		}
 	}
 
@@ -181,6 +206,14 @@ public class VinculoHandler extends XMLHandler {
 		String string = builder.toString();
 		if (!Util.estaVazio(string)) {
 			instrucao.setValor(string.trim());
+		}
+	}
+
+	private void setValorFiltro(List<Filtro> lista) {
+		Filtro filtro = lista.get(lista.size() - 1);
+		String string = builder.toString();
+		if (!Util.estaVazio(string)) {
+			filtro.setValor(string.trim());
 		}
 	}
 
