@@ -23,6 +23,7 @@ public class VinculoHandler extends XMLHandler {
 	public static final String INSTRUCAO = "instrucao";
 	public static final String COR_FONTE = "corFonte";
 	public static final String PESQUISA = "pesquisa";
+	public static final String FILTRO = "filtro";
 	public static final String TABELA = "tabela";
 	public static final String CAMPO = "campo";
 	public static final String ICONE = "icone";

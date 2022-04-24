@@ -10,6 +10,7 @@ import br.com.persist.plugins.objeto.Objeto;
 
 public class ParaTabela {
 	private final List<Instrucao> instrucoes;
+	private final List<Filtro> filtros;
 	private String prefixoNomeTabela;
 	private String selectAlternativo;
 	private String clonarAoDestacar;
@@ -41,6 +42,7 @@ public class ParaTabela {
 			throw new IllegalStateException("Tabela vazia.");
 		}
 		instrucoes = new ArrayList<>();
+		filtros = new ArrayList<>();
 		this.tabela = tabela;
 	}
 
@@ -48,9 +50,19 @@ public class ParaTabela {
 		return instrucoes;
 	}
 
+	public List<Filtro> getFiltros() {
+		return filtros;
+	}
+
 	public void add(Instrucao i) {
 		if (i != null) {
 			instrucoes.add(i);
+		}
+	}
+
+	public void add(Filtro f) {
+		if (f != null) {
+			filtros.add(f);
 		}
 	}
 
@@ -171,6 +183,11 @@ public class ParaTabela {
 			i.salvar(util, ql);
 			ql = true;
 		}
+		ql = false;
+		for (Filtro f : filtros) {
+			f.salvar(util, ql);
+			ql = true;
+		}
 		util.finalizarTag(VinculoHandler.PARA);
 	}
 
@@ -209,9 +226,15 @@ public class ParaTabela {
 		util.tab().atributo("sane", true).ql();
 		util.tab().atributo("ccsc", true).ql();
 		util.tab().atributo("bpnt", false).fecharTag();
+
 		Instrucao i = new Instrucao("Resumo da instrucao");
 		i.setValor("UPDATE candidato SET votos = 0 WHERE id = #id#");
 		i.salvar(util, false);
+
+		Filtro f = new Filtro("Resumo do filtro");
+		f.setValor("AND id = AND descricao like '%maria%'");
+		f.salvar(util, false);
+
 		util.finalizarTag(VinculoHandler.PARA);
 	}
 
