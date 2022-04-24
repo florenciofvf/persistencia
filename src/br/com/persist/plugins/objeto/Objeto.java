@@ -31,6 +31,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
+import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -54,6 +55,7 @@ public class Objeto implements Runnable {
 	private Referencia referenciaPesquisa;
 	private boolean ajusteAutoForm = true;
 	private boolean chaveamentoAlterado;
+	private final List<Filtro> filtros;
 	private boolean mapeamentoAlterado;
 	private boolean sequenciasAlterado;
 	private boolean desenharId = true;
@@ -125,6 +127,7 @@ public class Objeto implements Runnable {
 		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
 		pesquisas = new ArrayList<>();
+		filtros = new ArrayList<>();
 		setIcone(icone);
 		setCor(cor);
 		this.x = x;
@@ -151,6 +154,7 @@ public class Objeto implements Runnable {
 		o.sequencias = sequencias;
 		o.abrirAuto = abrirAuto;
 		o.descricao = descricao;
+		o.addFiltros(filtros);
 		o.corFonte = corFonte;
 		o.linkAuto = linkAuto;
 		o.tabelas = tabelas;
@@ -359,6 +363,10 @@ public class Objeto implements Runnable {
 		return instrucoes;
 	}
 
+	public List<Filtro> getFiltros() {
+		return filtros;
+	}
+
 	public boolean isVisivel() {
 		return visivel;
 	}
@@ -373,10 +381,24 @@ public class Objeto implements Runnable {
 		}
 	}
 
+	public void addFiltro(Filtro f) {
+		if (f != null) {
+			filtros.add(f);
+		}
+	}
+
 	public void addInstrucoes(List<Instrucao> lista) {
 		if (lista != null) {
 			for (Instrucao i : lista) {
 				addInstrucao(i);
+			}
+		}
+	}
+
+	public void addFiltros(List<Filtro> lista) {
+		if (lista != null) {
+			for (Filtro f : lista) {
+				addFiltro(f);
 			}
 		}
 	}
@@ -993,6 +1015,10 @@ public class Objeto implements Runnable {
 
 	public void ordenarInstrucoes() {
 		Collections.sort(instrucoes);
+	}
+
+	public void ordenarFiltros() {
+		Collections.sort(filtros);
 	}
 
 	public List<Referencia> getReferencias() {
