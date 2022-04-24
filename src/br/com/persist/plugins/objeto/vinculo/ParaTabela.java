@@ -183,7 +183,6 @@ public class ParaTabela {
 			i.salvar(util, ql);
 			ql = true;
 		}
-		ql = false;
 		for (Filtro f : filtros) {
 			f.salvar(util, ql);
 			ql = true;

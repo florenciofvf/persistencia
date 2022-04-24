@@ -85,6 +85,7 @@ public class Vinculacao {
 		ParaTabela paraTabela = mapaParaTabela.get(objeto.getTabela());
 		if (paraTabela != null) {
 			objeto.addInstrucoes(paraTabela.getInstrucoes());
+			objeto.addFiltros(paraTabela.getFiltros());
 			paraTabela.config(objeto);
 		}
 		for (Pesquisa p : pesquisas) {

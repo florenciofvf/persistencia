@@ -104,6 +104,7 @@ import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.Relacao;
+import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
 import br.com.persist.plugins.objeto.vinculo.Referencia;
@@ -549,6 +550,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			buttonInfo.ini(objeto);
 			buttonUpdate.complemento(objeto);
 			buttonPesquisa.complemento(objeto);
+			buttonComplemento.complemento(objeto);
 			setFloatable(false);
 		}
 
@@ -741,6 +743,31 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				copiarAcao.setActionListener(e -> copiarComplemento());
 				concatAcao.setActionListener(e -> processar(false));
 				normalAcao.setActionListener(e -> processar(true));
+			}
+
+			private void complemento(Objeto objeto) {
+				int i = 0;
+				if (objeto != null) {
+					objeto.ordenarFiltros();
+					for (Filtro f : objeto.getFiltros()) {
+						if (!Util.estaVazio(f.getValor())) {
+							MenuFiltro menu = new MenuFiltro(f);
+							if (++i == 1) {
+								addSeparator();
+							}
+							addMenuItem(menu);
+						}
+					}
+				}
+			}
+
+			private class MenuFiltro extends MenuItem {
+				private static final long serialVersionUID = 1L;
+
+				private MenuFiltro(Filtro filtro) {
+					super(filtro.getNome(), false, null);
+					addActionListener(e -> txtComplemento.setText(filtro.getValor()));
+				}
 			}
 
 			private void copiarNomeTabela() {
