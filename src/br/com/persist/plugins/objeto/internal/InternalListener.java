@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import br.com.persist.abstrato.DesktopAlinhamento;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.Relacao;
@@ -22,6 +23,8 @@ public interface InternalListener {
 
 		public void pesquisar(Conexao conexao, Pesquisa pesquisa, String argumentos);
 
+		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException;
+
 		public void selecionarCampo(Objeto objeto, Coletor coletor, Component c);
 
 		public void getMetadado(AtomicReference<Object> ref, Objeto objeto);
@@ -29,8 +32,6 @@ public interface InternalListener {
 		public void pesquisarLink(List<Referencia> refs, String argumentos);
 
 		public void pesquisarApos(Objeto fonte, Pesquisa pesquisa);
-
-		public void preencherVinculacao(Vinculacao vinculacao);
 
 		public void salvarVinculacao(Vinculacao vinculacao);
 

@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import br.com.persist.abstrato.AbstratoFormulario;
 import br.com.persist.assistencia.Util;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.metadado.Metadado;
 import br.com.persist.plugins.objeto.internal.InternalConfig;
@@ -56,7 +57,7 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		}
 	}
 
-	public void abrirArquivo(File file, ObjetoColetor coletor, InternalConfig config) {
+	public void abrirArquivo(File file, ObjetoColetor coletor, InternalConfig config) throws XMLException {
 		container.abrir(file, coletor, config);
 	}
 

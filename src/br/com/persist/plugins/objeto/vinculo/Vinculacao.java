@@ -35,7 +35,7 @@ public class Vinculacao {
 		mapaParaTabela.put(paraTabela.getTabela(), paraTabela);
 	}
 
-	public void abrir(String arquivo, Component componente) {
+	public void abrir(String arquivo, Component componente) throws XMLException {
 		mapaParaTabela.clear();
 		pesquisas.clear();
 		File file = null;
@@ -50,6 +50,7 @@ public class Vinculacao {
 				mapaParaTabela.putAll(handler.getMapaParaTabela());
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage("ABRIR: " + file.getAbsolutePath(), ex, componente);
+				throw new XMLException(ex);
 			}
 		}
 	}

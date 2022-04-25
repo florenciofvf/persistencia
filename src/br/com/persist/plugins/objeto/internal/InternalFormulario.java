@@ -26,6 +26,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.objeto.Desktop;
 import br.com.persist.plugins.objeto.Objeto;
@@ -309,7 +310,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 			}
 		}
 
-		public void preencherVinculacao(Vinculacao vinculacao) {
+		public void preencherVinculacao(Vinculacao vinculacao) throws XMLException {
 			checarDesktop();
 			if (desktop instanceof ObjetoSuperficie) {
 				((ObjetoSuperficie) desktop).preencherVinculacao(vinculacao);

@@ -65,6 +65,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.SetFormulario;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoEvento;
@@ -598,7 +599,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		btnSelecao.click();
 	}
 
-	public void abrir(File file, ObjetoColetor coletor, InternalConfig config) {
+	public void abrir(File file, ObjetoColetor coletor, InternalConfig config) throws XMLException {
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
 		objetoSuperficie.abrir(coletor);
 		arquivo = file;

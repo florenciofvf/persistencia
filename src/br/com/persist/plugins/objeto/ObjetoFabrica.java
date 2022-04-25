@@ -29,6 +29,7 @@ import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.arquivo.ArquivoEvento;
 import br.com.persist.plugins.arquivo.ArquivoProvedor;
 import br.com.persist.plugins.conexao.Conexao;
@@ -261,7 +262,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private static void abrirNoFormulario(Formulario formulario, File file, ObjetoColetor coletor,
-			InternalConfig config) {
+			InternalConfig config) throws XMLException {
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
 		form.abrirArquivo(file, coletor, config);
 	}

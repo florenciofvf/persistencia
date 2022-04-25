@@ -151,6 +151,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private transient InternalListener.Selecao selecaoListener;
 	private transient InternalListener.Titulo tituloListener;
 	private static final Logger LOG = Logger.getGlobal();
+	private static final String DESCRICAO = "DESCRICAO";
 	private ScrollPane scrollPane = new ScrollPane();
 	private transient InternalConfig internalConfig;
 	private final JComboBox<Conexao> comboConexao;
@@ -960,7 +961,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						try {
 							Util.mensagem(InternalContainer.this, ObjetoUtil.getDescricao(pesquisa));
 						} catch (Exception ex) {
-							Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 						}
 					}
 
@@ -1023,7 +1024,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								return;
 							}
 							Vinculacao vinculacao = new Vinculacao();
-							vinculoListener.preencherVinculacao(vinculacao);
+							try {
+								vinculoListener.preencherVinculacao(vinculacao);
+							} catch (Exception ex) {
+								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+								return;
+							}
 							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 							if (pesq != null) {
 								MenuPesquisa.this.setIcon(Imagens.getIcon(nome));
@@ -1039,7 +1045,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								return;
 							}
 							Vinculacao vinculacao = new Vinculacao();
-							vinculoListener.preencherVinculacao(vinculacao);
+							try {
+								vinculoListener.preencherVinculacao(vinculacao);
+							} catch (Exception ex) {
+								Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+								return;
+							}
 							Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 							if (pesq != null) {
 								MenuPesquisa.this.setIcon(null);
@@ -1055,7 +1066,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							return;
 						}
 						Vinculacao vinculacao = new Vinculacao();
-						vinculoListener.preencherVinculacao(vinculacao);
+						try {
+							vinculoListener.preencherVinculacao(vinculacao);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							return;
+						}
 						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 						if (pesq != null) {
 							if (adicionar && !pesq.contemLimparResto()) {
@@ -1075,7 +1091,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							return;
 						}
 						Vinculacao vinculacao = new Vinculacao();
-						vinculoListener.preencherVinculacao(vinculacao);
+						try {
+							vinculoListener.preencherVinculacao(vinculacao);
+						} catch (Exception ex) {
+							Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+							return;
+						}
 						Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 						if (pesq != null) {
 							if (invisivel) {
@@ -1096,7 +1117,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
-					vinculoListener.preencherVinculacao(vinculacao);
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
 					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 					if (pesq != null
 							&& Util.confirmar(InternalContainer.this,
@@ -1112,7 +1138,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
-					vinculoListener.preencherVinculacao(vinculacao);
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
 					Pesquisa pesq = vinculacao.getPesquisa(pesquisa);
 					if (pesq != null) {
 						renomear(pesq, vinculacao);
@@ -1615,7 +1646,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					String descricao = ObjetoUtil.getDescricao(objeto.getPesquisaAdicaoHierarquico());
 					Util.mensagem(InternalContainer.this, descricao);
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("DESCRICAO", ex, InternalContainer.this);
+					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
 				}
 			}
 
@@ -2106,7 +2137,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					Vinculacao vinculacao = new Vinculacao();
-					vinculoListener.preencherVinculacao(vinculacao);
+					try {
+						vinculoListener.preencherVinculacao(vinculacao);
+					} catch (Exception ex) {
+						Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+						return;
+					}
 					if (objeto.getPesquisas().isEmpty()) {
 						processarPesquisaVazio(mapaRef, vinculacao);
 					} else {
@@ -2657,7 +2693,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				return;
 			}
 			Vinculacao vinculacao = new Vinculacao();
-			vinculoListener.preencherVinculacao(vinculacao);
+			try {
+				vinculoListener.preencherVinculacao(vinculacao);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+				return;
+			}
 			Pesquisa pesquisa = new Pesquisa(nomePesquisa,
 					new Referencia(objeto.getGrupo(), objeto.getTabela(), coluna));
 			Referencia referencia = new Referencia(objDetalhe.getGrupo(), objDetalhe.getTabela(), coletor.get(0));

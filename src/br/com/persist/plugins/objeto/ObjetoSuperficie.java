@@ -1653,7 +1653,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	public void abrir(ObjetoColetor coletor) {
+	public void abrir(ObjetoColetor coletor) throws XMLException {
 		limpar();
 		for (Objeto objeto : coletor.getObjetos()) {
 			addObjeto(objeto);
@@ -1676,7 +1676,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 	}
 
-	public void preencherVinculacao(Vinculacao vinculacao) {
+	public void preencherVinculacao(Vinculacao vinculacao) throws XMLException {
 		vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
 	}
 
@@ -2524,7 +2524,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void salvar(Pesquisa pesquisa) {
-			vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
+			try {
+				vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("SALVAR", ex, ObjetoSuperficie.this);
+				return;
+			}
 			vinculacao.adicionarPesquisa(pesquisa);
 			for (Referencia ref : pesquisa.getReferencias()) {
 				Pesquisa pesq = ref.inverter();
@@ -2534,7 +2539,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		}
 
 		private void salvar(List<Pesquisa> listaRef) {
-			vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
+			try {
+				vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
+			} catch (Exception ex) {
+				Util.stackTraceAndMessage("VINCULAR", ex, ObjetoSuperficie.this);
+				return;
+			}
 			for (Pesquisa pesq : listaRef) {
 				vinculacao.adicionarPesquisa(pesq);
 				Pesquisa invertido = pesq.inverter(null, null);
