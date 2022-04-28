@@ -347,7 +347,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		public void windowOpenedHandler(Window window) {
-			buttonDestacar.estadoFormulario();
+			if (objetoFormulario != null) {
+				buttonDestacar.estadoFormulario();
+			} else {
+				buttonDestacar.estadoFichario();
+			}
 			estadoSelecao();
 		}
 
