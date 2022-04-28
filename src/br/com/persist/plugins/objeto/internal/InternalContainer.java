@@ -1688,7 +1688,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private void tabelasRepetidas() {
-					Util.mensagem(InternalContainer.this, objeto.getTabelasRepetidas().toString());
+					Util.mensagem(InternalContainer.this, objeto.getInconsistencias());
 				}
 
 				private void configCor() {

@@ -45,7 +45,6 @@ public class Objeto implements Runnable {
 	private Pesquisa pesquisaAdicaoHierarquico;
 	private final List<Referencia> referencias;
 	private Map<String, String> mapaSequencias;
-	private final Set<String> tabelasRepetidas;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private final List<Instrucao> instrucoes;
 	private boolean clonarAoDestacar = true;
@@ -122,7 +121,6 @@ public class Objeto implements Runnable {
 
 	public Objeto(int x, int y, Color cor, String icone) {
 		id = Constantes.VAZIO + (++sequencia);
-		tabelasRepetidas = new HashSet<>();
 		referencias = new ArrayList<>();
 		complementos = new HashSet<>();
 		instrucoes = new ArrayList<>();
@@ -1027,11 +1025,38 @@ public class Objeto implements Runnable {
 
 	public void addReferencia(Referencia ref) {
 		if (ref != null && !Pesquisa.contem(ref, referencias)) {
-			if (Pesquisa.contem2(ref, referencias)) {
-				tabelasRepetidas.add(ref.getTabela());
-			}
 			referencias.add(ref);
 		}
+	}
+
+	public String getInconsistencias() {
+		Map<String, List<String>> map = new HashMap<>();
+		for (int i = 0; i < referencias.size(); i++) {
+			Referencia ref = referencias.get(i);
+			String chave = criarChave(ref);
+			List<String> campos = map.computeIfAbsent(chave, t -> new ArrayList<>());
+			campos.add(ref.getCampo());
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+			String chave = entry.getKey();
+			List<String> campos = entry.getValue();
+			if (campos.size() > 1) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL2);
+				}
+				sb.append(chave + Constantes.QL);
+				sb.append(campos.toString());
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String criarChave(Referencia ref) {
+		return ref.getGrupo() + "|" + ref.getTabela();
 	}
 
 	public void addReferencias(List<Referencia> referencias) {
@@ -1062,10 +1087,6 @@ public class Objeto implements Runnable {
 
 	public void setReferenciaPesquisa(Referencia referenciaPesquisa) {
 		this.referenciaPesquisa = referenciaPesquisa;
-	}
-
-	public Set<String> getTabelasRepetidas() {
-		return tabelasRepetidas;
 	}
 
 	public boolean isChecarLargura() {
