@@ -1666,6 +1666,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					addMenuItem(true, tabelasRepetidasAcao);
 					addMenuItem(true, destacarColunaAcao);
 					larTitTodosAcao.setActionListener(e -> tabelaPersistencia.larguraTituloTodos());
+					tabelasRepetidasAcao.hint(ObjetoMensagens.getString("hint.incon_link_auto"));
 					tabelasRepetidasAcao.setActionListener(e -> tabelasRepetidas());
 					colunasComplAcao.setActionListener(e -> totalColunasCompl());
 					destacarColunaAcao.setActionListener(e -> destacarColuna());
