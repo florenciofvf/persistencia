@@ -1030,33 +1030,50 @@ public class Objeto implements Runnable {
 	}
 
 	public String getInconsistencias() {
-		Map<String, List<String>> map = new HashMap<>();
+		Map<String, List<Referencia>> map = new HashMap<>();
 		for (int i = 0; i < referencias.size(); i++) {
 			Referencia ref = referencias.get(i);
 			String chave = criarChave(ref);
-			List<String> campos = map.computeIfAbsent(chave, t -> new ArrayList<>());
-			campos.add(ref.getCampo());
+			List<Referencia> refs = map.computeIfAbsent(chave, t -> new ArrayList<>());
+			refs.add(ref);
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-			String chave = entry.getKey();
-			List<String> campos = entry.getValue();
-			if (campos.size() > 1) {
+		for (Map.Entry<String, List<Referencia>> entry : map.entrySet()) {
+			List<Referencia> refs = entry.getValue();
+			if (refs.size() > 1) {
 				if (sb.length() > 0) {
 					sb.append(Constantes.QL2);
 				}
-				sb.append(chave + Constantes.QL);
-				sb.append(campos.toString());
+				sb.append(toString(refs));
 			}
 		}
 
 		return sb.toString();
 	}
 
+	private String toString(List<Referencia> refs) {
+		StringBuilder sb = new StringBuilder();
+		for (Referencia ref : refs) {
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(toString(ref));
+		}
+		return sb.toString();
+	}
+
+	private String toString(Referencia ref) {
+		if (ref.getPesquisa() != null) {
+			Pesquisa p = ref.getPesquisa();
+			return "pesquisa=" + p.getNome() + ", " + ref.toString();
+		}
+		return ref.toString();
+	}
+
 	private String criarChave(Referencia ref) {
-		return ref.getGrupo() + "|" + ref.getTabela();
+		return "[" + ref.getGrupo() + "][" + ref.getTabela() + "]";
 	}
 
 	public void addReferencias(List<Referencia> referencias) {
