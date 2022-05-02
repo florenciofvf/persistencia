@@ -207,7 +207,10 @@ class SetListaModelo extends AbstractListModel<Item> {
 			Item item = new Item(string, !config.somenteUm);
 			if (!listaItem.contains(item)) {
 				listaItem.add(item);
-				if (getSize() == 1) {
+				if (config.somenteUm) {
+					for (Item it : listaItem) {
+						it.setSelecionado(false);
+					}
 					item.setSelecionado(true);
 				}
 				notificarMudancas();
