@@ -167,6 +167,8 @@ public class ObjetoContainer extends Panel {
 				para.setMapeamento(compChave.getText());
 			} else if ("COMPLEMENTO".equals(compChave.chave)) {
 				para.setComplemento(compChave.getText());
+			} else if ("DESTACAVEIS".equals(compChave.chave)) {
+				para.setDestacaveis(compChave.getText());
 			}
 			processar(para);
 			objetoSuperficie.salvarVinculacao(vinculacao);
@@ -379,6 +381,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtChaveamento = new TextField();
 		private TextField txtSelectAlter = new TextField();
 		private TextField txtComplemento = new TextField();
+		private TextField txtDestacaveis = new TextField();
 		private TextField txtSequencias = new TextField();
 		private TextField txtMapeamento = new TextField();
 		private TextField txtPrefixoNT = new TextField();
@@ -404,6 +407,7 @@ public class ObjetoContainer extends Panel {
 			chkColunaInfo.setSelected(objeto.isColunaInfo());
 			txtChaveamento.setText(objeto.getChaveamento());
 			txtComplemento.setText(objeto.getComplemento());
+			txtDestacaveis.setText(objeto.getDestacaveis());
 			chkAbrirAuto.setSelected(objeto.isAbrirAuto());
 			txtSequencias.setText(objeto.getSequencias());
 			txtMapeamento.setText(objeto.getMapeamento());
@@ -420,6 +424,7 @@ public class ObjetoContainer extends Panel {
 			txtFinalConsulta.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
 			txtComplemento.addFocusListener(focusListenerInner);
+			txtDestacaveis.addFocusListener(focusListenerInner);
 			txtSelectAlter.addFocusListener(focusListenerInner);
 			txtMapeamento.addFocusListener(focusListenerInner);
 			txtSequencias.addFocusListener(focusListenerInner);
@@ -435,6 +440,7 @@ public class ObjetoContainer extends Panel {
 			txtFinalConsulta.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
+			txtDestacaveis.addActionListener(this);
 			txtSelectAlter.addActionListener(this);
 			txtMapeamento.addActionListener(this);
 			txtSequencias.addActionListener(this);
@@ -470,6 +476,7 @@ public class ObjetoContainer extends Panel {
 			container.add(
 					criarLinhaCopiar("label.mapeamento", txtMapeamento, ObjetoMensagens.getString("hint.mapeamento")));
 			container.add(criarLinhaCopiar("label.complemento", txtComplemento));
+			container.add(criarLinhaCopiar("label.campos_destac", txtDestacaveis));
 			container.add(criarLinhaCopiar("label.order_by", txtOrderBy));
 			container.add(criarLinhaCopiarRotulo("label.final_consulta", txtFinalConsulta));
 			container.add(criarLinhaRotulo("label.coluna_info", chkColunaInfo));
@@ -482,6 +489,7 @@ public class ObjetoContainer extends Panel {
 					chkAjusteAutoForm, ObjetoMensagens.getString("hint.ajuste_auto_form"), null));
 			txtChaveamento.addMouseListener(chaveamentoListener);
 			txtComplemento.addMouseListener(complementoListener);
+			txtDestacaveis.addMouseListener(destacaveisListener);
 			txtMapeamento.addMouseListener(mapeamentoListener);
 			txtSequencias.addMouseListener(sequenciaListener);
 			add(BorderLayout.CENTER, new ScrollPane(container));
@@ -494,6 +502,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(txtSelectAlter, "SELECT_ALTER"));
 			vinculados.add(new CompChave(txtChaveamento, "CHAVEAMENTO"));
 			vinculados.add(new CompChave(txtComplemento, "COMPLEMENTO"));
+			vinculados.add(new CompChave(txtDestacaveis, "DESTACAVEIS"));
 			vinculados.add(new CompChave(chkColunaInfo, "COLUNA_INFO"));
 			vinculados.add(new CompChave(txtMapeamento, "MAPEAMENTO"));
 			vinculados.add(new CompChave(txtPrefixoNT, "PREFIXO_NT"));
@@ -515,6 +524,7 @@ public class ObjetoContainer extends Panel {
 			txtSelectAlter.addMouseListener(listenerVinculado);
 			txtChaveamento.addMouseListener(listenerVinculado);
 			txtComplemento.addMouseListener(listenerVinculado);
+			txtDestacaveis.addMouseListener(listenerVinculado);
 			txtSequencias.addMouseListener(listenerVinculado);
 			txtMapeamento.addMouseListener(listenerVinculado);
 			chkColunaInfo.addMouseListener(listenerVinculado);
@@ -567,6 +577,20 @@ public class ObjetoContainer extends Panel {
 			}
 		};
 
+		private transient MouseListener destacaveisListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() >= Constantes.DOIS) {
+					Dialog dialog = Util.getViewParentDialog(ObjetoContainer.this);
+					MiscelaniaDialogo form = MiscelaniaDialogo.criar(dialog, objeto,
+							MiscelaniaContainer.Tipo.DESTACAVEIS);
+					config(dialog, form);
+					form.setVisible(true);
+					txtDestacaveis.setText(objeto.getDestacaveis());
+				}
+			}
+		};
+
 		private void config(Window parent, Window child) {
 			Util.configSizeLocation(parent, child, ObjetoContainer.this);
 		}
@@ -611,6 +635,8 @@ public class ObjetoContainer extends Panel {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txtComplemento.getText());
+			} else if (txtDestacaveis == e.getSource()) {
+				objeto.setDestacaveis(txtDestacaveis.getText());
 			} else if (txtOrderBy == e.getSource()) {
 				objeto.setOrderBy(txtOrderBy.getText());
 			} else if (txtGrupo == e.getSource()) {

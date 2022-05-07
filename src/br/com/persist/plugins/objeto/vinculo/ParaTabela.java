@@ -18,6 +18,7 @@ public class ParaTabela {
 	private String finalConsulta;
 	private String transparente;
 	private String complemento;
+	private String destacaveis;
 	private String colunaInfo;
 	private String destacavel;
 	private String sequencias;
@@ -113,6 +114,9 @@ public class ParaTabela {
 		if (!Util.estaVazio(complemento)) {
 			objeto.setComplemento(complemento);
 		}
+		if (!Util.estaVazio(destacaveis)) {
+			objeto.setDestacaveis(destacaveis);
+		}
 		if (!Util.estaVazio(campoNomes)) {
 			objeto.setChaveamento(campoNomes);
 		}
@@ -162,6 +166,7 @@ public class ParaTabela {
 		atributoValor(util, "ajustarAltura", ajustarAltura);
 		atributoValor(util, "transparente", transparente);
 		atributoValor(util, "complemento", complemento);
+		atributoValor(util, "destacaveis", destacaveis);
 		atributoValor(util, "mapeamento", mapeamento);
 		atributoValor(util, "sequencias", sequencias);
 		atributoValor(util, "campoNomes", campoNomes);
@@ -210,6 +215,7 @@ public class ParaTabela {
 		util.tab().atributo("finalConsulta", "").ql();
 		util.tab().atributo("transparente", "").ql();
 		util.tab().atributo("complemento", "").ql();
+		util.tab().atributo("destacaveis", "").ql();
 		util.tab().atributo("mapeamento", "").ql();
 		util.tab().atributo("sequencias", "").ql();
 		util.tab().atributo("campoNomes", "").ql();
@@ -321,6 +327,14 @@ public class ParaTabela {
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+
+	public String getDestacaveis() {
+		return destacaveis;
+	}
+
+	public void setDestacaveis(String destacaveis) {
+		this.destacaveis = destacaveis;
 	}
 
 	public String getCampoNomes() {
