@@ -14,6 +14,7 @@ public class ParaTabela {
 	private String prefixoNomeTabela;
 	private String selectAlternativo;
 	private String clonarAoDestacar;
+	private String larguraRotulos;
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String transparente;
@@ -85,6 +86,9 @@ public class ParaTabela {
 		}
 		if (!Util.estaVazio(linkAuto)) {
 			objeto.setLinkAuto(Boolean.parseBoolean(linkAuto));
+		}
+		if (!Util.estaVazio(larguraRotulos)) {
+			objeto.setLarguraRotulos(Boolean.parseBoolean(larguraRotulos));
 		}
 		if (!Util.estaVazio(prefixoNomeTabela)) {
 			objeto.setPrefixoNomeTabela(prefixoNomeTabela);
@@ -162,6 +166,7 @@ public class ParaTabela {
 		atributoValor(util, "prefixoNomeTabela", prefixoNomeTabela);
 		atributoValor(util, "selectAlternativo", selectAlternativo);
 		atributoValor(util, "clonarAoDestacar", clonarAoDestacar);
+		atributoValor(util, "larguraRotulos", larguraRotulos);
 		atributoValor(util, "finalConsulta", finalConsulta);
 		atributoValor(util, "ajustarAltura", ajustarAltura);
 		atributoValor(util, "transparente", transparente);
@@ -210,6 +215,7 @@ public class ParaTabela {
 				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#AABBCC").ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
+		util.tab().atributo("larguraRotulos", false).ql();
 		util.tab().atributo("clonarAoDestacar", "").ql();
 		util.tab().atributo("ajustarAltura", true).ql();
 		util.tab().atributo("finalConsulta", "").ql();
@@ -403,6 +409,14 @@ public class ParaTabela {
 
 	public void setLinkAuto(String linkAuto) {
 		this.linkAuto = linkAuto;
+	}
+
+	public String getLarguraRotulos() {
+		return larguraRotulos;
+	}
+
+	public void setLarguraRotulos(String larguraRotulos) {
+		this.larguraRotulos = larguraRotulos;
 	}
 
 	public String getSane() {

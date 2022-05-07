@@ -94,6 +94,18 @@ public class Macro {
 		}
 	}
 
+	static class LarguraRotulos extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setLarguraRotulos((Boolean) valor);
+		}
+	}
+
 	static class Ccsc extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {

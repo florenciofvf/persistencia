@@ -11,7 +11,6 @@ import br.com.persist.plugins.objeto.macro.Macro.AbrirAuto;
 import br.com.persist.plugins.objeto.macro.Macro.AjusteAutoForm;
 import br.com.persist.plugins.objeto.macro.Macro.Bpnt;
 import br.com.persist.plugins.objeto.macro.Macro.Ccsc;
-import br.com.persist.plugins.objeto.macro.Macro.Sane;
 import br.com.persist.plugins.objeto.macro.Macro.ColunaInfo;
 import br.com.persist.plugins.objeto.macro.Macro.CopiarDestacado;
 import br.com.persist.plugins.objeto.macro.Macro.Cor;
@@ -20,10 +19,12 @@ import br.com.persist.plugins.objeto.macro.Macro.DesenharIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.DeslocamentoXIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.DeslocamentoYIdDescricao;
 import br.com.persist.plugins.objeto.macro.Macro.Icone;
+import br.com.persist.plugins.objeto.macro.Macro.LarguraRotulos;
 import br.com.persist.plugins.objeto.macro.Macro.LinkAuto;
 import br.com.persist.plugins.objeto.macro.Macro.PontoDestino;
 import br.com.persist.plugins.objeto.macro.Macro.PontoOrigem;
 import br.com.persist.plugins.objeto.macro.Macro.Quebrado;
+import br.com.persist.plugins.objeto.macro.Macro.Sane;
 import br.com.persist.plugins.objeto.macro.Macro.Transparente;
 import br.com.persist.plugins.objeto.macro.Macro.XPos;
 import br.com.persist.plugins.objeto.macro.Macro.YPos;
@@ -36,6 +37,7 @@ public class MacroProvedor {
 	private static final String DESENHAR_ID_DESC = "desenharIdDesc";
 	private static final String DESCLOC_X_ID_DESC = "deslocXIdDesc";
 	private static final String DESCLOC_Y_ID_DESC = "deslocYIdDesc";
+	private static final String LARGURA_ROTULOS = "larguraRotulos";
 	private static final String PONTO_DESTINO = "pontoDestino";
 	private static final String TRANSPARENTE = "transparente";
 	private static final String PONTO_ORIGEM = "pontoOrigem";
@@ -93,6 +95,7 @@ public class MacroProvedor {
 		mapa.put(DESENHAR_ID_DESC, new DesenharIdDescricao());
 		mapa.put(COPIAR_DESTACADO, new CopiarDestacado());
 		mapa.put(AJUSTE_AUTO_FORM, new AjusteAutoForm());
+		mapa.put(LARGURA_ROTULOS, new LarguraRotulos());
 		mapa.put(PONTO_DESTINO, new PontoDestino());
 		mapa.put(TRANSPARENTE, new Transparente());
 		mapa.put(PONTO_ORIGEM, new PontoOrigem());
@@ -153,6 +156,12 @@ public class MacroProvedor {
 
 	public static void linkAuto(Object valor) {
 		Instrucao instrucao = get(LINK_AUTO);
+		instrucao.setValor(valor);
+		adicionar(instrucao);
+	}
+
+	public static void larguraRotulos(Object valor) {
+		Instrucao instrucao = get(LARGURA_ROTULOS);
 		instrucao.setValor(valor);
 		adicionar(instrucao);
 	}

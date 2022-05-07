@@ -185,6 +185,8 @@ public class ObjetoContainer extends Panel {
 				para.setDestacavel(compChave.getBool());
 			} else if ("LINK_AUTO".equals(compChave.chave)) {
 				para.setLinkAuto(compChave.getBool());
+			} else if ("LARGURA_ROTULOS".equals(compChave.chave)) {
+				para.setLarguraRotulos(compChave.getBool());
 			} else if ("TRANSPARENTE".equals(compChave.chave)) {
 				para.setTransparente(compChave.getBool());
 			} else if ("CLONAR_DESTA".equals(compChave.chave)) {
@@ -378,6 +380,7 @@ public class ObjetoContainer extends Panel {
 		private static final long serialVersionUID = 1L;
 		private TextField txtFinalConsulta = new TextField();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
+		private CheckBox chkLarguraRotulos = new CheckBox();
 		private TextField txtChaveamento = new TextField();
 		private TextField txtSelectAlter = new TextField();
 		private TextField txtComplemento = new TextField();
@@ -400,6 +403,7 @@ public class ObjetoContainer extends Panel {
 
 		private PanelBanco() {
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
+			chkLarguraRotulos.setSelected(objeto.isLarguraRotulos());
 			txtSelectAlter.setText(objeto.getSelectAlternativo());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
 			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
@@ -437,6 +441,7 @@ public class ObjetoContainer extends Panel {
 			txtJoins.addFocusListener(focusListenerInner);
 			txtGrupo.addFocusListener(focusListenerInner);
 			chkAjusteAutoForm.addActionListener(this);
+			chkLarguraRotulos.addActionListener(this);
 			txtFinalConsulta.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
@@ -482,6 +487,7 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaRotulo("label.coluna_info", chkColunaInfo));
 			container.add(criarLinha("label.abrir_auto", chkAbrirAuto));
 			container.add(criarLinhaRotulo("label.link_auto", chkLinkAuto));
+			container.add(criarLinhaRotulo("label.largura_rotulos", chkLarguraRotulos));
 			container.add(criarLinha("label.sane", chkSANE, ObjetoMensagens.getString("hint.sane")));
 			container.add(criarLinha("label.ccsc", chkCCSC, ObjetoMensagens.getString("hint.ccsc")));
 			container.add(criarLinha("label.bpnt", chkBPNT, ObjetoMensagens.getString("hint.bpnt")));
@@ -497,6 +503,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void vincular() {
+			vinculados.add(new CompChave(chkLarguraRotulos, "LARGURA_ROTULOS"));
 			vinculados.add(new CompChave(txtFinalConsulta, "FINAL_CONSULTA"));
 			vinculados.add(new CompChave(chkAjusteAutoForm, "AJUSTE_AUTO"));
 			vinculados.add(new CompChave(txtSelectAlter, "SELECT_ALTER"));
@@ -520,6 +527,7 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(chkBPNT, "BPNT"));
 
 			chkAjusteAutoForm.addMouseListener(listenerVinculado);
+			chkLarguraRotulos.addMouseListener(listenerVinculado);
 			txtFinalConsulta.addMouseListener(listenerVinculado);
 			txtSelectAlter.addMouseListener(listenerVinculado);
 			txtChaveamento.addMouseListener(listenerVinculado);
@@ -670,6 +678,10 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setLinkAuto(chk.isSelected());
 				MacroProvedor.linkAuto(chk.isSelected());
+			} else if (chkLarguraRotulos == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setLarguraRotulos(chk.isSelected());
+				MacroProvedor.larguraRotulos(chk.isSelected());
 			} else if (chkCCSC == e.getSource()) {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setCcsc(chk.isSelected());
