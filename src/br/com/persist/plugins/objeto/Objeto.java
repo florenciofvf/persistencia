@@ -78,6 +78,7 @@ public class Objeto implements Runnable {
 	private boolean sane = true;
 	private long totalRegistros;
 	private String complemento;
+	private String destacaveis;
 	private String chaveamento;
 	private boolean colunaInfo;
 	private String sequencias;
@@ -145,6 +146,7 @@ public class Objeto implements Runnable {
 		o.transparente = transparente;
 		o.addInstrucoes(instrucoes);
 		o.complemento = complemento;
+		o.destacaveis = destacaveis;
 		o.chaveamento = chaveamento;
 		o.desenharId = desenharId;
 		o.colunaInfo = colunaInfo;
@@ -190,6 +192,7 @@ public class Objeto implements Runnable {
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
+		destacaveis = attr.getValue("destacaveis");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
 		mapeamento = attr.getValue("mapeamento");
@@ -216,6 +219,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("finalConsulta", getFinalConsulta());
 		util.atributoCheck("chaveamento", getChaveamento());
 		util.atributoCheck("complemento", getComplemento());
+		util.atributoCheck("destacaveis", getDestacaveis());
 		util.atributoCheck("selectAlternativo", getSelectAlternativo());
 		util.atributoCheck("apelidoParaJoins", getApelidoParaJoins());
 		util.atributoCheck("orderBy", getOrderBy());
@@ -339,6 +343,10 @@ public class Objeto implements Runnable {
 		if (!Util.estaVazio(complemento)) {
 			complementos.add(complemento);
 		}
+	}
+
+	public void setDestacaveis(String destacaveis) {
+		this.destacaveis = destacaveis;
 	}
 
 	public void setDesenharId(boolean desenharId) {
@@ -473,6 +481,13 @@ public class Objeto implements Runnable {
 			complemento = Constantes.VAZIO;
 		}
 		return complemento;
+	}
+
+	public String getDestacaveis() {
+		if (Util.estaVazio(destacaveis)) {
+			destacaveis = Constantes.VAZIO;
+		}
+		return destacaveis;
 	}
 
 	public String getChaves() {
