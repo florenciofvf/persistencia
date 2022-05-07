@@ -2540,7 +2540,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void larguraRotulos() {
 		if (objeto.isLarguraRotulos()) {
-			tabelaPersistencia.larguraTituloTodos();
+			SwingUtilities.invokeLater(tabelaPersistencia::larguraTituloTodos);
 		}
 	}
 
