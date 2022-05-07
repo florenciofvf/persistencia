@@ -252,29 +252,6 @@ public class TabelaPersistencia extends JTable {
 		}
 	}
 
-	public void larguraConteudo(int coluna) {
-		FontMetrics fontMetrics = getFontMetrics(getFont());
-		TableColumn tableColumn = getTableColumn(coluna);
-		TableModel model = getModel();
-		String chave = model.getColumnName(coluna);
-		int maior = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
-		for (int i = 0; i < model.getRowCount(); i++) {
-			Object obj = model.getValueAt(i, coluna);
-			if (obj != null && !Util.estaVazio(obj.toString())) {
-				int valor = fontMetrics.stringWidth(obj.toString()) + Constantes.TRINTA;
-				if (valor > maior) {
-					maior = valor;
-				}
-			}
-		}
-		tableColumn.setPreferredWidth(maior);
-	}
-
-	public void larguraMinima(int coluna) {
-		TableColumn tableColumn = getTableColumn(coluna);
-		tableColumn.setPreferredWidth(Constantes.DEZ);
-	}
-
 	private TableColumn getTableColumn(int coluna) {
 		int colunaView = convertColumnIndexToView(coluna);
 		TableColumnModel columnModel = getColumnModel();
@@ -382,6 +359,29 @@ public class TabelaPersistencia extends JTable {
 			larguraConteudoAcao.setActionListener(e -> larguraConteudo(indiceColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
+		}
+
+		private void larguraConteudo(int coluna) {
+			FontMetrics fontMetrics = getFontMetrics(getFont());
+			TableColumn tableColumn = getTableColumn(coluna);
+			TableModel model = getModel();
+			String chave = model.getColumnName(coluna);
+			int maior = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
+			for (int i = 0; i < model.getRowCount(); i++) {
+				Object obj = model.getValueAt(i, coluna);
+				if (obj != null && !Util.estaVazio(obj.toString())) {
+					int valor = fontMetrics.stringWidth(obj.toString()) + Constantes.TRINTA;
+					if (valor > maior) {
+						maior = valor;
+					}
+				}
+			}
+			tableColumn.setPreferredWidth(maior);
+		}
+
+		private void larguraMinima(int coluna) {
+			TableColumn tableColumn = getTableColumn(coluna);
+			tableColumn.setPreferredWidth(Constantes.DEZ);
 		}
 
 		private void preShow(String chave, Coluna colunaTabela) {
