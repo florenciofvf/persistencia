@@ -327,6 +327,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			configurarCabecalhoTabela(modeloOrdenacao, cabecalho);
 			Util.ajustar(tabelaPersistencia, g == null ? getGraphics() : g);
 			processarReferencia();
+			destacarColunas();
 		} catch (Exception ex) {
 			mensagemException(ex);
 		}
@@ -1703,10 +1704,14 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.coluna",
 							Mensagens.getString("label.coluna_outra_coluna"), Constantes.VAZIO);
 					if (resp != null && !Util.estaVazio(resp.toString())) {
-						String[] strings = resp.toString().split(",");
-						for (String string : strings) {
-							destacarColunaTabela(string);
-						}
+						destacarColuna(resp.toString());
+					}
+				}
+
+				private void destacarColuna(String string) {
+					String[] strings = string.split(",");
+					for (String str : strings) {
+						destacarColunaTabela(str);
 					}
 				}
 
@@ -2524,6 +2529,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	public String getTituloAtualizado() {
 		OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 		return objeto.getTitle(modelo);
+	}
+
+	private void destacarColunas() {
+		if (!Util.estaVazio(objeto.getDestacaveis())) {
+			toolbar.buttonInfo.menuTemp.destacarColuna(objeto.getDestacaveis());
+		}
 	}
 
 	public void atualizarTitulo() {
