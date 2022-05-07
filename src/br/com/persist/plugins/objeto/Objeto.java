@@ -67,6 +67,7 @@ public class Objeto implements Runnable {
 	private boolean linkAuto = true;
 	private boolean transparenteBkp;
 	private ObjetoListener listener;
+	private boolean larguraRotulos;
 	private Color cor = COR_PADRAO;
 	private boolean checarLargura;
 	private static long sequencia;
@@ -142,6 +143,7 @@ public class Objeto implements Runnable {
 		o.deslocamentoXId = deslocamentoXId;
 		o.deslocamentoYId = deslocamentoYId;
 		o.ajusteAutoForm = ajusteAutoForm;
+		o.larguraRotulos = larguraRotulos;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
 		o.addInstrucoes(instrucoes);
@@ -174,6 +176,7 @@ public class Objeto implements Runnable {
 	public void aplicar(Attributes attr) {
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
 		clonarAoDestacar = Boolean.parseBoolean(attr.getValue("copiarDestac"));
+		larguraRotulos = Boolean.parseBoolean(attr.getValue("larguraRotulos"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
@@ -225,6 +228,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("orderBy", getOrderBy());
 		util.atributoCheck("ajusteAutoForm", ajusteAutoForm);
 		util.atributoCheck("copiarDestac", clonarAoDestacar);
+		util.atributoCheck("larguraRotulos", larguraRotulos);
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());
@@ -363,6 +367,14 @@ public class Objeto implements Runnable {
 
 	public void setLinkAuto(boolean linkAuto) {
 		this.linkAuto = linkAuto;
+	}
+
+	public boolean isLarguraRotulos() {
+		return larguraRotulos;
+	}
+
+	public void setLarguraRotulos(boolean larguraRotulos) {
+		this.larguraRotulos = larguraRotulos;
 	}
 
 	public List<Instrucao> getInstrucoes() {
