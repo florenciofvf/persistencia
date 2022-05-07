@@ -252,6 +252,24 @@ public class TabelaPersistencia extends JTable {
 		}
 	}
 
+	public void larguraConteudo(int coluna) {
+		FontMetrics fontMetrics = getFontMetrics(getFont());
+		TableColumn tableColumn = getTableColumn(coluna);
+		TableModel model = getModel();
+		String chave = model.getColumnName(coluna);
+		int maior = fontMetrics.stringWidth(chave) + Constantes.TRINTA;
+		for (int i = 0; i < model.getRowCount(); i++) {
+			Object obj = model.getValueAt(i, coluna);
+			if (obj != null && !Util.estaVazio(obj.toString())) {
+				int valor = fontMetrics.stringWidth(obj.toString()) + Constantes.TRINTA;
+				if (valor > maior) {
+					maior = valor;
+				}
+			}
+		}
+		tableColumn.setPreferredWidth(maior);
+	}
+
 	public void larguraMinima(int coluna) {
 		TableColumn tableColumn = getTableColumn(coluna);
 		tableColumn.setPreferredWidth(Constantes.DEZ);
@@ -277,6 +295,7 @@ public class TabelaPersistencia extends JTable {
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_manual", null);
 		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
 		private transient ProcessarTitulo processarTitulo = new ProcessarTitulo();
+		private Action larguraConteudoAcao = actionMenu("label.largura_conteudo");
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
 		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();
@@ -292,7 +311,8 @@ public class TabelaPersistencia extends JTable {
 
 		private PopupHeader() {
 			add(menuMetadados);
-			addMenuItem(true, larguraTituloAcao);
+			addMenuItem(true, larguraConteudoAcao);
+			addMenuItem(larguraTituloAcao);
 			addMenuItem(larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
 			addMenuItem(true, pesquisaApartirColunaAcao);
@@ -359,6 +379,7 @@ public class TabelaPersistencia extends JTable {
 				}
 			});
 			larguraTituloAcao.setActionListener(e -> larguraTitulo(indiceColuna, larguraColuna));
+			larguraConteudoAcao.setActionListener(e -> larguraConteudo(indiceColuna));
 			larguraColunaAcao.setActionListener(e -> larguraColuna(indiceColuna));
 			larguraMinimaAcao.setActionListener(e -> larguraMinima(indiceColuna));
 		}

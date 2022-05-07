@@ -328,6 +328,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			Util.ajustar(tabelaPersistencia, g == null ? getGraphics() : g);
 			processarReferencia();
 			destacarColunas();
+			larguraRotulos();
 		} catch (Exception ex) {
 			mensagemException(ex);
 		}
@@ -2534,6 +2535,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private void destacarColunas() {
 		if (!Util.estaVazio(objeto.getDestacaveis())) {
 			toolbar.buttonInfo.menuTemp.destacarColuna(objeto.getDestacaveis());
+		}
+	}
+
+	private void larguraRotulos() {
+		if (objeto.isLarguraRotulos()) {
+			tabelaPersistencia.larguraTituloTodos();
 		}
 	}
 
