@@ -9,6 +9,7 @@ import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -241,6 +242,7 @@ class SetListaDialogo extends AbstratoDialogo {
 	}
 
 	private void init(List<String> listaString) {
+		Collections.sort(listaString);
 		lista.setModel(criarModel(listaString, config));
 		lista.setCellRenderer(new ItemRenderer());
 		setSize(Constantes.SIZE3);
