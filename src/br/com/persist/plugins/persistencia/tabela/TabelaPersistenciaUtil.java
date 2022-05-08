@@ -124,6 +124,6 @@ public class TabelaPersistenciaUtil {
 	}
 
 	private static String getFieldAtributo(Field field) {
-		return field.getType() + " " + field.getName() + ";\n";
+		return field.getType().getName() + " " + field.getName() + ";\n";
 	}
 }
