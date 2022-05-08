@@ -23,6 +23,8 @@ public class MiscelaniaDialogo extends AbstratoDialogo {
 			setTitle(Mensagens.getString("label.sequencias") + " - " + getTitle());
 		} else if (MiscelaniaContainer.Tipo.COMPLEMENTO.equals(tipo)) {
 			setTitle(Mensagens.getString("label.complemento") + " - " + getTitle());
+		} else if (MiscelaniaContainer.Tipo.CLASSBIBLIO.equals(tipo)) {
+			setTitle(Mensagens.getString("label.class_biblio") + " - " + getTitle());
 		} else if (MiscelaniaContainer.Tipo.DESTACAVEIS.equals(tipo)) {
 			setTitle(Mensagens.getString("label.campos_destac") + " - " + getTitle());
 		}

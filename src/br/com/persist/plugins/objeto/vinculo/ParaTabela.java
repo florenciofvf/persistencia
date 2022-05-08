@@ -19,6 +19,7 @@ public class ParaTabela {
 	private String finalConsulta;
 	private String transparente;
 	private String complemento;
+	private String classBiblio;
 	private String destacaveis;
 	private String colunaInfo;
 	private String destacavel;
@@ -118,6 +119,9 @@ public class ParaTabela {
 		if (!Util.estaVazio(complemento)) {
 			objeto.setComplemento(complemento);
 		}
+		if (!Util.estaVazio(classBiblio)) {
+			objeto.setClassBiblio(classBiblio);
+		}
 		if (!Util.estaVazio(destacaveis)) {
 			objeto.setDestacaveis(destacaveis);
 		}
@@ -171,6 +175,7 @@ public class ParaTabela {
 		atributoValor(util, "ajustarAltura", ajustarAltura);
 		atributoValor(util, "transparente", transparente);
 		atributoValor(util, "complemento", complemento);
+		atributoValor(util, "classBiblio", classBiblio);
 		atributoValor(util, "destacaveis", destacaveis);
 		atributoValor(util, "mapeamento", mapeamento);
 		atributoValor(util, "sequencias", sequencias);
@@ -221,6 +226,7 @@ public class ParaTabela {
 		util.tab().atributo("finalConsulta", "").ql();
 		util.tab().atributo("transparente", "").ql();
 		util.tab().atributo("complemento", "").ql();
+		util.tab().atributo("classBiblio", "").ql();
 		util.tab().atributo("destacaveis", "").ql();
 		util.tab().atributo("mapeamento", "").ql();
 		util.tab().atributo("sequencias", "").ql();
@@ -333,6 +339,14 @@ public class ParaTabela {
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+
+	public String getClassBiblio() {
+		return classBiblio;
+	}
+
+	public void setClassBiblio(String classBiblio) {
+		this.classBiblio = classBiblio;
 	}
 
 	public String getDestacaveis() {

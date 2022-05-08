@@ -45,6 +45,8 @@ public class MiscelaniaContainer extends Panel {
 			seque(builder);
 		} else if (Tipo.COMPLEMENTO.equals(tipo)) {
 			compl(builder);
+		} else if (Tipo.CLASSBIBLIO.equals(tipo)) {
+			classBiblio(builder);
 		} else if (Tipo.DESTACAVEIS.equals(tipo)) {
 			destac(builder);
 		}
@@ -97,6 +99,10 @@ public class MiscelaniaContainer extends Panel {
 		}
 	}
 
+	private void classBiblio(StringBuilder builder) {
+		builder.append(objeto.getClassBiblio());
+	}
+
 	private void compl(StringBuilder builder) {
 		builder.append(objeto.getComplemento());
 	}
@@ -106,7 +112,7 @@ public class MiscelaniaContainer extends Panel {
 	}
 
 	public enum Tipo {
-		COMPLEMENTO, DESTACAVEIS, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA
+		COMPLEMENTO, CLASSBIBLIO, DESTACAVEIS, CHAVEAMENTO, MAPEAMENTO, SEQUENCIA
 	}
 
 	private String campoDetalhe(String chave, List<String> lista) {
@@ -140,6 +146,8 @@ public class MiscelaniaContainer extends Panel {
 					objeto.setSequencias(Util.normalizar(textArea.getText(), false));
 				} else if (Tipo.COMPLEMENTO.equals(tipo)) {
 					objeto.setComplemento(Util.normalizar(textArea.getText(), false));
+				} else if (Tipo.CLASSBIBLIO.equals(tipo)) {
+					objeto.setClassBiblio(Util.normalizar(textArea.getText(), false));
 				} else if (Tipo.DESTACAVEIS.equals(tipo)) {
 					objeto.setDestacaveis(Util.normalizar(textArea.getText(), false));
 				}
