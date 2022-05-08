@@ -46,7 +46,7 @@ public class TabelaPersistenciaUtil {
 	private static boolean isFieldEnum(Field field) {
 		Class<?> classe = field.getType();
 		Class<?> superClasse = classe.getSuperclass();
-		return superClasse != null && "java.lang.Enum".equals(superClasse.getName());
+		return superClasse != null && superClasse.isAssignableFrom(Enum.class);
 	}
 
 	private static boolean valido(Field field, String coluna) {
@@ -78,7 +78,7 @@ public class TabelaPersistenciaUtil {
 		return null;
 	}
 
-	protected static String getDescricaoCampoEnum(Field campo) throws IllegalAccessException {
+	protected static String getDescricaoCampoEnum(Class<?> classeCampo, Field campo) throws IllegalAccessException {
 		StringBuilder sb = new StringBuilder();
 		Class<?> tipoCampo = campo.getType();
 		Field[] enuns = tipoCampo.getFields();
@@ -90,7 +90,7 @@ public class TabelaPersistenciaUtil {
 			Object instancia = _enum_.get(campo);
 			sb.append(getDescricaoInstanciaEnum(_enum_, instancia));
 		}
-		return "campo: " + campo.getName() + "\n" + sb.toString();
+		return classeCampo.getName() + " " + campo.getName() + ";\n\n" + sb.toString();
 	}
 
 	private static String getDescricaoInstanciaEnum(Field fieldEnum, Object objeto) throws IllegalAccessException {

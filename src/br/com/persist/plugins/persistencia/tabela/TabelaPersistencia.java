@@ -675,7 +675,7 @@ public class TabelaPersistencia extends JTable {
 						return;
 					}
 					try {
-						String string = TabelaPersistenciaUtil.getDescricaoCampoEnum(field);
+						String string = TabelaPersistenciaUtil.getDescricaoCampoEnum(field.getType(), field);
 						Util.mensagem(TabelaPersistencia.this, string);
 					} catch (IllegalAccessException ex) {
 						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
