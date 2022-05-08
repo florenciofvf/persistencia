@@ -1,9 +1,11 @@
 package br.com.persist.plugins.persistencia.tabela;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 
 public class TabelaPersistenciaUtil {
@@ -38,5 +40,9 @@ public class TabelaPersistenciaUtil {
 			}
 		}
 		return resposta;
+	}
+
+	protected static Field getField(Class<?> classe, Coluna coluna) {
+		return null;
 	}
 }

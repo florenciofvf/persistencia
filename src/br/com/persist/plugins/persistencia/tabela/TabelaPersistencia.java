@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -658,6 +659,21 @@ public class TabelaPersistencia extends JTable {
 			private ItemClassBiblio() {
 				super("label.info");
 				addActionListener(e -> {
+					Class<?> classe = null;
+					try {
+						classe = Class.forName(getToolTipText());
+					} catch (ClassNotFoundException ex) {
+						String msg = TabelaMensagens.getString("msg.class_biblio");
+						Util.mensagem(TabelaPersistencia.this, msg + ex.getMessage());
+						return;
+					}
+					Field field = TabelaPersistenciaUtil.getField(classe, colunaTabela);
+					if (field == null) {
+						String msg = TabelaMensagens.getString("msg.class_biblio_field_inexist",
+								colunaTabela.getNome());
+						Util.mensagem(TabelaPersistencia.this, msg);
+						return;
+					}
 				});
 			}
 		}
