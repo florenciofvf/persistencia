@@ -667,7 +667,7 @@ public class TabelaPersistencia extends JTable {
 						Util.mensagem(TabelaPersistencia.this, msg + ex.getMessage());
 						return;
 					}
-					Field field = TabelaPersistenciaUtil.getField(classe, colunaTabela.getNome());
+					Field field = TabelaPersistenciaUtil.getFieldParaColuna(classe, colunaTabela.getNome());
 					if (field == null) {
 						String msg = TabelaMensagens.getString("msg.class_biblio_field_inexist",
 								colunaTabela.getNome());
@@ -675,7 +675,7 @@ public class TabelaPersistencia extends JTable {
 						return;
 					}
 					try {
-						String string = TabelaPersistenciaUtil.getDescricaoCampoEnum(field.getType(), field);
+						String string = TabelaPersistenciaUtil.descreverField(field);
 						Util.mensagem(TabelaPersistencia.this, string);
 					} catch (IllegalAccessException ex) {
 						Util.mensagem(TabelaPersistencia.this, ex.getMessage());

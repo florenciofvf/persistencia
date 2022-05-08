@@ -43,13 +43,22 @@ public class TabelaPersistenciaUtil {
 		return resposta;
 	}
 
-	private static boolean isFieldEnum(Field field) {
-		Class<?> classe = field.getType();
-		Class<?> superClasse = classe.getSuperclass();
-		return superClasse != null && superClasse.isAssignableFrom(Enum.class);
+	public static Field getFieldParaColuna(Class<?> classe, String coluna) {
+		if (classe != null && coluna != null) {
+			Field[] fields = classe.getDeclaredFields();
+			if (fields != null) {
+				coluna = coluna.toUpperCase();
+				for (Field field : fields) {
+					if (corresponde(field, coluna)) {
+						return field;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
-	private static boolean valido(Field field, String coluna) {
+	private static boolean corresponde(Field field, String coluna) {
 		if (field.getName().equalsIgnoreCase(coluna)) {
 			return true;
 		}
@@ -65,35 +74,35 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
-	protected static Field getField(Class<?> classe, String coluna) {
-		if (coluna != null) {
-			coluna = coluna.toUpperCase();
-			Field[] fields = classe.getDeclaredFields();
-			for (Field field : fields) {
-				if (isFieldEnum(field) && valido(field, coluna)) {
-					return field;
-				}
-			}
+	public static String descreverField(Field field) throws IllegalAccessException {
+		if (field == null) {
+			return "";
 		}
-		return null;
+		return isFieldEnum(field) ? getFieldAtributoEnum(field) : getFieldAtributo(field);
 	}
 
-	protected static String getDescricaoCampoEnum(Class<?> classeCampo, Field campo) throws IllegalAccessException {
+	private static boolean isFieldEnum(Field field) {
+		Class<?> classe = field.getType();
+		Class<?> superClasse = classe.getSuperclass();
+		return superClasse != null && superClasse.isAssignableFrom(Enum.class);
+	}
+
+	private static String getFieldAtributoEnum(Field field) throws IllegalAccessException {
 		StringBuilder sb = new StringBuilder();
-		Class<?> tipoCampo = campo.getType();
-		Field[] enuns = tipoCampo.getFields();
+		Class<?> fieldType = field.getType();
+		Field[] enuns = fieldType.getFields();
 		for (Field _enum_ : enuns) {
 			if (sb.length() > 0) {
 				sb.append("\n");
 			}
 			_enum_.setAccessible(true);
-			Object instancia = _enum_.get(campo);
-			sb.append(getDescricaoInstanciaEnum(_enum_, instancia));
+			Object instancia = _enum_.get(field);
+			sb.append(getFieldAtributoInstanciaEnum(_enum_, instancia));
 		}
-		return classeCampo.getName() + " " + campo.getName() + ";\n\n" + sb.toString();
+		return getFieldAtributo(field) + "\n" + sb.toString();
 	}
 
-	private static String getDescricaoInstanciaEnum(Field fieldEnum, Object objeto) throws IllegalAccessException {
+	private static String getFieldAtributoInstanciaEnum(Field fieldEnum, Object objeto) throws IllegalAccessException {
 		StringBuilder sb = new StringBuilder();
 		Class<?> classe = objeto.getClass();
 		Field[] campos = classe.getDeclaredFields();
@@ -112,5 +121,9 @@ public class TabelaPersistenciaUtil {
 			sb.insert(0, fieldEnum.getName() + " = ");
 		}
 		return sb.toString();
+	}
+
+	private static String getFieldAtributo(Field field) {
+		return field.getType() + " " + field.getName() + ";\n";
 	}
 }
