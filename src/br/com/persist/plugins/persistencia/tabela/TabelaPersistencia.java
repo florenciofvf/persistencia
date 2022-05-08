@@ -667,12 +667,18 @@ public class TabelaPersistencia extends JTable {
 						Util.mensagem(TabelaPersistencia.this, msg + ex.getMessage());
 						return;
 					}
-					Field field = TabelaPersistenciaUtil.getField(classe, colunaTabela);
+					Field field = TabelaPersistenciaUtil.getField(classe, colunaTabela.getNome());
 					if (field == null) {
 						String msg = TabelaMensagens.getString("msg.class_biblio_field_inexist",
 								colunaTabela.getNome());
 						Util.mensagem(TabelaPersistencia.this, msg);
 						return;
+					}
+					try {
+						String string = TabelaPersistenciaUtil.getDescricaoCampoEnum(field);
+						Util.mensagem(TabelaPersistencia.this, string);
+					} catch (IllegalAccessException ex) {
+						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
 					}
 				});
 			}
