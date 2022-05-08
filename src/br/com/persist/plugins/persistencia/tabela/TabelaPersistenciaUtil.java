@@ -54,16 +54,25 @@ public class TabelaPersistenciaUtil {
 			return true;
 		}
 		Annotation[] annotations = field.getAnnotations();
-		for (Annotation annotation : annotations) {
+		if (annotations != null) {
+			for (Annotation annotacao : annotations) {
+				String toString = annotacao.toString();
+				if (toString != null && toString.toUpperCase().indexOf(coluna) != -1) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
 
 	protected static Field getField(Class<?> classe, String coluna) {
-		Field[] fields = classe.getFields();
-		for (Field field : fields) {
-			if (isFieldEnum(field) && valido(field, coluna)) {
-				return field;
+		if (coluna != null) {
+			coluna = coluna.toUpperCase();
+			Field[] fields = classe.getDeclaredFields();
+			for (Field field : fields) {
+				if (isFieldEnum(field) && valido(field, coluna)) {
+					return field;
+				}
 			}
 		}
 		return null;
