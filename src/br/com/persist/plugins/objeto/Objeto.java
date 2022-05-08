@@ -79,6 +79,7 @@ public class Objeto implements Runnable {
 	private boolean sane = true;
 	private long totalRegistros;
 	private String complemento;
+	private String classBiblio;
 	private String destacaveis;
 	private String chaveamento;
 	private boolean colunaInfo;
@@ -148,6 +149,7 @@ public class Objeto implements Runnable {
 		o.transparente = transparente;
 		o.addInstrucoes(instrucoes);
 		o.complemento = complemento;
+		o.classBiblio = classBiblio;
 		o.destacaveis = destacaveis;
 		o.chaveamento = chaveamento;
 		o.desenharId = desenharId;
@@ -195,6 +197,7 @@ public class Objeto implements Runnable {
 		finalConsulta = attr.getValue("finalConsulta");
 		chaveamento = attr.getValue("chaveamento");
 		complemento = attr.getValue("complemento");
+		classBiblio = attr.getValue("classBiblio");
 		destacaveis = attr.getValue("destacaveis");
 		x = Integer.parseInt(attr.getValue("x"));
 		y = Integer.parseInt(attr.getValue("y"));
@@ -222,6 +225,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("finalConsulta", getFinalConsulta());
 		util.atributoCheck("chaveamento", getChaveamento());
 		util.atributoCheck("complemento", getComplemento());
+		util.atributoCheck("classBiblio", getClassBiblio());
 		util.atributoCheck("destacaveis", getDestacaveis());
 		util.atributoCheck("selectAlternativo", getSelectAlternativo());
 		util.atributoCheck("apelidoParaJoins", getApelidoParaJoins());
@@ -347,6 +351,10 @@ public class Objeto implements Runnable {
 		if (!Util.estaVazio(complemento)) {
 			complementos.add(complemento);
 		}
+	}
+
+	public void setClassBiblio(String classBiblio) {
+		this.classBiblio = classBiblio;
 	}
 
 	public void setDestacaveis(String destacaveis) {
@@ -493,6 +501,13 @@ public class Objeto implements Runnable {
 			complemento = Constantes.VAZIO;
 		}
 		return complemento;
+	}
+
+	public String getClassBiblio() {
+		if (Util.estaVazio(classBiblio)) {
+			classBiblio = Constantes.VAZIO;
+		}
+		return classBiblio;
 	}
 
 	public String getDestacaveis() {
