@@ -40,6 +40,7 @@ public class TabelaPersistencia extends JTable {
 	private PopupHeader popupHeader = new PopupHeader();
 	private Map<String, List<String>> chaveamento;
 	private Map<String, String> mapeamento;
+	private String classBiblio;
 	private boolean arrastado;
 
 	public TabelaPersistencia() {
@@ -86,6 +87,14 @@ public class TabelaPersistencia extends JTable {
 
 	public void setTabelaPersistenciaListener(TabelaPersistenciaListener listener) {
 		this.listener = listener;
+	}
+
+	public String getClassBiblio() {
+		return classBiblio;
+	}
+
+	public void setClassBiblio(String classBiblio) {
+		this.classBiblio = classBiblio;
 	}
 
 	public Map<String, String> getMapeamento() {
@@ -276,6 +285,7 @@ public class TabelaPersistencia extends JTable {
 		private Action larguraTituloAcao = actionMenu("label.largura_titulo");
 		private Action larguraMinimaAcao = actionMenu("label.largura_minima");
 		private MenuCopiarLinhas menuCopiarLinhas = new MenuCopiarLinhas();
+		private ItemClassBiblio itemClassBiblio = new ItemClassBiblio();
 		private ItemMapeamento itemMapeamento = new ItemMapeamento();
 		private MenuMetadados menuMetadados = new MenuMetadados();
 		private Separator separatorChave = new Separator();
@@ -398,13 +408,25 @@ public class TabelaPersistencia extends JTable {
 				}
 			}
 			limparItemMapeamento();
-			String valorChave = getMapeamento().get(chave.toLowerCase());
-			if (valorChave != null) {
-				itemMapeamento.setText(valorChave);
+			String valor = getMapeamento().get(chave.toLowerCase());
+			if (!Util.estaVazio(valor) || !Util.estaVazio(classBiblio)) {
 				add(separatorInfo);
+			}
+			if (!Util.estaVazio(valor)) {
+				itemMapeamento.setText(valor);
 				add(itemMapeamento);
 			}
+			if (!Util.estaVazio(classBiblio)) {
+				itemClassBiblio.setToolTipText(classBiblio);
+				itemClassBiblio.setText(getNome(classBiblio));
+				add(itemClassBiblio);
+			}
 			this.colunaTabela = colunaTabela;
+		}
+
+		private String getNome(String classBiblio) {
+			int pos = classBiblio.lastIndexOf('.');
+			return pos == -1 ? classBiblio : classBiblio.substring(pos + 1);
 		}
 
 		private class ProcessarTitulo extends MouseAdapter {
@@ -615,6 +637,7 @@ public class TabelaPersistencia extends JTable {
 		private void limparItemMapeamento() {
 			remove(separatorInfo);
 			remove(itemMapeamento);
+			remove(itemClassBiblio);
 		}
 
 		private class ItemMapeamento extends MenuItem {
@@ -625,6 +648,16 @@ public class TabelaPersistencia extends JTable {
 				addActionListener(e -> {
 					Mapeamento m = MapeamentoProvedor.getMapeamento(getText());
 					Util.mensagem(TabelaPersistencia.this, m == null ? Constantes.VAZIO : m.getValor());
+				});
+			}
+		}
+
+		private class ItemClassBiblio extends MenuItem {
+			private static final long serialVersionUID = 1L;
+
+			private ItemClassBiblio() {
+				super("label.info");
+				addActionListener(e -> {
 				});
 			}
 		}

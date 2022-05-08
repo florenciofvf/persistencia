@@ -2971,6 +2971,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
 		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
 		tabelaPersistencia.atualizarSequencias(objeto.getMapaSequencias());
+		tabelaPersistencia.setClassBiblio(objeto.getClassBiblio());
 	}
 
 	public void pesquisarLink(Referencia referencia, String argumentos) {
