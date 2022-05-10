@@ -84,7 +84,7 @@ public class TabelaPersistenciaUtil {
 	private static boolean isFieldEnum(Field field) {
 		Class<?> classe = field.getType();
 		Class<?> superClasse = classe.getSuperclass();
-		return superClasse != null && superClasse.isAssignableFrom(Enum.class);
+		return Enum.class.isAssignableFrom(superClasse);
 	}
 
 	private static String getFieldAtributoEnum(Field field) throws IllegalAccessException {
