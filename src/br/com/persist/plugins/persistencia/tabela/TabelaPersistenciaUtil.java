@@ -74,11 +74,11 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
-	public static String descreverField(Field field) throws IllegalAccessException {
+	public static String descreverField(Field field, String atual) throws IllegalAccessException {
 		if (field == null) {
 			return "";
 		}
-		return isFieldEnum(field) ? getFieldAtributoEnum(field) : getFieldAtributo(field);
+		return isFieldEnum(field) ? getFieldAtributoEnum(field, atual) : getFieldAtributo(field);
 	}
 
 	private static boolean isFieldEnum(Field field) {
@@ -87,7 +87,7 @@ public class TabelaPersistenciaUtil {
 		return Enum.class.isAssignableFrom(superClasse);
 	}
 
-	private static String getFieldAtributoEnum(Field field) throws IllegalAccessException {
+	private static String getFieldAtributoEnum(Field field, String atual) throws IllegalAccessException {
 		StringBuilder sb = new StringBuilder();
 		Class<?> fieldType = field.getType();
 		Field[] enuns = fieldType.getFields();
@@ -97,12 +97,13 @@ public class TabelaPersistenciaUtil {
 			}
 			_enum_.setAccessible(true);
 			Object instancia = _enum_.get(field);
-			sb.append(getFieldAtributoInstanciaEnum(_enum_, instancia));
+			sb.append(getFieldAtributoInstanciaEnum(_enum_, instancia, atual));
 		}
 		return getFieldAtributo(field) + "\n" + sb.toString();
 	}
 
-	private static String getFieldAtributoInstanciaEnum(Field fieldEnum, Object objeto) throws IllegalAccessException {
+	private static String getFieldAtributoInstanciaEnum(Field fieldEnum, Object objeto, String atual)
+			throws IllegalAccessException {
 		StringBuilder sb = new StringBuilder();
 		Class<?> classe = objeto.getClass();
 		Field[] campos = classe.getDeclaredFields();
@@ -116,9 +117,17 @@ public class TabelaPersistenciaUtil {
 			}
 		}
 		if (sb.length() == 0) {
-			sb.append(objeto);
+			String pre = "";
+			if (objeto.toString().equals(atual)) {
+				pre = ">>> ";
+			}
+			sb.append(pre + objeto);
 		} else {
-			sb.insert(0, fieldEnum.getName() + " = ");
+			String pre = "";
+			if (fieldEnum.getName().equals(atual)) {
+				pre = ">>> ";
+			}
+			sb.insert(0, pre + fieldEnum.getName() + " = ");
 		}
 		return sb.toString();
 	}

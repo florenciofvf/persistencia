@@ -675,7 +675,10 @@ public class TabelaPersistencia extends JTable {
 						return;
 					}
 					try {
-						String string = TabelaPersistenciaUtil.descreverField(field);
+						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this,
+								indiceColuna);
+						String atual = lista.size() == 1 ? lista.get(0) : null;
+						String string = TabelaPersistenciaUtil.descreverField(field, atual);
 						Util.mensagem(TabelaPersistencia.this, string);
 					} catch (IllegalAccessException ex) {
 						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
