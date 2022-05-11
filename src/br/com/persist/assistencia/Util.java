@@ -488,7 +488,7 @@ public class Util {
 	}
 
 	private static void configLocation(JDialog dialog, Component componente) {
-		if (componente != null) {
+		if (componente != null && componente.isShowing()) {
 			Point pDialog = dialog.getLocation();
 			Point pComp = componente.getLocationOnScreen();
 			if (pDialog.y <= pComp.y) {
