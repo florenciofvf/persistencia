@@ -769,7 +769,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private MenuFiltro(Filtro filtro) {
 					super(filtro.getNome(), false, null);
-					addActionListener(e -> txtComplemento.setText(filtro.getValor()));
+					addActionListener(e -> filtrar(filtro));
+				}
+
+				private void filtrar(Filtro filtro) {
+					txtComplemento.setText(filtro.getValor());
 					if (Util.confirmar(InternalContainer.this, Constantes.LABEL_EXECUTAR)) {
 						actionListenerInner.actionPerformed(null);
 					}
