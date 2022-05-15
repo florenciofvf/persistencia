@@ -1551,8 +1551,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				super("label.funcoes", Icones.SOMA);
 				MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
 				MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
-				maximo.setToolTipText(ObjetoMensagens.getString("msg.maximo_minimo"));
-				minimo.setToolTipText(ObjetoMensagens.getString("msg.maximo_minimo"));
 				addMenuItem(new TotalizarRegistrosAcao(false));
 				addMenuItem(true, new TotalizarRegistrosAcao(true));
 				addMenuItem(true, minimo);
@@ -1575,18 +1573,30 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					String[] chaves = objeto.getChavesArray();
-					if (chaves.length != 1) {
+					if (chaves.length < 1) {
 						txtComplemento.setText(Constantes.VAZIO);
 						return;
 					}
 					if (minimo) {
-						txtComplemento.setText(objeto.comApelido("AND", chaves[0]) + " = (SELECT MIN(" + chaves[0]
-								+ ") FROM " + objeto.getTabelaEsquema(conexao) + ")");
+						txtComplemento.setText(montar(chaves, "MIN", conexao));
 					} else {
-						txtComplemento.setText(objeto.comApelido("AND", chaves[0]) + " = (SELECT MAX(" + chaves[0]
-								+ ") FROM " + objeto.getTabelaEsquema(conexao) + ")");
+						txtComplemento.setText(montar(chaves, "MAX", conexao));
 					}
 					actionListenerInner.actionPerformed(null);
+				}
+
+				private String montar(String[] chaves, String funcao, Conexao conexao) {
+					StringBuilder sb = new StringBuilder();
+					for (String chave : chaves) {
+						if (sb.length() > 0) {
+							sb.append(" ");
+						}
+						sb.append(objeto.comApelido("AND", chave));
+						sb.append(" = (SELECT " + funcao + "(" + chave + ")");
+						sb.append(" FROM ");
+						sb.append(objeto.getTabelaEsquema(conexao) + ")");
+					}
+					return sb.toString();
 				}
 			}
 
