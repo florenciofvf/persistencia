@@ -12,6 +12,8 @@ public interface TabelaPersistenciaListener {
 
 	public void colocarNomeColuna(TabelaPersistencia tabelaPersistencia, String nome, Coluna coluna);
 
+	public void selectDistinct(TabelaPersistencia tabelaPersistencia, String nome, boolean form);
+
 	public void tabelaMouseClick(TabelaPersistencia tabelaPersistencia, int colunaClicada);
 
 	public void pesquisaApartirColuna(TabelaPersistencia tabelaPersistencia, String nome);

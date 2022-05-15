@@ -2670,6 +2670,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private class TabelaListener implements TabelaPersistenciaListener {
+		@Override
+		public void selectDistinct(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			//
+		}
+
 		private Coletor getNomePesquisa() {
 			List<Pesquisa> pesquisas = objeto.getPesquisas();
 			List<String> nomes = pesquisas.stream().map(Pesquisa::getNome).collect(Collectors.toList());

@@ -27,6 +27,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuItem;
 import br.com.persist.componente.MenuPadrao2;
+import br.com.persist.componente.MenuPadrao3;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.plugins.mapeamento.Mapeamento;
@@ -319,12 +320,15 @@ public class TabelaPersistencia extends JTable {
 			private Action exportaParaAcao = actionMenu("label.campo_exportado_para");
 			private Action importaDeAcao = actionMenu("label.campo_importado_de");
 			private Action infoColunaAcao = Action.actionMenu("label.info", null);
+			private MenuSelectDistinct distinct = new MenuSelectDistinct();
 
 			private MenuMetadados() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
 				addMenuItem(infoColunaAcao);
 				addMenuItem(true, exportaParaAcao);
 				addMenuItem(true, importaDeAcao);
+				addSeparator();
+				add(distinct);
 				exportaParaAcao.setActionListener(e -> importarExportarInfo(true));
 				importaDeAcao.setActionListener(e -> importarExportarInfo(false));
 				addMouseListener(new MouseAdapter() {
@@ -350,6 +354,23 @@ public class TabelaPersistencia extends JTable {
 						listener.campoExportadoPara(coluna);
 					} else {
 						listener.campoImportadoDe(coluna);
+					}
+				}
+			}
+
+			private class MenuSelectDistinct extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuSelectDistinct() {
+					super(TabelaMensagens.getString("label.select_distinct"), false, null);
+					formularioAcao.setActionListener(e -> abrirSelect(true));
+					dialogoAcao.setActionListener(e -> abrirSelect(false));
+				}
+
+				private void abrirSelect(boolean abrirEmForm) {
+					if (listener != null) {
+						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+						listener.selectDistinct(TabelaPersistencia.this, coluna, abrirEmForm);
 					}
 				}
 			}
