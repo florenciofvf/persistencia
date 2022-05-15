@@ -1943,7 +1943,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (conexao != null) {
 							String instrucao = getConsulta(conexao, Constantes.VAZIO).toString();
 							if (!Util.estaVazio(instrucao)) {
-								selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
+								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
 						}
 					}
@@ -2041,7 +2041,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (conexao != null) {
 							String instrucao = getConsultaColuna(conexao, Constantes.VAZIO).toString();
 							if (!Util.estaVazio(instrucao)) {
-								selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
+								selectFormDialog(abrirEmForm, conexao, instrucao);
 							}
 						}
 					}
@@ -2313,6 +2313,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					}
 				}
 			}
+		}
+
+		private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao) {
+			selectFormDialog(abrirEmForm, conexao, instrucao, "Select");
 		}
 
 		private void selectFormDialog(boolean abrirEmForm, Conexao conexao, String instrucao, String titulo) {
@@ -2672,7 +2676,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private class TabelaListener implements TabelaPersistenciaListener {
 		@Override
 		public void selectDistinct(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
-			//
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				String instrucao = montarInstrucao(conexao, nome);
+				if (!Util.estaVazio(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		private String montarInstrucao(Conexao conexao, String nome) {
+			StringBuilder sb = new StringBuilder("SELECT DISTINCT " + nome);
+			sb.append(" FROM ");
+			sb.append(objeto.getTabelaEsquema(conexao));
+			return sb.toString();
 		}
 
 		private Coletor getNomePesquisa() {
