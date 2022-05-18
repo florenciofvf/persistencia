@@ -699,6 +699,9 @@ public class TabelaPersistencia extends JTable {
 						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this,
 								indiceColuna);
 						String atual = lista.size() == 1 ? lista.get(0) : null;
+						if (atual != null) {
+							atual = atual.trim();
+						}
 						String string = TabelaPersistenciaUtil.descreverField(field, atual);
 						Util.mensagem(TabelaPersistencia.this, string);
 					} catch (IllegalAccessException ex) {
