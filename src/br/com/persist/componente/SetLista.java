@@ -114,7 +114,7 @@ public class SetLista {
 	}
 }
 
-class Item {
+class Item implements Comparable<Item> {
 	private final String rotulo;
 	private boolean selecionado;
 
@@ -163,6 +163,11 @@ class Item {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int compareTo(Item o) {
+		return rotulo.compareTo(o.rotulo);
 	}
 }
 
@@ -218,6 +223,10 @@ class SetListaModelo extends AbstractListModel<Item> {
 			}
 		}
 	}
+
+	public List<Item> getListaItem() {
+		return listaItem;
+	}
 }
 
 class SetListaDialogo extends AbstratoDialogo {
@@ -242,7 +251,6 @@ class SetListaDialogo extends AbstratoDialogo {
 	}
 
 	private void init(List<String> listaString) {
-		Collections.sort(listaString);
 		lista.setModel(criarModel(listaString, config));
 		lista.setCellRenderer(new ItemRenderer());
 		setSize(Constantes.SIZE3);
@@ -299,9 +307,11 @@ class SetListaDialogo extends AbstratoDialogo {
 		private static final long serialVersionUID = 1L;
 		private final CheckBox chkTodos = new CheckBox("label.todos");
 		private Action criarAcao = Action.actionIcon("label.criar", Icones.CRIAR);
+		private Action ordenarAcao = Action.actionIcon("label.ordenar", Icones.ASC_TEXTO);
 
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);
+			add(ordenarAcao);
 			add(chkTodos);
 			if (config.criar) {
 				add(criarAcao);
@@ -309,17 +319,24 @@ class SetListaDialogo extends AbstratoDialogo {
 			}
 			chkTodos.setSelected(!config.somenteUm);
 			chkTodos.addActionListener(e -> selecionar(chkTodos.isSelected()));
+			ordenarAcao.setActionListener(e -> ordenar());
+		}
+
+		private void ordenar() {
+			List<Item> listaItem = ((SetListaModelo) lista.getModel()).getListaItem();
+			Collections.sort(listaItem);
+			lista.setModel(new SetListaModelo(listaItem, config));
 		}
 
 		private void criarCampo() {
 			Object resp = Util.getValorInputDialog(SetListaDialogo.this, "label.atencao",
 					Mensagens.getString("label.nome"), null);
 			if (resp != null && !Util.estaVazio(resp.toString())) {
-				crarCampo(resp.toString().trim());
+				criarCampo(resp.toString().trim());
 			}
 		}
 
-		private void crarCampo(String nome) {
+		private void criarCampo(String nome) {
 			((SetListaModelo) lista.getModel()).addItem(nome);
 		}
 
