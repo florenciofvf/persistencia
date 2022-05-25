@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -236,6 +238,39 @@ public class TabelaPersistencia extends JTable {
 			SwingUtilities.updateComponentTreeUI(this);
 			tornarVisivel(0, coluna);
 		}
+	}
+
+	public void deslocarColuna(String string) {
+		if (Util.estaVazio(string)) {
+			return;
+		}
+		TableColumnModel columnModel = getColumnModel();
+		List<TableColumn> lista = new ArrayList<>();
+		String[] strings = string.split(",");
+		for (String str : strings) {
+			if (!Util.estaVazio(str)) {
+				TableColumn tableColumn = getTableColumn(columnModel, str.trim());
+				if (tableColumn != null) {
+					columnModel.removeColumn(tableColumn);
+					lista.add(tableColumn);
+				}
+			}
+		}
+		for (TableColumn tableColumn : lista) {
+			columnModel.addColumn(tableColumn);
+		}
+	}
+
+	private TableColumn getTableColumn(TableColumnModel columnModel, String nome) {
+		Enumeration<TableColumn> columns = columnModel.getColumns();
+		while (columns.hasMoreElements()) {
+			TableColumn element = columns.nextElement();
+			CabecalhoColuna cabecalho = (CabecalhoColuna) element.getHeaderRenderer();
+			if (cabecalho != null && nome.equalsIgnoreCase(cabecalho.getNome())) {
+				return element;
+			}
+		}
+		return null;
 	}
 
 	public void larguraColuna(int coluna) {

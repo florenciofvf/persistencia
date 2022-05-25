@@ -1722,20 +1722,20 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Object resp = Util.getValorInputDialog(InternalContainer.this, "label.coluna",
 							Mensagens.getString("label.coluna_outra_coluna"), Constantes.VAZIO);
 					if (resp != null && !Util.estaVazio(resp.toString())) {
-						destacarColuna(resp.toString());
+						destacarColuna(resp.toString(), true);
 					}
 				}
 
-				private void destacarColuna(String string) {
+				private void destacarColuna(String string, boolean like) {
 					String[] strings = string.split(",");
 					for (String str : strings) {
-						destacarColunaTabela(str);
+						destacarColunaTabela(str, like);
 					}
 				}
 
-				private void destacarColunaTabela(String nome) {
+				private void destacarColunaTabela(String nome, boolean like) {
 					if (!Util.estaVazio(nome)) {
-						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome.trim(), true);
+						int coluna = TabelaPersistenciaUtil.getIndiceColuna(tabelaPersistencia, nome.trim(), like);
 						if (coluna != -1) {
 							tabelaPersistencia.destacarColuna(coluna);
 						}
@@ -2555,7 +2555,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private void destacarColunas() {
 		if (!Util.estaVazio(objeto.getDestacaveis())) {
-			toolbar.buttonInfo.menuTemp.destacarColuna(objeto.getDestacaveis());
+			toolbar.buttonInfo.menuTemp.destacarColuna(objeto.getDestacaveis(), false);
+			tabelaPersistencia.deslocarColuna(objeto.getDestacaveis());
 		}
 	}
 
