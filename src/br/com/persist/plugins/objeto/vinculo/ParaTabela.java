@@ -57,10 +57,31 @@ public class ParaTabela {
 		return filtros;
 	}
 
+	public void addInstrucao(String instrucao) {
+		if (Util.estaVazio(instrucao)) {
+			instrucao = "ALTERE PARA SUA INSTRUCAO";
+		}
+		Instrucao i = new Instrucao("Resumo");
+		i.setSelecaoMultipla(true);
+		i.setValor(instrucao);
+		i.setOrdem(1);
+		add(i);
+	}
+
 	public void add(Instrucao i) {
 		if (i != null) {
 			instrucoes.add(i);
 		}
+	}
+
+	public void addFiltro(String filtro) {
+		if (Util.estaVazio(filtro)) {
+			filtro = "ALTERE PARA SEU FILTRO";
+		}
+		Filtro f = new Filtro("Resumo");
+		f.setValor(filtro);
+		f.setOrdem(1);
+		add(f);
 	}
 
 	public void add(Filtro f) {

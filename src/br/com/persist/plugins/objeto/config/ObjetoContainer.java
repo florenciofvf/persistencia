@@ -140,6 +140,9 @@ public class ObjetoContainer extends Panel {
 				Util.stackTraceAndMessage("VINCULAR EM BANCO", ex, ObjetoContainer.this);
 				return;
 			}
+			if (vinculacao == null) {
+				return;
+			}
 			ParaTabela para = vinculacao.getParaTabela(txtTabela.getText().trim());
 			if (para == null) {
 				para = new ParaTabela(txtTabela.getText().trim());
@@ -159,7 +162,14 @@ public class ObjetoContainer extends Panel {
 				para.setSelectAlternativo(compChave.getText());
 			} else if ("PREFIXO_NT".equals(compChave.chave)) {
 				para.setPrefixoNomeTabela(compChave.getText());
-			} else if ("SEQUENCIA".equals(compChave.chave)) {
+			}
+			processar1(para);
+			processar2(para);
+			objetoSuperficie.salvarVinculacao(vinculacao);
+		}
+
+		void processar1(ParaTabela para) {
+			if ("SEQUENCIA".equals(compChave.chave)) {
 				para.setSequencias(compChave.getText());
 			} else if ("CHAVEAMENTO".equals(compChave.chave)) {
 				para.setCampoNomes(compChave.getText());
@@ -170,11 +180,9 @@ public class ObjetoContainer extends Panel {
 			} else if ("DESTACAVEIS".equals(compChave.chave)) {
 				para.setDestacaveis(compChave.getText());
 			}
-			processar(para);
-			objetoSuperficie.salvarVinculacao(vinculacao);
 		}
 
-		void processar(ParaTabela para) {
+		void processar2(ParaTabela para) {
 			if ("ORDER_BY".equals(compChave.chave)) {
 				para.setOrderBy(compChave.getText());
 			} else if ("CLASSBIBLIO".equals(compChave.chave)) {
@@ -202,9 +210,9 @@ public class ObjetoContainer extends Panel {
 			} else if ("AJUSTE_AUTO".equals(compChave.chave)) {
 				para.setAjustarAltura(compChave.getBool());
 			} else if ("INSTRUCAO".equals(compChave.chave)) {
-				// para.addInstrucao(compChave.getText());
+				para.addInstrucao(compChave.getText());
 			} else if ("FILTRO".equals(compChave.chave)) {
-				// para.addFiltro(compChave.getText());
+				para.addFiltro(compChave.getText());
 			}
 		}
 
