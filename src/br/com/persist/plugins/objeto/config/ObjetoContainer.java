@@ -201,6 +201,10 @@ public class ObjetoContainer extends Panel {
 				para.setBpnt(compChave.getBool());
 			} else if ("AJUSTE_AUTO".equals(compChave.chave)) {
 				para.setAjustarAltura(compChave.getBool());
+			} else if ("INSTRUCAO".equals(compChave.chave)) {
+				// para.addInstrucao(compChave.getText());
+			} else if ("FILTRO".equals(compChave.chave)) {
+				// para.addFiltro(compChave.getText());
 			}
 		}
 
@@ -237,8 +241,10 @@ public class ObjetoContainer extends Panel {
 		private TextField txtDeslocXId = new TextField();
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
+		private TextField txtInstrucao = new TextField();
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtArquivo = new TextField();
+		private TextField txtFiltro = new TextField();
 		private TextField txtId = new TextField();
 		private TextField txtX = new TextField();
 		private TextField txtY = new TextField();
@@ -292,6 +298,10 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
 			container.add(criarLinhaRotulo("label.copiar_destacado", chkCopiarDestac));
+			container.add(criarLinhaCopiar("label.add_instrucao", txtInstrucao,
+					ObjetoMensagens.getString("hint.add_instrucao")));
+			container
+					.add(criarLinhaCopiar("label.add_filtro", txtFiltro, ObjetoMensagens.getString("hint.add_filtro")));
 			add(BorderLayout.CENTER, new ScrollPane(container));
 			vincular();
 		}
@@ -299,9 +309,13 @@ public class ObjetoContainer extends Panel {
 		private void vincular() {
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
+			vinculados.add(new CompChave(txtInstrucao, "INSTRUCAO"));
+			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
 
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
+			txtInstrucao.addMouseListener(listenerVinculado);
+			txtFiltro.addMouseListener(listenerVinculado);
 		}
 
 		private void mensagemPropriedadeArquivo(Label label) {
