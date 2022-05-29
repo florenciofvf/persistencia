@@ -302,6 +302,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
 		antesProcessar();
 		if (Preferencias.isDesconectado()) {
+			toolbar.exceptionEnable(Constantes.DESCONECTADO);
 			processado.set(false);
 			return;
 		}
