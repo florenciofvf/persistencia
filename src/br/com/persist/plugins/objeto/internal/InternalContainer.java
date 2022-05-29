@@ -523,6 +523,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private Action exceptionAcao = Action.actionIcon("label.exception", Icones.EXCEPTION);
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
 		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
 		private final ButtonComplemento buttonComplemento = new ButtonComplemento();
@@ -534,10 +535,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		private final Label labelTotal = new Label(Color.BLUE);
 		private final ButtonInfo buttonInfo = new ButtonInfo();
 		private transient Thread thread;
+		private String msgException;
 
 		protected void ini(Janela janela, Objeto objeto) {
 			super.ini(janela);
 			add(btnArrasto);
+			addButton(true, exceptionAcao);
 			add(true, buttonInfo);
 			add(true, buttonExcluir);
 			add(true, buttonFragVar);
@@ -555,6 +558,21 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			buttonPesquisa.complemento(objeto);
 			buttonComplemento.complemento(objeto);
 			setFloatable(false);
+			exceptionAcao.setActionListener(e -> exceptionMsg());
+		}
+
+		private void exceptionDisable() {
+			msgException = Constantes.VAZIO;
+			exceptionAcao.setEnabled(false);
+		}
+
+		private void exceptionEnable(String string) {
+			msgException = string;
+			exceptionAcao.setEnabled(true);
+		}
+
+		private void exceptionMsg() {
+			Util.mensagem(InternalContainer.this, msgException);
 		}
 
 		private void habilitarUpdateExcluir(boolean b) {
@@ -2465,8 +2483,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public Conexao getConexao() {
+		toolbar.exceptionDisable();
 		if (Preferencias.isDesconectado()) {
-			Util.mensagem(InternalContainer.this, Constantes.DESCONECTADO);
+			toolbar.exceptionEnable(Constantes.DESCONECTADO);
 			return null;
 		}
 		return (Conexao) comboConexao.getSelectedItem();
