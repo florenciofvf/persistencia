@@ -34,4 +34,9 @@ public class MensagemDialogo extends AbstratoDialogo {
 	public static MensagemDialogo criar(Frame frame, String titulo, String msg, File file) {
 		return new MensagemDialogo(frame, titulo, msg, file);
 	}
+
+	@Override
+	public void dialogOpenedHandler(Dialog dialog) {
+		container.dialogOpenedHandler();
+	}
 }

@@ -88,4 +88,8 @@ public class MensagemContainer extends Panel {
 			}
 		}
 	}
+
+	public void dialogOpenedHandler() {
+		textArea.requestFocus();
+	}
 }
