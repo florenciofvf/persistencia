@@ -2699,18 +2699,36 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		public void selectDistinct(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
 			Conexao conexao = getConexao();
 			if (conexao != null) {
-				String instrucao = montarInstrucao(conexao, nome);
+				String instrucao = montarInstrucaoDistinct(conexao, nome);
 				if (!Util.estaVazio(instrucao)) {
 					toolbar.selectFormDialog(form, conexao, instrucao);
 				}
 			}
 		}
 
-		private String montarInstrucao(Conexao conexao, String nome) {
-			StringBuilder sb = new StringBuilder("SELECT DISTINCT " + nome);
-			sb.append(" FROM ");
+		private String montarInstrucaoDistinct(Conexao conexao, String nome) {
+			StringBuilder sb = new StringBuilder("SELECT DISTINCT " + nome + " FROM ");
 			sb.append(objeto.getTabelaEsquema(conexao));
 			sb.append(" ORDER BY " + nome);
+			return sb.toString();
+		}
+
+		@Override
+		public void selectGroupBy(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				String instrucao = montarInstrucaoGroupBy(conexao, nome);
+				if (!Util.estaVazio(instrucao)) {
+					toolbar.selectFormDialog(form, conexao, instrucao);
+				}
+			}
+		}
+
+		private String montarInstrucaoGroupBy(Conexao conexao, String nome) {
+			StringBuilder sb = new StringBuilder("SELECT " + nome + ", COUNT(*) FROM ");
+			sb.append(objeto.getTabelaEsquema(conexao));
+			sb.append("\nGROUP BY " + nome);
+			sb.append("\nHAVING COUNT(*) > 1");
 			return sb.toString();
 		}
 

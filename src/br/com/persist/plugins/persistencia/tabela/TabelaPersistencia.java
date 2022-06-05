@@ -356,6 +356,7 @@ public class TabelaPersistencia extends JTable {
 			private Action importaDeAcao = actionMenu("label.campo_importado_de");
 			private Action infoColunaAcao = Action.actionMenu("label.info", null);
 			private MenuSelectDistinct distinct = new MenuSelectDistinct();
+			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
 
 			private MenuMetadados() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
@@ -364,6 +365,7 @@ public class TabelaPersistencia extends JTable {
 				addMenuItem(true, importaDeAcao);
 				addSeparator();
 				add(distinct);
+				add(groupBy);
 				exportaParaAcao.setActionListener(e -> importarExportarInfo(true));
 				importaDeAcao.setActionListener(e -> importarExportarInfo(false));
 				addMouseListener(new MouseAdapter() {
@@ -406,6 +408,23 @@ public class TabelaPersistencia extends JTable {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 						listener.selectDistinct(TabelaPersistencia.this, coluna, abrirEmForm);
+					}
+				}
+			}
+
+			private class MenuSelectGroupBy extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+
+				private MenuSelectGroupBy() {
+					super(TabelaMensagens.getString("label.select_group_by"), false, null);
+					formularioAcao.setActionListener(e -> abrirSelect(true));
+					dialogoAcao.setActionListener(e -> abrirSelect(false));
+				}
+
+				private void abrirSelect(boolean abrirEmForm) {
+					if (listener != null) {
+						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
+						listener.selectGroupBy(TabelaPersistencia.this, coluna, abrirEmForm);
 					}
 				}
 			}
