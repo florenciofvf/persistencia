@@ -43,7 +43,6 @@ public class ChecagemPagina extends Panel {
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private ScrollPane scrollPane;
-	private JSplitPane split;
 	private final File file;
 
 	public ChecagemPagina(File file) {
@@ -54,7 +53,7 @@ public class ChecagemPagina extends Panel {
 	}
 
 	private void montarLayout() {
-		split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.CENTER, split);
 	}
@@ -102,18 +101,6 @@ public class ChecagemPagina extends Panel {
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
-			configModoTexto();
-		}
-
-		private void configModoTexto() {
-			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, toolbarParametro);
-			Panel panelArea = new Panel();
-			panelArea.add(BorderLayout.CENTER, areaParametros);
-			scrollPane.getViewport().setView(panelArea);
-			panel.add(BorderLayout.CENTER, scrollPane);
-			split.setLeftComponent(panel);
-			split.setDividerLocation(Constantes.SIZE.height / 2);
 		}
 
 		@Override
