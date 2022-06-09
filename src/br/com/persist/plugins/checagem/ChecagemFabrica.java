@@ -1,5 +1,6 @@
 package br.com.persist.plugins.checagem;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,12 @@ public class ChecagemFabrica extends AbstratoFabricaContainer {
 	@Override
 	public void inicializar() {
 		Util.criarDiretorio(ChecagemConstantes.CHECAGENS);
+		String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS + ".map";
+		File file = new File(arquivo);
+		if (!file.exists()) {
+			throw new IllegalStateException(arquivo + " inexistente!");
+		}
+		ChecagemGramatica.mapear(arquivo);
 	}
 
 	@Override
