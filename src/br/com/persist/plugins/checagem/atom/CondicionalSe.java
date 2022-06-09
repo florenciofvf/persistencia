@@ -1,9 +1,9 @@
 package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.Controle;
+import br.com.persist.plugins.checagem.Sentenca;
 
-public class CondicionalSe extends Controle {
+public class CondicionalSe extends Sentenca {
 
 	@Override
 	public Object executar(Contexto ctx) {

@@ -3,20 +3,20 @@ package br.com.persist.plugins.checagem;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Controle {
-	protected final List<Controle> parametros;
+public abstract class Sentenca {
+	protected final List<Sentenca> parametros;
 
-	public Controle() {
+	public Sentenca() {
 		parametros = new ArrayList<>();
 	}
 
 	public abstract Object executar(Contexto ctx);
 
-	public Controle param0() {
+	public Sentenca param0() {
 		return parametros.get(0);
 	}
 
-	public Controle param1() {
+	public Sentenca param1() {
 		return parametros.get(1);
 	}
 }

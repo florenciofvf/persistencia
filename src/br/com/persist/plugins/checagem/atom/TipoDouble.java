@@ -1,9 +1,9 @@
 package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.Controle;
+import br.com.persist.plugins.checagem.Sentenca;
 
-public class TipoDouble extends Controle {
+public class TipoDouble extends Sentenca {
 	private Double valor;
 
 	@Override
