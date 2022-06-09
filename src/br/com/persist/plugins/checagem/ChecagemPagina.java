@@ -202,7 +202,4 @@ public class ChecagemPagina extends Panel {
 			Util.stackTraceAndMessage(ChecagemConstantes.PAINEL_CHECAGEM, ex, this);
 		}
 	}
-
-	public void processar() {
-	}
 }

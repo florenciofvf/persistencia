@@ -12,13 +12,11 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
-import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -45,7 +43,6 @@ public class ChecagemContainer extends AbstratoContainer {
 		super(formulario);
 		toolbar.ini(janela);
 		montarLayout();
-		configurar();
 		abrir(conteudo, idPagina);
 	}
 
@@ -74,11 +71,6 @@ public class ChecagemContainer extends AbstratoContainer {
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, fichario);
-	}
-
-	private void configurar() {
-		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
 	}
 
 	public String getConteudo() {
@@ -135,15 +127,12 @@ public class ChecagemContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
-			addButton(true, atualizarAcao);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
-			atualizarAcao.setActionListener(e -> atualizar());
 		}
 
 		@Override
@@ -249,14 +238,6 @@ public class ChecagemContainer extends AbstratoContainer {
 				int indice = fichario.getSelectedIndex();
 				ativa.excluir();
 				fichario.remove(indice);
-			}
-		}
-
-		@Override
-		protected void atualizar() {
-			ChecagemPagina ativa = fichario.getPaginaAtiva();
-			if (ativa != null) {
-				ativa.processar();
 			}
 		}
 	}
