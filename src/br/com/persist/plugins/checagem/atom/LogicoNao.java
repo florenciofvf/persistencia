@@ -7,7 +7,7 @@ public class LogicoNao extends Controle {
 
 	@Override
 	public Object executar(Contexto ctx) {
-		Boolean arq = (Boolean) param0().executar(ctx);
-		return !arq;
+		Boolean pri = (Boolean) param0().executar(ctx);
+		return !pri;
 	}
 }

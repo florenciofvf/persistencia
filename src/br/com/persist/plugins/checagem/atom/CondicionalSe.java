@@ -7,8 +7,8 @@ public class CondicionalSe extends Controle {
 
 	@Override
 	public Object executar(Contexto ctx) {
-		Boolean arg0 = (Boolean) param0().executar(ctx);
-		Object arq1 = param1().executar(ctx);
-		return arg0 ? arq1 : null;
+		Boolean pri = (Boolean) param0().executar(ctx);
+		Object seg = param1().executar(ctx);
+		return pri ? seg : null;
 	}
 }

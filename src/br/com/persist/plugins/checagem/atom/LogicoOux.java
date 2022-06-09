@@ -7,8 +7,8 @@ public class LogicoOux extends Controle {
 
 	@Override
 	public Object executar(Contexto ctx) {
-		Boolean arg0 = (Boolean) param0().executar(ctx);
-		Boolean arq1 = (Boolean) param1().executar(ctx);
-		return arg0 ^ arq1;
+		Boolean pri = (Boolean) param0().executar(ctx);
+		Boolean seg = (Boolean) param1().executar(ctx);
+		return pri ^ seg;
 	}
 }
