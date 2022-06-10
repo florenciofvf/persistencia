@@ -194,6 +194,10 @@ public class ChecagemContainer extends AbstratoContainer {
 				return;
 			}
 			String nome = resp.toString();
+			if (ChecagemConstantes.CHECAGENS.equalsIgnoreCase(nome)) {
+				Util.mensagem(ChecagemContainer.this, Mensagens.getString("label.indentificador_reservado"));
+				return;
+			}
 
 			File f = new File(file, nome);
 			if (f.exists()) {

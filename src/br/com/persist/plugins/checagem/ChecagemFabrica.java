@@ -1,8 +1,11 @@
 package br.com.persist.plugins.checagem;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -17,16 +20,21 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class ChecagemFabrica extends AbstratoFabricaContainer {
+	private static final Logger LOG = Logger.getGlobal();
 
 	@Override
 	public void inicializar() {
 		Util.criarDiretorio(ChecagemConstantes.CHECAGENS);
-		String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS + ".map";
+		String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS;
 		File file = new File(arquivo);
 		if (!file.exists()) {
-			throw new IllegalStateException(arquivo + " inexistente!");
+			throw new IllegalStateException("ARQUIVO: " + arquivo + " inexistente!");
 		}
-		ChecagemGramatica.mapear(arquivo);
+		try {
+			ChecagemGramatica.mapear(arquivo);
+		} catch (IOException e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
 	}
 
 	@Override
