@@ -1,9 +1,8 @@
 package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.Sentenca;
 
-public class TipoBoolean extends Sentenca {
+public class TipoBoolean extends TipoAtomico {
 	private Boolean valor;
 
 	@Override

@@ -1,9 +1,8 @@
 package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.Sentenca;
 
-public class TipoString extends Sentenca {
+public class TipoString extends TipoAtomico {
 	private String valor;
 
 	@Override

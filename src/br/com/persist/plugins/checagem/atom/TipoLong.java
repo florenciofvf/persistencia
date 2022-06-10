@@ -1,9 +1,8 @@
 package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.Sentenca;
 
-public class TipoLong extends Sentenca {
+public class TipoLong extends TipoAtomico {
 	private Long valor;
 
 	@Override
