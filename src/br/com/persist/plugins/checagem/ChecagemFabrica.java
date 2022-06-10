@@ -10,9 +10,11 @@ import java.util.logging.Logger;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import br.com.persist.abstrato.AbstratoConfiguracao;
 import br.com.persist.abstrato.AbstratoFabricaContainer;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Preferencias;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.MenuPadrao1;
 import br.com.persist.fichario.Pagina;
@@ -24,6 +26,7 @@ public class ChecagemFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public void inicializar() {
+		Preferencias.addOutraPreferencia(ChecagemPreferencia.class);
 		Util.criarDiretorio(ChecagemConstantes.CHECAGENS);
 		String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS;
 		File file = new File(arquivo);
@@ -35,6 +38,11 @@ public class ChecagemFabrica extends AbstratoFabricaContainer {
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
+	}
+
+	@Override
+	public AbstratoConfiguracao getConfiguracao(Formulario formulario) {
+		return new ChecagemConfiguracao(formulario);
 	}
 
 	@Override

@@ -99,6 +99,10 @@ public class ChecagemContainer extends AbstratoContainer {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
+					if (ChecagemConstantes.CHECAGENS.equalsIgnoreCase(f.getName())
+							&& !ChecagemPreferencia.isExibirArqSentencas()) {
+						continue;
+					}
 					ChecagemPagina pagina = new ChecagemPagina(f);
 					fichario.adicionarPagina(pagina);
 				}
