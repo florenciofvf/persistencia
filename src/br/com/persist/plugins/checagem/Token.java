@@ -46,28 +46,28 @@ public class Token {
 		StringBuilder sb = new StringBuilder(valor);
 		switch (tipo) {
 		case PARENTESE_ABRIR:
-			sb.append(", PARENTESE_ABRIR");
+			sb.append("[PARENTESE_ABRIR]");
 			break;
 		case PARENTESE_FECHA:
-			sb.append(", PARENTESE_FECHA");
+			sb.append("[PARENTESE_FECHA]");
 			break;
 		case VIRGULA:
-			sb.append(", VIRGULA");
+			sb.append("[VIRGULA]");
 			break;
 		case BOOLEAN:
-			sb.append(", BOOLEAN");
+			sb.append("[BOOLEAN]");
 			break;
 		case STRING:
-			sb.append(", STRING");
+			sb.append("[STRING]");
 			break;
 		case DOUBLE:
-			sb.append(", DOUBLE");
+			sb.append("[DOUBLE]");
 			break;
 		case LONG:
-			sb.append(", LONG");
+			sb.append("[LONG]");
 			break;
 		default:
-			sb.append(", INVALIDO");
+			sb.append("[INVALIDO]");
 		}
 		return sb.toString();
 	}

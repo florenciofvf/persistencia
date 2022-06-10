@@ -73,13 +73,9 @@ public class ChecagemToken {
 		StringBuilder sb = new StringBuilder();
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
-			switch (c) {
-			case '\'':
-			case '(':
-			case ')':
-			case ',':
+			if (c == '\'' || c == '(' || c == ')' || c == ',') {
 				break;
-			default:
+			} else {
 				sb.append(c);
 			}
 			indice++;
