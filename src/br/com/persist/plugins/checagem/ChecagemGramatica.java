@@ -26,7 +26,7 @@ public class ChecagemGramatica {
 	private ChecagemGramatica() {
 	}
 
-	public static void montarGramatica(String chaveSentencas, Checagem checagem) {
+	public static void montarGramatica(String chaveSentencas, Checagem checagem) throws ChecagemException {
 		List<String> sentencasString = lerSentencasString(chaveSentencas);
 		List<Sentenca> sentencas = criarHierarquiaSentencas(sentencasString);
 		checagem.map.put(chaveSentencas, sentencas);
@@ -53,8 +53,31 @@ public class ChecagemGramatica {
 		return handler.getSentencas();
 	}
 
-	private static List<Sentenca> criarHierarquiaSentencas(List<String> sentencasString) {
-		return new ArrayList<>();
+	private static List<Sentenca> criarHierarquiaSentencas(List<String> sentencasString) throws ChecagemException {
+		List<Sentenca> sentencas = new ArrayList<>();
+		for (String set : sentencasString) {
+			sentencas.add(criarSentenca(set));
+		}
+		return sentencas;
+	}
+
+	private static Sentenca criarSentenca(String set) throws ChecagemException {
+		ChecagemToken checagemToken = new ChecagemToken(set);
+		Sentenca selecionado = null;
+		Sentenca raiz = null;
+		Token token = checagemToken.proximoToken();
+		while (token != null) {
+			if (token.isParenteseAbrir()) {
+
+			} else if (token.isParenteseFechar()) {
+
+			}
+			token = checagemToken.proximoToken();
+		}
+		if (raiz == null) {
+			throw new ChecagemException("sentenca raiz null.");
+		}
+		return raiz;
 	}
 
 	public static void mapear(String arquivo) throws IOException, ClassNotFoundException {

@@ -1,5 +1,7 @@
 package br.com.persist.plugins.checagem;
 
+import br.com.persist.assistencia.Util;
+
 public class Token {
 	public static final int PARENTESE_ABRIR = 1;
 	public static final int PARENTESE_FECHA = 2;
@@ -25,6 +27,18 @@ public class Token {
 		return tipo;
 	}
 
+	public boolean isParenteseAbrir() {
+		return tipo == PARENTESE_ABRIR;
+	}
+
+	public boolean isParenteseFechar() {
+		return tipo == PARENTESE_FECHA;
+	}
+
+	public boolean isVirgula() {
+		return tipo == VIRGULA;
+	}
+
 	public boolean isBoolean() {
 		return tipo == BOOLEAN;
 	}
@@ -39,6 +53,51 @@ public class Token {
 
 	public boolean isLong() {
 		return tipo == LONG;
+	}
+
+	public boolean isConteudoLong() {
+		if (Util.estaVazio(valor)) {
+			return false;
+		}
+		for (char c : valor.toCharArray()) {
+			if (c < '0' || c > '9') {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean isConteudoBoolean() {
+		if (Util.estaVazio(valor)) {
+			return false;
+		}
+		return "true".equalsIgnoreCase(valor) || "false".equalsIgnoreCase(valor);
+	}
+
+	public boolean isConteudoDouble() {
+		if (Util.estaVazio(valor)) {
+			return false;
+		}
+		if (valor.startsWith(".") || valor.endsWith(".")) {
+			return false;
+		}
+		int pos = valor.indexOf('.');
+		if (pos == -1) {
+			return false;
+		}
+		String string = valor.substring(0, pos);
+		for (char c : string.toCharArray()) {
+			if (c < '0' || c > '9') {
+				return false;
+			}
+		}
+		string = valor.substring(pos + 1);
+		for (char c : string.toCharArray()) {
+			if (c < '0' || c > '9') {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

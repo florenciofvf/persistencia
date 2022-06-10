@@ -66,7 +66,7 @@ public class ChecagemToken {
 			indice++;
 		}
 		indice++;
-		return new Token(sb.toString(), Token.STRING);
+		return normalizar(new Token(sb.toString(), Token.STRING));
 	}
 
 	private Token token() {
@@ -80,6 +80,19 @@ public class ChecagemToken {
 			}
 			indice++;
 		}
-		return new Token(sb.toString(), Token.STRING);
+		return normalizar(new Token(sb.toString(), Token.STRING));
+	}
+
+	private Token normalizar(Token token) {
+		if (token.isConteudoBoolean()) {
+			return new Token(token.getValor(), Token.BOOLEAN);
+		}
+		if (token.isConteudoDouble()) {
+			return new Token(token.getValor(), Token.DOUBLE);
+		}
+		if (token.isConteudoLong()) {
+			return new Token(token.getValor(), Token.LONG);
+		}
+		return token;
 	}
 }
