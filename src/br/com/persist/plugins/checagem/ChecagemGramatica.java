@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,10 +19,16 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.checagem.atom.SentencaRaiz;
+import br.com.persist.plugins.checagem.atom.TipoBoolean;
+import br.com.persist.plugins.checagem.atom.TipoDouble;
+import br.com.persist.plugins.checagem.atom.TipoField;
+import br.com.persist.plugins.checagem.atom.TipoLong;
+import br.com.persist.plugins.checagem.atom.TipoString;
 
 public class ChecagemGramatica {
-	private static Map<String, String> map = new HashMap<>();
 	private static final Logger LOG = Logger.getGlobal();
+	static Map<String, String> map = new HashMap<>();
 
 	private ChecagemGramatica() {
 	}
@@ -62,22 +69,62 @@ public class ChecagemGramatica {
 	}
 
 	private static Sentenca criarSentenca(String set) throws ChecagemException {
+		AtomicReference<Sentenca> selecionado = new AtomicReference<>();
 		ChecagemToken checagemToken = new ChecagemToken(set);
-		Sentenca selecionado = null;
-		Sentenca raiz = null;
+		SentencaRaiz sentencaRaiz = new SentencaRaiz();
 		Token token = checagemToken.proximoToken();
+		selecionado.set(sentencaRaiz);
 		while (token != null) {
-			if (token.isParenteseAbrir()) {
-
-			} else if (token.isParenteseFechar()) {
-
+			if (token.isParenteseFechar()) {
+				Sentenca sel = selecionado.get();
+				selecionado.set(sel.pai);
+			} else if (token.isVirgula()) {
+				Sentenca sel = selecionado.get();
+				if (sel.parametros.isEmpty()) {
+					throw new ChecagemException("sentenca vazia >>> " + sel);
+				}
+			} else {
+				Sentenca sentenca = criarSentenca(token);
+				sentenca.checarProximo(token, checagemToken.proximoToken(), selecionado);
 			}
 			token = checagemToken.proximoToken();
 		}
-		if (raiz == null) {
-			throw new ChecagemException("sentenca raiz null.");
+		if (sentencaRaiz.parametros.size() != 1) {
+			throw new ChecagemException("sentenca invalida >>> " + set);
 		}
-		return raiz;
+		return sentencaRaiz.param0();
+	}
+
+	private static Sentenca criarSentenca(Token token) throws ChecagemException {
+		if (token.isParenteseAbrir() || token.isParenteseFechar() || token.isVirgula()) {
+			throw new ChecagemException("funcao invalida >>>" + token.getValor());
+		}
+		if (token.isBoolean()) {
+			TipoBoolean tipo = new TipoBoolean();
+			tipo.setValor(new Boolean(token.getValor()));
+			return tipo;
+		}
+		if (token.isDouble()) {
+			TipoDouble tipo = new TipoDouble();
+			tipo.setValor(new Double(token.getValor()));
+			return tipo;
+		}
+		if (token.isLong()) {
+			TipoLong tipo = new TipoLong();
+			tipo.setValor(new Long(token.getValor()));
+			return tipo;
+		}
+		if (token.isString()) {
+			if (!Util.estaVazio(token.getValor()) && token.getValor().startsWith("$")) {
+				TipoField tipo = new TipoField();
+				tipo.setValor(token.getValor().substring(1));
+				return tipo;
+			}
+			TipoString tipo = new TipoString();
+			tipo.setValor(token.getValor());
+			return tipo;
+		}
+		throw new ChecagemException("funcao invalida >>>" + token.getValor());
 	}
 
 	public static void mapear(String arquivo) throws IOException, ClassNotFoundException {
