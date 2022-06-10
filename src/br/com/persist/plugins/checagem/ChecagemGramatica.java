@@ -38,7 +38,7 @@ public class ChecagemGramatica {
 			while (string != null) {
 				if (!Util.estaVazio(string)) {
 					if (Util.estaVazio(chave)) {
-						chave = string.trim();
+						chave = string.trim().toLowerCase();
 					} else {
 						map.put(chave, string.trim());
 					}
