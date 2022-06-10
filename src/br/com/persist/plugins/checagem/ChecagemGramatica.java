@@ -1,18 +1,27 @@
 package br.com.persist.plugins.checagem;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLUtil;
 
 public class ChecagemGramatica {
 	private static Map<String, String> map = new HashMap<>();
+	private static final Logger LOG = Logger.getGlobal();
 
 	private ChecagemGramatica() {
 	}
@@ -24,7 +33,24 @@ public class ChecagemGramatica {
 	}
 
 	private static List<String> lerSentencasString(String chaveSentencas) {
-		return new ArrayList<>();
+		ChecagemHandler handler = new ChecagemHandler();
+		try {
+			File file = new File(chaveSentencas);
+			if (file.exists() && file.canRead()) {
+				String conteudo = Util.conteudo(file);
+				StringWriter sw = new StringWriter();
+				XMLUtil util = new XMLUtil(sw);
+				util.prologo();
+				util.abrirTag2("sentencas");
+				util.print(conteudo).ql();
+				util.finalizarTag("sentencas");
+				util.close();
+				XML.processar(new ByteArrayInputStream(sw.toString().getBytes()), handler);
+			}
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+		return handler.getSentencas();
 	}
 
 	private static List<Sentenca> criarHierarquiaSentencas(List<String> sentencasString) {

@@ -1,6 +1,7 @@
 package br.com.persist.marca;
 
 import java.io.File;
+import java.io.InputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
@@ -17,6 +18,16 @@ public class XML {
 			factory.setNamespaceAware(true);
 			factory.setXIncludeAware(true);
 			return factory;
+		} catch (Exception e) {
+			throw new XMLException(e);
+		}
+	}
+
+	public static void processar(InputStream is, XMLHandler handler) throws XMLException {
+		try {
+			SAXParserFactory factory = criarSAXParserFactory();
+			SAXParser parser = factory.newSAXParser();
+			parser.parse(is, handler);
 		} catch (Exception e) {
 			throw new XMLException(e);
 		}

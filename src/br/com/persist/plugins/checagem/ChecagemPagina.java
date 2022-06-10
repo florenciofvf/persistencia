@@ -27,6 +27,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
@@ -92,15 +93,31 @@ public class ChecagemPagina extends Panel {
 
 	private class ToolbarParametro extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private Action criarAcao = actionIcon("label.nova_sentenca", Icones.CRIAR2);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
 		private ToolbarParametro() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
+			addButton(criarAcao);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			criarAcao.setActionListener(e -> novaSentenca());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		private void novaSentenca() {
+			StringBuilder sb = new StringBuilder(areaParametros.getText());
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append("<set>" + Constantes.QL);
+			sb.append("	<![CDATA[" + Constantes.QL);
+			sb.append("		" + Constantes.QL);
+			sb.append("	]]>" + Constantes.QL);
+			sb.append("</set>");
+			areaParametros.setText(sb.toString());
 		}
 
 		@Override

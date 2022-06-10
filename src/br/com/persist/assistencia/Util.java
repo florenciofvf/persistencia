@@ -947,6 +947,12 @@ public class Util {
 
 	public static void conteudo(Component componente, File file) throws IOException {
 		if (file != null && file.exists()) {
+			mensagem(componente, conteudo(file), file);
+		}
+	}
+
+	public static String conteudo(File file) throws IOException {
+		if (file != null && file.exists()) {
 			StringBuilder sb = new StringBuilder();
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 				String linha = br.readLine();
@@ -955,8 +961,9 @@ public class Util {
 					linha = br.readLine();
 				}
 			}
-			mensagem(componente, sb.toString(), file);
+			return sb.toString();
 		}
+		return Constantes.VAZIO;
 	}
 
 	public static String pesquisar(File file, String pesquisar) {
