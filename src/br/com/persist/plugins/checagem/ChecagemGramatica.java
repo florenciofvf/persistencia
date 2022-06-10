@@ -31,7 +31,7 @@ public class ChecagemGramatica {
 		return new ArrayList<>();
 	}
 
-	public static void mapear(String arquivo) throws IOException {
+	public static void mapear(String arquivo) throws IOException, ClassNotFoundException {
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(arquivo)))) {
 			String string = br.readLine();
 			String chave = null;
@@ -40,7 +40,9 @@ public class ChecagemGramatica {
 					if (Util.estaVazio(chave)) {
 						chave = string.trim().toLowerCase();
 					} else {
+						Class.forName(string.trim());
 						map.put(chave, string.trim());
+						chave = null;
 					}
 				}
 				string = br.readLine();

@@ -37,6 +37,8 @@ public class ChecagemFabrica extends AbstratoFabricaContainer {
 			ChecagemGramatica.mapear(arquivo);
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		} catch (ClassNotFoundException ex) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
 		}
 	}
 
