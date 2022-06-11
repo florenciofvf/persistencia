@@ -30,6 +30,7 @@ public class ChecagemToken {
 		char c = string.charAt(indice);
 		switch (c) {
 		case '\'':
+			indice++;
 			return tokenString();
 		case '(':
 			indice++;

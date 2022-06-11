@@ -18,7 +18,7 @@ public class ComparacaoIgual extends Sentenca {
 		} else if (pri instanceof String) {
 			return priString(pri, seg);
 		}
-		throw new IllegalStateException();
+		return Boolean.FALSE;
 	}
 
 	private Object priLong(Object pri, Object seg) {
@@ -31,7 +31,7 @@ public class ComparacaoIgual extends Sentenca {
 		} else if (seg instanceof String) {
 			return false;
 		}
-		throw new IllegalStateException();
+		return Boolean.FALSE;
 	}
 
 	private Object priDouble(Object pri, Object seg) {
@@ -44,7 +44,7 @@ public class ComparacaoIgual extends Sentenca {
 		} else if (seg instanceof String) {
 			return false;
 		}
-		throw new IllegalStateException();
+		return Boolean.FALSE;
 	}
 
 	private Object priBoolean(Object pri, Object seg) {
@@ -57,7 +57,7 @@ public class ComparacaoIgual extends Sentenca {
 		} else if (seg instanceof String) {
 			return false;
 		}
-		throw new IllegalStateException();
+		return Boolean.FALSE;
 	}
 
 	private Object priString(Object pri, Object seg) {
@@ -70,6 +70,6 @@ public class ComparacaoIgual extends Sentenca {
 		} else if (seg instanceof String) {
 			return pri.equals(seg);
 		}
-		throw new IllegalStateException();
+		return Boolean.FALSE;
 	}
 }
