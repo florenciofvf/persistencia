@@ -42,7 +42,7 @@ public class ChecagemGramatica {
 	private static List<String> lerSentencasString(String chaveSentencas) {
 		ChecagemHandler handler = new ChecagemHandler();
 		try {
-			File file = new File(chaveSentencas);
+			File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + chaveSentencas);
 			if (file.exists() && file.canRead()) {
 				String conteudo = Util.conteudo(file);
 				StringWriter sw = new StringWriter();
