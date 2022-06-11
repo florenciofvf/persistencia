@@ -30,11 +30,11 @@ public abstract class Sentenca {
 		parametros.add(sentenca);
 	}
 
-	public Sentenca getPai() {
+	Sentenca getPai() {
 		return pai;
 	}
 
-	public void checarProximo(Token atual, Token proximo, AtomicReference<Sentenca> sel) throws ChecagemException {
+	void checarProximo(Token atual, Token proximo, AtomicReference<Sentenca> sel) throws ChecagemException {
 		if (proximo == null) {
 			Sentenca selecionado = sel.get();
 			selecionado.addParam(this);

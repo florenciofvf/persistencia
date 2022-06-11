@@ -14,7 +14,11 @@ public class Contexto {
 		this(null);
 	}
 
-	public String get(String key) {
-		return map.get(key);
+	public String get(String chave) {
+		return map.get(chave);
+	}
+
+	public void put(String chave, String valor) {
+		map.put(chave, valor);
 	}
 }
