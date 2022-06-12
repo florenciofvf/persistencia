@@ -1,10 +1,8 @@
 package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.Sentenca;
 
-public class ComparacaoMenor extends Sentenca {
-
+public class ComparacaoMenor extends FuncaoBinaria {
 	@Override
 	public Object executar(Contexto ctx) {
 		Object pri = param0().executar(ctx);

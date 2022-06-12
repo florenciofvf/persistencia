@@ -17,4 +17,9 @@ public class TipoString extends TipoAtomico {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public String getValorString() {
+		return getValor();
+	}
 }

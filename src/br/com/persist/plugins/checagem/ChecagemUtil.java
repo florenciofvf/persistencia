@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.plugins.checagem.atom.Sentenca;
 
 public class ChecagemUtil {
 	private static final Checagem checagem = new Checagem();

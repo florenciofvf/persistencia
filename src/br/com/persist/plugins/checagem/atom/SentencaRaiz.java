@@ -1,20 +1,14 @@
 package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.Sentenca;
 
-public class SentencaRaiz extends Sentenca {
-	@Override
-	public void addParam(Sentenca sentenca) {
-		if (parametros.isEmpty()) {
-			super.addParam(sentenca);
-		} else {
-			throw new IllegalStateException("SentencaRaiz size > 1");
-		}
+public class SentencaRaiz extends FuncaoUnaria {
+	public Sentenca getSentenca() {
+		return param0();
 	}
 
 	@Override
 	public Object executar(Contexto ctx) {
-		throw new UnsupportedOperationException("Not supported.");
+		throw new UnsupportedOperationException("Nao pode ser executado >>> " + getClass().getName());
 	}
 }

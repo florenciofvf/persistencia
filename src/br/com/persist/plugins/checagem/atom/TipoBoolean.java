@@ -17,4 +17,9 @@ public class TipoBoolean extends TipoAtomico {
 	public void setValor(Boolean valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public String getValorString() {
+		return valor.toString();
+	}
 }

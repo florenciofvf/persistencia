@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,12 +18,10 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLUtil;
+import br.com.persist.plugins.checagem.atom.Sentenca;
 import br.com.persist.plugins.checagem.atom.SentencaRaiz;
-import br.com.persist.plugins.checagem.atom.TipoBoolean;
-import br.com.persist.plugins.checagem.atom.TipoDouble;
-import br.com.persist.plugins.checagem.atom.TipoField;
-import br.com.persist.plugins.checagem.atom.TipoLong;
-import br.com.persist.plugins.checagem.atom.TipoString;
+import br.com.persist.plugins.checagem.atom.TipoAtomico;
+import br.com.persist.plugins.checagem.atom.TipoFuncao;
 
 public class ChecagemGramatica {
 	private static final Logger LOG = Logger.getGlobal();
@@ -69,62 +66,48 @@ public class ChecagemGramatica {
 	}
 
 	private static Sentenca criarSentenca(String set) throws ChecagemException {
-		AtomicReference<Sentenca> selecionado = new AtomicReference<>();
 		ChecagemToken checagemToken = new ChecagemToken(set);
 		SentencaRaiz sentencaRaiz = new SentencaRaiz();
 		Token token = checagemToken.proximoToken();
-		selecionado.set(sentencaRaiz);
+		TipoFuncao funcaoSelecionada = sentencaRaiz;
 		while (token != null) {
-			if (token.isParenteseFechar()) {
-				Sentenca sel = selecionado.get();
-				selecionado.set(sel.pai);
+			if (token.isParenteseAbrir()) {
+				TipoAtomico atomico = (TipoAtomico) funcaoSelecionada.getUltimoParametro();
+				TipoFuncao funcao = transformarEmFuncao(atomico);
+				funcaoSelecionada.setUltimoParametro(funcao);
+				funcaoSelecionada = funcao;
+			} else if (token.isParenteseFechar()) {
+				funcaoSelecionada.encerrar();
+				funcaoSelecionada = (TipoFuncao) funcaoSelecionada.getPai();
 			} else if (token.isVirgula()) {
-				Sentenca sel = selecionado.get();
-				if (sel.parametros.isEmpty()) {
-					throw new ChecagemException("sentenca vazia >>> " + sel);
-				}
+				funcaoSelecionada.preParametro();
 			} else {
-				Sentenca sentenca = criarSentenca(token);
-				sentenca.checarProximo(token, checagemToken.proximoToken(), selecionado);
+				TipoAtomico atomico = Token.criarTipoAtomico(token);
+				funcaoSelecionada.addParam(atomico);
 			}
 			token = checagemToken.proximoToken();
 		}
-		if (sentencaRaiz.parametros.size() != 1) {
-			throw new ChecagemException("sentenca invalida >>> " + set);
+		if (sentencaRaiz.getSentenca() == null) {
+			throw new ChecagemException("Sentenca invalida >>> " + set);
 		}
-		return sentencaRaiz.param0();
+		return sentencaRaiz.getSentenca();
 	}
 
-	private static Sentenca criarSentenca(Token token) throws ChecagemException {
-		if (token.isParenteseAbrir() || token.isParenteseFechar() || token.isVirgula()) {
-			throw new ChecagemException("funcao invalida >>>" + token.getValor());
+	private static TipoFuncao transformarEmFuncao(TipoAtomico atomico) throws ChecagemException {
+		String classe = ChecagemGramatica.map.get(atomico.getValorString().toLowerCase());
+		Class<?> klass = null;
+		try {
+			klass = Class.forName(classe);
+		} catch (ClassNotFoundException e) {
+			throw new ChecagemException("Classe nao encontrada >>> " + classe);
 		}
-		if (token.isBoolean()) {
-			TipoBoolean tipo = new TipoBoolean();
-			tipo.setValor(new Boolean(token.getValor()));
-			return tipo;
+		try {
+			return (TipoFuncao) klass.newInstance();
+		} catch (InstantiationException e) {
+			throw new ChecagemException("Classe nao pode ser instanciada >>> " + classe);
+		} catch (IllegalAccessException e) {
+			throw new ChecagemException("Acesso ilegal ao instanciar classe >>> " + classe);
 		}
-		if (token.isDouble()) {
-			TipoDouble tipo = new TipoDouble();
-			tipo.setValor(new Double(token.getValor()));
-			return tipo;
-		}
-		if (token.isLong()) {
-			TipoLong tipo = new TipoLong();
-			tipo.setValor(new Long(token.getValor()));
-			return tipo;
-		}
-		if (token.isString()) {
-			if (!Util.estaVazio(token.getValor()) && token.getValor().startsWith("$")) {
-				TipoField tipo = new TipoField();
-				tipo.setValor(token.getValor().substring(1));
-				return tipo;
-			}
-			TipoString tipo = new TipoString();
-			tipo.setValor(token.getValor());
-			return tipo;
-		}
-		throw new ChecagemException("funcao invalida >>>" + token.getValor());
 	}
 
 	public static void mapear(String arquivo) throws IOException, ClassNotFoundException {

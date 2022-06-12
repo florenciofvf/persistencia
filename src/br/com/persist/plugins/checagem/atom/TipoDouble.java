@@ -17,4 +17,9 @@ public class TipoDouble extends TipoAtomico {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public String getValorString() {
+		return valor.toString();
+	}
 }

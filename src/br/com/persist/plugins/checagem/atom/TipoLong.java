@@ -17,4 +17,9 @@ public class TipoLong extends TipoAtomico {
 	public void setValor(Long valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public String getValorString() {
+		return valor.toString();
+	}
 }

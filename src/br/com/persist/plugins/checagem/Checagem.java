@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.plugins.checagem.atom.Sentenca;
+
 public class Checagem {
 	final Map<String, List<Sentenca>> map;
 

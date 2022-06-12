@@ -1,6 +1,12 @@
 package br.com.persist.plugins.checagem;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.checagem.atom.TipoAtomico;
+import br.com.persist.plugins.checagem.atom.TipoBoolean;
+import br.com.persist.plugins.checagem.atom.TipoDouble;
+import br.com.persist.plugins.checagem.atom.TipoField;
+import br.com.persist.plugins.checagem.atom.TipoLong;
+import br.com.persist.plugins.checagem.atom.TipoString;
 
 public class Token {
 	public static final int PARENTESE_ABRIR = 1;
@@ -55,7 +61,7 @@ public class Token {
 		return tipo == LONG;
 	}
 
-	public boolean isConteudoLong() {
+	boolean isConteudoLong() {
 		if (Util.estaVazio(valor)) {
 			return false;
 		}
@@ -67,14 +73,14 @@ public class Token {
 		return true;
 	}
 
-	public boolean isConteudoBoolean() {
+	boolean isConteudoBoolean() {
 		if (Util.estaVazio(valor)) {
 			return false;
 		}
 		return "true".equalsIgnoreCase(valor) || "false".equalsIgnoreCase(valor);
 	}
 
-	public boolean isConteudoDouble() {
+	boolean isConteudoDouble() {
 		if (Util.estaVazio(valor)) {
 			return false;
 		}
@@ -98,6 +104,38 @@ public class Token {
 			}
 		}
 		return true;
+	}
+
+	public static TipoAtomico criarTipoAtomico(Token token) throws ChecagemException {
+		if (token.isParenteseAbrir() || token.isParenteseFechar() || token.isVirgula()) {
+			throw new ChecagemException("Invalido criar sentenca para >>> " + token.getValor());
+		}
+		if (token.isBoolean()) {
+			TipoBoolean tipo = new TipoBoolean();
+			tipo.setValor(new Boolean(token.getValor()));
+			return tipo;
+		}
+		if (token.isDouble()) {
+			TipoDouble tipo = new TipoDouble();
+			tipo.setValor(new Double(token.getValor()));
+			return tipo;
+		}
+		if (token.isLong()) {
+			TipoLong tipo = new TipoLong();
+			tipo.setValor(new Long(token.getValor()));
+			return tipo;
+		}
+		if (token.isString()) {
+			if (!Util.estaVazio(token.getValor()) && token.getValor().startsWith("$")) {
+				TipoField tipo = new TipoField();
+				tipo.setValor(token.getValor());
+				return tipo;
+			}
+			TipoString tipo = new TipoString();
+			tipo.setValor(token.getValor());
+			return tipo;
+		}
+		throw new ChecagemException("Invalido criar sentenca para >>> " + token.getValor());
 	}
 
 	@Override
