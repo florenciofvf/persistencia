@@ -67,7 +67,7 @@ public class ChecagemToken {
 			indice++;
 		}
 		indice++;
-		return normalizar(new Token(sb.toString(), Token.STRING));
+		return new Token(sb.toString(), Token.STRING);
 	}
 
 	private Token token() {
