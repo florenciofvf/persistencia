@@ -52,6 +52,11 @@ br.com.persist.plugins.checagem.atom.LogicoNao
 !
 br.com.persist.plugins.checagem.atom.LogicoNao
 
+isEmpty
+br.com.persist.plugins.checagem.atom.IsEmptyFuncao
+vazio
+br.com.persist.plugins.checagem.atom.IsEmptyFuncao
+
 ou
 br.com.persist.plugins.checagem.atom.LogicoOu
 or

@@ -38,7 +38,7 @@
 		</instrucao>
 	</para>
 
-	<para tabela="eleicao" icone="executar">
+	<para tabela="eleicao" icone="executar" checarRegistro="true">
 	</para>
 
 	<pesquisa nome="Candidatos" tabela="eleicao" campo="id" iconeGrupo="boss">

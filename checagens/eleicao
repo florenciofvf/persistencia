@@ -1,0 +1,11 @@
+<set>
+	<![CDATA[
+		isEmpty($DATA_INICIADA)
+	]]>
+</set>
+
+<set>
+	<![CDATA[
+		$DATA_INICIADA
+	]]>
+</set>
