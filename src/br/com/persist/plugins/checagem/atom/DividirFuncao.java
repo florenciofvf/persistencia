@@ -3,8 +3,8 @@ package br.com.persist.plugins.checagem.atom;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
-public class SomarFuncao extends FuncaoBinaria {
-	private static final String ERRO = "Erro soma";
+public class DividirFuncao extends FuncaoBinaria {
+	private static final String ERRO = "Erro divisao";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
@@ -24,37 +24,43 @@ public class SomarFuncao extends FuncaoBinaria {
 
 	private Object priLong(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof Long) {
-			return ((Long) pri).longValue() + ((Long) seg).longValue();
+			check((Long) seg);
+			return ((Long) pri).longValue() / ((Long) seg).longValue();
 		} else if (seg instanceof Double) {
-			return ((Long) pri).longValue() + ((Double) seg).doubleValue();
-		} else if (seg instanceof String) {
-			return pri.toString() + seg.toString();
+			check((Double) seg);
+			return ((Long) pri).longValue() / ((Double) seg).doubleValue();
 		}
 		throw new ChecagemException(ERRO);
 	}
 
 	private Object priDouble(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof Long) {
-			return ((Double) pri).doubleValue() + ((Long) seg).longValue();
+			check((Long) seg);
+			return ((Double) pri).doubleValue() / ((Long) seg).longValue();
 		} else if (seg instanceof Double) {
-			return ((Double) pri).doubleValue() + ((Double) seg).doubleValue();
-		} else if (seg instanceof String) {
-			return pri.toString() + seg.toString();
+			check((Double) seg);
+			return ((Double) pri).doubleValue() / ((Double) seg).doubleValue();
 		}
 		throw new ChecagemException(ERRO);
 	}
 
-	private Object priBoolean(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof String) {
-			return pri.toString() + seg.toString();
+	private void check(Double operando) throws ChecagemException {
+		if (operando == 0) {
+			throw new ChecagemException("Nao existe divisao por zero");
 		}
+	}
+
+	private void check(Long operando) throws ChecagemException {
+		if (operando == 0) {
+			throw new ChecagemException("Nao existe divisao por zero");
+		}
+	}
+
+	private Object priBoolean(Object pri, Object seg) throws ChecagemException {
 		throw new ChecagemException(ERRO);
 	}
 
 	private Object priString(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof Long || seg instanceof Double || seg instanceof Boolean || seg instanceof String) {
-			return pri.toString() + seg.toString();
-		}
 		throw new ChecagemException(ERRO);
 	}
 }

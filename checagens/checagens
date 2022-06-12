@@ -62,6 +62,21 @@ br.com.persist.plugins.checagem.atom.SomarFuncao
 +
 br.com.persist.plugins.checagem.atom.SomarFuncao
 
+sub
+br.com.persist.plugins.checagem.atom.SubtrairFuncao
+-
+br.com.persist.plugins.checagem.atom.SubtrairFuncao
+
+mul
+br.com.persist.plugins.checagem.atom.MultiplicarFuncao
+*
+br.com.persist.plugins.checagem.atom.MultiplicarFuncao
+
+div
+br.com.persist.plugins.checagem.atom.DividirFuncao
+/
+br.com.persist.plugins.checagem.atom.DividirFuncao
+
 ou
 br.com.persist.plugins.checagem.atom.LogicoOu
 or
