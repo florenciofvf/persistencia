@@ -1,5 +1,6 @@
 package br.com.persist.plugins.checagem.atom;
 
+import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
 public class SentencaRaiz extends FuncaoUnaria {
@@ -8,12 +9,12 @@ public class SentencaRaiz extends FuncaoUnaria {
 	}
 
 	@Override
-	public Object executar(Contexto ctx) {
-		throw new UnsupportedOperationException("Nao pode ser executado >>> " + getClass().getName());
+	public Object executar(Contexto ctx) throws ChecagemException {
+		throw new ChecagemException("Nao pode ser executado >>> " + getClass().getName());
 	}
 
 	@Override
-	public void encerrar() {
-		throw new UnsupportedOperationException("Nao pode ser encerrado >>> " + getClass().getName());
+	public void encerrar() throws ChecagemException {
+		throw new ChecagemException("Nao pode ser encerrado >>> " + getClass().getName());
 	}
 }

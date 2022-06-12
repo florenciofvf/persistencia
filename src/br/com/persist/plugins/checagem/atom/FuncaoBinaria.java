@@ -10,24 +10,24 @@ public abstract class FuncaoBinaria extends FuncaoUnaria {
 	}
 
 	@Override
-	public void addParam(Sentenca sentenca) {
+	public void addParam(Sentenca sentenca) throws ChecagemException {
 		if (!modoInsercao) {
-			throw new UnsupportedOperationException("O parametro nao pode ser adicionado >>> " + getClass().getName());
+			throw new ChecagemException("O parametro nao pode ser adicionado >>> " + getClass().getName());
 		}
 		if (parametros.size() == 2) {
-			throw new UnsupportedOperationException("A funcao ja possui 2 parametros >>> " + getClass().getName());
+			throw new ChecagemException("A funcao ja possui 2 parametros >>> " + getClass().getName());
 		}
 		addParamImpl(sentenca);
 		modoInsercao = false;
 	}
 
 	@Override
-	public void preParametro() {
+	public void preParametro() throws ChecagemException {
 		if (modoInsercao) {
-			throw new UnsupportedOperationException("Parametro anterior nao adicionado >>> " + getClass().getName());
+			throw new ChecagemException("Parametro anterior nao adicionado >>> " + getClass().getName());
 		}
 		if (parametros.size() == 2) {
-			throw new UnsupportedOperationException("A funcao ja possui 2 parametros >>> " + getClass().getName());
+			throw new ChecagemException("A funcao ja possui 2 parametros >>> " + getClass().getName());
 		}
 		modoInsercao = true;
 	}

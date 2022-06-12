@@ -4,6 +4,8 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
 public class ComparacaoMaior extends FuncaoBinaria {
+	private static final String ERRO = "Erro maior";
+
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
 		Object pri = param0().executar(ctx);
@@ -21,6 +23,6 @@ public class ComparacaoMaior extends FuncaoBinaria {
 				return ((Double) pri) > ((Double) seg);
 			}
 		}
-		throw new IllegalStateException();
+		throw new ChecagemException(ERRO);
 	}
 }

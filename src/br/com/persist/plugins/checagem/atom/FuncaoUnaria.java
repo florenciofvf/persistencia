@@ -8,16 +8,16 @@ public abstract class FuncaoUnaria extends TipoFuncao {
 	}
 
 	@Override
-	public void addParam(Sentenca sentenca) {
+	public void addParam(Sentenca sentenca) throws ChecagemException {
 		if (!parametros.isEmpty()) {
-			throw new UnsupportedOperationException("A funcao ja possui 1 parametro >>> " + getClass().getName());
+			throw new ChecagemException("A funcao ja possui 1 parametro >>> " + getClass().getName());
 		}
 		super.addParam(sentenca);
 	}
 
 	@Override
-	public void preParametro() {
-		throw new UnsupportedOperationException("Suporta apenas 1 parametro >>> " + getClass().getName());
+	public void preParametro() throws ChecagemException {
+		throw new ChecagemException("Suporta apenas 1 parametro >>> " + getClass().getName());
 	}
 
 	@Override

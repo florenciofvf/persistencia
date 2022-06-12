@@ -17,12 +17,12 @@ public class ChecagemUtil {
 	private ChecagemUtil() {
 	}
 
-	public static void inicializar() {
+	public static void inicializar() throws ChecagemException {
 		if (ChecagemGramatica.map.isEmpty()) {
 			String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS;
 			File file = new File(arquivo);
 			if (!file.exists()) {
-				throw new IllegalStateException("ARQUIVO: " + arquivo + " inexistente!");
+				throw new ChecagemException("ARQUIVO: " + arquivo + " inexistente!");
 			}
 			try {
 				ChecagemGramatica.mapear(arquivo);

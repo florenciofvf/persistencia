@@ -1,12 +1,13 @@
 package br.com.persist.plugins.checagem.atom;
 
+import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
 public class TipoDouble extends TipoAtomico {
 	private Double valor;
 
 	@Override
-	public Object executar(Contexto ctx) {
+	public Object executar(Contexto ctx) throws ChecagemException {
 		return valor;
 	}
 

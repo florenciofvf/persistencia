@@ -16,14 +16,14 @@ public class Checagem {
 
 	public List<Object> processar(String key, Contexto ctx) throws ChecagemException {
 		if (key == null) {
-			throw new IllegalArgumentException("key null.");
+			throw new ChecagemException("key null.");
 		}
 		if (ctx == null) {
-			throw new IllegalArgumentException("ctx null.");
+			throw new ChecagemException("ctx null.");
 		}
 		List<Sentenca> sentencas = map.get(key);
 		if (sentencas == null) {
-			throw new IllegalStateException("sentencas null.");
+			throw new ChecagemException("sentencas null.");
 		}
 		List<Object> resp = new ArrayList<>();
 		for (Sentenca sentenca : sentencas) {
