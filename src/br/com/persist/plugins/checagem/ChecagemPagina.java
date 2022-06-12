@@ -95,6 +95,7 @@ public class ChecagemPagina extends Panel {
 
 	private class ToolbarParametro extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private Action sincronizarAcao = actionIcon("label.atualizar_cache2", Icones.SINCRONIZAR);
 		private Action checarAcao = actionIcon("label.checar_sentenca", Icones.SUCESSO);
 		private Action criarAcao = actionIcon("label.nova_sentenca", Icones.CRIAR2);
 		private final TextField txtPesquisa = new TextField(35);
@@ -104,8 +105,10 @@ public class ChecagemPagina extends Panel {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
 			addButton(criarAcao);
 			addButton(checarAcao);
+			addButton(sincronizarAcao);
 			atualizarAcao.text(ChecagemMensagens.getString("label.atualizar_cache"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			sincronizarAcao.setActionListener(e -> sincronizarSentencas());
 			checarAcao.setActionListener(e -> checarSentenca());
 			criarAcao.setActionListener(e -> novaSentenca());
 			txtPesquisa.addActionListener(this);
@@ -113,11 +116,20 @@ public class ChecagemPagina extends Panel {
 			add(label);
 		}
 
+		private void sincronizarSentencas() {
+			try {
+				ChecagemUtil.atualizarEstrutura(file, areaParametros.getText());
+				mensagemSucesso();
+			} catch (ChecagemException | XMLException e) {
+				Util.mensagem(ChecagemPagina.this, e.getMessage());
+			}
+		}
+
 		@Override
 		protected void atualizar() {
 			try {
 				ChecagemUtil.atualizarEstrutura(file);
-				Util.mensagem(ChecagemPagina.this, "SUCESSO");
+				mensagemSucesso();
 			} catch (ChecagemException e) {
 				Util.mensagem(ChecagemPagina.this, e.getMessage());
 			}
@@ -143,10 +155,14 @@ public class ChecagemPagina extends Panel {
 			}
 			try {
 				ChecagemUtil.checarEstrutura(areaParametros.getText());
-				Util.mensagem(ChecagemPagina.this, "SUCESSO");
+				mensagemSucesso();
 			} catch (ChecagemException | XMLException e) {
 				Util.mensagem(ChecagemPagina.this, e.getMessage());
 			}
+		}
+
+		private void mensagemSucesso() {
+			Util.mensagem(ChecagemPagina.this, "SUCESSO");
 		}
 
 		@Override

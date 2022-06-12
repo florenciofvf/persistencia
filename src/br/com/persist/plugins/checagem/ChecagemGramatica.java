@@ -31,19 +31,26 @@ public class ChecagemGramatica {
 	private ChecagemGramatica() {
 	}
 
-	public static void checarGramatica(String string, Checagem checagem) throws XMLException, ChecagemException {
-		List<String> sentencasString = sentencasString(string);
+	public static void checarGramatica(String conteudo, Checagem checagem) throws XMLException, ChecagemException {
+		List<String> sentencasString = sentencasString(conteudo);
 		criarHierarquiaSentencas(sentencasString);
 	}
 
 	private static List<String> sentencasString(String conteudo) throws XMLException {
 		ChecagemHandler handler = new ChecagemHandler();
-		processarSentencas(handler, conteudo);
+		processarXMLSentencas(handler, conteudo);
 		return handler.getSentencas();
 	}
 
 	public static void montarGramatica(String chaveSentencas, Checagem checagem) throws ChecagemException {
 		List<String> sentencasString = lerSentencasString(chaveSentencas);
+		List<Sentenca> sentencas = criarHierarquiaSentencas(sentencasString);
+		checagem.map.put(chaveSentencas, sentencas);
+	}
+
+	public static void atualizarGramatica(String chaveSentencas, String conteudo, Checagem checagem)
+			throws ChecagemException, XMLException {
+		List<String> sentencasString = sentencasString(conteudo);
 		List<Sentenca> sentencas = criarHierarquiaSentencas(sentencasString);
 		checagem.map.put(chaveSentencas, sentencas);
 	}
@@ -54,7 +61,7 @@ public class ChecagemGramatica {
 			File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + chaveSentencas);
 			if (file.exists() && file.canRead()) {
 				String conteudo = Util.conteudo(file);
-				processarSentencas(handler, conteudo);
+				processarXMLSentencas(handler, conteudo);
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
@@ -62,7 +69,7 @@ public class ChecagemGramatica {
 		return handler.getSentencas();
 	}
 
-	private static void processarSentencas(ChecagemHandler handler, String conteudo) throws XMLException {
+	private static void processarXMLSentencas(ChecagemHandler handler, String conteudo) throws XMLException {
 		StringWriter sw = new StringWriter();
 		XMLUtil util = new XMLUtil(sw);
 		util.prologo();

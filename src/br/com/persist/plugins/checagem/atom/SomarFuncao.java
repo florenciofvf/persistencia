@@ -4,6 +4,8 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
 public class SomarFuncao extends FuncaoBinaria {
+	private static final String ERRO_SOMAR = "Erro soma";
+
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
 		Object pri = param0().executar(ctx);
@@ -17,10 +19,10 @@ public class SomarFuncao extends FuncaoBinaria {
 		} else if (pri instanceof String) {
 			return priString(pri, seg);
 		}
-		throw new IllegalStateException();
+		throw new ChecagemException(ERRO_SOMAR);
 	}
 
-	private Object priLong(Object pri, Object seg) {
+	private Object priLong(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof Long) {
 			return ((Long) pri).longValue() + ((Long) seg).longValue();
 		} else if (seg instanceof Double) {
@@ -28,10 +30,10 @@ public class SomarFuncao extends FuncaoBinaria {
 		} else if (seg instanceof String) {
 			return pri.toString() + seg.toString();
 		}
-		throw new IllegalStateException();
+		throw new ChecagemException(ERRO_SOMAR);
 	}
 
-	private Object priDouble(Object pri, Object seg) {
+	private Object priDouble(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof Long) {
 			return ((Double) pri).doubleValue() + ((Long) seg).longValue();
 		} else if (seg instanceof Double) {
@@ -39,20 +41,20 @@ public class SomarFuncao extends FuncaoBinaria {
 		} else if (seg instanceof String) {
 			return pri.toString() + seg.toString();
 		}
-		throw new IllegalStateException();
+		throw new ChecagemException(ERRO_SOMAR);
 	}
 
-	private Object priBoolean(Object pri, Object seg) {
+	private Object priBoolean(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof String) {
 			return pri.toString() + seg.toString();
 		}
-		throw new IllegalStateException();
+		throw new ChecagemException(ERRO_SOMAR);
 	}
 
-	private Object priString(Object pri, Object seg) {
+	private Object priString(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof Long || seg instanceof Double || seg instanceof Boolean || seg instanceof String) {
 			return pri.toString() + seg.toString();
 		}
-		throw new IllegalStateException();
+		throw new ChecagemException(ERRO_SOMAR);
 	}
 }

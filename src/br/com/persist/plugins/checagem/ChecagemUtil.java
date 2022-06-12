@@ -46,6 +46,10 @@ public class ChecagemUtil {
 		ChecagemGramatica.checarGramatica(conteudo, checagem);
 	}
 
+	public static void atualizarEstrutura(File file, String conteudo) throws ChecagemException, XMLException {
+		ChecagemGramatica.atualizarGramatica(file.getName(), conteudo, checagem);
+	}
+
 	public static void atualizarEstrutura(File file) throws ChecagemException {
 		ChecagemGramatica.montarGramatica(file.getName(), checagem);
 	}
