@@ -244,6 +244,15 @@ public class PersistenciaModelo implements TableModel {
 		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb, coletor, conexao);
 	}
 
+	public Map<String, String> getMap(int rowIndex, Coletor coletor, Conexao conexao) {
+		List<Object> registro = registros.get(rowIndex);
+		List<Object> valores = new ArrayList<>();
+		for (Coluna coluna : colunas) {
+			valores.add(registro.get(coluna.getIndice()));
+		}
+		return getMap(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), coletor, conexao);
+	}
+
 	public String getUpdate(int rowIndex, String prefixoNomeTabela, Coletor coletor, boolean comWhere,
 			Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
@@ -384,6 +393,27 @@ public class PersistenciaModelo implements TableModel {
 				sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i], conexao));
 			}
 		}
+	}
+
+	private Map<String, String> getMap(Coluna[] colunas, Object[] valores, Coletor coletor, Conexao conexao) {
+		Map<String, String> map = new HashMap<>();
+		int i = 0;
+		Coluna coluna = null;
+		for (; i < colunas.length; i++) {
+			coluna = colunas[i];
+			if (coletor.contem(coluna.getNome())) {
+				map.put(coluna.getNome(), coluna.get(valores[i], conexao));
+				i++;
+				break;
+			}
+		}
+		for (; i < colunas.length; i++) {
+			coluna = colunas[i];
+			if (coletor.contem(coluna.getNome())) {
+				map.put(coluna.getNome(), coluna.get(valores[i], conexao));
+			}
+		}
+		return map;
 	}
 
 	private String gerarUpdate(List<Object> registro, Coluna[] colunas, Object[] valores, String prefixoNomeTabela,

@@ -69,6 +69,7 @@ public class Objeto implements Runnable {
 	private ObjetoListener listener;
 	private boolean larguraRotulos;
 	private Color cor = COR_PADRAO;
+	private boolean checarRegistro;
 	private boolean checarLargura;
 	private static long sequencia;
 	private boolean buscaAutoTemp;
@@ -1240,5 +1241,13 @@ public class Objeto implements Runnable {
 
 	public void setMetadado(Metadado metadado) {
 		this.metadado = metadado;
+	}
+
+	public boolean isChecarRegistro() {
+		return checarRegistro;
+	}
+
+	public void setChecarRegistro(boolean checarRegistro) {
+		this.checarRegistro = checarRegistro;
 	}
 }

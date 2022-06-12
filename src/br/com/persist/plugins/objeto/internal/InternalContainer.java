@@ -89,6 +89,9 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.IconeListener;
+import br.com.persist.plugins.checagem.ChecagemException;
+import br.com.persist.plugins.checagem.ChecagemUtil;
+import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.conexao.Conexao;
 import br.com.persist.plugins.conexao.ConexaoProvedor;
 import br.com.persist.plugins.consulta.ConsultaDialogo;
@@ -1651,6 +1654,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		private class ButtonInfo extends ButtonPopup {
 			private static final long serialVersionUID = 1L;
 			private Action scriptAdicaoHierAcao = actionMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
+			private Action checagemAcao = actionMenu("label.checar_registro", Icones.SUCESSO);
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 			private MenuTemp menuTemp = new MenuTemp();
 
@@ -1659,6 +1663,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void ini(Objeto objeto) {
+				if (objeto.isChecarRegistro()) {
+					addMenuItem(checagemAcao);
+				}
 				if (objeto.getPesquisaAdicaoHierarquico() != null) {
 					addMenuItem(scriptAdicaoHierAcao);
 				}
@@ -1674,6 +1681,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addMenu(true, menuAlinhamento);
 				addMenu(true, menuTemp);
 				scriptAdicaoHierAcao.setActionListener(e -> descrever(objeto));
+				checagemAcao.setActionListener(e -> checarRegistro());
 			}
 
 			private void descrever(Objeto objeto) {
@@ -1685,6 +1693,40 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Util.mensagem(InternalContainer.this, descricao);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+				}
+			}
+
+			private void checarRegistro() {
+				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
+				int[] linhas = tabelaPersistencia.getSelectedRows();
+				if (linhas != null && linhas.length == 1) {
+					Coletor coletor = new Coletor();
+					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+							InternalContainer.this, null);
+					Map<String, String> map = modelo.getMap(linhas[0], coletor, null);
+					StringBuilder sb = new StringBuilder();
+					try {
+						Contexto ctx = new Contexto(map);
+						List<Object> lista = ChecagemUtil.processar(objeto.getTabela(), ctx);
+						for (Object object : lista) {
+							append(sb, object);
+						}
+					} catch (ChecagemException e) {
+						append(sb, e.getMessage());
+					}
+					Util.mensagem(InternalContainer.this, sb.toString());
+				} else {
+					Util.mensagem(InternalContainer.this,
+							ObjetoMensagens.getString("msg.selecione_apenas_um_registro_para_checagem"));
+				}
+			}
+
+			private void append(StringBuilder sb, Object obj) {
+				if (obj != null && !Util.estaVazio(obj.toString())) {
+					if (sb.length() > 0) {
+						sb.append(Constantes.QL);
+					}
+					sb.append(obj.toString());
 				}
 			}
 
