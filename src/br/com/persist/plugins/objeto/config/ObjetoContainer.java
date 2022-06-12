@@ -244,6 +244,7 @@ public class ObjetoContainer extends Panel {
 
 	private class PanelGeral extends Panel implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private CheckBox chkChecarRegistro = new CheckBox();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
 		private TextField txtDeslocXId = new TextField();
@@ -263,6 +264,7 @@ public class ObjetoContainer extends Panel {
 			txtDeslocXId.setText(VAZIO + objeto.getDeslocamentoXId());
 			txtDeslocYId.setText(VAZIO + objeto.getDeslocamentoYId());
 			chkCopiarDestac.setSelected(objeto.isClonarAoDestacar());
+			chkChecarRegistro.setSelected(objeto.isChecarRegistro());
 			chkTransparente.setSelected(objeto.isTransparente());
 			txtIntervalo.setText(VAZIO + objeto.getIntervalo());
 			chkDesenharId.setSelected(objeto.isDesenharId());
@@ -277,6 +279,7 @@ public class ObjetoContainer extends Panel {
 			txtId.addFocusListener(focusListenerInner);
 			txtX.addFocusListener(focusListenerInner);
 			txtY.addFocusListener(focusListenerInner);
+			chkChecarRegistro.addActionListener(this);
 			chkTransparente.addActionListener(this);
 			chkCopiarDestac.addActionListener(this);
 			chkDesenharId.addActionListener(this);
@@ -305,6 +308,7 @@ public class ObjetoContainer extends Panel {
 					PanelGeral.this::mensagemPropriedadeArquivo));
 			container.add(criarLinha("label.desenhar_id", chkDesenharId));
 			container.add(criarLinha("label.transparente", chkTransparente));
+			container.add(criarLinha("label.checar_reg", chkChecarRegistro));
 			container.add(criarLinhaRotulo("label.copiar_destacado", chkCopiarDestac));
 			container.add(criarLinhaCopiar("label.add_instrucao", txtInstrucao,
 					ObjetoMensagens.getString("hint.add_instrucao")));
@@ -376,6 +380,10 @@ public class ObjetoContainer extends Panel {
 				CheckBox chk = (CheckBox) e.getSource();
 				objeto.setDesenharId(chk.isSelected());
 				MacroProvedor.desenharIdDescricao(chk.isSelected());
+			} else if (chkChecarRegistro == e.getSource()) {
+				CheckBox chk = (CheckBox) e.getSource();
+				objeto.setChecarRegistro(chk.isSelected());
+				MacroProvedor.checarRegistro(chk.isSelected());
 			}
 			actionPerformedCont2(e);
 		}

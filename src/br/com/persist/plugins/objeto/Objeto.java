@@ -146,6 +146,7 @@ public class Objeto implements Runnable {
 		o.deslocamentoYId = deslocamentoYId;
 		o.ajusteAutoForm = ajusteAutoForm;
 		o.larguraRotulos = larguraRotulos;
+		o.checarRegistro = checarRegistro;
 		o.finalConsulta = finalConsulta;
 		o.transparente = transparente;
 		o.addInstrucoes(instrucoes);
@@ -180,6 +181,7 @@ public class Objeto implements Runnable {
 		ajusteAutoForm = Boolean.parseBoolean(attr.getValue("ajusteAutoForm"));
 		clonarAoDestacar = Boolean.parseBoolean(attr.getValue("copiarDestac"));
 		larguraRotulos = Boolean.parseBoolean(attr.getValue("larguraRotulos"));
+		checarRegistro = Boolean.parseBoolean(attr.getValue("checarRegistro"));
 		transparente = Boolean.parseBoolean(attr.getValue("transparente"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
 		deslocamentoXId = Integer.parseInt(attr.getValue("desloc_x_id"));
@@ -234,6 +236,7 @@ public class Objeto implements Runnable {
 		util.atributoCheck("ajusteAutoForm", ajusteAutoForm);
 		util.atributoCheck("copiarDestac", clonarAoDestacar);
 		util.atributoCheck("larguraRotulos", larguraRotulos);
+		util.atributoCheck("checarRegistro", checarRegistro);
 		util.atributo("desloc_x_id", deslocamentoXId);
 		util.atributo("desloc_y_id", deslocamentoYId);
 		util.atributo("corFonte", corFonte.getRGB());

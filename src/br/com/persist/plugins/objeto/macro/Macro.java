@@ -46,6 +46,18 @@ public class Macro {
 		}
 	}
 
+	static class ChecarRegistro extends Instrucao {
+		@Override
+		public void executar(Relacao relacao) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void executar(Objeto objeto) {
+			objeto.setChecarRegistro((Boolean) valor);
+		}
+	}
+
 	static class Quebrado extends Instrucao {
 		@Override
 		public void executar(Relacao relacao) {
