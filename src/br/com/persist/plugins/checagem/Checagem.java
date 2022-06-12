@@ -14,7 +14,7 @@ public class Checagem {
 		map = new HashMap<>();
 	}
 
-	public List<Object> processar(String key, Contexto ctx) {
+	public List<Object> processar(String key, Contexto ctx) throws ChecagemException {
 		if (key == null) {
 			throw new IllegalArgumentException("key null.");
 		}

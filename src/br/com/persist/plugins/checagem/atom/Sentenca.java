@@ -6,11 +6,11 @@ import br.com.persist.plugins.checagem.Contexto;
 public abstract class Sentenca {
 	protected Sentenca pai;
 
+	public abstract Object executar(Contexto ctx) throws ChecagemException;
+
 	public abstract void preParametro() throws ChecagemException;
 
 	public abstract void encerrar() throws ChecagemException;
-
-	public abstract Object executar(Contexto ctx);
 
 	public Sentenca getPai() {
 		return pai;

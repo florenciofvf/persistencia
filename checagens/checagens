@@ -57,6 +57,11 @@ br.com.persist.plugins.checagem.atom.IsEmptyFuncao
 vazio
 br.com.persist.plugins.checagem.atom.IsEmptyFuncao
 
+somar
+br.com.persist.plugins.checagem.atom.SomarFuncao
++
+br.com.persist.plugins.checagem.atom.SomarFuncao
+
 ou
 br.com.persist.plugins.checagem.atom.LogicoOu
 or

@@ -1,10 +1,11 @@
 package br.com.persist.plugins.checagem.atom;
 
+import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
 public class ComparacaoMenor extends FuncaoBinaria {
 	@Override
-	public Object executar(Contexto ctx) {
+	public Object executar(Contexto ctx) throws ChecagemException {
 		Object pri = param0().executar(ctx);
 		Object seg = param1().executar(ctx);
 		if (pri instanceof Long) {
