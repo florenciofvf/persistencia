@@ -15,6 +15,7 @@ public class ParaTabela {
 	private String selectAlternativo;
 	private String clonarAoDestacar;
 	private String larguraRotulos;
+	private String checarRegistro;
 	private String ajustarAltura;
 	private String finalConsulta;
 	private String transparente;
@@ -93,6 +94,9 @@ public class ParaTabela {
 	public void config(Objeto objeto) {
 		if (!Util.estaVazio(clonarAoDestacar)) {
 			objeto.setClonarAoDestacar(Boolean.parseBoolean(clonarAoDestacar));
+		}
+		if (!Util.estaVazio(checarRegistro)) {
+			objeto.setChecarRegistro(Boolean.parseBoolean(checarRegistro));
 		}
 		if (!Util.estaVazio(ajustarAltura)) {
 			objeto.setAjusteAutoForm(Boolean.parseBoolean(ajustarAltura));
@@ -192,6 +196,7 @@ public class ParaTabela {
 		atributoValor(util, "selectAlternativo", selectAlternativo);
 		atributoValor(util, "clonarAoDestacar", clonarAoDestacar);
 		atributoValor(util, "larguraRotulos", larguraRotulos);
+		atributoValor(util, "checarRegistro", checarRegistro);
 		atributoValor(util, "finalConsulta", finalConsulta);
 		atributoValor(util, "ajustarAltura", ajustarAltura);
 		atributoValor(util, "transparente", transparente);
@@ -240,27 +245,28 @@ public class ParaTabela {
 		util.abrirTag(VinculoHandler.PARA).atributo(VinculoHandler.TABELA, VinculoHandler.NOME_TABELA)
 				.atributo(VinculoHandler.ICONE, "nome_icone").atributo(VinculoHandler.COR_FONTE, "#AABBCC").ql();
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
+		util.tab().atributo("clonarAoDestacar", true).ql();
+		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
 		util.tab().atributo("larguraRotulos", false).ql();
-		util.tab().atributo("clonarAoDestacar", "").ql();
+		util.tab().atributo("checarRegistro", false).ql();
 		util.tab().atributo("ajustarAltura", true).ql();
+		util.tab().atributo("transparente", false).ql();
+		util.tab().atributo("colunaInfo", false).ql();
 		util.tab().atributo("finalConsulta", "").ql();
-		util.tab().atributo("transparente", "").ql();
+		util.tab().atributo("destacavel", true).ql();
 		util.tab().atributo("complemento", "").ql();
 		util.tab().atributo("classBiblio", "").ql();
 		util.tab().atributo("destacaveis", "").ql();
 		util.tab().atributo("mapeamento", "").ql();
 		util.tab().atributo("sequencias", "").ql();
 		util.tab().atributo("campoNomes", "").ql();
-		util.tab().atributo("colunaInfo", false).ql();
-		util.tab().atributo("destacavel", true).ql();
 		util.tab().atributo("linkAuto", true).ql();
 		util.tab().atributo("apelido", "ape").ql();
 		util.tab().atributo("orderBy", "").ql();
 		util.tab().atributo("tabelas", "").ql();
 		util.tab().atributo("chaves", "").ql();
 		util.tab().atributo("joins", "").ql();
-		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
 		util.tab().atributo("sane", true).ql();
 		util.tab().atributo("ccsc", true).ql();
 		util.tab().atributo("bpnt", false).fecharTag();
@@ -506,8 +512,16 @@ public class ParaTabela {
 		return transparente;
 	}
 
+	public String getChecarRegistro() {
+		return checarRegistro;
+	}
+
 	public void setTransparente(String transparente) {
 		this.transparente = transparente;
+	}
+
+	public void setChecarRegistro(String checarRegistro) {
+		this.checarRegistro = checarRegistro;
 	}
 
 	public String getClonarAoDestacar() {

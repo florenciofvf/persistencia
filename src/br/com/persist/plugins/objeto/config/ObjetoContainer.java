@@ -179,6 +179,8 @@ public class ObjetoContainer extends Panel {
 				para.setComplemento(compChave.getText());
 			} else if ("DESTACAVEIS".equals(compChave.chave)) {
 				para.setDestacaveis(compChave.getText());
+			} else if ("CHECAR_REGISTRO".equals(compChave.chave)) {
+				para.setChecarRegistro(compChave.getBool());
 			}
 		}
 
@@ -319,11 +321,13 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private void vincular() {
+			vinculados.add(new CompChave(chkChecarRegistro, "CHECAR_REGISTRO"));
 			vinculados.add(new CompChave(chkTransparente, "TRANSPARENTE"));
 			vinculados.add(new CompChave(chkCopiarDestac, "CLONAR_DESTA"));
 			vinculados.add(new CompChave(txtInstrucao, "INSTRUCAO"));
 			vinculados.add(new CompChave(txtFiltro, "FILTRO"));
 
+			chkChecarRegistro.addMouseListener(listenerVinculado);
 			chkTransparente.addMouseListener(listenerVinculado);
 			chkCopiarDestac.addMouseListener(listenerVinculado);
 			txtInstrucao.addMouseListener(listenerVinculado);
