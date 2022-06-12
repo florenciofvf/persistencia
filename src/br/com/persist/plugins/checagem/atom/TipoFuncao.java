@@ -40,4 +40,10 @@ public abstract class TipoFuncao extends Sentenca {
 	public Sentenca getUltimoParametro() {
 		return parametros.get(parametros.size() - 1);
 	}
+
+	protected void checkObrigatorioBoolean(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof Boolean)) {
+			throw new ChecagemException(msg);
+		}
+	}
 }
