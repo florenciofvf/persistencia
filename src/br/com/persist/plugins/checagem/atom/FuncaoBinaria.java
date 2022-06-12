@@ -17,7 +17,7 @@ public abstract class FuncaoBinaria extends FuncaoUnaria {
 		if (parametros.size() == 2) {
 			throw new UnsupportedOperationException("A funcao ja possui 2 parametros >>> " + getClass().getName());
 		}
-		super.addParam(sentenca);
+		addParamImpl(sentenca);
 		modoInsercao = false;
 	}
 

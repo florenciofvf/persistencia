@@ -11,6 +11,10 @@ public abstract class TipoFuncao extends Sentenca {
 	}
 
 	public void addParam(Sentenca sentenca) {
+		addParamImpl(sentenca);
+	}
+
+	protected void addParamImpl(Sentenca sentenca) {
 		check(sentenca);
 		sentenca.pai = this;
 		parametros.add(sentenca);

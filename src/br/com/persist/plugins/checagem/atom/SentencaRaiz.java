@@ -11,4 +11,9 @@ public class SentencaRaiz extends FuncaoUnaria {
 	public Object executar(Contexto ctx) {
 		throw new UnsupportedOperationException("Nao pode ser executado >>> " + getClass().getName());
 	}
+
+	@Override
+	public void encerrar() {
+		throw new UnsupportedOperationException("Nao pode ser encerrado >>> " + getClass().getName());
+	}
 }
