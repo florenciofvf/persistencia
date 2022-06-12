@@ -38,6 +38,11 @@ br.com.persist.plugins.checagem.atom.CondicionalSe
 if
 br.com.persist.plugins.checagem.atom.CondicionalSe
 
+senao
+br.com.persist.plugins.checagem.atom.CondicionalSeNao
+ifElse
+br.com.persist.plugins.checagem.atom.CondicionalSeNao
+
 e
 br.com.persist.plugins.checagem.atom.LogicoE
 and
@@ -76,6 +81,11 @@ div
 br.com.persist.plugins.checagem.atom.DividirFuncao
 /
 br.com.persist.plugins.checagem.atom.DividirFuncao
+
+resto
+br.com.persist.plugins.checagem.atom.RestoFuncao
+%
+br.com.persist.plugins.checagem.atom.RestoFuncao
 
 ou
 br.com.persist.plugins.checagem.atom.LogicoOu

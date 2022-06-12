@@ -17,6 +17,9 @@ public abstract class TipoFuncao extends Sentenca {
 	}
 
 	protected void addParamImpl(Sentenca sentenca) throws ChecagemException {
+		if (sentenca == null) {
+			throw new ChecagemException("Sentenca nula");
+		}
 		check(sentenca);
 		sentenca.pai = this;
 		parametros.add(sentenca);

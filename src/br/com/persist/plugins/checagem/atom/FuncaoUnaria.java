@@ -2,7 +2,7 @@ package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 
-public abstract class FuncaoUnaria extends TipoFuncao {
+public abstract class FuncaoUnaria extends FuncaoVazia {
 	public Sentenca param0() {
 		return parametros.get(0);
 	}
@@ -12,7 +12,7 @@ public abstract class FuncaoUnaria extends TipoFuncao {
 		if (!parametros.isEmpty()) {
 			throw new ChecagemException("A funcao ja possui 1 parametro >>> " + getClass().getName());
 		}
-		super.addParam(sentenca);
+		addParamImpl(sentenca);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public abstract class FuncaoUnaria extends TipoFuncao {
 	@Override
 	public void encerrar() throws ChecagemException {
 		if (parametros.size() != 1) {
-			throw new UnsupportedOperationException("A funcao exige 1 parametro >>> " + getClass().getName());
+			throw new ChecagemException("A funcao exige 1 parametro >>> " + getClass().getName());
 		}
 	}
 }
