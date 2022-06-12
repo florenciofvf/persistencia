@@ -377,18 +377,8 @@ public class PersistenciaModelo implements TableModel {
 	}
 
 	private void getDado(Coluna[] colunas, Object[] valores, StringBuilder sb, Coletor coletor, Conexao conexao) {
-		int i = 0;
-		Coluna coluna = null;
-		for (; i < colunas.length; i++) {
-			coluna = colunas[i];
-			if (coletor.contem(coluna.getNome())) {
-				sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i], conexao));
-				i++;
-				break;
-			}
-		}
-		for (; i < colunas.length; i++) {
-			coluna = colunas[i];
+		for (int i = 0; i < colunas.length; i++) {
+			Coluna coluna = colunas[i];
 			if (coletor.contem(coluna.getNome())) {
 				sb.append(Constantes.QL + coluna.getNome() + " = " + coluna.get(valores[i], conexao));
 			}
@@ -397,20 +387,10 @@ public class PersistenciaModelo implements TableModel {
 
 	private Map<String, String> getMap(Coluna[] colunas, Object[] valores, Coletor coletor, Conexao conexao) {
 		Map<String, String> map = new HashMap<>();
-		int i = 0;
-		Coluna coluna = null;
-		for (; i < colunas.length; i++) {
-			coluna = colunas[i];
+		for (int i = 0; i < colunas.length; i++) {
+			Coluna coluna = colunas[i];
 			if (coletor.contem(coluna.getNome())) {
-				map.put(coluna.getNome(), coluna.get(valores[i], conexao));
-				i++;
-				break;
-			}
-		}
-		for (; i < colunas.length; i++) {
-			coluna = colunas[i];
-			if (coletor.contem(coluna.getNome())) {
-				map.put(coluna.getNome(), coluna.get(valores[i], conexao));
+				map.put(coluna.getNome(), valores[i].toString());
 			}
 		}
 		return map;
