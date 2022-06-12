@@ -1,5 +1,6 @@
 package br.com.persist.plugins.checagem;
 
+import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
@@ -100,15 +101,26 @@ public class ChecagemPagina extends Panel {
 		private transient Selecao selecao;
 
 		private ToolbarParametro() {
-			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
+			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
 			addButton(criarAcao);
 			addButton(checarAcao);
+			atualizarAcao.text(ChecagemMensagens.getString("label.atualizar_cache"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			checarAcao.setActionListener(e -> checarSentenca());
 			criarAcao.setActionListener(e -> novaSentenca());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		@Override
+		protected void atualizar() {
+			try {
+				ChecagemUtil.atualizarEstrutura(file);
+				Util.mensagem(ChecagemPagina.this, "SUCESSO");
+			} catch (ChecagemException e) {
+				Util.mensagem(ChecagemPagina.this, e.getMessage());
+			}
 		}
 
 		private void novaSentenca() {

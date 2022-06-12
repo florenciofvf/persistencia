@@ -36,9 +36,9 @@ public class ChecagemGramatica {
 		criarHierarquiaSentencas(sentencasString);
 	}
 
-	private static List<String> sentencasString(String string) throws XMLException {
+	private static List<String> sentencasString(String conteudo) throws XMLException {
 		ChecagemHandler handler = new ChecagemHandler();
-		processarSentencas(handler, string);
+		processarSentencas(handler, conteudo);
 		return handler.getSentencas();
 	}
 

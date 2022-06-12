@@ -42,7 +42,11 @@ public class ChecagemUtil {
 		return checagem.processar(arquivo, ctx);
 	}
 
-	public static void checarEstrutura(String string) throws ChecagemException, XMLException {
-		ChecagemGramatica.checarGramatica(string, checagem);
+	public static void checarEstrutura(String conteudo) throws ChecagemException, XMLException {
+		ChecagemGramatica.checarGramatica(conteudo, checagem);
+	}
+
+	public static void atualizarEstrutura(File file) throws ChecagemException {
+		ChecagemGramatica.montarGramatica(file.getName(), checagem);
 	}
 }
