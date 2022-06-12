@@ -1698,7 +1698,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private void checarRegistro() {
 				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
-				int[] linhas = tabelaPersistencia.getSelectedRows();
+				int[] linhas = null;
+				if (modelo.getRowCount() == 1) {
+					linhas = new int[] { 0 };
+				}
+				if (linhas == null) {
+					linhas = tabelaPersistencia.getSelectedRows();
+				}
 				if (linhas != null && linhas.length == 1) {
 					Coletor coletor = new Coletor();
 					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
