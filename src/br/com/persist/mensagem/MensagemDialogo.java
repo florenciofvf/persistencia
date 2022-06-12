@@ -24,7 +24,7 @@ public class MensagemDialogo extends AbstratoDialogo {
 	}
 
 	private void montarLayout() {
-		setModalityType(ModalityType.MODELESS);
+		setModalityType(ModalityType.DOCUMENT_MODAL);
 		add(BorderLayout.CENTER, container);
 	}
 
