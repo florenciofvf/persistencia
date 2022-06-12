@@ -37,6 +37,7 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
+import br.com.persist.marca.XMLException;
 
 public class ChecagemPagina extends Panel {
 	private static final long serialVersionUID = 1L;
@@ -93,6 +94,7 @@ public class ChecagemPagina extends Panel {
 
 	private class ToolbarParametro extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
+		private Action checarAcao = actionIcon("label.checar_sentenca", Icones.SUCESSO);
 		private Action criarAcao = actionIcon("label.nova_sentenca", Icones.CRIAR2);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
@@ -100,7 +102,9 @@ public class ChecagemPagina extends Panel {
 		private ToolbarParametro() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
 			addButton(criarAcao);
+			addButton(checarAcao);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			checarAcao.setActionListener(e -> checarSentenca());
 			criarAcao.setActionListener(e -> novaSentenca());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
@@ -118,6 +122,19 @@ public class ChecagemPagina extends Panel {
 			sb.append("	]]>" + Constantes.QL);
 			sb.append("</set>");
 			areaParametros.setText(sb.toString());
+		}
+
+		private void checarSentenca() {
+			if (Util.estaVazio(areaParametros.getText())) {
+				Util.mensagem(ChecagemPagina.this, ChecagemMensagens.getString("msg.nenhuma_sentenca_declarada"));
+				return;
+			}
+			try {
+				ChecagemUtil.checarEstrutura(areaParametros.getText());
+				Util.mensagem(ChecagemPagina.this, "SUCESSO");
+			} catch (ChecagemException | XMLException e) {
+				Util.mensagem(ChecagemPagina.this, e.getMessage());
+			}
 		}
 
 		@Override

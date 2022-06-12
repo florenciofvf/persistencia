@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
+import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.plugins.checagem.atom.Sentenca;
 import br.com.persist.plugins.checagem.atom.SentencaRaiz;
@@ -28,6 +29,17 @@ public class ChecagemGramatica {
 	static Map<String, String> map = new HashMap<>();
 
 	private ChecagemGramatica() {
+	}
+
+	public static void checarGramatica(String string, Checagem checagem) throws XMLException, ChecagemException {
+		List<String> sentencasString = sentencasString(string);
+		criarHierarquiaSentencas(sentencasString);
+	}
+
+	private static List<String> sentencasString(String string) throws XMLException {
+		ChecagemHandler handler = new ChecagemHandler();
+		processarSentencas(handler, string);
+		return handler.getSentencas();
 	}
 
 	public static void montarGramatica(String chaveSentencas, Checagem checagem) throws ChecagemException {
@@ -42,19 +54,23 @@ public class ChecagemGramatica {
 			File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + chaveSentencas);
 			if (file.exists() && file.canRead()) {
 				String conteudo = Util.conteudo(file);
-				StringWriter sw = new StringWriter();
-				XMLUtil util = new XMLUtil(sw);
-				util.prologo();
-				util.abrirTag2("sentencas");
-				util.print(conteudo).ql();
-				util.finalizarTag("sentencas");
-				util.close();
-				XML.processar(new ByteArrayInputStream(sw.toString().getBytes()), handler);
+				processarSentencas(handler, conteudo);
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 		return handler.getSentencas();
+	}
+
+	private static void processarSentencas(ChecagemHandler handler, String conteudo) throws XMLException {
+		StringWriter sw = new StringWriter();
+		XMLUtil util = new XMLUtil(sw);
+		util.prologo();
+		util.abrirTag2("sentencas");
+		util.print(conteudo).ql();
+		util.finalizarTag("sentencas");
+		util.close();
+		XML.processar(new ByteArrayInputStream(sw.toString().getBytes()), handler);
 	}
 
 	private static List<Sentenca> criarHierarquiaSentencas(List<String> sentencasString) throws ChecagemException {

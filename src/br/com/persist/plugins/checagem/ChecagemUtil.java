@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.checagem.atom.Sentenca;
 
 public class ChecagemUtil {
@@ -39,5 +40,9 @@ public class ChecagemUtil {
 			ChecagemGramatica.montarGramatica(arquivo, checagem);
 		}
 		return checagem.processar(arquivo, ctx);
+	}
+
+	public static void checarEstrutura(String string) throws ChecagemException, XMLException {
+		ChecagemGramatica.checarGramatica(string, checagem);
 	}
 }
