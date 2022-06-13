@@ -121,7 +121,7 @@ public class ChecagemGramatica {
 
 	private static TipoFuncao transformarEmFuncao(TipoAtomico atomico) throws ChecagemException {
 		String chave = atomico.getValorString().toLowerCase();
-		String classe = ChecagemGramatica.map.get(chave);
+		String classe = ChecagemGramatica.map.get(chave.trim());
 		if (classe == null) {
 			throw new ChecagemException("Nenhuma sentenca mapeada para >>> " + chave);
 		}

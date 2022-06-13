@@ -84,15 +84,15 @@ public class ChecagemToken {
 		return normalizar(new Token(sb.toString(), Token.STRING));
 	}
 
-	private Token normalizar(Token token) {
+	private static Token normalizar(Token token) {
 		if (token.isConteudoBoolean()) {
-			return new Token(token.getValor(), Token.BOOLEAN);
+			return new Token(token.getValor().trim(), Token.BOOLEAN);
 		}
 		if (token.isConteudoDouble()) {
-			return new Token(token.getValor(), Token.DOUBLE);
+			return new Token(token.getValor().trim(), Token.DOUBLE);
 		}
 		if (token.isConteudoLong()) {
-			return new Token(token.getValor(), Token.LONG);
+			return new Token(token.getValor().trim(), Token.LONG);
 		}
 		return token;
 	}

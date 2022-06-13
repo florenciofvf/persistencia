@@ -65,7 +65,8 @@ public class Token {
 		if (Util.estaVazio(valor)) {
 			return false;
 		}
-		for (char c : valor.toCharArray()) {
+		String string = valor.trim();
+		for (char c : string.toCharArray()) {
 			if (c < '0' || c > '9') {
 				return false;
 			}
@@ -77,28 +78,30 @@ public class Token {
 		if (Util.estaVazio(valor)) {
 			return false;
 		}
-		return "true".equalsIgnoreCase(valor) || "false".equalsIgnoreCase(valor);
+		String string = valor.trim();
+		return "true".equalsIgnoreCase(string) || "false".equalsIgnoreCase(string);
 	}
 
 	boolean isConteudoDouble() {
 		if (Util.estaVazio(valor)) {
 			return false;
 		}
-		if (valor.startsWith(".") || valor.endsWith(".")) {
+		String string = valor.trim();
+		if (string.startsWith(".") || string.endsWith(".")) {
 			return false;
 		}
-		int pos = valor.indexOf('.');
+		int pos = string.indexOf('.');
 		if (pos == -1) {
 			return false;
 		}
-		String string = valor.substring(0, pos);
-		for (char c : string.toCharArray()) {
+		String sub = string.substring(0, pos);
+		for (char c : sub.toCharArray()) {
 			if (c < '0' || c > '9') {
 				return false;
 			}
 		}
-		string = valor.substring(pos + 1);
-		for (char c : string.toCharArray()) {
+		sub = string.substring(pos + 1);
+		for (char c : sub.toCharArray()) {
 			if (c < '0' || c > '9') {
 				return false;
 			}
