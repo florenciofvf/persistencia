@@ -67,7 +67,7 @@ public class ComparacaoIgual extends FuncaoBinaria {
 		} else if (seg instanceof Boolean) {
 			return false;
 		} else if (seg instanceof String) {
-			return pri.equals(seg);
+			return ((String) pri).equalsIgnoreCase((String) seg);
 		}
 		return Boolean.FALSE;
 	}
