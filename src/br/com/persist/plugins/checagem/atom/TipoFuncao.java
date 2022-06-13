@@ -25,18 +25,19 @@ public abstract class TipoFuncao extends Sentenca {
 		if (sentenca == null) {
 			throw new ChecagemException("Sentenca nula");
 		}
-		check(sentenca);
+		checkSentenca(sentenca);
 		sentenca.pai = this;
 		parametros.add(sentenca);
 	}
 
 	public void setUltimoParametro(Sentenca sentenca) throws ChecagemException {
-		check(sentenca);
+		checkSentenca(sentenca);
+		checkParametros();
 		sentenca.pai = this;
 		parametros.set(parametros.size() - 1, sentenca);
 	}
 
-	private void check(Sentenca sentenca) throws ChecagemException {
+	private void checkSentenca(Sentenca sentenca) throws ChecagemException {
 		if (sentenca == this) {
 			throw new ChecagemException("Sentenca tentando adicionar a si proprio");
 		}
@@ -45,7 +46,14 @@ public abstract class TipoFuncao extends Sentenca {
 		}
 	}
 
-	public Sentenca getUltimoParametro() {
+	private void checkParametros() throws ChecagemException {
+		if (parametros.isEmpty()) {
+			throw new ChecagemException("Nenhum parametro definido");
+		}
+	}
+
+	public Sentenca getUltimoParametro() throws ChecagemException {
+		checkParametros();
 		return parametros.get(parametros.size() - 1);
 	}
 
