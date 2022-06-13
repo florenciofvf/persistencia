@@ -100,3 +100,14 @@ xor
 br.com.persist.plugins.checagem.atom.LogicoOux
 ^
 br.com.persist.plugins.checagem.atom.LogicoOux
+
+
+now
+br.com.persist.plugins.checagem.atom.AgoraFuncao
+agora
+br.com.persist.plugins.checagem.atom.AgoraFuncao
+
+formatNow
+br.com.persist.plugins.checagem.atom.FormatarAgoraFuncao
+formatarAgora
+br.com.persist.plugins.checagem.atom.FormatarAgoraFuncao

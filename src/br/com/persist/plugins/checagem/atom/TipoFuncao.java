@@ -13,9 +13,9 @@ public abstract class TipoFuncao extends Sentenca {
 		parametros = new ArrayList<>();
 	}
 
-	public abstract void preParametro() throws ChecagemException;
-
 	public abstract void encerrar() throws ChecagemException;
+
+	public abstract void preParametro() throws ChecagemException;
 
 	public void addParam(Sentenca sentenca) throws ChecagemException {
 		addParamImpl(sentenca);
@@ -59,7 +59,25 @@ public abstract class TipoFuncao extends Sentenca {
 
 	protected void checkObrigatorioBoolean(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Boolean)) {
-			throw new ChecagemException(msg);
+			throw new ChecagemException(msg + " nao eh Boolean");
+		}
+	}
+
+	protected void checkObrigatorioDouble(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof Double)) {
+			throw new ChecagemException(msg + " nao eh Double");
+		}
+	}
+
+	protected void checkObrigatorioLong(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof Long)) {
+			throw new ChecagemException(msg + " nao eh Long");
+		}
+	}
+
+	protected void checkObrigatorioString(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof String)) {
+			throw new ChecagemException(msg + " nao eh String");
 		}
 	}
 
