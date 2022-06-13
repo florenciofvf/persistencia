@@ -37,5 +37,6 @@ public abstract class FuncaoBinaria extends FuncaoUnaria {
 		if (parametros.size() != 2) {
 			throw new ChecagemException("A funcao exige 2 parametros >>> " + getClass().getName());
 		}
+		encerrado = true;
 	}
 }

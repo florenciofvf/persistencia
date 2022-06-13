@@ -113,6 +113,9 @@ public class ChecagemGramatica {
 		if (sentencaRaiz.getSentenca() == null) {
 			throw new ChecagemException("Sentenca invalida >>> " + set);
 		}
+		if (sentencaRaiz.getSentenca() instanceof TipoFuncao) {
+			((TipoFuncao) sentencaRaiz.getSentenca()).checarEncerrar();
+		}
 		return sentencaRaiz.getSentenca();
 	}
 

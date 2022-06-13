@@ -8,10 +8,6 @@ public abstract class Sentenca {
 
 	public abstract Object executar(Contexto ctx) throws ChecagemException;
 
-	public abstract void preParametro() throws ChecagemException;
-
-	public abstract void encerrar() throws ChecagemException;
-
 	public Sentenca getPai() {
 		return pai;
 	}

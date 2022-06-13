@@ -25,5 +25,6 @@ public abstract class FuncaoUnaria extends FuncaoVazia {
 		if (parametros.size() != 1) {
 			throw new ChecagemException("A funcao exige 1 parametro >>> " + getClass().getName());
 		}
+		encerrado = true;
 	}
 }

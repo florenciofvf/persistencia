@@ -36,5 +36,6 @@ public abstract class FuncaoTernaria extends FuncaoBinaria {
 		if (parametros.size() != 3) {
 			throw new ChecagemException("A funcao exige 3 parametros >>> " + getClass().getName());
 		}
+		encerrado = true;
 	}
 }

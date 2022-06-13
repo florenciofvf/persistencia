@@ -18,5 +18,6 @@ public abstract class FuncaoVazia extends TipoFuncao {
 		if (!parametros.isEmpty()) {
 			throw new ChecagemException("A funcao nao exige parametros >>> " + getClass().getName());
 		}
+		encerrado = true;
 	}
 }
