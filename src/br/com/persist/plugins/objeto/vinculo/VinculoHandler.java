@@ -95,11 +95,13 @@ public class VinculoHandler extends XMLHandler {
 	private void addInstrucao(Attributes attributes, List<Instrucao> lista) {
 		Instrucao i = new Instrucao(attributes.getValue(NOME));
 		boolean sm = Boolean.parseBoolean(attributes.getValue("selecaoMultipla"));
+		i.setSelecaoMultipla(sm);
+		boolean cf = Boolean.parseBoolean(attributes.getValue("comoFiltro"));
+		i.setComoFiltro(cf);
 		String ordem = attributes.getValue("ordem");
 		if (!Util.estaVazio(ordem)) {
 			i.setOrdem(Integer.parseInt(ordem));
 		}
-		i.setSelecaoMultipla(sm);
 		lista.add(i);
 	}
 

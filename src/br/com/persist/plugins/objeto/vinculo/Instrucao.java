@@ -6,6 +6,7 @@ import br.com.persist.marca.XMLUtil;
 
 public class Instrucao implements Comparable<Instrucao> {
 	private boolean selecaoMultipla;
+	private boolean comoFiltro;
 	private final String nome;
 	private String valor;
 	private int ordem;
@@ -52,6 +53,14 @@ public class Instrucao implements Comparable<Instrucao> {
 		this.selecaoMultipla = selecaoMultipla;
 	}
 
+	public boolean isComoFiltro() {
+		return comoFiltro;
+	}
+
+	public void setComoFiltro(boolean comoFiltro) {
+		this.comoFiltro = comoFiltro;
+	}
+
 	public Instrucao clonar() {
 		Instrucao i = new Instrucao(nome);
 		i.setValor(valor);
@@ -67,6 +76,9 @@ public class Instrucao implements Comparable<Instrucao> {
 			util.atributo("nome", nome);
 			if (selecaoMultipla) {
 				util.atributo("selecaoMultipla", selecaoMultipla);
+			}
+			if (comoFiltro) {
+				util.atributo("comoFiltro", comoFiltro);
 			}
 			if (ordem != 0) {
 				util.atributo("ordem", ordem);

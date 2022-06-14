@@ -64,6 +64,7 @@ public class ParaTabela {
 		}
 		Instrucao i = new Instrucao("Resumo");
 		i.setSelecaoMultipla(true);
+		i.setComoFiltro(false);
 		i.setValor(instrucao);
 		i.setOrdem(1);
 		add(i);

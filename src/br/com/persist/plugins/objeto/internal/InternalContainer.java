@@ -771,17 +771,57 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void complemento(Objeto objeto) {
-				int i = 0;
 				if (objeto != null) {
-					objeto.ordenarFiltros();
-					for (Filtro f : objeto.getFiltros()) {
-						if (!Util.estaVazio(f.getValor())) {
-							MenuFiltro menu = new MenuFiltro(f);
-							if (++i == 1) {
-								addSeparator();
-							}
-							addMenuItem(menu);
+					processarFiltro(objeto);
+					processarInstrucao(objeto);
+				}
+			}
+
+			private void processarFiltro(Objeto objeto) {
+				int i = 0;
+				objeto.ordenarFiltros();
+				for (Filtro f : objeto.getFiltros()) {
+					if (!Util.estaVazio(f.getValor())) {
+						MenuFiltro menu = new MenuFiltro(f);
+						if (++i == 1) {
+							addSeparator();
 						}
+						addMenuItem(menu);
+					}
+				}
+			}
+
+			private void processarInstrucao(Objeto objeto) {
+				objeto.ordenarInstrucoes();
+				for (Instrucao inst : objeto.getInstrucoes()) {
+					if (!Util.estaVazio(inst.getValor()) && inst.isComoFiltro()) {
+						MenuInstrucao menu = new MenuInstrucao(inst);
+						addMenu(true, menu);
+					}
+				}
+			}
+
+			private class MenuInstrucao extends MenuPadrao3 {
+				private static final long serialVersionUID = 1L;
+				private final transient Instrucao instrucao;
+
+				private MenuInstrucao(Instrucao instrucao) {
+					super(instrucao.getNome(), false, instrucao.isSelect() ? Icones.ATUALIZAR : Icones.CALC);
+					this.instrucao = instrucao;
+					formularioAcao.setActionListener(e -> abrirInstrucao(true));
+					dialogoAcao.setActionListener(e -> abrirInstrucao(false));
+				}
+
+				private void abrirInstrucao(boolean abrirEmForm) {
+					Conexao conexao = getConexao();
+					if (conexao == null) {
+						return;
+					}
+					String conteudo = instrucao.getValor();
+					if (instrucao.isSelect()) {
+						selectFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
+					} else {
+						updateFormDialog(abrirEmForm, conexao, conteudo, instrucao.getNome());
 					}
 				}
 			}
@@ -1277,7 +1317,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (objeto != null) {
 					objeto.ordenarInstrucoes();
 					for (Instrucao i : objeto.getInstrucoes()) {
-						if (!Util.estaVazio(i.getValor())) {
+						if (!Util.estaVazio(i.getValor()) && !i.isComoFiltro()) {
 							MenuInstrucao menu = new MenuInstrucao(i);
 							listaMenuInstrucao.add(menu);
 							addMenu(true, menu);
