@@ -19,7 +19,7 @@ public class ChecagemToken {
 		}
 	}
 
-	public Token proximoToken() {
+	public Token proximoToken() throws ChecagemException {
 		if (indice >= string.length()) {
 			return null;
 		}
@@ -46,9 +46,10 @@ public class ChecagemToken {
 		}
 	}
 
-	private Token tokenString() {
+	private Token tokenString() throws ChecagemException {
 		StringBuilder sb = new StringBuilder();
 		boolean escapeAtivado = false;
+		boolean encerrado = false;
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (c == '\'') {
@@ -56,6 +57,7 @@ public class ChecagemToken {
 					sb.append(c);
 					escapeAtivado = false;
 				} else {
+					encerrado = true;
 					break;
 				}
 			} else if (c == '\\') {
@@ -65,6 +67,9 @@ public class ChecagemToken {
 				escapeAtivado = false;
 			}
 			indice++;
+		}
+		if (!encerrado) {
+			throw new ChecagemException("String nao encerrada >>> " + sb.toString());
 		}
 		indice++;
 		return new Token(sb.toString(), Token.STRING);
