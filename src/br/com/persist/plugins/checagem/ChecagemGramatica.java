@@ -120,8 +120,8 @@ public class ChecagemGramatica {
 	}
 
 	private static TipoFuncao transformarEmFuncao(TipoAtomico atomico) throws ChecagemException {
-		String chave = atomico.getValorString().toLowerCase();
-		String classe = ChecagemGramatica.map.get(chave.trim());
+		String chave = atomico.getValorString().toLowerCase().trim();
+		String classe = ChecagemGramatica.map.get(chave);
 		if (classe == null) {
 			throw new ChecagemException("Nenhuma sentenca mapeada para >>> " + chave);
 		}
@@ -147,7 +147,7 @@ public class ChecagemGramatica {
 			while (string != null) {
 				if (!Util.estaVazio(string)) {
 					if (Util.estaVazio(chave)) {
-						chave = string.trim().toLowerCase();
+						chave = string.toLowerCase().trim();
 					} else {
 						Class.forName(string.trim());
 						map.put(chave, string.trim());
