@@ -19,10 +19,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLUtil;
-import br.com.persist.plugins.checagem.atom.Sentenca;
-import br.com.persist.plugins.checagem.atom.SentencaRaiz;
-import br.com.persist.plugins.checagem.atom.TipoAtomico;
-import br.com.persist.plugins.checagem.atom.TipoFuncao;
 
 public class ChecagemGramatica {
 	private static final Logger LOG = Logger.getGlobal();

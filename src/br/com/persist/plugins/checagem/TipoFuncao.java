@@ -1,9 +1,7 @@
-package br.com.persist.plugins.checagem.atom;
+package br.com.persist.plugins.checagem;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.persist.plugins.checagem.ChecagemException;
 
 public abstract class TipoFuncao extends Sentenca {
 	protected final List<Sentenca> parametros;

@@ -2,6 +2,7 @@ package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
+import br.com.persist.plugins.checagem.FuncaoBinaria;
 
 public class SubtrairFuncao extends FuncaoBinaria {
 	private static final String ERRO = "Erro subtracao";

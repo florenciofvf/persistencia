@@ -6,6 +6,7 @@ import java.util.Date;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
+import br.com.persist.plugins.checagem.FuncaoBinaria;
 
 public class FormatarAgoraFuncao extends FuncaoBinaria {
 	private static final String ERRO = "Erro formatar agora";

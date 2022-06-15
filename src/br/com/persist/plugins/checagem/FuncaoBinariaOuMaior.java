@@ -1,6 +1,4 @@
-package br.com.persist.plugins.checagem.atom;
-
-import br.com.persist.plugins.checagem.ChecagemException;
+package br.com.persist.plugins.checagem;
 
 public abstract class FuncaoBinariaOuMaior extends FuncaoUnaria {
 	protected boolean modoInsercao = true;

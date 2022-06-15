@@ -1,7 +1,6 @@
 package br.com.persist.plugins.checagem;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.checagem.atom.TipoAtomico;
 import br.com.persist.plugins.checagem.atom.TipoBoolean;
 import br.com.persist.plugins.checagem.atom.TipoDouble;
 import br.com.persist.plugins.checagem.atom.TipoField;

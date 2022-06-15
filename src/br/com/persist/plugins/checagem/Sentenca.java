@@ -1,7 +1,4 @@
-package br.com.persist.plugins.checagem.atom;
-
-import br.com.persist.plugins.checagem.ChecagemException;
-import br.com.persist.plugins.checagem.Contexto;
+package br.com.persist.plugins.checagem;
 
 public abstract class Sentenca {
 	protected Sentenca pai;
