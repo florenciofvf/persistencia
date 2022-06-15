@@ -18,7 +18,7 @@ public class Contexto {
 		return map.get(chave);
 	}
 
-	public void put(String chave, String valor) {
+	public void put(String chave, Object valor) {
 		map.put(chave, valor);
 	}
 }
