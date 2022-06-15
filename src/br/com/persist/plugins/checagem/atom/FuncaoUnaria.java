@@ -2,7 +2,7 @@ package br.com.persist.plugins.checagem.atom;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 
-public abstract class FuncaoUnaria extends FuncaoVazia {
+public abstract class FuncaoUnaria extends TipoFuncao {
 	public Sentenca param0() {
 		return parametros.get(0);
 	}
