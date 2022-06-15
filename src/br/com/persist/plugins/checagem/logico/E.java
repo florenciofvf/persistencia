@@ -4,7 +4,7 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
-public class LogicoE extends FuncaoBinaria {
+public class E extends FuncaoBinaria {
 	private static final String ERRO = "Erro e";
 
 	@Override

@@ -4,8 +4,8 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
-public class SomarFuncao extends FuncaoBinaria {
-	private static final String ERRO = "Erro soma";
+public class Multiplicar extends FuncaoBinaria {
+	private static final String ERRO = "Erro multiplicacao";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
@@ -25,37 +25,27 @@ public class SomarFuncao extends FuncaoBinaria {
 
 	private Object priLong(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof Long) {
-			return ((Long) pri).longValue() + ((Long) seg).longValue();
+			return ((Long) pri).longValue() * ((Long) seg).longValue();
 		} else if (seg instanceof Double) {
-			return ((Long) pri).longValue() + ((Double) seg).doubleValue();
-		} else if (seg instanceof String) {
-			return pri.toString() + seg.toString();
+			return ((Long) pri).longValue() * ((Double) seg).doubleValue();
 		}
 		throw new ChecagemException(ERRO);
 	}
 
 	private Object priDouble(Object pri, Object seg) throws ChecagemException {
 		if (seg instanceof Long) {
-			return ((Double) pri).doubleValue() + ((Long) seg).longValue();
+			return ((Double) pri).doubleValue() * ((Long) seg).longValue();
 		} else if (seg instanceof Double) {
-			return ((Double) pri).doubleValue() + ((Double) seg).doubleValue();
-		} else if (seg instanceof String) {
-			return pri.toString() + seg.toString();
+			return ((Double) pri).doubleValue() * ((Double) seg).doubleValue();
 		}
 		throw new ChecagemException(ERRO);
 	}
 
 	private Object priBoolean(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof String) {
-			return pri.toString() + seg.toString();
-		}
 		throw new ChecagemException(ERRO);
 	}
 
 	private Object priString(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof Long || seg instanceof Double || seg instanceof Boolean || seg instanceof String) {
-			return pri.toString() + seg.toString();
-		}
 		throw new ChecagemException(ERRO);
 	}
 }

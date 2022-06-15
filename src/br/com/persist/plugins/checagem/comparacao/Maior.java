@@ -4,7 +4,7 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
-public class ComparacaoMaior extends FuncaoBinaria {
+public class Maior extends FuncaoBinaria {
 	private static final String ERRO = "Erro maior";
 
 	@Override

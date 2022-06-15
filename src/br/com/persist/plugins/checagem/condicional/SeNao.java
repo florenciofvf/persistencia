@@ -4,7 +4,7 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoTernaria;
 
-public class CondicionalSeNao extends FuncaoTernaria {
+public class SeNao extends FuncaoTernaria {
 	private static final String ERRO = "Erro senao";
 
 	@Override

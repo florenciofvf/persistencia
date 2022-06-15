@@ -1,125 +1,125 @@
 eq
-br.com.persist.plugins.checagem.comparacao.ComparacaoIgual
+br.com.persist.plugins.checagem.comparacao.Igual
 igual
-br.com.persist.plugins.checagem.comparacao.ComparacaoIgual
+br.com.persist.plugins.checagem.comparacao.Igual
 =
-br.com.persist.plugins.checagem.comparacao.ComparacaoIgual
+br.com.persist.plugins.checagem.comparacao.Igual
 
 maior
-br.com.persist.plugins.checagem.comparacao.ComparacaoMaior
+br.com.persist.plugins.checagem.comparacao.Maior
 gt
-br.com.persist.plugins.checagem.comparacao.ComparacaoMaior
+br.com.persist.plugins.checagem.comparacao.Maior
 >
-br.com.persist.plugins.checagem.comparacao.ComparacaoMaior
+br.com.persist.plugins.checagem.comparacao.Maior
 
 maiorIgual
-br.com.persist.plugins.checagem.comparacao.ComparacaoMaiorIgual
+br.com.persist.plugins.checagem.comparacao.MaiorIgual
 ge
-br.com.persist.plugins.checagem.comparacao.ComparacaoMaiorIgual
+br.com.persist.plugins.checagem.comparacao.MaiorIgual
 >=
-br.com.persist.plugins.checagem.comparacao.ComparacaoMaiorIgual
+br.com.persist.plugins.checagem.comparacao.MaiorIgual
 
 menor
-br.com.persist.plugins.checagem.comparacao.ComparacaoMenor
+br.com.persist.plugins.checagem.comparacao.Menor
 lt
-br.com.persist.plugins.checagem.comparacao.ComparacaoMenor
+br.com.persist.plugins.checagem.comparacao.Menor
 <
-br.com.persist.plugins.checagem.comparacao.ComparacaoMenor
+br.com.persist.plugins.checagem.comparacao.Menor
 
 menorIgual
-br.com.persist.plugins.checagem.comparacao.ComparacaoMenorIgual
+br.com.persist.plugins.checagem.comparacao.MenorIgual
 le
-br.com.persist.plugins.checagem.comparacao.ComparacaoMenorIgual
+br.com.persist.plugins.checagem.comparacao.MenorIgual
 <=
-br.com.persist.plugins.checagem.comparacao.ComparacaoMenorIgual
+br.com.persist.plugins.checagem.comparacao.MenorIgual
 
 
 
 se
-br.com.persist.plugins.checagem.condicional.CondicionalSe
+br.com.persist.plugins.checagem.condicional.Se
 if
-br.com.persist.plugins.checagem.condicional.CondicionalSe
+br.com.persist.plugins.checagem.condicional.Se
 
 senao
-br.com.persist.plugins.checagem.condicional.CondicionalSeNao
+br.com.persist.plugins.checagem.condicional.SeNao
 ifElse
-br.com.persist.plugins.checagem.condicional.CondicionalSeNao
+br.com.persist.plugins.checagem.condicional.SeNao
 
 
 
 now
-br.com.persist.plugins.checagem.datetime.AgoraFuncao
+br.com.persist.plugins.checagem.datetime.Agora
 agora
-br.com.persist.plugins.checagem.datetime.AgoraFuncao
+br.com.persist.plugins.checagem.datetime.Agora
 
 formatNow
-br.com.persist.plugins.checagem.datetime.FormatarAgoraFuncao
+br.com.persist.plugins.checagem.datetime.Formatar
 formatarAgora
-br.com.persist.plugins.checagem.datetime.FormatarAgoraFuncao
+br.com.persist.plugins.checagem.datetime.Formatar
 
 
 
 e
-br.com.persist.plugins.checagem.logico.LogicoE
+br.com.persist.plugins.checagem.logico.E
 and
-br.com.persist.plugins.checagem.logico.LogicoE
+br.com.persist.plugins.checagem.logico.E
 &&
-br.com.persist.plugins.checagem.logico.LogicoE
+br.com.persist.plugins.checagem.logico.E
 
 nao
-br.com.persist.plugins.checagem.logico.LogicoNao
+br.com.persist.plugins.checagem.logico.Nao
 not
-br.com.persist.plugins.checagem.logico.LogicoNao
+br.com.persist.plugins.checagem.logico.Nao
 !
-br.com.persist.plugins.checagem.logico.LogicoNao
+br.com.persist.plugins.checagem.logico.Nao
 
 ou
-br.com.persist.plugins.checagem.logico.LogicoOu
+br.com.persist.plugins.checagem.logico.Ou
 or
-br.com.persist.plugins.checagem.logico.LogicoOu
+br.com.persist.plugins.checagem.logico.Ou
 ||
-br.com.persist.plugins.checagem.logico.LogicoOu
+br.com.persist.plugins.checagem.logico.Ou
 
 ouExcluiso
-br.com.persist.plugins.checagem.logico.LogicoOux
+br.com.persist.plugins.checagem.logico.Oux
 xor
-br.com.persist.plugins.checagem.logico.LogicoOux
+br.com.persist.plugins.checagem.logico.Oux
 ^
-br.com.persist.plugins.checagem.logico.LogicoOux
+br.com.persist.plugins.checagem.logico.Oux
 
 
 
 somar
-br.com.persist.plugins.checagem.matematico.SomarFuncao
+br.com.persist.plugins.checagem.matematico.Somar
 +
-br.com.persist.plugins.checagem.matematico.SomarFuncao
+br.com.persist.plugins.checagem.matematico.Somar
 
 sub
-br.com.persist.plugins.checagem.matematico.SubtrairFuncao
+br.com.persist.plugins.checagem.matematico.Subtrair
 -
-br.com.persist.plugins.checagem.matematico.SubtrairFuncao
+br.com.persist.plugins.checagem.matematico.Subtrair
 
 mul
-br.com.persist.plugins.checagem.matematico.MultiplicarFuncao
+br.com.persist.plugins.checagem.matematico.Multiplicar
 *
-br.com.persist.plugins.checagem.matematico.MultiplicarFuncao
+br.com.persist.plugins.checagem.matematico.Multiplicar
 
 div
-br.com.persist.plugins.checagem.matematico.DividirFuncao
+br.com.persist.plugins.checagem.matematico.Dividir
 /
-br.com.persist.plugins.checagem.matematico.DividirFuncao
+br.com.persist.plugins.checagem.matematico.Dividir
 
 resto
-br.com.persist.plugins.checagem.matematico.RestoFuncao
+br.com.persist.plugins.checagem.matematico.Resto
 %
-br.com.persist.plugins.checagem.matematico.RestoFuncao
+br.com.persist.plugins.checagem.matematico.Resto
 
 
 
 isEmpty
-br.com.persist.plugins.checagem.util.IsEmptyFuncao
+br.com.persist.plugins.checagem.util.IsEmpty
 vazio
-br.com.persist.plugins.checagem.util.IsEmptyFuncao
+br.com.persist.plugins.checagem.util.IsEmpty
 
 setAtributoContexto
 br.com.persist.plugins.checagem.util.SetAtributoContexto
