@@ -1749,7 +1749,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					Coletor coletor = new Coletor();
 					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 							InternalContainer.this, null);
-					Map<String, String> map = modelo.getMap(linhas[0], coletor, null);
+					Map<String, Object> map = modelo.getMap(linhas[0], coletor, null);
 					StringBuilder sb = new StringBuilder();
 					try {
 						Contexto ctx = new Contexto(map);

@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Contexto {
-	private final Map<String, String> map;
+	private final Map<String, Object> map;
 
-	public Contexto(Map<String, String> map) {
+	public Contexto(Map<String, Object> map) {
 		this.map = map != null ? map : new HashMap<>();
 	}
 
@@ -14,7 +14,7 @@ public class Contexto {
 		this(null);
 	}
 
-	public String get(String chave) {
+	public Object get(String chave) {
 		return map.get(chave);
 	}
 

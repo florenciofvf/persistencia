@@ -113,7 +113,7 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		model.getDados(linhas[rowIndex].indice, sb, coletor, conexao);
 	}
 
-	public Map<String, String> getMap(int rowIndex, Coletor coletor, Conexao conexao) {
+	public Map<String, Object> getMap(int rowIndex, Coletor coletor, Conexao conexao) {
 		return model.getMap(linhas[rowIndex].indice, coletor, conexao);
 	}
 

@@ -1,10 +1,9 @@
-package br.com.persist.plugins.checagem.util;
+package br.com.persist.plugins.checagem.atomico;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.atomico.TipoString;
 
-public class GetAtributoContexto extends TipoString {
+public class TipoAtributoContexto extends TipoString {
 	private String valorNormal;
 
 	@Override

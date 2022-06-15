@@ -244,7 +244,7 @@ public class PersistenciaModelo implements TableModel {
 		getDado(colunas.toArray(new Coluna[0]), valores.toArray(new Object[0]), sb, coletor, conexao);
 	}
 
-	public Map<String, String> getMap(int rowIndex, Coletor coletor, Conexao conexao) {
+	public Map<String, Object> getMap(int rowIndex, Coletor coletor, Conexao conexao) {
 		List<Object> registro = registros.get(rowIndex);
 		List<Object> valores = new ArrayList<>();
 		for (Coluna coluna : colunas) {
@@ -385,8 +385,8 @@ public class PersistenciaModelo implements TableModel {
 		}
 	}
 
-	private Map<String, String> getMap(Coluna[] colunas, Object[] valores, Coletor coletor, Conexao conexao) {
-		Map<String, String> map = new HashMap<>();
+	private Map<String, Object> getMap(Coluna[] colunas, Object[] valores, Coletor coletor, Conexao conexao) {
+		Map<String, Object> map = new HashMap<>();
 		for (int i = 0; i < colunas.length; i++) {
 			Coluna coluna = colunas[i];
 			if (coletor.contem(coluna.getNome())) {
