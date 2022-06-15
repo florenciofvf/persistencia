@@ -1,4 +1,4 @@
-package br.com.persist.plugins.checagem.atom;
+package br.com.persist.plugins.checagem.datetime;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

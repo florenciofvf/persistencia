@@ -1,11 +1,11 @@
-package br.com.persist.plugins.checagem.atom;
+package br.com.persist.plugins.checagem.logico;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
-public class LogicoE extends FuncaoBinaria {
-	private static final String ERRO = "Erro e";
+public class LogicoOux extends FuncaoBinaria {
+	private static final String ERRO = "Erro ou exclusivo";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
@@ -15,6 +15,6 @@ public class LogicoE extends FuncaoBinaria {
 		checkObrigatorioBoolean(op1, ERRO + " >>> op1");
 		Boolean pri = (Boolean) op0;
 		Boolean seg = (Boolean) op1;
-		return pri && seg;
+		return pri ^ seg;
 	}
 }

@@ -1,4 +1,4 @@
-package br.com.persist.plugins.checagem.atom;
+package br.com.persist.plugins.checagem.matematico;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;

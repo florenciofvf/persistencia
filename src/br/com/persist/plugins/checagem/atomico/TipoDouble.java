@@ -1,22 +1,22 @@
-package br.com.persist.plugins.checagem.atom;
+package br.com.persist.plugins.checagem.atomico;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.TipoAtomico;
 
-public class TipoBoolean extends TipoAtomico {
-	private Boolean valor;
+public class TipoDouble extends TipoAtomico {
+	private Double valor;
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
 		return valor;
 	}
 
-	public Boolean getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(Boolean valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

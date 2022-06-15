@@ -1,11 +1,11 @@
 package br.com.persist.plugins.checagem;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.checagem.atom.TipoBoolean;
-import br.com.persist.plugins.checagem.atom.TipoDouble;
-import br.com.persist.plugins.checagem.atom.TipoField;
-import br.com.persist.plugins.checagem.atom.TipoLong;
-import br.com.persist.plugins.checagem.atom.TipoString;
+import br.com.persist.plugins.checagem.atomico.TipoBoolean;
+import br.com.persist.plugins.checagem.atomico.TipoDouble;
+import br.com.persist.plugins.checagem.atomico.TipoLong;
+import br.com.persist.plugins.checagem.atomico.TipoString;
+import br.com.persist.plugins.checagem.util.GetAtributoContexto;
 
 public class Token {
 	public static final int PARENTESE_ABRIR = 1;
@@ -129,7 +129,7 @@ public class Token {
 		}
 		if (token.isString()) {
 			if (!Util.estaVazio(token.getValor()) && token.getValor().startsWith("$")) {
-				TipoField tipo = new TipoField();
+				GetAtributoContexto tipo = new GetAtributoContexto();
 				tipo.setValor(token.getValor());
 				return tipo;
 			}
