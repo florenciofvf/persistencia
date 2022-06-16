@@ -1,6 +1,7 @@
 package br.com.persist.plugins.checagem;
 
 public abstract class FuncaoUnaria extends TipoFuncao {
+
 	public Sentenca param0() {
 		return parametros.get(0);
 	}
@@ -11,6 +12,7 @@ public abstract class FuncaoUnaria extends TipoFuncao {
 			throw new ChecagemException("A funcao ja possui 1 parametro >>> " + getClass().getName());
 		}
 		addParamImpl(sentenca);
+		modoInsercao = false;
 	}
 
 	@Override

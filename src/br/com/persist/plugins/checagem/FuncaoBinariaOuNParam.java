@@ -1,7 +1,6 @@
 package br.com.persist.plugins.checagem;
 
 public abstract class FuncaoBinariaOuNParam extends FuncaoUnaria {
-	protected boolean modoInsercao = true;
 
 	@Override
 	public void addParam(Sentenca sentenca) throws ChecagemException {

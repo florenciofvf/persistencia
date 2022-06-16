@@ -1,7 +1,6 @@
 package br.com.persist.plugins.checagem;
 
 public abstract class FuncaoBinariaOuMaior extends FuncaoUnaria {
-	protected boolean modoInsercao = true;
 	private final int totalParametros;
 
 	public FuncaoBinariaOuMaior(int totalParametros) {

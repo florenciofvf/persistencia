@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class TipoFuncao extends Sentenca {
 	protected final List<Sentenca> parametros;
+	protected boolean modoInsercao = true;
 	protected boolean encerrado;
 
 	public TipoFuncao() {
