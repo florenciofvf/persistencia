@@ -144,3 +144,6 @@ br.com.persist.plugins.checagem.banco.Select
 
 criarLista
 br.com.persist.plugins.checagem.colecao.CriarLista
+
+sizeLista
+br.com.persist.plugins.checagem.colecao.SizeLista

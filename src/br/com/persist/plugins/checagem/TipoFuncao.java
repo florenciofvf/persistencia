@@ -80,6 +80,12 @@ public abstract class TipoFuncao extends Sentenca {
 		}
 	}
 
+	protected void checkObrigatorioList(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof List<?>)) {
+			throw new ChecagemException(msg + " nao eh List");
+		}
+	}
+
 	public void checarEncerrar() throws ChecagemException {
 		if (!encerrado) {
 			throw new ChecagemException("Funcao nao encerrada");
