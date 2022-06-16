@@ -9,6 +9,9 @@ public class Igual extends FuncaoBinaria {
 	public Object executar(Contexto ctx) throws ChecagemException {
 		Object pri = param0().executar(ctx);
 		Object seg = param1().executar(ctx);
+		if (pri == null && seg == null) {
+			return Boolean.TRUE;
+		}
 		if (pri instanceof Long) {
 			return priLong(pri, seg);
 		} else if (pri instanceof Double) {
@@ -17,6 +20,8 @@ public class Igual extends FuncaoBinaria {
 			return priBoolean(pri, seg);
 		} else if (pri instanceof String) {
 			return priString(pri, seg);
+		} else if (pri != null) {
+			return pri.equals(seg);
 		}
 		return Boolean.FALSE;
 	}
