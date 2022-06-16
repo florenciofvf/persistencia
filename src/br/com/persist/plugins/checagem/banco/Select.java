@@ -1,12 +1,14 @@
 package br.com.persist.plugins.checagem.banco;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinariaOuNParam;
@@ -27,19 +29,53 @@ public class Select extends FuncaoBinariaOuNParam {
 		}
 		@SuppressWarnings("resource")
 		Connection connection = (Connection) conn;
-		try (PreparedStatement psmt = connection.prepareStatement((String) op1)) {
-			for (int i = 2; i < parametros.size(); i++) {
-				Object valor = parametros.get(i).executar(ctx);
-				psmt.setObject(i - 1, valor);
+		String instrucao = (String) op1;
+		try (Statement st = connection.createStatement()) {
+			for (int i = 2; i < parametros.size(); i += 2) {
+				Object nomeParametro = parametros.get(i).executar(ctx);
+				checkObrigatorioString(nomeParametro, ERRO + " >>> op" + i);
+				int indiceValor = i + 1;
+				if (indiceValor >= parametros.size()) {
+					throw new ChecagemException("Parametro sem valor >>> " + nomeParametro);
+				}
+				Object valorParametro = parametros.get(indiceValor).executar(ctx);
+				instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
 			}
-			try (ResultSet rs = psmt.executeQuery()) {
+			try (ResultSet rs = st.executeQuery(instrucao)) {
 				while (rs.next()) {
 					resposta.add(rs.getObject(1));
 				}
 			}
 		} catch (SQLException ex) {
-			throw new ChecagemException(ERRO + ex.getMessage());
+			throw new ChecagemException(ERRO + " >>> " + ex.getMessage());
 		}
 		return resposta;
+	}
+
+	private String substituirParametro(String instrucao, String nomeParametro, Object valorParametro) {
+		String normalizado = normalizar(valorParametro);
+		return Util.replaceAll(instrucao, nomeParametro, normalizado);
+	}
+
+	private String normalizar(Object valorParametro) {
+		if (valorParametro instanceof CharSequence || valorParametro instanceof Character
+				|| valorParametro instanceof Date) {
+			return "'" + valorParametro.toString() + "'";
+		} else if (valorParametro instanceof Number) {
+			return valorParametro.toString();
+		} else if (valorParametro instanceof List<?>) {
+			StringBuilder sb = new StringBuilder();
+			List<?> lista = (List<?>) valorParametro;
+			for (Object object : lista) {
+				if (sb.length() > 0) {
+					sb.append(", ");
+				}
+				sb.append(normalizar(object));
+			}
+			return sb.toString();
+		} else if (valorParametro != null) {
+			return valorParametro.toString();
+		}
+		return "''";
 	}
 }

@@ -31,7 +31,7 @@ public class GetConnection extends FuncaoBinariaOuMaior {
 			Class.forName(driver);
 			return DriverManager.getConnection(url, usuario, senha);
 		} catch (Exception ex) {
-			throw new ChecagemException(ERRO + ex.getMessage());
+			throw new ChecagemException(ERRO + " >>> " + ex.getMessage());
 		}
 	}
 }
