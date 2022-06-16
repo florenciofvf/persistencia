@@ -1,6 +1,7 @@
 package br.com.persist.plugins.checagem;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public abstract class TipoFuncao extends Sentenca {
@@ -80,9 +81,9 @@ public abstract class TipoFuncao extends Sentenca {
 		}
 	}
 
-	protected void checkObrigatorioList(Object object, String msg) throws ChecagemException {
-		if (!(object instanceof List<?>)) {
-			throw new ChecagemException(msg + " nao eh List");
+	protected void checkObrigatorioCollection(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof Collection<?>)) {
+			throw new ChecagemException(msg + " nao eh Collection");
 		}
 	}
 

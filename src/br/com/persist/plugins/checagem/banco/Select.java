@@ -14,7 +14,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinariaOuNParam;
 
 public class Select extends FuncaoBinariaOuNParam {
-	private static final String ERRO = "Erro Select";
+	private static final String ERRO = "Erro select";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {

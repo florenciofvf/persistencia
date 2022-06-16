@@ -145,5 +145,11 @@ br.com.persist.plugins.checagem.banco.Select
 criarLista
 br.com.persist.plugins.checagem.colecao.CriarLista
 
-sizeLista
-br.com.persist.plugins.checagem.colecao.SizeLista
+createList
+br.com.persist.plugins.checagem.colecao.CriarLista
+
+tamanhoColecao
+br.com.persist.plugins.checagem.colecao.TamanhoColecao
+
+sizeCollection
+br.com.persist.plugins.checagem.colecao.TamanhoColecao

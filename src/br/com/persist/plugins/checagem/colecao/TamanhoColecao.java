@@ -1,19 +1,19 @@
 package br.com.persist.plugins.checagem.colecao;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoUnaria;
 
-public class SizeLista extends FuncaoUnaria {
-	private static final String ERRO = "Erro sizeLista";
+public class TamanhoColecao extends FuncaoUnaria {
+	private static final String ERRO = "Erro tamanhoColecao";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(ctx);
-		checkObrigatorioList(op0, ERRO + " >>> op0");
-		List<?> lista = (List<?>) op0;
-		return Long.valueOf(lista.size());
+		checkObrigatorioCollection(op0, ERRO + " >>> op0");
+		Collection<?> colecao = (Collection<?>) op0;
+		return Long.valueOf(colecao.size());
 	}
 }
