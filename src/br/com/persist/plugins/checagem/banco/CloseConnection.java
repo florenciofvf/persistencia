@@ -14,8 +14,7 @@ public class CloseConnection extends FuncaoUnaria {
 	public Object executar(Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
-		String pri = (String) op0;
-		Object obj = ctx.get(pri);
+		Object obj = ctx.get((String) op0);
 		if (obj instanceof Connection) {
 			Connection conn = (Connection) obj;
 			try {

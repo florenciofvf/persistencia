@@ -125,3 +125,14 @@ setAtributoContexto
 br.com.persist.plugins.checagem.util.SetAtributoContexto
 set
 br.com.persist.plugins.checagem.util.SetAtributoContexto
+
+
+
+closeConnection
+br.com.persist.plugins.checagem.banco.CloseConnection
+
+getConnection
+br.com.persist.plugins.checagem.banco.GetConnection
+
+select
+br.com.persist.plugins.checagem.banco.Select
