@@ -27,3 +27,27 @@ senao(igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
 		$DATA_INICIADA
 	]]>
 </set>
+<set>
+<![CDATA[
+      returnNull(
+	set(connEleicao,
+		getConnection('com.mysql.cj.jdbc.Driver','jdbc:mysql://localhost/eleicao','root','***')
+	)
+     )
+]]>
+</set>
+<set>
+<![CDATA[
+       returnNull(
+	set(listaIdCandidato,
+	   select('connEleicao', 'select id from candidato2 where eleicao_id = idEleicao', idEleicao, $ID)
+	)
+      )
+]]>
+</set>
+
+<set>
+	<![CDATA[
+		ifElse(isEmpty($listaIdCandidato), SEM CANDIDATO2, CONTÉM CANDIDATO2)
+	]]>
+</set>
