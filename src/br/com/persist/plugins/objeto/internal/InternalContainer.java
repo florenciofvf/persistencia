@@ -1739,32 +1739,36 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private void checarRegistro() {
 				OrdenacaoModelo modelo = tabelaPersistencia.getModelo();
 				int[] linhas = null;
-				if (modelo.getRowCount() == 1) {
-					linhas = new int[] { 0 };
-				}
-				if (linhas == null) {
-					linhas = tabelaPersistencia.getSelectedRows();
-				}
-				if (linhas != null && linhas.length == 1) {
-					Coletor coletor = new Coletor();
-					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
-							InternalContainer.this, null);
-					Map<String, Object> map = modelo.getMap(linhas[0], coletor, null);
-					StringBuilder sb = new StringBuilder();
-					try {
-						Contexto ctx = new Contexto(map);
-						List<Object> lista = ChecagemUtil.processar(objeto.getTabela(), ctx);
-						for (Object object : lista) {
-							append(sb, object);
-						}
-					} catch (ChecagemException e) {
-						append(sb, e.getMessage());
-					}
-					Util.mensagem(InternalContainer.this, sb.toString());
-				} else {
+				if (modelo.getRowCount() < 1) {
 					Util.mensagem(InternalContainer.this,
-							ObjetoMensagens.getString("msg.selecione_apenas_um_registro_para_checagem"));
+							ObjetoMensagens.getString("msg.nenhum_registro_para_checagem"));
+					return;
+				} else if (modelo.getRowCount() == 1) {
+					linhas = new int[] { 0 };
+				} else {
+					int[] sel = tabelaPersistencia.getSelectedRows();
+					if (sel == null || sel.length != 1) {
+						Util.mensagem(InternalContainer.this,
+								ObjetoMensagens.getString("msg.selecione_um_registro_para_checagem"));
+						return;
+					}
+					linhas = sel;
 				}
+				Coletor coletor = new Coletor();
+				SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+						InternalContainer.this, null);
+				Map<String, Object> map = modelo.getMap(linhas[0], coletor, null);
+				StringBuilder sb = new StringBuilder();
+				try {
+					Contexto ctx = new Contexto(map);
+					List<Object> lista = ChecagemUtil.processar(objeto.getTabela(), ctx);
+					for (Object object : lista) {
+						append(sb, object);
+					}
+				} catch (ChecagemException e) {
+					append(sb, e.getMessage());
+				}
+				Util.mensagem(InternalContainer.this, sb.toString());
 			}
 
 			private void append(StringBuilder sb, Object obj) {

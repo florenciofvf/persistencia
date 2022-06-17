@@ -141,9 +141,9 @@ public class ChecagemPagina extends Panel {
 				sb.append(Constantes.QL);
 			}
 			sb.append("<set>" + Constantes.QL);
-			sb.append("	<![CDATA[" + Constantes.QL);
-			sb.append("		" + Constantes.QL);
-			sb.append("	]]>" + Constantes.QL);
+			sb.append("    <![CDATA[" + Constantes.QL);
+			sb.append("        " + Constantes.QL);
+			sb.append("    ]]>" + Constantes.QL);
 			sb.append("</set>");
 			areaParametros.setText(sb.toString());
 		}
