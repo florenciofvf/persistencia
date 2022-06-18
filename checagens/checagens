@@ -129,6 +129,12 @@ br.com.persist.plugins.checagem.util.SetAtributoContexto
 returnNull
 br.com.persist.plugins.checagem.util.ReturnNull
 
+classe
+br.com.persist.plugins.checagem.util.Classe
+
+class
+br.com.persist.plugins.checagem.util.Classe
+
 
 
 closeConnection
