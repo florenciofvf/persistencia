@@ -92,6 +92,12 @@ public class Token {
 			return false;
 		}
 		String string = valor.trim();
+		if (string.startsWith("+") || string.startsWith("-")) {
+			string = string.substring(1);
+		}
+		if (Util.estaVazio(string)) {
+			return false;
+		}
 		if (string.startsWith(".") || string.endsWith(".")) {
 			return false;
 		}
