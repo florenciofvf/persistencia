@@ -160,8 +160,26 @@ br.com.persist.plugins.checagem.colecao.CriarLista
 createList
 br.com.persist.plugins.checagem.colecao.CriarLista
 
+criarConjunto
+br.com.persist.plugins.checagem.colecao.CriarSet
+
+createSet
+br.com.persist.plugins.checagem.colecao.CriarSet
+
 tamanhoColecao
 br.com.persist.plugins.checagem.colecao.TamanhoColecao
 
 sizeCollection
 br.com.persist.plugins.checagem.colecao.TamanhoColecao
+
+contains
+br.com.persist.plugins.checagem.colecao.Contem
+
+contem
+br.com.persist.plugins.checagem.colecao.Contem
+
+containsAll
+br.com.persist.plugins.checagem.colecao.ContemTodos
+
+contemTodos
+br.com.persist.plugins.checagem.colecao.ContemTodos
