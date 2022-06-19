@@ -65,6 +65,12 @@ public class Token {
 			return false;
 		}
 		String string = valor.trim();
+		if (string.startsWith("+") || string.startsWith("-")) {
+			string = string.substring(1);
+		}
+		if (Util.estaVazio(string)) {
+			return false;
+		}
 		for (char c : string.toCharArray()) {
 			if (c < '0' || c > '9') {
 				return false;
@@ -110,7 +116,7 @@ public class Token {
 
 	public static TipoAtomico criarTipoAtomico(Token token) throws ChecagemException {
 		if (token.isParenteseAbrir() || token.isParenteseFechar() || token.isVirgula()) {
-			throw new ChecagemException("Invalido criar sentenca para >>> " + token.getValor());
+			throw new ChecagemException("Invalido criar TipoAtomico para >>> " + token.getValor());
 		}
 		if (token.isBoolean()) {
 			TipoBoolean tipo = new TipoBoolean();
@@ -137,7 +143,7 @@ public class Token {
 			tipo.setValor(token.getValor());
 			return tipo;
 		}
-		throw new ChecagemException("Invalido criar sentenca para >>> " + token.getValor());
+		throw new ChecagemException("Invalido criar TipoAtomico para >>> " + token.getValor());
 	}
 
 	@Override
