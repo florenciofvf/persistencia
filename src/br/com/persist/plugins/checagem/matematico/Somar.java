@@ -4,7 +4,7 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
 public class Somar extends Matematico {
-	private static final String ERRO = "Erro soma";
+	private static final String ERRO = "Erro Somar";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
