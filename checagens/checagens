@@ -141,6 +141,27 @@ br.com.persist.plugins.checagem.util.Classe
 class
 br.com.persist.plugins.checagem.util.Classe
 
+parseBigDecimal
+br.com.persist.plugins.checagem.util.ParseBigDecimal
+
+parseBigInteger
+br.com.persist.plugins.checagem.util.ParseBigInteger
+
+parseDouble
+br.com.persist.plugins.checagem.util.ParseDouble
+
+parseInt
+br.com.persist.plugins.checagem.util.ParseInt
+
+parseLong
+br.com.persist.plugins.checagem.util.ParseLong
+
+parseShort
+br.com.persist.plugins.checagem.util.ParseShort
+
+parseString
+br.com.persist.plugins.checagem.util.ParseString
+
 
 
 closeConnection
@@ -169,7 +190,7 @@ br.com.persist.plugins.checagem.colecao.CriarSet
 tamanhoColecao
 br.com.persist.plugins.checagem.colecao.TamanhoColecao
 
-sizeCollection
+size
 br.com.persist.plugins.checagem.colecao.TamanhoColecao
 
 contains
