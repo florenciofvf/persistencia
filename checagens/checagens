@@ -150,6 +150,9 @@ br.com.persist.plugins.checagem.util.ParseBigInteger
 parseDouble
 br.com.persist.plugins.checagem.util.ParseDouble
 
+parseFloat
+br.com.persist.plugins.checagem.util.ParseFloat
+
 parseInt
 br.com.persist.plugins.checagem.util.ParseInt
 
