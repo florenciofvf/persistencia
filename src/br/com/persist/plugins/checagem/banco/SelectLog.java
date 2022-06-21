@@ -1,9 +1,7 @@
 package br.com.persist.plugins.checagem.banco;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.checagem.ChecagemException;
@@ -15,7 +13,6 @@ public class SelectLog extends FuncaoBinariaOuNParam {
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
-		List<Object> resposta = new ArrayList<>();
 		Object op0 = param0().executar(ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		String instrucao = (String) op0;
@@ -29,7 +26,7 @@ public class SelectLog extends FuncaoBinariaOuNParam {
 			Object valorParametro = parametros.get(indiceValor).executar(ctx);
 			instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
 		}
-		return resposta;
+		return instrucao;
 	}
 
 	private String substituirParametro(String instrucao, String nomeParametro, Object valorParametro) {

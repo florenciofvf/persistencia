@@ -1,5 +1,5 @@
 <set>
-	<![CDATA[
+    <![CDATA[
 senao(igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
        senao(igual($DESCRICAO, TER), TERCA-FEIRA,
               senao(igual($DESCRICAO, QUA), QUARTA-FEIRA,
@@ -14,40 +14,38 @@ senao(igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
               )
        )
 )
-	]]>
+    ]]>
 </set>
 <set>
-	<![CDATA[
-		isEmpty($DATA_INICIADA)
-	]]>
-</set>
-
-<set>
-	<![CDATA[
-		$DATA_INICIADA
-	]]>
+    <![CDATA[
+        isEmpty($DATA_INICIADA)
+    ]]>
 </set>
 <set>
-<![CDATA[
-      returnNull(
-	set(connEleicao,
-		getConnection('com.mysql.cj.jdbc.Driver','jdbc:mysql://localhost/eleicao','root','***')
-	)
-     )
-]]>
+    <![CDATA[
+        $DATA_INICIADA
+    ]]>
 </set>
 <set>
-<![CDATA[
-       returnNull(
-	set(listaIdCandidato,
-	   select('connEleicao', 'select id from candidato2 where eleicao_id = idEleicao', idEleicao, $ID)
-	)
-      )
-]]>
+    <![CDATA[
+        returnNull(
+            set(connEleicao,
+                getConnection('com.mysql.cj.jdbc.Driver','jdbc:mysql://localhost/eleicao','root','***')
+            )
+        )
+    ]]>
 </set>
-
 <set>
-	<![CDATA[
-		ifElse(isEmpty($listaIdCandidato), SEM CANDIDATO2, CONTÉM CANDIDATO2)
-	]]>
+    <![CDATA[
+        returnNull(
+            set(listaIdCandidato,
+                select('connEleicao', 'select id from candidato2 where eleicao_id = idEleicao', idEleicao, $ID)
+            )
+        )
+    ]]>
+</set>
+<set>
+    <![CDATA[
+        ifElse(isEmpty($listaIdCandidato), SEM CANDIDATO2, CONTÉM CANDIDATO2)
+    ]]>
 </set>
