@@ -10,130 +10,70 @@ public class Resto extends Matematico {
 	public Object executar(Contexto ctx) throws ChecagemException {
 		Object pri = param0().executar(ctx);
 		Object seg = param1().executar(ctx);
-		if (isNumericoValido(pri) && isNumericoValido(seg)) {
-			return dividir(pri, seg);
+		if (pri == null && seg == null) {
+			throw new ChecagemException(ERRO);
+		}
+		if (ehInteiro(pri)) {
+			return processarInteiro(pri, seg);
+		} else if (ehFlutuante(pri)) {
+			return processarFlutuante(pri, seg);
+		} else if (ehBigInteger(pri)) {
+			return processarBigInteger(pri, seg);
+		} else if (ehBigDecimal(pri)) {
+			return processarBigDecimal(pri, seg);
 		}
 		throw new ChecagemException(ERRO);
 	}
 
-	private Object dividir(Object pri, Object seg) throws ChecagemException {
-		if (pri instanceof Short) {
-			return priShort(pri, seg);
-		} else if (pri instanceof Integer) {
-			return priInteger(pri, seg);
-		} else if (pri instanceof Long) {
-			return priLong(pri, seg);
-		} else if (pri instanceof Float) {
-			return priFloat(pri, seg);
-		} else if (pri instanceof Double) {
-			return priDouble(pri, seg);
+	private Object processarInteiro(Object pri, Object seg) throws ChecagemException {
+		if (ehInteiro(seg)) {
+			return getNativoInteiro(pri) % getNativoInteiro(seg);
+		} else if (ehFlutuante(seg)) {
+			return getNativoInteiro(pri) % getNativoFlutuante(seg);
+		} else if (ehBigInteger(seg)) {
+			return criarBigInteger(getNativoInteiro(pri)).remainder(getNativoBigInteger(seg));
+		} else if (ehBigDecimal(seg)) {
+			return criarBigDecimal(getNativoInteiro(pri)).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
 	}
 
-	private Object priShort(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof Short) {
-			check(getShort(seg));
-			return getShort(pri) % getShort(seg);
-		} else if (seg instanceof Integer) {
-			check(getInteger(seg));
-			return getShort(pri) % getInteger(seg);
-		} else if (seg instanceof Long) {
-			check(getLong(seg));
-			return getShort(pri) % getLong(seg);
-		} else if (seg instanceof Float) {
-			check(getFloat(seg));
-			return getShort(pri) % getFloat(seg);
-		} else if (seg instanceof Double) {
-			check(getDouble(seg));
-			return getShort(pri) % getDouble(seg);
+	private Object processarFlutuante(Object pri, Object seg) throws ChecagemException {
+		if (ehInteiro(seg)) {
+			return getNativoFlutuante(pri) % getNativoInteiro(seg);
+		} else if (ehFlutuante(seg)) {
+			return getNativoFlutuante(pri) % getNativoFlutuante(seg);
+		} else if (ehBigInteger(seg)) {
+			return criarBigDecimal(getNativoFlutuante(pri)).remainder(criarBigDecimal(getNativoBigInteger(seg)));
+		} else if (ehBigDecimal(seg)) {
+			return criarBigDecimal(getNativoFlutuante(pri)).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
 	}
 
-	private Object priInteger(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof Short) {
-			check(getShort(seg));
-			return getInteger(pri) % getShort(seg);
-		} else if (seg instanceof Integer) {
-			check(getInteger(seg));
-			return getInteger(pri) % getInteger(seg);
-		} else if (seg instanceof Long) {
-			check(getLong(seg));
-			return getInteger(pri) % getLong(seg);
-		} else if (seg instanceof Float) {
-			check(getFloat(seg));
-			return getInteger(pri) % getFloat(seg);
-		} else if (seg instanceof Double) {
-			check(getDouble(seg));
-			return getInteger(pri) % getDouble(seg);
+	private Object processarBigInteger(Object pri, Object seg) throws ChecagemException {
+		if (ehInteiro(seg)) {
+			return getNativoBigInteger(pri).remainder(criarBigInteger(getNativoInteiro(seg)));
+		} else if (ehFlutuante(seg)) {
+			return criarBigDecimal(getNativoBigInteger(pri)).remainder(criarBigDecimal(getNativoFlutuante(seg)));
+		} else if (ehBigInteger(seg)) {
+			return getNativoBigInteger(pri).remainder(getNativoBigInteger(seg));
+		} else if (ehBigDecimal(seg)) {
+			return criarBigDecimal(getNativoBigInteger(pri)).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
 	}
 
-	private Object priLong(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof Short) {
-			check(getShort(seg));
-			return getLong(pri) % getShort(seg);
-		} else if (seg instanceof Integer) {
-			check(getInteger(seg));
-			return getLong(pri) % getInteger(seg);
-		} else if (seg instanceof Long) {
-			check(getLong(seg));
-			return getLong(pri) % getLong(seg);
-		} else if (seg instanceof Float) {
-			check(getFloat(seg));
-			return getLong(pri) % getFloat(seg);
-		} else if (seg instanceof Double) {
-			check(getDouble(seg));
-			return getLong(pri) % getDouble(seg);
+	private Object processarBigDecimal(Object pri, Object seg) throws ChecagemException {
+		if (ehInteiro(seg)) {
+			return getNativoBigDecimal(pri).remainder(criarBigDecimal(getNativoInteiro(seg)));
+		} else if (ehFlutuante(seg)) {
+			return getNativoBigDecimal(pri).remainder(criarBigDecimal(getNativoFlutuante(seg)));
+		} else if (ehBigInteger(seg)) {
+			return getNativoBigDecimal(pri).remainder(criarBigDecimal(getNativoBigInteger(seg)));
+		} else if (ehBigDecimal(seg)) {
+			return getNativoBigDecimal(pri).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
-	}
-
-	private Object priFloat(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof Short) {
-			check(getShort(seg));
-			return getFloat(pri) % getShort(seg);
-		} else if (seg instanceof Integer) {
-			check(getInteger(seg));
-			return getFloat(pri) % getInteger(seg);
-		} else if (seg instanceof Long) {
-			check(getLong(seg));
-			return getFloat(pri) % getLong(seg);
-		} else if (seg instanceof Float) {
-			check(getFloat(seg));
-			return getFloat(pri) % getFloat(seg);
-		} else if (seg instanceof Double) {
-			check(getDouble(seg));
-			return getFloat(pri) % getDouble(seg);
-		}
-		throw new ChecagemException(ERRO);
-	}
-
-	private Object priDouble(Object pri, Object seg) throws ChecagemException {
-		if (seg instanceof Short) {
-			check(getShort(seg));
-			return getDouble(pri) % getShort(seg);
-		} else if (seg instanceof Integer) {
-			check(getInteger(seg));
-			return getDouble(pri) % getInteger(seg);
-		} else if (seg instanceof Long) {
-			check(getLong(seg));
-			return getDouble(pri) % getLong(seg);
-		} else if (seg instanceof Float) {
-			check(getFloat(seg));
-			return getDouble(pri) % getFloat(seg);
-		} else if (seg instanceof Double) {
-			check(getDouble(seg));
-			return getDouble(pri) % getDouble(seg);
-		}
-		throw new ChecagemException(ERRO);
-	}
-
-	private void check(Number number) throws ChecagemException {
-		if (number.longValue() == 0 || number.doubleValue() == 0) {
-			throw new ChecagemException("Nao existe divisao por zero");
-		}
 	}
 }
