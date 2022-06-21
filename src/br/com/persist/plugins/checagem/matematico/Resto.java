@@ -27,12 +27,16 @@ public class Resto extends Matematico {
 
 	private Object processarInteiro(Object pri, Object seg) throws ChecagemException {
 		if (ehInteiro(seg)) {
+			checkOperandoDiv(getNativoInteiro(seg));
 			return getNativoInteiro(pri) % getNativoInteiro(seg);
 		} else if (ehFlutuante(seg)) {
+			checkOperandoDiv(getNativoFlutuante(seg));
 			return getNativoInteiro(pri) % getNativoFlutuante(seg);
 		} else if (ehBigInteger(seg)) {
+			checkOperandoDiv(getNativoBigInteger(seg));
 			return criarBigInteger(getNativoInteiro(pri)).remainder(getNativoBigInteger(seg));
 		} else if (ehBigDecimal(seg)) {
+			checkOperandoDiv(getNativoBigDecimal(seg));
 			return criarBigDecimal(getNativoInteiro(pri)).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
@@ -40,12 +44,16 @@ public class Resto extends Matematico {
 
 	private Object processarFlutuante(Object pri, Object seg) throws ChecagemException {
 		if (ehInteiro(seg)) {
+			checkOperandoDiv(getNativoInteiro(seg));
 			return getNativoFlutuante(pri) % getNativoInteiro(seg);
 		} else if (ehFlutuante(seg)) {
+			checkOperandoDiv(getNativoFlutuante(seg));
 			return getNativoFlutuante(pri) % getNativoFlutuante(seg);
 		} else if (ehBigInteger(seg)) {
+			checkOperandoDiv(getNativoBigInteger(seg));
 			return criarBigDecimal(getNativoFlutuante(pri)).remainder(criarBigDecimal(getNativoBigInteger(seg)));
 		} else if (ehBigDecimal(seg)) {
+			checkOperandoDiv(getNativoBigDecimal(seg));
 			return criarBigDecimal(getNativoFlutuante(pri)).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
@@ -53,12 +61,16 @@ public class Resto extends Matematico {
 
 	private Object processarBigInteger(Object pri, Object seg) throws ChecagemException {
 		if (ehInteiro(seg)) {
+			checkOperandoDiv(getNativoInteiro(seg));
 			return getNativoBigInteger(pri).remainder(criarBigInteger(getNativoInteiro(seg)));
 		} else if (ehFlutuante(seg)) {
+			checkOperandoDiv(getNativoFlutuante(seg));
 			return criarBigDecimal(getNativoBigInteger(pri)).remainder(criarBigDecimal(getNativoFlutuante(seg)));
 		} else if (ehBigInteger(seg)) {
+			checkOperandoDiv(getNativoBigInteger(seg));
 			return getNativoBigInteger(pri).remainder(getNativoBigInteger(seg));
 		} else if (ehBigDecimal(seg)) {
+			checkOperandoDiv(getNativoBigDecimal(seg));
 			return criarBigDecimal(getNativoBigInteger(pri)).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
@@ -66,12 +78,16 @@ public class Resto extends Matematico {
 
 	private Object processarBigDecimal(Object pri, Object seg) throws ChecagemException {
 		if (ehInteiro(seg)) {
+			checkOperandoDiv(getNativoInteiro(seg));
 			return getNativoBigDecimal(pri).remainder(criarBigDecimal(getNativoInteiro(seg)));
 		} else if (ehFlutuante(seg)) {
+			checkOperandoDiv(getNativoFlutuante(seg));
 			return getNativoBigDecimal(pri).remainder(criarBigDecimal(getNativoFlutuante(seg)));
 		} else if (ehBigInteger(seg)) {
+			checkOperandoDiv(getNativoBigInteger(seg));
 			return getNativoBigDecimal(pri).remainder(criarBigDecimal(getNativoBigInteger(seg)));
 		} else if (ehBigDecimal(seg)) {
+			checkOperandoDiv(getNativoBigDecimal(seg));
 			return getNativoBigDecimal(pri).remainder(getNativoBigDecimal(seg));
 		}
 		throw new ChecagemException(ERRO);
