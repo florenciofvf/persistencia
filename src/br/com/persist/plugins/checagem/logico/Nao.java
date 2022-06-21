@@ -5,7 +5,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoUnaria;
 
 public class Nao extends FuncaoUnaria {
-	private static final String ERRO = "Erro nao";
+	private static final String ERRO = "Erro Nao";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {

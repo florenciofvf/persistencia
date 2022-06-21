@@ -5,7 +5,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoTernaria;
 
 public class SeNao extends FuncaoTernaria {
-	private static final String ERRO = "Erro senao";
+	private static final String ERRO = "Erro SeNao";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {

@@ -162,6 +162,9 @@ br.com.persist.plugins.checagem.util.ParseLong
 parseShort
 br.com.persist.plugins.checagem.util.ParseShort
 
+parseByte
+br.com.persist.plugins.checagem.util.ParseByte
+
 parseString
 br.com.persist.plugins.checagem.util.ParseString
 

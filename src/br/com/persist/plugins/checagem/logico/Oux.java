@@ -5,7 +5,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
 public class Oux extends FuncaoBinaria {
-	private static final String ERRO = "Erro ou exclusivo";
+	private static final String ERRO = "Erro Oux";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -63,10 +64,10 @@ public class Select extends FuncaoBinariaOuNParam {
 			return "'" + valorParametro.toString() + "'";
 		} else if (valorParametro instanceof Number) {
 			return valorParametro.toString();
-		} else if (valorParametro instanceof List<?>) {
+		} else if (valorParametro instanceof Collection<?>) {
 			StringBuilder sb = new StringBuilder();
-			List<?> lista = (List<?>) valorParametro;
-			for (Object object : lista) {
+			Collection<?> colecao = (Collection<?>) valorParametro;
+			for (Object object : colecao) {
 				if (sb.length() > 0) {
 					sb.append(", ");
 				}

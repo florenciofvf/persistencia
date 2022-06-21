@@ -7,13 +7,13 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoUnaria;
 
 public class TamanhoColecao extends FuncaoUnaria {
-	private static final String ERRO = "Erro tamanhoColecao";
+	private static final String ERRO = "Erro TamanhoColecao";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(ctx);
 		checkObrigatorioCollection(op0, ERRO + " >>> op0");
 		Collection<?> colecao = (Collection<?>) op0;
-		return Long.valueOf(colecao.size());
+		return colecao.size();
 	}
 }

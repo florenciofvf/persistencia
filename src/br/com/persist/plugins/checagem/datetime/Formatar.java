@@ -9,7 +9,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
 public class Formatar extends FuncaoBinaria {
-	private static final String ERRO = "Erro formatar agora";
+	private static final String ERRO = "Erro Formatar";
 	private DateFormat format;
 
 	@Override

@@ -5,7 +5,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
 public class Se extends FuncaoBinaria {
-	private static final String ERRO = "Erro se";
+	private static final String ERRO = "Erro Se";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
