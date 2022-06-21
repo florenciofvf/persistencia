@@ -7,7 +7,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinariaOuMaior;
 
 public class GetConnection extends FuncaoBinariaOuMaior {
-	private static final String ERRO = "Erro getConnection";
+	private static final String ERRO = "Erro GetConnection";
 
 	public GetConnection() {
 		super(4);

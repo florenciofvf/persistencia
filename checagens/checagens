@@ -179,6 +179,9 @@ br.com.persist.plugins.checagem.banco.GetConnection
 select
 br.com.persist.plugins.checagem.banco.Select
 
+selectLog
+br.com.persist.plugins.checagem.banco.SelectLog
+
 
 
 criarLista

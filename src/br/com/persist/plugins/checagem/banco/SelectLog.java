@@ -1,9 +1,5 @@
 package br.com.persist.plugins.checagem.banco;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -14,41 +10,24 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinariaOuNParam;
 
-public class Select extends FuncaoBinariaOuNParam {
-	private static final String ERRO = "Erro Select";
+public class SelectLog extends FuncaoBinariaOuNParam {
+	private static final String ERRO = "Erro SelectLog";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
 		List<Object> resposta = new ArrayList<>();
 		Object op0 = param0().executar(ctx);
-		Object op1 = param1().executar(ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
-		checkObrigatorioString(op1, ERRO + " >>> op1");
-		Object conn = ctx.get((String) op0);
-		if (!(conn instanceof Connection)) {
-			throw new ChecagemException(ERRO + " >>> Conexao invalida");
-		}
-		@SuppressWarnings("resource")
-		Connection connection = (Connection) conn;
-		String instrucao = (String) op1;
-		try (Statement st = connection.createStatement()) {
-			for (int i = 2; i < parametros.size(); i += 2) {
-				Object nomeParametro = parametros.get(i).executar(ctx);
-				checkObrigatorioString(nomeParametro, ERRO + " >>> op" + i);
-				int indiceValor = i + 1;
-				if (indiceValor >= parametros.size()) {
-					throw new ChecagemException("Parametro sem valor >>> " + nomeParametro);
-				}
-				Object valorParametro = parametros.get(indiceValor).executar(ctx);
-				instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
+		String instrucao = (String) op0;
+		for (int i = 1; i < parametros.size(); i += 2) {
+			Object nomeParametro = parametros.get(i).executar(ctx);
+			checkObrigatorioString(nomeParametro, ERRO + " >>> op" + i);
+			int indiceValor = i + 1;
+			if (indiceValor >= parametros.size()) {
+				throw new ChecagemException("Parametro sem valor >>> " + nomeParametro);
 			}
-			try (ResultSet rs = st.executeQuery(instrucao)) {
-				while (rs.next()) {
-					resposta.add(rs.getObject(1));
-				}
-			}
-		} catch (SQLException ex) {
-			throw new ChecagemException(ERRO + " >>> " + ex.getMessage());
+			Object valorParametro = parametros.get(indiceValor).executar(ctx);
+			instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
 		}
 		return resposta;
 	}

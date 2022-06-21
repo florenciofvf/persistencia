@@ -8,7 +8,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoUnaria;
 
 public class CloseConnection extends FuncaoUnaria {
-	private static final String ERRO = "Erro closeConnection";
+	private static final String ERRO = "Erro CloseConnection";
 
 	@Override
 	public Object executar(Contexto ctx) throws ChecagemException {
