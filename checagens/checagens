@@ -213,3 +213,9 @@ br.com.persist.plugins.checagem.colecao.ContemTodos
 
 contemTodos
 br.com.persist.plugins.checagem.colecao.ContemTodos
+
+classeItens
+br.com.persist.plugins.checagem.colecao.ClasseItens
+
+classItens
+br.com.persist.plugins.checagem.colecao.ClasseItens
