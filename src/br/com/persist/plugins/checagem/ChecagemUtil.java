@@ -34,7 +34,7 @@ public class ChecagemUtil {
 	}
 
 	public static List<Object> processar(String arquivo, Contexto ctx) throws ChecagemException {
-		List<Sentenca> sentencas = checagem.map.get(arquivo);
+		List<Set> sentencas = checagem.map.get(arquivo);
 		if (sentencas == null) {
 			ChecagemGramatica.montarGramatica(arquivo, checagem);
 		}

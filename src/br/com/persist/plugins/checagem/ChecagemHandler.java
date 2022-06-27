@@ -11,7 +11,7 @@ import br.com.persist.marca.XMLHandler;
 
 class ChecagemHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
-	private final List<String> sentencas = new ArrayList<>();
+	private final List<Set> sentencas = new ArrayList<>();
 
 	private void limpar() {
 		if (builder.length() > 0) {
@@ -22,6 +22,8 @@ class ChecagemHandler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if ("set".equals(qName)) {
+			Set set = new Set(attributes.getValue("id"));
+			sentencas.add(set);
 			limpar();
 		}
 	}
@@ -31,7 +33,8 @@ class ChecagemHandler extends XMLHandler {
 		if ("set".equals(qName)) {
 			String string = builder.toString();
 			if (!Util.estaVazio(string)) {
-				sentencas.add(string.trim());
+				Set set = sentencas.get(sentencas.size() - 1);
+				set.setString(string.trim());
 			}
 			limpar();
 		}
@@ -42,7 +45,7 @@ class ChecagemHandler extends XMLHandler {
 		builder.append(new String(ch, start, length));
 	}
 
-	public List<String> getSentencas() {
+	public List<Set> getSentencas() {
 		return sentencas;
 	}
 }

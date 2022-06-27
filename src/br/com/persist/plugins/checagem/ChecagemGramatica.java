@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,30 +27,24 @@ public class ChecagemGramatica {
 	}
 
 	public static void checarGramatica(String conteudo, Checagem checagem) throws XMLException, ChecagemException {
-		List<String> sentencasString = sentencasString(conteudo);
-		criarHierarquiaSentencas(sentencasString);
-	}
-
-	private static List<String> sentencasString(String conteudo) throws XMLException {
-		ChecagemHandler handler = new ChecagemHandler();
-		processarXMLSentencas(handler, conteudo);
-		return handler.getSentencas();
+		List<Set> sentencas = sentencasString(conteudo);
+		criarHierarquiaSentencas(sentencas);
 	}
 
 	public static void montarGramatica(String chaveSentencas, Checagem checagem) throws ChecagemException {
-		List<String> sentencasString = lerSentencasString(chaveSentencas);
-		List<Sentenca> sentencas = criarHierarquiaSentencas(sentencasString);
+		List<Set> sentencas = sentencasFile(chaveSentencas);
+		criarHierarquiaSentencas(sentencas);
 		checagem.map.put(chaveSentencas, sentencas);
 	}
 
 	public static void atualizarGramatica(String chaveSentencas, String conteudo, Checagem checagem)
 			throws ChecagemException, XMLException {
-		List<String> sentencasString = sentencasString(conteudo);
-		List<Sentenca> sentencas = criarHierarquiaSentencas(sentencasString);
+		List<Set> sentencas = sentencasString(conteudo);
+		criarHierarquiaSentencas(sentencas);
 		checagem.map.put(chaveSentencas, sentencas);
 	}
 
-	private static List<String> lerSentencasString(String chaveSentencas) {
+	private static List<Set> sentencasFile(String chaveSentencas) {
 		ChecagemHandler handler = new ChecagemHandler();
 		try {
 			File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + chaveSentencas);
@@ -62,6 +55,12 @@ public class ChecagemGramatica {
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
+		return handler.getSentencas();
+	}
+
+	private static List<Set> sentencasString(String conteudo) throws XMLException {
+		ChecagemHandler handler = new ChecagemHandler();
+		processarXMLSentencas(handler, conteudo);
 		return handler.getSentencas();
 	}
 
@@ -76,16 +75,14 @@ public class ChecagemGramatica {
 		XML.processar(new ByteArrayInputStream(sw.toString().getBytes()), handler);
 	}
 
-	private static List<Sentenca> criarHierarquiaSentencas(List<String> sentencasString) throws ChecagemException {
-		List<Sentenca> sentencas = new ArrayList<>();
-		for (String set : sentencasString) {
-			sentencas.add(criarSentenca(set));
+	private static void criarHierarquiaSentencas(List<Set> sentencas) throws ChecagemException {
+		for (Set set : sentencas) {
+			criarSentenca(set);
 		}
-		return sentencas;
 	}
 
-	private static Sentenca criarSentenca(String set) throws ChecagemException {
-		ChecagemToken checagemToken = new ChecagemToken(set);
+	private static void criarSentenca(Set set) throws ChecagemException {
+		ChecagemToken checagemToken = new ChecagemToken(set.getString());
 		SentencaRaiz sentencaRaiz = new SentencaRaiz();
 		Token token = checagemToken.proximoToken();
 		TipoFuncao funcaoSelecionada = sentencaRaiz;
@@ -112,7 +109,7 @@ public class ChecagemGramatica {
 		if (sentencaRaiz.getSentenca() instanceof TipoFuncao) {
 			((TipoFuncao) sentencaRaiz.getSentenca()).checarEncerrar();
 		}
-		return sentencaRaiz.getSentenca();
+		set.setSentenca(sentencaRaiz.getSentenca());
 	}
 
 	private static TipoFuncao transformarEmFuncao(TipoAtomico atomico) throws ChecagemException {
