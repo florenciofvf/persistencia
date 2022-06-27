@@ -1,7 +1,5 @@
 package br.com.persist.plugins.checagem;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,17 +26,10 @@ public class ChecagemFabrica extends AbstratoFabricaContainer {
 	public void inicializar() {
 		Preferencias.addOutraPreferencia(ChecagemPreferencia.class);
 		Util.criarDiretorio(ChecagemConstantes.CHECAGENS);
-		String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS;
-		File file = new File(arquivo);
-		if (!file.exists()) {
-			throw new IllegalStateException("ARQUIVO: " + arquivo + " inexistente!");
-		}
 		try {
-			ChecagemGramatica.mapear(arquivo);
-		} catch (IOException e) {
+			ChecagemUtil.inicializar();
+		} catch (ChecagemException e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
-		} catch (ClassNotFoundException ex) {
-			LOG.log(Level.SEVERE, Constantes.ERRO, ex);
 		}
 	}
 
