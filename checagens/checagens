@@ -1,3 +1,6 @@
+defun
+br.com.persist.plugins.checagem.FuncaoPadraoDef
+
 eq
 br.com.persist.plugins.checagem.comparacao.Igual
 igual
@@ -167,6 +170,12 @@ br.com.persist.plugins.checagem.util.ParseByte
 
 parseString
 br.com.persist.plugins.checagem.util.ParseString
+
+funcao
+br.com.persist.plugins.checagem.util.Funcao
+
+fn
+br.com.persist.plugins.checagem.util.Funcao
 
 
 
