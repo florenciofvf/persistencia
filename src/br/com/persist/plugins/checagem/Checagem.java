@@ -26,7 +26,9 @@ public class Checagem {
 		List<Object> resp = new ArrayList<>();
 		for (Set set : sentencas) {
 			if (set.getSentenca() != null) {
-				resp.add(set.getSentenca().executar(ctx));
+				Sentenca sentenca = set.getSentenca();
+				sentenca.setKey(key);
+				resp.add(sentenca.executar(ctx));
 			}
 		}
 		return resp;
@@ -48,7 +50,9 @@ public class Checagem {
 		}
 		for (Set set : sentencas) {
 			if (set.getSentenca() != null && id.equalsIgnoreCase(set.getId())) {
-				return set.getSentenca().executar(ctx);
+				Sentenca sentenca = set.getSentenca();
+				sentenca.setKey(key);
+				return sentenca.executar(ctx);
 			}
 		}
 		return null;

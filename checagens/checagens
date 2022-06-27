@@ -177,6 +177,9 @@ br.com.persist.plugins.checagem.util.Funcao
 fn
 br.com.persist.plugins.checagem.util.Funcao
 
+exec
+br.com.persist.plugins.checagem.util.Reinvocar
+
 
 
 closeConnection

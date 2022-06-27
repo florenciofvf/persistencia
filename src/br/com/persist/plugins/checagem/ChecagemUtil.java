@@ -41,6 +41,14 @@ public class ChecagemUtil {
 		return checagem.processar(arquivo, ctx);
 	}
 
+	public static Object processar(String arquivo, Contexto ctx, String id) throws ChecagemException {
+		List<Set> sentencas = checagem.map.get(arquivo);
+		if (sentencas == null) {
+			ChecagemGramatica.montarGramatica(arquivo, checagem);
+		}
+		return checagem.processar(arquivo, ctx, id);
+	}
+
 	public static void checarEstrutura(String conteudo) throws ChecagemException, XMLException {
 		ChecagemGramatica.checarGramatica(conteudo, checagem);
 	}
