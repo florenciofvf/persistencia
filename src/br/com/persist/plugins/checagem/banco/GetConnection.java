@@ -14,11 +14,11 @@ public class GetConnection extends FuncaoBinariaOuMaior {
 	}
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(ctx);
-		Object op1 = param1().executar(ctx);
-		Object op2 = parametros.get(2).executar(ctx);
-		Object op3 = parametros.get(3).executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(key, ctx);
+		Object op1 = param1().executar(key, ctx);
+		Object op2 = parametros.get(2).executar(key, ctx);
+		Object op3 = parametros.get(3).executar(key, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		checkObrigatorioString(op1, ERRO + " >>> op1");
 		checkObrigatorioString(op2, ERRO + " >>> op2");

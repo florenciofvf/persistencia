@@ -8,8 +8,8 @@ public class Nao extends FuncaoUnaria {
 	private static final String ERRO = "Erro Nao";
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(key, ctx);
 		checkObrigatorioBoolean(op0, ERRO + " >>> op0");
 		Boolean pri = (Boolean) op0;
 		return !pri;

@@ -7,9 +7,9 @@ public class Somar extends Matematico {
 	private static final String ERRO = "Erro Somar";
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object pri = param0().executar(ctx);
-		Object seg = param1().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object pri = param0().executar(key, ctx);
+		Object seg = param1().executar(key, ctx);
 		if (pri == null && seg == null) {
 			return "nullnull";
 		}

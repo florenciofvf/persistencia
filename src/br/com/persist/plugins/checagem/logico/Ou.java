@@ -8,9 +8,9 @@ public class Ou extends FuncaoBinaria {
 	private static final String ERRO = "Erro Ou";
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(ctx);
-		Object op1 = param1().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(key, ctx);
+		Object op1 = param1().executar(key, ctx);
 		checkObrigatorioBoolean(op0, ERRO + " >>> op0");
 		checkObrigatorioBoolean(op1, ERRO + " >>> op1");
 		Boolean pri = (Boolean) op0;

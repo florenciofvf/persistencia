@@ -7,7 +7,7 @@ public class TipoAtributoContexto extends TipoString {
 	private String valorNormal;
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
 		return ctx.get(valorNormal);
 	}
 

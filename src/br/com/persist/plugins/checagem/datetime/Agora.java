@@ -6,7 +6,7 @@ import br.com.persist.plugins.checagem.FuncaoVazia;
 
 public class Agora extends FuncaoVazia {
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
 		return System.currentTimeMillis();
 	}
 }

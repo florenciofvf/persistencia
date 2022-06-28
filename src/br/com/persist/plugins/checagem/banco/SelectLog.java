@@ -12,18 +12,18 @@ public class SelectLog extends FuncaoBinariaOuNParam {
 	private static final String ERRO = "Erro SelectLog";
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(key, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		String instrucao = (String) op0;
 		for (int i = 1; i < parametros.size(); i += 2) {
-			Object nomeParametro = parametros.get(i).executar(ctx);
+			Object nomeParametro = parametros.get(i).executar(key, ctx);
 			checkObrigatorioString(nomeParametro, ERRO + " >>> op" + i);
 			int indiceValor = i + 1;
 			if (indiceValor >= parametros.size()) {
 				throw new ChecagemException("Parametro sem valor >>> " + nomeParametro);
 			}
-			Object valorParametro = parametros.get(indiceValor).executar(ctx);
+			Object valorParametro = parametros.get(indiceValor).executar(key, ctx);
 			instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
 		}
 		return instrucao;

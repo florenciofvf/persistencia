@@ -11,10 +11,10 @@ import br.com.persist.plugins.checagem.Sentenca;
 public class CriarLista extends FuncaoVaziaOuNParam {
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
 		List<Object> resposta = new ArrayList<>();
 		for (Sentenca s : parametros) {
-			resposta.add(s.executar(ctx));
+			resposta.add(s.executar(key, ctx));
 		}
 		return resposta;
 	}

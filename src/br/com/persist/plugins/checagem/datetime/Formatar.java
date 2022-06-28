@@ -13,9 +13,9 @@ public class Formatar extends FuncaoBinaria {
 	private DateFormat format;
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(ctx);
-		Object op1 = param1().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(key, ctx);
+		Object op1 = param1().executar(key, ctx);
 		checkObrigatorioLong(op0, ERRO + " >>> op0");
 		checkObrigatorioString(op1, ERRO + " >>> op1");
 		Long pri = (Long) op0;

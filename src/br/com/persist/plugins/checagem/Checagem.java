@@ -27,8 +27,7 @@ public class Checagem {
 		for (Set set : sentencas) {
 			if (set.getSentenca() != null) {
 				Sentenca sentenca = set.getSentenca();
-				sentenca.setKey(key);
-				resp.add(sentenca.executar(ctx));
+				resp.add(sentenca.executar(key, ctx));
 			}
 		}
 		return resp;
@@ -51,8 +50,7 @@ public class Checagem {
 		for (Set set : sentencas) {
 			if (set.getSentenca() != null && id.equalsIgnoreCase(set.getId())) {
 				Sentenca sentenca = set.getSentenca();
-				sentenca.setKey(key);
-				return sentenca.executar(ctx);
+				return sentenca.executar(key, ctx);
 			}
 		}
 		return null;

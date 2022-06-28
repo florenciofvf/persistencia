@@ -6,7 +6,7 @@ public class SentencaRaiz extends FuncaoUnaria {
 	}
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
 		throw new ChecagemException("Nao pode ser executado >>> " + getClass().getName());
 	}
 

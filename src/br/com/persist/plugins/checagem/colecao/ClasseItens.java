@@ -10,8 +10,8 @@ public class ClasseItens extends FuncaoUnaria {
 	private static final String ERRO = "Erro ClasseItens";
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(key, ctx);
 		checkObrigatorioCollection(op0, ERRO + " >>> op0");
 		Collection<?> colecao = (Collection<?>) op0;
 		StringBuilder sb = new StringBuilder();

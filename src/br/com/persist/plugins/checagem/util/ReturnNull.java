@@ -6,8 +6,8 @@ import br.com.persist.plugins.checagem.FuncaoUnaria;
 
 public class ReturnNull extends FuncaoUnaria {
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		param0().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		param0().executar(key, ctx);
 		return null;
 	}
 }

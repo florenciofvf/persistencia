@@ -9,8 +9,8 @@ import br.com.persist.plugins.checagem.FuncaoUnaria;
 
 public class IsEmpty extends FuncaoUnaria {
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object pri = param0().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object pri = param0().executar(key, ctx);
 		if (pri instanceof Collection<?>) {
 			return ((Collection<?>) pri).isEmpty();
 		} else if (pri instanceof Map<?, ?>) {

@@ -8,7 +8,7 @@ public class TipoLong extends TipoAtomico {
 	private Long valor;
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
 		return valor;
 	}
 

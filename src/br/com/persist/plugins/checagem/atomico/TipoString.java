@@ -8,7 +8,7 @@ public class TipoString extends TipoAtomico {
 	private String valor;
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
 		return valor;
 	}
 

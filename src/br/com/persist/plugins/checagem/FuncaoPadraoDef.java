@@ -4,8 +4,8 @@ public class FuncaoPadraoDef extends FuncaoUnaria {
 	private static final String ERRO = "Erro FuncaoPadraoDef";
 
 	@Override
-	public Object executar(Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(ctx);
+	public Object executar(String key, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(key, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		ChecagemGramatica.map.put((String) op0, FuncaoPadrao.class.getName());
 		return null;
@@ -14,6 +14,6 @@ public class FuncaoPadraoDef extends FuncaoUnaria {
 	@Override
 	public void encerrar() throws ChecagemException {
 		super.encerrar();
-		executar(null);
+		executar(null, null);
 	}
 }
