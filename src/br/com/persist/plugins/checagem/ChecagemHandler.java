@@ -11,7 +11,8 @@ import br.com.persist.marca.XMLHandler;
 
 class ChecagemHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
-	private final List<Set> sentencas = new ArrayList<>();
+	private final List<Bloco> blocos = new ArrayList<>();
+	private static final String BLOCO = "bloco";
 
 	private void limpar() {
 		if (builder.length() > 0) {
@@ -21,20 +22,20 @@ class ChecagemHandler extends XMLHandler {
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if ("set".equals(qName)) {
-			Set set = new Set(attributes.getValue("id"));
-			sentencas.add(set);
+		if (BLOCO.equals(qName)) {
+			Bloco bloco = new Bloco(attributes.getValue("id"));
+			blocos.add(bloco);
 			limpar();
 		}
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if ("set".equals(qName)) {
+		if (BLOCO.equals(qName)) {
 			String string = builder.toString();
 			if (!Util.estaVazio(string)) {
-				Set set = sentencas.get(sentencas.size() - 1);
-				set.setString(string.trim());
+				Bloco bloco = blocos.get(blocos.size() - 1);
+				bloco.setString(string.trim());
 			}
 			limpar();
 		}
@@ -45,7 +46,7 @@ class ChecagemHandler extends XMLHandler {
 		builder.append(new String(ch, start, length));
 	}
 
-	public List<Set> getSentencas() {
-		return sentencas;
+	public List<Bloco> getBlocos() {
+		return blocos;
 	}
 }

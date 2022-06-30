@@ -1,11 +1,11 @@
 package br.com.persist.plugins.checagem;
 
-public class Set {
+public class Bloco {
 	private Sentenca sentenca;
 	private final String id;
 	private String string;
 
-	public Set(String id) {
+	public Bloco(String id) {
 		this.id = id;
 	}
 
@@ -27,5 +27,12 @@ public class Set {
 
 	public void setString(String string) {
 		this.string = string;
+	}
+
+	public Object executar(Checagem checagem, Contexto ctx) throws ChecagemException {
+		if (sentenca == null) {
+			return null;
+		}
+		return sentenca.executar(checagem, this, ctx);
 	}
 }

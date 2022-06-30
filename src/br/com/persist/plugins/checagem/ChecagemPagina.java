@@ -130,7 +130,7 @@ public class ChecagemPagina extends Panel {
 			try {
 				ChecagemUtil.atualizarEstrutura(file);
 				mensagemSucesso();
-			} catch (ChecagemException e) {
+			} catch (ChecagemException | XMLException | IOException e) {
 				Util.mensagem(ChecagemPagina.this, e.getMessage());
 			}
 		}
