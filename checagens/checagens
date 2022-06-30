@@ -205,6 +205,12 @@ br.com.persist.plugins.checagem.colecao.CriarSet
 createSet
 br.com.persist.plugins.checagem.colecao.CriarSet
 
+criarMapa
+br.com.persist.plugins.checagem.colecao.CriarMapa
+
+createMap
+br.com.persist.plugins.checagem.colecao.CriarMapa
+
 tamanhoColecao
 br.com.persist.plugins.checagem.colecao.TamanhoColecao
 

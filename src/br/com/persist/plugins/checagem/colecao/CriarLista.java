@@ -11,7 +11,6 @@ import br.com.persist.plugins.checagem.FuncaoVaziaOuNParam;
 import br.com.persist.plugins.checagem.Sentenca;
 
 public class CriarLista extends FuncaoVaziaOuNParam {
-
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		List<Object> resposta = new ArrayList<>();

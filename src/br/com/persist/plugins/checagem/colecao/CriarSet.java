@@ -11,7 +11,6 @@ import br.com.persist.plugins.checagem.FuncaoVaziaOuNParam;
 import br.com.persist.plugins.checagem.Sentenca;
 
 public class CriarSet extends FuncaoVaziaOuNParam {
-
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		Set<Object> resposta = new HashSet<>();
