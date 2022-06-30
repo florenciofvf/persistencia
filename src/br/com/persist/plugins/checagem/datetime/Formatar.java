@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.persist.plugins.checagem.Bloco;
+import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
@@ -13,9 +15,9 @@ public class Formatar extends FuncaoBinaria {
 	private DateFormat format;
 
 	@Override
-	public Object executar(String key, Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(key, ctx);
-		Object op1 = param1().executar(key, ctx);
+	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(checagem, bloco, ctx);
+		Object op1 = param1().executar(checagem, bloco, ctx);
 		checkObrigatorioLong(op0, ERRO + " >>> op0");
 		checkObrigatorioString(op1, ERRO + " >>> op1");
 		Long pri = (Long) op0;

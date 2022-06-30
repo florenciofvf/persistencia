@@ -2,6 +2,8 @@ package br.com.persist.plugins.checagem.banco;
 
 import java.sql.DriverManager;
 
+import br.com.persist.plugins.checagem.Bloco;
+import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinariaOuMaior;
@@ -14,11 +16,11 @@ public class GetConnection extends FuncaoBinariaOuMaior {
 	}
 
 	@Override
-	public Object executar(String key, Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(key, ctx);
-		Object op1 = param1().executar(key, ctx);
-		Object op2 = parametros.get(2).executar(key, ctx);
-		Object op3 = parametros.get(3).executar(key, ctx);
+	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(checagem, bloco, ctx);
+		Object op1 = param1().executar(checagem, bloco, ctx);
+		Object op2 = parametros.get(2).executar(checagem, bloco, ctx);
+		Object op3 = parametros.get(3).executar(checagem, bloco, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		checkObrigatorioString(op1, ERRO + " >>> op1");
 		checkObrigatorioString(op2, ERRO + " >>> op2");

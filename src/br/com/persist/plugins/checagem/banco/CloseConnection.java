@@ -3,6 +3,8 @@ package br.com.persist.plugins.checagem.banco;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import br.com.persist.plugins.checagem.Bloco;
+import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoUnaria;
@@ -11,8 +13,8 @@ public class CloseConnection extends FuncaoUnaria {
 	private static final String ERRO = "Erro CloseConnection";
 
 	@Override
-	public Object executar(String key, Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(key, ctx);
+	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(checagem, bloco, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		Object obj = ctx.get((String) op0);
 		if (obj instanceof Connection) {

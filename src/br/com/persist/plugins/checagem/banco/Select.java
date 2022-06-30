@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.checagem.Bloco;
+import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinariaOuNParam;
@@ -18,10 +20,10 @@ public class Select extends FuncaoBinariaOuNParam {
 	private static final String ERRO = "Erro Select";
 
 	@Override
-	public Object executar(String key, Contexto ctx) throws ChecagemException {
+	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		List<Object> resposta = new ArrayList<>();
-		Object op0 = param0().executar(key, ctx);
-		Object op1 = param1().executar(key, ctx);
+		Object op0 = param0().executar(checagem, bloco, ctx);
+		Object op1 = param1().executar(checagem, bloco, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		checkObrigatorioString(op1, ERRO + " >>> op1");
 		Object conn = ctx.get((String) op0);
@@ -33,13 +35,13 @@ public class Select extends FuncaoBinariaOuNParam {
 		String instrucao = (String) op1;
 		try (Statement st = connection.createStatement()) {
 			for (int i = 2; i < parametros.size(); i += 2) {
-				Object nomeParametro = parametros.get(i).executar(key, ctx);
+				Object nomeParametro = parametros.get(i).executar(checagem, bloco, ctx);
 				checkObrigatorioString(nomeParametro, ERRO + " >>> op" + i);
 				int indiceValor = i + 1;
 				if (indiceValor >= parametros.size()) {
 					throw new ChecagemException("Parametro sem valor >>> " + nomeParametro);
 				}
-				Object valorParametro = parametros.get(indiceValor).executar(key, ctx);
+				Object valorParametro = parametros.get(indiceValor).executar(checagem, bloco, ctx);
 				instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
 			}
 			try (ResultSet rs = st.executeQuery(instrucao)) {

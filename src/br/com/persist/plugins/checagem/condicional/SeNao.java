@@ -1,5 +1,7 @@
 package br.com.persist.plugins.checagem.condicional;
 
+import br.com.persist.plugins.checagem.Bloco;
+import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoTernaria;
@@ -8,12 +10,12 @@ public class SeNao extends FuncaoTernaria {
 	private static final String ERRO = "Erro SeNao";
 
 	@Override
-	public Object executar(String key, Contexto ctx) throws ChecagemException {
-		Object op0 = param0().executar(key, ctx);
+	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
+		Object op0 = param0().executar(checagem, bloco, ctx);
 		checkObrigatorioBoolean(op0, ERRO + " >>> op0");
 		Boolean pri = (Boolean) op0;
-		Object seg = param1().executar(key, ctx);
-		Object ter = param2().executar(key, ctx);
+		Object seg = param1().executar(checagem, bloco, ctx);
+		Object ter = param2().executar(checagem, bloco, ctx);
 		return pri ? seg : ter;
 	}
 }

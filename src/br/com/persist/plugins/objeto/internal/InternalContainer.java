@@ -27,6 +27,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,6 +90,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.IconeListener;
+import br.com.persist.marca.XMLException;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.ChecagemUtil;
 import br.com.persist.plugins.checagem.Contexto;
@@ -1765,7 +1767,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					for (Object object : lista) {
 						append(sb, object);
 					}
-				} catch (ChecagemException e) {
+				} catch (ChecagemException | XMLException | IOException e) {
 					append(sb, e.getMessage());
 				}
 				Util.mensagem(InternalContainer.this, sb.toString());

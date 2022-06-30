@@ -1,5 +1,7 @@
 package br.com.persist.plugins.checagem.matematico;
 
+import br.com.persist.plugins.checagem.Bloco;
+import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
@@ -7,9 +9,9 @@ public class Multiplicar extends Matematico {
 	private static final String ERRO = "Erro Multiplicar";
 
 	@Override
-	public Object executar(String key, Contexto ctx) throws ChecagemException {
-		Object pri = param0().executar(key, ctx);
-		Object seg = param1().executar(key, ctx);
+	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
+		Object pri = param0().executar(checagem, bloco, ctx);
+		Object seg = param1().executar(checagem, bloco, ctx);
 		if (pri == null && seg == null) {
 			throw new ChecagemException(ERRO);
 		}
