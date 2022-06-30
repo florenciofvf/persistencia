@@ -12,7 +12,12 @@ import br.com.persist.marca.XMLHandler;
 class ChecagemHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
 	private final List<Bloco> blocos = new ArrayList<>();
-	private static final String BLOCO = "bloco";
+	private static final String BLOCO = "set";
+	private final Modulo modulo;
+
+	public ChecagemHandler(Modulo modulo) {
+		this.modulo = modulo;
+	}
 
 	private void limpar() {
 		if (builder.length() > 0) {
@@ -23,7 +28,7 @@ class ChecagemHandler extends XMLHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (BLOCO.equals(qName)) {
-			Bloco bloco = new Bloco(attributes.getValue("id"));
+			Bloco bloco = new Bloco(modulo, attributes.getValue("id"));
 			blocos.add(bloco);
 			limpar();
 		}

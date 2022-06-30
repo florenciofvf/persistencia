@@ -47,6 +47,17 @@ public class ChecagemUtil {
 		return checagem.processar(idModulo, ctx);
 	}
 
+	public static void checarModulo(String idModulo) throws ChecagemException {
+		Modulo modulo = checagem.getModulo(idModulo);
+		if (modulo == null) {
+			try {
+				montarGramaticaArquivo(idModulo, checagem);
+			} catch (XMLException | IOException e) {
+				throw new ChecagemException(e);
+			}
+		}
+	}
+
 	public static void checarEstrutura(String conteudo) throws ChecagemException, XMLException {
 		checarGramaticaString(conteudo, checagem);
 	}
@@ -61,31 +72,32 @@ public class ChecagemUtil {
 
 	private static void checarGramaticaString(String conteudo, Checagem checagem)
 			throws XMLException, ChecagemException {
-		List<Bloco> blocos = lerBlocosString(conteudo);
+		Modulo modulo = new Modulo("tmp");
+		List<Bloco> blocos = lerBlocosString(modulo, conteudo);
 		ChecagemGramatica.criarHierarquiaSentencas(blocos);
 	}
 
 	private static void montarGramaticaArquivo(String idModulo, Checagem checagem)
 			throws ChecagemException, XMLException, IOException {
-		List<Bloco> blocos = lerBlocosArquivo(idModulo);
-		ChecagemGramatica.criarHierarquiaSentencas(blocos);
 		Modulo modulo = new Modulo(idModulo);
+		List<Bloco> blocos = lerBlocosArquivo(modulo);
+		ChecagemGramatica.criarHierarquiaSentencas(blocos);
 		modulo.addBlocos(blocos);
 		checagem.add(modulo);
 	}
 
 	private static void atualizarGramaticaString(String idModulo, String conteudo, Checagem checagem)
 			throws ChecagemException, XMLException {
-		List<Bloco> blocos = lerBlocosString(conteudo);
-		ChecagemGramatica.criarHierarquiaSentencas(blocos);
 		Modulo modulo = new Modulo(idModulo);
+		List<Bloco> blocos = lerBlocosString(modulo, conteudo);
+		ChecagemGramatica.criarHierarquiaSentencas(blocos);
 		modulo.addBlocos(blocos);
 		checagem.set(modulo);
 	}
 
-	private static List<Bloco> lerBlocosArquivo(String idModulo) throws XMLException, IOException {
-		ChecagemHandler handler = new ChecagemHandler();
-		File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + idModulo);
+	private static List<Bloco> lerBlocosArquivo(Modulo modulo) throws XMLException, IOException {
+		ChecagemHandler handler = new ChecagemHandler(modulo);
+		File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + modulo.getId());
 		if (file.exists() && file.canRead()) {
 			String conteudo = Util.conteudo(file);
 			processarXMLModulo(handler, conteudo);
@@ -93,8 +105,8 @@ public class ChecagemUtil {
 		return handler.getBlocos();
 	}
 
-	private static List<Bloco> lerBlocosString(String conteudo) throws XMLException {
-		ChecagemHandler handler = new ChecagemHandler();
+	private static List<Bloco> lerBlocosString(Modulo modulo, String conteudo) throws XMLException {
+		ChecagemHandler handler = new ChecagemHandler(modulo);
 		processarXMLModulo(handler, conteudo);
 		return handler.getBlocos();
 	}

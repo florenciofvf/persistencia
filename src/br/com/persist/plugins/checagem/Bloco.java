@@ -1,16 +1,22 @@
 package br.com.persist.plugins.checagem;
 
 public class Bloco {
+	private final Modulo modulo;
 	private Sentenca sentenca;
 	private final String id;
 	private String string;
 
-	public Bloco(String id) {
+	public Bloco(Modulo modulo, String id) {
+		this.modulo = modulo;
 		this.id = id;
 	}
 
 	public String getId() {
 		return id;
+	}
+
+	public Modulo getModulo() {
+		return modulo;
 	}
 
 	public Sentenca getSentenca() {

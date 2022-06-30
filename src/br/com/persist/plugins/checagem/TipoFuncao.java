@@ -3,6 +3,7 @@ package br.com.persist.plugins.checagem;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public abstract class TipoFuncao extends Sentenca {
 	protected final List<Sentenca> parametros;
@@ -84,6 +85,12 @@ public abstract class TipoFuncao extends Sentenca {
 	protected void checkObrigatorioCollection(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Collection<?>)) {
 			throw new ChecagemException(msg + " nao eh Collection");
+		}
+	}
+
+	protected void checkObrigatorioMap(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof Map<?, ?>)) {
+			throw new ChecagemException(msg + " nao eh Map");
 		}
 	}
 
