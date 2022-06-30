@@ -116,7 +116,7 @@ public class ChecagemGramatica {
 		String chave = atomico.getValorString().toLowerCase().trim();
 		String classe = ChecagemGramatica.map.get(chave);
 		if (classe == null) {
-			throw new ChecagemException("Nenhuma sentenca mapeada para >>> " + chave);
+			return new FuncaoPadrao();
 		}
 		Class<?> klass = null;
 		try {

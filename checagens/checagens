@@ -1,6 +1,3 @@
-defun
-br.com.persist.plugins.checagem.FuncaoPadraoDef
-
 eq
 br.com.persist.plugins.checagem.comparacao.Igual
 igual
