@@ -93,12 +93,14 @@ public class ChecagemUtil {
 		checagem.set(modulo);
 	}
 
-	private static void lerBlocosArquivo(Modulo modulo) throws XMLException, IOException {
+	private static void lerBlocosArquivo(Modulo modulo) throws ChecagemException, XMLException, IOException {
 		ChecagemHandler handler = new ChecagemHandler(modulo);
 		File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + modulo.getId());
 		if (file.exists() && file.canRead()) {
 			String conteudo = Util.conteudo(file);
 			processarXMLModulo(handler, conteudo);
+		} else {
+			throw new ChecagemException("Erro ao carregar o modulo >>> " + modulo.getId());
 		}
 	}
 
