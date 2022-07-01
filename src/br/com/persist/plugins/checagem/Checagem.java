@@ -10,7 +10,7 @@ public class Checagem {
 		modulos = new ArrayList<>();
 	}
 
-	public List<Object> processar(String idModulo, Contexto ctx) throws ChecagemException {
+	public List<Object> processar(String idModulo, String idBloco, Contexto ctx) throws ChecagemException {
 		if (idModulo == null) {
 			throw new ChecagemException("idModulo null.");
 		}
@@ -21,7 +21,7 @@ public class Checagem {
 		if (modulo == null) {
 			throw new ChecagemException("modulo null.");
 		}
-		return modulo.executar(this, ctx);
+		return modulo.executar(this, idBloco, ctx);
 	}
 
 	public Modulo getModulo(String idModulo) {

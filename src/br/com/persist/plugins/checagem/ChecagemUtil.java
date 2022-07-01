@@ -38,13 +38,13 @@ public class ChecagemUtil {
 		}
 	}
 
-	public static List<Object> processar(String idModulo, Contexto ctx)
+	public static List<Object> processar(String idModulo, String idBloco, Contexto ctx)
 			throws ChecagemException, XMLException, IOException {
 		Modulo modulo = checagem.getModulo(idModulo);
 		if (modulo == null) {
 			montarGramaticaArquivo(idModulo, checagem);
 		}
-		return checagem.processar(idModulo, ctx);
+		return checagem.processar(idModulo, idBloco, ctx);
 	}
 
 	public static void checarModulo(String idModulo) throws ChecagemException {

@@ -53,11 +53,21 @@ public class Modulo {
 		}
 	}
 
-	public List<Object> executar(Checagem checagem, Contexto ctx) throws ChecagemException {
+	public List<Object> executar(Checagem checagem, String idBloco, Contexto ctx) throws ChecagemException {
 		List<Object> resp = new ArrayList<>();
-		for (Bloco bloco : blocos) {
+		if (idBloco != null) {
+			Bloco bloco = getBloco(idBloco);
+			if (bloco == null) {
+				throw new ChecagemException("Bloco inexistente! >>> " + idBloco);
+			}
 			if (!bloco.isDesativado()) {
 				resp.add(bloco.executar(checagem, ctx));
+			}
+		} else {
+			for (Bloco bloco : blocos) {
+				if (!bloco.isDesativado()) {
+					resp.add(bloco.executar(checagem, ctx));
+				}
 			}
 		}
 		return resp;
