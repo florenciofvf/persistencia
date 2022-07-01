@@ -1,8 +1,5 @@
 package br.com.persist.plugins.checagem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -11,7 +8,6 @@ import br.com.persist.marca.XMLHandler;
 
 class ChecagemHandler extends XMLHandler {
 	private final StringBuilder builder = new StringBuilder();
-	private final List<Bloco> blocos = new ArrayList<>();
 	private static final String BLOCO = "set";
 	private final Modulo modulo;
 
@@ -29,7 +25,7 @@ class ChecagemHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (BLOCO.equals(qName)) {
 			Bloco bloco = new Bloco(modulo, attributes.getValue("id"));
-			blocos.add(bloco);
+			modulo.add(bloco);
 			limpar();
 		}
 	}
@@ -39,7 +35,7 @@ class ChecagemHandler extends XMLHandler {
 		if (BLOCO.equals(qName)) {
 			String string = builder.toString();
 			if (!Util.estaVazio(string)) {
-				Bloco bloco = blocos.get(blocos.size() - 1);
+				Bloco bloco = modulo.getUltimoBloco();
 				bloco.setString(string.trim());
 			}
 			limpar();
@@ -49,9 +45,5 @@ class ChecagemHandler extends XMLHandler {
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		builder.append(new String(ch, start, length));
-	}
-
-	public List<Bloco> getBlocos() {
-		return blocos;
 	}
 }

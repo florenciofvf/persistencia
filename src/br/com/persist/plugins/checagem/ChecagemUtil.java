@@ -73,42 +73,38 @@ public class ChecagemUtil {
 	private static void checarGramaticaString(String conteudo, Checagem checagem)
 			throws XMLException, ChecagemException {
 		Modulo modulo = new Modulo("tmp");
-		List<Bloco> blocos = lerBlocosString(modulo, conteudo);
-		ChecagemGramatica.criarHierarquiaSentencas(blocos);
+		lerBlocosString(modulo, conteudo);
+		ChecagemGramatica.criarHierarquiaSentencas(modulo.getBlocos());
 	}
 
 	private static void montarGramaticaArquivo(String idModulo, Checagem checagem)
 			throws ChecagemException, XMLException, IOException {
 		Modulo modulo = new Modulo(idModulo);
-		List<Bloco> blocos = lerBlocosArquivo(modulo);
-		ChecagemGramatica.criarHierarquiaSentencas(blocos);
-		modulo.addBlocos(blocos);
+		lerBlocosArquivo(modulo);
+		ChecagemGramatica.criarHierarquiaSentencas(modulo.getBlocos());
 		checagem.add(modulo);
 	}
 
 	private static void atualizarGramaticaString(String idModulo, String conteudo, Checagem checagem)
 			throws ChecagemException, XMLException {
 		Modulo modulo = new Modulo(idModulo);
-		List<Bloco> blocos = lerBlocosString(modulo, conteudo);
-		ChecagemGramatica.criarHierarquiaSentencas(blocos);
-		modulo.addBlocos(blocos);
+		lerBlocosString(modulo, conteudo);
+		ChecagemGramatica.criarHierarquiaSentencas(modulo.getBlocos());
 		checagem.set(modulo);
 	}
 
-	private static List<Bloco> lerBlocosArquivo(Modulo modulo) throws XMLException, IOException {
+	private static void lerBlocosArquivo(Modulo modulo) throws XMLException, IOException {
 		ChecagemHandler handler = new ChecagemHandler(modulo);
 		File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + modulo.getId());
 		if (file.exists() && file.canRead()) {
 			String conteudo = Util.conteudo(file);
 			processarXMLModulo(handler, conteudo);
 		}
-		return handler.getBlocos();
 	}
 
-	private static List<Bloco> lerBlocosString(Modulo modulo, String conteudo) throws XMLException {
+	private static void lerBlocosString(Modulo modulo, String conteudo) throws XMLException {
 		ChecagemHandler handler = new ChecagemHandler(modulo);
 		processarXMLModulo(handler, conteudo);
-		return handler.getBlocos();
 	}
 
 	private static void processarXMLModulo(ChecagemHandler handler, String conteudo) throws XMLException {

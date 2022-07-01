@@ -20,6 +20,13 @@ public class Modulo {
 		return blocos;
 	}
 
+	public Bloco getUltimoBloco() {
+		if (blocos.isEmpty()) {
+			return null;
+		}
+		return blocos.get(blocos.size() - 1);
+	}
+
 	public Bloco getBloco(String id) {
 		if (id == null) {
 			return null;
