@@ -35,7 +35,11 @@ public class Reinvocar extends FuncaoUnariaOuNParam {
 		Object op1 = parametros.get(1).executar(checagem, bloco, ctx);
 		checkObrigatorioMap(op1, ERRO + "op1");
 		Modulo modulo = bloco.getModulo();
-		Bloco outro = modulo.getBloco((String) op0);
+		String idBloco = (String) op0;
+		Bloco outro = modulo.getBloco(idBloco);
+		if (outro == null) {
+			throwBlocoInexistente(modulo, idBloco);
+		}
 		return outro.executar(checagem, Contexto.criar(op1));
 	}
 
@@ -49,7 +53,22 @@ public class Reinvocar extends FuncaoUnariaOuNParam {
 		String idModulo = (String) op0;
 		ChecagemUtil.checarModulo(idModulo);
 		Modulo modulo = checagem.getModulo(idModulo);
-		Bloco outro = modulo.getBloco((String) op1);
+		if (modulo == null) {
+			throwModuloInexistente(idModulo);
+		}
+		String idBloco = (String) op1;
+		Bloco outro = modulo.getBloco(idBloco);
+		if (outro == null) {
+			throwBlocoInexistente(modulo, idBloco);
+		}
 		return outro.executar(checagem, Contexto.criar(op2));
+	}
+
+	private void throwModuloInexistente(String idModulo) throws ChecagemException {
+		throw new ChecagemException("Modulo inexistente! >>> " + idModulo);
+	}
+
+	private void throwBlocoInexistente(Modulo modulo, String idBloco) throws ChecagemException {
+		throw new ChecagemException("Bloco inexistente! >>> modulo=" + modulo.getId() + "[" + idBloco + "]");
 	}
 }
