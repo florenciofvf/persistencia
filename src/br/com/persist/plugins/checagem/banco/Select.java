@@ -55,12 +55,12 @@ public class Select extends FuncaoBinariaOuNParam {
 		return resposta;
 	}
 
-	private String substituirParametro(String instrucao, String nomeParametro, Object valorParametro) {
+	static String substituirParametro(String instrucao, String nomeParametro, Object valorParametro) {
 		String normalizado = normalizar(valorParametro);
 		return Util.replaceAll(instrucao, nomeParametro, normalizado);
 	}
 
-	private String normalizar(Object valorParametro) {
+	private static String normalizar(Object valorParametro) {
 		if (valorParametro instanceof CharSequence || valorParametro instanceof Character
 				|| valorParametro instanceof Date) {
 			return "'" + valorParametro.toString() + "'";
