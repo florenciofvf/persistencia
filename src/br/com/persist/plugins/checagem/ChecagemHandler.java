@@ -25,6 +25,8 @@ class ChecagemHandler extends XMLHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		if (BLOCO.equals(qName)) {
 			Bloco bloco = new Bloco(modulo, attributes.getValue("id"));
+			boolean desativado = Boolean.parseBoolean(attributes.getValue("desativado"));
+			bloco.setDesativado(desativado);
 			modulo.add(bloco);
 			limpar();
 		}

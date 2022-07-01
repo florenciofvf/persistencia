@@ -56,7 +56,9 @@ public class Modulo {
 	public List<Object> executar(Checagem checagem, Contexto ctx) throws ChecagemException {
 		List<Object> resp = new ArrayList<>();
 		for (Bloco bloco : blocos) {
-			resp.add(bloco.executar(checagem, ctx));
+			if (!bloco.isDesativado()) {
+				resp.add(bloco.executar(checagem, ctx));
+			}
 		}
 		return resp;
 	}
