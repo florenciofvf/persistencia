@@ -14,7 +14,6 @@ public class Se extends FuncaoBinaria {
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		checkObrigatorioBoolean(op0, ERRO + " >>> op0");
 		Boolean pri = (Boolean) op0;
-		Object seg = param1().executar(checagem, bloco, ctx);
-		return pri ? seg : null;
+		return pri ? param1().executar(checagem, bloco, ctx) : null;
 	}
 }

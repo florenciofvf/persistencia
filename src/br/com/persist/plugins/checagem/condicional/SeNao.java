@@ -14,8 +14,6 @@ public class SeNao extends FuncaoTernaria {
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		checkObrigatorioBoolean(op0, ERRO + " >>> op0");
 		Boolean pri = (Boolean) op0;
-		Object seg = param1().executar(checagem, bloco, ctx);
-		Object ter = param2().executar(checagem, bloco, ctx);
-		return pri ? seg : ter;
+		return pri ? param1().executar(checagem, bloco, ctx) : param2().executar(checagem, bloco, ctx);
 	}
 }

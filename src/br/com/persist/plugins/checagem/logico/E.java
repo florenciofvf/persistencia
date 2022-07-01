@@ -12,11 +12,13 @@ public class E extends FuncaoBinaria {
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(checagem, bloco, ctx);
-		Object op1 = param1().executar(checagem, bloco, ctx);
 		checkObrigatorioBoolean(op0, ERRO + " >>> op0");
-		checkObrigatorioBoolean(op1, ERRO + " >>> op1");
 		Boolean pri = (Boolean) op0;
-		Boolean seg = (Boolean) op1;
-		return pri && seg;
+		if (!pri) {
+			return Boolean.FALSE;
+		}
+		Object op1 = param1().executar(checagem, bloco, ctx);
+		checkObrigatorioBoolean(op1, ERRO + " >>> op1");
+		return ((Boolean) op1).booleanValue();
 	}
 }
