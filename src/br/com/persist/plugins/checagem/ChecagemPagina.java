@@ -57,7 +57,7 @@ public class ChecagemPagina extends Panel {
 
 	private void montarLayout() {
 		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
-		split.setDividerLocation(Constantes.SIZE.height / 2);
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
 		add(BorderLayout.CENTER, split);
 	}
 
