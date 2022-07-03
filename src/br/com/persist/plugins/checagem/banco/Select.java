@@ -28,7 +28,7 @@ public class Select extends FuncaoBinariaOuNParam {
 		checkObrigatorioString(op1, ERRO + " >>> op1");
 		Object conn = ctx.get((String) op0);
 		if (!(conn instanceof Connection)) {
-			throw new ChecagemException(ERRO + " >>> Conexao invalida");
+			throw new ChecagemException(getClass(), ERRO + " >>> Conexao invalida");
 		}
 		@SuppressWarnings("resource")
 		Connection connection = (Connection) conn;
@@ -39,7 +39,7 @@ public class Select extends FuncaoBinariaOuNParam {
 				checkObrigatorioString(nomeParametro, ERRO + " >>> op" + i);
 				int indiceValor = i + 1;
 				if (indiceValor >= parametros.size()) {
-					throw new ChecagemException("Parametro sem valor >>> " + nomeParametro);
+					throw new ChecagemException(getClass(), "Parametro sem valor >>> " + nomeParametro);
 				}
 				Object valorParametro = parametros.get(indiceValor).executar(checagem, bloco, ctx);
 				instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
@@ -50,7 +50,7 @@ public class Select extends FuncaoBinariaOuNParam {
 				}
 			}
 		} catch (SQLException ex) {
-			throw new ChecagemException(ERRO + " >>> " + ex.getMessage());
+			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 		return resposta;
 	}

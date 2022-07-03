@@ -19,7 +19,7 @@ public abstract class Matematico extends FuncaoBinaria implements ChecagemNumero
 
 	protected void checkOperandoDiv(long l) throws ChecagemException {
 		if (l == 0) {
-			throw new ChecagemException("Nao existe divisao por zero.");
+			throw new ChecagemException(getClass(), "Nao existe divisao por zero");
 		}
 	}
 

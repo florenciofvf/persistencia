@@ -26,13 +26,13 @@ public class Formatar extends FuncaoBinaria {
 			try {
 				format = new SimpleDateFormat(seg);
 			} catch (Exception e) {
-				throw new ChecagemException("Padrao invalido >>> " + seg);
+				throw new ChecagemException(getClass(), "Padrao invalido >>> " + seg);
 			}
 		}
 		try {
 			return format.format(new Date(pri));
 		} catch (Exception e) {
-			throw new ChecagemException("Agora invalido >>> " + pri);
+			throw new ChecagemException(getClass(), "Agora invalido >>> " + pri);
 		}
 	}
 }

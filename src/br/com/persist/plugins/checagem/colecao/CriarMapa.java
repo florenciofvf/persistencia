@@ -20,7 +20,7 @@ public class CriarMapa extends FuncaoVaziaOuNParam {
 			checkObrigatorioString(nomeParametro, ERRO + " >>> op" + i);
 			int indiceValor = i + 1;
 			if (indiceValor >= parametros.size()) {
-				throw new ChecagemException("Parametro sem valor >>> " + nomeParametro);
+				throw new ChecagemException(getClass(), "Parametro sem valor >>> " + nomeParametro);
 			}
 			Object valorParametro = parametros.get(indiceValor).executar(checagem, bloco, ctx);
 			resposta.put(nomeParametro.toString(), valorParametro);

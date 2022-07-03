@@ -39,7 +39,7 @@ public class Somar extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return criarBigDecimal(getNativoInteiro(pri)).add(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 
 	private Object processarFlutuante(Object pri, Object seg) throws ChecagemException {
@@ -52,7 +52,7 @@ public class Somar extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return criarBigDecimal(getNativoFlutuante(pri)).add(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 
 	private Object processarBigInteger(Object pri, Object seg) throws ChecagemException {
@@ -65,7 +65,7 @@ public class Somar extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return criarBigDecimal(getNativoBigInteger(pri)).add(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 
 	private Object processarBigDecimal(Object pri, Object seg) throws ChecagemException {
@@ -78,6 +78,6 @@ public class Somar extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return getNativoBigDecimal(pri).add(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 }

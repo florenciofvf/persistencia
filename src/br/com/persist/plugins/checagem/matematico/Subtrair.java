@@ -13,7 +13,7 @@ public class Subtrair extends Matematico {
 		Object pri = param0().executar(checagem, bloco, ctx);
 		Object seg = param1().executar(checagem, bloco, ctx);
 		if (pri == null && seg == null) {
-			throw new ChecagemException(ERRO);
+			throw new ChecagemException(getClass(), ERRO);
 		}
 		if (ehInteiro(pri)) {
 			return processarInteiro(pri, seg);
@@ -24,7 +24,7 @@ public class Subtrair extends Matematico {
 		} else if (ehBigDecimal(pri)) {
 			return processarBigDecimal(pri, seg);
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 
 	private Object processarInteiro(Object pri, Object seg) throws ChecagemException {
@@ -37,7 +37,7 @@ public class Subtrair extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return criarBigDecimal(getNativoInteiro(pri)).subtract(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 
 	private Object processarFlutuante(Object pri, Object seg) throws ChecagemException {
@@ -50,7 +50,7 @@ public class Subtrair extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return criarBigDecimal(getNativoFlutuante(pri)).subtract(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 
 	private Object processarBigInteger(Object pri, Object seg) throws ChecagemException {
@@ -63,7 +63,7 @@ public class Subtrair extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return criarBigDecimal(getNativoBigInteger(pri)).subtract(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 
 	private Object processarBigDecimal(Object pri, Object seg) throws ChecagemException {
@@ -76,6 +76,6 @@ public class Subtrair extends Matematico {
 		} else if (ehBigDecimal(seg)) {
 			return getNativoBigDecimal(pri).subtract(getNativoBigDecimal(seg));
 		}
-		throw new ChecagemException(ERRO);
+		throw new ChecagemException(getClass(), ERRO);
 	}
 }
