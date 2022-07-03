@@ -53,7 +53,7 @@ public class ChecagemUtil {
 			try {
 				montarGramaticaArquivo(idModulo, checagem);
 			} catch (XMLException | IOException e) {
-				throw new ChecagemException(e);
+				throw new ChecagemException(ChecagemUtil.class, e.getMessage());
 			}
 		}
 	}

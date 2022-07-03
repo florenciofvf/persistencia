@@ -4,10 +4,6 @@ public class ChecagemException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public ChecagemException(Class<?> klass, String message) {
-		super(klass.getName() + ": " + message);
-	}
-
-	public ChecagemException(Throwable cause) {
-		super(cause);
+		super(klass.getName() + ": " + message + ".");
 	}
 }

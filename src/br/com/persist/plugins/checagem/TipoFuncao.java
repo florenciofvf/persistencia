@@ -24,7 +24,7 @@ public abstract class TipoFuncao extends Sentenca {
 
 	protected void addParamImpl(Sentenca sentenca) throws ChecagemException {
 		if (sentenca == null) {
-			throw new ChecagemException("Sentenca nula");
+			throw new ChecagemException(getClass(), "Sentenca nula");
 		}
 		checkSentenca(sentenca);
 		sentenca.pai = this;
@@ -40,16 +40,16 @@ public abstract class TipoFuncao extends Sentenca {
 
 	private void checkSentenca(Sentenca sentenca) throws ChecagemException {
 		if (sentenca == this) {
-			throw new ChecagemException("Sentenca tentando adicionar a si proprio");
+			throw new ChecagemException(getClass(), "Sentenca tentando adicionar a si proprio");
 		}
 		if (sentenca.pai != null) {
-			throw new ChecagemException("A sentenca ja possui um pai");
+			throw new ChecagemException(getClass(), "A sentenca ja possui um pai");
 		}
 	}
 
 	private void checkParametros() throws ChecagemException {
 		if (parametros.isEmpty()) {
-			throw new ChecagemException("Nenhum parametro definido");
+			throw new ChecagemException(getClass(), "Nenhum parametro definido");
 		}
 	}
 
@@ -60,43 +60,43 @@ public abstract class TipoFuncao extends Sentenca {
 
 	protected void checkObrigatorioBoolean(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Boolean)) {
-			throw new ChecagemException(msg + " nao eh Boolean");
+			throw new ChecagemException(getClass(), msg + " nao eh Boolean");
 		}
 	}
 
 	protected void checkObrigatorioDouble(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Double)) {
-			throw new ChecagemException(msg + " nao eh Double");
+			throw new ChecagemException(getClass(), msg + " nao eh Double");
 		}
 	}
 
 	protected void checkObrigatorioLong(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Long)) {
-			throw new ChecagemException(msg + " nao eh Long");
+			throw new ChecagemException(getClass(), msg + " nao eh Long");
 		}
 	}
 
 	protected void checkObrigatorioString(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof String)) {
-			throw new ChecagemException(msg + " nao eh String");
+			throw new ChecagemException(getClass(), msg + " nao eh String");
 		}
 	}
 
 	protected void checkObrigatorioCollection(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Collection<?>)) {
-			throw new ChecagemException(msg + " nao eh Collection");
+			throw new ChecagemException(getClass(), msg + " nao eh Collection");
 		}
 	}
 
 	protected void checkObrigatorioMap(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Map<?, ?>)) {
-			throw new ChecagemException(msg + " nao eh Map");
+			throw new ChecagemException(getClass(), msg + " nao eh Map");
 		}
 	}
 
 	public void checarEncerrar() throws ChecagemException {
 		if (!encerrado) {
-			throw new ChecagemException("Funcao nao encerrada");
+			throw new ChecagemException(getClass(), "Funcao nao encerrada");
 		}
 	}
 }

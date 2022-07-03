@@ -122,7 +122,7 @@ public class Token {
 
 	public static TipoAtomico criarTipoAtomico(Token token) throws ChecagemException {
 		if (token.isParenteseAbrir() || token.isParenteseFechar() || token.isVirgula()) {
-			throw new ChecagemException("Invalido criar TipoAtomico para >>> " + token.getValor());
+			throw new ChecagemException(Token.class, "Invalido criar TipoAtomico para >>> " + token.getValor());
 		}
 		if (token.isBoolean()) {
 			TipoBoolean tipo = new TipoBoolean();
@@ -149,7 +149,7 @@ public class Token {
 			tipo.setValor(token.getValor());
 			return tipo;
 		}
-		throw new ChecagemException("Invalido criar TipoAtomico para >>> " + token.getValor());
+		throw new ChecagemException(Token.class, "Invalido criar TipoAtomico para >>> " + token.getValor());
 	}
 
 	@Override

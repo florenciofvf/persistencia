@@ -58,7 +58,7 @@ public class Modulo {
 		if (idBloco != null) {
 			Bloco bloco = getBloco(idBloco);
 			if (bloco == null) {
-				throw new ChecagemException("Bloco inexistente! >>> " + idBloco);
+				throw new ChecagemException(getClass(), "Bloco inexistente! >>> " + idBloco);
 			}
 			if (!bloco.isDesativado()) {
 				resp.add(bloco.executar(checagem, ctx));

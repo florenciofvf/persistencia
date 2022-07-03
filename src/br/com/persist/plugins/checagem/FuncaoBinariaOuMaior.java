@@ -17,10 +17,10 @@ public abstract class FuncaoBinariaOuMaior extends FuncaoUnaria {
 	@Override
 	public void addParam(Sentenca sentenca) throws ChecagemException {
 		if (!modoInsercao) {
-			throw new ChecagemException("O parametro nao pode ser adicionado >>> " + getClass().getName());
+			throw new ChecagemException(getClass(), "O parametro nao pode ser adicionado");
 		}
 		if (parametros.size() == totalParametros) {
-			throw new ChecagemException(erro("A funcao ja possui"));
+			throw new ChecagemException(getClass(), erro("A funcao ja possui"));
 		}
 		addParamImpl(sentenca);
 		modoInsercao = false;
@@ -29,10 +29,10 @@ public abstract class FuncaoBinariaOuMaior extends FuncaoUnaria {
 	@Override
 	public void preParametro() throws ChecagemException {
 		if (modoInsercao) {
-			throw new ChecagemException("Parametro anterior nao adicionado >>> " + getClass().getName());
+			throw new ChecagemException(getClass(), "Parametro anterior nao adicionado");
 		}
 		if (parametros.size() == totalParametros) {
-			throw new ChecagemException(erro("A funcao suporta apenas"));
+			throw new ChecagemException(getClass(), erro("A funcao suporta apenas"));
 		}
 		modoInsercao = true;
 	}
@@ -40,12 +40,12 @@ public abstract class FuncaoBinariaOuMaior extends FuncaoUnaria {
 	@Override
 	public void encerrar() throws ChecagemException {
 		if (parametros.size() != totalParametros) {
-			throw new ChecagemException(erro("A funcao exige"));
+			throw new ChecagemException(getClass(), erro("A funcao exige"));
 		}
 		encerrado = true;
 	}
 
 	private String erro(String prefixo) {
-		return prefixo + " " + totalParametros + " parametros >>> " + getClass().getName();
+		return prefixo + " " + totalParametros + " parametros";
 	}
 }

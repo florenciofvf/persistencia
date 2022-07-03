@@ -5,7 +5,7 @@ public abstract class FuncaoBinariaOuNParam extends FuncaoUnaria {
 	@Override
 	public void addParam(Sentenca sentenca) throws ChecagemException {
 		if (!modoInsercao) {
-			throw new ChecagemException("O parametro nao pode ser adicionado >>> " + getClass().getName());
+			throw new ChecagemException(getClass(), "O parametro nao pode ser adicionado");
 		}
 		addParamImpl(sentenca);
 		modoInsercao = false;
@@ -18,7 +18,7 @@ public abstract class FuncaoBinariaOuNParam extends FuncaoUnaria {
 	@Override
 	public void preParametro() throws ChecagemException {
 		if (modoInsercao) {
-			throw new ChecagemException("Parametro anterior nao adicionado >>> " + getClass().getName());
+			throw new ChecagemException(getClass(), "Parametro anterior nao adicionado");
 		}
 		modoInsercao = true;
 	}
@@ -26,7 +26,7 @@ public abstract class FuncaoBinariaOuNParam extends FuncaoUnaria {
 	@Override
 	public void encerrar() throws ChecagemException {
 		if (parametros.size() < 2) {
-			throw new ChecagemException("A funcao exige no minimo 2 parametros >>> " + getClass().getName());
+			throw new ChecagemException(getClass(), "A funcao exige no minimo 2 parametros");
 		}
 		encerrado = true;
 	}

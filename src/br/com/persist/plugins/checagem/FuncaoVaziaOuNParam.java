@@ -5,7 +5,7 @@ public abstract class FuncaoVaziaOuNParam extends FuncaoVazia {
 	@Override
 	public void addParam(Sentenca sentenca) throws ChecagemException {
 		if (!modoInsercao) {
-			throw new ChecagemException("O parametro nao pode ser adicionado >>> " + getClass().getName());
+			throw new ChecagemException(getClass(), "O parametro nao pode ser adicionado");
 		}
 		addParamImpl(sentenca);
 		modoInsercao = false;
@@ -14,7 +14,7 @@ public abstract class FuncaoVaziaOuNParam extends FuncaoVazia {
 	@Override
 	public void preParametro() throws ChecagemException {
 		if (modoInsercao) {
-			throw new ChecagemException("Parametro anterior nao adicionado >>> " + getClass().getName());
+			throw new ChecagemException(getClass(), "Parametro anterior nao adicionado");
 		}
 		modoInsercao = true;
 	}

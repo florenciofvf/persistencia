@@ -7,11 +7,11 @@ public class SentencaRaiz extends FuncaoUnaria {
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
-		throw new ChecagemException("Nao pode ser executado >>> " + getClass().getName());
+		throw new ChecagemException(getClass(), "Nao pode ser executado");
 	}
 
 	@Override
 	public void encerrar() throws ChecagemException {
-		throw new ChecagemException("Nao pode ser encerrado >>> " + getClass().getName());
+		throw new ChecagemException(getClass(), "Nao pode ser encerrado");
 	}
 }
