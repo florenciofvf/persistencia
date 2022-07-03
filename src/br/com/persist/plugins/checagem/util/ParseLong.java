@@ -15,7 +15,7 @@ public class ParseLong extends FuncaoUnaria {
 			try {
 				return Long.valueOf(string);
 			} catch (Exception e) {
-				throw new ChecagemException(e.getMessage());
+				throw new ChecagemException(getClass(), e.getMessage());
 			}
 		}
 		return null;

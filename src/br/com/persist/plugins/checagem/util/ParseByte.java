@@ -15,7 +15,7 @@ public class ParseByte extends FuncaoUnaria {
 			try {
 				return Byte.valueOf(string);
 			} catch (Exception e) {
-				throw new ChecagemException(e.getMessage());
+				throw new ChecagemException(getClass(), e.getMessage());
 			}
 		}
 		return null;

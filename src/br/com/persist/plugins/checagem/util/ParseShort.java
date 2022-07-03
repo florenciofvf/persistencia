@@ -15,7 +15,7 @@ public class ParseShort extends FuncaoUnaria {
 			try {
 				return Short.valueOf(string);
 			} catch (Exception e) {
-				throw new ChecagemException(e.getMessage());
+				throw new ChecagemException(getClass(), e.getMessage());
 			}
 		}
 		return null;

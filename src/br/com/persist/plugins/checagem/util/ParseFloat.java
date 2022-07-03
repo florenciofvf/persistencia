@@ -15,7 +15,7 @@ public class ParseFloat extends FuncaoUnaria {
 			try {
 				return Float.valueOf(string);
 			} catch (Exception e) {
-				throw new ChecagemException(e.getMessage());
+				throw new ChecagemException(getClass(), e.getMessage());
 			}
 		}
 		return null;

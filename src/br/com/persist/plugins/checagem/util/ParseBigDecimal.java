@@ -17,7 +17,7 @@ public class ParseBigDecimal extends FuncaoUnaria {
 			try {
 				return new BigDecimal(string);
 			} catch (Exception e) {
-				throw new ChecagemException(e.getMessage());
+				throw new ChecagemException(getClass(), e.getMessage());
 			}
 		}
 		return null;

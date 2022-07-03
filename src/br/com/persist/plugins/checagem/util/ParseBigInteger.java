@@ -17,7 +17,7 @@ public class ParseBigInteger extends FuncaoUnaria {
 			try {
 				return new BigInteger(string);
 			} catch (Exception e) {
-				throw new ChecagemException(e.getMessage());
+				throw new ChecagemException(getClass(), e.getMessage());
 			}
 		}
 		return null;

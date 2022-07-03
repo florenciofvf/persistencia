@@ -20,7 +20,7 @@ public class Reinvocar extends FuncaoUnariaOuNParam {
 		} else if (parametros.size() == 3) {
 			return executarModuloBloco(checagem, bloco, ctx);
 		}
-		throw new ChecagemException(ERRO + "O maximo de parametros eh 3");
+		throw new ChecagemException(getClass(), ERRO + "O maximo de parametros eh 3");
 	}
 
 	private Object executarProprioBloco(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
@@ -65,10 +65,11 @@ public class Reinvocar extends FuncaoUnariaOuNParam {
 	}
 
 	private void throwModuloInexistente(String idModulo) throws ChecagemException {
-		throw new ChecagemException("Modulo inexistente! >>> " + idModulo);
+		throw new ChecagemException(getClass(), "Modulo inexistente! >>> " + idModulo);
 	}
 
 	private void throwBlocoInexistente(Modulo modulo, String idBloco) throws ChecagemException {
-		throw new ChecagemException("Bloco inexistente! >>> modulo=" + modulo.getId() + "[" + idBloco + "]");
+		throw new ChecagemException(getClass(),
+				"Bloco inexistente! >>> modulo=" + modulo.getId() + "[" + idBloco + "]");
 	}
 }
