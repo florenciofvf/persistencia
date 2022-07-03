@@ -26,7 +26,7 @@ public class ChecagemUtil {
 			String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS;
 			File file = new File(arquivo);
 			if (!file.exists()) {
-				throw new ChecagemException("ARQUIVO: " + arquivo + " inexistente!");
+				throw new ChecagemException(ChecagemUtil.class, "ARQUIVO: " + arquivo + " inexistente!");
 			}
 			try {
 				ChecagemGramatica.mapear(arquivo);
@@ -108,7 +108,7 @@ public class ChecagemUtil {
 			String conteudo = Util.conteudo(file);
 			processarXMLModulo(handler, conteudo);
 		} else {
-			throw new ChecagemException("Erro ao carregar o modulo >>> " + modulo.getId());
+			throw new ChecagemException(ChecagemUtil.class, "Erro ao carregar o modulo >>> " + modulo.getId());
 		}
 	}
 

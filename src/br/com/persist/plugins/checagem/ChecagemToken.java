@@ -69,7 +69,7 @@ public class ChecagemToken {
 			indice++;
 		}
 		if (!encerrado) {
-			throw new ChecagemException("String nao encerrada >>> " + sb.toString());
+			throw new ChecagemException(getClass(), "String nao encerrada >>> " + sb.toString());
 		}
 		indice++;
 		return new Token(sb.toString(), Token.STRING);

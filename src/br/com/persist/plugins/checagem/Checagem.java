@@ -12,14 +12,14 @@ public class Checagem {
 
 	public List<Object> processar(String idModulo, String idBloco, Contexto ctx) throws ChecagemException {
 		if (idModulo == null) {
-			throw new ChecagemException("idModulo null.");
+			throw new ChecagemException(getClass(), "idModulo null.");
 		}
 		if (ctx == null) {
-			throw new ChecagemException("ctx null.");
+			throw new ChecagemException(getClass(), "ctx null.");
 		}
 		Modulo modulo = getModulo(idModulo);
 		if (modulo == null) {
-			throw new ChecagemException("modulo null.");
+			throw new ChecagemException(getClass(), "modulo null.");
 		}
 		return modulo.executar(this, idBloco, ctx);
 	}

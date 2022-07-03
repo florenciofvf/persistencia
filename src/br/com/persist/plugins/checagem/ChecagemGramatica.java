@@ -64,7 +64,7 @@ public class ChecagemGramatica {
 			token = checagemToken.proximoToken();
 		}
 		if (sentencaRaiz.getSentenca() == null) {
-			throw new ChecagemException("Sentenca invalida (vazia!)>>> " + bloco);
+			throw new ChecagemException(ChecagemGramatica.class, "Sentenca invalida (vazia!) >>> " + bloco);
 		}
 		if (sentencaRaiz.getSentenca() instanceof TipoFuncao) {
 			((TipoFuncao) sentencaRaiz.getSentenca()).checarEncerrar();
@@ -82,14 +82,14 @@ public class ChecagemGramatica {
 		try {
 			klass = Class.forName(classe);
 		} catch (ClassNotFoundException e) {
-			throw new ChecagemException("Classe nao encontrada >>> " + classe);
+			throw new ChecagemException(ChecagemGramatica.class, "Classe nao encontrada >>> " + classe);
 		}
 		try {
 			return (TipoFuncao) klass.newInstance();
 		} catch (InstantiationException e) {
-			throw new ChecagemException("Classe nao pode ser instanciada >>> " + classe);
+			throw new ChecagemException(ChecagemGramatica.class, "Classe nao pode ser instanciada >>> " + classe);
 		} catch (IllegalAccessException e) {
-			throw new ChecagemException("Acesso ilegal ao instanciar classe >>> " + classe);
+			throw new ChecagemException(ChecagemGramatica.class, "Acesso ilegal ao instanciar classe >>> " + classe);
 		}
 	}
 }
