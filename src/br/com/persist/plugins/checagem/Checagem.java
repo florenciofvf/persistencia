@@ -45,7 +45,7 @@ public class Checagem {
 	public void set(Modulo modulo) {
 		if (modulo != null && modulos.contains(modulo)) {
 			modulos.remove(modulo);
-			modulos.add(modulo);
 		}
+		modulos.add(modulo);
 	}
 }

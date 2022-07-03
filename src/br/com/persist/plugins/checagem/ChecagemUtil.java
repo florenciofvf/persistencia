@@ -67,7 +67,7 @@ public class ChecagemUtil {
 	}
 
 	public static void atualizarEstrutura(File file) throws ChecagemException, XMLException, IOException {
-		montarGramaticaArquivo(file.getName(), checagem);
+		atualizarGramaticaArquivo(file.getName(), checagem);
 	}
 
 	private static void checarGramaticaString(String conteudo, Checagem checagem)
@@ -83,6 +83,14 @@ public class ChecagemUtil {
 		lerBlocosArquivo(modulo);
 		ChecagemGramatica.criarHierarquiaSentencas(modulo.getBlocos());
 		checagem.add(modulo);
+	}
+
+	private static void atualizarGramaticaArquivo(String idModulo, Checagem checagem)
+			throws ChecagemException, XMLException, IOException {
+		Modulo modulo = new Modulo(idModulo);
+		lerBlocosArquivo(modulo);
+		ChecagemGramatica.criarHierarquiaSentencas(modulo.getBlocos());
+		checagem.set(modulo);
 	}
 
 	private static void atualizarGramaticaString(String idModulo, String conteudo, Checagem checagem)
