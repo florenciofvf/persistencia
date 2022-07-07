@@ -1,19 +1,32 @@
 <set>
     <![CDATA[
-senao(igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
-       senao(igual($DESCRICAO, TER), TERCA-FEIRA,
-              senao(igual($DESCRICAO, QUA), QUARTA-FEIRA,
-                     senao(igual($DESCRICAO, QUI), QUINTA-FEIRA,
-                            senao(igual($DESCRICAO, SEX), SEXTA-FEIRA,
-                                   senao(
-                                         ou(igual($DESCRICAO, SAB),igual($DESCRICAO, DOM)), 
-                                         FINAL DE SEMANA, 'DIA INVÁLIDO'
-                                   )
-                            )     
-                     )
-              )
-       )
-)
+        senao(igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
+               senao(igual($DESCRICAO, TER), TERCA-FEIRA,
+                      senao(igual($DESCRICAO, QUA), QUARTA-FEIRA,
+                             senao(igual($DESCRICAO, QUI), QUINTA-FEIRA,
+                                    senao(igual($DESCRICAO, SEX), SEXTA-FEIRA,
+                                           senao(
+                                                 ou(igual($DESCRICAO, SAB),igual($DESCRICAO, DOM)), 
+                                                 FINAL DE SEMANA, 'DIA INVÁLIDO'
+                                           )
+                                    )
+                             )
+                      )
+               )
+        )
+    ]]>
+</set>
+<set>
+    <![CDATA[
+        switch(
+              igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
+              igual($DESCRICAO, TER), TERCA-FEIRA,
+              igual($DESCRICAO, QUA), QUARTA-FEIRA,
+              igual($DESCRICAO, QUI), QUINTA-FEIRA,
+              igual($DESCRICAO, SEX), SEXTA-FEIRA,
+              ou(igual($DESCRICAO, SAB),igual($DESCRICAO, DOM)), FINAL DE SEMANA, 
+              'DIA INVÁLIDO'
+        )
     ]]>
 </set>
 <set>

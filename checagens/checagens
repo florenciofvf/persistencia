@@ -45,6 +45,11 @@ br.com.persist.plugins.checagem.condicional.SeNao
 ifElse
 br.com.persist.plugins.checagem.condicional.SeNao
 
+multEscolha
+br.com.persist.plugins.checagem.condicional.MultEscolha
+switch
+br.com.persist.plugins.checagem.condicional.MultEscolha
+
 
 
 now
