@@ -104,7 +104,7 @@ public class FragmentoContainer extends AbstratoContainer {
 		}
 
 		private void setListener(FragmentoListener listener) {
-			aplicarAcao.setEnabled(listener != null);
+			buttonAplicar.setEnabled(listener != null);
 			this.listener = listener;
 		}
 
@@ -220,11 +220,17 @@ public class FragmentoContainer extends AbstratoContainer {
 			}
 		}
 
+		private void mensagem() {
+			Util.mensagem(FragmentoContainer.this, Mensagens.getString("msg.nenhum_registro_selecionado"));
+		}
+
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
 			if (linhas != null && linhas.length > 0) {
 				aplicarListaFragmento(linhas, false);
+			} else {
+				mensagem();
 			}
 		}
 
@@ -233,6 +239,8 @@ public class FragmentoContainer extends AbstratoContainer {
 			int[] linhas = tabela.getSelectedRows();
 			if (linhas != null && linhas.length > 0) {
 				aplicarListaFragmento(linhas, true);
+			} else {
+				mensagem();
 			}
 		}
 
