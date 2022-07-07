@@ -179,6 +179,16 @@ br.com.persist.plugins.checagem.util.Funcao
 exec
 br.com.persist.plugins.checagem.util.Reinvocar
 
+concat
+br.com.persist.plugins.checagem.util.Concatenar
+concatenar
+br.com.persist.plugins.checagem.util.Concatenar
+
+process
+br.com.persist.plugins.checagem.util.Processar
+processar
+br.com.persist.plugins.checagem.util.Processar
+
 
 
 closeConnection
