@@ -12,8 +12,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
@@ -752,7 +754,8 @@ public class TabelaPersistencia extends JTable {
 					try {
 						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this,
 								indiceColuna);
-						String atual = lista.size() == 1 ? lista.get(0) : null;
+						Set<String> set = new HashSet<>(lista);
+						String atual = set.size() == 1 ? set.iterator().next() : null;
 						if (atual != null) {
 							atual = atual.trim();
 						}
