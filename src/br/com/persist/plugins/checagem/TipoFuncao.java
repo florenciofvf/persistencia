@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import br.com.persist.assistencia.Lista;
+
 public abstract class TipoFuncao extends Sentenca {
 	protected final List<Sentenca> parametros;
 	protected boolean modoInsercao = true;
@@ -85,6 +87,12 @@ public abstract class TipoFuncao extends Sentenca {
 	protected void checkObrigatorioCollection(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Collection<?>)) {
 			throw new ChecagemException(getClass(), msg + " nao eh Collection");
+		}
+	}
+
+	protected void checkObrigatorioLista(Object object, String msg) throws ChecagemException {
+		if (!(object instanceof Lista)) {
+			throw new ChecagemException(getClass(), msg + " nao eh Lista");
 		}
 	}
 

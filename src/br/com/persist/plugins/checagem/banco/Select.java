@@ -2,13 +2,15 @@ package br.com.persist.plugins.checagem.banco;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import br.com.persist.assistencia.Lista;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
@@ -21,7 +23,7 @@ public class Select extends FuncaoBinariaOuNParam {
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
-		List<Object> resposta = new ArrayList<>();
+		Lista<Object> resposta = new Lista<>();
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		Object op1 = param1().executar(checagem, bloco, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
@@ -44,15 +46,33 @@ public class Select extends FuncaoBinariaOuNParam {
 				Object valorParametro = parametros.get(indiceValor).executar(checagem, bloco, ctx);
 				instrucao = substituirParametro(instrucao, (String) nomeParametro, valorParametro);
 			}
-			try (ResultSet rs = st.executeQuery(instrucao)) {
-				while (rs.next()) {
-					resposta.add(rs.getObject(1));
-				}
-			}
+			processar(resposta, instrucao, st);
 		} catch (SQLException ex) {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 		return resposta;
+	}
+
+	private void processar(Lista<Object> resposta, String instrucao, Statement st) throws SQLException {
+		try (ResultSet rs = st.executeQuery(instrucao)) {
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int qtdColunas = rsmd.getColumnCount();
+			if (qtdColunas == 1) {
+				while (rs.next()) {
+					resposta.add(rs.getObject(1));
+				}
+			} else {
+				while (rs.next()) {
+					Map<String, Object> map = new HashMap<>();
+					for (int i = 1; i <= qtdColunas; i++) {
+						String nome = rsmd.getColumnName(i).trim();
+						Object valor = rs.getObject(i);
+						map.put(nome, valor);
+					}
+					resposta.add(map);
+				}
+			}
+		}
 	}
 
 	static String substituirParametro(String instrucao, String nomeParametro, Object valorParametro) {
