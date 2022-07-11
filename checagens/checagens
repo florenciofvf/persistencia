@@ -179,6 +179,9 @@ br.com.persist.plugins.checagem.util.Funcao
 exec
 br.com.persist.plugins.checagem.util.Reinvocar
 
+execModulo
+br.com.persist.plugins.checagem.util.ExecModulo
+
 concat
 br.com.persist.plugins.checagem.util.Concatenar
 concatenar
