@@ -227,6 +227,9 @@ br.com.persist.plugins.checagem.colecao.CriarMapa
 map
 br.com.persist.plugins.checagem.colecao.CriarMapa
 
+put
+br.com.persist.plugins.checagem.colecao.Put
+
 tamanhoColecao
 br.com.persist.plugins.checagem.colecao.TamanhoColecao
 size
