@@ -6,10 +6,10 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoUnaria;
+import br.com.persist.plugins.checagem.FuncaoUnariaOuNParam;
 
-public class Put extends FuncaoUnaria {
-	private static final String ERRO = "Erro Cabeca";
+public class Put extends FuncaoUnariaOuNParam {
+	private static final String ERRO = "Erro Put";
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
