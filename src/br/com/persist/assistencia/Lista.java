@@ -8,6 +8,13 @@ public class Lista<E> implements Collection<E> {
 	private No<E> cabeca;
 	private No<E> cauda;
 
+	public E getCabeca() throws ListaException {
+		if (comprimento == 0) {
+			throw new ListaException("Lista Vazia.");
+		}
+		return cabeca.valor;
+	}
+
 	public Lista<E> getCauda() throws ListaException {
 		if (comprimento == 0) {
 			throw new ListaException("Lista Vazia.");
