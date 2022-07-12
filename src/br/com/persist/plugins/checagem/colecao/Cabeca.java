@@ -6,9 +6,9 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoBinaria;
+import br.com.persist.plugins.checagem.FuncaoUnaria;
 
-public class Cabeca extends FuncaoBinaria {
+public class Cabeca extends FuncaoUnaria {
 	private static final String ERRO = "Erro Cabeca";
 
 	@Override
