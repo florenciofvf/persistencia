@@ -23,9 +23,11 @@ public class Lista<E> implements Collection<E> {
 		if (comprimento == 1) {
 			return resposta;
 		}
-		resposta.comprimento = comprimento - 1;
-		resposta.add(cabeca.proximo.valor);
-		resposta.cauda = cauda;
+		No<E> no = cabeca.proximo;
+		while (no != null) {
+			resposta.add(no.valor);
+			no = no.proximo;
+		}
 		return resposta;
 	}
 
@@ -136,6 +138,22 @@ public class Lista<E> implements Collection<E> {
 		comprimento = 0;
 		cabeca = null;
 		cauda = null;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		No<E> no = cabeca;
+		while (no != null) {
+			if (sb.length() > 0) {
+				sb.append(", ");
+			}
+			sb.append(no.valor);
+			no = no.proximo;
+		}
+		sb.insert(0, "[");
+		sb.insert(sb.length(), "]");
+		return sb.toString();
 	}
 }
 
