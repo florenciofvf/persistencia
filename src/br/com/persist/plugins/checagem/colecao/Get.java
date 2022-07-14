@@ -9,7 +9,7 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoBinaria;
 
 public class Get extends FuncaoBinaria {
-	private static final String ERRO = "Erro Put";
+	private static final String ERRO = "Erro Get";
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
