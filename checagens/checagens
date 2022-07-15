@@ -177,7 +177,7 @@ fn
 br.com.persist.plugins.checagem.util.Funcao
 
 exec
-br.com.persist.plugins.checagem.util.Reinvocar
+br.com.persist.plugins.checagem.util.Exec
 
 execModulo
 br.com.persist.plugins.checagem.util.ExecModulo

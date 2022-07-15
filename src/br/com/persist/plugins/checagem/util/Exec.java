@@ -8,8 +8,8 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoUnariaOuNParam;
 import br.com.persist.plugins.checagem.Modulo;
 
-public class Reinvocar extends FuncaoUnariaOuNParam {
-	private static final String ERRO = "Erro Reinvocar >>> ";
+public class Exec extends FuncaoUnariaOuNParam {
+	private static final String ERRO = "Erro Exec >>> ";
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
