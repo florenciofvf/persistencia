@@ -9,6 +9,6 @@ import br.com.persist.plugins.checagem.FuncaoVazia;
 public class MapParam extends FuncaoVazia {
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
-		return ctx;
+		return ctx.getMap();
 	}
 }

@@ -15,6 +15,10 @@ public class Contexto {
 		this(null);
 	}
 
+	public Map<String, Object> getMap() {
+		return map;
+	}
+
 	public Object get(String chave) {
 		return map.get(chave);
 	}
