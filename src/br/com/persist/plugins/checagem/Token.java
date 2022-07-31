@@ -37,12 +37,16 @@ public class Token {
 		return tipo;
 	}
 
-	public boolean isParenteseAbrir() {
+	public boolean isParenteseIni() {
 		return tipo == PARENTESE_INI;
 	}
 
-	public boolean isParenteseFechar() {
+	public boolean isParenteseFim() {
 		return tipo == PARENTESE_FIM;
+	}
+
+	public boolean isFuncaoInfixa() {
+		return tipo == FUNCAO_INFIXA;
 	}
 
 	public boolean isVirgula() {

@@ -44,15 +44,16 @@ public class ChecagemGramatica {
 	private static void criarSentenca(Bloco bloco) throws ChecagemException {
 		ChecagemToken checagemToken = new ChecagemToken(bloco.getString());
 		SentencaRaiz sentencaRaiz = new SentencaRaiz();
-		Token token = checagemToken.proximoToken();
+		List<Token> tokens = checagemToken.getTokens();
 		TipoFuncao funcaoSelecionada = sentencaRaiz;
-		while (token != null) {
-			if (token.isParenteseAbrir()) {
+		for (int i = 0; i < tokens.size(); i++) {
+			Token token = tokens.get(i);
+			if (token.isParenteseIni()) {
 				TipoAtomico atomico = (TipoAtomico) funcaoSelecionada.getUltimoParametro();
 				TipoFuncao funcao = transformarEmFuncao(atomico);
 				funcaoSelecionada.setUltimoParametro(funcao);
 				funcaoSelecionada = funcao;
-			} else if (token.isParenteseFechar()) {
+			} else if (token.isParenteseFim()) {
 				funcaoSelecionada.encerrar();
 				funcaoSelecionada = (TipoFuncao) funcaoSelecionada.getPai();
 			} else if (token.isVirgula()) {
@@ -61,7 +62,6 @@ public class ChecagemGramatica {
 				TipoAtomico atomico = Token.criarTipoAtomico(token);
 				funcaoSelecionada.addParam(atomico);
 			}
-			token = checagemToken.proximoToken();
 		}
 		if (sentencaRaiz.getSentenca() == null) {
 			throw new ChecagemException(ChecagemGramatica.class, "Sentenca invalida (vazia!) >>> " + bloco);
