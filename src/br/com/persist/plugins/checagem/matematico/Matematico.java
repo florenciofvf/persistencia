@@ -5,9 +5,9 @@ import java.math.BigInteger;
 
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.ChecagemNumero;
-import br.com.persist.plugins.checagem.FuncaoBinaria;
+import br.com.persist.plugins.checagem.FuncaoBinariaInfixa;
 
-public abstract class Matematico extends FuncaoBinaria implements ChecagemNumero {
+public abstract class Matematico extends FuncaoBinariaInfixa implements ChecagemNumero {
 	public Object concatenar(Object pri, Object seg) {
 		if (pri != null && seg == null) {
 			return pri.toString() + "null";

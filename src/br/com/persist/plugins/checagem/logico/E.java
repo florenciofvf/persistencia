@@ -4,9 +4,9 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoBinaria;
+import br.com.persist.plugins.checagem.FuncaoBinariaInfixa;
 
-public class E extends FuncaoBinaria {
+public class E extends FuncaoBinariaInfixa {
 	private static final String ERRO = "Erro E";
 
 	@Override
