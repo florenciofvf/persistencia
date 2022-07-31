@@ -11,6 +11,7 @@ public class Token {
 	static final int PARENTESE_INI = 1;
 	static final int PARENTESE_FIM = 2;
 	static final int FUNCAO_INFIXA = 8;
+	static final int ALEATORIOS = 9;
 	static final int VIRGULA = 3;
 	static final int BOOLEAN = 4;
 	static final int STRING = 5;
@@ -47,6 +48,10 @@ public class Token {
 
 	public boolean isFuncaoInfixa() {
 		return tipo == FUNCAO_INFIXA;
+	}
+
+	public boolean isAleatorios() {
+		return tipo == ALEATORIOS;
 	}
 
 	public boolean isVirgula() {

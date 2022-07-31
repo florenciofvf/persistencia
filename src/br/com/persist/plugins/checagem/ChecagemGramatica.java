@@ -56,8 +56,11 @@ public class ChecagemGramatica {
 			} else if (token.isParenteseFim()) {
 				funcaoSelecionada.encerrar();
 				funcaoSelecionada = (TipoFuncao) funcaoSelecionada.getPai();
+			} else if (token.isFuncaoInfixa()) {
+			} else if (token.isAleatorios()) {
 			} else if (token.isVirgula()) {
 				funcaoSelecionada.preParametro();
+			} else if (token.isBoolean() || token.isString() || token.isDouble() || token.isLong()) {
 			} else {
 				TipoAtomico atomico = Token.criarTipoAtomico(token);
 				funcaoSelecionada.addParam(atomico);

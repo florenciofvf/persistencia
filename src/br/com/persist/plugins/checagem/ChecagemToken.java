@@ -112,7 +112,8 @@ public class ChecagemToken {
 			indice++;
 			return tokenFalse(c);
 		default:
-			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
+			String a = getString(c);
+			return new Token(a, Token.ALEATORIOS);
 		}
 	}
 
@@ -171,20 +172,20 @@ public class ChecagemToken {
 		}
 	}
 
-	private Token tokenTrue(char c) throws ChecagemException {
+	private Token tokenTrue(char c) {
 		String a = getString(c);
 		if ("true".equalsIgnoreCase(a)) {
 			return new Token(Boolean.TRUE, Token.BOOLEAN);
 		}
-		throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + a);
+		return new Token(a, Token.ALEATORIOS);
 	}
 
-	private Token tokenFalse(char c) throws ChecagemException {
+	private Token tokenFalse(char c) {
 		String b = getString(c);
 		if ("false".equalsIgnoreCase(b)) {
 			return new Token(Boolean.FALSE, Token.BOOLEAN);
 		}
-		throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + b);
+		return new Token(b, Token.ALEATORIOS);
 	}
 
 	private String getString(char d) {
