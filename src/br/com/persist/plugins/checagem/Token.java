@@ -8,23 +8,28 @@ import br.com.persist.plugins.checagem.atomico.TipoLong;
 import br.com.persist.plugins.checagem.atomico.TipoString;
 
 public class Token {
-	public static final int PARENTESE_ABRIR = 1;
-	public static final int PARENTESE_FECHA = 2;
-	public static final int VIRGULA = 3;
-	public static final int BOOLEAN = 4;
-	public static final int STRING = 5;
-	public static final int DOUBLE = 6;
-	public static final int LONG = 7;
+	static final int PARENTESE_INI = 1;
+	static final int PARENTESE_FIM = 2;
+	static final int FUNCAO_INFIXA = 8;
+	static final int VIRGULA = 3;
+	static final int BOOLEAN = 4;
+	static final int STRING = 5;
+	static final int DOUBLE = 6;
+	static final int LONG = 7;
 
-	private final String valor;
+	private final Object valor;
 	private final int tipo;
 
-	public Token(String valor, int tipo) {
+	public Token(Object valor, int tipo) {
 		this.valor = valor;
 		this.tipo = tipo;
 	}
 
-	public String getValor() {
+	public Token(char c, int tipo) {
+		this("" + c, tipo);
+	}
+
+	public Object getValor() {
 		return valor;
 	}
 
@@ -33,11 +38,11 @@ public class Token {
 	}
 
 	public boolean isParenteseAbrir() {
-		return tipo == PARENTESE_ABRIR;
+		return tipo == PARENTESE_INI;
 	}
 
 	public boolean isParenteseFechar() {
-		return tipo == PARENTESE_FECHA;
+		return tipo == PARENTESE_FIM;
 	}
 
 	public boolean isVirgula() {
@@ -60,93 +65,31 @@ public class Token {
 		return tipo == LONG;
 	}
 
-	boolean isConteudoLong() {
-		if (Util.estaVazio(valor)) {
-			return false;
-		}
-		String string = valor.trim();
-		if (string.startsWith("+") || string.startsWith("-")) {
-			string = string.substring(1);
-		}
-		if (Util.estaVazio(string)) {
-			return false;
-		}
-		for (char c : string.toCharArray()) {
-			if (c < '0' || c > '9') {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	boolean isConteudoBoolean() {
-		if (Util.estaVazio(valor)) {
-			return false;
-		}
-		String string = valor.trim();
-		return "true".equalsIgnoreCase(string) || "false".equalsIgnoreCase(string);
-	}
-
-	boolean isConteudoDouble() {
-		if (Util.estaVazio(valor)) {
-			return false;
-		}
-		String string = valor.trim();
-		if (string.startsWith("+") || string.startsWith("-")) {
-			string = string.substring(1);
-		}
-		if (Util.estaVazio(string)) {
-			return false;
-		}
-		if (string.startsWith(".") || string.endsWith(".")) {
-			return false;
-		}
-		int pos = string.indexOf('.');
-		if (pos == -1) {
-			return false;
-		}
-		String sub = string.substring(0, pos);
-		for (char c : sub.toCharArray()) {
-			if (c < '0' || c > '9') {
-				return false;
-			}
-		}
-		sub = string.substring(pos + 1);
-		for (char c : sub.toCharArray()) {
-			if (c < '0' || c > '9') {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	public static TipoAtomico criarTipoAtomico(Token token) throws ChecagemException {
-		if (token.isParenteseAbrir() || token.isParenteseFechar() || token.isVirgula()) {
-			throw new ChecagemException(Token.class, "Invalido criar TipoAtomico para >>> " + token.getValor());
-		}
 		if (token.isBoolean()) {
 			TipoBoolean tipo = new TipoBoolean();
-			tipo.setValor(new Boolean(token.getValor()));
+			tipo.setValor((Boolean) token.getValor());
 			return tipo;
 		}
 		if (token.isDouble()) {
 			TipoDouble tipo = new TipoDouble();
-			tipo.setValor(new Double(token.getValor()));
+			tipo.setValor((Double) token.getValor());
 			return tipo;
 		}
 		if (token.isLong()) {
 			TipoLong tipo = new TipoLong();
-			tipo.setValor(new Long(token.getValor()));
+			tipo.setValor((Long) token.getValor());
 			return tipo;
 		}
 		if (token.isString()) {
-			if (!Util.estaVazio(token.getValor()) && token.getValor().startsWith("$")) {
+			String valor = token.getValor().toString();
+			if (!Util.estaVazio(valor) && valor.startsWith("$")) {
 				TipoAtributoContexto tipo = new TipoAtributoContexto();
-				tipo.setValor(token.getValor());
+				tipo.setValor(valor);
 				return tipo;
 			}
 			TipoString tipo = new TipoString();
-			tipo.setValor(token.getValor());
+			tipo.setValor(valor);
 			return tipo;
 		}
 		throw new ChecagemException(Token.class, "Invalido criar TipoAtomico para >>> " + token.getValor());
@@ -154,32 +97,6 @@ public class Token {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(valor);
-		switch (tipo) {
-		case PARENTESE_ABRIR:
-			sb.append("[PARENTESE_ABRIR]");
-			break;
-		case PARENTESE_FECHA:
-			sb.append("[PARENTESE_FECHA]");
-			break;
-		case VIRGULA:
-			sb.append("[VIRGULA]");
-			break;
-		case BOOLEAN:
-			sb.append("[BOOLEAN]");
-			break;
-		case STRING:
-			sb.append("[STRING]");
-			break;
-		case DOUBLE:
-			sb.append("[DOUBLE]");
-			break;
-		case LONG:
-			sb.append("[LONG]");
-			break;
-		default:
-			sb.append("[INVALIDO]");
-		}
-		return sb.toString();
+		return valor.toString();
 	}
 }

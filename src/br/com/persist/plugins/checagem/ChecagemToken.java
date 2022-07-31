@@ -1,12 +1,23 @@
 package br.com.persist.plugins.checagem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChecagemToken {
+	private static final String TOKEN_INVALIDO = " <<< Token invalido >>> ";
 	private final String string;
 	private int indice;
 
 	public ChecagemToken(String string) {
 		this.string = string.trim();
 		indice = 0;
+	}
+
+	private boolean proximoEh(char c) {
+		if (indice >= string.length()) {
+			return false;
+		}
+		return string.charAt(indice) == c;
 	}
 
 	private void pularDescartaveis() {
@@ -19,7 +30,7 @@ public class ChecagemToken {
 		}
 	}
 
-	public Token proximoToken() throws ChecagemException {
+	private Token proximoToken() throws ChecagemException {
 		if (indice >= string.length()) {
 			return null;
 		}
@@ -34,15 +45,74 @@ public class ChecagemToken {
 			return tokenString();
 		case '(':
 			indice++;
-			return new Token("" + c, Token.PARENTESE_ABRIR);
+			return new Token(c, Token.PARENTESE_INI);
 		case ')':
 			indice++;
-			return new Token("" + c, Token.PARENTESE_FECHA);
+			return new Token(c, Token.PARENTESE_FIM);
 		case ',':
 			indice++;
-			return new Token("" + c, Token.VIRGULA);
+			return new Token(c, Token.VIRGULA);
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+		case '%':
+		case '^':
+		case '=':
+			indice++;
+			return new Token(c, Token.FUNCAO_INFIXA);
+		case '&':
+			indice++;
+			if (proximoEh('&')) {
+				indice++;
+				return new Token("&&", Token.FUNCAO_INFIXA);
+			}
+			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
+		case '|':
+			indice++;
+			if (proximoEh('|')) {
+				indice++;
+				return new Token("||", Token.FUNCAO_INFIXA);
+			}
+			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
+		case '<':
+			indice++;
+			if (proximoEh('=')) {
+				indice++;
+				return new Token("<=", Token.FUNCAO_INFIXA);
+			} else {
+				return new Token(c, Token.FUNCAO_INFIXA);
+			}
+		case '>':
+			indice++;
+			if (proximoEh('=')) {
+				indice++;
+				return new Token(">=", Token.FUNCAO_INFIXA);
+			} else {
+				return new Token(c, Token.FUNCAO_INFIXA);
+			}
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			indice++;
+			return tokenNumero(c);
+		case 't':
+		case 'T':
+			indice++;
+			return tokenTrue(c);
+		case 'f':
+		case 'F':
+			indice++;
+			return tokenFalse(c);
 		default:
-			return token();
+			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		}
 	}
 
@@ -75,30 +145,69 @@ public class ChecagemToken {
 		return new Token(sb.toString(), Token.STRING);
 	}
 
-	private Token token() {
-		StringBuilder sb = new StringBuilder();
+	private Token tokenNumero(char d) throws ChecagemException {
+		StringBuilder sb = new StringBuilder("" + d);
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
-			if (c == '\'' || c == '(' || c == ')' || c == ',') {
-				break;
-			} else {
+			if ((c >= '0' && c <= '9') || c == '.') {
 				sb.append(c);
+			} else {
+				break;
 			}
 			indice++;
 		}
-		return normalizar(new Token(sb.toString(), Token.STRING));
+		String sequencia = sb.toString();
+		if (sequencia.indexOf('.') != -1) {
+			try {
+				return new Token(Double.valueOf(sequencia), Token.DOUBLE);
+			} catch (Exception e) {
+				throw new ChecagemException(getClass(), "Flutuante invalido >>> " + sequencia);
+			}
+		}
+		try {
+			return new Token(Long.valueOf(sequencia), Token.LONG);
+		} catch (Exception e) {
+			throw new ChecagemException(getClass(), "Inteiro invalido >>> " + sequencia);
+		}
 	}
 
-	private static Token normalizar(Token token) {
-		if (token.isConteudoBoolean()) {
-			return new Token(token.getValor().trim(), Token.BOOLEAN);
+	private Token tokenTrue(char c) throws ChecagemException {
+		String a = getString(c);
+		if ("true".equalsIgnoreCase(a)) {
+			return new Token(Boolean.TRUE, Token.BOOLEAN);
 		}
-		if (token.isConteudoDouble()) {
-			return new Token(token.getValor().trim(), Token.DOUBLE);
+		throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + a);
+	}
+
+	private Token tokenFalse(char c) throws ChecagemException {
+		String b = getString(c);
+		if ("false".equalsIgnoreCase(b)) {
+			return new Token(Boolean.FALSE, Token.BOOLEAN);
 		}
-		if (token.isConteudoLong()) {
-			return new Token(token.getValor().trim(), Token.LONG);
+		throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + b);
+	}
+
+	private String getString(char d) {
+		StringBuilder sb = new StringBuilder("" + d);
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+				sb.append(c);
+			} else {
+				break;
+			}
+			indice++;
 		}
-		return token;
+		return sb.toString();
+	}
+
+	public List<Token> getTokens() throws ChecagemException {
+		List<Token> lista = new ArrayList<>();
+		Token token = proximoToken();
+		while (token != null) {
+			lista.add(token);
+			token = proximoToken();
+		}
+		return lista;
 	}
 }
