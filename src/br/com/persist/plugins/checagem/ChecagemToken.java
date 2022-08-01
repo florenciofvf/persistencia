@@ -43,6 +43,9 @@ public class ChecagemToken {
 		case '\'':
 			indice++;
 			return tokenString();
+		case '$':
+			indice++;
+			return tokenVariavel();
 		case '(':
 			indice++;
 			return new Token(c, Token.PARENTESE_INI);
@@ -106,14 +109,17 @@ public class ChecagemToken {
 		case 't':
 		case 'T':
 			indice++;
-			return tokenTrue(c);
+			return tokenTrueOuPrefixa(c);
 		case 'f':
 		case 'F':
 			indice++;
-			return tokenFalse(c);
+			return tokenFalseOuPrefixa(c);
 		default:
-			String a = getString(c);
-			return new Token(a, Token.ALEATORIOS);
+			if (validoChar(c)) {
+				String s = getString(c);
+				return new Token(s, Token.FUNCAO_PREFIXA);
+			}
+			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		}
 	}
 
@@ -146,6 +152,14 @@ public class ChecagemToken {
 		return new Token(sb.toString(), Token.STRING);
 	}
 
+	private Token tokenVariavel() throws ChecagemException {
+		String s = getString();
+		if (s.isEmpty()) {
+			throw new ChecagemException(getClass(), "Nome variavel vazio >>> " + indice);
+		}
+		return new Token("$" + s, Token.VARIAVEL);
+	}
+
 	private Token tokenNumero(char d) throws ChecagemException {
 		StringBuilder sb = new StringBuilder("" + d);
 		while (indice < string.length()) {
@@ -172,27 +186,37 @@ public class ChecagemToken {
 		}
 	}
 
-	private Token tokenTrue(char c) {
-		String a = getString(c);
-		if ("true".equalsIgnoreCase(a)) {
+	private Token tokenTrueOuPrefixa(char c) {
+		String s = getString(c);
+		if ("true".equalsIgnoreCase(s)) {
 			return new Token(Boolean.TRUE, Token.BOOLEAN);
 		}
-		return new Token(a, Token.ALEATORIOS);
+		return new Token(s, Token.FUNCAO_PREFIXA);
 	}
 
-	private Token tokenFalse(char c) {
-		String b = getString(c);
-		if ("false".equalsIgnoreCase(b)) {
+	private Token tokenFalseOuPrefixa(char c) {
+		String s = getString(c);
+		if ("false".equalsIgnoreCase(s)) {
 			return new Token(Boolean.FALSE, Token.BOOLEAN);
 		}
-		return new Token(b, Token.ALEATORIOS);
+		return new Token(s, Token.FUNCAO_PREFIXA);
 	}
 
 	private String getString(char d) {
 		StringBuilder sb = new StringBuilder("" + d);
+		sb.append(getString());
+		return sb.toString();
+	}
+
+	private boolean validoChar(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
+	}
+
+	private String getString() {
+		StringBuilder sb = new StringBuilder();
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
-			if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+			if (validoChar(c)) {
 				sb.append(c);
 			} else {
 				break;
