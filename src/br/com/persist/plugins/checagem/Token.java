@@ -1,22 +1,22 @@
 package br.com.persist.plugins.checagem;
 
-import br.com.persist.assistencia.Util;
-import br.com.persist.plugins.checagem.atomico.TipoAtributoContexto;
+import br.com.persist.plugins.checagem.atomico.TipoVariavel;
 import br.com.persist.plugins.checagem.atomico.TipoBoolean;
 import br.com.persist.plugins.checagem.atomico.TipoDouble;
 import br.com.persist.plugins.checagem.atomico.TipoLong;
 import br.com.persist.plugins.checagem.atomico.TipoString;
 
 public class Token {
-	static final int PARENTESE_INI = 1;
-	static final int PARENTESE_FIM = 2;
-	static final int FUNCAO_INFIXA = 8;
-	static final int ALEATORIOS = 9;
-	static final int VIRGULA = 3;
-	static final int BOOLEAN = 4;
-	static final int STRING = 5;
-	static final int DOUBLE = 6;
-	static final int LONG = 7;
+	static final int FUNCAO_PREFIXA = 1;
+	static final int FUNCAO_INFIXA = 2;
+	static final int PARENTESE_INI = 3;
+	static final int PARENTESE_FIM = 4;
+	static final int VARIAVEL = 5;
+	static final int VIRGULA = 6;
+	static final int BOOLEAN = 7;
+	static final int STRING = 8;
+	static final int DOUBLE = 9;
+	static final int LONG = 10;
 
 	private final Object valor;
 	private final int tipo;
@@ -38,6 +38,14 @@ public class Token {
 		return tipo;
 	}
 
+	public boolean isFuncaoPrefixa() {
+		return tipo == FUNCAO_PREFIXA;
+	}
+
+	public boolean isFuncaoInfixa() {
+		return tipo == FUNCAO_INFIXA;
+	}
+
 	public boolean isParenteseIni() {
 		return tipo == PARENTESE_INI;
 	}
@@ -46,12 +54,8 @@ public class Token {
 		return tipo == PARENTESE_FIM;
 	}
 
-	public boolean isFuncaoInfixa() {
-		return tipo == FUNCAO_INFIXA;
-	}
-
-	public boolean isAleatorios() {
-		return tipo == ALEATORIOS;
+	public boolean isVariavel() {
+		return tipo == VARIAVEL;
 	}
 
 	public boolean isVirgula() {
@@ -74,38 +78,27 @@ public class Token {
 		return tipo == LONG;
 	}
 
-	public static TipoAtomico criarTipoAtomico(Token token) throws ChecagemException {
-		if (token.isBoolean()) {
-			TipoBoolean tipo = new TipoBoolean();
-			tipo.setValor((Boolean) token.getValor());
-			return tipo;
-		}
-		if (token.isDouble()) {
-			TipoDouble tipo = new TipoDouble();
-			tipo.setValor((Double) token.getValor());
-			return tipo;
-		}
-		if (token.isLong()) {
-			TipoLong tipo = new TipoLong();
-			tipo.setValor((Long) token.getValor());
-			return tipo;
-		}
-		if (token.isString()) {
-			String valor = token.getValor().toString();
-			if (!Util.estaVazio(valor) && valor.startsWith("$")) {
-				TipoAtributoContexto tipo = new TipoAtributoContexto();
-				tipo.setValor(valor);
-				return tipo;
-			}
-			TipoString tipo = new TipoString();
-			tipo.setValor(valor);
-			return tipo;
-		}
-		throw new ChecagemException(Token.class, "Invalido criar TipoAtomico para >>> " + token.getValor());
-	}
-
 	@Override
 	public String toString() {
 		return valor.toString();
+	}
+
+	public static TipoAtomico criarTipoAtomico(Token token) throws ChecagemException {
+		if (token.isBoolean()) {
+			return new TipoBoolean((Boolean) token.getValor());
+		}
+		if (token.isVariavel()) {
+			return new TipoVariavel((String) token.getValor());
+		}
+		if (token.isDouble()) {
+			return new TipoDouble((Double) token.getValor());
+		}
+		if (token.isString()) {
+			return new TipoString((String) token.getValor());
+		}
+		if (token.isLong()) {
+			return new TipoLong((Long) token.getValor());
+		}
+		throw new ChecagemException(Token.class, "Invalido criar TipoAtomico para >>> " + token.getValor());
 	}
 }

@@ -1,5 +1,7 @@
 package br.com.persist.plugins.checagem.atomico;
 
+import java.util.Objects;
+
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
@@ -7,7 +9,11 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.TipoAtomico;
 
 public class TipoLong extends TipoAtomico {
-	private Long valor;
+	private final Long valor;
+
+	public TipoLong(Long valor) {
+		this.valor = Objects.requireNonNull(valor);
+	}
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
@@ -18,12 +24,8 @@ public class TipoLong extends TipoAtomico {
 		return valor;
 	}
 
-	public void setValor(Long valor) {
-		this.valor = valor;
-	}
-
 	@Override
-	public String getValorString() {
+	public String toString() {
 		return valor.toString();
 	}
 }
