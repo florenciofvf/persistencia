@@ -87,9 +87,9 @@ public class ChecagemGramatica {
 				funcaoSelecionada = funcao;
 				prefixa = true;
 			} else if (token.isFuncaoInfixa()) {
-				TipoFuncao funcao = criarFuncaoInfixa(token);
-				Sentenca sentenca = funcaoSelecionada.getUltimoParametro();
-				funcao.addParam(sentenca);
+				FuncaoBinariaInfixa funcao = criarFuncaoInfixa(token);
+				Sentenca sentenca = funcaoSelecionada.excluirUltimoParametro();
+				funcao.addParamOp0(sentenca);
 				funcaoSelecionada.addParam(funcao);
 				funcaoSelecionada = funcao;
 			} else if (token.isParenteseIni()) {
@@ -163,7 +163,7 @@ public class ChecagemGramatica {
 		}
 	}
 
-	private static TipoFuncao criarFuncaoInfixa(Token token) throws ChecagemException {
+	private static FuncaoBinariaInfixa criarFuncaoInfixa(Token token) throws ChecagemException {
 		if (!token.isFuncaoInfixa()) {
 			throw new ChecagemException(ChecagemGramatica.class, "Nao eh funcao infixa >>> " + token);
 		}
@@ -174,7 +174,7 @@ public class ChecagemGramatica {
 					token.getIndice() + " <<< Classe nao mapeada para >>> " + chave);
 		}
 		try {
-			return (TipoFuncao) klass.newInstance();
+			return (FuncaoBinariaInfixa) klass.newInstance();
 		} catch (InstantiationException e) {
 			throw new ChecagemException(ChecagemGramatica.class, "Classe nao pode ser instanciada >>> " + klass);
 		} catch (IllegalAccessException e) {

@@ -53,11 +53,12 @@ public abstract class TipoFuncao implements Sentenca {
 		parametros.add(sentenca);
 	}
 
-	public Sentenca getUltimoParametro() throws ChecagemException {
+	public Sentenca excluirUltimoParametro() throws ChecagemException {
 		if (parametros.isEmpty()) {
 			throw new ChecagemException(getClass(), "Nenhum parametro definido");
 		}
-		return parametros.get(parametros.size() - 1);
+		modoInsercao = true;
+		return parametros.remove(parametros.size() - 1);
 	}
 
 	protected void checkObrigatorioBoolean(Object object, String msg) throws ChecagemException {
