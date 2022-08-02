@@ -50,4 +50,9 @@ public class Bloco {
 		}
 		return sentenca.executar(checagem, this, ctx);
 	}
+
+	@Override
+	public String toString() {
+		return id + "\n" + string;
+	}
 }
