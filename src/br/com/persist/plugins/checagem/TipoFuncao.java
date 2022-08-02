@@ -7,18 +7,30 @@ import java.util.Map;
 
 import br.com.persist.assistencia.Lista;
 
-public abstract class TipoFuncao extends Sentenca {
+public abstract class TipoFuncao implements Sentenca {
 	protected final List<Sentenca> parametros;
 	protected boolean modoInsercao = true;
 	protected boolean encerrado;
+	protected TipoFuncao pai;
 
 	public TipoFuncao() {
 		parametros = new ArrayList<>();
 	}
 
+	public TipoFuncao getPai() {
+		return pai;
+	}
+
 	public abstract void encerrar() throws ChecagemException;
 
 	public abstract void preParametro() throws ChecagemException;
+
+	public boolean excluir(Sentenca s) throws ChecagemException {
+		if (!parametros.contains(s)) {
+			throw new ChecagemException(getClass(), "Nao contem >>> " + s);
+		}
+		return parametros.remove(s);
+	}
 
 	public void addParam(Sentenca sentenca) throws ChecagemException {
 		addParamImpl(sentenca);
@@ -28,35 +40,23 @@ public abstract class TipoFuncao extends Sentenca {
 		if (sentenca == null) {
 			throw new ChecagemException(getClass(), "Sentenca nula");
 		}
-		checkSentenca(sentenca);
-		sentenca.pai = this;
-		parametros.add(sentenca);
-	}
-
-	public void setUltimoParametro(Sentenca sentenca) throws ChecagemException {
-		checkSentenca(sentenca);
-		checkParametros();
-		sentenca.pai = this;
-		parametros.set(parametros.size() - 1, sentenca);
-	}
-
-	private void checkSentenca(Sentenca sentenca) throws ChecagemException {
 		if (sentenca == this) {
 			throw new ChecagemException(getClass(), "Sentenca tentando adicionar a si proprio");
 		}
-		if (sentenca.pai != null) {
-			throw new ChecagemException(getClass(), "A sentenca ja possui um pai");
+		if (sentenca instanceof TipoFuncao) {
+			TipoFuncao funcao = (TipoFuncao) sentenca;
+			if (funcao.pai != null) {
+				funcao.pai.excluir(sentenca);
+			}
+			funcao.pai = this;
 		}
-	}
-
-	private void checkParametros() throws ChecagemException {
-		if (parametros.isEmpty()) {
-			throw new ChecagemException(getClass(), "Nenhum parametro definido");
-		}
+		parametros.add(sentenca);
 	}
 
 	public Sentenca getUltimoParametro() throws ChecagemException {
-		checkParametros();
+		if (parametros.isEmpty()) {
+			throw new ChecagemException(getClass(), "Nenhum parametro definido");
+		}
 		return parametros.get(parametros.size() - 1);
 	}
 
