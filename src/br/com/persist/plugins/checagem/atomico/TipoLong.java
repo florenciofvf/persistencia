@@ -8,7 +8,7 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.TipoAtomico;
 
-public class TipoLong extends TipoAtomico {
+public class TipoLong implements TipoAtomico {
 	private final Long valor;
 
 	public TipoLong(Long valor) {

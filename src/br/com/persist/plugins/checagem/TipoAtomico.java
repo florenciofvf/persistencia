@@ -1,4 +1,4 @@
 package br.com.persist.plugins.checagem;
 
-public abstract class TipoAtomico extends Sentenca {
+public interface TipoAtomico extends Sentenca {
 }

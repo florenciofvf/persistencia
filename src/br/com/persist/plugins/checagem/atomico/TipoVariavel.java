@@ -8,7 +8,7 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.TipoAtomico;
 
-public class TipoVariavel extends TipoAtomico {
+public class TipoVariavel implements TipoAtomico {
 	private final String valor;
 
 	public TipoVariavel(String valor) {

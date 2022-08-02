@@ -8,7 +8,7 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.TipoAtomico;
 
-public class TipoBoolean extends TipoAtomico {
+public class TipoBoolean implements TipoAtomico {
 	private final Boolean valor;
 
 	public TipoBoolean(Boolean valor) {
