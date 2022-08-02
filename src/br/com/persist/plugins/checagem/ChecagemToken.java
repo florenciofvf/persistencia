@@ -48,13 +48,13 @@ public class ChecagemToken {
 			return tokenVariavel();
 		case '(':
 			indice++;
-			return new Token(c, Token.PARENTESE_INI);
+			return new Token(c, Token.PARENTESE_INI, indice);
 		case ')':
 			indice++;
-			return new Token(c, Token.PARENTESE_FIM);
+			return new Token(c, Token.PARENTESE_FIM, indice);
 		case ',':
 			indice++;
-			return new Token(c, Token.VIRGULA);
+			return new Token(c, Token.VIRGULA, indice);
 		case '+':
 		case '-':
 		case '*':
@@ -63,36 +63,36 @@ public class ChecagemToken {
 		case '^':
 		case '=':
 			indice++;
-			return new Token(c, Token.FUNCAO_INFIXA);
+			return new Token(c, Token.FUNCAO_INFIXA, indice);
 		case '&':
 			indice++;
 			if (proximoEh('&')) {
 				indice++;
-				return new Token("&&", Token.FUNCAO_INFIXA);
+				return new Token("&&", Token.FUNCAO_INFIXA, indice);
 			}
 			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		case '|':
 			indice++;
 			if (proximoEh('|')) {
 				indice++;
-				return new Token("||", Token.FUNCAO_INFIXA);
+				return new Token("||", Token.FUNCAO_INFIXA, indice);
 			}
 			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		case '<':
 			indice++;
 			if (proximoEh('=')) {
 				indice++;
-				return new Token("<=", Token.FUNCAO_INFIXA);
+				return new Token("<=", Token.FUNCAO_INFIXA, indice);
 			} else {
-				return new Token(c, Token.FUNCAO_INFIXA);
+				return new Token(c, Token.FUNCAO_INFIXA, indice);
 			}
 		case '>':
 			indice++;
 			if (proximoEh('=')) {
 				indice++;
-				return new Token(">=", Token.FUNCAO_INFIXA);
+				return new Token(">=", Token.FUNCAO_INFIXA, indice);
 			} else {
-				return new Token(c, Token.FUNCAO_INFIXA);
+				return new Token(c, Token.FUNCAO_INFIXA, indice);
 			}
 		case '0':
 		case '1':
@@ -117,7 +117,7 @@ public class ChecagemToken {
 		default:
 			if (validoChar(c)) {
 				String s = getString(c);
-				return new Token(s, Token.FUNCAO_PREFIXA);
+				return new Token(s, Token.FUNCAO_PREFIXA, indice);
 			}
 			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		}
@@ -146,18 +146,18 @@ public class ChecagemToken {
 			indice++;
 		}
 		if (!encerrado) {
-			throw new ChecagemException(getClass(), "String nao encerrada >>> " + sb.toString());
+			throw new ChecagemException(getClass(), indice + " <<< String nao encerrada >>> " + sb.toString());
 		}
 		indice++;
-		return new Token(sb.toString(), Token.STRING);
+		return new Token(sb.toString(), Token.STRING, indice);
 	}
 
 	private Token tokenVariavel() throws ChecagemException {
 		String s = getString();
 		if (s.isEmpty()) {
-			throw new ChecagemException(getClass(), "Nome variavel vazio >>> " + indice);
+			throw new ChecagemException(getClass(), indice + " <<< Nome variavel vazio >>> " + indice);
 		}
-		return new Token("$" + s, Token.VARIAVEL);
+		return new Token("$" + s, Token.VARIAVEL, indice);
 	}
 
 	private Token tokenNumero(char d) throws ChecagemException {
@@ -174,32 +174,32 @@ public class ChecagemToken {
 		String sequencia = sb.toString();
 		if (sequencia.indexOf('.') != -1) {
 			try {
-				return new Token(Double.valueOf(sequencia), Token.DOUBLE);
+				return new Token(Double.valueOf(sequencia), Token.DOUBLE, indice);
 			} catch (Exception e) {
-				throw new ChecagemException(getClass(), "Flutuante invalido >>> " + sequencia);
+				throw new ChecagemException(getClass(), indice + " <<< Flutuante invalido >>> " + sequencia);
 			}
 		}
 		try {
-			return new Token(Long.valueOf(sequencia), Token.LONG);
+			return new Token(Long.valueOf(sequencia), Token.LONG, indice);
 		} catch (Exception e) {
-			throw new ChecagemException(getClass(), "Inteiro invalido >>> " + sequencia);
+			throw new ChecagemException(getClass(), indice + " <<< Inteiro invalido >>> " + sequencia);
 		}
 	}
 
 	private Token tokenTrueOuPrefixa(char c) {
 		String s = getString(c);
 		if ("true".equalsIgnoreCase(s)) {
-			return new Token(Boolean.TRUE, Token.BOOLEAN);
+			return new Token(Boolean.TRUE, Token.BOOLEAN, indice);
 		}
-		return new Token(s, Token.FUNCAO_PREFIXA);
+		return new Token(s, Token.FUNCAO_PREFIXA, indice);
 	}
 
 	private Token tokenFalseOuPrefixa(char c) {
 		String s = getString(c);
 		if ("false".equalsIgnoreCase(s)) {
-			return new Token(Boolean.FALSE, Token.BOOLEAN);
+			return new Token(Boolean.FALSE, Token.BOOLEAN, indice);
 		}
-		return new Token(s, Token.FUNCAO_PREFIXA);
+		return new Token(s, Token.FUNCAO_PREFIXA, indice);
 	}
 
 	private String getString(char d) {
