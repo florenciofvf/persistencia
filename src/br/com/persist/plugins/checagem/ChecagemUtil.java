@@ -22,7 +22,7 @@ public class ChecagemUtil {
 	}
 
 	public static void inicializar() throws ChecagemException {
-		if (ChecagemGramatica.map.isEmpty()) {
+		if (ChecagemGramatica.prefixas.isEmpty()) {
 			String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS;
 			File file = new File(arquivo);
 			if (!file.exists()) {

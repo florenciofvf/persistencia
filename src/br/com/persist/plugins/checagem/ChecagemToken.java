@@ -64,20 +64,6 @@ public class ChecagemToken {
 		case '=':
 			indice++;
 			return new Token(c, Token.FUNCAO_INFIXA, indice);
-		case '&':
-			indice++;
-			if (proximoEh('&')) {
-				indice++;
-				return new Token("&&", Token.FUNCAO_INFIXA, indice);
-			}
-			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
-		case '|':
-			indice++;
-			if (proximoEh('|')) {
-				indice++;
-				return new Token("||", Token.FUNCAO_INFIXA, indice);
-			}
-			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		case '<':
 			indice++;
 			if (proximoEh('=')) {
@@ -94,6 +80,20 @@ public class ChecagemToken {
 			} else {
 				return new Token(c, Token.FUNCAO_INFIXA, indice);
 			}
+		case '&':
+			indice++;
+			if (proximoEh('&')) {
+				indice++;
+				return new Token("&&", Token.FUNCAO_INFIXA, indice);
+			}
+			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
+		case '|':
+			indice++;
+			if (proximoEh('|')) {
+				indice++;
+				return new Token("||", Token.FUNCAO_INFIXA, indice);
+			}
+			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		case '0':
 		case '1':
 		case '2':
