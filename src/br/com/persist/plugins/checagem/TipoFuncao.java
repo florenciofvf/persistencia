@@ -58,7 +58,12 @@ public abstract class TipoFuncao implements Sentenca {
 			throw new ChecagemException(getClass(), "Nenhum parametro definido");
 		}
 		modoInsercao = true;
-		return parametros.remove(parametros.size() - 1);
+		Sentenca sentenca = parametros.remove(parametros.size() - 1);
+		if (sentenca instanceof TipoFuncao) {
+			TipoFuncao funcao = (TipoFuncao) sentenca;
+			funcao.pai = null;
+		}
+		return sentenca;
 	}
 
 	protected void checkObrigatorioBoolean(Object object, String msg) throws ChecagemException {
