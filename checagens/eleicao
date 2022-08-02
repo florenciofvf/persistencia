@@ -1,13 +1,12 @@
 <set>
     <![CDATA[
-        senao(igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
-               senao(igual($DESCRICAO, TER), TERCA-FEIRA,
-                      senao(igual($DESCRICAO, QUA), QUARTA-FEIRA,
-                             senao(igual($DESCRICAO, QUI), QUINTA-FEIRA,
-                                    senao(igual($DESCRICAO, SEX), SEXTA-FEIRA,
-                                           senao(
-                                                 ou(igual($DESCRICAO, SAB),igual($DESCRICAO, DOM)), 
-                                                 FINAL DE SEMANA, 'DIA INVÁLIDO'
+        senao($DESCRICAO='SEG', 'SEGUNDA-FEIRA',
+               senao($DESCRICAO='TER', 'TERCA-FEIRA',
+                      senao($DESCRICAO='QUA', 'QUARTA-FEIRA',
+                             senao($DESCRICAO='QUI', 'QUINTA-FEIRA',
+                                    senao($DESCRICAO='SEX', 'SEXTA-FEIRA',
+                                           senao(($DESCRICAO='SAB') || ($DESCRICAO='DOM'), 
+                                                 'FINAL DE SEMANA', 'DIA INVÁLIDO'
                                            )
                                     )
                              )
@@ -19,12 +18,12 @@
 <set>
     <![CDATA[
         switch(
-              igual($DESCRICAO, SEG), SEGUNDA-FEIRA,
-              igual($DESCRICAO, TER), TERCA-FEIRA,
-              igual($DESCRICAO, QUA), QUARTA-FEIRA,
-              igual($DESCRICAO, QUI), QUINTA-FEIRA,
-              igual($DESCRICAO, SEX), SEXTA-FEIRA,
-              ou(igual($DESCRICAO, SAB),igual($DESCRICAO, DOM)), FINAL DE SEMANA, 
+              $DESCRICAO='SEG', 'SEGUNDA-FEIRA',
+              $DESCRICAO='TER', 'TERCA-FEIRA',
+              $DESCRICAO='QUA', 'QUARTA-FEIRA',
+              $DESCRICAO='QUI', 'QUINTA-FEIRA',
+              $DESCRICAO='SEX', 'SEXTA-FEIRA',
+              ($DESCRICAO='SAB') || ($DESCRICAO='DOM'), 'FINAL DE SEMANA', 
               'DIA INVÁLIDO'
         )
     ]]>
@@ -42,7 +41,7 @@
 <set>
     <![CDATA[
         returnNull(
-            set(connEleicao,
+            set('connEleicao',
                 getConnection('com.mysql.cj.jdbc.Driver','jdbc:mysql://localhost/eleicao','root','***')
             )
         )
@@ -51,14 +50,14 @@
 <set>
     <![CDATA[
         returnNull(
-            set(listaIdCandidato,
-                select('connEleicao', 'select id from candidato2 where eleicao_id = idEleicao', idEleicao, $ID)
+            set('listaIdCandidato',
+                select('connEleicao', 'select id from candidato2 where eleicao_id = idEleicao', 'idEleicao', $ID)
             )
         )
     ]]>
 </set>
 <set>
     <![CDATA[
-        ifElse(isEmpty($listaIdCandidato), SEM CANDIDATO2, CONTÉM CANDIDATO2)
+        ifElse(isEmpty($listaIdCandidato), 'SEM CANDIDATO2', 'CONTÉM CANDIDATO2')
     ]]>
 </set>

@@ -142,8 +142,8 @@ public class ChecagemGramatica {
 		if (!token.isFuncaoPrefixa()) {
 			throw new ChecagemException(ChecagemGramatica.class, "Nao eh funcao prefixa >>> " + token);
 		}
-		String chave = token.getValor().toString().toLowerCase();
-		String classe = prefixas.get(chave);
+		String chave = token.getValor().toString();
+		String classe = prefixas.get(chave.toLowerCase());
 		if (classe == null) {
 			throw new ChecagemException(ChecagemGramatica.class,
 					token.getIndice() + " <<< Funcao nao declarada >>> " + chave);
@@ -167,8 +167,8 @@ public class ChecagemGramatica {
 		if (!token.isFuncaoInfixa()) {
 			throw new ChecagemException(ChecagemGramatica.class, "Nao eh funcao infixa >>> " + token);
 		}
-		String chave = token.getValor().toString().toLowerCase();
-		Class<?> klass = infixas.get(chave);
+		String chave = token.getValor().toString();
+		Class<?> klass = infixas.get(chave.toLowerCase());
 		if (klass == null) {
 			throw new ChecagemException(ChecagemGramatica.class,
 					token.getIndice() + " <<< Classe nao mapeada para >>> " + chave);
