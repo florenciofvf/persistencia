@@ -116,7 +116,7 @@ public class ChecagemToken {
 			return tokenFalseOuPrefixa(c);
 		default:
 			if (validoChar(c)) {
-				String s = getString(c);
+				String s = getString();
 				return new Token(s, Token.FUNCAO_PREFIXA, indice);
 			}
 			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
