@@ -1772,7 +1772,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				StringBuilder sb = new StringBuilder();
 				try {
 					Contexto ctx = new Contexto(map);
-					ctx.put("CONEXÃO", conn);
+					ctx.put("CONEXAO_SEL", conn);
 					List<Object> lista = ChecagemUtil.processar(objeto.getTabela(), null, ctx);
 					for (Object object : lista) {
 						append(sb, object);
