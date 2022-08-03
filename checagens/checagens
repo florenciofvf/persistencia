@@ -94,6 +94,9 @@ br.com.persist.plugins.checagem.util.Funcao
 exec
 br.com.persist.plugins.checagem.util.Exec
 
+this
+br.com.persist.plugins.checagem.util.Exec
+
 execModulo
 br.com.persist.plugins.checagem.util.ExecModulo
 
