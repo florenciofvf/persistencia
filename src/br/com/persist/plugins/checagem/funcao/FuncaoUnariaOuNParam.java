@@ -4,7 +4,6 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Sentenca;
 
 public abstract class FuncaoUnariaOuNParam extends FuncaoUnaria {
-
 	@Override
 	public void addParam(Sentenca sentenca) throws ChecagemException {
 		if (!modoInsercao) {
