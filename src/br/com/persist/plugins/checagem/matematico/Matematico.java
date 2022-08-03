@@ -8,10 +8,12 @@ import br.com.persist.plugins.checagem.ChecagemNumero;
 import br.com.persist.plugins.checagem.funcao.FuncaoBinariaInfixa;
 
 public abstract class Matematico extends FuncaoBinariaInfixa implements ChecagemNumero {
-	public Object concatenar(Object pri, Object seg) {
-		if (pri != null && seg == null) {
+	protected Object concatenar(Object pri, Object seg) {
+		if (pri != null && seg != null) {
+			return pri.toString() + seg.toString();
+		} else if (pri != null) {
 			return pri.toString() + "null";
-		} else if (pri == null && seg != null) {
+		} else if (seg != null) {
 			return "null" + seg.toString();
 		}
 		return "nullnull";
