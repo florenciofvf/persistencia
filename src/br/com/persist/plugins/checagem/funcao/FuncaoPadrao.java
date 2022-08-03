@@ -1,4 +1,9 @@
-package br.com.persist.plugins.checagem;
+package br.com.persist.plugins.checagem.funcao;
+
+import br.com.persist.plugins.checagem.Bloco;
+import br.com.persist.plugins.checagem.Checagem;
+import br.com.persist.plugins.checagem.ChecagemException;
+import br.com.persist.plugins.checagem.Contexto;
 
 public class FuncaoPadrao extends FuncaoVaziaOu1Param {
 	@Override

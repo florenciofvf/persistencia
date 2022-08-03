@@ -7,7 +7,7 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoVaziaOuNParam;
+import br.com.persist.plugins.checagem.funcao.FuncaoVaziaOuNParam;
 
 public class Mapa extends FuncaoVaziaOuNParam {
 	private static final String ERRO = "Erro Mapa";

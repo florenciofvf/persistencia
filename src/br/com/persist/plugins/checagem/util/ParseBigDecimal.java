@@ -6,7 +6,7 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoUnaria;
+import br.com.persist.plugins.checagem.funcao.FuncaoUnaria;
 
 public class ParseBigDecimal extends FuncaoUnaria {
 	@Override

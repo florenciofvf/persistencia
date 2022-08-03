@@ -1,4 +1,4 @@
-package br.com.persist.plugins.checagem;
+package br.com.persist.plugins.checagem.funcao;
 
 public abstract class FuncaoBinaria extends FuncaoBinariaOuMaior {
 

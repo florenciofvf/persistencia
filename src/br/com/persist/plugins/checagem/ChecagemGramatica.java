@@ -16,6 +16,7 @@ import br.com.persist.plugins.checagem.comparacao.Maior;
 import br.com.persist.plugins.checagem.comparacao.MaiorIgual;
 import br.com.persist.plugins.checagem.comparacao.Menor;
 import br.com.persist.plugins.checagem.comparacao.MenorIgual;
+import br.com.persist.plugins.checagem.funcao.FuncaoBinariaInfixa;
 import br.com.persist.plugins.checagem.logico.E;
 import br.com.persist.plugins.checagem.logico.Ou;
 import br.com.persist.plugins.checagem.logico.Oux;

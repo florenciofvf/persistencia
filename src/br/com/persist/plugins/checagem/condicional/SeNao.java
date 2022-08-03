@@ -4,7 +4,7 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoTernaria;
+import br.com.persist.plugins.checagem.funcao.FuncaoTernaria;
 
 public class SeNao extends FuncaoTernaria {
 	private static final String ERRO = "Erro SeNao";

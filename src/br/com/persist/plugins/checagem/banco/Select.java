@@ -16,7 +16,7 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoBinariaOuNParam;
+import br.com.persist.plugins.checagem.funcao.FuncaoBinariaOuNParam;
 
 public class Select extends FuncaoBinariaOuNParam {
 	private static final String ERRO = "Erro Select";

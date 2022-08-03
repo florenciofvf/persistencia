@@ -1,4 +1,7 @@
-package br.com.persist.plugins.checagem;
+package br.com.persist.plugins.checagem.funcao;
+
+import br.com.persist.plugins.checagem.ChecagemException;
+import br.com.persist.plugins.checagem.Sentenca;
 
 public abstract class FuncaoBinariaInfixa extends FuncaoBinaria {
 	public void addParamOp0(Sentenca sentenca) throws ChecagemException {

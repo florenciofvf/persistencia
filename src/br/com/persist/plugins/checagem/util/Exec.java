@@ -5,8 +5,8 @@ import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.ChecagemUtil;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoUnariaOuNParam;
 import br.com.persist.plugins.checagem.Modulo;
+import br.com.persist.plugins.checagem.funcao.FuncaoUnariaOuNParam;
 
 public class Exec extends FuncaoUnariaOuNParam {
 	private static final String ERRO = "Erro Exec >>> ";

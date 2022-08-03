@@ -1,7 +1,7 @@
 package br.com.persist.plugins.checagem.comparacao;
 
 import br.com.persist.plugins.checagem.ChecagemNumero;
-import br.com.persist.plugins.checagem.FuncaoBinariaInfixa;
+import br.com.persist.plugins.checagem.funcao.FuncaoBinariaInfixa;
 
 public abstract class Comparacao extends FuncaoBinariaInfixa implements ChecagemNumero {
 	public boolean iguais(Object obj1, Object obj2) {

@@ -7,8 +7,8 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoVaziaOuNParam;
 import br.com.persist.plugins.checagem.Sentenca;
+import br.com.persist.plugins.checagem.funcao.FuncaoVaziaOuNParam;
 
 public class CriarSet extends FuncaoVaziaOuNParam {
 	@Override

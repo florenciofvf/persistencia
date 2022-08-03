@@ -1,6 +1,9 @@
-package br.com.persist.plugins.checagem;
+package br.com.persist.plugins.checagem.funcao;
 
-public abstract class FuncaoVaziaOuNParam extends FuncaoVazia {
+import br.com.persist.plugins.checagem.ChecagemException;
+import br.com.persist.plugins.checagem.Sentenca;
+
+public abstract class FuncaoUnariaOuNParam extends FuncaoUnaria {
 
 	@Override
 	public void addParam(Sentenca sentenca) throws ChecagemException {
@@ -21,6 +24,9 @@ public abstract class FuncaoVaziaOuNParam extends FuncaoVazia {
 
 	@Override
 	public void encerrar() throws ChecagemException {
+		if (parametros.isEmpty()) {
+			throw new ChecagemException(getClass(), "A funcao exige no minimo 1 parametro");
+		}
 		encerrado = true;
 	}
 }

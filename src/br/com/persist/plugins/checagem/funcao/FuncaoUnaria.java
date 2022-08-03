@@ -1,4 +1,8 @@
-package br.com.persist.plugins.checagem;
+package br.com.persist.plugins.checagem.funcao;
+
+import br.com.persist.plugins.checagem.ChecagemException;
+import br.com.persist.plugins.checagem.Sentenca;
+import br.com.persist.plugins.checagem.TipoFuncao;
 
 public abstract class FuncaoUnaria extends TipoFuncao {
 

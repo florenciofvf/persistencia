@@ -1,5 +1,7 @@
 package br.com.persist.plugins.checagem;
 
+import br.com.persist.plugins.checagem.funcao.FuncaoUnaria;
+
 public class SentencaRaiz extends FuncaoUnaria {
 	public Sentenca getSentenca() {
 		return param0();

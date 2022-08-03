@@ -9,8 +9,8 @@ import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.ChecagemUtil;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.FuncaoBinaria;
 import br.com.persist.plugins.checagem.Modulo;
+import br.com.persist.plugins.checagem.funcao.FuncaoBinaria;
 
 public class ExecModulo extends FuncaoBinaria {
 	private static final String ERRO = "Erro ExecModulo >>> ";
