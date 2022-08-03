@@ -152,8 +152,12 @@ br.com.persist.plugins.checagem.colecao.Contem
 
 cabeca
 br.com.persist.plugins.checagem.colecao.Cabeca
+head
+br.com.persist.plugins.checagem.colecao.Cabeca
 
 cauda
+br.com.persist.plugins.checagem.colecao.Cauda
+tail
 br.com.persist.plugins.checagem.colecao.Cauda
 
 containsAll
