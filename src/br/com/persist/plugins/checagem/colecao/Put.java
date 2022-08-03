@@ -27,7 +27,6 @@ public class Put extends FuncaoUnariaOuNParam {
 			Object valorParametro = parametros.get(indiceValor).executar(checagem, bloco, ctx);
 			map.put(nomeParametro.toString(), valorParametro);
 		}
-
 		return op0;
 	}
 }
