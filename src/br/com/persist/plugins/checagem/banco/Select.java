@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.persist.assistencia.Lista;
+import br.com.persist.assistencia.ListaEncadeada;
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
@@ -23,7 +23,7 @@ public class Select extends FuncaoBinariaOuNParam {
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
-		Lista<Object> resposta = new Lista<>();
+		ListaEncadeada<Object> resposta = new ListaEncadeada<>();
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		Object op1 = param1().executar(checagem, bloco, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
@@ -53,7 +53,7 @@ public class Select extends FuncaoBinariaOuNParam {
 		return resposta;
 	}
 
-	private void processar(Lista<Object> resposta, String instrucao, Statement st) throws SQLException {
+	private void processar(ListaEncadeada<Object> resposta, String instrucao, Statement st) throws SQLException {
 		try (ResultSet rs = st.executeQuery(instrucao)) {
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int qtdColunas = rsmd.getColumnCount();

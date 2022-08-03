@@ -123,24 +123,10 @@ br.com.persist.plugins.checagem.banco.SelectLog
 
 
 
-criarLista
-br.com.persist.plugins.checagem.colecao.CriarLista
-createList
-br.com.persist.plugins.checagem.colecao.CriarLista
-list
-br.com.persist.plugins.checagem.colecao.CriarLista
-
 criarConjunto
 br.com.persist.plugins.checagem.colecao.CriarSet
 createSet
 br.com.persist.plugins.checagem.colecao.CriarSet
-
-criarMapa
-br.com.persist.plugins.checagem.colecao.CriarMapa
-createMap
-br.com.persist.plugins.checagem.colecao.CriarMapa
-map
-br.com.persist.plugins.checagem.colecao.CriarMapa
 
 put
 br.com.persist.plugins.checagem.colecao.Put

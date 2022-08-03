@@ -9,8 +9,8 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoVaziaOuNParam;
 
-public class CriarMapa extends FuncaoVaziaOuNParam {
-	private static final String ERRO = "Erro CriarMapa";
+public class Mapa extends FuncaoVaziaOuNParam {
+	private static final String ERRO = "Erro Mapa";
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {

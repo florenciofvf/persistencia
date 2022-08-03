@@ -1,6 +1,6 @@
 package br.com.persist.plugins.checagem.colecao;
 
-import br.com.persist.assistencia.Lista;
+import br.com.persist.assistencia.ListaEncadeada;
 import br.com.persist.assistencia.ListaException;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
@@ -16,7 +16,7 @@ public class Cauda extends FuncaoUnaria {
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		checkObrigatorioLista(op0, ERRO + " >>> op0");
 		try {
-			Lista<?> lista = (Lista<?>) op0;
+			ListaEncadeada<?> lista = (ListaEncadeada<?>) op0;
 			return lista.getCauda();
 		} catch (ListaException ex) {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());

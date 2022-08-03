@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.checagem.colecao.Lista;
+import br.com.persist.plugins.checagem.colecao.Mapa;
 import br.com.persist.plugins.checagem.comparacao.Igual;
 import br.com.persist.plugins.checagem.comparacao.Maior;
 import br.com.persist.plugins.checagem.comparacao.MaiorIgual;
@@ -104,6 +106,14 @@ public class ChecagemGramatica {
 				funcaoSelecionada.encerrar();
 				funcaoSelecionada = funcaoSelecionada.getPai();
 				funcaoSelecionada = selecionada(funcaoSelecionada);
+			} else if (token.isColcheteIni()) {
+				TipoFuncao funcao = new Lista();
+				funcaoSelecionada.addParam(funcao);
+				funcaoSelecionada = funcao;
+			} else if (token.isChaveIni()) {
+				TipoFuncao funcao = new Mapa();
+				funcaoSelecionada.addParam(funcao);
+				funcaoSelecionada = funcao;
 			} else if (token.isVirgula()) {
 				funcaoSelecionada.preParametro();
 			} else if (ehTipoAtomico(token)) {

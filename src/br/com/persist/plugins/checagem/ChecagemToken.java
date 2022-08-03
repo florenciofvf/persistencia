@@ -46,12 +46,21 @@ public class ChecagemToken {
 		case '$':
 			indice++;
 			return tokenVariavel();
+		case '{':
+			indice++;
+			return new Token(c, Token.CHAVE_INI, indice);
+		case '[':
+			indice++;
+			return new Token(c, Token.COLCHETE_INI, indice);
 		case '(':
 			indice++;
 			return new Token(c, Token.PARENTESE_INI, indice);
 		case ')':
+		case '}':
+		case ']':
 			indice++;
 			return new Token(c, Token.PARENTESE_FIM, indice);
+		case ':':
 		case ',':
 			indice++;
 			return new Token(c, Token.VIRGULA, indice);

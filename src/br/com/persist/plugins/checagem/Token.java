@@ -11,12 +11,14 @@ public class Token {
 	static final int FUNCAO_INFIXA = 2;
 	static final int PARENTESE_INI = 3;
 	static final int PARENTESE_FIM = 4;
-	static final int VARIAVEL = 5;
-	static final int VIRGULA = 6;
-	static final int BOOLEAN = 7;
-	static final int STRING = 8;
-	static final int DOUBLE = 9;
-	static final int LONG = 10;
+	static final int COLCHETE_INI = 5;
+	static final int CHAVE_INI = 6;
+	static final int VARIAVEL = 7;
+	static final int VIRGULA = 8;
+	static final int BOOLEAN = 9;
+	static final int STRING = 10;
+	static final int DOUBLE = 11;
+	static final int LONG = 12;
 
 	private final Object valor;
 	private final int indice;
@@ -54,6 +56,14 @@ public class Token {
 
 	public boolean isParenteseIni() {
 		return tipo == PARENTESE_INI;
+	}
+
+	public boolean isColcheteIni() {
+		return tipo == COLCHETE_INI;
+	}
+
+	public boolean isChaveIni() {
+		return tipo == CHAVE_INI;
 	}
 
 	public boolean isParenteseFim() {

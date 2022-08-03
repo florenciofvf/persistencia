@@ -3,7 +3,7 @@ package br.com.persist.assistencia;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class Lista<E> implements Collection<E> {
+public class ListaEncadeada<E> implements Collection<E> {
 	private int comprimento;
 	private No<E> cabeca;
 	private No<E> cauda;
@@ -15,11 +15,11 @@ public class Lista<E> implements Collection<E> {
 		return cabeca.valor;
 	}
 
-	public Lista<E> getCauda() throws ListaException {
+	public ListaEncadeada<E> getCauda() throws ListaException {
 		if (comprimento == 0) {
 			throw new ListaException("Lista Vazia.");
 		}
-		Lista<E> resposta = new Lista<>();
+		ListaEncadeada<E> resposta = new ListaEncadeada<>();
 		if (comprimento == 1) {
 			return resposta;
 		}

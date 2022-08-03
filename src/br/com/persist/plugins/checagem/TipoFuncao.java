@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.assistencia.Lista;
+import br.com.persist.assistencia.ListaEncadeada;
 
 public abstract class TipoFuncao implements Sentenca {
 	protected final List<Sentenca> parametros;
@@ -97,7 +97,7 @@ public abstract class TipoFuncao implements Sentenca {
 	}
 
 	protected void checkObrigatorioLista(Object object, String msg) throws ChecagemException {
-		if (!(object instanceof Lista)) {
+		if (!(object instanceof ListaEncadeada)) {
 			throw new ChecagemException(getClass(), msg + " nao eh Lista");
 		}
 	}

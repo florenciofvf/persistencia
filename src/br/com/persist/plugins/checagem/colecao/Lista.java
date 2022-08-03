@@ -1,6 +1,6 @@
 package br.com.persist.plugins.checagem.colecao;
 
-import br.com.persist.assistencia.Lista;
+import br.com.persist.assistencia.ListaEncadeada;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
@@ -8,10 +8,10 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.FuncaoVaziaOuNParam;
 import br.com.persist.plugins.checagem.Sentenca;
 
-public class CriarLista extends FuncaoVaziaOuNParam {
+public class Lista extends FuncaoVaziaOuNParam {
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
-		Lista<Object> resposta = new Lista<>();
+		ListaEncadeada<Object> resposta = new ListaEncadeada<>();
 		for (Sentenca s : parametros) {
 			resposta.add(s.executar(checagem, bloco, ctx));
 		}
