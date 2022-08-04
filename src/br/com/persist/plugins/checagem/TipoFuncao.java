@@ -66,6 +66,13 @@ public abstract class TipoFuncao implements Sentenca {
 		return sentenca;
 	}
 
+	public Sentenca getUltimoParametro() throws ChecagemException {
+		if (parametros.isEmpty()) {
+			throw new ChecagemException(getClass(), "Nenhum parametro definido");
+		}
+		return parametros.get(parametros.size() - 1);
+	}
+
 	protected void checkObrigatorioBoolean(Object object, String msg) throws ChecagemException {
 		if (!(object instanceof Boolean)) {
 			throw new ChecagemException(getClass(), msg + " nao eh Boolean");

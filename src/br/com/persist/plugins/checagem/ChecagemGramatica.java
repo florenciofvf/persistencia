@@ -82,39 +82,36 @@ public class ChecagemGramatica {
 		SentencaRaiz sentencaRaiz = new SentencaRaiz();
 		List<Token> tokens = checagemToken.getTokens();
 		TipoFuncao funcaoSelecionada = sentencaRaiz;
-		boolean prefixa = false;
+		boolean prefixaSet = false;
 		for (Token token : tokens) {
 			if (token.isFuncaoPrefixa()) {
-				TipoFuncao funcao = criarFuncaoPrefixa(token);
-				funcaoSelecionada.addParam(funcao);
-				funcaoSelecionada = funcao;
-				prefixa = true;
+				TipoFuncao prefixa = criarFuncaoPrefixa(token);
+				funcaoSelecionada.addParam(prefixa);
+				funcaoSelecionada = prefixa;
+				prefixaSet = true;
 			} else if (token.isFuncaoInfixa()) {
-				FuncaoBinariaInfixa funcao = criarFuncaoInfixa(token);
-				Sentenca sentenca = funcaoSelecionada.excluirUltimoParametro();
-				funcao.addParamOp0(sentenca);
-				funcaoSelecionada.addParam(funcao);
-				funcaoSelecionada = funcao;
+				FuncaoBinariaInfixa infixa = criarFuncaoInfixa(token);
+				funcaoSelecionada = processarInfixa(funcaoSelecionada, infixa);
 			} else if (token.isParenteseIni()) {
-				if (prefixa) {
-					prefixa = false;
+				if (prefixaSet) {
+					prefixaSet = false;
 				} else {
-					TipoFuncao funcao = new Expressao();
-					funcaoSelecionada.addParam(funcao);
-					funcaoSelecionada = funcao;
+					TipoFuncao expressao = new Expressao();
+					funcaoSelecionada.addParam(expressao);
+					funcaoSelecionada = expressao;
 				}
 			} else if (token.isParenteseFim()) {
 				funcaoSelecionada.encerrar();
 				funcaoSelecionada = funcaoSelecionada.getPai();
 				funcaoSelecionada = selecionada(funcaoSelecionada);
 			} else if (token.isColcheteIni()) {
-				TipoFuncao funcao = new Lista();
-				funcaoSelecionada.addParam(funcao);
-				funcaoSelecionada = funcao;
+				TipoFuncao lista = new Lista();
+				funcaoSelecionada.addParam(lista);
+				funcaoSelecionada = lista;
 			} else if (token.isChaveIni()) {
-				TipoFuncao funcao = new Mapa();
-				funcaoSelecionada.addParam(funcao);
-				funcaoSelecionada = funcao;
+				TipoFuncao mapa = new Mapa();
+				funcaoSelecionada.addParam(mapa);
+				funcaoSelecionada = mapa;
 			} else if (token.isVirgula()) {
 				funcaoSelecionada.preParametro();
 			} else if (ehTipoAtomico(token)) {
@@ -129,9 +126,25 @@ public class ChecagemGramatica {
 		bloco.setSentenca(sentencaRaiz.getSentenca());
 	}
 
+	private static TipoFuncao processarInfixa(TipoFuncao funcaoSelecionada, FuncaoBinariaInfixa infixa)
+			throws ChecagemException {
+		Sentenca sentenca = funcaoSelecionada.getUltimoParametro();
+		if (infixa.isPrioritario(sentenca)) {
+			FuncaoBinariaInfixa anterior = (FuncaoBinariaInfixa) sentenca;
+			sentenca = anterior.excluirUltimoParametro();
+			infixa.addParamOp0(sentenca);
+			anterior.addParam(infixa);
+		} else {
+			sentenca = funcaoSelecionada.excluirUltimoParametro();
+			infixa.addParamOp0(sentenca);
+			funcaoSelecionada.addParam(infixa);
+		}
+		return infixa;
+	}
+
 	private static TipoFuncao selecionada(TipoFuncao funcao) {
-		if (funcao instanceof FuncaoBinariaInfixa) {
-			return funcao.getPai();
+		while (funcao instanceof FuncaoBinariaInfixa) {
+			funcao = funcao.getPai();
 		}
 		return funcao;
 	}
