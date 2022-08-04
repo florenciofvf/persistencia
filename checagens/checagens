@@ -27,15 +27,6 @@ br.com.persist.plugins.checagem.datetime.Formatar
 
 
 
-nao
-br.com.persist.plugins.checagem.logico.Nao
-not
-br.com.persist.plugins.checagem.logico.Nao
-!
-br.com.persist.plugins.checagem.logico.Nao
-
-
-
 isEmpty
 br.com.persist.plugins.checagem.util.IsEmpty
 vazio
@@ -150,6 +141,11 @@ br.com.persist.plugins.checagem.colecao.Contem
 contem
 br.com.persist.plugins.checagem.colecao.Contem
 
+containsAll
+br.com.persist.plugins.checagem.colecao.ContemTodos
+contemTodos
+br.com.persist.plugins.checagem.colecao.ContemTodos
+
 cabeca
 br.com.persist.plugins.checagem.colecao.Cabeca
 head
@@ -159,11 +155,6 @@ cauda
 br.com.persist.plugins.checagem.colecao.Cauda
 tail
 br.com.persist.plugins.checagem.colecao.Cauda
-
-containsAll
-br.com.persist.plugins.checagem.colecao.ContemTodos
-contemTodos
-br.com.persist.plugins.checagem.colecao.ContemTodos
 
 classeItens
 br.com.persist.plugins.checagem.colecao.ClasseItens

@@ -19,6 +19,7 @@ public class Token {
 	static final int STRING = 10;
 	static final int DOUBLE = 11;
 	static final int LONG = 12;
+	static final int AUTO = 13;
 
 	private final Object valor;
 	private final int indice;
@@ -92,6 +93,10 @@ public class Token {
 
 	public boolean isLong() {
 		return tipo == LONG;
+	}
+
+	public boolean isAuto() {
+		return tipo == AUTO;
 	}
 
 	@Override

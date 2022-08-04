@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.checagem.colecao.Lista;
@@ -18,6 +19,7 @@ import br.com.persist.plugins.checagem.comparacao.Menor;
 import br.com.persist.plugins.checagem.comparacao.MenorIgual;
 import br.com.persist.plugins.checagem.funcao.FuncaoBinariaInfixa;
 import br.com.persist.plugins.checagem.logico.E;
+import br.com.persist.plugins.checagem.logico.Nao;
 import br.com.persist.plugins.checagem.logico.Ou;
 import br.com.persist.plugins.checagem.logico.Oux;
 import br.com.persist.plugins.checagem.matematico.Dividir;
@@ -28,8 +30,9 @@ import br.com.persist.plugins.checagem.matematico.Subtrair;
 import br.com.persist.plugins.checagem.util.Expressao;
 
 public class ChecagemGramatica {
-	static final Map<String, String> prefixas = new HashMap<>();
 	static final Map<String, Class<?>> infixas = new HashMap<>();
+	static final Map<String, String> prefixas = new HashMap<>();
+	static final Map<String, Class<?>> autos = new HashMap<>();
 
 	private ChecagemGramatica() {
 	}
@@ -50,6 +53,8 @@ public class ChecagemGramatica {
 		infixas.put("^", Oux.class);
 		infixas.put("&&", E.class);
 		infixas.put("||", Ou.class);
+
+		autos.put("!", Nao.class);
 	}
 
 	static void mapear(String arquivo) throws IOException, ClassNotFoundException {
@@ -81,49 +86,57 @@ public class ChecagemGramatica {
 		ChecagemToken checagemToken = new ChecagemToken(bloco.getString());
 		SentencaRaiz sentencaRaiz = new SentencaRaiz();
 		List<Token> tokens = checagemToken.getTokens();
+		AtomicBoolean prefixaSet = new AtomicBoolean();
 		TipoFuncao funcaoSelecionada = sentencaRaiz;
-		boolean prefixaSet = false;
 		for (Token token : tokens) {
-			if (token.isFuncaoPrefixa()) {
-				TipoFuncao prefixa = criarFuncaoPrefixa(token);
-				funcaoSelecionada.addParam(prefixa);
-				funcaoSelecionada = prefixa;
-				prefixaSet = true;
-			} else if (token.isFuncaoInfixa()) {
-				FuncaoBinariaInfixa infixa = criarFuncaoInfixa(token);
-				funcaoSelecionada = processarInfixa(funcaoSelecionada, infixa);
-			} else if (token.isParenteseIni()) {
-				if (prefixaSet) {
-					prefixaSet = false;
-				} else {
-					TipoFuncao expressao = new Expressao();
-					funcaoSelecionada.addParam(expressao);
-					funcaoSelecionada = expressao;
-				}
-			} else if (token.isParenteseFim()) {
-				funcaoSelecionada.encerrar();
-				funcaoSelecionada = funcaoSelecionada.getPai();
-				funcaoSelecionada = selecionada(funcaoSelecionada);
-			} else if (token.isColcheteIni()) {
-				TipoFuncao lista = new Lista();
-				funcaoSelecionada.addParam(lista);
-				funcaoSelecionada = lista;
-			} else if (token.isChaveIni()) {
-				TipoFuncao mapa = new Mapa();
-				funcaoSelecionada.addParam(mapa);
-				funcaoSelecionada = mapa;
-			} else if (token.isVirgula()) {
-				funcaoSelecionada.preParametro();
-			} else if (ehTipoAtomico(token)) {
-				TipoAtomico atomico = Token.criarTipoAtomico(token);
-				funcaoSelecionada.addParam(atomico);
-				funcaoSelecionada = selecionada(funcaoSelecionada);
-			} else {
-				throw new ChecagemException(ChecagemGramatica.class, "Token invalido >>> " + token);
-			}
+			funcaoSelecionada = processar(prefixaSet, funcaoSelecionada, token);
 		}
 		checagemFinal(bloco, sentencaRaiz);
 		bloco.setSentenca(sentencaRaiz.getSentenca());
+	}
+
+	private static TipoFuncao processar(AtomicBoolean prefixaSet, TipoFuncao funcaoSelecionada, Token token)
+			throws ChecagemException {
+		if (token.isFuncaoPrefixa()) {
+			funcaoSelecionada = vincular(funcaoSelecionada, criarFuncaoPrefixa(token));
+			prefixaSet.set(true);
+		} else if (token.isFuncaoInfixa()) {
+			funcaoSelecionada = processarInfixa(funcaoSelecionada, criarFuncaoInfixa(token));
+		} else if (token.isAuto()) {
+			funcaoSelecionada = vincular(funcaoSelecionada, criarFuncaoAuto(token));
+		} else if (token.isParenteseIni()) {
+			if (prefixaSet.get()) {
+				prefixaSet.set(false);
+			} else {
+				funcaoSelecionada = vincular(funcaoSelecionada, new Expressao());
+			}
+		} else if (token.isParenteseFim()) {
+			funcaoSelecionada.encerrar();
+			funcaoSelecionada = funcaoSelecionada.getPai();
+			funcaoSelecionada = selecionada(funcaoSelecionada);
+		} else if (token.isColcheteIni()) {
+			funcaoSelecionada = vincular(funcaoSelecionada, new Lista());
+		} else if (token.isChaveIni()) {
+			funcaoSelecionada = vincular(funcaoSelecionada, new Mapa());
+		} else if (token.isVirgula()) {
+			funcaoSelecionada.preParametro();
+		} else if (ehTipoAtomico(token)) {
+			processarAtomico(funcaoSelecionada, token);
+			funcaoSelecionada = selecionada(funcaoSelecionada);
+		} else {
+			throw new ChecagemException(ChecagemGramatica.class, "Token invalido >>> " + token);
+		}
+		return funcaoSelecionada;
+	}
+
+	private static void processarAtomico(TipoFuncao funcaoSelecionada, Token token) throws ChecagemException {
+		TipoAtomico atomico = Token.criarTipoAtomico(token);
+		funcaoSelecionada.addParam(atomico);
+	}
+
+	private static TipoFuncao vincular(TipoFuncao funcaoSelecionada, TipoFuncao funcao) throws ChecagemException {
+		funcaoSelecionada.addParam(funcao);
+		return funcao;
 	}
 
 	private static TipoFuncao processarInfixa(TipoFuncao funcaoSelecionada, FuncaoBinariaInfixa infixa)
@@ -144,6 +157,9 @@ public class ChecagemGramatica {
 
 	private static TipoFuncao selecionada(TipoFuncao funcao) {
 		while (funcao instanceof FuncaoBinariaInfixa) {
+			funcao = funcao.getPai();
+		}
+		while (funcao instanceof Auto) {
 			funcao = funcao.getPai();
 		}
 		return funcao;
@@ -181,9 +197,11 @@ public class ChecagemGramatica {
 		try {
 			return (TipoFuncao) klass.newInstance();
 		} catch (InstantiationException e) {
-			throw new ChecagemException(ChecagemGramatica.class, "Classe nao pode ser instanciada >>> " + klass);
+			throw new ChecagemException(ChecagemGramatica.class,
+					"Classe nao pode ser instanciada (prefixa) >>> " + klass);
 		} catch (IllegalAccessException e) {
-			throw new ChecagemException(ChecagemGramatica.class, "Acesso ilegal ao instanciar classe >>> " + klass);
+			throw new ChecagemException(ChecagemGramatica.class,
+					"Acesso ilegal ao instanciar classe (prefixa) >>> " + klass);
 		}
 	}
 
@@ -200,9 +218,31 @@ public class ChecagemGramatica {
 		try {
 			return (FuncaoBinariaInfixa) klass.newInstance();
 		} catch (InstantiationException e) {
-			throw new ChecagemException(ChecagemGramatica.class, "Classe nao pode ser instanciada >>> " + klass);
+			throw new ChecagemException(ChecagemGramatica.class,
+					"Classe nao pode ser instanciada (infixa) >>> " + klass);
 		} catch (IllegalAccessException e) {
-			throw new ChecagemException(ChecagemGramatica.class, "Acesso ilegal ao instanciar classe >>> " + klass);
+			throw new ChecagemException(ChecagemGramatica.class,
+					"Acesso ilegal ao instanciar classe (infixa) >>> " + klass);
+		}
+	}
+
+	private static TipoFuncao criarFuncaoAuto(Token token) throws ChecagemException {
+		if (!token.isAuto()) {
+			throw new ChecagemException(ChecagemGramatica.class, "Nao eh funcao auto >>> " + token);
+		}
+		String chave = token.getValor().toString();
+		Class<?> klass = autos.get(chave.toLowerCase());
+		if (klass == null) {
+			throw new ChecagemException(ChecagemGramatica.class,
+					token.getIndice() + " <<< Classe nao mapeada para >>> " + chave);
+		}
+		try {
+			return (TipoFuncao) klass.newInstance();
+		} catch (InstantiationException e) {
+			throw new ChecagemException(ChecagemGramatica.class, "Classe nao pode ser instanciada (auto) >>> " + klass);
+		} catch (IllegalAccessException e) {
+			throw new ChecagemException(ChecagemGramatica.class,
+					"Acesso ilegal ao instanciar classe (auto) >>> " + klass);
 		}
 	}
 }

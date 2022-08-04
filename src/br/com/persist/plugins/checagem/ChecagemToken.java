@@ -64,6 +64,9 @@ public class ChecagemToken {
 		case ',':
 			indice++;
 			return new Token(c, Token.VIRGULA, indice);
+		case '!':
+			indice++;
+			return new Token(c, Token.AUTO, indice);
 		case '+':
 		case '-':
 		case '*':
