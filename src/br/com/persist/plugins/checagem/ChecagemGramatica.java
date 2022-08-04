@@ -156,10 +156,7 @@ public class ChecagemGramatica {
 	}
 
 	private static TipoFuncao selecionada(TipoFuncao funcao) {
-		while (funcao instanceof FuncaoBinariaInfixa) {
-			funcao = funcao.getPai();
-		}
-		while (funcao instanceof Auto) {
+		while (funcao instanceof Auto || funcao instanceof FuncaoBinariaInfixa) {
 			funcao = funcao.getPai();
 		}
 		return funcao;
