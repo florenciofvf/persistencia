@@ -78,4 +78,9 @@ public class Subtrair extends Matematico {
 		}
 		throw new ChecagemException(getClass(), ERRO);
 	}
+
+	@Override
+	public short getNivel() {
+		return matematico3;
+	}
 }

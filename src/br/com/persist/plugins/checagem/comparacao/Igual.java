@@ -97,4 +97,9 @@ public class Igual extends Comparacao {
 		}
 		return Boolean.FALSE;
 	}
+
+	@Override
+	public short getNivel() {
+		return comparacao1;
+	}
 }

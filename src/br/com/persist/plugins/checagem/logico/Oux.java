@@ -19,4 +19,9 @@ public class Oux extends FuncaoBinariaInfixa {
 		Boolean seg = (Boolean) op1;
 		return pri ^ seg;
 	}
+
+	@Override
+	public short getNivel() {
+		return logico1;
+	}
 }

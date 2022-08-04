@@ -73,4 +73,9 @@ public class Somar extends Matematico {
 		}
 		return concatenar(pri, seg);
 	}
+
+	@Override
+	public short getNivel() {
+		return matematico3;
+	}
 }

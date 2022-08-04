@@ -78,4 +78,9 @@ public class Maior extends Comparacao {
 		}
 		throw new ChecagemException(getClass(), ERRO);
 	}
+
+	@Override
+	public short getNivel() {
+		return comparacao1;
+	}
 }

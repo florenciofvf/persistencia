@@ -94,4 +94,9 @@ public class Resto extends Matematico {
 		}
 		throw new ChecagemException(getClass(), ERRO);
 	}
+
+	@Override
+	public short getNivel() {
+		return matematico1;
+	}
 }

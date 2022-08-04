@@ -21,4 +21,9 @@ public class E extends FuncaoBinariaInfixa {
 		checkObrigatorioBoolean(op1, ERRO + " >>> op1");
 		return ((Boolean) op1).booleanValue();
 	}
+
+	@Override
+	public short getNivel() {
+		return logico1;
+	}
 }

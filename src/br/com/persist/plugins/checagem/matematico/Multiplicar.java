@@ -78,4 +78,9 @@ public class Multiplicar extends Matematico {
 		}
 		throw new ChecagemException(getClass(), ERRO);
 	}
+
+	@Override
+	public short getNivel() {
+		return matematico2;
+	}
 }
