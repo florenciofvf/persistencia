@@ -22,6 +22,7 @@ public class Token {
 	static final int AUTO = 13;
 
 	private final Object valor;
+	private boolean processado;
 	private final int indice;
 	private final int tipo;
 
@@ -97,6 +98,14 @@ public class Token {
 
 	public boolean isAuto() {
 		return tipo == AUTO;
+	}
+
+	public boolean isProcessado() {
+		return processado;
+	}
+
+	public void setProcessado(boolean processado) {
+		this.processado = processado;
 	}
 
 	@Override
