@@ -245,66 +245,20 @@ public class ChecagemToken {
 			lista.add(token);
 			token = proximoToken();
 		}
-		return normalizar(lista);
-	}
-
-	private List<Token> normalizar(List<Token> lista) throws ChecagemException {
-		final String op = "-";
-		TokenIndice obj = getTokenIndice(lista, op);
-		while (obj != null) {
-			processar(obj, lista);
-			obj = getTokenIndice(lista, op);
-		}
+		normalizar(lista, "-");
+		normalizar(lista, "+");
 		return lista;
 	}
 
-	private void processar(TokenIndice obj, List<Token> lista) throws ChecagemException {
-		int antes = obj.indice - 1;
-		int apos = obj.indice + 1;
-		if ((obj.indice == 0 && isNumero(apos, lista))
-				|| (isTipo(antes, lista, Token.PARENTESE_INI) && isNumero(apos, lista))) {
-			negativar(obj, lista, apos);
+	private void normalizar(final List<Token> lista, final String op) throws ChecagemException {
+		TokenIndice tokenIndice = getTokenIndice(lista, op);
+		while (tokenIndice != null) {
+			processar(lista, tokenIndice);
+			tokenIndice = getTokenIndice(lista, op);
 		}
 	}
 
-	private void negativar(TokenIndice obj, List<Token> lista, int apos) throws ChecagemException {
-		Token proximo = lista.get(apos);
-		Token novo = negar(proximo, apos);
-		lista.set(apos, novo);
-		lista.remove(obj.indice);
-	}
-
-	private Token negar(Token token, int indice) throws ChecagemException {
-		if (token.isDouble()) {
-			return new Token(((Double) token.getValor()) * -1, Token.DOUBLE, indice);
-		}
-		if (token.isLong()) {
-			return new Token(((Long) token.getValor()) * -1, Token.LONG, indice);
-		}
-		throw new ChecagemException(getClass(), indice + " <<< negar >>> " + token);
-	}
-
-	private boolean isNumero(int i, List<Token> lista) {
-		if (i < lista.size()) {
-			Token token = lista.get(i);
-			if (token.isDouble() || token.isLong()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean isTipo(int i, List<Token> lista, int tipo) {
-		if (i < lista.size()) {
-			Token token = lista.get(i);
-			if (token.getTipo() == tipo) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private TokenIndice getTokenIndice(List<Token> lista, Object valor) {
+	private TokenIndice getTokenIndice(final List<Token> lista, Object valor) {
 		for (int i = 0; i < lista.size(); i++) {
 			Token token = lista.get(i);
 			if (!token.isProcessado() && valor.equals(token.getValor())) {
@@ -312,6 +266,50 @@ public class ChecagemToken {
 			}
 		}
 		return null;
+	}
+
+	private void processar(final List<Token> lista, TokenIndice tokenIndice) throws ChecagemException {
+		int antes = tokenIndice.indice - 1;
+		int depois = tokenIndice.indice + 1;
+		if (isTokenNumero(depois, lista) && !calculavel(antes, lista)) {
+			negarToken(depois, tokenIndice, lista);
+		} else {
+			tokenIndice.token.setProcessado(true);
+		}
+	}
+
+	private boolean isTokenNumero(int i, final List<Token> lista) {
+		if (i >= 0 && i < lista.size()) {
+			Token token = lista.get(i);
+			return token.isDouble() || token.isLong();
+		}
+		return false;
+	}
+
+	private boolean calculavel(int i, List<Token> lista) {
+		if (i >= 0 && i < lista.size()) {
+			Token token = lista.get(i);
+			return token.getTipo() == Token.PARENTESE_FIM || token.getTipo() == Token.VARIAVEL
+					|| token.getTipo() == Token.DOUBLE || token.getTipo() == Token.LONG;
+		}
+		return false;
+	}
+
+	private void negarToken(int i, TokenIndice tokenIndice, final List<Token> lista) throws ChecagemException {
+		Token token = lista.get(i);
+		Token novo = inverter(token, i);
+		lista.set(i, novo);
+		lista.remove(tokenIndice.indice);
+	}
+
+	private Token inverter(Token token, int indice) throws ChecagemException {
+		if (token.isDouble()) {
+			return new Token(((Double) token.getValor()) * -1, Token.DOUBLE, indice);
+		}
+		if (token.isLong()) {
+			return new Token(((Long) token.getValor()) * -1, Token.LONG, indice);
+		}
+		throw new ChecagemException(getClass(), indice + " <<< inverter >>> " + token);
 	}
 
 	class TokenIndice {
