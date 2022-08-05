@@ -259,13 +259,19 @@ public class ChecagemToken {
 	}
 
 	private void processar(TokenIndice obj, List<Token> lista) throws ChecagemException {
-		int proximoIndice = obj.indice + 1;
-		if (obj.indice == 0 && isNumero(proximoIndice, lista)) {
-			Token proximo = lista.get(proximoIndice);
-			Token novo = negar(proximo, proximoIndice);
-			lista.set(proximoIndice, novo);
-			lista.remove(0);
+		int antes = obj.indice - 1;
+		int apos = obj.indice + 1;
+		if ((obj.indice == 0 && isNumero(apos, lista))
+				|| (isTipo(antes, lista, Token.PARENTESE_INI) && isNumero(apos, lista))) {
+			negativar(obj, lista, apos);
 		}
+	}
+
+	private void negativar(TokenIndice obj, List<Token> lista, int apos) throws ChecagemException {
+		Token proximo = lista.get(apos);
+		Token novo = negar(proximo, apos);
+		lista.set(apos, novo);
+		lista.remove(obj.indice);
 	}
 
 	private Token negar(Token token, int indice) throws ChecagemException {
@@ -282,6 +288,16 @@ public class ChecagemToken {
 		if (i < lista.size()) {
 			Token token = lista.get(i);
 			if (token.isDouble() || token.isLong()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isTipo(int i, List<Token> lista, int tipo) {
+		if (i < lista.size()) {
+			Token token = lista.get(i);
+			if (token.getTipo() == tipo) {
 				return true;
 			}
 		}
