@@ -10,15 +10,11 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.funcao.FuncaoUnaria;
 
 public class CloseConnection extends FuncaoUnaria {
-	private static final String ERRO = "Erro CloseConnection";
-
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		Object op0 = param0().executar(checagem, bloco, ctx);
-		checkObrigatorioString(op0, ERRO + " >>> op0");
-		Object obj = ctx.get((String) op0);
-		if (obj instanceof Connection) {
-			Connection conn = (Connection) obj;
+		if (op0 instanceof Connection) {
+			Connection conn = (Connection) op0;
 			try {
 				conn.close();
 				return Boolean.TRUE;

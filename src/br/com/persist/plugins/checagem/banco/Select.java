@@ -26,14 +26,12 @@ public class Select extends FuncaoBinariaOuNParam {
 		ListaEncadeada<Object> resposta = new ListaEncadeada<>();
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		Object op1 = param1().executar(checagem, bloco, ctx);
-		checkObrigatorioString(op0, ERRO + " >>> op0");
 		checkObrigatorioString(op1, ERRO + " >>> op1");
-		Object conn = ctx.get((String) op0);
-		if (!(conn instanceof Connection)) {
-			throw new ChecagemException(getClass(), ERRO + " >>> Conexao invalida");
+		if (!(op0 instanceof Connection)) {
+			throw new ChecagemException(getClass(), ERRO + " >>> Nao eh conexao valida >>> op0");
 		}
 		@SuppressWarnings("resource")
-		Connection connection = (Connection) conn;
+		Connection connection = (Connection) op0;
 		String instrucao = (String) op1;
 		try (Statement st = connection.createStatement()) {
 			for (int i = 2; i < parametros.size(); i += 2) {
