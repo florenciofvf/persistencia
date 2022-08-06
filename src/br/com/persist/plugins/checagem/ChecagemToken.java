@@ -245,15 +245,15 @@ public class ChecagemToken {
 			lista.add(token);
 			token = proximoToken();
 		}
-		normalizar(lista, "-");
-		normalizar(lista, "+");
+		normalizar(lista, "-", true);
+		normalizar(lista, "+", false);
 		return lista;
 	}
 
-	private void normalizar(final List<Token> lista, final String op) throws ChecagemException {
+	private void normalizar(final List<Token> lista, final String op, boolean negar) throws ChecagemException {
 		TokenIndice tokenIndice = getTokenIndice(lista, op);
 		while (tokenIndice != null) {
-			processar(lista, tokenIndice);
+			processar(lista, tokenIndice, negar);
 			tokenIndice = getTokenIndice(lista, op);
 		}
 	}
@@ -268,11 +268,15 @@ public class ChecagemToken {
 		return null;
 	}
 
-	private void processar(final List<Token> lista, TokenIndice tokenIndice) throws ChecagemException {
+	private void processar(final List<Token> lista, TokenIndice tokenIndice, boolean negar) throws ChecagemException {
 		int antes = tokenIndice.indice - 1;
 		int depois = tokenIndice.indice + 1;
 		if (isTokenNumero(depois, lista) && !calculavel(antes, lista)) {
-			negarToken(depois, tokenIndice, lista);
+			if (negar) {
+				negarToken(depois, tokenIndice, lista);
+			} else {
+				lista.remove(tokenIndice.indice);
+			}
 		} else {
 			tokenIndice.token.setProcessado(true);
 		}
