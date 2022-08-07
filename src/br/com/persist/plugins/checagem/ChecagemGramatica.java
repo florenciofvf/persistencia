@@ -108,7 +108,7 @@ public class ChecagemGramatica {
 			if (prefixaSet.get()) {
 				prefixaSet.set(false);
 			} else {
-				funcaoSelecionada = vincular(funcaoSelecionada, new Expressao());
+				funcaoSelecionada = vincular(funcaoSelecionada, new Expressao(token.isNegarExpressao()));
 			}
 		} else if (token.isParenteseFim()) {
 			funcaoSelecionada.encerrar();

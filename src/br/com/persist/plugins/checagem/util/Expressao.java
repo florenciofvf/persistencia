@@ -11,7 +11,11 @@ import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.checagem.funcao.FuncaoUnaria;
 
 public class Expressao extends FuncaoUnaria implements ChecagemNumero {
-	private boolean negarExpressao;
+	private final boolean negarExpressao;
+
+	public Expressao(boolean negarExpressao) {
+		this.negarExpressao = negarExpressao;
+	}
 
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
@@ -29,13 +33,5 @@ public class Expressao extends FuncaoUnaria implements ChecagemNumero {
 			throw new ChecagemException(getClass(), "O valor nao pode ser negado >>> " + obj);
 		}
 		return obj;
-	}
-
-	public boolean isNegarExpressao() {
-		return negarExpressao;
-	}
-
-	public void setNegarExpressao(boolean negarExpressao) {
-		this.negarExpressao = negarExpressao;
 	}
 }

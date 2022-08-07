@@ -21,8 +21,9 @@ public class Token {
 	static final int LONG = 12;
 	static final int AUTO = 13;
 
-	private final Object valor;
+	private boolean negarExpressao;
 	private boolean processado;
+	private final Object valor;
 	private final int indice;
 	private final int tipo;
 
@@ -106,6 +107,14 @@ public class Token {
 
 	public void setProcessado(boolean processado) {
 		this.processado = processado;
+	}
+
+	public boolean isNegarExpressao() {
+		return negarExpressao;
+	}
+
+	public void setNegarExpressao(boolean negarExpressao) {
+		this.negarExpressao = negarExpressao;
 	}
 
 	@Override
