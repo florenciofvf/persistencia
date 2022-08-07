@@ -20,7 +20,17 @@ public class ChecagemToken {
 		return string.charAt(indice) == c;
 	}
 
-	private String pularDescartaveis() {
+	private void pularDescartaveis() {
+		while (indice < string.length()) {
+			if (string.charAt(indice) <= ' ') {
+				indice++;
+			} else {
+				break;
+			}
+		}
+	}
+
+	private String getDescartaveis() {
 		StringBuilder sb = new StringBuilder();
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
@@ -34,13 +44,17 @@ public class ChecagemToken {
 		return sb.toString();
 	}
 
-	private Token proximoToken() throws ChecagemException {
+	private Token proximoToken(boolean completo) throws ChecagemException {
 		if (indice >= string.length()) {
 			return null;
 		}
-		String s = pularDescartaveis();
-		if (!s.isEmpty()) {
-			return new Token(s, Token.META, indice);
+		if (completo) {
+			String s = getDescartaveis();
+			if (!s.isEmpty()) {
+				return new Token(s, Token.META, indice);
+			}
+		} else {
+			pularDescartaveis();
 		}
 		if (indice >= string.length()) {
 			return null;
@@ -251,12 +265,12 @@ public class ChecagemToken {
 
 	public List<Token> getTokens(boolean completo) throws ChecagemException {
 		List<Token> lista = new ArrayList<>();
-		Token token = proximoToken();
+		Token token = proximoToken(completo);
 		while (token != null) {
 			if (completo || token.getTipo() != Token.META) {
 				lista.add(token);
 			}
-			token = proximoToken();
+			token = proximoToken(completo);
 		}
 		if (!completo) {
 			normalizar(lista, "-", true);
