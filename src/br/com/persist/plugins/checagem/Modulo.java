@@ -61,12 +61,12 @@ public class Modulo {
 				throw new ChecagemException(getClass(),
 						"Bloco inexistente! >>> modulo=" + getId() + "[" + idBloco + "]");
 			}
-			if (!bloco.isDesativado()) {
+			if (!bloco.isPrivado()) {
 				resp.add(bloco.executar(checagem, ctx));
 			}
 		} else {
 			for (Bloco bloco : blocos) {
-				if (!bloco.isDesativado()) {
+				if (!bloco.isPrivado()) {
 					resp.add(bloco.executar(checagem, ctx));
 				}
 			}

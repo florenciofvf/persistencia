@@ -2,8 +2,8 @@ package br.com.persist.plugins.checagem;
 
 public class Bloco {
 	private final Modulo modulo;
-	private boolean desativado;
 	private Sentenca sentenca;
+	private boolean privado;
 	private final String id;
 	private String string;
 
@@ -36,12 +36,12 @@ public class Bloco {
 		this.string = string;
 	}
 
-	public boolean isDesativado() {
-		return desativado;
+	public boolean isPrivado() {
+		return privado;
 	}
 
-	public void setDesativado(boolean desativado) {
-		this.desativado = desativado;
+	public void setPrivado(boolean privado) {
+		this.privado = privado;
 	}
 
 	public Object executar(Checagem checagem, Contexto ctx) throws ChecagemException {
