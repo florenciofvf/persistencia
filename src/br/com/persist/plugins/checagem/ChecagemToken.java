@@ -20,24 +20,35 @@ public class ChecagemToken {
 		return string.charAt(indice) == c;
 	}
 
-	private void pularDescartaveis() {
+	private String pularDescartaveis() {
+		StringBuilder sb = new StringBuilder();
 		while (indice < string.length()) {
-			if (string.charAt(indice) <= ' ') {
+			char c = string.charAt(indice);
+			if (c <= ' ') {
+				sb.append(c);
 				indice++;
 			} else {
 				break;
 			}
 		}
+		return sb.toString();
 	}
 
 	private Token proximoToken() throws ChecagemException {
 		if (indice >= string.length()) {
 			return null;
 		}
-		pularDescartaveis();
+		String s = pularDescartaveis();
+		if (!s.isEmpty()) {
+			return new Token(s, Token.META, indice);
+		}
 		if (indice >= string.length()) {
 			return null;
 		}
+		return proximoTokenImpl();
+	}
+
+	private Token proximoTokenImpl() throws ChecagemException {
 		char c = string.charAt(indice);
 		switch (c) {
 		case '\'':
@@ -238,15 +249,19 @@ public class ChecagemToken {
 		return sb.toString();
 	}
 
-	public List<Token> getTokens() throws ChecagemException {
+	public List<Token> getTokens(boolean completo) throws ChecagemException {
 		List<Token> lista = new ArrayList<>();
 		Token token = proximoToken();
 		while (token != null) {
-			lista.add(token);
+			if (completo || token.getTipo() != Token.META) {
+				lista.add(token);
+			}
 			token = proximoToken();
 		}
-		normalizar(lista, "-", true);
-		normalizar(lista, "+", false);
+		if (!completo) {
+			normalizar(lista, "-", true);
+			normalizar(lista, "+", false);
+		}
 		return lista;
 	}
 

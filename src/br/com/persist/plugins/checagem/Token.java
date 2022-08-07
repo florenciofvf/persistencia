@@ -20,6 +20,7 @@ public class Token {
 	static final int DOUBLE = 11;
 	static final int LONG = 12;
 	static final int AUTO = 13;
+	static final int META = 14;
 
 	private boolean negarExpressao;
 	private boolean processado;

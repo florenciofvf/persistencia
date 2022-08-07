@@ -38,7 +38,7 @@ class ChecagemHandler extends XMLHandler {
 			String string = builder.toString();
 			if (!Util.estaVazio(string)) {
 				Bloco bloco = modulo.getUltimoBloco();
-				bloco.setString(string.trim());
+				bloco.setString(string);
 			}
 			limpar();
 		}
