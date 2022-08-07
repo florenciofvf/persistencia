@@ -6,7 +6,6 @@ import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
 
 public class Igual extends Comparacao {
-
 	@Override
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		Object pri = param0().executar(checagem, bloco, ctx);
