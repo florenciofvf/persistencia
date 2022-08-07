@@ -277,6 +277,11 @@ public class ChecagemToken {
 			} else {
 				lista.remove(tokenIndice.indice);
 			}
+		} else if (iniExpressao(depois, lista) && !calculavel(antes, lista)) {
+			if (negar) {
+				lista.get(depois).setNegarExpressao(true);
+			}
+			lista.remove(tokenIndice.indice);
 		} else {
 			tokenIndice.token.setProcessado(true);
 		}
@@ -286,6 +291,14 @@ public class ChecagemToken {
 		if (i >= 0 && i < lista.size()) {
 			Token token = lista.get(i);
 			return token.isDouble() || token.isLong();
+		}
+		return false;
+	}
+
+	private boolean iniExpressao(int i, final List<Token> lista) {
+		if (i >= 0 && i < lista.size()) {
+			Token token = lista.get(i);
+			return token.getTipo() == Token.PARENTESE_INI;
 		}
 		return false;
 	}
