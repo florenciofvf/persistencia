@@ -98,6 +98,7 @@ public class ChecagemPagina extends Panel {
 		private Action sincronizarAcao = actionIcon("label.atualizar_cache2", Icones.SINCRONIZAR);
 		private Action checarAcao = actionIcon("label.checar_sentenca", Icones.SUCESSO);
 		private Action criarAcao = actionIcon("label.nova_sentenca", Icones.CRIAR2);
+		private Action formatarAcao = actionIcon("label.formatar", Icones.ELEMENTO);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
@@ -106,11 +107,13 @@ public class ChecagemPagina extends Panel {
 			addButton(criarAcao);
 			addButton(checarAcao);
 			addButton(sincronizarAcao);
+			addButton(formatarAcao);
 			atualizarAcao.text(ChecagemMensagens.getString("label.atualizar_cache"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			sincronizarAcao.setActionListener(e -> sincronizarSentencas());
 			checarAcao.setActionListener(e -> checarSentenca());
 			criarAcao.setActionListener(e -> novaSentenca());
+			formatarAcao.setActionListener(e -> formatar());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
@@ -133,6 +136,9 @@ public class ChecagemPagina extends Panel {
 			} catch (ChecagemException | XMLException | IOException e) {
 				Util.mensagem(ChecagemPagina.this, e.getMessage());
 			}
+		}
+
+		private void formatar() {
 		}
 
 		private void novaSentenca() {

@@ -31,6 +31,7 @@ public class Icones {
 	public static final Icon UM_PIXEL = criarImagem("um_pixel");
 	public static final Icon FRAGMENTO = criarImagem("feature");
 	public static final Icon SINCRONIZAR = criarImagem("sync");
+	public static final Icon ELEMENTO = criarImagem("element");
 	public static final Icon ARRASTAR = criarImagem("synonym");
 	public static final Icon LARGURA = criarImagem("largura");
 	public static final Icon EXCLUIR = criarImagem("excluir");
