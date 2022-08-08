@@ -109,7 +109,7 @@ public class ChecagemUtil {
 
 	private static void lerBlocosArquivo(Modulo modulo, boolean lexicalHandler)
 			throws ChecagemException, XMLException, IOException {
-		ChecagemHandler handler = new ChecagemHandler(modulo);
+		ChecagemHandler handler = new ChecagemHandler(modulo, lexicalHandler);
 		File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + modulo.getId());
 		if (file.exists() && file.canRead()) {
 			String conteudo = Util.conteudo(file);
@@ -120,7 +120,7 @@ public class ChecagemUtil {
 	}
 
 	private static void lerBlocosString(Modulo modulo, String conteudo) throws XMLException {
-		ChecagemHandler handler = new ChecagemHandler(modulo);
+		ChecagemHandler handler = new ChecagemHandler(modulo, false);
 		processarXMLModulo(handler, conteudo, false);
 	}
 

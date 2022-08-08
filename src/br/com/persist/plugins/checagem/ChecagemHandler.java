@@ -8,9 +8,11 @@ import br.com.persist.marca.XMLHandler;
 
 class ChecagemHandler extends XMLHandler {
 	private static final String BLOCO = "set";
+	private final boolean lexicalHandler;
 	private final Modulo modulo;
 
-	public ChecagemHandler(Modulo modulo) {
+	public ChecagemHandler(Modulo modulo, boolean lexicalHandler) {
+		this.lexicalHandler = lexicalHandler;
 		this.modulo = modulo;
 	}
 
@@ -21,6 +23,15 @@ class ChecagemHandler extends XMLHandler {
 			boolean privado = Boolean.parseBoolean(attributes.getValue("privado"));
 			bloco.setPrivado(privado);
 			modulo.add(bloco);
+			config(bloco);
+		}
+	}
+
+	private void config(Bloco bloco) {
+		if (!lexicalHandler) {
+			bloco.setParaPre(false);
+			bloco.setParaString(true);
+			bloco.setParaPos(false);
 		}
 	}
 
@@ -34,6 +45,9 @@ class ChecagemHandler extends XMLHandler {
 
 	@Override
 	public void startCDATA() throws SAXException {
+		if (!lexicalHandler) {
+			return;
+		}
 		Bloco bloco = modulo.getUltimoBloco();
 		if (bloco != null) {
 			bloco.append("<![CDATA[");
@@ -44,6 +58,9 @@ class ChecagemHandler extends XMLHandler {
 
 	@Override
 	public void endCDATA() throws SAXException {
+		if (!lexicalHandler) {
+			return;
+		}
 		Bloco bloco = modulo.getUltimoBloco();
 		if (bloco != null) {
 			bloco.setParaPre(false);
