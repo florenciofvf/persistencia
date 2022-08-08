@@ -80,7 +80,7 @@ public class ChecagemUtil {
 	private static void montarGramaticaArquivo(String idModulo, Checagem checagem)
 			throws ChecagemException, XMLException, IOException {
 		Modulo modulo = new Modulo(idModulo);
-		lerBlocosArquivo(modulo);
+		lerBlocosArquivo(modulo, false);
 		ChecagemGramatica.criarHierarquiaSentencas(modulo.getBlocos());
 		checagem.add(modulo);
 	}
@@ -88,14 +88,14 @@ public class ChecagemUtil {
 	private static void atualizarGramaticaArquivo(String idModulo, Checagem checagem)
 			throws ChecagemException, XMLException, IOException {
 		Modulo modulo = new Modulo(idModulo);
-		lerBlocosArquivo(modulo);
+		lerBlocosArquivo(modulo, false);
 		ChecagemGramatica.criarHierarquiaSentencas(modulo.getBlocos());
 		checagem.set(modulo);
 	}
 
 	public static Modulo getModulo(File file) throws ChecagemException, XMLException, IOException {
 		Modulo modulo = new Modulo(file.getName());
-		lerBlocosArquivo(modulo);
+		lerBlocosArquivo(modulo, true);
 		return modulo;
 	}
 
@@ -107,12 +107,13 @@ public class ChecagemUtil {
 		checagem.set(modulo);
 	}
 
-	private static void lerBlocosArquivo(Modulo modulo) throws ChecagemException, XMLException, IOException {
+	private static void lerBlocosArquivo(Modulo modulo, boolean lexicalHandler)
+			throws ChecagemException, XMLException, IOException {
 		ChecagemHandler handler = new ChecagemHandler(modulo);
 		File file = new File(ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + modulo.getId());
 		if (file.exists() && file.canRead()) {
 			String conteudo = Util.conteudo(file);
-			processarXMLModulo(handler, conteudo);
+			processarXMLModulo(handler, conteudo, lexicalHandler);
 		} else {
 			throw new ChecagemException(ChecagemUtil.class, "Erro ao carregar o modulo >>> " + modulo.getId());
 		}
@@ -120,10 +121,11 @@ public class ChecagemUtil {
 
 	private static void lerBlocosString(Modulo modulo, String conteudo) throws XMLException {
 		ChecagemHandler handler = new ChecagemHandler(modulo);
-		processarXMLModulo(handler, conteudo);
+		processarXMLModulo(handler, conteudo, false);
 	}
 
-	private static void processarXMLModulo(ChecagemHandler handler, String conteudo) throws XMLException {
+	private static void processarXMLModulo(ChecagemHandler handler, String conteudo, boolean lexicalHandler)
+			throws XMLException {
 		StringWriter sw = new StringWriter();
 		XMLUtil util = new XMLUtil(sw);
 		util.prologo();
@@ -131,6 +133,6 @@ public class ChecagemUtil {
 		util.print(conteudo).ql();
 		util.finalizarTag("sentencas");
 		util.close();
-		XML.processar(new ByteArrayInputStream(sw.toString().getBytes()), handler);
+		XML.processar(new ByteArrayInputStream(sw.toString().getBytes()), handler, lexicalHandler);
 	}
 }
