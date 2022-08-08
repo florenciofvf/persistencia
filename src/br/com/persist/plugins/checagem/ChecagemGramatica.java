@@ -83,7 +83,7 @@ public class ChecagemGramatica {
 	}
 
 	private static void criarSentenca(Bloco bloco) throws ChecagemException {
-		ChecagemToken checagemToken = new ChecagemToken(bloco.getString());
+		ChecagemToken checagemToken = new ChecagemToken(bloco.getString(), false);
 		List<Token> tokens = checagemToken.getTokens(false);
 		SentencaRaiz sentencaRaiz = new SentencaRaiz();
 		AtomicBoolean prefixaSet = new AtomicBoolean();

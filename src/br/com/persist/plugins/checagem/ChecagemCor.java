@@ -39,7 +39,7 @@ public class ChecagemCor {
 			doc.remove(0, doc.getLength());
 			for (Bloco bloco : modulo.getBlocos()) {
 				doc.insertString(doc.getLength(), "<set>" + Constantes.QL, attBlue);
-				doc.insertString(doc.getLength(), "    <![CDATA[" + Constantes.QL, null);
+				doc.insertString(doc.getLength(), "    <![CDATA[", null);
 				processar(doc, bloco);
 				doc.insertString(doc.getLength(), "    ]]>" + Constantes.QL, null);
 				doc.insertString(doc.getLength(), "</set>" + Constantes.QL, attBlue);
@@ -50,7 +50,7 @@ public class ChecagemCor {
 	}
 
 	private void processar(StyledDocument doc, Bloco bloco) throws ChecagemException, BadLocationException {
-		ChecagemToken checagemToken = new ChecagemToken(bloco.getString());
+		ChecagemToken checagemToken = new ChecagemToken(bloco.getString(), true);
 		List<Token> tokens = checagemToken.getTokens(true);
 		for (Token token : tokens) {
 			insert0(doc, token);

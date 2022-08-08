@@ -3,7 +3,6 @@ package br.com.persist.plugins.checagem;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLHandler;
 
 class ChecagemHandler extends XMLHandler {
@@ -36,10 +35,8 @@ class ChecagemHandler extends XMLHandler {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (BLOCO.equals(qName)) {
 			String string = builder.toString();
-			if (!Util.estaVazio(string)) {
-				Bloco bloco = modulo.getUltimoBloco();
-				bloco.setString(string);
-			}
+			Bloco bloco = modulo.getUltimoBloco();
+			bloco.setString(string);
 			limpar();
 		}
 	}

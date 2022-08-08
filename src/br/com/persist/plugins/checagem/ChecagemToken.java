@@ -8,8 +8,8 @@ public class ChecagemToken {
 	private final String string;
 	private int indice;
 
-	public ChecagemToken(String string) {
-		this.string = string.trim();
+	public ChecagemToken(String string, boolean completo) {
+		this.string = completo ? string : string.trim();
 		indice = 0;
 	}
 
