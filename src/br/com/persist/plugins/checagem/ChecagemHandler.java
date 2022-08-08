@@ -6,18 +6,11 @@ import org.xml.sax.SAXException;
 import br.com.persist.marca.XMLHandler;
 
 class ChecagemHandler extends XMLHandler {
-	private final StringBuilder builder = new StringBuilder();
 	private static final String BLOCO = "set";
 	private final Modulo modulo;
 
 	public ChecagemHandler(Modulo modulo) {
 		this.modulo = modulo;
-	}
-
-	private void limpar() {
-		if (builder.length() > 0) {
-			builder.delete(0, builder.length());
-		}
 	}
 
 	@Override
@@ -27,22 +20,23 @@ class ChecagemHandler extends XMLHandler {
 			boolean privado = Boolean.parseBoolean(attributes.getValue("privado"));
 			bloco.setPrivado(privado);
 			modulo.add(bloco);
-			limpar();
-		}
-	}
-
-	@Override
-	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (BLOCO.equals(qName)) {
-			String string = builder.toString();
-			Bloco bloco = modulo.getUltimoBloco();
-			bloco.setString(string);
-			limpar();
 		}
 	}
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		builder.append(new String(ch, start, length));
+		Bloco bloco = modulo.getUltimoBloco();
+		if (bloco != null) {
+			bloco.append(new String(ch, start, length));
+		}
+	}
+
+	@Override
+	public void startCDATA() throws SAXException {
+		Bloco bloco = modulo.getUltimoBloco();
+		if (bloco != null) {
+			bloco.append("<![CDATA[");
+			bloco.setParaString(true);
+		}
 	}
 }

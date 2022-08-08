@@ -1,15 +1,27 @@
 package br.com.persist.plugins.checagem;
 
 public class Bloco {
+	private final StringBuilder preString;
+	private final StringBuilder string;
 	private final Modulo modulo;
+	private boolean paraString;
 	private Sentenca sentenca;
 	private boolean privado;
 	private final String id;
-	private String string;
 
 	public Bloco(Modulo modulo, String id) {
+		preString = new StringBuilder();
+		string = new StringBuilder();
 		this.modulo = modulo;
 		this.id = id;
+	}
+
+	public void append(String s) {
+		if (paraString) {
+			string.append(s);
+		} else {
+			preString.append(s);
+		}
 	}
 
 	public String getId() {
@@ -28,16 +40,20 @@ public class Bloco {
 		this.sentenca = sentenca;
 	}
 
-	public String getString() {
-		return string;
+	public String getPreString() {
+		return preString.toString();
 	}
 
-	public void setString(String string) {
-		this.string = string;
+	public String getString() {
+		return string.toString();
 	}
 
 	public boolean isPrivado() {
 		return privado;
+	}
+
+	public void setParaString(boolean paraString) {
+		this.paraString = paraString;
 	}
 
 	public void setPrivado(boolean privado) {
