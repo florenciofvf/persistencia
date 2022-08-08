@@ -16,6 +16,7 @@ import br.com.persist.assistencia.Constantes;
 public class ChecagemCor {
 	private static final Logger LOG = Logger.getGlobal();
 	private final MutableAttributeSet attMagenta;
+	private final MutableAttributeSet attBlack;
 	private final MutableAttributeSet attGray;
 	private final MutableAttributeSet attBlue;
 	private final MutableAttributeSet attRed2;
@@ -24,14 +25,17 @@ public class ChecagemCor {
 	public ChecagemCor() {
 		attMagenta = new SimpleAttributeSet();
 		attBlue = new SimpleAttributeSet();
+		attBlack = new SimpleAttributeSet();
 		attGray = new SimpleAttributeSet();
 		attRed2 = new SimpleAttributeSet();
 		attRed = new SimpleAttributeSet();
 		StyleConstants.setForeground(attMagenta, Color.MAGENTA);
 		StyleConstants.setBold(attMagenta, true);
+		StyleConstants.setForeground(attBlack, Color.BLACK);
 		StyleConstants.setForeground(attBlue, Color.BLUE);
 		StyleConstants.setForeground(attGray, Color.GRAY);
 		StyleConstants.setForeground(attRed, Color.RED);
+		StyleConstants.setBold(attBlack, true);
 		StyleConstants.setBold(attRed, true);
 		StyleConstants.setForeground(attRed2, new Color(180, 0, 0));
 		StyleConstants.setBold(attRed2, true);
@@ -41,11 +45,11 @@ public class ChecagemCor {
 		try {
 			doc.remove(0, doc.getLength());
 			for (Bloco bloco : modulo.getBlocos()) {
-				doc.insertString(doc.getLength(), "<set>", attBlue);
-				doc.insertString(doc.getLength(), bloco.getPreString(), attGray);
+				insert(doc, "<set>", attBlue);
+				insert(doc, bloco.getPreString(), attGray);
 				processar(doc, bloco);
-				doc.insertString(doc.getLength(), bloco.getPosString(), attGray);
-				doc.insertString(doc.getLength(), "</set>" + Constantes.QL, attBlue);
+				insert(doc, bloco.getPosString(), attGray);
+				insert(doc, "</set>" + Constantes.QL, attBlue);
 			}
 		} catch (BadLocationException e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
@@ -62,15 +66,40 @@ public class ChecagemCor {
 
 	private void insert0(StyledDocument doc, Token token) throws BadLocationException {
 		if (token.isFuncaoInfixa() || token.isAuto()) {
-			doc.insertString(doc.getLength(), token.getValor().toString(), attRed);
+			insert(doc, token.getValor().toString(), attRed);
 		} else if (token.isVariavel()) {
-			doc.insertString(doc.getLength(), token.getValor().toString(), attMagenta);
+			insert(doc, token.getValor().toString(), attMagenta);
+		} else if (token.isVirgula()) {
+			insert(doc, token.getValor().toString(), attBlack);
 		} else if (token.isString()) {
-			doc.insertString(doc.getLength(), "'" + token.getValor().toString() + "'", attBlue);
+			insert(doc, "'" + token.getValor().toString() + "'", attBlue);
 		} else if (token.isDouble() || token.isLong()) {
-			doc.insertString(doc.getLength(), token.getValor().toString(), attRed2);
+			insert(doc, token.getValor().toString(), attRed2);
 		} else {
-			doc.insertString(doc.getLength(), token.getValor().toString(), null);
+			insert(doc, token.getValor().toString(), null);
 		}
+	}
+
+	public void novaSentenca(StyledDocument doc) {
+		try {
+			if (doc.getLength() > 0 && !doc.getText(0, doc.getLength()).endsWith(Constantes.QL)) {
+				insert(doc, Constantes.QL);
+			}
+			insert(doc, "<set>" + Constantes.QL, attBlue);
+			insert(doc, "    <![CDATA[" + Constantes.QL);
+			insert(doc, "        " + Constantes.QL);
+			insert(doc, "    ]]>" + Constantes.QL);
+			insert(doc, "</set>" + Constantes.QL, attBlue);
+		} catch (BadLocationException e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
+	}
+
+	private void insert(StyledDocument doc, String string, MutableAttributeSet att) throws BadLocationException {
+		doc.insertString(doc.getLength(), string, att);
+	}
+
+	private void insert(StyledDocument doc, String string) throws BadLocationException {
+		insert(doc, string, null);
 	}
 }

@@ -149,16 +149,7 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void novaSentenca() {
-			StringBuilder sb = new StringBuilder(areaParametros.getText());
-			if (sb.length() > 0) {
-				sb.append(Constantes.QL);
-			}
-			sb.append("<set>" + Constantes.QL);
-			sb.append("    <![CDATA[" + Constantes.QL);
-			sb.append("        " + Constantes.QL);
-			sb.append("    ]]>" + Constantes.QL);
-			sb.append("</set>");
-			areaParametros.setText(sb.toString());
+			checagemCor.novaSentenca(areaParametros.getStyledDocument());
 		}
 
 		private void checarSentenca() {
