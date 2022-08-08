@@ -39,9 +39,9 @@ public class ChecagemCor {
 			doc.remove(0, doc.getLength());
 			for (Bloco bloco : modulo.getBlocos()) {
 				doc.insertString(doc.getLength(), "<set>" + Constantes.QL, attBlue);
-				doc.insertString(doc.getLength(), "    <![CDATA[", null);
+				doc.insertString(doc.getLength(), "<![CDATA[", null);
 				processar(doc, bloco);
-				doc.insertString(doc.getLength(), "    ]]>" + Constantes.QL, null);
+				doc.insertString(doc.getLength(), "]]>" + Constantes.QL, null);
 				doc.insertString(doc.getLength(), "</set>" + Constantes.QL, attBlue);
 			}
 		} catch (BadLocationException e) {
