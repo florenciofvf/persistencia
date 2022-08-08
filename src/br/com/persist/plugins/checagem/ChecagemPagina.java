@@ -235,6 +235,7 @@ public class ChecagemPagina extends Panel {
 					linha = br.readLine();
 				}
 				areaParametros.setText(sb.toString());
+				toolbarParametro.formatar();
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ChecagemConstantes.PAINEL_CHECAGEM, ex, this);
