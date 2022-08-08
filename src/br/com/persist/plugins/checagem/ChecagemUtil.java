@@ -93,6 +93,12 @@ public class ChecagemUtil {
 		checagem.set(modulo);
 	}
 
+	public static Modulo getModulo(File file) throws ChecagemException, XMLException, IOException {
+		Modulo modulo = new Modulo(file.getName());
+		lerBlocosArquivo(modulo);
+		return modulo;
+	}
+
 	private static void atualizarGramaticaString(String idModulo, String conteudo, Checagem checagem)
 			throws ChecagemException, XMLException {
 		Modulo modulo = new Modulo(idModulo);

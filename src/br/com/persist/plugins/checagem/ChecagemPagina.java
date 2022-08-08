@@ -43,6 +43,7 @@ import br.com.persist.marca.XMLException;
 public class ChecagemPagina extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
+	private final transient ChecagemCor checagemCor = new ChecagemCor();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private ScrollPane scrollPane;
@@ -139,6 +140,12 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void formatar() {
+			try {
+				Modulo modulo = ChecagemUtil.getModulo(file);
+				checagemCor.processar(areaParametros.getStyledDocument(), modulo);
+			} catch (ChecagemException | XMLException | IOException e) {
+				Util.mensagem(ChecagemPagina.this, e.getMessage());
+			}
 		}
 
 		private void novaSentenca() {
