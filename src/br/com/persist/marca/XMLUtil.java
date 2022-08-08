@@ -96,7 +96,7 @@ public class XMLUtil {
 		return this;
 	}
 
-	private String citar(String valor) {
+	public static String citar(String valor) {
 		return "\"" + Util.escapar(valor) + "\"";
 	}
 

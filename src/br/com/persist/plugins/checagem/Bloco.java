@@ -1,5 +1,8 @@
 package br.com.persist.plugins.checagem;
 
+import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLUtil;
+
 public class Bloco {
 	private final StringBuilder preString;
 	private final StringBuilder posString;
@@ -28,6 +31,17 @@ public class Bloco {
 		} else if (paraPos) {
 			posString.append(s);
 		}
+	}
+
+	public String getAtts() {
+		StringBuilder sb = new StringBuilder();
+		if (!Util.estaVazio(id)) {
+			sb.append(" id=" + XMLUtil.citar(id));
+		}
+		if (privado) {
+			sb.append(" privado=" + XMLUtil.citar("" + privado));
+		}
+		return sb.toString();
 	}
 
 	public String getId() {

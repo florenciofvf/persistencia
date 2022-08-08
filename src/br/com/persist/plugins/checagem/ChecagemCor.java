@@ -45,7 +45,7 @@ public class ChecagemCor {
 		try {
 			doc.remove(0, doc.getLength());
 			for (Bloco bloco : modulo.getBlocos()) {
-				insert(doc, "<set>", attBlue);
+				insert(doc, "<set" + bloco.getAtts() + ">", attBlue);
 				insert(doc, bloco.getPreString(), attGray);
 				processar(doc, bloco);
 				insert(doc, bloco.getPosString(), attGray);
