@@ -15,12 +15,23 @@ import br.com.persist.assistencia.Constantes;
 
 public class ChecagemCor {
 	private static final Logger LOG = Logger.getGlobal();
+	private final MutableAttributeSet attMagenta;
 	private final MutableAttributeSet attBlue;
+	private final MutableAttributeSet attRed2;
+	private final MutableAttributeSet attRed;
 
 	public ChecagemCor() {
+		attMagenta = new SimpleAttributeSet();
 		attBlue = new SimpleAttributeSet();
+		attRed2 = new SimpleAttributeSet();
+		attRed = new SimpleAttributeSet();
+		StyleConstants.setForeground(attMagenta, Color.MAGENTA);
+		StyleConstants.setBold(attMagenta, true);
 		StyleConstants.setForeground(attBlue, Color.BLUE);
-		StyleConstants.setBold(attBlue, true);
+		StyleConstants.setForeground(attRed, Color.RED);
+		StyleConstants.setBold(attRed, true);
+		StyleConstants.setForeground(attRed2, new Color(180, 0, 0));
+		StyleConstants.setBold(attRed2, true);
 	}
 
 	public void processar(StyledDocument doc, Modulo modulo) throws ChecagemException {
@@ -28,17 +39,17 @@ public class ChecagemCor {
 			doc.remove(0, doc.getLength());
 			for (Bloco bloco : modulo.getBlocos()) {
 				doc.insertString(doc.getLength(), "<set>" + Constantes.QL, attBlue);
-				doc.insertString(doc.getLength(), "    <![CDATA[", null);
+				doc.insertString(doc.getLength(), "    <![CDATA[" + Constantes.QL, null);
 				processar(doc, bloco);
 				doc.insertString(doc.getLength(), "    ]]>" + Constantes.QL, null);
-				doc.insertString(doc.getLength(), "</set>", attBlue);
+				doc.insertString(doc.getLength(), "</set>" + Constantes.QL, attBlue);
 			}
 		} catch (BadLocationException e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 
-	private void processar(StyledDocument doc, Bloco bloco) throws ChecagemException {
+	private void processar(StyledDocument doc, Bloco bloco) throws ChecagemException, BadLocationException {
 		ChecagemToken checagemToken = new ChecagemToken(bloco.getString());
 		List<Token> tokens = checagemToken.getTokens(true);
 		for (Token token : tokens) {
@@ -46,7 +57,17 @@ public class ChecagemCor {
 		}
 	}
 
-	private void insert0(StyledDocument doc, Token token) {
-
+	private void insert0(StyledDocument doc, Token token) throws BadLocationException {
+		if (token.isFuncaoInfixa() || token.isAuto()) {
+			doc.insertString(doc.getLength(), token.getValor().toString(), attRed);
+		} else if (token.isVariavel()) {
+			doc.insertString(doc.getLength(), token.getValor().toString(), attMagenta);
+		} else if (token.isString()) {
+			doc.insertString(doc.getLength(), "'" + token.getValor().toString() + "'", attBlue);
+		} else if (token.isDouble() || token.isLong()) {
+			doc.insertString(doc.getLength(), token.getValor().toString(), attRed2);
+		} else {
+			doc.insertString(doc.getLength(), token.getValor().toString(), null);
+		}
 	}
 }
