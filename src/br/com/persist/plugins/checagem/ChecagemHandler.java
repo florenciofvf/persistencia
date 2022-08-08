@@ -3,6 +3,7 @@ package br.com.persist.plugins.checagem;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.marca.XMLHandler;
 
 class ChecagemHandler extends XMLHandler {
@@ -36,7 +37,20 @@ class ChecagemHandler extends XMLHandler {
 		Bloco bloco = modulo.getUltimoBloco();
 		if (bloco != null) {
 			bloco.append("<![CDATA[");
+			bloco.setParaPre(false);
 			bloco.setParaString(true);
+		}
+	}
+
+	@Override
+	public void endCDATA() throws SAXException {
+		Bloco bloco = modulo.getUltimoBloco();
+		if (bloco != null) {
+			bloco.setParaPre(false);
+			bloco.setParaString(false);
+			bloco.setParaPos(true);
+			bloco.append("]]>" + Constantes.QL);
+			bloco.setParaPos(false);
 		}
 	}
 }

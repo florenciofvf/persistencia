@@ -41,7 +41,7 @@ public class ChecagemCor {
 				doc.insertString(doc.getLength(), "<set>", attBlue);
 				doc.insertString(doc.getLength(), bloco.getPreString(), null);
 				processar(doc, bloco);
-				doc.insertString(doc.getLength(), "]]>" + Constantes.QL, null);
+				doc.insertString(doc.getLength(), bloco.getPosString(), null);
 				doc.insertString(doc.getLength(), "</set>" + Constantes.QL, attBlue);
 			}
 		} catch (BadLocationException e) {
