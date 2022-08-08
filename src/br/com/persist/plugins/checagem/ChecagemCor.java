@@ -16,6 +16,7 @@ import br.com.persist.assistencia.Constantes;
 public class ChecagemCor {
 	private static final Logger LOG = Logger.getGlobal();
 	private final MutableAttributeSet attMagenta;
+	private final MutableAttributeSet attGray;
 	private final MutableAttributeSet attBlue;
 	private final MutableAttributeSet attRed2;
 	private final MutableAttributeSet attRed;
@@ -23,11 +24,13 @@ public class ChecagemCor {
 	public ChecagemCor() {
 		attMagenta = new SimpleAttributeSet();
 		attBlue = new SimpleAttributeSet();
+		attGray = new SimpleAttributeSet();
 		attRed2 = new SimpleAttributeSet();
 		attRed = new SimpleAttributeSet();
 		StyleConstants.setForeground(attMagenta, Color.MAGENTA);
 		StyleConstants.setBold(attMagenta, true);
 		StyleConstants.setForeground(attBlue, Color.BLUE);
+		StyleConstants.setForeground(attGray, Color.GRAY);
 		StyleConstants.setForeground(attRed, Color.RED);
 		StyleConstants.setBold(attRed, true);
 		StyleConstants.setForeground(attRed2, new Color(180, 0, 0));
@@ -39,9 +42,9 @@ public class ChecagemCor {
 			doc.remove(0, doc.getLength());
 			for (Bloco bloco : modulo.getBlocos()) {
 				doc.insertString(doc.getLength(), "<set>", attBlue);
-				doc.insertString(doc.getLength(), bloco.getPreString(), null);
+				doc.insertString(doc.getLength(), bloco.getPreString(), attGray);
 				processar(doc, bloco);
-				doc.insertString(doc.getLength(), bloco.getPosString(), null);
+				doc.insertString(doc.getLength(), bloco.getPosString(), attGray);
 				doc.insertString(doc.getLength(), "</set>" + Constantes.QL, attBlue);
 			}
 		} catch (BadLocationException e) {
