@@ -2333,7 +2333,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						if (selecionado(pesquisa, coletor.getLista())) {
 							Referencia ref = (Referencia) mapaRef.get("ref");
 							atualizarPesquisa(vinculacao, atom, pesquisa, ref);
-							addInvertido(mapaRef, vinculacao);
+							if (addInvertido(mapaRef, vinculacao)) {
+								atom.set(true);
+							}
 							objeto.addReferencia(ref);
 							pesquisa.add(ref);
 							buscaAuto = true;
@@ -2367,9 +2369,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					buscaAuto = true;
 				}
 
-				private void addInvertido(Map<String, Object> mapaRef, Vinculacao vinculacao) {
+				private boolean addInvertido(Map<String, Object> mapaRef, Vinculacao vinculacao) {
 					Pesquisa pesquisa = (Pesquisa) mapaRef.get(ObjetoConstantes.PESQUISA_INVERTIDO);
-					vinculacao.adicionarPesquisa(pesquisa);
+					return vinculacao.adicionarPesquisa(pesquisa);
 				}
 
 				private boolean selecionado(Pesquisa pesquisa, List<String> lista) {
