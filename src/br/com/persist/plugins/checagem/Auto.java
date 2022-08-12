@@ -1,5 +1,5 @@
 package br.com.persist.plugins.checagem;
 
 public interface Auto {
-	public abstract void encerrar() throws ChecagemException;
+	public void encerrar() throws ChecagemException;
 }
