@@ -21,9 +21,8 @@ public class Arquivo {
 	private File file;
 
 	public Arquivo(File file) {
-		Objects.requireNonNull(file);
+		this.file = Objects.requireNonNull(file);
 		filhos = new ArrayList<>();
-		this.file = file;
 	}
 
 	public void inflar() {

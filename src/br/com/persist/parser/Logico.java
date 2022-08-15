@@ -14,8 +14,7 @@ public class Logico extends Tipo {
 	private final Boolean conteudo;
 
 	public Logico(Boolean conteudo) {
-		Objects.requireNonNull(conteudo);
-		this.conteudo = conteudo;
+		this.conteudo = Objects.requireNonNull(conteudo);
 	}
 
 	@Override

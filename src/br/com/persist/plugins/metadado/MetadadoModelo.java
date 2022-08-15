@@ -20,8 +20,7 @@ public class MetadadoModelo implements TreeModel {
 	}
 
 	public MetadadoModelo(Metadado raiz) {
-		Objects.requireNonNull(raiz);
-		this.raiz = raiz;
+		this.raiz = Objects.requireNonNull(raiz);
 	}
 
 	@Override

@@ -24,11 +24,9 @@ public class InternalTransferidor implements Transferable {
 	public static final byte ARRAY_INDICE_DIM = 2;
 
 	public InternalTransferidor(Objeto objeto, Conexao conexao, Dimension dimension) {
-		Objects.requireNonNull(dimension);
-		Objects.requireNonNull(conexao);
 		Objects.requireNonNull(objeto);
-		this.dimension = dimension;
-		this.conexao = conexao;
+		this.dimension = Objects.requireNonNull(dimension);
+		this.conexao = Objects.requireNonNull(conexao);
 		this.objeto = objeto.isClonarAoDestacar() ? objeto.clonar() : objeto;
 	}
 

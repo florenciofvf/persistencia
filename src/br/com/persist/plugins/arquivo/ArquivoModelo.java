@@ -32,8 +32,7 @@ public class ArquivoModelo implements TreeModel {
 	}
 
 	public ArquivoModelo(Arquivo raiz) {
-		Objects.requireNonNull(raiz);
-		this.raiz = raiz;
+		this.raiz = Objects.requireNonNull(raiz);
 		iniIgnorados();
 		raiz.inflar();
 	}

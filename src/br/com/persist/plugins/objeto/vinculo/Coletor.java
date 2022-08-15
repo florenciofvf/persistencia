@@ -7,8 +7,7 @@ public class Coletor {
 	private int total;
 
 	public Coletor(String chave) {
-		Objects.requireNonNull(chave);
-		this.chave = chave;
+		this.chave = Objects.requireNonNull(chave);
 	}
 
 	public int getTotal() {

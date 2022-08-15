@@ -45,12 +45,10 @@ public class Relacao {
 
 	public Relacao(Objeto origem, boolean pontoOrigem, Objeto destino, boolean pontoDestino) {
 		this.pontoDestino = pontoDestino;
-		Objects.requireNonNull(destino);
 		this.pontoOrigem = pontoOrigem;
-		Objects.requireNonNull(origem);
-		this.destino = destino;
-		this.origem = origem;
-		if (origem == destino || origem.equals(destino)) {
+		this.destino = Objects.requireNonNull(destino);
+		this.origem = Objects.requireNonNull(origem);
+		if (origem.equals(destino)) {
 			throw new IllegalStateException();
 		}
 	}

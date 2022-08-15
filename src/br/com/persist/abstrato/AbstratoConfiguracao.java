@@ -16,9 +16,8 @@ public abstract class AbstratoConfiguracao extends Panel implements WindowHandle
 	protected final Formulario formulario;
 
 	public AbstratoConfiguracao(Formulario formulario, String titulo) {
-		Objects.requireNonNull(formulario);
 		Objects.requireNonNull(titulo);
-		this.formulario = formulario;
+		this.formulario = Objects.requireNonNull(formulario);
 		setBorder(BorderFactory.createTitledBorder(titulo));
 	}
 

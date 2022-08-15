@@ -22,8 +22,7 @@ public class OrdenacaoModelo extends AbstractTableModel {
 	private int coluna;
 
 	public OrdenacaoModelo(PersistenciaModelo model) {
-		Objects.requireNonNull(model);
-		this.model = model;
+		this.model = Objects.requireNonNull(model);
 		iniArray();
 	}
 

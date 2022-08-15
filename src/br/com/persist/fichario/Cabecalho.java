@@ -36,10 +36,8 @@ class Cabecalho extends Panel {
 	Cabecalho(Fichario fichario, Pagina pagina) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-		Objects.requireNonNull(fichario);
-		Objects.requireNonNull(pagina);
-		this.fichario = fichario;
-		this.pagina = pagina;
+		this.fichario = Objects.requireNonNull(fichario);
+		this.pagina = Objects.requireNonNull(pagina);
 		setOpaque(false);
 		Titulo titulo = pagina.getTitulo();
 		String title = Preferencias.isTituloAbaMin() ? titulo.getTituloMin() : titulo.getTitulo();

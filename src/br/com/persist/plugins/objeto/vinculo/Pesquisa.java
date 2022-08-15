@@ -18,13 +18,12 @@ public class Pesquisa {
 	private String nome;
 
 	public Pesquisa(String nome, Referencia ref) {
-		Objects.requireNonNull(ref);
+		this.referencia = Objects.requireNonNull(ref);
 		if (Util.estaVazio(nome)) {
 			throw new IllegalStateException("Nome da pesquisa vazia.");
 		}
 		referenciasApos = new ArrayList<>();
 		referencias = new ArrayList<>();
-		this.referencia = ref;
 		this.nome = nome;
 	}
 

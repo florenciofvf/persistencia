@@ -40,8 +40,7 @@ public class AnexoModelo implements TreeModel {
 	}
 
 	public AnexoModelo(Anexo raiz) {
-		Objects.requireNonNull(raiz);
-		this.raiz = raiz;
+		this.raiz = Objects.requireNonNull(raiz);
 		inicializar();
 		raiz.inflar(new StringBuilder());
 	}

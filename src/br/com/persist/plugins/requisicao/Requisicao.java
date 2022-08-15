@@ -14,8 +14,7 @@ public class Requisicao {
 	private String url;
 
 	public Requisicao(Tipo tipo) {
-		Objects.requireNonNull(tipo);
-		this.tipo = tipo;
+		this.tipo = Objects.requireNonNull(tipo);
 		init();
 	}
 

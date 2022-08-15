@@ -31,9 +31,8 @@ public class Anexo {
 	private Anexo pai;
 
 	public Anexo(File file) {
-		Objects.requireNonNull(file);
+		this.file = Objects.requireNonNull(file);
 		filhos = new ArrayList<>();
-		this.file = file;
 	}
 
 	public void inflar(StringBuilder sb) {

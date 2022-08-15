@@ -31,8 +31,7 @@ public class IconeContainer extends Panel {
 	private int totalIcones;
 
 	public IconeContainer(Janela janela, IconeListener listener, String iconeSel) {
-		Objects.requireNonNull(listener);
-		this.listener = listener;
+		this.listener = Objects.requireNonNull(listener);
 		this.iconeSel = iconeSel;
 		toolbar.ini(janela);
 		montarLayout();

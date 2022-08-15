@@ -15,8 +15,7 @@ public class Texto extends Tipo {
 	private String alternativo;
 
 	public Texto(String conteudo) {
-		Objects.requireNonNull(conteudo);
-		this.conteudo = conteudo;
+		this.conteudo = Objects.requireNonNull(conteudo);
 	}
 
 	@Override

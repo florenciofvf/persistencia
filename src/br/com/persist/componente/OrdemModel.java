@@ -18,8 +18,7 @@ public class OrdemModel extends AbstractTableModel {
 	private int coluna;
 
 	public OrdemModel(TableModel model) {
-		Objects.requireNonNull(model);
-		this.model = model;
+		this.model = Objects.requireNonNull(model);
 		iniArray();
 	}
 

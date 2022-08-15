@@ -14,8 +14,7 @@ public class Numero extends Tipo {
 	private final Number conteudo;
 
 	public Numero(Number conteudo) {
-		Objects.requireNonNull(conteudo);
-		this.conteudo = conteudo;
+		this.conteudo = Objects.requireNonNull(conteudo);
 	}
 
 	@Override

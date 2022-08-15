@@ -8,9 +8,8 @@ public class IndiceValor {
 	public final int indice;
 
 	public IndiceValor(int indice, Object valor) {
-		Objects.requireNonNull(valor);
+		this.valor = Objects.requireNonNull(valor);
 		this.indice = indice;
-		this.valor = valor;
 	}
 
 	public boolean igual(List<Object> registro) {
