@@ -1,9 +1,5 @@
 package br.com.persist.plugins.checagem.util;
 
-import java.util.List;
-
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
@@ -27,24 +23,10 @@ public class ExecModulo extends FuncaoBinaria {
 		if (modulo == null) {
 			throwModuloInexistente(idModulo);
 		}
-		List<Object> lista = modulo.processar(checagem, null, Contexto.criar(op1));
-		StringBuilder sb = new StringBuilder();
-		for (Object object : lista) {
-			append(sb, object);
-		}
-		return sb.toString();
+		return modulo.executar(checagem, null, Contexto.criar(op1));
 	}
 
 	private void throwModuloInexistente(String idModulo) throws ChecagemException {
 		throw new ChecagemException(getClass(), "Modulo inexistente! >>> " + idModulo);
-	}
-
-	private void append(StringBuilder sb, Object obj) {
-		if (obj != null && !Util.estaVazio(obj.toString())) {
-			if (sb.length() > 0) {
-				sb.append(Constantes.QL);
-			}
-			sb.append(obj.toString());
-		}
 	}
 }

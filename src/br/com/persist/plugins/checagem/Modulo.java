@@ -3,6 +3,9 @@ package br.com.persist.plugins.checagem;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
+
 public class Modulo {
 	private final List<Bloco> blocos;
 	private final String id;
@@ -72,6 +75,28 @@ public class Modulo {
 			}
 		}
 		return resp;
+	}
+
+	public String executar(Checagem checagem, String idBloco, Contexto ctx) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			List<Object> lista = processar(checagem, idBloco, ctx);
+			for (Object object : lista) {
+				append(sb, object);
+			}
+		} catch (ChecagemException ex) {
+			append(sb, ex.getMessage());
+		}
+		return sb.toString();
+	}
+
+	private void append(StringBuilder sb, Object obj) {
+		if (obj != null && !Util.estaVazio(obj.toString())) {
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(obj.toString());
+		}
 	}
 
 	@Override

@@ -24,6 +24,20 @@ public class Checagem {
 		return modulo.processar(this, idBloco, ctx);
 	}
 
+	public String executar(String idModulo, String idBloco, Contexto ctx) {
+		if (idModulo == null) {
+			return "idModulo null";
+		}
+		if (ctx == null) {
+			return "ctx null";
+		}
+		Modulo modulo = getModulo(idModulo);
+		if (modulo == null) {
+			return "Modulo inexistente! >>> " + idModulo;
+		}
+		return modulo.executar(this, idBloco, ctx);
+	}
+
 	public Modulo getModulo(String idModulo) {
 		if (idModulo == null) {
 			return null;
