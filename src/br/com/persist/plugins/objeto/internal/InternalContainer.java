@@ -89,6 +89,7 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.IconeListener;
+import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.ChecagemUtil;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.conexao.Conexao;
@@ -1736,6 +1737,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private void checarRegistro() {
+				try {
+					ChecagemUtil.checarModulo(objeto.getTabela());
+				} catch (ChecagemException ex) {
+					Util.stackTraceAndMessage(DESCRICAO, ex, InternalContainer.this);
+					return;
+				}
 				Conexao conexao = getConexao();
 				Connection conn = null;
 				if (conexao != null) {
