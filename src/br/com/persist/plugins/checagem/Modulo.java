@@ -53,7 +53,7 @@ public class Modulo {
 		}
 	}
 
-	public List<Object> executar(Checagem checagem, String idBloco, Contexto ctx) throws ChecagemException {
+	public List<Object> processar(Checagem checagem, String idBloco, Contexto ctx) throws ChecagemException {
 		List<Object> resp = new ArrayList<>();
 		if (idBloco != null) {
 			Bloco bloco = getBloco(idBloco);

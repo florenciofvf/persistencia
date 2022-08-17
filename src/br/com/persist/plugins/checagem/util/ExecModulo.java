@@ -27,7 +27,7 @@ public class ExecModulo extends FuncaoBinaria {
 		if (modulo == null) {
 			throwModuloInexistente(idModulo);
 		}
-		List<Object> lista = modulo.executar(checagem, null, Contexto.criar(op1));
+		List<Object> lista = modulo.processar(checagem, null, Contexto.criar(op1));
 		StringBuilder sb = new StringBuilder();
 		for (Object object : lista) {
 			append(sb, object);

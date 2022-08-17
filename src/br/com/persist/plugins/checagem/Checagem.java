@@ -21,7 +21,7 @@ public class Checagem {
 		if (modulo == null) {
 			throw new ChecagemException(getClass(), "modulo null");
 		}
-		return modulo.executar(this, idBloco, ctx);
+		return modulo.processar(this, idBloco, ctx);
 	}
 
 	public Modulo getModulo(String idModulo) {
