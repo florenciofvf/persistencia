@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
@@ -44,13 +43,12 @@ public class ChecagemPagina extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final transient ChecagemCor checagemCor = new ChecagemCor();
-	private final JTabbedPane tabbedPane = new JTabbedPane();
+	private final JTextPane areaResultado = new JTextPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private ScrollPane scrollPane;
 	private final File file;
 
 	public ChecagemPagina(File file) {
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.file = file;
 		montarLayout();
 		abrir();
@@ -74,7 +72,7 @@ public class ChecagemPagina extends Panel {
 
 	private Panel criarPanelResultado() {
 		Panel panel = new Panel();
-		panel.add(BorderLayout.CENTER, tabbedPane);
+		panel.add(BorderLayout.CENTER, areaResultado);
 		return panel;
 	}
 
@@ -100,6 +98,7 @@ public class ChecagemPagina extends Panel {
 		private Action checarAcao = actionIcon("label.checar_sentenca", Icones.SUCESSO);
 		private Action criarAcao = actionIcon("label.nova_sentenca", Icones.CRIAR2);
 		private Action formatarAcao = actionIcon("label.formatar", Icones.ELEMENTO);
+		private Action executarAcao = actionIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
@@ -109,15 +108,23 @@ public class ChecagemPagina extends Panel {
 			addButton(checarAcao);
 			addButton(sincronizarAcao);
 			addButton(formatarAcao);
+			addButton(executarAcao);
 			atualizarAcao.text(ChecagemMensagens.getString("label.atualizar_cache"));
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			sincronizarAcao.setActionListener(e -> sincronizarSentencas());
 			checarAcao.setActionListener(e -> checarSentenca());
 			criarAcao.setActionListener(e -> novaSentenca());
 			formatarAcao.setActionListener(e -> formatar());
+			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
 			add(label);
+		}
+
+		private void executar() {
+			Contexto ctx = new Contexto();
+			String string = ChecagemUtil.executar(file.getName(), null, ctx);
+			areaResultado.setText(string);
 		}
 
 		private void sincronizarSentencas() {

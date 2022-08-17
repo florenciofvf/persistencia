@@ -47,6 +47,28 @@ public class ChecagemUtil {
 		return checagem.processar(idModulo, idBloco, ctx);
 	}
 
+	public static String executar(String idModulo, String idBloco, Contexto ctx) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			List<Object> lista = ChecagemUtil.processar(idModulo, idBloco, ctx);
+			for (Object object : lista) {
+				append(sb, object);
+			}
+		} catch (ChecagemException | XMLException | IOException e) {
+			append(sb, e.getMessage());
+		}
+		return sb.toString();
+	}
+
+	private static void append(StringBuilder sb, Object obj) {
+		if (obj != null && !Util.estaVazio(obj.toString())) {
+			if (sb.length() > 0) {
+				sb.append(Constantes.QL);
+			}
+			sb.append(obj.toString());
+		}
+	}
+
 	public static void checarModulo(String idModulo) throws ChecagemException {
 		Modulo modulo = checagem.getModulo(idModulo);
 		if (modulo == null) {

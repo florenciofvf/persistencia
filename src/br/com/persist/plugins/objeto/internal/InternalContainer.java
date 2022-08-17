@@ -27,7 +27,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,8 +89,6 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 import br.com.persist.icone.IconeDialogo;
 import br.com.persist.icone.IconeListener;
-import br.com.persist.marca.XMLException;
-import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.ChecagemUtil;
 import br.com.persist.plugins.checagem.Contexto;
 import br.com.persist.plugins.conexao.Conexao;
@@ -1769,27 +1766,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
 						InternalContainer.this, null);
 				Map<String, Object> map = modelo.getMap(linhas[0], coletor, null);
-				StringBuilder sb = new StringBuilder();
-				try {
-					Contexto ctx = new Contexto(map);
-					ctx.put("CONEXAO_SEL", conn);
-					List<Object> lista = ChecagemUtil.processar(objeto.getTabela(), null, ctx);
-					for (Object object : lista) {
-						append(sb, object);
-					}
-				} catch (ChecagemException | XMLException | IOException e) {
-					append(sb, e.getMessage());
-				}
-				Util.mensagem(InternalContainer.this, sb.toString());
-			}
-
-			private void append(StringBuilder sb, Object obj) {
-				if (obj != null && !Util.estaVazio(obj.toString())) {
-					if (sb.length() > 0) {
-						sb.append(Constantes.QL);
-					}
-					sb.append(obj.toString());
-				}
+				Contexto ctx = new Contexto(map);
+				ctx.put("CONEXAO_SEL", conn);
+				String string = ChecagemUtil.executar(objeto.getTabela(), null, ctx);
+				Util.mensagem(InternalContainer.this, string);
 			}
 
 			private class MenuTemp extends Menu {
