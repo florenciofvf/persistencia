@@ -17,28 +17,28 @@ public class ChecagemCor {
 	private static final Logger LOG = Logger.getGlobal();
 	private final MutableAttributeSet attMagenta;
 	private final MutableAttributeSet attBlack;
+	private final MutableAttributeSet attGreen;
 	private final MutableAttributeSet attGray;
 	private final MutableAttributeSet attBlue;
-	private final MutableAttributeSet attRed2;
 	private final MutableAttributeSet attRed;
 
 	public ChecagemCor() {
 		attMagenta = new SimpleAttributeSet();
-		attBlue = new SimpleAttributeSet();
 		attBlack = new SimpleAttributeSet();
+		attGreen = new SimpleAttributeSet();
 		attGray = new SimpleAttributeSet();
-		attRed2 = new SimpleAttributeSet();
+		attBlue = new SimpleAttributeSet();
 		attRed = new SimpleAttributeSet();
+		StyleConstants.setForeground(attGreen, new Color(0, 125, 0));
 		StyleConstants.setForeground(attMagenta, Color.MAGENTA);
-		StyleConstants.setBold(attMagenta, true);
 		StyleConstants.setForeground(attBlack, Color.BLACK);
 		StyleConstants.setForeground(attBlue, Color.BLUE);
 		StyleConstants.setForeground(attGray, Color.GRAY);
 		StyleConstants.setForeground(attRed, Color.RED);
+		StyleConstants.setBold(attMagenta, true);
 		StyleConstants.setBold(attBlack, true);
+		StyleConstants.setBold(attGreen, true);
 		StyleConstants.setBold(attRed, true);
-		StyleConstants.setForeground(attRed2, new Color(180, 0, 0));
-		StyleConstants.setBold(attRed2, true);
 	}
 
 	public void processar(StyledDocument doc, Modulo modulo) throws ChecagemException {
@@ -74,7 +74,7 @@ public class ChecagemCor {
 		} else if (token.isString()) {
 			insert(doc, "'" + token.getValor().toString() + "'", attBlue);
 		} else if (token.isDouble() || token.isLong()) {
-			insert(doc, token.getValor().toString(), attRed2);
+			insert(doc, token.getValor().toString(), attGreen);
 		} else {
 			insert(doc, token.getValor().toString(), null);
 		}
