@@ -101,7 +101,8 @@ public class RequisicaoUtil {
 		}
 		URL url2 = new URL(url);
 		URLConnection conn = url2.openConnection();
-		String verbo = setRequestPropertyAndGetVerbo(header, conn);
+		setRequestProperty(header, conn);
+		String verbo = getVerbo(header, conn);
 		checarDoOutput(parametros, conn, verbo);
 		conn.connect();
 		sePost(parametros, conn, verbo);
@@ -111,13 +112,18 @@ public class RequisicaoUtil {
 		return conn.getInputStream();
 	}
 
-	public static String setRequestPropertyAndGetVerbo(Map<String, String> header, URLConnection conn) {
-		String verbo = null;
+	private static void setRequestProperty(Map<String, String> header, URLConnection conn) {
 		if (header != null) {
-			verbo = header.get("Request-Method");
 			for (Map.Entry<String, String> entry : header.entrySet()) {
 				conn.setRequestProperty(entry.getKey(), entry.getValue());
 			}
+		}
+	}
+
+	public static String getVerbo(Map<String, String> header, URLConnection conn) {
+		String verbo = null;
+		if (header != null) {
+			verbo = header.get("Request-Method");
 		}
 		return verbo;
 	}
