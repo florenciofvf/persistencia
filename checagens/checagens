@@ -37,6 +37,9 @@ br.com.persist.plugins.checagem.util.SetAtributoContexto
 set
 br.com.persist.plugins.checagem.util.SetAtributoContexto
 
+request
+br.com.persist.plugins.checagem.util.Request
+
 returnNull
 br.com.persist.plugins.checagem.util.ReturnNull
 
