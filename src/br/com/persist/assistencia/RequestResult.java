@@ -48,6 +48,16 @@ public class RequestResult {
 		return null;
 	}
 
+	public String getCookie() {
+		if (headerFields != null) {
+			List<String> list = headerFields.get("Set-Cookie");
+			if (list != null && !list.isEmpty()) {
+				return list.get(0);
+			}
+		}
+		return null;
+	}
+
 	private List<String> getList(Map<String, List<String>> map) {
 		List<String> list = map.get("Content-Type");
 		if (list == null) {

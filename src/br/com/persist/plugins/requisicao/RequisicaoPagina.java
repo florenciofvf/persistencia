@@ -26,7 +26,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -693,17 +692,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			Objeto parametros = (Objeto) parser.parse(string);
 			RequestResult result = RequestUtil.processar(parametros);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
-			setVarCookie(result.getHeaderFields(), varCookie);
+			RequisicaoVisualizadorHeader.setVarCookie(varCookie, result.getCookie());
 			processarResposta(result.getInputStream(), parametros, result.getUrl(), result.getMime());
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
-		}
-	}
-
-	private void setVarCookie(Map<String, List<String>> map, String varCookie) {
-		if (map != null) {
-			RequisicaoVisualizadorHeader.setVarCookie(map, varCookie);
 		}
 	}
 

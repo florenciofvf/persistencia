@@ -32,7 +32,7 @@ public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 			String string = Util.getString(bytes);
 			textPane.setText(string);
 			String varAuthToken = RequisicaoUtil.getAtributoVarAuthToken(parametros);
-			setVarAuthToken(string, varAuthToken);
+			setVarAuthToken(varAuthToken, string);
 
 			Panel panelTextPane = new Panel();
 			panelTextPane.add(BorderLayout.CENTER, textPane);

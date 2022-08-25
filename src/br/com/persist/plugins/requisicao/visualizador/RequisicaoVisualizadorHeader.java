@@ -1,8 +1,5 @@
 package br.com.persist.plugins.requisicao.visualizador;
 
-import java.util.List;
-import java.util.Map;
-
 import br.com.persist.assistencia.Util;
 import br.com.persist.parser.Objeto;
 import br.com.persist.parser.Texto;
@@ -35,8 +32,8 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		}
 	}
 
-	protected void setVarAuthToken(String string, String varAuthToken) {
-		if (Util.estaVazio(string) || Util.estaVazio(varAuthToken)) {
+	protected void setVarAuthToken(String varAuthToken, String string) {
+		if (Util.estaVazio(varAuthToken) || Util.estaVazio(string)) {
 			return;
 		}
 		String str = "name=\"authenticity_token\" value=\"";
@@ -55,20 +52,16 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		}
 	}
 
-	public static void setVarCookie(Map<String, List<String>> map, String varCookie) {
-		if (map == null || Util.estaVazio(varCookie)) {
+	public static void setVarCookie(String varCookie, String cookie) {
+		if (Util.estaVazio(varCookie) || Util.estaVazio(cookie)) {
 			return;
 		}
-		List<String> lista = map.get("Set-Cookie");
-		if (lista != null && !lista.isEmpty()) {
-			String valor = lista.get(0);
-			Variavel var = VariavelProvedor.getVariavel(varCookie);
-			if (var == null) {
-				var = new Variavel(varCookie, valor);
-				VariavelProvedor.adicionar(var);
-			} else {
-				var.setValor(valor);
-			}
+		Variavel var = VariavelProvedor.getVariavel(varCookie);
+		if (var == null) {
+			var = new Variavel(varCookie, cookie);
+			VariavelProvedor.adicionar(var);
+		} else {
+			var.setValor(cookie);
 		}
 	}
 }
