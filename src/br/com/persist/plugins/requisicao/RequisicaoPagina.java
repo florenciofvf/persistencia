@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -690,42 +689,20 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			Parser parser = new Parser();
 			string = VariavelProvedor.substituir(string);
 			Tipo parametros = parser.parse(string);
-			StringBuilder sbUrl = new StringBuilder();
-			AtomicReference<Map<String, List<String>>> mapResponseHeader = new AtomicReference<>();
-			InputStream is = RequisicaoUtil.requisicao(parametros, mapResponseHeader, sbUrl);
+			RequisicaoResult result = RequisicaoUtil.requisicao(parametros);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
-			String mime = getMime(mapResponseHeader, varCookie);
-			processarResposta(is, parametros, sbUrl.toString(), mime);
+			setVarCookie(result.getHeaderFields(), varCookie);
+			processarResposta(result.getInputStream(), parametros, result.getUrl(), result.getMime());
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
 	}
 
-	private String getMime(AtomicReference<Map<String, List<String>>> mapHeader, String varCookie) {
-		String mime = null;
-		Map<String, List<String>> map = mapHeader.get();
+	private void setVarCookie(Map<String, List<String>> map, String varCookie) {
 		if (map != null) {
-			List<String> list = RequisicaoUtil.getList(map);
-			if (list != null && !list.isEmpty()) {
-				mime = get(list);
-			}
 			RequisicaoVisualizadorHeader.setVarCookie(map, varCookie);
 		}
-		return mime;
-	}
-
-	private String get(List<String> list) {
-		StringBuilder sb = new StringBuilder();
-		for (String string : list) {
-			if (!Util.estaVazio(string)) {
-				if (sb.length() > 0) {
-					sb.append(" ");
-				}
-				sb.append(string.trim());
-			}
-		}
-		return sb.toString().trim();
 	}
 
 	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime) throws IOException {

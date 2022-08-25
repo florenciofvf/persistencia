@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 import java.util.Map;
 
 import br.com.persist.assistencia.Util;
@@ -16,17 +15,6 @@ import br.com.persist.parser.Tipo;
 public class RequisicaoUtil {
 
 	private RequisicaoUtil() {
-	}
-
-	public static List<String> getList(Map<String, List<String>> map) {
-		List<String> list = map.get("Content-Type");
-		if (list == null) {
-			list = map.get("content-type");
-		}
-		if (list == null) {
-			list = map.get("CONTENT-TYPE");
-		}
-		return list;
 	}
 
 	public static boolean getAutoSaveVar(Tipo parametros) {
@@ -88,7 +76,8 @@ public class RequisicaoUtil {
 		return null;
 	}
 
-	private static RequisicaoResult requisicao(String url, Map<String, String> requestHeader, String parameters) throws IOException {
+	private static RequisicaoResult requisicao(String url, Map<String, String> requestHeader, String parameters)
+			throws IOException {
 		if (Util.estaVazio(url)) {
 			return null;
 		}
