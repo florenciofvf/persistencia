@@ -1,13 +1,11 @@
 package br.com.persist.plugins.requisicao;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.parser.Logico;
@@ -59,60 +57,56 @@ public class RequisicaoUtil {
 		return null;
 	}
 
-	public static InputStream requisicao(Tipo parametros, AtomicReference<Map<String, List<String>>> mapResponseHeader,
-			StringBuilder sbUrl) throws IOException {
-		if (parametros instanceof Objeto) {
-			Objeto objeto = (Objeto) parametros;
+	public static RequisicaoResult requisicao(Tipo request) throws IOException {
+		if (request instanceof Objeto) {
+			Objeto objeto = (Objeto) request;
 			Tipo tipoUrl = objeto.getValor("url");
 			String url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
-			sbUrl.append(url);
-			Map<String, String> mapHeader = getMapHeader(objeto);
+			Map<String, String> requestHeader = getRequestHeader(objeto);
 			String bodyParams = getBodyParams(objeto);
-			return requisicao(url, mapHeader, bodyParams, mapResponseHeader);
+			return requisicao(url, requestHeader, bodyParams);
 		}
 		return null;
 	}
 
-	public static Map<String, String> getMapHeader(Objeto objeto) {
-		Map<String, String> mapHeader = null;
+	private static Map<String, String> getRequestHeader(Objeto objeto) {
 		Tipo tipoHeader = objeto.getValor("header");
 		if (tipoHeader instanceof Objeto) {
 			Objeto objHeader = (Objeto) tipoHeader;
-			mapHeader = objHeader.getAtributosString();
+			return objHeader.getAtributosString();
 		}
-		return mapHeader;
+		return null;
 	}
 
-	public static String getBodyParams(Objeto objeto) {
+	private static String getBodyParams(Objeto objeto) {
 		Tipo tipoBody = objeto.getValor("body");
-		String bodyParams = null;
 		if (tipoBody instanceof Objeto) {
 			Objeto objBody = (Objeto) tipoBody;
 			Tipo params = objBody.getValor("parameters");
-			bodyParams = params instanceof Texto ? params.toString() : null;
+			return params instanceof Texto ? params.toString() : null;
 		}
-		return bodyParams;
+		return null;
 	}
 
-	public static InputStream requisicao(String url, Map<String, String> header, String parametros,
-			AtomicReference<Map<String, List<String>>> mapResponseHeader) throws IOException {
+	private static RequisicaoResult requisicao(String url, Map<String, String> requestHeader, String parameters) throws IOException {
 		if (Util.estaVazio(url)) {
 			return null;
 		}
+		RequisicaoResult result = new RequisicaoResult();
 		URL url2 = new URL(url);
 		URLConnection conn = url2.openConnection();
-		setRequestProperty(header, conn);
-		String verbo = getVerbo(header, conn);
-		checarDoOutput(parametros, conn, verbo);
+		requestProperty(requestHeader, conn);
+		String verbo = getVerbo(requestHeader, conn);
+		checkDoOutput(parameters, conn, verbo);
 		conn.connect();
-		sePost(parametros, conn, verbo);
-		if (mapResponseHeader != null) {
-			mapResponseHeader.set(conn.getHeaderFields());
-		}
-		return conn.getInputStream();
+		post(parameters, conn, verbo);
+		result.setUrl(url);
+		result.setHeaderFields(conn.getHeaderFields());
+		result.setBytes(Util.getArrayBytes(conn.getInputStream()));
+		return result;
 	}
 
-	private static void setRequestProperty(Map<String, String> header, URLConnection conn) {
+	private static void requestProperty(Map<String, String> header, URLConnection conn) {
 		if (header != null) {
 			for (Map.Entry<String, String> entry : header.entrySet()) {
 				conn.setRequestProperty(entry.getKey(), entry.getValue());
@@ -121,20 +115,19 @@ public class RequisicaoUtil {
 	}
 
 	public static String getVerbo(Map<String, String> header, URLConnection conn) {
-		String verbo = null;
 		if (header != null) {
-			verbo = header.get("Request-Method");
+			return header.get("Request-Method");
 		}
-		return verbo;
+		return null;
 	}
 
-	private static void checarDoOutput(String parametros, URLConnection conn, String verbo) {
+	private static void checkDoOutput(String parametros, URLConnection conn, String verbo) {
 		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
 			conn.setDoOutput(true);
 		}
 	}
 
-	private static void sePost(String parametros, URLConnection conn, String verbo) throws IOException {
+	private static void post(String parametros, URLConnection conn, String verbo) throws IOException {
 		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 			osw.write(parametros);
