@@ -1,13 +1,11 @@
-package br.com.persist.plugins.requisicao;
+package br.com.persist.assistencia;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import br.com.persist.assistencia.Util;
-
-public class RequisicaoResult {
+public class RequestResult {
 	private Map<String, List<String>> headerFields;
 	private byte[] bytes;
 	private String url;
