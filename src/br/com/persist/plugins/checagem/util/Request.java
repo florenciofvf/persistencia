@@ -9,10 +9,10 @@ import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
 import br.com.persist.plugins.checagem.Contexto;
-import br.com.persist.plugins.checagem.funcao.FuncaoBinaria;
+import br.com.persist.plugins.checagem.funcao.FuncaoUnaria;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class Request extends FuncaoBinaria {
+public class Request extends FuncaoUnaria {
 	private static final String ERRO = "Erro Request";
 
 	@Override

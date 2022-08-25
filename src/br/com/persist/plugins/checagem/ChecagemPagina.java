@@ -72,7 +72,7 @@ public class ChecagemPagina extends Panel {
 
 	private Panel criarPanelResultado() {
 		Panel panel = new Panel();
-		panel.add(BorderLayout.CENTER, areaResultado);
+		panel.add(BorderLayout.CENTER, new ScrollPane(areaResultado));
 		return panel;
 	}
 
