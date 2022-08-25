@@ -122,13 +122,13 @@ public class RequisicaoUtil {
 		return verbo;
 	}
 
-	public static void checarDoOutput(String parametros, URLConnection conn, String verbo) {
+	private static void checarDoOutput(String parametros, URLConnection conn, String verbo) {
 		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
 			conn.setDoOutput(true);
 		}
 	}
 
-	public static void sePost(String parametros, URLConnection conn, String verbo) throws IOException {
+	private static void sePost(String parametros, URLConnection conn, String verbo) throws IOException {
 		if ("POST".equalsIgnoreCase(verbo) && !Util.estaVazio(parametros)) {
 			OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 			osw.write(parametros);
