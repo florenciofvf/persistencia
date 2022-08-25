@@ -45,6 +45,8 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.FragmentoUtil;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.RequestResult;
+import br.com.persist.assistencia.RequestUtil;
 import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -688,8 +690,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		try {
 			Parser parser = new Parser();
 			string = VariavelProvedor.substituir(string);
-			Tipo parametros = parser.parse(string);
-			RequisicaoResult result = RequisicaoUtil.requisicao(parametros);
+			Objeto parametros = (Objeto) parser.parse(string);
+			RequestResult result = RequestUtil.processar(parametros);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
 			setVarCookie(result.getHeaderFields(), varCookie);
 			processarResposta(result.getInputStream(), parametros, result.getUrl(), result.getMime());

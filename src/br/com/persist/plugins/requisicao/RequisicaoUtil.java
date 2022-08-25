@@ -10,21 +10,21 @@ public class RequisicaoUtil {
 	private RequisicaoUtil() {
 	}
 
-	public static boolean getAutoSaveVar(Tipo parametros) {
-		if (parametros instanceof Objeto) {
-			Objeto objeto = (Objeto) parametros;
-			Tipo tipo = objeto.getValor("AutoSaveVar");
-			String string = tipo instanceof Logico ? tipo.toString() : null;
+	public static boolean getAutoSaveVar(Tipo tipo) {
+		if (tipo instanceof Objeto) {
+			Objeto objeto = (Objeto) tipo;
+			Tipo tipoAuto = objeto.getValor("AutoSaveVar");
+			String string = tipoAuto instanceof Logico ? tipoAuto.toString() : null;
 			return Boolean.parseBoolean(string);
 		}
 		return false;
 	}
 
-	public static String getAtributoVarAuthToken(Tipo parametros) {
-		if (parametros instanceof Objeto) {
-			Objeto objeto = (Objeto) parametros;
-			Tipo tipo = objeto.getValor("SetVarAuthToken");
-			return tipo instanceof Texto ? tipo.toString() : null;
+	public static String getAtributoVarAuthToken(Tipo tipo) {
+		if (tipo instanceof Objeto) {
+			Objeto objeto = (Objeto) tipo;
+			Tipo tipoAuth = objeto.getValor("SetVarAuthToken");
+			return tipoAuth instanceof Texto ? tipoAuth.toString() : null;
 		}
 		return null;
 	}
@@ -32,8 +32,8 @@ public class RequisicaoUtil {
 	public static String getAtributoVarCookie(Tipo parametros) {
 		if (parametros instanceof Objeto) {
 			Objeto objeto = (Objeto) parametros;
-			Tipo tipo = objeto.getValor("SetVarCookie");
-			return tipo instanceof Texto ? tipo.toString() : null;
+			Tipo tipoCook = objeto.getValor("SetVarCookie");
+			return tipoCook instanceof Texto ? tipoCook.toString() : null;
 		}
 		return null;
 	}
