@@ -40,6 +40,9 @@ br.com.persist.plugins.checagem.util.SetAtributoContexto
 request
 br.com.persist.plugins.checagem.util.Request
 
+getInvoke
+br.com.persist.plugins.checagem.util.GetInvoke
+
 returnNull
 br.com.persist.plugins.checagem.util.ReturnNull
 
