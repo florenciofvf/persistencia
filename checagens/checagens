@@ -83,6 +83,9 @@ br.com.persist.plugins.checagem.util.ParseByte
 parseString
 br.com.persist.plugins.checagem.util.ParseString
 
+parseJson
+br.com.persist.plugins.checagem.util.ParseJson
+
 funcao
 br.com.persist.plugins.checagem.util.Funcao
 fn
