@@ -1,0 +1,10 @@
+<set>
+    <![CDATA[
+        returnNull(set('request', request('{"url": "http://desenv.com.br"}')))
+    ]]>
+</set>
+<set>
+    <![CDATA[
+        invoke($request, 'getMime', [], [])
+    ]]>
+</set>

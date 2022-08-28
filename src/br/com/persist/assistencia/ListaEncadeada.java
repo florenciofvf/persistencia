@@ -1,5 +1,6 @@
 package br.com.persist.assistencia;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -72,12 +73,35 @@ public class ListaEncadeada<E> implements Collection<E> {
 
 	@Override
 	public Object[] toArray() {
-		return new Object[0];
+		Object[] array = new Object[comprimento];
+		int i = 0;
+		No<E> no = cabeca;
+		while (no != null) {
+			array[i] = no.valor;
+			no = no.proximo;
+			i++;
+		}
+		return array;
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public <T> T[] toArray(T[] a) {
-		throw new UnsupportedOperationException("Nao suportado.");
+		if (a.length < comprimento) {
+			a = (T[]) Array.newInstance(a.getClass().getComponentType(), comprimento);
+		}
+		int i = 0;
+		No<E> no = cabeca;
+		Object[] array = a;
+		while (no != null) {
+			array[i] = no.valor;
+			no = no.proximo;
+			i++;
+		}
+		if (a.length > comprimento) {
+			a[comprimento] = null;
+		}
+		return a;
 	}
 
 	@Override
