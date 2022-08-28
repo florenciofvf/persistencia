@@ -26,7 +26,7 @@ public class Request extends FuncaoUnaria {
 		try {
 			return RequestUtil.processar(parametros);
 		} catch (IOException ex) {
-			throw new ChecagemException(getClass(), ex.getMessage());
+			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
 }
