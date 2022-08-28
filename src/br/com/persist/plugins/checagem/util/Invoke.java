@@ -31,7 +31,7 @@ public class Invoke extends FuncaoBinariaOuMaior {
 			Method method = klass.getMethod((String) metodo, classess.toArray(new Class[0]));
 			return method.invoke(objeto, objetoss.toArray());
 		} catch (Exception ex) {
-			throw new ChecagemException(getClass(), ex.getMessage());
+			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
 }

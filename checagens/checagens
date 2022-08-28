@@ -56,6 +56,9 @@ br.com.persist.plugins.checagem.util.Classe
 class
 br.com.persist.plugins.checagem.util.Classe
 
+getClass
+br.com.persist.plugins.checagem.util.GetClass
+
 parseBigDecimal
 br.com.persist.plugins.checagem.util.ParseBigDecimal
 

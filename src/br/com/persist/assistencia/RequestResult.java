@@ -10,18 +10,6 @@ public class RequestResult {
 	private byte[] bytes;
 	private String url;
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder("url=" + url);
-		if (bytes == null) {
-			sb.append(" bytes=[]");
-		} else {
-			sb.append(Constantes.QL);
-			sb.append(new String(bytes));
-		}
-		return sb.toString();
-	}
-
 	public Map<String, List<String>> getHeaderFields() {
 		return headerFields;
 	}
@@ -44,6 +32,10 @@ public class RequestResult {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getString() {
+		return new String(bytes);
 	}
 
 	public InputStream getInputStream() {
@@ -92,5 +84,17 @@ public class RequestResult {
 			}
 		}
 		return sb.toString().trim();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("url=" + url);
+		if (bytes == null) {
+			sb.append(" bytes=[]");
+		} else {
+			sb.append(Constantes.QL);
+			sb.append(new String(bytes));
+		}
+		return sb.toString();
 	}
 }
