@@ -98,9 +98,6 @@ public class ListaEncadeada<E> implements Collection<E> {
 			no = no.proximo;
 			i++;
 		}
-		if (a.length > comprimento) {
-			a[comprimento] = null;
-		}
 		return a;
 	}
 
