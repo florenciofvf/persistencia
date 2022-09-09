@@ -23,6 +23,9 @@ public class Array extends Tipo {
 		return elementos.get(indice);
 	}
 
+	public void preElemento() {
+	}
+
 	@Override
 	public String toString() {
 		return elementos.toString();

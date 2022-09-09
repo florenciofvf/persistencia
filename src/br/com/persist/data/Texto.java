@@ -9,6 +9,10 @@ public class Texto extends Tipo {
 		this.conteudo = Objects.requireNonNull(conteudo);
 	}
 
+	public String getConteudo() {
+		return conteudo;
+	}
+
 	@Override
 	public String toString() {
 		return conteudo;

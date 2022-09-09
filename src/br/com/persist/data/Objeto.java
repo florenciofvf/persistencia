@@ -8,6 +8,7 @@ import br.com.persist.assistencia.Constantes;
 
 public class Objeto extends Tipo {
 	private final List<Par> atributos;
+	private String tempNomeAtributo;
 
 	public Objeto() {
 		atributos = new ArrayList<>();
@@ -31,6 +32,12 @@ public class Objeto extends Tipo {
 			}
 		}
 		return null;
+	}
+
+	public void preAtributo() {
+	}
+
+	public void checkDoisPonto() {
 	}
 
 	@Override
@@ -59,6 +66,17 @@ public class Objeto extends Tipo {
 		@Override
 		public String toString() {
 			return nome + ": " + valor;
+		}
+	}
+
+	public void processar(Tipo tipo) throws DataException {
+		if (tempNomeAtributo != null) {
+			addAtributo(tempNomeAtributo, tipo);
+			tempNomeAtributo = null;
+		} else if (tipo instanceof Texto) {
+			tempNomeAtributo = ((Texto) tipo).getConteudo();
+		} else {
+			throw new DataException("Tipo invalido >>> " + tipo);
 		}
 	}
 }

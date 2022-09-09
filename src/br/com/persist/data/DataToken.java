@@ -30,6 +30,9 @@ public class DataToken {
 		case '"':
 			indice++;
 			return tokenString();
+		case ':':
+			indice++;
+			return new Token(c, Token.SEP_ATRIBUTO, indice);
 		case '{':
 			indice++;
 			return new Token(c, Token.CHAVE_INI, indice);
@@ -42,9 +45,6 @@ public class DataToken {
 		case ']':
 			indice++;
 			return new Token(c, Token.COLCH_FIM, indice);
-		case ':':
-			indice++;
-			return new Token(c, Token.DOIS_PONTO, indice);
 		case ',':
 			indice++;
 			return new Token(c, Token.VIRGULA, indice);
@@ -105,7 +105,7 @@ public class DataToken {
 	}
 
 	private Token checkTokenTrue(char c) throws DataException {
-		StringBuilder sb = new StringBuilder(""+c);
+		StringBuilder sb = new StringBuilder("" + c);
 		sb.append(getStringMinus());
 		if ("true".equals(sb.toString())) {
 			return new Token(Boolean.TRUE, Token.LOGICO, indice);
@@ -114,16 +114,16 @@ public class DataToken {
 	}
 
 	private Token checkTokenFalse(char c) throws DataException {
-		StringBuilder sb = new StringBuilder(""+c);
+		StringBuilder sb = new StringBuilder("" + c);
 		sb.append(getStringMinus());
 		if ("false".equals(sb.toString())) {
-			return new Token(Boolean.TRUE, Token.LOGICO, indice);
+			return new Token(Boolean.FALSE, Token.LOGICO, indice);
 		}
 		throw new DataException(indice + " <<< Boolean invalido >>> " + sb.toString());
 	}
 
 	private Token checkTokenNull(char c) throws DataException {
-		StringBuilder sb = new StringBuilder(""+c);
+		StringBuilder sb = new StringBuilder("" + c);
 		sb.append(getStringMinus());
 		if ("null".equals(sb.toString())) {
 			return new Token("null", Token.NULO, indice);

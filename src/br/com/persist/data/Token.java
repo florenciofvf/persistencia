@@ -1,7 +1,7 @@
 package br.com.persist.data;
 
 public class Token {
-	static final byte DOIS_PONTO = 1;
+	static final byte SEP_ATRIBUTO = 1;
 	static final byte CHAVE_INI = 2;
 	static final byte CHAVE_FIM = 3;
 	static final byte COLCH_INI = 4;
@@ -38,6 +38,10 @@ public class Token {
 		return tipo;
 	}
 
+	public boolean isSepAtributos() {
+		return tipo == SEP_ATRIBUTO;
+	}
+
 	public boolean isColcheteIni() {
 		return tipo == COLCH_INI;
 	}
@@ -70,8 +74,28 @@ public class Token {
 		return tipo == NUMERO;
 	}
 
+	public boolean isNull() {
+		return tipo == NULO;
+	}
+
 	@Override
 	public String toString() {
 		return indice + " <<< " + valor.toString();
+	}
+
+	public static Tipo criarAtomico(Token token) throws DataException {
+		if (token.isBoolean()) {
+			return new Logico((Boolean) token.getValor());
+		}
+		if (token.isNumero()) {
+			return new Numero(token.getValor());
+		}
+		if (token.isString()) {
+			return new Texto((String) token.getValor());
+		}
+		if (token.isNull()) {
+			return new Nulo();
+		}
+		throw new DataException("Invalido criar Atomico para >>> " + token.getValor());
 	}
 }
