@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Objeto implements Tipo {
+import br.com.persist.assistencia.Constantes;
+
+public class Objeto extends Tipo {
 	private final List<Par> atributos;
 
 	public Objeto() {
@@ -15,9 +17,10 @@ public class Objeto implements Tipo {
 		return atributos;
 	}
 
-	public void addAtributo(String nome, Tipo valor) {
+	public void addAtributo(String nome, Tipo tipo) {
 		if (getAtributo(nome) == null) {
-			atributos.add(new Par(nome, valor));
+			tipo.pai = this;
+			atributos.add(new Par(nome, tipo));
 		}
 	}
 
@@ -30,6 +33,20 @@ public class Objeto implements Tipo {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("{");
+		for (int i = 0; i < atributos.size() && i < 1; i++) {
+			sb.append(atributos.get(i));
+		}
+		for (int i = 1; i < atributos.size(); i++) {
+			sb.append("," + Constantes.QL);
+			sb.append(atributos.get(i));
+		}
+		sb.append("}");
+		return sb.toString();
+	}
+
 	class Par {
 		final String nome;
 		final Tipo valor;
@@ -37,6 +54,11 @@ public class Objeto implements Tipo {
 		Par(String nome, Tipo valor) {
 			this.nome = Objects.requireNonNull(nome);
 			this.valor = Objects.requireNonNull(valor);
+		}
+
+		@Override
+		public String toString() {
+			return nome + ": " + valor;
 		}
 	}
 }

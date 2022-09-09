@@ -2,7 +2,7 @@ package br.com.persist.data;
 
 import java.util.Objects;
 
-public class Numero implements Tipo {
+public class Numero extends Tipo {
 	private final Object conteudo;
 
 	public Numero(Object conteudo) {

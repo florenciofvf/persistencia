@@ -2,9 +2,8 @@ package br.com.persist.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class Array implements Tipo {
+public class Array extends Tipo {
 	private final List<Tipo> elementos;
 
 	public Array() {
@@ -15,11 +14,17 @@ public class Array implements Tipo {
 		return elementos;
 	}
 
-	public void addElemento(Tipo valor) {
-		elementos.add(Objects.requireNonNull(valor));
+	public void addElemento(Tipo tipo) {
+		tipo.pai = this;
+		elementos.add(tipo);
 	}
 
 	public Tipo getElemento(int indice) {
 		return elementos.get(indice);
+	}
+
+	@Override
+	public String toString() {
+		return elementos.toString();
 	}
 }

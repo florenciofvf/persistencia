@@ -1,6 +1,6 @@
 package br.com.persist.data;
 
-public class Nulo implements Tipo {
+public class Nulo extends Tipo {
 	public static final String CONTEUDO = "null";
 
 	@Override

@@ -38,6 +38,38 @@ public class Token {
 		return tipo;
 	}
 
+	public boolean isColcheteIni() {
+		return tipo == COLCH_INI;
+	}
+
+	public boolean isColcheteFim() {
+		return tipo == COLCH_FIM;
+	}
+
+	public boolean isChaveIni() {
+		return tipo == CHAVE_INI;
+	}
+
+	public boolean isChaveFim() {
+		return tipo == CHAVE_FIM;
+	}
+
+	public boolean isVirgula() {
+		return tipo == VIRGULA;
+	}
+
+	public boolean isBoolean() {
+		return tipo == LOGICO;
+	}
+
+	public boolean isString() {
+		return tipo == TEXTO;
+	}
+
+	public boolean isNumero() {
+		return tipo == NUMERO;
+	}
+
 	@Override
 	public String toString() {
 		return indice + " <<< " + valor.toString();
