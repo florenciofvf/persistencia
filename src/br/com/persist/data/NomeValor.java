@@ -14,11 +14,7 @@ class NomeValor {
 	}
 
 	boolean compativel(Method metodoSet) {
-		Class<?>[] parameterTypes = metodoSet.getParameterTypes();
-		if (parameterTypes.length != 1) {
-			return false;
-		}
-		Class<?> param = parameterTypes[0];
+		Class<?> param = metodoSet.getParameterTypes()[0];
 		if (valor instanceof Logico) {
 			return Boolean.class.isAssignableFrom(param);
 		} else if (valor instanceof Numero) {

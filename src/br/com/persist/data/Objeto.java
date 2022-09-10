@@ -1,7 +1,5 @@
 package br.com.persist.data;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,25 +17,8 @@ public class Objeto extends Tipo {
 		return atributos;
 	}
 
-	public Object converter(Object object)
-			throws IllegalAccessException, InvocationTargetException, InstantiationException {
-		PoolMetodo poolMetodo = new PoolMetodo(object.getClass());
-		for (NomeValor par : atributos) {
-			if (par.isNull()) {
-				continue;
-			}
-			Method metodoSet = poolMetodo.getMethodSet(par.nome);
-			if (metodoSet != null) {
-				if (par.compativel(metodoSet)) {
-					par.invoke(object, metodoSet);
-				} else if (par.isObjeto()) {
-					Class<?> classe = metodoSet.getParameterTypes()[0];
-					Object objeto = classe.newInstance();
-					metodoSet.invoke(object, objeto);
-					((Objeto) par.valor).converter(objeto);
-				}
-			}
-		}
+	public Object converter(Object object) {
+		Conversor.converter(this, object);
 		return object;
 	}
 
@@ -49,9 +30,9 @@ public class Objeto extends Tipo {
 	}
 
 	public Tipo getAtributo(String nome) {
-		for (NomeValor par : atributos) {
-			if (par.nome.equals(nome)) {
-				return par.valor;
+		for (NomeValor nomeValor : atributos) {
+			if (nomeValor.nome.equals(nome)) {
+				return nomeValor.valor;
 			}
 		}
 		return null;
@@ -81,27 +62,6 @@ public class Objeto extends Tipo {
 		}
 		sb.append("}");
 		return sb.toString();
-	}
-
-	class PoolMetodo {
-		final Method[] metodos;
-
-		PoolMetodo(Class<?> classe) {
-			metodos = classe.getDeclaredMethods();
-		}
-
-		Method getMethodSet(String nome) {
-			String nomeMetodo = "set" + nome.substring(0, 1).toUpperCase() + nome.substring(1);
-			for (Method m : metodos) {
-				if (nomeMetodo.equals(m.getName())) {
-					Class<?>[] parameterTypes = m.getParameterTypes();
-					if (parameterTypes.length == 1) {
-						return m;
-					}
-				}
-			}
-			return null;
-		}
 	}
 
 	public void processar(Tipo tipo) throws DataException {
