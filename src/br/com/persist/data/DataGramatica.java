@@ -95,7 +95,7 @@ public class DataGramatica {
 
 	private static void processarSepAtributos(Tipo selecionado, Token token) throws DataException {
 		if (selecionado instanceof Objeto) {
-			((Objeto) selecionado).checkDoisPonto();
+			((Objeto) selecionado).checkDoisPontos();
 		} else {
 			throw new DataException("Objeto invalido >>> " + token);
 		}
@@ -113,6 +113,6 @@ public class DataGramatica {
 	}
 
 	private static boolean ehTipoAtomico(Token token) {
-		return token.isNumero() || token.isBoolean() || token.isString() || token.isNull();
+		return token.isBoolean() || token.isNumero() || token.isString() || token.isNull();
 	}
 }

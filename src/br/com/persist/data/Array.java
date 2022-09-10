@@ -23,7 +23,10 @@ public class Array extends Tipo {
 		return elementos.get(indice);
 	}
 
-	public void preElemento() {
+	public void preElemento() throws DataException {
+		if (elementos.isEmpty()) {
+			throw new DataException("Array virgula");
+		}
 	}
 
 	@Override

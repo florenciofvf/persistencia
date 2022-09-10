@@ -9,6 +9,10 @@ public class Logico extends Tipo {
 		this.conteudo = Objects.requireNonNull(conteudo);
 	}
 
+	public Boolean getConteudo() {
+		return conteudo;
+	}
+
 	@Override
 	public String toString() {
 		return conteudo.toString();

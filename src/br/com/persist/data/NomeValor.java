@@ -1,0 +1,62 @@
+package br.com.persist.data;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Objects;
+
+class NomeValor {
+	final String nome;
+	final Tipo valor;
+
+	NomeValor(String nome, Tipo valor) {
+		this.nome = Objects.requireNonNull(nome);
+		this.valor = Objects.requireNonNull(valor);
+	}
+
+	boolean compativel(Method metodoSet) {
+		Class<?>[] parameterTypes = metodoSet.getParameterTypes();
+		if (parameterTypes.length != 1) {
+			return false;
+		}
+		Class<?> param = parameterTypes[0];
+		if (valor instanceof Logico) {
+			return Boolean.class.isAssignableFrom(param);
+		} else if (valor instanceof Numero) {
+			return Number.class.isAssignableFrom(param);
+		} else if (valor instanceof Texto) {
+			return String.class.isAssignableFrom(param);
+		}
+		return false;
+	}
+
+	void invoke(Object object, Method metodoSet) throws IllegalAccessException, InvocationTargetException {
+		if (valor instanceof Logico) {
+			Boolean arg = ((Logico) valor).getConteudo();
+			metodoSet.invoke(object, arg);
+		} else if (valor instanceof Numero) {
+			Class<?> param = metodoSet.getParameterTypes()[0];
+			Number arg = ((Numero) valor).getConteudo(param);
+			metodoSet.invoke(object, arg);
+		} else if (valor instanceof Texto) {
+			String arg = ((Texto) valor).getConteudo();
+			metodoSet.invoke(object, arg);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return nome + ": " + valor;
+	}
+
+	boolean isNull() {
+		return valor instanceof Nulo;
+	}
+
+	boolean isObjeto() {
+		return valor instanceof Objeto;
+	}
+
+	boolean isAtomico() {
+		return valor instanceof Logico || valor instanceof Numero || valor instanceof Texto;
+	}
+}
