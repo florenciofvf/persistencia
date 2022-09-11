@@ -20,6 +20,11 @@ public class Array extends Tipo {
 		Formatador.formatar(this, c, tab);
 	}
 
+	@Override
+	public void append(Container c, int tab) {
+		Formatador.append(this, c, tab);
+	}
+
 	public List<Tipo> getElementos() {
 		return elementos;
 	}

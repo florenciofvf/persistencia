@@ -14,6 +14,11 @@ public class Nulo extends Tipo {
 		c.append(CONTEUDO, att);
 	}
 
+	@Override
+	public void append(Container c, int tab) {
+		export(c, tab);
+	}
+
 	public String getConteudo() {
 		return CONTEUDO;
 	}

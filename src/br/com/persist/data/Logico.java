@@ -19,6 +19,11 @@ public class Logico extends Tipo {
 		c.append(conteudo.toString(), att);
 	}
 
+	@Override
+	public void append(Container c, int tab) {
+		export(c, tab);
+	}
+
 	public Boolean getConteudo() {
 		return conteudo;
 	}

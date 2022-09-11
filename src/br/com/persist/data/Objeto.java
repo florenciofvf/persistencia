@@ -22,6 +22,11 @@ public class Objeto extends Tipo {
 		Formatador.formatar(this, c, tab);
 	}
 
+	@Override
+	public void append(Container c, int tab) {
+		Formatador.append(this, c, tab);
+	}
+
 	public Object converter(Object object) {
 		Conversor.converter(this, object);
 		return object;

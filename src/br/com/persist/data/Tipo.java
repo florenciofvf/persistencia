@@ -8,4 +8,6 @@ public abstract class Tipo {
 	}
 
 	public abstract void export(Container c, int tab);
+
+	public abstract void append(Container c, int tab);
 }

@@ -19,6 +19,11 @@ public class Numero extends Tipo {
 		c.append(conteudo.toString(), att);
 	}
 
+	@Override
+	public void append(Container c, int tab) {
+		export(c, tab);
+	}
+
 	public Object getConteudo() {
 		return conteudo;
 	}
