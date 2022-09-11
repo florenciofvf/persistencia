@@ -33,11 +33,11 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Janela;
+import br.com.persist.data.DataDialogo;
+import br.com.persist.data.DataListener;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.parser.ParserDialogo;
-import br.com.persist.parser.ParserListener;
 import br.com.persist.parser.Tipo;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 
@@ -198,15 +198,15 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 			private void modelo() {
 				Component comp = Util.getViewParent(RequisicaoContainer.this);
-				ParserDialogo form = null;
+				DataDialogo form = null;
 				if (comp instanceof Frame) {
-					form = ParserDialogo.criar((Frame) comp, parserListener);
+					form = DataDialogo.criar((Frame) comp, parserListener);
 					Util.configSizeLocation((Frame) comp, form, RequisicaoContainer.this);
 				} else if (comp instanceof Dialog) {
-					form = ParserDialogo.criar((Dialog) comp, parserListener);
+					form = DataDialogo.criar((Dialog) comp, parserListener);
 					Util.configSizeLocation((Dialog) comp, form, RequisicaoContainer.this);
 				} else {
-					form = ParserDialogo.criar((Dialog) null, parserListener);
+					form = DataDialogo.criar((Dialog) null, parserListener);
 					form.setLocationRelativeTo(comp != null ? comp : formulario);
 				}
 				form.setVisible(true);
@@ -385,7 +385,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 	}
 
-	private transient ParserListener parserListener = new ParserListener() {
+	private transient DataListener parserListener = new DataListener() {
 		@Override
 		public void setParserTipo(Tipo tipo) {
 			LOG.log(Level.FINEST, "setParserTipo");

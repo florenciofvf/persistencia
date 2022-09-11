@@ -3,8 +3,8 @@ package br.com.persist.plugins.checagem.util;
 import java.io.IOException;
 
 import br.com.persist.assistencia.RequestUtil;
+import br.com.persist.data.DataParser;
 import br.com.persist.parser.Objeto;
-import br.com.persist.parser.Parser;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
@@ -21,7 +21,7 @@ public class Request extends FuncaoUnaria {
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		String string = (String) op0;
 		string = VariavelProvedor.substituir(string);
-		Parser parser = new Parser();
+		DataParser parser = new DataParser();
 		Objeto parametros = (Objeto) parser.parse(string);
 		try {
 			return RequestUtil.processar(parametros);

@@ -1,6 +1,6 @@
-package br.com.persist.parser;
+package br.com.persist.data;
 
-public interface ParserListener {
+public interface DataListener {
 	public void setParserTipo(Tipo tipo);
 
 	public boolean somenteModelo();

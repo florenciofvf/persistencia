@@ -1,4 +1,4 @@
-package br.com.persist.parser;
+package br.com.persist.data;
 
 import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.COLAR;
@@ -18,15 +18,15 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TabbedPane;
 
-public class ParserContainer extends Panel {
+public class DataContainer extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final JTextPane areaModelo = new JTextPane();
 	private final JTextPane areaEdicao = new JTextPane();
 	private final TabbedPane fichario = new TabbedPane();
-	private final transient ParserListener listener;
+	private final transient DataListener listener;
 	private final Toolbar toolbar = new Toolbar();
 
-	public ParserContainer(Janela janela, ParserListener listener) {
+	public DataContainer(Janela janela, DataListener listener) {
 		this.listener = listener;
 		toolbar.ini(janela);
 		montarLayout();
@@ -49,7 +49,7 @@ public class ParserContainer extends Panel {
 		}
 		area.setText(Constantes.VAZIO);
 		try {
-			Parser parser = new Parser();
+			DataParser parser = new DataParser();
 			Tipo json = parser.parse(string);
 			StyledDocument styledDoc = area.getStyledDocument();
 			if (styledDoc instanceof AbstractDocument) {
@@ -58,7 +58,7 @@ public class ParserContainer extends Panel {
 			}
 			area.requestFocus();
 		} catch (Exception ex) {
-			Util.stackTraceAndMessage(ParserConstantes.PAINEL_PARSER, ex, this);
+			Util.stackTraceAndMessage(DataConstantes.PAINEL_PARSER, ex, this);
 		}
 	}
 
@@ -107,11 +107,11 @@ public class ParserContainer extends Panel {
 			}
 			String string = Util.getString(areaEdicao);
 			try {
-				Parser parser = new Parser();
+				DataParser parser = new DataParser();
 				Tipo json = parser.parse(string);
 				listener.setParserTipo(json);
 			} catch (Exception ex) {
-				Util.stackTraceAndMessage(ParserConstantes.PAINEL_PARSER, ex, this);
+				Util.stackTraceAndMessage(DataConstantes.PAINEL_PARSER, ex, this);
 			}
 			fechar();
 		}

@@ -15,11 +15,11 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.parser.Parser;
+import br.com.persist.data.DataParser;
 import br.com.persist.parser.Tipo;
 
 public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
-	private final Parser parser = new Parser();
+	private final DataParser parser = new DataParser();
 
 	@Override
 	public Component exibidor(Component parent, byte[] bytes, Tipo parametros) {

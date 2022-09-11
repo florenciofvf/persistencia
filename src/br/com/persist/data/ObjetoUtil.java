@@ -1,7 +1,6 @@
-package br.com.persist.parser;
+package br.com.persist.data;
 
 public class ObjetoUtil {
-
 	private ObjetoUtil() {
 	}
 

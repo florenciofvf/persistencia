@@ -58,10 +58,10 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
+import br.com.persist.data.DataParser;
+import br.com.persist.data.ObjetoUtil;
 import br.com.persist.parser.Array;
 import br.com.persist.parser.Objeto;
-import br.com.persist.parser.ObjetoUtil;
-import br.com.persist.parser.Parser;
 import br.com.persist.parser.Tipo;
 import br.com.persist.parser.TipoUtil;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
@@ -368,7 +368,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				return null;
 			}
 			try {
-				Parser parser = new Parser();
+				DataParser parser = new DataParser();
 				Tipo tipo = parser.parse(string);
 				return new Requisicao(tipo);
 			} catch (Exception ex) {
@@ -575,7 +575,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			return;
 		}
 		try {
-			Parser parser = new Parser();
+			DataParser parser = new DataParser();
 			Tipo tipo = parser.parse(valor);
 			Requisicao req = new Requisicao(tipo);
 			req.setUrl(checkUrl(req.getUrl(), link));
@@ -612,7 +612,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 	private void adicionarRota(RequisicaoRota rota, String string) {
 		try {
-			Parser parser = new Parser();
+			DataParser parser = new DataParser();
 			Tipo tipo = parser.parse(string);
 			Requisicao req = new Requisicao(tipo);
 			rota.adicionar(req.getDesc(), req.getString());
@@ -625,7 +625,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		requisicoes.clear();
 		sleep = 0;
 		try {
-			Parser parser = new Parser();
+			DataParser parser = new DataParser();
 			Tipo tipo = parser.parse(string);
 			iniciarRequisicoes(tipo);
 		} catch (Exception ex) {
@@ -687,7 +687,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 	private void atualizar(String string) {
 		try {
-			Parser parser = new Parser();
+			DataParser parser = new DataParser();
 			string = VariavelProvedor.substituir(string);
 			Objeto parametros = (Objeto) parser.parse(string);
 			RequestResult result = RequestUtil.processar(parametros);
