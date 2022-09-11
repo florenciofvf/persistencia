@@ -38,7 +38,7 @@ import br.com.persist.data.DataListener;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 
 public class RequisicaoContainer extends AbstratoContainer {
@@ -90,7 +90,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 
 	private void configurar() {
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constantes.EXEC);
-		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao);
+		getActionMap().put(Constantes.EXEC, toolbar.atualizarAcao2);
 	}
 
 	public String getConteudo() {
@@ -152,7 +152,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-		private Action atualizarAcao = Action.actionIcon("label.requisicao", Icones.URL);
+		private Action atualizarAcao2 = Action.actionIcon("label.requisicao", Icones.URL);
 		private ButtonUtil buttonUtil = new ButtonUtil();
 		private ButtonRota buttonRota = new ButtonRota();
 
@@ -160,11 +160,11 @@ public class RequisicaoContainer extends AbstratoContainer {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
 					NOVO, BAIXAR, SALVAR);
 			addButton(excluirAtivoAcao);
-			addButton(true, atualizarAcao);
+			addButton(true, atualizarAcao2);
 			add(true, buttonUtil);
 			add(buttonRota);
 			excluirAtivoAcao.setActionListener(e -> excluirAtivo());
-			atualizarAcao.setActionListener(e -> atualizar());
+			atualizarAcao2.setActionListener(e -> atualizar());
 		}
 
 		private class ButtonUtil extends ButtonPopup {
@@ -200,13 +200,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 				Component comp = Util.getViewParent(RequisicaoContainer.this);
 				DataDialogo form = null;
 				if (comp instanceof Frame) {
-					form = DataDialogo.criar((Frame) comp, parserListener);
+					form = DataDialogo.criar((Frame) comp, dataListener);
 					Util.configSizeLocation((Frame) comp, form, RequisicaoContainer.this);
 				} else if (comp instanceof Dialog) {
-					form = DataDialogo.criar((Dialog) comp, parserListener);
+					form = DataDialogo.criar((Dialog) comp, dataListener);
 					Util.configSizeLocation((Dialog) comp, form, RequisicaoContainer.this);
 				} else {
-					form = DataDialogo.criar((Dialog) null, parserListener);
+					form = DataDialogo.criar((Dialog) null, dataListener);
 					form.setLocationRelativeTo(comp != null ? comp : formulario);
 				}
 				form.setVisible(true);
@@ -385,7 +385,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 	}
 
-	private transient DataListener parserListener = new DataListener() {
+	private transient DataListener dataListener = new DataListener() {
 		@Override
 		public void setParserTipo(Tipo tipo) {
 			LOG.log(Level.FINEST, "setParserTipo");

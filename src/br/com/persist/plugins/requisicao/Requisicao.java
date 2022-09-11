@@ -2,11 +2,11 @@ package br.com.persist.plugins.requisicao;
 
 import java.util.Objects;
 
-import br.com.persist.parser.Array;
-import br.com.persist.parser.Objeto;
-import br.com.persist.parser.Texto;
-import br.com.persist.parser.Tipo;
-import br.com.persist.parser.TipoUtil;
+import br.com.persist.data.Array;
+import br.com.persist.data.Objeto;
+import br.com.persist.data.Texto;
+import br.com.persist.data.Tipo;
+import br.com.persist.data.DataUtil;
 
 public class Requisicao {
 	private final Tipo tipo;
@@ -27,7 +27,7 @@ public class Requisicao {
 			desc = tipoDesc instanceof Texto ? tipoDesc.toString() : "Objeto sem atributo desc";
 		} else if (tipo instanceof Array) {
 			Array array = (Array) tipo;
-			desc = "Objeto Array [" + array.getLista().size() + "]";
+			desc = "Objeto Array [" + array.getElementos().size() + "]";
 		} else if (tipo != null) {
 			desc = tipo.getClass().getName();
 		}
@@ -47,9 +47,9 @@ public class Requisicao {
 			if (tipoUrl instanceof Texto) {
 				((Texto) tipoUrl).setAlternativo(url);
 			}
-			return TipoUtil.toString(objeto);
+			return DataUtil.toString(objeto);
 		} else if (tipo != null) {
-			return TipoUtil.toString(tipo);
+			return DataUtil.toString(tipo);
 		}
 		return null;
 	}

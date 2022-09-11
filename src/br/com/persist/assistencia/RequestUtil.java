@@ -6,9 +6,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
 
-import br.com.persist.parser.Objeto;
-import br.com.persist.parser.Texto;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Objeto;
+import br.com.persist.data.Texto;
+import br.com.persist.data.Tipo;
 
 public class RequestUtil {
 	private RequestUtil() {

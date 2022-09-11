@@ -1,6 +1,6 @@
 package br.com.persist.plugins.checagem.util;
 
-import br.com.persist.parser.Parser;
+import br.com.persist.data.DataParser;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
@@ -15,7 +15,7 @@ public class ParseJson extends FuncaoUnaria {
 		Object op0 = param0().executar(checagem, bloco, ctx);
 		checkObrigatorioString(op0, ERRO + " >>> op0");
 		try {
-			Parser parser = new Parser();
+			DataParser parser = new DataParser();
 			return parser.parse((String) op0);
 		} catch (Exception ex) {
 			throw new ChecagemException(getClass(), ex.getMessage());

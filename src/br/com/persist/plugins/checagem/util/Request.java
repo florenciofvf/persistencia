@@ -1,10 +1,8 @@
 package br.com.persist.plugins.checagem.util;
 
-import java.io.IOException;
-
 import br.com.persist.assistencia.RequestUtil;
 import br.com.persist.data.DataParser;
-import br.com.persist.parser.Objeto;
+import br.com.persist.data.Objeto;
 import br.com.persist.plugins.checagem.Bloco;
 import br.com.persist.plugins.checagem.Checagem;
 import br.com.persist.plugins.checagem.ChecagemException;
@@ -22,10 +20,10 @@ public class Request extends FuncaoUnaria {
 		String string = (String) op0;
 		string = VariavelProvedor.substituir(string);
 		DataParser parser = new DataParser();
-		Objeto parametros = (Objeto) parser.parse(string);
 		try {
+			Objeto parametros = (Objeto) parser.parse(string);
 			return RequestUtil.processar(parametros);
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
