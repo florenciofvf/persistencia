@@ -50,11 +50,11 @@ public class DataContainer extends Panel {
 		area.setText(Constantes.VAZIO);
 		try {
 			DataParser parser = new DataParser();
-			Tipo json = parser.parse(string);
+			Tipo objJSON = parser.parse(string);
 			StyledDocument styledDoc = area.getStyledDocument();
 			if (styledDoc instanceof AbstractDocument) {
 				AbstractDocument doc = (AbstractDocument) styledDoc;
-				json.toString(doc, false, 0);
+				objJSON.export(new ContainerDocument(doc), 0);
 			}
 			area.requestFocus();
 		} catch (Exception ex) {

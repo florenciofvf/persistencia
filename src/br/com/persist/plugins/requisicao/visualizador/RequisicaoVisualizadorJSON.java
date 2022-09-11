@@ -15,6 +15,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
+import br.com.persist.data.ContainerDocument;
 import br.com.persist.data.DataParser;
 import br.com.persist.data.Tipo;
 
@@ -28,12 +29,12 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 			textPane.setText(Constantes.VAZIO);
 			String string = Util.getString(bytes);
 			StyledDocument styledDoc = textPane.getStyledDocument();
-			Tipo json = parser.parse(string);
+			Tipo objJSON = parser.parse(string);
 			if (styledDoc instanceof AbstractDocument) {
 				AbstractDocument doc = (AbstractDocument) styledDoc;
-				json.toString(doc, false, 0);
+				objJSON.export(new ContainerDocument(doc), 0);
 			}
-			String accessToken = getAccessToken(json);
+			String accessToken = getAccessToken(objJSON);
 			setAccesToken(accessToken);
 
 			Panel panelTextPane = new Panel();
