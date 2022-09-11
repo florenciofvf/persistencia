@@ -28,6 +28,7 @@ public class RequisicaoPanelBytes extends Panel {
 	private transient RequisicaoRota requisicaoRota;
 	private final RequisicaoPagina requisicaoPagina;
 	private final transient Tipo parametros;
+	private Component ultimoVisualizador;
 	private String titulo = "Bytes";
 	private final byte[] bytes;
 
@@ -107,8 +108,12 @@ public class RequisicaoPanelBytes extends Panel {
 				requisicaoVisualizador.setRequisicaoVisualizadorListener(requisicaoVisualizadorListener);
 				Component visualizador = requisicaoVisualizador.exibidor(RequisicaoPanelBytes.this, bytes, parametros);
 				if (visualizador != null) {
+					if (ultimoVisualizador != null) {
+						RequisicaoPanelBytes.this.remove(ultimoVisualizador);
+					}
 					RequisicaoPanelBytes.this.add(BorderLayout.CENTER, visualizador);
 					requisicaoPagina.associarMimeVisualizador(mime, requisicaoVisualizador);
+					ultimoVisualizador = visualizador;
 				}
 			}
 		}
