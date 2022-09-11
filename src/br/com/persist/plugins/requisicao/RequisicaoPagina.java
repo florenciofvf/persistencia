@@ -60,10 +60,10 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.data.DataParser;
 import br.com.persist.data.ObjetoUtil;
-import br.com.persist.parser.Array;
-import br.com.persist.parser.Objeto;
-import br.com.persist.parser.Tipo;
-import br.com.persist.parser.TipoUtil;
+import br.com.persist.data.Array;
+import br.com.persist.data.Objeto;
+import br.com.persist.data.Tipo;
+import br.com.persist.data.DataUtil;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHeader;
@@ -661,7 +661,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			sleep = Integer.parseInt(s);
 		}
 		for (int i = 1; i <= total; i++) {
-			requisicoes.add(TipoUtil.toString(tipo));
+			requisicoes.add(DataUtil.toString(tipo));
 		}
 	}
 
@@ -669,7 +669,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		List<String> lista = new ArrayList<>();
 		Array array = (Array) tipo;
 		int total = 1;
-		for (Tipo item : array.getLista()) {
+		for (Tipo item : array.getElementos()) {
 			if (ObjetoUtil.contemAtributo(item, RequisicaoConstantes.TENTATIVAS)) {
 				String s = ObjetoUtil.getValorAtributo(item, RequisicaoConstantes.TENTATIVAS);
 				total = Integer.parseInt(s);
@@ -678,7 +678,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				String s = ObjetoUtil.getValorAtributo(item, RequisicaoConstantes.SLEEP);
 				sleep = Integer.parseInt(s);
 			}
-			lista.add(TipoUtil.toString(item));
+			lista.add(DataUtil.toString(item));
 		}
 		for (int i = 1; i <= total; i++) {
 			requisicoes.addAll(lista);

@@ -20,7 +20,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.TextField;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoRota;
 
 public interface RequisicaoVisualizador {

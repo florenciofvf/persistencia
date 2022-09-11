@@ -12,7 +12,7 @@ import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Tipo;
 
 public class RequisicaoVisualizadorTexto extends AbstratoRequisicaoVisualizador {
 

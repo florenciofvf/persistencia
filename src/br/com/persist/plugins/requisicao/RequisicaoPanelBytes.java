@@ -18,7 +18,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
 

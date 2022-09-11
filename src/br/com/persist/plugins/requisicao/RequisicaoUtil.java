@@ -1,9 +1,9 @@
 package br.com.persist.plugins.requisicao;
 
-import br.com.persist.parser.Logico;
-import br.com.persist.parser.Objeto;
-import br.com.persist.parser.Texto;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Logico;
+import br.com.persist.data.Objeto;
+import br.com.persist.data.Texto;
+import br.com.persist.data.Tipo;
 
 public class RequisicaoUtil {
 

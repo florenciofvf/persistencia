@@ -16,7 +16,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.data.DataParser;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Tipo;
 
 public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	private final DataParser parser = new DataParser();

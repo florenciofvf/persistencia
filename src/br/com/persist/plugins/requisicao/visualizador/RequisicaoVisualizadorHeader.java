@@ -1,9 +1,9 @@
 package br.com.persist.plugins.requisicao.visualizador;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.parser.Objeto;
-import br.com.persist.parser.Texto;
-import br.com.persist.parser.Tipo;
+import br.com.persist.data.Objeto;
+import br.com.persist.data.Texto;
+import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
