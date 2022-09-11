@@ -1,25 +1,34 @@
 package br.com.persist.data;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.persist.assistencia.Constantes;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 public class Objeto extends Tipo {
 	private final List<NomeValor> atributos;
+	static final MutableAttributeSet att2;
+	static final MutableAttributeSet att;
 	private String tempNomeAtributo;
 
 	public Objeto() {
 		atributos = new ArrayList<>();
 	}
 
-	public List<NomeValor> getAtributos() {
-		return atributos;
+	public void export(Container c, int tab) {
+		Formatador.formatar(this, c, tab);
 	}
 
 	public Object converter(Object object) {
 		Conversor.converter(this, object);
 		return object;
+	}
+
+	public List<NomeValor> getAtributos() {
+		return atributos;
 	}
 
 	public void addAtributo(String nome, Tipo tipo) {
@@ -52,16 +61,7 @@ public class Objeto extends Tipo {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("{");
-		for (int i = 0; i < atributos.size() && i < 1; i++) {
-			sb.append(atributos.get(i));
-		}
-		for (int i = 1; i < atributos.size(); i++) {
-			sb.append("," + Constantes.QL);
-			sb.append(atributos.get(i));
-		}
-		sb.append("}");
-		return sb.toString();
+		return DataUtil.toString(this);
 	}
 
 	public void processar(Tipo tipo) throws DataException {
@@ -73,5 +73,12 @@ public class Objeto extends Tipo {
 		} else {
 			throw new DataException("Tipo invalido >>> " + tipo);
 		}
+	}
+
+	static {
+		att2 = new SimpleAttributeSet();
+		att = new SimpleAttributeSet();
+		StyleConstants.setForeground(att, Color.BLACK);
+		StyleConstants.setForeground(att2, new Color(125, 0, 0));
 	}
 }

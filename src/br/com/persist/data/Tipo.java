@@ -7,7 +7,5 @@ public abstract class Tipo {
 		return pai;
 	}
 
-	public static String citar(String s) {
-		return "\"" + s + "\"";
-	}
+	public abstract void export(Container c, int tab);
 }
