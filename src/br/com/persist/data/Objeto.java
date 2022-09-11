@@ -2,7 +2,9 @@ package br.com.persist.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
@@ -37,19 +39,29 @@ public class Objeto extends Tipo {
 	}
 
 	public void addAtributo(String nome, Tipo tipo) {
-		if (getAtributo(nome) == null) {
+		if (getValor(nome) == null) {
 			tipo.pai = this;
 			atributos.add(new NomeValor(nome, tipo));
 		}
 	}
 
-	public Tipo getAtributo(String nome) {
+	public Tipo getValor(String nome) {
 		for (NomeValor nomeValor : atributos) {
 			if (nomeValor.nome.equals(nome)) {
 				return nomeValor.valor;
 			}
 		}
 		return null;
+	}
+
+	public Map<String, String> getAtributosString() {
+		Map<String, String> map = new LinkedHashMap<>();
+		for (NomeValor nomeValor : atributos) {
+			if (nomeValor.isTexto()) {
+				map.put(nomeValor.nome, nomeValor.valor.toString());
+			}
+		}
+		return map;
 	}
 
 	public void preAtributo() throws DataException {

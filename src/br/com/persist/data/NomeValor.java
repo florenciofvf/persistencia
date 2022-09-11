@@ -52,6 +52,10 @@ class NomeValor {
 		return valor instanceof Objeto;
 	}
 
+	boolean isTexto() {
+		return valor instanceof Texto;
+	}
+
 	boolean isAtomico() {
 		return valor instanceof Logico || valor instanceof Numero || valor instanceof Texto;
 	}
