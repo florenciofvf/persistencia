@@ -62,11 +62,11 @@ public class RequisicaoPanelBytes extends Panel {
 		return titulo;
 	}
 
-	public void configuracoes(String uri, String mime) {
+	public void configuracoes(String uri, String mime, RequisicaoVisualizador outro) {
 		BarraInfo barraInfo = new BarraInfo(uri, mime);
 		add(BorderLayout.NORTH, barraInfo);
 		barraInfo.configurar();
-		barraInfo.checarView();
+		barraInfo.checarView(outro);
 	}
 
 	private class BarraInfo extends JToolBar {
@@ -118,8 +118,11 @@ public class RequisicaoPanelBytes extends Panel {
 			}
 		}
 
-		private void checarView() {
+		private void checarView(RequisicaoVisualizador outro) {
 			RequisicaoVisualizador requisicaoVisualizador = requisicaoPagina.getVisualizador(mime);
+			if (requisicaoVisualizador == null) {
+				requisicaoVisualizador = outro;
+			}
 			cmbVisualizador.setSelectedItem(requisicaoVisualizador);
 		}
 

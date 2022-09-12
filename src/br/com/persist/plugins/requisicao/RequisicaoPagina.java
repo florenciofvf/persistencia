@@ -533,7 +533,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			return;
 		}
 		try {
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, "TEXTO");
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, "TEXTO",
+					RequisicaoPoolVisualizador.VISUALIZADOR_TEXTO);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
@@ -544,7 +545,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			return;
 		}
 		try {
-			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, "JSON");
+			processarResposta(new ByteArrayInputStream(string.getBytes()), null, uri, "JSON",
+					RequisicaoPoolVisualizador.VISUALIZADOR_JSON);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
@@ -693,18 +695,19 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			RequestResult result = RequestUtil.processar(parametros);
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
 			RequisicaoVisualizadorHeader.setVarCookie(varCookie, result.getCookie());
-			processarResposta(result.getInputStream(), parametros, result.getUrl(), result.getMime());
+			processarResposta(result.getInputStream(), parametros, result.getUrl(), result.getMime(), null);
 			areaParametros.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
 	}
 
-	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime) throws IOException {
+	private void processarResposta(InputStream resposta, Tipo parametros, String uri, String mime,
+			RequisicaoVisualizador outro) throws IOException {
 		RequisicaoPanelBytes panelBytes = new RequisicaoPanelBytes(this, resposta, parametros);
 		panelBytes.setRequisicaoVisualizadorListener(this);
 		panelBytes.setRequisicaoRota(requisicaoRota);
-		panelBytes.configuracoes(uri, mime);
+		panelBytes.configuracoes(uri, mime, outro);
 		tabbedPane.addTab(panelBytes.getTitulo(), panelBytes.getIcone(), panelBytes);
 		int ultimoIndice = tabbedPane.getTabCount() - 1;
 		tabbedPane.setSelectedIndex(ultimoIndice);
