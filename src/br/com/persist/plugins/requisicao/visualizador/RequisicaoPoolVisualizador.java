@@ -14,13 +14,15 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.requisicao.RequisicaoConstantes;
 
 public class RequisicaoPoolVisualizador {
+	public static final RequisicaoVisualizador VISUALIZADOR_TEXTO = new RequisicaoVisualizadorTexto();
+	public static final RequisicaoVisualizador VISUALIZADOR_JSON = new RequisicaoVisualizadorJSON();
 	private final RequisicaoVisualizador[] visualizadores;
 	private RequisicaoVisualizador selecionado;
 	private final File file;
 
 	public RequisicaoPoolVisualizador() {
-		visualizadores = new RequisicaoVisualizador[] { null, new RequisicaoVisualizadorImagem(),
-				new RequisicaoVisualizadorTexto(), new RequisicaoVisualizadorHTML(), new RequisicaoVisualizadorJSON() };
+		visualizadores = new RequisicaoVisualizador[] { null, new RequisicaoVisualizadorImagem(), VISUALIZADOR_TEXTO,
+				new RequisicaoVisualizadorHTML(), VISUALIZADOR_JSON };
 		file = new File(RequisicaoConstantes.REQUISICOES + Constantes.SEPARADOR + RequisicaoConstantes.MIMES);
 	}
 
