@@ -2,6 +2,9 @@ package br.com.persist.data;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,12 +31,42 @@ public class Conversor {
 						Object objetoParam = classeParam.newInstance();
 						metodoSet.invoke(object, objetoParam);
 						((Objeto) nomeValor.valor).converter(objetoParam);
+					} else if (nomeValor.isArray()) {
+						String classe = getNomeClasse(metodoSet);
+						if (classe != null) {
+							Class<?> klass = Class.forName(classe);
+							Object[] array = ((Array) nomeValor.valor).converter(klass);
+							List<Object> lista = Arrays.asList(array);
+							metodoSet.invoke(object, lista);
+						}
 					}
 				}
 			}
-		} catch (IllegalAccessException | InvocationTargetException | InstantiationException ex) {
+		} catch (IllegalAccessException | InvocationTargetException | ClassNotFoundException
+				| InstantiationException ex) {
 			LOG.log(Level.SEVERE, ex.getMessage(), ex);
 		}
+	}
+
+	private static String getNomeClasse(Method metodo) {
+		Class<?> classeParam = metodo.getParameterTypes()[0];
+		if (!List.class.isAssignableFrom(classeParam)) {
+			return null;
+		}
+		Type[] types = metodo.getGenericParameterTypes();
+		if (types == null || types.length != 1) {
+			return null;
+		}
+		Type type = types[0];
+		if (!(type instanceof ParameterizedType)) {
+			return null;
+		}
+		ParameterizedType typeParam = (ParameterizedType) type;
+		Type[] typesArgs = typeParam.getActualTypeArguments();
+		if (typesArgs == null || typesArgs.length != 1) {
+			return null;
+		}
+		return typesArgs[0].getTypeName();
 	}
 
 	public static Object[] converter(Array array, Class<?> classe) {

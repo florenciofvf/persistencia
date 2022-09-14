@@ -52,6 +52,10 @@ class NomeValor {
 		return valor instanceof Objeto;
 	}
 
+	boolean isArray() {
+		return valor instanceof Array;
+	}
+
 	boolean isTexto() {
 		return valor instanceof Texto;
 	}
