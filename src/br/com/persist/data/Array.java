@@ -25,6 +25,10 @@ public class Array extends Tipo {
 		Formatador.append(this, c, tab);
 	}
 
+	public Object[] converter(Class<?> classe) {
+		return Conversor.converter(this, classe);
+	}
+
 	public List<Tipo> getElementos() {
 		return elementos;
 	}

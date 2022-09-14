@@ -2,6 +2,7 @@ package br.com.persist.data;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +34,23 @@ public class Conversor {
 		} catch (IllegalAccessException | InvocationTargetException | InstantiationException ex) {
 			LOG.log(Level.SEVERE, ex.getMessage(), ex);
 		}
+	}
+
+	public static Object[] converter(Array array, Class<?> classe) {
+		List<Tipo> elementos = array.getElementos();
+		Object[] resposta = new Object[elementos.size()];
+		try {
+			for (int i = 0; i < elementos.size(); i++) {
+				Tipo tipo = elementos.get(i);
+				if (tipo instanceof Objeto) {
+					Object object = classe.newInstance();
+					resposta[i] = ((Objeto) tipo).converter(object);
+				}
+			}
+		} catch (IllegalAccessException | InstantiationException ex) {
+			LOG.log(Level.SEVERE, ex.getMessage(), ex);
+		}
+		return resposta;
 	}
 
 	static class PoolMetodo {
