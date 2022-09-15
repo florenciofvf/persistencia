@@ -1,10 +1,30 @@
 package br.com.persist.data;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DataGramatica {
 	private DataGramatica() {
+	}
+
+	public static Tipo criarTipo(File arquivo) throws IOException, DataException {
+		if (!arquivo.isFile()) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(arquivo)))) {
+			String linha = br.readLine();
+			while (linha != null) {
+				sb.append(linha);
+				linha = br.readLine();
+			}
+		}
+		return criarTipo(sb.toString());
 	}
 
 	public static Tipo criarTipo(String stringJSON) throws DataException {
