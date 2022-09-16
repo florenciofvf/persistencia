@@ -113,6 +113,9 @@ br.com.persist.plugins.checagem.util.Processar
 processar
 br.com.persist.plugins.checagem.util.Processar
 
+formatJson
+br.com.persist.plugins.checagem.util.FormatJson
+
 
 
 closeConnection
