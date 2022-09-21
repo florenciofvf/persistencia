@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -307,15 +308,20 @@ public class TabelaPersistencia extends JTable {
 	}
 
 	static Action actionMenu(String chave, Icon icon) {
-		return Action.acaoMenu(TabelaMensagens.getString(chave), icon);
+		return Action.acaoMenu(getString(chave), icon);
 	}
 
 	static Action actionMenu(String chave) {
 		return actionMenu(chave, null);
 	}
 
+	static String getString(String chave) {
+		return TabelaMensagens.getString(chave);
+	}
+
 	private class PopupHeader extends Popup {
 		private static final long serialVersionUID = 1L;
+		private JCheckBoxMenuItem inativoTempCheck = new JCheckBoxMenuItem(getString("label.inativo_temp"));
 		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_manual", null);
 		private Action copiarNomeColunaAcao = actionMenu("label.copiar_nome_coluna");
@@ -337,7 +343,8 @@ public class TabelaPersistencia extends JTable {
 
 		private PopupHeader() {
 			add(menuMetadados);
-			addMenuItem(true, larguraConteudoAcao);
+			add(true, inativoTempCheck);
+			addMenuItem(larguraConteudoAcao);
 			addMenuItem(larguraTituloAcao);
 			addMenuItem(larguraMinimaAcao);
 			addMenuItem(larguraColunaAcao);
@@ -452,6 +459,11 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private void eventos() {
+			inativoTempCheck.addActionListener(e -> {
+				if (colunaTabela != null) {
+					colunaTabela.setInativoTemp(inativoTempCheck.isSelected());
+				}
+			});
 			copiarNomeColunaAcao.setActionListener(e -> {
 				String coluna = getModel().getColumnName(indiceColuna);
 				Util.setContentTransfered(coluna);
@@ -519,6 +531,9 @@ public class TabelaPersistencia extends JTable {
 				add(itemClassBiblio);
 			}
 			this.colunaTabela = colunaTabela;
+			if (colunaTabela != null) {
+				inativoTempCheck.setSelected(colunaTabela.isInativoTemp());
+			}
 		}
 
 		private String getNome(String classBiblio) {

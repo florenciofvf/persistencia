@@ -144,7 +144,7 @@ public class PersistenciaModelo implements TableModel {
 	public List<String> getListaNomeColunas(boolean comChaves) {
 		List<String> lista = new ArrayList<>();
 		for (Coluna c : colunas) {
-			if (!c.isColunaInfo()) {
+			if (!c.isColunaInfo() && !c.isInativoTemp()) {
 				if (c.isChave()) {
 					if (comChaves)
 						lista.add(c.getNome());

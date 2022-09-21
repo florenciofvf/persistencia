@@ -13,6 +13,7 @@ public class Coluna {
 	private final boolean autoInc;
 	private final boolean nulavel;
 	private final boolean numero;
+	private boolean inativoTemp;
 	private final boolean chave;
 	private final boolean blob;
 	private final String nome;
@@ -191,5 +192,13 @@ public class Coluna {
 
 	public void setValorAlternativoInsert(String valorAlternativoInsert) {
 		this.valorAlternativoInsert = valorAlternativoInsert;
+	}
+
+	public boolean isInativoTemp() {
+		return inativoTemp;
+	}
+
+	public void setInativoTemp(boolean inativoTemp) {
+		this.inativoTemp = inativoTemp;
 	}
 }
