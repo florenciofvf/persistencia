@@ -18,7 +18,7 @@ class NomeValor {
 		if (valor instanceof Logico) {
 			return Boolean.class.isAssignableFrom(param);
 		} else if (valor instanceof Numero) {
-			return Number.class.isAssignableFrom(param);
+			return Number.class.isAssignableFrom(param) || String.class.isAssignableFrom(param);
 		} else if (valor instanceof Texto) {
 			return String.class.isAssignableFrom(param);
 		}
@@ -31,8 +31,13 @@ class NomeValor {
 			metodoSet.invoke(object, arg);
 		} else if (valor instanceof Numero) {
 			Class<?> param = metodoSet.getParameterTypes()[0];
-			Number arg = ((Numero) valor).getConteudo(param);
-			metodoSet.invoke(object, arg);
+			if (String.class.isAssignableFrom(param)) {
+				String arg = ((Numero) valor).getConteudo().toString();
+				metodoSet.invoke(object, arg);
+			} else {
+				Number arg = ((Numero) valor).getConteudo(param);
+				metodoSet.invoke(object, arg);
+			}
 		} else if (valor instanceof Texto) {
 			String arg = ((Texto) valor).getConteudo();
 			metodoSet.invoke(object, arg);

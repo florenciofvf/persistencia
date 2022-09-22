@@ -32,12 +32,16 @@ public class Numero extends Tipo {
 		String string = conteudo.toString();
 		if (Double.class.isAssignableFrom(classe)) {
 			return Double.valueOf(string);
-		} else if (Long.class.isAssignableFrom(classe)) {
-			return Long.valueOf(string);
 		} else if (Float.class.isAssignableFrom(classe)) {
 			return Float.valueOf(string);
+		} else if (Long.class.isAssignableFrom(classe)) {
+			return Long.valueOf(string);
 		} else if (Integer.class.isAssignableFrom(classe)) {
 			return Integer.valueOf(string);
+		} else if (Short.class.isAssignableFrom(classe)) {
+			return Short.valueOf(string);
+		} else if (Byte.class.isAssignableFrom(classe)) {
+			return Byte.valueOf(string);
 		}
 		return null;
 	}
