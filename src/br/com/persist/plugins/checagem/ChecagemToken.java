@@ -190,11 +190,13 @@ public class ChecagemToken {
 	}
 
 	private Token tokenVariavel() throws ChecagemException {
-		String s = getString();
-		if (s.isEmpty()) {
+		StringBuilder sb = new StringBuilder(getString());
+		if (sb.length() == 0) {
 			throw new ChecagemException(getClass(), indice + " <<< Nome variavel vazio >>> " + indice);
+		} else {
+			sb.append(getString2());
 		}
-		return new Token("$" + s, Token.VARIAVEL, indice);
+		return new Token("$" + sb.toString(), Token.VARIAVEL, indice);
 	}
 
 	private Token tokenNumero(char d) throws ChecagemException {
@@ -249,11 +251,29 @@ public class ChecagemToken {
 		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
 	}
 
+	private boolean validoChar2(char c) {
+		return validoChar(c) || (c >= '0' && c <= '9');
+	}
+
 	private String getString() {
 		StringBuilder sb = new StringBuilder();
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (validoChar(c)) {
+				sb.append(c);
+			} else {
+				break;
+			}
+			indice++;
+		}
+		return sb.toString();
+	}
+
+	private String getString2() {
+		StringBuilder sb = new StringBuilder();
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if (validoChar2(c)) {
 				sb.append(c);
 			} else {
 				break;
