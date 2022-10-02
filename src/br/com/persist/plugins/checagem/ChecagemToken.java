@@ -153,8 +153,7 @@ public class ChecagemToken {
 			return tokenFalseOuPrefixa(c);
 		default:
 			if (validoChar(c)) {
-				String s = getString();
-				return new Token(s, Token.FUNCAO_PREFIXA, indice);
+				return tokenFuncaoPrefixa();
 			}
 			throw new ChecagemException(getClass(), indice + TOKEN_INVALIDO + c);
 		}
@@ -197,6 +196,12 @@ public class ChecagemToken {
 			sb.append(getString2());
 		}
 		return new Token("$" + sb.toString(), Token.VARIAVEL, indice);
+	}
+
+	private Token tokenFuncaoPrefixa() {
+		StringBuilder sb = new StringBuilder(getString());
+		sb.append(getString3());
+		return new Token(sb.toString(), Token.FUNCAO_PREFIXA, indice);
 	}
 
 	private Token tokenNumero(char d) throws ChecagemException {
@@ -274,6 +279,20 @@ public class ChecagemToken {
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
 			if (validoChar2(c)) {
+				sb.append(c);
+			} else {
+				break;
+			}
+			indice++;
+		}
+		return sb.toString();
+	}
+
+	private String getString3() {
+		StringBuilder sb = new StringBuilder();
+		while (indice < string.length()) {
+			char c = string.charAt(indice);
+			if (validoChar2(c) || c == '.') {
 				sb.append(c);
 			} else {
 				break;
