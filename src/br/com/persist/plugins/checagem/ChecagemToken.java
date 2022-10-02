@@ -191,7 +191,7 @@ public class ChecagemToken {
 	private Token tokenVariavel() throws ChecagemException {
 		StringBuilder sb = new StringBuilder(getString());
 		if (sb.length() == 0) {
-			throw new ChecagemException(getClass(), indice + " <<< Nome variavel vazio >>> " + indice);
+			throw new ChecagemException(getClass(), indice + " <<< Nome variavel invalido >>> " + indice);
 		} else {
 			sb.append(getString2());
 		}
