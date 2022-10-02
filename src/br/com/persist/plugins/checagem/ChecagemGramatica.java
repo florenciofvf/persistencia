@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.checagem.atomico.TipoString;
 import br.com.persist.plugins.checagem.colecao.Lista;
 import br.com.persist.plugins.checagem.colecao.Mapa;
 import br.com.persist.plugins.checagem.comparacao.Igual;
@@ -27,6 +28,7 @@ import br.com.persist.plugins.checagem.matematico.Multiplicar;
 import br.com.persist.plugins.checagem.matematico.Resto;
 import br.com.persist.plugins.checagem.matematico.Somar;
 import br.com.persist.plugins.checagem.matematico.Subtrair;
+import br.com.persist.plugins.checagem.util.Exec;
 import br.com.persist.plugins.checagem.util.Expressao;
 
 public class ChecagemGramatica {
@@ -182,8 +184,7 @@ public class ChecagemGramatica {
 		String chave = token.getValor().toString();
 		String classe = prefixas.get(chave.toLowerCase());
 		if (classe == null) {
-			throw new ChecagemException(ChecagemGramatica.class,
-					token.getIndice() + " <<< Funcao nao declarada >>> " + chave);
+			return criarFuncaoExec(chave);
 		}
 		Class<?> klass = null;
 		try {
@@ -200,6 +201,20 @@ public class ChecagemGramatica {
 			throw new ChecagemException(ChecagemGramatica.class,
 					"Acesso ilegal ao instanciar classe (prefixa) >>> " + klass);
 		}
+	}
+
+	private static TipoFuncao criarFuncaoExec(String chave) throws ChecagemException {
+		Exec exec = new Exec();
+		int pos = chave.indexOf('.');
+		if (pos == -1) {
+			exec.addParam(new TipoString(chave));
+		} else {
+			String idModulo = chave.substring(0, pos);
+			String idBloco = chave.substring(pos + 1);
+			exec.addParam(new TipoString(idModulo));
+			exec.addParam(new TipoString(idBloco));
+		}
+		return exec;
 	}
 
 	private static FuncaoBinariaInfixa criarFuncaoInfixa(Token token) throws ChecagemException {
