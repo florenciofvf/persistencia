@@ -200,7 +200,7 @@ public class ChecagemToken {
 
 	private Token tokenFuncaoPrefixa() {
 		StringBuilder sb = new StringBuilder(getString());
-		sb.append(getString3());
+		sb.append(getString2());
 		return new Token(sb.toString(), Token.FUNCAO_PREFIXA, indice);
 	}
 
@@ -231,7 +231,7 @@ public class ChecagemToken {
 	}
 
 	private Token tokenTrueOuPrefixa(char c) {
-		String s = getString(c);
+		String s = getString(c) + getString2();
 		if ("true".equalsIgnoreCase(s)) {
 			return new Token(Boolean.TRUE, Token.BOOLEAN, indice);
 		}
@@ -239,7 +239,7 @@ public class ChecagemToken {
 	}
 
 	private Token tokenFalseOuPrefixa(char c) {
-		String s = getString(c);
+		String s = getString(c) + getString2();
 		if ("false".equalsIgnoreCase(s)) {
 			return new Token(Boolean.FALSE, Token.BOOLEAN, indice);
 		}
@@ -275,20 +275,6 @@ public class ChecagemToken {
 	}
 
 	private String getString2() {
-		StringBuilder sb = new StringBuilder();
-		while (indice < string.length()) {
-			char c = string.charAt(indice);
-			if (validoChar2(c)) {
-				sb.append(c);
-			} else {
-				break;
-			}
-			indice++;
-		}
-		return sb.toString();
-	}
-
-	private String getString3() {
 		StringBuilder sb = new StringBuilder();
 		while (indice < string.length()) {
 			char c = string.charAt(indice);
