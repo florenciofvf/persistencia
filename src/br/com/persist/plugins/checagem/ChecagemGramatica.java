@@ -212,8 +212,10 @@ public class ChecagemGramatica {
 			String idModulo = chave.substring(0, pos);
 			String idBloco = chave.substring(pos + 1);
 			exec.addParam(new TipoString(idModulo));
+			exec.preParametro();
 			exec.addParam(new TipoString(idBloco));
 		}
+		exec.preParametro();
 		return exec;
 	}
 
