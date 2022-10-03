@@ -20,6 +20,7 @@ public class ChecagemCor {
 	private final MutableAttributeSet attGreen;
 	private final MutableAttributeSet attGray;
 	private final MutableAttributeSet attBlue;
+	private final MutableAttributeSet attRed2;
 	private final MutableAttributeSet attRed;
 
 	public ChecagemCor() {
@@ -28,8 +29,10 @@ public class ChecagemCor {
 		attGreen = new SimpleAttributeSet();
 		attGray = new SimpleAttributeSet();
 		attBlue = new SimpleAttributeSet();
+		attRed2 = new SimpleAttributeSet();
 		attRed = new SimpleAttributeSet();
 		StyleConstants.setForeground(attGreen, new Color(0, 125, 0));
+		StyleConstants.setForeground(attRed2, new Color(125, 0, 0));
 		StyleConstants.setForeground(attMagenta, Color.MAGENTA);
 		StyleConstants.setForeground(attBlack, Color.BLACK);
 		StyleConstants.setForeground(attBlue, Color.BLUE);
@@ -38,6 +41,7 @@ public class ChecagemCor {
 		StyleConstants.setBold(attMagenta, true);
 		StyleConstants.setBold(attBlack, true);
 		StyleConstants.setBold(attGreen, true);
+		StyleConstants.setBold(attRed2, true);
 		StyleConstants.setBold(attRed, true);
 	}
 
@@ -65,12 +69,14 @@ public class ChecagemCor {
 	}
 
 	private void insert0(StyledDocument doc, Token token) throws BadLocationException {
-		if (token.isFuncaoInfixa() || token.isAuto() || token.isBoolean()) {
+		if (token.isFuncaoInfixa() || token.isAuto()) {
 			insert(doc, token.getValor().toString(), attRed);
 		} else if (token.isVariavel()) {
 			insert(doc, token.getValor().toString(), attMagenta);
 		} else if (token.isVirgula()) {
 			insert(doc, token.getValor().toString(), attBlack);
+		} else if (token.isBoolean()) {
+			insert(doc, token.getValor().toString(), attRed2);
 		} else if (token.isString()) {
 			insert(doc, "'" + token.getValor().toString() + "'", attBlue);
 		} else if (token.isDouble() || token.isLong()) {
