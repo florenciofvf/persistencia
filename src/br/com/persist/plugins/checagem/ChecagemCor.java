@@ -65,7 +65,7 @@ public class ChecagemCor {
 	}
 
 	private void insert0(StyledDocument doc, Token token) throws BadLocationException {
-		if (token.isFuncaoInfixa() || token.isAuto()) {
+		if (token.isFuncaoInfixa() || token.isAuto() || token.isBoolean()) {
 			insert(doc, token.getValor().toString(), attRed);
 		} else if (token.isVariavel()) {
 			insert(doc, token.getValor().toString(), attMagenta);
