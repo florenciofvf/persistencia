@@ -106,6 +106,12 @@ br.com.persist.plugins.checagem.util.Exec
 execModulo
 br.com.persist.plugins.checagem.util.ExecModulo
 
+import
+br.com.persist.plugins.checagem.util.Importar
+
+importar
+br.com.persist.plugins.checagem.util.Importar
+
 concat
 br.com.persist.plugins.checagem.util.Concatenar
 concatenar
