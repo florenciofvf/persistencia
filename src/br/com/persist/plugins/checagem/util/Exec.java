@@ -38,6 +38,9 @@ public class Exec extends FuncaoUnariaOuNParam {
 		String idBloco = (String) op0;
 		Bloco outro = modulo.getBloco(idBloco);
 		if (outro == null) {
+			outro = checagem.getBlocoImportado(idBloco);
+		}
+		if (outro == null) {
 			throwBlocoInexistente(modulo, idBloco);
 		}
 		return outro.executar(checagem, Contexto.criar(op1));
