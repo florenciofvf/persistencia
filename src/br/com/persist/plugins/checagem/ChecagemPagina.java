@@ -122,14 +122,17 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void executar() {
-			try {
-				ChecagemUtil.atualizarEstrutura(file, areaParametros.getText());
-			} catch (ChecagemException | XMLException e) {
-				Util.mensagem(ChecagemPagina.this, e.getMessage());
-			}
-			Contexto ctx = new Contexto();
-			String string = ChecagemUtil.executar(file.getName(), null, ctx);
-			areaResultado.setText(string);
+			areaResultado.setText(Constantes.VAZIO);
+			SwingUtilities.invokeLater(() -> {
+				try {
+					ChecagemUtil.atualizarEstrutura(file, areaParametros.getText());
+				} catch (ChecagemException | XMLException e) {
+					Util.mensagem(ChecagemPagina.this, e.getMessage());
+				}
+				Contexto ctx = new Contexto();
+				String string = ChecagemUtil.executar(file.getName(), null, ctx);
+				areaResultado.setText(string);
+			});
 		}
 
 		private void sincronizarSentencas() {

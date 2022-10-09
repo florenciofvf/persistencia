@@ -17,7 +17,7 @@ public class Importar extends FuncaoUnariaOuNParam {
 		for (int i = 1; i < parametros.size(); i++) {
 			Object valor = parametros.get(i).executar(checagem, bloco, ctx);
 			checkObrigatorioString(valor, ERRO + " >>> op" + i);
-			checagem.add(op0.toString());
+			checagem.add(valor.toString());
 		}
 		return op0;
 	}
