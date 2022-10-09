@@ -12,6 +12,10 @@ public class Checagem {
 		imports = new ArrayList<>();
 	}
 
+	public void initModulos() {
+		modulos.clear();
+	}
+
 	public List<Object> processar(String idModulo, String idBloco, Contexto ctx) throws ChecagemException {
 		if (idModulo == null) {
 			throw new ChecagemException(getClass(), "idModulo null");

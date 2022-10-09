@@ -94,6 +94,7 @@ public class ChecagemContainer extends AbstratoContainer {
 	}
 
 	private void abrir(String conteudo, String idPagina) {
+		ChecagemUtil.initModulos();
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

@@ -21,6 +21,10 @@ public class ChecagemUtil {
 	private ChecagemUtil() {
 	}
 
+	public static void initModulos() {
+		checagem.initModulos();
+	}
+
 	public static void inicializar() throws ChecagemException {
 		if (ChecagemGramatica.prefixas.isEmpty()) {
 			String arquivo = ChecagemConstantes.CHECAGENS + Constantes.SEPARADOR + ChecagemConstantes.CHECAGENS;
