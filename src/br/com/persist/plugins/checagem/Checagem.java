@@ -14,6 +14,7 @@ public class Checagem {
 
 	public void initModulos() {
 		modulos.clear();
+		imports.clear();
 	}
 
 	public List<Object> processar(String idModulo, String idBloco, Contexto ctx) throws ChecagemException {
