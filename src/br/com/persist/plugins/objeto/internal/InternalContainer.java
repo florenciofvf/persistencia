@@ -1077,6 +1077,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						addMenuItem(true, vazioInvisivelAcao);
 						addMenuItem(vazioVisivelAcao);
 						addMenuItem(true, iconeAcao);
+						iconeAcao.hint(ObjetoMensagens.getString("hint.pesquisa.icone.excluir"));
 						addLimparRestoAcao.setActionListener(e -> processar(true));
 						excLimparRestoAcao.setActionListener(e -> processar(false));
 						vazioInvisivelAcao.setActionListener(e -> vazio(true));
