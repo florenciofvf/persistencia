@@ -327,6 +327,11 @@ public class InternalFormulario extends AbstratoInternalFrame {
 
 	private transient InternalListener.Visibilidade visibilidadeListener = new InternalListener.Visibilidade() {
 		@Override
+		public void checarRedimensionamento() {
+			InternalFormulario.this.checarRedimensionamento();
+		}
+
+		@Override
 		public void setVisible(boolean b) {
 			InternalFormulario.this.setVisible(b);
 		}

@@ -63,6 +63,8 @@ public interface InternalListener {
 
 		public void limparOutros(InternalContainer invocador);
 
+		public void checarRedimensionamento();
+
 		public void setVisible(boolean b);
 	}
 

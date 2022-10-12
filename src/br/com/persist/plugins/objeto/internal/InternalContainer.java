@@ -468,6 +468,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			if (!visivel && objeto.isVisivel()) {
 				visibilidadeListener.checarLargura(InternalContainer.this);
 			}
+			visibilidadeListener.checarRedimensionamento();
 		}
 	}
 
