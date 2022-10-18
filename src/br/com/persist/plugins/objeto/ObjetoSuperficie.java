@@ -1572,6 +1572,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					if (grupoTabela.equals(grupoT)) {
 						interno.setVisible(true);
 						objeto.setVisivel(true);
+						interno.checarRedimensionamento();
 					}
 				}
 			}

@@ -88,7 +88,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		}
 	}
 
-	private void checarRedimensionamento() {
+	public void checarRedimensionamento() {
 		checarDesktop();
 		if (desktop != null && desktop.isAjusteAutomatico() && desktop.isAjusteAutomaticoForm()) {
 			configurarAjustes(false);
