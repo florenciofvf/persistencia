@@ -1497,6 +1497,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		private static final long serialVersionUID = 1L;
 		private Action atualizarFormulariosAcao = actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action limparFormulariosAcao = actionMenu("label.limpar_formularios", Icones.NOVO);
+		private Action formulariosInvisiveisAcao = actionMenu("label.forms_invisiveis", null);
 		private Action criarObjetoAcao = actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
@@ -1507,7 +1508,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 			addMenuItem(criarObjetoAcao);
 			addMenuItem(true, colarAcao);
 			add(true, menuAjustar);
-			addMenuItem(true, atualizarFormulariosAcao);
+			addMenuItem(true, formulariosInvisiveisAcao);
+			addMenuItem(atualizarFormulariosAcao);
 			addMenuItem(limparFormulariosAcao);
 			add(true, menuLargura);
 			add(true, menuAjuste);
@@ -1517,6 +1519,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void eventos() {
 			criarObjetoAcao.setActionListener(e -> criarNovoObjeto(popup2.xLocal, popup2.yLocal));
+			formulariosInvisiveisAcao.setActionListener(e -> formulariosInvisiveis());
 			atualizarFormulariosAcao.setActionListener(e -> atualizarFormularios());
 			propriedadesAcao.setActionListener(e -> propriedades());
 			limparFormulariosAcao.setActionListener(e -> limpar2());
@@ -1526,11 +1529,52 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 
 		private void preShow(boolean contemFrames) {
 			colarAcao.setEnabled(!CopiarColar.copiadosIsEmpty());
+			formulariosInvisiveisAcao.setEnabled(contemFrames);
 			atualizarFormulariosAcao.setEnabled(contemFrames);
 			limparFormulariosAcao.setEnabled(contemFrames);
 			menuLargura.habilitar(contemFrames);
 			menuAjustar.habilitar(contemFrames);
 			menuAjuste.habilitar(contemFrames);
+		}
+
+		private String getGrupoTabela(Objeto objeto) {
+			return objeto.getGrupo() + " - " + objeto.getTabela();
+		}
+
+		private void formulariosInvisiveis() {
+			List<String> lista = new ArrayList<>();
+			for (JInternalFrame frame : getAllFrames()) {
+				if (!frame.isVisible() && frame instanceof InternalFormulario) {
+					InternalFormulario interno = (InternalFormulario) frame;
+					Objeto objeto = interno.getInternalContainer().getObjeto();
+					lista.add(getGrupoTabela(objeto));
+				}
+			}
+			if (lista.isEmpty()) {
+				Util.mensagem(formulario, ObjetoMensagens.getString("msg.nenhum_form_invisivel"));
+				return;
+			}
+
+			Coletor coletor = new Coletor();
+			SetLista.view(ObjetoMensagens.getString("label.forms_invisiveis"), lista, coletor, ObjetoSuperficie.this,
+					new SetLista.Config(true, true));
+			if (coletor.size() == 1) {
+				tornarVisivel(coletor.get(0));
+			}
+		}
+
+		private void tornarVisivel(String grupoTabela) {
+			for (JInternalFrame frame : getAllFrames()) {
+				if (!frame.isVisible() && frame instanceof InternalFormulario) {
+					InternalFormulario interno = (InternalFormulario) frame;
+					Objeto objeto = interno.getInternalContainer().getObjeto();
+					String grupoT = getGrupoTabela(objeto);
+					if (grupoTabela.equals(grupoT)) {
+						interno.setVisible(true);
+						objeto.setVisivel(true);
+					}
+				}
+			}
 		}
 
 		private void propriedades() {
