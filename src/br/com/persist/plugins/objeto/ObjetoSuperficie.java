@@ -1570,9 +1570,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					Objeto objeto = interno.getInternalContainer().getObjeto();
 					String grupoT = getGrupoTabela(objeto);
 					if (grupoTabela.equals(grupoT)) {
-						interno.setVisible(true);
 						objeto.setVisivel(true);
+						interno.setVisible(true);
 						interno.checarRedimensionamento();
+						checarLargura(interno.getInternalContainer());
 					}
 				}
 			}
