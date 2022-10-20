@@ -80,6 +80,10 @@ public class TabelaPersistencia extends JTable {
 		return getModelo().getListaNomeColunasObrigatorias();
 	}
 
+	public List<String> getListaNomeColunasPreenchidas(boolean comChaves, int indice) {
+		return getModelo().getListaNomeColunasPreenchidas(comChaves, indice);
+	}
+
 	public List<String> getListaNomeColunas(boolean comChaves) {
 		return getModelo().getListaNomeColunas(comChaves);
 	}

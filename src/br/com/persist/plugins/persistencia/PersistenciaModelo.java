@@ -141,13 +141,19 @@ public class PersistenciaModelo implements TableModel {
 		return colunas;
 	}
 
+	public List<String> getListaNomeColunasPreenchidas(boolean comChaves, int indice) {
+		List<Object> registro = registros.get(indice);
+		return getListaNomeColunasPreenchidas(comChaves, registro);
+	}
+
 	public List<String> getListaNomeColunas(boolean comChaves) {
 		List<String> lista = new ArrayList<>();
 		for (Coluna c : colunas) {
 			if (!c.isColunaInfo() && !c.isInativoTemp()) {
 				if (c.isChave()) {
-					if (comChaves)
+					if (comChaves) {
 						lista.add(c.getNome());
+					}
 				} else {
 					lista.add(c.getNome());
 				}
@@ -425,6 +431,22 @@ public class PersistenciaModelo implements TableModel {
 		return resposta.toString();
 	}
 
+	public List<String> getListaNomeColunasPreenchidas(boolean comChaves, List<Object> registro) {
+		List<String> lista = new ArrayList<>();
+		for (Coluna c : colunas) {
+			if (!c.isColunaInfo() && !c.isInativoTemp()) {
+				if (c.isChave()) {
+					if (comChaves) {
+						appendNomeColunaPreenchida(c, registro, lista);
+					}
+				} else {
+					appendNomeColunaPreenchida(c, registro, lista);
+				}
+			}
+		}
+		return lista;
+	}
+
 	private String gerarInsert(List<Object> registro, String prefixoNomeTabela, Coletor coletor) {
 		if (colunas.isEmpty()) {
 			return null;
@@ -471,6 +493,13 @@ public class PersistenciaModelo implements TableModel {
 			valor.append(Constantes.TAB + string
 					+ prefixarEsquema(conexao, prefixoNomeTabela, coluna.getSequencia(), Constantes.VAZIO)
 					+ Constantes.QL);
+		}
+	}
+
+	private void appendNomeColunaPreenchida(Coluna coluna, List<Object> registro, List<String> nomeColunas) {
+		Object valor = registro.get(coluna.getIndice());
+		if (valor != null && !Util.estaVazio(valor.toString())) {
+			nomeColunas.add(coluna.getNome());
 		}
 	}
 

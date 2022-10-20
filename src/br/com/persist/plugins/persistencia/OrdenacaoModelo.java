@@ -82,6 +82,10 @@ public class OrdenacaoModelo extends AbstractTableModel {
 		return model.getListaNomeColunasObrigatorias();
 	}
 
+	public List<String> getListaNomeColunasPreenchidas(boolean comChaves, int indice) {
+		return model.getListaNomeColunasPreenchidas(comChaves, linhas[indice].indice);
+	}
+
 	public List<String> getListaNomeColunas(boolean comChaves) {
 		return model.getListaNomeColunas(comChaves);
 	}
