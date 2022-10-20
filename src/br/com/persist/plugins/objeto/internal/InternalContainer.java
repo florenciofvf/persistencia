@@ -1421,8 +1421,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							return;
 						}
 						Coletor coletor = new Coletor();
-						SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(false), coletor,
-								InternalContainer.this, new SetLista.Config(true, false));
+						List<String> nomeColunas = null;
+						if (Util.confirmar(InternalContainer.this,
+								ObjetoMensagens.getString("msg.somente_colunas_preenchidas"), false)) {
+							nomeColunas = tabelaPersistencia.getListaNomeColunasPreenchidas(false, linhas[0]);
+						} else {
+							nomeColunas = tabelaPersistencia.getListaNomeColunas(false);
+						}
+						SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
+								new SetLista.Config(true, false));
 						if (!coletor.estaVazio()) {
 							String instrucao = modelo.getUpdate(linhas[0], objeto.getPrefixoNomeTabela(), coletor, true,
 									conexao);
