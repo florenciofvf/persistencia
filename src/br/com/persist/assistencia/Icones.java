@@ -88,6 +88,7 @@ public class Icones {
 	public static final Icon PKEY = criarImagem("pkey");
 	public static final Icon OLHO = criarImagem("eye");
 	public static final Icon MAO = criarImagem("mao");
+	public static final Icon PDF = criarImagem("pdf");
 	public static final Icon TOP = criarImagem("top");
 	public static final Icon VAR = criarImagem("var");
 	public static final Icon KEY = criarImagem("key");
