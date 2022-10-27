@@ -22,7 +22,7 @@ public class RequisicaoPoolVisualizador {
 
 	public RequisicaoPoolVisualizador() {
 		visualizadores = new RequisicaoVisualizador[] { null, new RequisicaoVisualizadorImagem(), VISUALIZADOR_TEXTO,
-				new RequisicaoVisualizadorHTML(), new RequisicaoVisualizadorPDF(), VISUALIZADOR_JSON };
+				new RequisicaoVisualizadorHTML(), VISUALIZADOR_JSON, new RequisicaoVisualizadorPDF() };
 		file = new File(RequisicaoConstantes.REQUISICOES + Constantes.SEPARADOR + RequisicaoConstantes.MIMES);
 	}
 

@@ -54,7 +54,7 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 
 	@Override
 	public String toString() {
-		return "Json";
+		return "JSON";
 	}
 
 	@Override

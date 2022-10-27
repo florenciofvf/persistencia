@@ -40,7 +40,7 @@ public class RequisicaoVisualizadorPDF extends AbstratoRequisicaoVisualizador {
 
 	@Override
 	public String toString() {
-		return "Pdf";
+		return "PDF";
 	}
 
 	@Override

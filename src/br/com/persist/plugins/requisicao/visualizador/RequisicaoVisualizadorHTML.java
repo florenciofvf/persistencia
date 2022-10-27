@@ -97,7 +97,7 @@ public class RequisicaoVisualizadorHTML extends RequisicaoVisualizadorHeader {
 
 	@Override
 	public String toString() {
-		return "Html";
+		return "HTML";
 	}
 
 	@Override
