@@ -9,7 +9,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 public class RequisicaoModelo implements TableModel {
-	private static final String[] COLUNAS = { "DESCRICAO", "URL" };
+	private static final String[] COLUNAS = { "RESUMO", "URL" };
 	private final List<Requisicao> lista = new ArrayList<>();
 	private static final Logger LOG = Logger.getGlobal();
 
