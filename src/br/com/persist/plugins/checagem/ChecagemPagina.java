@@ -244,14 +244,6 @@ public class ChecagemPagina extends Panel {
 				label.limpar();
 			}
 		}
-
-		private boolean ehArquivoReservado() {
-			return ChecagemContainer.ehArquivoReservado(getNome());
-		}
-
-		private void mensagemReservado() {
-			Util.mensagem(ChecagemPagina.this, ChecagemMensagens.getString("msg.arquivo_reservado"));
-		}
 	}
 
 	public String getConteudo() {
@@ -260,6 +252,14 @@ public class ChecagemPagina extends Panel {
 
 	public String getNome() {
 		return file.getName();
+	}
+
+	void mensagemReservado() {
+		Util.mensagem(ChecagemPagina.this, ChecagemMensagens.getString("msg.arquivo_reservado"));
+	}
+
+	boolean ehArquivoReservado() {
+		return ChecagemContainer.ehArquivoReservado(getNome());
 	}
 
 	private void abrir() {
