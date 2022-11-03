@@ -113,14 +113,17 @@ public class RequisicaoContainer extends AbstratoContainer {
 		return fichario.getIndiceAtivo();
 	}
 
+	public static boolean ehArquivoReservado(String nome) {
+		return RequisicaoConstantes.MIMES.equalsIgnoreCase(nome);
+	}
+
 	private void abrir(String conteudo, String idPagina) {
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					if (RequisicaoConstantes.MIMES.equalsIgnoreCase(f.getName())
-							&& !RequisicaoPreferencia.isExibirArqMimes()) {
+					if (ehArquivoReservado(f.getName()) && !RequisicaoPreferencia.isExibirArqMimes()) {
 						continue;
 					}
 					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
@@ -293,7 +296,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				return;
 			}
 			String nome = resp.toString();
-			if (RequisicaoConstantes.MIMES.equalsIgnoreCase(nome)) {
+			if (ehArquivoReservado(nome)) {
 				Util.mensagem(RequisicaoContainer.this, Mensagens.getString("label.indentificador_reservado"));
 				return;
 			}

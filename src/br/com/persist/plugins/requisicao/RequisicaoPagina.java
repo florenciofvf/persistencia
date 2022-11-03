@@ -327,7 +327,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		private void modoTabelaHandler(boolean modoTabela) {
 			if (modoTabela) {
-				configModoTabela();
+				if (!ehArquivoReservado()) {
+					configModoTabela();
+				} else {
+					chkModoTabela.setSelected(false);
+				}
 			} else {
 				configModoTexto();
 			}
@@ -439,6 +443,10 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		return file.getName();
 	}
 
+	private boolean ehArquivoReservado() {
+		return RequisicaoContainer.ehArquivoReservado(getNome());
+	}
+
 	private void abrir() {
 		areaParametros.setText(Constantes.VAZIO);
 		if (file.exists()) {
@@ -457,7 +465,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
-		if (RequisicaoPreferencia.isAbrirModoTabela()) {
+		if (RequisicaoPreferencia.isAbrirModoTabela() && !ehArquivoReservado()) {
 			SwingUtilities.invokeLater(() -> {
 				toolbarParametro.modoTabelaHandler(true);
 				toolbarParametro.chkModoTabela.setSelected(true);
