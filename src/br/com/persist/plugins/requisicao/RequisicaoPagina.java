@@ -330,6 +330,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				if (!ehArquivoReservado()) {
 					configModoTabela();
 				} else {
+					Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.arquivo_reservado"));
 					chkModoTabela.setSelected(false);
 				}
 			} else {
