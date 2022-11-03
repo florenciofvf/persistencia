@@ -113,8 +113,8 @@ public class ChecagemPagina extends Panel {
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			sincronizarAcao.setActionListener(e -> sincronizarSentencas());
 			checarAcao.setActionListener(e -> checarSentenca());
+			formatarAcao.setActionListener(e -> formatar(true));
 			criarAcao.setActionListener(e -> novaSentenca());
-			formatarAcao.setActionListener(e -> formatar());
 			executarAcao.setActionListener(e -> executar());
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
@@ -122,6 +122,10 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void executar() {
+			if (ehArquivoReservado()) {
+				mensagemReservado();
+				return;
+			}
 			areaResultado.setText(Constantes.VAZIO);
 			SwingUtilities.invokeLater(() -> {
 				try {
@@ -136,6 +140,10 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void sincronizarSentencas() {
+			if (ehArquivoReservado()) {
+				mensagemReservado();
+				return;
+			}
 			try {
 				ChecagemUtil.atualizarEstrutura(file, areaParametros.getText());
 				mensagemSucesso();
@@ -146,6 +154,10 @@ public class ChecagemPagina extends Panel {
 
 		@Override
 		protected void atualizar() {
+			if (ehArquivoReservado()) {
+				mensagemReservado();
+				return;
+			}
 			try {
 				ChecagemUtil.atualizarEstrutura(file);
 				mensagemSucesso();
@@ -154,7 +166,13 @@ public class ChecagemPagina extends Panel {
 			}
 		}
 
-		private void formatar() {
+		private void formatar(boolean msg) {
+			if (ehArquivoReservado()) {
+				if (msg) {
+					mensagemReservado();
+				}
+				return;
+			}
 			try {
 				Modulo modulo = ChecagemUtil.getModulo(file);
 				checagemCor.processar(areaParametros.getStyledDocument(), modulo);
@@ -164,10 +182,18 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void novaSentenca() {
+			if (ehArquivoReservado()) {
+				mensagemReservado();
+				return;
+			}
 			checagemCor.novaSentenca(areaParametros.getStyledDocument());
 		}
 
 		private void checarSentenca() {
+			if (ehArquivoReservado()) {
+				mensagemReservado();
+				return;
+			}
 			if (Util.estaVazio(areaParametros.getText())) {
 				Util.mensagem(ChecagemPagina.this, ChecagemMensagens.getString("msg.nenhuma_sentenca_declarada"));
 				return;
@@ -218,6 +244,14 @@ public class ChecagemPagina extends Panel {
 				label.limpar();
 			}
 		}
+
+		private boolean ehArquivoReservado() {
+			return ChecagemContainer.ehArquivoReservado(getNome());
+		}
+
+		private void mensagemReservado() {
+			Util.mensagem(ChecagemPagina.this, ChecagemMensagens.getString("msg.arquivo_reservado"));
+		}
 	}
 
 	public String getConteudo() {
@@ -241,7 +275,7 @@ public class ChecagemPagina extends Panel {
 					linha = br.readLine();
 				}
 				areaParametros.setText(sb.toString());
-				toolbarParametro.formatar();
+				toolbarParametro.formatar(false);
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ChecagemConstantes.PAINEL_CHECAGEM, ex, this);

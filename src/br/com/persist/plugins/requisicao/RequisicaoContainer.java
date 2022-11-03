@@ -113,7 +113,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 		return fichario.getIndiceAtivo();
 	}
 
-	public static boolean ehArquivoReservado(String nome) {
+	static boolean ehArquivoReservado(String nome) {
 		return RequisicaoConstantes.MIMES.equalsIgnoreCase(nome);
 	}
 

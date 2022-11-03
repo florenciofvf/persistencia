@@ -93,6 +93,10 @@ public class ChecagemContainer extends AbstratoContainer {
 		return fichario.getIndiceAtivo();
 	}
 
+	static boolean ehArquivoReservado(String nome) {
+		return ChecagemConstantes.CHECAGENS.equalsIgnoreCase(nome);
+	}
+
 	private void abrir(String conteudo, String idPagina) {
 		ChecagemUtil.initModulos();
 		fichario.excluirPaginas();
@@ -100,8 +104,7 @@ public class ChecagemContainer extends AbstratoContainer {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					if (ChecagemConstantes.CHECAGENS.equalsIgnoreCase(f.getName())
-							&& !ChecagemPreferencia.isExibirArqSentencas()) {
+					if (ehArquivoReservado(f.getName()) && !ChecagemPreferencia.isExibirArqSentencas()) {
 						continue;
 					}
 					ChecagemPagina pagina = new ChecagemPagina(f);
@@ -199,7 +202,7 @@ public class ChecagemContainer extends AbstratoContainer {
 				return;
 			}
 			String nome = resp.toString();
-			if (ChecagemConstantes.CHECAGENS.equalsIgnoreCase(nome)) {
+			if (ehArquivoReservado(nome)) {
 				Util.mensagem(ChecagemContainer.this, Mensagens.getString("label.indentificador_reservado"));
 				return;
 			}
