@@ -11,4 +11,9 @@ public class Null extends FuncaoVazia {
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "null()";
+	}
 }

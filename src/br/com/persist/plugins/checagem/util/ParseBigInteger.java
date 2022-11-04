@@ -22,4 +22,9 @@ public class ParseBigInteger extends FuncaoUnaria {
 		}
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "parseBigInteger(Texto) : Numero";
+	}
 }

@@ -12,4 +12,9 @@ public class ReturnNull extends FuncaoUnaria {
 		param0().executar(checagem, bloco, ctx);
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "returnNull(funcao)";
+	}
 }

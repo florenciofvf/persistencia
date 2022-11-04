@@ -20,4 +20,9 @@ public class ParseByte extends FuncaoUnaria {
 		}
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "parseByte(Texto) : Numero";
+	}
 }

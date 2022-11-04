@@ -20,4 +20,9 @@ public class ParseFloat extends FuncaoUnaria {
 		}
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "parseFloat(Texto) : Flutuante";
+	}
 }

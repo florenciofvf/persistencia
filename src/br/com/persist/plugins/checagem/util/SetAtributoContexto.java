@@ -17,4 +17,9 @@ public class SetAtributoContexto extends FuncaoBinaria {
 		ctx.put((String) op0, op1);
 		return op1;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "setAtt(Texto, Objeto) : Objeto";
+	}
 }

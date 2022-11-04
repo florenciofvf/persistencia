@@ -17,4 +17,9 @@ public class Processar extends FuncaoVaziaOuNParam {
 		}
 		return resposta;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "processar(funcao, funcaoN) : Objeto";
+	}
 }

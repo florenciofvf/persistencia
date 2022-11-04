@@ -27,4 +27,9 @@ public class Request extends FuncaoUnaria {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "request(Texto) : Objeto";
+	}
 }

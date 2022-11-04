@@ -20,4 +20,9 @@ public class ParseLong extends FuncaoUnaria {
 		}
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "parseLong(Texto) : Numero";
+	}
 }

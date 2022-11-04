@@ -22,4 +22,9 @@ public class ParseBigDecimal extends FuncaoUnaria {
 		}
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "parseBigDecimal(Texto) : Flutuante";
+	}
 }

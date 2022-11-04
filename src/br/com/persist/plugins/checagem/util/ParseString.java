@@ -15,4 +15,9 @@ public class ParseString extends FuncaoUnaria {
 		}
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "parseString(Objeto) : Texto";
+	}
 }
