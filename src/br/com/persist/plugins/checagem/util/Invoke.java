@@ -34,4 +34,9 @@ public class Invoke extends FuncaoBinariaOuMaior {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "invoke(Texto, Texto, [Texto, Objeto]) : Objeto";
+	}
 }

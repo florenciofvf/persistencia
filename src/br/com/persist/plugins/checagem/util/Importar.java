@@ -21,4 +21,9 @@ public class Importar extends FuncaoUnariaOuNParam {
 		}
 		return op0;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "importar(Texto, TextoN) : Texto";
+	}
 }

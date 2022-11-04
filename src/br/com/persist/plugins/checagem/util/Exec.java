@@ -75,4 +75,9 @@ public class Exec extends FuncaoUnariaOuNParam {
 		throw new ChecagemException(getClass(),
 				"Bloco inexistente! >>> modulo=" + modulo.getId() + "[" + idBloco + "]");
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "exec(Texto, [Texto]) : Objeto";
+	}
 }

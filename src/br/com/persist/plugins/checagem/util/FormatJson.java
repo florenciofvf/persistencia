@@ -23,4 +23,9 @@ public class FormatJson extends FuncaoUnaria {
 			throw new ChecagemException(getClass(), ex.getMessage());
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "formatJson(Texto) : Texto";
+	}
 }

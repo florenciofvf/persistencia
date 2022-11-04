@@ -34,4 +34,9 @@ public class Expressao extends FuncaoUnaria implements ChecagemNumero {
 		}
 		return obj;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "() : Objeto";
+	}
 }

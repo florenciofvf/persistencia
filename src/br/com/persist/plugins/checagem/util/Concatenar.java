@@ -17,4 +17,9 @@ public class Concatenar extends FuncaoVaziaOuNParam {
 		}
 		return resposta;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "concat(Objeto, ObjetoN) : Texto";
+	}
 }

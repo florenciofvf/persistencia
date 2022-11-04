@@ -23,4 +23,9 @@ public class NewInstance extends FuncaoUnaria {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "newInstance(Texto) : Objeto";
+	}
 }

@@ -11,4 +11,9 @@ public class Funcao extends FuncaoUnaria {
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		return param0().executar(checagem, bloco, ctx);
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "funcao(funcao) : Objeto";
+	}
 }

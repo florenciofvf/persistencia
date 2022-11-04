@@ -29,4 +29,9 @@ public class ExecModulo extends FuncaoBinaria {
 	private void throwModuloInexistente(String idModulo) throws ChecagemException {
 		throw new ChecagemException(getClass(), "Modulo inexistente! >>> " + idModulo);
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "execModulo(Texto, [Texto]) : Objeto";
+	}
 }

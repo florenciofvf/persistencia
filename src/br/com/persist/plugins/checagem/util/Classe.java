@@ -15,4 +15,9 @@ public class Classe extends FuncaoUnaria {
 		}
 		return "null";
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "classe(Objeto) : Texto";
+	}
 }

@@ -19,4 +19,9 @@ public class GetClass extends FuncaoUnaria {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "getClass(Texto) : Texto";
+	}
 }

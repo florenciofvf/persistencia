@@ -20,4 +20,9 @@ public class IsEmpty extends FuncaoUnaria {
 		}
 		return pri == null || pri.toString().trim().length() == 0;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "isEmpty(collection) : Logico";
+	}
 }
