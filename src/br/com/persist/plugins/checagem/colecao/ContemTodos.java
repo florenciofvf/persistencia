@@ -21,4 +21,9 @@ public class ContemTodos extends FuncaoBinaria {
 		Collection<?> colecao2 = (Collection<?>) op1;
 		return colecao.containsAll(colecao2);
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "contemTodos(collection, collection) : Logico";
+	}
 }

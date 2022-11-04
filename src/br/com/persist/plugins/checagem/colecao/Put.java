@@ -29,4 +29,9 @@ public class Put extends FuncaoUnariaOuNParam {
 		}
 		return op0;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "put({}, Texto, Objeto, Texto, Objeto) : {}";
+	}
 }

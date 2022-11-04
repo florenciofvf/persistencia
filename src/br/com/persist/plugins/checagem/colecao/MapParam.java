@@ -11,4 +11,9 @@ public class MapParam extends FuncaoVazia {
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		return ctx.getMap();
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "mapParam() : {}";
+	}
 }

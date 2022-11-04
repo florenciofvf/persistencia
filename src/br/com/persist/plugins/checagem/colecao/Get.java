@@ -21,4 +21,9 @@ public class Get extends FuncaoBinaria {
 		Map<String, Object> map = (Map<String, Object>) op0;
 		return map.get((String) op1);
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "get({}, Texto) : Objeto";
+	}
 }

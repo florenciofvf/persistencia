@@ -18,4 +18,9 @@ public class TamanhoColecao extends FuncaoUnaria {
 		Collection<?> colecao = (Collection<?>) op0;
 		return colecao.size();
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "size(collection) : Numero";
+	}
 }

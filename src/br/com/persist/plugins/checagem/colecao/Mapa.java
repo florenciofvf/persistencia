@@ -27,4 +27,9 @@ public class Mapa extends FuncaoVaziaOuNParam {
 		}
 		return resposta;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "mapa(Texto, Objeto, Texto, Objeto) : {}";
+	}
 }

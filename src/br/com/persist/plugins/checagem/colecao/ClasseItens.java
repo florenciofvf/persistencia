@@ -31,4 +31,9 @@ public class ClasseItens extends FuncaoUnaria {
 		}
 		return sb.toString();
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "classeItens(collection) : Texto";
+	}
 }

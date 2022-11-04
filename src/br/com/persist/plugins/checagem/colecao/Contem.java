@@ -19,4 +19,9 @@ public class Contem extends FuncaoBinaria {
 		Collection<?> colecao = (Collection<?>) op0;
 		return colecao.contains(op1);
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "contem(collection) : Logico";
+	}
 }

@@ -22,4 +22,9 @@ public class Cabeca extends FuncaoUnaria {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "cabeca([]) : Objeto";
+	}
 }

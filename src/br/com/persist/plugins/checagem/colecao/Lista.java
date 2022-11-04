@@ -17,4 +17,9 @@ public class Lista extends FuncaoVaziaOuNParam {
 		}
 		return resposta;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "lista(Objeto, ObjetoN) : []";
+	}
 }

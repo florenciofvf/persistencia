@@ -19,4 +19,9 @@ public class CriarSet extends FuncaoVaziaOuNParam {
 		}
 		return resposta;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "criarSet(objeto, objetoN) : Set";
+	}
 }
