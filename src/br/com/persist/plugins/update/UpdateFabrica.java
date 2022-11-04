@@ -16,7 +16,6 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class UpdateFabrica extends AbstratoFabricaContainer {
-
 	@Override
 	public void inicializar() {
 		Util.criarDiretorio(UpdateConstantes.ATUALIZACOES);

@@ -20,7 +20,6 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class VariavelFabrica extends AbstratoFabricaContainer {
-
 	@Override
 	public void inicializar() {
 		Util.criarDiretorio(VariavelConstantes.VARIAVEIS);

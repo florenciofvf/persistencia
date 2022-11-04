@@ -22,7 +22,6 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioEvento;
 
 public class ConexaoFabrica extends AbstratoFabricaContainer {
-
 	@Override
 	public void inicializar() {
 		Util.criarDiretorio(ConexaoConstantes.CONEXOES);

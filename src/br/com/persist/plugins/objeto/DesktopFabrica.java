@@ -15,7 +15,6 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class DesktopFabrica extends AbstratoFabricaContainer {
-
 	@Override
 	public PaginaServico getPaginaServico() {
 		return new DesktopPaginaServico();

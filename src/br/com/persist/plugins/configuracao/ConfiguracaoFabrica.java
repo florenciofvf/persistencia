@@ -18,7 +18,6 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class ConfiguracaoFabrica extends AbstratoFabricaContainer {
-
 	@Override
 	public PaginaServico getPaginaServico() {
 		return new ConfiguracaoPaginaServico();

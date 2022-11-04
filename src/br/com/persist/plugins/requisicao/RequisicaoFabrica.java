@@ -18,7 +18,6 @@ import br.com.persist.fichario.PaginaServico;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoFabrica extends AbstratoFabricaContainer {
-
 	@Override
 	public void inicializar() {
 		Preferencias.addOutraPreferencia(RequisicaoPreferencia.class);

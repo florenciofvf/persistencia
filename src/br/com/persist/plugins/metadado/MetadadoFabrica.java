@@ -17,7 +17,6 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.plugins.conexao.Conexao;
 
 public class MetadadoFabrica extends AbstratoFabricaContainer {
-
 	@Override
 	public void inicializar() {
 		Util.criarDiretorio(MetadadoConstantes.METADADOS);
