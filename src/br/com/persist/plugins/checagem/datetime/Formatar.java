@@ -35,4 +35,9 @@ public class Formatar extends FuncaoBinaria {
 			throw new ChecagemException(getClass(), "Agora invalido >>> " + pri);
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "formatar(Numero, Texto) : Texto";
+	}
 }

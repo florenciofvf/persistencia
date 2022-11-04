@@ -28,4 +28,9 @@ public class MultEscolha extends FuncaoBinariaOuNParam {
 		}
 		return null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "switch(Logico, Logico, Logico) : Objeto";
+	}
 }

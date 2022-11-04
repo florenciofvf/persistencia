@@ -16,4 +16,9 @@ public class Se extends FuncaoBinaria {
 		Boolean pri = (Boolean) op0;
 		return pri ? param1().executar(checagem, bloco, ctx) : null;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "se(Logico) : Objeto";
+	}
 }

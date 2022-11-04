@@ -11,4 +11,9 @@ public class Agora extends FuncaoVazia {
 	public Object executar(Checagem checagem, Bloco bloco, Contexto ctx) throws ChecagemException {
 		return System.currentTimeMillis();
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "agora() : Numero";
+	}
 }

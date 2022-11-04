@@ -16,4 +16,9 @@ public class SeNao extends FuncaoTernaria {
 		Boolean pri = (Boolean) op0;
 		return pri ? param1().executar(checagem, bloco, ctx) : param2().executar(checagem, bloco, ctx);
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "seNao(Logico, funcao) : Objeto";
+	}
 }

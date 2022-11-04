@@ -83,4 +83,9 @@ public class Menor extends Comparacao {
 	public short getNivel() {
 		return comparacao1;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "Numero < Numero";
+	}
 }
