@@ -28,4 +28,9 @@ public class TipoDouble implements TipoAtomico {
 	public String toString() {
 		return valor.toString();
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return toString();
+	}
 }

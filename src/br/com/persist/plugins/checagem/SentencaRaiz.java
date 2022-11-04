@@ -16,4 +16,9 @@ public class SentencaRaiz extends FuncaoUnaria {
 	public void encerrar() throws ChecagemException {
 		throw new ChecagemException(getClass(), "Nao pode ser encerrado");
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		throw new ChecagemException(getClass(), "Nenhum doc");
+	}
 }
