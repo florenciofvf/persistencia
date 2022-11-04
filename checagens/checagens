@@ -109,6 +109,9 @@ br.com.persist.plugins.checagem.util.ExecModulo
 import
 br.com.persist.plugins.checagem.util.Importar
 
+doc
+br.com.persist.plugins.checagem.util.Doc
+
 importar
 br.com.persist.plugins.checagem.util.Importar
 
