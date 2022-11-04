@@ -6,7 +6,6 @@ import br.com.persist.data.Texto;
 import br.com.persist.data.Tipo;
 
 public class RequisicaoUtil {
-
 	private RequisicaoUtil() {
 	}
 

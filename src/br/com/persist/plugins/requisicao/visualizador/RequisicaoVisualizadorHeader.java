@@ -9,7 +9,6 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVisualizador {
-
 	protected String getAccessToken(Tipo tipo) {
 		if (tipo instanceof Objeto) {
 			Objeto objeto = (Objeto) tipo;

@@ -15,7 +15,6 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.data.Tipo;
 
 public class RequisicaoVisualizadorTexto extends AbstratoRequisicaoVisualizador {
-
 	@Override
 	public Component exibidor(Component parent, byte[] bytes, Tipo parametros) {
 		try {
