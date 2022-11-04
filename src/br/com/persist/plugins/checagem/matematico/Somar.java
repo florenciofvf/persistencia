@@ -78,4 +78,9 @@ public class Somar extends Matematico {
 	public short getNivel() {
 		return matematico3;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "Objeto + Objeto";
+	}
 }

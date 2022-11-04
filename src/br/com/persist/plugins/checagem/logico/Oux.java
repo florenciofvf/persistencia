@@ -24,4 +24,9 @@ public class Oux extends FuncaoBinariaInfixa {
 	public short getNivel() {
 		return logico1;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "Logico ^ Logico";
+	}
 }

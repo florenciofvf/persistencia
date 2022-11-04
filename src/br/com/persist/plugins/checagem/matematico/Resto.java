@@ -99,4 +99,9 @@ public class Resto extends Matematico {
 	public short getNivel() {
 		return matematico1;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "Numero % Numero";
+	}
 }

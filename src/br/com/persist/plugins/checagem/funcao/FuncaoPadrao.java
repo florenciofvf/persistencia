@@ -13,4 +13,9 @@ public class FuncaoPadrao extends FuncaoVaziaOu1Param {
 		}
 		return parametros.get(0).executar(checagem, bloco, ctx);
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "funcao([funcao]) : Objeto";
+	}
 }

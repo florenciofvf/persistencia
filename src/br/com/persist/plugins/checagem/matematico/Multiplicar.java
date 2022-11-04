@@ -83,4 +83,9 @@ public class Multiplicar extends Matematico {
 	public short getNivel() {
 		return matematico2;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "Numero * Numero";
+	}
 }

@@ -83,4 +83,9 @@ public class Subtrair extends Matematico {
 	public short getNivel() {
 		return matematico3;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "Numero - Numero";
+	}
 }

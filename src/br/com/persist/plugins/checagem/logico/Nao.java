@@ -24,4 +24,9 @@ public class Nao extends FuncaoUnaria implements Auto {
 		super.addParam(sentenca);
 		encerrar();
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "!Logico";
+	}
 }
