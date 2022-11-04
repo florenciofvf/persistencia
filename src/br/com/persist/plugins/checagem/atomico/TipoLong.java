@@ -31,6 +31,6 @@ public class TipoLong implements TipoAtomico {
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return toString();
+		return "Numero >>> " + toString();
 	}
 }

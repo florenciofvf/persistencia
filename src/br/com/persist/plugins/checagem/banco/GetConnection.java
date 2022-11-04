@@ -36,4 +36,9 @@ public class GetConnection extends FuncaoBinariaOuMaior {
 			throw new ChecagemException(getClass(), ERRO + " >>> " + ex.getMessage());
 		}
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "getConnection(driver, url, usuario, senha)";
+	}
 }

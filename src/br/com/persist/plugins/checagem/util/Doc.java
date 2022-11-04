@@ -23,6 +23,6 @@ public class Doc extends FuncaoUnariaOuNParam {
 
 	@Override
 	public String getDoc() {
-		return "doc(funcao,funcao)";
+		return "doc(funcao, funcao)";
 	}
 }

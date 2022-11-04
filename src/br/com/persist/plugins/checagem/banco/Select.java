@@ -99,4 +99,9 @@ public class Select extends FuncaoBinariaOuNParam {
 		}
 		return "''";
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "select(conn, instrucao, [param, valor, paramN, valorN])";
+	}
 }

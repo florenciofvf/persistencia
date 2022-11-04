@@ -31,6 +31,6 @@ public class TipoVariavel implements TipoAtomico {
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return "$" + toString();
+		return "Variavel >>> " + "$" + toString();
 	}
 }

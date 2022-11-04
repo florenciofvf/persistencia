@@ -26,4 +26,9 @@ public class SelectLog extends FuncaoBinariaOuNParam {
 		}
 		return instrucao;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "selectLog(instrucao, [param, valor, paramN, valorN])";
+	}
 }

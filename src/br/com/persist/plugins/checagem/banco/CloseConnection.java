@@ -24,4 +24,9 @@ public class CloseConnection extends FuncaoUnaria {
 		}
 		return Boolean.FALSE;
 	}
+
+	@Override
+	public String getDoc() throws ChecagemException {
+		return "closeConnection(conn)";
+	}
 }

@@ -31,6 +31,6 @@ public class TipoBoolean implements TipoAtomico {
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return toString();
+		return "Logico >>> " + toString();
 	}
 }

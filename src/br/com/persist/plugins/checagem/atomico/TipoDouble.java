@@ -31,6 +31,6 @@ public class TipoDouble implements TipoAtomico {
 
 	@Override
 	public String getDoc() throws ChecagemException {
-		return toString();
+		return "Flutuante >>> " + toString();
 	}
 }
