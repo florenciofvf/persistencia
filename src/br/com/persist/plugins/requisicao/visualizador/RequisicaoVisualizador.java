@@ -26,15 +26,15 @@ import br.com.persist.plugins.requisicao.RequisicaoRota;
 public interface RequisicaoVisualizador {
 	public Component exibidor(Component parent, byte[] bytes, Tipo parametros);
 
-	public Set<String> getMimes();
-
 	public void adicionarMime(String mime);
-
-	public void excluirMime(String mime);
 
 	public boolean contemMime(String mime);
 
+	public void excluirMime(String mime);
+
 	public void salvar(PrintWriter pw);
+
+	public Set<String> getMimes();
 
 	public String getTitulo();
 

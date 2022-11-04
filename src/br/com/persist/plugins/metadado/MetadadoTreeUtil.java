@@ -7,7 +7,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
 
 public class MetadadoTreeUtil {
-
 	private MetadadoTreeUtil() {
 	}
 

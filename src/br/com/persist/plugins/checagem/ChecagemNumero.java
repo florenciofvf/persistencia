@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public interface ChecagemNumero {
-
 	public default boolean ehInteiro(Object obj) {
 		return obj instanceof Byte || obj instanceof Short || obj instanceof Integer || obj instanceof Long;
 	}

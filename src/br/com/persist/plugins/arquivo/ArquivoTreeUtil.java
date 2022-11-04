@@ -9,7 +9,6 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
 
 public class ArquivoTreeUtil {
-
 	private ArquivoTreeUtil() {
 	}
 
