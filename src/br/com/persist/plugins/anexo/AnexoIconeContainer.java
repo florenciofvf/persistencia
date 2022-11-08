@@ -71,7 +71,7 @@ public class AnexoIconeContainer extends Panel {
 
 		private void selecionar(String nomeIcone) {
 			if (nome.equals(nomeIcone)) {
-				setBorder(BorderFactory.createLineBorder(Color.BLUE));
+				setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
 			}
 		}
 
