@@ -21,11 +21,14 @@ import javax.swing.Icon;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Preferencias;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.Button;
 import br.com.persist.componente.Label;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.Popup;
 
 class Cabecalho extends Panel {
 	private static final Logger LOG = Logger.getGlobal();
@@ -70,6 +73,7 @@ class Cabecalho extends Panel {
 	}
 
 	private class IconeFechar extends Button implements ActionListener {
+		private final FecharPopup popup = new FecharPopup();
 		private static final long serialVersionUID = 1L;
 		private final boolean desenhar;
 
@@ -86,6 +90,40 @@ class Cabecalho extends Panel {
 			addActionListener(this);
 			setFocusable(false);
 		}
+
+		private final transient MouseListener mouseListenerInner = new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Component component = e.getComponent();
+				if (component instanceof AbstractButton) {
+					AbstractButton button = (AbstractButton) component;
+					button.setBorderPainted(true);
+				}
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				Component component = e.getComponent();
+				if (component instanceof AbstractButton) {
+					AbstractButton button = (AbstractButton) component;
+					button.setBorderPainted(false);
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					popup.show(IconeFechar.this, e.getX(), e.getY());
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					popup.show(IconeFechar.this, e.getX(), e.getY());
+				}
+			}
+		};
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -119,25 +157,19 @@ class Cabecalho extends Panel {
 				g2.dispose();
 			}
 		}
+
+		private class FecharPopup extends Popup {
+			private static final long serialVersionUID = 1L;
+			private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.SAIR);
+
+			private FecharPopup() {
+				add(fecharAcao);
+				fecharAcao.setActionListener(e -> fechar());
+			}
+
+			private void fechar() {
+				actionPerformed(null);
+			}
+		}
 	}
-
-	private final transient MouseListener mouseListenerInner = new MouseAdapter() {
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			Component component = e.getComponent();
-			if (component instanceof AbstractButton) {
-				AbstractButton button = (AbstractButton) component;
-				button.setBorderPainted(true);
-			}
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			Component component = e.getComponent();
-			if (component instanceof AbstractButton) {
-				AbstractButton button = (AbstractButton) component;
-				button.setBorderPainted(false);
-			}
-		}
-	};
 }
