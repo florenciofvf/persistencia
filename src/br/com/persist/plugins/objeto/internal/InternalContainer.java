@@ -1936,22 +1936,25 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					htmlAcao.setActionListener(e -> processar(2));
 				}
 
+				private List<String> getNomeColunas() {
+					return tabelaPersistencia.getListaNomeColunas(true);
+				}
+
 				private void umaColuna(boolean comAspas) {
 					String titulo = comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
 							: Mensagens.getString("label.uma_coluna_sem_aspas");
-					Util.copiarColunaUnicaString(titulo, tabelaPersistencia, comAspas);
+					Util.copiarColunaUnicaString(titulo, tabelaPersistencia, comAspas, getNomeColunas());
 				}
 
 				private void nomeColunas() {
-					List<String> nomeColunas = tabelaPersistencia.getListaNomeColunas(true);
-					Util.copiarNomeColunas(Mensagens.getString("label.nome_colunas"), tabelaPersistencia, nomeColunas);
+					Util.copiarNomeColunas(Mensagens.getString("label.nome_colunas"), tabelaPersistencia,
+							getNomeColunas());
 				}
 
 				private void processar(int tipo) {
 					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-					List<String> nomeColunas = tabelaPersistencia.getListaNomeColunas(true);
-					TransferidorTabular transferidor = Util.criarTransferidorTabular(tabelaPersistencia, nomeColunas,
-							indices);
+					TransferidorTabular transferidor = Util.criarTransferidorTabular(tabelaPersistencia,
+							getNomeColunas(), indices);
 					if (transferidor != null) {
 						if (tipo == 0) {
 							Util.setTransfered(transferidor);

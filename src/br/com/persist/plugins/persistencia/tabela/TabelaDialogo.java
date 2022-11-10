@@ -121,7 +121,7 @@ class TabelaContainer extends Panel {
 			private void umaColuna(boolean comAspas) {
 				String titulo = comAspas ? Mensagens.getString("label.uma_coluna_com_aspas")
 						: Mensagens.getString("label.uma_coluna_sem_aspas");
-				Util.copiarColunaUnicaString(titulo, tabela, comAspas);
+				Util.copiarColunaUnicaString(titulo, tabela, comAspas, null);
 			}
 
 			private void processar(int tipo) {

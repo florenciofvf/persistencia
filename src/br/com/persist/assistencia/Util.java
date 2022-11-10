@@ -185,7 +185,7 @@ public class Util {
 		}
 	}
 
-	public static void copiarColunaUnicaString(String titulo, JTable table, boolean comAspas) {
+	public static void copiarColunaUnicaString(String titulo, JTable table, boolean comAspas, List<String> nomes) {
 		if (table == null) {
 			return;
 		}
@@ -196,7 +196,7 @@ public class Util {
 		Coletor coletor = new Coletor();
 		JTableHeader tableHeader = table.getTableHeader();
 		TableColumnModel columnModel = tableHeader.getColumnModel();
-		List<String> listaNomes = nomeColunas(columnModel);
+		List<String> listaNomes = nomes == null ? nomeColunas(columnModel) : nomes;
 		if (listaNomes.size() == 1) {
 			coletor.getLista().add(listaNomes.get(0));
 		} else {
