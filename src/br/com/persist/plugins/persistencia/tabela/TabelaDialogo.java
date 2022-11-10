@@ -126,7 +126,7 @@ class TabelaContainer extends Panel {
 
 			private void processar(int tipo) {
 				List<Integer> indices = Util.getIndicesLinha(tabela);
-				TransferidorTabular transferidor = Util.criarTransferidorTabular(tabela, indices);
+				TransferidorTabular transferidor = Util.criarTransferidorTabular(tabela, null, indices);
 				if (transferidor != null) {
 					if (tipo == 0) {
 						Util.setTransfered(transferidor);

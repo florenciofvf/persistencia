@@ -1949,7 +1949,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private void processar(int tipo) {
 					List<Integer> indices = Util.getIndicesLinha(tabelaPersistencia);
-					TransferidorTabular transferidor = Util.criarTransferidorTabular(tabelaPersistencia, indices);
+					List<String> nomeColunas = tabelaPersistencia.getListaNomeColunas(true);
+					TransferidorTabular transferidor = Util.criarTransferidorTabular(tabelaPersistencia, nomeColunas,
+							indices);
 					if (transferidor != null) {
 						if (tipo == 0) {
 							Util.setTransfered(transferidor);

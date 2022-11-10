@@ -213,7 +213,8 @@ public class Util {
 		SeparadorDialogo.criar(table, titulo, table, sel.indiceModel, comAspas, null);
 	}
 
-	public static TransferidorTabular criarTransferidorTabular(JTable table, List<Integer> indices) {
+	public static TransferidorTabular criarTransferidorTabular(JTable table, List<String> colunas,
+			List<Integer> indices) {
 		if (table == null || indices == null) {
 			return null;
 		}
@@ -224,7 +225,8 @@ public class Util {
 		Coletor coletor = new Coletor();
 		JTableHeader tableHeader = table.getTableHeader();
 		TableColumnModel columnModel = tableHeader.getColumnModel();
-		SetLista.view("Colunas", nomeColunas(columnModel), coletor, table, new SetLista.Config(true, false));
+		SetLista.view("Colunas", colunas == null ? nomeColunas(columnModel) : colunas, coletor, table,
+				new SetLista.Config(true, false));
 		if (coletor.estaVazio()) {
 			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
 		}
