@@ -50,8 +50,23 @@ public class Persistencia {
 		mapa.put("java.sql.Date", Boolean.FALSE);
 	}
 
+	private static String normal(String string) {
+		if (string == null) {
+			return string;
+		}
+		StringBuilder sb = new StringBuilder(string.trim());
+		while (sb.length() > 0 && (normalLast(sb, ';') || normalLast(sb, ' '))) {
+			sb.delete(sb.length() - 1, sb.length());
+		}
+		return sb.toString();
+	}
+
+	private static boolean normalLast(StringBuilder sb, char c) {
+		return sb.charAt(sb.length() - 1) == c;
+	}
+
 	public static int executar(Connection conn, String sql) throws PersistenciaException {
-		try (PreparedStatement psmt = conn.prepareStatement(sql)) {
+		try (PreparedStatement psmt = conn.prepareStatement(normal(sql))) {
 			return psmt.executeUpdate();
 		} catch (Exception ex) {
 			throw new PersistenciaException(ex);
@@ -227,7 +242,7 @@ public class Persistencia {
 
 	public static int getTotalRegistros(Connection conn, String aposFROM) throws PersistenciaException {
 		StringBuilder builder = new StringBuilder("SELECT COUNT(*) FROM " + aposFROM);
-		try (PreparedStatement psmt = conn.prepareStatement(builder.toString())) {
+		try (PreparedStatement psmt = conn.prepareStatement(normal(builder.toString()))) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				rs.next();
 				return rs.getInt(1);
@@ -244,7 +259,7 @@ public class Persistencia {
 	public static MemoriaModelo criarMemoriaModelo(Connection conn, String consulta, String[] chaves,
 			boolean colunaInfo, Map<String, String> mapaSequencia, Map<String, String> mapaFuncoes)
 			throws PersistenciaException {
-		try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
+		try (PreparedStatement psmt = conn.prepareStatement(normal(consulta))) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
 				List<Coluna> colunas = criarColunas(rsmd, chaves, colunaInfo, mapaSequencia, mapaFuncoes);
@@ -283,7 +298,7 @@ public class Persistencia {
 
 	public static PersistenciaModelo criarPersistenciaModelo(PersistenciaModelo.Parametros parametros)
 			throws PersistenciaException {
-		try (PreparedStatement psmt = parametros.getConn().prepareStatement(parametros.getConsulta())) {
+		try (PreparedStatement psmt = parametros.getConn().prepareStatement(normal(parametros.getConsulta()))) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
 				List<Coluna> colunas = criarColunas(rsmd, parametros.getColunasChave(), parametros.isComColunaInfo(),
@@ -421,7 +436,7 @@ public class Persistencia {
 		try {
 			String consulta = String.format(conexao.getConstraint(), tabela);
 			List<List<String>> resposta = new ArrayList<>();
-			try (PreparedStatement psmt = conn.prepareStatement(consulta)) {
+			try (PreparedStatement psmt = conn.prepareStatement(normal(consulta))) {
 				try (ResultSet rs = psmt.executeQuery()) {
 					ResultSetMetaData rsmd = rs.getMetaData();
 					int totalColunas = rsmd.getColumnCount();
@@ -543,7 +558,7 @@ public class Persistencia {
 		String string = "SELECT * FROM " + PersistenciaModelo.prefixarEsquema(conexao, null, tabela, null)
 				+ " WHERE 1 > 2";
 
-		try (PreparedStatement psmt = conn.prepareStatement(string)) {
+		try (PreparedStatement psmt = conn.prepareStatement(normal(string))) {
 			try (ResultSet rs = psmt.executeQuery()) {
 				ResultSetMetaData rsmd = rs.getMetaData();
 				int totalColunas = rsmd.getColumnCount();
