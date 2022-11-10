@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 
 public class SeparadorDialogo extends AbstratoDialogo {
@@ -103,7 +104,10 @@ class SeparadorContainer extends Panel {
 
 	public void checarCopias() {
 		List<String> lista = table != null ? Util.getValoresLinha(table, indiceColuna) : listaString;
-		if (lista.size() == 1) {
+		if (lista.isEmpty()) {
+			Util.mensagem(this, Mensagens.getString("msg.nenhum_registro_para_copiar"));
+			dialogo.dispose();
+		} else if (lista.size() == 1) {
 			String string = Util.getStringLista(lista, Constantes.VAZIO, false, comAspas);
 			Util.setContentTransfered(string);
 			dialogo.dispose();
