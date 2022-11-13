@@ -93,7 +93,7 @@ public class Action extends Acao {
 	}
 
 	public static Action actionIconDestacar() {
-		return Action.actionIcon(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, e -> {
+		return Action.actionIcon(Constantes.LABEL_ARRASTAR, Icones.ARRASTAR2, e -> {
 		});
 	}
 

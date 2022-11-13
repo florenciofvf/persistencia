@@ -33,6 +33,7 @@ public class Constantes {
 	public static final Stroke STROKE_PADRAO = new BasicStroke(2);
 	public static final String LABEL_EXECUTAR = "label.executar";
 	public static final String LABEL_DESTACAR = "label.destacar";
+	public static final String LABEL_ARRASTAR = "label.arrastar";
 	public static final String LABEL_CONSULTA = "label.consulta";
 	public static final String LABEL_FICHARIO = "label.fichario";
 	public static final String LABEL_ARQUIVOS = "label.arquivos";
