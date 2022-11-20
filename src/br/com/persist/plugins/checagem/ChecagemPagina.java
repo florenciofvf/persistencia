@@ -7,6 +7,7 @@ import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -42,8 +43,8 @@ import br.com.persist.marca.XMLException;
 public class ChecagemPagina extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
+	private final PainelResultado painelResultado = new PainelResultado();
 	private final transient ChecagemCor checagemCor = new ChecagemCor();
-	private final JTextPane areaResultado = new JTextPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private ScrollPane scrollPane;
 	private final File file;
@@ -72,7 +73,7 @@ public class ChecagemPagina extends Panel {
 
 	private Panel criarPanelResultado() {
 		Panel panel = new Panel();
-		panel.add(BorderLayout.CENTER, new ScrollPane(areaResultado));
+		panel.add(BorderLayout.CENTER, painelResultado);
 		return panel;
 	}
 
@@ -90,6 +91,63 @@ public class ChecagemPagina extends Panel {
 
 	static Action actionIcon(String chave, Icon icon) {
 		return Action.acaoIcon(ChecagemMensagens.getString(chave), icon);
+	}
+
+	private class PainelResultado extends Panel {
+		private static final long serialVersionUID = 1L;
+		private JTextPane textPane = new JTextPane();
+
+		private PainelResultado() {
+			add(BorderLayout.NORTH, new ToolbarPesquisa());
+			add(BorderLayout.CENTER, new ScrollPane(textPane));
+		}
+
+		private void setText(String string) {
+			textPane.setText(string);
+			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
+		}
+
+		private class ToolbarPesquisa extends BarraButton implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private final TextField txtPesquisa = new TextField(35);
+			private transient Selecao selecao;
+
+			public ToolbarPesquisa() {
+				super.ini(new Nil(), LIMPAR, COPIAR, COLAR);
+				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+				txtPesquisa.addActionListener(this);
+				add(txtPesquisa);
+				add(label);
+			}
+
+			@Override
+			protected void limpar() {
+				textPane.setText(Constantes.VAZIO);
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(textPane);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				textPane.requestFocus();
+			}
+
+			@Override
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(textPane, numeros, letras);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!Util.estaVazio(txtPesquisa.getText())) {
+					selecao = Util.getSelecao(textPane, selecao, txtPesquisa.getText());
+					selecao.selecionar(label);
+				} else {
+					label.limpar();
+				}
+			}
+		}
 	}
 
 	private class ToolbarParametro extends BarraButton implements ActionListener {
@@ -126,7 +184,7 @@ public class ChecagemPagina extends Panel {
 				mensagemReservado();
 				return;
 			}
-			areaResultado.setText(Constantes.VAZIO);
+			painelResultado.setText(Constantes.VAZIO);
 			SwingUtilities.invokeLater(() -> {
 				try {
 					ChecagemUtil.atualizarEstrutura(file, areaParametros.getText());
@@ -135,7 +193,7 @@ public class ChecagemPagina extends Panel {
 				}
 				Contexto ctx = new Contexto();
 				String string = ChecagemUtil.executar(file.getName(), null, ctx);
-				areaResultado.setText(string);
+				painelResultado.setText(string);
 			});
 		}
 
