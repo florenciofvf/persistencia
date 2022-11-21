@@ -22,14 +22,14 @@ public class SeparadorDialogo extends AbstratoDialogo {
 
 	private SeparadorDialogo(Frame frame, String titulo, JTable table, int indiceColuna, boolean comAspas,
 			List<String> listaString) {
-		super(frame, titulo);
+		super(frame, titulo + " [ASPAS=" + comAspas + "]");
 		container = new SeparadorContainer(this, table, indiceColuna, comAspas, listaString);
 		montarLayout();
 	}
 
 	private SeparadorDialogo(Dialog dialog, String titulo, JTable table, int indiceColuna, boolean comAspas,
 			List<String> listaString) {
-		super(dialog, titulo);
+		super(dialog, titulo + " [ASPAS=" + comAspas + "]");
 		container = new SeparadorContainer(this, table, indiceColuna, comAspas, listaString);
 		montarLayout();
 	}
