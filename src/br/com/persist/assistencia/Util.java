@@ -1062,4 +1062,15 @@ public class Util {
 		}
 		return sb.toString();
 	}
+
+	public static String completar(String string, int length, char c) {
+		if (string == null) {
+			return string;
+		}
+		StringBuilder sb = new StringBuilder(string);
+		while (sb.length() < length) {
+			sb.append(c);
+		}
+		return sb.toString();
+	}
 }

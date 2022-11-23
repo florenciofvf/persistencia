@@ -1969,16 +1969,32 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private class MenuDML extends Menu {
 				private static final long serialVersionUID = 1L;
+				private Action descreverAcao = Action.actionMenu("label.descrever", Icones.TABELA);
 
 				private MenuDML() {
 					super("label.dml", Icones.EXECUTAR);
-					add(false, new MenuInsert(true));
+					add(descreverAcao);
+					add(true, new MenuInsert(true));
 					add(false, new MenuInsert(false));
 					add(true, new MenuUpdate());
 					add(true, new MenuDelete());
 					add(true, new MenuSelect());
 					add(true, new MenuSelectColuna());
 					add(true, new MenuInnerJoin());
+					descreverAcao.setActionListener(e -> descrever());
+				}
+
+				private void descrever() {
+					StringBuilder sb = new StringBuilder(objeto.getTabela() + Constantes.QL);
+					sb.append(Util.completar(Constantes.VAZIO, objeto.getTabela().length(), '-'));
+					Coletor coletor = new Coletor();
+					SetLista.view(objeto.getId(), tabelaPersistencia.getListaNomeColunas(true), coletor,
+							InternalContainer.this, null);
+					for (String string : coletor.getLista()) {
+						sb.append(Constantes.QL);
+						sb.append(string);
+					}
+					Util.mensagem(InternalContainer.this, sb.toString());
 				}
 
 				private class MenuInsert extends MenuPadrao3 {
