@@ -540,6 +540,6 @@ public class Metadado implements Transferable {
 	}
 
 	public void copiarDescricao() {
-		Util.setContentTransfered(descricao);
+		Util.setContentTransfered(toString());
 	}
 }
