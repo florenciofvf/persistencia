@@ -538,4 +538,8 @@ public class Metadado implements Transferable {
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
 	}
+
+	public void copiarDescricao() {
+		Util.setContentTransfered(descricao);
+	}
 }

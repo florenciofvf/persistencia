@@ -168,6 +168,8 @@ public class MetadadoTree extends Tree {
 
 	private class MetadadosPopup extends Popup {
 		private static final long serialVersionUID = 1L;
+		private Action copiarDescricaoAcao = Action.acaoMenu(MetadadoMensagens.getString("label.copiar_descricao"),
+				Icones.COPIA);
 		private Action constraintInfoAction = Action.acaoMenu(MetadadoMensagens.getString("label.constraint_info"),
 				null);
 		private MenuAbrirExportacaoH menuAbrirExportacaoH = new MenuAbrirExportacaoH();
@@ -182,8 +184,17 @@ public class MetadadoTree extends Tree {
 			add(menuAbrirImportacaoH);
 			add(menuAbrirExportacaoC);
 			add(menuAbrirImportacaoC);
+			addMenuItem(true, copiarDescricaoAcao);
 			addMenuItem(true, constraintInfoAction);
 			constraintInfoAction.setActionListener(e -> constraintInfo());
+			copiarDescricaoAcao.setActionListener(e -> copiarDescricao());
+		}
+
+		private void copiarDescricao() {
+			Metadado metadado = getObjetoSelecionado();
+			if (metadado != null) {
+				metadado.copiarDescricao();
+			}
 		}
 
 		private void preShow(Metadado metadado) {
