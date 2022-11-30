@@ -179,8 +179,7 @@ public class EntregaPagina extends Panel {
 	}
 
 	public void salvar(AtomicBoolean atomic) {
-		if (!Util.confirmaSalvarMsg(this, Constantes.TRES,
-				EntregaMensagens.getString("msg.confirmar_salvar_ativa"))) {
+		if (!Util.confirmaSalvarMsg(this, Constantes.TRES, EntregaMensagens.getString("msg.confirmar_salvar_ativa"))) {
 			return;
 		}
 		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
