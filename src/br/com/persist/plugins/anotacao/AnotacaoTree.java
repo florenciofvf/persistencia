@@ -69,7 +69,8 @@ public class AnotacaoTree extends Tree {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				mouseListenerInner.mouseClicked(new MouseEvent(AnotacaoTree.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
+				mouseListenerInner
+						.mouseClicked(new MouseEvent(AnotacaoTree.this, 0, 0, 0, 0, 0, Constantes.DOIS, false));
 			}
 		}
 	};
@@ -158,7 +159,8 @@ public class AnotacaoTree extends Tree {
 		}
 
 		private void preShow(Anotacao anotacao) {
-			boolean renomearExcluir = anotacao.getPai() != null && !AnotacaoModelo.anotacaoInfo.equals(anotacao.getFile());
+			boolean renomearExcluir = anotacao.getPai() != null
+					&& !AnotacaoModelo.anotacaoInfo.equals(anotacao.getFile());
 			renomearAcao.setEnabled(renomearExcluir);
 			excluirAcao.setEnabled(renomearExcluir);
 		}
