@@ -56,13 +56,13 @@ public class AnexoModelo implements TreeModel {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(anexosInfo), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
-				Anexo selecioinado = null;
+				Anexo selecionado = null;
 				while (linha != null) {
 					if (linha.startsWith(Constantes.SEP)) {
-						selecioinado = new Anexo(new File(linha));
-						anexos.put(linha, selecioinado);
+						selecionado = new Anexo(new File(linha));
+						anexos.put(linha, selecionado);
 					} else {
-						configurar(selecioinado, linha);
+						configurar(selecionado, linha);
 					}
 					linha = br.readLine();
 				}
