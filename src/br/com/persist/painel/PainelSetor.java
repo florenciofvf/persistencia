@@ -12,6 +12,7 @@ class PainelSetor {
 	private int metadeAltura;
 	private final char setor;
 	boolean selecionado;
+	boolean valido;
 	private int x;
 	private int y;
 
@@ -23,18 +24,23 @@ class PainelSetor {
 		dimension = c.getSize();
 		metadeLargura = dimension.width / 2;
 		metadeAltura = dimension.height / 2;
+		valido = false;
 		if (setor == 'N') {
 			x = metadeLargura - metade;
 			y = metade;
+			valido = true;
 		} else if (setor == 'S') {
 			x = metadeLargura - metade;
 			y = dimension.height - larguraAltura - metade;
+			valido = true;
 		} else if (setor == 'L') {
 			x = dimension.width - larguraAltura - metade;
 			y = metadeAltura - metade;
+			valido = true;
 		} else if (setor == 'O') {
 			x = metade;
 			y = metadeAltura - metade;
+			valido = true;
 		}
 	}
 
@@ -43,6 +49,9 @@ class PainelSetor {
 	}
 
 	void paint(Graphics g) {
+		if (!valido) {
+			return;
+		}
 		g.drawRect(x, y, larguraAltura, larguraAltura);
 		if (selecionado) {
 			if (setor == 'N') {
