@@ -14,6 +14,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
+import br.com.persist.assistencia.Util;
+
 public class PainelContainer extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private transient PainelSetor nor = new PainelSetor('N');
@@ -104,17 +106,21 @@ public class PainelContainer extends JPanel {
 
 		private void processarArrastado(DropTargetDropEvent e, Transferable transferable, DataFlavor[] flavors) {
 			DataFlavor flavor = flavors[0];
-			AtomicBoolean completado = new AtomicBoolean(false);
-			processarTransferable(e, transferable, flavor, completado);
-			processarTransferableFinal(e, completado);
+			AtomicBoolean processado = new AtomicBoolean(false);
+			processarTransferable(e, transferable, flavor, processado);
+			processarTransferableFinal(e, processado);
 		}
 
-		private void processarTransferable(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor, AtomicBoolean completado) {
-//			if (InternalTransferidor.flavor.equals(flavor)) {
-//				processarInternal(e, transferable, flavor, completado);
-//			} else if (Metadado.flavor.equals(flavor)) {
-//				processarMetadado(e, transferable, flavor, completado);
-//			}
+		private void processarTransferable(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor,
+				AtomicBoolean processado) {
+			if (PainelTransferable.flavor.equals(flavor)) {
+				try {
+					PainelTransferable objeto = (PainelTransferable) transferable.getTransferData(flavor);
+					processado.set(true);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, PainelContainer.this);
+				}
+			}
 		}
 
 		private void processarTransferableFinal(DropTargetDropEvent e, AtomicBoolean completado) {
@@ -126,29 +132,5 @@ public class PainelContainer extends JPanel {
 			}
 			invalidar();
 		}
-
-//		private void processarInternal(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor, AtomicBoolean processado) {
-//			try {
-//				Object[] array = (Object[]) transferable.getTransferData(flavor);
-//				Objeto objeto = (Objeto) array[InternalTransferidor.ARRAY_INDICE_OBJ];
-//				if (!contemReferencia(objeto)) {
-//					montarEAdicionarInternalFormulario(array, e.getLocation(), false, null);
-//					processado.set(true);
-//				}
-//			} catch (Exception ex) {
-//				Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
-//			}
-//		}
-
-//		private void processarMetadado(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor, AtomicBoolean processado) {
-//			try {
-//				Metadado metadado = (Metadado) transferable.getTransferData(flavor);
-//				if (processadoMetadado(metadado, e.getLocation(), false, true)) {
-//					processado.set(true);
-//				}
-//			} catch (Exception ex) {
-//				Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Desktop.this);
-//			}
-//		}
 	};
 }
