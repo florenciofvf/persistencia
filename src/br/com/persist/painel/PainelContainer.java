@@ -110,7 +110,7 @@ public class PainelContainer extends Panel {
 			if (PainelTransferable.flavor.equals(flavor)) {
 				try {
 					PainelTransferable objeto = (PainelTransferable) transferable.getTransferData(flavor);
-					PainelSetor setor = getSetor(e, nor, sul, les, oes);
+					PainelSetor setor = PainelUtil.getSetor(e, nor, sul, les, oes);
 					if (valido(objeto, setor)) {
 						e.acceptDrop(DnDConstants.ACTION_MOVE);
 						e.dropComplete(true);
@@ -123,16 +123,6 @@ public class PainelContainer extends Panel {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, PainelContainer.this);
 				}
 			}
-		}
-
-		private PainelSetor getSetor(DropTargetDropEvent e, PainelSetor... setores) {
-			Point p = e.getLocation();
-			for (PainelSetor setor : setores) {
-				if (setor.contem(p.x, p.y)) {
-					return setor;
-				}
-			}
-			return null;
 		}
 
 		private boolean valido(PainelTransferable objeto, PainelSetor setor) {

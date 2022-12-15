@@ -12,10 +12,12 @@ public class PainelTransferable extends Panel implements Transferable {
 	public static final DataFlavor flavor = createDataFlavor();
 	private static final DataFlavor[] flavors = { flavor };
 	private String title;
+	private int index;
 
 	public static DataFlavor createDataFlavor() {
 		try {
-			return new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=\"" +  PainelTransferable.class.getName() + "\"");
+			return new DataFlavor(
+					DataFlavor.javaJVMLocalObjectMimeType + ";class=\"" + PainelTransferable.class.getName() + "\"");
 		} catch (ClassNotFoundException e) {
 			return null;
 		}
@@ -37,6 +39,14 @@ public class PainelTransferable extends Panel implements Transferable {
 			return this;
 		}
 		throw new UnsupportedFlavorException(flavor);
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 	public String getTitle() {

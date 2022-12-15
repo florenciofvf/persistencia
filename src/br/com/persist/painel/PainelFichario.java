@@ -2,6 +2,7 @@ package br.com.persist.painel;
 
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
+import java.awt.dnd.DragSourceContext;
 import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
@@ -21,8 +22,8 @@ public class PainelFichario extends JTabbedPane {
 			int indice = getSelectedIndex();
 			if (indice != -1) {
 				PainelTransferable aba = (PainelTransferable) getComponentAt(indice);
-				String title = getTitleAt(indice);
-				aba.setTitle(title);
+				aba.setTitle(getTitleAt(indice));
+				aba.setIndex(indice);
 				dge.startDrag(null, aba, listenerArrasto);
 			}
 		});
@@ -56,9 +57,10 @@ public class PainelFichario extends JTabbedPane {
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
 			if (dsde.getDropSuccess()) {
-				int indice = getSelectedIndex();
-				if (indice != -1) {
-					removeTabAt(indice);
+				DragSourceContext context = (DragSourceContext) dsde.getSource();
+				PainelTransferable aba = (PainelTransferable) context.getTransferable();
+				if (aba.getIndex() != -1) {
+					removeTabAt(aba.getIndex());
 				}
 			}
 		}
