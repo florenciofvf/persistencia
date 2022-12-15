@@ -3,8 +3,10 @@ package br.com.persist.painel;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.dnd.DropTargetDropEvent;
 
-class PainelSetor {
+class Setor {
 	private int larguraAltura = 40;
 	private int metade = larguraAltura / 2;
 	static final char NORTE = 'N';
@@ -14,14 +16,14 @@ class PainelSetor {
 	static final char SUL = 'S';
 	private int metadeLargura;
 	private int metadeAltura;
-	private final char setor;
+	private final char local;
 	boolean selecionado;
 	boolean valido;
 	private int x;
 	private int y;
 
-	PainelSetor(char setor) {
-		this.setor = setor;
+	Setor(char setor) {
+		this.local = setor;
 	}
 
 	void localizar(Component c) {
@@ -29,19 +31,19 @@ class PainelSetor {
 		metadeLargura = dimension.width / 2;
 		metadeAltura = dimension.height / 2;
 		valido = false;
-		if (setor == NORTE) {
+		if (local == NORTE) {
 			x = metadeLargura - metade;
 			y = metade;
 			valido = true;
-		} else if (setor == SUL) {
+		} else if (local == SUL) {
 			x = metadeLargura - metade;
 			y = dimension.height - larguraAltura - metade;
 			valido = true;
-		} else if (setor == LESTE) {
+		} else if (local == LESTE) {
 			x = dimension.width - larguraAltura - metade;
 			y = metadeAltura - metade;
 			valido = true;
-		} else if (setor == OESTE) {
+		} else if (local == OESTE) {
 			x = metade;
 			y = metadeAltura - metade;
 			valido = true;
@@ -58,33 +60,25 @@ class PainelSetor {
 		}
 		g.drawRect(x, y, larguraAltura, larguraAltura);
 		if (selecionado) {
-			if (setor == NORTE) {
+			if (local == NORTE) {
 				g.drawRect(1, 1, dimension.width - 3, metadeAltura);
-			} else if (setor == SUL) {
+			} else if (local == SUL) {
 				g.drawRect(1, metadeAltura, dimension.width - 3, metadeAltura - 2);
-			} else if (setor == LESTE) {
+			} else if (local == LESTE) {
 				g.drawRect(metadeLargura, 1, metadeLargura - 2, dimension.height - 3);
-			} else if (setor == OESTE) {
+			} else if (local == OESTE) {
 				g.drawRect(1, 1, metadeLargura, dimension.height - 3);
 			}
 		}
 	}
 
-	void processar(PainelTransferable objeto, PainelContainer painelContainer) {
-		Component raiz = painelContainer.excluirRaiz();
-		PainelSeparador separador = null;
-		if (setor == NORTE) {
-			separador = PainelSeparador.vertical(objeto, raiz);
-			painelContainer.adicionar(separador);
-		} else if (setor == SUL) {
-			separador = PainelSeparador.vertical(raiz, objeto);
-			painelContainer.adicionar(separador);
-		} else if (setor == LESTE) {
-			separador = PainelSeparador.horizontal(raiz, objeto);
-			painelContainer.adicionar(separador);
-		} else if (setor == OESTE) {
-			separador = PainelSeparador.horizontal(objeto, raiz);
-			painelContainer.adicionar(separador);
+	static Setor get(DropTargetDropEvent e, Setor... setores) {
+		Point p = e.getLocation();
+		for (Setor setor : setores) {
+			if (setor.contem(p.x, p.y)) {
+				return setor;
+			}
 		}
+		return null;
 	}
 }

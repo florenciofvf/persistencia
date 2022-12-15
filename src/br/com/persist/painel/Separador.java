@@ -1,6 +1,5 @@
 package br.com.persist.painel;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -13,20 +12,30 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Util;
-import br.com.persist.componente.Panel;
 
-public class PainelContainer extends Panel {
+public class Separador extends JSplitPane {
+	private transient Setor nor = new Setor(Setor.NORTE);
+	private transient Setor les = new Setor(Setor.LESTE);
+	private transient Setor oes = new Setor(Setor.OESTE);
+	private transient Setor sul = new Setor(Setor.SUL);
 	private static final long serialVersionUID = 1L;
-	private transient PainelSetor nor = new PainelSetor(PainelSetor.NORTE);
-	private transient PainelSetor les = new PainelSetor(PainelSetor.LESTE);
-	private transient PainelSetor oes = new PainelSetor(PainelSetor.OESTE);
-	private transient PainelSetor sul = new PainelSetor(PainelSetor.SUL);
 
-	public PainelContainer() {
+	public Separador(int orientation, Component left, Component right) {
+		super(orientation, left, right);
 		new DropTarget(this, dropTargetListener);
+		SwingUtilities.invokeLater(() -> setDividerLocation(0.5));
+	}
+
+	public static Separador horizontal(Component left, Component right) {
+		return new Separador(HORIZONTAL_SPLIT, left, right);
+	}
+
+	public static Separador vertical(Component left, Component right) {
+		return new Separador(VERTICAL_SPLIT, left, right);
 	}
 
 	@Override
@@ -39,13 +48,9 @@ public class PainelContainer extends Panel {
 	}
 
 	private transient DropTargetListener dropTargetListener = new DropTargetListener() {
-		private boolean acaoValida(int acao) {
-			return (acao & DnDConstants.ACTION_MOVE) != 0;
-		}
-
 		@Override
 		public void dropActionChanged(DropTargetDragEvent e) {
-			if (!acaoValida(e.getDropAction())) {
+			if (!Transferivel.acaoValida(e.getDropAction())) {
 				e.rejectDrag();
 				invalidar();
 			}
@@ -53,14 +58,14 @@ public class PainelContainer extends Panel {
 
 		@Override
 		public void dragEnter(DropTargetDragEvent e) {
-			if (!acaoValida(e.getDropAction())) {
+			if (!Transferivel.acaoValida(e.getDropAction())) {
 				e.rejectDrag();
 				invalidar();
 			} else {
-				nor.localizar(PainelContainer.this);
-				sul.localizar(PainelContainer.this);
-				les.localizar(PainelContainer.this);
-				oes.localizar(PainelContainer.this);
+				nor.localizar(Separador.this);
+				sul.localizar(Separador.this);
+				les.localizar(Separador.this);
+				oes.localizar(Separador.this);
 				repaint();
 			}
 		}
@@ -92,7 +97,7 @@ public class PainelContainer extends Panel {
 
 		@Override
 		public void drop(DropTargetDropEvent e) {
-			if (!acaoValida(e.getDropAction())) {
+			if (!Transferivel.acaoValida(e.getDropAction())) {
 				e.rejectDrop();
 				invalidar();
 			} else {
@@ -107,63 +112,30 @@ public class PainelContainer extends Panel {
 		}
 
 		private void processarArrastado(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor) {
-			if (PainelTransferable.flavor.equals(flavor)) {
+			if (Transferivel.flavor.equals(flavor)) {
 				try {
-					PainelTransferable objeto = (PainelTransferable) transferable.getTransferData(flavor);
-					PainelSetor setor = PainelUtil.getSetor(e, nor, sul, les, oes);
+					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
+					Setor setor = Setor.get(e, nor, sul, les, oes);
 					if (valido(objeto, setor)) {
 						e.acceptDrop(DnDConstants.ACTION_MOVE);
 						e.dropComplete(true);
-						setor.processar(objeto, PainelContainer.this);
+						processar(objeto, setor);
 					} else {
 						e.rejectDrop();
 					}
 					invalidar();
 				} catch (Exception ex) {
-					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, PainelContainer.this);
+					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Separador.this);
 				}
 			}
 		}
 
-		private boolean valido(PainelTransferable objeto, PainelSetor setor) {
-			if (objeto == null || setor == null) {
-				return false;
-			}
-			Component c = getRaiz();
-			if (c instanceof PainelFichario) {
-				PainelFichario fichario = (PainelFichario) c;
-				if (fichario.getTotalAbas() == 1 && fichario.getComponentAt(0) == objeto) {
-					return false;
-				}
-			}
-			return true;
+		private boolean valido(Transferivel objeto, Setor setor) {
+			return objeto != null && setor != null;
+		}
+
+		private void processar(Transferivel objeto, Setor setor) {
+			// TODO
 		}
 	};
-
-	public Component getRaiz() {
-		if (getComponentCount() != 1) {
-			throw new IllegalStateException();
-		}
-		Component c = getComponent(0);
-		checarComponente(c);
-		return c;
-	}
-
-	public Component excluirRaiz() {
-		Component c = getRaiz();
-		remove(c);
-		return c;
-	}
-
-	public void adicionar(Component c) {
-		checarComponente(c);
-		add(BorderLayout.CENTER, c);
-		SwingUtilities.updateComponentTreeUI(this);
-	}
-
-	private void checarComponente(Component c) {
-		if (!(c instanceof PainelFichario) && !(c instanceof PainelSeparador)) {
-			throw new IllegalStateException();
-		}
-	}
 }
