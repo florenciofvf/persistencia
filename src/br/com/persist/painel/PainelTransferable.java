@@ -5,9 +5,9 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import javax.swing.JPanel;
+import br.com.persist.componente.Panel;
 
-public class PainelTransferable extends JPanel implements Transferable {
+public class PainelTransferable extends Panel implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(PainelTransferable.class, "PainelTransferable");
 	private static final long serialVersionUID = -2395376493141225954L;
 	private static final DataFlavor[] flavors = { flavor };

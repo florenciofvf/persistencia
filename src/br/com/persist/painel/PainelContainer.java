@@ -13,6 +13,8 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 
+import javax.swing.SwingUtilities;
+
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 
@@ -153,9 +155,7 @@ public class PainelContainer extends Panel {
 			throw new IllegalStateException();
 		}
 		Component c = getComponent(0);
-		if (!(c instanceof PainelFichario) || !(c instanceof PainelSeparador)) {
-			throw new IllegalStateException();
-		}
+		checarComponente(c);
 		return c;
 	}
 
@@ -166,9 +166,14 @@ public class PainelContainer extends Panel {
 	}
 
 	public void adicionar(Component c) {
-		if (!(c instanceof PainelFichario) || !(c instanceof PainelSeparador)) {
+		checarComponente(c);
+		add(BorderLayout.CENTER, c);
+		SwingUtilities.updateComponentTreeUI(this);
+	}
+
+	private void checarComponente(Component c) {
+		if (!(c instanceof PainelFichario) && !(c instanceof PainelSeparador)) {
 			throw new IllegalStateException();
 		}
-		add(BorderLayout.CENTER, c);
 	}
 }

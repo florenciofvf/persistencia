@@ -9,6 +9,7 @@ public class PainelSeparador extends JSplitPane {
 
 	public PainelSeparador(int orientation, Component left, Component right) {
 		super(orientation, left, right);
+		setDividerLocation(0.5);
 	}
 
 	public static PainelSeparador horizontal(Component left, Component right) {
