@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
@@ -25,9 +24,19 @@ public class Separador extends JSplitPane {
 	private static final long serialVersionUID = 1L;
 
 	public Separador(int orientation, Component left, Component right) {
-		super(orientation, left, right);
+		super(orientation, get(left), get(right));
 		new DropTarget(this, dropTargetListener);
 		SwingUtilities.invokeLater(() -> setDividerLocation(0.5));
+	}
+
+	private static Component get(Component c) {
+		if (c instanceof Transferivel) {
+			Transferivel aba = (Transferivel) c;
+			Fichario fichario = new Fichario();
+			fichario.addTab(aba.getTitle(), aba);
+			c = fichario;
+		}
+		return c;
 	}
 
 	public static Separador horizontal(Component left, Component right) {
@@ -117,7 +126,7 @@ public class Separador extends JSplitPane {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
 					Setor setor = Setor.get(e, nor, sul, les, oes);
 					if (valido(objeto, setor)) {
-						e.acceptDrop(DnDConstants.ACTION_MOVE);
+						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						e.dropComplete(true);
 						processar(objeto, setor);
 					} else {

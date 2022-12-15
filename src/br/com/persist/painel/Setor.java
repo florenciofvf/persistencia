@@ -1,10 +1,13 @@
 package br.com.persist.painel;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.dnd.DropTargetDropEvent;
+
+import javax.swing.SwingUtilities;
 
 class Setor {
 	private int larguraAltura = 40;
@@ -80,5 +83,60 @@ class Setor {
 			}
 		}
 		return null;
+	}
+
+	void processar(Transferivel objeto, Fichario fichario) {
+		Container parent = fichario.getParent();
+		excluir(parent, fichario);
+		if (local == NORTE) {
+			adicionar(parent, Separador.vertical(objeto, fichario));
+		} else if (local == SUL) {
+			adicionar(parent, Separador.vertical(fichario, objeto));
+		} else if (local == LESTE) {
+			adicionar(parent, Separador.horizontal(fichario, objeto));
+		} else if (local == OESTE) {
+			adicionar(parent, Separador.horizontal(objeto, fichario));
+		}
+		SwingUtilities.updateComponentTreeUI(parent);
+	}
+
+	void excluir(Container parent, Fichario fichario) {
+		if (parent instanceof Separador) {
+			Separador separador = (Separador) parent;
+			checkValidoExcluir(separador, fichario);
+			if (separador.getLeftComponent() == fichario) {
+				separador.setLeftComponent(null);
+			} else {
+				separador.setRightComponent(null);
+			}
+		} else {
+			parent.remove(fichario);
+		}
+	}
+
+	private void checkValidoExcluir(Separador separador, Fichario fichario) {
+		if (separador.getLeftComponent() != fichario && separador.getRightComponent() != fichario) {
+			throw new IllegalStateException();
+		}
+	}
+
+	void adicionar(Container parent, Separador novoSeparador) {
+		if (parent instanceof Separador) {
+			Separador separador = (Separador) parent;
+			checkValidoAdicionar(separador);
+			if (separador.getLeftComponent() == null) {
+				separador.setLeftComponent(novoSeparador);
+			} else {
+				separador.setRightComponent(novoSeparador);
+			}
+		} else {
+			parent.add(novoSeparador);
+		}
+	}
+
+	private void checkValidoAdicionar(Separador separador) {
+		if (separador.getLeftComponent() != null && separador.getRightComponent() != null) {
+			throw new IllegalStateException();
+		}
 	}
 }

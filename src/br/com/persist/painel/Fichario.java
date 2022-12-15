@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceContext;
 import java.awt.dnd.DragSourceDragEvent;
@@ -124,9 +123,9 @@ public class Fichario extends JTabbedPane {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
 					Setor setor = Setor.get(e, nor, sul, les, oes);
 					if (valido(objeto, setor)) {
-						e.acceptDrop(DnDConstants.ACTION_MOVE);
+						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						e.dropComplete(true);
-						processar(objeto, setor);
+						setor.processar(objeto, Fichario.this);
 					} else {
 						e.rejectDrop();
 					}
@@ -142,10 +141,6 @@ public class Fichario extends JTabbedPane {
 				return false;
 			}
 			return !(getTabCount() == 1 && getComponentAt(0) == objeto);
-		}
-
-		private void processar(Transferivel objeto, Setor setor) {
-			// TODO
 		}
 	};
 
