@@ -8,10 +8,18 @@ import java.io.IOException;
 import br.com.persist.componente.Panel;
 
 public class PainelTransferable extends Panel implements Transferable {
-	public static final DataFlavor flavor = new DataFlavor(PainelTransferable.class, "PainelTransferable");
 	private static final long serialVersionUID = -2395376493141225954L;
+	public static final DataFlavor flavor = createDataFlavor();
 	private static final DataFlavor[] flavors = { flavor };
 	private String title;
+
+	public static DataFlavor createDataFlavor() {
+		try {
+			return new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType + ";class=\"" +  PainelTransferable.class.getName() + "\"");
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public DataFlavor[] getTransferDataFlavors() {

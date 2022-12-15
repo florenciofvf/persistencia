@@ -142,7 +142,7 @@ public class PainelContainer extends Panel {
 			Component c = getRaiz();
 			if (c instanceof PainelFichario) {
 				PainelFichario fichario = (PainelFichario) c;
-				if (fichario.getTotalAbas() < 2) {
+				if (fichario.getTotalAbas() == 1 && fichario.getComponentAt(0) == objeto) {
 					return false;
 				}
 			}
