@@ -65,4 +65,8 @@ class PainelSetor {
 			}
 		}
 	}
+
+	public void processar(PainelTransferable objeto, PainelContainer painelContainer) {
+		// TODO Auto-generated method stub
+	}
 }

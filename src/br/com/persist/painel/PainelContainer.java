@@ -1,5 +1,6 @@
 package br.com.persist.painel;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
@@ -10,7 +11,6 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
@@ -64,8 +64,8 @@ public class PainelContainer extends JPanel {
 		}
 
 		@Override
-		public void dragOver(DropTargetDragEvent dtde) {
-			Point p = dtde.getLocation();
+		public void dragOver(DropTargetDragEvent e) {
+			Point p = e.getLocation();
 			int x = p.x;
 			int y = p.y;
 			nor.selecionado = nor.contem(x, y);
@@ -98,39 +98,61 @@ public class PainelContainer extends JPanel {
 				if (transferable != null) {
 					DataFlavor[] flavors = transferable.getTransferDataFlavors();
 					if (flavors != null && flavors.length > 0) {
-						processarArrastado(e, transferable, flavors);
+						processarArrastado(e, transferable, flavors[0]);
 					}
 				}
 			}
 		}
 
-		private void processarArrastado(DropTargetDropEvent e, Transferable transferable, DataFlavor[] flavors) {
-			DataFlavor flavor = flavors[0];
-			AtomicBoolean processado = new AtomicBoolean(false);
-			processarTransferable(e, transferable, flavor, processado);
-			processarTransferableFinal(e, processado);
-		}
-
-		private void processarTransferable(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor,
-				AtomicBoolean processado) {
+		private void processarArrastado(DropTargetDropEvent e, Transferable transferable, DataFlavor flavor) {
 			if (PainelTransferable.flavor.equals(flavor)) {
 				try {
 					PainelTransferable objeto = (PainelTransferable) transferable.getTransferData(flavor);
-					processado.set(true);
+					PainelSetor setor = getSetor(e, nor, sul, les, oes);
+					if (valido(objeto, setor)) {
+						e.acceptDrop(DnDConstants.ACTION_MOVE);
+						e.dropComplete(true);
+						setor.processar(objeto, PainelContainer.this);
+					} else {
+						e.rejectDrop();
+					}
+					invalidar();
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, PainelContainer.this);
 				}
 			}
 		}
 
-		private void processarTransferableFinal(DropTargetDropEvent e, AtomicBoolean completado) {
-			if (completado.get()) {
-				e.acceptDrop(DnDConstants.ACTION_MOVE);
-				e.dropComplete(true);
-			} else {
-				e.rejectDrop();
+		private PainelSetor getSetor(DropTargetDropEvent e, PainelSetor... setores) {
+			Point p = e.getLocation();
+			for (PainelSetor setor : setores) {
+				if (setor.contem(p.x, p.y)) {
+					return setor;
+				}
 			}
-			invalidar();
+			return null;
+		}
+
+		private boolean valido(PainelTransferable objeto, PainelSetor setor) {
+			if (objeto == null || setor == null) {
+				return false;
+			}
+			Component c = getComponente();
+			if (c instanceof PainelFichario) {
+				PainelFichario fichario = (PainelFichario) c;
+				if (fichario.getTotalAbas() < 2) {
+					return false;
+				}
+			}
+			return true;
 		}
 	};
+
+	public Component getComponente() {
+		Component c = getComponent(0);
+		if (!(c instanceof PainelFichario) || !(c instanceof PainelSeparador)) {
+			throw new IllegalStateException();
+		}
+		return c;
+	}
 }
