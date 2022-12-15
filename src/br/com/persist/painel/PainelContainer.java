@@ -1,5 +1,6 @@
 package br.com.persist.painel;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -12,16 +13,15 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 
-import javax.swing.JPanel;
-
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Panel;
 
-public class PainelContainer extends JPanel {
+public class PainelContainer extends Panel {
 	private static final long serialVersionUID = 1L;
-	private transient PainelSetor nor = new PainelSetor('N');
-	private transient PainelSetor sul = new PainelSetor('S');
-	private transient PainelSetor les = new PainelSetor('L');
-	private transient PainelSetor oes = new PainelSetor('O');
+	private transient PainelSetor nor = new PainelSetor(PainelSetor.NORTE);
+	private transient PainelSetor les = new PainelSetor(PainelSetor.LESTE);
+	private transient PainelSetor oes = new PainelSetor(PainelSetor.OESTE);
+	private transient PainelSetor sul = new PainelSetor(PainelSetor.SUL);
 
 	public PainelContainer() {
 		new DropTarget(this, dropTargetListener);
@@ -137,7 +137,7 @@ public class PainelContainer extends JPanel {
 			if (objeto == null || setor == null) {
 				return false;
 			}
-			Component c = getComponente();
+			Component c = getRaiz();
 			if (c instanceof PainelFichario) {
 				PainelFichario fichario = (PainelFichario) c;
 				if (fichario.getTotalAbas() < 2) {
@@ -148,11 +148,27 @@ public class PainelContainer extends JPanel {
 		}
 	};
 
-	public Component getComponente() {
+	public Component getRaiz() {
+		if (getComponentCount() != 1) {
+			throw new IllegalStateException();
+		}
 		Component c = getComponent(0);
 		if (!(c instanceof PainelFichario) || !(c instanceof PainelSeparador)) {
 			throw new IllegalStateException();
 		}
 		return c;
+	}
+
+	public Component excluirRaiz() {
+		Component c = getRaiz();
+		remove(c);
+		return c;
+	}
+
+	public void adicionar(Component c) {
+		if (!(c instanceof PainelFichario) || !(c instanceof PainelSeparador)) {
+			throw new IllegalStateException();
+		}
+		add(BorderLayout.CENTER, c);
 	}
 }
