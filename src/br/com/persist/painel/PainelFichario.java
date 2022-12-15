@@ -1,7 +1,5 @@
 package br.com.persist.painel;
 
-import java.awt.Component;
-import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceDragEvent;
@@ -20,9 +18,12 @@ public class PainelFichario extends JTabbedPane {
 	public PainelFichario() {
 		DragSource dragSource = DragSource.getDefaultDragSource();
 		dragSource.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_MOVE, dge -> {
-			Component c = getSelectedComponent();
-			if (c instanceof PainelTransferable) {
-				dge.startDrag(null, (Transferable) c, listenerArrasto);
+			int indice = getSelectedIndex();
+			if (indice != -1) {
+				PainelTransferable aba = (PainelTransferable) getComponentAt(indice);
+				String title = getTitleAt(indice);
+				aba.setTitle(title);
+				dge.startDrag(null, aba, listenerArrasto);
 			}
 		});
 	}
@@ -55,18 +56,11 @@ public class PainelFichario extends JTabbedPane {
 		@Override
 		public void dragDropEnd(DragSourceDropEvent dsde) {
 			if (dsde.getDropSuccess()) {
-				Component c = getSelectedComponent();
-				removeTabAt(getIndice(c));
+				int indice = getSelectedIndex();
+				if (indice != -1) {
+					removeTabAt(indice);
+				}
 			}
 		}
 	};
-
-	public synchronized int getIndice(Component c) {
-		for (int i = 0; i < getTabCount(); i++) {
-			if (getComponentAt(i) == c) {
-				return i;
-			}
-		}
-		return -1;
-	}
 }

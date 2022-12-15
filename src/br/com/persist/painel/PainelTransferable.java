@@ -11,6 +11,7 @@ public class PainelTransferable extends Panel implements Transferable {
 	public static final DataFlavor flavor = new DataFlavor(PainelTransferable.class, "PainelTransferable");
 	private static final long serialVersionUID = -2395376493141225954L;
 	private static final DataFlavor[] flavors = { flavor };
+	private String title;
 
 	@Override
 	public DataFlavor[] getTransferDataFlavors() {
@@ -28,5 +29,13 @@ public class PainelTransferable extends Panel implements Transferable {
 			return this;
 		}
 		throw new UnsupportedFlavorException(flavor);
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
