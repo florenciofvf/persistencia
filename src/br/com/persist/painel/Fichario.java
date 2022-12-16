@@ -28,11 +28,11 @@ public class Fichario extends JTabbedPane {
 	private transient Setor nor = new Setor(Setor.NORTE);
 	private transient Setor les = new Setor(Setor.LESTE);
 	private transient Setor oes = new Setor(Setor.OESTE);
+	private transient FicharioListener ficharioListener;
 	private transient Setor sul = new Setor(Setor.SUL);
 	private static final long serialVersionUID = 1L;
 
 	public Fichario() {
-		new DropTarget(this, dropTargetListener);
 		DragSource dragSource = DragSource.getDefaultDragSource();
 		dragSource.createDefaultDragGestureRecognizer(this, Transferivel.ACAO_VALIDA, dge -> {
 			int indice = getSelectedIndex();
@@ -43,6 +43,7 @@ public class Fichario extends JTabbedPane {
 				dge.startDrag(null, aba, dragSourceListener);
 			}
 		});
+		new DropTarget(this, dropTargetListener);
 	}
 
 	@Override
@@ -172,7 +173,22 @@ public class Fichario extends JTabbedPane {
 				DragSourceContext context = (DragSourceContext) dsde.getSource();
 				Transferivel objeto = (Transferivel) context.getTransferable();
 				remove(objeto);
+				checarVazio();
 			}
 		}
 	};
+
+	public void checarVazio() {
+		if (getTabCount() == 0 && ficharioListener != null) {
+			ficharioListener.ficharioVazio(this);
+		}
+	}
+
+	public FicharioListener getFicharioListener() {
+		return ficharioListener;
+	}
+
+	public void setFicharioListener(FicharioListener ficharioListener) {
+		this.ficharioListener = ficharioListener;
+	}
 }
