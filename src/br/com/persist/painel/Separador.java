@@ -12,6 +12,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
@@ -27,6 +28,9 @@ public class Separador extends JSplitPane implements FicharioListener {
 	public Separador(int orientation, Component left, Component right) {
 		super(orientation, get(left), get(right));
 		new DropTarget(this, dropTargetListener);
+		setBorder(BorderFactory.createEmptyBorder());
+		setOneTouchExpandable(true);
+		setContinuousLayout(true);
 		SwingUtilities.invokeLater(() -> setDividerLocation(0.5));
 	}
 

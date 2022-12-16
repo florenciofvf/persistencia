@@ -15,6 +15,9 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +25,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
+import br.com.persist.componente.Popup;
 
 public class Fichario extends JTabbedPane {
 	private static final Logger LOG = Logger.getGlobal();
@@ -31,8 +36,13 @@ public class Fichario extends JTabbedPane {
 	private transient FicharioListener ficharioListener;
 	private transient Setor sul = new Setor(Setor.SUL);
 	private static final long serialVersionUID = 1L;
+	private final PopupFichario popupFichario;
 
 	public Fichario() {
+		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		new DropTarget(this, dropTargetListener);
+		addMouseListener(mouseListenerFichario);
+		popupFichario = new PopupFichario();
 		DragSource dragSource = DragSource.getDefaultDragSource();
 		dragSource.createDefaultDragGestureRecognizer(this, Transferivel.ACAO_VALIDA, dge -> {
 			int indice = getSelectedIndex();
@@ -43,7 +53,6 @@ public class Fichario extends JTabbedPane {
 				dge.startDrag(null, aba, dragSourceListener);
 			}
 		});
-		new DropTarget(this, dropTargetListener);
 	}
 
 	@Override
@@ -190,5 +199,41 @@ public class Fichario extends JTabbedPane {
 
 	public void setFicharioListener(FicharioListener ficharioListener) {
 		this.ficharioListener = ficharioListener;
+	}
+
+	private transient MouseListener mouseListenerFichario = new MouseAdapter() {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			processar(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			processar(e);
+		}
+
+		private void processar(MouseEvent e) {
+			if (e.isPopupTrigger()) {
+				popupFichario.show(Fichario.this, e.getX(), e.getY());
+			}
+		}
+	};
+
+	private class PopupFichario extends Popup {
+		private static final long serialVersionUID = 1L;
+		private Action fechar = Action.actionMenu("label.fechar", null);
+
+		PopupFichario() {
+			addMenuItem(fechar);
+			fechar.setActionListener(e -> fechar());
+		}
+
+		private void fechar() {
+			int indice = getSelectedIndex();
+			if (indice != -1) {
+				removeTabAt(indice);
+				checarVazio();
+			}
+		}
 	}
 }
