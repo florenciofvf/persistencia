@@ -85,6 +85,9 @@ class Setor {
 		return null;
 	}
 
+	void processar(Transferivel objeto, Separador separador) {
+	}
+
 	void processar(Transferivel objeto, Fichario fichario) {
 		Container parent = fichario.getParent();
 		excluir(parent, fichario);
