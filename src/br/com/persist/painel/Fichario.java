@@ -1,6 +1,9 @@
 package br.com.persist.painel;
 
+import java.awt.AlphaComposite;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -35,6 +38,7 @@ public class Fichario extends JTabbedPane {
 	private transient Setor oes = new Setor(Setor.OESTE);
 	private transient FicharioListener ficharioListener;
 	private transient Setor sul = new Setor(Setor.SUL);
+	private transient Inclusao inc = new Inclusao();
 	private static final long serialVersionUID = 1L;
 	private final PopupFichario popupFichario;
 
@@ -62,6 +66,7 @@ public class Fichario extends JTabbedPane {
 		sul.paint(g);
 		les.paint(g);
 		oes.paint(g);
+		inc.paint(g);
 	}
 
 	private transient DropTargetListener dropTargetListener = new DropTargetListener() {
@@ -83,6 +88,7 @@ public class Fichario extends JTabbedPane {
 				sul.localizar(Fichario.this);
 				les.localizar(Fichario.this);
 				oes.localizar(Fichario.this);
+				inc.localizar(Fichario.this);
 				repaint();
 			}
 		}
@@ -96,6 +102,7 @@ public class Fichario extends JTabbedPane {
 			sul.selecionado = sul.contem(x, y);
 			les.selecionado = les.contem(x, y);
 			oes.selecionado = oes.contem(x, y);
+			inc.selecionado = inc.contem(x, y);
 			repaint();
 		}
 
@@ -109,6 +116,7 @@ public class Fichario extends JTabbedPane {
 			sul.valido = false;
 			les.valido = false;
 			oes.valido = false;
+			inc.valido = false;
 			repaint();
 		}
 
@@ -132,7 +140,7 @@ public class Fichario extends JTabbedPane {
 			if (Transferivel.flavor.equals(flavor)) {
 				try {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
-					Setor setor = Setor.get(e, nor, sul, les, oes);
+					Setor setor = Setor.get(e, nor, sul, les, oes, inc);
 					if (valido(objeto, setor)) {
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						e.dropComplete(true);
@@ -151,7 +159,19 @@ public class Fichario extends JTabbedPane {
 			if (objeto == null || setor == null) {
 				return false;
 			}
+			if (Inclusao.INSERT == setor.local && contemObjeto(objeto)) {
+				return false;
+			}
 			return !(getTabCount() == 1 && getComponentAt(0) == objeto);
+		}
+
+		private boolean contemObjeto(Transferivel objeto) {
+			for (int i = 0; i < getTabCount(); i++) {
+				if (getComponentAt(i) == objeto) {
+					return true;
+				}
+			}
+			return false;
 		}
 	};
 
@@ -235,5 +255,38 @@ public class Fichario extends JTabbedPane {
 				checarVazio();
 			}
 		}
+	}
+}
+
+class Inclusao extends Setor {
+	static final char INSERT = 'I';
+
+	Inclusao() {
+		super(INSERT);
+	}
+
+	@Override
+	void localizar(Component c) {
+		valido = true;
+	}
+
+	@Override
+	void paint(Graphics g) {
+		if (!valido) {
+			return;
+		}
+		g.drawRect(x, y, larguraAltura, larguraAltura);
+		if (selecionado) {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+			g.fillRect(x, y, larguraAltura, larguraAltura);
+		}
+	}
+
+	@Override
+	void processar(Transferivel objeto, Fichario dropTarget) {
+		dropTarget.addTab(objeto.getTitle(), objeto);
+		int indice = dropTarget.getTabCount() - 1;
+		dropTarget.setSelectedIndex(indice);
 	}
 }

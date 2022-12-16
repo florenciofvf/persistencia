@@ -12,7 +12,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import javax.swing.SwingUtilities;
 
 class Setor {
-	private int larguraAltura = 40;
+	int larguraAltura = 40;
 	private int metade = larguraAltura / 2;
 	static final char NORTE = 'N';
 	static final char LESTE = 'L';
@@ -21,11 +21,11 @@ class Setor {
 	static final char SUL = 'S';
 	private int metadeLargura;
 	private int metadeAltura;
-	private final char local;
 	boolean selecionado;
+	final char local;
 	boolean valido;
-	private int x;
-	private int y;
+	int x;
+	int y;
 
 	Setor(char setor) {
 		this.local = setor;
