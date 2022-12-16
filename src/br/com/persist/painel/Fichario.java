@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Util;
 
@@ -125,7 +126,7 @@ public class Fichario extends JTabbedPane {
 					if (valido(objeto, setor)) {
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						e.dropComplete(true);
-						setor.processar(objeto, Fichario.this);
+						SwingUtilities.invokeLater(() -> setor.processar(objeto, Fichario.this));
 					} else {
 						e.rejectDrop();
 					}
@@ -170,11 +171,7 @@ public class Fichario extends JTabbedPane {
 			if (dsde.getDropSuccess()) {
 				DragSourceContext context = (DragSourceContext) dsde.getSource();
 				Transferivel objeto = (Transferivel) context.getTransferable();
-				if (objeto.getIndex() >= 0 && objeto.getIndex() < getTabCount()) {
-					removeTabAt(objeto.getIndex());
-				} else {
-					throw new IllegalStateException();
-				}
+				remove(objeto);
 			}
 		}
 	};
