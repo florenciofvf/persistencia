@@ -24,6 +24,7 @@ import java.awt.event.MouseListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
@@ -147,6 +148,8 @@ public class Fichario extends JTabbedPane {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
 					Setor setor = Setor.get(e, nor, sul, les, oes, inc, des);
 					if (valido(objeto, setor)) {
+						objeto.setSetor(setor);
+						setor.point = e.getLocation();
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						e.dropComplete(true);
 						SwingUtilities.invokeLater(() -> setor.processar(objeto, Fichario.this));
@@ -209,8 +212,10 @@ public class Fichario extends JTabbedPane {
 			if (dsde.getDropSuccess()) {
 				DragSourceContext context = (DragSourceContext) dsde.getSource();
 				Transferivel objeto = (Transferivel) context.getTransferable();
-				remove(objeto);
-				checarVazio();
+				if (objeto.getSetor() == null || Setor.DESLOCAR != objeto.getSetor().local) {
+					remove(objeto);
+					checarVazio();
+				}
 			}
 		}
 	};
@@ -329,5 +334,23 @@ class Deslocar extends Setor {
 
 	@Override
 	void processar(Transferivel objeto, Fichario dropTarget) {
+		int destino = dropTarget.indexAtLocation(point.x, point.y);
+		int origem = objeto.getIndex();
+		if (origem != -1 && destino != -1 && origem != destino) {
+			inverter(origem, destino, dropTarget);
+		}
+		dropTarget.repaint();
+	}
+
+	private void inverter(int origem, int destino, Fichario dropTarget) {
+		Component tab = dropTarget.getTabComponentAt(origem);
+		Component cmp = dropTarget.getComponentAt(origem);
+		String hint = dropTarget.getToolTipTextAt(origem);
+		String titulo = dropTarget.getTitleAt(origem);
+		Icon icon = dropTarget.getIconAt(origem);
+		dropTarget.remove(origem);
+		dropTarget.insertTab(titulo, icon, cmp, hint, destino);
+		dropTarget.setTabComponentAt(destino, tab);
+		dropTarget.setSelectedIndex(destino);
 	}
 }

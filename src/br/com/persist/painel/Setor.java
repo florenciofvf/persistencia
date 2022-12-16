@@ -26,6 +26,7 @@ class Setor {
 	boolean selecionado;
 	final char local;
 	boolean valido;
+	Point point;
 	int x;
 	int y;
 

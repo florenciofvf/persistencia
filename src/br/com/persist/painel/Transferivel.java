@@ -13,6 +13,7 @@ public class Transferivel extends Panel implements Transferable {
 	public static final int ACAO_VALIDA = DnDConstants.ACTION_MOVE;
 	public static final DataFlavor flavor = createDataFlavor();
 	private static final DataFlavor[] flavors = { flavor };
+	private transient Setor setor;
 	private String title;
 	private int index;
 
@@ -61,5 +62,18 @@ public class Transferivel extends Panel implements Transferable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Setor getSetor() {
+		return setor;
+	}
+
+	public void setSetor(Setor setor) {
+		this.setor = setor;
+	}
+
+	@Override
+	public String toString() {
+		return title;
 	}
 }
