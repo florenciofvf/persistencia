@@ -85,48 +85,58 @@ class Setor {
 		return null;
 	}
 
-	void processar(Transferivel objeto, Separador separador) {
-	}
-
-	void processar(Transferivel objeto, Fichario fichario) {
-		Container parent = fichario.getParent();
-		excluir(parent, fichario);
+	void processar(Transferivel objeto, Separador dropTarget) {
+		Container parent = dropTarget.getParent();
+		preParent(parent, dropTarget);
 		if (local == NORTE) {
-			adicionar(parent, Separador.vertical(objeto, fichario));
+			posParent(parent, Separador.vertical(objeto, dropTarget));
 		} else if (local == SUL) {
-			adicionar(parent, Separador.vertical(fichario, objeto));
+			posParent(parent, Separador.vertical(dropTarget, objeto));
 		} else if (local == LESTE) {
-			adicionar(parent, Separador.horizontal(fichario, objeto));
+			posParent(parent, Separador.horizontal(dropTarget, objeto));
 		} else if (local == OESTE) {
-			adicionar(parent, Separador.horizontal(objeto, fichario));
+			posParent(parent, Separador.horizontal(objeto, dropTarget));
 		}
 		SwingUtilities.updateComponentTreeUI(parent);
 	}
 
-	void excluir(Container parent, Fichario fichario) {
+	void processar(Transferivel objeto, Fichario dropTarget) {
+		Container parent = dropTarget.getParent();
+		preParent(parent, dropTarget);
+		if (local == NORTE) {
+			posParent(parent, Separador.vertical(objeto, dropTarget));
+		} else if (local == SUL) {
+			posParent(parent, Separador.vertical(dropTarget, objeto));
+		} else if (local == LESTE) {
+			posParent(parent, Separador.horizontal(dropTarget, objeto));
+		} else if (local == OESTE) {
+			posParent(parent, Separador.horizontal(objeto, dropTarget));
+		}
+		SwingUtilities.updateComponentTreeUI(parent);
+	}
+
+	void preParent(Container parent, Component dropTarget) {
 		if (parent instanceof Separador) {
 			Separador separador = (Separador) parent;
-			checkValidoExcluir(separador, fichario);
-			if (separador.getLeftComponent() == fichario) {
+			if (separador.getLeftComponent() != dropTarget && separador.getRightComponent() != dropTarget) {
+				throw new IllegalStateException();
+			}
+			if (separador.getLeftComponent() == dropTarget) {
 				separador.setLeftComponent(null);
 			} else {
 				separador.setRightComponent(null);
 			}
 		} else {
-			parent.remove(fichario);
+			parent.remove(dropTarget);
 		}
 	}
 
-	private void checkValidoExcluir(Separador separador, Fichario fichario) {
-		if (separador.getLeftComponent() != fichario && separador.getRightComponent() != fichario) {
-			throw new IllegalStateException();
-		}
-	}
-
-	void adicionar(Container parent, Separador novoSeparador) {
+	void posParent(Container parent, Separador novoSeparador) {
 		if (parent instanceof Separador) {
 			Separador separador = (Separador) parent;
-			checkValidoAdicionar(separador);
+			if (separador.getLeftComponent() != null && separador.getRightComponent() != null) {
+				throw new IllegalStateException();
+			}
 			if (separador.getLeftComponent() == null) {
 				separador.setLeftComponent(novoSeparador);
 			} else {
@@ -134,12 +144,6 @@ class Setor {
 			}
 		} else {
 			parent.add(novoSeparador);
-		}
-	}
-
-	private void checkValidoAdicionar(Separador separador) {
-		if (separador.getLeftComponent() != null && separador.getRightComponent() != null) {
-			throw new IllegalStateException();
 		}
 	}
 }

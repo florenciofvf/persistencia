@@ -171,6 +171,7 @@ public class Separador extends JSplitPane implements FicharioListener {
 			parent.remove(this);
 			parent.add(novo);
 		}
+		SwingUtilities.updateComponentTreeUI(parent);
 	}
 
 	@Override
