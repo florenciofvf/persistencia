@@ -13,14 +13,16 @@ import javax.swing.SwingUtilities;
 
 class Setor {
 	int larguraAltura = 40;
-	private int metade = larguraAltura / 2;
+	int metade = larguraAltura / 2;
+	static final char DESLOCAR = 'D';
+	static final char INCLUIR = 'I';
 	static final char NORTE = 'N';
 	static final char LESTE = 'L';
 	static final char OESTE = 'O';
-	private Dimension dimension;
 	static final char SUL = 'S';
 	private int metadeLargura;
 	private int metadeAltura;
+	Dimension dimension;
 	boolean selecionado;
 	final char local;
 	boolean valido;

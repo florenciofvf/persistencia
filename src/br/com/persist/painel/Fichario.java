@@ -39,6 +39,7 @@ public class Fichario extends JTabbedPane {
 	private transient FicharioListener ficharioListener;
 	private transient Setor sul = new Setor(Setor.SUL);
 	private transient Inclusao inc = new Inclusao();
+	private transient Deslocar des = new Deslocar();
 	private static final long serialVersionUID = 1L;
 	private final PopupFichario popupFichario;
 
@@ -67,6 +68,7 @@ public class Fichario extends JTabbedPane {
 		les.paint(g);
 		oes.paint(g);
 		inc.paint(g);
+		des.paint(g);
 	}
 
 	private transient DropTargetListener dropTargetListener = new DropTargetListener() {
@@ -89,6 +91,7 @@ public class Fichario extends JTabbedPane {
 				les.localizar(Fichario.this);
 				oes.localizar(Fichario.this);
 				inc.localizar(Fichario.this);
+				des.localizar(Fichario.this);
 				repaint();
 			}
 		}
@@ -103,6 +106,7 @@ public class Fichario extends JTabbedPane {
 			les.selecionado = les.contem(x, y);
 			oes.selecionado = oes.contem(x, y);
 			inc.selecionado = inc.contem(x, y);
+			des.selecionado = des.contem(x, y);
 			repaint();
 		}
 
@@ -117,6 +121,7 @@ public class Fichario extends JTabbedPane {
 			les.valido = false;
 			oes.valido = false;
 			inc.valido = false;
+			des.valido = false;
 			repaint();
 		}
 
@@ -140,7 +145,7 @@ public class Fichario extends JTabbedPane {
 			if (Transferivel.flavor.equals(flavor)) {
 				try {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
-					Setor setor = Setor.get(e, nor, sul, les, oes, inc);
+					Setor setor = Setor.get(e, nor, sul, les, oes, inc, des);
 					if (valido(objeto, setor)) {
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						e.dropComplete(true);
@@ -159,8 +164,11 @@ public class Fichario extends JTabbedPane {
 			if (objeto == null || setor == null) {
 				return false;
 			}
-			if (Inclusao.INSERT == setor.local && contemObjeto(objeto)) {
+			if (Setor.INCLUIR == setor.local && contemObjeto(objeto)) {
 				return false;
+			}
+			if (Setor.DESLOCAR == setor.local && contemObjeto(objeto) && getTabCount() > 1) {
+				return true;
 			}
 			return !(getTabCount() == 1 && getComponentAt(0) == objeto);
 		}
@@ -259,14 +267,13 @@ public class Fichario extends JTabbedPane {
 }
 
 class Inclusao extends Setor {
-	static final char INSERT = 'I';
-
 	Inclusao() {
-		super(INSERT);
+		super(INCLUIR);
 	}
 
 	@Override
 	void localizar(Component c) {
+		y = metade + 2;
 		valido = true;
 	}
 
@@ -288,5 +295,39 @@ class Inclusao extends Setor {
 		dropTarget.addTab(objeto.getTitle(), objeto);
 		int indice = dropTarget.getTabCount() - 1;
 		dropTarget.setSelectedIndex(indice);
+	}
+}
+
+class Deslocar extends Setor {
+	Deslocar() {
+		super(DESLOCAR);
+	}
+
+	@Override
+	void localizar(Component c) {
+		super.localizar(c);
+		valido = true;
+	}
+
+	@Override
+	boolean contem(int posX, int posY) {
+		return (posX >= x && posX <= x + dimension.width) && (posY >= y && posY <= y + metade);
+	}
+
+	@Override
+	void paint(Graphics g) {
+		if (!valido) {
+			return;
+		}
+		g.drawRect(x, y, dimension.width, metade);
+		if (selecionado) {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+			g.fillRect(x, y, dimension.width, metade);
+		}
+	}
+
+	@Override
+	void processar(Transferivel objeto, Fichario dropTarget) {
 	}
 }
