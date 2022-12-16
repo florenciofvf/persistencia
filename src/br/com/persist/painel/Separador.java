@@ -1,6 +1,7 @@
 package br.com.persist.painel;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
@@ -16,7 +17,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Util;
 
-public class Separador extends JSplitPane {
+public class Separador extends JSplitPane implements FicharioListener {
 	private transient Setor nor = new Setor(Setor.NORTE);
 	private transient Setor les = new Setor(Setor.LESTE);
 	private transient Setor oes = new Setor(Setor.OESTE);
@@ -128,7 +129,7 @@ public class Separador extends JSplitPane {
 					if (valido(objeto, setor)) {
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
 						e.dropComplete(true);
-						processar(objeto, setor);
+						SwingUtilities.invokeLater(() -> setor.processar(objeto, Separador.this));
 					} else {
 						e.rejectDrop();
 					}
@@ -142,9 +143,51 @@ public class Separador extends JSplitPane {
 		private boolean valido(Transferivel objeto, Setor setor) {
 			return objeto != null && setor != null;
 		}
-
-		private void processar(Transferivel objeto, Setor setor) {
-			// TODO
-		}
 	};
+
+	@Override
+	public void ficharioVazio(Fichario fichario) {
+		if (leftComponent == fichario) {
+			setLeftComponent(null);
+			substituirPor(rightComponent);
+		} else if (rightComponent == fichario) {
+			setRightComponent(null);
+			substituirPor(leftComponent);
+		} else {
+			throw new IllegalStateException();
+		}
+	}
+
+	private void substituirPor(Component novo) {
+		Container parent = getParent();
+		if (parent instanceof Separador) {
+			Separador separador = (Separador) parent;
+			if (separador.getLeftComponent() == this) {
+				separador.setLeftComponent(novo);
+			} else {
+				separador.setRightComponent(novo);
+			}
+		} else {
+			parent.remove(this);
+			parent.add(novo);
+		}
+	}
+
+	@Override
+	public void setLeftComponent(Component comp) {
+		super.setLeftComponent(comp);
+		setFicharioListener(comp);
+	}
+
+	@Override
+	public void setRightComponent(Component comp) {
+		super.setRightComponent(comp);
+		setFicharioListener(comp);
+	}
+
+	private void setFicharioListener(Component comp) {
+		if (comp instanceof Fichario) {
+			((Fichario) comp).setFicharioListener(this);
+		}
+	}
 }
