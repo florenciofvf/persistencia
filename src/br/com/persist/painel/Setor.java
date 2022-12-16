@@ -1,9 +1,11 @@
 package br.com.persist.painel;
 
+import java.awt.AlphaComposite;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.dnd.DropTargetDropEvent;
 
@@ -63,14 +65,16 @@ class Setor {
 		}
 		g.drawRect(x, y, larguraAltura, larguraAltura);
 		if (selecionado) {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
 			if (local == NORTE) {
-				g.drawRect(1, 1, dimension.width - 3, metadeAltura);
+				g2.fillRect(1, 1, dimension.width - 3, metadeAltura);
 			} else if (local == SUL) {
-				g.drawRect(1, metadeAltura, dimension.width - 3, metadeAltura - 2);
+				g2.fillRect(1, metadeAltura, dimension.width - 3, metadeAltura - 2);
 			} else if (local == LESTE) {
-				g.drawRect(metadeLargura, 1, metadeLargura - 2, dimension.height - 3);
+				g2.fillRect(metadeLargura, 1, metadeLargura - 2, dimension.height - 3);
 			} else if (local == OESTE) {
-				g.drawRect(1, 1, metadeLargura, dimension.height - 3);
+				g2.fillRect(1, 1, metadeLargura, dimension.height - 3);
 			}
 		}
 	}
