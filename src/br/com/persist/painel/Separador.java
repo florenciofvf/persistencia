@@ -163,6 +163,7 @@ public class Separador extends JSplitPane implements FicharioListener {
 	}
 
 	private void substituirPor(Component novo) {
+		setFicharioListener(novo, null);
 		Container parent = getParent();
 		if (parent instanceof Separador) {
 			Separador separador = (Separador) parent;
@@ -181,18 +182,18 @@ public class Separador extends JSplitPane implements FicharioListener {
 	@Override
 	public void setLeftComponent(Component comp) {
 		super.setLeftComponent(comp);
-		setFicharioListener(comp);
+		setFicharioListener(comp, this);
 	}
 
 	@Override
 	public void setRightComponent(Component comp) {
 		super.setRightComponent(comp);
-		setFicharioListener(comp);
+		setFicharioListener(comp, this);
 	}
 
-	private void setFicharioListener(Component comp) {
+	private void setFicharioListener(Component comp, FicharioListener listener) {
 		if (comp instanceof Fichario) {
-			((Fichario) comp).setFicharioListener(this);
+			((Fichario) comp).setFicharioListener(listener);
 		}
 	}
 }
