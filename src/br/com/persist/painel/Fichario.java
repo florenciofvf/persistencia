@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -148,18 +147,21 @@ public class Fichario extends JTabbedPane {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
 					Setor setor = Setor.get(e, nor, sul, les, oes, inc, des);
 					if (valido(objeto, setor)) {
-						objeto.setSetor(setor);
-						setor.point = e.getLocation();
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
+						setor.dropTarget = Fichario.this;
+						setor.point = e.getLocation();
+						objeto.setSetor(setor);
 						e.dropComplete(true);
-						SwingUtilities.invokeLater(() -> setor.processar(objeto, Fichario.this));
 					} else {
 						e.rejectDrop();
 					}
 					invalidar();
 				} catch (Exception ex) {
+					e.rejectDrop();
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Fichario.this);
 				}
+			} else {
+				e.rejectDrop();
 			}
 		}
 
@@ -212,9 +214,14 @@ public class Fichario extends JTabbedPane {
 			if (dsde.getDropSuccess()) {
 				DragSourceContext context = (DragSourceContext) dsde.getSource();
 				Transferivel objeto = (Transferivel) context.getTransferable();
-				if (objeto.getSetor() == null || Setor.DESLOCAR != objeto.getSetor().local) {
-					remove(objeto);
-					checarVazio();
+				Setor setor = objeto.getSetor();
+				objeto.setSetor(null);
+				if (setor != null) {
+					if (Setor.DESLOCAR != setor.local) {
+						remove(objeto);
+						checarVazio();
+					}
+					setor.processar(objeto);
 				}
 			}
 		}
@@ -296,10 +303,12 @@ class Inclusao extends Setor {
 	}
 
 	@Override
-	void processar(Transferivel objeto, Fichario dropTarget) {
-		dropTarget.addTab(objeto.getTitle(), objeto);
-		int indice = dropTarget.getTabCount() - 1;
-		dropTarget.setSelectedIndex(indice);
+	void processar(Transferivel objeto) {
+		Fichario fichario = (Fichario) dropTarget;
+		dropTarget = null;
+		fichario.addTab(objeto.getTitle(), objeto);
+		int indice = fichario.getTabCount() - 1;
+		fichario.setSelectedIndex(indice);
 	}
 }
 
@@ -333,13 +342,15 @@ class Deslocar extends Setor {
 	}
 
 	@Override
-	void processar(Transferivel objeto, Fichario dropTarget) {
-		int destino = dropTarget.indexAtLocation(point.x, point.y);
+	void processar(Transferivel objeto) {
+		Fichario fichario = (Fichario) dropTarget;
+		dropTarget = null;
+		int destino = fichario.indexAtLocation(point.x, point.y);
 		int origem = objeto.getIndex();
 		if (origem != -1 && destino != -1 && origem != destino) {
-			inverter(origem, destino, dropTarget);
+			inverter(origem, destino, fichario);
 		}
-		dropTarget.repaint();
+		fichario.repaint();
 	}
 
 	private void inverter(int origem, int destino, Fichario dropTarget) {

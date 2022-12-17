@@ -132,15 +132,20 @@ public class Separador extends JSplitPane implements FicharioListener {
 					Setor setor = Setor.get(e, nor, sul, les, oes);
 					if (valido(objeto, setor)) {
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
+						setor.dropTarget = Separador.this;
+						setor.point = e.getLocation();
+						objeto.setSetor(setor);
 						e.dropComplete(true);
-						SwingUtilities.invokeLater(() -> setor.processar(objeto, Separador.this));
 					} else {
 						e.rejectDrop();
 					}
 					invalidar();
 				} catch (Exception ex) {
+					e.rejectDrop();
 					Util.stackTraceAndMessage("SOLTAR OBJETO", ex, Separador.this);
 				}
+			} else {
+				e.rejectDrop();
 			}
 		}
 

@@ -22,6 +22,7 @@ class Setor {
 	static final char SUL = 'S';
 	private int metadeLargura;
 	private int metadeAltura;
+	Component dropTarget;
 	Dimension dimension;
 	boolean selecionado;
 	final char local;
@@ -92,32 +93,19 @@ class Setor {
 		return null;
 	}
 
-	void processar(Transferivel objeto, Separador dropTarget) {
-		Container parent = dropTarget.getParent();
-		preParent(parent, dropTarget);
+	void processar(Transferivel objeto) {
+		Component component = dropTarget;
+		dropTarget = null;
+		Container parent = component.getParent();
+		preParent(parent, component);
 		if (local == NORTE) {
-			posParent(parent, Separador.vertical(objeto, dropTarget));
+			posParent(parent, Separador.vertical(objeto, component));
 		} else if (local == SUL) {
-			posParent(parent, Separador.vertical(dropTarget, objeto));
+			posParent(parent, Separador.vertical(component, objeto));
 		} else if (local == LESTE) {
-			posParent(parent, Separador.horizontal(dropTarget, objeto));
+			posParent(parent, Separador.horizontal(component, objeto));
 		} else if (local == OESTE) {
-			posParent(parent, Separador.horizontal(objeto, dropTarget));
-		}
-		SwingUtilities.updateComponentTreeUI(parent);
-	}
-
-	void processar(Transferivel objeto, Fichario dropTarget) {
-		Container parent = dropTarget.getParent();
-		preParent(parent, dropTarget);
-		if (local == NORTE) {
-			posParent(parent, Separador.vertical(objeto, dropTarget));
-		} else if (local == SUL) {
-			posParent(parent, Separador.vertical(dropTarget, objeto));
-		} else if (local == LESTE) {
-			posParent(parent, Separador.horizontal(dropTarget, objeto));
-		} else if (local == OESTE) {
-			posParent(parent, Separador.horizontal(objeto, dropTarget));
+			posParent(parent, Separador.horizontal(objeto, component));
 		}
 		SwingUtilities.updateComponentTreeUI(parent);
 	}
