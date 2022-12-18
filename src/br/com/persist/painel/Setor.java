@@ -94,19 +94,21 @@ class Setor {
 	}
 
 	void processar(Transferivel objeto) {
-		Component component = dropTarget;
-		dropTarget = null;
-		Container parent = component.getParent();
-		preParent(parent, component);
-		if (local == NORTE) {
-			posParent(parent, Separador.vertical(objeto, component));
-		} else if (local == SUL) {
-			posParent(parent, Separador.vertical(component, objeto));
-		} else if (local == LESTE) {
-			posParent(parent, Separador.horizontal(component, objeto));
-		} else if (local == OESTE) {
-			posParent(parent, Separador.horizontal(objeto, component));
+		if (dropTarget.getParent() == null) {
+			dropTarget = ((Separador) dropTarget).substituto;
 		}
+		Container parent = dropTarget.getParent();
+		preParent(parent, dropTarget);
+		if (local == NORTE) {
+			posParent(parent, Separador.vertical(objeto, dropTarget));
+		} else if (local == SUL) {
+			posParent(parent, Separador.vertical(dropTarget, objeto));
+		} else if (local == LESTE) {
+			posParent(parent, Separador.horizontal(dropTarget, objeto));
+		} else if (local == OESTE) {
+			posParent(parent, Separador.horizontal(objeto, dropTarget));
+		}
+		dropTarget = null;
 		SwingUtilities.updateComponentTreeUI(parent);
 	}
 

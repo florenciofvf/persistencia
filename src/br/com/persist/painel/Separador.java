@@ -24,6 +24,7 @@ public class Separador extends JSplitPane implements FicharioListener {
 	private transient Setor oes = new Setor(Setor.OESTE);
 	private transient Setor sul = new Setor(Setor.SUL);
 	private static final long serialVersionUID = 1L;
+	Component substituto;
 
 	public Separador(int orientation, Component left, Component right) {
 		super(orientation, get(left), get(right));
@@ -131,8 +132,8 @@ public class Separador extends JSplitPane implements FicharioListener {
 					Transferivel objeto = (Transferivel) transferable.getTransferData(flavor);
 					Setor setor = Setor.get(e, nor, sul, les, oes);
 					if (valido(objeto, setor)) {
-						setor.dropTarget = Separador.this.getParent();
 						e.acceptDrop(Transferivel.ACAO_VALIDA);
+						setor.dropTarget = Separador.this;
 						objeto.setSetor(setor);
 						e.dropComplete(true);
 					} else {
@@ -169,6 +170,7 @@ public class Separador extends JSplitPane implements FicharioListener {
 	private void substituirPor(Component novo) {
 		setFicharioListener(novo, null);
 		Container parent = getParent();
+		substituto = novo;
 		if (parent instanceof Separador) {
 			Separador separador = (Separador) parent;
 			if (separador.getLeftComponent() == this) {
