@@ -305,10 +305,10 @@ class Inclusao extends Setor {
 	@Override
 	void processar(Transferivel objeto) {
 		Fichario fichario = (Fichario) dropTarget;
-		dropTarget = null;
 		fichario.addTab(objeto.getTitle(), objeto);
 		int indice = fichario.getTabCount() - 1;
 		fichario.setSelectedIndex(indice);
+		dropTarget = null;
 	}
 }
 
@@ -344,12 +344,12 @@ class Deslocar extends Setor {
 	@Override
 	void processar(Transferivel objeto) {
 		Fichario fichario = (Fichario) dropTarget;
-		dropTarget = null;
 		int destino = fichario.indexAtLocation(point.x, point.y);
 		int origem = objeto.getIndex();
 		if (origem != -1 && destino != -1 && origem != destino) {
 			inverter(origem, destino, fichario);
 		}
+		dropTarget = null;
 		fichario.repaint();
 	}
 
