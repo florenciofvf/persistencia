@@ -1,5 +1,6 @@
 package br.com.persist.arquivo;
 
+import java.awt.Component;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
 
 public class ArquivoUtil {
@@ -50,5 +53,55 @@ public class ArquivoUtil {
 				desktop.open(parent);
 			}
 		}
+	}
+
+	public static boolean novoDiretorio(Component c, File parent) {
+		File f = getFile(c, parent);
+		if (f == null) {
+			return false;
+		}
+		try {
+			return f.mkdirs();
+		} catch (Exception ex) {
+			Util.stackTraceAndMessage("ArquivoUtil.novoDiretorio()", ex, c);
+			return false;
+		}
+	}
+
+	public static boolean novoArquivo(Component c, File parent) {
+		File f = getFile(c, parent);
+		if (f == null) {
+			return false;
+		}
+		try {
+			return f.createNewFile();
+		} catch (IOException ex) {
+			Util.stackTraceAndMessage("ArquivoUtil.novoArquivo()", ex, c);
+			return false;
+		}
+	}
+
+	private static File getFile(Component c, File parent) {
+		if (c == null || parent == null) {
+			return null;
+		}
+		String nome = getNome(c);
+		if (nome == null) {
+			return null;
+		}
+		File f = new File(parent, nome);
+		if (f.exists()) {
+			return null;
+		}
+		return f;
+	}
+
+	private static String getNome(Component c) {
+		Object resp = Util.getValorInputDialog(c, "label.id", Mensagens.getString("label.nome_arquivo"),
+				Constantes.VAZIO);
+		if (resp == null || Util.estaVazio(resp.toString())) {
+			return null;
+		}
+		return resp.toString();
 	}
 }

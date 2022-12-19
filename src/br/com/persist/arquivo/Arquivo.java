@@ -31,6 +31,12 @@ public class Arquivo {
 		return ignorados;
 	}
 
+	public void reiniciar() {
+		processado = true;
+		filhos.clear();
+		inflar();
+	}
+
 	public void inflar() {
 		getFilhos();
 		for (Arquivo a : filhos) {

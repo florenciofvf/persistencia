@@ -67,5 +67,21 @@ class AnotacaoSplit extends SplitPane {
 		@Override
 		public void abrirArquivo(ArquivoTree arquivoTree) {
 		}
+
+		@Override
+		public void novoDiretorio(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null && ArquivoUtil.novoDiretorio(AnotacaoSplit.this, arquivo.getFile())) {
+				inicializar();
+			}
+		}
+
+		@Override
+		public void novoArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null && ArquivoUtil.novoArquivo(AnotacaoSplit.this, arquivo.getFile())) {
+				inicializar();
+			}
+		}
 	};
 }

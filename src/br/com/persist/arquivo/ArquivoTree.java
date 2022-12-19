@@ -161,8 +161,8 @@ public class ArquivoTree extends Tree {
 
 	private class ArquivoPopup extends Popup {
 		private static final long serialVersionUID = 1L;
-		private Action novoDiretorioAcao = Action.actionMenu("label.novo_diretorio", Icones.PANEL4);
-		private Action novoArquivoAcao = Action.actionMenu("label.novo_arquivo", Icones.ABRIR);
+		private Action novoDiretorioAcao = Action.actionMenu("label.novo_diretorio", Icones.ABRIR);
+		private Action novoArquivoAcao = Action.actionMenu("label.novo_arquivo", Icones.PANEL4);
 		private Action diretorioAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
 		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
@@ -175,18 +175,12 @@ public class ArquivoTree extends Tree {
 			addMenuItem(renomearAcao);
 			addMenuItem(excluirAcao);
 			addMenuItem(abrirAcao);
+			novoDiretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoDiretorio(ArquivoTree.this)));
 			diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
 			renomearAcao.setActionListener(e -> ouvintes.forEach(o -> o.renomearArquivo(ArquivoTree.this)));
+			novoArquivoAcao.setActionListener(e -> ouvintes.forEach(o -> o.novoArquivo(ArquivoTree.this)));
 			excluirAcao.setActionListener(e -> ouvintes.forEach(o -> o.excluirArquivo(ArquivoTree.this)));
 			abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivo(ArquivoTree.this)));
-			novoDiretorioAcao.setActionListener(e -> novoDiretorio());
-			novoArquivoAcao.setActionListener(e -> novoArquivo());
-		}
-
-		private void novoDiretorio() {
-		}
-
-		private void novoArquivo() {
 		}
 
 		private void preShow(Arquivo arquivo) {

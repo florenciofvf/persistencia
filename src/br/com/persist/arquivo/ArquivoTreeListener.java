@@ -7,5 +7,9 @@ public interface ArquivoTreeListener {
 
 	public void excluirArquivo(ArquivoTree arquivoTree);
 
+	public void novoDiretorio(ArquivoTree arquivoTree);
+
 	public void abrirArquivo(ArquivoTree arquivoTree);
+
+	public void novoArquivo(ArquivoTree arquivoTree);
 }
