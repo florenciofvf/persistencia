@@ -181,6 +181,10 @@ public class Arquivo {
 		return pai;
 	}
 
+	public String getName() {
+		return file.getName();
+	}
+
 	@Override
 	public String toString() {
 		return file.getName();

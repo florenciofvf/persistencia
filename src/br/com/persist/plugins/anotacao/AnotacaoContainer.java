@@ -8,8 +8,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 
@@ -17,11 +15,8 @@ import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
-import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.Selecao;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Janela;
-import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
@@ -73,17 +68,11 @@ public class AnotacaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	private class Toolbar extends BarraButton implements ActionListener {
+	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
-		private final TextField txtPesquisa = new TextField(35);
-		private transient Selecao selecao;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			txtPesquisa.addActionListener(this);
-			add(txtPesquisa);
-			add(label);
 		}
 
 		@Override
@@ -127,36 +116,6 @@ public class AnotacaoContainer extends AbstratoContainer {
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// if (!Util.estaVazio(txtPesquisa.getText())) {
-			// if (chkPesquisaLocal.isSelected()) {
-			// selecao = Util.getSelecao(textArea, selecao,
-			// txtPesquisa.getText());
-			// selecao.selecionar(label);
-			// return;
-			// }
-			// List<String> arquivos = Util.listarNomeBackup(fileParent,
-			// AnotacaoConstantes.ANOTACOES);
-			// StringBuilder sb = new StringBuilder();
-			// for (String arquivo : arquivos) {
-			// String resultado = Util.pesquisar(new File(fileParent, arquivo),
-			// txtPesquisa.getText());
-			// if (!Util.estaVazio(resultado)) {
-			// if (sb.length() > 0) {
-			// sb.append(Constantes.QL);
-			// }
-			// sb.append(arquivo + Constantes.QL);
-			// sb.append(resultado);
-			// }
-			// }
-			// textArea.setText(sb.toString());
-			// selecao = null;
-			// } else {
-			// label.limpar();
-			// }
 		}
 	}
 

@@ -202,4 +202,56 @@ public class Separador extends JSplitPane implements FicharioListener {
 			((Fichario) comp).setFicharioListener(listener);
 		}
 	}
+
+	public Fichario getFicharioSelecionado() {
+		if (leftComponent instanceof Fichario && leftComponent.hasFocus()) {
+			return (Fichario) leftComponent;
+		}
+
+		if (rightComponent instanceof Fichario && rightComponent.hasFocus()) {
+			return (Fichario) rightComponent;
+		}
+
+		Fichario fichario = null;
+
+		if (leftComponent instanceof Separador) {
+			fichario = ((Separador) leftComponent).getFicharioSelecionado();
+		}
+
+		if (fichario != null) {
+			return fichario;
+		}
+
+		if (rightComponent instanceof Separador) {
+			fichario = ((Separador) rightComponent).getFicharioSelecionado();
+		}
+
+		return fichario;
+	}
+
+	public Fichario getFicharioPrimeiro() {
+		if (leftComponent instanceof Fichario) {
+			return (Fichario) leftComponent;
+		}
+
+		if (rightComponent instanceof Fichario) {
+			return (Fichario) rightComponent;
+		}
+
+		Fichario fichario = null;
+
+		if (leftComponent instanceof Separador) {
+			fichario = ((Separador) leftComponent).getFicharioPrimeiro();
+		}
+
+		if (fichario != null) {
+			return fichario;
+		}
+
+		if (rightComponent instanceof Separador) {
+			fichario = ((Separador) rightComponent).getFicharioPrimeiro();
+		}
+
+		return fichario;
+	}
 }
