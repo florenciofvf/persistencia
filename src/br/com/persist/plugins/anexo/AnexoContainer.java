@@ -14,7 +14,6 @@ import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -29,6 +28,7 @@ import javax.swing.Icon;
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoDialogo;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Imagens;
@@ -270,22 +270,15 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	public void diretorioAnexo(AnexoTree anexoTree) {
 		Anexo anexo = anexoTree.getObjetoSelecionado();
 		if (anexo != null) {
-			try {
-				processar(anexo.getFile());
-			} catch (IOException e) {
-				Util.mensagem(AnexoContainer.this, e.getMessage());
-			}
+			desktopOpen(anexo);
 		}
 	}
 
-	private void processar(File file) throws IOException {
-		if (Util.isMac()) {
-			Runtime.getRuntime().exec("open -R " + file.getAbsolutePath());
-		} else {
-			File parent = file.getParentFile();
-			if (parent != null) {
-				desktop.open(parent);
-			}
+	private void desktopOpen(Anexo anexo) {
+		try {
+			ArquivoUtil.diretorio(anexo.getFile());
+		} catch (IOException e) {
+			Util.mensagem(AnexoContainer.this, e.getMessage());
 		}
 	}
 

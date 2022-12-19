@@ -7,7 +7,6 @@ import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Desktop;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +21,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -258,21 +258,9 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 
 	private void desktopOpen(Arquivo arquivo) {
 		try {
-			processar(arquivo.getFile());
+			ArquivoUtil.diretorio(arquivo.getFile());
 		} catch (IOException e) {
 			Util.mensagem(ArquivoContainer.this, e.getMessage());
-		}
-	}
-
-	private void processar(File file) throws IOException {
-		if (Util.isMac()) {
-			Runtime.getRuntime().exec("open -R " + file.getAbsolutePath());
-		} else {
-			File parent = file.getParentFile();
-			if (parent != null) {
-				Desktop desktop = Desktop.getDesktop();
-				desktop.open(parent);
-			}
 		}
 	}
 
