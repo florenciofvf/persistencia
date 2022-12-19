@@ -1,8 +1,10 @@
 package br.com.persist.arquivo;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -33,5 +35,20 @@ public class ArquivoUtil {
 			LOG.log(Level.FINEST, "ArquivoUtil.getIgnorados()");
 		}
 		return lista;
+	}
+
+	public static void diretorio(File file) throws IOException {
+		if (file == null) {
+			return;
+		}
+		if (Util.isMac()) {
+			Runtime.getRuntime().exec("open -R " + file.getAbsolutePath());
+		} else {
+			File parent = file.getParentFile();
+			if (parent != null) {
+				Desktop desktop = Desktop.getDesktop();
+				desktop.open(parent);
+			}
+		}
 	}
 }
