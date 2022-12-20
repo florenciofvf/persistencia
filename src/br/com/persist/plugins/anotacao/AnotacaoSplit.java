@@ -91,6 +91,8 @@ class AnotacaoSplit extends SplitPane {
 
 	private void novaAba(Fichario fichario, Arquivo arquivo) {
 		fichario.addTab(arquivo.getName(), new Aba(arquivo));
+		int indice = fichario.getTabCount() - 1;
+		fichario.setSelectedIndex(indice);
 	}
 
 	public ArquivoTree getTree() {
