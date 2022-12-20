@@ -99,9 +99,16 @@ class AnotacaoSplit extends SplitPane {
 		return tree;
 	}
 
-	private ArquivoTreeListener treeListener = new ArquivoTreeListener() {
+	private transient ArquivoTreeListener treeListener = new ArquivoTreeListener() {
 		@Override
 		public void renomearArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null) {
+				String nome = ArquivoUtil.getNome(AnotacaoSplit.this);
+				if (nome != null && arquivo.renomear(nome)) {
+					inicializar();
+				}
+			}
 		}
 
 		@Override
