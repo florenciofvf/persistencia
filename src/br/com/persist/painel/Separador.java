@@ -204,11 +204,11 @@ public class Separador extends JSplitPane implements FicharioListener {
 	}
 
 	public Fichario getFicharioSelecionado() {
-		if (leftComponent instanceof Fichario && leftComponent.hasFocus()) {
+		if (leftComponent instanceof Fichario && ((Fichario) leftComponent).estaSelecionado()) {
 			return (Fichario) leftComponent;
 		}
 
-		if (rightComponent instanceof Fichario && rightComponent.hasFocus()) {
+		if (rightComponent instanceof Fichario && ((Fichario) rightComponent).estaSelecionado()) {
 			return (Fichario) rightComponent;
 		}
 

@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeListener;
 
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
@@ -42,11 +43,13 @@ public class Fichario extends JTabbedPane {
 	private transient Deslocar des = new Deslocar();
 	private static final long serialVersionUID = 1L;
 	private final PopupFichario popupFichario;
+	private static Fichario selecionado;
 
 	public Fichario() {
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		new DropTarget(this, dropTargetListener);
 		addMouseListener(mouseListenerFichario);
+		addChangeListener(changeListenerInner);
 		popupFichario = new PopupFichario();
 		DragSource dragSource = DragSource.getDefaultDragSource();
 		dragSource.createDefaultDragGestureRecognizer(this, Transferivel.ACAO_VALIDA, dge -> {
@@ -258,6 +261,20 @@ public class Fichario extends JTabbedPane {
 			}
 		}
 	};
+
+	private transient ChangeListener changeListenerInner = e -> Fichario.setSelecionado(Fichario.this);
+
+	public boolean estaSelecionado() {
+		return Fichario.selecionado == this;
+	}
+
+	public static Fichario getSelecionado() {
+		return selecionado;
+	}
+
+	public static void setSelecionado(Fichario selecionado) {
+		Fichario.selecionado = selecionado;
+	}
 
 	private class PopupFichario extends Popup {
 		private static final long serialVersionUID = 1L;
