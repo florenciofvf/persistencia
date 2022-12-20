@@ -10,7 +10,7 @@ public class EntregaFichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 
 	public EntregaFichario() {
-		setTabPlacement(BOTTOM);
+		setTabPlacement(EntregaPreferencia.getEntregaPosicaoAbaFichario());
 	}
 
 	public void adicionarPagina(EntregaPagina pagina) {

@@ -13,6 +13,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
 
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import br.com.persist.formulario.Formulario;
@@ -57,6 +58,7 @@ public class Preferencias {
 		aplicarLarguraAoAbrirArquivoObjeto = pref.getBoolean("aplicar_largura_abrir_arquivo_objeto", false);
 		aplicarAlturaAoAbrirArquivoObjeto = pref.getBoolean("aplicar_altura_abrir_arquivo_objeto", false);
 		fecharComESCFormulario = pref.getBoolean("fechar_com_ESC_formulario", false);
+		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", SwingConstants.TOP);
 		abrirFormularioDireita = pref.getBoolean("abrir_formulario_direita", false);
 		abrirFormularioAbaixo = pref.getBoolean("abrir_formulario_abaixo", false);
 		fecharComESCInternal = pref.getBoolean("fechar_com_ESC_internal", false);
@@ -66,7 +68,6 @@ public class Preferencias {
 		monitorPreferencial = pref.getBoolean("monitor_preferencial", false);
 		porcVerticalLocalForm = pref.getInt("porc_vertical_local_form", 70);
 		ficharioComRolagem = pref.getBoolean("fichario_com_rolagem", true);
-		posicaoAbaFichario = pref.getInt("posicao_aba_fichario", 1);
 		tituloAbaMin = pref.getBoolean("titulo_aba_min", false);
 		formDialogo = pref.get("form_dialogo", "FORM,DIALOG");
 		formFicha = pref.get("form_ficha", "FORM,FICHA");
