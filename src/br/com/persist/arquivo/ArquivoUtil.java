@@ -56,7 +56,7 @@ public class ArquivoUtil {
 	}
 
 	public static boolean novoDiretorio(Component c, File parent) {
-		File f = getFile(c, parent);
+		File f = getFile(c, parent, Constantes.VAZIO);
 		if (f == null) {
 			return false;
 		}
@@ -69,7 +69,7 @@ public class ArquivoUtil {
 	}
 
 	public static boolean novoArquivo(Component c, File parent) {
-		File f = getFile(c, parent);
+		File f = getFile(c, parent, Constantes.VAZIO);
 		if (f == null) {
 			return false;
 		}
@@ -81,11 +81,11 @@ public class ArquivoUtil {
 		}
 	}
 
-	private static File getFile(Component c, File parent) {
+	private static File getFile(Component c, File parent, String padrao) {
 		if (c == null || parent == null) {
 			return null;
 		}
-		String nome = getNome(c);
+		String nome = getNome(c, padrao);
 		if (nome == null) {
 			return null;
 		}
@@ -96,9 +96,8 @@ public class ArquivoUtil {
 		return f;
 	}
 
-	public static String getNome(Component c) {
-		Object resp = Util.getValorInputDialog(c, "label.id", Mensagens.getString("label.nome_arquivo"),
-				Constantes.VAZIO);
+	public static String getNome(Component c, String padrao) {
+		Object resp = Util.getValorInputDialog(c, "label.id", Mensagens.getString("label.nome_arquivo"), padrao);
 		if (resp == null || Util.estaVazio(resp.toString())) {
 			return null;
 		}
