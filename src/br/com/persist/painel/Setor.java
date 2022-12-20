@@ -71,10 +71,10 @@ class Setor {
 		if (!valido) {
 			return;
 		}
-		g.drawRect(x, y, larguraAltura, larguraAltura);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		g2.fillRect(x, y, larguraAltura, larguraAltura);
 		if (selecionado) {
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 			if (local == NORTE) {
 				g2.fillRect(1, 1, dimension.width - 3, metadeAltura);
 			} else if (local == SUL) {
