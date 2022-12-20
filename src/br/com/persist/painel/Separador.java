@@ -11,6 +11,7 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JSplitPane;
@@ -200,6 +201,24 @@ public class Separador extends JSplitPane implements FicharioListener {
 	private void setFicharioListener(Component comp, FicharioListener listener) {
 		if (comp instanceof Fichario) {
 			((Fichario) comp).setFicharioListener(listener);
+		}
+	}
+
+	public void processar(Map<String, Object> map) {
+		if (leftComponent instanceof Fichario) {
+			((Fichario) leftComponent).processar(map);
+		}
+
+		if (rightComponent instanceof Fichario) {
+			((Fichario) rightComponent).processar(map);
+		}
+
+		if (leftComponent instanceof Separador) {
+			((Separador) leftComponent).processar(map);
+		}
+
+		if (rightComponent instanceof Separador) {
+			((Separador) rightComponent).processar(map);
 		}
 	}
 

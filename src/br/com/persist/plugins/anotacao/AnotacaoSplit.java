@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.swing.JScrollPane;
@@ -29,6 +31,7 @@ import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoModelo;
 import br.com.persist.arquivo.ArquivoTree;
 import br.com.persist.arquivo.ArquivoTreeListener;
+import br.com.persist.arquivo.ArquivoTreeUtil;
 import br.com.persist.arquivo.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
@@ -108,7 +111,8 @@ class AnotacaoSplit extends SplitPane {
 			if (arquivo != null) {
 				String nome = ArquivoUtil.getNome(AnotacaoSplit.this, arquivo.getName());
 				if (nome != null && arquivo.renomear(nome)) {
-					inicializar();
+					ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
+					panel.renomear();
 				}
 			}
 		}
@@ -217,6 +221,13 @@ class Aba extends Transferivel {
 		}
 	}
 
+	@Override
+	public void processar(Fichario fichario, int indice, Map<String, Object> map) {
+		if (map.containsKey(Transferivel.RENOMEAR)) {
+			fichario.setTitleAt(indice, arquivo.getName());
+		}
+	}
+
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
@@ -311,5 +322,18 @@ class PanelRoot extends Panel {
 			throw new IllegalStateException();
 		}
 		add(c);
+	}
+
+	void renomear() {
+		if (getComponentCount() == 0) {
+			return;
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put(Transferivel.RENOMEAR, null);
+		if (getComponent(0) instanceof Fichario) {
+			((Fichario) getComponent(0)).processar(map);
+			return;
+		}
+		((Separador) getComponent(0)).processar(map);
 	}
 }

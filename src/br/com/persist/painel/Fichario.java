@@ -21,6 +21,7 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -190,6 +191,14 @@ public class Fichario extends JTabbedPane {
 			return false;
 		}
 	};
+
+	public void processar(Map<String, Object> map) {
+		for (int i = 0; i < getTabCount(); i++) {
+			if (getComponentAt(i) instanceof Transferivel) {
+				((Transferivel) getComponentAt(i)).processar(this, i, map);
+			}
+		}
+	}
 
 	private transient DragSourceListener dragSourceListener = new DragSourceListener() {
 		@Override

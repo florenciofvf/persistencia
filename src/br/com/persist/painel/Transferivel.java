@@ -5,14 +5,16 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.io.IOException;
+import java.util.Map;
 
 import br.com.persist.componente.Panel;
 
-public class Transferivel extends Panel implements Transferable {
+public abstract class Transferivel extends Panel implements Transferable {
 	private static final long serialVersionUID = -2395376493141225954L;
 	public static final int ACAO_VALIDA = DnDConstants.ACTION_MOVE;
 	public static final DataFlavor flavor = createDataFlavor();
 	private static final DataFlavor[] flavors = { flavor };
+	public static final String RENOMEAR = "RENOMEAR";
 	private transient Setor setor;
 	private String title;
 	private int index;
@@ -75,5 +77,8 @@ public class Transferivel extends Panel implements Transferable {
 	@Override
 	public String toString() {
 		return title;
+	}
+
+	public void processar(Fichario fichario, int indice, Map<String, Object> map) {
 	}
 }
