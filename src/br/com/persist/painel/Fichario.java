@@ -34,11 +34,11 @@ import br.com.persist.componente.Popup;
 
 public class Fichario extends JTabbedPane {
 	private static final Logger LOG = Logger.getGlobal();
-	private transient Setor nor = new Setor(Setor.NORTE);
-	private transient Setor les = new Setor(Setor.LESTE);
-	private transient Setor oes = new Setor(Setor.OESTE);
+	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_3);
+	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_3);
+	private transient Setor oes = new Setor(Setor.OESTE, Setor.ALPHA_3);
 	private transient FicharioListener ficharioListener;
-	private transient Setor sul = new Setor(Setor.SUL);
+	private transient Setor sul = new Setor(Setor.SUL, Setor.ALPHA_3);
 	private transient Inclusao inc = new Inclusao();
 	private transient Deslocar des = new Deslocar();
 	private static final long serialVersionUID = 1L;
@@ -297,7 +297,7 @@ public class Fichario extends JTabbedPane {
 
 class Inclusao extends Setor {
 	Inclusao() {
-		super(INCLUIR);
+		super(INCLUIR, 0.4f);
 	}
 
 	@Override
@@ -331,7 +331,7 @@ class Inclusao extends Setor {
 
 class Deslocar extends Setor {
 	Deslocar() {
-		super(DESLOCAR);
+		super(DESLOCAR, 0.4f);
 	}
 
 	@Override

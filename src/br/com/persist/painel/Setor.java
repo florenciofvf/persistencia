@@ -13,6 +13,8 @@ import javax.swing.SwingUtilities;
 
 class Setor {
 	int larguraAltura = 40;
+	static final float ALPHA_7 = 0.7f;
+	static final float ALPHA_3 = 0.3f;
 	int metade = larguraAltura / 2;
 	static final char DESLOCAR = 'D';
 	static final char INCLUIR = 'I';
@@ -25,13 +27,15 @@ class Setor {
 	Component dropTarget;
 	Dimension dimension;
 	boolean selecionado;
+	final float alpha;
 	final char local;
 	boolean valido;
 	Point point;
 	int x;
 	int y;
 
-	Setor(char setor) {
+	Setor(char setor, float alpha) {
+		this.alpha = alpha;
 		this.local = setor;
 	}
 
@@ -70,7 +74,7 @@ class Setor {
 		g.drawRect(x, y, larguraAltura, larguraAltura);
 		if (selecionado) {
 			Graphics2D g2 = (Graphics2D) g;
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 			if (local == NORTE) {
 				g2.fillRect(1, 1, dimension.width - 3, metadeAltura);
 			} else if (local == SUL) {

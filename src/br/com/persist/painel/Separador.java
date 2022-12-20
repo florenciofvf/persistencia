@@ -19,10 +19,10 @@ import javax.swing.SwingUtilities;
 import br.com.persist.assistencia.Util;
 
 public class Separador extends JSplitPane implements FicharioListener {
-	private transient Setor nor = new Setor(Setor.NORTE);
-	private transient Setor les = new Setor(Setor.LESTE);
-	private transient Setor oes = new Setor(Setor.OESTE);
-	private transient Setor sul = new Setor(Setor.SUL);
+	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_7);
+	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_7);
+	private transient Setor oes = new Setor(Setor.OESTE, Setor.ALPHA_7);
+	private transient Setor sul = new Setor(Setor.SUL, Setor.ALPHA_7);
 	private static final long serialVersionUID = 1L;
 	Component substituto;
 
