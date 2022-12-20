@@ -9,6 +9,10 @@ import br.com.persist.assistencia.Util;
 public class EntregaFichario extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 
+	public EntregaFichario() {
+		setTabPlacement(BOTTOM);
+	}
+
 	public void adicionarPagina(EntregaPagina pagina) {
 		addTab(pagina.getNome(), pagina);
 		int ultimoIndice = getTabCount() - 1;
