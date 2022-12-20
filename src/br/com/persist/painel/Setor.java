@@ -50,14 +50,14 @@ class Setor {
 			valido = true;
 		} else if (local == SUL) {
 			x = metadeLargura - metade;
-			y = dimension.height - larguraAltura - metade;
+			y = dimension.height - larguraAltura;
 			valido = true;
 		} else if (local == LESTE) {
-			x = dimension.width - larguraAltura - metade;
+			x = dimension.width - larguraAltura;
 			y = metadeAltura - metade;
 			valido = true;
 		} else if (local == OESTE) {
-			x = metade;
+			x = 0;
 			y = metadeAltura - metade;
 			valido = true;
 		}
