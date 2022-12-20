@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.Arquivo;
@@ -34,7 +35,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
@@ -106,6 +106,11 @@ class AnotacaoSplit extends SplitPane {
 
 		@Override
 		public void excluirArquivo(ArquivoTree arquivoTree) {
+			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
+			if (arquivo != null && Util.confirmar(AnotacaoSplit.this, "msg.confirma_exclusao")) {
+				arquivo.excluir();
+				inicializar();
+			}
 		}
 
 		@Override
@@ -162,7 +167,7 @@ class Aba extends Transferivel {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new ScrollPane(textArea));
+		add(BorderLayout.CENTER, new JScrollPane(textArea));
 	}
 
 	private void abrir() {
