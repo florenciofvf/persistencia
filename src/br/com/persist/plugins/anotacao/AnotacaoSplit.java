@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -159,13 +161,35 @@ class AnotacaoSplit extends SplitPane {
 	};
 }
 
+class TextArea extends TextPane {
+	private static final long serialVersionUID = 1L;
+
+	TextArea() {
+		addFocusListener(focusListenerInner);
+	}
+
+	private transient FocusListener focusListenerInner = new FocusAdapter() {
+		@Override
+		public void focusGained(java.awt.event.FocusEvent e) {
+			Component c = getParent();
+			while (c != null) {
+				if (c instanceof Fichario) {
+					Fichario.setSelecionado((Fichario) c);
+					break;
+				}
+				c = c.getParent();
+			}
+		}
+	};
+}
+
 class Aba extends Transferivel {
 	private static final long serialVersionUID = 1L;
-	private final TextPane textArea = new TextPane();
+	private final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	final transient Arquivo arquivo;
 
-	public Aba(Arquivo arquivo) {
+	Aba(Arquivo arquivo) {
 		this.arquivo = Objects.requireNonNull(arquivo);
 		toolbar.ini();
 		montarLayout();
