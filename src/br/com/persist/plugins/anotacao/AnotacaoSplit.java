@@ -173,7 +173,9 @@ class AnotacaoSplit extends SplitPane {
 			if (file != null) {
 				Arquivo novo = arquivo.adicionar(file);
 				if (novo != null) {
+					arquivo.ordenar();
 					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
+					requestFocus();
 					ArquivoTreeUtil.selecionarObjeto(arquivoTree, novo);
 					arquivoTree.repaint();
 				}
