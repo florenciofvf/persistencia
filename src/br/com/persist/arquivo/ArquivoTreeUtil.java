@@ -53,6 +53,5 @@ public class ArquivoTreeUtil {
 		arquivoTree.makeVisible(path);
 		arquivoTree.setSelectionPath(path);
 		arquivoTree.scrollPathToVisible(path);
-		SwingUtilities.updateComponentTreeUI(arquivoTree);
 	}
 }

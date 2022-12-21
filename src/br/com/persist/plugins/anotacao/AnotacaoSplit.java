@@ -175,6 +175,7 @@ class AnotacaoSplit extends SplitPane {
 				if (novo != null) {
 					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
 					ArquivoTreeUtil.selecionarObjeto(arquivoTree, novo);
+					arquivoTree.repaint();
 				}
 			}
 		}
