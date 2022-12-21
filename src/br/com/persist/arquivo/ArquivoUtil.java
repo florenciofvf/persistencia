@@ -55,29 +55,29 @@ public class ArquivoUtil {
 		}
 	}
 
-	public static boolean novoDiretorio(Component c, File file) {
+	public static File novoDiretorio(Component c, File file) {
 		File f = getFile(c, getParent(file), Constantes.VAZIO);
 		if (f == null) {
-			return false;
+			return null;
 		}
 		try {
-			return f.mkdirs();
+			return f.mkdirs() ? f : null;
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage("ArquivoUtil.novoDiretorio()", ex, c);
-			return false;
+			return null;
 		}
 	}
 
-	public static boolean novoArquivo(Component c, File file) {
+	public static File novoArquivo(Component c, File file) {
 		File f = getFile(c, getParent(file), Constantes.VAZIO);
 		if (f == null) {
-			return false;
+			return null;
 		}
 		try {
-			return f.createNewFile();
+			return f.createNewFile() ? f : null;
 		} catch (IOException ex) {
 			Util.stackTraceAndMessage("ArquivoUtil.novoArquivo()", ex, c);
-			return false;
+			return null;
 		}
 	}
 

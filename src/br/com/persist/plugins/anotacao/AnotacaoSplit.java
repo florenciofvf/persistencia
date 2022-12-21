@@ -150,16 +150,32 @@ class AnotacaoSplit extends SplitPane {
 		@Override
 		public void novoDiretorio(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-			if (arquivo != null && ArquivoUtil.novoDiretorio(AnotacaoSplit.this, arquivo.getFile())) {
-				inicializar();
+			if (valido(arquivo)) {
+				File file = ArquivoUtil.novoDiretorio(AnotacaoSplit.this, arquivo.getFile());
+				adicionar(arquivoTree, arquivo, file);
 			}
 		}
 
 		@Override
 		public void novoArquivo(ArquivoTree arquivoTree) {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-			if (arquivo != null && ArquivoUtil.novoArquivo(AnotacaoSplit.this, arquivo.getFile())) {
-				inicializar();
+			if (valido(arquivo)) {
+				File file = ArquivoUtil.novoArquivo(AnotacaoSplit.this, arquivo.getFile());
+				adicionar(arquivoTree, arquivo, file);
+			}
+		}
+
+		private boolean valido(Arquivo arquivo) {
+			return arquivo != null && arquivo.isDirectory();
+		}
+
+		private void adicionar(ArquivoTree arquivoTree, Arquivo arquivo, File file) {
+			if (file != null) {
+				Arquivo novo = arquivo.adicionar(file);
+				if (novo != null) {
+					ArquivoTreeUtil.atualizarEstrutura(arquivoTree, arquivo);
+					ArquivoTreeUtil.selecionarObjeto(arquivoTree, novo);
+				}
 			}
 		}
 	};

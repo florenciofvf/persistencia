@@ -94,14 +94,24 @@ public class Arquivo {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 				for (File f : files) {
 					if (!ignorar(f.getName())) {
-						Arquivo arq = new Arquivo(f, ignorados);
-						filhos.add(arq);
-						arq.pai = this;
+						adicionar(f);
 					}
 				}
 			}
 		}
 		processado = true;
+	}
+
+	public Arquivo adicionar(File file) {
+		if (file != null) {
+			Arquivo arquivo = new Arquivo(file, ignorados);
+			if (!contem(arquivo)) {
+				filhos.add(arquivo);
+				arquivo.pai = this;
+				return arquivo;
+			}
+		}
+		return null;
 	}
 
 	private boolean ignorar(String string) {
@@ -116,19 +126,23 @@ public class Arquivo {
 	}
 
 	public void excluir(Arquivo arquivo) {
-		getFilhos().remove(arquivo);
+		filhos.remove(arquivo);
+	}
+
+	public boolean contem(Arquivo arquivo) {
+		return getIndice(arquivo) >= 0;
 	}
 
 	public int getIndice(Arquivo arquivo) {
-		return getFilhos().indexOf(arquivo);
+		return filhos.indexOf(arquivo);
 	}
 
 	public int getTotal() {
-		return getFilhos().size();
+		return filhos.size();
 	}
 
 	public boolean estaVazio() {
-		return getFilhos().isEmpty();
+		return filhos.isEmpty();
 	}
 
 	public Arquivo getArquivo(int index) {
@@ -196,5 +210,31 @@ public class Arquivo {
 
 	public void setArquivoAberto(boolean arquivoAberto) {
 		this.arquivoAberto = arquivoAberto;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((file == null) ? 0 : file.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Arquivo other = (Arquivo) obj;
+		if (file == null) {
+			if (other.file != null)
+				return false;
+		} else if (!file.equals(other.file)) {
+			return false;
+		}
+		return true;
 	}
 }
