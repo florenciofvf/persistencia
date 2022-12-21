@@ -187,6 +187,8 @@ public class ArquivoTree extends Tree {
 			boolean dir = arquivo.isDirectory();
 			boolean file = arquivo.isFile();
 			boolean both = dir || file;
+			novoDiretorioAcao.setEnabled(dir);
+			novoArquivoAcao.setEnabled(dir);
 			diretorioAcao.setEnabled(both);
 			renomearAcao.setEnabled(both);
 			excluirAcao.setEnabled(both);
