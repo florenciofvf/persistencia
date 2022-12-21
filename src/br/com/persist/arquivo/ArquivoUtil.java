@@ -55,8 +55,8 @@ public class ArquivoUtil {
 		}
 	}
 
-	public static boolean novoDiretorio(Component c, File parent) {
-		File f = getFile(c, parent, Constantes.VAZIO);
+	public static boolean novoDiretorio(Component c, File file) {
+		File f = getFile(c, getParent(file), Constantes.VAZIO);
 		if (f == null) {
 			return false;
 		}
@@ -68,8 +68,8 @@ public class ArquivoUtil {
 		}
 	}
 
-	public static boolean novoArquivo(Component c, File parent) {
-		File f = getFile(c, parent, Constantes.VAZIO);
+	public static boolean novoArquivo(Component c, File file) {
+		File f = getFile(c, getParent(file), Constantes.VAZIO);
 		if (f == null) {
 			return false;
 		}
@@ -79,6 +79,17 @@ public class ArquivoUtil {
 			Util.stackTraceAndMessage("ArquivoUtil.novoArquivo()", ex, c);
 			return false;
 		}
+	}
+
+	private static File getParent(File file) {
+		File f = file;
+		while (f != null) {
+			if (f.isDirectory()) {
+				return f;
+			}
+			f = f.getParentFile();
+		}
+		return f;
 	}
 
 	private static File getFile(Component c, File parent, String padrao) {
