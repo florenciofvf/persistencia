@@ -22,27 +22,24 @@ public class ArquivoTreeUtil {
 	}
 
 	public static void atualizarEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
-		modelo.treeStructureChanged(event);
+		arquivoTree.getModelo().treeStructureChanged(event);
 	}
 
 	public static void refreshEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
-		modelo.treeNodesChanged(event);
+		arquivoTree.getModelo().treeNodesChanged(event);
 	}
 
 	public static void excluirEstrutura(ArquivoTree arquivoTree, Arquivo arquivo) {
-		ArquivoModelo modelo = (ArquivoModelo) arquivoTree.getModel();
 		TreePath path = getTreePath(arquivo);
 		TreeModelEvent event = new TreeModelEvent(arquivo, path);
 		if (arquivo.getPai() != null) {
 			arquivo.getPai().excluir(arquivo);
 		}
-		modelo.treeNodesRemoved(event);
+		arquivoTree.getModelo().treeNodesRemoved(event);
 		arquivoTree.setSelectionPath(null);
 		SwingUtilities.updateComponentTreeUI(arquivoTree);
 	}
@@ -53,5 +50,10 @@ public class ArquivoTreeUtil {
 		arquivoTree.makeVisible(path);
 		arquivoTree.setSelectionPath(path);
 		arquivoTree.scrollPathToVisible(path);
+	}
+
+	public static void reiniciarEstrutura(ArquivoTree arquivoTree) {
+		ArquivoModelo modelo = arquivoTree.getModelo();
+		arquivoTree.setModel(new ArquivoModelo((Arquivo) modelo.getRoot()));
 	}
 }

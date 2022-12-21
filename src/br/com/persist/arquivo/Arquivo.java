@@ -6,7 +6,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -91,7 +91,6 @@ public class Arquivo {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
-				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 				for (File f : files) {
 					if (!ignorar(f.getName())) {
 						adicionar(f);
@@ -100,6 +99,11 @@ public class Arquivo {
 			}
 		}
 		processado = true;
+		ordenar();
+	}
+
+	public void ordenar() {
+		Collections.sort(filhos, (a1, a2) -> a1.getName().compareTo(a2.getName()));
 	}
 
 	public Arquivo adicionar(File file) {

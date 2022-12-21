@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import br.com.persist.assistencia.Constantes;
@@ -22,8 +21,8 @@ public class ArquivoTree extends Tree {
 	private final transient List<ArquivoTreeListener> ouvintes;
 	private ArquivoPopup arquivoPopup = new ArquivoPopup();
 
-	public ArquivoTree(TreeModel newModel) {
-		super(newModel);
+	public ArquivoTree(ArquivoModelo modelo) {
+		super(modelo);
 		addMouseListener(mouseListenerInner);
 		addKeyListener(keyListenerInner);
 		ouvintes = new ArrayList<>();
@@ -35,9 +34,12 @@ public class ArquivoTree extends Tree {
 		}
 	}
 
+	public ArquivoModelo getModelo() {
+		return (ArquivoModelo) getModel();
+	}
+
 	public Arquivo getRaiz() {
-		ArquivoModelo modelo = (ArquivoModelo) getModel();
-		return (Arquivo) modelo.getRoot();
+		return (Arquivo) getModelo().getRoot();
 	}
 
 	public Arquivo getObjetoSelecionado() {
