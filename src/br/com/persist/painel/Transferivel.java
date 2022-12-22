@@ -4,6 +4,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -80,5 +81,9 @@ public abstract class Transferivel extends Panel implements Transferable {
 	}
 
 	public void processar(Fichario fichario, int indice, Map<String, Object> map) {
+	}
+
+	public boolean associadoA(File file) {
+		return false;
 	}
 }

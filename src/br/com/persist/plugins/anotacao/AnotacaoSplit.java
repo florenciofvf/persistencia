@@ -122,7 +122,8 @@ class AnotacaoSplit extends SplitPane {
 			Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 			if (arquivo != null && Util.confirmar(AnotacaoSplit.this, "msg.confirma_exclusao")) {
 				arquivo.excluir();
-				inicializar();
+				ArquivoTreeUtil.excluirEstrutura(arquivoTree, arquivo);
+				panel.excluir(arquivo);
 			}
 		}
 
@@ -217,6 +218,11 @@ class Aba extends Transferivel {
 		toolbar.ini();
 		montarLayout();
 		abrir();
+	}
+
+	@Override
+	public boolean associadoA(File file) {
+		return arquivo.getFile().equals(file);
 	}
 
 	private void montarLayout() {
@@ -336,6 +342,29 @@ class PanelRoot extends Panel {
 		return ((Separador) getComponent(0)).getFicharioPrimeiro();
 	}
 
+	Transferivel getTransferivel(File file) {
+		if (getComponentCount() == 0) {
+			return null;
+		}
+		if (getComponent(0) instanceof Fichario) {
+			return ((Fichario) getComponent(0)).getTransferivel(file);
+		}
+		return ((Separador) getComponent(0)).getTransferivel(file);
+	}
+
+	Fichario getFichario(Transferivel objeto) {
+		if (getComponentCount() == 0) {
+			return null;
+		}
+		if (getComponent(0) instanceof Fichario && ((Fichario) getComponent(0)).contem(objeto)) {
+			return (Fichario) getComponent(0);
+		}
+		if (getComponent(0) instanceof Separador) {
+			return ((Separador) getComponent(0)).getFichario(objeto);
+		}
+		return null;
+	}
+
 	void setRoot(Component c) {
 		if (getComponentCount() > 0) {
 			throw new IllegalStateException();
@@ -354,5 +383,22 @@ class PanelRoot extends Panel {
 			return;
 		}
 		((Separador) getComponent(0)).processar(map);
+	}
+
+	void excluir(Arquivo arquivo) {
+		Transferivel objeto = getTransferivel(arquivo.getFile());
+		while (objeto != null) {
+			Fichario fichario = getFichario(objeto);
+			if (fichario != null) {
+				if (!fichario.contem(objeto)) {
+					throw new IllegalStateException();
+				} else {
+					fichario.excluir(objeto);
+				}
+			} else {
+				throw new IllegalStateException();
+			}
+			objeto = getTransferivel(arquivo.getFile());
+		}
 	}
 }

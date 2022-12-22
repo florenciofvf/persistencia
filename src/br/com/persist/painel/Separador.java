@@ -11,6 +11,7 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.io.File;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -202,6 +203,64 @@ public class Separador extends JSplitPane implements FicharioListener {
 		if (comp instanceof Fichario) {
 			((Fichario) comp).setFicharioListener(listener);
 		}
+	}
+
+	public Fichario getFichario(Transferivel objeto) {
+		if (leftComponent instanceof Fichario && ((Fichario) leftComponent).contem(objeto)) {
+			return (Fichario) leftComponent;
+		}
+
+		if (rightComponent instanceof Fichario && ((Fichario) rightComponent).contem(objeto)) {
+			return (Fichario) rightComponent;
+		}
+
+		Fichario fichario = null;
+
+		if (leftComponent instanceof Separador) {
+			fichario = ((Separador) leftComponent).getFichario(objeto);
+		}
+
+		if (fichario != null) {
+			return fichario;
+		}
+
+		if (rightComponent instanceof Separador) {
+			fichario = ((Separador) rightComponent).getFichario(objeto);
+		}
+
+		return fichario;
+	}
+
+	public Transferivel getTransferivel(File file) {
+		Transferivel objeto = null;
+		if (leftComponent instanceof Fichario) {
+			objeto = ((Fichario) leftComponent).getTransferivel(file);
+		}
+
+		if (objeto != null) {
+			return objeto;
+		}
+
+		if (rightComponent instanceof Fichario) {
+			objeto = ((Fichario) rightComponent).getTransferivel(file);
+		}
+
+		if (objeto != null) {
+			return objeto;
+		}
+
+		if (leftComponent instanceof Separador) {
+			objeto = ((Separador) leftComponent).getTransferivel(file);
+		}
+
+		if (objeto != null) {
+			return objeto;
+		}
+
+		if (rightComponent instanceof Separador) {
+			objeto = ((Separador) rightComponent).getTransferivel(file);
+		}
+		return objeto;
 	}
 
 	public void processar(Map<String, Object> map) {

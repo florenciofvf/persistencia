@@ -21,6 +21,7 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -198,6 +199,34 @@ public class Fichario extends JTabbedPane {
 				((Transferivel) getComponentAt(i)).processar(this, i, map);
 			}
 		}
+	}
+
+	public Transferivel getTransferivel(File file) {
+		for (int i = 0; i < getTabCount(); i++) {
+			if (getComponentAt(i) instanceof Transferivel && ((Transferivel) getComponentAt(i)).associadoA(file)) {
+				return (Transferivel) getComponentAt(i);
+			}
+		}
+		return null;
+	}
+
+	public void excluir(Transferivel objeto) {
+		for (int i = 0; i < getTabCount(); i++) {
+			if (getComponentAt(i) == objeto) {
+				removeTabAt(i);
+				checarVazio();
+				break;
+			}
+		}
+	}
+
+	public boolean contem(Transferivel objeto) {
+		for (int i = 0; i < getTabCount(); i++) {
+			if (getComponentAt(i) == objeto) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private transient DragSourceListener dragSourceListener = new DragSourceListener() {
