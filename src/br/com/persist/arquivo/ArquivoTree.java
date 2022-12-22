@@ -186,6 +186,15 @@ public class ArquivoTree extends Tree {
 		}
 
 		private void preShow(Arquivo arquivo) {
+			if (getRaiz() == arquivo) {
+				novoDiretorioAcao.setEnabled(true);
+				novoArquivoAcao.setEnabled(true);
+				diretorioAcao.setEnabled(true);
+				renomearAcao.setEnabled(false);
+				excluirAcao.setEnabled(false);
+				abrirAcao.setEnabled(false);
+				return;
+			}
 			boolean dir = arquivo.isDirectory();
 			boolean file = arquivo.isFile();
 			boolean both = dir || file;
