@@ -22,9 +22,11 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
@@ -62,8 +64,8 @@ public class RelacaoContainer extends Panel {
 	private final transient Relacao relacao;
 
 	public RelacaoContainer(Janela janela, ObjetoSuperficie objetoSuperficie, Relacao relacao) {
-		this.objetoSuperficie = objetoSuperficie;
-		this.relacao = relacao;
+		this.objetoSuperficie = Objects.requireNonNull(objetoSuperficie);
+		this.relacao = Objects.requireNonNull(relacao);
 		MacroProvedor.limpar();
 		toolbar.ini(janela);
 		montarLayout();
@@ -167,9 +169,59 @@ public class RelacaoContainer extends Panel {
 
 		private class Toolbar extends BarraButton {
 			private static final long serialVersionUID = 1L;
+			private Action diferencaAction = actionMenu("label.diferenca_em_horas", null);
+			private Action somarAction = actionMenu("label.somar_em_horas", null);
+			private static final String CHAVE_ERRO = "msg.padrao_valor_invalido";
 
 			private Toolbar() {
 				super.ini(new Nil(), COPIAR, COLAR);
+				add(diferencaAction);
+				add(somarAction);
+				diferencaAction.setActionListener(e -> diferenca());
+				somarAction.setActionListener(e -> somar());
+			}
+
+			private void diferenca() {
+				int destino = 0;
+				int origem = 0;
+				try {
+					origem = HoraUtil.getTime(relacao.getOrigem().getId());
+				} catch (Exception e) {
+					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "ORIGEM"));
+					return;
+				}
+				try {
+					destino = HoraUtil.getTime(relacao.getDestino().getId());
+				} catch (Exception e) {
+					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "DESTINO"));
+					return;
+				}
+				int diff = HoraUtil.getDiff(origem, destino);
+				textArea.setText(HoraUtil.formatar(diff));
+				focusListenerDesc.focusLost(null);
+				chkDesenharDesc.setSelected(true);
+				objetoSuperficie.repaint();
+			}
+
+			private void somar() {
+				int destino = 0;
+				int origem = 0;
+				try {
+					origem = HoraUtil.getTime(relacao.getOrigem().getId());
+				} catch (Exception e) {
+					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "ORIGEM"));
+					return;
+				}
+				try {
+					destino = HoraUtil.getTime(relacao.getDestino().getId());
+				} catch (Exception e) {
+					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "DESTINO"));
+					return;
+				}
+				textArea.setText(HoraUtil.formatar(origem + destino));
+				focusListenerDesc.focusLost(null);
+				chkDesenharDesc.setSelected(true);
+				objetoSuperficie.repaint();
 			}
 
 			@Override
@@ -184,6 +236,10 @@ public class RelacaoContainer extends Panel {
 			protected void colar(boolean numeros, boolean letras) {
 				Util.getContentTransfered(textArea.getTextAreaInner(), numeros, letras);
 			}
+		}
+
+		Action actionMenu(String chave, Icon icon) {
+			return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 		}
 	}
 
