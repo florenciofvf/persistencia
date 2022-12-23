@@ -200,7 +200,7 @@ public class RelacaoContainer extends Panel {
 				textArea.setText(HoraUtil.formatar(diff));
 				focusListenerDesc.focusLost(null);
 				chkDesenharDesc.setSelected(true);
-				objetoSuperficie.repaint();
+				actionPerformed(new ActionEvent(chkDesenharDesc, 0, null));
 			}
 
 			private void somar() {
@@ -221,7 +221,7 @@ public class RelacaoContainer extends Panel {
 				textArea.setText(HoraUtil.formatar(origem + destino));
 				focusListenerDesc.focusLost(null);
 				chkDesenharDesc.setSelected(true);
-				objetoSuperficie.repaint();
+				actionPerformed(new ActionEvent(chkDesenharDesc, 0, null));
 			}
 
 			@Override
