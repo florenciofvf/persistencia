@@ -1,11 +1,20 @@
 package br.com.persist.plugins.objeto.config;
 
+import java.util.Calendar;
+
 import br.com.persist.plugins.objeto.ObjetoException;
 
 public class HoraUtil {
 	public static final byte SESSENTA = 60;
 
 	private HoraUtil() {
+	}
+
+	public static String getHoraAtual() {
+		Calendar c = Calendar.getInstance();
+		int hor = c.get(Calendar.HOUR_OF_DAY) * SESSENTA;
+		int min = c.get(Calendar.MINUTE);
+		return formatar(hor + min);
 	}
 
 	public static String formatar(int horaMin) {
