@@ -11,13 +11,14 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
-public class Relacao {
+public class Relacao implements Runnable {
 	private static final Color COR_PADRAO_FONTE = Color.BLACK;
 	private static final Color COR_PADRAO = Color.BLACK;
 	private Color corFonte = COR_PADRAO_FONTE;
 	private int deslocamentoXDesc = -5;
 	private int deslocamentoYDesc = -5;
 	private boolean desenharDescricao;
+	private RelacaoListener listener;
 	private static int diametro = 6;
 	private Color cor = COR_PADRAO;
 	private final Objeto destino;
@@ -28,8 +29,10 @@ public class Relacao {
 	private final Objeto origem;
 	private boolean selecionado;
 	private String chaveOrigem;
+	private boolean processar;
 	private boolean quebrado;
 	private String descricao;
+	private Thread thread;
 
 	public Relacao(Objeto origem, Objeto destino) {
 		this(origem, false, destino, false);
@@ -269,6 +272,7 @@ public class Relacao {
 		deslocamentoXDesc = Integer.parseInt(attr.getValue("desloc_x_desc"));
 		deslocamentoYDesc = Integer.parseInt(attr.getValue("desloc_y_desc"));
 		corFonte = new Color(Integer.parseInt(attr.getValue("corFonte")));
+		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		quebrado = Boolean.parseBoolean(attr.getValue("quebrado"));
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		chaveDestino = attr.getValue("chaveDestino");
@@ -287,6 +291,7 @@ public class Relacao {
 		util.atributo("corFonte", corFonte.getRGB());
 		util.atributoCheck("pontoDestino", pontoDestino);
 		util.atributoCheck("pontoOrigem", pontoOrigem);
+		util.atributoCheck("processar", processar);
 		util.atributoCheck("quebrado", quebrado);
 		util.atributo("cor", cor.getRGB());
 		util.fecharTag();
@@ -426,6 +431,56 @@ public class Relacao {
 				g2.fillOval(x1 + auxX2 - m, y1 + auxY2 - m, diametro, diametro);
 			}
 		}
+	}
+
+	private void processarHora() {
+
+	}
+
+	@Override
+	public void run() {
+		while (!Thread.currentThread().isInterrupted()) {
+			processarHora();
+			if (listener != null) {
+				listener.repaint();
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+
+	public void ativar() {
+		if (processar && thread == null) {
+			thread = new Thread(this);
+			thread.start();
+		}
+	}
+
+	public void desativar() {
+		if (thread != null) {
+			thread.interrupt();
+			processar = false;
+			thread = null;
+		}
+	}
+
+	public RelacaoListener getListener() {
+		return listener;
+	}
+
+	public void setListener(RelacaoListener listener) {
+		this.listener = listener;
+	}
+
+	public boolean isProcessar() {
+		return processar;
+	}
+
+	public void setProcessar(boolean processar) {
+		this.processar = processar;
 	}
 
 	public int getDeslocamentoXDesc() {

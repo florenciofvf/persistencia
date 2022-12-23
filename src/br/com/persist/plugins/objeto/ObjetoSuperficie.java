@@ -93,7 +93,7 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class ObjetoSuperficie extends Desktop implements ObjetoListener {
+public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
 	private static final long serialVersionUID = 1L;
 	private final transient Vinculacao vinculacao = new Vinculacao();
 	private SuperficiePopup2 popup2 = new SuperficiePopup2();
@@ -190,6 +190,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					objeto.ativar();
 				}
 			}
+			for (Relacao relacao : relacoes) {
+				if (relacao.isSelecionado()) {
+					relacao.setProcessar(true);
+					relacao.ativar();
+				}
+			}
 			repaint();
 		}
 	};
@@ -218,6 +224,11 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 					objeto.desativar();
 				}
 			}
+			for (Relacao relacao : relacoes) {
+				if (relacao.isSelecionado()) {
+					relacao.desativar();
+				}
+			}
 			repaint();
 		}
 	};
@@ -225,6 +236,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 	public void desativarObjetos() {
 		for (Objeto objeto : objetos) {
 			objeto.desativar();
+		}
+		for (Relacao relacao : relacoes) {
+			relacao.desativar();
 		}
 		repaint();
 	}
@@ -957,11 +971,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		relacoes = new Relacao[bkp.length + 1];
 		System.arraycopy(bkp, 0, relacoes, 0, bkp.length);
 		relacoes[bkp.length] = obj;
+		obj.setListener(this);
 	}
 
 	public void excluir(Relacao obj) {
 		int indice = getIndice(obj);
 		if (indice >= 0) {
+			relacoes[indice].setListener(null);
 			relacoes[indice] = null;
 			Relacao[] bkp = relacoes;
 			relacoes = new Relacao[0];
@@ -1715,6 +1731,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : coletor.getObjetos()) {
 			objeto.ativar();
 		}
+		for (Relacao relacao : coletor.getRelacoes()) {
+			relacao.ativar();
+		}
 		arquivoVinculo = coletor.getArquivoVinculo();
 		vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
 		for (Objeto objeto : objetos) {
@@ -1811,6 +1830,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener {
 		for (Objeto objeto : objetos) {
 			objeto.setListener(null);
 			objeto.desativar();
+		}
+		for (Relacao relacao : relacoes) {
+			relacao.setListener(null);
+			relacao.desativar();
 		}
 	}
 
