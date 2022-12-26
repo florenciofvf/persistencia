@@ -230,6 +230,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	public void setProcessar(boolean processar) {
+		this.processar = processar;
+	}
+
 	private transient javax.swing.Action threadProcessar = new AbstractAction() {
 		private static final long serialVersionUID = 1L;
 

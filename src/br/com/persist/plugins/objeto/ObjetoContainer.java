@@ -610,6 +610,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 	public void abrir(File file, ObjetoColetor coletor, InternalConfig config) throws XMLException {
 		toolbar.txtArquivoVinculo.setText(coletor.getArquivoVinculo());
+		objetoSuperficie.setProcessar(coletor.getProcessar().get());
 		objetoSuperficie.abrir(coletor);
 		arquivo = file;
 		btnSelecao.click();
