@@ -74,6 +74,7 @@ import br.com.persist.plugins.metadado.MetadadoConstantes;
 import br.com.persist.plugins.metadado.MetadadoEvento;
 import br.com.persist.plugins.objeto.circular.CircularContainer.Tipo;
 import br.com.persist.plugins.objeto.circular.CircularDialogo;
+import br.com.persist.plugins.objeto.config.HoraUtil;
 import br.com.persist.plugins.objeto.config.ObjetoDialogo;
 import br.com.persist.plugins.objeto.config.RelacaoDialogo;
 import br.com.persist.plugins.objeto.internal.ExternalFormulario;
@@ -111,6 +112,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private boolean validoArrastar;
 	private String arquivoVinculo;
 	private boolean processar;
+	private int totalHoras;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -194,11 +196,19 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private void processarHora() {
-		//
+		totalHoras = 0;
+		for (Relacao relacao : relacoes) {
+			try {
+				totalHoras += HoraUtil.getTime(relacao.getDescricao());
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, Constantes.ERRO, e);
+			}
+		}
 	}
 
 	public void somarHoras(boolean b) {
 		if (b) {
+			processar = true;
 			ativar();
 		} else {
 			desativar();
@@ -927,6 +937,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			objeto.desenhar(this, g2, stroke);
 		}
 		area.desenhar(g2);
+		if (processar && thread != null) {
+			g2.setFont(ObjetoConstantes.FONT_HORAS);
+			g2.drawString(HoraUtil.formatar(totalHoras), 300, 300);
+		}
 	}
 
 	public void excluirSelecionados() {
