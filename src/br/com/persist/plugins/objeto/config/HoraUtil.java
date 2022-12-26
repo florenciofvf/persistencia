@@ -99,9 +99,9 @@ public class HoraUtil {
 		}
 
 		public static String formatar(int segundos) {
-			long hor = getHora(segundos);
-			long min = getMinuto(segundos);
-			long seg = getSegundo(segundos);
+			int hor = getHora(segundos);
+			int min = getMinuto(segundos - (hor * HORA));
+			int seg = getSegundo(segundos - (hor * HORA) - (min * MINUTO));
 			return get(hor) + ":" + get(min) + ":" + get(seg);
 		}
 
@@ -114,7 +114,7 @@ public class HoraUtil {
 		}
 
 		private static int getSegundo(int segundos) {
-			return segundos % MINUTO;
+			return segundos;
 		}
 
 		private static String get(long valor) {
