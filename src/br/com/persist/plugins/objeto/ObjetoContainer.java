@@ -440,6 +440,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			private Action selecaoGeralAcao = actionMenu("label.selecao_todos", Icones.TAG2);
 			private Action pontoDestinoAcao = actionMenu("label.ponto_destino", Icones.RECT);
 			private Action pontoOrigemAcao = actionMenu("label.ponto_origem", Icones.RECT);
+			private Action somarHorasAcao = actionMenu("label.somar_em_horas", null);
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);
@@ -449,6 +450,8 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 				addItem(new JCheckBoxMenuItem(transparenteAcao));
 				addItem(new JCheckBoxMenuItem(pontoOrigemAcao));
 				addItem(new JCheckBoxMenuItem(pontoDestinoAcao));
+				addSeparator();
+				addItem(new JCheckBoxMenuItem(somarHorasAcao));
 				eventos();
 			}
 
@@ -465,6 +468,8 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 						e -> objetoSuperficie.pontoOrigem(((JCheckBoxMenuItem) e.getSource()).isSelected()));
 				desenharIdAcao.setActionListener(
 						e -> objetoSuperficie.desenharIds(((JCheckBoxMenuItem) e.getSource()).isSelected()));
+				somarHorasAcao.setActionListener(
+						e -> objetoSuperficie.somarHoras(((JCheckBoxMenuItem) e.getSource()).isSelected()));
 			}
 		}
 

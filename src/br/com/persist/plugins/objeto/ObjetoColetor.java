@@ -12,6 +12,7 @@ public class ObjetoColetor {
 	private final AtomicBoolean ajusteAutoForm;
 	private final List<InternalForm> forms;
 	private final StringBuilder sbConexao;
+	private final AtomicBoolean processar;
 	private final List<Relacao> relacoes;
 	private final List<Objeto> objetos;
 	private final Dimension dimension;
@@ -20,9 +21,10 @@ public class ObjetoColetor {
 	public ObjetoColetor() {
 		ajusteLarguraForm = new AtomicBoolean();
 		ajusteAutoForm = new AtomicBoolean();
+		processar = new AtomicBoolean();
 		sbConexao = new StringBuilder();
-		dimension = new Dimension();
 		relacoes = new ArrayList<>();
+		dimension = new Dimension();
 		objetos = new ArrayList<>();
 		forms = new ArrayList<>();
 	}
@@ -35,6 +37,7 @@ public class ObjetoColetor {
 		ajusteAutoForm.set(false);
 		dimension.setSize(0, 0);
 		arquivoVinculo = null;
+		processar.set(false);
 		relacoes.clear();
 		objetos.clear();
 		forms.clear();
@@ -74,5 +77,9 @@ public class ObjetoColetor {
 
 	public String getArquivoVinculo() {
 		return arquivoVinculo;
+	}
+
+	public AtomicBoolean getProcessar() {
+		return processar;
 	}
 }

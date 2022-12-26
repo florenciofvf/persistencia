@@ -93,7 +93,7 @@ import br.com.persist.plugins.persistencia.PersistenciaModelo;
 import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
-public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener {
+public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
 	private static final long serialVersionUID = 1L;
 	private final transient Vinculacao vinculacao = new Vinculacao();
 	private SuperficiePopup2 popup2 = new SuperficiePopup2();
@@ -107,8 +107,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	private transient Relacao[] relacoes;
 	private final Formulario formulario;
 	private transient Objeto[] objetos;
+	private transient Thread thread;
 	private boolean validoArrastar;
 	private String arquivoVinculo;
+	private boolean processar;
 	private byte estado;
 	private int ultX;
 	private int ultY;
@@ -177,6 +179,45 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			}
 		}
 		repaint();
+	}
+
+	@Override
+	public void run() {
+		while (!Thread.currentThread().isInterrupted()) {
+			processarHora();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+
+	private void processarHora() {
+		//
+	}
+
+	public void somarHoras(boolean b) {
+		if (b) {
+			ativar();
+		} else {
+			desativar();
+		}
+	}
+
+	public void ativar() {
+		if (processar && thread == null) {
+			thread = new Thread(this);
+			thread.start();
+		}
+	}
+
+	public void desativar() {
+		if (thread != null) {
+			thread.interrupt();
+			processar = false;
+			thread = null;
+		}
 	}
 
 	private transient javax.swing.Action threadProcessar = new AbstractAction() {
@@ -1679,6 +1720,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		util.abrirTag("fvf");
 		util.atributo("ajusteAutoForm", isAjusteAutomaticoForm());
 		util.atributo("ajusteLarguraForm", isAjusteLarguraForm());
+		util.atributoCheck("processar", processar);
 		util.atributo("largura", getWidth());
 		util.atributo("altura", getHeight());
 		util.atributo("arquivoVinculo", getArquivoVinculo());
@@ -1734,6 +1776,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		for (Relacao relacao : coletor.getRelacoes()) {
 			relacao.ativar();
 		}
+		ativar();
 		arquivoVinculo = coletor.getArquivoVinculo();
 		vinculacao.abrir(arquivoVinculo, ObjetoSuperficie.this);
 		for (Objeto objeto : objetos) {
@@ -1835,6 +1878,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 			relacao.setListener(null);
 			relacao.desativar();
 		}
+		desativar();
 	}
 
 	@Override
