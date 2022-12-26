@@ -185,13 +185,13 @@ public class RelacaoContainer extends Panel {
 				int destino = 0;
 				int origem = 0;
 				try {
-					origem = HoraUtil.getTime(relacao.getOrigem().getId());
+					origem = HoraUtil.getSegundos(relacao.getOrigem().getId());
 				} catch (Exception e) {
 					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "ORIGEM"));
 					return;
 				}
 				try {
-					destino = HoraUtil.getTime(relacao.getDestino().getId());
+					destino = HoraUtil.getSegundos(relacao.getDestino().getId());
 				} catch (Exception e) {
 					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "DESTINO"));
 					return;
@@ -207,13 +207,13 @@ public class RelacaoContainer extends Panel {
 				int destino = 0;
 				int origem = 0;
 				try {
-					origem = HoraUtil.getTime(relacao.getOrigem().getId());
+					origem = HoraUtil.getSegundos(relacao.getOrigem().getId());
 				} catch (Exception e) {
 					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "ORIGEM"));
 					return;
 				}
 				try {
-					destino = HoraUtil.getTime(relacao.getDestino().getId());
+					destino = HoraUtil.getSegundos(relacao.getDestino().getId());
 				} catch (Exception e) {
 					Util.mensagem(RelacaoContainer.this, ObjetoMensagens.getString(CHAVE_ERRO, "DESTINO"));
 					return;

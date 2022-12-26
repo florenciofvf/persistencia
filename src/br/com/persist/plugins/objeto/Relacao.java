@@ -438,13 +438,13 @@ public class Relacao implements Runnable {
 		int des = 0;
 		int ori = 0;
 		try {
-			ori = HoraUtil.getTime(getOrigem().getId());
+			ori = HoraUtil.getSegundos(getOrigem().getId());
 		} catch (Exception e) {
 			return;
 		}
 		try {
 			getDestino().setId(HoraUtil.getHoraAtual());
-			des = HoraUtil.getTime(getDestino().getId());
+			des = HoraUtil.getSegundos(getDestino().getId());
 		} catch (Exception e) {
 			return;
 		}

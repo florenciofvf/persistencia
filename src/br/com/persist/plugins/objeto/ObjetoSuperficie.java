@@ -199,7 +199,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		totalHoras = 0;
 		for (Relacao relacao : relacoes) {
 			try {
-				totalHoras += HoraUtil.getTime(relacao.getDescricao());
+				totalHoras += HoraUtil.getSegundos(relacao.getDescricao());
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, Constantes.ERRO, e);
 			}

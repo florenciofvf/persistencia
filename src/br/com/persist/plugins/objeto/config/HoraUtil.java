@@ -5,85 +5,120 @@ import java.util.Calendar;
 import br.com.persist.plugins.objeto.ObjetoException;
 
 public class HoraUtil {
-	public static final byte SESSENTA = 60;
+	public static final byte MINUTO = 60;
+	public static final short HORA = 60 * MINUTO;
 
 	private HoraUtil() {
 	}
 
 	public static String getHoraAtual() {
 		Calendar c = Calendar.getInstance();
-		int hor = c.get(Calendar.HOUR_OF_DAY) * SESSENTA;
-		int min = c.get(Calendar.MINUTE);
-		return formatar(hor + min);
+		int hor = c.get(Calendar.HOUR_OF_DAY) * HORA;
+		int min = c.get(Calendar.MINUTE) * MINUTO;
+		int seg = c.get(Calendar.SECOND);
+		return formatar(hor + min + seg);
 	}
 
-	public static String formatar(int horaMin) {
-		long hor = getHora(horaMin);
-		long min = getMinuto(horaMin);
-		return get(hor) + ":" + get(min);
+	public static String formatar(int segundos) {
+		return Inteiro.formatar(segundos);
+	}
+
+	public static int getSegundos(String string) throws ObjetoException {
+		return Texto.getSegundos(string);
 	}
 
 	public static int getDiff(int valor1, int valor2) {
 		return valor1 < valor2 ? valor2 - valor1 : valor1 - valor2;
 	}
 
-	public static int getTime(String horaMin) throws ObjetoException {
-		return getHora(horaMin) + getMinuto(horaMin);
-	}
-
-	private static int getHora(String horaMin) throws ObjetoException {
-		int indice = horaMin.indexOf(':');
-		final String erro = "Hora";
-		if (indice == -1) {
-			throw new ObjetoException(erro);
+	public static class Texto {
+		private Texto() {
 		}
-		String hora = horaMin.substring(0, indice);
-		checarLength(hora, erro);
-		return getNumero(hora, erro) * SESSENTA;
-	}
 
-	private static int getMinuto(String horaMin) throws ObjetoException {
-		int indice = horaMin.indexOf(':');
-		final String erro = "Minuto";
-		if (indice == -1) {
-			throw new ObjetoException(erro);
+		public static int getSegundos(String string) throws ObjetoException {
+			return getHora(string) + getMinuto(string) + getSegundo(string);
 		}
-		String hora = horaMin.substring(indice + 1);
-		checarLength(hora, erro);
-		return getNumero(hora, erro);
-	}
 
-	private static int getHora(int horaMin) {
-		return horaMin / SESSENTA;
-	}
+		private static int getHora(String string) throws ObjetoException {
+			final String erro = "Hora";
+			String[] array = getArray(string, erro);
+			String hora = array[0];
+			checarLength(hora, erro);
+			return getNumero(hora, erro) * HORA;
+		}
 
-	private static int getMinuto(int horaMin) {
-		return horaMin % SESSENTA;
-	}
+		private static String[] getArray(String string, String erro) throws ObjetoException {
+			String[] array = string.split(":");
+			if (array == null || array.length != 3) {
+				throw new ObjetoException(erro);
+			}
+			return array;
+		}
 
-	private static byte getNumero(String string, String erro) {
-		char c = string.charAt(0);
-		while (c == '0') {
-			string = string.substring(1);
+		private static void checarLength(String string, String erro) throws ObjetoException {
 			if (string.isEmpty()) {
-				break;
-			} else {
-				c = string.charAt(0);
+				throw new ObjetoException(erro);
 			}
 		}
-		if (string.isEmpty()) {
-			return 0;
+
+		private static int getMinuto(String string) throws ObjetoException {
+			final String erro = "Minuto";
+			String[] array = getArray(string, erro);
+			String hora = array[1];
+			checarLength(hora, erro);
+			return getNumero(hora, erro) * MINUTO;
 		}
-		return Byte.parseByte(string);
+
+		private static int getSegundo(String string) throws ObjetoException {
+			final String erro = "Segundo";
+			String[] array = getArray(string, erro);
+			String hora = array[2];
+			checarLength(hora, erro);
+			return getNumero(hora, erro);
+		}
+
+		private static byte getNumero(String string, String erro) {
+			char c = string.charAt(0);
+			while (c == '0') {
+				string = string.substring(1);
+				if (string.isEmpty()) {
+					break;
+				} else {
+					c = string.charAt(0);
+				}
+			}
+			if (string.isEmpty()) {
+				return 0;
+			}
+			return Byte.parseByte(string);
+		}
 	}
 
-	private static void checarLength(String string, String erro) throws ObjetoException {
-		if (string.isEmpty()) {
-			throw new ObjetoException(erro);
+	public static class Inteiro {
+		private Inteiro() {
 		}
-	}
 
-	private static String get(long valor) {
-		return valor < 10 ? "0" + valor : "" + valor;
+		public static String formatar(int segundos) {
+			long hor = getHora(segundos);
+			long min = getMinuto(segundos);
+			long seg = getSegundo(segundos);
+			return get(hor) + ":" + get(min) + ":" + get(seg);
+		}
+
+		private static int getHora(int segundos) {
+			return segundos / HORA;
+		}
+
+		private static int getMinuto(int segundos) {
+			return segundos / MINUTO;
+		}
+
+		private static int getSegundo(int segundos) {
+			return segundos % MINUTO;
+		}
+
+		private static String get(long valor) {
+			return valor < 10 ? "0" + valor : "" + valor;
+		}
 	}
 }
