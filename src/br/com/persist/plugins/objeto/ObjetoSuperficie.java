@@ -230,6 +230,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	public boolean isProcessando() {
+		return thread != null;
+	}
+
 	public void setProcessar(boolean processar) {
 		this.processar = processar;
 	}

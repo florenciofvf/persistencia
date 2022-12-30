@@ -7,15 +7,23 @@ import javax.swing.JCheckBoxMenuItem;
 
 import br.com.persist.assistencia.Mensagens;
 
-public class ButtonPopup extends Button {
+public abstract class ButtonPopup extends Button {
 	private static final long serialVersionUID = 1L;
 	private Popup popup = new Popup();
 
 	public ButtonPopup(String chaveRotulo, Icon icon) {
 		setToolTipText(Mensagens.getString(chaveRotulo));
-		addActionListener(e -> popup.show(this, 5, 5));
+		addActionListener(e -> popupShow());
 		setComponentPopupMenu(popup);
 		setIcon(icon);
+	}
+
+	protected void popupShow() {
+		popupPreShow();
+		popup.show(this, 5, 5);
+	}
+
+	protected void popupPreShow() {
 	}
 
 	protected void addMenuItem(Action action) {
