@@ -19,6 +19,7 @@ import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.marca.XMLUtil;
 
 public class Separador extends JSplitPane implements FicharioListener {
 	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_7);
@@ -279,6 +280,26 @@ public class Separador extends JSplitPane implements FicharioListener {
 		if (rightComponent instanceof Separador) {
 			((Separador) rightComponent).processar(map);
 		}
+	}
+
+	public void salvar(XMLUtil util) {
+		util.abrirTag("separador").atributo("orientacao", getOrientation()).fecharTag();
+		if (leftComponent instanceof Fichario) {
+			((Fichario) leftComponent).salvar(util);
+		}
+
+		if (rightComponent instanceof Fichario) {
+			((Fichario) rightComponent).salvar(util);
+		}
+
+		if (leftComponent instanceof Separador) {
+			((Separador) leftComponent).salvar(util);
+		}
+
+		if (rightComponent instanceof Separador) {
+			((Separador) rightComponent).salvar(util);
+		}
+		util.finalizarTag("separador");
 	}
 
 	public Fichario getFicharioSelecionado() {

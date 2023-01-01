@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import br.com.persist.componente.Panel;
+import br.com.persist.marca.XMLUtil;
 
 public abstract class Transferivel extends Panel implements Transferable {
 	private static final long serialVersionUID = -2395376493141225954L;
@@ -83,7 +84,20 @@ public abstract class Transferivel extends Panel implements Transferable {
 	public void processar(Fichario fichario, int indice, Map<String, Object> map) {
 	}
 
+	public void salvar(XMLUtil util) {
+		util.abrirTag("transferivel");
+		File file = getFile();
+		if (file != null) {
+			util.atributo("file", file.getAbsolutePath());
+		}
+		util.fecharTag();
+	}
+
 	public boolean associadoA(File file) {
 		return false;
+	}
+
+	public File getFile() {
+		return null;
 	}
 }

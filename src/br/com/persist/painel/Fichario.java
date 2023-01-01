@@ -33,6 +33,7 @@ import javax.swing.event.ChangeListener;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.Popup;
+import br.com.persist.marca.XMLUtil;
 
 public class Fichario extends JTabbedPane {
 	private static final Logger LOG = Logger.getGlobal();
@@ -208,6 +209,16 @@ public class Fichario extends JTabbedPane {
 			}
 		}
 		return null;
+	}
+
+	public void salvar(XMLUtil util) {
+		util.abrirTag2("fichario");
+		for (int i = 0; i < getTabCount(); i++) {
+			if (getComponentAt(i) instanceof Transferivel) {
+				((Transferivel) getComponentAt(i)).salvar(util);
+			}
+		}
+		util.finalizarTag("fichario");
 	}
 
 	public void excluir(Transferivel objeto) {
