@@ -237,6 +237,21 @@ class Aba extends Transferivel {
 		return arquivo.getFile().equals(file);
 	}
 
+	public static String getStringRelativo(File base, File file) {
+		String absolutoBase = base.getAbsolutePath();
+		String absolutoFile = file.getAbsolutePath();
+		if (absolutoFile.startsWith(absolutoBase)) {
+			int length = absolutoBase.length();
+			return absolutoFile.substring(length);
+		}
+		return file.getAbsolutePath();
+	}
+
+	@Override
+	public String getStringFile() {
+		return getStringRelativo(new File(AnotacaoConstantes.ANOTACOES), arquivo.getFile());
+	}
+
 	@Override
 	public File getFile() {
 		return arquivo.getFile();

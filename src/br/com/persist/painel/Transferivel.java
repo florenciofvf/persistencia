@@ -86,15 +86,19 @@ public abstract class Transferivel extends Panel implements Transferable {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("transferivel");
-		File file = getFile();
+		String file = getStringFile();
 		if (file != null) {
-			util.atributo("file", file.getAbsolutePath());
+			util.atributo("file", file);
 		}
 		util.fecharTag2(-1);
 	}
 
 	public boolean associadoA(File file) {
 		return false;
+	}
+
+	public String getStringFile() {
+		return null;
 	}
 
 	public File getFile() {
