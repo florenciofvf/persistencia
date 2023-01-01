@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
@@ -20,8 +22,10 @@ import br.com.persist.componente.Janela;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
+import br.com.persist.marca.XMLException;
 
 public class AnotacaoContainer extends AbstratoContainer {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private AnotacaoFormulario anotacaoFormulario;
@@ -136,6 +140,11 @@ public class AnotacaoContainer extends AbstratoContainer {
 
 	@Override
 	public String getStringPersistencia() {
+		try {
+			split.salvar();
+		} catch (XMLException e) {
+			LOG.log(Level.SEVERE, e.getMessage());
+		}
 		return Constantes.VAZIO;
 	}
 

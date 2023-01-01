@@ -43,6 +43,8 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
+import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLUtil;
 import br.com.persist.painel.Fichario;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.Transferivel;
@@ -67,6 +69,16 @@ class AnotacaoSplit extends SplitPane {
 		panel = new PanelRoot();
 		setLeftComponent(tree);
 		setRightComponent(panel);
+	}
+
+	void salvar() throws XMLException {
+		File file = new File(fileRoot, "hierarquia.xml");
+		XMLUtil util = new XMLUtil(file);
+		util.prologo();
+		util.abrirTag2("anotacoes");
+		panel.salvar(util);
+		util.finalizarTag("anotacoes");
+		util.close();
 	}
 
 	void abrir(Arquivo arquivo) {
@@ -225,6 +237,11 @@ class Aba extends Transferivel {
 		return arquivo.getFile().equals(file);
 	}
 
+	@Override
+	public File getFile() {
+		return arquivo.getFile();
+	}
+
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, new JScrollPane(textArea));
@@ -321,6 +338,18 @@ class Aba extends Transferivel {
 
 class PanelRoot extends Panel {
 	private static final long serialVersionUID = 1L;
+
+	void salvar(XMLUtil util) {
+		if (getComponentCount() == 0) {
+			return;
+		}
+		if (getComponent(0) instanceof Fichario) {
+			((Fichario) getComponent(0)).salvar(util);
+		}
+		if (getComponent(0) instanceof Separador) {
+			((Separador) getComponent(0)).salvar(util);
+		}
+	}
 
 	Fichario getFicharioSelecionado() {
 		if (getComponentCount() == 0) {

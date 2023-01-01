@@ -269,12 +269,12 @@ public class Separador extends JSplitPane implements FicharioListener {
 			((Fichario) leftComponent).processar(map);
 		}
 
-		if (rightComponent instanceof Fichario) {
-			((Fichario) rightComponent).processar(map);
-		}
-
 		if (leftComponent instanceof Separador) {
 			((Separador) leftComponent).processar(map);
+		}
+
+		if (rightComponent instanceof Fichario) {
+			((Fichario) rightComponent).processar(map);
 		}
 
 		if (rightComponent instanceof Separador) {
@@ -284,20 +284,30 @@ public class Separador extends JSplitPane implements FicharioListener {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("separador").atributo("orientacao", getOrientation()).fecharTag();
+		final String left = "left";
+		final String right = "right";
 		if (leftComponent instanceof Fichario) {
+			util.abrirTag2(left);
 			((Fichario) leftComponent).salvar(util);
-		}
-
-		if (rightComponent instanceof Fichario) {
-			((Fichario) rightComponent).salvar(util);
+			util.finalizarTag(left);
 		}
 
 		if (leftComponent instanceof Separador) {
+			util.abrirTag2(left);
 			((Separador) leftComponent).salvar(util);
+			util.finalizarTag(left);
+		}
+
+		if (rightComponent instanceof Fichario) {
+			util.abrirTag2(right);
+			((Fichario) rightComponent).salvar(util);
+			util.finalizarTag(right);
 		}
 
 		if (rightComponent instanceof Separador) {
+			util.abrirTag2(right);
 			((Separador) rightComponent).salvar(util);
+			util.finalizarTag(right);
 		}
 		util.finalizarTag("separador");
 	}

@@ -90,7 +90,7 @@ public abstract class Transferivel extends Panel implements Transferable {
 		if (file != null) {
 			util.atributo("file", file.getAbsolutePath());
 		}
-		util.fecharTag();
+		util.fecharTag2(-1);
 	}
 
 	public boolean associadoA(File file) {
