@@ -262,7 +262,8 @@ class Aba extends Transferivel {
 		String absolutoFile = file.getAbsolutePath();
 		if (absolutoFile.startsWith(absolutoBase)) {
 			int length = absolutoBase.length();
-			return absolutoFile.substring(length + 1);
+			String nome = absolutoFile.substring(length + 1);
+			return Util.replaceAll(nome, Constantes.SEPARADOR, Constantes.SEP);
 		}
 		return file.getAbsolutePath();
 	}
@@ -498,6 +499,7 @@ class AnotacaoHandler extends XMLHandler {
 			setComponent(separadorBkp, separador);
 		} else if ("transferivel".equals(qName)) {
 			String nome = attributes.getValue("file");
+			nome = Util.replaceAll(nome, Constantes.SEP, Constantes.SEPARADOR);
 			File fileRoot = new File(AnotacaoConstantes.ANOTACOES);
 			Arquivo arquivo = modelo.getArquivo(new File(fileRoot, nome));
 			if (arquivo != null) {
