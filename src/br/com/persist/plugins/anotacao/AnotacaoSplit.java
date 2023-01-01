@@ -126,9 +126,10 @@ class AnotacaoSplit extends SplitPane {
 		return fichario;
 	}
 
-	private void novaAba(Fichario fichario, Arquivo arquivo) {
+	public static void novaAba(Fichario fichario, Arquivo arquivo) {
 		fichario.addTab(arquivo.getName(), new Aba(arquivo));
 		int indice = fichario.getTabCount() - 1;
+		fichario.setToolTipTextAt(indice, arquivo.getFile().getAbsolutePath());
 		fichario.setSelectedIndex(indice);
 	}
 
@@ -503,7 +504,7 @@ class AnotacaoHandler extends XMLHandler {
 			File fileRoot = new File(AnotacaoConstantes.ANOTACOES);
 			Arquivo arquivo = modelo.getArquivo(new File(fileRoot, nome));
 			if (arquivo != null) {
-				fichario.addTab(arquivo.getName(), new Aba(arquivo));
+				AnotacaoSplit.novaAba(fichario, arquivo);
 			}
 		}
 	}

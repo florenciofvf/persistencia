@@ -19,6 +19,7 @@ public abstract class Transferivel extends Panel implements Transferable {
 	public static final String RENOMEAR = "RENOMEAR";
 	private transient Setor setor;
 	private String title;
+	private String hint;
 	private int index;
 
 	public static DataFlavor createDataFlavor() {
@@ -66,6 +67,14 @@ public abstract class Transferivel extends Panel implements Transferable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getHint() {
+		return hint;
+	}
+
+	public void setHint(String hint) {
+		this.hint = hint;
 	}
 
 	public Setor getSetor() {

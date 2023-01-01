@@ -59,6 +59,7 @@ public class Fichario extends JTabbedPane {
 			int indice = getSelectedIndex();
 			if (indice != -1) {
 				Transferivel aba = (Transferivel) getComponentAt(indice);
+				aba.setHint(getToolTipTextAt(indice));
 				aba.setTitle(getTitleAt(indice));
 				aba.setIndex(indice);
 				dge.startDrag(null, aba, dragSourceListener);
@@ -374,6 +375,7 @@ class Inclusao extends Setor {
 		fichario.addTab(objeto.getTitle(), objeto);
 		int indice = fichario.getTabCount() - 1;
 		fichario.setSelectedIndex(indice);
+		fichario.setToolTipTextAt(indice, objeto.getHint());
 		dropTarget = null;
 	}
 }
