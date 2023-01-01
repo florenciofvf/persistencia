@@ -153,6 +153,19 @@ public class Arquivo {
 		return filhos.get(index);
 	}
 
+	public Arquivo getArquivo(File file) {
+		if (this.file.equals(file)) {
+			return this;
+		}
+		for (Arquivo m : filhos) {
+			Arquivo a = m.getArquivo(file);
+			if (a != null) {
+				return a;
+			}
+		}
+		return null;
+	}
+
 	public Arquivo getArquivo(String descricao, boolean porParte) {
 		for (Arquivo m : filhos) {
 			String nome = m.file.getName();

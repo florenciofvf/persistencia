@@ -1,5 +1,6 @@
 package br.com.persist.arquivo;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -19,6 +20,10 @@ public class ArquivoModelo implements TreeModel {
 	public ArquivoModelo(Arquivo raiz) {
 		this.raiz = Objects.requireNonNull(raiz);
 		raiz.inflar();
+	}
+
+	public Arquivo getArquivo(File file) {
+		return raiz.getArquivo(file);
 	}
 
 	public void listar(List<Arquivo> lista) {

@@ -23,9 +23,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 import br.com.persist.arquivo.Arquivo;
 import br.com.persist.arquivo.ArquivoModelo;
@@ -43,13 +48,16 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
+import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
+import br.com.persist.marca.XMLHandler;
 import br.com.persist.marca.XMLUtil;
 import br.com.persist.painel.Fichario;
 import br.com.persist.painel.Separador;
 import br.com.persist.painel.Transferivel;
 
 class AnotacaoSplit extends SplitPane {
+	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private final File fileRoot;
 	private ArquivoTree tree;
@@ -69,6 +77,7 @@ class AnotacaoSplit extends SplitPane {
 		panel = new PanelRoot();
 		setLeftComponent(tree);
 		setRightComponent(panel);
+		abrir();
 	}
 
 	void salvar() throws XMLException {
@@ -79,6 +88,17 @@ class AnotacaoSplit extends SplitPane {
 		panel.salvar(util);
 		util.finalizarTag("anotacoes");
 		util.close();
+	}
+
+	void abrir() {
+		File file = new File(fileRoot, "hierarquia.xml");
+		try {
+			if (file.exists() && file.canRead()) {
+				XML.processar(file, new AnotacaoHandler(panel, tree.getModelo()));
+			}
+		} catch (Exception e) {
+			LOG.log(Level.SEVERE, Constantes.ERRO, e);
+		}
 	}
 
 	void abrir(Arquivo arquivo) {
@@ -242,7 +262,7 @@ class Aba extends Transferivel {
 		String absolutoFile = file.getAbsolutePath();
 		if (absolutoFile.startsWith(absolutoBase)) {
 			int length = absolutoBase.length();
-			return absolutoFile.substring(length);
+			return absolutoFile.substring(length + 1);
 		}
 		return file.getAbsolutePath();
 	}
@@ -409,6 +429,12 @@ class PanelRoot extends Panel {
 		return null;
 	}
 
+	void setRootIf(Component c) {
+		if (getComponentCount() == 0) {
+			add(c);
+		}
+	}
+
 	void setRoot(Component c) {
 		if (getComponentCount() > 0) {
 			throw new IllegalStateException();
@@ -443,6 +469,65 @@ class PanelRoot extends Panel {
 				throw new IllegalStateException();
 			}
 			objeto = getTransferivel(arquivo.getFile());
+		}
+	}
+}
+
+class AnotacaoHandler extends XMLHandler {
+	private final ArquivoModelo modelo;
+	private final PanelRoot root;
+	Separador separador;
+	Fichario fichario;
+
+	AnotacaoHandler(PanelRoot root, ArquivoModelo modelo) {
+		this.modelo = modelo;
+		this.root = root;
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		if ("fichario".equals(qName)) {
+			fichario = new Fichario();
+			root.setRootIf(fichario);
+			setComponent(separador, fichario);
+		} else if ("separador".equals(qName)) {
+			int orientation = Integer.parseInt(attributes.getValue("orientacao"));
+			Separador separadorBkp = separador;
+			separador = new Separador(orientation, null, null);
+			root.setRootIf(separador);
+			setComponent(separadorBkp, separador);
+		} else if ("transferivel".equals(qName)) {
+			String nome = attributes.getValue("file");
+			File fileRoot = new File(AnotacaoConstantes.ANOTACOES);
+			Arquivo arquivo = modelo.getArquivo(new File(fileRoot, nome));
+			if (arquivo != null) {
+				fichario.addTab(arquivo.getName(), new Aba(arquivo));
+			}
+		}
+	}
+
+	private void setComponent(Separador separador, Component c) {
+		if (separador != null) {
+			if (separador.getLeftComponent() == null) {
+				separador.setLeftComponent(c);
+			} else {
+				separador.setRightComponent(c);
+			}
+		}
+	}
+
+	@Override
+	public void endElement(String uri, String localName, String qName) throws SAXException {
+		if ("fichario".equals(qName)) {
+			if (fichario.getParent() instanceof Separador) {
+				separador = (Separador) fichario.getParent();
+			}
+			fichario = null;
+		} else if ("separador".equals(qName)) {
+			if (separador.getParent() instanceof Separador) {
+				separador = (Separador) separador.getParent();
+			}
+			fichario = null;
 		}
 	}
 }
