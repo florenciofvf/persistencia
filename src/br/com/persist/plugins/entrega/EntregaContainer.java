@@ -110,17 +110,19 @@ public class EntregaContainer extends AbstratoContainer {
 	private static List<String> getIgnorados() {
 		File arquivo = new File(file, EntregaConstantes.INVISIVEL);
 		List<String> lista = new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(
-				new InputStreamReader(new FileInputStream(arquivo), StandardCharsets.UTF_8))) {
-			String linha = br.readLine();
-			while (linha != null) {
-				if (!Util.estaVazio(linha)) {
-					lista.add(linha);
+		if (arquivo.isFile() && arquivo.canRead()) {
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(arquivo), StandardCharsets.UTF_8))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					if (!Util.estaVazio(linha)) {
+						lista.add(linha);
+					}
+					linha = br.readLine();
 				}
-				linha = br.readLine();
+			} catch (Exception e) {
+				LOG.log(Level.FINEST, "getIgnorados()");
 			}
-		} catch (Exception e) {
-			LOG.log(Level.FINEST, "getIgnorados()");
 		}
 		return lista;
 	}
