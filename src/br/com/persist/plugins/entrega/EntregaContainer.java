@@ -12,9 +12,17 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
@@ -34,7 +42,9 @@ import br.com.persist.formulario.Formulario;
 public class EntregaContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final EntregaFichario fichario = new EntregaFichario();
+	private final List<String> ignorados = new ArrayList<>();
 	private static final File file = new File("entregas");
+	private static final Logger LOG = Logger.getGlobal();
 	private final Toolbar toolbar = new Toolbar();
 	private EntregaFormulario entregaFormulario;
 	private EntregaDialogo entregaDialogo;
@@ -97,13 +107,34 @@ public class EntregaContainer extends AbstratoContainer {
 		return EntregaConstantes.INVISIVEL.equalsIgnoreCase(nome);
 	}
 
+	private static List<String> getIgnorados() {
+		File arquivo = new File(file, EntregaConstantes.INVISIVEL);
+		List<String> lista = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(
+				new InputStreamReader(new FileInputStream(arquivo), StandardCharsets.UTF_8))) {
+			String linha = br.readLine();
+			while (linha != null) {
+				if (!Util.estaVazio(linha)) {
+					lista.add(linha);
+				}
+				linha = br.readLine();
+			}
+		} catch (Exception e) {
+			LOG.log(Level.FINEST, "getIgnorados()");
+		}
+		return lista;
+	}
+
 	private void abrir(String conteudo, String idPagina) {
+		ignorados.clear();
+		ignorados.addAll(getIgnorados());
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					if (ehArquivoReservado(f.getName()) && !EntregaPreferencia.isExibirArqInvisivel()) {
+					if ((ehArquivoReservado(f.getName()) && !EntregaPreferencia.isExibirArqInvisivel())
+							|| ignorar(f.getName())) {
 						continue;
 					}
 					EntregaPagina pagina = new EntregaPagina(f);
@@ -112,6 +143,17 @@ public class EntregaContainer extends AbstratoContainer {
 			}
 		}
 		fichario.setConteudo(conteudo, idPagina);
+	}
+
+	private boolean ignorar(String string) {
+		if (string != null) {
+			for (String s : ignorados) {
+				if (string.endsWith(s)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
