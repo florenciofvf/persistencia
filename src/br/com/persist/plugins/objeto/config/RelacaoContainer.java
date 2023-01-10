@@ -170,6 +170,7 @@ public class RelacaoContainer extends Panel {
 		private class Toolbar extends BarraButton {
 			private static final long serialVersionUID = 1L;
 			private Action diferencaAction = actionMenu("label.diferenca_em_horas", null);
+			private Action reiniciarAction = actionMenu("label.reiniciar_horas", null);
 			private Action somarAction = actionMenu("label.somar_em_horas", null);
 			private static final String CHAVE_ERRO = "msg.padrao_valor_invalido";
 
@@ -177,8 +178,15 @@ public class RelacaoContainer extends Panel {
 				super.ini(new Nil(), COPIAR, COLAR);
 				add(diferencaAction);
 				add(somarAction);
+				add(reiniciarAction);
 				diferencaAction.setActionListener(e -> diferenca());
+				reiniciarAction.setActionListener(e -> reiniciar());
 				somarAction.setActionListener(e -> somar());
+			}
+
+			private void reiniciar() {
+				relacao.reiniciarHoras();
+				objetoSuperficie.repaint();
 			}
 
 			private void diferenca() {
