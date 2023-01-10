@@ -186,7 +186,7 @@ public class RelacaoContainer extends Panel {
 
 			private void reiniciar() {
 				relacao.reiniciarHoras();
-				objetoSuperficie.repaint();
+				diferenca();
 			}
 
 			private void diferenca() {

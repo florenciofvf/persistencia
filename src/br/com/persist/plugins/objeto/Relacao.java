@@ -437,7 +437,6 @@ public class Relacao implements Runnable {
 	public void reiniciarHoras() {
 		getOrigem().setId("00:00:00");
 		getDestino().setId("00:00:0");
-		processarHora();
 	}
 
 	private void processarHora() {
