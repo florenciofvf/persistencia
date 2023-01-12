@@ -146,6 +146,11 @@ public class PersistenciaModelo implements TableModel {
 		return getListaNomeColunasPreenchidas(comChaves, registro);
 	}
 
+	public boolean contemCampoVazio(boolean comChaves, int indice) {
+		List<Object> registro = registros.get(indice);
+		return contemCampoVazio(comChaves, registro);
+	}
+
 	public List<String> getListaNomeColunas(boolean comChaves) {
 		List<String> lista = new ArrayList<>();
 		for (Coluna c : colunas) {
@@ -447,6 +452,22 @@ public class PersistenciaModelo implements TableModel {
 		return lista;
 	}
 
+	public boolean contemCampoVazio(boolean comChaves, List<Object> registro) {
+		AtomicBoolean atomic = new AtomicBoolean(false);
+		for (Coluna c : colunas) {
+			if (!c.isColunaInfo() && !c.isInativoTemp()) {
+				if (c.isChave()) {
+					if (comChaves) {
+						contemCampoVazio(c, registro, atomic);
+					}
+				} else {
+					contemCampoVazio(c, registro, atomic);
+				}
+			}
+		}
+		return atomic.get();
+	}
+
 	private String gerarInsert(List<Object> registro, String prefixoNomeTabela, Coletor coletor) {
 		if (colunas.isEmpty()) {
 			return null;
@@ -500,6 +521,13 @@ public class PersistenciaModelo implements TableModel {
 		Object valor = registro.get(coluna.getIndice());
 		if (valor != null && !Util.estaVazio(valor.toString())) {
 			nomeColunas.add(coluna.getNome());
+		}
+	}
+
+	private void contemCampoVazio(Coluna coluna, List<Object> registro, AtomicBoolean atomic) {
+		Object valor = registro.get(coluna.getIndice());
+		if (valor == null || Util.estaVazio(valor.toString())) {
+			atomic.set(true);
 		}
 	}
 

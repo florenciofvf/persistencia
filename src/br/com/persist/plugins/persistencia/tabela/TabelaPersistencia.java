@@ -84,6 +84,10 @@ public class TabelaPersistencia extends JTable {
 		return getModelo().getListaNomeColunasPreenchidas(comChaves, indice);
 	}
 
+	public boolean contemCampoVazio(boolean comChaves, int indice) {
+		return getModelo().contemCampoVazio(comChaves, indice);
+	}
+
 	public List<String> getListaNomeColunas(boolean comChaves) {
 		return getModelo().getListaNomeColunas(comChaves);
 	}

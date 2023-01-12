@@ -1421,13 +1421,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 							return;
 						}
 						Coletor coletor = new Coletor();
-						List<String> nomeColunas = null;
-						if (Util.confirmar(InternalContainer.this,
-								ObjetoMensagens.getString("msg.somente_colunas_preenchidas"), false)) {
-							nomeColunas = tabelaPersistencia.getListaNomeColunasPreenchidas(false, linhas[0]);
-						} else {
-							nomeColunas = tabelaPersistencia.getListaNomeColunas(false);
-						}
+						List<String> nomeColunas = getNomeColunas(linhas);
 						SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
 								new SetLista.Config(true, false));
 						if (!coletor.estaVazio()) {
@@ -1437,6 +1431,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								updateFormDialog(abrirEmForm, conexao, instrucao, "Update");
 							}
 						}
+					}
+				}
+
+				private List<String> getNomeColunas(int[] linhas) {
+					if (tabelaPersistencia.contemCampoVazio(false, linhas[0]) && Util.confirmar(InternalContainer.this,
+							ObjetoMensagens.getString("msg.somente_colunas_preenchidas"), false)) {
+						return tabelaPersistencia.getListaNomeColunasPreenchidas(false, linhas[0]);
+					} else {
+						return tabelaPersistencia.getListaNomeColunas(false);
 					}
 				}
 			}
@@ -1520,13 +1523,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						int[] linhas = tabelaPersistencia.getSelectedRows();
 						if (linhas != null && linhas.length == 1) {
 							Coletor coletor = new Coletor();
-							List<String> nomeColunas = null;
-							if (Util.confirmar(InternalContainer.this,
-									ObjetoMensagens.getString("msg.somente_colunas_preenchidas"), false)) {
-								nomeColunas = tabelaPersistencia.getListaNomeColunasPreenchidas(true, linhas[0]);
-							} else {
-								nomeColunas = tabelaPersistencia.getListaNomeColunas(true);
-							}
+							List<String> nomeColunas = getNomeColunas(linhas);
 							SetLista.view(objeto.getId(), nomeColunas, coletor, InternalContainer.this,
 									new SetLista.Config(true, false));
 							if (!coletor.estaVazio()) {
@@ -1537,6 +1534,15 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 								}
 							}
 						}
+					}
+				}
+
+				private List<String> getNomeColunas(int[] linhas) {
+					if (tabelaPersistencia.contemCampoVazio(true, linhas[0]) && Util.confirmar(InternalContainer.this,
+							ObjetoMensagens.getString("msg.somente_colunas_preenchidas"), false)) {
+						return tabelaPersistencia.getListaNomeColunasPreenchidas(true, linhas[0]);
+					} else {
+						return tabelaPersistencia.getListaNomeColunas(true);
 					}
 				}
 
