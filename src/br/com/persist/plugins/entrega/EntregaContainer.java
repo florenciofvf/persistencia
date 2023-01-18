@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -134,12 +135,16 @@ public class EntregaContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
+				List<EntregaPagina> ordenadas = new ArrayList<>();
 				for (File f : files) {
 					if ((ehArquivoReservado(f.getName()) && !EntregaPreferencia.isExibirArqInvisivel())
 							|| ignorar(f.getName())) {
 						continue;
 					}
-					EntregaPagina pagina = new EntregaPagina(f);
+					ordenadas.add(new EntregaPagina(f));
+				}
+				Collections.sort(ordenadas, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
+				for (EntregaPagina pagina : ordenadas) {
 					fichario.adicionarPagina(pagina);
 				}
 			}
