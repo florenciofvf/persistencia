@@ -102,8 +102,15 @@ public class Arquivo {
 		ordenar();
 	}
 
-	public void ordenar() {
-		Collections.sort(filhos, (a1, a2) -> a1.getName().compareTo(a2.getName()));
+	private boolean ignorar(String string) {
+		if (string != null) {
+			for (String s : ignorados) {
+				if (string.endsWith(s)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Arquivo adicionar(File file) {
@@ -118,19 +125,12 @@ public class Arquivo {
 		return null;
 	}
 
-	private boolean ignorar(String string) {
-		if (string != null) {
-			for (String s : ignorados) {
-				if (string.endsWith(s)) {
-					return true;
-				}
-			}
-		}
-		return false;
+	public void ordenar() {
+		Collections.sort(filhos, (a1, a2) -> a1.getName().compareTo(a2.getName()));
 	}
 
-	public void excluir(Arquivo arquivo) {
-		filhos.remove(arquivo);
+	public boolean excluir(Arquivo arquivo) {
+		return filhos.remove(arquivo);
 	}
 
 	public boolean contem(Arquivo arquivo) {
