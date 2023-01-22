@@ -1633,12 +1633,56 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 			private ButtonFuncoes() {
 				super("label.funcoes", Icones.SOMA);
-				MenuItem maximo = new MenuItem(new MinimoMaximoAcao(false));
-				MenuItem minimo = new MenuItem(new MinimoMaximoAcao(true));
-				addMenuItem(new TotalizarRegistrosAcao(false));
-				addMenuItem(true, new TotalizarRegistrosAcao(true));
-				addMenuItem(true, minimo);
-				addMenuItem(maximo);
+				addMenuItem(new MinimoMaximoAcao(true));
+				addMenuItem(new MinimoMaximoAcao(false));
+				addMenuItem(true, new TotalizarRegistrosAcao(false));
+				addMenuItem(new TotalizarRegistrosAcao(true));
+				addMenuItem(true, new PrimeirosUltimosAcao(true));
+				addMenuItem(new PrimeirosUltimosAcao(false));
+			}
+
+			private class PrimeirosUltimosAcao extends Action {
+				private static final long serialVersionUID = 1L;
+				private final boolean primeiros;
+
+				private PrimeirosUltimosAcao(boolean primeiros) {
+					super(true, primeiros ? ObjetoMensagens.getString("label.primeiros_10")
+							: ObjetoMensagens.getString("label.ultimos_10"), false, Icones.ATUALIZAR);
+					this.primeiros = primeiros;
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = getConexao();
+					if (conexao == null) {
+						return;
+					}
+					String[] chaves = objeto.getChavesArray();
+					if (chaves.length < 1) {
+						txtComplemento.setText(Constantes.VAZIO);
+						return;
+					}
+					if (primeiros) {
+						txtComplemento.setText(montar(chaves, "MIN", conexao));
+					} else {
+						txtComplemento.setText(montar(chaves, "MAX", conexao));
+					}
+					actionListenerInner.actionPerformed(null);
+				}
+
+				private String montar(String[] chaves, String funcao, Conexao conexao) {
+					StringBuilder sb = new StringBuilder();
+					for (String chave : chaves) {
+						if (sb.length() > 0) {
+							sb.append(" ");
+						}
+						sb.append(objeto.comApelido("AND", chave));
+						sb.append(" = (SELECT " + funcao + "(" + chave + ")");
+						sb.append(" FROM ");
+						sb.append(objeto.getTabelaEsquema(conexao) + ")");
+					}
+					return sb.toString();
+				}
 			}
 
 			private class MinimoMaximoAcao extends Action {
