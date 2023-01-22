@@ -1637,8 +1637,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addMenuItem(new MinimoMaximoAcao(false));
 				addMenuItem(true, new TotalizarRegistrosAcao(false));
 				addMenuItem(new TotalizarRegistrosAcao(true));
-				addMenuItem(true, new PrimeirosUltimosAcao(true));
-				addMenuItem(new PrimeirosUltimosAcao(false));
+				addMenuItem(true, new PrimeirosUltimosAcao(false));
 			}
 
 			private class PrimeirosUltimosAcao extends Action {
@@ -1663,23 +1662,22 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 						return;
 					}
 					if (primeiros) {
-						txtComplemento.setText(montar(chaves, "MIN", conexao));
+						txtComplemento.setText(montar(chaves, "<=", conexao));
 					} else {
-						txtComplemento.setText(montar(chaves, "MAX", conexao));
+						txtComplemento.setText(montar(chaves, ">=", conexao));
 					}
 					actionListenerInner.actionPerformed(null);
 				}
 
-				private String montar(String[] chaves, String funcao, Conexao conexao) {
+				private String montar(String[] chaves, String operador, Conexao conexao) {
 					StringBuilder sb = new StringBuilder();
 					for (String chave : chaves) {
 						if (sb.length() > 0) {
 							sb.append(" ");
 						}
 						sb.append(objeto.comApelido("AND", chave));
-						sb.append(" = (SELECT " + funcao + "(" + chave + ")");
-						sb.append(" FROM ");
-						sb.append(objeto.getTabelaEsquema(conexao) + ")");
+						sb.append(" " + operador + " (SELECT COUNT(*) FROM ");
+						sb.append(objeto.getTabelaEsquema(conexao) + ") - 10");
 					}
 					return sb.toString();
 				}
