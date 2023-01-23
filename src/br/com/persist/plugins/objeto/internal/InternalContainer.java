@@ -2660,11 +2660,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	};
 
-	private class ActionListenerInner implements ActionListener {
+	protected class ActionListenerInner implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			processar(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
 					cabecalhoFiltro, null);
+		}
+
+		public void processarConsulta(String consultaAlter) {
+			if (!Util.estaVazio(consultaAlter)) {
+				processar(Constantes.VAZIO, null, null, consultaAlter);
+			}
 		}
 	}
 
