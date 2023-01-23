@@ -180,7 +180,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public void processar(Graphics g) {
-		processar("", g, null);
+		processar("", g, null, null);
 	}
 
 	protected void atualizar() {
@@ -302,7 +302,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		return tabelaPersistencia.getPreferredSize().width > scrollPane.getViewport().getWidth();
 	}
 
-	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho) {
+	public void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, String consultaAlter) {
 		antesProcessar();
 		if (Preferencias.isDesconectado()) {
 			toolbar.exceptionEnable(Constantes.DESCONECTADO);
@@ -312,15 +312,17 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		Conexao conexao = getConexao();
 		if (conexao != null) {
 			if (continuar(complemento, conexao)) {
-				processar(complemento, g, cabecalho, conexao);
+				processar(complemento, g, cabecalho, conexao, consultaAlter);
 			} else {
 				processado.set(false);
 			}
 		}
 	}
 
-	private void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, Conexao conexao) {
-		StringBuilder consulta = getConsulta(conexao, complemento);
+	private void processar(String complemento, Graphics g, CabecalhoColuna cabecalho, Conexao conexao,
+			String consultaAlter) {
+		StringBuilder consulta = !Util.estaVazio(consultaAlter) ? new StringBuilder(consultaAlter)
+				: getConsulta(conexao, complemento);
 		try {
 			Connection conn = ConexaoProvedor.getConnection(conexao);
 			Parametros param = criarParametros(conn, conexao, consulta.toString());
@@ -484,7 +486,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private transient CabecalhoColunaListener cabecalhoColunaListener = (cabecalho, string) -> processar(string, null,
-			cabecalho);
+			cabecalho, null);
 
 	private void mensagemException(Exception ex) {
 		if (Preferencias.isErroCriarConnection()) {
@@ -2662,7 +2664,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			processar(cabecalhoFiltro == null ? Constantes.VAZIO : cabecalhoFiltro.getFiltroComplemento(), null,
-					cabecalhoFiltro);
+					cabecalhoFiltro, null);
 		}
 	}
 
