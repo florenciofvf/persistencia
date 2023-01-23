@@ -1637,50 +1637,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addMenuItem(new MinimoMaximoAcao(false));
 				addMenuItem(true, new TotalizarRegistrosAcao(false));
 				addMenuItem(new TotalizarRegistrosAcao(true));
-				addMenuItem(true, new PrimeirosUltimosAcao(false));
-			}
-
-			private class PrimeirosUltimosAcao extends Action {
-				private static final long serialVersionUID = 1L;
-				private final boolean primeiros;
-
-				private PrimeirosUltimosAcao(boolean primeiros) {
-					super(true, primeiros ? ObjetoMensagens.getString("label.primeiros_10")
-							: ObjetoMensagens.getString("label.ultimos_10"), false, Icones.ATUALIZAR);
-					this.primeiros = primeiros;
-				}
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					Conexao conexao = getConexao();
-					if (conexao == null) {
-						return;
-					}
-					String[] chaves = objeto.getChavesArray();
-					if (chaves.length < 1) {
-						txtComplemento.setText(Constantes.VAZIO);
-						return;
-					}
-					if (primeiros) {
-						txtComplemento.setText(montar(chaves, "<=", conexao));
-					} else {
-						txtComplemento.setText(montar(chaves, ">=", conexao));
-					}
-					actionListenerInner.actionPerformed(null);
-				}
-
-				private String montar(String[] chaves, String operador, Conexao conexao) {
-					StringBuilder sb = new StringBuilder();
-					for (String chave : chaves) {
-						if (sb.length() > 0) {
-							sb.append(" ");
-						}
-						sb.append(objeto.comApelido("AND", chave));
-						sb.append(" " + operador + " (SELECT COUNT(*) FROM ");
-						sb.append(objeto.getTabelaEsquema(conexao) + ") - 10");
-					}
-					return sb.toString();
-				}
 			}
 
 			private class MinimoMaximoAcao extends Action {
