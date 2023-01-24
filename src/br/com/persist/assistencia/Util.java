@@ -228,7 +228,7 @@ public class Util {
 		SetLista.view("Colunas", colunas == null ? nomeColunas(columnModel) : colunas, coletor, table,
 				new SetLista.Config(true, false));
 		if (coletor.estaVazio()) {
-			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO);
+			return new TransferidorTabular(Constantes.VAZIO, Constantes.VAZIO, Constantes.VAZIO);
 		}
 		return criarTransferidorTabular(columnModel, model, indices, coletor, table);
 	}
@@ -238,13 +238,14 @@ public class Util {
 		List<ColunaSel> selecionadas = colunasSelecionadas(coletor, columnModel);
 		StringBuilder tabular = new StringBuilder();
 		StringBuilder html = new StringBuilder();
+		StringBuilder pipe = new StringBuilder();
 		iniciar(html);
 		if (confirmar(table, "msg.com_cabecalho")) {
-			cabecalho(html, tabular, columnModel, selecionadas);
+			cabecalho(html, tabular, pipe, columnModel, selecionadas);
 		}
-		conteudo(html, tabular, model, indices, selecionadas);
+		conteudo(html, tabular, pipe, model, indices, selecionadas);
 		finalizar(html, tabular);
-		return new TransferidorTabular(html.toString(), tabular.toString());
+		return new TransferidorTabular(html.toString(), tabular.toString(), pipe.toString());
 	}
 
 	private static void iniciar(StringBuilder html) {
@@ -294,34 +295,40 @@ public class Util {
 		return object == null ? Constantes.VAZIO : object.toString();
 	}
 
-	private static void cabecalho(StringBuilder html, StringBuilder tabular, TableColumnModel columnModel,
-			List<ColunaSel> selecionadas) {
+	private static void cabecalho(StringBuilder html, StringBuilder tabular, StringBuilder pipe,
+			TableColumnModel columnModel, List<ColunaSel> selecionadas) {
 		html.append("<tr>").append(Constantes.QL);
+		pipe.append("|");
 		for (ColunaSel sel : selecionadas) {
 			TableColumn column = columnModel.getColumn(sel.indiceHeader);
 			String coluna = nomeColuna(column);
 			html.append("<th>" + coluna + "</th>").append(Constantes.QL);
 			tabular.append(coluna + Constantes.TAB);
+			pipe.append("_." + coluna + "|");
 		}
 		html.append("</tr>").append(Constantes.QL);
 		tabular.deleteCharAt(tabular.length() - 1);
 		tabular.append(Constantes.QL);
+		pipe.append(Constantes.QL);
 	}
 
-	private static void conteudo(StringBuilder html, StringBuilder tabular, TableModel model, List<Integer> indices,
-			List<ColunaSel> selecionadas) {
+	private static void conteudo(StringBuilder html, StringBuilder tabular, StringBuilder pipe, TableModel model,
+			List<Integer> indices, List<ColunaSel> selecionadas) {
 		for (Integer i : indices) {
 			html.append("<tr>").append(Constantes.QL);
+			pipe.append("|");
 			for (ColunaSel sel : selecionadas) {
 				Object obj = model.getValueAt(i, sel.indiceModel);
 				String val = obj == null ? Constantes.VAZIO : obj.toString();
 				tabular.append(val + Constantes.TAB);
+				pipe.append(val + "|");
 				html.append("<td>" + val + "</td>");
 				html.append(Constantes.QL);
 			}
 			html.append("</tr>").append(Constantes.QL);
 			tabular.deleteCharAt(tabular.length() - 1);
 			tabular.append(Constantes.QL);
+			pipe.append(Constantes.QL);
 		}
 	}
 

@@ -18,10 +18,12 @@ public class TransferidorTabular implements Transferable, UIResource {
 	private static final Logger LOG = Logger.getGlobal();
 	private final String tabular;
 	private final String html;
+	private final String pipe;
 
-	public TransferidorTabular(String html, String tabular) {
+	public TransferidorTabular(String html, String tabular, String pipe) {
 		this.tabular = tabular;
 		this.html = html;
+		this.pipe = pipe;
 	}
 
 	public DataFlavor[] getTransferDataFlavors() {
@@ -102,6 +104,10 @@ public class TransferidorTabular implements Transferable, UIResource {
 
 	public String getHtml() {
 		return html;
+	}
+
+	public String getPipe() {
+		return pipe;
 	}
 
 	static {

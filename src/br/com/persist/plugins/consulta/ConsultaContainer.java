@@ -151,10 +151,12 @@ public class ConsultaContainer extends AbstratoContainer {
 			private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
 			private Action tabularAcao = Action.actionMenu("label.tabular", null);
 			private Action htmlAcao = Action.actionMenu("label.html", null);
+			private Action pipeAcao = Action.actionMenu("label.pipe", null);
 
 			private ButtonCopiar() {
 				super("label.copiar_tabela", Icones.TABLE2);
-				addMenuItem(htmlAcao);
+				addMenuItem(pipeAcao);
+				addMenuItem(true, htmlAcao);
 				addMenuItem(true, tabularAcao);
 				addMenuItem(true, transferidorAcao);
 				addMenuItem(true, umaColunaSemAcao);
@@ -164,6 +166,7 @@ public class ConsultaContainer extends AbstratoContainer {
 				transferidorAcao.setActionListener(e -> processar(0));
 				tabularAcao.setActionListener(e -> processar(1));
 				htmlAcao.setActionListener(e -> processar(2));
+				pipeAcao.setActionListener(e -> processar(3));
 			}
 
 			private void umaColuna(boolean comAspas) {
@@ -182,6 +185,8 @@ public class ConsultaContainer extends AbstratoContainer {
 						Util.setContentTransfered(transferidor.getTabular());
 					} else if (tipo == 2) {
 						Util.setContentTransfered(transferidor.getHtml());
+					} else if (tipo == 3) {
+						Util.setContentTransfered(transferidor.getPipe());
 					}
 				}
 			}
