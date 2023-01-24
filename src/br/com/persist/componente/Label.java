@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
+import br.com.persist.assistencia.Util;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +14,7 @@ import java.awt.event.MouseEvent;
 public class Label extends JLabel {
 	private static final long serialVersionUID = 1L;
 	private transient LabelLinkListener linkListener;
+	private Popup popup;
 
 	public Label(String rotulo, boolean chaveRotulo) {
 		super(chaveRotulo ? Mensagens.getString(rotulo) : rotulo);
@@ -36,6 +38,40 @@ public class Label extends JLabel {
 
 	public void limpar() {
 		setText(Constantes.VAZIO);
+	}
+
+	public void modoCopiar() {
+		if (popup == null) {
+			popup = new Popup();
+			popup.add(criarActionCopiar());
+			addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					if (e.isPopupTrigger()) {
+						showPopup(e);
+					}
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					if (e.isPopupTrigger()) {
+						showPopup(e);
+					}
+				}
+
+				private void showPopup(MouseEvent e) {
+					if (popup != null) {
+						popup.show(Label.this, 5, 5);
+					}
+				}
+			});
+		}
+	}
+
+	private Action criarActionCopiar() {
+		Action action = Action.actionMenuCopiar();
+		action.setActionListener(e -> Util.setContentTransfered(getText()));
+		return action;
 	}
 
 	public void modoLink(LabelLinkListener linkListener) {
