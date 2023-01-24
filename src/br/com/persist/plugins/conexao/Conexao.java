@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.xml.sax.Attributes;
 
+import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
 import br.com.persist.marca.XMLUtil;
 
@@ -22,6 +23,7 @@ public class Conexao {
 	private String driver;
 	private String filtro;
 	private String senha;
+	private String grupo;
 
 	public Conexao(String nome) {
 		if (Util.estaVazio(nome)) {
@@ -91,6 +93,7 @@ public class Conexao {
 		c.driver = driver;
 		c.filtro = filtro;
 		c.senha = senha;
+		c.grupo = grupo;
 		return c;
 	}
 
@@ -105,6 +108,7 @@ public class Conexao {
 		driver = attr.getValue("driver");
 		filtro = attr.getValue("filtro");
 		senha = attr.getValue("senha");
+		grupo = attr.getValue("grupo");
 	}
 
 	public void salvar(XMLUtil util) {
@@ -119,6 +123,7 @@ public class Conexao {
 		util.atributo("catalogo", catalogo);
 		util.atributo("esquema", esquema);
 		util.atributo("driver", driver);
+		util.atributoCheck("grupo", grupo);
 		util.atributo("tiposFuncoes", tiposFuncoes);
 		util.fecharTag().finalizarTag("conexao");
 	}
@@ -188,6 +193,17 @@ public class Conexao {
 
 	public void setTiposFuncoes(String tiposFuncoes) {
 		this.tiposFuncoes = tiposFuncoes;
+	}
+
+	public String getGrupo() {
+		if (grupo == null) {
+			grupo = Constantes.VAZIO;
+		}
+		return grupo;
+	}
+
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
 	}
 
 	public Map<String, String> getMapaTiposFuncoes() {

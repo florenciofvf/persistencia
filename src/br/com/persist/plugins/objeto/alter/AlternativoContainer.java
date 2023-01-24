@@ -1,7 +1,7 @@
 package br.com.persist.plugins.objeto.alter;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
-import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
@@ -14,13 +14,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
@@ -83,6 +82,7 @@ public class AlternativoContainer extends AbstratoContainer {
 		tabela.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
 		tabela.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
 		tabela.getColumnModel().getColumn(2).setCellEditor(new AlternativoEditor());
+		tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		toolbar.baixar();
 	}
@@ -98,13 +98,12 @@ public class AlternativoContainer extends AbstratoContainer {
 
 		public void ini(Janela janela, AlternativoListener listener) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					EXCLUIR, COPIAR, APLICAR_BOTAO);
-			buttonAplicar.setTextAplicar2(AlternativoMensagens.getString("label.aplicar_concatenado"));
+					EXCLUIR, COPIAR, APLICAR);
 			setListener(listener);
 		}
 
 		private void setListener(AlternativoListener listener) {
-			buttonAplicar.setEnabled(listener != null);
+			aplicarAcao.setEnabled(listener != null);
 			this.listener = listener;
 		}
 
@@ -227,34 +226,20 @@ public class AlternativoContainer extends AbstratoContainer {
 		@Override
 		protected void aplicar() {
 			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0) {
-				aplicarListaAlternativo(linhas, false);
+			if (linhas != null && linhas.length == 1) {
+				aplicarListaAlternativo(linhas);
 			} else {
 				mensagem();
 			}
 		}
 
-		@Override
-		protected void aplicar2() {
-			int[] linhas = tabela.getSelectedRows();
-			if (linhas != null && linhas.length > 0) {
-				aplicarListaAlternativo(linhas, true);
-			} else {
-				mensagem();
-			}
+		private void aplicarListaAlternativo(int[] linhas) {
+			aplicarAlternativo(AlternativoProvedor.getAlternativo(linhas[0]));
 		}
 
-		private void aplicarListaAlternativo(int[] linhas, boolean concatenar) {
-			List<Alternativo> frags = new ArrayList<>();
-			for (int i : linhas) {
-				frags.add(AlternativoProvedor.getAlternativo(i));
-			}
-			aplicarAlternativo(frags, concatenar);
-		}
-
-		private void aplicarAlternativo(List<Alternativo> frags, boolean concatenar) {
+		private void aplicarAlternativo(Alternativo alternativo) {
 			try {
-				listener.aplicarAlternativo(frags, concatenar);
+				listener.aplicarAlternativo(alternativo);
 			} finally {
 				if (janela != null) {
 					janela.fechar();

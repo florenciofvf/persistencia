@@ -107,6 +107,9 @@ import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 import br.com.persist.plugins.objeto.Relacao;
+import br.com.persist.plugins.objeto.alter.Alternativo;
+import br.com.persist.plugins.objeto.alter.AlternativoDialogo;
+import br.com.persist.plugins.objeto.alter.AlternativoListener;
 import br.com.persist.plugins.objeto.vinculo.Filtro;
 import br.com.persist.plugins.objeto.vinculo.Instrucao;
 import br.com.persist.plugins.objeto.vinculo.Pesquisa;
@@ -1639,6 +1642,27 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				addMenuItem(new MinimoMaximoAcao(false));
 				addMenuItem(true, new TotalizarRegistrosAcao(false));
 				addMenuItem(new TotalizarRegistrosAcao(true));
+				addMenuItem(true, new AlternativoAcao());
+			}
+
+			private class AlternativoAcao extends Action {
+				private static final long serialVersionUID = 1L;
+
+				private AlternativoAcao() {
+					super(true, "label.alternativo", Icones.VAR);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Conexao conexao = getConexao();
+					if (conexao == null) {
+						return;
+					}
+					Frame frame = Util.getViewParentFrame(InternalContainer.this);
+					AlternativoDialogo form = AlternativoDialogo.criar(frame, getFormulario(), alternativoListener);
+					config(frame, form);
+					form.setVisible(true);
+				}
 			}
 
 			private class MinimoMaximoAcao extends Action {
@@ -2657,6 +2681,31 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				colunas.add(model.getColumnName(i));
 			}
 			return colunas;
+		}
+	};
+
+	private transient AlternativoListener alternativoListener = new AlternativoListener() {
+		@Override
+		public void aplicarAlternativo(Alternativo alternativo) {
+			Conexao conexao = getConexao();
+			final String chave = "###";
+			if (conexao == null) {
+				return;
+			}
+			String consulta = alternativo.getValor();
+			consulta = Util.replaceAll(consulta, chave + "TABELA" + chave, objeto.getTabelaEsquema(conexao));
+			consulta = Util.replaceAll(consulta, chave + "ID" + chave, objeto.getChaves());
+			actionListenerInner.processarConsulta(consulta);
+		}
+
+		@Override
+		public List<String> getGrupoFiltro() {
+			List<String> grupos = new ArrayList<>();
+			Conexao conexao = getConexao();
+			if (conexao != null) {
+				grupos.add(conexao.getGrupo());
+			}
+			return grupos;
 		}
 	};
 
