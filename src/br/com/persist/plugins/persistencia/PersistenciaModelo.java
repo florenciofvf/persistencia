@@ -231,8 +231,8 @@ public class PersistenciaModelo implements TableModel {
 			try {
 				Coluna coluna = colunas.get(columnIndex);
 				String update = gerarUpdate(registro, new Coluna[] { coluna }, new Object[] { aValue },
-						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true, this.conexao);
-				Persistencia.executar(ConexaoProvedor.getConnection(this.conexao), update);
+						getPrefixoNomeTabela(), new Coletor(coluna.getNome()), true, conexao);
+				Persistencia.executar(ConexaoProvedor.getConnection(conexao), update);
 				registro.set(columnIndex, aValue);
 				if (Util.confirmar(componente, PersistenciaMensagens.getString("msg.area_trans_tabela_registros"),
 						false)) {
@@ -327,7 +327,7 @@ public class PersistenciaModelo implements TableModel {
 		if (contemChaves()) {
 			try {
 				String delete = gerarDelete(registro, prefixoNomeTabela, comWhere, conexao);
-				int i = Persistencia.executar(ConexaoProvedor.getConnection(this.conexao), delete);
+				int i = Persistencia.executar(ConexaoProvedor.getConnection(conexao), delete);
 				if (atom.get() && Util.confirmar2(componente,
 						PersistenciaMensagens.getString("msg.area_trans_tabela_registros"), atom)) {
 					Util.setContentTransfered(delete);
