@@ -116,6 +116,8 @@ public class VinculoHandler extends XMLHandler {
 
 	private static ParaTabela criarParaTabela(String tabela, Attributes attributes) {
 		ParaTabela paraTabela = new ParaTabela(tabela);
+		paraTabela.setEsquemaAlternativo(attributes.getValue("esquemaAlternativo"));
+		paraTabela.setTabelaAlternativo(attributes.getValue("tabelaAlternativo"));
 		paraTabela.setPrefixoNomeTabela(attributes.getValue("prefixoNomeTabela"));
 		paraTabela.setSelectAlternativo(attributes.getValue("selectAlternativo"));
 		paraTabela.setClonarAoDestacar(attributes.getValue("clonarAoDestacar"));
