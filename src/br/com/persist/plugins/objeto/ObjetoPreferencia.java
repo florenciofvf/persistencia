@@ -6,6 +6,7 @@ import java.util.prefs.Preferences;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoPreferencia {
+	private static boolean habilitadoEsquemaTabelaAlter;
 	private static boolean habilitadoInnerJoinsObjeto;
 	private static int tipoContainerPesquisaAuto;
 	private static boolean abrirAutoDestacado;
@@ -24,6 +25,7 @@ public class ObjetoPreferencia {
 		tipoContainerPesquisaAuto = pref.getInt("tipo_container_pesquisa_auto",
 				ObjetoConstantes.TIPO_CONTAINER_FORMULARIO);
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
+		habilitadoEsquemaTabelaAlter = pref.getBoolean("habilitado_esquema_tabela_alter", false);
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
@@ -35,6 +37,7 @@ public class ObjetoPreferencia {
 
 	public static void salvar() {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
+		pref.putBoolean("habilitado_esquema_tabela_alter", habilitadoEsquemaTabelaAlter);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
@@ -52,6 +55,14 @@ public class ObjetoPreferencia {
 
 	public static void setHabilitadoInnerJoinsObjeto(boolean habilitadoInnerJoinsObjeto) {
 		ObjetoPreferencia.habilitadoInnerJoinsObjeto = habilitadoInnerJoinsObjeto;
+	}
+
+	public static boolean isHabilitadoEsquemaTabelaAlter() {
+		return habilitadoEsquemaTabelaAlter;
+	}
+
+	public static void setHabilitadoEsquemaTabelaAlter(boolean habilitadoEsquemaTabelaAlter) {
+		ObjetoPreferencia.habilitadoEsquemaTabelaAlter = habilitadoEsquemaTabelaAlter;
 	}
 
 	public static Color getCorAntesTotalRecente() {

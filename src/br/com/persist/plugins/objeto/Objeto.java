@@ -58,6 +58,8 @@ public class Objeto implements Runnable {
 	private boolean mapeamentoAlterado;
 	private boolean sequenciasAlterado;
 	private boolean desenharId = true;
+	private String esquemaAlternativo;
+	private String tabelaAlternativo;
 	private boolean abrirAuto = true;
 	private int deslocamentoXId = -5;
 	private int deslocamentoYId = -5;
@@ -139,6 +141,8 @@ public class Objeto implements Runnable {
 	public Objeto clonar() {
 		Objeto o = new Objeto(x, y, cor, icone);
 		o.referenciaPesquisa = referenciaPesquisa;
+		o.esquemaAlternativo = esquemaAlternativo;
+		o.tabelaAlternativo = tabelaAlternativo;
 		o.selectAlternativo = selectAlternativo;
 		o.clonarAoDestacar = clonarAoDestacar;
 		o.apelidoParaJoins = apelidoParaJoins;
@@ -191,8 +195,10 @@ public class Objeto implements Runnable {
 		abrirAuto = Boolean.parseBoolean(attr.getValue("abrirAuto"));
 		processar = Boolean.parseBoolean(attr.getValue("processar"));
 		linkAuto = Boolean.parseBoolean(attr.getValue("linkAuto"));
+		esquemaAlternativo = attr.getValue("esquemaAlternativo");
 		cor = new Color(Integer.parseInt(attr.getValue("cor")));
 		selectAlternativo = attr.getValue("selectAlternativo");
+		tabelaAlternativo = attr.getValue("tabelaAlternativo");
 		apelidoParaJoins = attr.getValue("apelidoParaJoins");
 		ccsc = Boolean.parseBoolean(attr.getValue("ccsc"));
 		sane = Boolean.parseBoolean(attr.getValue("sane"));
@@ -230,7 +236,9 @@ public class Objeto implements Runnable {
 		util.atributoCheck("complemento", getComplemento());
 		util.atributoCheck("classBiblio", getClassBiblio());
 		util.atributoCheck("destacaveis", getDestacaveis());
+		util.atributoCheck("esquemaAlternativo", getEsquemaAlternativo());
 		util.atributoCheck("selectAlternativo", getSelectAlternativo());
+		util.atributoCheck("tabelaAlternativo", getTabelaAlternativo());
 		util.atributoCheck("apelidoParaJoins", getApelidoParaJoins());
 		util.atributoCheck("orderBy", getOrderBy());
 		util.atributoCheck("ajusteAutoForm", ajusteAutoForm);
@@ -447,6 +455,14 @@ public class Objeto implements Runnable {
 
 	public void setTabelas(String tabelas) {
 		this.tabelas = tabelas;
+	}
+
+	public void setEsquemaAlternativo(String esquemaAlternativo) {
+		this.esquemaAlternativo = esquemaAlternativo;
+	}
+
+	public void setTabelaAlternativo(String tabelaAlternativo) {
+		this.tabelaAlternativo = tabelaAlternativo;
 	}
 
 	public void setJoins(String joins) {
@@ -728,6 +744,20 @@ public class Objeto implements Runnable {
 			tabelas = Constantes.VAZIO;
 		}
 		return tabelas;
+	}
+
+	public String getTabelaAlternativo() {
+		if (Util.estaVazio(tabelaAlternativo)) {
+			tabelaAlternativo = Constantes.VAZIO;
+		}
+		return tabelaAlternativo;
+	}
+
+	public String getEsquemaAlternativo() {
+		if (Util.estaVazio(esquemaAlternativo)) {
+			esquemaAlternativo = Constantes.VAZIO;
+		}
+		return esquemaAlternativo;
 	}
 
 	public String getJoins() {

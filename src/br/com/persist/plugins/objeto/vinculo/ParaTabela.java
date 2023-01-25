@@ -11,6 +11,8 @@ import br.com.persist.plugins.objeto.Objeto;
 public class ParaTabela {
 	private final List<Instrucao> instrucoes;
 	private final List<Filtro> filtros;
+	private String esquemaAlternativo;
+	private String tabelaAlternativo;
 	private String prefixoNomeTabela;
 	private String selectAlternativo;
 	private String clonarAoDestacar;
@@ -136,6 +138,12 @@ public class ParaTabela {
 	}
 
 	private void config2(Objeto objeto) {
+		if (!Util.estaVazio(esquemaAlternativo)) {
+			objeto.setEsquemaAlternativo(esquemaAlternativo);
+		}
+		if (!Util.estaVazio(tabelaAlternativo)) {
+			objeto.setTabelaAlternativo(tabelaAlternativo);
+		}
 		if (!Util.estaVazio(sane)) {
 			objeto.setSane(Boolean.parseBoolean(sane));
 		}
@@ -169,6 +177,10 @@ public class ParaTabela {
 		if (!Util.estaVazio(tabelas)) {
 			objeto.setTabelas(tabelas);
 		}
+		config3(objeto);
+	}
+
+	private void config3(Objeto objeto) {
 		if (!Util.estaVazio(chaves)) {
 			objeto.setChaves(chaves);
 		}
@@ -193,6 +205,8 @@ public class ParaTabela {
 		if (corFonte != null) {
 			atributoValor(util, VinculoHandler.COR_FONTE, Referencia.toHex(corFonte));
 		}
+		atributoValor(util, "esquemaAlternativo", esquemaAlternativo);
+		atributoValor(util, "tabelaAlternativo", tabelaAlternativo);
 		atributoValor(util, "prefixoNomeTabela", prefixoNomeTabela);
 		atributoValor(util, "selectAlternativo", selectAlternativo);
 		atributoValor(util, "clonarAoDestacar", clonarAoDestacar);
@@ -248,7 +262,9 @@ public class ParaTabela {
 		util.tab().atributo("prefixoNomeTabela", "H_").ql();
 		util.tab().atributo("clonarAoDestacar", true).ql();
 		util.tab().atributo(VinculoHandler.GRUPO, "").ql();
+		util.tab().atributo("esquemaAlternativo", "").ql();
 		util.tab().atributo("selectAlternativo", "").ql();
+		util.tab().atributo("tabelaAlternativo", "").ql();
 		util.tab().atributo("larguraRotulos", false).ql();
 		util.tab().atributo("checarRegistro", false).ql();
 		util.tab().atributo("ajustarAltura", true).ql();
@@ -499,6 +515,22 @@ public class ParaTabela {
 
 	public void setTabelas(String tabelas) {
 		this.tabelas = tabelas;
+	}
+
+	public String getEsquemaAlternativo() {
+		return esquemaAlternativo;
+	}
+
+	public void setEsquemaAlternativo(String esquemaAlternativo) {
+		this.esquemaAlternativo = esquemaAlternativo;
+	}
+
+	public String getTabelaAlternativo() {
+		return tabelaAlternativo;
+	}
+
+	public void setTabelaAlternativo(String tabelaAlternativo) {
+		this.tabelaAlternativo = tabelaAlternativo;
 	}
 
 	public String getJoins() {

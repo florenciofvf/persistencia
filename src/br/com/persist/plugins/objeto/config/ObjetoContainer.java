@@ -158,6 +158,10 @@ public class ObjetoContainer extends Panel {
 				para.setJoins(compChave.getText());
 			} else if ("TABELAS".equals(compChave.chave)) {
 				para.setTabelas(compChave.getText());
+			} else if ("ESQUEMA_ALTER".equals(compChave.chave)) {
+				para.setEsquemaAlternativo(compChave.getText());
+			} else if ("TABELA_ALTER".equals(compChave.chave)) {
+				para.setTabelaAlternativo(compChave.getText());
 			} else if ("SELECT_ALTER".equals(compChave.chave)) {
 				para.setSelectAlternativo(compChave.getText());
 			} else if ("PREFIXO_NT".equals(compChave.chave)) {
@@ -417,11 +421,13 @@ public class ObjetoContainer extends Panel {
 		private TextField txtFinalConsulta = new TextField();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
 		private CheckBox chkLarguraRotulos = new CheckBox();
+		private TextField txtEsquemaAlter = new TextField();
 		private TextField txtChaveamento = new TextField();
 		private TextField txtSelectAlter = new TextField();
 		private TextField txtComplemento = new TextField();
 		private TextField txtClassBiblio = new TextField();
 		private TextField txtDestacaveis = new TextField();
+		private TextField txtTabelaAlter = new TextField();
 		private TextField txtSequencias = new TextField();
 		private TextField txtMapeamento = new TextField();
 		private TextField txtPrefixoNT = new TextField();
@@ -441,6 +447,8 @@ public class ObjetoContainer extends Panel {
 		private PanelBanco() {
 			chkAjusteAutoForm.setSelected(objeto.isAjusteAutoForm());
 			chkLarguraRotulos.setSelected(objeto.isLarguraRotulos());
+			txtEsquemaAlter.setText(objeto.getEsquemaAlternativo());
+			txtTabelaAlter.setText(objeto.getTabelaAlternativo());
 			txtSelectAlter.setText(objeto.getSelectAlternativo());
 			txtFinalConsulta.setText(objeto.getFinalConsulta());
 			txtPrefixoNT.setText(objeto.getPrefixoNomeTabela());
@@ -464,6 +472,8 @@ public class ObjetoContainer extends Panel {
 			txtGrupo.setText(objeto.getGrupo());
 			txtJoins.setText(objeto.getJoins());
 			txtFinalConsulta.addFocusListener(focusListenerInner);
+			txtEsquemaAlter.addFocusListener(focusListenerInner);
+			txtTabelaAlter.addFocusListener(focusListenerInner);
 			txtChaveamento.addFocusListener(focusListenerInner);
 			txtComplemento.addFocusListener(focusListenerInner);
 			txtClassBiblio.addFocusListener(focusListenerInner);
@@ -482,6 +492,8 @@ public class ObjetoContainer extends Panel {
 			chkAjusteAutoForm.addActionListener(this);
 			chkLarguraRotulos.addActionListener(this);
 			txtFinalConsulta.addActionListener(this);
+			txtEsquemaAlter.addActionListener(this);
+			txtTabelaAlter.addActionListener(this);
 			txtChaveamento.addActionListener(this);
 			txtComplemento.addActionListener(this);
 			txtClassBiblio.addActionListener(this);
@@ -509,6 +521,11 @@ public class ObjetoContainer extends Panel {
 			container.add(criarLinhaCopiar("label.tabela", txtTabela));
 			container.add(criarLinhaCopiar("label.chaves", txtChaves, ObjetoMensagens.getString("hint.chaves")));
 			container.add(criarLinhaCopiarRotulo("label.select_alter", txtSelectAlter));
+			if (ObjetoPreferencia.isHabilitadoEsquemaTabelaAlter()) {
+				container.add(criarLinhaCopiar("label.esquema_alter", txtEsquemaAlter));
+				container.add(criarLinhaCopiar("label.tabela_alter", txtTabelaAlter,
+						ObjetoMensagens.getString("hint.tabela_alter")));
+			}
 			if (ObjetoPreferencia.isHabilitadoInnerJoinsObjeto()) {
 				container.add(criarLinhaCopiar("label.tabelas", txtTabelas));
 				container.add(criarLinhaCopiar("label.joins", txtJoins, ObjetoMensagens.getString("hint.joins")));
@@ -548,6 +565,8 @@ public class ObjetoContainer extends Panel {
 			vinculados.add(new CompChave(chkLarguraRotulos, "LARGURA_ROTULOS"));
 			vinculados.add(new CompChave(txtFinalConsulta, "FINAL_CONSULTA"));
 			vinculados.add(new CompChave(chkAjusteAutoForm, "AJUSTE_AUTO"));
+			vinculados.add(new CompChave(txtEsquemaAlter, "ESQUEMA_ALTER"));
+			vinculados.add(new CompChave(txtTabelaAlter, "TABELA_ALTER"));
 			vinculados.add(new CompChave(txtSelectAlter, "SELECT_ALTER"));
 			vinculados.add(new CompChave(txtChaveamento, "CHAVEAMENTO"));
 			vinculados.add(new CompChave(txtComplemento, "COMPLEMENTO"));
@@ -572,6 +591,8 @@ public class ObjetoContainer extends Panel {
 			chkAjusteAutoForm.addMouseListener(listenerVinculado);
 			chkLarguraRotulos.addMouseListener(listenerVinculado);
 			txtFinalConsulta.addMouseListener(listenerVinculado);
+			txtEsquemaAlter.addMouseListener(listenerVinculado);
+			txtTabelaAlter.addMouseListener(listenerVinculado);
 			txtSelectAlter.addMouseListener(listenerVinculado);
 			txtChaveamento.addMouseListener(listenerVinculado);
 			txtComplemento.addMouseListener(listenerVinculado);
@@ -765,6 +786,10 @@ public class ObjetoContainer extends Panel {
 				MacroProvedor.ajusteAutoForm(chk.isSelected());
 			} else if (txtTabelas == e.getSource()) {
 				objeto.setTabelas(txtTabelas.getText());
+			} else if (txtEsquemaAlter == e.getSource()) {
+				objeto.setEsquemaAlternativo(txtEsquemaAlter.getText());
+			} else if (txtTabelaAlter == e.getSource()) {
+				objeto.setTabelaAlternativo(txtTabelaAlter.getText());
 			} else if (txtSelectAlter == e.getSource()) {
 				objeto.setSelectAlternativo(txtSelectAlter.getText());
 			} else if (txtJoins == e.getSource()) {
