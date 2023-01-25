@@ -572,6 +572,10 @@ public class Objeto implements Runnable {
 	}
 
 	public String getTabelaEsquema(Conexao conexao) {
+		if (PersistenciaModelo.usarTabelaAlternativa(conexao, getEsquemaAlternativo(), getTabelaAlternativo())) {
+			return PersistenciaModelo.prefixarEsquema(conexao, getPrefixoNomeTabela(), getTabelaAlternativo(),
+					getApelidoParaJoins());
+		}
 		return PersistenciaModelo.prefixarEsquema(conexao, getPrefixoNomeTabela(), getTabela(), getApelidoParaJoins());
 	}
 

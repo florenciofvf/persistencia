@@ -579,6 +579,13 @@ public class PersistenciaModelo implements TableModel {
 		return resp;
 	}
 
+	public static boolean usarTabelaAlternativa(Conexao conexao, String esquemaAlternativo, String tabelaAlternativa) {
+		if (Util.estaVazio(esquemaAlternativo) || Util.estaVazio(tabelaAlternativa)) {
+			return false;
+		}
+		return esquemaAlternativo.equalsIgnoreCase(conexao.getEsquema());
+	}
+
 	private List<Coluna> getChaves() {
 		return colunas.stream().filter(Coluna::isChave).collect(Collectors.toList());
 	}
