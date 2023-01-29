@@ -133,6 +133,13 @@ class AnotacaoSplit extends SplitPane {
 		fichario.setSelectedIndex(indice);
 	}
 
+	public static void novaAba(Fichario fichario, File file) {
+		fichario.addTab(file.getName(), new Aba(file));
+		int indice = fichario.getTabCount() - 1;
+		fichario.setToolTipTextAt(indice, file.getAbsolutePath());
+		fichario.setSelectedIndex(indice);
+	}
+
 	public ArquivoTree getTree() {
 		return tree;
 	}
@@ -253,6 +260,12 @@ class Aba extends Transferivel {
 		abrir();
 	}
 
+	Aba(File file) {
+		toolbar.ini(Mensagens.getString("msg.arquivo_inexistente") + " " + file.getAbsolutePath());
+		add(BorderLayout.NORTH, toolbar);
+		this.arquivo = null;
+	}
+
 	@Override
 	public boolean associadoA(File file) {
 		return arquivo.getFile().equals(file);
@@ -317,6 +330,11 @@ class Aba extends Transferivel {
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
+			add(label);
+		}
+
+		public void ini(String arqAbsoluto) {
+			label.setText(arqAbsoluto);
 			add(label);
 		}
 
@@ -502,9 +520,12 @@ class AnotacaoHandler extends XMLHandler {
 			String nome = attributes.getValue("file");
 			nome = Util.replaceAll(nome, Constantes.SEP, Constantes.SEPARADOR);
 			File fileRoot = new File(AnotacaoConstantes.ANOTACOES);
-			Arquivo arquivo = modelo.getArquivo(new File(fileRoot, nome));
+			File file = new File(fileRoot, nome);
+			Arquivo arquivo = modelo.getArquivo(file);
 			if (arquivo != null) {
 				AnotacaoSplit.novaAba(fichario, arquivo);
+			} else {
+				AnotacaoSplit.novaAba(fichario, file);
 			}
 		}
 	}
