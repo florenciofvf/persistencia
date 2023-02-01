@@ -1080,4 +1080,23 @@ public class Util {
 		}
 		return sb.toString();
 	}
+
+	public static int[][] matrizSubsequencia(String s1, String s2) {
+		if (estaVazio(s1) || estaVazio(s2)) {
+			return new int[0][0];
+		}
+		int linha = s1.length();
+		int coluna = s2.length();
+		int[][] matriz = new int[linha + 1][coluna + 1];
+		for (int l = 1; l <= linha; l++) {
+			for (int c = 1; c <= coluna; c++) {
+				if (s1.charAt(l - 1) == s2.charAt(c - 1)) {
+					matriz[l][c] = matriz[l - 1][c - 1] + 1;
+				} else {
+					matriz[l][c] = Math.max(matriz[l][c - 1], matriz[l - 1][c]);
+				}
+			}
+		}
+		return matriz;
+	}
 }
