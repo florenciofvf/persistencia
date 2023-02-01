@@ -1081,22 +1081,42 @@ public class Util {
 		return sb.toString();
 	}
 
-	public static int[][] matrizSubsequencia(String s1, String s2) {
-		if (estaVazio(s1) || estaVazio(s2)) {
+	public static int[][] matrizSubsequencia(String strColuna, String strLinha) {
+		if (estaVazio(strColuna) || estaVazio(strLinha)) {
 			return new int[0][0];
 		}
-		int linha = s1.length();
-		int coluna = s2.length();
+		int coluna = strColuna.length();
+		int linha = strLinha.length();
 		int[][] matriz = new int[linha + 1][coluna + 1];
 		for (int l = 1; l <= linha; l++) {
 			for (int c = 1; c <= coluna; c++) {
-				if (s1.charAt(l - 1) == s2.charAt(c - 1)) {
+				if (strLinha.charAt(l - 1) == strColuna.charAt(c - 1)) {
 					matriz[l][c] = matriz[l - 1][c - 1] + 1;
 				} else {
-					matriz[l][c] = Math.max(matriz[l][c - 1], matriz[l - 1][c]);
+					matriz[l][c] = Math.max(matriz[l - 1][c], matriz[l][c - 1]);
 				}
 			}
 		}
 		return matriz;
+	}
+
+	public static String lcs(int[][] matriz, String strColuna, String strLinha) {
+		return lcs(strColuna, strLinha, strColuna.length(), strLinha.length(), matriz);
+	}
+
+	private static String lcs(String strColuna, String strLinha, int coluna, int linha, int[][] matriz) {
+		if (coluna == 0 || linha == 0) {
+			return "";
+		}
+
+		if (strColuna.charAt(coluna - 1) == strLinha.charAt(linha - 1)) {
+			return lcs(strColuna, strLinha, coluna - 1, linha - 1, matriz) + strColuna.charAt(coluna - 1);
+		}
+
+		if (matriz[linha - 1][coluna] > matriz[linha][coluna - 1]) {
+			return lcs(strColuna, strLinha, coluna, linha - 1, matriz);
+		} else {
+			return lcs(strColuna, strLinha, coluna - 1, linha, matriz);
+		}
 	}
 }
