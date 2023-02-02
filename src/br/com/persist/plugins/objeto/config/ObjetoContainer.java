@@ -6,6 +6,7 @@ import static br.com.persist.componente.BarraButtonEnum.COLAR0;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -303,7 +304,9 @@ public class ObjetoContainer extends Panel {
 			panelIcone.addMouseListener(new IconeListener(objeto, labelIcone));
 			Box container = Box.createVerticalBox();
 			container.add(criarLinha("label.icone", panelIcone));
-			container.add(criarLinhaCopiarRotulo("label.id", txtId));
+			Panel panel = criarLinhaCopiarRotulo("label.id", txtId);
+			configHora(panel);
+			container.add(panel);
 			container.add(criarLinha("label.x", txtX));
 			container.add(criarLinha("label.y", txtY));
 			container.add(criarLinhaRotulo("label.desloc_x_id", txtDeslocXId));
@@ -322,6 +325,15 @@ public class ObjetoContainer extends Panel {
 					.add(criarLinhaCopiar("label.add_filtro", txtFiltro, ObjetoMensagens.getString("hint.add_filtro")));
 			add(BorderLayout.CENTER, new ScrollPane(container));
 			vincular();
+		}
+
+		private void configHora(Panel panel) {
+			for (Component c : panel.getComponents()) {
+				if (c instanceof PanelCopiarColar) {
+					PanelCopiarColar pnl = (PanelCopiarColar) c;
+					pnl.buttonColar.configHora();
+				}
+			}
 		}
 
 		private void vincular() {
@@ -853,6 +865,7 @@ public class ObjetoContainer extends Panel {
 	private class PanelCopiarColar extends Panel {
 		private static final long serialVersionUID = 1L;
 		private final Action copiar = Action.actionIcon("label.copiar", Icones.COPIA);
+		private final ButtonColar buttonColar = new ButtonColar();
 		private LabelTextTemp lblMsg = new LabelTextTemp();
 		private final TextField textField;
 
@@ -860,7 +873,7 @@ public class ObjetoContainer extends Panel {
 			this.textField = textField;
 			add(BorderLayout.WEST, new Button(copiar));
 			add(BorderLayout.CENTER, lblMsg);
-			add(BorderLayout.EAST, new ButtonColar());
+			add(BorderLayout.EAST, buttonColar);
 			copiar.setActionListener(e -> copiar());
 		}
 
@@ -877,6 +890,7 @@ public class ObjetoContainer extends Panel {
 			private Action numeroAcao = Action.actionMenu("label.numeros", null);
 			private Action letraAcao = Action.actionMenu("label.letras", null);
 			private Action todosAcao = Action.actionMenu("label.todos", null);
+			private Action horaAcao = Action.actionMenu("label.hora", null);
 
 			private ButtonColar() {
 				super("label.colar", Icones.COLAR);
@@ -891,6 +905,14 @@ public class ObjetoContainer extends Panel {
 			private void colar(boolean numeros, boolean letras) {
 				Util.getContentTransfered(textField, numeros, letras);
 				textField.postActionEvent();
+			}
+
+			private void configHora() {
+				addMenuItem(true, horaAcao);
+				horaAcao.setActionListener(e -> {
+					textField.setText(HoraUtil.getHoraAtual());
+					textField.postActionEvent();
+				});
 			}
 		}
 	}
