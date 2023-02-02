@@ -58,8 +58,8 @@ import javax.swing.text.StyledDocument;
 
 import br.com.persist.componente.SeparadorDialogo;
 import br.com.persist.componente.SetLista;
-import br.com.persist.componente.TextArea;
 import br.com.persist.componente.SetLista.Coletor;
+import br.com.persist.componente.TextArea;
 import br.com.persist.mensagem.MensagemDialogo;
 import br.com.persist.mensagem.MensagemFormulario;
 
@@ -1118,5 +1118,82 @@ public class Util {
 		} else {
 			return lcs(strColuna, strLinha, coluna - 1, linha, matriz);
 		}
+	}
+
+	public static String diff(String t1, String t2) {
+		int lengthT1 = t1.length();
+		int lengthT2 = t2.length();
+		int length = lengthT1 + lengthT2;
+		int lengthOff = length + 1;
+		int[] vetor = new int[2 * length + 1];
+		StringBuilder resposta = new StringBuilder();
+		List<String> cache = new ArrayList<>();
+		for (int i = 0; i < 2 * length + 1; i++) {
+			cache.add("");
+		}
+
+		for (int d = 0; d <= length; d++) {
+			for (int k = -d; k < d + 1; k += 2) {
+				int x;
+				int y;
+				x = check(t1, t2, vetor, resposta, cache, d, k);
+				y = x - k;
+				while (x < lengthT1 && y < lengthT2 && t1.charAt(x) == t2.charAt(y)) {
+					resposta.append(" " + t1.charAt(x));
+					x += 1;
+					y += 1;
+				}
+				vetor[k + lengthOff] = x;
+				cache.set(k + lengthOff, resposta.toString());
+				if (x >= lengthT1 && y >= lengthT2) {
+					return resposta.toString();
+				}
+			}
+		}
+
+		return resposta.toString();
+	}
+
+	private static int check(String t1, String t2, int[] vetor, StringBuilder resposta, List<String> cache, int d,
+			int k) {
+		int lengthT1 = t1.length();
+		int lengthT2 = t2.length();
+		int length = lengthT1 + lengthT2;
+		int lengthOff = length + 1;
+		int x;
+		int y;
+		if (k == -d || (k != d && vetor[k - 1 + lengthOff] < vetor[k + 1 + lengthOff])) {
+			x = vetor[k + 1 + lengthOff];
+			resetInsert(lengthOff, resposta, cache, k);
+			y = x - k;
+			checkInsert(t2, lengthT2, resposta, y);
+		} else {
+			x = vetor[k - 1 + lengthOff] + 1;
+			resetDelete(lengthOff, resposta, cache, k);
+			checkDelete(t1, lengthT1, resposta, x);
+		}
+		return x;
+	}
+
+	private static void checkInsert(String t2, int lengthT2, StringBuilder resposta, int y) {
+		if (y > 0 && y <= lengthT2) {
+			resposta.append(" +" + t2.charAt(y - 1));
+		}
+	}
+
+	private static void resetInsert(int lengthOff, StringBuilder resposta, List<String> cache, int k) {
+		resposta.delete(0, resposta.length());
+		resposta.append(cache.get(k + 1 + lengthOff));
+	}
+
+	private static void checkDelete(String t1, int lengthT1, StringBuilder resposta, int x) {
+		if (x > 0 && x <= lengthT1) {
+			resposta.append(" -" + t1.charAt(x - 1));
+		}
+	}
+
+	private static void resetDelete(int lengthOff, StringBuilder resposta, List<String> cache, int k) {
+		resposta.delete(0, resposta.length());
+		resposta.append(cache.get(k - 1 + lengthOff));
 	}
 }
