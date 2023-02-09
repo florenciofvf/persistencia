@@ -466,7 +466,7 @@ public abstract class BarraButton extends JToolBar
 		add(new Button(action));
 	}
 
-	protected void addButton(Action action) {
+	public void addButton(Action action) {
 		addButton(false, action);
 	}
 
