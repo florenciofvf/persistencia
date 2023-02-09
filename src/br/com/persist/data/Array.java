@@ -57,4 +57,13 @@ public class Array extends Tipo {
 		att = new SimpleAttributeSet();
 		StyleConstants.setForeground(att, Color.BLACK);
 	}
+
+	@Override
+	public Tipo clonar() {
+		Array array = new Array();
+		for (Tipo tipo : elementos) {
+			array.addElemento(tipo.clonar());
+		}
+		return array;
+	}
 }

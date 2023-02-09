@@ -37,4 +37,9 @@ public class Logico extends Tipo {
 		att = new SimpleAttributeSet();
 		StyleConstants.setForeground(att, Color.RED);
 	}
+
+	@Override
+	public Tipo clonar() {
+		return new Logico(conteudo);
+	}
 }

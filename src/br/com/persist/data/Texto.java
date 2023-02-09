@@ -50,4 +50,11 @@ public class Texto extends Tipo {
 		att = new SimpleAttributeSet();
 		StyleConstants.setForeground(att, Color.BLUE);
 	}
+
+	@Override
+	public Tipo clonar() {
+		Texto texto = new Texto(conteudo);
+		texto.alternativo = alternativo;
+		return texto;
+	}
 }

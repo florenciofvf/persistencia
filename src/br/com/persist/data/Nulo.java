@@ -32,4 +32,9 @@ public class Nulo extends Tipo {
 		att = new SimpleAttributeSet();
 		StyleConstants.setForeground(att, new Color(255, 0, 255));
 	}
+
+	@Override
+	public Tipo clonar() {
+		return new Nulo();
+	}
 }

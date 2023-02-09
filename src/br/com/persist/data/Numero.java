@@ -55,4 +55,9 @@ public class Numero extends Tipo {
 		att = new SimpleAttributeSet();
 		StyleConstants.setForeground(att, new Color(0, 125, 0));
 	}
+
+	@Override
+	public Tipo clonar() {
+		return new Numero(conteudo);
+	}
 }
