@@ -66,6 +66,7 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	}
 
 	private void config(BarraButton barraButton, Tipo json, JTextPane textPane) {
+		Action totalElemAction = Action.acaoIcon(RequisicaoMensagens.getString("label.total_elementos"), Icones.INFO);
 		Action comAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.com_atributos"), null);
 		Action semAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.sem_atributos"), null);
 		Action originalAction = Action.acaoMenu(RequisicaoMensagens.getString("label.original"), null);
@@ -74,6 +75,7 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 
 		comAtributoAction.setActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo));
 		semAtributoAction.setActionListener(e -> filtrarSemAtributo(json, textPane, txtSemAtributo));
+		totalElemAction.setActionListener(e -> totalElementos(textPane));
 		originalAction.setActionListener(e -> retornar(json, textPane));
 
 		barraButton.addButton(comAtributoAction);
@@ -81,10 +83,27 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 		barraButton.addButton(semAtributoAction);
 		barraButton.add(txtSemAtributo);
 		barraButton.addButton(originalAction);
+		barraButton.addButton(totalElemAction);
 	}
 
 	private void retornar(Tipo json, JTextPane textPane) {
 		setText(json, textPane);
+	}
+
+	private void totalElementos(JTextPane textPane) {
+		if (!Util.estaVazio(textPane.getText())) {
+			try {
+				Tipo json = parser.parse(textPane.getText());
+				if (json instanceof Array) {
+					String msg = RequisicaoMensagens.getString("label.total_elementos");
+					Util.mensagem(textPane, msg + " [" + ((Array) json).getElementos().size() + "]");
+				} else {
+					Util.mensagem(textPane, RequisicaoMensagens.getString("msg.objeto_principal_nao_array"));
+				}
+			} catch (Exception e) {
+				Util.mensagem(textPane, e.getMessage());
+			}
+		}
 	}
 
 	private void filtrarComAtributo(Tipo json, JTextPane textPane, TextField textField) {
