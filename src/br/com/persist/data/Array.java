@@ -2,6 +2,7 @@ package br.com.persist.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.text.MutableAttributeSet;
@@ -65,5 +66,39 @@ public class Array extends Tipo {
 			array.addElemento(tipo.clonar());
 		}
 		return array;
+	}
+
+	public void filtrarComAtributos(String[] atts) {
+		Iterator<Tipo> it = elementos.iterator();
+		while (it.hasNext()) {
+			Tipo tipo = it.next();
+			if (tipo instanceof Objeto) {
+				Objeto objeto = Filtro.comAtributos((Objeto) tipo, atts);
+				if (objeto == null) {
+					it.remove();
+				} else {
+					objeto.filtrarComAtributos(atts);
+				}
+			} else if (tipo instanceof Array) {
+				((Array) tipo).filtrarComAtributos(atts);
+			}
+		}
+	}
+
+	public void filtrarSemAtributos(String[] atts) {
+		Iterator<Tipo> it = elementos.iterator();
+		while (it.hasNext()) {
+			Tipo tipo = it.next();
+			if (tipo instanceof Objeto) {
+				Objeto objeto = Filtro.semAtributos((Objeto) tipo, atts);
+				if (objeto == null) {
+					it.remove();
+				} else {
+					objeto.filtrarSemAtributos(atts);
+				}
+			} else if (tipo instanceof Array) {
+				((Array) tipo).filtrarSemAtributos(atts);
+			}
+		}
 	}
 }

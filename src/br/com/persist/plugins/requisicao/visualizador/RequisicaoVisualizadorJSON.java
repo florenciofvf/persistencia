@@ -18,8 +18,11 @@ import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
+import br.com.persist.data.Array;
 import br.com.persist.data.ContainerDocument;
 import br.com.persist.data.DataParser;
+import br.com.persist.data.Filtro;
+import br.com.persist.data.Objeto;
 import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.RequisicaoMensagens;
 
@@ -56,34 +59,64 @@ public class RequisicaoVisualizadorJSON extends RequisicaoVisualizadorHeader {
 	private void setText(Tipo json, JTextPane textPane) {
 		textPane.setText(Constantes.VAZIO);
 		StyledDocument styledDoc = textPane.getStyledDocument();
-		if (styledDoc instanceof AbstractDocument) {
+		if (styledDoc instanceof AbstractDocument && json != null) {
 			AbstractDocument doc = (AbstractDocument) styledDoc;
 			json.export(new ContainerDocument(doc), 0);
 		}
 	}
 
 	private void config(BarraButton barraButton, Tipo json, JTextPane textPane) {
-		Action retornarAction = Action.acaoMenu(RequisicaoMensagens.getString("label.retornar"), null);
-		Action filtroAction = Action.acaoMenu(RequisicaoMensagens.getString("label.filtrar"), null);
+		Action comAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.com_atributos"), null);
+		Action semAtributoAction = Action.acaoMenu(RequisicaoMensagens.getString("label.sem_atributos"), null);
+		Action originalAction = Action.acaoMenu(RequisicaoMensagens.getString("label.original"), null);
 		TextField txtComAtributo = new TextField(20);
 		TextField txtSemAtributo = new TextField(20);
-		txtComAtributo.setToolTipText(RequisicaoMensagens.getString("hint.com_atributo"));
-		txtSemAtributo.setToolTipText(RequisicaoMensagens.getString("hint.sem_atributo"));
 
-		filtroAction.setActionListener(e -> filtrar(json, txtComAtributo, txtSemAtributo));
-		retornarAction.setActionListener(e -> retornar(json, textPane));
+		comAtributoAction.setActionListener(e -> filtrarComAtributo(json, textPane, txtComAtributo));
+		semAtributoAction.setActionListener(e -> filtrarSemAtributo(json, textPane, txtSemAtributo));
+		originalAction.setActionListener(e -> retornar(json, textPane));
 
-		barraButton.addButton(filtroAction);
+		barraButton.addButton(comAtributoAction);
 		barraButton.add(txtComAtributo);
+		barraButton.addButton(semAtributoAction);
 		barraButton.add(txtSemAtributo);
-		barraButton.addButton(retornarAction);
+		barraButton.addButton(originalAction);
 	}
 
 	private void retornar(Tipo json, JTextPane textPane) {
 		setText(json, textPane);
 	}
 
-	private void filtrar(Tipo json, TextField txtComAtributo, TextField txtSemAtributo) {
+	private void filtrarComAtributo(Tipo json, JTextPane textPane, TextField textField) {
+		if ((json instanceof Objeto || json instanceof Array) && !Util.estaVazio(textField.getText())) {
+			String[] atributos = textField.getText().split(",");
+			filtrarComAtributos(json.clonar(), atributos, textPane);
+		}
+	}
+
+	private void filtrarSemAtributo(Tipo json, JTextPane textPane, TextField textField) {
+		if ((json instanceof Objeto || json instanceof Array) && !Util.estaVazio(textField.getText())) {
+			String[] atributos = textField.getText().split(",");
+			filtrarSemAtributos(json.clonar(), atributos, textPane);
+		}
+	}
+
+	private void filtrarComAtributos(Tipo json, String[] atributos, JTextPane textPane) {
+		if (json instanceof Objeto) {
+			json = Filtro.comAtributos((Objeto) json, atributos);
+		} else if (json instanceof Array) {
+			json = Filtro.comAtributos((Array) json, atributos);
+		}
+		setText(json, textPane);
+	}
+
+	private void filtrarSemAtributos(Tipo json, String[] atributos, JTextPane textPane) {
+		if (json instanceof Objeto) {
+			json = Filtro.semAtributos((Objeto) json, atributos);
+		} else if (json instanceof Array) {
+			json = Filtro.semAtributos((Array) json, atributos);
+		}
+		setText(json, textPane);
 	}
 
 	@Override

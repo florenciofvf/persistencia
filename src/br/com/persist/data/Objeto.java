@@ -2,6 +2,7 @@ package br.com.persist.data;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,15 @@ public class Objeto extends Tipo {
 			}
 		}
 		return null;
+	}
+
+	public boolean contemAtributo(String nome) {
+		for (NomeValor nomeValor : atributos) {
+			if (nomeValor.nome.equalsIgnoreCase(nome)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Map<String, String> getAtributosString() {
@@ -106,5 +116,41 @@ public class Objeto extends Tipo {
 			objeto.addAtributo(nomeValor.nome, nomeValor.valor.clonar());
 		}
 		return objeto;
+	}
+
+	public void filtrarComAtributos(String[] atts) {
+		Iterator<NomeValor> it = atributos.iterator();
+		while (it.hasNext()) {
+			NomeValor nv = it.next();
+			Tipo tipo = nv.valor;
+			if (tipo instanceof Objeto) {
+				Objeto objeto = Filtro.comAtributos((Objeto) tipo, atts);
+				if (objeto == null) {
+					it.remove();
+				} else {
+					objeto.filtrarComAtributos(atts);
+				}
+			} else if (tipo instanceof Array) {
+				((Array) tipo).filtrarComAtributos(atts);
+			}
+		}
+	}
+
+	public void filtrarSemAtributos(String[] atts) {
+		Iterator<NomeValor> it = atributos.iterator();
+		while (it.hasNext()) {
+			NomeValor nv = it.next();
+			Tipo tipo = nv.valor;
+			if (tipo instanceof Objeto) {
+				Objeto objeto = Filtro.semAtributos((Objeto) tipo, atts);
+				if (objeto == null) {
+					it.remove();
+				} else {
+					objeto.filtrarSemAtributos(atts);
+				}
+			} else if (tipo instanceof Array) {
+				((Array) tipo).filtrarSemAtributos(atts);
+			}
+		}
 	}
 }
