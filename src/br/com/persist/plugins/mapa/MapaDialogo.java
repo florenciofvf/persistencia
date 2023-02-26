@@ -15,7 +15,7 @@ public class MapaDialogo extends AbstratoDialogo {
 	private MapaDialogo(Frame frame, Formulario formulario) {
 		super(frame, MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
 		container = new MapaContainer(this, formulario, null, null);
-		container.setEntregaDialogo(this);
+		container.setMapaDialogo(this);
 		montarLayout();
 	}
 
@@ -32,7 +32,7 @@ public class MapaDialogo extends AbstratoDialogo {
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
-		container.setEntregaDialogo(null);
+		container.setMapaDialogo(null);
 		fechar();
 	}
 

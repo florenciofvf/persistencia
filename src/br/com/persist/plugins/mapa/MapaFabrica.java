@@ -31,10 +31,10 @@ public class MapaFabrica extends AbstratoFabricaContainer {
 
 	@Override
 	public PaginaServico getPaginaServico() {
-		return new EntregaPaginaServico();
+		return new MapaPaginaServico();
 	}
 
-	private class EntregaPaginaServico implements PaginaServico {
+	private class MapaPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
 			return new MapaContainer(null, formulario, null, stringPersistencia);
@@ -44,14 +44,14 @@ public class MapaFabrica extends AbstratoFabricaContainer {
 	@Override
 	public List<JMenuItem> criarMenuItens(Formulario formulario, JMenu menu) {
 		List<JMenuItem> lista = new ArrayList<>();
-		lista.add(new MenuEntrega(formulario));
+		lista.add(new MenuMapa(formulario));
 		return lista;
 	}
 
-	private class MenuEntrega extends MenuPadrao1 {
+	private class MenuMapa extends MenuPadrao1 {
 		private static final long serialVersionUID = 1L;
 
-		private MenuEntrega(Formulario formulario) {
+		private MenuMapa(Formulario formulario) {
 			super(Constantes.LABEL_VAZIO, Icones.BOLA_VERDE);
 			setText(MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
 			ficharioAcao.setActionListener(

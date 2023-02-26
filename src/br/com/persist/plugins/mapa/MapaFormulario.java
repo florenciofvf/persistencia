@@ -13,13 +13,13 @@ public class MapaFormulario extends AbstratoFormulario {
 	private MapaFormulario(Formulario formulario, String conteudo, String idPagina) {
 		super(MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
 		container = new MapaContainer(this, formulario, conteudo, idPagina);
-		container.setEntregaFormulario(this);
+		container.setMapaFormulario(this);
 		montarLayout();
 	}
 
 	private MapaFormulario(MapaContainer container) {
 		super(MapaMensagens.getString(MapaConstantes.LABEL_MAPA));
-		container.setEntregaFormulario(this);
+		container.setMapaFormulario(this);
 		this.container = container;
 		container.setJanela(this);
 		montarLayout();
@@ -42,7 +42,7 @@ public class MapaFormulario extends AbstratoFormulario {
 	public void excluirContainer() {
 		remove(container);
 		container.setJanela(null);
-		container.setEntregaFormulario(null);
+		container.setMapaFormulario(null);
 		fechar();
 	}
 
