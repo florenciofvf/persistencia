@@ -24,11 +24,11 @@ public class OrganizadorRandomico implements Organizador {
 	@Override
 	public void organizar(Forma forma) {
 		pausar();
-		forma.vetor.rotacaoX(random.nextInt(360));
+		forma.getVetor().rotacaoX(random.nextInt(360));
 		pausar();
-		forma.vetor.rotacaoY(random.nextInt(360));
+		forma.getVetor().rotacaoY(random.nextInt(360));
 		pausar();
-		forma.vetor.rotacaoZ(random.nextInt(360));
+		forma.getVetor().rotacaoZ(random.nextInt(360));
 	}
 
 	private void pausar() {

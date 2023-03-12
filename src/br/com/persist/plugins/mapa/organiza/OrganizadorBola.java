@@ -32,8 +32,8 @@ public class OrganizadorBola implements Organizador {
 	@Override
 	public void organizar(Forma forma) {
 		if (estagio == 0) {
-			forma.vetor.rotacaoZ(deslocamento);
-			forma.vetor.rotacaoY(soma);
+			forma.getVetor().rotacaoZ(deslocamento);
+			forma.getVetor().rotacaoY(soma);
 			soma += grau;
 			if (soma > 340) {
 				soma = 0;
@@ -41,8 +41,8 @@ public class OrganizadorBola implements Organizador {
 				deslocamento += deslocamentoDelta;
 			}
 		} else if (estagio == 1) {
-			forma.vetor.rotacaoY(deslocamento);
-			forma.vetor.rotacaoZ(soma);
+			forma.getVetor().rotacaoY(deslocamento);
+			forma.getVetor().rotacaoZ(soma);
 			soma += grau;
 			if (soma > 340) {
 				soma = 0;

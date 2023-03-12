@@ -3,21 +3,20 @@ package br.com.persist.plugins.mapa.forma;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import br.com.persist.assistencia.Vetor3D;
 import br.com.persist.plugins.mapa.Objeto;
 
-public abstract class Forma implements Comparable<Forma> {
-	public static boolean desenharObjetoCentro = true;
-	public static boolean desenharAtributos = true;
-	public boolean centro;
-	public Objeto objeto;
-	public Vetor3D vetor;
+public abstract class Forma /* implements Comparable<Forma> */ {
+	public static final boolean DESENHAR_OBJETO_CENTRO = true;
+	public static final boolean DESENHAR_ATRIBUTOS = true;
+	protected boolean centro;
+	protected Objeto objeto;
+	protected Vetor3D vetor;
 	Color corGradiente1;
 	Color corGradiente2;
-	public int xOrigem;
-	public int yOrigem;
 	int qtdObjetos;
 	int diametro;
+	int xOrigem;
+	int yOrigem;
 	String nome;
 
 	public Forma(int x, int y, int z, int diametro, Objeto objeto) {
@@ -33,7 +32,7 @@ public abstract class Forma implements Comparable<Forma> {
 		if (this.objeto.getCorRGB() != null) {
 			corGradiente2 = this.objeto.getCorRGB();
 		}
-		qtdObjetos = objeto.getQtdFilhos() + objeto.getQtdFilhosRef();
+		qtdObjetos = objeto.getQtdFilhos() + objeto.getQtdReferencias();
 	}
 
 	public void setCorGradienteRef(boolean ref) {
@@ -51,9 +50,10 @@ public abstract class Forma implements Comparable<Forma> {
 		this.corGradiente2 = corGradiente2;
 	}
 
-	public int compareTo(Forma o) {
-		return (int) (vetor.z - o.vetor.z);
-	}
+	/*
+	 * @Override public int compareTo(Forma o) { return (int) (vetor.z -
+	 * o.vetor.z); }
+	 */
 
 	public abstract void desenhar(Graphics2D g2);
 
@@ -63,6 +63,10 @@ public abstract class Forma implements Comparable<Forma> {
 
 	public int getDiametro() {
 		return diametro;
+	}
+
+	public Vetor3D getVetor() {
+		return vetor;
 	}
 
 	@Override

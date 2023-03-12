@@ -60,6 +60,14 @@ public class Objeto {
 		return atributos;
 	}
 
+	public int getQtdReferencias() {
+		return referencias.size();
+	}
+
+	public int getQtdFilhos() {
+		return filhos.size();
+	}
+
 	public int getQtdAtributos() {
 		return atributos.size();
 	}

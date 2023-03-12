@@ -31,7 +31,7 @@ public class OrganizadorSequencia implements Organizador {
 
 	@Override
 	public void organizar(Forma forma) {
-		forma.vetor.x = posicaoX;
+		forma.getVetor().setX(posicaoX);
 		posicaoX -= distancia;
 	}
 

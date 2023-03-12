@@ -22,7 +22,7 @@ public class OrganizadorCircular implements Organizador {
 
 	@Override
 	public void organizar(Forma forma) {
-		forma.vetor.rotacaoZ(soma);
+		forma.getVetor().rotacaoZ(soma);
 		soma += grau;
 	}
 
