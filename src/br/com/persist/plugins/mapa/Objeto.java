@@ -56,6 +56,14 @@ public class Objeto {
 		checarMenu();
 	}
 
+	public List<Atributo> getAtributos() {
+		return atributos;
+	}
+
+	public int getQtdAtributos() {
+		return atributos.size();
+	}
+
 	public void adicionar(Add add) {
 		if (add != null) {
 			setFilhos.add(add);
