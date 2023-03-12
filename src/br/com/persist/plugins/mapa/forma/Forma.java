@@ -69,6 +69,10 @@ public abstract class Forma /* implements Comparable<Forma> */ {
 		return vetor;
 	}
 
+	public Objeto getObjeto() {
+		return objeto;
+	}
+
 	@Override
 	public String toString() {
 		return objeto.toString();
