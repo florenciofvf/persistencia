@@ -1,4 +1,4 @@
-package br.com.persist.plugins.mapa.form;
+package br.com.persist.plugins.mapa;
 
 import java.awt.event.MouseEvent;
 

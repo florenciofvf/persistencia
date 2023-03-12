@@ -1,4 +1,4 @@
-package br.com.persist.plugins.mapa.form;
+package br.com.persist.plugins.mapa;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 
-import br.com.persist.plugins.mapa.Objeto;
+import br.com.persist.plugins.mapa.form.PainelRaiz;
 
 public class LabelMenu extends JLabel {
 	private static final long serialVersionUID = 1L;

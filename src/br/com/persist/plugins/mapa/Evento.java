@@ -1,11 +1,10 @@
-package br.com.persist.plugins.mapa.form;
+package br.com.persist.plugins.mapa;
 
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.plugins.mapa.config.Config;
 
 public class Evento {
 	private static final Logger LOG = Logger.getGlobal();
@@ -38,10 +37,13 @@ public class Evento {
 				return;
 			}
 			synchronized (this) {
-				try {
-					wait(Config.INTERVALO_DUPLO_CLICK);
-				} catch (Exception e) {
-					LOG.log(Level.SEVERE, Constantes.INFO, e);
+				while (true) {
+					try {
+						wait(Config.getIntervaloDuploClick());
+						break;
+					} catch (Exception e) {
+						LOG.log(Level.SEVERE, Constantes.INFO, e);
+					}
 				}
 				if (this.click != Evento.this.click) {
 					this.click = null;
@@ -57,7 +59,7 @@ public class Evento {
 			synchronized (this) {
 				while (!avaliado) {
 					try {
-						wait(Config.INTERVALO_DUPLO_CLICK);
+						wait(Config.getIntervaloDuploClick());
 					} catch (Exception e) {
 						LOG.log(Level.SEVERE, Constantes.INFO, e);
 					}
