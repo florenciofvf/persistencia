@@ -9,9 +9,9 @@ import org.xml.sax.SAXException;
 import br.com.persist.marca.XMLHandler;
 
 public class MapaHandler extends XMLHandler {
-	Set<Objeto> objetos = new HashSet<>();
-	Objeto selecionado;
-	Objeto raiz;
+	private Set<Objeto> objetos = new HashSet<>();
+	private Objeto selecionado;
+	private Objeto raiz;
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -31,6 +31,7 @@ public class MapaHandler extends XMLHandler {
 		} else {
 			selecionado = new Objeto(qName);
 			selecionado.lerAtributos(attributes);
+			objetos.add(selecionado);
 		}
 	}
 
