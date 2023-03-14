@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SubstLinhaArquivo {
 	public static void main(String[] args) throws Exception {
@@ -26,6 +28,7 @@ public class SubstLinhaArquivo {
 }
 
 class Arquivo {
+	private static final Logger LOG = Logger.getGlobal();
 	final String absoluto;
 	final Linha linha;
 
@@ -49,6 +52,7 @@ class Arquivo {
 			pw.print(c);
 		}
 		pw.close();
+		LOG.log(Level.INFO, absoluto);
 	}
 
 	List<String> lerArquivo() throws IOException {
