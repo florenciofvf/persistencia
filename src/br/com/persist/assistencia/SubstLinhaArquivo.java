@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +39,14 @@ class Arquivo {
 		if (arquivo.size() < linha.numero) {
 			return;
 		}
+		char c = ultimo();
 		PrintWriter pw = criarPrintWriter();
 		for (int i = 0, num = 1; i < arquivo.size(); i++, num++) {
 			String string = arquivo.get(i);
 			linha.processar(string, num, pw, num < arquivo.size());
+		}
+		if (c == '\r' || c == '\n') {
+			pw.print(c);
 		}
 		pw.close();
 	}
@@ -56,6 +61,14 @@ class Arquivo {
 			}
 		}
 		return resposta;
+	}
+
+	char ultimo() throws IOException {
+		try (RandomAccessFile raf = new RandomAccessFile(absoluto, "r")) {
+			long length = raf.length();
+			raf.seek(length - 1);
+			return (char) raf.read();
+		}
 	}
 
 	private PrintWriter criarPrintWriter() throws FileNotFoundException {
