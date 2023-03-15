@@ -52,7 +52,7 @@ class Arquivo {
 			pw.print(c);
 		}
 		pw.close();
-		LOG.log(Level.INFO, "PROCESSADO: {0}", absoluto);
+		LOG.log(Level.INFO, "PROCESSADO >>> {0}", absoluto);
 	}
 
 	private List<String> lerArquivo() throws IOException {
