@@ -1,6 +1,7 @@
 package br.com.persist.assistencia;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,6 +57,7 @@ class Arquivo {
 	}
 
 	private List<String> lerArquivo() throws IOException {
+		checarArquivo();
 		List<String> resposta = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(absoluto)))) {
 			String string = br.readLine();
@@ -68,6 +70,7 @@ class Arquivo {
 	}
 
 	private char ultimo() throws IOException {
+		checarArquivo();
 		try (RandomAccessFile raf = new RandomAccessFile(absoluto, "r")) {
 			long length = raf.length();
 			raf.seek(length - 1);
@@ -86,6 +89,19 @@ class Arquivo {
 		}
 		String string = arquivo.get(num - 1);
 		return new Linha(num, string);
+	}
+
+	private void checarArquivo() throws IOException {
+		File file = new File(absoluto);
+		if (!file.exists()) {
+			throw new IOException("Arquivo inexistente! >>> " + absoluto);
+		}
+		if (!file.canRead()) {
+			throw new IOException("O arquivo n\u00e3o pode ser lido! >>> " + absoluto);
+		}
+		if (file.isDirectory()) {
+			throw new IOException("O arquivo n\u00e3o pode ser um diret\u00F3rio! >>> " + absoluto);
+		}
 	}
 }
 
