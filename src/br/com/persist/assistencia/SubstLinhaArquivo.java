@@ -55,7 +55,7 @@ class Arquivo {
 		LOG.log(Level.INFO, absoluto);
 	}
 
-	List<String> lerArquivo() throws IOException {
+	private List<String> lerArquivo() throws IOException {
 		List<String> resposta = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(absoluto)))) {
 			String string = br.readLine();
@@ -67,7 +67,7 @@ class Arquivo {
 		return resposta;
 	}
 
-	char ultimo() throws IOException {
+	private char ultimo() throws IOException {
 		try (RandomAccessFile raf = new RandomAccessFile(absoluto, "r")) {
 			long length = raf.length();
 			raf.seek(length - 1);
@@ -78,28 +78,42 @@ class Arquivo {
 	private PrintWriter criarPrintWriter() throws FileNotFoundException {
 		return new PrintWriter(absoluto);
 	}
+
+	Linha getLinhaArquivo(int num) throws IOException {
+		List<String> arquivo = lerArquivo();
+		if (num < 1 || num > arquivo.size()) {
+			return null;
+		}
+		String string = arquivo.get(num - 1);
+		return new Linha(num, string);
+	}
 }
 
 class Linha {
 	final int numero;
-	final String novo;
+	final String string;
 
-	Linha(int numero, String novo) {
+	Linha(int numero, String string) {
 		this.numero = numero;
-		this.novo = novo;
+		this.string = string;
 	}
 
-	void processar(String string, int num, PrintWriter pw, boolean ln) {
+	void processar(String str, int num, PrintWriter pw, boolean ln) {
 		if (numero == num) {
-			if (ln)
-				pw.println(novo);
-			else
-				pw.print(novo);
-		} else {
 			if (ln)
 				pw.println(string);
 			else
 				pw.print(string);
+		} else {
+			if (ln)
+				pw.println(str);
+			else
+				pw.print(str);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return numero + ": " + string;
 	}
 }
