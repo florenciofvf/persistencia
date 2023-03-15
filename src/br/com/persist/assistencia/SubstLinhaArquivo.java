@@ -39,7 +39,7 @@ class Arquivo {
 
 	void processar() throws IOException {
 		List<String> arquivo = lerArquivo();
-		if (arquivo.size() < linha.numero) {
+		if (linha.numero < 1 || linha.numero > arquivo.size()) {
 			return;
 		}
 		char c = ultimo();
@@ -52,7 +52,7 @@ class Arquivo {
 			pw.print(c);
 		}
 		pw.close();
-		LOG.log(Level.INFO, absoluto);
+		LOG.log(Level.INFO, "PROCESSADO: {0}", absoluto);
 	}
 
 	private List<String> lerArquivo() throws IOException {
