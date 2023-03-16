@@ -15,16 +15,89 @@ import java.util.logging.Logger;
 
 public class SubstLinhaArquivo {
 	public static void main(String[] args) throws Exception {
-		List<Arquivo> arquivos = criarArquivos();
-		for (Arquivo arquivo : arquivos) {
-			arquivo.processar();
-		}
+		processar();
 	}
 
-	private static List<Arquivo> criarArquivos() {
-		List<Arquivo> resposta = new ArrayList<>();
-		resposta.add(new Arquivo("teste.tmp", new Linha(2, "Teste")));
-		return resposta;
+	private static String trocarVersao(String string, String novaVersao) {
+		int posIni = string.indexOf('>');
+		int posFim = string.indexOf("</");
+		return string.substring(0, posIni + 1) + novaVersao + string.substring(posFim);
+	}
+
+	private static String getVersao(String absoluto, int num) throws IOException {
+		String string = getLinha(absoluto, num);
+		int posIni = string.indexOf('>');
+		int posFim = string.indexOf("</");
+		return string.substring(posIni + 1, posFim);
+	}
+
+	private static String getLinha(String absoluto, int num) throws IOException {
+		Arquivo arquivo = new Arquivo(absoluto, null);
+		return arquivo.getLinhaArquivo(num).string;
+	}
+
+	private static void substituirVersao(String absoluto, int num, String novaVersao) throws IOException {
+		String string = getLinha(absoluto, num);
+		String novaString = trocarVersao(string, novaVersao);
+		Arquivo arquivo = new Arquivo(absoluto, new Linha(num, novaString));
+		arquivo.processar();
+	}
+
+	public static void substituirLinha(String absoluto, int num, String novaString) throws IOException {
+		Arquivo arquivo = new Arquivo(absoluto, new Linha(num, novaString));
+		arquivo.processar();
+	}
+
+	private static void processar() throws IOException {
+		String pomFiscalizRestClient = "/Users/florenciovieirafilho/desenv/projetos/proad/siproquim-fiscalizacao-rest-client/pom.xml";
+		String pomFiscalizRest = "/Users/florenciovieirafilho/desenv/projetos/proad/siproquim-fiscalizacao-rest/pom.xml";
+		String pomOffline = "/Users/florenciovieirafilho/desenv/projetos/proad/siproquim-fiscalizacao-offline/pom.xml";
+		String pomDomain = "/Users/florenciovieirafilho/desenv/projetos/siproquim/siproquim-common-domain/pom.xml";
+		String pomMapasBatch = "/Users/florenciovieirafilho/desenv/projetos/mapa/siproquim-mapas-batch/pom.xml";
+		String pomMapasRest = "/Users/florenciovieirafilho/desenv/projetos/mapa/siproquim-mapas-rest/pom.xml";
+		String pomCadastro = "/Users/florenciovieirafilho/desenv/projetos/siproquim/siproquim-rest/pom.xml";
+		String pomUtils = "/Users/florenciovieirafilho/desenv/projetos/siproquim-common-utils/pom.xml";
+
+		String versaoClient = getVersao(pomFiscalizRestClient, 9);
+		String versaoDomain = getVersao(pomDomain, 7);
+		String versaoUtils = getVersao(pomUtils, 9);
+
+		// FISCALIZACAO-REST-CLIENT
+		substituirVersao(pomFiscalizRestClient, 14, versaoUtils);
+
+		// FISCALIZACAO-REST
+		substituirVersao(pomFiscalizRest, 28, versaoDomain);
+		substituirVersao(pomFiscalizRest, 29, versaoUtils);
+		substituirVersao(pomFiscalizRest, 30, versaoClient);
+
+		// MAPAS-BATCH
+		substituirVersao(pomMapasBatch, 19, versaoDomain);
+		substituirVersao(pomMapasBatch, 20, versaoUtils);
+
+		// MAPAS-REST
+		substituirVersao(pomMapasRest, 21, versaoDomain);
+		substituirVersao(pomMapasRest, 22, versaoUtils);
+
+		// CADASTRO-REST
+		substituirVersao(pomCadastro, 26, versaoDomain);
+
+		// OFFLINE
+		substituirVersao(pomOffline, 40, versaoClient);
+		substituirVersao(pomOffline, 41, versaoUtils);
+		String string = getLinha(pomOffline, 97);
+		substituirLinha(pomOffline, 97, check(string, "<!--", true));
+		string = getLinha(pomOffline, 102);
+		substituirLinha(pomOffline, 102, check(string, "-->", false));
+
+		// UTILS
+		substituirVersao(pomUtils, 18, versaoDomain);
+	}
+
+	static String check(String string, String delta, boolean inicio) {
+		if (inicio) {
+			return string.startsWith(delta) ? string : delta + string;
+		}
+		return string.endsWith(delta) ? string : string + delta;
 	}
 }
 
