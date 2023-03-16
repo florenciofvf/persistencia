@@ -2921,34 +2921,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 		}
 
-		@Override
-		public void selectUltimos(TabelaPersistencia tabelaPersistencia, String nome, boolean form) {
-			Conexao conexao = getConexao();
-			if (conexao != null) {
-				String instrucao = montarInstrucaoUltimos(conexao, nome);
-				if (!Util.estaVazio(instrucao)) {
-					toolbar.selectFormDialog(form, conexao, instrucao);
-				}
-			}
-		}
-
 		private String montarInstrucaoGroupBy(Conexao conexao, String nome) {
 			StringBuilder sb = new StringBuilder("SELECT " + objeto.comApelido(nome) + ", COUNT(*)");
 			sb.append("\nFROM " + objeto.getTabelaEsquema(conexao));
 			sb.append("\nWHERE " + objeto.comApelido(nome) + " IS NOT NULL");
 			sb.append("\nGROUP BY " + objeto.comApelido(nome));
 			sb.append("\nHAVING COUNT(*) > 1");
-			return sb.toString();
-		}
-
-		private String montarInstrucaoUltimos(Conexao conexao, String nome) {
-			StringBuilder sb = new StringBuilder("SELECT * FROM (SELECT * FROM ");
-			sb.append(objeto.getTabelaEsquema(conexao));
-			sb.append(" ORDER BY ");
-			sb.append(objeto.comApelido(nome));
-			sb.append(" DESC");
-			sb.append(")");
-			sb.append("\nWHERE ROWNUM < 11");
 			return sb.toString();
 		}
 

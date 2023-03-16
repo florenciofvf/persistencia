@@ -374,7 +374,6 @@ public class TabelaPersistencia extends JTable {
 			private Action infoColunaAcao = Action.actionMenu("label.info", null);
 			private MenuSelectDistinct distinct = new MenuSelectDistinct();
 			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
-			private MenuSelectUltimos ultimos = new MenuSelectUltimos();
 
 			private MenuMetadados() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
@@ -384,7 +383,6 @@ public class TabelaPersistencia extends JTable {
 				addSeparator();
 				add(distinct);
 				add(groupBy);
-				add(ultimos);
 				exportaParaAcao.setActionListener(e -> importarExportarInfo(true));
 				importaDeAcao.setActionListener(e -> importarExportarInfo(false));
 				addMouseListener(new MouseAdapter() {
@@ -444,23 +442,6 @@ public class TabelaPersistencia extends JTable {
 					if (listener != null) {
 						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
 						listener.selectGroupBy(TabelaPersistencia.this, coluna, abrirEmForm);
-					}
-				}
-			}
-
-			private class MenuSelectUltimos extends MenuPadrao3 {
-				private static final long serialVersionUID = 1L;
-
-				private MenuSelectUltimos() {
-					super(TabelaMensagens.getString("label.select_ultimos"), false, null);
-					formularioAcao.setActionListener(e -> abrirSelect(true));
-					dialogoAcao.setActionListener(e -> abrirSelect(false));
-				}
-
-				private void abrirSelect(boolean abrirEmForm) {
-					if (listener != null) {
-						String coluna = TabelaPersistencia.this.getModel().getColumnName(indiceColuna);
-						listener.selectUltimos(TabelaPersistencia.this, coluna, abrirEmForm);
 					}
 				}
 			}
