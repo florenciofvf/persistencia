@@ -1,10 +1,14 @@
 package br.com.persist.plugins.mapa;
 
+import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -19,8 +23,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 
+import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.TextField;
 import br.com.persist.plugins.mapa.organiza.Organizador;
 import br.com.persist.plugins.mapa.organiza.OrganizadorBola;
 import br.com.persist.plugins.mapa.organiza.OrganizadorCircular;
@@ -30,16 +38,20 @@ import br.com.persist.plugins.mapa.organiza.OrganizadorSequencia;
 public class AbaView extends Panel {
 	private transient Organizador organizadorPadrao = new OrganizadorRandomico();
 	private static Map<String, Organizador> organizadores = new HashMap<>();
+	private final ToolbarParametro toolbar = new ToolbarParametro();
 	private static final long serialVersionUID = 1L;
 	private PanelView panelView = new PanelView();
 	private PanelMenu panelMenu = new PanelMenu();
 	private transient MapaHandler mapaHandler;
+	private final File file;
 
-	public AbaView() {
+	public AbaView(File file) {
+		this.file = file;
 		montarLayout();
 	}
 
 	private void montarLayout() {
+		add(BorderLayout.NORTH, toolbar);
 		add(BorderLayout.CENTER, panelView);
 		add(BorderLayout.EAST, panelMenu);
 	}
@@ -64,6 +76,7 @@ public class AbaView extends Panel {
 
 	public void carregar(File file) {
 		panelMenu.removeAll();
+		panelView.reiniciar();
 		try {
 			mapaHandler = MontaObjeto.montarObjeto(file);
 			configRaiz();
@@ -75,6 +88,30 @@ public class AbaView extends Panel {
 			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, AbaView.this);
+		}
+	}
+
+	private class ToolbarParametro extends BarraButton implements ActionListener {
+		private static final long serialVersionUID = 1L;
+		private final TextField txtPesquisa = new TextField(35);
+
+		private ToolbarParametro() {
+			super.ini(new Nil(), BAIXAR);
+			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+			txtPesquisa.addActionListener(this);
+			add(txtPesquisa);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (!Util.estaVazio(txtPesquisa.getText())) {
+				panelView.localizar(txtPesquisa.getText());
+			}
+		}
+
+		@Override
+		protected void baixar() {
+			carregar(file);
 		}
 	}
 
@@ -144,9 +181,13 @@ public class AbaView extends Panel {
 		public PanelView() {
 			addMouseMotionListener(new OuvinteMouseMotion());
 			addMouseListener(new OuvinteMouse());
+			// new Thread(this).start();
+			reiniciar();
+		}
+
+		public void reiniciar() {
 			associacoes = new Associacao[0];
 			formas = new Forma[0];
-			new Thread(this).start();
 		}
 
 		private class T extends Thread {

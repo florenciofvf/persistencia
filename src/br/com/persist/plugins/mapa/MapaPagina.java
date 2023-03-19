@@ -40,11 +40,12 @@ public class MapaPagina extends Panel {
 	private static final long serialVersionUID = 1L;
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	private final AbaText abaText = new AbaText();
-	private final AbaView abaView = new AbaView();
+	private final AbaView abaView;
 	private final File file;
 
 	public MapaPagina(File file) {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		abaView = new AbaView(file);
 		this.file = file;
 		montarLayout();
 		abrir();
