@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -44,6 +45,7 @@ public class AbaView extends Panel {
 	private transient Organizador organizadorPadrao = new OrganizadorRandomico();
 	private static Map<String, Organizador> organizadores = new HashMap<>();
 	private final ToolbarParametro toolbar = new ToolbarParametro();
+	private transient Logger log = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private PanelView panelView = new PanelView();
 	private PanelMenu panelMenu = new PanelMenu();
@@ -127,6 +129,7 @@ public class AbaView extends Panel {
 			private Action desenharAtributoAcao = actionMenu("label.desenhar_atributo");
 			private Action desenharGrade2Acao = actionMenu("label.desenhar_grade2");
 			private Action desenharGradeAcao = actionMenu("label.desenhar_grade");
+			private Action velocidadeAcao = actionMenu("label.velocidade");
 			private Action girarAcao = actionMenu("label.girar");
 
 			private ButtonStatus() {
@@ -134,9 +137,10 @@ public class AbaView extends Panel {
 				addItem(new JCheckBoxMenuItem(desenharObjetoCentroAcao));
 				addItem(new JCheckBoxMenuItem(desenharAssociacaoAcao));
 				addItem(new JCheckBoxMenuItem(desenharAtributoAcao));
-				addItem(new JCheckBoxMenuItem(desenharGradeAcao));
 				addItem(new JCheckBoxMenuItem(desenharGrade2Acao));
+				addItem(new JCheckBoxMenuItem(desenharGradeAcao));
 				addItem(new JCheckBoxMenuItem(girarAcao));
+				addMenuItem(velocidadeAcao);
 				eventos();
 			}
 
@@ -162,6 +166,22 @@ public class AbaView extends Panel {
 					panelView.repaint();
 				});
 				girarAcao.setActionListener(e -> panelView.rotacionar = isSelected(e));
+				velocidadeAcao.setActionListener(e -> velocidade());
+			}
+
+			private void velocidade() {
+				String s = JOptionPane.showInputDialog(AbaView.this, MapaMensagens.getString("label.velocidade"),
+						"" + Config.getIntervaloRotacao());
+				if (s != null) {
+					try {
+						int i = Integer.parseInt(s);
+						if (i >= Config.getVelocidadeMinimaRotacao() && i <= Config.getVelocidadeMaximaRotacao()) {
+							Config.setIntervaloRotacao(i);
+						}
+					} catch (Exception ex) {
+						log.log(Level.SEVERE, ex.getMessage());
+					}
+				}
 			}
 
 			private boolean isSelected(ActionEvent e) {
