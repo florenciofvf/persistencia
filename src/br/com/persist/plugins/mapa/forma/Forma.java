@@ -8,15 +8,15 @@ import br.com.persist.plugins.mapa.Objeto;
 public abstract class Forma /* implements Comparable<Forma> */ {
 	public static final boolean DESENHAR_OBJETO_CENTRO = true;
 	public static final boolean DESENHAR_ATRIBUTOS = true;
-	protected boolean centro;
 	protected Objeto objeto;
 	protected Vetor3D vetor;
+	public boolean centro;
 	Color corGradiente1;
 	Color corGradiente2;
+	public int xOrigem;
+	public int yOrigem;
 	int qtdObjetos;
 	int diametro;
-	int xOrigem;
-	int yOrigem;
 	String nome;
 
 	public Forma(int x, int y, int z, int diametro, Objeto objeto) {

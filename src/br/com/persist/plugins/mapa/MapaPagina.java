@@ -164,10 +164,6 @@ public class MapaPagina extends Panel {
 		}
 	}
 
-	class AbaView extends Panel {
-		private static final long serialVersionUID = 1L;
-	}
-
 	public String getConteudo() {
 		return abaText.getConteudo();
 	}
