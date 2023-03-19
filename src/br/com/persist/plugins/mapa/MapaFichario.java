@@ -67,7 +67,7 @@ public class MapaFichario extends JTabbedPane {
 		MapaPagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.estaVazio(conteudo)) {
-				pagina.areaParametros.setText(conteudo);
+				pagina.setConteudo(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}

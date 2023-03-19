@@ -21,7 +21,6 @@ import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -39,10 +38,9 @@ import br.com.persist.componente.TextField;
 
 public class MapaPagina extends Panel {
 	private static final long serialVersionUID = 1L;
-	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final JTabbedPane tabbedPane = new JTabbedPane();
-	public final JTextPane areaParametros = new JTextPane();
-	private ScrollPane scrollPane;
+	private final AbaText abaText = new AbaText();
+	private final AbaView abaView = new AbaView();
 	private final File file;
 
 	public MapaPagina(File file) {
@@ -53,33 +51,9 @@ public class MapaPagina extends Panel {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
-		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
-		add(BorderLayout.CENTER, split);
-	}
-
-	private Panel criarPanelParametro() {
-		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, toolbarParametro);
-		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, areaParametros);
-		scrollPane = new ScrollPane(panelArea);
-		panel.add(BorderLayout.CENTER, scrollPane);
-		return panel;
-	}
-
-	private Panel criarPanelResultado() {
-		Panel panel = new Panel();
-		panel.add(BorderLayout.CENTER, tabbedPane);
-		return panel;
-	}
-
-	private int getValueScrollPane() {
-		return scrollPane.getVerticalScrollBar().getValue();
-	}
-
-	private void setValueScrollPane(int value) {
-		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		tabbedPane.addTab("Text", abaText);
+		tabbedPane.addTab("View", abaView);
+		add(BorderLayout.CENTER, tabbedPane);
 	}
 
 	static Action actionMenu(String chave) {
@@ -90,57 +64,116 @@ public class MapaPagina extends Panel {
 		return Action.acaoIcon(MapaMensagens.getString(chave), icon);
 	}
 
-	private class ToolbarParametro extends BarraButton implements ActionListener {
+	class AbaText extends Panel {
 		private static final long serialVersionUID = 1L;
-		private final TextField txtPesquisa = new TextField(35);
-		private transient Selecao selecao;
+		private final ToolbarParametro toolbar = new ToolbarParametro();
+		private final JTextPane textArea = new JTextPane();
+		private ScrollPane scrollPane;
 
-		private ToolbarParametro() {
-			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			txtPesquisa.addActionListener(this);
-			add(txtPesquisa);
-			add(label);
+		AbaText() {
+			montarLayout();
 		}
 
-		@Override
-		protected void limpar() {
-			areaParametros.setText(Constantes.VAZIO);
+		void montarLayout() {
+			add(BorderLayout.NORTH, toolbar);
+			Panel panelArea = new Panel();
+			panelArea.add(BorderLayout.CENTER, textArea);
+			scrollPane = new ScrollPane(panelArea);
+			add(BorderLayout.CENTER, scrollPane);
 		}
 
-		@Override
-		protected void baixar() {
-			abrir();
-			selecao = null;
-			label.limpar();
+		int getValueScrollPane() {
+			return scrollPane.getVerticalScrollBar().getValue();
 		}
 
-		@Override
-		protected void copiar() {
-			String string = Util.getString(areaParametros);
-			Util.setContentTransfered(string);
-			copiarMensagem(string);
-			areaParametros.requestFocus();
+		void setValueScrollPane(int value) {
+			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 		}
 
-		@Override
-		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(areaParametros, numeros, letras);
+		String getConteudo() {
+			return textArea.getText();
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(areaParametros, selecao, txtPesquisa.getText());
-				selecao.selecionar(label);
-			} else {
+		void abrir() {
+			textArea.setText(Constantes.VAZIO);
+			if (file.exists()) {
+				try (BufferedReader br = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
+					StringBuilder sb = new StringBuilder();
+					int value = getValueScrollPane();
+					String linha = br.readLine();
+					while (linha != null) {
+						sb.append(linha + Constantes.QL);
+						linha = br.readLine();
+					}
+					textArea.setText(sb.toString());
+					setValueScrollPane(value);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, this);
+				}
+			}
+		}
+
+		private class ToolbarParametro extends BarraButton implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private final TextField txtPesquisa = new TextField(35);
+			private transient Selecao selecao;
+
+			private ToolbarParametro() {
+				super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
+				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+				txtPesquisa.addActionListener(this);
+				add(txtPesquisa);
+				add(label);
+			}
+
+			@Override
+			protected void limpar() {
+				textArea.setText(Constantes.VAZIO);
+			}
+
+			@Override
+			protected void baixar() {
+				abrir();
+				selecao = null;
 				label.limpar();
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(textArea);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				textArea.requestFocus();
+			}
+
+			@Override
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(textArea, numeros, letras);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!Util.estaVazio(txtPesquisa.getText())) {
+					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+					selecao.selecionar(label);
+				} else {
+					label.limpar();
+				}
 			}
 		}
 	}
 
+	class AbaView extends Panel {
+		private static final long serialVersionUID = 1L;
+	}
+
 	public String getConteudo() {
-		return areaParametros.getText();
+		return abaText.getConteudo();
+	}
+
+	public void setConteudo(String string) {
+		abaText.textArea.setText(string);
 	}
 
 	public String getNome() {
@@ -148,23 +181,7 @@ public class MapaPagina extends Panel {
 	}
 
 	private void abrir() {
-		areaParametros.setText(Constantes.VAZIO);
-		if (file.exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
-				StringBuilder sb = new StringBuilder();
-				int value = getValueScrollPane();
-				String linha = br.readLine();
-				while (linha != null) {
-					sb.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
-				areaParametros.setText(sb.toString());
-				setValueScrollPane(value);
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, this);
-			}
-		}
+		abaText.abrir();
 	}
 
 	public void excluir() {
@@ -183,7 +200,7 @@ public class MapaPagina extends Panel {
 			return;
 		}
 		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-			pw.print(areaParametros.getText());
+			pw.print(abaText.textArea.getText());
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, this);
