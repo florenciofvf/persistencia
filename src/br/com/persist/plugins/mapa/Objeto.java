@@ -72,6 +72,10 @@ public class Objeto {
 		return atributos.size();
 	}
 
+	public List<Objeto> getFilhos() {
+		return filhos;
+	}
+
 	public void adicionar(Add add) {
 		if (add != null) {
 			setFilhos.add(add);
@@ -182,5 +186,9 @@ public class Objeto {
 
 	public void setOrganizador(Organizador organizador) {
 		this.organizador = organizador;
+	}
+
+	public List<Associacao> criarAssociacoes(List<Objeto> objetos) {
+		return new ArrayList<>();
 	}
 }

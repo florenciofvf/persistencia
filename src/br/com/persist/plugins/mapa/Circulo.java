@@ -1,12 +1,9 @@
-package br.com.persist.plugins.mapa.forma;
+package br.com.persist.plugins.mapa;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-
-import br.com.persist.plugins.mapa.Atributo;
-import br.com.persist.plugins.mapa.Objeto;
 
 public class Circulo extends Forma {
 	private Vetor3D v = new Vetor3D(0, 0, 0);

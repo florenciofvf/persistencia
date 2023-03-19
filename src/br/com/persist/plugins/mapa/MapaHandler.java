@@ -55,4 +55,8 @@ public class MapaHandler extends XMLHandler {
 		}
 		return null;
 	}
+
+	public Set<Objeto> getObjetos() {
+		return objetos;
+	}
 }

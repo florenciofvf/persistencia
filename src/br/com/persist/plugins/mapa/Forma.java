@@ -1,23 +1,21 @@
-package br.com.persist.plugins.mapa.forma;
+package br.com.persist.plugins.mapa;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import br.com.persist.plugins.mapa.Objeto;
-
-public abstract class Forma /* implements Comparable<Forma> */ {
+public abstract class Forma implements Comparable<Forma> {
 	public static final boolean DESENHAR_OBJETO_CENTRO = true;
 	public static final boolean DESENHAR_ATRIBUTOS = true;
-	protected Objeto objeto;
-	protected Vetor3D vetor;
-	public boolean centro;
 	Color corGradiente1;
 	Color corGradiente2;
-	public int xOrigem;
-	public int yOrigem;
+	boolean centro;
 	int qtdObjetos;
+	Objeto objeto;
+	Vetor3D vetor;
 	int diametro;
 	String nome;
+	int xOrigem;
+	int yOrigem;
 
 	public Forma(int x, int y, int z, int diametro, Objeto objeto) {
 		if (objeto == null) {
@@ -50,10 +48,11 @@ public abstract class Forma /* implements Comparable<Forma> */ {
 		this.corGradiente2 = corGradiente2;
 	}
 
-	/*
-	 * @Override public int compareTo(Forma o) { return (int) (vetor.z -
-	 * o.vetor.z); }
-	 */
+	@Override
+	public int compareTo(Forma o) {
+		Vetor3D oVetor = o.vetor;
+		return (int) (vetor.z - oVetor.z);
+	}
 
 	public abstract void desenhar(Graphics2D g2);
 
@@ -71,6 +70,33 @@ public abstract class Forma /* implements Comparable<Forma> */ {
 
 	public Objeto getObjeto() {
 		return objeto;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((objeto == null) ? 0 : objeto.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Forma other = (Forma) obj;
+		if (objeto == null) {
+			if (other.objeto != null) {
+				return false;
+			}
+		} else if (!objeto.equals(other.objeto)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

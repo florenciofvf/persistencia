@@ -1,4 +1,4 @@
-package br.com.persist.plugins.mapa.forma;
+package br.com.persist.plugins.mapa;
 
 import java.awt.Graphics2D;
 

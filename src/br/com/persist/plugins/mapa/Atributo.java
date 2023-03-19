@@ -25,6 +25,10 @@ public class Atributo {
 		return valor;
 	}
 
+	public Integer getValorInt() {
+		return Integer.parseInt(valor);
+	}
+
 	public String toString() {
 		return nome + "=" + valor;
 	}

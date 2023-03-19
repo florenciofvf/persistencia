@@ -1,4 +1,4 @@
-package br.com.persist.plugins.mapa.forma;
+package br.com.persist.plugins.mapa;
 
 public class Vetor3D {
 	private static final double RADIANO = Math.PI / 180;
