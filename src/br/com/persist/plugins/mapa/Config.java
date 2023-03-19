@@ -9,6 +9,8 @@ public class Config {
 	private static int intervaloRotacao = velocidadeMinimaRotacao;
 	private static int intervaloDuploClick = 400;
 	private static int diametroObjetoCentro = 60;
+	private static boolean desenharObjetoCentro;
+	private static boolean desenharAtributos;
 	private static int distanciaCentro = 200;
 	private static int diametroObjeto = 30;
 
@@ -66,5 +68,21 @@ public class Config {
 
 	public static void setDiametroObjeto(int diametroObjeto) {
 		Config.diametroObjeto = diametroObjeto;
+	}
+
+	public static boolean isDesenharObjetoCentro() {
+		return desenharObjetoCentro;
+	}
+
+	public static void setDesenharObjetoCentro(boolean desenharObjetoCentro) {
+		Config.desenharObjetoCentro = desenharObjetoCentro;
+	}
+
+	public static boolean isDesenharAtributos() {
+		return desenharAtributos;
+	}
+
+	public static void setDesenharAtributos(boolean desenharAtributos) {
+		Config.desenharAtributos = desenharAtributos;
 	}
 }

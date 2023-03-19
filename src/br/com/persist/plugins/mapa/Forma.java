@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public abstract class Forma implements Comparable<Forma> {
-	public static final boolean DESENHAR_OBJETO_CENTRO = true;
-	public static final boolean DESENHAR_ATRIBUTOS = true;
 	Color corGradiente1;
 	Color corGradiente2;
 	boolean centro;

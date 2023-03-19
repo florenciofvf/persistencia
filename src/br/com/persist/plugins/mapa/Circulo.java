@@ -38,7 +38,7 @@ public class Circulo extends Forma {
 		v.z = 0;
 		v.rotacaoZ(-75);
 
-		if (DESENHAR_ATRIBUTOS) {
+		if (Config.isDesenharAtributos()) {
 			int i = objeto.getQtdAtributos();
 			if (i > 0) {
 				int g = 180 / i;
@@ -64,5 +64,15 @@ public class Circulo extends Forma {
 		xy[0] = (int) (xOrigem + vetor.x + metade);
 		xy[1] = (int) (yOrigem + vetor.y + metade);
 		return xy;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
 	}
 }

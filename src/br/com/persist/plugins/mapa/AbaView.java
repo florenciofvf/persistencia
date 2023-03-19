@@ -21,11 +21,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 
+import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
 import br.com.persist.assistencia.Util;
+import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
+import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
@@ -97,6 +102,7 @@ public class AbaView extends Panel {
 
 		private ToolbarParametro() {
 			super.ini(new Nil(), BAIXAR);
+			add(true, new ButtonStatus());
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
 			add(txtPesquisa);
@@ -112,6 +118,55 @@ public class AbaView extends Panel {
 		@Override
 		protected void baixar() {
 			carregar(file);
+		}
+
+		private class ButtonStatus extends ButtonPopup {
+			private static final long serialVersionUID = 1L;
+			private Action desenharObjetoCentroAcao = actionMenu("label.desenhar_objeto_centro");
+			private Action desenharAssociacaoAcao = actionMenu("label.desenhar_associacao");
+			private Action desenharAtributoAcao = actionMenu("label.desenhar_atributo");
+			private Action desenharGrade2Acao = actionMenu("label.desenhar_grade2");
+			private Action desenharGradeAcao = actionMenu("label.desenhar_grade");
+			private Action girarAcao = actionMenu("label.girar");
+
+			private ButtonStatus() {
+				super("label.status", Icones.TAG2);
+				addItem(new JCheckBoxMenuItem(desenharObjetoCentroAcao));
+				addItem(new JCheckBoxMenuItem(desenharAssociacaoAcao));
+				addItem(new JCheckBoxMenuItem(desenharAtributoAcao));
+				addItem(new JCheckBoxMenuItem(desenharGradeAcao));
+				addItem(new JCheckBoxMenuItem(desenharGrade2Acao));
+				addItem(new JCheckBoxMenuItem(girarAcao));
+				eventos();
+			}
+
+			private void eventos() {
+				desenharObjetoCentroAcao.setActionListener(e -> {
+					Config.setDesenharObjetoCentro(isSelected(e));
+					panelView.repaint();
+				});
+				desenharAssociacaoAcao.setActionListener(e -> {
+					panelView.desenharAssociacoes = isSelected(e);
+					panelView.repaint();
+				});
+				desenharAtributoAcao.setActionListener(e -> {
+					Config.setDesenharAtributos(isSelected(e));
+					panelView.repaint();
+				});
+				desenharGradeAcao.setActionListener(e -> {
+					panelView.desenharGrade = isSelected(e);
+					panelView.repaint();
+				});
+				desenharGrade2Acao.setActionListener(e -> {
+					panelView.desenharGrade2 = isSelected(e);
+					panelView.repaint();
+				});
+				girarAcao.setActionListener(e -> panelView.rotacionar = isSelected(e));
+			}
+
+			private boolean isSelected(ActionEvent e) {
+				return ((JCheckBoxMenuItem) e.getSource()).isSelected();
+			}
 		}
 	}
 
@@ -162,14 +217,22 @@ public class AbaView extends Panel {
 		}
 	}
 
+	static Action actionMenu(String chave, Icon icon) {
+		return Action.acaoMenu(MapaMensagens.getString(chave), icon);
+	}
+
+	static Action actionMenu(String chave) {
+		return actionMenu(chave, null);
+	}
+
 	class PanelView extends Panel implements Runnable {
 		private static final long serialVersionUID = 1L;
 		private transient Logger log = Logger.getGlobal();
 		private transient Evento evento = new Evento();
 		private transient Associacao[] associacoes;
-		private boolean desenharAssociacoes = true;
-		private boolean desenharGrade2 = true;
-		private boolean desenharGrade = true;
+		private boolean desenharAssociacoes;
+		private boolean desenharGrade2;
+		private boolean desenharGrade;
 		private boolean rotacionado;
 		private boolean rotacionar;
 		private boolean montando;
