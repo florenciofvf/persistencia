@@ -3,9 +3,7 @@ package br.com.persist.plugins.mapa.organiza;
 import br.com.persist.plugins.mapa.Objeto;
 
 /*
- * 
- * organizador="bola" organizadorParametros="grau deslocamento"
- * 
+ * organizadorParametros="grau deslocamento"
  */
 public class OrganizadorBola extends Organizador {
 	private int deslocamentoDelta;

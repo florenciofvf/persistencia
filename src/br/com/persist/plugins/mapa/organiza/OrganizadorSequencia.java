@@ -3,9 +3,7 @@ package br.com.persist.plugins.mapa.organiza;
 import br.com.persist.plugins.mapa.Objeto;
 
 /*
- * 
- * organizador="sequencia" organizadorParametros="totalObjetos distancia"
- * 
+ * organizadorParametros="totalObjetos distancia"
  */
 public class OrganizadorSequencia extends Organizador {
 	private int distancia;

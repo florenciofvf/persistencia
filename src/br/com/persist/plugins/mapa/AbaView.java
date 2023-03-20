@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -163,7 +165,7 @@ public class AbaView extends Panel {
 					panelView.desenharGrade2 = isSelected(e);
 					panelView.repaint();
 				});
-				girarAcao.setActionListener(e -> panelView.rotacionar = isSelected(e));
+				girarAcao.setActionListener(e -> panelView.rotacionar(isSelected(e)));
 				velocidadeAcao.setActionListener(e -> velocidade());
 			}
 
@@ -221,25 +223,23 @@ public class AbaView extends Panel {
 		return actionMenu(chave, null);
 	}
 
-	class PanelView extends Panel /* implements Runnable */ {
+	class PanelView extends Panel implements Runnable {
 		private static final long serialVersionUID = 1L;
 		private transient Logger log = Logger.getGlobal();
 		private transient Associacao[] associacoes;
 		private boolean desenharAssociacoes;
 		private transient Objeto[] objetos;
+		private transient Thread thread;
 		private boolean desenharGrade2;
 		private boolean desenharGrade;
 		private boolean rotacionado;
-		private boolean rotacionar;
 		private boolean montando;
-		private boolean continua;
 		int xUltimoClick;
 		int yUltimoClick;
 
 		public PanelView() {
 			addMouseMotionListener(new OuvinteMouseMotion());
 			addMouseListener(new OuvinteMouse());
-			// new Thread(this).start();
 			reiniciar();
 		}
 
@@ -255,7 +255,6 @@ public class AbaView extends Panel {
 					objeto.vetor.rotacaoX(yUltimoClick - e.getY());
 					objeto.vetor.rotacaoY(xUltimoClick - e.getX());
 				}
-				// rotacionado = true;
 				xUltimoClick = e.getX();
 				yUltimoClick = e.getY();
 				repaint();
@@ -267,12 +266,6 @@ public class AbaView extends Panel {
 			public void mousePressed(MouseEvent e) {
 				xUltimoClick = e.getX();
 				yUltimoClick = e.getY();
-				parar();
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				continuar();
 			}
 
 			@Override
@@ -299,21 +292,40 @@ public class AbaView extends Panel {
 			}
 		}
 
-		/*
-		 * public void run() { while (true) { if (continua && rotacionar) { for
-		 * (int i = 0; i < formas.length; i++) { if (formas[i] != null &&
-		 * formas[i].vetor != null) { formas[i].vetor.rotacaoY(1); } }
-		 * rotacionado = true; repaint(); break; } try {
-		 * Thread.sleep(Config.getIntervaloRotacao()); } catch (Exception ex) {
-		 * log.log(Level.SEVERE, ex.getMessage()); } } }
-		 */
-
-		public void continuar() {
-			continua = true;
+		public synchronized void rotacionar(boolean b) {
+			if (b) {
+				iniciar();
+			} else {
+				parar();
+			}
 		}
 
-		public void parar() {
-			continua = false;
+		private void iniciar() {
+			if (thread == null) {
+				thread = new Thread(this);
+				thread.start();
+			}
+		}
+
+		private void parar() {
+			if (thread != null) {
+				thread.interrupt();
+				thread = null;
+			}
+		}
+
+		public void run() {
+			while (thread != null && !Thread.currentThread().isInterrupted()) {
+				for (Objeto objeto : objetos) {
+					objeto.vetor.rotacaoY(1);
+				}
+				repaint();
+				try {
+					Thread.sleep(Config.getIntervaloRotacao());
+				} catch (Exception ex) {
+					log.log(Level.SEVERE, ex.getMessage());
+				}
+			}
 		}
 
 		@Override
@@ -329,8 +341,7 @@ public class AbaView extends Panel {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			if (rotacionado) {
-				// Arrays.sort(formas);
-				// rotacionado = false;
+				Arrays.sort(objetos, comparador);
 			}
 			g.setColor(Color.LIGHT_GRAY);
 			if (desenharGrade) {
@@ -352,6 +363,8 @@ public class AbaView extends Panel {
 				objeto.desenhar(g2);
 			}
 		}
+
+		private transient Comparator<Objeto> comparador = (o1, o2) -> (int) (o1.vetor.z - o2.vetor.z);
 
 		private void paintGrade(Graphics g, int largura, int altura, int metadeAltura) {
 			int j = largura / 10;
@@ -383,7 +396,6 @@ public class AbaView extends Panel {
 		}
 
 		private synchronized void montar(Objeto objeto) {
-			// montando = true;
 			configOrganizador(objeto);
 
 			objeto.preDesenhar(0, 0, 0, Config.getDiametroObjetoCentro());
@@ -404,7 +416,6 @@ public class AbaView extends Panel {
 
 			associacoes = listaAssociacao.toArray(new Associacao[0]);
 			objetos = listaObjeto.toArray(new Objeto[0]);
-			// montando = false;
 			repaint();
 		}
 

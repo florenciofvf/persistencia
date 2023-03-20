@@ -7,11 +7,6 @@ import java.util.logging.Logger;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.plugins.mapa.Objeto;
 
-/*
- * 
- * organizador="randomico"
- * 
- */
 public class OrganizadorRandomico extends Organizador {
 	private static final Logger LOG = Logger.getGlobal();
 	private Random random = new Random();
@@ -41,10 +36,5 @@ public class OrganizadorRandomico extends Organizador {
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.INFO, e);
 		}
-	}
-
-	@Override
-	public void reiniciar() {
-		LOG.log(Level.INFO, Constantes.INFO);
 	}
 }

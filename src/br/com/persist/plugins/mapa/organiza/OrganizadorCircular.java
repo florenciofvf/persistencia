@@ -3,9 +3,7 @@ package br.com.persist.plugins.mapa.organiza;
 import br.com.persist.plugins.mapa.Objeto;
 
 /*
- * 
- * organizador="circular" organizadorParametros="grau"
- * 
+ * organizadorParametros="grau"
  */
 public class OrganizadorCircular extends Organizador {
 	private int grau = 15;

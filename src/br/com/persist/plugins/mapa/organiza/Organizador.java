@@ -16,7 +16,8 @@ public abstract class Organizador {
 
 	public abstract void organizar(Objeto objeto);
 
-	public abstract void reiniciar();
+	public void reiniciar() {
+	}
 
 	@Override
 	public String toString() {
