@@ -352,10 +352,19 @@ public class AbaView extends Panel {
 			}
 			int xOrigem = largura / 2;
 			int yOrigem = altura / 2;
-			for (Objeto objeto : objetos) {
-				objeto.xOrigem = xOrigem;
-				objeto.yOrigem = yOrigem;
-				objeto.desenhar(g2);
+			if (Config.isDesenharObjetoCentro()) {
+				for (Objeto objeto : objetos) {
+					objeto.xOrigem = xOrigem;
+					objeto.yOrigem = yOrigem;
+					objeto.desenhar(g2);
+				}
+			} else {
+				for (int i = 1; i < objetos.length; i++) {
+					Objeto objeto = objetos[i];
+					objeto.xOrigem = xOrigem;
+					objeto.yOrigem = yOrigem;
+					objeto.desenhar(g2);
+				}
 			}
 		}
 

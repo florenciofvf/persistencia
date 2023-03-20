@@ -46,9 +46,9 @@ public class Objeto {
 	}
 
 	public void preDesenhar(int x, int y, int z, int diametro) {
+		corGradiente2 = corRGB != null ? corRGB : Color.BLACK;
 		vetor = new Vetor3D(x, y, z);
 		corGradiente1 = Color.WHITE;
-		corGradiente2 = Color.BLACK;
 		this.diametro = diametro;
 	}
 
