@@ -70,17 +70,17 @@ public class Objeto {
 		g2.drawString("(" + filhos.size() + ")", (int) (xOrigem + vetor.x + 10),
 				(int) (yOrigem + vetor.y + diametMet + 10));
 
-		int metade = diamet / 2;
-		int xx = xOrigem + metade;
-		int yy = yOrigem + metade;
-		v.x = (double) (metade + 10);
-		v.y = 0;
-		v.z = 0;
-		v.rotacaoZ(-75);
-
 		if (Config.isDesenharAtributos()) {
 			int i = atributos.size();
 			if (i > 0) {
+				int metade = diamet / 2;
+				int xx = xOrigem + metade;
+				int yy = yOrigem + metade;
+				v.x = (double) (metade + 10);
+				v.y = 0;
+				v.z = 0;
+				v.rotacaoZ(-75);
+
 				int g = 180 / i;
 				for (Atributo a : atributos) {
 					g2.drawString(a.toString(), (int) (xx + vetor.x + v.x), (int) (yy + vetor.y + v.y));

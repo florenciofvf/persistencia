@@ -233,7 +233,6 @@ public class AbaView extends Panel {
 		private boolean desenharGrade2;
 		private boolean desenharGrade;
 		private boolean rotacionado;
-		private boolean montando;
 		int xUltimoClick;
 		int yUltimoClick;
 
@@ -334,10 +333,6 @@ public class AbaView extends Panel {
 			int largura = getWidth();
 			int altura = getHeight();
 			int metadeAltura = altura / 2;
-			if (montando) {
-				g.drawString("Montando objetos...", largura / 2, metadeAltura);
-				return;
-			}
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			if (rotacionado) {
