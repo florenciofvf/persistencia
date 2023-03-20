@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -501,5 +502,9 @@ public class AbaView extends Panel {
 
 	class PanelMenu extends Panel {
 		private static final long serialVersionUID = 1L;
+
+		PanelMenu() {
+			super(new GridLayout(0, 1));
+		}
 	}
 }
