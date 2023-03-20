@@ -1,6 +1,9 @@
 package br.com.persist.plugins.mapa;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,6 +16,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.plugins.mapa.organiza.Organizador;
 
 public class Objeto {
+	private Vetor3D v = new Vetor3D(0, 0, 0);
 	private final List<Atributo> atributos;
 	private final List<Objeto> referencias;
 	private final Set<Ref> setReferencias;
@@ -22,6 +26,13 @@ public class Objeto {
 	protected final String nome;
 	private Color corRGB;
 	private String menu;
+
+	Color corGradiente1;
+	Color corGradiente2;
+	Vetor3D vetor;
+	int diametro;
+	int xOrigem;
+	int yOrigem;
 
 	public Objeto(String nome) {
 		if (Util.estaVazio(nome)) {
@@ -33,6 +44,70 @@ public class Objeto {
 		setFilhos = new HashSet<>();
 		filhos = new ArrayList<>();
 		this.nome = nome;
+	}
+
+	public void preDesenhar(int x, int y, int z, int diametro) {
+		vetor = new Vetor3D(x, y, z);
+		corGradiente1 = Color.WHITE;
+		corGradiente2 = Color.BLACK;
+		this.diametro = diametro;
+	}
+
+	public void desenhar(Graphics2D g2) {
+		int diamet = this.diametro + (int) (vetor.z / 10);
+		int diametMet = diamet / 2;
+
+		GradientPaint gradiente = new GradientPaint((float) (xOrigem + vetor.x), (float) (yOrigem + vetor.y),
+				corGradiente1, (float) (xOrigem + vetor.x + diamet), (float) (yOrigem + vetor.y + diamet),
+				corGradiente2);
+
+		g2.setPaint(gradiente);
+
+		g2.fill(new Ellipse2D.Double(xOrigem + vetor.x, yOrigem + vetor.y, diamet, diamet));
+
+		g2.setColor(Color.BLACK);
+
+		g2.drawString(nome, (int) (xOrigem + vetor.x), (int) (yOrigem + vetor.y + diametMet));
+		g2.drawString("(" + filhos.size() + ")", (int) (xOrigem + vetor.x + 10),
+				(int) (yOrigem + vetor.y + diametMet + 10));
+
+		int metade = diamet / 2;
+		int xx = xOrigem + metade;
+		int yy = yOrigem + metade;
+		v.x = (double) (metade + 10);
+		v.y = 0;
+		v.z = 0;
+		v.rotacaoZ(-75);
+
+		if (Config.isDesenharAtributos()) {
+			int i = atributos.size();
+			if (i > 0) {
+				int g = 180 / i;
+				for (Atributo a : atributos) {
+					g2.drawString(a.toString(), (int) (xx + vetor.x + v.x), (int) (yy + vetor.y + v.y));
+					v.rotacaoZ(g);
+				}
+			}
+		}
+	}
+
+	public boolean contem(int x, int y) {
+		int diamet = this.diametro + (int) (vetor.z / 10);
+		return (x >= xOrigem + vetor.x && x <= xOrigem + vetor.x + diamet)
+				&& (y >= yOrigem + vetor.y && y <= yOrigem + vetor.y + diamet);
+	}
+
+	public int[] getXYCentro() {
+		int diamet = this.diametro + (int) (vetor.z / 10);
+		int metade = diamet / 2;
+		int[] xy = new int[2];
+		xy[0] = (int) (xOrigem + vetor.x + metade);
+		xy[1] = (int) (yOrigem + vetor.y + metade);
+		return xy;
+	}
+
+	public Vetor3D getVetor() {
+		return vetor;
 	}
 
 	public String getNome() {
@@ -62,14 +137,6 @@ public class Objeto {
 
 	public int getQtdReferencias() {
 		return referencias.size();
-	}
-
-	public int getQtdFilhos() {
-		return filhos.size();
-	}
-
-	public int getQtdAtributos() {
-		return atributos.size();
 	}
 
 	public List<Objeto> getFilhos() {

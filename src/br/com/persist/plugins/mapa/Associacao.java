@@ -3,10 +3,10 @@ package br.com.persist.plugins.mapa;
 import java.awt.Graphics2D;
 
 public class Associacao {
-	Forma origem;
-	Forma destino;
+	Objeto origem;
+	Objeto destino;
 
-	public Associacao(Forma origem, Forma destino) {
+	public Associacao(Objeto origem, Objeto destino) {
 		this.origem = origem;
 		this.destino = destino;
 	}

@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.persist.assistencia.Constantes;
-import br.com.persist.plugins.mapa.Forma;
+import br.com.persist.plugins.mapa.Objeto;
 
 /*
  * 
@@ -22,13 +22,13 @@ public class OrganizadorRandomico implements Organizador {
 	}
 
 	@Override
-	public void organizar(Forma forma) {
+	public void organizar(Objeto objeto) {
 		pausar();
-		forma.getVetor().rotacaoX(random.nextInt(360));
+		objeto.getVetor().rotacaoX(random.nextInt(360));
 		pausar();
-		forma.getVetor().rotacaoY(random.nextInt(360));
+		objeto.getVetor().rotacaoY(random.nextInt(360));
 		pausar();
-		forma.getVetor().rotacaoZ(random.nextInt(360));
+		objeto.getVetor().rotacaoZ(random.nextInt(360));
 	}
 
 	private void pausar() {

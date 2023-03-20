@@ -1,6 +1,6 @@
 package br.com.persist.plugins.mapa.organiza;
 
-import br.com.persist.plugins.mapa.Forma;
+import br.com.persist.plugins.mapa.Objeto;
 
 /*
  * 
@@ -30,10 +30,10 @@ public class OrganizadorBola implements Organizador {
 	}
 
 	@Override
-	public void organizar(Forma forma) {
+	public void organizar(Objeto objeto) {
 		if (estagio == 0) {
-			forma.getVetor().rotacaoZ(deslocamento);
-			forma.getVetor().rotacaoY(soma);
+			objeto.getVetor().rotacaoZ(deslocamento);
+			objeto.getVetor().rotacaoY(soma);
 			soma += grau;
 			if (soma > 340) {
 				soma = 0;
@@ -41,8 +41,8 @@ public class OrganizadorBola implements Organizador {
 				deslocamento += deslocamentoDelta;
 			}
 		} else if (estagio == 1) {
-			forma.getVetor().rotacaoY(deslocamento);
-			forma.getVetor().rotacaoZ(soma);
+			objeto.getVetor().rotacaoY(deslocamento);
+			objeto.getVetor().rotacaoZ(soma);
 			soma += grau;
 			if (soma > 340) {
 				soma = 0;

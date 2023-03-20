@@ -1,6 +1,6 @@
 package br.com.persist.plugins.mapa.organiza;
 
-import br.com.persist.plugins.mapa.Forma;
+import br.com.persist.plugins.mapa.Objeto;
 
 /*
  * 
@@ -30,8 +30,8 @@ public class OrganizadorSequencia implements Organizador {
 	}
 
 	@Override
-	public void organizar(Forma forma) {
-		forma.getVetor().setX(posicaoX);
+	public void organizar(Objeto objeto) {
+		objeto.getVetor().setX(posicaoX);
 		posicaoX -= distancia;
 	}
 
