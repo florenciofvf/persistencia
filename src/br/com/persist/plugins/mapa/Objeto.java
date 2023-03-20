@@ -19,17 +19,16 @@ public class Objeto {
 	private Vetor3D v = new Vetor3D(0, 0, 0);
 	private final List<Atributo> atributos;
 	private final List<Objeto> referencias;
-	private final Set<Ref> setReferencias;
 	private final List<Objeto> filhos;
-	private final Set<Add> setFilhos;
 	private Organizador organizador;
+	private final Set<Add> setAdds;
+	private final Set<Ref> setRefs;
 	protected final String nome;
-	private Color corRGB;
-	private String menu;
-
 	private Color corGradiente1;
 	private Color corGradiente2;
 	private int diametro;
+	private Color corRGB;
+	private String menu;
 	Vetor3D vetor;
 	int xOrigem;
 	int yOrigem;
@@ -38,11 +37,11 @@ public class Objeto {
 		if (Util.estaVazio(nome)) {
 			throw new IllegalArgumentException("Nome do objeto vazio.");
 		}
-		setReferencias = new HashSet<>();
 		referencias = new ArrayList<>();
 		atributos = new ArrayList<>();
-		setFilhos = new HashSet<>();
 		filhos = new ArrayList<>();
+		setAdds = new HashSet<>();
+		setRefs = new HashSet<>();
 		this.nome = nome;
 	}
 
@@ -135,28 +134,24 @@ public class Objeto {
 		return atributos;
 	}
 
-	public int getQtdReferencias() {
-		return referencias.size();
-	}
-
 	public List<Objeto> getFilhos() {
 		return filhos;
 	}
 
 	public void adicionar(Add add) {
-		if (add != null) {
-			setFilhos.add(add);
+		if (add != null && !add.getNome().equalsIgnoreCase(nome)) {
+			setAdds.add(add);
 		}
 	}
 
 	public void adicionar(Ref ref) {
-		if (ref != null) {
-			setReferencias.add(ref);
+		if (ref != null && !ref.getNome().equalsIgnoreCase(nome)) {
+			setRefs.add(ref);
 		}
 	}
 
 	public void adicionar(Objeto objeto, boolean ref) {
-		if (objeto == null) {
+		if (objeto == null || objeto.equals(this)) {
 			return;
 		}
 		if (ref && !referencias.contains(objeto)) {
@@ -201,13 +196,13 @@ public class Objeto {
 	}
 
 	public void resolverReferencias(MapaHandler mapaHandler) {
-		Iterator<Ref> itRef = setReferencias.iterator();
+		Iterator<Ref> itRef = setRefs.iterator();
 		while (itRef.hasNext()) {
 			Ref ref = itRef.next();
 			Objeto obj = mapaHandler.getObjeto(ref.getNome());
 			adicionar(obj, true);
 		}
-		Iterator<Add> itAdd = setFilhos.iterator();
+		Iterator<Add> itAdd = setAdds.iterator();
 		while (itAdd.hasNext()) {
 			Add add = itAdd.next();
 			Objeto obj = mapaHandler.getObjeto(add.getNome());
@@ -266,6 +261,12 @@ public class Objeto {
 	}
 
 	public List<Associacao> criarAssociacoes(List<Objeto> objetos) {
-		return new ArrayList<>();
+		List<Associacao> resp = new ArrayList<>();
+		for (Objeto obj : referencias) {
+			if (objetos.contains(obj)) {
+				resp.add(new Associacao(this, obj));
+			}
+		}
+		return resp;
 	}
 }

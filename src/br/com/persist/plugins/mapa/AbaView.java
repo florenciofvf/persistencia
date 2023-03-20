@@ -61,7 +61,7 @@ public class AbaView extends Panel {
 		panelView.reiniciar();
 		try {
 			mapaHandler = MontaObjeto.montarObjeto(file);
-			configRaiz();
+			configuracoes();
 			for (Objeto obj : mapaHandler.getObjetos()) {
 				obj.resolverReferencias(mapaHandler);
 				if (obj.getMenu() != null) {
@@ -74,7 +74,7 @@ public class AbaView extends Panel {
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 
-	private void configRaiz() {
+	private void configuracoes() {
 		Objeto raiz = mapaHandler.getRaiz();
 		if (raiz != null) {
 			Atributo atributo = raiz.getAtributo("diametroObjeto");

@@ -9,7 +9,7 @@ import org.xml.sax.SAXException;
 import br.com.persist.marca.XMLHandler;
 
 public class MapaHandler extends XMLHandler {
-	private Set<Objeto> objetos = new HashSet<>();
+	private final Set<Objeto> objetos = new HashSet<>();
 	private Objeto selecionado;
 	private Objeto raiz;
 
