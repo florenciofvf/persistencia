@@ -23,11 +23,19 @@ public abstract class Organizador {
 		return id;
 	}
 
-	public static class Organizadores {
+	public static Organizador get(Objeto objeto) {
+		return OrganizadorCache.get(objeto);
+	}
+
+	public static Organizador get(String nome) {
+		return OrganizadorCache.get(nome);
+	}
+
+	public static class OrganizadorCache {
 		private static final Map<String, Organizador> cache = new HashMap<>();
 		private static final Organizador padrao = new OrganizadorRandomico();
 
-		private Organizadores() {
+		private OrganizadorCache() {
 		}
 
 		public static Organizador get(Objeto objeto) {

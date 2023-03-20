@@ -27,10 +27,10 @@ public class Objeto {
 	private Color corRGB;
 	private String menu;
 
-	Color corGradiente1;
-	Color corGradiente2;
+	private Color corGradiente1;
+	private Color corGradiente2;
+	private int diametro;
 	Vetor3D vetor;
-	int diametro;
 	int xOrigem;
 	int yOrigem;
 
@@ -240,6 +240,16 @@ public class Objeto {
 			return false;
 		}
 		return true;
+	}
+
+	public Color getCorGradiente1() {
+		return corGradiente1;
+	}
+
+	public void setCorGradiente1(Color corGradiente1) {
+		if (corGradiente1 != null) {
+			this.corGradiente1 = corGradiente1;
+		}
 	}
 
 	@Override

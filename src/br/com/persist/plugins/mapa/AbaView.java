@@ -15,10 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +23,7 @@ import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -37,14 +35,8 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.TextField;
 import br.com.persist.plugins.mapa.organiza.Organizador;
-import br.com.persist.plugins.mapa.organiza.OrganizadorBola;
-import br.com.persist.plugins.mapa.organiza.OrganizadorCircular;
-import br.com.persist.plugins.mapa.organiza.OrganizadorRandomico;
-import br.com.persist.plugins.mapa.organiza.OrganizadorSequencia;
 
 public class AbaView extends Panel {
-	private transient Organizador organizadorPadrao = new OrganizadorRandomico();
-	private static Map<String, Organizador> organizadores = new HashMap<>();
 	private final ToolbarParametro toolbar = new ToolbarParametro();
 	private transient Logger log = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
@@ -64,24 +56,6 @@ public class AbaView extends Panel {
 		add(BorderLayout.EAST, panelMenu);
 	}
 
-	static {
-		organizadores.put("sequencia", new OrganizadorSequencia());
-		organizadores.put("randomico", new OrganizadorRandomico());
-		organizadores.put("circular", new OrganizadorCircular());
-		organizadores.put("bola", new OrganizadorBola());
-	}
-
-	Organizador getOrganizador(Objeto objeto) {
-		return objeto.getOrganizador() != null ? objeto.getOrganizador() : organizadorPadrao;
-	}
-
-	public static Organizador getOrganizador(String nome) {
-		if (nome != null) {
-			nome = nome.trim().toLowerCase();
-		}
-		return organizadores.get(nome);
-	}
-
 	public void carregar(File file) {
 		panelMenu.removeAll();
 		panelView.reiniciar();
@@ -96,6 +70,29 @@ public class AbaView extends Panel {
 			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(MapaConstantes.PAINEL_MAPA, ex, AbaView.this);
+		}
+		SwingUtilities.updateComponentTreeUI(this);
+	}
+
+	private void configRaiz() {
+		Objeto raiz = mapaHandler.getRaiz();
+		if (raiz != null) {
+			Atributo atributo = raiz.getAtributo("diametroObjeto");
+			if (atributo != null) {
+				Config.setDiametroObjeto(atributo.getValorInt());
+			}
+			atributo = raiz.getAtributo("diametroObjetoCentro");
+			if (atributo != null) {
+				Config.setDiametroObjetoCentro(atributo.getValorInt());
+			}
+			atributo = raiz.getAtributo("distanciaCentro");
+			if (atributo != null) {
+				Config.setDistanciaCentro(atributo.getValorInt());
+			}
+			atributo = raiz.getAtributo("intervaloRotacao");
+			if (atributo != null) {
+				Config.setIntervaloRotacao(atributo.getValorInt());
+			}
 		}
 	}
 
@@ -216,28 +213,6 @@ public class AbaView extends Panel {
 		}
 	}
 
-	private void configRaiz() {
-		Objeto raiz = mapaHandler.getRaiz();
-		if (raiz != null) {
-			Atributo atributo = raiz.getAtributo("diametroObjeto");
-			if (atributo != null) {
-				Config.setDiametroObjeto(atributo.getValorInt());
-			}
-			atributo = raiz.getAtributo("diametroObjetoCentro");
-			if (atributo != null) {
-				Config.setDiametroObjetoCentro(atributo.getValorInt());
-			}
-			atributo = raiz.getAtributo("distanciaCentro");
-			if (atributo != null) {
-				Config.setDistanciaCentro(atributo.getValorInt());
-			}
-			atributo = raiz.getAtributo("intervaloRotacao");
-			if (atributo != null) {
-				Config.setIntervaloRotacao(atributo.getValorInt());
-			}
-		}
-	}
-
 	static Action actionMenu(String chave, Icon icon) {
 		return Action.acaoMenu(MapaMensagens.getString(chave), icon);
 	}
@@ -246,19 +221,18 @@ public class AbaView extends Panel {
 		return actionMenu(chave, null);
 	}
 
-	class PanelView extends Panel implements Runnable {
+	class PanelView extends Panel /* implements Runnable */ {
 		private static final long serialVersionUID = 1L;
 		private transient Logger log = Logger.getGlobal();
-		private transient Evento evento = new Evento();
 		private transient Associacao[] associacoes;
 		private boolean desenharAssociacoes;
+		private transient Objeto[] objetos;
 		private boolean desenharGrade2;
 		private boolean desenharGrade;
 		private boolean rotacionado;
 		private boolean rotacionar;
 		private boolean montando;
 		private boolean continua;
-		transient Forma[] formas;
 		int xUltimoClick;
 		int yUltimoClick;
 
@@ -271,39 +245,17 @@ public class AbaView extends Panel {
 
 		public void reiniciar() {
 			associacoes = new Associacao[0];
-			formas = new Forma[0];
-		}
-
-		private class T extends Thread {
-			Evento.THREAD thread;
-
-			T(Evento.THREAD thread) {
-				this.thread = thread;
-			}
-
-			@Override
-			public void run() {
-				Click click = thread.getClick();
-				if (click == null) {
-					return;
-				}
-				Forma forma = getForma(click);
-				if (forma != null) {
-					montar(forma.objeto);
-				}
-			}
+			objetos = new Objeto[0];
 		}
 
 		private class OuvinteMouseMotion extends MouseMotionAdapter {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				for (int i = 0; i < formas.length; i++) {
-					if (formas[i] != null && formas[i].vetor != null) {
-						formas[i].vetor.rotacaoX(yUltimoClick - e.getY());
-						formas[i].vetor.rotacaoY(xUltimoClick - e.getX());
-					}
+				for (Objeto objeto : objetos) {
+					objeto.vetor.rotacaoX(yUltimoClick - e.getY());
+					objeto.vetor.rotacaoY(xUltimoClick - e.getX());
 				}
-				rotacionado = true;
+				// rotacionado = true;
 				xUltimoClick = e.getX();
 				yUltimoClick = e.getY();
 				repaint();
@@ -325,48 +277,36 @@ public class AbaView extends Panel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				evento.click(e);
-				Evento.THREAD thread = evento.get();
-				new T(thread).start();
+				Objeto objeto = getObjeto(e);
+				if (objeto != null) {
+					montar(objeto);
+				}
+			}
+
+			private Objeto getObjeto(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				int xOrigem = getWidth() / 2;
+				int yOrigem = getHeight() / 2;
+				for (int i = objetos.length - 1; i >= 0; i--) {
+					objetos[i].xOrigem = xOrigem;
+					objetos[i].yOrigem = yOrigem;
+					if (objetos[i].contem(x, y)) {
+						return objetos[i];
+					}
+				}
+				return null;
 			}
 		}
 
-		public Forma getForma(Click e) {
-			int x = e.getX();
-			int y = e.getY();
-			int xOrigem = getWidth() / 2;
-			int yOrigem = getHeight() / 2;
-			for (int i = formas.length - 1; i >= 0; i--) {
-				if (formas[i] != null) {
-					formas[i].xOrigem = xOrigem;
-					formas[i].yOrigem = yOrigem;
-					if (formas[i].contem(x, y)) {
-						return formas[i];
-					}
-				}
-			}
-			return null;
-		}
-
-		public void run() {
-			while (true) {
-				if (continua && rotacionar) {
-					for (int i = 0; i < formas.length; i++) {
-						if (formas[i] != null && formas[i].vetor != null) {
-							formas[i].vetor.rotacaoY(1);
-						}
-					}
-					rotacionado = true;
-					repaint();
-					break;
-				}
-				try {
-					Thread.sleep(Config.getIntervaloRotacao());
-				} catch (Exception ex) {
-					log.log(Level.SEVERE, ex.getMessage());
-				}
-			}
-		}
+		/*
+		 * public void run() { while (true) { if (continua && rotacionar) { for
+		 * (int i = 0; i < formas.length; i++) { if (formas[i] != null &&
+		 * formas[i].vetor != null) { formas[i].vetor.rotacaoY(1); } }
+		 * rotacionado = true; repaint(); break; } try {
+		 * Thread.sleep(Config.getIntervaloRotacao()); } catch (Exception ex) {
+		 * log.log(Level.SEVERE, ex.getMessage()); } } }
+		 */
 
 		public void continuar() {
 			continua = true;
@@ -377,7 +317,7 @@ public class AbaView extends Panel {
 		}
 
 		@Override
-		public void paint(Graphics g) {
+		public synchronized void paint(Graphics g) {
 			super.paint(g);
 			int largura = getWidth();
 			int altura = getHeight();
@@ -389,8 +329,8 @@ public class AbaView extends Panel {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			if (rotacionado) {
-				Arrays.sort(formas);
-				rotacionado = false;
+				// Arrays.sort(formas);
+				// rotacionado = false;
 			}
 			g.setColor(Color.LIGHT_GRAY);
 			if (desenharGrade) {
@@ -406,10 +346,10 @@ public class AbaView extends Panel {
 			}
 			int xOrigem = largura / 2;
 			int yOrigem = altura / 2;
-			for (Forma forma : formas) {
-				forma.xOrigem = xOrigem;
-				forma.yOrigem = yOrigem;
-				forma.desenhar(g2);
+			for (Objeto objeto : objetos) {
+				objeto.xOrigem = xOrigem;
+				objeto.yOrigem = yOrigem;
+				objeto.desenhar(g2);
 			}
 		}
 
@@ -432,33 +372,51 @@ public class AbaView extends Panel {
 		}
 
 		public void localizar(String s) {
-			if (s == null) {
-				return;
-			}
-			for (Forma f : formas) {
-				Objeto o = f.getObjeto();
-				if (o.getNome().equalsIgnoreCase(s)) {
-					f.setCorGradiente1(Color.GREEN);
+			if (s != null) {
+				for (Objeto objeto : objetos) {
+					if (objeto.nome.equalsIgnoreCase(s)) {
+						objeto.setCorGradiente1(Color.GREEN);
+					}
 				}
+				repaint();
 			}
+		}
+
+		private synchronized void montar(Objeto objeto) {
+			// montando = true;
+			configOrganizador(objeto);
+
+			objeto.preDesenhar(0, 0, 0, Config.getDiametroObjetoCentro());
+			List<Objeto> listaObjeto = new ArrayList<>();
+			listaObjeto.add(objeto);
+
+			for (Objeto obj : objeto.getFilhos()) {
+				obj.preDesenhar(Config.getDistanciaCentro(), 0, 0, Config.getDiametroObjeto());
+				objeto.getOrganizador().organizar(obj);
+				listaObjeto.add(obj);
+			}
+
+			List<Associacao> listaAssociacao = new ArrayList<>();
+			listaAssociacao.addAll(objeto.criarAssociacoes(objeto.getFilhos()));
+			for (Objeto obj : objeto.getFilhos()) {
+				listaAssociacao.addAll(obj.criarAssociacoes(objeto.getFilhos()));
+			}
+
+			associacoes = listaAssociacao.toArray(new Associacao[0]);
+			objetos = listaObjeto.toArray(new Objeto[0]);
+			// montando = false;
 			repaint();
 		}
 
-		private Circulo criar(Objeto objeto, Organizador organizador) {
-			Circulo c = new Circulo(Config.getDistanciaCentro(), 0, 0, Config.getDiametroObjeto(), objeto);
-			// c.setCorGradienteRef(obj.ref);
-			organizador.organizar(c);
-			return c;
-		}
-
-		private Organizador configOrganizador(Objeto objeto) {
+		private void configOrganizador(Objeto objeto) {
 			if (objeto.getOrganizador() != null) {
-				return objeto.getOrganizador();
+				objeto.getOrganizador().reiniciar();
+				return;
 			}
 			Organizador organizador = null;
 			Atributo atributo = objeto.getAtributo("organizador");
 			if (atributo != null) {
-				organizador = getOrganizador(atributo.getValor());
+				organizador = Organizador.get(atributo.getValor());
 				if (organizador != null) {
 					atributo = objeto.getAtributo("organizadorParametros");
 					if (atributo != null) {
@@ -467,36 +425,10 @@ public class AbaView extends Panel {
 				}
 			}
 			if (organizador == null) {
-				organizador = getOrganizador(objeto);
+				organizador = Organizador.get(objeto);
 			}
 			objeto.setOrganizador(organizador);
-			return organizador;
-		}
-
-		public void montar(Objeto objeto) {
-			montando = true;
-			Organizador organizador = configOrganizador(objeto);
 			organizador.reiniciar();
-
-			formas = new Forma[objeto.getQtdFilhos() + 1];
-			Circulo c = new Circulo(0, 0, 0, Config.getDiametroObjetoCentro(), objeto);
-			c.centro = true;
-			formas[0] = c;
-
-			int i = 0;
-			for (Objeto obj : objeto.getFilhos()) {
-				formas[++i] = criar(obj, organizador);
-			}
-
-			List<Associacao> lista = new ArrayList<>();
-			lista.addAll(objeto.criarAssociacoes(objeto.getFilhos()));
-			for (Objeto obj : objeto.getFilhos()) {
-				lista.addAll(obj.criarAssociacoes(objeto.getFilhos()));
-			}
-
-			associacoes = lista.toArray(new Associacao[0]);
-			montando = false;
-			repaint();
 		}
 	}
 
