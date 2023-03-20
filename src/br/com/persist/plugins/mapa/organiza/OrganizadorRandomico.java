@@ -12,9 +12,13 @@ import br.com.persist.plugins.mapa.Objeto;
  * organizador="randomico"
  * 
  */
-public class OrganizadorRandomico implements Organizador {
+public class OrganizadorRandomico extends Organizador {
 	private static final Logger LOG = Logger.getGlobal();
 	private Random random = new Random();
+
+	public OrganizadorRandomico() {
+		super("randomico");
+	}
 
 	@Override
 	public void parametros(String string) {

@@ -7,7 +7,7 @@ import br.com.persist.plugins.mapa.Objeto;
  * organizador="bola" organizadorParametros="grau deslocamento"
  * 
  */
-public class OrganizadorBola implements Organizador {
+public class OrganizadorBola extends Organizador {
 	private int deslocamentoDelta;
 	private int deslocamento;
 	private int grau = 15;
@@ -15,6 +15,7 @@ public class OrganizadorBola implements Organizador {
 	private int soma;
 
 	public OrganizadorBola() {
+		super("bola");
 		reiniciar();
 	}
 

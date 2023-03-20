@@ -7,11 +7,12 @@ import br.com.persist.plugins.mapa.Objeto;
  * organizador="circular" organizadorParametros="grau"
  * 
  */
-public class OrganizadorCircular implements Organizador {
+public class OrganizadorCircular extends Organizador {
 	private int grau = 15;
 	private int soma;
 
 	public OrganizadorCircular() {
+		super("circular");
 		reiniciar();
 	}
 

@@ -7,12 +7,13 @@ import br.com.persist.plugins.mapa.Objeto;
  * organizador="sequencia" organizadorParametros="totalObjetos distancia"
  * 
  */
-public class OrganizadorSequencia implements Organizador {
+public class OrganizadorSequencia extends Organizador {
 	private int distancia;
 	private int posicaoX;
 	private int total;
 
 	public OrganizadorSequencia() {
+		super("sequencia");
 		reiniciar();
 	}
 
