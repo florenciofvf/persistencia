@@ -15,8 +15,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -255,6 +253,7 @@ public class AbaView extends Panel {
 				}
 				xUltimoClick = e.getX();
 				yUltimoClick = e.getY();
+				ordenarObjetos();
 				repaint();
 			}
 		}
@@ -317,6 +316,7 @@ public class AbaView extends Panel {
 				for (Objeto objeto : objetos) {
 					objeto.vetor.rotacaoY(1);
 				}
+				ordenarObjetos();
 				repaint();
 				try {
 					Thread.sleep(Config.getIntervaloRotacao());
@@ -334,7 +334,6 @@ public class AbaView extends Panel {
 			int metadeAltura = altura / 2;
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			Arrays.sort(objetos, comparador);
 			g.setColor(Color.LIGHT_GRAY);
 			if (desenharGrade) {
 				paintGrade(g, largura, altura, metadeAltura);
@@ -356,16 +355,29 @@ public class AbaView extends Panel {
 					objeto.desenhar(g2);
 				}
 			} else {
-				for (int i = 1; i < objetos.length; i++) {
-					Objeto objeto = objetos[i];
+				for (Objeto objeto : objetos) {
 					objeto.xOrigem = xOrigem;
 					objeto.yOrigem = yOrigem;
+					if (objeto.centro) {
+						continue;
+					}
 					objeto.desenhar(g2);
 				}
 			}
 		}
 
-		private transient Comparator<Objeto> comparador = (o1, o2) -> (int) (o1.vetor.z - o2.vetor.z);
+		private void ordenarObjetos() {
+			for (int i = 0; i < objetos.length; i++) {
+				for (int j = 0; j < objetos.length; j++) {
+					if (objetos[i].vetor.z < objetos[j].vetor.z) {
+						Objeto objI = objetos[i];
+						Objeto objJ = objetos[j];
+						objetos[i] = objJ;
+						objetos[j] = objI;
+					}
+				}
+			}
+		}
 
 		private void paintGrade(Graphics g, int largura, int altura, int metadeAltura) {
 			int j = largura / 10;
@@ -417,6 +429,10 @@ public class AbaView extends Panel {
 
 			associacoes = listaAssociacao.toArray(new Associacao[0]);
 			objetos = listaObjeto.toArray(new Objeto[0]);
+			for (Objeto obj : objetos) {
+				obj.centro = false;
+			}
+			objeto.centro = true;
 			repaint();
 		}
 

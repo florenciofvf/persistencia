@@ -29,6 +29,7 @@ public class Objeto {
 	private int diametro;
 	private Color corRGB;
 	private String menu;
+	boolean centro;
 	Vetor3D vetor;
 	int xOrigem;
 	int yOrigem;
