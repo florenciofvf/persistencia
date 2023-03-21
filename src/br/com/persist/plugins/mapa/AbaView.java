@@ -38,7 +38,6 @@ import br.com.persist.plugins.mapa.organiza.Organizador;
 
 public class AbaView extends Panel {
 	private final ToolbarParametro toolbar = new ToolbarParametro();
-	private transient Logger log = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
 	private PanelView panelView = new PanelView();
 	private PanelMenu panelMenu = new PanelMenu();
@@ -170,16 +169,7 @@ public class AbaView extends Panel {
 			private void velocidade() {
 				String s = JOptionPane.showInputDialog(AbaView.this, MapaMensagens.getString("label.velocidade"),
 						"" + Config.getIntervaloRotacao());
-				if (s != null) {
-					try {
-						int i = Integer.parseInt(s);
-						if (i >= Config.getVelocidadeMinimaRotacao() && i <= Config.getVelocidadeMaximaRotacao()) {
-							Config.setIntervaloRotacao(i);
-						}
-					} catch (Exception ex) {
-						log.log(Level.SEVERE, ex.getMessage());
-					}
-				}
+				Config.setIntervaloRotacao(Util.getInt(s, Config.getIntervaloRotacao()));
 			}
 
 			private boolean isSelected(ActionEvent e) {

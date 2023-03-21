@@ -4,30 +4,22 @@ public class Config {
 	private Config() {
 	}
 
-	private static int velocidadeMaximaRotacao = 10000;
-	private static int velocidadeMinimaRotacao = 100;
-	private static int intervaloRotacao = velocidadeMinimaRotacao;
+	private static final int VELOCIDADE_MAXIMA_ROTACAO = 50000;
+	private static final int VELOCIDADE_MINIMA_ROTACAO = 10;
 	private static int intervaloDuploClick = 400;
 	private static int diametroObjetoCentro = 60;
 	private static boolean desenharObjetoCentro;
+	private static int intervaloRotacao = 100;
 	private static boolean desenharAtributos;
 	private static int distanciaCentro = 200;
 	private static int diametroObjeto = 30;
 
 	public static int getVelocidadeMaximaRotacao() {
-		return velocidadeMaximaRotacao;
-	}
-
-	public static void setVelocidadeMaximaRotacao(int velocidadeMaximaRotacao) {
-		Config.velocidadeMaximaRotacao = velocidadeMaximaRotacao;
+		return VELOCIDADE_MAXIMA_ROTACAO;
 	}
 
 	public static int getVelocidadeMinimaRotacao() {
-		return velocidadeMinimaRotacao;
-	}
-
-	public static void setVelocidadeMinimaRotacao(int velocidadeMinimaRotacao) {
-		Config.velocidadeMinimaRotacao = velocidadeMinimaRotacao;
+		return VELOCIDADE_MINIMA_ROTACAO;
 	}
 
 	public static int getIntervaloRotacao() {
@@ -35,7 +27,9 @@ public class Config {
 	}
 
 	public static void setIntervaloRotacao(int intervaloRotacao) {
-		Config.intervaloRotacao = intervaloRotacao;
+		if (intervaloRotacao >= VELOCIDADE_MINIMA_ROTACAO && intervaloRotacao <= VELOCIDADE_MAXIMA_ROTACAO) {
+			Config.intervaloRotacao = intervaloRotacao;
+		}
 	}
 
 	public static int getIntervaloDuploClick() {
