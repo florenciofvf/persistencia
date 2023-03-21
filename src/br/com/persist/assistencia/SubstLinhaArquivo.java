@@ -46,7 +46,7 @@ public class SubstLinhaArquivo {
 		return lista;
 	}
 
-	private static Linha getLinha(String absoluto, int num) throws IOException {
+	public static Linha getLinha(String absoluto, int num) throws IOException {
 		Arquivo arquivo = new Arquivo(absoluto, null);
 		return arquivo.getLinhaArquivo(num);
 	}
@@ -64,7 +64,7 @@ public class SubstLinhaArquivo {
 		return string.substring(0, posIni + 1) + novaVersao + string.substring(posFim);
 	}
 
-	private static void substituirVersao(String absoluto, String tag, String novaVersao) throws IOException {
+	private static void atualizarVersao(String absoluto, String tag, String novaVersao) throws IOException {
 		Linha linha = getLinhas(absoluto, "<" + tag + ">", "</" + tag + ">").get(0);
 		String novaString = trocarVersao(linha.string, novaVersao);
 		Arquivo arquivo = new Arquivo(absoluto, new Linha(linha.numero, novaString));
@@ -91,34 +91,38 @@ public class SubstLinhaArquivo {
 		String utils = getVersao(pomUtils);
 
 		// FISCALIZACAO-REST
-		substituirVersao(pomFiscalizRest, "siproquim-fiscalizacao-client.version", client);
-		substituirVersao(pomFiscalizRest, "siproquim-domain.version", domain);
-		substituirVersao(pomFiscalizRest, "siproquim-utils.version", utils);
-
-		// FISCALIZACAO-REST-CLIENT
-		substituirVersao(pomFiscalizRestClient, "siproquim-utils.version", utils);
-
-		// MAPAS-BATCH
-		substituirVersao(pomMapasBatch, "version.common.domain", domain);
-		substituirVersao(pomMapasBatch, "version.common.utils", utils);
-
-		// MAPAS-REST
-		substituirVersao(pomMapasRest, "version.common.domain", domain);
-		substituirVersao(pomMapasRest, "version.common.utils", utils);
-
-		// CADASTRO-REST
-		substituirVersao(pomCadastro, "version.common.domain", domain);
+		atualizarVersao(pomFiscalizRest, "siproquim-fiscalizacao-client.version", client);
+		atualizarVersao(pomFiscalizRest, "siproquim-domain.version", domain);
+		atualizarVersao(pomFiscalizRest, "siproquim-utils.version", utils);
 
 		// OFFLINE
-		substituirVersao(pomOffline, "version.siproquim-fiscalizacao-client", client);
-		substituirVersao(pomOffline, "version.siproquim-common-utils", utils);
-		Linha linha = getLinha(pomOffline, 97);
-		substituirLinha(pomOffline, linha.numero, check(linha.string, "<!--", true));
-		linha = getLinha(pomOffline, 102);
-		substituirLinha(pomOffline, linha.numero, check(linha.string, "-->", false));
+		atualizarVersao(pomOffline, "version.siproquim-fiscalizacao-client", client);
+		atualizarVersao(pomOffline, "version.siproquim-common-utils", utils);
+		corrigirBuildDeployLocal(pomOffline);
+
+		// FISCALIZACAO-REST-CLIENT
+		atualizarVersao(pomFiscalizRestClient, "siproquim-utils.version", utils);
+
+		// MAPAS-BATCH
+		atualizarVersao(pomMapasBatch, "version.common.domain", domain);
+		atualizarVersao(pomMapasBatch, "version.common.utils", utils);
+
+		// MAPAS-REST
+		atualizarVersao(pomMapasRest, "version.common.domain", domain);
+		atualizarVersao(pomMapasRest, "version.common.utils", utils);
+
+		// CADASTRO-REST
+		atualizarVersao(pomCadastro, "version.common.domain", domain);
 
 		// UTILS
-		substituirVersao(pomUtils, "version.siproquim-domain", domain);
+		atualizarVersao(pomUtils, "version.siproquim-domain", domain);
+	}
+
+	private static void corrigirBuildDeployLocal(String pomOffline) throws IOException {
+		Linha linha = getLinhas(pomOffline, "<exclusions>").get(0);
+		substituirLinha(pomOffline, linha.numero, check(linha.string, "<!--", true));
+		linha = getLinhas(pomOffline, "</exclusions>").get(0);
+		substituirLinha(pomOffline, linha.numero, check(linha.string, "-->", false));
 	}
 
 	static String check(String string, String delta, boolean inicio) {
