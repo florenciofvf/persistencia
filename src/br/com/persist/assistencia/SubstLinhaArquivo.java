@@ -33,7 +33,12 @@ public class SubstLinhaArquivo {
 
 	private static Linha getLinha(String absoluto, String strInicio, String strFinal) throws IOException {
 		Arquivo arquivo = new Arquivo(absoluto, null);
-		return arquivo.getLinhaArquivo(strInicio, strFinal);
+		Linha linha = arquivo.getLinhaArquivo(strInicio, strFinal);
+		if (linha == null) {
+			throw new IOException("Nenhuma linha come\u00E7ando com <<<[" + strInicio + "]>>> e finalizando com <<<["
+					+ strFinal + "]>>> no arquivo <<<[" + absoluto + "]>>>");
+		}
+		return linha;
 	}
 
 	private static Linha getLinha(String absoluto, int num) throws IOException {
