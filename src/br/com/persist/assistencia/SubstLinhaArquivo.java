@@ -24,11 +24,16 @@ public class SubstLinhaArquivo {
 		return string.substring(0, posIni + 1) + novaVersao + string.substring(posFim);
 	}
 
-	private static String getVersao(String absoluto, int num) throws IOException {
-		String string = getLinha(absoluto, num);
+	private static String getVersao(String absoluto) throws IOException {
+		String string = getLinha(absoluto, "<version>", "</version>");
 		int posIni = string.indexOf('>');
 		int posFim = string.indexOf("</");
 		return string.substring(posIni + 1, posFim);
+	}
+
+	private static String getLinha(String absoluto, String strInicio, String strFinal) throws IOException {
+		Arquivo arquivo = new Arquivo(absoluto, null);
+		return arquivo.getLinhaArquivo(strInicio, strFinal).string;
 	}
 
 	private static String getLinha(String absoluto, int num) throws IOException {
@@ -58,9 +63,9 @@ public class SubstLinhaArquivo {
 		String pomCadastro = "/Users/florenciovieirafilho/desenv/projetos/siproquim/siproquim-rest/pom.xml";
 		String pomUtils = "/Users/florenciovieirafilho/desenv/projetos/siproquim-common-utils/pom.xml";
 
-		String versaoClient = getVersao(pomFiscalizRestClient, 9);
-		String versaoDomain = getVersao(pomDomain, 7);
-		String versaoUtils = getVersao(pomUtils, 9);
+		String versaoClient = getVersao(pomFiscalizRestClient);
+		String versaoDomain = getVersao(pomDomain);
+		String versaoUtils = getVersao(pomUtils);
 
 		// FISCALIZACAO-REST-CLIENT
 		substituirVersao(pomFiscalizRestClient, 14, versaoUtils);
@@ -162,6 +167,26 @@ class Arquivo {
 		}
 		String string = arquivo.get(num - 1);
 		return new Linha(num, string);
+	}
+
+	Linha getLinhaArquivo(String strInicio, String strFinal) throws IOException {
+		if (isEmpty(strInicio) || isEmpty(strFinal)) {
+			return null;
+		}
+		strInicio = strInicio.trim();
+		strFinal = strFinal.trim();
+		List<String> arquivo = lerArquivo();
+		for (int i = 0; i < arquivo.size(); i++) {
+			String string = arquivo.get(i).trim();
+			if (string.startsWith(strInicio) && string.endsWith(strFinal)) {
+				return new Linha(i + 1, arquivo.get(i));
+			}
+		}
+		return null;
+	}
+
+	private boolean isEmpty(String string) {
+		return string == null || string.trim().isEmpty();
 	}
 
 	private void checarArquivo() throws IOException {
