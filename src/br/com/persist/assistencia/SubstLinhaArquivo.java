@@ -18,27 +18,32 @@ public class SubstLinhaArquivo {
 		processar();
 	}
 
-	private static String trocarVersao(String string, String novaVersao) {
-		int posIni = string.indexOf('>');
-		int posFim = string.indexOf("</");
-		return string.substring(0, posIni + 1) + novaVersao + string.substring(posFim);
-	}
-
-	private static String getVersao(String absoluto) throws IOException {
-		String string = getLinha(absoluto, "<version>", "</version>").string;
-		int posIni = string.indexOf('>');
-		int posFim = string.indexOf("</");
-		return string.substring(posIni + 1, posFim);
-	}
-
-	private static Linha getLinha(String absoluto, String strInicio, String strFinal) throws IOException {
+	private static List<Linha> getLinhas(String absoluto, String strInicio, String strFinal) throws IOException {
 		Arquivo arquivo = new Arquivo(absoluto, null);
-		Linha linha = arquivo.getLinhaArquivo(strInicio, strFinal);
-		if (linha == null) {
+		List<Linha> lista = arquivo.getLinhasArquivo(strInicio, strFinal);
+		return checkResultado(absoluto, strInicio, strFinal, lista);
+	}
+
+	private static List<Linha> checkResultado(String absoluto, String strInicio, String strFinal, List<Linha> lista)
+			throws IOException {
+		if (lista.isEmpty()) {
 			throw new IOException("Nenhuma linha come\u00E7ando com <<<[" + strInicio + "]>>> e finalizando com <<<["
 					+ strFinal + "]>>> no arquivo <<<[" + absoluto + "]>>>");
 		}
-		return linha;
+		return lista;
+	}
+
+	private static List<Linha> getLinhas(String absoluto, String string) throws IOException {
+		Arquivo arquivo = new Arquivo(absoluto, null);
+		List<Linha> lista = arquivo.getLinhasArquivo(string);
+		return checkResultado(absoluto, string, lista);
+	}
+
+	private static List<Linha> checkResultado(String absoluto, String string, List<Linha> lista) throws IOException {
+		if (lista.isEmpty()) {
+			throw new IOException("Nenhuma linha contendo <<<[" + string + "]>>> no arquivo <<<[" + absoluto + "]>>>");
+		}
+		return lista;
 	}
 
 	private static Linha getLinha(String absoluto, int num) throws IOException {
@@ -46,8 +51,21 @@ public class SubstLinhaArquivo {
 		return arquivo.getLinhaArquivo(num);
 	}
 
+	private static String getVersao(String absoluto) throws IOException {
+		String string = getLinhas(absoluto, "<version>", "</version>").get(0).string;
+		int posIni = string.indexOf('>');
+		int posFim = string.indexOf("</");
+		return string.substring(posIni + 1, posFim);
+	}
+
+	private static String trocarVersao(String string, String novaVersao) {
+		int posIni = string.indexOf('>');
+		int posFim = string.indexOf("</");
+		return string.substring(0, posIni + 1) + novaVersao + string.substring(posFim);
+	}
+
 	private static void substituirVersao(String absoluto, String tag, String novaVersao) throws IOException {
-		Linha linha = getLinha(absoluto, "<" + tag + ">", "</" + tag + ">");
+		Linha linha = getLinhas(absoluto, "<" + tag + ">", "</" + tag + ">").get(0);
 		String novaString = trocarVersao(linha.string, novaVersao);
 		Arquivo arquivo = new Arquivo(absoluto, new Linha(linha.numero, novaString));
 		arquivo.processar();
@@ -165,18 +183,10 @@ class Arquivo {
 		return new PrintWriter(absoluto);
 	}
 
-	Linha getLinhaArquivo(int num) throws IOException {
-		List<String> arquivo = lerArquivo();
-		if (num < 1 || num > arquivo.size()) {
-			return null;
-		}
-		String string = arquivo.get(num - 1);
-		return new Linha(num, string);
-	}
-
-	Linha getLinhaArquivo(String strInicio, String strFinal) throws IOException {
+	List<Linha> getLinhasArquivo(String strInicio, String strFinal) throws IOException {
+		List<Linha> resposta = new ArrayList<>();
 		if (isEmpty(strInicio) || isEmpty(strFinal)) {
-			return null;
+			return resposta;
 		}
 		strInicio = strInicio.trim();
 		strFinal = strFinal.trim();
@@ -184,10 +194,35 @@ class Arquivo {
 		for (int i = 0; i < arquivo.size(); i++) {
 			String string = arquivo.get(i).trim();
 			if (string.startsWith(strInicio) && string.endsWith(strFinal)) {
-				return new Linha(i + 1, arquivo.get(i));
+				resposta.add(new Linha(i + 1, arquivo.get(i)));
 			}
 		}
-		return null;
+		return resposta;
+	}
+
+	List<Linha> getLinhasArquivo(String string) throws IOException {
+		List<Linha> resposta = new ArrayList<>();
+		if (isEmpty(string)) {
+			return resposta;
+		}
+		string = string.trim();
+		List<String> arquivo = lerArquivo();
+		for (int i = 0; i < arquivo.size(); i++) {
+			String str = arquivo.get(i).trim();
+			if (str.equals(string)) {
+				resposta.add(new Linha(i + 1, arquivo.get(i)));
+			}
+		}
+		return resposta;
+	}
+
+	Linha getLinhaArquivo(int num) throws IOException {
+		List<String> arquivo = lerArquivo();
+		if (num < 1 || num > arquivo.size()) {
+			return null;
+		}
+		String string = arquivo.get(num - 1);
+		return new Linha(num, string);
 	}
 
 	private boolean isEmpty(String string) {
