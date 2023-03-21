@@ -25,26 +25,26 @@ public class SubstLinhaArquivo {
 	}
 
 	private static String getVersao(String absoluto) throws IOException {
-		String string = getLinha(absoluto, "<version>", "</version>");
+		String string = getLinha(absoluto, "<version>", "</version>").string;
 		int posIni = string.indexOf('>');
 		int posFim = string.indexOf("</");
 		return string.substring(posIni + 1, posFim);
 	}
 
-	private static String getLinha(String absoluto, String strInicio, String strFinal) throws IOException {
+	private static Linha getLinha(String absoluto, String strInicio, String strFinal) throws IOException {
 		Arquivo arquivo = new Arquivo(absoluto, null);
-		return arquivo.getLinhaArquivo(strInicio, strFinal).string;
+		return arquivo.getLinhaArquivo(strInicio, strFinal);
 	}
 
-	private static String getLinha(String absoluto, int num) throws IOException {
+	private static Linha getLinha(String absoluto, int num) throws IOException {
 		Arquivo arquivo = new Arquivo(absoluto, null);
-		return arquivo.getLinhaArquivo(num).string;
+		return arquivo.getLinhaArquivo(num);
 	}
 
-	private static void substituirVersao(String absoluto, int num, String novaVersao) throws IOException {
-		String string = getLinha(absoluto, num);
-		String novaString = trocarVersao(string, novaVersao);
-		Arquivo arquivo = new Arquivo(absoluto, new Linha(num, novaString));
+	private static void substituirVersao(String absoluto, String tag, String novaVersao) throws IOException {
+		Linha linha = getLinha(absoluto, "<" + tag + ">", "</" + tag + ">");
+		String novaString = trocarVersao(linha.string, novaVersao);
+		Arquivo arquivo = new Arquivo(absoluto, new Linha(linha.numero, novaString));
 		arquivo.processar();
 	}
 
@@ -63,39 +63,39 @@ public class SubstLinhaArquivo {
 		String pomCadastro = "/Users/florenciovieirafilho/desenv/projetos/siproquim/siproquim-rest/pom.xml";
 		String pomUtils = "/Users/florenciovieirafilho/desenv/projetos/siproquim-common-utils/pom.xml";
 
-		String versaoClient = getVersao(pomFiscalizRestClient);
-		String versaoDomain = getVersao(pomDomain);
-		String versaoUtils = getVersao(pomUtils);
-
-		// FISCALIZACAO-REST-CLIENT
-		substituirVersao(pomFiscalizRestClient, 14, versaoUtils);
+		String client = getVersao(pomFiscalizRestClient);
+		String domain = getVersao(pomDomain);
+		String utils = getVersao(pomUtils);
 
 		// FISCALIZACAO-REST
-		substituirVersao(pomFiscalizRest, 28, versaoDomain);
-		substituirVersao(pomFiscalizRest, 29, versaoUtils);
-		substituirVersao(pomFiscalizRest, 30, versaoClient);
+		substituirVersao(pomFiscalizRest, "siproquim-fiscalizacao-client.version", client);
+		substituirVersao(pomFiscalizRest, "siproquim-domain.version", domain);
+		substituirVersao(pomFiscalizRest, "siproquim-utils.version", utils);
+
+		// FISCALIZACAO-REST-CLIENT
+		substituirVersao(pomFiscalizRestClient, "siproquim-utils.version", utils);
 
 		// MAPAS-BATCH
-		substituirVersao(pomMapasBatch, 19, versaoDomain);
-		substituirVersao(pomMapasBatch, 20, versaoUtils);
+		substituirVersao(pomMapasBatch, "version.common.domain", domain);
+		substituirVersao(pomMapasBatch, "version.common.utils", utils);
 
 		// MAPAS-REST
-		substituirVersao(pomMapasRest, 21, versaoDomain);
-		substituirVersao(pomMapasRest, 22, versaoUtils);
+		substituirVersao(pomMapasRest, "version.common.domain", domain);
+		substituirVersao(pomMapasRest, "version.common.utils", utils);
 
 		// CADASTRO-REST
-		substituirVersao(pomCadastro, 26, versaoDomain);
+		substituirVersao(pomCadastro, "version.common.domain", domain);
 
 		// OFFLINE
-		substituirVersao(pomOffline, 40, versaoClient);
-		substituirVersao(pomOffline, 41, versaoUtils);
-		String string = getLinha(pomOffline, 97);
-		substituirLinha(pomOffline, 97, check(string, "<!--", true));
-		string = getLinha(pomOffline, 102);
-		substituirLinha(pomOffline, 102, check(string, "-->", false));
+		substituirVersao(pomOffline, "version.siproquim-fiscalizacao-client", client);
+		substituirVersao(pomOffline, "version.siproquim-common-utils", utils);
+		Linha linha = getLinha(pomOffline, 97);
+		substituirLinha(pomOffline, linha.numero, check(linha.string, "<!--", true));
+		linha = getLinha(pomOffline, 102);
+		substituirLinha(pomOffline, linha.numero, check(linha.string, "-->", false));
 
 		// UTILS
-		substituirVersao(pomUtils, 18, versaoDomain);
+		substituirVersao(pomUtils, "version.siproquim-domain", domain);
 	}
 
 	static String check(String string, String delta, boolean inicio) {
