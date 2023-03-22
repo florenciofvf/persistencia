@@ -435,16 +435,17 @@ public class Relacao implements Runnable {
 	}
 
 	public void reiniciarHoras(boolean checar) {
+		final String padrao = "00:00:00";
 		if (checar) {
 			if (HoraUtil.Texto.getTotal(getOrigem().getId(), ':') == 2
 					|| HoraUtil.Texto.getTotal(getDestino().getId(), ':') == 2) {
-				getOrigem().setId("00:00:00");
-				getDestino().setId("00:00:0");
-				setDescricao(Constantes.VAZIO);
+				getOrigem().setId(padrao);
+				getDestino().setId(padrao);
+				setDescricao(padrao);
 			}
 		} else {
-			getOrigem().setId("00:00:00");
-			getDestino().setId("00:00:0");
+			getOrigem().setId(padrao);
+			getDestino().setId(padrao);
 		}
 	}
 
