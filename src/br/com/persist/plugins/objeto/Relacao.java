@@ -437,15 +437,14 @@ public class Relacao implements Runnable {
 	public void reiniciarHoras(boolean checar) {
 		final String padrao = "00:00:00";
 		if (checar) {
-			if (HoraUtil.Texto.getTotal(getOrigem().getId(), ':') == 2
-					|| HoraUtil.Texto.getTotal(getDestino().getId(), ':') == 2) {
-				getOrigem().setId(padrao);
+			if (HoraUtil.formatoValido(getOrigem().getId()) || HoraUtil.formatoValido(getDestino().getId())) {
 				getDestino().setId(padrao);
+				getOrigem().setId(padrao);
 				setDescricao(padrao);
 			}
 		} else {
-			getOrigem().setId(padrao);
 			getDestino().setId(padrao);
+			getOrigem().setId(padrao);
 		}
 	}
 

@@ -31,20 +31,24 @@ public class HoraUtil {
 		return valor1 < valor2 ? valor2 - valor1 : valor1 - valor2;
 	}
 
-	public static class Texto {
-		private Texto() {
-		}
+	public static boolean formatoValido(String string) {
+		return getTotal(string, ':') == 2;
+	}
 
-		public static int getTotal(String string, char c) {
-			int total = 0;
-			if (string != null) {
-				for (char d : string.toCharArray()) {
-					if (d == c) {
-						total++;
-					}
+	private static int getTotal(String string, char c) {
+		int total = 0;
+		if (string != null) {
+			for (char d : string.toCharArray()) {
+				if (d == c) {
+					total++;
 				}
 			}
-			return total;
+		}
+		return total;
+	}
+
+	public static class Texto {
+		private Texto() {
 		}
 
 		public static int getSegundos(String string) throws ObjetoException {
