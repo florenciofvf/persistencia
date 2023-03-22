@@ -210,6 +210,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		for (Relacao relacao : relacoes) {
 			relacao.reiniciarHoras(true);
 		}
+		totalHoras = 0;
 		repaint();
 	}
 
@@ -220,6 +221,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		} else {
 			desativar();
 		}
+		repaint();
 	}
 
 	public void ativar() {
