@@ -35,6 +35,18 @@ public class HoraUtil {
 		private Texto() {
 		}
 
+		public static int getTotal(String string, char c) {
+			int total = 0;
+			if (string != null) {
+				for (char d : string.toCharArray()) {
+					if (d == c) {
+						total++;
+					}
+				}
+			}
+			return total;
+		}
+
 		public static int getSegundos(String string) throws ObjetoException {
 			return getHora(string) + getMinuto(string) + getSegundo(string);
 		}

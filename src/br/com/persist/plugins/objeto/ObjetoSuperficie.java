@@ -206,6 +206,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
+	public void reiniciarHoras() {
+		for (Relacao relacao : relacoes) {
+			relacao.reiniciarHoras(true);
+		}
+		repaint();
+	}
+
 	public void somarHoras(boolean b) {
 		if (b) {
 			processar = true;

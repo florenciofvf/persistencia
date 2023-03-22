@@ -434,9 +434,18 @@ public class Relacao implements Runnable {
 		}
 	}
 
-	public void reiniciarHoras() {
-		getOrigem().setId("00:00:00");
-		getDestino().setId("00:00:0");
+	public void reiniciarHoras(boolean checar) {
+		if (checar) {
+			if (HoraUtil.Texto.getTotal(getOrigem().getId(), ':') == 2
+					|| HoraUtil.Texto.getTotal(getDestino().getId(), ':') == 2) {
+				getOrigem().setId("00:00:00");
+				getDestino().setId("00:00:0");
+				setDescricao(Constantes.VAZIO);
+			}
+		} else {
+			getOrigem().setId("00:00:00");
+			getDestino().setId("00:00:0");
+		}
 	}
 
 	private void processarHora() {
