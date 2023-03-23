@@ -434,18 +434,33 @@ public class Relacao implements Runnable {
 		}
 	}
 
-	public void reiniciarHoras(boolean checar) {
-		final String padrao = "00:00:00";
+	public void reiniciarHoras(boolean checar, ObjetoSuperficie superficie) {
 		if (checar) {
 			if (HoraUtil.formatoValido(getOrigem().getId()) || HoraUtil.formatoValido(getDestino().getId())) {
-				getDestino().setId(padrao);
-				getOrigem().setId(padrao);
-				setDescricao(padrao);
+				reiniciar(getDestino(), superficie);
+				reiniciar(getOrigem(), superficie);
+				setDescricao("00:00:00");
 			}
 		} else {
-			getDestino().setId(padrao);
-			getOrigem().setId(padrao);
+			reiniciar(getDestino(), superficie);
+			reiniciar(getOrigem(), superficie);
 		}
+	}
+
+	private void reiniciar(Objeto objeto, ObjetoSuperficie superficie) {
+		final String id = "00:00:";
+		Objeto obj = new Objeto();
+		int cont = 0;
+		obj.setId(id + get(cont));
+		while (superficie.contemId(obj)) {
+			cont++;
+			obj.setId(id + get(cont));
+		}
+		objeto.setId(obj.getId());
+	}
+
+	private String get(int i) {
+		return i < 10 ? "0" + i : "" + i;
 	}
 
 	private void processarHora() {
