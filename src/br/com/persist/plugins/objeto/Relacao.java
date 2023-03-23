@@ -437,13 +437,13 @@ public class Relacao implements Runnable {
 	public void reiniciarHoras(boolean checar, ObjetoSuperficie superficie) {
 		if (checar) {
 			if (HoraUtil.formatoValido(getOrigem().getId()) || HoraUtil.formatoValido(getDestino().getId())) {
-				reiniciar(getDestino(), superficie);
 				reiniciar(getOrigem(), superficie);
+				reiniciar(getDestino(), superficie);
 				setDescricao("00:00:00");
 			}
 		} else {
-			reiniciar(getDestino(), superficie);
 			reiniciar(getOrigem(), superficie);
+			reiniciar(getDestino(), superficie);
 		}
 	}
 
