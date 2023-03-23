@@ -282,11 +282,11 @@ public class Relacao implements Runnable {
 
 	public void salvar(XMLUtil util) {
 		util.abrirTag("relacao");
-		util.atributoCheck("chaveDestino", getChaveDestino());
-		util.atributoCheck("chaveOrigem", getChaveOrigem());
-		util.atributoCheck("destino", destino.getId());
-		util.atributoCheck("desenharDescricao", desenharDescricao);
 		util.atributoCheck("origem", origem.getId());
+		util.atributoCheck("destino", destino.getId());
+		util.atributoCheck("chaveOrigem", getChaveOrigem());
+		util.atributoCheck("chaveDestino", getChaveDestino());
+		util.atributoCheck("desenharDescricao", desenharDescricao);
 		util.atributo("desloc_x_desc", deslocamentoXDesc);
 		util.atributo("desloc_y_desc", deslocamentoYDesc);
 		util.atributo("corFonte", corFonte.getRGB());
