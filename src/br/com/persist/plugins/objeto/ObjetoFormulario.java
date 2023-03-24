@@ -65,8 +65,8 @@ public class ObjetoFormulario extends AbstratoFormulario {
 		container.exportarMetadadoRaiz(metadado);
 	}
 
-	public void abrirArquivo(File file) {
-		container.abrirArquivo(file);
+	public void abrirArquivo(File file, InternalConfig config) {
+		container.abrirArquivo(file, config);
 	}
 
 	public void excluirContainer() {

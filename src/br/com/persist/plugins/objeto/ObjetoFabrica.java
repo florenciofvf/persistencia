@@ -59,7 +59,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
 			File file = ArquivoProvedor.restaurarStringPersistencia(stringPersistencia);
 			ObjetoContainer container = criarObjetoContainer(formulario);
-			container.abrirArquivo(file);
+			container.abrirArquivo(file, null);
 			return container;
 		}
 	}
@@ -94,7 +94,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 					ObjetoProvedor.setParentFile(file.getParentFile());
 					formulario.adicionarPagina(pagina);
 				} else {
-					abrirNoFormulario(formulario, file);
+					abrirNoFormulario(formulario, file, null);
 				}
 			}
 		}
@@ -212,7 +212,7 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 			File[] files = getSelectedFiles(formulario, true);
 			if (files != null) {
 				for (File file : files) {
-					abrirNoFormulario(formulario, file);
+					abrirNoFormulario(formulario, file, null);
 				}
 			}
 		}
@@ -232,12 +232,12 @@ public class ObjetoFabrica extends AbstratoFabricaContainer {
 		formulario.adicionarPagina(pagina);
 	}
 
-	public static void abrirNoFormulario(Formulario formulario, File file) {
+	public static void abrirNoFormulario(Formulario formulario, File file, InternalConfig config) {
 		if (file == null || !file.isFile()) {
 			return;
 		}
 		ObjetoFormulario form = ObjetoFormulario.criar(formulario, file);
-		form.abrirArquivo(file);
+		form.abrirArquivo(file, config);
 	}
 
 	public static void abrirNoFormulario(Formulario formulario, String stringPersistencia, InternalConfig config) {

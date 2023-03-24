@@ -21,6 +21,12 @@ public class InternalConfig {
 		this.tabela = tabela;
 	}
 
+	public InternalConfig(String conexao) {
+		this.conexao = conexao;
+		this.tabela = "";
+		this.grupo = "";
+	}
+
 	public boolean igual(Objeto objeto) {
 		return objeto != null && grupo.equalsIgnoreCase(objeto.getGrupo())
 				&& tabela.equalsIgnoreCase(objeto.getTabela());

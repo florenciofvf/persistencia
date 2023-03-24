@@ -158,11 +158,11 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 	}
 
-	public void abrirArquivo(File file) {
+	public void abrirArquivo(File file, InternalConfig config) {
 		if (file != null) {
 			if (file.exists() && file.isFile()) {
 				arquivo = file;
-				toolbar.baixar();
+				toolbar.baixar(config);
 			} else {
 				Util.mensagem(ObjetoContainer.this,
 						Mensagens.getString("msg.arquivo_invalido", file.getAbsolutePath()));
@@ -339,7 +339,12 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		@Override
 		protected void abrirEmFormulario() {
 			if (getArquivo() != null) {
-				ObjetoFabrica.abrirNoFormulario(formulario, getArquivo());
+				Conexao conexao = getConexaoPadrao();
+				InternalConfig config = null;
+				if (conexao != null) {
+					config = new InternalConfig(conexao.getNome());
+				}
+				ObjetoFabrica.abrirNoFormulario(formulario, getArquivo(), config);
 			} else {
 				Util.mensagem(ObjetoContainer.this, Mensagens.getString("msg.arquivo_inexistente"));
 			}
@@ -362,19 +367,23 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 
 		@Override
 		protected void baixar() {
+			baixar(null);
+		}
+
+		protected void baixar(InternalConfig config) {
 			if (arquivo == null) {
 				btnSelecao.click();
 				return;
 			}
-			reabrirArquivo();
+			reabrirArquivo(config);
 		}
 
-		private void reabrirArquivo() {
+		private void reabrirArquivo(InternalConfig config) {
 			try {
 				excluido();
 				ObjetoColetor objetoColetor = new ObjetoColetor();
 				XML.processar(arquivo, new ObjetoHandler(objetoColetor));
-				abrir(arquivo, objetoColetor, null);
+				abrir(arquivo, objetoColetor, config);
 				txtPrefixoNomeTabela.limpar();
 				txtDestacaObjeto.limpar();
 				tituloTemporario = null;
@@ -607,7 +616,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			arquivo = new File(ref.get());
 			tituloTemp.set(arquivo.getName());
 			toolbar.salvar(arquivo);
-			toolbar.reabrirArquivo();
+			toolbar.reabrirArquivo(null);
 		}
 		btnSelecao.click();
 	}
