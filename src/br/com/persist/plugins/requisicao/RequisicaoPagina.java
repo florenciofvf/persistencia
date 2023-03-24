@@ -561,17 +561,41 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 	}
 
+	public boolean isModoTabela() {
+		return toolbarParametro.chkModoTabela.isSelected();
+	}
+
 	public void processar() {
-		if (toolbarParametro.chkModoTabela.isSelected()) {
+		if (isModoTabela()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
 				String string = req.getString();
 				processar(string);
+			} else {
+				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.sem_linha_tabela_sel"));
 			}
 		} else {
 			if (!Util.estaVazio(areaParametros.getText())) {
 				String string = Util.getString(areaParametros);
 				processar(string);
+			}
+		}
+	}
+
+	public void salvarReqSel(AtomicBoolean atomic) {
+		if (toolbarParametro.chkModoTabela.isSelected()) {
+			Requisicao req = tabela.getRequisicao();
+			if (req != null) {
+				String string = req.getString();
+				try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
+					pw.println(areaParametros.getText());
+					pw.print(string);
+					atomic.set(true);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoPagina.this);
+				}
+			} else {
+				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.sem_linha_tabela_sel"));
 			}
 		}
 	}

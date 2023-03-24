@@ -176,6 +176,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			private Action variaveisAcao = actionMenu("label.variaveis_sistema");
 			private Action modeloAcao = Action.actionMenu("label.modelo", null);
 			private Action retornar64Acao = actionMenu("label.retornar_base64");
+			private Action appendAcao = actionMenu("label.salvar_req_sel");
 			private Action base64Acao = actionMenu("label.criar_base64");
 
 			private ButtonUtil() {
@@ -185,11 +186,30 @@ public class RequisicaoContainer extends AbstratoContainer {
 				addMenuItem(base64Acao);
 				addMenuItem(retornar64Acao);
 				addMenuItem(variaveisAcao);
+				addMenuItem(true, appendAcao);
 				retornar64Acao.setActionListener(e -> retornar64());
 				variaveisAcao.setActionListener(e -> variaveis());
+				appendAcao.setActionListener(e -> salvarReqSel());
 				formatarAcao.setActionListener(e -> formatar());
 				base64Acao.setActionListener(e -> base64());
 				modeloAcao.setActionListener(e -> modelo());
+			}
+
+			@Override
+			protected void popupPreShow() {
+				RequisicaoPagina ativa = fichario.getPaginaAtiva();
+				appendAcao.setEnabled(ativa != null && ativa.isModoTabela());
+			}
+
+			private void salvarReqSel() {
+				RequisicaoPagina ativa = fichario.getPaginaAtiva();
+				if (ativa != null) {
+					AtomicBoolean atomic = new AtomicBoolean(false);
+					ativa.salvarReqSel(atomic);
+					if (atomic.get()) {
+						salvoMensagem();
+					}
+				}
 			}
 
 			private void formatar() {
