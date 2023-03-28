@@ -437,17 +437,18 @@ public class Relacao implements Runnable {
 	public void reiniciarHoras(boolean checar, ObjetoSuperficie superficie) {
 		if (checar) {
 			if (HoraUtil.formatoValido(getOrigem().getId()) || HoraUtil.formatoValido(getDestino().getId())) {
-				reiniciar(getOrigem(), superficie);
-				reiniciar(getDestino(), superficie);
-				setDescricao("00:00:00");
+				reiniciarHora(getOrigem(), superficie);
+				reiniciarHora(getDestino(), superficie);
+				processarHoraDiff(false);
 			}
 		} else {
-			reiniciar(getOrigem(), superficie);
-			reiniciar(getDestino(), superficie);
+			reiniciarHora(getOrigem(), superficie);
+			reiniciarHora(getDestino(), superficie);
+			processarHoraDiff(false);
 		}
 	}
 
-	private void reiniciar(Objeto objeto, ObjetoSuperficie superficie) {
+	private void reiniciarHora(Objeto objeto, ObjetoSuperficie superficie) {
 		final String id = "00:00:";
 		Objeto obj = new Objeto();
 		int cont = 0;
@@ -463,16 +464,18 @@ public class Relacao implements Runnable {
 		return i < 10 ? "0" + i : "" + i;
 	}
 
-	private void processarHora() {
-		int des = 0;
+	private void processarHoraDiff(boolean horaAtual) {
 		int ori = 0;
+		int des = 0;
 		try {
 			ori = HoraUtil.getSegundos(getOrigem().getId());
 		} catch (Exception e) {
 			return;
 		}
 		try {
-			getDestino().setId(HoraUtil.getHoraAtual());
+			if (horaAtual) {
+				getDestino().setId(HoraUtil.getHoraAtual());
+			}
 			des = HoraUtil.getSegundos(getDestino().getId());
 		} catch (Exception e) {
 			return;
@@ -485,7 +488,7 @@ public class Relacao implements Runnable {
 	@Override
 	public void run() {
 		while (!Thread.currentThread().isInterrupted()) {
-			processarHora();
+			processarHoraDiff(true);
 			if (listener != null) {
 				listener.repaint();
 			}
