@@ -589,7 +589,13 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				String string = req.getString();
 				try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 					pw.println(areaParametros.getText());
-					pw.print(string);
+					if (Util.confirmar(this, RequisicaoMensagens.getString("msg.salvar_objeto_formatado"), false)) {
+						pw.print(string);
+					} else {
+						string = Util.replaceAll(string, "\n", Constantes.VAZIO);
+						string = Util.replaceAll(string, "\r", Constantes.VAZIO);
+						pw.print(string);
+					}
 					atomic.set(true);
 				} catch (Exception ex) {
 					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoPagina.this);
