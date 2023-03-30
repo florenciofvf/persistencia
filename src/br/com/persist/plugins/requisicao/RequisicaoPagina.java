@@ -64,6 +64,7 @@ import br.com.persist.data.Array;
 import br.com.persist.data.Objeto;
 import br.com.persist.data.Tipo;
 import br.com.persist.data.DataUtil;
+import br.com.persist.data.Formatador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHeader;
@@ -586,10 +587,15 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		if (toolbarParametro.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
+				boolean salvarFormatado = Util.confirmar(this,
+						RequisicaoMensagens.getString("msg.salvar_objeto_formatado"), false);
+				boolean bkp = Formatador.isTabHabilitado();
+				Formatador.setTabHabilitado(salvarFormatado);
 				String string = req.getString();
+				Formatador.setTabHabilitado(bkp);
 				try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
 					pw.println(areaParametros.getText());
-					if (Util.confirmar(this, RequisicaoMensagens.getString("msg.salvar_objeto_formatado"), false)) {
+					if (salvarFormatado) {
 						pw.print(string);
 					} else {
 						string = Util.replaceAll(string, "\n", Constantes.VAZIO);
