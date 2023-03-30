@@ -50,7 +50,7 @@ public class RequisicaoModelo implements TableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex != 0;
+		return true;
 	}
 
 	@Override
@@ -70,8 +70,9 @@ public class RequisicaoModelo implements TableModel {
 		Requisicao req = lista.get(rowIndex);
 		if (columnIndex == 0) {
 			req.setDesc(aValue.toString());
+		} else if (columnIndex == 1) {
+			req.setUrl(aValue.toString());
 		}
-		req.setUrl(aValue.toString());
 	}
 
 	@Override
