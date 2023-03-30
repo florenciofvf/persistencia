@@ -5,6 +5,8 @@ import java.util.Iterator;
 import br.com.persist.assistencia.Constantes;
 
 public class Formatador {
+	private static boolean tabHabilitado = true;
+
 	private Formatador() {
 	}
 
@@ -53,7 +55,7 @@ public class Formatador {
 	public static String getTab(int i) {
 		StringBuilder sb = new StringBuilder();
 		int q = 0;
-		while (q < i) {
+		while (q < i && tabHabilitado) {
 			sb.append("    ");
 			q++;
 		}
@@ -62,5 +64,13 @@ public class Formatador {
 
 	public static String citar(String s) {
 		return "\"" + s + "\"";
+	}
+
+	public static boolean isTabHabilitado() {
+		return tabHabilitado;
+	}
+
+	public static void setTabHabilitado(boolean tabHabilitado) {
+		Formatador.tabHabilitado = tabHabilitado;
 	}
 }
