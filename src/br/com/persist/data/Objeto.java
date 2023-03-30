@@ -55,6 +55,15 @@ public class Objeto extends Tipo {
 		return null;
 	}
 
+	public void atualizar(String nome, String valor) {
+		for (int i = 0; i < atributos.size(); i++) {
+			NomeValor nomeValor = atributos.get(i);
+			if (nomeValor.nome.equals(nome)) {
+				atributos.set(i, new NomeValor(nome, new Texto(valor)));
+			}
+		}
+	}
+
 	public boolean contemAtributo(String nome) {
 		for (NomeValor nomeValor : atributos) {
 			if (nomeValor.nome.equalsIgnoreCase(nome)) {

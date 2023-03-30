@@ -47,6 +47,7 @@ public class Requisicao {
 			if (tipoUrl instanceof Texto) {
 				((Texto) tipoUrl).setAlternativo(url);
 			}
+			objeto.atualizar("desc", desc);
 			return DataUtil.toString(objeto);
 		} else if (tipo != null) {
 			return DataUtil.toString(tipo);
