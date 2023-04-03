@@ -12,18 +12,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
@@ -44,7 +38,6 @@ public class MapaContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final MapaFichario fichario = new MapaFichario();
 	private final List<String> ignorados = new ArrayList<>();
-	private static final Logger LOG = Logger.getGlobal();
 	private static final File file = new File("mapas");
 	private final Toolbar toolbar = new Toolbar();
 	private MapaFormulario mapaFormulario;
@@ -109,23 +102,7 @@ public class MapaContainer extends AbstratoContainer {
 	}
 
 	private static List<String> getIgnorados() {
-		File arquivo = new File(file, MapaConstantes.INVISIVEL);
-		List<String> lista = new ArrayList<>();
-		if (arquivo.isFile() && arquivo.canRead()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(arquivo), StandardCharsets.UTF_8))) {
-				String linha = br.readLine();
-				while (linha != null) {
-					if (!Util.estaVazio(linha)) {
-						lista.add(linha);
-					}
-					linha = br.readLine();
-				}
-			} catch (Exception e) {
-				LOG.log(Level.FINEST, "getIgnorados()");
-			}
-		}
-		return lista;
+		return Util.getListaStringArquivo(new File(file, MapaConstantes.INVISIVEL));
 	}
 
 	private void abrir(String conteudo, String idPagina) {

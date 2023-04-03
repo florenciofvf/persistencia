@@ -975,6 +975,25 @@ public class Util {
 		return Constantes.VAZIO;
 	}
 
+	public static List<String> getListaStringArquivo(File arquivo) {
+		List<String> lista = new ArrayList<>();
+		if (arquivo != null && arquivo.isFile() && arquivo.canRead()) {
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(arquivo), StandardCharsets.UTF_8))) {
+				String linha = br.readLine();
+				while (linha != null) {
+					if (!Util.estaVazio(linha)) {
+						lista.add(linha);
+					}
+					linha = br.readLine();
+				}
+			} catch (Exception e) {
+				LOG.log(Level.SEVERE, "getListaStringArquivo(file)");
+			}
+		}
+		return lista;
+	}
+
 	public static String pesquisar(File file, String pesquisar) {
 		if (file != null && file.exists()) {
 			pesquisar = pesquisar.toUpperCase();
