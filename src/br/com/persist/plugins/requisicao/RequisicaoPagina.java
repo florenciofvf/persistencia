@@ -77,6 +77,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final PopupFichario popupFichario = new PopupFichario();
 	private final List<String> requisicoes = new ArrayList<>();
+	private String chaveMensagem = "msg.sem_linha_tabela_sel";
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane areaParametros = new JTextPane();
 	private final transient RequisicaoRota requisicaoRota;
@@ -328,7 +329,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		private void modoTabelaHandler(boolean modoTabela) {
 			if (modoTabela) {
-				if (!ehArquivoReservado()) {
+				if (!ehArquivoReservadoMimes() && !ehArquivoReservadoIgnorados()) {
 					configModoTabela();
 				} else {
 					Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.arquivo_reservado"));
@@ -445,8 +446,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		return file.getName();
 	}
 
-	private boolean ehArquivoReservado() {
-		return RequisicaoContainer.ehArquivoReservado(getNome());
+	private boolean ehArquivoReservadoMimes() {
+		return RequisicaoContainer.ehArquivoReservadoMimes(getNome());
+	}
+
+	private boolean ehArquivoReservadoIgnorados() {
+		return RequisicaoContainer.ehArquivoReservadoIgnorados(getNome());
 	}
 
 	private void abrir() {
@@ -467,7 +472,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 			}
 		}
-		if (RequisicaoPreferencia.isAbrirModoTabela() && !ehArquivoReservado()) {
+		if (RequisicaoPreferencia.isAbrirModoTabela() && !ehArquivoReservadoMimes() && !ehArquivoReservadoIgnorados()) {
 			SwingUtilities.invokeLater(() -> {
 				toolbarParametro.modoTabelaHandler(true);
 				toolbarParametro.chkModoTabela.setSelected(true);
@@ -573,7 +578,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				String string = req.getString();
 				processar(string);
 			} else {
-				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.sem_linha_tabela_sel"));
+				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
 		} else {
 			if (!Util.estaVazio(areaParametros.getText())) {
@@ -607,7 +612,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 					Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, RequisicaoPagina.this);
 				}
 			} else {
-				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.sem_linha_tabela_sel"));
+				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
 		}
 	}
@@ -649,7 +654,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				String string = req.getString();
 				adicionarRota(rota, string);
 			} else {
-				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.sem_linha_tabela_sel"));
+				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
 		} else {
 			if (!Util.estaVazio(areaParametros.getText())) {

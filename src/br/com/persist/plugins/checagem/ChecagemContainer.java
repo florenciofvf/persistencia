@@ -258,7 +258,7 @@ public class ChecagemContainer extends AbstratoContainer {
 			ChecagemPagina ativa = fichario.getPaginaAtiva();
 			if (ativa != null && Util.confirmar(ChecagemContainer.this,
 					ChecagemMensagens.getString("msg.confirmar_excluir_ativa"), false)) {
-				if (ativa.ehArquivoReservado()) {
+				if (ativa.ehArquivoReservadoSentencas() || ativa.ehArquivoReservadoIgnorados()) {
 					ativa.mensagemReservado();
 				} else {
 					int indice = fichario.getSelectedIndex();

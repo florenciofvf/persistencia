@@ -180,7 +180,7 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void executar() {
-			if (ehArquivoReservado()) {
+			if (ehArquivoReservadoSentencas() || ehArquivoReservadoIgnorados()) {
 				mensagemReservado();
 				return;
 			}
@@ -198,7 +198,7 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void sincronizarSentencas() {
-			if (ehArquivoReservado()) {
+			if (ehArquivoReservadoSentencas() || ehArquivoReservadoIgnorados()) {
 				mensagemReservado();
 				return;
 			}
@@ -212,7 +212,7 @@ public class ChecagemPagina extends Panel {
 
 		@Override
 		protected void atualizar() {
-			if (ehArquivoReservado()) {
+			if (ehArquivoReservadoSentencas() || ehArquivoReservadoIgnorados()) {
 				mensagemReservado();
 				return;
 			}
@@ -225,7 +225,7 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void formatar(boolean msg) {
-			if (ehArquivoReservado()) {
+			if (ehArquivoReservadoSentencas() || ehArquivoReservadoIgnorados()) {
 				if (msg) {
 					mensagemReservado();
 				}
@@ -240,7 +240,7 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void novaSentenca() {
-			if (ehArquivoReservado()) {
+			if (ehArquivoReservadoSentencas() || ehArquivoReservadoIgnorados()) {
 				mensagemReservado();
 				return;
 			}
@@ -248,7 +248,7 @@ public class ChecagemPagina extends Panel {
 		}
 
 		private void checarSentenca() {
-			if (ehArquivoReservado()) {
+			if (ehArquivoReservadoSentencas() || ehArquivoReservadoIgnorados()) {
 				mensagemReservado();
 				return;
 			}
@@ -316,8 +316,12 @@ public class ChecagemPagina extends Panel {
 		Util.mensagem(ChecagemPagina.this, ChecagemMensagens.getString("msg.arquivo_reservado"));
 	}
 
-	boolean ehArquivoReservado() {
-		return ChecagemContainer.ehArquivoReservado(getNome());
+	boolean ehArquivoReservadoSentencas() {
+		return ChecagemContainer.ehArquivoReservadoSentencas(getNome());
+	}
+
+	boolean ehArquivoReservadoIgnorados() {
+		return ChecagemContainer.ehArquivoReservadoIgnorados(getNome());
 	}
 
 	private void abrir() {
