@@ -10,6 +10,7 @@ import br.com.persist.formulario.Formulario;
 
 public class RequisicaoConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
+	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 	private final CheckBox chkAbrirModoTabela = criarCheckBox("label.padrao_abrir_tabela");
 	private final CheckBox chkExibirArqMimes = criarCheckBox("label.exibir_arq_mimes");
 
@@ -20,11 +21,13 @@ public class RequisicaoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void montarLayout() {
+		chkExibirArqIgnorados.setSelected(RequisicaoPreferencia.isExibirArqIgnorados());
 		chkAbrirModoTabela.setSelected(RequisicaoPreferencia.isAbrirModoTabela());
 		chkExibirArqMimes.setSelected(RequisicaoPreferencia.isExibirArqMimes());
 
 		Muro muro = new Muro();
 		muro.camada(Muro.panelGrid(chkExibirArqMimes, chkAbrirModoTabela));
+		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -37,6 +40,8 @@ public class RequisicaoConfiguracao extends AbstratoConfiguracao {
 				.addActionListener(e -> RequisicaoPreferencia.setAbrirModoTabela(chkAbrirModoTabela.isSelected()));
 		chkExibirArqMimes
 				.addActionListener(e -> RequisicaoPreferencia.setExibirArqMimes(chkExibirArqMimes.isSelected()));
+		chkExibirArqIgnorados.addActionListener(
+				e -> RequisicaoPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 	}
 
 	public Label criarLabel(String chaveRotulo) {

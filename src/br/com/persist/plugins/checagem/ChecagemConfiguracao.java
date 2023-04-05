@@ -11,6 +11,7 @@ import br.com.persist.formulario.Formulario;
 public class ChecagemConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
 	private final CheckBox chkExibirArqSentencas = criarCheckBox("label.exibir_arq_sentencas");
+	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 
 	public ChecagemConfiguracao(Formulario formulario) {
 		super(formulario, ChecagemMensagens.getString("label.plugin_checagem"));
@@ -19,10 +20,12 @@ public class ChecagemConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private void montarLayout() {
+		chkExibirArqIgnorados.setSelected(ChecagemPreferencia.isExibirArqIgnorados());
 		chkExibirArqSentencas.setSelected(ChecagemPreferencia.isExibirArqSentencas());
 
 		Muro muro = new Muro();
 		muro.camada(Muro.panelGrid(chkExibirArqSentencas));
+		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		add(BorderLayout.CENTER, muro);
 	}
 
@@ -33,6 +36,8 @@ public class ChecagemConfiguracao extends AbstratoConfiguracao {
 	private void configurar() {
 		chkExibirArqSentencas
 				.addActionListener(e -> ChecagemPreferencia.setExibirArqSentencas(chkExibirArqSentencas.isSelected()));
+		chkExibirArqIgnorados
+				.addActionListener(e -> ChecagemPreferencia.setExibirArqIgnorados(chkExibirArqIgnorados.isSelected()));
 	}
 
 	public Label criarLabel(String chaveRotulo) {
