@@ -98,11 +98,11 @@ public class EntregaContainer extends AbstratoContainer {
 	}
 
 	static boolean ehArquivoReservado(String nome) {
-		return EntregaConstantes.INVISIVEL.equalsIgnoreCase(nome);
+		return EntregaConstantes.IGNORADOS.equalsIgnoreCase(nome);
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(EntregaConstantes.ENTREGAS, new File(file, EntregaConstantes.INVISIVEL));
+		ArquivoUtil.lerArquivo(EntregaConstantes.ENTREGAS, new File(file, EntregaConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

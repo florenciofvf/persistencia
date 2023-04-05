@@ -98,11 +98,11 @@ public class MapaContainer extends AbstratoContainer {
 	}
 
 	static boolean ehArquivoReservado(String nome) {
-		return MapaConstantes.INVISIVEL.equalsIgnoreCase(nome);
+		return MapaConstantes.IGNORADOS.equalsIgnoreCase(nome);
 	}
 
 	private void abrir(String conteudo, String idPagina) {
-		ArquivoUtil.lerArquivo(MapaConstantes.MAPAS, new File(file, MapaConstantes.INVISIVEL));
+		ArquivoUtil.lerArquivo(MapaConstantes.MAPAS, new File(file, MapaConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();

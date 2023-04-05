@@ -17,7 +17,7 @@ import br.com.persist.formulario.Formulario;
 
 public class MapaConfiguracao extends AbstratoConfiguracao {
 	private static final long serialVersionUID = 1L;
-	private final CheckBox chkExibirArqInvisivel = criarCheckBox("label.exibir_arq_invisivel");
+	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 
 	private final transient NomeValor[] posicoes = {
 			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
@@ -33,18 +33,18 @@ public class MapaConfiguracao extends AbstratoConfiguracao {
 
 	private void montarLayout() {
 		PanelCenter panelPosicoes = criarPainelGrupo(posicoes, MapaPreferencia.getMapaPosicaoAbaFichario());
-		chkExibirArqInvisivel.setSelected(MapaPreferencia.isExibirArqInvisivel());
+		chkExibirArqIgnorados.setSelected(MapaPreferencia.isExibirArqInvisivel());
 
 		Muro muro = new Muro();
 		Label tituloLocalAbas = criarLabelTituloRotulo("label.local_abas");
 		muro.camada(Muro.panelGridBorderBottom(tituloLocalAbas, panelPosicoes));
-		muro.camada(Muro.panelGrid(chkExibirArqInvisivel));
+		muro.camada(Muro.panelGrid(chkExibirArqIgnorados));
 		add(BorderLayout.CENTER, muro);
 	}
 
 	private void configurar() {
-		chkExibirArqInvisivel
-				.addActionListener(e -> MapaPreferencia.setExibirArqInvisivel(chkExibirArqInvisivel.isSelected()));
+		chkExibirArqIgnorados
+				.addActionListener(e -> MapaPreferencia.setExibirArqInvisivel(chkExibirArqIgnorados.isSelected()));
 	}
 
 	private Label criarLabelTituloRotulo(String rotulo) {
