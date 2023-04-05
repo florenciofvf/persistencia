@@ -12,6 +12,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.persist.assistencia.ArquivoUtil;
+
 public class Arquivo {
 	private static final Logger LOG = Logger.getGlobal();
 	private final List<Arquivo> filhos;
@@ -131,7 +133,7 @@ public class Arquivo {
 			if (files != null) {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 				for (File f : files) {
-					if (!ArquivoModelo.ignorar(f.getName())) {
+					if (!ArquivoUtil.contem(ArquivoConstantes.ARQUIVOS, f.getName())) {
 						Arquivo arq = new Arquivo(f);
 						filhos.add(arq);
 						arq.pai = this;

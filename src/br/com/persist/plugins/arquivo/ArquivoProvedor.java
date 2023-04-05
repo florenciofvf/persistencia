@@ -13,7 +13,7 @@ public class ArquivoProvedor {
 		if (file == null) {
 			return Constantes.VAZIO;
 		}
-		return montarAbsolutoRelativo(ArquivoModelo.FILE, file);
+		return montarAbsolutoRelativo(ArquivoModelo.file, file);
 	}
 
 	private static String montarAbsolutoRelativo(File diretorioArquivos, File file) {
@@ -36,7 +36,7 @@ public class ArquivoProvedor {
 		}
 		if (stringPersistencia.startsWith(Constantes.SEP)) {
 			stringPersistencia = Util.replaceAll(stringPersistencia, Constantes.SEP, Constantes.SEPARADOR);
-			return new File(ArquivoModelo.FILE.getAbsolutePath() + stringPersistencia);
+			return new File(ArquivoModelo.file.getAbsolutePath() + stringPersistencia);
 		}
 		return new File(stringPersistencia);
 	}
