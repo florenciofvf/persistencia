@@ -23,6 +23,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -37,7 +38,6 @@ import br.com.persist.formulario.Formulario;
 public class MapaContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
 	private final MapaFichario fichario = new MapaFichario();
-	private final List<String> ignorados = new ArrayList<>();
 	private static final File file = new File("mapas");
 	private final Toolbar toolbar = new Toolbar();
 	private MapaFormulario mapaFormulario;
@@ -101,13 +101,8 @@ public class MapaContainer extends AbstratoContainer {
 		return MapaConstantes.INVISIVEL.equalsIgnoreCase(nome);
 	}
 
-	private static List<String> getIgnorados() {
-		return Util.getListaStringArquivo(new File(file, MapaConstantes.INVISIVEL));
-	}
-
 	private void abrir(String conteudo, String idPagina) {
-		ignorados.clear();
-		ignorados.addAll(getIgnorados());
+		ArquivoUtil.lerArquivo(MapaConstantes.MAPAS, new File(file, MapaConstantes.INVISIVEL));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
@@ -115,7 +110,7 @@ public class MapaContainer extends AbstratoContainer {
 				List<MapaPagina> ordenadas = new ArrayList<>();
 				for (File f : files) {
 					if ((ehArquivoReservado(f.getName()) && !MapaPreferencia.isExibirArqInvisivel())
-							|| ignorar(f.getName())) {
+							|| !ArquivoUtil.contem(MapaConstantes.MAPAS, f.getName())) {
 						continue;
 					}
 					ordenadas.add(new MapaPagina(f));
@@ -127,17 +122,6 @@ public class MapaContainer extends AbstratoContainer {
 			}
 		}
 		fichario.setConteudo(conteudo, idPagina);
-	}
-
-	private boolean ignorar(String string) {
-		if (string != null) {
-			for (String s : ignorados) {
-				if (string.endsWith(s)) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	@Override
