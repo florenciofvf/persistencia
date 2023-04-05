@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 
 public class Anexo {
@@ -142,7 +143,7 @@ public class Anexo {
 			if (files != null) {
 				Arrays.sort(files, (f1, f2) -> f1.getName().compareTo(f2.getName()));
 				for (File f : files) {
-					if (!AnexoModelo.ignorar(f.getName())) {
+					if (!ArquivoUtil.contem(AnexoConstantes.ANEXOS, f.getName())) {
 						Anexo arq = new Anexo(f);
 						filhos.add(arq);
 						arq.pai = this;
