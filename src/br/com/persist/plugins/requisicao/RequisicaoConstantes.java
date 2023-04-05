@@ -7,6 +7,7 @@ public class RequisicaoConstantes {
 	public static final String LABEL_REQUISICAO = "label.requisicao";
 	public static final String REQUISICOES = "requisicoes";
 	public static final String TENTATIVAS = "tentativas";
+	public static final String IGNORADOS = "ignorados";
 	public static final String SLEEP = "sleep";
 	public static final String MIMES = "mimes";
 

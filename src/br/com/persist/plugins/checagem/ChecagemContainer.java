@@ -20,6 +20,7 @@ import javax.swing.Icon;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -93,18 +94,28 @@ public class ChecagemContainer extends AbstratoContainer {
 		return fichario.getIndiceAtivo();
 	}
 
-	static boolean ehArquivoReservado(String nome) {
+	static boolean ehArquivoReservadoSentencas(String nome) {
 		return ChecagemConstantes.CHECAGENS.equalsIgnoreCase(nome);
 	}
 
+	static boolean ehArquivoReservadoIgnorados(String nome) {
+		return ChecagemConstantes.IGNORADOS.equalsIgnoreCase(nome);
+	}
+
+	private boolean vetarAdicionarPagina(File file) {
+		return (ehArquivoReservadoSentencas(file.getName()) && !ChecagemPreferencia.isExibirArqSentencas())
+				|| (ehArquivoReservadoIgnorados(file.getName()) && !ChecagemPreferencia.isExibirArqIgnorados());
+	}
+
 	private void abrir(String conteudo, String idPagina) {
+		ArquivoUtil.lerArquivo(ChecagemConstantes.CHECAGENS, new File(file, ChecagemConstantes.IGNORADOS));
 		ChecagemUtil.initModulos();
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					if (ehArquivoReservado(f.getName()) && !ChecagemPreferencia.isExibirArqSentencas()) {
+					if (vetarAdicionarPagina(f)) {
 						continue;
 					}
 					ChecagemPagina pagina = new ChecagemPagina(f);
@@ -202,7 +213,7 @@ public class ChecagemContainer extends AbstratoContainer {
 				return;
 			}
 			String nome = resp.toString();
-			if (ehArquivoReservado(nome)) {
+			if (ehArquivoReservadoSentencas(nome)) {
 				Util.mensagem(ChecagemContainer.this, Mensagens.getString("label.indentificador_reservado"));
 				return;
 			}

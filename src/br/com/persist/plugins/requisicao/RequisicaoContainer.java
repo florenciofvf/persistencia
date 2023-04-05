@@ -25,6 +25,7 @@ import javax.swing.KeyStroke;
 
 import br.com.persist.abstrato.AbstratoContainer;
 import br.com.persist.abstrato.AbstratoTitulo;
+import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Mensagens;
@@ -35,10 +36,10 @@ import br.com.persist.componente.ButtonPopup;
 import br.com.persist.componente.Janela;
 import br.com.persist.data.DataDialogo;
 import br.com.persist.data.DataListener;
+import br.com.persist.data.Tipo;
 import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
-import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 
 public class RequisicaoContainer extends AbstratoContainer {
@@ -113,17 +114,27 @@ public class RequisicaoContainer extends AbstratoContainer {
 		return fichario.getIndiceAtivo();
 	}
 
-	static boolean ehArquivoReservado(String nome) {
+	static boolean ehArquivoReservadoMimes(String nome) {
 		return RequisicaoConstantes.MIMES.equalsIgnoreCase(nome);
 	}
 
+	static boolean ehArquivoReservadoIgnorados(String nome) {
+		return RequisicaoConstantes.IGNORADOS.equalsIgnoreCase(nome);
+	}
+
+	private boolean vetarAdicionarPagina(File file) {
+		return (ehArquivoReservadoMimes(file.getName()) && !RequisicaoPreferencia.isExibirArqMimes())
+				|| (ehArquivoReservadoIgnorados(file.getName()) && !RequisicaoPreferencia.isExibirArqIgnorados());
+	}
+
 	private void abrir(String conteudo, String idPagina) {
+		ArquivoUtil.lerArquivo(RequisicaoConstantes.REQUISICOES, new File(file, RequisicaoConstantes.IGNORADOS));
 		fichario.excluirPaginas();
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					if (ehArquivoReservado(f.getName()) && !RequisicaoPreferencia.isExibirArqMimes()) {
+					if (vetarAdicionarPagina(f)) {
 						continue;
 					}
 					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
@@ -316,7 +327,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 				return;
 			}
 			String nome = resp.toString();
-			if (ehArquivoReservado(nome)) {
+			if (ehArquivoReservadoMimes(nome)) {
 				Util.mensagem(RequisicaoContainer.this, Mensagens.getString("label.indentificador_reservado"));
 				return;
 			}
