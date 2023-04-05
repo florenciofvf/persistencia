@@ -107,16 +107,16 @@ public class EntregaContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
-				List<EntregaPagina> ordenadas = new ArrayList<>();
+				List<EntregaPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if ((ehArquivoReservado(f.getName()) && !EntregaPreferencia.isExibirArqInvisivel())
 							|| ArquivoUtil.contem(EntregaConstantes.ENTREGAS, f.getName())) {
 						continue;
 					}
-					ordenadas.add(new EntregaPagina(f));
+					ordenados.add(new EntregaPagina(f));
 				}
-				Collections.sort(ordenadas, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
-				for (EntregaPagina pagina : ordenadas) {
+				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
+				for (EntregaPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}
 			}

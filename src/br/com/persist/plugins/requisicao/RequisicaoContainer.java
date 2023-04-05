@@ -16,6 +16,9 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -133,11 +136,15 @@ public class RequisicaoContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
+				List<RequisicaoPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(RequisicaoConstantes.REQUISICOES, f.getName())) {
 						continue;
 					}
-					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
+					ordenados.add(new RequisicaoPagina(poolVisualizador, rota, f));
+				}
+				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
+				for (RequisicaoPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}
 			}

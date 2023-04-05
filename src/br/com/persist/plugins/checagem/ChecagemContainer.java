@@ -14,6 +14,9 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
@@ -114,11 +117,15 @@ public class ChecagemContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
+				List<ChecagemPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(ChecagemConstantes.CHECAGENS, f.getName())) {
 						continue;
 					}
-					ChecagemPagina pagina = new ChecagemPagina(f);
+					ordenados.add(new ChecagemPagina(f));
+				}
+				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
+				for (ChecagemPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}
 			}
