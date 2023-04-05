@@ -648,6 +648,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			if (req != null) {
 				String string = req.getString();
 				adicionarRota(rota, string);
+			} else {
+				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.sem_linha_tabela_sel"));
 			}
 		} else {
 			if (!Util.estaVazio(areaParametros.getText())) {
