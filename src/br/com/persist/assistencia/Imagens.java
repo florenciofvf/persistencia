@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 
 public class Imagens {
 	private static final Map<String, Icon> MAPA_ICONES = new HashMap<>();
-	private static final File file = new File("imagens");
+	private static final File file = new File(Constantes.IMAGENS);
 
 	private Imagens() {
 	}

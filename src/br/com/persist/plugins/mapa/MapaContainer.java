@@ -37,8 +37,8 @@ import br.com.persist.formulario.Formulario;
 
 public class MapaContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
+	private static final File file = new File(MapaConstantes.MAPAS);
 	private final MapaFichario fichario = new MapaFichario();
-	private static final File file = new File("mapas");
 	private final Toolbar toolbar = new Toolbar();
 	private MapaFormulario mapaFormulario;
 	private MapaDialogo mapaDialogo;

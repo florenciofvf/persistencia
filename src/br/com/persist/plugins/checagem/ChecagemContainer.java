@@ -33,8 +33,8 @@ import br.com.persist.formulario.Formulario;
 
 public class ChecagemContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
+	private static final File file = new File(ChecagemConstantes.CHECAGENS);
 	private final ChecagemFichario fichario = new ChecagemFichario();
-	private static final File file = new File("checagens");
 	private ChecagemFormulario checagemFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private ChecagemDialogo checagemDialogo;

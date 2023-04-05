@@ -26,10 +26,10 @@ import br.com.persist.assistencia.Imagens;
 import br.com.persist.assistencia.Util;
 
 public class AnexoModelo implements TreeModel {
+	private static final File anexosRaiz = new File(AnexoConstantes.ANEXOS);
 	private final EventListenerList listenerList = new EventListenerList();
 	private static final Map<String, Anexo> anexos = new HashMap<>();
 	private static final List<String> ignorados = new ArrayList<>();
-	private static final File anexosRaiz = new File("anexos");
 	public static final File anexosInfo = new File(anexosRaiz, "A");
 	private static final File ignore = new File(anexosRaiz, "ignore");
 	private static final Logger LOG = Logger.getGlobal();

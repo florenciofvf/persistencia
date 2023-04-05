@@ -43,10 +43,10 @@ import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador
 
 public class RequisicaoContainer extends AbstratoContainer {
 	private static final long serialVersionUID = 1L;
+	private static final File file = new File(RequisicaoConstantes.REQUISICOES);
 	private final RequisicaoFichario fichario = new RequisicaoFichario();
 	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final transient RequisicaoRota rota = new RequisicaoRota();
-	private static final File file = new File("requisicoes");
 	private static final Logger LOG = Logger.getGlobal();
 	private RequisicaoFormulario requisicaoFormulario;
 	private final Toolbar toolbar = new Toolbar();
