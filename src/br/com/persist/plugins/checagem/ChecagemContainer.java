@@ -115,7 +115,7 @@ public class ChecagemContainer extends AbstratoContainer {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					if (vetarAdicionarPagina(f)) {
+					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(ChecagemConstantes.CHECAGENS, f.getName())) {
 						continue;
 					}
 					ChecagemPagina pagina = new ChecagemPagina(f);

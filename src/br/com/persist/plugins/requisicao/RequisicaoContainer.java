@@ -134,7 +134,7 @@ public class RequisicaoContainer extends AbstratoContainer {
 			File[] files = file.listFiles();
 			if (files != null) {
 				for (File f : files) {
-					if (vetarAdicionarPagina(f)) {
+					if (vetarAdicionarPagina(f) || ArquivoUtil.contem(RequisicaoConstantes.REQUISICOES, f.getName())) {
 						continue;
 					}
 					RequisicaoPagina pagina = new RequisicaoPagina(poolVisualizador, rota, f);
