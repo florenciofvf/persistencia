@@ -69,8 +69,8 @@ class AnotacaoSplit extends SplitPane {
 	}
 
 	void inicializar() {
-		File ignore = new File(fileRoot, "ignore");
-		List<String> ignorados = ArquivoUtil.getIgnorados(ignore);
+		File file = new File(fileRoot, AnotacaoConstantes.IGNORADOS);
+		List<String> ignorados = ArquivoUtil.getIgnorados(file);
 		Arquivo raiz = new Arquivo(fileRoot, ignorados);
 		tree = new ArquivoTree(new ArquivoModelo(raiz));
 		tree.adicionarOuvinte(treeListener);

@@ -27,8 +27,12 @@ public class ArquivoUtil {
 		if (chave == null || file == null) {
 			return;
 		}
+		map.put(chave, lerArquivo(file));
+	}
+
+	public static List<String> lerArquivo(File file) {
 		List<String> lista = new ArrayList<>();
-		if (file.isFile() && file.canRead()) {
+		if (file != null && file.isFile() && file.canRead()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 				String linha = br.readLine();
@@ -39,10 +43,10 @@ public class ArquivoUtil {
 					linha = br.readLine();
 				}
 			} catch (Exception e) {
-				LOG.log(Level.SEVERE, "lerArquivo(chave, file)");
+				LOG.log(Level.SEVERE, "lerArquivo(file)");
 			}
 		}
-		map.put(chave, lista);
+		return lista;
 	}
 
 	public static boolean contem(String chave, String string) {
