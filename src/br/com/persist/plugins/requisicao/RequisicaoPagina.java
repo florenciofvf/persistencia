@@ -662,7 +662,11 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			DataParser parser = new DataParser();
 			Tipo tipo = parser.parse(string);
 			Requisicao req = new Requisicao(tipo);
-			rota.adicionar(req.getDesc(), req.getString());
+			if (req.getRota() != null) {
+				rota.adicionar(req.getRota(), req.getString());
+			} else {
+				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.objeto_sem_atributo_rota"));
+			}
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}

@@ -10,6 +10,7 @@ import br.com.persist.data.DataUtil;
 
 public class Requisicao {
 	private final Tipo tipo;
+	private String rota;
 	private String desc;
 	private String url;
 
@@ -24,7 +25,9 @@ public class Requisicao {
 			Tipo tipoUrl = objeto.getValor("url");
 			url = tipoUrl instanceof Texto ? tipoUrl.toString() : null;
 			Tipo tipoDesc = objeto.getValor("desc");
-			desc = tipoDesc instanceof Texto ? tipoDesc.toString() : "Objeto sem atributo desc";
+			desc = tipoDesc instanceof Texto ? tipoDesc.toString() : "desc null";
+			Tipo tipoRota = objeto.getValor("rota");
+			rota = tipoRota instanceof Texto ? tipoRota.toString() : null;
 		} else if (tipo instanceof Array) {
 			Array array = (Array) tipo;
 			desc = "Objeto Array [" + array.getElementos().size() + "]";
@@ -61,6 +64,14 @@ public class Requisicao {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public String getRota() {
+		return rota;
+	}
+
+	public void setRota(String rota) {
+		this.rota = rota;
 	}
 
 	public String getUrl() {
