@@ -107,16 +107,16 @@ public class MapaContainer extends AbstratoContainer {
 		if (file.isDirectory()) {
 			File[] files = file.listFiles();
 			if (files != null) {
-				List<MapaPagina> ordenadas = new ArrayList<>();
+				List<MapaPagina> ordenados = new ArrayList<>();
 				for (File f : files) {
 					if ((ehArquivoReservado(f.getName()) && !MapaPreferencia.isExibirArqInvisivel())
 							|| ArquivoUtil.contem(MapaConstantes.MAPAS, f.getName())) {
 						continue;
 					}
-					ordenadas.add(new MapaPagina(f));
+					ordenados.add(new MapaPagina(f));
 				}
-				Collections.sort(ordenadas, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
-				for (MapaPagina pagina : ordenadas) {
+				Collections.sort(ordenados, (a1, a2) -> a1.getNome().compareTo(a2.getNome()));
+				for (MapaPagina pagina : ordenados) {
 					fichario.adicionarPagina(pagina);
 				}
 			}
