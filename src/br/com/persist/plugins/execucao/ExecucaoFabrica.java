@@ -44,7 +44,7 @@ public class ExecucaoFabrica extends AbstratoFabricaContainer {
 		private static final long serialVersionUID = 1L;
 
 		private MenuExecucao(Formulario formulario) {
-			super(Constantes.LABEL_VAZIO, Icones.PANEL4);
+			super(Constantes.LABEL_VAZIO, Icones.PANEL);
 			setText(ExecucaoMensagens.getString(ExecucaoConstantes.LABEL_EXECUCOES));
 			ficharioAcao
 					.setActionListener(e -> formulario.adicionarPagina(new ExecucaoContainer(null, formulario, null)));
