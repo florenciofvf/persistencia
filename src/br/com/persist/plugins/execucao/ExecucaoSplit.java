@@ -26,7 +26,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import org.xml.sax.Attributes;
@@ -45,6 +46,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
@@ -249,21 +251,151 @@ class TextArea extends TextPane {
 
 class Aba extends Transferivel {
 	private static final long serialVersionUID = 1L;
-	private final TextArea textArea = new TextArea();
-	private final Toolbar toolbar = new Toolbar();
+	private final JTabbedPane tabbedPane = new JTabbedPane();
+	private final AbaText abaText = new AbaText();
 	final transient Arquivo arquivo;
+	private final AbaView abaView;
 
 	Aba(Arquivo arquivo) {
 		this.arquivo = Objects.requireNonNull(arquivo);
-		toolbar.ini();
+		abaView = new AbaView(arquivo.getFile());
+		abaText.toolbar.ini();
+		abaText.abrir();
 		montarLayout();
-		abrir();
 	}
 
 	Aba(File file) {
-		toolbar.ini(Mensagens.getString("msg.arquivo_inexistente") + " " + file.getAbsolutePath());
-		add(BorderLayout.NORTH, toolbar);
+		abaText.toolbar.ini(Mensagens.getString("msg.arquivo_inexistente") + " " + file.getAbsolutePath());
+		add(BorderLayout.NORTH, abaText.toolbar);
 		this.arquivo = null;
+		this.abaView = null;
+	}
+
+	private void montarLayout() {
+		tabbedPane.addTab("Text", abaText);
+		tabbedPane.addTab("View", abaView);
+		add(BorderLayout.CENTER, tabbedPane);
+	}
+
+	class AbaText extends Panel {
+		private static final long serialVersionUID = 1L;
+		private final JTextPane textArea = new JTextPane();
+		private final Toolbar toolbar = new Toolbar();
+		private ScrollPane scrollPane;
+
+		AbaText() {
+			montarLayout();
+		}
+
+		void montarLayout() {
+			add(BorderLayout.NORTH, toolbar);
+			Panel panelArea = new Panel();
+			panelArea.add(BorderLayout.CENTER, textArea);
+			scrollPane = new ScrollPane(panelArea);
+			add(BorderLayout.CENTER, scrollPane);
+		}
+
+		int getValueScrollPane() {
+			return scrollPane.getVerticalScrollBar().getValue();
+		}
+
+		void setValueScrollPane(int value) {
+			SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
+		}
+
+		String getConteudo() {
+			return textArea.getText();
+		}
+
+		void abrir() {
+			textArea.setText(Constantes.VAZIO);
+			if (arquivo.getFile().exists()) {
+				try (BufferedReader br = new BufferedReader(
+						new InputStreamReader(new FileInputStream(arquivo.getFile()), StandardCharsets.UTF_8))) {
+					StringBuilder sb = new StringBuilder();
+					int value = getValueScrollPane();
+					String linha = br.readLine();
+					while (linha != null) {
+						sb.append(linha + Constantes.QL);
+						linha = br.readLine();
+					}
+					textArea.setText(sb.toString());
+					setValueScrollPane(value);
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage(ExecucaoConstantes.PAINEL_EXECUCAO, ex, Aba.this);
+				}
+			}
+		}
+
+		private class Toolbar extends BarraButton implements ActionListener {
+			private static final long serialVersionUID = 1L;
+			private final TextField txtPesquisa = new TextField(35);
+			private transient Selecao selecao;
+
+			public void ini() {
+				super.ini(new Nil(), LIMPAR, BAIXAR, SALVAR, COPIAR, COLAR);
+				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
+				txtPesquisa.addActionListener(this);
+				add(txtPesquisa);
+				add(label);
+			}
+
+			public void ini(String arqAbsoluto) {
+				label.setText(arqAbsoluto);
+				add(label);
+			}
+
+			@Override
+			protected void limpar() {
+				textArea.setText(Constantes.VAZIO);
+			}
+
+			@Override
+			protected void baixar() {
+				abrir();
+				selecao = null;
+				label.limpar();
+			}
+
+			@Override
+			protected void copiar() {
+				String string = Util.getString(textArea);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				textArea.requestFocus();
+			}
+
+			@Override
+			protected void colar(boolean numeros, boolean letras) {
+				Util.getContentTransfered(textArea, numeros, letras);
+			}
+
+			@Override
+			protected void salvar() {
+				if (Util.confirmaSalvar(Aba.this, Constantes.TRES)) {
+					salvarArquivo(arquivo.getFile());
+				}
+			}
+
+			private void salvarArquivo(File file) {
+				try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
+					pw.print(textArea.getText());
+					salvoMensagem();
+				} catch (Exception ex) {
+					Util.stackTraceAndMessage("Aba", ex, Aba.this);
+				}
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!Util.estaVazio(txtPesquisa.getText())) {
+					selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
+					selecao.selecionar(label);
+				} else {
+					label.limpar();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -292,101 +424,10 @@ class Aba extends Transferivel {
 		return arquivo.getFile();
 	}
 
-	private void montarLayout() {
-		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, new JScrollPane(textArea));
-	}
-
-	private void abrir() {
-		textArea.limpar();
-		if (arquivo.getFile().exists()) {
-			try (BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(arquivo.getFile()), StandardCharsets.UTF_8))) {
-				String linha = br.readLine();
-				while (linha != null) {
-					textArea.append(linha + Constantes.QL);
-					linha = br.readLine();
-				}
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("Aba", ex, Aba.this);
-			}
-		}
-	}
-
 	@Override
 	public void processar(Fichario fichario, int indice, Map<String, Object> map) {
 		if (map.containsKey(Transferivel.RENOMEAR)) {
 			fichario.setTitleAt(indice, arquivo.getName());
-		}
-	}
-
-	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
-		private final TextField txtPesquisa = new TextField(35);
-		private transient Selecao selecao;
-
-		public void ini() {
-			super.ini(new Nil(), BAIXAR, LIMPAR, SALVAR, COPIAR, COLAR);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			txtPesquisa.addActionListener(this);
-			add(txtPesquisa);
-			add(label);
-		}
-
-		public void ini(String arqAbsoluto) {
-			label.setText(arqAbsoluto);
-			add(label);
-		}
-
-		@Override
-		protected void baixar() {
-			abrir();
-			selecao = null;
-			label.limpar();
-		}
-
-		@Override
-		protected void limpar() {
-			textArea.limpar();
-		}
-
-		@Override
-		protected void copiar() {
-			String string = Util.getString(textArea);
-			Util.setContentTransfered(string);
-			copiarMensagem(string);
-			textArea.requestFocus();
-		}
-
-		@Override
-		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textArea, numeros, letras);
-		}
-
-		@Override
-		protected void salvar() {
-			if (Util.confirmaSalvar(Aba.this, Constantes.TRES)) {
-				salvarArquivo(arquivo.getFile());
-			}
-		}
-
-		private void salvarArquivo(File file) {
-			try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-				pw.print(textArea.getText());
-				salvoMensagem();
-			} catch (Exception ex) {
-				Util.stackTraceAndMessage("Aba", ex, Aba.this);
-			}
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
-				selecao.selecionar(label);
-			} else {
-				label.limpar();
-			}
 		}
 	}
 }

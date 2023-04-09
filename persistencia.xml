@@ -23,9 +23,9 @@
 		<menu classeFabrica="br.com.persist.plugins.mapeamento.MapeamentoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.variaveis.VariavelFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.requisicao.RequisicaoFabrica" ativo="true" />
+		<menu classeFabrica="br.com.persist.plugins.execucao.ExecucaoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.checagem.ChecagemFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.entrega.EntregaFabrica" ativo="true" />
-		<menu classeFabrica="br.com.persist.plugins.execucao.ExecucaoFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.plugins.mapa.MapaFabrica" ativo="true" />
 		<menu classeFabrica="br.com.persist.comparacao.ComparacaoFabrica" ativo="false" />
 	</menu>
