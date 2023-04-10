@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<exec git="/usr/local/Cellar/git/2.32.0/bin/git">
+	<proj dir=" -C /Users/florenciovieirafilho/Downloads/eclipse/persistencia">
+		<comando checkout=" checkout ."
+	</proj>
+</exec>
