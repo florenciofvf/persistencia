@@ -187,9 +187,9 @@ public class ArquivoTree extends Tree {
 
 		private void preShow(Arquivo arquivo) {
 			if (getRaiz() == arquivo) {
+				diretorioAcao.setEnabled(arquivo.pathValido());
 				novoDiretorioAcao.setEnabled(true);
 				novoArquivoAcao.setEnabled(true);
-				diretorioAcao.setEnabled(true);
 				renomearAcao.setEnabled(false);
 				excluirAcao.setEnabled(false);
 				abrirAcao.setEnabled(false);
@@ -198,9 +198,9 @@ public class ArquivoTree extends Tree {
 			boolean dir = arquivo.isDirectory();
 			boolean file = arquivo.isFile();
 			boolean both = dir || file;
+			diretorioAcao.setEnabled(both && arquivo.pathValido());
 			novoDiretorioAcao.setEnabled(dir);
 			novoArquivoAcao.setEnabled(dir);
-			diretorioAcao.setEnabled(both);
 			renomearAcao.setEnabled(both);
 			excluirAcao.setEnabled(both);
 			abrirAcao.setEnabled(file);

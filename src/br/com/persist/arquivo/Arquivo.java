@@ -196,6 +196,23 @@ public class Arquivo {
 		}
 	}
 
+	public boolean pathValido() {
+		return pathValido(file);
+	}
+
+	public static boolean pathValido(File file) {
+		if (file == null) {
+			return false;
+		}
+		String path = file.getAbsolutePath();
+		for (char c : path.toCharArray()) {
+			if (c <= ' ') {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public boolean isFile() {
 		return file.isFile();
 	}

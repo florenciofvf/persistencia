@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import br.com.persist.arquivo.Arquivo;
 import br.com.persist.assistencia.ArquivoUtil;
 import br.com.persist.assistencia.Constantes;
 
@@ -152,6 +153,10 @@ public class Anexo {
 			}
 		}
 		processado = true;
+	}
+
+	public boolean pathValido() {
+		return Arquivo.pathValido(file);
 	}
 
 	public boolean isFile() {

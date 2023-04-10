@@ -160,9 +160,10 @@ public class AnexoTree extends Tree {
 		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
 		private Action corFonteAcao = Action.actionMenu("label.cor_fonte", Icones.COR);
 		private Action iconeAcao = Action.actionMenu("label.icone", Icones.ICON);
+		private MenuAbrir menuAbrir = new MenuAbrir();
 
 		private AnexoPopup() {
-			add(new MenuAbrir());
+			add(menuAbrir);
 			add(true, chkPadraoAbrir);
 			add(chkAbrirVisivel);
 			addMenuItem(true, renomearAcao);
@@ -189,6 +190,7 @@ public class AnexoTree extends Tree {
 			chkPadraoAbrir.setEnabled(anexo.isFile());
 			renomearAcao.setEnabled(renomearExcluir);
 			excluirAcao.setEnabled(renomearExcluir);
+			menuAbrir.preShow(anexo);
 		}
 
 		private void padraoAbrir(boolean b) {
@@ -228,6 +230,10 @@ public class AnexoTree extends Tree {
 				imprimirAcao.setActionListener(e -> ouvintes.forEach(o -> o.imprimirAnexo(AnexoTree.this)));
 				editarAcao.setActionListener(e -> ouvintes.forEach(o -> o.editarAnexo(AnexoTree.this)));
 				abrirAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirAnexo(AnexoTree.this)));
+			}
+
+			private void preShow(Anexo anexo) {
+				diretorioAcao.setEnabled(anexo.pathValido());
 			}
 		}
 	}
