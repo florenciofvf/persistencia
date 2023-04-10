@@ -80,7 +80,14 @@ public class Container {
 
 	private void executar(StringBuilder sb) {
 		try {
-			Process process = Runtime.getRuntime().exec(gerarComando());
+			String comando = gerarComando();
+			if (sb != null) {
+				if (sb.length() > 0) {
+					sb.append(Constantes.QL);
+				}
+				sb.append("[" + comando + "]" + Constantes.QL2);
+			}
+			Process process = Runtime.getRuntime().exec(comando);
 			if (sb != null) {
 				imprimir(process.getErrorStream(), sb);
 				imprimir(process.getInputStream(), sb);
