@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.io.File;
 
 import javax.swing.Icon;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
@@ -110,10 +111,10 @@ class Handler extends XMLHandler {
 
 class PanelLog extends Panel {
 	private static final long serialVersionUID = 1L;
-	private br.com.persist.componente.TextArea textArea = new br.com.persist.componente.TextArea();
+	private final TextArea textArea = new TextArea();
 
 	PanelLog() {
-		add(BorderLayout.CENTER, textArea);
+		add(BorderLayout.CENTER, new JScrollPane(textArea));
 	}
 
 	void processar(Container container) {

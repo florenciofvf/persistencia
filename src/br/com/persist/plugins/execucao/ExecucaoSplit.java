@@ -27,7 +27,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JTabbedPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import org.xml.sax.Attributes;
@@ -279,7 +278,7 @@ class Aba extends Transferivel {
 
 	class AbaText extends Panel {
 		private static final long serialVersionUID = 1L;
-		private final JTextPane textArea = new JTextPane();
+		private final TextArea textArea = new TextArea();
 		private final Toolbar toolbar = new Toolbar();
 		private ScrollPane scrollPane;
 
@@ -289,9 +288,7 @@ class Aba extends Transferivel {
 
 		void montarLayout() {
 			add(BorderLayout.NORTH, toolbar);
-			Panel panelArea = new Panel();
-			panelArea.add(BorderLayout.CENTER, textArea);
-			scrollPane = new ScrollPane(panelArea);
+			scrollPane = new ScrollPane(textArea);
 			add(BorderLayout.CENTER, scrollPane);
 		}
 
