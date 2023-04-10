@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.io.File;
 
 import javax.swing.Icon;
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import org.xml.sax.Attributes;
@@ -16,6 +17,7 @@ import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
+import br.com.persist.componente.ScrollPane;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLHandler;
 
@@ -34,8 +36,8 @@ public class AbaView extends Panel implements ContainerTreeListener {
 
 	private void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		add(BorderLayout.CENTER, tree);
-		add(BorderLayout.SOUTH, log);
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new ScrollPane(tree), log);
+		add(BorderLayout.CENTER, split);
 	}
 
 	public void carregar(File file) {
@@ -108,7 +110,7 @@ class Handler extends XMLHandler {
 
 class PanelLog extends Panel {
 	private static final long serialVersionUID = 1L;
-	private TextArea textArea = new TextArea();
+	private br.com.persist.componente.TextArea textArea = new br.com.persist.componente.TextArea();
 
 	PanelLog() {
 		add(BorderLayout.CENTER, textArea);
