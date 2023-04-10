@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import br.com.persist.arquivo.Arquivo;
@@ -26,7 +27,6 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
-import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 
 public class AbaText extends Panel {
@@ -34,7 +34,7 @@ public class AbaText extends Panel {
 	private final TextArea textArea = new TextArea();
 	private final transient Arquivo arquivo;
 	final Toolbar toolbar = new Toolbar();
-	private ScrollPane scrollPane;
+	private JScrollPane scrollPane;
 
 	AbaText(Arquivo arquivo) {
 		this.arquivo = arquivo;
@@ -43,7 +43,7 @@ public class AbaText extends Panel {
 
 	void montarLayout() {
 		add(BorderLayout.NORTH, toolbar);
-		scrollPane = new ScrollPane(textArea);
+		scrollPane = new JScrollPane(textArea);
 		add(BorderLayout.CENTER, scrollPane);
 	}
 
