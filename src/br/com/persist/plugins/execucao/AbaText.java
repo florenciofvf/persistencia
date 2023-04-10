@@ -92,7 +92,7 @@ public class AbaText extends Panel {
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
-		public void ini() {
+		void ini() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, SALVAR, COPIAR, COLAR);
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 			txtPesquisa.addActionListener(this);
@@ -100,7 +100,7 @@ public class AbaText extends Panel {
 			add(label);
 		}
 
-		public void ini(String arqAbsoluto) {
+		void ini(String arqAbsoluto) {
 			label.setText(arqAbsoluto);
 			add(label);
 		}

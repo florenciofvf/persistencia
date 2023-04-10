@@ -41,7 +41,7 @@ public class AbaView extends Panel implements ContainerTreeListener {
 		add(BorderLayout.CENTER, split);
 	}
 
-	public void carregar(File file) {
+	void carregar(File file) {
 		try {
 			Handler handler = new Handler();
 			if (file.exists() && file.canRead()) {
