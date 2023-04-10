@@ -176,6 +176,7 @@ public class ArquivoTree extends Tree {
 			atualizarAcao.setEnabled(ehArquivo);
 			fecharAcao.setEnabled(ehArquivo);
 			menuAbrir.setEnabled(ehArquivo);
+			menuAbrir.preShow(arquivo);
 		}
 
 		private class MenuAbrir extends MenuPadrao1 {
@@ -193,6 +194,10 @@ public class ArquivoTree extends Tree {
 				ficharioAcao.setActionListener(e -> ouvintes.forEach(o -> o.abrirArquivoFichario(ArquivoTree.this)));
 				diretorioAcao.setActionListener(e -> ouvintes.forEach(o -> o.diretorioArquivo(ArquivoTree.this)));
 				conteudoAcao.setActionListener(e -> ouvintes.forEach(o -> o.conteudoArquivo(ArquivoTree.this)));
+			}
+
+			private void preShow(Arquivo arquivo) {
+				diretorioAcao.setEnabled(arquivo.pathValido());
 			}
 		}
 	}

@@ -144,6 +144,10 @@ public class Arquivo {
 		processado = true;
 	}
 
+	public boolean pathValido() {
+		return br.com.persist.arquivo.Arquivo.pathValido(file);
+	}
+
 	public boolean isFile() {
 		return file.isFile();
 	}
