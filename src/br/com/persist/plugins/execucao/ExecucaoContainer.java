@@ -1,6 +1,7 @@
 package br.com.persist.plugins.execucao;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
 import static br.com.persist.componente.BarraButtonEnum.RETORNAR_AO_FICHARIO;
 
@@ -76,7 +77,7 @@ public class ExecucaoContainer extends AbstratoContainer {
 		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
-			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
+			super.ini(janela, BAIXAR, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO);
 		}
 
 		@Override
@@ -120,6 +121,11 @@ public class ExecucaoContainer extends AbstratoContainer {
 		@Override
 		public void dialogOpenedHandler(Dialog dialog) {
 			buttonDestacar.estadoDialogo();
+		}
+
+		@Override
+		protected void baixar() {
+			split.inicializar();
 		}
 	}
 
