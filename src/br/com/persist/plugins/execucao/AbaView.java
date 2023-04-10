@@ -19,7 +19,7 @@ import br.com.persist.componente.Panel;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLHandler;
 
-public class AbaView extends Panel {
+public class AbaView extends Panel implements ContainerTreeListener {
 	private static final long serialVersionUID = 1L;
 	private ContainerTree tree = new ContainerTree();
 	private final Toolbar toolbar = new Toolbar();
@@ -29,6 +29,7 @@ public class AbaView extends Panel {
 	public AbaView(File file) {
 		this.file = file;
 		montarLayout();
+		tree.adicionarOuvinte(this);
 	}
 
 	private void montarLayout() {
@@ -48,6 +49,11 @@ public class AbaView extends Panel {
 			Util.stackTraceAndMessage(ExecucaoConstantes.PAINEL_EXECUCAO, ex, AbaView.this);
 		}
 		SwingUtilities.updateComponentTreeUI(this);
+	}
+
+	@Override
+	public void executar(ContainerTree tree) {
+		log.processar(tree.getObjetoSelecionado());
 	}
 
 	private class Toolbar extends BarraButton {
@@ -112,5 +118,8 @@ class PanelLog extends Panel {
 		if (container == null) {
 			return;
 		}
+		StringBuilder sb = new StringBuilder();
+		container.processar(sb);
+		textArea.setText(sb.toString());
 	}
 }
