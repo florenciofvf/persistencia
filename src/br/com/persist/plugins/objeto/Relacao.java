@@ -440,6 +440,7 @@ public class Relacao implements Runnable {
 				reiniciarHora(getOrigem(), superficie);
 				reiniciarHora(getDestino(), superficie);
 				processarHoraDiff(false);
+				desativar();
 			}
 		} else {
 			reiniciarHora(getOrigem(), superficie);
