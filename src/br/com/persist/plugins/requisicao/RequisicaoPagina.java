@@ -263,6 +263,17 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		RequisicaoModelo getModelo() {
 			return (RequisicaoModelo) ((OrdemModel) getModel()).getModel();
 		}
+
+		void adicionar(Requisicao req) {
+			if (req != null) {
+				RequisicaoModelo modelo = getModelo();
+				modelo.adicionar(req);
+				setModel(new OrdemModel(modelo));
+				Util.ajustar(this, RequisicaoPagina.this.getGraphics());
+				int i = modelo.getRowCount() - 1;
+				addRowSelectionInterval(i, i);
+			}
+		}
 	}
 
 	private void montarLayout() {
@@ -435,7 +446,14 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(areaParametros, numeros, letras);
+			if (chkModoTabela.isSelected()) {
+				String string = Util.getContentTransfered();
+				if (!Util.estaVazio(string)) {
+					tabela.adicionar(criar(string));
+				}
+			} else {
+				Util.getContentTransfered(areaParametros, numeros, letras);
+			}
 		}
 
 		@Override
