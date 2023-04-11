@@ -416,10 +416,21 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(areaParametros);
-			Util.setContentTransfered(string);
-			copiarMensagem(string);
-			areaParametros.requestFocus();
+			if (chkModoTabela.isSelected()) {
+				Requisicao req = tabela.getRequisicao();
+				if (req != null) {
+					String string = req.getString();
+					Util.setContentTransfered(string);
+					copiarMensagem(string);
+				} else {
+					Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
+				}
+			} else {
+				String string = Util.getString(areaParametros);
+				Util.setContentTransfered(string);
+				copiarMensagem(string);
+				areaParametros.requestFocus();
+			}
 		}
 
 		@Override
