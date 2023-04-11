@@ -22,8 +22,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		if (!Util.estaVazio(accessToken)) {
 			Variavel vAccessToken = VariavelProvedor.getVariavel(RequisicaoConstantes.VAR_ACCESS_TOKEN);
 			if (vAccessToken == null) {
-				vAccessToken = new Variavel(RequisicaoConstantes.VAR_ACCESS_TOKEN, accessToken);
-				VariavelProvedor.adicionar(vAccessToken);
+				VariavelProvedor.adicionar(RequisicaoConstantes.VAR_ACCESS_TOKEN, accessToken);
 			} else {
 				vAccessToken.setValor(accessToken);
 			}
@@ -43,8 +42,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		String valor = string.substring(pos + str.length(), pos2);
 		Variavel var = VariavelProvedor.getVariavel(varAuthToken);
 		if (var == null) {
-			var = new Variavel(varAuthToken, valor);
-			VariavelProvedor.adicionar(var);
+			VariavelProvedor.adicionar(varAuthToken, valor);
 		} else {
 			var.setValor(valor);
 		}
@@ -56,8 +54,7 @@ public abstract class RequisicaoVisualizadorHeader extends AbstratoRequisicaoVis
 		}
 		Variavel var = VariavelProvedor.getVariavel(varCookie);
 		if (var == null) {
-			var = new Variavel(varCookie, cookie);
-			VariavelProvedor.adicionar(var);
+			VariavelProvedor.adicionar(varCookie, cookie);
 		} else {
 			var.setValor(cookie);
 		}

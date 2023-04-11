@@ -90,6 +90,10 @@ public class VariavelProvedor {
 		}
 	}
 
+	public static void adicionar(String nome, String valor) {
+		adicionar(new Variavel(nome, valor));
+	}
+
 	public static void inicializar() {
 		lista.clear();
 		try {
