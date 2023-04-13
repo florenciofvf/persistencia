@@ -1,5 +1,8 @@
 package br.com.persist.assistencia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FragmentoUtil {
 	private int indice;
 	private final String string;
@@ -38,5 +41,15 @@ public class FragmentoUtil {
 			indice++;
 		}
 		return sb.toString().trim().isEmpty();
+	}
+
+	public List<String> fragmentos() {
+		List<String> resp = new ArrayList<>();
+		String str = proximo();
+		while (str.length() > 0) {
+			resp.add(str);
+			str = proximo();
+		}
+		return resp;
 	}
 }

@@ -804,6 +804,24 @@ public class Util {
 		return klass.getName().equals(nome);
 	}
 
+	public static void selecionarTexto(JTextComponent area, String string) {
+		if (area == null || estaVazio(string)) {
+			return;
+		}
+		String strArea = area.getText();
+		FragmentoUtil util = new FragmentoUtil(strArea);
+		String str = util.proximo();
+		while (str.length() > 0) {
+			if (str.contains(string)) {
+				int ini = strArea.indexOf(str);
+				int fim = ini + str.length();
+				area.setSelectionStart(ini);
+				area.setSelectionEnd(fim);
+			}
+			str = util.proximo();
+		}
+	}
+
 	public static void selecionarTexto(JTextComponent area) {
 		if (area == null) {
 			return;
