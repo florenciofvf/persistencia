@@ -353,14 +353,27 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		private void modoTabelaHandler(boolean modoTabela) {
 			if (modoTabela) {
 				if (!ehArquivoReservadoMimes() && !ehArquivoReservadoIgnorados()) {
-					configModoTabela();
+					configModoTabela(getRequisicaoTextSel());
 				} else {
 					Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString("msg.arquivo_reservado"));
 					chkModoTabela.setSelected(false);
 				}
 			} else {
-				configModoTexto();
+				configModoTexto(tabela.getRequisicao());
 			}
+		}
+
+		private Requisicao getRequisicaoTextSel() {
+			String string = Util.getString(areaParametros);
+			Requisicao resp = null;
+			if (!Util.estaVazio(string)) {
+				FragmentoUtil util = new FragmentoUtil(string);
+				List<String> lista = util.fragmentos();
+				if (lista.size() == 1) {
+					resp = criar(lista.get(0));
+				}
+			}
+			return resp;
 		}
 
 		private void clonarSelecionados() {
@@ -369,7 +382,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			}
 		}
 
-		private void configModoTabela() {
+		private void configModoTabela(Requisicao req) {
 			Panel panel = new Panel();
 			panel.add(BorderLayout.NORTH, toolbarParametro);
 			tabela.setModel(new OrdemModel(criarRequisicaoModelo()));
@@ -379,6 +392,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			split.setLeftComponent(panel);
 			split.setDividerLocation(Constantes.SIZE.height / 2);
 			Util.ajustar(tabela, getGraphics());
+			tabela.selecionar(req);
 		}
 
 		private RequisicaoModelo criarRequisicaoModelo() {
@@ -407,7 +421,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			return null;
 		}
 
-		private void configModoTexto() {
+		private void configModoTexto(Requisicao req) {
 			Panel panel = new Panel();
 			panel.add(BorderLayout.NORTH, toolbarParametro);
 			Panel panelArea = new Panel();
@@ -416,6 +430,9 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			panel.add(BorderLayout.CENTER, scrollPane);
 			split.setLeftComponent(panel);
 			split.setDividerLocation(Constantes.SIZE.height / 2);
+			if (req != null) {
+				Util.selecionarTexto(areaParametros, req.getUrl());
+			}
 		}
 
 		private void atualizarVar() {
