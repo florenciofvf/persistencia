@@ -274,6 +274,18 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				addRowSelectionInterval(i, i);
 			}
 		}
+
+		void selecionar(Requisicao req) {
+			if (req != null) {
+				RequisicaoModelo modelo = getModelo();
+				for (int i = 0; i < modelo.getRowCount(); i++) {
+					Requisicao r = modelo.getRequisicao(i);
+					if (req.equals(r)) {
+						addRowSelectionInterval(i, i);
+					}
+				}
+			}
+		}
 	}
 
 	private void montarLayout() {
