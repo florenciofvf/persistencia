@@ -817,6 +817,7 @@ public class Util {
 				int fim = ini + str.length();
 				area.setSelectionStart(ini);
 				area.setSelectionEnd(fim);
+				area.requestFocus();
 			}
 			str = util.proximo();
 		}
