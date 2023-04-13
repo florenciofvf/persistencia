@@ -3,6 +3,7 @@ package br.com.persist.plugins.execucao;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.File;
 
 import javax.swing.Icon;
@@ -55,8 +56,8 @@ public class AbaView extends Panel implements ContainerTreeListener {
 	}
 
 	@Override
-	public void executar(ContainerTree tree) {
-		log.processar(tree.getObjetoSelecionado());
+	public void executar(ContainerTree tree, boolean confirmar) {
+		log.processar(tree.getObjetoSelecionado(), confirmar, tree);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -117,12 +118,12 @@ class PanelLog extends Panel {
 		add(BorderLayout.CENTER, new JScrollPane(textArea));
 	}
 
-	void processar(Container container) {
+	void processar(Container container, boolean confirmar, Component comp) {
 		if (container == null) {
 			return;
 		}
 		StringBuilder sb = new StringBuilder();
-		container.processar(sb);
+		container.processar(sb, confirmar, comp);
 		textArea.setText(sb.toString());
 	}
 }

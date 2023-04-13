@@ -128,7 +128,7 @@ public class ContainerTree extends Tree {
 				if (arquivo == null) {
 					return;
 				}
-				ouvintes.forEach(o -> o.executar(ContainerTree.this));
+				ouvintes.forEach(o -> o.executar(ContainerTree.this, true));
 			}
 		}
 	};
@@ -139,7 +139,7 @@ public class ContainerTree extends Tree {
 
 		private ContainerPopup() {
 			addMenuItem(executarAcao);
-			executarAcao.setActionListener(e -> ouvintes.forEach(o -> o.executar(ContainerTree.this)));
+			executarAcao.setActionListener(e -> ouvintes.forEach(o -> o.executar(ContainerTree.this, false)));
 		}
 
 		private void preShow(Container container) {

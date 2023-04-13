@@ -1,5 +1,6 @@
 package br.com.persist.plugins.execucao;
 
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
+import br.com.persist.assistencia.Util;
 
 public class Container {
 	private final List<Container> filhos;
@@ -68,17 +70,17 @@ public class Container {
 		return string;
 	}
 
-	public void processar(StringBuilder sb) {
+	public void processar(StringBuilder sb, boolean confirmar, Component comp) {
 		if (filhos.isEmpty()) {
-			executar(sb);
+			executar(sb, confirmar, comp);
 		} else {
 			for (Container c : filhos) {
-				c.processar(sb);
+				c.processar(sb, confirmar, comp);
 			}
 		}
 	}
 
-	private void executar(StringBuilder sb) {
+	private void executar(StringBuilder sb, boolean confirmar, Component comp) {
 		try {
 			String comando = gerarComando();
 			if (sb != null) {
@@ -86,6 +88,9 @@ public class Container {
 					sb.append(Constantes.QL);
 				}
 				sb.append("[" + comando + "]" + Constantes.QL2);
+			}
+			if (confirmar && !Util.confirmar(comp, comando, false)) {
+				return;
 			}
 			Process process = Runtime.getRuntime().exec(comando);
 			if (sb != null) {
