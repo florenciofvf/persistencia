@@ -63,7 +63,7 @@ public class RequisicaoFichario extends JTabbedPane {
 		RequisicaoPagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.estaVazio(conteudo)) {
-				pagina.areaParametros.setText(conteudo);
+				pagina.textArea.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}

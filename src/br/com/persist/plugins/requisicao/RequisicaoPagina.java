@@ -73,15 +73,15 @@ import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorListener {
 	private static final long serialVersionUID = 1L;
-	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final PopupFichario popupFichario = new PopupFichario();
 	private final List<String> requisicoes = new ArrayList<>();
 	private String chaveMensagem = "msg.sem_linha_tabela_sel";
 	private final JTabbedPane tabbedPane = new JTabbedPane();
-	public final JTextPane areaParametros = new JTextPane();
 	private final transient RequisicaoRota requisicaoRota;
 	private static final Logger LOG = Logger.getGlobal();
+	public final JTextPane textArea = new JTextPane();
+	private final Toolbar toolbar = new Toolbar();
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
 	private JSplitPane split;
@@ -289,16 +289,16 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void montarLayout() {
-		split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
+		split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		split.setDividerLocation(Constantes.SIZE.height / 2);
 		add(BorderLayout.CENTER, split);
 	}
 
-	private Panel criarPanelParametro() {
+	private Panel criarPanel() {
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, toolbarParametro);
+		panel.add(BorderLayout.NORTH, toolbar);
 		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, areaParametros);
+		panelArea.add(BorderLayout.CENTER, textArea);
 		scrollPane = new ScrollPane(panelArea);
 		panel.add(BorderLayout.CENTER, scrollPane);
 		return panel;
@@ -326,7 +326,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		return Action.acaoIcon(RequisicaoMensagens.getString(chave), icon);
 	}
 
-	private class ToolbarParametro extends BarraButton implements ActionListener {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action clonarSelAcao = actionIcon("label.clonar_selecionados", Icones.COPIA);
 		private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
@@ -334,7 +334,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		private CheckBox chkModoTabela = new CheckBox();
 		private transient Selecao selecao;
 
-		private ToolbarParametro() {
+		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
 			addButton(clonarSelAcao);
 			buttonColar.addSeparator();
@@ -364,7 +364,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 
 		private Requisicao getRequisicaoTextSel() {
-			String string = Util.getString(areaParametros);
+			String string = Util.getString(textArea);
 			Requisicao resp = null;
 			if (!Util.estaVazio(string)) {
 				FragmentoUtil util = new FragmentoUtil(string);
@@ -384,7 +384,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		private void configModoTabela(Requisicao req) {
 			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, toolbarParametro);
+			panel.add(BorderLayout.NORTH, toolbar);
 			tabela.setModel(new OrdemModel(criarRequisicaoModelo()));
 			tabela.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
 			scrollPane.getViewport().setView(tabela);
@@ -397,7 +397,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		private RequisicaoModelo criarRequisicaoModelo() {
 			RequisicaoModelo modelo = new RequisicaoModelo();
-			FragmentoUtil frag = new FragmentoUtil(areaParametros.getText());
+			FragmentoUtil frag = new FragmentoUtil(textArea.getText());
 			String string = frag.proximo();
 			while (string.length() > 0) {
 				Requisicao req = criar(string);
@@ -423,15 +423,15 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		private void configModoTexto(Requisicao req) {
 			Panel panel = new Panel();
-			panel.add(BorderLayout.NORTH, toolbarParametro);
+			panel.add(BorderLayout.NORTH, toolbar);
 			Panel panelArea = new Panel();
-			panelArea.add(BorderLayout.CENTER, areaParametros);
+			panelArea.add(BorderLayout.CENTER, textArea);
 			scrollPane.getViewport().setView(panelArea);
 			panel.add(BorderLayout.CENTER, scrollPane);
 			split.setLeftComponent(panel);
 			split.setDividerLocation(Constantes.SIZE.height / 2);
 			if (req != null) {
-				Util.selecionarTexto(areaParametros, req.getUrl());
+				Util.selecionarTexto(textArea, req.getUrl());
 			}
 		}
 
@@ -444,7 +444,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 
 		@Override
 		protected void limpar() {
-			areaParametros.setText(Constantes.VAZIO);
+			textArea.setText(Constantes.VAZIO);
 		}
 
 		@Override
@@ -466,10 +466,10 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 					Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 				}
 			} else {
-				String string = Util.getString(areaParametros);
+				String string = Util.getString(textArea);
 				Util.setContentTransfered(string);
 				copiarMensagem(string);
-				areaParametros.requestFocus();
+				textArea.requestFocus();
 			}
 		}
 
@@ -481,14 +481,14 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 					tabela.adicionar(criar(string));
 				}
 			} else {
-				Util.getContentTransfered(areaParametros, numeros, letras);
+				Util.getContentTransfered(textArea, numeros, letras);
 			}
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(areaParametros, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();
@@ -497,7 +497,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public String getConteudo() {
-		return areaParametros.getText();
+		return textArea.getText();
 	}
 
 	public String getNome() {
@@ -513,7 +513,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private void abrir() {
-		areaParametros.setText(Constantes.VAZIO);
+		textArea.setText(Constantes.VAZIO);
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -524,7 +524,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
-				areaParametros.setText(sb.toString());
+				textArea.setText(sb.toString());
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
@@ -532,8 +532,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 		if (RequisicaoPreferencia.isAbrirModoTabela() && !ehArquivoReservadoMimes() && !ehArquivoReservadoIgnorados()) {
 			SwingUtilities.invokeLater(() -> {
-				toolbarParametro.modoTabelaHandler(true);
-				toolbarParametro.chkModoTabela.setSelected(true);
+				toolbar.modoTabelaHandler(true);
+				toolbar.chkModoTabela.setSelected(true);
 			});
 		}
 	}
@@ -555,7 +555,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			return;
 		}
 		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-			pw.print(areaParametros.getText());
+			pw.print(textArea.getText());
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
@@ -563,30 +563,30 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public void formatar() {
-		if (!Util.estaVazio(areaParametros.getText())) {
-			String string = Util.getString(areaParametros);
+		if (!Util.estaVazio(textArea.getText())) {
+			String string = Util.getString(textArea);
 			conteudoJson(string, "formatar()");
-			areaParametros.requestFocus();
+			textArea.requestFocus();
 		}
 	}
 
 	public void base64() {
-		if (!Util.estaVazio(areaParametros.getText())) {
-			String string = Util.getString(areaParametros);
+		if (!Util.estaVazio(textArea.getText())) {
+			String string = Util.getString(textArea);
 			conteudoTexto(Base64Util.criarBase64(string), "base64()");
-			areaParametros.requestFocus();
+			textArea.requestFocus();
 		}
 	}
 
 	public void retornar64() {
-		if (!Util.estaVazio(areaParametros.getText())) {
-			String string = Util.getString(areaParametros);
+		if (!Util.estaVazio(textArea.getText())) {
+			String string = Util.getString(textArea);
 			try {
 				conteudoTexto(Base64Util.retornarBase64(string), "retornar64()");
 			} catch (Exception ex) {
 				conteudoTexto(ex.getMessage(), "retornar64()");
 			}
-			areaParametros.requestFocus();
+			textArea.requestFocus();
 		}
 	}
 
@@ -626,7 +626,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public boolean isModoTabela() {
-		return toolbarParametro.chkModoTabela.isSelected();
+		return toolbar.chkModoTabela.isSelected();
 	}
 
 	public void processar() {
@@ -639,15 +639,15 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
 		} else {
-			if (!Util.estaVazio(areaParametros.getText())) {
-				String string = Util.getString(areaParametros);
+			if (!Util.estaVazio(textArea.getText())) {
+				String string = Util.getString(textArea);
 				processar(string);
 			}
 		}
 	}
 
 	public void salvarReqSel(AtomicBoolean atomic) {
-		if (toolbarParametro.chkModoTabela.isSelected()) {
+		if (toolbar.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
 				boolean salvarFormatado = Util.confirmar(this,
@@ -657,7 +657,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				String string = req.getString();
 				Formatador.setTabHabilitado(bkp);
 				try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-					pw.println(areaParametros.getText());
+					pw.println(textArea.getText());
 					if (salvarFormatado) {
 						pw.print(string);
 					} else {
@@ -706,7 +706,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	public void adicionarRota(RequisicaoRota rota) {
-		if (toolbarParametro.chkModoTabela.isSelected()) {
+		if (toolbar.chkModoTabela.isSelected()) {
 			Requisicao req = tabela.getRequisicao();
 			if (req != null) {
 				String string = req.getString();
@@ -715,8 +715,8 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 				Util.mensagem(RequisicaoPagina.this, RequisicaoMensagens.getString(chaveMensagem));
 			}
 		} else {
-			if (!Util.estaVazio(areaParametros.getText())) {
-				String string = Util.getString(areaParametros);
+			if (!Util.estaVazio(textArea.getText())) {
+				String string = Util.getString(textArea);
 				adicionarRota(rota, string);
 			}
 		}
@@ -810,7 +810,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			String varCookie = RequisicaoUtil.getAtributoVarCookie(parametros);
 			RequisicaoVisualizadorHeader.setVarCookie(varCookie, result.getCookie());
 			processarResposta(result.getInputStream(), parametros, result.getUrl(), result.getMime(), null);
-			areaParametros.requestFocus();
+			textArea.requestFocus();
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
 		}
