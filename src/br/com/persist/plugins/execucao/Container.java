@@ -12,6 +12,7 @@ import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class Container {
 	private final List<Container> filhos;
@@ -111,7 +112,7 @@ public class Container {
 			sb.insert(0, container.string);
 			container = container.pai;
 		}
-		return sb.toString();
+		return VariavelProvedor.substituir(sb.toString());
 	}
 
 	private void imprimir(InputStream is, StringBuilder sb) throws IOException {
