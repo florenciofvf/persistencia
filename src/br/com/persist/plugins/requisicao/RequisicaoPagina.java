@@ -9,6 +9,9 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -58,13 +61,13 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.Popup;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
-import br.com.persist.data.DataParser;
-import br.com.persist.data.ObjetoUtil;
 import br.com.persist.data.Array;
-import br.com.persist.data.Objeto;
-import br.com.persist.data.Tipo;
+import br.com.persist.data.DataParser;
 import br.com.persist.data.DataUtil;
 import br.com.persist.data.Formatador;
+import br.com.persist.data.Objeto;
+import br.com.persist.data.ObjetoUtil;
+import br.com.persist.data.Tipo;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoPoolVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorHeader;
@@ -80,7 +83,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	private final transient RequisicaoRota requisicaoRota;
 	private static final Logger LOG = Logger.getGlobal();
-	public final JTextPane textArea = new JTextPane();
+	public final TextArea textArea = new TextArea();
 	private final Toolbar toolbar = new Toolbar();
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
@@ -219,6 +222,22 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 			}
 		}
 	};
+
+	class TextArea extends JTextPane {
+		private static final long serialVersionUID = 1L;
+		private boolean validoSel;
+
+		TextArea() {
+			addFocusListener(focusListenerInner);
+		}
+
+		private transient FocusListener focusListenerInner = new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				validoSel = true;
+			}
+		};
+	}
 
 	private class Tabela extends OrdemTable {
 		private static final long serialVersionUID = 1L;
@@ -364,6 +383,9 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 		}
 
 		private Requisicao getRequisicaoTextSel() {
+			if (!textArea.validoSel) {
+				return null;
+			}
 			String string = Util.getString(textArea);
 			Requisicao resp = null;
 			if (!Util.estaVazio(string)) {
@@ -525,6 +547,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 					linha = br.readLine();
 				}
 				textArea.setText(sb.toString());
+				textArea.validoSel = false;
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(RequisicaoConstantes.PAINEL_REQUISICAO, ex, this);
