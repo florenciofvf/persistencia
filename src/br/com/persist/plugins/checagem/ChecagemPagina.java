@@ -42,10 +42,10 @@ import br.com.persist.marca.XMLException;
 
 public class ChecagemPagina extends Panel {
 	private static final long serialVersionUID = 1L;
-	private final ToolbarParametro toolbarParametro = new ToolbarParametro();
 	private final PainelResultado painelResultado = new PainelResultado();
 	private final transient ChecagemCor checagemCor = new ChecagemCor();
-	public final JTextPane areaParametros = new JTextPane();
+	public final JTextPane textArea = new JTextPane();
+	private final Toolbar toolbar = new Toolbar();
 	private ScrollPane scrollPane;
 	private final File file;
 
@@ -56,16 +56,16 @@ public class ChecagemPagina extends Panel {
 	}
 
 	private void montarLayout() {
-		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanelParametro(), criarPanelResultado());
+		JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, criarPanel(), criarPanelResultado());
 		SwingUtilities.invokeLater(() -> split.setDividerLocation(.99));
 		add(BorderLayout.CENTER, split);
 	}
 
-	private Panel criarPanelParametro() {
+	private Panel criarPanel() {
 		Panel panel = new Panel();
-		panel.add(BorderLayout.NORTH, toolbarParametro);
+		panel.add(BorderLayout.NORTH, toolbar);
 		Panel panelArea = new Panel();
-		panelArea.add(BorderLayout.CENTER, areaParametros);
+		panelArea.add(BorderLayout.CENTER, textArea);
 		scrollPane = new ScrollPane(panelArea);
 		panel.add(BorderLayout.CENTER, scrollPane);
 		return panel;
@@ -150,7 +150,7 @@ public class ChecagemPagina extends Panel {
 		}
 	}
 
-	private class ToolbarParametro extends BarraButton implements ActionListener {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private Action sincronizarAcao = actionIcon("label.atualizar_cache2", Icones.SINCRONIZAR);
 		private Action checarAcao = actionIcon("label.checar_sentenca", Icones.SUCESSO);
@@ -160,7 +160,7 @@ public class ChecagemPagina extends Panel {
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 
-		private ToolbarParametro() {
+		private Toolbar() {
 			super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR, ATUALIZAR);
 			addButton(criarAcao);
 			addButton(checarAcao);
@@ -187,7 +187,7 @@ public class ChecagemPagina extends Panel {
 			painelResultado.setText(Constantes.VAZIO);
 			SwingUtilities.invokeLater(() -> {
 				try {
-					ChecagemUtil.atualizarEstrutura(file, areaParametros.getText());
+					ChecagemUtil.atualizarEstrutura(file, textArea.getText());
 				} catch (ChecagemException | XMLException e) {
 					Util.mensagem(ChecagemPagina.this, e.getMessage());
 				}
@@ -203,7 +203,7 @@ public class ChecagemPagina extends Panel {
 				return;
 			}
 			try {
-				ChecagemUtil.atualizarEstrutura(file, areaParametros.getText());
+				ChecagemUtil.atualizarEstrutura(file, textArea.getText());
 				mensagemSucesso();
 			} catch (ChecagemException | XMLException e) {
 				Util.mensagem(ChecagemPagina.this, e.getMessage());
@@ -233,7 +233,7 @@ public class ChecagemPagina extends Panel {
 			}
 			try {
 				Modulo modulo = ChecagemUtil.getModulo(file);
-				checagemCor.processar(areaParametros.getStyledDocument(), modulo);
+				checagemCor.processar(textArea.getStyledDocument(), modulo);
 			} catch (ChecagemException | XMLException | IOException e) {
 				Util.mensagem(ChecagemPagina.this, e.getMessage());
 			}
@@ -244,7 +244,7 @@ public class ChecagemPagina extends Panel {
 				mensagemReservado();
 				return;
 			}
-			checagemCor.novaSentenca(areaParametros.getStyledDocument());
+			checagemCor.novaSentenca(textArea.getStyledDocument());
 		}
 
 		private void checarSentenca() {
@@ -252,12 +252,12 @@ public class ChecagemPagina extends Panel {
 				mensagemReservado();
 				return;
 			}
-			if (Util.estaVazio(areaParametros.getText())) {
+			if (Util.estaVazio(textArea.getText())) {
 				Util.mensagem(ChecagemPagina.this, ChecagemMensagens.getString("msg.nenhuma_sentenca_declarada"));
 				return;
 			}
 			try {
-				ChecagemUtil.checarEstrutura(areaParametros.getText());
+				ChecagemUtil.checarEstrutura(textArea.getText());
 				mensagemSucesso();
 			} catch (ChecagemException | XMLException e) {
 				Util.mensagem(ChecagemPagina.this, e.getMessage());
@@ -270,7 +270,7 @@ public class ChecagemPagina extends Panel {
 
 		@Override
 		protected void limpar() {
-			areaParametros.setText(Constantes.VAZIO);
+			textArea.setText(Constantes.VAZIO);
 		}
 
 		@Override
@@ -282,21 +282,21 @@ public class ChecagemPagina extends Panel {
 
 		@Override
 		protected void copiar() {
-			String string = Util.getString(areaParametros);
+			String string = Util.getString(textArea);
 			Util.setContentTransfered(string);
 			copiarMensagem(string);
-			areaParametros.requestFocus();
+			textArea.requestFocus();
 		}
 
 		@Override
 		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(areaParametros, numeros, letras);
+			Util.getContentTransfered(textArea, numeros, letras);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!Util.estaVazio(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(areaParametros, selecao, txtPesquisa.getText());
+				selecao = Util.getSelecao(textArea, selecao, txtPesquisa.getText());
 				selecao.selecionar(label);
 			} else {
 				label.limpar();
@@ -305,7 +305,7 @@ public class ChecagemPagina extends Panel {
 	}
 
 	public String getConteudo() {
-		return areaParametros.getText();
+		return textArea.getText();
 	}
 
 	public String getNome() {
@@ -325,7 +325,7 @@ public class ChecagemPagina extends Panel {
 	}
 
 	private void abrir() {
-		areaParametros.setText(Constantes.VAZIO);
+		textArea.setText(Constantes.VAZIO);
 		if (file.exists()) {
 			try (BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
@@ -336,8 +336,8 @@ public class ChecagemPagina extends Panel {
 					sb.append(linha + Constantes.QL);
 					linha = br.readLine();
 				}
-				areaParametros.setText(sb.toString());
-				toolbarParametro.formatar(false);
+				textArea.setText(sb.toString());
+				toolbar.formatar(false);
 				setValueScrollPane(value);
 			} catch (Exception ex) {
 				Util.stackTraceAndMessage(ChecagemConstantes.PAINEL_CHECAGEM, ex, this);
@@ -361,7 +361,7 @@ public class ChecagemPagina extends Panel {
 			return;
 		}
 		try (PrintWriter pw = new PrintWriter(file, StandardCharsets.UTF_8.name())) {
-			pw.print(areaParametros.getText());
+			pw.print(textArea.getText());
 			atomic.set(true);
 		} catch (Exception ex) {
 			Util.stackTraceAndMessage(ChecagemConstantes.PAINEL_CHECAGEM, ex, this);

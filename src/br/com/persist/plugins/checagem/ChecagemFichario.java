@@ -63,7 +63,7 @@ public class ChecagemFichario extends JTabbedPane {
 		ChecagemPagina pagina = getPagina(idPagina);
 		if (pagina != null) {
 			if (!Util.estaVazio(conteudo)) {
-				pagina.areaParametros.setText(conteudo);
+				pagina.textArea.setText(conteudo);
 			}
 			setSelectedIndex(getIndicePagina(pagina));
 		}
