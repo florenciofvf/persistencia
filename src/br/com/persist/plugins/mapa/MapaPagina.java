@@ -67,8 +67,8 @@ public class MapaPagina extends Panel {
 
 	class AbaText extends Panel {
 		private static final long serialVersionUID = 1L;
-		private final ToolbarParametro toolbar = new ToolbarParametro();
 		private final JTextPane textArea = new JTextPane();
+		private final Toolbar toolbar = new Toolbar();
 		private ScrollPane scrollPane;
 
 		AbaText() {
@@ -115,12 +115,12 @@ public class MapaPagina extends Panel {
 			}
 		}
 
-		private class ToolbarParametro extends BarraButton implements ActionListener {
+		private class Toolbar extends BarraButton implements ActionListener {
 			private static final long serialVersionUID = 1L;
 			private final TextField txtPesquisa = new TextField(35);
 			private transient Selecao selecao;
 
-			private ToolbarParametro() {
+			private Toolbar() {
 				super.ini(new Nil(), LIMPAR, BAIXAR, COPIAR, COLAR);
 				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
 				txtPesquisa.addActionListener(this);

@@ -37,10 +37,10 @@ import br.com.persist.componente.TextField;
 import br.com.persist.plugins.mapa.organiza.Organizador;
 
 public class AbaView extends Panel {
-	private final ToolbarParametro toolbar = new ToolbarParametro();
 	private static final long serialVersionUID = 1L;
 	private PanelView panelView = new PanelView();
 	private PanelMenu panelMenu = new PanelMenu();
+	private final Toolbar toolbar = new Toolbar();
 	private transient MapaHandler mapaHandler;
 	private final File file;
 
@@ -95,11 +95,11 @@ public class AbaView extends Panel {
 		}
 	}
 
-	private class ToolbarParametro extends BarraButton implements ActionListener {
+	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
 
-		private ToolbarParametro() {
+		private Toolbar() {
 			super.ini(new Nil(), BAIXAR);
 			add(true, new ButtonStatus());
 			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
