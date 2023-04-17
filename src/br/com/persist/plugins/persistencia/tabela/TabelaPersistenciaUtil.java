@@ -78,7 +78,7 @@ public class TabelaPersistenciaUtil {
 		if (field == null) {
 			return "";
 		}
-		return ehCampoEnum(field) ? getFieldAtributoEnum(field, atual) : declaracaoDoCampo(field);
+		return ehCampoEnum(field) ? declaracaoDoCampoEnum(field, atual) : declaracaoDoCampo(field);
 	}
 
 	private static boolean ehCampoEnum(Field field) {
@@ -87,49 +87,53 @@ public class TabelaPersistenciaUtil {
 		return superClasse != null && Enum.class.isAssignableFrom(superClasse);
 	}
 
-	private static String getFieldAtributoEnum(Field field, String atual) throws IllegalAccessException {
-		StringBuilder sb = new StringBuilder();
-		Class<?> fieldType = field.getType();
-		Field[] enuns = fieldType.getFields();
-		for (Field _enum_ : enuns) {
-			if (sb.length() > 0) {
-				sb.append("\n");
-			}
-			_enum_.setAccessible(true);
-			Object instancia = _enum_.get(field);
-			sb.append(getFieldAtributoInstanciaEnum(_enum_, instancia, atual));
-		}
-		return declaracaoDoCampo(field) + "\n" + sb.toString();
+	private static String declaracaoDoCampoEnum(Field field, String atual) throws IllegalAccessException {
+		return declaracaoDoCampo(field) + "\n" + descreverInstanciaEnum(field, field.getType(), atual);
 	}
 
-	private static String getFieldAtributoInstanciaEnum(Field fieldEnum, Object objeto, String atual)
+	private static String descreverInstanciaEnum(Field campoEnum, Class<?> classeDoCampoEnum, String atual)
 			throws IllegalAccessException {
-		StringBuilder sb = new StringBuilder();
-		Class<?> classe = objeto.getClass();
-		Field[] campos = classe.getDeclaredFields();
-		for (Field campo : campos) {
-			if (!Modifier.isStatic(campo.getModifiers())) {
-				campo.setAccessible(true);
-				if (sb.length() > 0) {
-					sb.append(": ");
+		StringBuilder builder = new StringBuilder();
+		Field[] fields = classeDoCampoEnum.getFields();
+		for (Field campo : fields) {
+			if (builder.length() > 0) {
+				builder.append("\n");
+			}
+			campo.setAccessible(true);
+			Object campoInstancia = campo.get(campoEnum);
+			builder.append(descreverInstancia(campo, campoInstancia, atual));
+		}
+		return builder.toString();
+	}
+
+	private static String descreverInstancia(Field campo, Object campoInstancia, String atual)
+			throws IllegalAccessException {
+		StringBuilder builder = new StringBuilder();
+		Class<?> classe = campoInstancia.getClass();
+		Field[] fields = classe.getDeclaredFields();
+		for (Field field : fields) {
+			if (!Modifier.isStatic(field.getModifiers())) {
+				field.setAccessible(true);
+				if (builder.length() > 0) {
+					builder.append(": ");
 				}
-				sb.append(campo.get(objeto));
+				builder.append(field.get(campoInstancia));
 			}
 		}
-		if (sb.length() == 0) {
+		if (builder.length() == 0) {
 			String pre = "";
-			if (objeto.toString().equals(atual)) {
+			if (campoInstancia.toString().equals(atual)) {
 				pre = ">>> ";
 			}
-			sb.append(pre + objeto);
+			builder.append(pre + campoInstancia);
 		} else {
 			String pre = "";
-			if (fieldEnum.getName().equals(atual)) {
+			if (campo.getName().equals(atual)) {
 				pre = ">>> ";
 			}
-			sb.insert(0, pre + fieldEnum.getName() + " = ");
+			builder.insert(0, pre + campo.getName() + " = ");
 		}
-		return sb.toString();
+		return builder.toString();
 	}
 
 	private static String declaracaoDoCampo(Field field) {
