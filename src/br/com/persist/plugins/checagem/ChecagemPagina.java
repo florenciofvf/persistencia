@@ -38,6 +38,7 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
+import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XMLException;
 
 public class ChecagemPagina extends Panel {
@@ -98,55 +99,13 @@ public class ChecagemPagina extends Panel {
 		private JTextPane textPane = new JTextPane();
 
 		private PainelResultado() {
-			add(BorderLayout.NORTH, new ToolbarPesquisa());
+			add(BorderLayout.NORTH, new ToolbarPesquisa(textPane));
 			add(BorderLayout.CENTER, new ScrollPane(textPane));
 		}
 
 		private void setText(String string) {
 			textPane.setText(string);
 			SwingUtilities.invokeLater(() -> textPane.scrollRectToVisible(new Rectangle()));
-		}
-
-		private class ToolbarPesquisa extends BarraButton implements ActionListener {
-			private static final long serialVersionUID = 1L;
-			private final TextField txtPesquisa = new TextField(35);
-			private transient Selecao selecao;
-
-			public ToolbarPesquisa() {
-				super.ini(new Nil(), LIMPAR, COPIAR, COLAR);
-				txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-				txtPesquisa.addActionListener(this);
-				add(txtPesquisa);
-				add(label);
-			}
-
-			@Override
-			protected void limpar() {
-				textPane.setText(Constantes.VAZIO);
-			}
-
-			@Override
-			protected void copiar() {
-				String string = Util.getString(textPane);
-				Util.setContentTransfered(string);
-				copiarMensagem(string);
-				textPane.requestFocus();
-			}
-
-			@Override
-			protected void colar(boolean numeros, boolean letras) {
-				Util.getContentTransfered(textPane, numeros, letras);
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!Util.estaVazio(txtPesquisa.getText())) {
-					selecao = Util.getSelecao(textPane, selecao, txtPesquisa.getText());
-					selecao.selecionar(label);
-				} else {
-					label.limpar();
-				}
-			}
 		}
 	}
 
