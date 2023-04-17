@@ -1,35 +1,26 @@
 package br.com.persist.plugins.execucao;
 
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
-import static br.com.persist.componente.BarraButtonEnum.COLAR;
-import static br.com.persist.componente.BarraButtonEnum.COPIAR;
-import static br.com.persist.componente.BarraButtonEnum.LIMPAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import br.com.persist.assistencia.Constantes;
-import br.com.persist.assistencia.Mensagens;
-import br.com.persist.assistencia.Selecao;
 import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.BarraButton;
 import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
-import br.com.persist.componente.TextField;
+import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLHandler;
 
@@ -125,7 +116,7 @@ class PanelLog extends Panel {
 	private final TextArea textArea = new TextArea();
 
 	PanelLog() {
-		add(BorderLayout.NORTH, new Toolbar(textArea));
+		add(BorderLayout.NORTH, new ToolbarPesquisa(textArea));
 		add(BorderLayout.CENTER, new JScrollPane(textArea));
 	}
 
@@ -136,49 +127,5 @@ class PanelLog extends Panel {
 		StringBuilder sb = new StringBuilder();
 		container.processar(sb, confirmar, comp);
 		textArea.setText(sb.toString());
-	}
-
-	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
-		private final TextField txtPesquisa = new TextField(35);
-		private transient Selecao selecao;
-		private final JTextPane textPane;
-
-		private Toolbar(JTextPane textPane) {
-			super.ini(new Nil(), LIMPAR, COPIAR, COLAR);
-			txtPesquisa.setToolTipText(Mensagens.getString("label.pesquisar"));
-			txtPesquisa.addActionListener(this);
-			this.textPane = textPane;
-			add(txtPesquisa);
-			add(label);
-		}
-
-		@Override
-		protected void limpar() {
-			textPane.setText(Constantes.VAZIO);
-		}
-
-		@Override
-		protected void copiar() {
-			String string = Util.getString(textPane);
-			Util.setContentTransfered(string);
-			copiarMensagem(string);
-			textPane.requestFocus();
-		}
-
-		@Override
-		protected void colar(boolean numeros, boolean letras) {
-			Util.getContentTransfered(textPane, numeros, letras);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (!Util.estaVazio(txtPesquisa.getText())) {
-				selecao = Util.getSelecao(textPane, selecao, txtPesquisa.getText());
-				selecao.selecionar(label);
-			} else {
-				label.limpar();
-			}
-		}
 	}
 }
