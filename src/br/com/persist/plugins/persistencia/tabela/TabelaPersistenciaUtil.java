@@ -78,10 +78,10 @@ public class TabelaPersistenciaUtil {
 		if (field == null) {
 			return "";
 		}
-		return isFieldEnum(field) ? getFieldAtributoEnum(field, atual) : getFieldAtributo(field);
+		return ehCampoEnum(field) ? getFieldAtributoEnum(field, atual) : declaracaoDoCampo(field);
 	}
 
-	private static boolean isFieldEnum(Field field) {
+	private static boolean ehCampoEnum(Field field) {
 		Class<?> classe = field.getType();
 		Class<?> superClasse = classe.getSuperclass();
 		return superClasse != null && Enum.class.isAssignableFrom(superClasse);
@@ -99,7 +99,7 @@ public class TabelaPersistenciaUtil {
 			Object instancia = _enum_.get(field);
 			sb.append(getFieldAtributoInstanciaEnum(_enum_, instancia, atual));
 		}
-		return getFieldAtributo(field) + "\n" + sb.toString();
+		return declaracaoDoCampo(field) + "\n" + sb.toString();
 	}
 
 	private static String getFieldAtributoInstanciaEnum(Field fieldEnum, Object objeto, String atual)
@@ -132,7 +132,7 @@ public class TabelaPersistenciaUtil {
 		return sb.toString();
 	}
 
-	private static String getFieldAtributo(Field field) {
+	private static String declaracaoDoCampo(Field field) {
 		return field.getType().getName() + " " + field.getName() + ";\n";
 	}
 }
