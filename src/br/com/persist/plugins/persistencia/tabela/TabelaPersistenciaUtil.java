@@ -74,6 +74,10 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
+	private static String declaracaoDoCampo(Field field) {
+		return field.getType().getName() + " " + field.getName() + ";\n";
+	}
+
 	public static String descreverField(Field field, String atual) throws IllegalAccessException {
 		if (field == null) {
 			return "";
@@ -88,55 +92,85 @@ public class TabelaPersistenciaUtil {
 	}
 
 	private static String declaracaoDoCampoEnum(Field field, String atual) throws IllegalAccessException {
-		return declaracaoDoCampo(field) + "\n" + descreverInstanciaEnum(field, field.getType(), atual);
+		return declaracaoDoCampo(field) + "\n" + descreverInstanciaEnum(field, atual);
 	}
 
-	private static String descreverInstanciaEnum(Field campoEnum, Class<?> classeDoCampoEnum, String atual)
-			throws IllegalAccessException {
+	private static String descreverInstanciaEnum(Field campoEnum, String atual) throws IllegalAccessException {
+		Class<?> classeDoCampoEnum = campoEnum.getType();
+		Field[] fieldsEnum = classeDoCampoEnum.getFields();
+		boolean comparacaoOrdinal = ehNumero(atual);
 		StringBuilder builder = new StringBuilder();
-		Field[] fields = classeDoCampoEnum.getFields();
-		for (Field campo : fields) {
+		for (Field fieldEnum : fieldsEnum) {
 			if (builder.length() > 0) {
 				builder.append("\n");
 			}
-			campo.setAccessible(true);
-			Object campoInstancia = campo.get(campoEnum);
-			builder.append(descreverInstancia(campo, campoInstancia, atual));
+			fieldEnum.setAccessible(true);
+			Object fieldInstancia = fieldEnum.get(campoEnum);
+			builder.append(descreverInstancia(fieldEnum, fieldInstancia, atual, comparacaoOrdinal));
 		}
 		return builder.toString();
 	}
 
-	private static String descreverInstancia(Field campo, Object campoInstancia, String atual)
-			throws IllegalAccessException {
+	private static boolean ehNumero(String atual) {
+		if (Util.estaVazio(atual)) {
+			return false;
+		}
+		for (char c : atual.toCharArray()) {
+			if (c < '0' || c > '9') {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static String descreverInstancia(Field fieldEnum, Object fieldInstancia, String atual,
+			boolean comparacaoOrdinal) throws IllegalAccessException {
 		StringBuilder builder = new StringBuilder();
-		Class<?> classe = campoInstancia.getClass();
+		Class<?> classe = fieldInstancia.getClass();
 		Field[] fields = classe.getDeclaredFields();
+		if (igual(fieldInstancia, atual, comparacaoOrdinal)) {
+			builder.append(">>> ");
+		}
+		if (contemValido(fields)) {
+			builder.append(fieldEnum.getName() + " = [" + getCampos(fields, fieldInstancia) + "]");
+		} else {
+			builder.append(fieldInstancia);
+		}
+		return builder.toString();
+	}
+
+	private static boolean igual(Object instancia, String valor, boolean comparacaoOrdinal) {
+		if (instancia instanceof Enum) {
+			Enum<?> enumeration = (Enum<?>) instancia;
+			if (comparacaoOrdinal) {
+				return Integer.toString(enumeration.ordinal()).equals(valor);
+			} else {
+				return enumeration.name().equals(valor);
+			}
+		}
+		return false;
+	}
+
+	private static boolean contemValido(Field[] fields) {
+		for (Field field : fields) {
+			if (!Modifier.isStatic(field.getModifiers())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static String getCampos(Field[] fields, Object campoInstancia) throws IllegalAccessException {
+		StringBuilder builder = new StringBuilder();
 		for (Field field : fields) {
 			if (!Modifier.isStatic(field.getModifiers())) {
 				field.setAccessible(true);
 				if (builder.length() > 0) {
-					builder.append(": ");
+					builder.append(", ");
 				}
 				builder.append(field.get(campoInstancia));
 			}
 		}
-		if (builder.length() == 0) {
-			String pre = "";
-			if (campoInstancia.toString().equals(atual)) {
-				pre = ">>> ";
-			}
-			builder.append(pre + campoInstancia);
-		} else {
-			String pre = "";
-			if (campo.getName().equals(atual)) {
-				pre = ">>> ";
-			}
-			builder.insert(0, pre + campo.getName() + " = ");
-		}
 		return builder.toString();
-	}
-
-	private static String declaracaoDoCampo(Field field) {
-		return field.getType().getName() + " " + field.getName() + ";\n";
 	}
 }
