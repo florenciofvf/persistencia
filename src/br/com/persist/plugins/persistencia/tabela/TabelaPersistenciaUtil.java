@@ -106,7 +106,7 @@ public class TabelaPersistenciaUtil {
 			}
 			fieldEnum.setAccessible(true);
 			Object fieldInstancia = fieldEnum.get(campoEnum);
-			builder.append(descreverInstancia(fieldEnum, fieldInstancia, atual, comparacaoOrdinal));
+			builder.append(descreverFieldInstancia(fieldEnum, fieldInstancia, atual, comparacaoOrdinal));
 		}
 		return builder.toString();
 	}
@@ -123,7 +123,7 @@ public class TabelaPersistenciaUtil {
 		return true;
 	}
 
-	private static String descreverInstancia(Field fieldEnum, Object fieldInstancia, String atual,
+	private static String descreverFieldInstancia(Field fieldEnum, Object fieldInstancia, String atual,
 			boolean comparacaoOrdinal) throws IllegalAccessException {
 		StringBuilder builder = new StringBuilder();
 		Class<?> classe = fieldInstancia.getClass();
@@ -132,7 +132,7 @@ public class TabelaPersistenciaUtil {
 			builder.append(">>> ");
 		}
 		if (contemValido(fields)) {
-			builder.append(fieldEnum.getName() + " = [" + getCampos(fields, fieldInstancia) + "]");
+			builder.append(fieldEnum.getName() + " = [" + getValorFields(fields, fieldInstancia) + "]");
 		} else {
 			builder.append(fieldInstancia);
 		}
@@ -160,7 +160,7 @@ public class TabelaPersistenciaUtil {
 		return false;
 	}
 
-	private static String getCampos(Field[] fields, Object campoInstancia) throws IllegalAccessException {
+	private static String getValorFields(Field[] fields, Object fieldInstancia) throws IllegalAccessException {
 		StringBuilder builder = new StringBuilder();
 		for (Field field : fields) {
 			if (!Modifier.isStatic(field.getModifiers())) {
@@ -168,7 +168,7 @@ public class TabelaPersistenciaUtil {
 				if (builder.length() > 0) {
 					builder.append(", ");
 				}
-				builder.append(field.get(campoInstancia));
+				builder.append(field.get(fieldInstancia));
 			}
 		}
 		return builder.toString();
