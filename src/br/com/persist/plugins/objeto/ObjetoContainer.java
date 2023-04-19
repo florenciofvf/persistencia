@@ -77,12 +77,12 @@ import br.com.persist.plugins.objeto.internal.InternalForm;
 import br.com.persist.plugins.objeto.internal.InternalTransferidor;
 
 public class ObjetoContainer extends AbstratoContainer implements SetFormulario {
-	private static final long serialVersionUID = 1L;
 	private final ToggleButton btnArrasto = new ToggleButton(new ArrastoAcao());
 	private final ToggleButton btnRotulos = new ToggleButton(new RotulosAcao());
 	private final ToggleButton btnRelacao = new ToggleButton(new RelacaoAcao());
 	private final ToggleButton btnSelecao = new ToggleButton(new SelecaoAcao());
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;

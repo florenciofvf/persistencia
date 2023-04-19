@@ -48,8 +48,8 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class AmbienteContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final TextPane textArea = new TextPane();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private AmbienteFormulario ambienteFormulario;
 	private final transient Ambiente ambiente;

@@ -56,9 +56,9 @@ import br.com.persist.plugins.persistencia.Persistencia;
 import br.com.persist.plugins.persistencia.PersistenciaException;
 
 public class MetadadoContainer extends AbstratoContainer implements MetadadoTreeListener {
-	private static final long serialVersionUID = 1L;
 	private static final File file = new File(MetadadoConstantes.METADADOS);
 	private final MetadadoTree metadadoTree = new MetadadoTree();
+	private static final long serialVersionUID = 1L;
 	private MetadadoFormulario metadadoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Conexao> comboConexao;

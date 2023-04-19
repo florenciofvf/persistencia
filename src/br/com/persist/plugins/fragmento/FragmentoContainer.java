@@ -37,10 +37,10 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class FragmentoContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final FragmentoModelo fragmentoModelo = new FragmentoModelo();
 	private final JTable tabela = new JTable(fragmentoModelo);
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private FragmentoFormulario fragmentoFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private FragmentoDialogo fragmentoDialogo;

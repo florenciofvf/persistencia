@@ -70,11 +70,11 @@ import br.com.persist.plugins.persistencia.MemoriaModelo;
 import br.com.persist.plugins.persistencia.Persistencia;
 
 public class ConsultaContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final transient ConsultaCor consultaCor = new ConsultaCor();
 	private final ToolbarTabela toolbarTabela = new ToolbarTabela();
 	private final JTable tabela = new JTable(new VazioModelo());
 	private final TextPane textArea = new TextPane();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ConsultaFormulario consultaFormulario;
 	private final Label labelStatus = new Label();

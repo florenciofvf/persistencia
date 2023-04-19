@@ -36,11 +36,11 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class AlternativoContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final AlternativoModelo alternativoModelo = new AlternativoModelo();
 	private final JTable tabela = new JTable(alternativoModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private AlternativoFormulario alternativoFormulario;
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private AlternativoDialogo alternativoDialogo;
 

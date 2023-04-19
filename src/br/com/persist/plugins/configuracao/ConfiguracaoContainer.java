@@ -33,9 +33,9 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioFabrica;
 
 public class ConfiguracaoContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final PainelConfiguracao painelConfiguracao = new PainelConfiguracao();
 	private ConfiguracaoFormulario configuracaoFormulario;
+	private static final long serialVersionUID = 1L;
 	private ConfiguracaoDialogo configuracaoDialogo;
 	private final Toolbar toolbar = new Toolbar();
 

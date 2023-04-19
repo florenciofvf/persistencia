@@ -34,10 +34,10 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class VariavelContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final VariavelModelo variavelModelo = new VariavelModelo();
 	private final JTable tabela = new JTable(variavelModelo);
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private VariavelFormulario variavelFormulario;
 	private final Toolbar toolbar = new Toolbar();
 	private VariavelDialogo variavelDialogo;

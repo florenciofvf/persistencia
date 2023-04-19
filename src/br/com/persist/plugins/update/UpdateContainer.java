@@ -62,9 +62,9 @@ import br.com.persist.plugins.consulta.ConsultaCor;
 import br.com.persist.plugins.persistencia.Persistencia;
 
 public class UpdateContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final transient ConsultaCor consultaCor = new ConsultaCor();
 	private final TextPane textArea = new TextPane();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Label labelStatus = new Label();
 	private final JComboBox<Conexao> comboConexao;

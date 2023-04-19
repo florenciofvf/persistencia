@@ -36,9 +36,9 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class EntregaContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private static final File file = new File(EntregaConstantes.ENTREGAS);
 	private final EntregaFichario fichario = new EntregaFichario();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private EntregaFormulario entregaFormulario;
 	private EntregaDialogo entregaDialogo;

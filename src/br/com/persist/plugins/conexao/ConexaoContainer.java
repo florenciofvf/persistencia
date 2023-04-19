@@ -44,10 +44,10 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioEvento;
 
 public class ConexaoContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final ConexaoModelo conexaoModelo = new ConexaoModelo();
 	private final JTable tabela = new JTable(conexaoModelo);
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ConexaoFormulario conexaoFormulario;
 	private ConexaoDialogo conexaoDialogo;

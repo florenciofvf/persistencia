@@ -34,11 +34,11 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class MapeamentoContainer extends AbstratoContainer {
-	private static final long serialVersionUID = 1L;
 	private final MapeamentoModelo mapeamentoModelo = new MapeamentoModelo();
 	private final JTable tabela = new JTable(mapeamentoModelo);
 	private static final Logger LOG = Logger.getGlobal();
 	private MapeamentoFormulario mapeamentoFormulario;
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private MapeamentoDialogo mapeamentoDialogo;
 

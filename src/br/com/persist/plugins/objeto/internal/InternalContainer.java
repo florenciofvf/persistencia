@@ -137,7 +137,6 @@ import br.com.persist.plugins.variaveis.VariavelDialogo;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class InternalContainer extends Panel implements ItemListener, Pagina, WindowHandler, WindowInternalHandler {
-	private static final long serialVersionUID = 1L;
 	private final transient ActionListenerInner actionListenerInner = new ActionListenerInner();
 	private final TabelaPersistencia tabelaPersistencia = new TabelaPersistencia();
 	private transient InternalListener.ConfiguraAltura configuraAlturaListener;
@@ -159,6 +158,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	private static final Logger LOG = Logger.getGlobal();
 	private static final String DESCRICAO = "DESCRICAO";
 	private ScrollPane scrollPane = new ScrollPane();
+	private static final long serialVersionUID = 1L;
 	private transient InternalConfig internalConfig;
 	private final JComboBox<Conexao> comboConexao;
 	private final Toolbar toolbar = new Toolbar();

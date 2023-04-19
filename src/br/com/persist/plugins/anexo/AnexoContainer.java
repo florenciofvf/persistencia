@@ -44,9 +44,9 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class AnexoContainer extends AbstratoContainer implements AnexoTreeListener {
-	private static final long serialVersionUID = 1L;
 	private final AnexoTree anexoTree = new AnexoTree(new AnexoModelo());
 	private static final Map<String, Object> map = new HashMap<>();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private AnexoFormulario anexoFormulario;
 	private final transient Desktop desktop;

@@ -22,10 +22,10 @@ import br.com.persist.plugins.objeto.Relacao;
 import static br.com.persist.componente.BarraButtonEnum.ATUALIZAR;
 
 public class CircularContainer extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final TextField txtGrauTotal = new TextField("360");
 	private final TextField txtGrauOrigem = new TextField("0");
 	private final TextField txtRaio = new TextField("300");
+	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private final JComboBox<Objeto> comboObjeto;

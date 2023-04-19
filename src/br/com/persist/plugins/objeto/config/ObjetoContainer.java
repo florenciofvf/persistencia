@@ -61,10 +61,10 @@ import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
 
 public class ObjetoContainer extends Panel {
-	private static final long serialVersionUID = 1L;
 	private transient List<CompChave> vinculados = new ArrayList<>();
 	private String labelVinculo = "label.aplicar_arq_vinculo";
 	private VinculadoPopup popupVinculo = new VinculadoPopup();
+	private static final long serialVersionUID = 1L;
 	private final ObjetoSuperficie objetoSuperficie;
 	private final Toolbar toolbar = new Toolbar();
 	private TextField txtTabela = new TextField();

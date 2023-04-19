@@ -42,9 +42,9 @@ import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 import br.com.persist.plugins.persistencia.PersistenciaModelo;
 
 public class TabelaPersistencia extends JTable {
-	private static final long serialVersionUID = 1L;
 	private transient TabelaPersistenciaListener listener;
 	private PopupHeader popupHeader = new PopupHeader();
+	private static final long serialVersionUID = 1L;
 	private Map<String, List<String>> chaveamento;
 	private Map<String, String> mapeamento;
 	private String classBiblio;
