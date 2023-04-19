@@ -397,7 +397,15 @@ public class TabelaPersistencia extends JTable {
 			private void infoColuna() {
 				Coluna coluna = ((OrdenacaoModelo) TabelaPersistencia.this.getModel()).getColuna(indiceColuna);
 				if (coluna != null) {
-					Util.mensagem(TabelaPersistencia.this, coluna.getDetalhe());
+					List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this, indiceColuna);
+					StringBuilder builder = new StringBuilder(coluna.getDetalhe());
+					if (!lista.isEmpty()) {
+						builder.append("CARACTERES: " + Constantes.QL);
+						for (String string : lista) {
+							builder.append(string.length() + Constantes.QL);
+						}
+					}
+					Util.mensagem(TabelaPersistencia.this, builder.toString());
 				}
 			}
 
