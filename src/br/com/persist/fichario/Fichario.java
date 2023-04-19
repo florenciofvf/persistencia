@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -55,6 +56,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 	private final transient Navegacao navegacaoEsquerdo = new Navegacao(ESQUERDO);
 	private final transient Navegacao navegacaoDireito = new Navegacao(DIREITO);
 	private final transient Navegacao navegacaoLimpar = new Navegacao(LIMPAR);
+	private transient Map<String, Object> args = new HashMap<>();
 	private final transient NavegacaoListener navegacaoListener;
 	private final transient Listener listener = new Listener();
 	private static final Logger LOG = Logger.getGlobal();
@@ -404,6 +406,11 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 			Pagina pagina = getPagina(i);
 			if (pagina != null) {
 				pagina.tabActivatedHandler(this);
+				args.put(FicharioEvento.PAGINA_SELECIONADA, pagina);
+				for (int j = 0; j < getTabCount(); j++) {
+					Pagina p = getPagina(j);
+					p.processar(null, args);
+				}
 			}
 		}
 	}

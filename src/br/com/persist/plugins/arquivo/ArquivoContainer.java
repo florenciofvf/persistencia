@@ -33,6 +33,8 @@ import br.com.persist.componente.Janela;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 import br.com.persist.fichario.Fichario;
+import br.com.persist.fichario.FicharioEvento;
+import br.com.persist.fichario.Pagina;
 import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
@@ -230,6 +232,16 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		args.put(ArquivoEvento.ABRIR_ARQUIVO, file);
 		args.put(ArquivoEvento.FICHARIO, fichario);
 		return args;
+	}
+
+	@Override
+	public void processar(Formulario formulario, Map<String, Object> args) {
+		Pagina pagina = (Pagina) args.get(FicharioEvento.PAGINA_SELECIONADA);
+		if (pagina == null || pagina == this || pagina.getFile() == null || !chkLinkAuto.isSelected()) {
+			return;
+		}
+		File file = pagina.getFile();
+		arquivoTree.selecionar(file);
 	}
 
 	@Override

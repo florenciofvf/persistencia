@@ -70,6 +70,19 @@ public class Arquivo {
 		}
 	}
 
+	public Arquivo get(File file) {
+		if (this.file != null && file != null && this.file.getAbsolutePath().equals(file.getAbsolutePath())) {
+			return this;
+		}
+		for (Arquivo a : filhos) {
+			Arquivo resp = a.get(file);
+			if (resp != null) {
+				return resp;
+			}
+		}
+		return null;
+	}
+
 	public List<Arquivo> getFilhos() {
 		if (!processado) {
 			processar();

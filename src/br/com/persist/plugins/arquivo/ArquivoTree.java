@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,13 @@ public class ArquivoTree extends Tree {
 	public Arquivo getRaiz() {
 		ArquivoModelo modelo = (ArquivoModelo) getModel();
 		return (Arquivo) modelo.getRoot();
+	}
+
+	public void selecionar(File file) {
+		Arquivo arquivo = getRaiz().get(file);
+		if (arquivo != null) {
+			selecionarArquivo(arquivo);
+		}
 	}
 
 	public Arquivo getObjetoSelecionado() {
