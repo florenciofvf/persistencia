@@ -47,6 +47,7 @@ public class ArquivoTree extends Tree {
 		Arquivo arquivo = getRaiz().get(file);
 		if (arquivo != null) {
 			selecionarArquivo(arquivo);
+			arquivo.setArquivoAberto(true);
 		}
 	}
 
