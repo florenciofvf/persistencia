@@ -39,10 +39,8 @@ import br.com.persist.fichario.Titulo;
 import br.com.persist.formulario.Formulario;
 
 public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeListener {
-	private static final long serialVersionUID = 1L;
 	private final ArquivoTree arquivoTree = new ArquivoTree(new ArquivoModelo());
-	private final CheckBox chkDuplicar = new CheckBox();
-	private final CheckBox chkLinkAuto = new CheckBox();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ArquivoFormulario arquivoFormulario;
 
@@ -83,6 +81,8 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private final CheckBox chkSempreTopArq = new CheckBox();
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtArquivo = new TextField(35);
+		private final CheckBox chkDuplicar = new CheckBox();
+		private final CheckBox chkLinkAuto = new CheckBox();
 		private transient ArquivoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
@@ -237,7 +237,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void processar(Formulario formulario, Map<String, Object> args) {
 		Pagina pagina = (Pagina) args.get(FicharioEvento.PAGINA_SELECIONADA);
-		if (pagina == null || pagina == this || pagina.getFile() == null || !chkLinkAuto.isSelected()) {
+		if (pagina == null || pagina == this || pagina.getFile() == null || !toolbar.chkLinkAuto.isSelected()) {
 			return;
 		}
 		File file = pagina.getFile();
@@ -280,7 +280,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	public void abrirArquivoFichario(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
 		if (arquivo != null) {
-			if (chkDuplicar.isSelected()) {
+			if (toolbar.chkDuplicar.isSelected()) {
 				formulario.processar(criarArgs(arquivo.getFile(), true));
 			} else {
 				if (!formulario.isAberto(arquivo.getFile())) {
@@ -309,7 +309,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	@Override
 	public void clickArquivo(ArquivoTree arquivoTree) {
 		Arquivo arquivo = arquivoTree.getObjetoSelecionado();
-		if (arquivo != null && chkLinkAuto.isSelected()) {
+		if (arquivo != null && toolbar.chkLinkAuto.isSelected()) {
 			formulario.selecionarPagina(arquivo.getFile());
 			arquivo.setArquivoAberto(formulario.isAberto(arquivo.getFile()));
 			ArquivoTreeUtil.refreshEstrutura(arquivoTree, arquivo);
