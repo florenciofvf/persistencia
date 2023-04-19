@@ -19,7 +19,6 @@ import br.com.persist.fichario.Fichario;
 import br.com.persist.fichario.FicharioHandler;
 
 public abstract class AbstratoDesktop extends JDesktopPane implements WindowHandler, FicharioHandler {
-	private static final long serialVersionUID = 1L;
 	protected final transient Distribuicao distribuicao = new Distribuicao();
 	protected final transient Alinhamento alinhamento = new Alinhamento();
 	protected final transient MenuLargura menuLargura = new MenuLargura();
@@ -28,6 +27,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	protected final transient Larguras larguras = new Larguras();
 	protected final transient Ajustar ajustar = new Ajustar();
 	protected final transient Ajuste ajuste = new Ajuste();
+	private static final long serialVersionUID = 1L;
 	private boolean ajusteLarguraForm;
 
 	public class Distribuicao {
@@ -173,11 +173,11 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	protected class MenuLargura extends Menu {
-		private static final long serialVersionUID = 1L;
 		private Action direitoAutoAcao = actionMenu("label.total_direito_auto", Icones.ALINHA_DIREITO);
 		private Action esquerdoAcao = actionMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = actionMenu("label.total_direito", Icones.ALINHA_DIREITO);
 		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
+		private static final long serialVersionUID = 1L;
 		private JCheckBoxMenuItem checkDireitoAuto;
 
 		protected MenuLargura() {
@@ -221,10 +221,10 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	protected class MenuAjustar extends Menu {
-		private static final long serialVersionUID = 1L;
 		private Action usarFormularioAcao = actionMenu("label.usar_formularios");
 		private Action dimensaoManualAcao = actionMenu("label.dimensao_manual");
 		private Action retirarRolagemAcao = actionMenu("label.retirar_rolagem");
+		private static final long serialVersionUID = 1L;
 
 		protected MenuAjustar() {
 			super(AbstratoMensagens.getString("label.ajustar"), false, Icones.RECT);
@@ -250,12 +250,12 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	protected class MenuAjuste extends Menu {
-		private static final long serialVersionUID = 1L;
+		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
 		private Action aproximarFormAoObjetoAcao = actionMenu("label.aproximar_form_ao_objeto");
 		private Action aproximarObjetoAoFormAcao = actionMenu("label.aproximar_objeto_ao_form");
-		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
 		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
 		private Action empilharAcao = actionMenu("label.empilhar_formularios");
+		private static final long serialVersionUID = 1L;
 
 		protected MenuAjuste() {
 			super(AbstratoMensagens.getString("label.ajuste"), false, Icones.RECT);

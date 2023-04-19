@@ -9,10 +9,10 @@ import br.com.persist.componente.Label;
 import br.com.persist.formulario.Formulario;
 
 public class RequisicaoConfiguracao extends AbstratoConfiguracao {
-	private static final long serialVersionUID = 1L;
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
 	private final CheckBox chkAbrirModoTabela = criarCheckBox("label.padrao_abrir_tabela");
 	private final CheckBox chkExibirArqMimes = criarCheckBox("label.exibir_arq_mimes");
+	private static final long serialVersionUID = 1L;
 
 	public RequisicaoConfiguracao(Formulario formulario) {
 		super(formulario, RequisicaoMensagens.getString("label.plugin_requisicao"));

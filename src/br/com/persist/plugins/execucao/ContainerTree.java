@@ -17,9 +17,9 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
 
 public class ContainerTree extends Tree {
-	private static final long serialVersionUID = 1L;
 	private final transient List<ContainerTreeListener> ouvintes;
 	private ContainerPopup popup = new ContainerPopup();
+	private static final long serialVersionUID = 1L;
 
 	public ContainerTree(ContainerModelo modelo) {
 		super(modelo);
@@ -134,8 +134,8 @@ public class ContainerTree extends Tree {
 	};
 
 	private class ContainerPopup extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action executarAcao = Action.actionMenu("label.executar", Icones.EXECUTAR);
+		private static final long serialVersionUID = 1L;
 
 		private ContainerPopup() {
 			addMenuItem(executarAcao);

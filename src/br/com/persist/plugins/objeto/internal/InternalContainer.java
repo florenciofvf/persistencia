@@ -532,7 +532,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private Action exceptionAcao = Action.actionIcon("label.exception", Icones.EXCEPTION);
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
 		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
@@ -544,6 +543,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		private final ButtonUpdate buttonUpdate = new ButtonUpdate();
 		private final Label labelTotal = new Label(Color.BLUE);
 		private final ButtonInfo buttonInfo = new ButtonInfo();
+		private static final long serialVersionUID = 1L;
 		private transient Thread thread;
 		private String msgException;
 
@@ -592,9 +592,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonFragVar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action fragmentoAcao = Action.actionMenu(Constantes.LABEL_FRAGMENTO, Icones.FRAGMENTO);
 			private Action variaveisAcao = Action.actionMenu(Constantes.LABEL_VARIAVEIS, Icones.VAR);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonFragVar() {
 				super("label.util", Icones.FRAGMENTO);
@@ -620,12 +620,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonBaixar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action limpar2Acao = Action.actionMenu(Constantes.LABEL_LIMPAR2, Icones.NOVO);
 			private Action limparAcao = Action.actionMenu(Constantes.LABEL_LIMPAR, Icones.NOVO);
 			private Action limparOutrosAcao = actionMenu("label.limpar_outros", Icones.NOVO);
 			private Action conexaoAcao = Action.actionMenu(Constantes.LABEL_CONEXAO2, null);
 			private Action objetoAcao = Action.actionMenu(Constantes.LABEL_OBJETO, null);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonBaixar() {
 				super("label.baixar", Icones.BAIXAR);
@@ -764,11 +764,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonComplemento extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action copiarNomeTabAcao = actionMenu("label.copiar_nome_tabela");
 			private Action copiarAcao = actionMenu("label.copiar_complemento");
 			private Action concatAcao = actionMenu("label.baixar_concatenado");
 			private Action normalAcao = actionMenu("label.baixar_normal");
+			private static final long serialVersionUID = 1L;
 
 			private ButtonComplemento() {
 				super("label.complemento", Icones.BAIXAR2);
@@ -897,11 +897,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonSincronizar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action sincronizarAcao = Action.actionMenu(Constantes.LABEL_SINCRONIZAR, Icones.SINCRONIZAR);
 			private MenuItem itemAtualizarAuto = new MenuItem(
 					ObjetoMensagens.getString(ObjetoConstantes.LABEL_ATUALIZAR_AUTO), false, Icones.ATUALIZAR);
 			private Action atualizarAcao = Action.actionMenuAtualizar();
+			private static final long serialVersionUID = 1L;
 
 			private ButtonSincronizar() {
 				super(Constantes.LABEL_ATUALIZAR, Icones.ATUALIZAR);
@@ -994,9 +994,9 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuPesquisa extends MenuPadrao2 {
-				private static final long serialVersionUID = 1L;
 				private Action renomearAcao = Action.actionMenu("label.renomear", null);
 				private Action excluirAcao = Action.actionMenu("label.excluir", null);
+				private static final long serialVersionUID = 1L;
 				private MenuInfo menuInfo = new MenuInfo();
 				private MenuUtil menuUtil = new MenuUtil();
 				private final transient Pesquisa pesquisa;
@@ -1025,10 +1025,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private class MenuInfo extends Menu {
-					private static final long serialVersionUID = 1L;
 					private Action elementosAcao = Action.actionMenu("label.elementos", null);
 					private Action descricaoAcao = Action.actionMenu("label.descricao", null);
 					private Action consultaAcao = Action.actionMenu("label.consulta", null);
+					private static final long serialVersionUID = 1L;
 
 					private MenuInfo() {
 						super("label.info");
@@ -1074,12 +1074,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private class MenuUtil extends Menu {
-					private static final long serialVersionUID = 1L;
 					private Action addLimparRestoAcao = actionMenu("label.add_limpar_resto");
 					private Action excLimparRestoAcao = actionMenu("label.exc_limpar_resto");
 					private Action vazioInvisivelAcao = actionMenu("label.vazio_invisivel");
 					private Action vazioVisivelAcao = actionMenu("label.vazio_visivel");
 					private Action iconeAcao = Action.actionMenu("label.icone", null);
+					private static final long serialVersionUID = 1L;
 
 					private MenuUtil() {
 						super("label.util");
@@ -1306,7 +1306,6 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonUpdate extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action dadosAcao = Action.actionMenu("label.dados", Icones.TABELA);
 			private List<MenuInstrucao> listaMenuInstrucao = new ArrayList<>();
 			private MenuUpdateMul menuUpdateMul = new MenuUpdateMul();
@@ -1314,6 +1313,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private MenuUpdate menuUpdate = new MenuUpdate();
 			private MenuDelete menuDelete = new MenuDelete();
 			private MenuInsert menuInsert = new MenuInsert();
+			private static final long serialVersionUID = 1L;
 
 			private ButtonUpdate() {
 				super(Constantes.LABEL_UPDATE, Icones.UPDATE);
@@ -1744,10 +1744,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 
 		private class ButtonInfo extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action scriptAdicaoHierAcao = actionMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
 			private Action checagemAcao = actionMenu("label.checar_registro", Icones.SUCESSO);
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
+			private static final long serialVersionUID = 1L;
 			private MenuTemp menuTemp = new MenuTemp();
 
 			private ButtonInfo() {
@@ -1832,12 +1832,12 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuTemp extends Menu {
-				private static final long serialVersionUID = 1L;
 				private Action tabelasRepetidasAcao = actionMenu("label.tabelas_repetidas");
 				private Action larTitTodosAcao = actionMenu("label.largura_titulo_todos");
 				private Action colunasComplAcao = actionMenu("label.colunas_complemento");
 				private Action destacarColunaAcao = actionMenu("label.destacar_coluna");
 				private Action corAcao = Action.actionMenu("label.cor", Icones.COR);
+				private static final long serialVersionUID = 1L;
 
 				private MenuTemp() {
 					super("label.temp");
@@ -1906,11 +1906,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuAlinhamento extends Menu {
-				private static final long serialVersionUID = 1L;
 				private Action somenteDireitoAcao = actionMenu("label.somente_direito", Icones.ALINHA_DIREITO);
 				private Action esquerdoAcao = Action.actionMenu("label.esquerdo", Icones.ALINHA_ESQUERDO);
 				private Action direitoAcao = Action.actionMenu("label.direito", Icones.ALINHA_DIREITO);
 				private Action mesmaLarguraAcao = actionMenu("label.mesma_largura", Icones.LARGURA);
+				private static final long serialVersionUID = 1L;
 
 				private MenuAlinhamento() {
 					super("label.alinhamento", Icones.LARGURA);
@@ -1947,13 +1947,13 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuCopiar extends Menu {
-				private static final long serialVersionUID = 1L;
 				private Action umaColunaSemAcao = Action.actionMenu("label.uma_coluna_sem_aspas", null);
 				private Action umaColunaComAcao = Action.actionMenu("label.uma_coluna_com_aspas", null);
 				private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
 				private Action nomeColunasAcao = Action.actionMenu("label.nome_colunas", null);
 				private Action tabularAcao = Action.actionMenu("label.tabular", null);
 				private Action htmlAcao = Action.actionMenu("label.html", null);
+				private static final long serialVersionUID = 1L;
 
 				private MenuCopiar() {
 					super("label.copiar", Icones.TABLE2);
@@ -2004,8 +2004,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			}
 
 			private class MenuDML extends Menu {
-				private static final long serialVersionUID = 1L;
 				private Action descreverAcao = Action.actionMenu("label.descrever", Icones.TABELA);
+				private static final long serialVersionUID = 1L;
 
 				private MenuDML() {
 					super("label.dml", Icones.EXECUTAR);
@@ -2133,8 +2133,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				}
 
 				private class MenuInnerJoin extends Menu {
-					private static final long serialVersionUID = 1L;
 					private Action disponivelAcao = Action.actionMenu("label.disponivel", null);
+					private static final long serialVersionUID = 1L;
 
 					private MenuInnerJoin() {
 						super(ObjetoMensagens.getString("label.inner_join"), false, Icones.TABELA);

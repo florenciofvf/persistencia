@@ -38,9 +38,9 @@ import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.TextField;
 
 public class EntregaPagina extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final JTabbedPane tabbedPane = new JTabbedPane();
 	public final JTextPane textArea = new JTextPane();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ScrollPane scrollPane;
 	private final File file;
@@ -91,8 +91,8 @@ public class EntregaPagina extends Panel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		private Toolbar() {

@@ -16,8 +16,8 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
 public class MapaConfiguracao extends AbstratoConfiguracao {
-	private static final long serialVersionUID = 1L;
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
+	private static final long serialVersionUID = 1L;
 
 	private final transient NomeValor[] posicoes = {
 			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),

@@ -75,7 +75,6 @@ import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorList
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorListener {
-	private static final long serialVersionUID = 1L;
 	private final transient RequisicaoPoolVisualizador poolVisualizador;
 	private final PopupFichario popupFichario = new PopupFichario();
 	private final List<String> requisicoes = new ArrayList<>();
@@ -84,6 +83,7 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	private final transient RequisicaoRota requisicaoRota;
 	private static final Logger LOG = Logger.getGlobal();
 	public final TextArea textArea = new TextArea();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final Tabela tabela = new Tabela();
 	private ScrollPane scrollPane;
@@ -102,12 +102,12 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private class PopupFichario extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action fecharEsquerda = actionMenu("label.fechar_todas_esquerda");
 		private Action fecharDireita = actionMenu("label.fechar_todas_direita");
 		private Action fecharOutras = actionMenu("label.fechar_outras_abas");
 		private Action fecharTodas = actionMenu("label.fechar_todas_abas");
 		private Action fechar = actionMenu("label.fechar_aba_ativa");
+		private static final long serialVersionUID = 1L;
 
 		PopupFichario() {
 			addMenuItem(fechar);
@@ -346,10 +346,10 @@ public class RequisicaoPagina extends Panel implements RequisicaoVisualizadorLis
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private Action clonarSelAcao = actionIcon("label.clonar_selecionados", Icones.COPIA);
 		private Action vAccessTokenAcao = actionMenu("label.atualizar_access_token_var");
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private CheckBox chkModoTabela = new CheckBox();
 		private transient Selecao selecao;
 

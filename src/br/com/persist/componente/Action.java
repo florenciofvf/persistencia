@@ -9,8 +9,8 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 
 public class Action extends Acao {
-	private static final long serialVersionUID = 1L;
 	protected transient ActionListener actionListener;
+	private static final long serialVersionUID = 1L;
 
 	public Action(boolean menu, String rotulo, boolean chaveRotulo, Icon icone) {
 		super(menu, rotulo, chaveRotulo, icone);

@@ -328,7 +328,6 @@ public class TabelaPersistencia extends JTable {
 	}
 
 	private class PopupHeader extends Popup {
-		private static final long serialVersionUID = 1L;
 		private JCheckBoxMenuItem inativoTempCheck = new JCheckBoxMenuItem(getString("label.inativo_temp"));
 		private Action pesquisaApartirColunaAcao = actionMenu("label.pesquisa_a_partir_coluna");
 		private Action larguraColunaAcao = Action.actionMenu("label.largura_manual", null);
@@ -343,6 +342,7 @@ public class TabelaPersistencia extends JTable {
 		private MenuMetadados menuMetadados = new MenuMetadados();
 		private Separator separatorChave = new Separator();
 		private Separator separatorInfo = new Separator();
+		private static final long serialVersionUID = 1L;
 		private static final String AND = "AND ";
 		private transient Coluna colunaTabela;
 		private MenuIN menuIN = new MenuIN();
@@ -368,12 +368,12 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuMetadados extends Menu {
-			private static final long serialVersionUID = 1L;
 			private Action exportaParaAcao = actionMenu("label.campo_exportado_para");
 			private Action importaDeAcao = actionMenu("label.campo_importado_de");
 			private Action infoColunaAcao = Action.actionMenu("label.info", null);
 			private MenuSelectDistinct distinct = new MenuSelectDistinct();
 			private MenuSelectGroupBy groupBy = new MenuSelectGroupBy();
+			private static final long serialVersionUID = 1L;
 
 			private MenuMetadados() {
 				super(Constantes.LABEL_METADADOS, Icones.INFO);
@@ -561,9 +561,9 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuColocarNomeColuna extends Menu {
-			private static final long serialVersionUID = 1L;
 			private Action atalhoAcao = actionMenu("label.atalho");
 			private Action opcoesAcao = actionMenu("label.opcoes");
+			private static final long serialVersionUID = 1L;
 
 			private MenuColocarNomeColuna() {
 				super(TabelaMensagens.getString("label.colocar_nome_coluna"), false, null);
@@ -592,9 +592,9 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuCopiarLinhas extends MenuPadrao2 {
-			private static final long serialVersionUID = 1L;
 			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho", Icones.ASPAS);
 			private Action semAspasAtalhoAcao = actionMenu("label.sem_aspas_atalho");
+			private static final long serialVersionUID = 1L;
 
 			private MenuCopiarLinhas() {
 				super(TabelaMensagens.getString("label.copiar_header"), false, null);
@@ -628,9 +628,9 @@ public class TabelaPersistencia extends JTable {
 		}
 
 		private class MenuColocarColuna extends MenuPadrao2 {
-			private static final long serialVersionUID = 1L;
 			private Action comAspasAtalhoAcao = actionMenu("label.com_aspas_atalho", Icones.ASPAS);
 			private Action semAspasAtalhoAcao = actionMenu("label.sem_aspas_atalho");
+			private static final long serialVersionUID = 1L;
 			private final boolean numeros;
 			private final boolean letras;
 

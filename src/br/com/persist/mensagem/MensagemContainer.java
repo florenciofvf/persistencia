@@ -21,8 +21,8 @@ import br.com.persist.componente.TextField;
 import br.com.persist.componente.TextPane;
 
 public class MensagemContainer extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final TextPane textArea = new TextPane();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final File file;
 
@@ -39,8 +39,8 @@ public class MensagemContainer extends Panel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini(Janela janela) {

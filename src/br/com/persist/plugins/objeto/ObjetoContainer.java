@@ -191,7 +191,6 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private Action excluirAcao = actionIcon("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action arquivoVinculadoAcao = actionMenu("label.abrir_criar_arq_vinculado");
 		private Action criarObjetoAcao = actionIcon("label.criar_objeto", Icones.CRIAR);
@@ -201,6 +200,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		private CheckBox chkAjusteAutomatico = new CheckBox();
 		private CheckBox chkAjusteLarguraFrm = new CheckBox();
 		private Popup popupArquivoVinculado = new Popup();
+		private static final long serialVersionUID = 1L;
 		private Label labelStatus = new Label();
 
 		public void ini(Janela janela) {
@@ -442,7 +442,6 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private class ButtonStatus extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private JCheckBoxMenuItem somarHorasAcao = new JCheckBoxMenuItem(
 					ObjetoMensagens.getString("label.somar_em_horas"));
 			private Action desenharDescAcao = Action.actionMenu("label.desenhar_desc", Icones.TAG);
@@ -452,6 +451,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			private Action pontoDestinoAcao = actionMenu("label.ponto_destino", Icones.RECT);
 			private Action pontoOrigemAcao = actionMenu("label.ponto_origem", Icones.RECT);
 			private Action reiniciarAction = actionMenu("label.reiniciar_horas", null);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);
@@ -492,12 +492,12 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 		}
 
 		private class ButtonInfo extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action excluirSemTabelaAcao = actionMenu("label.excluir_sem_tabela");
 			private Action totalAtualAcao = actionMenu("label.total_atual");
 			private Action comparaRecAcao = actionMenu("label.compararRec");
 			private MenuItem itemTotalAtual = new MenuItem(totalAtualAcao);
 			private MenuItem itemComparaRec = new MenuItem(comparaRecAcao);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonInfo() {
 				super("label.comparar", Icones.INFO);

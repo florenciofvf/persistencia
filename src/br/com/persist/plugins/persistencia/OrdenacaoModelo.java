@@ -14,8 +14,8 @@ import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.plugins.conexao.Conexao;
 
 public class OrdenacaoModelo extends AbstractTableModel {
-	private static final long serialVersionUID = 1L;
 	private final transient PersistenciaModelo model;
+	private static final long serialVersionUID = 1L;
 	private transient Linha[] linhas;
 	private boolean descendente;
 	private boolean numero;

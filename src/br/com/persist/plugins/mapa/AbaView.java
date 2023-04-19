@@ -96,8 +96,8 @@ public class AbaView extends Panel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 
 		private Toolbar() {
 			super.ini(new Nil(), BAIXAR);
@@ -120,7 +120,6 @@ public class AbaView extends Panel {
 		}
 
 		private class ButtonStatus extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action desenharObjetoCentroAcao = actionMenu("label.desenhar_objeto_centro");
 			private Action desenharAssociacaoAcao = actionMenu("label.desenhar_associacao");
 			private Action desenharAtributoAcao = actionMenu("label.desenhar_atributo");
@@ -128,6 +127,7 @@ public class AbaView extends Panel {
 			private Action desenharGradeAcao = actionMenu("label.desenhar_grade");
 			private Action velocidadeAcao = actionMenu("label.velocidade");
 			private Action girarAcao = actionMenu("label.girar");
+			private static final long serialVersionUID = 1L;
 
 			private ButtonStatus() {
 				super("label.status", Icones.TAG2);
@@ -212,8 +212,8 @@ public class AbaView extends Panel {
 	}
 
 	class PanelView extends Panel implements Runnable {
-		private static final long serialVersionUID = 1L;
 		private transient Logger log = Logger.getGlobal();
+		private static final long serialVersionUID = 1L;
 		private transient Associacao[] associacoes;
 		private boolean desenharAssociacoes;
 		private transient Objeto[] objetos;

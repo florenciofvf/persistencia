@@ -178,10 +178,10 @@ public class UpdateContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
 		private Action updateAcao = Action.actionIconUpdate();
+		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		protected void ini(Janela janela) {

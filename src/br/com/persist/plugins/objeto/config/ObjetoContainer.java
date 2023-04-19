@@ -121,8 +121,8 @@ public class ObjetoContainer extends Panel {
 	};
 
 	private class VinculadoPopup extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action action = actionMenu(labelVinculo);
+		private static final long serialVersionUID = 1L;
 		private transient CompChave compChave;
 
 		private VinculadoPopup() {
@@ -250,7 +250,6 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class PanelGeral extends Panel implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private CheckBox chkChecarRegistro = new CheckBox();
 		private CheckBox chkTransparente = new CheckBox();
 		private CheckBox chkCopiarDestac = new CheckBox();
@@ -258,6 +257,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtDeslocYId = new TextField();
 		private TextField txtIntervalo = new TextField();
 		private TextField txtInstrucao = new TextField();
+		private static final long serialVersionUID = 1L;
 		private CheckBox chkDesenharId = new CheckBox();
 		private TextField txtArquivo = new TextField();
 		private TextField txtFiltro = new TextField();
@@ -429,7 +429,6 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class PanelBanco extends Panel implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private TextField txtFinalConsulta = new TextField();
 		private CheckBox chkAjusteAutoForm = new CheckBox();
 		private CheckBox chkLarguraRotulos = new CheckBox();
@@ -443,6 +442,7 @@ public class ObjetoContainer extends Panel {
 		private TextField txtSequencias = new TextField();
 		private TextField txtMapeamento = new TextField();
 		private TextField txtPrefixoNT = new TextField();
+		private static final long serialVersionUID = 1L;
 		private CheckBox chkColunaInfo = new CheckBox();
 		private TextField txtOrderBy = new TextField();
 		private CheckBox chkAbrirAuto = new CheckBox();
@@ -863,10 +863,10 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class PanelCopiarColar extends Panel {
-		private static final long serialVersionUID = 1L;
 		private final Action copiar = Action.actionIcon("label.copiar", Icones.COPIA);
 		private final ButtonColar buttonColar = new ButtonColar();
 		private LabelTextTemp lblMsg = new LabelTextTemp();
+		private static final long serialVersionUID = 1L;
 		private final TextField textField;
 
 		private PanelCopiarColar(TextField textField) {
@@ -886,11 +886,11 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class ButtonColar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action numeroAcao = Action.actionMenu("label.numeros", null);
 			private Action letraAcao = Action.actionMenu("label.letras", null);
 			private Action todosAcao = Action.actionMenu("label.todos", null);
 			private Action horaAcao = Action.actionMenu("label.hora", null);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonColar() {
 				super("label.colar", Icones.COLAR);
@@ -918,8 +918,8 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class PanelDescricao extends Panel {
-		private static final long serialVersionUID = 1L;
 		private final TextArea textArea = new TextArea();
+		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
 
 		private PanelDescricao() {
@@ -978,8 +978,8 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
-			private static final long serialVersionUID = 1L;
 			private Action actionFonteVinculo = actionIcon(labelVinculo, Icones.SUCESSO);
+			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
 				super.ini(new Nil(), COPIAR, COLAR0, APLICAR);

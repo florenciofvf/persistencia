@@ -38,9 +38,9 @@ public class ConfiguracaoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private class MenuConfiguracao extends MenuPadrao1 {
-		private static final long serialVersionUID = 1L;
-		private Action exportarAcao = Action.actionMenu("label.exportar", Icones.TOP);
 		private Action importarAcao = Action.actionMenu("label.importar", Icones.BAIXAR2);
+		private Action exportarAcao = Action.actionMenu("label.exportar", Icones.TOP);
+		private static final long serialVersionUID = 1L;
 
 		private MenuConfiguracao(Formulario formulario) {
 			super(Constantes.LABEL_CONFIGURACOES, Icones.CONFIG);

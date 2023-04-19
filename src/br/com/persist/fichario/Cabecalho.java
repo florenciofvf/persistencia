@@ -159,8 +159,8 @@ class Cabecalho extends Panel {
 		}
 
 		private class FecharPopup extends Popup {
-			private static final long serialVersionUID = 1L;
 			private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.SAIR);
+			private static final long serialVersionUID = 1L;
 
 			private FecharPopup() {
 				add(fecharAcao);

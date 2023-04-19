@@ -135,11 +135,11 @@ public class AmbienteContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private Action pesquisaGeralAcao = Action.acaoIcon(AmbienteMensagens.getString("label.pesquisa_geral"),
 				Icones.BOLA_AMARELA);
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini(Janela janela) {

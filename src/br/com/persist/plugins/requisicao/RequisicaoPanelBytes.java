@@ -23,8 +23,8 @@ import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizador;
 import br.com.persist.plugins.requisicao.visualizador.RequisicaoVisualizadorListener;
 
 public class RequisicaoPanelBytes extends Panel {
-	private static final long serialVersionUID = 1L;
 	private transient RequisicaoVisualizadorListener requisicaoVisualizadorListener;
+	private static final long serialVersionUID = 1L;
 	private transient RequisicaoRota requisicaoRota;
 	private final RequisicaoPagina requisicaoPagina;
 	private final transient Tipo parametros;
@@ -70,10 +70,10 @@ public class RequisicaoPanelBytes extends Panel {
 	}
 
 	private class BarraInfo extends JToolBar {
-		private static final long serialVersionUID = 1L;
 		private JComboBox<RequisicaoVisualizador> cmbVisualizador = new JComboBox<>();
 		private Label labelVisualizador = new Label("label.visualizador");
 		private Button btnBaixar = new Button("label.baixar");
+		private static final long serialVersionUID = 1L;
 		private Label labelMime = new Label();
 		private Label labelURI = new Label();
 		private final String mime;

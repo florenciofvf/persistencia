@@ -9,8 +9,8 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Mensagens;
 
 public class LabelTextTemp extends JLabel implements Runnable {
-	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private int atraso = 500;
 
 	public void mensagemChave(String chave) {

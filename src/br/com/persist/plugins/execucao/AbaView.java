@@ -25,8 +25,8 @@ import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLHandler;
 
 public class AbaView extends Panel implements ContainerTreeListener {
-	private static final long serialVersionUID = 1L;
 	private ContainerTree tree = new ContainerTree();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private PanelLog log = new PanelLog();
 	private final File file;
@@ -112,8 +112,8 @@ class Handler extends XMLHandler {
 }
 
 class PanelLog extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
+	private static final long serialVersionUID = 1L;
 
 	PanelLog() {
 		add(BorderLayout.NORTH, new ToolbarPesquisa(textArea));

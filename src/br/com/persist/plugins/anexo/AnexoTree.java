@@ -20,9 +20,9 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
 
 public class AnexoTree extends Tree {
-	private static final long serialVersionUID = 1L;
 	private final transient List<AnexoTreeListener> ouvintes;
 	private AnexoPopup anexoPopup = new AnexoPopup();
+	private static final long serialVersionUID = 1L;
 
 	public AnexoTree(TreeModel newModel) {
 		super(newModel);
@@ -151,7 +151,6 @@ public class AnexoTree extends Tree {
 	};
 
 	private class AnexoPopup extends Popup {
-		private static final long serialVersionUID = 1L;
 		private CheckBoxItem chkAbrirVisivel = new CheckBoxItem("label.abrir_visivel", Icones.HIERARQUIA);
 		private CheckBoxItem chkPadraoAbrir = new CheckBoxItem("label.padrao_abrir", Icones.EXECUTAR);
 		private Action copiarAcao = Action.actionMenu("label.copiar_atributos", Icones.COPIA);
@@ -160,6 +159,7 @@ public class AnexoTree extends Tree {
 		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
 		private Action corFonteAcao = Action.actionMenu("label.cor_fonte", Icones.COR);
 		private Action iconeAcao = Action.actionMenu("label.icone", Icones.ICON);
+		private static final long serialVersionUID = 1L;
 		private MenuAbrir menuAbrir = new MenuAbrir();
 
 		private AnexoPopup() {
@@ -210,12 +210,12 @@ public class AnexoTree extends Tree {
 		}
 
 		private class MenuAbrir extends Menu {
-			private static final long serialVersionUID = 1L;
 			private Action diretorioAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 			private Action imprimirAcao = Action.actionMenu("label.imprimir", Icones.PRINT);
 			private Action editarAcao = Action.actionMenu("label.editar", Icones.EDIT);
 			private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
 			private Action conteudoAcao = Action.actionMenu("label.conteudo", null);
+			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {
 				super("label.opcoes", Icones.CONFIG);

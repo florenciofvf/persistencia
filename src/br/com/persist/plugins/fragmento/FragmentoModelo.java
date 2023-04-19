@@ -5,8 +5,8 @@ import javax.swing.table.AbstractTableModel;
 import br.com.persist.assistencia.Constantes;
 
 public class FragmentoModelo extends AbstractTableModel {
-	private static final long serialVersionUID = 1L;
 	private static final String[] COLUNAS = { "RESUMO", "GRUPO", "VALOR" };
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public int getRowCount() {

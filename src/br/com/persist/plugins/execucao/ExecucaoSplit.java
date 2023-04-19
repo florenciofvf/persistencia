@@ -232,8 +232,8 @@ class TextArea extends TextPane {
 }
 
 class Aba extends Transferivel {
-	private static final long serialVersionUID = 1L;
 	private final JTabbedPane tabbedPane = new JTabbedPane();
+	private static final long serialVersionUID = 1L;
 	final transient Arquivo arquivo;
 	private final AbaView abaView;
 	private final AbaText abaText;

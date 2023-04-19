@@ -20,8 +20,8 @@ import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoUtil;
 
 public class MiscelaniaContainer extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final transient Objeto objeto;
 	private final Tipo tipo;

@@ -88,8 +88,8 @@ class TabelaContainer extends Panel {
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private ButtonCopiar buttonCopiar = new ButtonCopiar();
+		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela);
@@ -97,12 +97,12 @@ class TabelaContainer extends Panel {
 		}
 
 		private class ButtonCopiar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action umaColunaSemAcao = Action.actionMenu("label.uma_coluna_sem_aspas", null);
 			private Action umaColunaComAcao = Action.actionMenu("label.uma_coluna_com_aspas", null);
 			private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
 			private Action tabularAcao = Action.actionMenu("label.tabular", null);
 			private Action htmlAcao = Action.actionMenu("label.html", null);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonCopiar() {
 				super("label.copiar_tabela", Icones.TABLE2);

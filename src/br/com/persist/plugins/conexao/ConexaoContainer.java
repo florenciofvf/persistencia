@@ -125,12 +125,12 @@ public class ConexaoContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private Action desconectaAcao = actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
 		private Action descerAcao = Action.actionIcon("label.descer", Icones.BAIXAR2);
 		private Action subirAcao = Action.actionIcon("label.subir", Icones.TOP);
 		private Action infoAcao = Action.actionIcon("label.info", Icones.INFO);
+		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,

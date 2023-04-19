@@ -25,8 +25,8 @@ import br.com.persist.plugins.persistencia.Coluna;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 
 public class CabecalhoColuna extends Panel implements TableCellRenderer {
-	private static final long serialVersionUID = 1L;
 	private final transient CabecalhoColunaListener listener;
+	private static final long serialVersionUID = 1L;
 	private final transient Coluna coluna;
 	private final OrdenacaoModelo modelo;
 	private final Ordenacao ordenacao;

@@ -26,7 +26,6 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.formulario.Formulario;
 
 public class ObjetoConfiguracao extends AbstratoConfiguracao {
-	private static final long serialVersionUID = 1L;
 	private final CheckBox chkHabitEsquemaTabelaAlter = new CheckBox(
 			ObjetoMensagens.getString("label.habilitadoEsquemaTabelaAlter"), false);
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox(
@@ -61,6 +60,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			new NomeValor("label.formulario", ObjetoConstantes.TIPO_CONTAINER_FORMULARIO, NomeValor.DESTACADOS),
 			new NomeValor("label.fichario", ObjetoConstantes.TIPO_CONTAINER_FICHARIO, NomeValor.DESTACADOS),
 			new NomeValor("label.desktop", ObjetoConstantes.TIPO_CONTAINER_DESKTOP, NomeValor.DESTACADOS) };
+	private static final long serialVersionUID = 1L;
 
 	public ObjetoConfiguracao(Formulario formulario) {
 		super(formulario, ObjetoMensagens.getString("label.plugin_objeto"));
@@ -187,11 +187,11 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private class PainelCorTotalRecente extends Panel {
-		private static final long serialVersionUID = 1L;
 		private Label labelAntesProcessar = new Label(ObjetoMensagens.getString("label.cor_antes_processar"), false);
 		private Label labelBuscarTotal = new Label(ObjetoMensagens.getString("label.cor_total_atual"), false);
 		private Label labelComparacao = new Label(ObjetoMensagens.getString("label.cor_comparacao"), false);
 		private transient MouseInner mouseInner = new MouseInner();
+		private static final long serialVersionUID = 1L;
 
 		private PainelCorTotalRecente() {
 			super(new GridLayout(0, 3));

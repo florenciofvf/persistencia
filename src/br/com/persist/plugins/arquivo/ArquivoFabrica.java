@@ -59,8 +59,8 @@ public class ArquivoFabrica extends AbstratoFabricaContainer {
 	}
 
 	private class MenuArquivo extends MenuPadrao1 {
-		private static final long serialVersionUID = 1L;
 		private Action separadorAcao = Action.actionMenu("label.separador", null);
+		private static final long serialVersionUID = 1L;
 
 		private MenuArquivo(Formulario formulario) {
 			super(Constantes.LABEL_ARQUIVOS, Icones.EXPANDIR, false);

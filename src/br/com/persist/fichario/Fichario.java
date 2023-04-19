@@ -52,7 +52,6 @@ import br.com.persist.formulario.Formulario;
 import br.com.persist.formulario.FormularioEvento;
 
 public class Fichario extends JTabbedPane implements WindowHandler {
-	private static final long serialVersionUID = 1L;
 	private final transient Navegacao navegacaoEsquerdo = new Navegacao(ESQUERDO);
 	private final transient Navegacao navegacaoDireito = new Navegacao(DIREITO);
 	private final transient Navegacao navegacaoLimpar = new Navegacao(LIMPAR);
@@ -60,6 +59,7 @@ public class Fichario extends JTabbedPane implements WindowHandler {
 	private final transient NavegacaoListener navegacaoListener;
 	private final transient Listener listener = new Listener();
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private static final int ESQUERDO = 1;
 	private static final int DIREITO = 2;
 	private static final int LIMPAR = 0;

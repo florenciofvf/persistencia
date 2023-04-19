@@ -304,10 +304,10 @@ class SetListaDialogo extends AbstratoDialogo {
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
-		private final CheckBox chkTodos = new CheckBox("label.todos");
-		private Action criarAcao = Action.actionIcon("label.criar", Icones.CRIAR);
 		private Action ordenarAcao = Action.actionIcon("label.ordenar", Icones.ASC_TEXTO);
+		private Action criarAcao = Action.actionIcon("label.criar", Icones.CRIAR);
+		private final CheckBox chkTodos = new CheckBox("label.todos");
+		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela, APLICAR);

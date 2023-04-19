@@ -26,7 +26,6 @@ import br.com.persist.componente.PanelCenter;
 import br.com.persist.componente.TextField;
 
 public class FormularioConfiguracao extends AbstratoConfiguracao {
-	private static final long serialVersionUID = 1L;
 	private final CheckBox chkAplicarLarguraAoAbrirArquivo = criarCheckBox("label.aplicar_largura_ao_abrir_arq_objeto");
 	private final CheckBox chkAplicarAlturaAoAbrirArquivo = criarCheckBox("label.aplicar_altura_ao_abrir_arq_objeto");
 	private final CheckBox chkFecharComESCFormulario = criarCheckBox("label.fechar_com_esc_formulario");
@@ -44,6 +43,7 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	private final TextField txtDefinirAltura = new TextField();
 	private final TextField txtFormDialogo = new TextField();
 	private final TextField txtFormFicha = new TextField();
+	private static final long serialVersionUID = 1L;
 	private final transient NomeValor[] posicoes = {
 			new NomeValor("label.acima", SwingConstants.TOP, NomeValor.POSICAO_ABA),
 			new NomeValor("label.esquerdo", SwingConstants.LEFT, NomeValor.POSICAO_ABA),
@@ -215,9 +215,9 @@ public class FormularioConfiguracao extends AbstratoConfiguracao {
 	}
 
 	private class PainelMonitorPreferencial extends Panel {
-		private static final long serialVersionUID = 1L;
 		private Button buttonNaoPreferencial = new Button("label.nao_preferencial");
 		private Button buttonPreferencial = new Button("label.preferencial");
+		private static final long serialVersionUID = 1L;
 
 		private PainelMonitorPreferencial() {
 			super(new FlowLayout());

@@ -83,11 +83,11 @@ public class AnexoContainer extends AbstratoContainer implements AnexoTreeListen
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopAnex = new CheckBox();
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private final TextField txtAnexo = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private transient AnexoPesquisa pesquisa;
 
 		public void ini(Janela janela) {

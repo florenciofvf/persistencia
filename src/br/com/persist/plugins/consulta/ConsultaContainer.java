@@ -136,8 +136,8 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private class ToolbarTabela extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private ButtonCopiar buttonCopiar = new ButtonCopiar();
+		private static final long serialVersionUID = 1L;
 
 		private ToolbarTabela() {
 			super.ini(new Nil());
@@ -145,13 +145,13 @@ public class ConsultaContainer extends AbstratoContainer {
 		}
 
 		private class ButtonCopiar extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action umaColunaSemAcao = Action.actionMenu("label.uma_coluna_sem_aspas", null);
 			private Action umaColunaComAcao = Action.actionMenu("label.uma_coluna_com_aspas", null);
 			private Action transferidorAcao = Action.actionMenu("label.transferidor", null);
 			private Action tabularAcao = Action.actionMenu("label.tabular", null);
 			private Action htmlAcao = Action.actionMenu("label.html", null);
 			private Action pipeAcao = Action.actionMenu("label.pipe", null);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonCopiar() {
 				super("label.copiar_tabela", Icones.TABLE2);
@@ -260,10 +260,10 @@ public class ConsultaContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private Action colarSemAspasAcao = actionMenu("label.colar_sem_aspas");
 		private final CheckBox chkPesquisaLocal = new CheckBox(true);
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		protected void ini(Janela janela) {

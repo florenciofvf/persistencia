@@ -29,10 +29,10 @@ import br.com.persist.componente.SetLista.Coletor;
 import br.com.persist.componente.Tree;
 
 public class MetadadoTree extends Tree {
-	private static final long serialVersionUID = 1L;
 	private MetadadosPopup metadadosPopup = new MetadadosPopup();
 	private final transient List<MetadadoTreeListener> ouvintes;
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private boolean padraoClickExportacao = true;
 
 	public MetadadoTree() {
@@ -167,7 +167,6 @@ public class MetadadoTree extends Tree {
 	};
 
 	private class MetadadosPopup extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action copiarDescricaoAcao = Action.acaoMenu(MetadadoMensagens.getString("label.copiar_descricao"),
 				Icones.COPIA);
 		private Action constraintInfoAction = Action.acaoMenu(MetadadoMensagens.getString("label.constraint_info"),
@@ -177,6 +176,7 @@ public class MetadadoTree extends Tree {
 		private MenuAbrirExportacaoC menuAbrirExportacaoC = new MenuAbrirExportacaoC();
 		private MenuAbrirImportacaoC menuAbrirImportacaoC = new MenuAbrirImportacaoC();
 		private MenuExportacao menuExportacao = new MenuExportacao();
+		private static final long serialVersionUID = 1L;
 
 		private MetadadosPopup() {
 			add(menuExportacao);

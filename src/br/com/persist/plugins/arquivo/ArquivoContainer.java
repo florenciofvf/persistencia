@@ -74,7 +74,6 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private Action fecharAcao = Action.actionIcon("label.fechar_todos", Icones.FECHAR);
 		private Action statusAcao = Action.actionIcon("label.abertos", Icones.HIERARQUIA);
 		private final CheckBox chkSempreTopForm = new CheckBox();
@@ -83,6 +82,7 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 		private final TextField txtArquivo = new TextField(35);
 		private final CheckBox chkDuplicar = new CheckBox();
 		private final CheckBox chkLinkAuto = new CheckBox();
+		private static final long serialVersionUID = 1L;
 		private transient ArquivoPesquisa pesquisa;
 
 		public void ini(Janela janela) {

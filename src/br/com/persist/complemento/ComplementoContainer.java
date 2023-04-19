@@ -27,11 +27,11 @@ import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 
 public class ComplementoContainer extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final ToolbarLista toolbarLista = new ToolbarLista();
 	private final ToolbarArea toolbarArea = new ToolbarArea();
 	private final transient ComplementoListener listener;
 	private final JTextArea textArea = new JTextArea();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private final JList<String> listaComplementos;
 
@@ -120,9 +120,9 @@ public class ComplementoContainer extends Panel {
 	}
 
 	private class ToolbarLista extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private Action limparComplementosAcao = Action
 				.acaoIcon(ComplementoMensagens.getString("label.limpar_complementos"), Icones.EXCLUIR);
+		private static final long serialVersionUID = 1L;
 
 		private ToolbarLista() {
 			super.ini(new Nil());

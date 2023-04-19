@@ -3,9 +3,9 @@ package br.com.persist.componente;
 import javax.swing.Icon;
 
 public class MenuPadrao2 extends Menu {
-	private static final long serialVersionUID = 1L;
 	protected Action comAspasAcao = Action.actionMenuComAspas();
 	protected Action semAspasAcao = Action.actionMenuSemAspas();
+	private static final long serialVersionUID = 1L;
 
 	public MenuPadrao2(String rotulo, boolean chaveRotulo, Icon icon) {
 		super(rotulo, chaveRotulo, icon);

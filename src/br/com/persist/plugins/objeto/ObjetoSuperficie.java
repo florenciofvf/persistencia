@@ -95,12 +95,12 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class ObjetoSuperficie extends Desktop implements ObjetoListener, RelacaoListener, Runnable {
-	private static final long serialVersionUID = 1L;
 	private final transient Vinculacao vinculacao = new Vinculacao();
 	private SuperficiePopup2 popup2 = new SuperficiePopup2();
 	private SuperficiePopup popup = new SuperficiePopup();
 	private static final Logger LOG = Logger.getGlobal();
 	private final transient Linha linha = new Linha();
+	private static final long serialVersionUID = 1L;
 	private final transient Area area = new Area();
 	private transient Relacao selecionadoRelacao;
 	private transient Objeto selecionadoObjeto;
@@ -1268,7 +1268,6 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private class SuperficiePopup extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action configuracaoAcao = Action.actionMenu("label.configuracoes", Icones.CONFIG);
 		private Action excluirAcao = actionMenu("label.excluir_selecionado", Icones.EXCLUIR);
 		private Action copiarAcao = Action.actionMenu("label.copiar", Icones.COPIA);
@@ -1280,6 +1279,7 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		private MenuDestacar menuDestacar = new MenuDestacar();
 		private MenuCircular menuCircular = new MenuCircular();
 		private MenuItem itemDados = new MenuItem(dadosAcao);
+		private static final long serialVersionUID = 1L;
 
 		private SuperficiePopup() {
 			add(menuAlinhamento);
@@ -1329,8 +1329,8 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private class MenuDistribuicao extends Menu {
-			private static final long serialVersionUID = 1L;
 			Action inverterAcao = actionMenu("label.inverter_posicao");
+			private static final long serialVersionUID = 1L;
 
 			private MenuDistribuicao() {
 				super("label.distribuicao");
@@ -1409,10 +1409,10 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private class MenuCircular extends Menu {
-			private static final long serialVersionUID = 1L;
 			private Action exportacaoAcao = Action.actionMenu("label.exportacao", null);
 			private Action importacaoAcao = Action.actionMenu("label.importacao", null);
 			private Action normalAcao = Action.actionMenu("label.normal", null);
+			private static final long serialVersionUID = 1L;
 
 			private MenuCircular() {
 				super(Constantes.LABEL_CIRCULAR);
@@ -1432,9 +1432,9 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 
 		private class MenuDestacar extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
 			Action proprioAcao = actionMenu("label.proprio_container");
 			Action desktopAcao = Action.actionMenuDesktop();
+			private static final long serialVersionUID = 1L;
 
 			private MenuDestacar() {
 				super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR, false);
@@ -1584,13 +1584,13 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 	}
 
 	private class SuperficiePopup2 extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action atualizarFormulariosAcao = actionMenu("label.atualizar_forms", Icones.ATUALIZAR);
 		private Action limparFormulariosAcao = actionMenu("label.limpar_formularios", Icones.NOVO);
 		private Action formulariosInvisiveisAcao = actionMenu("label.forms_invisiveis", null);
 		private Action criarObjetoAcao = actionMenu("label.criar_objeto", Icones.CRIAR);
 		private Action propriedadesAcao = Action.actionMenu("label.propriedades", null);
 		private Action colarAcao = Action.actionMenu("label.colar", Icones.COLAR);
+		private static final long serialVersionUID = 1L;
 		int xLocal;
 		int yLocal;
 

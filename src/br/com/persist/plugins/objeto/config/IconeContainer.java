@@ -91,8 +91,8 @@ public class IconeContainer extends Panel {
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private TextField txtPesquisa = new TextField(10);
+		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela, LIMPAR);

@@ -8,10 +8,10 @@ import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Preferencias;
 
 public class MenuPadrao1 extends Menu {
-	private static final long serialVersionUID = 1L;
 	protected Action formularioAcao = Action.actionMenuFormulario();
 	protected Action ficharioAcao = Action.actionMenuFichario();
 	protected Action dialogoAcao = Action.actionMenuDialogo();
+	private static final long serialVersionUID = 1L;
 
 	public MenuPadrao1(String rotulo, boolean chaveRotulo, Icon icon, boolean dialogo) {
 		super(rotulo, chaveRotulo, icon);

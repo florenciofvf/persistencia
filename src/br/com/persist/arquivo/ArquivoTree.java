@@ -17,9 +17,9 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
 
 public class ArquivoTree extends Tree {
-	private static final long serialVersionUID = 1L;
 	private final transient List<ArquivoTreeListener> ouvintes;
 	private ArquivoPopup arquivoPopup = new ArquivoPopup();
+	private static final long serialVersionUID = 1L;
 
 	public ArquivoTree(ArquivoModelo modelo) {
 		super(modelo);
@@ -162,13 +162,13 @@ public class ArquivoTree extends Tree {
 	};
 
 	private class ArquivoPopup extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action novoDiretorioAcao = Action.actionMenu("label.novo_diretorio", Icones.ABRIR);
 		private Action novoArquivoAcao = Action.actionMenu("label.novo_arquivo", Icones.PANEL4);
 		private Action diretorioAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
-		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
 		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
+		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
 		private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
+		private static final long serialVersionUID = 1L;
 
 		private ArquivoPopup() {
 			addMenuItem(novoDiretorioAcao);

@@ -9,9 +9,9 @@ import br.com.persist.componente.Label;
 import br.com.persist.formulario.Formulario;
 
 public class ChecagemConfiguracao extends AbstratoConfiguracao {
-	private static final long serialVersionUID = 1L;
 	private final CheckBox chkExibirArqSentencas = criarCheckBox("label.exibir_arq_sentencas");
 	private final CheckBox chkExibirArqIgnorados = criarCheckBox("label.exibir_arq_ignorados");
+	private static final long serialVersionUID = 1L;
 
 	public ChecagemConfiguracao(Formulario formulario) {
 		super(formulario, ChecagemMensagens.getString("label.plugin_checagem"));

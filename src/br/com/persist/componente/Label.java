@@ -12,8 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Label extends JLabel {
-	private static final long serialVersionUID = 1L;
 	private transient LabelLinkListener linkListener;
+	private static final long serialVersionUID = 1L;
 	private Popup popup;
 
 	public Label(String rotulo, boolean chaveRotulo) {

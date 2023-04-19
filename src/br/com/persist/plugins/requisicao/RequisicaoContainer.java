@@ -171,11 +171,11 @@ public class RequisicaoContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
 		private Action atualizarAcao2 = Action.actionIcon("label.requisicao", Icones.URL);
 		private ButtonUtil buttonUtil = new ButtonUtil();
 		private ButtonRota buttonRota = new ButtonRota();
+		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
@@ -189,13 +189,13 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private class ButtonUtil extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action formatarAcao = actionMenu("label.formatar_frag_json");
 			private Action variaveisAcao = actionMenu("label.variaveis_sistema");
 			private Action modeloAcao = Action.actionMenu("label.modelo", null);
 			private Action retornar64Acao = actionMenu("label.retornar_base64");
 			private Action appendAcao = actionMenu("label.salvar_req_sel");
 			private Action base64Acao = actionMenu("label.criar_base64");
+			private static final long serialVersionUID = 1L;
 
 			private ButtonUtil() {
 				super("label.util", Icones.BOLA_VERDE);
@@ -394,10 +394,10 @@ public class RequisicaoContainer extends AbstratoContainer {
 		}
 
 		private class ButtonRota extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action adicionarAcao = Action.actionMenu("label.adicionar", null);
 			private Action exibirAcao = Action.actionMenu("label.exibir", null);
 			private Action limparAcao = Action.actionMenu("label.limpar", null);
+			private static final long serialVersionUID = 1L;
 
 			private ButtonRota() {
 				super("label.rotas", Icones.BOLA_AMARELA);

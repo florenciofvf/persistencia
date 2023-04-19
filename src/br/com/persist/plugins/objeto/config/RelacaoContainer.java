@@ -81,11 +81,11 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class PanelDescricao extends Panel implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private TextField txtDeslocXDesc = new TextField();
 		private TextField txtDeslocYDesc = new TextField();
 		private CheckBox chkDesenharDesc = new CheckBox();
 		private final TextArea textArea = new TextArea();
+		private static final long serialVersionUID = 1L;
 		private final Toolbar toolbar = new Toolbar();
 
 		private PanelDescricao() {
@@ -168,11 +168,11 @@ public class RelacaoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
-			private static final long serialVersionUID = 1L;
 			private Action diferencaAction = actionMenu("label.diferenca_em_horas", null);
 			private Action reiniciarAction = actionMenu("label.reiniciar_horas", null);
 			private Action somarAction = actionMenu("label.somar_em_horas", null);
 			private static final String CHAVE_ERRO = "msg.padrao_valor_invalido";
+			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
 				super.ini(new Nil(), COPIAR, COLAR);
@@ -348,8 +348,8 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class PanelGeral extends Panel implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private CheckBox chkQuebrado = new CheckBox("label.quebrado");
+		private static final long serialVersionUID = 1L;
 
 		private PanelGeral() {
 			add(new PanelLado(true));
@@ -383,8 +383,8 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class PanelLado extends Panel implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final CheckBox chkPonto = new CheckBox("label.ponto");
+		private static final long serialVersionUID = 1L;
 		private TextField txtChave = new TextField(30);
 		private final boolean origem;
 
@@ -446,8 +446,8 @@ public class RelacaoContainer extends Panel {
 	}
 
 	private class PanelChave extends Panel {
-		private static final long serialVersionUID = 1L;
 		private final Action campos = Action.actionIcon("label.campos", Icones.CAMPOS);
+		private static final long serialVersionUID = 1L;
 		private final transient Objeto objeto;
 		private final TextField textField;
 

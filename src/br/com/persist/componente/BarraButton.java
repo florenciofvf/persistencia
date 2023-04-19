@@ -20,7 +20,6 @@ import static br.com.persist.componente.BarraButtonEnum.*;
 
 public abstract class BarraButton extends JToolBar
 		implements WindowHandler, DialogHandler, FicharioHandler, WindowInternalHandler {
-	private static final long serialVersionUID = 1L;
 	protected Action aplicarAcao = Action.actionIcon(Constantes.LABEL_APLICAR, Icones.SUCESSO);
 	private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
 	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
@@ -41,6 +40,7 @@ public abstract class BarraButton extends JToolBar
 	private Action baixarAcao = Action.actionIconBaixar();
 	private Action limparAcao = Action.actionIconLimpar();
 	protected transient ButtonDestacar buttonDestacar;
+	private static final long serialVersionUID = 1L;
 	protected transient ButtonAplicar buttonAplicar;
 	private Label labelNomeBackup = new Label();
 	protected Label label = new Label();
@@ -112,10 +112,10 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonColar extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
 		private Action numeroAcao = Action.actionMenu("label.numeros", null);
 		private Action letraAcao = Action.actionMenu("label.letras", null);
 		private Action todosAcao = Action.actionMenu("label.todos", null);
+		private static final long serialVersionUID = 1L;
 
 		protected ButtonColar() {
 			super("label.colar", Icones.COLAR);
@@ -148,9 +148,9 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonBackup extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
 		private Action criarAcao = Action.actionMenu("label.criar", null);
 		private Action abrirAcao = Action.actionMenu("label.abrir", null);
+		private static final long serialVersionUID = 1L;
 
 		protected ButtonBackup() {
 			super("label.backup", Icones.BACKUP);
@@ -249,9 +249,9 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonAplicar extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
 		protected Action aplicar2Acao = Action.actionMenu(Constantes.LABEL_APLICAR, null);
 		protected Action aplicarAcao = Action.actionMenu(Constantes.LABEL_APLICAR, null);
+		private static final long serialVersionUID = 1L;
 
 		protected ButtonAplicar() {
 			super(Constantes.LABEL_APLICAR, Icones.SUCESSO);
@@ -267,11 +267,11 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonDestacar extends ButtonPopup {
-		private static final long serialVersionUID = 1L;
 		protected Action destacarEmFormulario = Action.actionMenu("label.destacar_formulario", null);
 		protected Action retornarAoFichario = Action.actionMenu("label.retornar_ao_fichario", null);
 		protected Action clonarEmFormulario = Action.actionMenu("label.clonar_em_formulario", null);
 		protected Action abrirEmFormulario = Action.actionMenu("label.abrir_em_formulario", null);
+		private static final long serialVersionUID = 1L;
 
 		protected ButtonDestacar() {
 			super(Constantes.LABEL_DESTACAR, Icones.ARRASTAR);

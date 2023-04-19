@@ -61,10 +61,10 @@ public class SeparadorDialogo extends AbstratoDialogo {
 }
 
 class SeparadorContainer extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final CheckBox chkQuebraLinha = new CheckBox("label.quebrarLinha");
 	private final Button btnCopiar = new Button("label.copiar");
 	private final TextField txtSeparador = new TextField();
+	private static final long serialVersionUID = 1L;
 	private final List<String> listaString;
 	private final boolean comAspas;
 	private final int indiceColuna;

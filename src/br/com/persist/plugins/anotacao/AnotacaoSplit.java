@@ -248,8 +248,8 @@ class TextArea extends TextPane {
 }
 
 class Aba extends Transferivel {
-	private static final long serialVersionUID = 1L;
 	private final TextArea textArea = new TextArea();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	final transient Arquivo arquivo;
 
@@ -321,8 +321,8 @@ class Aba extends Transferivel {
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final TextField txtPesquisa = new TextField(35);
+		private static final long serialVersionUID = 1L;
 		private transient Selecao selecao;
 
 		public void ini() {

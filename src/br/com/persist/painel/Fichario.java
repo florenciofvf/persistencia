@@ -36,12 +36,12 @@ import br.com.persist.componente.Popup;
 import br.com.persist.marca.XMLUtil;
 
 public class Fichario extends JTabbedPane {
-	private static final Logger LOG = Logger.getGlobal();
 	private transient Setor nor = new Setor(Setor.NORTE, Setor.ALPHA_3);
 	private transient Setor les = new Setor(Setor.LESTE, Setor.ALPHA_3);
 	private transient Setor oes = new Setor(Setor.OESTE, Setor.ALPHA_3);
-	private transient FicharioListener ficharioListener;
 	private transient Setor sul = new Setor(Setor.SUL, Setor.ALPHA_3);
+	private static final Logger LOG = Logger.getGlobal();
+	private transient FicharioListener ficharioListener;
 	private transient Inclusao inc = new Inclusao();
 	private transient Deslocar des = new Deslocar();
 	private static final long serialVersionUID = 1L;
@@ -327,8 +327,8 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private class PopupFichario extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action fechar = Action.actionMenu("label.fechar", null);
+		private static final long serialVersionUID = 1L;
 
 		PopupFichario() {
 			addMenuItem(fechar);

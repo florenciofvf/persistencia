@@ -45,12 +45,12 @@ import br.com.persist.fichario.Pagina;
 import br.com.persist.marca.XML;
 
 public class Formulario extends JFrame implements SetFormulario {
-	private static final long serialVersionUID = 1L;
 	private final transient Map<String, FabricaContainer> fabricas = new HashMap<>();
 	private final transient List<Servico> servicos = new ArrayList<>();
 	private final MenuPrincipal menuPrincipal = new MenuPrincipal();
 	private static final Logger LOG = Logger.getGlobal();
 	private final Fichario fichario = new Fichario();
+	private static final long serialVersionUID = 1L;
 
 	public Formulario(GraphicsConfiguration gc) {
 		super(Mensagens.getTituloAplicacao(), gc);

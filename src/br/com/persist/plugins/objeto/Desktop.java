@@ -54,9 +54,9 @@ import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class Desktop extends AbstratoDesktop implements Pagina, FicharioHandler {
-	private static final long serialVersionUID = 1L;
 	private final DesktopPopup popup = new DesktopPopup();
 	private static final Logger LOG = Logger.getGlobal();
+	private static final long serialVersionUID = 1L;
 	private boolean ajusteAutomatico = true;
 	private boolean ajusteAutomaticoForm;
 	private final ScrollPane scrollPane;

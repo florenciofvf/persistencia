@@ -129,11 +129,11 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private static final long serialVersionUID = 1L;
 		private final JProgressBar progresso = new JProgressBar();
 		private final TextField txtMetadado = new TextField(35);
 		private final CheckBox chkPorParte = new CheckBox(true);
 		private ButtonInfo buttonInfo = new ButtonInfo();
+		private static final long serialVersionUID = 1L;
 		private transient MetadadoPesquisa pesquisa;
 
 		public void ini(Janela janela) {
@@ -201,7 +201,6 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 		}
 
 		private class ButtonInfo extends ButtonPopup {
-			private static final long serialVersionUID = 1L;
 			private Action pksMultiplaAcaoExport = actionMenu("label.pks_multiplas_export");
 			private Action queExportamAcao = actionMenu("label.tabelas_que_exportam");
 			private Action naoExportamAcao = actionMenu("label.tabelas_nao_exportam");
@@ -211,6 +210,7 @@ public class MetadadoContainer extends AbstratoContainer implements MetadadoTree
 			private Action ordemCamposAcao = actionMenu("label.ordenado_campos");
 			private Action pksMultiplaAcao = actionMenu("label.pks_multiplas");
 			private Action pksAusentesAcao = actionMenu("label.pks_ausente");
+			private static final long serialVersionUID = 1L;
 
 			private ButtonInfo() {
 				super("label.funcoes", Icones.INFO);

@@ -20,9 +20,9 @@ import br.com.persist.componente.Popup;
 import br.com.persist.componente.Tree;
 
 public class ArquivoTree extends Tree {
-	private static final long serialVersionUID = 1L;
 	private final transient List<ArquivoTreeListener> ouvintes;
 	private ArquivoPopup arvorePopup = new ArquivoPopup();
+	private static final long serialVersionUID = 1L;
 
 	public ArquivoTree(TreeModel newModel) {
 		super(newModel);
@@ -158,11 +158,11 @@ public class ArquivoTree extends Tree {
 	};
 
 	private class ArquivoPopup extends Popup {
-		private static final long serialVersionUID = 1L;
 		private Action fecharAcao = Action.actionMenu(Constantes.LABEL_FECHAR, Icones.FECHAR);
 		private Action selecionarAcao = Action.actionMenu("label.selecionar", Icones.CURSOR);
 		private Action atualizarAcao = Action.actionMenu("label.status", Icones.ATUALIZAR);
 		private Action excluirAcao = Action.actionMenu("label.excluir", Icones.EXCLUIR);
+		private static final long serialVersionUID = 1L;
 		private MenuAbrir menuAbrir = new MenuAbrir();
 
 		private ArquivoPopup() {
@@ -188,9 +188,9 @@ public class ArquivoTree extends Tree {
 		}
 
 		private class MenuAbrir extends MenuPadrao1 {
-			private static final long serialVersionUID = 1L;
 			private Action diretorioAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
 			private Action conteudoAcao = Action.actionMenu("label.conteudo", null);
+			private static final long serialVersionUID = 1L;
 
 			private MenuAbrir() {
 				super("label.abrir", Icones.ABRIR, false);

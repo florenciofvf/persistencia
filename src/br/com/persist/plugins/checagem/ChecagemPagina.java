@@ -42,10 +42,10 @@ import br.com.persist.componente.ToolbarPesquisa;
 import br.com.persist.marca.XMLException;
 
 public class ChecagemPagina extends Panel {
-	private static final long serialVersionUID = 1L;
 	private final PainelResultado painelResultado = new PainelResultado();
 	private final transient ChecagemCor checagemCor = new ChecagemCor();
 	public final JTextPane textArea = new JTextPane();
+	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private ScrollPane scrollPane;
 	private final File file;

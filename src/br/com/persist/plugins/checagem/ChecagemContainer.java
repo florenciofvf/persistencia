@@ -151,8 +151,8 @@ public class ChecagemContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton {
-		private static final long serialVersionUID = 1L;
 		private Action excluirAtivoAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
+		private static final long serialVersionUID = 1L;
 
 		public void ini(Janela janela) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, CLONAR_EM_FORMULARIO, ABRIR_EM_FORMULARO,
