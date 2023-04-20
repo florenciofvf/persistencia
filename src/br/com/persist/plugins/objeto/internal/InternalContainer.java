@@ -3470,7 +3470,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	@Override
 	public void adicionadoAoFichario(Fichario fichario) {
-		processar(fichario.getGraphics());
+		SwingUtilities.invokeLater(() -> processar(fichario.getGraphics()));
 	}
 
 	@Override
@@ -3490,7 +3490,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	@Override
 	public void tabActivatedHandler(Fichario fichario) {
-		Util.ajustar(tabelaPersistencia, getGraphics());
+		SwingUtilities.invokeLater(() -> Util.ajustar(tabelaPersistencia, getGraphics()));
 	}
 
 	@Override
@@ -3504,6 +3504,10 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	@Override
 	public void windowInternalActivatedHandler(JInternalFrame internal) {
+		SwingUtilities.invokeLater(InternalContainer.this::windowInternalActivated);
+	}
+
+	private void windowInternalActivated() {
 		InternalConfig config = internalConfig;
 		internalConfig = null;
 		if (config != null && ehTabela(config)) {
