@@ -465,7 +465,7 @@ public class Relacao implements Runnable {
 		return i < 10 ? "0" + i : "" + i;
 	}
 
-	private void processarHoraDiff(boolean horaAtual) {
+	public void processarHoraDiff(boolean horaAtual) {
 		int ori = 0;
 		int des = 0;
 		try {

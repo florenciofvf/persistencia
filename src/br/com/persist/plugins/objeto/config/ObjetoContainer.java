@@ -56,6 +56,7 @@ import br.com.persist.plugins.objeto.Objeto;
 import br.com.persist.plugins.objeto.ObjetoMensagens;
 import br.com.persist.plugins.objeto.ObjetoPreferencia;
 import br.com.persist.plugins.objeto.ObjetoSuperficie;
+import br.com.persist.plugins.objeto.Relacao;
 import br.com.persist.plugins.objeto.macro.MacroProvedor;
 import br.com.persist.plugins.objeto.vinculo.ParaTabela;
 import br.com.persist.plugins.objeto.vinculo.Vinculacao;
@@ -912,6 +913,13 @@ public class ObjetoContainer extends Panel {
 				horaAcao.setActionListener(e -> {
 					textField.setText(HoraUtil.getHoraAtual());
 					textField.postActionEvent();
+					List<Relacao> lista = objetoSuperficie.getRelacoes(objeto);
+					if (lista.size() == 1 && Util.confirmar(ObjetoContainer.this,
+							ObjetoMensagens.getString("msg.calcular_diferenca_em_horas"), false)) {
+						Relacao relacao = lista.get(0);
+						relacao.processarHoraDiff(false);
+						objetoSuperficie.repaint();
+					}
 				});
 			}
 		}
