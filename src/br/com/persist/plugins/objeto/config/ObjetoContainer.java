@@ -23,6 +23,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Box;
 import javax.swing.Icon;
@@ -725,18 +726,20 @@ public class ObjetoContainer extends Panel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			AtomicBoolean atom = new AtomicBoolean(false);
 			if (txtChaveamento == e.getSource()) {
 				objeto.setChaveamento(txtChaveamento.getText());
-				objetoSuperficie.sequenciaChaveamentoMapeamento(ObjetoContainer.this, objeto);
+				atom.set(true);
 			} else if (txtMapeamento == e.getSource()) {
 				objeto.setMapeamento(txtMapeamento.getText());
-				objetoSuperficie.sequenciaChaveamentoMapeamento(ObjetoContainer.this, objeto);
+				atom.set(true);
 			} else if (txtFinalConsulta == e.getSource()) {
 				objeto.setFinalConsulta(txtFinalConsulta.getText());
 			} else if (txtComplemento == e.getSource()) {
 				objeto.setComplemento(txtComplemento.getText());
 			} else if (txtClassBiblio == e.getSource()) {
 				objeto.setClassBiblio(txtClassBiblio.getText());
+				atom.set(true);
 			} else if (txtDestacaveis == e.getSource()) {
 				objeto.setDestacaveis(txtDestacaveis.getText());
 			} else if (txtOrderBy == e.getSource()) {
@@ -753,10 +756,13 @@ public class ObjetoContainer extends Panel {
 				objeto.setChaves(txtChaves.getText());
 			} else if (txtSequencias == e.getSource()) {
 				objeto.setSequencias(txtSequencias.getText());
-				objetoSuperficie.sequenciaChaveamentoMapeamento(ObjetoContainer.this, objeto);
+				atom.set(true);
 			}
 			actionPerformedCont(e);
 			objetoSuperficie.repaint();
+			if (atom.get()) {
+				objetoSuperficie.configuracaoDinamica(ObjetoContainer.this, objeto);
+			}
 		}
 
 		private void actionPerformedCont(ActionEvent e) {

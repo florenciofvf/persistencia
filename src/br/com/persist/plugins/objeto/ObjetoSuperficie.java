@@ -2919,12 +2919,12 @@ public class ObjetoSuperficie extends Desktop implements ObjetoListener, Relacao
 		}
 	}
 
-	public void sequenciaChaveamentoMapeamento(Component componente, Objeto objeto) {
+	public void configuracaoDinamica(Component componente, Objeto objeto) {
 		InternalFormulario interno = getInternalFormulario(objeto);
 		if (interno == null) {
 			Util.mensagem(componente, ObjetoMensagens.getString("msg.sem_form_seq_chave_mapa", objeto.getId()));
 		} else {
-			interno.sequenciaChaveamentoMapeamento(objeto);
+			interno.configuracaoDinamica(objeto);
 		}
 	}
 

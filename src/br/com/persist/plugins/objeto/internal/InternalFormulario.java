@@ -440,8 +440,8 @@ public class InternalFormulario extends AbstratoInternalFrame {
 		container.atualizarComplemento(objeto);
 	}
 
-	public void sequenciaChaveamentoMapeamento(Objeto objeto) {
-		container.sequenciaChaveamentoMapeamento(objeto);
+	public void configuracaoDinamica(Objeto objeto) {
+		container.configuracaoDinamica(objeto);
 	}
 
 	public void limpar2() {

@@ -173,8 +173,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		txtComplemento.addMouseListener(mouseComplementoListener);
 		comboConexao = ConexaoProvedor.criarComboConexao(padrao);
 		txtComplemento.setText(objeto.getComplemento());
-		sequenciaChaveamentoMapeamento(objeto);
 		comboConexao.addItemListener(this);
+		configuracaoDinamica(objeto);
 		toolbar.ini(janela, objeto);
 		this.buscaAuto = buscaAuto;
 		this.objeto = objeto;
@@ -3243,7 +3243,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 		}
 	}
 
-	public void sequenciaChaveamentoMapeamento(Objeto objeto) {
+	public void configuracaoDinamica(Objeto objeto) {
 		tabelaPersistencia.setChaveamento(ObjetoUtil.criarMapaCampoNomes(objeto.getChaveamento()));
 		tabelaPersistencia.setMapeamento(ObjetoUtil.criarMapaCampoChave(objeto.getMapeamento()));
 		objeto.setMapaSequencias(ObjetoUtil.criarMapaSequencias(objeto.getSequencias()));
