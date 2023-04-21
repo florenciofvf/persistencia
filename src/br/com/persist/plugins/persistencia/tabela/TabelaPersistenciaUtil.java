@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.persist.assistencia.Util;
+import br.com.persist.assistencia.Valor;
 import br.com.persist.plugins.persistencia.OrdenacaoModelo;
 
 public class TabelaPersistenciaUtil {
@@ -78,11 +79,11 @@ public class TabelaPersistenciaUtil {
 		return field.getType().getName() + " " + field.getName() + ";\n";
 	}
 
-	public static String descreverField(Field field, String atual) throws IllegalAccessException {
+	public static String descreverField(Field field, List<Valor> valores) throws IllegalAccessException {
 		if (field == null) {
 			return "";
 		}
-		return ehCampoEnum(field) ? declaracaoDoCampoEnum(field, atual) : declaracaoDoCampo(field);
+		return ehCampoEnum(field) ? declaracaoDoCampoEnum(field, valores) : declaracaoDoCampo(field);
 	}
 
 	private static boolean ehCampoEnum(Field field) {
@@ -91,14 +92,13 @@ public class TabelaPersistenciaUtil {
 		return superClasse != null && Enum.class.isAssignableFrom(superClasse);
 	}
 
-	private static String declaracaoDoCampoEnum(Field field, String atual) throws IllegalAccessException {
-		return declaracaoDoCampo(field) + "\n" + descreverInstanciaEnum(field, atual);
+	private static String declaracaoDoCampoEnum(Field field, List<Valor> valores) throws IllegalAccessException {
+		return declaracaoDoCampo(field) + "\n" + descreverInstanciaEnum(field, valores);
 	}
 
-	private static String descreverInstanciaEnum(Field campoEnum, String atual) throws IllegalAccessException {
+	private static String descreverInstanciaEnum(Field campoEnum, List<Valor> valores) throws IllegalAccessException {
 		Class<?> classeDoCampoEnum = campoEnum.getType();
 		Field[] fieldsEnum = classeDoCampoEnum.getFields();
-		boolean comparacaoOrdinal = ehNumero(atual);
 		StringBuilder builder = new StringBuilder();
 		for (Field fieldEnum : fieldsEnum) {
 			if (builder.length() > 0) {
@@ -106,29 +106,17 @@ public class TabelaPersistenciaUtil {
 			}
 			fieldEnum.setAccessible(true);
 			Object fieldInstancia = fieldEnum.get(campoEnum);
-			builder.append(descreverFieldInstancia(fieldEnum, fieldInstancia, atual, comparacaoOrdinal));
+			builder.append(descreverFieldInstancia(fieldEnum, fieldInstancia, valores));
 		}
 		return builder.toString();
 	}
 
-	private static boolean ehNumero(String atual) {
-		if (Util.estaVazio(atual)) {
-			return false;
-		}
-		for (char c : atual.toCharArray()) {
-			if (c < '0' || c > '9') {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private static String descreverFieldInstancia(Field fieldEnum, Object fieldInstancia, String atual,
-			boolean comparacaoOrdinal) throws IllegalAccessException {
+	private static String descreverFieldInstancia(Field fieldEnum, Object fieldInstancia, List<Valor> valores)
+			throws IllegalAccessException {
 		StringBuilder builder = new StringBuilder();
 		Class<?> classe = fieldInstancia.getClass();
 		Field[] fields = classe.getDeclaredFields();
-		if (igual(fieldInstancia, atual, comparacaoOrdinal)) {
+		if (contem(fieldInstancia, valores)) {
 			builder.append(">>> ");
 		}
 		if (contemValido(fields)) {
@@ -139,13 +127,22 @@ public class TabelaPersistenciaUtil {
 		return builder.toString();
 	}
 
-	private static boolean igual(Object instancia, String valor, boolean comparacaoOrdinal) {
+	private static boolean contem(Object instancia, List<Valor> valores) {
+		for (Valor valor : valores) {
+			if (igual(instancia, valor)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean igual(Object instancia, Valor valor) {
 		if (instancia instanceof Enum) {
 			Enum<?> enumeration = (Enum<?>) instancia;
-			if (comparacaoOrdinal) {
-				return Integer.toString(enumeration.ordinal()).equals(valor);
+			if (valor.isNumerico()) {
+				return Integer.toString(enumeration.ordinal()).equals(valor.getString());
 			} else {
-				return enumeration.name().equals(valor);
+				return enumeration.name().equals(valor.getString());
 			}
 		}
 		return false;

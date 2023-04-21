@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +29,7 @@ import javax.swing.table.TableModel;
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Icones;
 import br.com.persist.assistencia.Util;
+import br.com.persist.assistencia.Valor;
 import br.com.persist.componente.Action;
 import br.com.persist.componente.Menu;
 import br.com.persist.componente.MenuItem;
@@ -786,16 +788,21 @@ public class TabelaPersistencia extends JTable {
 						List<String> lista = TabelaPersistenciaUtil.getValoresLinha(TabelaPersistencia.this,
 								indiceColuna);
 						Set<String> set = new HashSet<>(lista);
-						String atual = set.size() == 1 ? set.iterator().next() : null;
-						if (atual != null) {
-							atual = atual.trim();
-						}
-						String string = TabelaPersistenciaUtil.descreverField(field, atual);
+						String string = TabelaPersistenciaUtil.descreverField(field, criarListaValores(set));
 						Util.mensagem(TabelaPersistencia.this, string);
 					} catch (IllegalAccessException ex) {
 						Util.mensagem(TabelaPersistencia.this, ex.getMessage());
 					}
 				});
+			}
+
+			private List<Valor> criarListaValores(Set<String> set) {
+				List<Valor> resp = new ArrayList<>();
+				Iterator<String> it = set.iterator();
+				while (it.hasNext()) {
+					resp.add(new Valor(it.next().trim()));
+				}
+				return resp;
 			}
 		}
 	}
