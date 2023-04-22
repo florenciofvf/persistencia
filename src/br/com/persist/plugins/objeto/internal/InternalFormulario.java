@@ -1,9 +1,11 @@
 package br.com.persist.plugins.objeto.internal;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyVetoException;
@@ -44,6 +46,7 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private final InternalContainer container;
 	private boolean processadoPesquisa;
+	private Dimension dimension;
 	private boolean processado;
 	private Desktop desktop;
 	private long ultimo;
@@ -393,10 +396,21 @@ public class InternalFormulario extends AbstratoInternalFrame {
 	public void selecionar(boolean b) {
 		try {
 			if (isEnabled() && isVisible()) {
+				dimension = b ? getSize() : null;
 				setSelected(b);
+				repaint();
 			}
 		} catch (PropertyVetoException e) {
 			LOG.log(Level.FINEST, "{0}", b);
+		}
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		if (dimension != null) {
+			g.setColor(Color.ORANGE);
+			g.fillRect(0, 0, dimension.width, dimension.height);
 		}
 	}
 
