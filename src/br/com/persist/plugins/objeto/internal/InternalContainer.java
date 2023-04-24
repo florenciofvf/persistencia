@@ -1745,6 +1745,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 		private class ButtonInfo extends ButtonPopup {
 			private Action scriptAdicaoHierAcao = actionMenu("label.meu_script_adicao_hierarq", Icones.HIERARQUIA);
+			private AdicionaHierarquicoAcao adicionaHierarquicoAcao = new AdicionaHierarquicoAcao();
 			private Action checagemAcao = actionMenu("label.checar_registro", Icones.SUCESSO);
 			private MenuAlinhamento menuAlinhamento = new MenuAlinhamento();
 			private static final long serialVersionUID = 1L;
@@ -1761,7 +1762,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				if (objeto.getPesquisaAdicaoHierarquico() != null) {
 					addMenuItem(scriptAdicaoHierAcao);
 				}
-				addMenuItem(new AdicionaHierarquicoAcao());
+				addMenuItem(adicionaHierarquicoAcao);
 				addMenuItem(true, new ChavesPrimariasAcao());
 				addMenuItem(true, new ChavesExportadasAcao());
 				addMenuItem(new ChavesImportadasAcao());
@@ -2326,6 +2327,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 				private AdicionaHierarquicoAcao() {
 					super(true, ObjetoMensagens.getString("label.adicionar_hierarquico2"), false, Icones.HIERARQUIA);
+					setEnabled(false);
 				}
 
 				@Override
@@ -3402,6 +3404,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	public void setVinculoListener(InternalListener.Vinculo vinculoListener) {
+		toolbar.buttonInfo.adicionaHierarquicoAcao.setEnabled(vinculoListener != null);
 		this.vinculoListener = vinculoListener;
 	}
 
