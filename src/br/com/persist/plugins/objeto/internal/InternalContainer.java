@@ -1922,6 +1922,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 					somenteDireitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.COMPLETAR_DIREITO));
 					esquerdoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.ESQUERDO));
 					direitoAcao.setActionListener(e -> alinhar(DesktopAlinhamento.DIREITO));
+					setToolTipText(ObjetoMensagens.getString("hint.alinhamento_internal"));
 					mesmaLarguraAcao.setActionListener(e -> mesma());
 					habilitar(false);
 				}
