@@ -8,6 +8,7 @@ import br.com.persist.formulario.Formulario;
 public class ObjetoPreferencia {
 	private static boolean habilitadoEsquemaTabelaAlter;
 	private static boolean habilitadoInnerJoinsObjeto;
+	private static boolean pesquisaFormInternalLazy;
 	private static int tipoContainerPesquisaAuto;
 	private static boolean abrirAutoDestacado;
 	private static Color corAntesTotalRecente;
@@ -27,6 +28,7 @@ public class ObjetoPreferencia {
 		corAntesTotalRecente = new Color(pref.getInt("cor_antes_total_recente", Color.BLACK.getRGB()));
 		habilitadoEsquemaTabelaAlter = pref.getBoolean("habilitado_esquema_tabela_alter", false);
 		habilitadoInnerJoinsObjeto = pref.getBoolean("habilitado_inner_joins_objeto", false);
+		pesquisaFormInternalLazy = pref.getBoolean("pesquisa_form_internal_lazy", false);
 		corTotalAtual = new Color(pref.getInt("cor_total_atual", Color.ORANGE.getRGB()));
 		corComparaRec = new Color(pref.getInt("cor_compara_rec", Color.CYAN.getRGB()));
 		intervaloPesquisaAuto = pref.getInt("intervalo_pesquisa_auto", 5000);
@@ -39,6 +41,7 @@ public class ObjetoPreferencia {
 		Preferences pref = Preferences.userNodeForPackage(Formulario.class);
 		pref.putBoolean("habilitado_esquema_tabela_alter", habilitadoEsquemaTabelaAlter);
 		pref.putBoolean("habilitado_inner_joins_objeto", habilitadoInnerJoinsObjeto);
+		pref.putBoolean("pesquisa_form_internal_lazy", pesquisaFormInternalLazy);
 		pref.putInt("tipo_container_pesquisa_auto", tipoContainerPesquisaAuto);
 		pref.putInt("cor_antes_total_recente", corAntesTotalRecente.getRGB());
 		pref.putInt("intervalo_pesquisa_auto", intervaloPesquisaAuto);
@@ -127,5 +130,13 @@ public class ObjetoPreferencia {
 
 	public static void setIntervaloComparacao(int intervaloComparacao) {
 		ObjetoPreferencia.intervaloComparacao = intervaloComparacao;
+	}
+
+	public static boolean isPesquisaFormInternalLazy() {
+		return pesquisaFormInternalLazy;
+	}
+
+	public static void setPesquisaFormInternalLazy(boolean pesquisaFormInternalLazy) {
+		ObjetoPreferencia.pesquisaFormInternalLazy = pesquisaFormInternalLazy;
 	}
 }

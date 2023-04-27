@@ -3508,7 +3508,11 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 
 	@Override
 	public void windowInternalActivatedHandler(JInternalFrame internal) {
-		SwingUtilities.invokeLater(InternalContainer.this::windowInternalActivated);
+		if (ObjetoPreferencia.isPesquisaFormInternalLazy()) {
+			SwingUtilities.invokeLater(InternalContainer.this::windowInternalActivated);
+		} else {
+			windowInternalActivated();
+		}
 	}
 
 	private void windowInternalActivated() {

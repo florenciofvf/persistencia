@@ -30,6 +30,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 			ObjetoMensagens.getString("label.habilitadoEsquemaTabelaAlter"), false);
 	private final CheckBox chkHabitInnerJoinsObj = new CheckBox(
 			ObjetoMensagens.getString("label.habilitadoInnerJoinsObjeto"), false);
+	private final CheckBox chkPesquisaFormInternalLazy = new CheckBox(
+			ObjetoMensagens.getString("label.pesquisaFormInternalLazy"), false);
 	private final CheckBox chkAtivarAbrirAutoDestac = new CheckBox(
 			ObjetoMensagens.getString("label.abrir_auto_destacado"), false);
 	private final CheckBox chkAtivarAbrirAuto = new CheckBox(ObjetoMensagens.getString("label.ativar_abrir_auto"),
@@ -76,6 +78,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		PanelCenter panelIntervalos = criarPainelGrupo(intervalos, ObjetoPreferencia.getIntervaloPesquisaAuto());
 
 		chkHabitEsquemaTabelaAlter.setSelected(ObjetoPreferencia.isHabilitadoEsquemaTabelaAlter());
+		chkPesquisaFormInternalLazy.setSelected(ObjetoPreferencia.isPesquisaFormInternalLazy());
 		chkHabitInnerJoinsObj.setSelected(ObjetoPreferencia.isHabilitadoInnerJoinsObjeto());
 		chkAtivarAbrirAutoDestac.setSelected(ObjetoPreferencia.isAbrirAutoDestacado());
 		chkAtivarAbrirAuto.setSelected(ObjetoPreferencia.isAbrirAuto());
@@ -87,7 +90,7 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervalo, panelIntervalos));
 		muro.camada(Muro.panelGridBorderBottom(tituloIntervaloCompara, panelIntervalosCompara,
 				criarLabelTitulo("label.titulo_cor_total_recente"), new PainelCorTotalRecente(),
-				chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj));
+				chkPesquisaFormInternalLazy, chkHabitEsquemaTabelaAlter, chkHabitInnerJoinsObj));
 		muro.camada(Muro.panelGrid(chkAtivarAbrirAuto, chkAtivarAbrirAutoDestac, tituloDestacado, panelDestacados));
 		Insets insets = new Insets(5, 10, 5, 5);
 		chkAtivarAbrirAutoDestac.setMargin(insets);
@@ -122,6 +125,8 @@ public class ObjetoConfiguracao extends AbstratoConfiguracao {
 	private void configurar() {
 		chkHabitEsquemaTabelaAlter.addActionListener(
 				e -> ObjetoPreferencia.setHabilitadoEsquemaTabelaAlter(chkHabitEsquemaTabelaAlter.isSelected()));
+		chkPesquisaFormInternalLazy.addActionListener(
+				e -> ObjetoPreferencia.setPesquisaFormInternalLazy(chkPesquisaFormInternalLazy.isSelected()));
 		chkHabitInnerJoinsObj.addActionListener(
 				e -> ObjetoPreferencia.setHabilitadoInnerJoinsObjeto(chkHabitInnerJoinsObj.isSelected()));
 		chkAtivarAbrirAutoDestac.addActionListener(e -> {
