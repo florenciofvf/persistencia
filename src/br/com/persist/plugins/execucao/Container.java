@@ -12,6 +12,7 @@ import org.xml.sax.Attributes;
 
 import br.com.persist.assistencia.Constantes;
 import br.com.persist.assistencia.Util;
+import br.com.persist.plugins.variaveis.Variavel;
 import br.com.persist.plugins.variaveis.VariavelProvedor;
 
 public class Container {
@@ -71,19 +72,19 @@ public class Container {
 		return string;
 	}
 
-	public void processar(StringBuilder sb, boolean confirmar, Component comp) {
+	public void processar(StringBuilder sb, boolean confirmar, Component comp, List<Variavel> variaveis) {
 		if (filhos.isEmpty()) {
-			executar(sb, confirmar, comp);
+			executar(sb, confirmar, comp, variaveis);
 		} else {
 			for (Container c : filhos) {
-				c.processar(sb, confirmar, comp);
+				c.processar(sb, confirmar, comp, variaveis);
 			}
 		}
 	}
 
-	private void executar(StringBuilder sb, boolean confirmar, Component comp) {
+	private void executar(StringBuilder sb, boolean confirmar, Component comp, List<Variavel> variaveis) {
 		try {
-			String comando = gerarComando();
+			String comando = gerarComando(variaveis);
 			if (sb != null) {
 				if (sb.length() > 0) {
 					sb.append(Constantes.QL);
@@ -105,12 +106,17 @@ public class Container {
 		}
 	}
 
-	private String gerarComando() {
+	private String gerarComando(List<Variavel> variaveis) {
 		StringBuilder sb = new StringBuilder(string);
 		Container container = pai;
 		while (container != null) {
 			sb.insert(0, container.string);
 			container = container.pai;
+		}
+		if (variaveis != null) {
+			for (Variavel var : variaveis) {
+				sb.append(" " + var.getValor());
+			}
 		}
 		return VariavelProvedor.substituir(sb.toString());
 	}

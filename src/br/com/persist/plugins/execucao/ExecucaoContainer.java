@@ -35,7 +35,7 @@ public class ExecucaoContainer extends AbstratoContainer {
 
 	public ExecucaoContainer(Janela janela, Formulario formulario, String conteudo) {
 		super(formulario);
-		split = new ExecucaoSplit();
+		split = new ExecucaoSplit(formulario);
 		split.inicializar();
 		toolbar.ini(janela);
 		montarLayout();

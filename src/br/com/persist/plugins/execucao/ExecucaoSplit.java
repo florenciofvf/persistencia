@@ -32,6 +32,7 @@ import br.com.persist.assistencia.Util;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.SplitPane;
 import br.com.persist.componente.TextPane;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLException;
 import br.com.persist.marca.XMLHandler;
@@ -43,12 +44,14 @@ import br.com.persist.painel.Transferivel;
 class ExecucaoSplit extends SplitPane {
 	private static final Logger LOG = Logger.getGlobal();
 	private static final long serialVersionUID = 1L;
+	private final Formulario formulario;
 	private final File fileRoot;
 	private ArquivoTree tree;
 	private PanelRoot panel;
 
-	ExecucaoSplit() {
+	ExecucaoSplit(Formulario formulario) {
 		super(HORIZONTAL_SPLIT);
+		this.formulario = formulario;
 		fileRoot = new File(ExecucaoConstantes.EXECUCOES);
 	}
 
@@ -78,40 +81,40 @@ class ExecucaoSplit extends SplitPane {
 		File file = new File(fileRoot, "hierarquia.xml");
 		try {
 			if (file.exists() && file.canRead()) {
-				XML.processar(file, new ExecucaoHandler(panel, tree.getModelo()));
+				XML.processar(file, new ExecucaoHandler(panel, tree.getModelo(), formulario));
 			}
 		} catch (Exception e) {
 			LOG.log(Level.SEVERE, Constantes.ERRO, e);
 		}
 	}
 
-	void abrir(Arquivo arquivo) {
+	void abrir(Arquivo arquivo, Formulario formulario) {
 		if (arquivo == null) {
 			return;
 		}
 		Fichario fichario = panel.getFicharioSelecionado();
 		if (fichario != null) {
-			novaAba(fichario, arquivo);
+			novaAba(fichario, arquivo, formulario);
 		} else {
 			fichario = panel.getFicharioPrimeiro();
 			if (fichario != null) {
-				novaAba(fichario, arquivo);
+				novaAba(fichario, arquivo, formulario);
 			} else {
-				fichario = novoFichario(arquivo);
+				fichario = novoFichario(arquivo, formulario);
 				panel.setRoot(fichario);
 			}
 		}
 		SwingUtilities.updateComponentTreeUI(panel);
 	}
 
-	private Fichario novoFichario(Arquivo arquivo) {
+	private Fichario novoFichario(Arquivo arquivo, Formulario formulario) {
 		Fichario fichario = new Fichario();
-		novaAba(fichario, arquivo);
+		novaAba(fichario, arquivo, formulario);
 		return fichario;
 	}
 
-	public static void novaAba(Fichario fichario, Arquivo arquivo) {
-		fichario.addTab(arquivo.getName(), new Aba(arquivo));
+	public static void novaAba(Fichario fichario, Arquivo arquivo, Formulario formulario) {
+		fichario.addTab(arquivo.getName(), new Aba(arquivo, formulario));
 		int indice = fichario.getTabCount() - 1;
 		fichario.setToolTipTextAt(indice, arquivo.getFile().getAbsolutePath());
 		fichario.setSelectedIndex(indice);
@@ -169,7 +172,7 @@ class ExecucaoSplit extends SplitPane {
 
 		@Override
 		public void abrirArquivo(ArquivoTree arquivoTree) {
-			abrir(arquivoTree.getObjetoSelecionado());
+			abrir(arquivoTree.getObjetoSelecionado(), formulario);
 		}
 
 		@Override
@@ -238,10 +241,10 @@ class Aba extends Transferivel {
 	private final AbaView abaView;
 	private final AbaText abaText;
 
-	Aba(Arquivo arquivo) {
+	Aba(Arquivo arquivo, Formulario formulario) {
+		abaView = new AbaView(arquivo.getFile(), formulario);
 		tabbedPane.addChangeListener(changeListenerInner);
 		this.arquivo = Objects.requireNonNull(arquivo);
-		abaView = new AbaView(arquivo.getFile());
 		abaText = new AbaText(arquivo);
 		abaText.abrir();
 		montarLayout();
@@ -411,12 +414,14 @@ class PanelRoot extends Panel {
 }
 
 class ExecucaoHandler extends XMLHandler {
+	private final Formulario formulario;
 	private final ArquivoModelo modelo;
 	private final PanelRoot root;
 	Separador separador;
 	Fichario fichario;
 
-	ExecucaoHandler(PanelRoot root, ArquivoModelo modelo) {
+	ExecucaoHandler(PanelRoot root, ArquivoModelo modelo, Formulario formulario) {
+		this.formulario = formulario;
 		this.modelo = modelo;
 		this.root = root;
 	}
@@ -440,7 +445,7 @@ class ExecucaoHandler extends XMLHandler {
 			File file = new File(fileRoot, nome);
 			Arquivo arquivo = modelo.getArquivo(file);
 			if (arquivo != null) {
-				ExecucaoSplit.novaAba(fichario, arquivo);
+				ExecucaoSplit.novaAba(fichario, arquivo, formulario);
 			} else {
 				ExecucaoSplit.novaAba(fichario, file);
 			}

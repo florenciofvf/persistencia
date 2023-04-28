@@ -4,6 +4,7 @@ import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Frame;
 import java.io.File;
 
 import javax.swing.Icon;
@@ -21,17 +22,22 @@ import br.com.persist.componente.Nil;
 import br.com.persist.componente.Panel;
 import br.com.persist.componente.ScrollPane;
 import br.com.persist.componente.ToolbarPesquisa;
+import br.com.persist.formulario.Formulario;
 import br.com.persist.marca.XML;
 import br.com.persist.marca.XMLHandler;
+import br.com.persist.plugins.variaveis.VariavelColetor;
+import br.com.persist.plugins.variaveis.VariavelDialogo;
 
 public class AbaView extends Panel implements ContainerTreeListener {
 	private ContainerTree tree = new ContainerTree();
 	private static final long serialVersionUID = 1L;
 	private final Toolbar toolbar = new Toolbar();
 	private PanelLog log = new PanelLog();
+	private final Formulario formulario;
 	private final File file;
 
-	public AbaView(File file) {
+	public AbaView(File file, Formulario formulario) {
+		this.formulario = formulario;
 		this.file = file;
 		montarLayout();
 		tree.adicionarOuvinte(this);
@@ -59,6 +65,11 @@ public class AbaView extends Panel implements ContainerTreeListener {
 	@Override
 	public void executar(ContainerTree tree, boolean confirmar) {
 		log.processar(tree.getObjetoSelecionado(), confirmar, tree);
+	}
+
+	@Override
+	public void executarVar(ContainerTree tree) {
+		log.processarVar(tree.getObjetoSelecionado(), tree, formulario);
 	}
 
 	private class Toolbar extends BarraButton {
@@ -125,7 +136,21 @@ class PanelLog extends Panel {
 			return;
 		}
 		StringBuilder sb = new StringBuilder();
-		container.processar(sb, confirmar, comp);
+		container.processar(sb, confirmar, comp, null);
+		textArea.setText(sb.toString());
+	}
+
+	void processarVar(Container container, Component comp, Formulario formulario) {
+		if (container == null) {
+			return;
+		}
+		VariavelColetor coletor = new VariavelColetor();
+		Frame frame = Util.getViewParentFrame(comp);
+		VariavelDialogo dialogo = VariavelDialogo.criar(frame, formulario, coletor);
+		Util.configSizeLocation(formulario, dialogo, comp);
+		dialogo.setVisible(true);
+		StringBuilder sb = new StringBuilder();
+		container.processar(sb, false, comp, coletor.getLista());
 		textArea.setText(sb.toString());
 	}
 }
