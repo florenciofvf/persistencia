@@ -612,7 +612,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 				});
 				variaveisAcao.setActionListener(e -> {
 					Frame frame = Util.getViewParentFrame(InternalContainer.this);
-					VariavelDialogo form = VariavelDialogo.criar(frame, getFormulario());
+					VariavelDialogo form = VariavelDialogo.criar(frame, getFormulario(), null);
 					config(frame, form);
 					form.setVisible(true);
 				});

@@ -14,16 +14,16 @@ public class VariavelDialogo extends AbstratoDialogo {
 	private static final long serialVersionUID = 1L;
 	private final VariavelContainer container;
 
-	private VariavelDialogo(Frame frame, Formulario formulario) {
+	private VariavelDialogo(Frame frame, Formulario formulario, VariavelColetor coletor) {
 		super(frame, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
-		container = new VariavelContainer(this, formulario);
+		container = new VariavelContainer(this, formulario, coletor);
 		container.setVariavelDialogo(this);
 		montarLayout();
 	}
 
-	private VariavelDialogo(Dialog dialog, Formulario formulario) {
+	private VariavelDialogo(Dialog dialog, Formulario formulario, VariavelColetor coletor) {
 		super(dialog, Mensagens.getString(Constantes.LABEL_VARIAVEIS));
-		container = new VariavelContainer(this, formulario);
+		container = new VariavelContainer(this, formulario, coletor);
 		container.setVariavelDialogo(this);
 		montarLayout();
 	}
@@ -32,8 +32,8 @@ public class VariavelDialogo extends AbstratoDialogo {
 		add(BorderLayout.CENTER, container);
 	}
 
-	public static void criar(Formulario formulario) {
-		VariavelDialogo form = new VariavelDialogo(formulario, formulario);
+	public static void criar(Formulario formulario, VariavelColetor coletor) {
+		VariavelDialogo form = new VariavelDialogo(formulario, formulario, coletor);
 		Util.configSizeLocation(formulario, form, null);
 		form.setVisible(true);
 	}
@@ -45,12 +45,12 @@ public class VariavelDialogo extends AbstratoDialogo {
 		fechar();
 	}
 
-	public static VariavelDialogo criar(Dialog dialog, Formulario formulario) {
-		return new VariavelDialogo(dialog, formulario);
+	public static VariavelDialogo criar(Dialog dialog, Formulario formulario, VariavelColetor coletor) {
+		return new VariavelDialogo(dialog, formulario, coletor);
 	}
 
-	public static VariavelDialogo criar(Frame frame, Formulario formulario) {
-		return new VariavelDialogo(frame, formulario);
+	public static VariavelDialogo criar(Frame frame, Formulario formulario, VariavelColetor coletor) {
+		return new VariavelDialogo(frame, formulario, coletor);
 	}
 
 	@Override

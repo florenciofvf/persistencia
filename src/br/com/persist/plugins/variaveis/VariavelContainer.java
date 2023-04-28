@@ -1,6 +1,7 @@
 package br.com.persist.plugins.variaveis;
 
 import static br.com.persist.componente.BarraButtonEnum.ABRIR_EM_FORMULARO;
+import static br.com.persist.componente.BarraButtonEnum.APLICAR_BOTAO;
 import static br.com.persist.componente.BarraButtonEnum.BAIXAR;
 import static br.com.persist.componente.BarraButtonEnum.COPIAR;
 import static br.com.persist.componente.BarraButtonEnum.DESTACAR_EM_FORMULARIO;
@@ -13,6 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,9 +45,9 @@ public class VariavelContainer extends AbstratoContainer {
 	private final Toolbar toolbar = new Toolbar();
 	private VariavelDialogo variavelDialogo;
 
-	public VariavelContainer(Janela janela, Formulario formulario) {
+	public VariavelContainer(Janela janela, Formulario formulario, VariavelColetor coletor) {
 		super(formulario);
-		toolbar.ini(janela);
+		toolbar.ini(janela, coletor);
 		montarLayout();
 		configurar();
 	}
@@ -90,10 +93,18 @@ public class VariavelContainer extends AbstratoContainer {
 
 	private class Toolbar extends BarraButton {
 		private static final long serialVersionUID = 1L;
+		private transient VariavelColetor coletor;
 
-		public void ini(Janela janela) {
+		public void ini(Janela janela, VariavelColetor coletor) {
 			super.ini(janela, DESTACAR_EM_FORMULARIO, RETORNAR_AO_FICHARIO, ABRIR_EM_FORMULARO, NOVO, BAIXAR, SALVAR,
-					EXCLUIR, COPIAR);
+					EXCLUIR, COPIAR, APLICAR_BOTAO);
+			buttonAplicar.setEnableAplicar2Acao(false);
+			setColetor(coletor);
+		}
+
+		private void setColetor(VariavelColetor coletor) {
+			buttonAplicar.setEnabled(coletor != null);
+			this.coletor = coletor;
 		}
 
 		@Override
@@ -205,6 +216,29 @@ public class VariavelContainer extends AbstratoContainer {
 				VariavelProvedor.excluir(linhas);
 				variavelModelo.fireTableDataChanged();
 			}
+		}
+
+		@Override
+		protected void aplicar() {
+			int[] linhas = tabela.getSelectedRows();
+			if (linhas != null && linhas.length > 0) {
+				aplicarLista(linhas);
+			} else {
+				mensagem();
+			}
+		}
+
+		private void aplicarLista(int[] linhas) {
+			List<Variavel> lista = new ArrayList<>();
+			for (int i : linhas) {
+				lista.add(VariavelProvedor.getVariavel(i));
+			}
+			coletor.setLista(lista);
+			janela.fechar();
+		}
+
+		private void mensagem() {
+			Util.mensagem(VariavelContainer.this, Mensagens.getString("msg.nenhum_registro_selecionado"));
 		}
 	}
 

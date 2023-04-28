@@ -33,7 +33,7 @@ public class VariavelFabrica extends AbstratoFabricaContainer {
 	private class VariavelPaginaServico implements PaginaServico {
 		@Override
 		public Pagina criarPagina(Formulario formulario, String stringPersistencia) {
-			return new VariavelContainer(null, formulario);
+			return new VariavelContainer(null, formulario, null);
 		}
 	}
 
@@ -61,9 +61,10 @@ public class VariavelFabrica extends AbstratoFabricaContainer {
 
 		private MenuVariavel(Formulario formulario) {
 			super(Constantes.LABEL_VARIAVEIS, Icones.VAR);
-			ficharioAcao.setActionListener(e -> formulario.adicionarPagina(new VariavelContainer(null, formulario)));
+			ficharioAcao
+					.setActionListener(e -> formulario.adicionarPagina(new VariavelContainer(null, formulario, null)));
 			formularioAcao.setActionListener(e -> VariavelFormulario.criar(formulario));
-			dialogoAcao.setActionListener(e -> VariavelDialogo.criar(formulario));
+			dialogoAcao.setActionListener(e -> VariavelDialogo.criar(formulario, null));
 		}
 	}
 }

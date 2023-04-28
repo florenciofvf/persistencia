@@ -14,7 +14,7 @@ public class VariavelFormulario extends AbstratoFormulario {
 
 	private VariavelFormulario(Formulario formulario) {
 		super(Mensagens.getString(Constantes.LABEL_VARIAVEIS));
-		container = new VariavelContainer(this, formulario);
+		container = new VariavelContainer(this, formulario, null);
 		container.setVariavelFormulario(this);
 		montarLayout();
 	}

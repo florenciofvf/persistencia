@@ -264,6 +264,10 @@ public abstract class BarraButton extends JToolBar
 		public void setTextAplicar2(String text) {
 			aplicar2Acao.text(text);
 		}
+
+		public void setEnableAplicar2Acao(boolean b) {
+			aplicar2Acao.setEnabled(b);
+		}
 	}
 
 	protected class ButtonDestacar extends ButtonPopup {
