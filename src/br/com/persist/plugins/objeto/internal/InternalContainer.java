@@ -623,8 +623,8 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 			private Action limpar2Acao = actionMenu(Constantes.LABEL_LIMPAR2, Icones.NOVO);
 			private Action limparOutrosAcao = acaoMenu("label.limpar_outros", Icones.NOVO);
 			private Action limparAcao = actionMenu(Constantes.LABEL_LIMPAR, Icones.NOVO);
-			private Action conexaoAcao = actionMenu(Constantes.LABEL_CONEXAO2, null);
-			private Action objetoAcao = actionMenu(Constantes.LABEL_OBJETO, null);
+			private Action conexaoAcao = actionMenu(Constantes.LABEL_CONEXAO2);
+			private Action objetoAcao = actionMenu(Constantes.LABEL_OBJETO);
 			private static final long serialVersionUID = 1L;
 
 			private ButtonBaixar() {

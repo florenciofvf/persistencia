@@ -450,7 +450,7 @@ public class ObjetoContainer extends AbstratoContainer implements SetFormulario 
 			private Action pontoDestinoAcao = acaoMenu("label.ponto_destino", Icones.RECT);
 			private Action desenharIdAcao = actionMenu("label.desenhar_id", Icones.LABEL);
 			private Action pontoOrigemAcao = acaoMenu("label.ponto_origem", Icones.RECT);
-			private Action reiniciarAction = acaoMenu("label.reiniciar_horas", null);
+			private Action reiniciarAction = acaoMenu("label.reiniciar_horas");
 			private static final long serialVersionUID = 1L;
 
 			private ButtonStatus() {

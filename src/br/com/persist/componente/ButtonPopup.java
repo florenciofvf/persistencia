@@ -90,4 +90,8 @@ public abstract class ButtonPopup extends Button {
 	protected Action actionMenu(String chaveRotulo, Icon icone) {
 		return Action.actionMenu(chaveRotulo, icone);
 	}
+
+	protected Action actionMenu(String chaveRotulo) {
+		return actionMenu(chaveRotulo, null);
+	}
 }

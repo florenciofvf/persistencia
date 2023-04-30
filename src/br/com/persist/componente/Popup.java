@@ -42,4 +42,8 @@ public class Popup extends JPopupMenu {
 	protected Action actionMenu(String chaveRotulo, Icon icone) {
 		return Action.actionMenu(chaveRotulo, icone);
 	}
+
+	protected Action actionMenu(String chaveRotulo) {
+		return actionMenu(chaveRotulo, null);
+	}
 }
