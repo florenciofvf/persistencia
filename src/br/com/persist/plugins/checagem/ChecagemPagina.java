@@ -86,11 +86,11 @@ public class ChecagemPagina extends Panel {
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
-	static Action actionMenu(String chave) {
+	static Action acaoMenu(String chave) {
 		return Action.acaoMenu(ChecagemMensagens.getString(chave), null);
 	}
 
-	static Action actionIcon(String chave, Icon icon) {
+	static Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(ChecagemMensagens.getString(chave), icon);
 	}
 
@@ -111,11 +111,11 @@ public class ChecagemPagina extends Panel {
 
 	private class Toolbar extends BarraButton implements ActionListener {
 		private static final long serialVersionUID = 1L;
-		private Action sincronizarAcao = actionIcon("label.atualizar_cache2", Icones.SINCRONIZAR);
-		private Action checarAcao = actionIcon("label.checar_sentenca", Icones.SUCESSO);
-		private Action criarAcao = actionIcon("label.nova_sentenca", Icones.CRIAR2);
-		private Action formatarAcao = actionIcon("label.formatar", Icones.ELEMENTO);
-		private Action executarAcao = actionIcon("label.executar", Icones.EXECUTAR);
+		private Action sincronizarAcao = acaoIcon("label.atualizar_cache2", Icones.SINCRONIZAR);
+		private Action checarAcao = acaoIcon("label.checar_sentenca", Icones.SUCESSO);
+		private Action criarAcao = acaoIcon("label.nova_sentenca", Icones.CRIAR2);
+		private Action formatarAcao = acaoIcon("label.formatar", Icones.ELEMENTO);
+		private Action executarAcao = acaoIcon("label.executar", Icones.EXECUTAR);
 		private final TextField txtPesquisa = new TextField(35);
 		private transient Selecao selecao;
 

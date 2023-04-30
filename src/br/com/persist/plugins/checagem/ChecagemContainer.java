@@ -142,12 +142,12 @@ public class ChecagemContainer extends AbstratoContainer {
 		return Action.acaoMenu(ChecagemMensagens.getString(chave), null);
 	}
 
-	static Action actionIcon(String chave, Icon icon) {
+	static Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(ChecagemMensagens.getString(chave), icon);
 	}
 
-	static Action actionIcon(String chave) {
-		return actionIcon(chave, null);
+	static Action acaoIcon(String chave) {
+		return acaoIcon(chave, null);
 	}
 
 	private class Toolbar extends BarraButton {

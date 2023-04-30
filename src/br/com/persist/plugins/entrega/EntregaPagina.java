@@ -82,11 +82,11 @@ public class EntregaPagina extends Panel {
 		SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(value));
 	}
 
-	static Action actionMenu(String chave) {
+	static Action acaoMenu(String chave) {
 		return Action.acaoMenu(EntregaMensagens.getString(chave), null);
 	}
 
-	static Action actionIcon(String chave, Icon icon) {
+	static Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(EntregaMensagens.getString(chave), icon);
 	}
 

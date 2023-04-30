@@ -116,16 +116,16 @@ public class ConexaoContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	static Action actionIcon(String chave, Icon icon) {
+	static Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(ConexaoMensagens.getString(chave), icon);
 	}
 
-	static Action actionIcon(String chave) {
-		return actionIcon(chave, null);
+	static Action acaoIcon(String chave) {
+		return acaoIcon(chave, null);
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action desconectaAcao = actionIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
+		private Action desconectaAcao = acaoIcon("label.final_conexoes", Icones.BANCO_DESCONECTA);
 		private Action conectaAcao = Action.actionIcon("label.conectar", Icones.CONECTA);
 		private Action descerAcao = Action.actionIcon("label.descer", Icones.BAIXAR2);
 		private Action subirAcao = Action.actionIcon("label.subir", Icones.TOP);
