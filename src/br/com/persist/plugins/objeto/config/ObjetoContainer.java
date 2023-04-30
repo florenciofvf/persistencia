@@ -123,7 +123,7 @@ public class ObjetoContainer extends Panel {
 	};
 
 	private class VinculadoPopup extends Popup {
-		private Action action = actionMenu(labelVinculo);
+		private Action action = acaoMenu(labelVinculo);
 		private static final long serialVersionUID = 1L;
 		private transient CompChave compChave;
 
@@ -992,7 +992,7 @@ public class ObjetoContainer extends Panel {
 		}
 
 		private class Toolbar extends BarraButton {
-			private Action actionFonteVinculo = actionIcon(labelVinculo, Icones.SUCESSO);
+			private Action actionFonteVinculo = acaoIcon(labelVinculo, Icones.SUCESSO);
 			private static final long serialVersionUID = 1L;
 
 			private Toolbar() {
@@ -1093,7 +1093,7 @@ public class ObjetoContainer extends Panel {
 	}
 
 	private class IconeListener extends MouseAdapter {
-		private Action action = actionMenu(labelVinculo);
+		private Action action = acaoMenu(labelVinculo);
 		private Popup popup = new Popup();
 		private final Objeto objeto;
 		private final Label label;
@@ -1155,20 +1155,20 @@ public class ObjetoContainer extends Panel {
 		}
 	}
 
-	Action actionMenu(String chave, Icon icon) {
+	Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(ObjetoMensagens.getString(chave), icon);
 	}
 
-	Action actionMenu(String chave) {
-		return actionMenu(chave, null);
+	Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
 	}
 
-	Action actionIcon(String chave, Icon icon) {
+	Action acaoIcon(String chave, Icon icon) {
 		return Action.acaoIcon(ObjetoMensagens.getString(chave), icon);
 	}
 
-	Action actionIcon(String chave) {
-		return actionIcon(chave, null);
+	Action acaoIcon(String chave) {
+		return acaoIcon(chave, null);
 	}
 
 	private class Fichario extends TabbedPane {

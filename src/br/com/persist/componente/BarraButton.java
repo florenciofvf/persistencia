@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
 
+import javax.swing.Icon;
 import javax.swing.JInternalFrame;
 import javax.swing.JToolBar;
 
@@ -20,17 +21,17 @@ import static br.com.persist.componente.BarraButtonEnum.*;
 
 public abstract class BarraButton extends JToolBar
 		implements WindowHandler, DialogHandler, FicharioHandler, WindowInternalHandler {
-	protected Action aplicarAcao = Action.actionIcon(Constantes.LABEL_APLICAR, Icones.SUCESSO);
-	private Action salvarComoAcao = Action.actionIcon("label.salvar_como", Icones.SALVARC);
-	private Action fecharAcao = Action.actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
-	private Action excluirAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-	private Action limpar2Acao = Action.actionIcon("label.limpar2", Icones.PANEL4);
-	private Action copiar2Acao = Action.actionIcon("label.copiar2", Icones.COPIA);
-	private Action baixar2Acao = Action.actionIcon("label.baixar2", Icones.COLAR);
-	protected Action copiarAcao = Action.actionIcon("label.copiar", Icones.COPIA);
-	protected Action colar0Acao = Action.actionIcon("label.colar", Icones.COLAR);
-	private Action colar2Acao = Action.actionIcon("label.colar2", Icones.COLAR);
-	private Action novoAcao = Action.actionIcon("label.novo", Icones.PANEL4);
+	protected Action aplicarAcao = actionIcon(Constantes.LABEL_APLICAR, Icones.SUCESSO);
+	private Action salvarComoAcao = actionIcon("label.salvar_como", Icones.SALVARC);
+	private Action fecharAcao = actionIcon(Constantes.LABEL_FECHAR, Icones.SAIR);
+	private Action excluirAcao = actionIcon("label.excluir", Icones.EXCLUIR);
+	private Action limpar2Acao = actionIcon("label.limpar2", Icones.PANEL4);
+	private Action copiar2Acao = actionIcon("label.copiar2", Icones.COPIA);
+	private Action baixar2Acao = actionIcon("label.baixar2", Icones.COLAR);
+	protected Action copiarAcao = actionIcon("label.copiar", Icones.COPIA);
+	protected Action colar0Acao = actionIcon("label.colar", Icones.COLAR);
+	private Action colar2Acao = actionIcon("label.colar2", Icones.COLAR);
+	private Action novoAcao = actionIcon("label.novo", Icones.PANEL4);
 	protected LabelTextTemp labelTextTempSalvo = new LabelTextTemp();
 	protected Action atualizarAcao = Action.actionIconAtualizar();
 	protected LabelTextTemp labelTextTemp = new LabelTextTemp();
@@ -74,6 +75,10 @@ public abstract class BarraButton extends JToolBar
 		configAplicar(enuns);
 		configButtonAplicar(enuns);
 		configBackup(enuns);
+	}
+
+	protected Action actionIcon(String chaveRotulo, Icon icone) {
+		return Action.actionIcon(chaveRotulo, icone);
 	}
 
 	private void configAplicar(BarraButtonEnum... enuns) {
