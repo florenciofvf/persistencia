@@ -138,7 +138,7 @@ public class ChecagemContainer extends AbstratoContainer {
 		toolbar.setJanela(janela);
 	}
 
-	static Action actionMenu(String chave) {
+	static Action acaoMenu(String chave) {
 		return Action.acaoMenu(ChecagemMensagens.getString(chave), null);
 	}
 

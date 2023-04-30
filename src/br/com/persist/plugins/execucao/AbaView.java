@@ -85,12 +85,12 @@ public class AbaView extends Panel implements ContainerTreeListener {
 		}
 	}
 
-	static Action actionMenu(String chave, Icon icon) {
+	static Action acaoMenu(String chave, Icon icon) {
 		return Action.acaoMenu(ExecucaoMensagens.getString(chave), icon);
 	}
 
-	static Action actionMenu(String chave) {
-		return actionMenu(chave, null);
+	static Action acaoMenu(String chave) {
+		return acaoMenu(chave, null);
 	}
 }
 
