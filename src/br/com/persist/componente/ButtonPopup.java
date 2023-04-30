@@ -86,4 +86,8 @@ public abstract class ButtonPopup extends Button {
 	public void limparPopup() {
 		popup.limpar();
 	}
+
+	protected Action actionMenu(String chaveRotulo, Icon icone) {
+		return Action.actionMenu(chaveRotulo, icone);
+	}
 }

@@ -162,11 +162,11 @@ public class ArquivoTree extends Tree {
 	};
 
 	private class ArquivoPopup extends Popup {
-		private Action novoDiretorioAcao = Action.actionMenu("label.novo_diretorio", Icones.ABRIR);
-		private Action novoArquivoAcao = Action.actionMenu("label.novo_arquivo", Icones.PANEL4);
-		private Action diretorioAcao = Action.actionMenu("label.diretorio", Icones.ABRIR);
-		private Action renomearAcao = Action.actionMenu("label.renomear", Icones.RULE);
-		private Action abrirAcao = Action.actionMenu("label.abrir", Icones.ABRIR);
+		private Action novoDiretorioAcao = actionMenu("label.novo_diretorio", Icones.ABRIR);
+		private Action novoArquivoAcao = actionMenu("label.novo_arquivo", Icones.PANEL4);
+		private Action diretorioAcao = actionMenu("label.diretorio", Icones.ABRIR);
+		private Action renomearAcao = actionMenu("label.renomear", Icones.RULE);
+		private Action abrirAcao = actionMenu("label.abrir", Icones.ABRIR);
 		private Action excluirAcao = Action.actionMenuExcluir();
 		private static final long serialVersionUID = 1L;
 

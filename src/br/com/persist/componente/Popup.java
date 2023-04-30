@@ -1,5 +1,6 @@
 package br.com.persist.componente;
 
+import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -36,5 +37,9 @@ public class Popup extends JPopupMenu {
 		while (getComponentCount() > 0) {
 			remove(0);
 		}
+	}
+
+	protected Action actionMenu(String chaveRotulo, Icon icone) {
+		return Action.actionMenu(chaveRotulo, icone);
 	}
 }

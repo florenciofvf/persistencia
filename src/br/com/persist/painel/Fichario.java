@@ -327,7 +327,7 @@ public class Fichario extends JTabbedPane {
 	}
 
 	private class PopupFichario extends Popup {
-		private Action fechar = Action.actionMenu("label.fechar", null);
+		private Action fechar = actionMenu("label.fechar", null);
 		private static final long serialVersionUID = 1L;
 
 		PopupFichario() {

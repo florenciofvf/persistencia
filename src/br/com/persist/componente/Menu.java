@@ -39,4 +39,8 @@ public class Menu extends JMenu {
 		}
 		add(menuItem);
 	}
+
+	protected Action actionMenu(String chaveRotulo, Icon icone) {
+		return Action.actionMenu(chaveRotulo, icone);
+	}
 }

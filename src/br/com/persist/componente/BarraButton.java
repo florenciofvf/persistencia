@@ -121,9 +121,9 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonColar extends ButtonPopup {
-		private Action numeroAcao = Action.actionMenu("label.numeros", null);
-		private Action letraAcao = Action.actionMenu("label.letras", null);
-		private Action todosAcao = Action.actionMenu("label.todos", null);
+		private Action numeroAcao = actionMenu("label.numeros", null);
+		private Action letraAcao = actionMenu("label.letras", null);
+		private Action todosAcao = actionMenu("label.todos", null);
 		private static final long serialVersionUID = 1L;
 
 		protected ButtonColar() {
@@ -157,8 +157,8 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonBackup extends ButtonPopup {
-		private Action criarAcao = Action.actionMenu("label.criar", null);
-		private Action abrirAcao = Action.actionMenu("label.abrir", null);
+		private Action criarAcao = actionMenu("label.criar", null);
+		private Action abrirAcao = actionMenu("label.abrir", null);
 		private static final long serialVersionUID = 1L;
 
 		protected ButtonBackup() {
@@ -258,8 +258,8 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonAplicar extends ButtonPopup {
-		protected Action aplicar2Acao = Action.actionMenu(Constantes.LABEL_APLICAR, null);
-		protected Action aplicarAcao = Action.actionMenu(Constantes.LABEL_APLICAR, null);
+		protected Action aplicar2Acao = actionMenu(Constantes.LABEL_APLICAR, null);
+		protected Action aplicarAcao = actionMenu(Constantes.LABEL_APLICAR, null);
 		private static final long serialVersionUID = 1L;
 
 		protected ButtonAplicar() {
@@ -280,10 +280,10 @@ public abstract class BarraButton extends JToolBar
 	}
 
 	protected class ButtonDestacar extends ButtonPopup {
-		protected Action destacarEmFormulario = Action.actionMenu("label.destacar_formulario", null);
-		protected Action retornarAoFichario = Action.actionMenu("label.retornar_ao_fichario", null);
-		protected Action clonarEmFormulario = Action.actionMenu("label.clonar_em_formulario", null);
-		protected Action abrirEmFormulario = Action.actionMenu("label.abrir_em_formulario", null);
+		protected Action destacarEmFormulario = actionMenu("label.destacar_formulario", null);
+		protected Action retornarAoFichario = actionMenu("label.retornar_ao_fichario", null);
+		protected Action clonarEmFormulario = actionMenu("label.clonar_em_formulario", null);
+		protected Action abrirEmFormulario = actionMenu("label.abrir_em_formulario", null);
 		private static final long serialVersionUID = 1L;
 
 		protected ButtonDestacar() {

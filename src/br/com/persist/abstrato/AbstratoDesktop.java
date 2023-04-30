@@ -176,7 +176,7 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 		private Action direitoAutoAcao = acaoMenu("label.total_direito_auto", Icones.ALINHA_DIREITO);
 		private Action esquerdoAcao = acaoMenu("label.total_esquerdo", Icones.ALINHA_ESQUERDO);
 		private Action direitoAcao = acaoMenu("label.total_direito", Icones.ALINHA_DIREITO);
-		private Action totalAcao = Action.actionMenu("label.total", Icones.LARGURA);
+		private Action totalAcao = actionMenu("label.total", Icones.LARGURA);
 		private static final long serialVersionUID = 1L;
 		private JCheckBoxMenuItem checkDireitoAuto;
 
@@ -250,10 +250,10 @@ public abstract class AbstratoDesktop extends JDesktopPane implements WindowHand
 	}
 
 	protected class MenuAjuste extends Menu {
-		private Action distribuirAcao = Action.actionMenu("label.distribuir", Icones.CENTRALIZAR);
 		private Action aproximarFormAoObjetoAcao = acaoMenu("label.aproximar_form_ao_objeto");
 		private Action aproximarObjetoAoFormAcao = acaoMenu("label.aproximar_objeto_ao_form");
-		private Action centralizarAcao = Action.actionMenu("label.centralizar", Icones.LARGURA);
+		private Action distribuirAcao = actionMenu("label.distribuir", Icones.CENTRALIZAR);
+		private Action centralizarAcao = actionMenu("label.centralizar", Icones.LARGURA);
 		private Action empilharAcao = acaoMenu("label.empilhar_formularios");
 		private static final long serialVersionUID = 1L;
 
