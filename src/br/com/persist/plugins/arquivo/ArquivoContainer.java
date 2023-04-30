@@ -74,8 +74,8 @@ public class ArquivoContainer extends AbstratoContainer implements ArquivoTreeLi
 	}
 
 	private class Toolbar extends BarraButton implements ActionListener {
-		private Action fecharAcao = Action.actionIcon("label.fechar_todos", Icones.FECHAR);
-		private Action statusAcao = Action.actionIcon("label.abertos", Icones.HIERARQUIA);
+		private Action fecharAcao = actionIcon("label.fechar_todos", Icones.FECHAR);
+		private Action statusAcao = actionIcon("label.abertos", Icones.HIERARQUIA);
 		private final CheckBox chkSempreTopForm = new CheckBox();
 		private final CheckBox chkSempreTopArq = new CheckBox();
 		private final CheckBox chkPorParte = new CheckBox(true);

@@ -532,7 +532,7 @@ public class InternalContainer extends Panel implements ItemListener, Pagina, Wi
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action exceptionAcao = Action.actionIcon("label.exception", Icones.EXCEPTION);
+		private Action exceptionAcao = actionIcon("label.exception", Icones.EXCEPTION);
 		private final Button buttonExcluir = new Button(new ExcluirRegistrosAcao());
 		private final ButtonSincronizar buttonSincronizar = new ButtonSincronizar();
 		private final ButtonComplemento buttonComplemento = new ButtonComplemento();

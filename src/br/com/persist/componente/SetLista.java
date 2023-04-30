@@ -304,8 +304,8 @@ class SetListaDialogo extends AbstratoDialogo {
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action ordenarAcao = Action.actionIcon("label.ordenar", Icones.ASC_TEXTO);
-		private Action criarAcao = Action.actionIcon("label.criar", Icones.CRIAR);
+		private Action ordenarAcao = actionIcon("label.ordenar", Icones.ASC_TEXTO);
+		private Action criarAcao = actionIcon("label.criar", Icones.CRIAR);
 		private final CheckBox chkTodos = new CheckBox("label.todos");
 		private static final long serialVersionUID = 1L;
 

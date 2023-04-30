@@ -171,8 +171,8 @@ public class RequisicaoContainer extends AbstratoContainer {
 	}
 
 	private class Toolbar extends BarraButton {
-		private Action excluirAtivoAcao = Action.actionIcon("label.excluir", Icones.EXCLUIR);
-		private Action atualizarAcao2 = Action.actionIcon("label.requisicao", Icones.URL);
+		private Action excluirAtivoAcao = actionIcon("label.excluir", Icones.EXCLUIR);
+		private Action atualizarAcao2 = actionIcon("label.requisicao", Icones.URL);
 		private ButtonUtil buttonUtil = new ButtonUtil();
 		private ButtonRota buttonRota = new ButtonRota();
 		private static final long serialVersionUID = 1L;
